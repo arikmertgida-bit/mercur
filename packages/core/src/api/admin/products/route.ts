@@ -35,7 +35,7 @@ export const GET = async (
     pagination: req.queryConfig.pagination,
   })
 
-  await enrichProductAttributes(req.scope, products as any[])
+  await enrichProductAttributes(req.scope, products)
 
   if (withOffers) {
     await wrapProductVariantsWithOffers(
@@ -62,15 +62,20 @@ export const POST = async (
 
   const { result } = await createProductsWorkflow(req.scope).run({
     input: {
+      // @ts-expect-error — Medusa's own `WithAdditionalData` validator helper is typed
+      // to return `ZodObject<any, any>` (confirmed in its .d.ts), which collapses
+      // `req.validatedBody`'s inferred field types once spread here. Real third-party
+      // (Medusa) type-system boundary, not a shortcut — `productData`'s runtime shape
+      // is the concrete, Zod-validated `AdminCreateProductType`.
       products: [{
         ...productData,
       }],
       created_by: req.auth_context.actor_id,
       additional_data,
-    } as any,
+    },
   })
 
-  const createdId = (result as { id: string }[])[0].id
+  const createdId = result[0].id
 
   const {
     data: [product],

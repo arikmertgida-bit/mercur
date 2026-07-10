@@ -16,7 +16,7 @@ import { splitComputedVariantFields } from "../helpers"
 export const GET = async (req: MedusaStoreRequest, res: MedusaResponse) => {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
 
-  const visibleIds = (req.filterableFields as { id?: unknown }).id
+  const visibleIds = req.filterableFields.id
   if (Array.isArray(visibleIds) && !visibleIds.includes(req.params.id)) {
     throw new MedusaError(
       MedusaError.Types.NOT_FOUND,
@@ -58,7 +58,7 @@ export const GET = async (req: MedusaStoreRequest, res: MedusaResponse) => {
   await enrichProductAttributes(req.scope, [product])
 
   if (withCalculatedPrice) {
-    await wrapProductVariantsWithOfferPrice(req, [product] as any[])
+    await wrapProductVariantsWithOfferPrice(req, [product])
   }
 
   res.json({ product })

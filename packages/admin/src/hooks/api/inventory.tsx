@@ -276,7 +276,11 @@ export const useBatchInventoryItemsLocationLevels = (
     HttpTypes.AdminBatchInventoryItemsLocationLevels
   >
 ) => {
-  return useMutation({
+  return useMutation<
+    HttpTypes.AdminBatchInventoryItemsLocationLevelsResponse,
+    ClientError,
+    HttpTypes.AdminBatchInventoryItemsLocationLevels
+  >({
     mutationFn: (payload) => {
       return sdk.admin.inventoryItems.locationLevels.batch.mutate({
         ...payload,

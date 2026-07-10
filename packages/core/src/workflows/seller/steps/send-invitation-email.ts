@@ -70,5 +70,11 @@ export const sendSellerInvitationEmailStep = createStep(
     })
 
     return new StepResponse(notification)
+  },
+  // Deliberate no-op: once the email is sent, the side effect happened in
+  // the real world and cannot be un-sent. A defined-but-empty compensate
+  // documents that this was considered, not overlooked.
+  async () => {
+    return
   }
 )

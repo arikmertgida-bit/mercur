@@ -28,6 +28,6 @@ export const deleteProductCollectionWithImagesWorkflow = createWorkflow(
       ids: [input.id],
     }))
 
-    deleteCollectionsWorkflow.runAsStep({ input: deleteInput as any })
+    deleteCollectionsWorkflow.runAsStep({ input: deleteInput })
   }
 )

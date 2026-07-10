@@ -16,5 +16,13 @@ export const deleteCustomFieldsStep = createStep(
     await service.delete(input.alias, input.ids)
 
     return new StepResponse(undefined, input)
+  },
+  async (input: DeleteCustomFieldsStepInput | undefined, { container }) => {
+    if (!input) {
+      return
+    }
+
+    const service = container.resolve<CustomFieldsModuleService>(MercurModules.CUSTOM_FIELDS)
+    await service.restore(input.alias, input.ids)
   }
 )

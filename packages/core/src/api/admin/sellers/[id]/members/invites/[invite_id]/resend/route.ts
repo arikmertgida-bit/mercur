@@ -16,7 +16,7 @@ export const POST = async (
     },
   })
 
-  const invite = (result as any[])[0]
+  const invite = result[0]
 
   res.status(200).json({
     member_invite: invite,

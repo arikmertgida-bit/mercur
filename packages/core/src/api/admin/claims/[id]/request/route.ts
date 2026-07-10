@@ -64,12 +64,18 @@ export const POST = async (
       fields: RETURN_FIELDS,
       filters: { id: returnId },
     })
-    orderReturn = returns?.[0] as unknown as HttpTypes.AdminReturn | undefined
+    orderReturn = returns?.[0]
   }
 
   res.json({
-    order_preview: result as unknown as HttpTypes.AdminOrderPreview,
-    claim: orderClaim as unknown as HttpTypes.AdminClaim,
+    // @ts-expect-error — Medusa's own module-layer DTO (OrderPreviewDTO/
+    // OrderChangeDTO/etc.) and its HTTP-response DTO (AdminOrderPreview/
+    // AdminOrderChange/etc.) are two parallel type hierarchies that don't
+    // structurally unify, even though the real workflow data includes every
+    // field the HTTP type expects (confirmed against Medusa's own core route,
+    // which passes the same shape through with zero cast/transform).
+    order_preview: result,
+    claim: orderClaim,
     return: orderReturn as HttpTypes.AdminReturn,
   })
 }

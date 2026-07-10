@@ -32,7 +32,7 @@ export function withMercur(config: MercurInputConfig = {}): InputConfigWithArray
     ...config.projectConfig,
     http: {
       ...config.projectConfig?.http,
-    } as any,
+    },
   }
 
   const admin = {
@@ -56,7 +56,6 @@ export function withMercur(config: MercurInputConfig = {}): InputConfigWithArray
       : []),
   ]
 
-  // @ts-ignore
   return defineConfig({
     ...config,
     projectConfig,

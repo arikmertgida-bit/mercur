@@ -70,6 +70,11 @@ The product has three audiences:
 - Vendor-level promotions and campaigns scoped to that vendor's catalog.
 - Platform-wide promotions configurable from the Admin Panel.
 
+### Offers
+- Admin panel module (`packages/admin/src/pages/offers`) for platform-wide
+  visibility into seller-created offers: list, detail, and per-variant detail
+  views, wired into the route map. Not previously documented here.
+
 ### Returns & Requests
 - Vendor-driven return workflows with vendor-defined return reasons.
 - Seller-initiated approval requests (product publish, returns, refunds).
@@ -80,7 +85,10 @@ The product has three audiences:
 - Aggregate rating exposed on public seller storefronts.
 
 ### Search & Discovery
-- Optional **Algolia** and **Meilisearch** integrations with admin UI for re-indexing.
+- **Meilisearch**-backed catalog search (BFF pattern, event-driven reindexing via
+  subscribers + scheduled jobs — see root `mercur/CLAUDE.md` §3). No dedicated
+  admin UI exists for re-indexing today; only unused i18n string leftovers
+  reference it (`packages/admin/src/i18n/translations`).
 
 ### Notifications & Communication
 - In-app vendor notification feed.

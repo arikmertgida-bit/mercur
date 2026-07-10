@@ -40,10 +40,10 @@ export default class PayoutProviderService {
   }
 
   static getRegistrationIdentifier(
-    providerClass: Constructor<IPayoutProvider>,
+    providerClass: Constructor<IPayoutProvider> & { identifier: string },
     optionName?: string
   ) {
-    return `${(providerClass as any).identifier}_${optionName}`
+    return `${providerClass.identifier}_${optionName}`
   }
 
   async createPayoutAccount(

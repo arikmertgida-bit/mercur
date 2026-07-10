@@ -37,10 +37,10 @@ export const GET = async (req: MedusaStoreRequest, res: MedusaResponse) => {
     pagination: req.queryConfig.pagination,
   })
 
-  await enrichProductAttributes(req.scope, products as any[])
+  await enrichProductAttributes(req.scope, products)
 
   if (withCalculatedPrice) {
-    await wrapProductVariantsWithOfferPrice(req, products as any[])
+    await wrapProductVariantsWithOfferPrice(req, products)
   }
 
   res.json({

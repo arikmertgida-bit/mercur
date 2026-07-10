@@ -13,7 +13,12 @@ const dashboardShared = path.join(
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   presets: [require("@medusajs/ui-preset")],
-  content: ["./src/**/*.{js,ts,jsx,tsx}", medusaUI, dashboardShared],
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "../../apps/vendor/src/**/*.{js,ts,jsx,tsx}",
+    medusaUI,
+    dashboardShared,
+  ],
   darkMode: "class",
   theme: {
     extend: {

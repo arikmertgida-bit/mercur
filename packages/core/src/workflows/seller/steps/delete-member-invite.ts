@@ -8,6 +8,14 @@ export const deleteMemberInviteStep = createStep(
   async (ids: string[], { container }) => {
     const service = container.resolve<SellerModuleService>(MercurModules.SELLER)
     await service.deleteMemberInvites(ids)
-    return new StepResponse(void 0)
+    return new StepResponse(void 0, ids)
+  },
+  async (ids: string[] | undefined, { container }) => {
+    if (!ids?.length) {
+      return
+    }
+
+    const service = container.resolve<SellerModuleService>(MercurModules.SELLER)
+    await service.restoreMemberInvites(ids)
   }
 )

@@ -22,8 +22,12 @@ export const createProductCategoryWithImagesWorkflow = createWorkflow(
   (input: CreateProductCategoryWithImagesWorkflowInput) => {
     const created = createProductCategoriesWorkflow.runAsStep({
       input: {
+        // @ts-expect-error — `product_category` is intentionally a caller-provided
+        // `Record<string, unknown>` (arbitrary category payload), so it can't
+        // structurally match Medusa's concrete `CreateProductCategoryDTO` at the
+        // type level. Real third-party (Medusa) type boundary.
         product_categories: [input.product_category],
-      } as any,
+      },
     })
 
     const categoryId = transform({ created }, ({ created }) => created[0].id)

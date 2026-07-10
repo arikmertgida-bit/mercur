@@ -19,11 +19,12 @@ function applySellerOpenFilters(
 
   req.filterableFields.status ??= SellerStatus.OPEN
 
-  req.filterableFields.$and ??= []
-    ; (req.filterableFields.$and as any[]).push(
-      { $or: [{ closed_from: null }, { closed_from: { $gt: now } }] },
-      { $or: [{ closed_to: null }, { closed_to: { $lt: now } }] }
-    )
+  const and = (req.filterableFields.$and as object[] | undefined) ?? []
+  and.push(
+    { $or: [{ closed_from: null }, { closed_from: { $gt: now } }] },
+    { $or: [{ closed_to: null }, { closed_to: { $lt: now } }] }
+  )
+  req.filterableFields.$and = and
 
   next()
 }

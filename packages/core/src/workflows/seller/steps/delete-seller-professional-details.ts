@@ -3,10 +3,17 @@ import { MercurModules, ProfessionalDetailsDTO } from "@mercurjs/types"
 
 import SellerModuleService from "../../../modules/seller/service"
 
+// The hand-authored `ProfessionalDetailsDTO` omits `seller_id`, but the real
+// entity returned by `listProfessionalDetails` always carries its owning
+// seller's id — needed here to recreate the record on compensate.
+type ProfessionalDetailsWithSeller = ProfessionalDetailsDTO & {
+  seller_id: string
+}
+
 export const deleteSellerProfessionalDetailsStep = createStep<
   { seller_id: string },
   void,
-  ProfessionalDetailsDTO | null
+  ProfessionalDetailsWithSeller | null
 >(
   "delete-seller-professional-details",
   async ({ seller_id }, { container }) => {
@@ -36,7 +43,7 @@ export const deleteSellerProfessionalDetailsStep = createStep<
       corporate_name: previous.corporate_name,
       registration_number: previous.registration_number,
       tax_id: previous.tax_id,
-      seller_id: (previous as any).seller_id,
+      seller_id: previous.seller_id,
     })
   }
 )

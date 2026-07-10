@@ -13,6 +13,7 @@ import {
   addSellerShippingMethodToCartWorkflow,
   completeCartWithSplitOrdersWorkflow,
 } from "@mercurjs/core/workflows"
+import { z } from "zod"
 
 /**
  * Seed a completed order for one seller using that seller's offers and a
@@ -33,25 +34,52 @@ import {
 const SELLER_ID = "sel_01KT45ZAGFMME7RWVM0ZAKYGP5"
 const SHIPPING_OPTION_ID = "so_01KTNY6Y4QC677N55P90AXN3QS"
 
-type OfferRow = {
-  id: string
-  seller_id: string
-  variant_id: string
-}
+const OfferRowSchema = z.object({
+  id: z.string(),
+  seller_id: z.string(),
+  variant_id: z.string().nullable().optional(),
+})
+type OfferRow = z.infer<typeof OfferRowSchema>
 
-type ShippingOptionRow = {
-  id: string
-  seller?: { id: string } | null
-  service_zone?: {
-    id: string
-    geo_zones?: Array<{ type: string; country_code?: string | null }> | null
-  } | null
-  prices?: Array<{
-    currency_code: string | null
-    amount: number | null
-    region_id?: string | null
-  }> | null
-}
+const ShippingOptionRowSchema = z.object({
+  id: z.string(),
+  seller: z.object({ id: z.string() }).nullable().optional(),
+  service_zone: z
+    .object({
+      id: z.string(),
+      geo_zones: z
+        .array(
+          z.object({
+            type: z.string(),
+            country_code: z.string().nullable().optional(),
+          })
+        )
+        .nullable()
+        .optional(),
+    })
+    .nullable()
+    .optional(),
+  prices: z
+    .array(
+      z.object({
+        currency_code: z.string().nullable(),
+        amount: z.number().nullable(),
+        region_id: z.string().nullable().optional(),
+      })
+    )
+    .nullable()
+    .optional(),
+  rules: z
+    .array(
+      z.object({
+        attribute: z.string(),
+        operator: z.string(),
+        value: z.union([z.string(), z.array(z.string())]),
+      })
+    )
+    .nullable()
+    .optional(),
+})
 
 export default async function seedOrderForSeller({ container }: ExecArgs) {
   const logger = container.resolve(ContainerRegistrationKeys.LOGGER)
@@ -94,18 +122,18 @@ export default async function seedOrderForSeller({ container }: ExecArgs) {
     ],
     filters: { id: SHIPPING_OPTION_ID },
   })
-  const shippingOption = shippingOptions[0] as unknown as
-    | (ShippingOptionRow & {
-        rules?: Array<{
-          attribute: string
-          operator: string
-          value: string | string[]
-        }> | null
-      })
-    | undefined
-  if (!shippingOption) {
+  const rawShippingOption = shippingOptions[0]
+  if (!rawShippingOption) {
     throw new Error(`Shipping option ${SHIPPING_OPTION_ID} not found`)
   }
+  const shippingOptionParseResult =
+    ShippingOptionRowSchema.safeParse(rawShippingOption)
+  if (!shippingOptionParseResult.success) {
+    throw new Error(
+      `Shipping option ${SHIPPING_OPTION_ID} has an unexpected shape: ${shippingOptionParseResult.error.message}`
+    )
+  }
+  const shippingOption = shippingOptionParseResult.data
   if (shippingOption.seller?.id !== SELLER_ID) {
     throw new Error(
       `Shipping option ${SHIPPING_OPTION_ID} does not belong to seller ${SELLER_ID}`
@@ -262,7 +290,7 @@ export default async function seedOrderForSeller({ container }: ExecArgs) {
       logger.info(
         `Linked stock location ${sellerStockLocationId} to sales channel '${salesChannel.name}'`
       )
-    } catch (e: unknown) {
+    } catch (e) {
       if (!(e instanceof Error && /already exists/i.test(e.message))) {
         throw e
       }
@@ -281,8 +309,15 @@ export default async function seedOrderForSeller({ container }: ExecArgs) {
     fields: ["id", "seller_id", "variant_id"],
     filters: { seller_id: SELLER_ID },
   })
-  const offers = (offerRows as unknown as OfferRow[]).filter(
-    (o) => typeof o.variant_id === "string" && o.variant_id.length > 0
+  const offerRowsParseResult = z.array(OfferRowSchema).safeParse(offerRows)
+  if (!offerRowsParseResult.success) {
+    throw new Error(
+      `Offers for seller ${SELLER_ID} have an unexpected shape: ${offerRowsParseResult.error.message}`
+    )
+  }
+  const offers = offerRowsParseResult.data.filter(
+    (o): o is OfferRow & { variant_id: string } =>
+      typeof o.variant_id === "string" && o.variant_id.length > 0
   )
   if (!offers.length) {
     throw new Error(`Seller ${SELLER_ID} has no offers with a variant`)

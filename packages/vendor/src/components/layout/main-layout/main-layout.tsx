@@ -1,5 +1,7 @@
+import { useEffect, useState } from "react";
 import {
   Buildings,
+  ChatBubble,
   CogSixTooth,
   CurrencyDollar,
   CreditCardRefresh,
@@ -26,7 +28,7 @@ import { Collapsible as RadixCollapsible } from "radix-ui";
 import { useTranslation } from "react-i18next";
 
 import { Skeleton } from "../../common/skeleton";
-import { INavItem, NavItem } from "../../layout/nav-item";
+import { BASE_NAV_LINK_CLASSES, INavItem, NavItem } from "../../layout/nav-item";
 import { Shell } from "../../layout/shell";
 
 import { useLocation, useNavigate } from "react-router-dom";
@@ -44,6 +46,7 @@ import {
   applyNavOverrides,
   groupNavItems,
   type NavItemGroup,
+  supportChatBridge,
   useExtension,
   usePermissions,
   type CoreNavItem,
@@ -518,6 +521,38 @@ const Searchbar = () => {
   );
 };
 
+const SupportNavItem = () => {
+  const { t } = useTranslation();
+  const [unreadCount, setUnreadCount] = useState(0);
+
+  useEffect(() => {
+    return supportChatBridge.subscribeUnreadCount(setUnreadCount);
+  }, []);
+
+  return (
+    <div className="px-3" data-testid="sidebar-nav-item-support">
+      <button
+        type="button"
+        onClick={() => supportChatBridge.requestOpen()}
+        className={clx(BASE_NAV_LINK_CLASSES, "w-full")}
+        data-testid="sidebar-nav-link-support"
+      >
+        <div className="flex size-6 items-center justify-center">
+          <ChatBubble />
+        </div>
+        <Text size="small" weight="plus" leading="compact">
+          {t("messenger.support")}
+        </Text>
+        {unreadCount > 0 && (
+          <span className="ms-auto flex h-4 min-w-[16px] items-center justify-center rounded-full bg-ui-tag-red-bg px-1 text-[10px] font-bold text-ui-tag-red-text">
+            {unreadCount > 9 ? "9+" : unreadCount}
+          </span>
+        )}
+      </button>
+    </div>
+  );
+};
+
 const UtilitySection = () => {
   const location = useLocation();
   const { t } = useTranslation();
@@ -525,6 +560,7 @@ const UtilitySection = () => {
   return (
     <div className="flex flex-col">
       <div className="flex flex-col gap-y-0.5 py-3">
+        <SupportNavItem />
         <NavItem
           label={t("app.nav.settings.header")}
           to="/settings"

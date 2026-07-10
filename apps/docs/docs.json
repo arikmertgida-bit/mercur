@@ -692,13 +692,6 @@
                 ]
               },
               {
-                "group": "Offers",
-                "pages": [
-                  "references/api/store/offers/list-offers",
-                  "references/api/store/offers/retrieve-offer"
-                ]
-              },
-              {
                 "group": "Search",
                 "pages": []
               },

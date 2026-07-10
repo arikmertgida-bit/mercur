@@ -4,8 +4,8 @@ import { client } from "../lib/client";
 export const useMe = (
 ) => {
   const { data, ...rest } = useQuery({
-    queryKey: ['members', 'me'],
-    queryFn: () => client.vendor.members.me.query(),
+    queryKey: ['sellers', 'me'],
+    queryFn: () => client.vendor.sellers.me.query(),
   });
 
   return { ...data, ...rest };

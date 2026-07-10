@@ -80,6 +80,11 @@ export default async function seedDemoData({ container }: ExecArgs) {
 
   logger.info("Seeding store data...");
   const [store] = await storeModuleService.listStores();
+  if (!store) {
+    throw new Error(
+      "[seed] No store found — cannot seed demo data without an existing store."
+    );
+  }
   let defaultSalesChannel = await salesChannelModuleService.listSalesChannels({
     name: "Default Sales Channel",
   });
@@ -195,6 +200,255 @@ export default async function seedDemoData({ container }: ExecArgs) {
   }
   logger.info("Finished seeding tax regions.");
 
+  logger.info("Seeding stock location data...");
+  const stockLocationModule = container.resolve(Modules.STOCK_LOCATION);
+  const existingStockLocations = await stockLocationModule.listStockLocations({
+    name: "European Warehouse",
+  });
+
+  let stockLocation;
+  if (existingStockLocations.length) {
+    stockLocation = existingStockLocations[0];
+    logger.info("Stock location 'European Warehouse' already exists, skipping.");
+  } else {
+    const { result: stockLocationResult } = await createStockLocationsWorkflow(
+      container
+    ).run({
+      input: {
+        locations: [
+          {
+            name: "European Warehouse",
+            address: {
+              city: "Copenhagen",
+              country_code: "DK",
+              address_1: "",
+            },
+          },
+        ],
+      },
+    });
+    stockLocation = stockLocationResult[0];
+  }
+
+  await updateStoresWorkflow(container).run({
+    input: {
+      selector: { id: store.id },
+      update: {
+        default_location_id: stockLocation.id,
+      },
+    },
+  });
+
+  // Link stock location to fulfillment provider (idempotent)
+  try {
+    await link.create({
+      [Modules.STOCK_LOCATION]: {
+        stock_location_id: stockLocation.id,
+      },
+      [Modules.FULFILLMENT]: {
+        fulfillment_provider_id: "manual_manual",
+      },
+    });
+  } catch (error) {
+    // Ignore if link already exists
+    if (!(error instanceof Error && error.message.includes("already exists"))) {
+      throw error;
+    }
+    logger.info("Stock location already linked to fulfillment provider, skipping.");
+  }
+
+  logger.info("Seeding fulfillment data...");
+  const shippingProfiles = await fulfillmentModuleService.listShippingProfiles({
+    type: "default",
+  });
+  let shippingProfile = shippingProfiles.length ? shippingProfiles[0] : null;
+
+  if (!shippingProfile) {
+    const { result: shippingProfileResult } =
+      await createShippingProfilesWorkflow(container).run({
+        input: {
+          data: [
+            {
+              name: "Default Shipping Profile",
+              type: "default",
+            },
+          ],
+        },
+      });
+    shippingProfile = shippingProfileResult[0];
+  }
+
+  const existingFulfillmentSets = await fulfillmentModuleService.listFulfillmentSets({
+    name: "European Warehouse delivery",
+  });
+
+  let fulfillmentSet;
+  if (existingFulfillmentSets.length) {
+    fulfillmentSet = existingFulfillmentSets[0];
+    logger.info("Fulfillment set 'European Warehouse delivery' already exists, skipping.");
+  } else {
+    fulfillmentSet = await fulfillmentModuleService.createFulfillmentSets({
+      name: "European Warehouse delivery",
+      type: "shipping",
+      service_zones: [
+        {
+          name: "Europe",
+          geo_zones: [
+            {
+              country_code: "gb",
+              type: "country",
+            },
+            {
+              country_code: "de",
+              type: "country",
+            },
+            {
+              country_code: "dk",
+              type: "country",
+            },
+            {
+              country_code: "se",
+              type: "country",
+            },
+            {
+              country_code: "fr",
+              type: "country",
+            },
+            {
+              country_code: "es",
+              type: "country",
+            },
+            {
+              country_code: "it",
+              type: "country",
+            },
+          ],
+        },
+      ],
+    });
+
+    try {
+      await link.create({
+        [Modules.STOCK_LOCATION]: {
+          stock_location_id: stockLocation.id,
+        },
+        [Modules.FULFILLMENT]: {
+          fulfillment_set_id: fulfillmentSet.id,
+        },
+      });
+    } catch (error) {
+      if (!(error instanceof Error && error.message.includes("already exists"))) {
+        throw error;
+      }
+    }
+
+    const [defaultServiceZone] = fulfillmentSet.service_zones ?? [];
+    if (!defaultServiceZone) {
+      throw new Error(
+        `[seed] Fulfillment set "${fulfillmentSet.name}" has no service zones — cannot create shipping options.`
+      );
+    }
+
+    await createShippingOptionsWorkflow(container).run({
+      input: [
+        {
+          name: "Standard Shipping",
+          price_type: "flat",
+          provider_id: "manual_manual",
+          service_zone_id: defaultServiceZone.id,
+          shipping_profile_id: shippingProfile.id,
+          type: {
+            label: "Standard",
+            description: "Ship in 2-3 days.",
+            code: "standard",
+          },
+          prices: [
+            {
+              currency_code: "usd",
+              amount: 10,
+            },
+            {
+              currency_code: "eur",
+              amount: 10,
+            },
+            {
+              region_id: region.id,
+              amount: 10,
+            },
+          ],
+          rules: [
+            {
+              attribute: "enabled_in_store",
+              value: "true",
+              operator: "eq",
+            },
+            {
+              attribute: "is_return",
+              value: "false",
+              operator: "eq",
+            },
+          ],
+        },
+        {
+          name: "Express Shipping",
+          price_type: "flat",
+          provider_id: "manual_manual",
+          service_zone_id: defaultServiceZone.id,
+          shipping_profile_id: shippingProfile.id,
+          type: {
+            label: "Express",
+            description: "Ship in 24 hours.",
+            code: "express",
+          },
+          prices: [
+            {
+              currency_code: "usd",
+              amount: 10,
+            },
+            {
+              currency_code: "eur",
+              amount: 10,
+            },
+            {
+              region_id: region.id,
+              amount: 10,
+            },
+          ],
+          rules: [
+            {
+              attribute: "enabled_in_store",
+              value: "true",
+              operator: "eq",
+            },
+            {
+              attribute: "is_return",
+              value: "false",
+              operator: "eq",
+            },
+          ],
+        },
+      ],
+    });
+  }
+  logger.info("Finished seeding fulfillment data.");
+
+  // Link sales channel to stock location (idempotent - workflow handles duplicates)
+  try {
+    await linkSalesChannelsToStockLocationWorkflow(container).run({
+      input: {
+        id: stockLocation.id,
+        add: [defaultSalesChannel[0].id],
+      },
+    });
+  } catch (error) {
+    // Ignore if link already exists
+    if (!(error instanceof Error && error.message.includes("already"))) {
+      throw error;
+    }
+    logger.info("Sales channel already linked to stock location, skipping.");
+  }
+  logger.info("Finished seeding stock location data.");
+
   logger.info("Seeding publishable API key data...");
   let publishableApiKey;
   const { data } = await query.graph({
@@ -232,7 +486,7 @@ export default async function seedDemoData({ container }: ExecArgs) {
         add: [defaultSalesChannel[0].id],
       },
     });
-  } catch (error: unknown) {
+  } catch (error) {
     // Ignore if link already exists
     if (!(error instanceof Error && error.message.includes("already"))) {
       throw error;

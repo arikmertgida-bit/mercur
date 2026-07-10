@@ -6,7 +6,12 @@ import {
   Path,
   UseFormRegister,
 } from "react-hook-form"
-import { CellErrorMetadata, CellMetadata, DataGridCoordinates } from "../types"
+import {
+  CellErrorMetadata,
+  CellMetadata,
+  DataGridCellValue,
+  DataGridCoordinates,
+} from "../types"
 
 type DataGridContextType<TFieldValues extends FieldValues> = {
   // Grid state
@@ -27,7 +32,7 @@ type DataGridContextType<TFieldValues extends FieldValues> = {
   control: Control<TFieldValues>
   getInputChangeHandler: (
     field: Path<TFieldValues>
-  ) => (next: any, prev: any) => void
+  ) => (next: DataGridCellValue, prev: DataGridCellValue) => void
   // Wrapper handlers
   getWrapperFocusHandler: (
     coordinates: DataGridCoordinates

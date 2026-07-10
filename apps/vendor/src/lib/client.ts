@@ -1,6 +1,6 @@
 import { createClient, type InferClient } from "@mercurjs/client"
 import { getAuthHeaders } from "@mercurjs/vendor"
-import type { Routes } from '@mercurjs/core/_generated'
+import type { Routes } from '@acme/api/_generated'
 
 declare const __BACKEND_URL__: string
 

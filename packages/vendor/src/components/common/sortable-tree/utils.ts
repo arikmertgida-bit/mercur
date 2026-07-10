@@ -81,8 +81,8 @@ function flatten<T extends TreeItem>(
   parentId: UniqueIdentifier | null = null,
   depth = 0,
   childrenProp: string
-): FlattenedItem[] {
-  return items.reduce<FlattenedItem[]>((acc, item, index) => {
+): (T & FlattenedItem)[] {
+  return items.reduce<(T & FlattenedItem)[]>((acc, item, index) => {
     const children = (item[childrenProp] || []) as T[]
 
     return [
@@ -96,7 +96,7 @@ function flatten<T extends TreeItem>(
 export function flattenTree<T extends TreeItem>(
   items: T[],
   childrenProp: string
-): FlattenedItem[] {
+): (T & FlattenedItem)[] {
   return flatten(items, undefined, undefined, childrenProp)
 }
 
@@ -263,8 +263,8 @@ export function getChildCount<T extends TreeItem>(
   return item ? countChildren(children, 0, childrenProp) : 0
 }
 
-export function removeChildrenOf(
-  items: FlattenedItem[],
+export function removeChildrenOf<T extends FlattenedItem>(
+  items: T[],
   ids: UniqueIdentifier[],
   childrenProp: string
 ) {

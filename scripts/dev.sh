@@ -2,8 +2,8 @@
 set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
-# api=9000, admin=7001, vendor=7002
-PORTS=(9000 7001 7002)
+# api=9000, admin=7000, vendor=7001
+PORTS=(9000 7000 7001)
 
 echo "→ Killing previous dev processes"
 for port in "${PORTS[@]}"; do
@@ -37,11 +37,11 @@ echo "→ Starting apps/api       (http://localhost:9000)"
 (cd "$REPO_ROOT/apps/api" && bun run dev) &
 pids+=($!)
 
-echo "→ Starting apps/admin-test (http://localhost:7001)"
+echo "→ Starting apps/admin-test (http://localhost:7000)"
 (cd "$REPO_ROOT/apps/admin-test" && bun run dev) &
 pids+=($!)
 
-echo "→ Starting apps/vendor    (http://localhost:7002)"
+echo "→ Starting apps/vendor    (http://localhost:7001)"
 (cd "$REPO_ROOT/apps/vendor" && bun run dev) &
 pids+=($!)
 
