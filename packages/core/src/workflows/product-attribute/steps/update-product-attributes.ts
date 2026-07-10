@@ -1,5 +1,9 @@
 import { createStep, StepResponse } from "@medusajs/framework/workflows-sdk"
-import { MercurModules, UpdateProductAttributeDTO } from "@mercurjs/types"
+import {
+  MercurModules,
+  ProductAttributeDTO,
+  UpdateProductAttributeDTO,
+} from "@mercurjs/types"
 
 import type ProductAttributeModuleService from "../../../modules/product-attribute/service"
 
@@ -27,7 +31,7 @@ export const updateProductAttributesStep = createStep(
     const attributes = await service.updateProductAttributes(attributesToUpdate)
     return new StepResponse(attributes, prevAttributes)
   },
-  async (prevAttributes: any[] | undefined, { container }) => {
+  async (prevAttributes: ProductAttributeDTO[] | undefined, { container }) => {
     if (!prevAttributes?.length) {
       return
     }
@@ -35,7 +39,20 @@ export const updateProductAttributesStep = createStep(
       MercurModules.PRODUCT_ATTRIBUTE,
     )
     await service.updateProductAttributes(
-      prevAttributes.map((a) => ({ ...a })),
+      prevAttributes.map((a) => ({
+        id: a.id,
+        handle: a.handle ?? undefined,
+        name: a.name,
+        description: a.description,
+        type: a.type,
+        is_required: a.is_required,
+        is_filterable: a.is_filterable,
+        is_variant_axis: a.is_variant_axis,
+        rank: a.rank,
+        is_active: a.is_active,
+        product_option_id: a.product_option_id,
+        metadata: a.metadata,
+      })),
     )
   },
 )

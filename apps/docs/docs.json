@@ -75,10 +75,8 @@
                     "pages": [
                       "rc/resources/tutorials/custom-panel-page",
                       "rc/resources/tutorials/add-a-widget",
-                      "rc/resources/tutorials/add-order-detail-button",
                       "rc/resources/tutorials/extend-forms-and-tables",
                       "rc/resources/tutorials/extend-onboarding",
-                      "rc/resources/tutorials/store-setup-checklist",
                       "rc/resources/tutorials/customize-navigation",
                       "rc/resources/tutorials/custom-api-route"
                     ]
@@ -174,12 +172,6 @@
                 "group": "Overview",
                 "pages": [
                   "rc/references/overview"
-                ]
-              },
-              {
-                "group": "Panel Extension API",
-                "pages": [
-                  "rc/references/panel-extension-api"
                 ]
               },
               {

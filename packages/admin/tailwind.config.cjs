@@ -8,7 +8,11 @@ const medusaUI = path.join(
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   presets: [require("@medusajs/ui-preset")],
-  content: ["./src/**/*.{js,ts,jsx,tsx}", medusaUI],
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "../../apps/admin-test/src/**/*.{js,ts,jsx,tsx}",
+    medusaUI,
+  ],
   darkMode: "class",
   theme: {
     extend: {},

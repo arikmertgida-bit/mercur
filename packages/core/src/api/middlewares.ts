@@ -34,7 +34,7 @@ export default defineMiddlewares({
         const adminUI = req.scope.resolve<AdminUIModuleService>(MercurModules.ADMIN_UI)
         const vendorUI = req.scope.resolve<VendorUIModuleService>(MercurModules.VENDOR_UI)
 
-        dashboardMiddleware(adminUI)(req, res, (err?: any) => {
+        dashboardMiddleware(adminUI)(req, res, (err) => {
           if (err) return next(err)
           dashboardMiddleware(vendorUI)(req, res, next)
         })

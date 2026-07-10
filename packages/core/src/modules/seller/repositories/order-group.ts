@@ -1,5 +1,5 @@
 import { SqlEntityManager } from "@medusajs/framework/mikro-orm/postgresql"
-import { Context, FindOptions } from "@medusajs/framework/types"
+import { Context } from "@medusajs/framework/types"
 import { DALUtils, isObject } from "@medusajs/framework/utils"
 import { OrderGroup } from "../models"
 
@@ -16,16 +16,47 @@ const OPERATOR_MAP = {
   $ilike: "ILIKE",
 }
 
+type FilterOperand = string | number | Date
+type OperatorFilter = Partial<
+  Record<keyof typeof OPERATOR_MAP, FilterOperand | FilterOperand[]>
+>
+type FilterValue = FilterOperand | FilterOperand[] | OperatorFilter
+
+export type OrderGroupFilters = {
+  id?: string | string[]
+  customer_id?: string | string[]
+  seller_id?: string | string[]
+  status?: string | string[]
+  sales_channel_id?: string | string[]
+  created_at?: OperatorFilter
+  updated_at?: OperatorFilter
+  q?: string
+}
+
+export type OrderGroupFindOptions = {
+  where?: OrderGroupFilters
+  options?: {
+    order?: { created_at?: "ASC" | "DESC"; updated_at?: "ASC" | "DESC" }
+    take?: number
+    skip?: number
+  }
+}
+
+export type OrderGroupRawRow = {
+  id: string
+  seller_count: number
+  total: number
+  [key: string]: FilterOperand | boolean | null
+}
+
 export class OrderGroupRepository extends DALUtils.mikroOrmBaseRepositoryFactory(
   OrderGroup
 ) {
-  
-
   private parseFilterValue(
     column: string,
-    value: any,
+    value: FilterValue,
     whereClauses: string[],
-    params: any[]
+    params: FilterOperand[]
   ): void {
     if (!isObject(value)) {
       if (Array.isArray(value)) {
@@ -40,7 +71,7 @@ export class OrderGroupRepository extends DALUtils.mikroOrmBaseRepositoryFactory
     }
 
     for (const [operator, operand] of Object.entries(value)) {
-      const sqlOperator = OPERATOR_MAP[operator]
+      const sqlOperator = OPERATOR_MAP[operator as keyof typeof OPERATOR_MAP]
       if (!sqlOperator) {
         continue
       }
@@ -57,21 +88,21 @@ export class OrderGroupRepository extends DALUtils.mikroOrmBaseRepositoryFactory
     }
   }
 
+  // @ts-expect-error — this is a hand-written raw-SQL implementation (see
+  // file docstring intent: OrderGroup aggregates data across multiple joined
+  // tables that MikroORM's generic FindOptions can't express), not the base
+  // repository's generated signature — a real third-party boundary.
   async findAndCount(
-    options?: FindOptions<any>,
+    options?: OrderGroupFindOptions,
     sharedContext: Context = {}
-  ): Promise<[any[], number]> {
-    const findOptions_ = { ...options } as any
-    findOptions_.options ??= {}
-    findOptions_.where ??= {}
-
-    const filters = findOptions_.where
-    const orderBy = findOptions_.options.order || {}
+  ): Promise<[OrderGroupRawRow[], number]> {
+    const filters = options?.where ?? {}
+    const orderBy = options?.options?.order ?? {}
 
     const manager = this.getActiveManager<SqlEntityManager>(sharedContext)
     const knex = manager.getKnex()
 
-    const params: any[] = []
+    const params: FilterOperand[] = []
     const whereClauses: string[] = ["og.deleted_at IS NULL"]
 
     if (filters.id) {
@@ -168,15 +199,15 @@ export class OrderGroupRepository extends DALUtils.mikroOrmBaseRepositoryFactory
       ORDER BY ${orderByClauses.join(", ")}
     `
 
-    const paginationParams: any[] = []
+    const paginationParams: FilterOperand[] = []
 
-    if (findOptions_.options.take) {
+    if (options?.options?.take) {
       query += " LIMIT ?"
-      paginationParams.push(findOptions_.options.take)
+      paginationParams.push(options.options.take)
     }
-    if (findOptions_.options.skip) {
+    if (options?.options?.skip) {
       query += " OFFSET ?"
-      paginationParams.push(findOptions_.options.skip)
+      paginationParams.push(options.options.skip)
     }
 
     const [result, countResult] = await Promise.all([
@@ -184,11 +215,13 @@ export class OrderGroupRepository extends DALUtils.mikroOrmBaseRepositoryFactory
       knex.raw(countQuery, params),
     ])
 
-    const rows = result.rows.map(row => ({
-      ...row,
-      total: row.total ? Number(row.total) : 0,
-      seller_count: row.seller_count ? Number(row.seller_count) : 0,
-    })) ?? []
+    const rows: OrderGroupRawRow[] = (result.rows ?? []).map(
+      (row: OrderGroupRawRow) => ({
+        ...row,
+        total: row.total ? Number(row.total) : 0,
+        seller_count: row.seller_count ? Number(row.seller_count) : 0,
+      })
+    )
     const count = parseInt(countResult.rows?.[0]?.count || "0", 10)
 
     return [rows, count]

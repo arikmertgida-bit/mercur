@@ -1,4 +1,5 @@
 import {
+  ContainerRegistrationKeys,
   OrderEditWorkflowEvents,
   OrderWorkflowEvents,
 } from "@medusajs/framework/utils"
@@ -23,9 +24,19 @@ export default async function orderCommissionRefreshHandler({
     return
   }
 
-  await refreshOrderCommissionLinesWorkflow(container).run({
-    input: { order_ids: [orderId] },
-  })
+  const logger = container.resolve(ContainerRegistrationKeys.LOGGER)
+
+  try {
+    await refreshOrderCommissionLinesWorkflow(container).run({
+      input: { order_ids: [orderId] },
+    })
+  } catch (error) {
+    // Log only, do not rethrow: an uncaught subscriber error loses the event.
+    logger.error(
+      `Commission refresh failed for order ${orderId}:`,
+      error as Error
+    )
+  }
 }
 
 export const config: SubscriberConfig = {

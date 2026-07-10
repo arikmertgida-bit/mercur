@@ -7,6 +7,7 @@
     "test:integration:meilisearch": "TEST_TYPE=integration:http MEILISEARCH_HOST=http://localhost:7700 MEILISEARCH_API_KEY=masterKey NODE_OPTIONS=--experimental-vm-modules jest --silent=false --runInBand --forceExit --testPathPattern=meilisearch"
   },
   "dependencies": {
+    "@acme/api": "*",
     "@medusajs/framework": "2.17.2",
     "@medusajs/medusa": "2.17.2",
     "@mercurjs/core": "*",

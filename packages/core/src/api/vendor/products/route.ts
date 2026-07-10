@@ -38,7 +38,7 @@ export const GET = async (
     pagination: req.queryConfig.pagination,
   })
 
-  await enrichProductAttributes(req.scope, products as any[])
+  await enrichProductAttributes(req.scope, products)
 
   if (withOffers) {
     await wrapProductVariantsWithOffers(
@@ -65,10 +65,14 @@ export const POST = async (
 
   const { additional_data, ...payload } = req.validatedBody
 
-  const productInput = {
+  const productInput: CreateProductsWorkflowInput["products"][number] = {
     ...payload,
+    // @ts-expect-error — TypeScript's `Omit` over the `VendorCreateProductType &
+    // AdditionalData` intersection degrades `payload.status` to `{}` once
+    // `additional_data` is destructured out (confirmed via tsc); a TS/Zod-typing
+    // boundary, not a shortcut — `payload.status` is really `ProductStatus | undefined`.
     status: payload.status ?? ProductStatus.PROPOSED,
-  } as unknown as CreateProductsWorkflowInput["products"][number]
+  }
 
   const { result } = await createProductsWorkflow(req.scope).run({
     input: {
@@ -78,7 +82,7 @@ export const POST = async (
     },
   })
 
-  const createdId = (result as { id: string }[])[0].id
+  const createdId = result[0].id
 
   const {
     data: [product],

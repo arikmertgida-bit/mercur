@@ -69,7 +69,7 @@ export interface InputProps {
   ref: RefObject<HTMLElement>
   onBlur: () => void
   onFocus: () => void
-  onChange: (next: any, prev: any) => void
+  onChange: (next: DataGridCellValue, prev: DataGridCellValue) => void
   "data-row": number
   "data-col": number
   "data-cell-id": string
@@ -172,3 +172,24 @@ export type DataGridToggleableNumber = {
   checked: boolean
   disabledToggle: boolean
 }
+
+export type MediaData = {
+  id?: string
+  url: string
+  isThumbnail: boolean
+  file?: File | null
+}
+
+/**
+ * The bounded set of raw values a DataGrid cell's input can produce,
+ * depending on its DataGridColumnType (text/number/boolean/select/
+ * togglable-number/media).
+ */
+export type DataGridCellValue =
+  | string
+  | number
+  | boolean
+  | DataGridToggleableNumber
+  | MediaData[]
+  | null
+  | undefined

@@ -2,6 +2,7 @@ import { MedusaError } from "@medusajs/framework/utils"
 import { createStep, StepResponse } from "@medusajs/framework/workflows-sdk"
 import {
   MercurModules,
+  ProductAttributeValueDTO,
   UpdateProductAttributeValueDTO,
   UpsertProductAttributeValueDTO,
 } from "@mercurjs/types"
@@ -53,7 +54,7 @@ export const updateProductAttributeValuesStep = createStep(
     const result = await service.updateProductAttributeValues(valuesToUpdate)
     return new StepResponse(result, prevValues)
   },
-  async (prevValues: any[] | undefined, { container }) => {
+  async (prevValues: ProductAttributeValueDTO[] | undefined, { container }) => {
     if (!prevValues?.length) {
       return
     }
@@ -61,7 +62,15 @@ export const updateProductAttributeValuesStep = createStep(
       MercurModules.PRODUCT_ATTRIBUTE,
     )
     await service.updateProductAttributeValues(
-      prevValues.map((v) => ({ ...v })),
+      prevValues.map((v) => ({
+        id: v.id,
+        handle: v.handle ?? undefined,
+        name: v.name,
+        rank: v.rank,
+        is_active: v.is_active,
+        product_option_value_id: v.product_option_value_id,
+        metadata: v.metadata,
+      })),
     )
   },
 )

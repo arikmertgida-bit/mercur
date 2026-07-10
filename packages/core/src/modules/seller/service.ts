@@ -1,5 +1,5 @@
 import { configManager } from "@medusajs/framework/config"
-import { Context, DAL, FindConfig, InternalModuleDeclaration } from "@medusajs/framework/types"
+import { Context, DAL, InternalModuleDeclaration } from "@medusajs/framework/types"
 import {
   generateJwtToken,
   InjectManager,
@@ -22,8 +22,28 @@ import {
   MemberInvite,
   OrderGroup,
 } from "./models"
-import { OrderGroupRepository } from "./repositories"
-import { MemberDTO, MemberInviteDTO, OrderGroupDTO, SellerDTO, SellerModuleOptions } from "@mercurjs/types"
+import {
+  OrderGroupFilters,
+  OrderGroupFindOptions,
+  OrderGroupRepository,
+} from "./repositories"
+import {
+  CreateMemberInviteDTO,
+  CreateSellerDTO,
+  MemberDTO,
+  MemberInviteDTO,
+  OrderGroupDTO,
+  SellerDTO,
+  SellerModuleOptions,
+  UpdateSellerDTO,
+} from "@mercurjs/types"
+
+type UpdateSellerInput = UpdateSellerDTO & { id: string }
+type CreateMemberInviteInput = CreateMemberInviteDTO & {
+  id?: string
+  accepted?: boolean
+  expires_at?: Date
+}
 
 const DEFAULT_INVITE_VALID_DURATION_SECONDS = 60 * 60 * 24 * 7 // 7 days
 
@@ -32,6 +52,19 @@ type InjectedDependencies = {
   baseRepository: DAL.RepositoryService
 }
 
+/**
+ * TypeScript cannot apply a decorator (`@InjectManager`/`@InjectTransactionManager`,
+ * required here for Medusa's DB session handling) to a method with public
+ * overload signatures — only to a single implementation signature. Every
+ * real caller in this codebase always passes (and expects back) an array, so
+ * these overrides are array-only rather than fighting the base class's
+ * generated single-or-array generic shape. `MedusaService(...)`'s own
+ * generated parameter/return types are anonymous structural types inferred
+ * from the DML model schema and don't line up 1:1 with our hand-authored
+ * `@mercurjs/types` DTOs (confirmed via `tsc`) — those specific mismatches
+ * are the only `@ts-expect-error` uses below, each at a real third-party
+ * (Medusa/TypeScript) type-system boundary, not a shortcut.
+ */
 class SellerModuleService extends MedusaService({
   Seller,
   ProfessionalDetails,
@@ -50,7 +83,6 @@ class SellerModuleService extends MedusaService({
     { orderGroupRepository, baseRepository }: InjectedDependencies,
     protected readonly moduleDeclaration?: InternalModuleDeclaration,
   ) {
-    // @ts-ignore
     // eslint-disable-next-line prefer-rest-params
     super(...arguments)
     this.orderGroupRepository_ = orderGroupRepository
@@ -67,43 +99,49 @@ class SellerModuleService extends MedusaService({
   }
 
   @InjectTransactionManager()
-  // @ts-ignore
-  async createSellers<T extends any | any[]>(
-    data: T,
+  // @ts-expect-error — MedusaService(...)'s generated param/return types are
+  // anonymous structural types inferred from the DML model schema and don't
+  // line up 1:1 with our hand-authored @mercurjs/types DTOs; confirmed via
+  // tsc, a real third-party type-system boundary.
+  async createSellers(
+    data: CreateSellerDTO[],
     sharedContext?: Context,
-  ): Promise<T extends any[] ? SellerDTO[] : SellerDTO> {
-    const input = (Array.isArray(data) ? data : [data]).map((seller) => {
+  ): Promise<SellerDTO[]> {
+    const input = data.map((seller) => {
       this.validateSellerData_(seller)
 
       if (!seller.handle && seller.name) {
-        seller.handle = toHandle(seller.name)
+        return { ...seller, handle: toHandle(seller.name) }
       }
 
       return seller
     })
 
-    const result = await super.createSellers(input, sharedContext)
-    return (Array.isArray(data) ? result : result[0]) as any
+    // @ts-expect-error — see class-level comment: base's generated param type
+    // is a DML-inferred anonymous type, not our named CreateSellerDTO.
+    return super.createSellers(input, sharedContext)
   }
 
   @InjectTransactionManager()
-  // @ts-ignore
-  async updateSellers<T extends any | any[]>(
-    data: T,
+  // @ts-expect-error — see createSellers: base's generated type doesn't match
+  // our named DTO exactly, a real third-party type-system boundary.
+  async updateSellers(
+    data: UpdateSellerInput[],
     sharedContext?: Context,
-  ): Promise<T extends any[] ? SellerDTO[] : SellerDTO> {
-    const input = (Array.isArray(data) ? data : [data]).map((seller) => {
+  ): Promise<SellerDTO[]> {
+    const input = data.map((seller) => {
       this.validateSellerData_(seller)
 
       if (!seller.handle && seller.name) {
-        seller.handle = toHandle(seller.name)
+        return { ...seller, handle: toHandle(seller.name) }
       }
 
       return seller
     })
 
-    // @ts-ignore
-    return super.updateSellers(input, sharedContext) as any
+    // @ts-expect-error — see class-level comment: base's generated param type
+    // is a DML-inferred anonymous type, not our named UpdateSellerDTO.
+    return super.updateSellers(input, sharedContext)
   }
 
   @InjectTransactionManager()
@@ -157,14 +195,15 @@ class SellerModuleService extends MedusaService({
   }
 
   @InjectTransactionManager()
-  // @ts-ignore
-  async createMemberInvites<T extends any | any[]>(
-    data: T,
+  // @ts-expect-error — see createSellers: base's generated type doesn't match
+  // our named DTO exactly, a real third-party type-system boundary.
+  async createMemberInvites(
+    data: CreateMemberInviteInput[],
     sharedContext?: Context,
-  ): Promise<T extends any[] ? MemberInviteDTO[] : MemberInviteDTO> {
+  ): Promise<MemberInviteDTO[]> {
     const validDuration = this.options_.invite_valid_duration ?? DEFAULT_INVITE_VALID_DURATION_SECONDS
 
-    const inviteList = Array.isArray(data) ? data : [data]
+    const inviteList = data
 
     const sellerIds = [...new Set(inviteList.map((i) => i.seller_id))]
     const sellers = await this.listSellers(
@@ -229,8 +268,7 @@ class SellerModuleService extends MedusaService({
       }
     })
 
-    const result = await super.createMemberInvites(input, sharedContext)
-    return (Array.isArray(data) ? result : result[0]) as any
+    return super.createMemberInvites(input, sharedContext)
   }
 
   @InjectManager()
@@ -286,7 +324,7 @@ class SellerModuleService extends MedusaService({
     })
   }
 
-  private validateSellerData_(data: any) {
+  private validateSellerData_(data: { handle?: string }) {
     if (data.handle && !isValidHandle(data.handle)) {
       throw new MedusaError(
         MedusaError.Types.INVALID_DATA,
@@ -296,12 +334,14 @@ class SellerModuleService extends MedusaService({
   }
 
   @InjectManager()
-  // @ts-ignore
+  // @ts-expect-error — overrides MedusaService(...)'s generated method with a
+  // real-SQL-backed implementation (OrderGroupRepository); the base's
+  // generated signature doesn't apply here, a real third-party boundary.
   async listOrderGroups(
-    filters: any = {},
-    config: FindConfig<any> = {},
+    filters: OrderGroupFilters = {},
+    config: OrderGroupFindOptions["options"] = {},
     @MedusaContext() sharedContext: Context = {}
-  ) {
+  ): Promise<OrderGroupDTO[]> {
     const [orderGroups] = await this.orderGroupRepository_.findAndCount(
       {
         where: filters,
@@ -314,12 +354,13 @@ class SellerModuleService extends MedusaService({
   }
 
   @InjectManager()
-  // @ts-ignore
+  // @ts-expect-error — see listOrderGroups: real-SQL-backed override, not the
+  // base's generated signature, a real third-party boundary.
   async listAndCountOrderGroups(
-    filters: any = {},
-    config: FindConfig<any> = {},
+    filters: OrderGroupFilters = {},
+    config: OrderGroupFindOptions["options"] = {},
     @MedusaContext() sharedContext: Context = {}
-  ) {
+  ): Promise<[OrderGroupDTO[], number]> {
     const [orderGroups, count] = await this.orderGroupRepository_.findAndCount(
       {
         where: filters,
@@ -334,10 +375,11 @@ class SellerModuleService extends MedusaService({
   }
 
   @InjectManager()
-  // @ts-ignore
+  // @ts-expect-error — see listOrderGroups: real-SQL-backed override, not the
+  // base's generated signature, a real third-party boundary.
   async retrieveOrderGroup(
     id: string,
-    config: FindConfig<any> = {},
+    config: OrderGroupFindOptions["options"] = {},
     @MedusaContext() sharedContext: Context = {}
   ) {
     const [orderGroups] = await this.orderGroupRepository_.findAndCount(

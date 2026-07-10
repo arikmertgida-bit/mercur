@@ -1,0 +1,95 @@
+import { AuthenticatedMedusaRequest, MedusaResponse } from '@medusajs/framework'
+import { ContainerRegistrationKeys, MedusaError } from '@medusajs/framework/utils'
+import type { Query } from '@medusajs/framework'
+import type {} from '@mercurjs/core/types/seller-context'
+
+import { SellerSummarySchema, parseFirstRow } from '../../../../lib/graph-schemas'
+import { emitReviewSellerReplyEvent } from '../../../../lib/review-events'
+import { VendorReviewResponse } from '../../../../modules/reviews/types'
+import { updateReviewWorkflow } from '../../../../workflows/review/workflows'
+import { validateSellerReview } from '../helpers'
+import { VendorUpdateReviewType } from '../validators'
+
+export const GET = async (
+  req: AuthenticatedMedusaRequest,
+  res: MedusaResponse<VendorReviewResponse>
+) => {
+  const { id } = req.params
+  const sellerId = req.seller_context?.seller_id
+
+  if (!sellerId) {
+    throw new MedusaError(
+      MedusaError.Types.NOT_ALLOWED,
+      'Authenticated seller not found'
+    )
+  }
+
+  await validateSellerReview(req.scope, sellerId, id!)
+
+  const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
+
+  const {
+    data: [review]
+  } = await query.graph({
+    entity: 'review',
+    fields: req.queryConfig.fields,
+    filters: {
+      id
+    }
+  })
+
+  res.json({
+    review
+  })
+}
+
+export const POST = async (
+  req: AuthenticatedMedusaRequest<VendorUpdateReviewType>,
+  res: MedusaResponse<VendorReviewResponse>
+) => {
+  const { id } = req.params
+  const sellerId = req.seller_context?.seller_id
+
+  if (!sellerId) {
+    throw new MedusaError(
+      MedusaError.Types.NOT_ALLOWED,
+      'Authenticated seller not found'
+    )
+  }
+
+  await validateSellerReview(req.scope, sellerId, id!)
+
+  const query = req.scope.resolve<Query>(ContainerRegistrationKeys.QUERY)
+
+  await updateReviewWorkflow.run({
+    container: req.scope,
+    input: { id, ...req.validatedBody }
+  })
+
+  const {
+    data: [review]
+  } = await query.graph({
+    entity: 'review',
+    fields: req.queryConfig.fields,
+    filters: {
+      id
+    }
+  })
+
+  const { data: sellers } = await query.graph({
+    entity: 'seller',
+    filters: { id: sellerId },
+    fields: ['id', 'name']
+  })
+  const seller = parseFirstRow(SellerSummarySchema, sellers)
+
+  await emitReviewSellerReplyEvent(req.scope, {
+    reviewId: id!,
+    sellerId,
+    sellerName: seller?.name ?? 'Satıcı'
+  })
+
+  res.json({
+    review
+  })
+}

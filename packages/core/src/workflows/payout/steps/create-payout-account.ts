@@ -11,5 +11,13 @@ export const createPayoutAccountStep = createStep(
     const payoutAccount: PayoutAccountDTO = await service.createPayoutAccount(input)
 
     return new StepResponse(payoutAccount, payoutAccount.id)
+  },
+  async (payoutAccountId, { container }) => {
+    if (!payoutAccountId) {
+      return
+    }
+
+    const service = container.resolve<PayoutModuleService>(MercurModules.PAYOUT)
+    await service.deletePayoutAccounts(payoutAccountId)
   }
 )

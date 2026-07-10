@@ -1,4 +1,4 @@
-import type { InputConfigWithArrayModules } from "@medusajs/framework/types"
+import type { ConfigModule, InputConfigWithArrayModules } from "@medusajs/framework/types"
 import { defineConfig } from '@medusajs/framework/utils'
 import { disableMedusaMiddlewares } from "./utils/disable-medusa-middlewares"
 
@@ -12,14 +12,14 @@ export type MercurInputConfig = Omit<InputConfigWithArrayModules, "projectConfig
   }
 }
 
-export function withMercur(config: MercurInputConfig = {}): InputConfigWithArrayModules {
+export function withMercur(config: MercurInputConfig = {}): ConfigModule {
   disableMedusaMiddlewares()
 
   const projectConfig = {
     ...config.projectConfig,
     http: {
       ...config.projectConfig?.http,
-    } as any,
+    },
   }
 
   const admin = {
@@ -54,7 +54,6 @@ export function withMercur(config: MercurInputConfig = {}): InputConfigWithArray
       : []),
   ]
 
-  // @ts-ignore
   return defineConfig({
     ...config,
     projectConfig,

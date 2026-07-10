@@ -3,7 +3,7 @@ import {
   AuthenticatedMedusaRequest,
   MedusaResponse,
 } from "@medusajs/framework"
-import { OrderDTO } from "@medusajs/framework/types"
+import { MedusaError } from "@medusajs/framework/utils"
 import { HttpTypes } from "@mercurjs/types"
 
 export const GET = async (
@@ -26,13 +26,16 @@ export const GET = async (
     },
   })
 
-  const { rows, metadata } = result as {
-    rows: OrderDTO[]
-    metadata: any
+  if (!("rows" in result)) {
+    throw new MedusaError(
+      MedusaError.Types.UNEXPECTED_STATE,
+      "Expected paginated orders result"
+    )
   }
+  const { rows, metadata } = result
 
   res.json({
-    orders: rows as unknown as HttpTypes.VendorOrderListResponse["orders"],
+    orders: rows,
     count: metadata.count,
     offset: metadata.skip,
     limit: metadata.take,

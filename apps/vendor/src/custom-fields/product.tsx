@@ -6,8 +6,8 @@ type ProductWithMeta = { metadata?: Record<string, unknown> };
 
 const form = createFormHelper<ProductWithMeta>();
 
-const erpId = (data: unknown) =>
-  ((data as ProductWithMeta)?.metadata?.erp_id as string) ?? "-";
+const erpId = (data: ProductWithMeta) =>
+  (data?.metadata?.erp_id as string) ?? "-";
 
 export default defineCustomFieldsConfig({
   model: "product",
@@ -36,7 +36,7 @@ export default defineCustomFieldsConfig({
           id: "erp_id",
           component: ({ data }) => (
             <Text size="small" className="text-ui-fg-subtle px-6 py-4">
-              ERP ID: {erpId(data)}
+              ERP ID: {erpId(data as ProductWithMeta)}
             </Text>
           ),
         },
@@ -57,7 +57,7 @@ export default defineCustomFieldsConfig({
   list: {
     // ADD a column; OVERRIDE an existing column keyed by id
     columns: [
-      { id: "erp_id", header: "ERP", component: ({ row }) => erpId(row) },
+      { id: "erp_id", header: "ERP", component: ({ row }) => erpId(row as ProductWithMeta) },
     ],
     viewDefaults: {
       columnVisibility: { collection: false }, // HIDE the built-in collection column

@@ -3,5 +3,148 @@
     "title": "Custom Fields",
     "description": "Manage your custom fields and configurations",
     "noFields": "No custom fields configured yet"
+  },
+  "actions": {
+    "continue": "Continue",
+    "cancel": "Cancel",
+    "delete": "Delete"
+  },
+  "productReports": {
+    "domain": "Product Reports",
+    "subtitle": "Products flagged by customers for review",
+    "filterAll": "All statuses",
+    "columns": {
+      "product": "Product",
+      "reporter": "Reported by",
+      "reason": "Reason",
+      "status": "Status"
+    },
+    "status": {
+      "pending": "Pending",
+      "resolved": "Resolved",
+      "dismissed": "Dismissed"
+    },
+    "reasons": {
+      "inaccurate_product_details": "Inaccurate product details",
+      "pricing_irregularities": "Pricing irregularities",
+      "prohibited_item": "Prohibited item",
+      "counterfeit_trademark": "Counterfeit / trademark violation",
+      "incorrect_categorization": "Incorrect categorization",
+      "inappropriate_media": "Inappropriate media",
+      "dmca_violation": "DMCA violation",
+      "other": "Other"
+    },
+    "actions": {
+      "resolve": "Mark resolved",
+      "dismiss": "Dismiss"
+    },
+    "resolvePrompt": {
+      "title": "Mark report as resolved?",
+      "description": "This report will be marked as resolved and removed from the pending queue."
+    },
+    "dismissPrompt": {
+      "title": "Dismiss this report?",
+      "description": "This report will be marked as dismissed and removed from the pending queue."
+    },
+    "deletePrompt": {
+      "title": "Delete this report?",
+      "description": "This will permanently delete the report. This action cannot be undone."
+    },
+    "updateSuccess": "Report updated",
+    "updateError": "Failed to update report",
+    "deleteSuccess": "Report deleted",
+    "deleteError": "Failed to delete report"
+  },
+  "wishlistModeration": {
+    "domain": "Wishlists",
+    "subtitle": "Customer wishlists, for moderation purposes",
+    "noProducts": "No products",
+    "columns": {
+      "customer": "Customer",
+      "products": "Products",
+      "created": "Created"
+    },
+    "deletePrompt": {
+      "title": "Delete this wishlist?",
+      "description": "This will permanently delete the customer's wishlist and all of its entries. This action cannot be undone."
+    },
+    "deleteSuccess": "Wishlist deleted",
+    "deleteError": "Failed to delete wishlist"
+  },
+  "reportedImages": {
+    "domain": "Reported Images",
+    "subtitle": "Review images flagged by customers as inappropriate",
+    "filterAll": "All statuses",
+    "imageRemoved": "Image removed",
+    "columns": {
+      "image": "Image",
+      "reporter": "Reported by",
+      "reason": "Reason",
+      "status": "Status"
+    },
+    "status": {
+      "pending": "Pending",
+      "resolved": "Resolved"
+    },
+    "actions": {
+      "remove": "Remove image",
+      "dismiss": "Dismiss report"
+    },
+    "removePrompt": {
+      "title": "Remove this image?",
+      "description": "The image will be permanently deleted from the review. This action cannot be undone."
+    },
+    "dismissPrompt": {
+      "title": "Dismiss this report?",
+      "description": "The image will stay published and the report will be marked as resolved."
+    },
+    "resolveSuccess": "Report resolved",
+    "resolveError": "Failed to resolve report"
+  },
+  "messenger": {
+    "searchConversations": "Search conversations...",
+    "noConversations": "No conversations yet",
+    "startConversation": "Start a conversation",
+    "selectConversation": "Select a conversation",
+    "startMessaging": "Select a conversation to start messaging",
+    "typeMessage": "Type a message...",
+    "seen": "Seen",
+    "sent": "Sent",
+    "notificationTitle": "{{senderName}} sent you a message",
+    "notificationBody": "{{preview}}",
+    "image": "Image",
+    "support": "Support",
+    "direct": "Direct",
+    "unknown": "Unknown",
+    "supportTeam": "Support Team",
+    "connected": "Connected",
+    "disconnected": "Disconnected",
+    "conversationOptions": "Conversation options"
+  },
+  "messages": {
+    "domain": "Messages",
+    "product": "Product",
+    "store": "Store",
+    "delete": "Delete",
+    "deleteForEveryone": "Delete for everyone",
+    "close": "Close",
+    "connectionLost": "Connection lost. Reconnecting...",
+    "imageUploadFailed": "Image upload failed",
+    "deleteConfirmTitle": "Delete message",
+    "deleteConfirmDesc": "Are you sure you want to delete this message?",
+    "productQuestion": "Product Question",
+    "storeQuestion": "Store Question",
+    "customerMessage": "Customer Message",
+    "sellerMessage": "Seller Message",
+    "directMessage": "Direct Message",
+    "storeContext": "Store Question",
+    "back": "Back",
+    "failedToGetUserInfo": "Failed to get user information.",
+    "send": "Send message",
+    "attachImage": "Attach image",
+    "removeAttachment": "Remove attached image",
+    "viewImage": "View image in full size",
+    "pendingImageAlt": "Image to send",
+    "imageAlt": "Image"
   }
 }

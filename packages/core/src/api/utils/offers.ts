@@ -2,7 +2,6 @@ import {
   AuthenticatedMedusaRequest,
   MedusaNextFunction,
   MedusaResponse,
-  MedusaStoreRequest,
 } from "@medusajs/framework/http"
 import {
   calculateAmountsWithTax,
@@ -10,6 +9,7 @@ import {
   Modules,
 } from "@medusajs/framework/utils"
 import type {
+  CalculatedPriceSet,
   ItemTaxLineDTO,
   MedusaContainer,
   MedusaPricingContext,
@@ -48,9 +48,46 @@ const OFFER_WRAP_FIELDS = [
   "inventory_item_link.inventory_item.location_levels.stocked_quantity",
 ]
 
-type WrappableVariant = { id: string; offers?: unknown[] }
+// Matches OFFER_WRAP_FIELDS above — the exact shape `query.graph` returns for the
+// offer entity with that field selection.
+type OfferGraphRow = {
+  id: string
+  seller_id: string
+  variant_id: string
+  shipping_profile_id?: string | null
+  sku?: string | null
+  ean?: string | null
+  upc?: string | null
+  created_at: string
+  updated_at: string
+  seller?: { id: string; name: string; handle: string } | null
+  shipping_profile?: { id: string; name: string } | null
+  prices?: {
+    id: string
+    amount: number
+    currency_code: string
+    min_quantity?: number | null
+    max_quantity?: number | null
+  }[] | null
+  inventory_item_link?: {
+    id: string
+    required_quantity?: number | null
+    inventory_item_id?: string | null
+    inventory_item?: {
+      id: string
+      sku?: string | null
+      title?: string | null
+      location_levels?: {
+        id: string
+        location_id: string
+        stocked_quantity: number
+      }[] | null
+    } | null
+  } | null
+}
+
+type WrappableVariant = { id: string; offers?: OfferGraphRow[] }
 type WrappableProduct = { variants?: WrappableVariant[] | null }
-type OfferRow = { variant_id: string }
 
 /**
  * The `offer ↔ variant` link is shared across sellers, so a raw graph
@@ -80,8 +117,8 @@ export const wrapProductVariantsWithOffers = async (
     },
   })
 
-  const offersByVariant = new Map<string, unknown[]>()
-  for (const offer of offers as OfferRow[]) {
+  const offersByVariant = new Map<string, OfferGraphRow[]>()
+  for (const offer of offers as OfferGraphRow[]) {
     const existing = offersByVariant.get(offer.variant_id)
     if (existing) {
       existing.push(offer)
@@ -206,7 +243,16 @@ export const applyGroupedOfferProductFilter = async (
   return next()
 }
 
-type StoreRequestWithContext = MedusaStoreRequest<unknown> & {
+/**
+ * `wrapProductVariantsWithOfferPrice`/`wrapVariantsWithTaxPrices` only ever read
+ * `scope`/`pricingContext`/`taxContext` off the request, so this is intentionally
+ * narrower than a full `MedusaStoreRequest` — real HTTP routes pass their (wider)
+ * request object, which satisfies this structurally, and batch callers (e.g.
+ * `search/lib/build-docs.ts`) that have no real HTTP request can build a plain
+ * object matching this shape instead of forcing a request through a wide cast.
+ */
+type StoreRequestWithContext = {
+  scope: MedusaContainer
   pricingContext?: MedusaPricingContext
   taxContext?: {
     taxLineContext?: TaxCalculationContext
@@ -221,10 +267,20 @@ type OfferPriceRow = {
   prices?: { id?: string }[] | null
 }
 
+// `calculateAmountsWithTax` results are bolted onto the price set after the fact
+// for the storefront — Medusa's own `CalculatedPriceSet` DTO has no tax-adjusted
+// amount fields, since tax calculation isn't part of the pricing module.
+export type CalculatedPriceWithTax = CalculatedPriceSet & {
+  calculated_amount_with_tax?: number
+  calculated_amount_without_tax?: number
+  original_amount_with_tax?: number
+  original_amount_without_tax?: number
+}
+
 type PriceableVariant = {
   id: string
   offer_id?: string | null
-  calculated_price?: Record<string, unknown> | null
+  calculated_price?: CalculatedPriceWithTax | null
 }
 
 type PriceableProduct = {
@@ -300,21 +356,19 @@ export const wrapProductVariantsWithOfferPrice = async (
 
   const byVariant = new Map<
     string,
-    { offerId: string | null; price: Record<string, unknown> }
+    { offerId: string | null; price: CalculatedPriceSet }
   >()
   for (const calc of calculated) {
     const variantId = priceSetToVariant.get(calc.id)
     if (!variantId) {
       continue
     }
-    const winningPriceId =
-      (calc as { calculated_price?: { id?: string | null } }).calculated_price
-        ?.id ?? null
+    const winningPriceId = calc.calculated_price?.id ?? null
     byVariant.set(variantId, {
       offerId: winningPriceId
         ? priceIdToOffer.get(winningPriceId) ?? null
         : null,
-      price: calc as unknown as Record<string, unknown>,
+      price: calc,
     })
   }
 
@@ -348,19 +402,16 @@ const wrapVariantsWithTaxPrices = async (
   const items: TaxableItemDTO[] = []
   for (const product of products) {
     for (const variant of product.variants ?? []) {
-      const price = variant.calculated_price as
-        | Record<string, unknown>
-        | null
-        | undefined
-      if (!price || !product.id) {
+      const price = variant.calculated_price
+      if (!price || !product.id || price.calculated_amount == null) {
         continue
       }
       items.push({
         id: variant.id,
         product_id: product.id,
         quantity: 1,
-        unit_price: price.calculated_amount as number,
-        currency_code: price.currency_code as string,
+        unit_price: Number(price.calculated_amount),
+        currency_code: price.currency_code,
       } as TaxableItemDTO)
     }
   }
@@ -369,13 +420,16 @@ const wrapVariantsWithTaxPrices = async (
   }
 
   const taxService = req.scope.resolve(Modules.TAX)
-  const taxLines = (await taxService.getTaxLines(
+  const taxLines = await taxService.getTaxLines(
     items,
     req.taxContext.taxLineContext
-  )) as unknown as ItemTaxLineDTO[]
+  )
 
   const taxRatesMap = new Map<string, ItemTaxLineDTO[]>()
   for (const taxLine of taxLines) {
+    if (!("line_item_id" in taxLine)) {
+      continue
+    }
     const existing = taxRatesMap.get(taxLine.line_item_id) ?? []
     existing.push(taxLine)
     taxRatesMap.set(taxLine.line_item_id, existing)
@@ -383,8 +437,8 @@ const wrapVariantsWithTaxPrices = async (
 
   for (const product of products) {
     for (const variant of product.variants ?? []) {
-      const price = variant.calculated_price as Record<string, unknown> | null
-      if (!price) {
+      const price = variant.calculated_price
+      if (!price || price.calculated_amount == null) {
         continue
       }
 
@@ -392,19 +446,22 @@ const wrapVariantsWithTaxPrices = async (
 
       const { priceWithTax, priceWithoutTax } = calculateAmountsWithTax({
         taxLines: taxRatesForVariant,
-        amount: price.calculated_amount as number,
-        includesTax: price.is_calculated_price_tax_inclusive as boolean,
+        amount: Number(price.calculated_amount),
+        includesTax: price.is_calculated_price_tax_inclusive,
       })
       price.calculated_amount_with_tax = priceWithTax
       price.calculated_amount_without_tax = priceWithoutTax
 
+      if (price.original_amount == null) {
+        continue
+      }
       const {
         priceWithTax: originalPriceWithTax,
         priceWithoutTax: originalPriceWithoutTax,
       } = calculateAmountsWithTax({
         taxLines: taxRatesForVariant,
-        amount: price.original_amount as number,
-        includesTax: price.is_original_price_tax_inclusive as boolean,
+        amount: Number(price.original_amount),
+        includesTax: price.is_original_price_tax_inclusive,
       })
       price.original_amount_with_tax = originalPriceWithTax
       price.original_amount_without_tax = originalPriceWithoutTax

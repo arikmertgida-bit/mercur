@@ -22,7 +22,17 @@ const toValue = (
   v: ProductAttributeValueDTO,
 ): WrappedProductAttributeValueDTO => ({ id: v.id, name: v.name, rank: v.rank })
 
-export function wrapProductWithProductAttributes(products: any[]): void {
+// Callers pass admin/store/vendor product DTOs, each with many more fields than
+// these — only these attribute-related fields are ever read or written here.
+export type AttributableProduct = {
+  scoped_attributes?: ProductAttributeDTO[]
+  product_attribute_values?: ProductAttributeValueDTO[]
+  attributes?: WrappedProductAttributeDTO[]
+}
+
+export function wrapProductWithProductAttributes(
+  products: AttributableProduct[],
+): void {
   if (!products?.length) return
 
   for (const product of products) {
@@ -99,7 +109,7 @@ export function wrapProductWithProductAttributes(products: any[]): void {
  */
 export async function enrichProductAttributes(
   scope: MedusaContainer,
-  products: any[],
+  products: AttributableProduct[],
 ): Promise<void> {
   wrapProductWithProductAttributes(products)
   if (!products?.length) return

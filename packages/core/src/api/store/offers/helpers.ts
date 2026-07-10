@@ -8,12 +8,14 @@ import {
 } from "@medusajs/framework/utils"
 import {
   ItemTaxLineDTO,
+  MedusaContainer,
   MedusaPricingContext,
   TaxableItemDTO,
   TaxCalculationContext,
 } from "@medusajs/framework/types"
 import { calculateAmountsWithTax, promiseAll } from "@medusajs/framework/utils"
 import { transformAndValidateSalesChannelIds } from "@medusajs/medusa/api/utils/middlewares/index"
+import { CalculatedPriceWithTax } from "../../utils/offers"
 
 type OfferLocationLevel = {
   location_id: string
@@ -32,12 +34,19 @@ export type EnrichableOffer = {
   product_id?: string
   product_variant?: { price_set?: { id?: string } | null } | null
   inventory_item_link?: OfferInventoryLink[] | null
-  calculated_price?: Record<string, unknown> | null
+  calculated_price?: CalculatedPriceWithTax | null
   inventory_quantity?: number | null
   in_stock?: boolean
 }
 
-type StoreRequestWithContext = MedusaStoreRequest<unknown> & {
+/**
+ * Narrower than a full `MedusaStoreRequest` — these helpers only ever read
+ * `scope`/`pricingContext`/`taxContext`. Real HTTP routes' request objects satisfy
+ * this structurally; batch callers with no real HTTP request (e.g.
+ * `search/lib/build-docs.ts`) can build a plain object matching this shape.
+ */
+type StoreRequestWithContext = {
+  scope: MedusaContainer
   pricingContext?: MedusaPricingContext
   taxContext?: {
     taxLineContext?: TaxCalculationContext
@@ -101,10 +110,7 @@ export const wrapOffersWithCalculatedPrices = async (
         )
 
         const byPriceSetId = new Map(
-          calculated.map((c) => [
-            c.id,
-            c as unknown as Record<string, unknown>,
-          ])
+          calculated.map((c) => [c.id, c])
         )
         for (const { priceSetId, offer } of singletons) {
           offer.calculated_price = byPriceSetId.get(priceSetId) ?? null
@@ -125,8 +131,7 @@ export const wrapOffersWithCalculatedPrices = async (
           { context: context as Record<string, string | number> }
         )
 
-        offer.calculated_price =
-          (calculated as unknown as Record<string, unknown>) ?? null
+        offer.calculated_price = calculated ?? null
       })()
     )
   }
@@ -148,19 +153,16 @@ export const wrapOffersWithTaxPrices = async (
 
   const items = offers
     .map((offer) => {
-      const price = offer.calculated_price as
-        | Record<string, unknown>
-        | null
-        | undefined
-      if (!price || !offer.product_id) {
+      const price = offer.calculated_price
+      if (!price || !offer.product_id || price.calculated_amount == null) {
         return undefined
       }
       return {
         id: offer.id,
         product_id: offer.product_id,
         quantity: 1,
-        unit_price: price.calculated_amount as number,
-        currency_code: price.currency_code as string,
+        unit_price: Number(price.calculated_amount),
+        currency_code: price.currency_code,
       }
     })
     .filter((item) => !!item) as TaxableItemDTO[]
@@ -170,21 +172,24 @@ export const wrapOffersWithTaxPrices = async (
   }
 
   const taxService = req.scope.resolve(Modules.TAX)
-  const taxLines = (await taxService.getTaxLines(
+  const taxLines = await taxService.getTaxLines(
     items,
     req.taxContext.taxLineContext
-  )) as unknown as ItemTaxLineDTO[]
+  )
 
   const taxRatesMap = new Map<string, ItemTaxLineDTO[]>()
   taxLines.forEach((taxLine) => {
+    if (!("line_item_id" in taxLine)) {
+      return
+    }
     const existing = taxRatesMap.get(taxLine.line_item_id) ?? []
     existing.push(taxLine)
     taxRatesMap.set(taxLine.line_item_id, existing)
   })
 
   offers.forEach((offer) => {
-    const price = offer.calculated_price as Record<string, unknown> | null
-    if (!price) {
+    const price = offer.calculated_price
+    if (!price || price.calculated_amount == null) {
       return
     }
 
@@ -192,19 +197,22 @@ export const wrapOffersWithTaxPrices = async (
 
     const { priceWithTax, priceWithoutTax } = calculateAmountsWithTax({
       taxLines: taxRatesForOffer,
-      amount: price.calculated_amount as number,
-      includesTax: price.is_calculated_price_tax_inclusive as boolean,
+      amount: Number(price.calculated_amount),
+      includesTax: price.is_calculated_price_tax_inclusive,
     })
     price.calculated_amount_with_tax = priceWithTax
     price.calculated_amount_without_tax = priceWithoutTax
 
+    if (price.original_amount == null) {
+      return
+    }
     const {
       priceWithTax: originalPriceWithTax,
       priceWithoutTax: originalPriceWithoutTax,
     } = calculateAmountsWithTax({
       taxLines: taxRatesForOffer,
-      amount: price.original_amount as number,
-      includesTax: price.is_original_price_tax_inclusive as boolean,
+      amount: Number(price.original_amount),
+      includesTax: price.is_original_price_tax_inclusive,
     })
     price.original_amount_with_tax = originalPriceWithTax
     price.original_amount_without_tax = originalPriceWithoutTax

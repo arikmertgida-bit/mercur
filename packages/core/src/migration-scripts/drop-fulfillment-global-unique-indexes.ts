@@ -17,7 +17,7 @@ export default async function dropFulfillmentGlobalUniqueIndexes({
 }: ExecArgs) {
   const knex = container.resolve(ContainerRegistrationKeys.PG_CONNECTION)
 
-  await knex.transaction(async (trx: any) => {
+  await knex.transaction(async (trx) => {
     for (const indexName of INDEXES_TO_DROP) {
       await trx.raw(`DROP INDEX IF EXISTS "${indexName}"`)
     }

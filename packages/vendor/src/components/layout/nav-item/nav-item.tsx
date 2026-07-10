@@ -32,7 +32,7 @@ export type INavItem = {
   nested?: string;
 };
 
-const BASE_NAV_LINK_CLASSES =
+export const BASE_NAV_LINK_CLASSES =
   "text-ui-fg-subtle transition-fg hover:bg-ui-bg-subtle-hover flex items-center gap-x-2 rounded-md py-0.5 pl-0.5 pr-2 outline-none [&>svg]:text-ui-fg-subtle focus-visible:shadow-borders-focus";
 const ACTIVE_NAV_LINK_CLASSES =
   "bg-ui-bg-base shadow-elevation-card-rest text-ui-fg-base hover:bg-ui-bg-base";

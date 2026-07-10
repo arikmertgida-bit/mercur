@@ -1,6 +1,6 @@
 {
   "name": "@acme/api",
-  "version": "2.2.0-canary.8",
+  "version": "2.2.0-rc.1",
   "description": "A starter for Medusa projects.",
   "author": "Medusa (https://medusajs.com)",
   "license": "MIT",

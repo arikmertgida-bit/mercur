@@ -19,8 +19,10 @@ import {
   CommissionCalculationItemLine,
   CommissionCalculationShippingLine,
   CommissionLineDTO,
+  CommissionRateDTO,
   CommissionRateType,
   CreateCommissionLineDTO,
+  CreateCommissionRateDTO,
 } from "@mercurjs/types"
 
 import {
@@ -405,29 +407,31 @@ class CommissionModuleService extends MedusaService({
    * payload or an array and preserves the caller's shape.
    */
   @InjectManager()
-  // @ts-ignore
+  // @ts-expect-error — MedusaService(...)'s generated param/return types are
+  // anonymous structural types inferred from the DML model schema and don't
+  // line up 1:1 with our hand-authored @mercurjs/types DTOs; confirmed via
+  // tsc, a real third-party type-system boundary. Also: @InjectManager can't
+  // apply to overloaded signatures, so this override is array-only, matching
+  // every real caller in this codebase.
   async createCommissionRates(
-    data: any,
+    data: CreateCommissionRateDTO[],
     @MedusaContext() sharedContext: Context = {}
-  ): Promise<any> {
-    const input = Array.isArray(data) ? data : [data]
-    const withCode = input.map((rate) => ({
+  ): Promise<CommissionRateDTO[]> {
+    const withCode = data.map((rate) => ({
       ...rate,
       code: rate.code ?? generateCommissionCode(rate.name),
     }))
 
-    const result = await super.createCommissionRates(withCode, sharedContext)
-
-    return Array.isArray(data) ? result : result[0]
+    return super.createCommissionRates(withCode, sharedContext)
   }
 
   @InjectManager()
-  // @ts-ignore
+  // @ts-expect-error — see createCommissionRates: base/override signature gap.
   async listCommissionRates(
-    filters: any = {},
-    config: FindConfig<any> = {},
+    filters: Record<string, unknown> = {},
+    config: FindConfig<CommissionRateDTO> = {},
     @MedusaContext() sharedContext: Context = {}
-  ) {
+  ): Promise<CommissionRateDTO[]> {
     return await super.listCommissionRates(
       this.applyScopeTypeFilter_(filters),
       config,
@@ -436,12 +440,12 @@ class CommissionModuleService extends MedusaService({
   }
 
   @InjectManager()
-  // @ts-ignore
+  // @ts-expect-error — see createCommissionRates: base/override signature gap.
   async listAndCountCommissionRates(
-    filters: any = {},
-    config: FindConfig<any> = {},
+    filters: Record<string, unknown> = {},
+    config: FindConfig<CommissionRateDTO> = {},
     @MedusaContext() sharedContext: Context = {}
-  ) {
+  ): Promise<[CommissionRateDTO[], number]> {
     return await super.listAndCountCommissionRates(
       this.applyScopeTypeFilter_(filters),
       config,

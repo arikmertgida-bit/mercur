@@ -18,6 +18,12 @@ module.exports = withMercur({
   featureFlags: {
     seller_registration: true
   },
+  plugins: [
+    {
+      resolve: '@acme/api',
+      options: {}
+    },
+  ],
   modules: [
     {
       resolve: '@mercurjs/core/modules/admin-ui',

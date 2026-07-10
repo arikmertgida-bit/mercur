@@ -3,33 +3,47 @@ import {
   MedusaContext,
   MedusaService,
 } from "@medusajs/framework/utils"
-import { Context, FindConfig } from "@medusajs/framework/types"
+import { Context, DAL, FindConfig } from "@medusajs/framework/types"
 import { SqlEntityManager } from "@medusajs/framework/mikro-orm/postgresql"
 import { OfferDTO } from "@mercurjs/types"
 
 import { Offer } from "./models"
 
-type OfferFilters = Record<string, unknown> & { group_by_seller?: boolean }
+type FilterValue = string | string[]
+type OfferFilters = {
+  group_by_seller?: boolean
+  product_id?: FilterValue
+  seller_id?: FilterValue
+  id?: FilterValue
+  [key: string]: FilterValue | boolean | undefined
+}
 
-const toArray = (value: unknown): string[] =>
+const toArray = (value: FilterValue): string[] =>
   (Array.isArray(value) ? value : [value]).map(String)
 
+/**
+ * TypeScript cannot apply `@InjectManager` to a method with public overload
+ * signatures — only a single implementation signature — and
+ * `MedusaService(...)`'s generated filter/return types are anonymous
+ * structural types inferred from the DML model schema that don't line up
+ * 1:1 with our hand-authored `@mercurjs/types` DTOs (confirmed via `tsc`).
+ * The `@ts-expect-error` uses below are at that real third-party
+ * (Medusa/TypeScript) type-system boundary, not a shortcut.
+ */
 class OfferModuleService extends MedusaService({
   Offer,
 }) {
+  protected readonly baseRepository_: DAL.RepositoryService
+
   @InjectManager()
-  // @ts-ignore - override narrows the generated signature
+  // @ts-expect-error — see class-level comment on the base/override signature gap.
   async listOffers(
     filters: OfferFilters = {},
     config: FindConfig<OfferDTO> = {},
     @MedusaContext() sharedContext: Context = {}
   ): Promise<OfferDTO[]> {
     if (!filters.group_by_seller) {
-      return super.listOffers(
-        filters,
-        config,
-        sharedContext
-      ) as unknown as Promise<OfferDTO[]>
+      return super.listOffers(filters, config, sharedContext)
     }
     const [offers] = await this.listGroupedOffersBySeller_(
       filters,
@@ -40,18 +54,14 @@ class OfferModuleService extends MedusaService({
   }
 
   @InjectManager()
-  // @ts-ignore - override narrows the generated signature
+  // @ts-expect-error — see class-level comment on the base/override signature gap.
   async listAndCountOffers(
     filters: OfferFilters = {},
     config: FindConfig<OfferDTO> = {},
     @MedusaContext() sharedContext: Context = {}
   ): Promise<[OfferDTO[], number]> {
     if (!filters.group_by_seller) {
-      return super.listAndCountOffers(
-        filters,
-        config,
-        sharedContext
-      ) as unknown as Promise<[OfferDTO[], number]>
+      return super.listAndCountOffers(filters, config, sharedContext)
     }
     return this.listGroupedOffersBySeller_(filters, config, sharedContext)
   }
@@ -65,11 +75,7 @@ class OfferModuleService extends MedusaService({
     const skip = config.skip ?? 0
     const take = config.take ?? 20
 
-    const { baseRepository_ } = this as unknown as {
-      baseRepository_: { getActiveManager<T>(context?: Context): T }
-    }
-    const manager =
-      baseRepository_.getActiveManager<SqlEntityManager>(sharedContext)
+    const manager = this.baseRepository_.getActiveManager<SqlEntityManager>()
     const knex = manager.getKnex()
 
     const scoped = () => {
@@ -109,11 +115,11 @@ class OfferModuleService extends MedusaService({
       return [[], count]
     }
 
-    const offers = (await super.listOffers(
-      { id: ids } as OfferFilters,
+    const offers = await super.listOffers(
+      { id: ids },
       { ...config, skip: 0, take: ids.length },
       sharedContext
-    )) as unknown as OfferDTO[]
+    )
 
     const rank = new Map(ids.map((id, index) => [id, index]))
     offers.sort((a, b) => (rank.get(a.id) ?? 0) - (rank.get(b.id) ?? 0))

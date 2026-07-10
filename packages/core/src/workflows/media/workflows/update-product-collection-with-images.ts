@@ -24,7 +24,7 @@ export const updateProductCollectionWithImagesWorkflow = createWorkflow(
       input: {
         selector: { id: input.id },
         update: input.update,
-      } as any,
+      },
     })
 
     const imagesInput = transform({ input }, ({ input }) => ({

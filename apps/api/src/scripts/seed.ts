@@ -71,6 +71,11 @@ export default async function seedDemoData({ container }: ExecArgs) {
 
   logger.info("Seeding store data...");
   const [store] = await storeModuleService.listStores();
+  if (!store) {
+    throw new Error(
+      "[seed] No store found — cannot seed demo data without an existing store."
+    );
+  }
   let defaultSalesChannel = await salesChannelModuleService.listSalesChannels({
     name: "Default Sales Channel",
   });
@@ -239,7 +244,7 @@ export default async function seedDemoData({ container }: ExecArgs) {
         fulfillment_provider_id: "manual_manual",
       },
     });
-  } catch (error: unknown) {
+  } catch (error) {
     // Ignore if link already exists
     if (!(error instanceof Error && error.message.includes("already exists"))) {
       throw error;
@@ -326,10 +331,17 @@ export default async function seedDemoData({ container }: ExecArgs) {
           fulfillment_set_id: fulfillmentSet.id,
         },
       });
-    } catch (error: unknown) {
+    } catch (error) {
       if (!(error instanceof Error && error.message.includes("already exists"))) {
         throw error;
       }
+    }
+
+    const [defaultServiceZone] = fulfillmentSet.service_zones ?? [];
+    if (!defaultServiceZone) {
+      throw new Error(
+        `[seed] Fulfillment set "${fulfillmentSet.name}" has no service zones — cannot create shipping options.`
+      );
     }
 
     await createShippingOptionsWorkflow(container).run({
@@ -338,7 +350,7 @@ export default async function seedDemoData({ container }: ExecArgs) {
           name: "Standard Shipping",
           price_type: "flat",
           provider_id: "manual_manual",
-          service_zone_id: fulfillmentSet.service_zones[0].id,
+          service_zone_id: defaultServiceZone.id,
           shipping_profile_id: shippingProfile.id,
           type: {
             label: "Standard",
@@ -376,7 +388,7 @@ export default async function seedDemoData({ container }: ExecArgs) {
           name: "Express Shipping",
           price_type: "flat",
           provider_id: "manual_manual",
-          service_zone_id: fulfillmentSet.service_zones[0].id,
+          service_zone_id: defaultServiceZone.id,
           shipping_profile_id: shippingProfile.id,
           type: {
             label: "Express",
@@ -423,7 +435,7 @@ export default async function seedDemoData({ container }: ExecArgs) {
         add: [defaultSalesChannel[0].id],
       },
     });
-  } catch (error: unknown) {
+  } catch (error) {
     // Ignore if link already exists
     if (!(error instanceof Error && error.message.includes("already"))) {
       throw error;
@@ -470,7 +482,7 @@ export default async function seedDemoData({ container }: ExecArgs) {
         add: [defaultSalesChannel[0].id],
       },
     });
-  } catch (error: unknown) {
+  } catch (error) {
     // Ignore if link already exists
     if (!(error instanceof Error && error.message.includes("already"))) {
       throw error;

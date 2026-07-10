@@ -8,7 +8,7 @@ import {
 import { EntitySchema } from "@medusajs/framework/mikro-orm/core"
 import { Field } from "@mercurjs/types"
 
-function getClass(className: string, ...properties) {
+function getClass(className: string, ...properties: string[]) {
     const cls = {
         [className]: class {
             constructor(...values) {
@@ -69,41 +69,52 @@ export function generateEntity(
     const hashTableName = simpleHash(tableName)
     const compressed = compressName(tableName)
 
-    return new EntitySchema({
+    // MikroORM's `EntitySchema` generic infers its entity shape from this literal,
+    // which would otherwise over-constrain `indexes[].properties` below to just
+    // this table's dynamic custom-field names. Typed loosely on purpose — these
+    // tables are defined entirely at runtime from caller-supplied field lists.
+    const entityProperties: Record<string, any> = {
+        id: {
+            type: "string",
+            nullable: false,
+            primary: true,
+        },
+        [foreignKeyName]: {
+            type: "string",
+            nullable: false,
+        },
+        ...properties,
+        created_at: {
+            columnType: "timestamptz",
+            type: "date",
+            nullable: false,
+            defaultRaw: "CURRENT_TIMESTAMP",
+        },
+        updated_at: {
+            columnType: "timestamptz",
+            type: "date",
+            nullable: false,
+            defaultRaw: "CURRENT_TIMESTAMP",
+        },
+        deleted_at: {
+            columnType: "timestamptz",
+            type: "date",
+            nullable: true,
+        },
+    }
+
+    return new EntitySchema<Record<string, unknown>>({
+        // @ts-expect-error — `getClass` builds a genuinely dynamic, runtime-named
+        // class from a caller-supplied field list, assigned via `this[name] =`
+        // rather than static property declarations, so it can never structurally
+        // satisfy MikroORM's `EntityClass<Record<string, unknown>>` at the type
+        // level. Real third-party (MikroORM) type boundary, not a shortcut.
         class: getClass(
             tableName,
             ...fieldNames.concat("created_at", "updated_at", "deleted_at")
-        ) as any,
+        ),
         tableName: compressed,
-        properties: {
-            id: {
-                type: "string",
-                nullable: false,
-                primary: true,
-            },
-            [foreignKeyName]: {
-                type: "string",
-                nullable: false,
-            },
-            ...properties,
-            created_at: {
-                columnType: "timestamptz",
-                type: "date",
-                nullable: false,
-                defaultRaw: "CURRENT_TIMESTAMP",
-            },
-            updated_at: {
-                columnType: "timestamptz",
-                type: "date",
-                nullable: false,
-                defaultRaw: "CURRENT_TIMESTAMP",
-            },
-            deleted_at: {
-                columnType: "timestamptz",
-                type: "date",
-                nullable: true,
-            },
-        } as any,
+        properties: entityProperties,
         filters: {
             [SoftDeletableFilterKey]: mikroOrmSoftDeletableFilterOptions,
         },

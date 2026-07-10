@@ -40,7 +40,6 @@ export default class PayoutModuleService extends MedusaService({
     protected readonly options_: PayoutModuleOptions
 
     constructor({ payoutProviderService, baseRepository }: InjectedDependencies, options: PayoutModuleOptions) {
-        // @ts-ignore
         super(...arguments)
         this.payoutProviderService_ = payoutProviderService
         this.baseRepository_ = baseRepository
@@ -150,7 +149,10 @@ export default class PayoutModuleService extends MedusaService({
 
     @InjectTransactionManager()
     @EmitEvents()
-    // @ts-ignore
+    // @ts-expect-error — TypeScript cannot apply these decorators to a method with
+    // public overload signatures, only a single implementation signature; the base
+    // `MedusaService(...)`'s generated member is seen as a property, not a method,
+    // once decorated. Real third-party (Medusa/TypeScript) type-system boundary.
     async createPayouts(
         input: CreatePayoutDTO,
         @MedusaContext() sharedContext?: Context<EntityManager>

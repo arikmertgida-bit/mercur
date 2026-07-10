@@ -22,8 +22,12 @@ export const createProductCollectionWithImagesWorkflow = createWorkflow(
   (input: CreateProductCollectionWithImagesWorkflowInput) => {
     const created = createCollectionsWorkflow.runAsStep({
       input: {
+        // @ts-expect-error — `collection` is intentionally a caller-provided
+        // `Record<string, unknown>` (arbitrary collection payload), so it can't
+        // structurally match Medusa's concrete collection DTO at the type level.
+        // Real third-party (Medusa) type boundary.
         collections: [input.collection],
-      } as any,
+      },
     })
 
     const collectionId = transform({ created }, ({ created }) => created[0].id)

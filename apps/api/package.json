@@ -6,8 +6,9 @@
   "license": "MIT",
   "exports": {
     "./_generated": {
-      "types": "./.mercur/index.d.ts"
-    }
+      "types": "./.mercur/routes.d.ts"
+    },
+    "./.medusa/server/src/modules/*": "./.medusa/server/src/modules/*/index.js"
   },
   "keywords": [
     "sqlite",
@@ -18,6 +19,8 @@
     "medusa"
   ],
   "scripts": {
+    "build": "bunx @mercurjs/cli codegen && medusa build",
+    "check-types": "tsc --noEmit",
     "seed": "medusa exec ./src/scripts/seed.ts",
     "start": "medusa start",
     "dev": "medusa develop",
@@ -33,16 +36,22 @@
     "@medusajs/admin-shared": "2.17.2",
     "@medusajs/medusa": "2.17.2",
     "@medusajs/draft-order": "2.17.2",
+    "@medusajs/core-flows": "2.17.2",
     "@mercurjs/core": "*",
     "@mercurjs/types": "*",
     "http-proxy-middleware": "^3.0.3",
-    "@mercurjs/cli": "*"
+    "@mercurjs/cli": "*",
+    "jsonwebtoken": "9.0.2",
+    "multer": "^2.0.2",
+    "zod": "3.25.76"
   },
   "devDependencies": {
     "@medusajs/test-utils": "2.17.2",
     "@swc/core": "^1.7.28",
     "@swc/jest": "^0.2.36",
     "@types/jest": "^29.5.13",
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/multer": "^2.0.0",
     "@types/node": "^26.1.0",
     "jest": "^30.4.2",
     "prop-types": "^15.8.1",

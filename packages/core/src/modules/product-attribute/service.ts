@@ -11,11 +11,37 @@ import {
   MedusaService,
   toHandle,
 } from "@medusajs/framework/utils"
-import { AttributeType } from "@mercurjs/types"
+import {
+  AttributeType,
+  CreateProductAttributeDTO,
+  ProductAttributeDTO,
+  ProductAttributeValueDTO,
+  UpdateProductAttributeDTO,
+  UpsertProductAttributeValueDTO,
+} from "@mercurjs/types"
 
 import { joinerConfig } from "./joiner-config"
 import { ProductAttribute, ProductAttributeValue } from "./models"
 
+type UpdateProductAttributeInput = UpdateProductAttributeDTO & { id: string }
+type UpsertProductAttributeValueInput = UpsertProductAttributeValueDTO & {
+  attribute_id: string
+}
+
+/**
+ * TypeScript cannot apply a decorator (`@InjectManager`/`@InjectTransactionManager`,
+ * required here for Medusa's DB session handling) to a method with public
+ * overload signatures — only to a single implementation signature. Every
+ * real caller in this codebase always passes (and expects back) an array, so
+ * these overrides are array-only rather than fighting the base class's
+ * generated single-or-array generic shape. `MedusaService(...)`'s own
+ * generated parameter/return types are anonymous structural types inferred
+ * from the DML model schema and don't line up 1:1 with our hand-authored
+ * `@mercurjs/types` DTOs (confirmed via `tsc` — e.g. an optional field's
+ * exact null/undefined shape differs) — those specific mismatches are the
+ * only `@ts-expect-error` uses below, each at a real third-party
+ * (Medusa/TypeScript) type-system boundary, not a shortcut.
+ */
 class ProductAttributeModuleService extends MedusaService({
   ProductAttribute,
   ProductAttributeValue,
@@ -25,23 +51,23 @@ class ProductAttributeModuleService extends MedusaService({
   }
 
   @InjectTransactionManager()
-  // @ts-ignore
-  async createProductAttributes<T extends any | any[]>(
-    data: T,
+  // @ts-expect-error — see class-level comment on the base/override signature gap.
+  async createProductAttributes(
+    data: Omit<CreateProductAttributeDTO, "values">[],
     sharedContext?: Context,
-  ): Promise<T extends any[] ? any[] : any> {
-    const input = (Array.isArray(data) ? data : [data]).map((attribute) => {
+  ): Promise<ProductAttributeDTO[]> {
+    const input = data.map((attribute) => {
       if (!attribute.handle && !attribute.product_id && attribute.name) {
-        attribute.handle = toHandle(attribute.name)
+        return { ...attribute, handle: toHandle(attribute.name) }
       }
-
       return attribute
     })
 
-    // @ts-ignore
-    const result = await super.createProductAttributes(input, sharedContext)
+    const created: ProductAttributeDTO[] = await super.createProductAttributes(
+      input,
+      sharedContext,
+    )
 
-    const created = Array.isArray(result) ? result : [result]
     const toggleValues = created
       .filter((attribute) => attribute.type === AttributeType.TOGGLE)
       .flatMap((attribute) => [
@@ -53,20 +79,18 @@ class ProductAttributeModuleService extends MedusaService({
       await this.createProductAttributeValues(toggleValues, sharedContext)
     }
 
-    return (Array.isArray(data) ? result : result[0]) as any
+    return created
   }
 
   @InjectTransactionManager()
-  // @ts-ignore
-  async updateProductAttributes<T extends any | any[]>(
-    data: T,
+  // @ts-expect-error — see class-level comment on the base/override signature gap.
+  async updateProductAttributes(
+    data: UpdateProductAttributeInput[],
     sharedContext?: Context,
-  ): Promise<T extends any[] ? any[] : any> {
-    const updates = Array.isArray(data) ? data : [data]
-
-    const idsWithType = updates
+  ): Promise<ProductAttributeDTO[]> {
+    const idsWithType = data
       .filter((u) => u.id && u.type !== undefined)
-      .map((u) => u.id as string)
+      .map((u) => u.id)
 
     if (idsWithType.length) {
       const existing = await this.listProductAttributes(
@@ -78,7 +102,7 @@ class ProductAttributeModuleService extends MedusaService({
         existing.map((a) => [a.id, a.type]),
       )
 
-      for (const update of updates) {
+      for (const update of data) {
         if (!update.id || update.type === undefined) {
           continue
         }
@@ -92,8 +116,7 @@ class ProductAttributeModuleService extends MedusaService({
       }
     }
 
-    // @ts-ignore
-    return super.updateProductAttributes(data, sharedContext) as any
+    return super.updateProductAttributes(data, sharedContext)
   }
 
   private static readonly VALUE_TYPES = new Set<string>([
@@ -102,7 +125,7 @@ class ProductAttributeModuleService extends MedusaService({
     AttributeType.TOGGLE,
   ])
 
-  private wantsValues(config?: FindConfig<any>): boolean {
+  private wantsValues(config?: FindConfig<ProductAttributeDTO>): boolean {
     const relations = config?.relations ?? []
     if (relations.some((r) => r === "values" || r.startsWith("values."))) {
       return true
@@ -112,13 +135,13 @@ class ProductAttributeModuleService extends MedusaService({
   }
 
   private stripValuesFromConfig(
-    config?: FindConfig<any>,
-  ): FindConfig<any> | undefined {
+    config?: FindConfig<ProductAttributeDTO>,
+  ): FindConfig<ProductAttributeDTO> | undefined {
     if (!config) {
       return config
     }
 
-    const next: FindConfig<any> = { ...config }
+    const next: FindConfig<ProductAttributeDTO> = { ...config }
 
     if (Array.isArray(next.relations)) {
       next.relations = next.relations.filter(
@@ -135,13 +158,15 @@ class ProductAttributeModuleService extends MedusaService({
           "id",
           "type",
         ]),
-      )
+      ) as (keyof ProductAttributeDTO)[]
     }
 
     return next
   }
 
-  private deriveValueConfig(config?: FindConfig<any>): FindConfig<any> {
+  private deriveValueConfig(
+    config?: FindConfig<ProductAttributeDTO>,
+  ): FindConfig<ProductAttributeValueDTO> {
     const relations = (config?.relations ?? [])
       .filter((r) => r.startsWith("values."))
       .map((r) => r.slice("values.".length))
@@ -149,20 +174,22 @@ class ProductAttributeModuleService extends MedusaService({
       .filter((s) => s.startsWith("values."))
       .map((s) => s.slice("values.".length))
 
-    const valueConfig: FindConfig<any> = {}
+    const valueConfig: FindConfig<ProductAttributeValueDTO> = {}
     if (relations.length) {
       valueConfig.relations = relations
     }
     if (selectPaths.length) {
-      valueConfig.select = Array.from(new Set([...selectPaths, "attribute_id"]))
+      valueConfig.select = Array.from(
+        new Set([...selectPaths, "attribute_id"]),
+      ) as (keyof ProductAttributeValueDTO)[]
     }
 
     return valueConfig
   }
 
   private async attachValues(
-    attributes: any[],
-    config?: FindConfig<any>,
+    attributes: ProductAttributeDTO[],
+    config?: FindConfig<ProductAttributeDTO>,
     sharedContext?: Context,
   ): Promise<void> {
     const valueAttributes = attributes.filter((a) =>
@@ -185,11 +212,12 @@ class ProductAttributeModuleService extends MedusaService({
       sharedContext,
     )
 
-    const valuesByAttribute = new Map<string, any[]>()
+    const valuesByAttribute = new Map<string, ProductAttributeValueDTO[]>()
     for (const value of values) {
-      const list = valuesByAttribute.get(value.attribute_id) ?? []
+      const key = value.attribute_id ?? ""
+      const list = valuesByAttribute.get(key) ?? []
       list.push(value)
-      valuesByAttribute.set(value.attribute_id, list)
+      valuesByAttribute.set(key, list)
     }
 
     for (const attribute of valueAttributes) {
@@ -198,15 +226,14 @@ class ProductAttributeModuleService extends MedusaService({
   }
 
   @InjectManager()
-  // @ts-ignore
+  // @ts-expect-error — see class-level comment on the base/override signature gap.
   async listProductAttributes(
-    filters?: any,
-    config?: FindConfig<any>,
+    filters?: Record<string, unknown>,
+    config?: FindConfig<ProductAttributeDTO>,
     @MedusaContext() sharedContext?: Context,
-  ): Promise<any[]> {
+  ): Promise<ProductAttributeDTO[]> {
     const wantsValues = this.wantsValues(config)
 
-    // @ts-ignore
     const attributes = await super.listProductAttributes(
       filters,
       this.stripValuesFromConfig(config),
@@ -221,15 +248,14 @@ class ProductAttributeModuleService extends MedusaService({
   }
 
   @InjectManager()
-  // @ts-ignore
+  // @ts-expect-error — see class-level comment on the base/override signature gap.
   async listAndCountProductAttributes(
-    filters?: any,
-    config?: FindConfig<any>,
+    filters?: Record<string, unknown>,
+    config?: FindConfig<ProductAttributeDTO>,
     @MedusaContext() sharedContext?: Context,
-  ): Promise<[any[], number]> {
+  ): Promise<[ProductAttributeDTO[], number]> {
     const wantsValues = this.wantsValues(config)
 
-    // @ts-ignore
     const [attributes, count] = await super.listAndCountProductAttributes(
       filters,
       this.stripValuesFromConfig(config),
@@ -244,15 +270,13 @@ class ProductAttributeModuleService extends MedusaService({
   }
 
   @InjectTransactionManager()
-  // @ts-ignore
-  async createProductAttributeValues<T extends any | any[]>(
-    data: T,
+  // @ts-expect-error — see class-level comment on the base/override signature gap.
+  async createProductAttributeValues(
+    data: UpsertProductAttributeValueInput[],
     sharedContext?: Context,
-  ): Promise<T extends any[] ? any[] : any> {
-    const values = Array.isArray(data) ? data : [data]
-
+  ): Promise<ProductAttributeValueDTO[]> {
     const attributeIds = Array.from(
-      new Set(values.map((v) => v.attribute_id).filter(Boolean)),
+      new Set(data.map((v) => v.attribute_id).filter(Boolean)),
     )
     const attributes = attributeIds.length
       ? await this.listProductAttributes(
@@ -261,7 +285,7 @@ class ProductAttributeModuleService extends MedusaService({
         sharedContext,
       )
       : []
-    const attributeById = new Map<string, { product_id?: string; type: string }>(
+    const attributeById = new Map<string, { product_id?: string | null; type: string }>(
       attributes.map((a) => [a.id, a]),
     )
 
@@ -270,23 +294,17 @@ class ProductAttributeModuleService extends MedusaService({
       AttributeType.MULTI_SELECT,
     ])
 
-    const input = values.map((value) => {
+    const input = data.map((value) => {
       const attribute = attributeById.get(value.attribute_id)
       const isProductScoped = !!attribute?.product_id
       const isSelectType = !!attribute && selectTypes.has(attribute.type)
       if (!value.handle && !isProductScoped && isSelectType && value.name) {
-        value.handle = toHandle(value.name)
+        return { ...value, handle: toHandle(value.name) }
       }
-
       return value
     })
 
-    // @ts-ignore
-    const result = await super.createProductAttributeValues(
-      input,
-      sharedContext,
-    )
-    return (Array.isArray(data) ? result : result[0]) as any
+    return super.createProductAttributeValues(input, sharedContext)
   }
 }
 

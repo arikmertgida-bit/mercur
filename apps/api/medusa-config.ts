@@ -23,6 +23,71 @@ module.exports = withMercur({
   },
   modules: [
     {
+      resolve: './src/modules/product-reports',
+    },
+    {
+      resolve: '@mercurjs/core/modules/custom-fields',
+      options: {
+        customFields: {
+          ProductCollection: {
+            request_status: {
+              type: 'enum',
+              enum: ['draft', 'pending', 'accepted', 'rejected'],
+              defaultValue: 'draft',
+            },
+            submitter_id: { type: 'string', nullable: true },
+            reviewer_id: { type: 'string', nullable: true },
+            reviewer_note: { type: 'text', nullable: true },
+          },
+          ProductCategory: {
+            request_status: {
+              type: 'enum',
+              enum: ['draft', 'pending', 'accepted', 'rejected'],
+              defaultValue: 'draft',
+            },
+            submitter_id: { type: 'string', nullable: true },
+            reviewer_id: { type: 'string', nullable: true },
+            reviewer_note: { type: 'text', nullable: true },
+          },
+          ProductType: {
+            request_status: {
+              type: 'enum',
+              enum: ['draft', 'pending', 'accepted', 'rejected'],
+              defaultValue: 'draft',
+            },
+            submitter_id: { type: 'string', nullable: true },
+            reviewer_id: { type: 'string', nullable: true },
+            reviewer_note: { type: 'text', nullable: true },
+          },
+          ProductTag: {
+            request_status: {
+              type: 'enum',
+              enum: ['draft', 'pending', 'accepted', 'rejected'],
+              defaultValue: 'draft',
+            },
+            submitter_id: { type: 'string', nullable: true },
+            reviewer_id: { type: 'string', nullable: true },
+            reviewer_note: { type: 'text', nullable: true },
+          },
+        },
+      },
+    },
+    {
+      resolve: './src/modules/reviews',
+    },
+    {
+      resolve: './src/modules/review-images',
+    },
+    {
+      resolve: './src/modules/review-image-reports',
+    },
+    {
+      resolve: './src/modules/wishlist',
+    },
+    {
+      resolve: './src/modules/seller-follow',
+    },
+    {
       resolve: '@mercurjs/core/modules/admin-ui',
       options: {
         appDir: '',

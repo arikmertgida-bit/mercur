@@ -1,21 +1,26 @@
 import { Command } from "../../../hooks/use-command-history"
+import { DataGridCellValue } from "../types"
 
 export type DataGridBulkUpdateCommandArgs = {
   fields: string[]
-  next: any[]
-  prev: any[]
-  setter: (fields: string[], values: any[], isHistory?: boolean) => void
+  next: DataGridCellValue[]
+  prev: DataGridCellValue[]
+  setter: (
+    fields: string[],
+    values: DataGridCellValue[],
+    isHistory?: boolean
+  ) => void
 }
 
 export class DataGridBulkUpdateCommand implements Command {
   private _fields: string[]
 
-  private _prev: any[]
-  private _next: any[]
+  private _prev: DataGridCellValue[]
+  private _next: DataGridCellValue[]
 
   private _setter: (
     fields: string[],
-    values: any[],
+    values: DataGridCellValue[],
     isHistory?: boolean
   ) => void
 

@@ -1,4 +1,14 @@
-import { LoaderOptions } from "@medusajs/framework/types"
+import {
+  InferEntityType,
+  LoaderOptions,
+  ModulesSdkTypes,
+} from "@medusajs/framework/types"
+
+import { CommissionRate } from "../models"
+
+type CommissionRateService = ModulesSdkTypes.IMedusaInternalService<
+  InferEntityType<typeof CommissionRate>
+>
 
 /**
  * Ensures the Global Commission (the `is_default` rate) always exists.
@@ -14,7 +24,8 @@ export default async function seedDefaultCommissionRateLoader({
   logger,
 }: LoaderOptions) {
   try {
-    const rateService: any = container.resolve("commissionRateService")
+    const rateService =
+      container.resolve<CommissionRateService>("commissionRateService")
 
     const existing = await rateService.list({ is_default: true }, { take: 1 })
     if (existing.length) {

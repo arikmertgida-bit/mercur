@@ -49,61 +49,70 @@ export default async function linkOrderLineItemsToOffersHandler({
   const query = container.resolve(ContainerRegistrationKeys.QUERY)
   const link = container.resolve(ContainerRegistrationKeys.LINK)
   const orderModuleService = container.resolve(Modules.ORDER)
+  const logger = container.resolve(ContainerRegistrationKeys.LOGGER)
 
-  const { data: orders } = await query.graph({
-    entity: "orders",
-    fields: [
-      "id",
-      "items.id",
-      "items.metadata",
-      "items.offer.id",
-    ],
-    filters: { id: orderId },
-  })
+  try {
+    const { data: orders } = await query.graph({
+      entity: "orders",
+      fields: [
+        "id",
+        "items.id",
+        "items.metadata",
+        "items.offer.id",
+      ],
+      filters: { id: orderId },
+    })
 
-  const order = orders?.[0] as { items?: LineItem[] } | undefined
-  const items = order?.items ?? []
+    const order = orders?.[0] as { items?: LineItem[] } | undefined
+    const items = order?.items ?? []
 
-  const pairs: Array<{ line_item_id: string; offer_id: string }> = []
+    const pairs: Array<{ line_item_id: string; offer_id: string }> = []
 
-  for (const item of items) {
-    const metadata = (item.metadata ?? {}) as Record<string, unknown>
-    const offerId = metadata[METADATA_KEY]
-    if (typeof offerId !== "string" || !offerId) {
-      continue
+    for (const item of items) {
+      const metadata = (item.metadata ?? {}) as Record<string, unknown>
+      const offerId = metadata[METADATA_KEY]
+      if (typeof offerId !== "string" || !offerId) {
+        continue
+      }
+      // Skip if already linked — guards against re-running on follow-up events
+      // before the metadata cleanup commits.
+      if (item.offer?.id) {
+        continue
+      }
+      pairs.push({ line_item_id: item.id, offer_id: offerId })
     }
-    // Skip if already linked — guards against re-running on follow-up events
-    // before the metadata cleanup commits.
-    if (item.offer?.id) {
-      continue
+
+    if (!pairs.length) {
+      return
     }
-    pairs.push({ line_item_id: item.id, offer_id: offerId })
+
+    await link.create(
+      pairs.map((pair) => ({
+        [Modules.ORDER]: { order_line_item_id: pair.line_item_id },
+        [MercurModules.OFFER]: { offer_id: pair.offer_id },
+      }))
+    )
+
+    // Clean up the metadata marker so the link isn't re-attempted on later
+    // events for the same order.
+    const updates = pairs.map((pair) => {
+      const item = items.find((i) => i.id === pair.line_item_id)
+      const nextMetadata = { ...(item?.metadata ?? {}) }
+      delete nextMetadata[METADATA_KEY]
+      return {
+        selector: { id: pair.line_item_id },
+        data: { metadata: nextMetadata },
+      }
+    })
+
+    await orderModuleService.updateOrderLineItems(updates)
+  } catch (error) {
+    // Log only, do not rethrow: an uncaught subscriber error loses the event.
+    logger.error(
+      `Linking order line items to offers failed for order ${orderId}:`,
+      error as Error
+    )
   }
-
-  if (!pairs.length) {
-    return
-  }
-
-  await link.create(
-    pairs.map((pair) => ({
-      [Modules.ORDER]: { order_line_item_id: pair.line_item_id },
-      [MercurModules.OFFER]: { offer_id: pair.offer_id },
-    }))
-  )
-
-  // Clean up the metadata marker so the link isn't re-attempted on later
-  // events for the same order.
-  const updates = pairs.map((pair) => {
-    const item = items.find((i) => i.id === pair.line_item_id)
-    const nextMetadata = { ...(item?.metadata ?? {}) }
-    delete nextMetadata[METADATA_KEY]
-    return {
-      selector: { id: pair.line_item_id },
-      data: { metadata: nextMetadata },
-    }
-  })
-
-  await orderModuleService.updateOrderLineItems(updates)
 }
 
 export const config: SubscriberConfig = {

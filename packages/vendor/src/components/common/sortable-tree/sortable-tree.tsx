@@ -337,14 +337,14 @@ export function SortableTree<T extends TreeItem>({
 
           const disabled =
             typeof enableDrag === "function"
-              ? !enableDrag(item as unknown as T)
+              ? !enableDrag(item)
               : !enableDrag
 
           return (
             <SortableTreeItem
               key={id}
               id={id}
-              value={renderValue(item as unknown as T)}
+              value={renderValue(item)}
               disabled={disabled}
               depth={id === activeId && projected ? projected.depth : depth}
               indentationWidth={indentationWidth}
@@ -366,7 +366,7 @@ export function SortableTree<T extends TreeItem>({
                 depth={activeItem.depth}
                 clone
                 childCount={getChildCount(items, activeId, childrenProp) + 1}
-                value={renderValue(activeItem as unknown as T)}
+                value={renderValue(activeItem)}
                 indentationWidth={0}
               />
             ) : null}

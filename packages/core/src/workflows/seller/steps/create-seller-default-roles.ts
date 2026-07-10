@@ -13,4 +13,11 @@ export const createSellerDefaultRolesStep = createStep(
 
     return new StepResponse(roles)
   },
+  // Deliberate no-op: SELLER_ROLES are global, platform-wide RBAC role
+  // definitions shared by every seller, not per-seller data owned by this
+  // workflow run. Deleting them on rollback would strip role access from
+  // every *other* seller already using them — worse than doing nothing.
+  async () => {
+    return
+  },
 )

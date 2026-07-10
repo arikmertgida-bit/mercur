@@ -1,16 +1,17 @@
 import { Command } from "../../../hooks/use-command-history"
+import { DataGridCellValue } from "../types"
 
 export type DataGridUpdateCommandArgs = {
-  prev: any
-  next: any
-  setter: (value: any) => void
+  prev: DataGridCellValue
+  next: DataGridCellValue
+  setter: (value: DataGridCellValue) => void
 }
 
 export class DataGridUpdateCommand implements Command {
-  private _prev: any
-  private _next: any
+  private _prev: DataGridCellValue
+  private _next: DataGridCellValue
 
-  private _setter: (value: any) => void
+  private _setter: (value: DataGridCellValue) => void
 
   constructor({ prev, next, setter }: DataGridUpdateCommandArgs) {
     this._prev = prev

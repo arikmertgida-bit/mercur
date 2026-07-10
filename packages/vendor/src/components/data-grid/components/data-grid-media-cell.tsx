@@ -5,15 +5,10 @@ import { Controller, ControllerRenderProps } from "react-hook-form"
 
 import { Thumbnail } from "../../common/thumbnail"
 import { useDataGridCell, useDataGridCellError } from "../hooks"
-import { DataGridCellProps, InputProps } from "../types"
+import { DataGridCellProps, InputProps, MediaData } from "../types"
 import { DataGridCellContainer } from "./data-grid-cell-container"
 
-export type MediaData = {
-  id?: string
-  url: string
-  isThumbnail: boolean
-  file?: File | null
-}
+export type { MediaData }
 
 export const DataGridMediaCell = <TData, TValue = MediaData[]>({
   context,

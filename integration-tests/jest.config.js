@@ -17,6 +17,19 @@ module.exports = {
   moduleFileExtensions: ["js", "ts", "json"],
   modulePathIgnorePatterns: ["dist/"],
   setupFiles: ["./setup.js"],
+  // `@acme/api` is a workspace package that bun does not hoist to the
+  // monorepo root `node_modules` (unlike `@mercurjs/core`), because
+  // `apps/api` itself depends on `@acme/admin`/`@acme/vendor`, which
+  // circularly depend back on it. Medusa's plugin loader resolves
+  // `@acme/api/...` module paths via a plain `require()` call issued from
+  // deep inside `node_modules/.bun/@medusajs+utils@.../...`, and Node's
+  // upward node_modules walk from that location never reaches
+  // `integration-tests/node_modules/@acme/api` — only the monorepo root.
+  // Map it explicitly so plugin module resolution works regardless of how
+  // the package manager happens to hoist it.
+  moduleNameMapper: {
+    "^@acme/api/(.*)$": "<rootDir>/../apps/api/$1",
+  },
   // Balance `--shard` partitions by estimated duration instead of file count
   // so heavy specs don't cluster in one shard and blow the job timeout.
   testSequencer: "./test-sequencer.js",

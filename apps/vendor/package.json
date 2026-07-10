@@ -4,13 +4,17 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "rm -rf node_modules/.vite && vite --port 7002",
-    "lint": "oxlint",
+    "dev": "rm -rf node_modules/.vite && vite --port 7001",
+    "build": "tsc -b && vite build",
+    "check-types": "tsc -b",
+    "lint": "eslint . && oxlint",
     "preview": "vite preview --port 7001"
   },
   "dependencies": {
+    "@acme/api": "*",
     "@hookform/resolvers": "3.4.2",
     "@medusajs/icons": "2.17.2",
+    "@medusajs/types": "2.17.2",
     "@medusajs/ui": "4.1.19",
     "@mercurjs/client": "*",
     "@mercurjs/dashboard-sdk": "*",
@@ -27,6 +31,7 @@
     "react-i18next": "17.0.8",
     "react-jwt": "^2.0.0",
     "react-router-dom": "7.18.1",
+    "socket.io-client": "4.8.3",
     "zod": "4.4.3"
   },
   "devDependencies": {

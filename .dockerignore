@@ -1,0 +1,12 @@
+# Exclude node_modules — Docker build installs them fresh via bun install.
+# Windows symlinks in local node_modules are incompatible with Linux containers.
+**/node_modules
+
+# Exclude build cache directories (not the dist output — that is copied to nginx)
+**/.turbo
+**/.medusa
+
+# Exclude development-only files
+**/.git
+**/.env.local
+**/coverage

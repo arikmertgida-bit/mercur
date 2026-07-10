@@ -21,6 +21,7 @@ export {
   type ReferenceField,
   type VariantGroup,
 } from "./lib/product-change-diff"
+export { supportChatBridge } from "./lib/support-chat-bridge"
 export * from "./components"
 export * from "./hooks"
 export * from "./extensions"

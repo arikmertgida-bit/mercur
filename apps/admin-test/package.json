@@ -4,11 +4,14 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "rm -rf node_modules/.vite && vite --port 7001",
-    "lint": "oxlint",
+    "dev": "rm -rf node_modules/.vite && vite --port 7000",
+    "build": "tsc -b && vite build",
+    "check-types": "tsc -b",
+    "lint": "eslint . && oxlint",
     "preview": "vite preview --port 7000"
   },
   "dependencies": {
+    "@acme/api": "*",
     "@mercurjs/admin": "*",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -26,7 +29,8 @@
     "react-hook-form": "7.49.1",
     "@hookform/resolvers": "3.4.2",
     "jsonwebtoken": "9.0.2",
-    "react-jwt": "^2.0.0"
+    "react-jwt": "^2.0.0",
+    "socket.io-client": "4.8.3"
   },
   "devDependencies": {
     "@types/react": "^19.2.17",

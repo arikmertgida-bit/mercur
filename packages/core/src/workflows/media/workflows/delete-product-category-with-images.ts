@@ -27,7 +27,7 @@ export const deleteProductCategoryWithImagesWorkflow = createWorkflow(
     const ids = transform({ input, cleared }, ({ input }) => [input.id])
 
     deleteProductCategoriesWorkflow.runAsStep({
-      input: ids as any,
+      input: ids,
     })
   }
 )
