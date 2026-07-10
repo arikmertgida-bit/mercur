@@ -1,0 +1,5 @@
+# Shell scripts must always use LF, regardless of the checking-out machine's
+# core.autocrlf setting — a CRLF shebang line (`#!/bin/sh\r`) breaks exec()
+# with a misleading "no such file or directory" error inside Linux containers.
+*.sh text eol=lf
+docker-entrypoint.sh text eol=lf
