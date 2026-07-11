@@ -218,8 +218,11 @@ export const formatFieldValue = (
   return JSON.stringify(value)
 }
 
+const asRecord = (value: JsonValue): JsonRecord =>
+  value && typeof value === "object" && !Array.isArray(value) ? value : {}
+
 const toAttributeAdd = (details: JsonRecord): AttributeChange => {
-  const attribute = (details.attribute ?? {}) as JsonRecord
+  const attribute = asRecord(details.attribute)
   const id = typeof attribute.id === "string" ? attribute.id : undefined
   const title =
     typeof attribute.title === "string" ? attribute.title : undefined
@@ -247,7 +250,7 @@ const isNamedValue = (v: JsonValue): v is { value: string } =>
   typeof v.value === "string"
 
 const toAttributeUpdate = (details: JsonRecord): AttributeChange | null => {
-  const update = (details.update ?? {}) as JsonRecord
+  const update = asRecord(details.update)
   const id = typeof update.id === "string" ? update.id : undefined
   if (!id) return null
   const add = Array.isArray(update.add) ? update.add : []
@@ -288,7 +291,7 @@ export const buildProductChangeView = (
   }
 
   for (const action of actions) {
-    const details = (action.details ?? {}) as JsonRecord
+    const details = action.details
 
     switch (action.action) {
       case ProductChangeActionType.UPDATE: {
@@ -320,8 +323,8 @@ export const buildProductChangeView = (
         break
       }
       case ProductChangeActionType.VARIANT_UPDATE: {
-        const fields = (details.fields ?? {}) as JsonRecord
-        const previousFields = (details.previous_fields ?? {}) as JsonRecord
+        const fields = asRecord(details.fields)
+        const previousFields = asRecord(details.previous_fields)
         const variantId =
           details.variant_id !== undefined && details.variant_id !== null
             ? String(details.variant_id)

@@ -134,7 +134,6 @@ export function useDisplayFieldOverride(
   if (!match) return { overridden: false, Component: null }
   return {
     overridden: true,
-    Component:
-      (match.component as ComponentType<{ data?: JsonRecord }> | null) ?? null,
+    Component: match.component,
   }
 }

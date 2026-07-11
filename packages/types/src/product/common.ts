@@ -5,6 +5,7 @@ import type {
   ProductImageDTO,
 } from "@medusajs/types"
 import { SellerDTO } from "../seller/common"
+import { JsonRecord } from "../json-value"
 
 // --- Enums ---
 
@@ -151,7 +152,7 @@ export interface ProductChangeActionDTO {
   product_change_id: string | null
   ordering: number
   action: string
-  details: Record<string, unknown>
+  details: JsonRecord
   internal_note: string | null
   applied: boolean
   product_change?: ProductChangeDTO

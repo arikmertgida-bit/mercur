@@ -4,7 +4,6 @@ import { Children, ReactNode, useMemo } from "react";
 import { DeepPartial, useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { HttpTypes } from "@medusajs/types";
 import { ProductDTO } from "@mercurjs/types";
 import { useRouteModal } from "../../../../../components/modals";
 import { TabbedForm } from "../../../../../components/tabbed-form/tabbed-form";
@@ -17,7 +16,7 @@ export type CreateProductVariantSchemaType = z.infer<
 >;
 
 type CreateProductVariantFormProps = {
-  product: HttpTypes.AdminProduct;
+  product: ProductDTO;
   children?: ReactNode;
   schema?: z.ZodType<CreateProductVariantSchemaType>;
   defaultValues?: DeepPartial<CreateProductVariantSchemaType>;
@@ -48,9 +47,7 @@ export const CreateProductVariantForm = ({
   const { mutateAsync, isPending } = useCreateProductVariant(product.id);
 
   const variantAttributes =
-    (
-      product as HttpTypes.AdminProduct & Pick<ProductDTO, "attributes">
-    ).attributes?.filter((a) => a.is_variant_axis) ?? [];
+    product.attributes?.filter((a) => a.is_variant_axis) ?? [];
 
   const handleSubmit = form.handleSubmit(async (data) => {
     const { title, options } = data;

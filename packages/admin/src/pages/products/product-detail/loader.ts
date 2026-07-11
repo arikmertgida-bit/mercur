@@ -4,7 +4,7 @@ import { getLinkQuery } from "@mercurjs/dashboard-shared"
 import { productsQueryKeys } from "../../../hooks/api/products"
 import { sdk } from "../../../lib/client"
 import { queryClient } from "../../../lib/query-client"
-import { AdminProductResponse } from "@mercurjs/types"
+import { HttpTypes } from "@mercurjs/types"
 import { PRODUCT_DETAIL_QUERY } from "../constants"
 
 export const productDetailQueryWithLinks = () =>
@@ -19,9 +19,14 @@ const productDetailQuery = (id: string) => {
   }
 }
 
-export const productLoader = async ({ params }: LoaderFunctionArgs): Promise<AdminProductResponse> => {
+export const productLoader = async ({
+  params,
+}: LoaderFunctionArgs): Promise<HttpTypes.AdminProductResponse> => {
   const id = params.id
-  const query = productDetailQuery(id!)
+  if (!id) {
+    throw new Error("productLoader: missing route param 'id'")
+  }
+  const query = productDetailQuery(id)
 
   const response = await queryClient.ensureQueryData({
     ...query,
