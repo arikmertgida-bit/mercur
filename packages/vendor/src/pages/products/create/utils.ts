@@ -3,11 +3,17 @@ import { AttributeType, ProductAttributeBatchAdd } from "@mercurjs/types"
 import { UseFormReturn } from "react-hook-form"
 import { ProductCreateSchemaType } from "./types"
 
+export type NormalizedCreateProduct = HttpTypes.AdminCreateProduct & {
+  // Mercur's `attributes[]` batch-add extension on top of the stock Medusa
+  // create-product payload — not part of `AdminCreateProduct` itself.
+  attributes?: ProductAttributeBatchAdd[]
+}
+
 export const normalizeProductFormValues = (
   values: ProductCreateSchemaType & {
     status: HttpTypes.AdminProductStatus
   }
-): HttpTypes.AdminCreateProduct => {
+): NormalizedCreateProduct => {
   const thumbnail = values.media?.find((media) => media.isThumbnail)?.url
   const images = values.media
     ?.filter((media) => !media.isThumbnail)
@@ -57,7 +63,7 @@ export const normalizeProductFormValues = (
       values.variants.filter((variant) => variant.should_create),
       hasAxis,
     ),
-  } as any
+  }
 }
 
 export const normalizeVariants = (

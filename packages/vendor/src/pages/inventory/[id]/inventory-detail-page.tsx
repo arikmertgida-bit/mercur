@@ -1,5 +1,6 @@
 import { Children, ReactNode } from "react";
 import { useLoaderData, useParams } from "react-router-dom";
+import { InventoryTypes, ProductVariantDTO } from "@medusajs/types";
 
 import { TwoColumnPageSkeleton } from "@components/common/skeleton";
 import { TwoColumnPage } from "@components/layout/pages";
@@ -10,10 +11,14 @@ import { InventoryItemAttributeSection } from "./_components/inventory-item-attr
 import { InventoryItemGeneralSection } from "./_components/inventory-item-general-section";
 import { InventoryItemLocationLevelsSection } from "./_components/inventory-item-location-levels";
 import { InventoryItemReservationsSection } from "./_components/inventory-item-reservations";
-import { AssociatedOffersSection } from "./_components/inventory-item-offers/associated-offers-section";
+import { InventoryItemVariantsSection } from "./_components/inventory-item-variants/variants-section";
 import { INVENTORY_DETAIL_FIELDS } from "./constants";
 
 import { loader } from "./loader";
+
+type DetailInventoryItem = InventoryTypes.InventoryItemDTO & {
+  variants?: ProductVariantDTO[] | null;
+};
 
 const Root = ({ children }: { children?: ReactNode }) => {
   const { id } = useParams();
@@ -63,11 +68,11 @@ const Root = ({ children }: { children?: ReactNode }) => {
           </TwoColumnPage.Main>
           <TwoColumnPage.Sidebar>
             <WidgetZone id="inventory.detail.side" data={inventory_item}>
-              <AssociatedOffersSection
-                offers={(inventory_item as any).offers}
+              <InventoryItemVariantsSection
+                variants={(inventory_item as DetailInventoryItem).variants ?? []}
               />
               <InventoryItemAttributeSection
-                inventoryItem={inventory_item as any}
+                inventoryItem={inventory_item as DetailInventoryItem}
               />
             </WidgetZone>
           </TwoColumnPage.Sidebar>
@@ -83,6 +88,6 @@ export const InventoryDetailPage = Object.assign(Root, {
   MainGeneralSection: InventoryItemGeneralSection,
   MainLocationLevelsSection: InventoryItemLocationLevelsSection,
   MainReservationsSection: InventoryItemReservationsSection,
-  SidebarOffersSection: AssociatedOffersSection,
+  SidebarVariantsSection: InventoryItemVariantsSection,
   SidebarAttributeSection: InventoryItemAttributeSection,
 });

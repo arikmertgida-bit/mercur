@@ -109,7 +109,7 @@ export const AddOrderEditItemsTable = ({
       fields: OFFER_PICKER_FIELDS,
     },
     { enabled: canViewOffers }
-  ) as unknown as {
+  ) as {
     offers?: OfferPickerRowExtended[]
     count?: number
   }

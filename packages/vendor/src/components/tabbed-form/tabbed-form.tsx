@@ -26,11 +26,15 @@ export const useTabbedForm = <T extends FieldValues = FieldValues>() => {
   return form as UseFormReturn<T>
 }
 
+type TabComponentType = {
+  _tabMeta?: TabDefinition<FieldValues>
+}
+
 function resolveTabMeta<T extends FieldValues>(
   child: ReactElement
 ): TabDefinition<T> | null {
-  const type = child.type as any
-  const meta: TabDefinition<T> | undefined = type?._tabMeta
+  const type = child.type as TabComponentType
+  const meta = type?._tabMeta as TabDefinition<T> | undefined
 
   if (!meta && !child.props?.id) {
     return null

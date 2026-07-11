@@ -39,9 +39,7 @@ type GeoZoneFormImplProps<TForm extends UseFormReturn<any>> = {
 const GeoZoneFormImpl = <TForm extends UseFormReturn<any>>({
   form,
 }: GeoZoneFormImplProps<TForm>) => {
-  const castForm = form as unknown as UseFormReturn<
-    z.infer<typeof GeoZoneSchema>
-  >
+  const castForm = form as UseFormReturn<z.infer<typeof GeoZoneSchema>>
 
   const { t } = useTranslation()
 
@@ -112,9 +110,7 @@ const PAGE_SIZE = 50
 const AreaStackedModal = <TForm extends UseFormReturn<any>>({
   form,
 }: AreasStackedModalProps<TForm>) => {
-  const castForm = form as unknown as UseFormReturn<
-    z.infer<typeof GeoZoneSchema>
-  >
+  const castForm = form as UseFormReturn<z.infer<typeof GeoZoneSchema>>
 
   const { t } = useTranslation()
   const { getValues, setValue } = castForm

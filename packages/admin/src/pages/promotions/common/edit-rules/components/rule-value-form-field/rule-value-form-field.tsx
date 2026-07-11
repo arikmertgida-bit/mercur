@@ -7,7 +7,7 @@ import {
 } from "@medusajs/types";
 import { Input } from "@medusajs/ui";
 
-import { useWatch } from "react-hook-form";
+import { UseFormReturn, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 import { Form } from "../../../../../../components/common/form";
@@ -15,9 +15,17 @@ import { Combobox } from "../../../../../../components/inputs/combobox";
 import { useStore } from "../../../../../../hooks/api";
 import { useComboboxData } from "../../../../../../hooks/use-combobox-data";
 import { sdk } from "../../../../../../lib/client";
+import { CreatePromotionSchemaType } from "../../../../promotion-create/components/create-promotion-form/form-schema";
+
+// The subset of a rule field's own schema fields this component reads;
+// the field array item also carries an RHF-generated key prop, which
+// isn't needed here.
+type PromotionRuleField = {
+  attribute: string;
+};
 
 type RuleValueFormFieldType = {
-  form: any;
+  form: UseFormReturn<CreatePromotionSchemaType>;
   identifier: string;
   scope:
     | "application_method.buy_rules"
@@ -25,7 +33,7 @@ type RuleValueFormFieldType = {
     | "application_method.target_rules";
   name: string;
   operator: string;
-  fieldRule: any;
+  fieldRule: PromotionRuleField;
   attributes: HttpTypes.AdminRuleAttributeOption[];
   ruleType: RuleTypeValues;
   applicationMethodTargetType: ApplicationMethodTargetTypeValues | undefined;

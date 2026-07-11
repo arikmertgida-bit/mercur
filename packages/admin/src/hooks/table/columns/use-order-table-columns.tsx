@@ -117,15 +117,15 @@ export const useOrderTableColumns = (props: UseOrderTableColumnsProps) => {
   )
 
   const isAccessorColumnDef = (
-    c: any
+    c: ColumnDefBase<HttpTypes.AdminOrder, any>
   ): c is ColumnDef<HttpTypes.AdminOrder> & { accessorKey: string } => {
-    return c.accessorKey !== undefined
+    return (c as { accessorKey?: string }).accessorKey !== undefined
   }
 
   const isDisplayColumnDef = (
-    c: any
+    c: ColumnDefBase<HttpTypes.AdminOrder, any>
   ): c is ColumnDef<HttpTypes.AdminOrder> & { id: string } => {
-    return c.id !== undefined
+    return (c as { id?: string }).id !== undefined
   }
 
   const shouldExclude = <TDef extends ColumnDefBase<HttpTypes.AdminOrder, any>>(

@@ -1,7 +1,10 @@
 import { UIMatch } from "react-router-dom"
+import type { HttpTypes } from "@mercurjs/types"
 import { useProductAttribute } from "../../../hooks/api"
 
-type AttributeDetailBreadcrumbProps = UIMatch<unknown>
+type AttributeDetailBreadcrumbProps = UIMatch<
+  HttpTypes.AdminProductAttributeResponse | undefined
+>
 
 export const AttributeDetailBreadcrumb = (
   props: AttributeDetailBreadcrumbProps
@@ -9,7 +12,7 @@ export const AttributeDetailBreadcrumb = (
   const { id } = props.params || {}
 
   const { product_attribute: attribute } = useProductAttribute(id!, undefined, {
-    initialData: props.data as any,
+    initialData: props.data,
     enabled: Boolean(id),
   })
 

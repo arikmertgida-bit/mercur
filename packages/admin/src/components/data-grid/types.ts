@@ -69,7 +69,7 @@ export interface InputProps {
   ref: RefObject<HTMLElement>
   onBlur: () => void
   onFocus: () => void
-  onChange: (next: any, prev: any) => void
+  onChange: (next: DataGridCellValue, prev: DataGridCellValue) => void
   "data-row": number
   "data-col": number
   "data-cell-id": string
@@ -172,3 +172,11 @@ export type DataGridToggleableNumber = {
   checked: boolean
   disabledToggle: boolean
 }
+
+// The value a single data-grid cell can hold, across every column type
+// (plain scalar columns vs. the combined quantity+checked toggle column).
+export type DataGridCellValue =
+  | string
+  | number
+  | boolean
+  | DataGridToggleableNumber

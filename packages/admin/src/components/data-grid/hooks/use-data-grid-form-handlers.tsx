@@ -3,6 +3,7 @@ import { FieldValues, Path, PathValue, UseFormReturn } from "react-hook-form"
 
 import { DataGridMatrix } from "../models"
 import {
+  DataGridCellValue,
   DataGridColumnType,
   DataGridCoordinates,
   DataGridToggleableNumber,
@@ -40,7 +41,7 @@ export const useDataGridFormHandlers = <
   )
 
   const setSelectionValues = useCallback(
-    async (fields: string[], values: string[], isHistory?: boolean) => {
+    async (fields: string[], values: DataGridCellValue[], isHistory?: boolean) => {
       if (!fields.length || !anchor) {
         return
       }
@@ -111,7 +112,7 @@ function convertToBoolean(value: string | boolean): boolean {
   throw new Error(`String "${value}" cannot be converted to boolean.`)
 }
 
-function covertToString(value: any): string {
+function covertToString(value: DataGridCellValue): string {
   if (typeof value === "undefined" || value === null) {
     return ""
   }
@@ -119,7 +120,7 @@ function covertToString(value: any): string {
   return String(value)
 }
 
-function convertToggleableNumber(value: any): {
+function convertToggleableNumber(value: DataGridCellValue): {
   quantity: number
   checked: boolean
   disabledToggle: boolean
@@ -134,42 +135,49 @@ function convertToggleableNumber(value: any): {
     }
   }
 
-  return obj
+  return obj as DataGridToggleableNumber
 }
 
-function setValue<
-  T extends DataGridToggleableNumber = DataGridToggleableNumber
->(
-  currentValues: any,
+function setValue(
+  currentValues: Record<string, unknown>,
   field: string,
-  newValue: T,
+  newValue: DataGridCellValue,
   type: string,
   isHistory?: boolean
 ) {
   if (type !== "togglable-number") {
-    field.split(".").reduce((curr, key, index) => {
+    field.split(".").reduce<Record<string, unknown>>((curr, key, index) => {
       if (index === field.split(".").length - 1) {
         curr[key] = newValue
       }
       curr[key] ??= {}
-      return curr[key]
+      return curr[key] as Record<string, unknown>
     }, currentValues)
     return
   }
 
-  setValueToggleableNumber(currentValues, field, newValue, isHistory)
+  // `type === "togglable-number"` guarantees newValue is a DataGridToggleableNumber here.
+  setValueToggleableNumber(
+    currentValues,
+    field,
+    newValue as DataGridToggleableNumber,
+    isHistory
+  )
 }
 
 function setValueToggleableNumber(
-  currentValues: any = {},
+  currentValues: Record<string, unknown> = {},
   field: string,
   newValue: DataGridToggleableNumber,
   isHistory?: boolean
 ) {
   const currentValue = field
     .split(".")
-    .reduce((obj, key) => obj?.[key], currentValues)
-  const { disabledToggle } = currentValue || {}
+    .reduce<Record<string, unknown> | undefined>(
+      (obj, key) => obj?.[key] as Record<string, unknown> | undefined,
+      currentValues
+    )
+  const { disabledToggle } = (currentValue as DataGridToggleableNumber) || {}
 
   const normalizeQuantity = (value: number | string | null | undefined) => {
     if (disabledToggle && value === "") {
@@ -193,7 +201,7 @@ function setValueToggleableNumber(
     : determineChecked(quantity)
 
   const fieldParts = field.split(".")
-  fieldParts.reduce((curr, key: string, index) => {
+  fieldParts.reduce<Record<string, unknown>>((curr, key, index) => {
     if (index === fieldParts.length - 1) {
       curr[key] = {
         ...(currentValue || {}),
@@ -203,14 +211,14 @@ function setValueToggleableNumber(
       }
     }
     curr[key] ??= {}
-    return curr[key]
+    return curr[key] as Record<string, unknown>
   }, currentValues)
 }
 
 export function convertArrayToPrimitive(
-  values: any[],
+  values: DataGridCellValue[],
   type: DataGridColumnType
-): any[] {
+): DataGridCellValue[] {
   switch (type) {
     case "number":
       return values.map((v) => {
@@ -222,12 +230,14 @@ export function convertArrayToPrimitive(
           return ""
         }
 
-        return convertToNumber(v)
+        // `type` guarantees the caller only passes number-like cell values here.
+        return convertToNumber(v as string | number)
       })
     case "togglable-number":
       return values.map(convertToggleableNumber)
     case "boolean":
-      return values.map(convertToBoolean)
+      // `type` guarantees the caller only passes boolean-like cell values here.
+      return values.map((v) => convertToBoolean(v as string | boolean))
     case "text":
     case "multiline-text":
       return values.map(covertToString)

@@ -20,7 +20,10 @@ export const PriceListConfigurationSection = ({
   return (
     <Container className="flex flex-col gap-y-4" data-testid="price-list-configuration-section-container">
       <div className="flex items-center justify-between" data-testid="price-list-configuration-section-header">
-        <Heading level="h2" data-testid="price-list-configuration-section-heading">{t("priceLists.configuration.header")}</Heading>
+        <div>
+          <Heading level="h2" data-testid="price-list-configuration-section-heading">{t("priceLists.configuration.header")}</Heading>
+          {/* TODO: Customer group availability - vendor API does not support customer groups yet */}
+        </div>
         <ActionMenu
           groups={[
             {

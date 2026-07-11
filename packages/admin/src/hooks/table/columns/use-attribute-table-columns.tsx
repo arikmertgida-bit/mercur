@@ -42,8 +42,8 @@ const FilterableToggle = ({
   const handleToggle = async (checked: boolean) => {
     try {
       await mutateAsync({ is_filterable: checked })
-    } catch (err: any) {
-      toast.error(err.message)
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "An error occurred")
     }
   }
 
@@ -84,8 +84,8 @@ const RequiredToggle = ({
   const handleToggle = async (checked: boolean) => {
     try {
       await mutateAsync({ is_required: checked })
-    } catch (err: any) {
-      toast.error(err.message)
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "An error occurred")
     }
   }
 
@@ -143,13 +143,14 @@ const AttributeActions = ({
       toast.success(
         t("attributes.delete.successToast", { name: attribute.name })
       )
-    } catch (err: any) {
-      const isInUse = err.message?.includes("can't be deleted")
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "An error occurred"
+      const isInUse = message.includes("can't be deleted")
 
       if (isInUse) {
         setInUseOpen(true)
       } else {
-        toast.error(err.message)
+        toast.error(message)
       }
     }
   }

@@ -34,12 +34,14 @@ import { ExchangeCreateSchema, type CreateExchangeSchemaType } from "./schema"
 // Discriminator workaround: `preview.order_change.exchange_id` is present
 // when `change_type === "exchange"` but `HttpTypes.AdminOrderChange` doesn't
 // expose a discriminated union. Read it via a narrow cast.
-const readExchangeId = (change: unknown): string | undefined => {
+type UnknownValue = unknown
+
+const readExchangeId = (change: UnknownValue): string | undefined => {
   if (
     change &&
     typeof change === "object" &&
     "exchange_id" in change &&
-    typeof (change as { exchange_id?: unknown }).exchange_id === "string"
+    typeof (change as { exchange_id?: UnknownValue }).exchange_id === "string"
   ) {
     return (change as { exchange_id: string }).exchange_id
   }

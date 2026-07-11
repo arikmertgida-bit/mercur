@@ -18,7 +18,7 @@ export const CommissionRuleBreadcrumb = (
       initialData: props.data,
       enabled: Boolean(id),
     }
-  ) as unknown as { commission_rate?: { name?: string } };
+  ) as { commission_rate?: { name?: string } };
 
   if (!commission_rate) {
     return null;

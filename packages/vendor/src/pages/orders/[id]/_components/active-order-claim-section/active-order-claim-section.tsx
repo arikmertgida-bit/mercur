@@ -18,12 +18,14 @@ type ActiveOrderClaimSectionProps = {
   orderPreview: HttpTypes.AdminOrderPreview
 }
 
-const readClaimId = (change: unknown): string | undefined => {
+type UnknownValue = unknown
+
+const readClaimId = (change: UnknownValue): string | undefined => {
   if (
     change &&
     typeof change === "object" &&
     "claim_id" in change &&
-    typeof (change as { claim_id?: unknown }).claim_id === "string"
+    typeof (change as { claim_id?: UnknownValue }).claim_id === "string"
   ) {
     return (change as { claim_id: string }).claim_id
   }

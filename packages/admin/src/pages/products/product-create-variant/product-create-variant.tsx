@@ -1,4 +1,3 @@
-import { HttpTypes } from "@medusajs/types"
 import { Children, ReactNode } from "react"
 import { useParams } from "react-router-dom"
 import { RouteFocusModal } from "../../../components/modals"
@@ -27,7 +26,7 @@ const Root = ({ children }: { children?: ReactNode }) => {
         Children.count(children) > 0 ? (
           children
         ) : (
-          <CreateProductVariantForm product={product as unknown as HttpTypes.AdminProduct} />
+          <CreateProductVariantForm product={product} />
         )
       )}
     </RouteFocusModal>

@@ -21,11 +21,15 @@ import { queryClient } from "../../lib/query-client";
 import { queryKeysFactory, TQueryKey } from "../../lib/query-key-factory";
 
 const ORDERS_QUERY_KEY = "orders" as const;
+type OrdersDetailSuffixKey = readonly [
+  ...ReturnType<TQueryKey<"orders">["detail"]>,
+  string,
+];
 const _orderKeys = queryKeysFactory(ORDERS_QUERY_KEY) as TQueryKey<"orders"> & {
-  preview: (orderId: string) => any;
-  changes: (orderId: string) => any;
-  lineItems: (orderId: string) => any;
-  shippingOptions: (orderId: string) => any;
+  preview: (orderId: string) => OrdersDetailSuffixKey;
+  changes: (orderId: string) => OrdersDetailSuffixKey;
+  lineItems: (orderId: string) => OrdersDetailSuffixKey;
+  shippingOptions: (orderId: string) => OrdersDetailSuffixKey;
 };
 
 _orderKeys.preview = function (id: string) {
@@ -82,7 +86,7 @@ export const useUpdateOrder = (
   return useMutation({
     mutationFn: (payload: HttpTypes.AdminUpdateOrder) =>
       sdk.admin.orders.$id.mutate({ $id: id, ...payload }),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.detail(id),
       });
@@ -221,7 +225,7 @@ export const useCancelOrder = (
 ) => {
   return useMutation({
     mutationFn: () => sdk.admin.orders.$id.cancel.mutate({ $id: orderId }),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.detail(orderId),
       });
@@ -247,7 +251,7 @@ export const useRequestTransferOrder = (
   return useMutation({
     mutationFn: (payload: HttpTypes.AdminRequestOrderTransfer) =>
       sdk.admin.orders.$id.transfer.mutate({ $id: orderId, ...payload }),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.preview(orderId),
       });
@@ -269,7 +273,7 @@ export const useCancelOrderTransfer = (
   return useMutation({
     mutationFn: () =>
       sdk.admin.orders.$id.transfer.cancel.mutate({ $id: orderId }),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.preview(orderId),
       });

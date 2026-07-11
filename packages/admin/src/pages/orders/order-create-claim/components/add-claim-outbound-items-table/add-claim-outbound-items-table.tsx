@@ -111,7 +111,7 @@ export const AddClaimOutboundItemsTable = ({
       fields: OFFER_PICKER_FIELDS,
     },
     { enabled: canViewOffers }
-  ) as unknown as {
+  ) as {
     offers?: ClaimOutboundOfferPickerRowExtended[]
     count?: number
   }

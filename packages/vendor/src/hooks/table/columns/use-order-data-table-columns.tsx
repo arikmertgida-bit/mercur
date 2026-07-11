@@ -128,7 +128,7 @@ export const useOrderDataTableColumns = (
           
           case "created_at":
           case "updated_at":
-            return columnHelper.accessor(col.field as any, {
+            return columnHelper.accessor(col.field as keyof HttpTypes.AdminOrder, {
               header: () => <DateHeader />,
               cell: ({ getValue }) => {
                 const date = getValue() ? new Date(getValue() as string) : null
@@ -218,10 +218,13 @@ export const useOrderDataTableColumns = (
             }
             
             // Default text column
-            return columnHelper.accessor(col.field as any, {
+            return columnHelper.accessor(col.field as keyof HttpTypes.AdminOrder, {
               header: () => <TextHeader text={col.name} />,
               cell: ({ getValue }) => {
-                const value = getValue()
+                // `col.field` is a dynamic API-provided key, so the accessor's
+                // value can be any field of AdminOrder, not just text — this
+                // column renders it as text either way.
+                const value = getValue() as string | number | undefined
                 return <TextCell text={value || ""} />
               },
             })

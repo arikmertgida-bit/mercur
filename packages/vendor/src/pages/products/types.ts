@@ -6,10 +6,12 @@ export interface ProductAttributePossibleValue {
   attribute_id?: string
 }
 
+type UnknownMetadataValue = unknown
+
 export interface ProductOptionMetadata {
   author?: string
   attribute_id?: string
-  [key: string]: unknown
+  [key: string]: UnknownMetadataValue
 }
 
 export interface ProductInformationalAttributeValue {

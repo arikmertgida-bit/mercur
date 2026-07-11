@@ -12,7 +12,7 @@ import { StringFilter } from "./string-filter"
 
 type Option = {
   label: string
-  value: unknown
+  value: string
 }
 
 export type Filter = {

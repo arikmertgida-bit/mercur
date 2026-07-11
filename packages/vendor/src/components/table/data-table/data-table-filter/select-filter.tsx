@@ -11,7 +11,7 @@ import FilterChip from "./filter-chip"
 import { IFilter } from "./types"
 
 interface SelectFilterProps extends IFilter {
-  options: { label: string; value: unknown }[]
+  options: { label: string; value: string }[]
   readonly?: boolean
   multiple?: boolean
   searchable?: boolean
@@ -76,7 +76,7 @@ export const SelectFilter = ({
     }
   }
 
-  const handleSelect = (value: unknown) => {
+  const handleSelect = (value: string) => {
     const isSelected = selectedParams.get().includes(String(value))
 
     if (isSelected) {

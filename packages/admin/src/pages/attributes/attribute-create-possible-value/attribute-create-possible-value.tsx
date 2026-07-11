@@ -333,8 +333,8 @@ const AttributeCreatePossibleValueInner = () => {
 
       toast.success(t("attributes.createPossibleValues.successToast"));
       handleSuccess(`/settings/attributes/${id}`);
-    } catch (error: any) {
-      toast.error(error.message);
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "An error occurred");
     } finally {
       setIsSaving(false);
     }

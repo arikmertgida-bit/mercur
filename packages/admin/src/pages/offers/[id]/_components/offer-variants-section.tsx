@@ -431,7 +431,7 @@ const useOrderBy = (): DataTableOrderByKey<OfferVariantRow>[] => {
       [
         { key: "title", label: t("fields.title") },
         { key: "sku", label: t("fields.sku") },
-      ] as unknown as DataTableOrderByKey<OfferVariantRow>[],
+      ] as DataTableOrderByKey<OfferVariantRow>[],
     [t],
   )
 }

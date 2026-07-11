@@ -1,5 +1,4 @@
 import { InventoryTypes, ProductVariantDTO } from "@medusajs/types"
-import { OfferDTO } from "@mercurjs/types"
 
 import { Checkbox } from "@medusajs/ui"
 import { createColumnHelper } from "@tanstack/react-table"
@@ -10,7 +9,6 @@ import { InventoryActions } from "./inventory-actions"
 
 interface ExtendedInventoryItem extends InventoryTypes.InventoryItemDTO {
   variants?: ProductVariantDTO[] | null
-  offers?: OfferDTO[] | null
   stocked_quantity?: number
   reserved_quantity?: number
 }
@@ -112,69 +110,7 @@ export const useInventoryTableColumns = () => {
           )
         },
       }),
-      columnHelper.display({
-        id: "product",
-        header: () => (
-          <div
-            className="flex h-full w-full items-center"
-            data-testid="inventory-table-header-product"
-          >
-            <span data-testid="inventory-table-header-product-text">
-              {t("fields.product")}
-            </span>
-          </div>
-        ),
-        cell: ({ row }) => {
-          const productTitle =
-            row.original.offers?.[0]?.product_variant?.product?.title
-
-          if (!productTitle) {
-            return <PlaceholderCell />
-          }
-
-          return (
-            <div className="flex size-full items-center overflow-hidden">
-              <span
-                className="truncate"
-                data-testid={`inventory-table-cell-${row.id}-product-value`}
-              >
-                {productTitle}
-              </span>
-            </div>
-          )
-        },
-      }),
-      columnHelper.accessor("stocked_quantity", {
-        header: () => (
-          <div
-            className="flex h-full w-full items-center"
-            data-testid="inventory-table-header-stocked-quantity"
-          >
-            <span data-testid="inventory-table-header-stocked-quantity-text">
-              {t("fields.inStock")}
-            </span>
-          </div>
-        ),
-        cell: ({ getValue, row }) => {
-          const quantity = getValue()
-
-          if (Number.isNaN(quantity)) {
-            return <PlaceholderCell />
-          }
-
-          return (
-            <div className="flex size-full items-center overflow-hidden">
-              <span
-                className="truncate"
-                data-testid={`inventory-table-cell-${row.id}-stocked_quantity-value`}
-              >
-                {quantity}
-              </span>
-            </div>
-          )
-        },
-      }),
-      columnHelper.accessor("reserved_quantity", {
+      columnHelper.accessor("location_levels", {
         header: () => (
           <div
             className="flex h-full w-full items-center"
@@ -186,9 +122,14 @@ export const useInventoryTableColumns = () => {
           </div>
         ),
         cell: ({ getValue, row }) => {
-          const quantity = getValue()
+          const locations = getValue() ?? []
 
-          if (Number.isNaN(quantity)) {
+          const totalReserved = locations.reduce(
+            (sum, level) => sum + level.reserved_quantity,
+            0
+          )
+
+          if (Number.isNaN(totalReserved)) {
             return <PlaceholderCell />
           }
 
@@ -198,7 +139,41 @@ export const useInventoryTableColumns = () => {
                 className="truncate"
                 data-testid={`inventory-table-cell-${row.id}-reserved_quantity-value`}
               >
-                {quantity}
+                {totalReserved}
+              </span>
+            </div>
+          )
+        },
+      }),
+      columnHelper.accessor("location_levels", {
+        header: () => (
+          <div
+            className="flex h-full w-full items-center"
+            data-testid="inventory-table-header-stocked-quantity"
+          >
+            <span data-testid="inventory-table-header-stocked-quantity-text">
+              {t("fields.inStock")}
+            </span>
+          </div>
+        ),
+        cell: ({ getValue, row }) => {
+          const locations = getValue() ?? []
+          const totalAvailable = locations.reduce(
+            (sum, level) => sum + level.available_quantity,
+            0
+          )
+
+          if (Number.isNaN(totalAvailable)) {
+            return <PlaceholderCell />
+          }
+
+          return (
+            <div className="flex size-full items-center overflow-hidden">
+              <span
+                className="truncate"
+                data-testid={`inventory-table-cell-${row.id}-stocked_quantity-value`}
+              >
+                {totalAvailable}
               </span>
             </div>
           )

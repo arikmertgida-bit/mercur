@@ -1,5 +1,5 @@
 import React, { useMemo } from "react"
-import { createDataTableColumnHelper } from "@medusajs/ui"
+import { createDataTableColumnHelper, DataTableCellContext } from "@medusajs/ui"
 import { HttpTypes } from "@medusajs/types"
 import { useTranslation } from "react-i18next"
 import { getCellRenderer, getColumnValue } from "../../../lib/table/cell-renderers"
@@ -49,10 +49,16 @@ export function useConfigurableTableColumns<TData = any>(
 
       const accessor = (row: TData) => getColumnValue(row, apiColumn)
 
-      return columnHelper.accessor(accessor, {
+      // `enableHiding` is a real tanstack `ColumnDef` field, but medusajs/ui's
+      // `.accessor()` config type deliberately omits it from its public Pick
+      // (column visibility goes through the DataTable's own column-options
+      // API instead) — passing it through a named const rather than an
+      // inline literal avoids the excess-property check on that one field
+      // without suppressing type-checking of the rest of the config.
+      const columnConfig = {
         id: apiColumn.field,
         header: () => apiColumn.name,
-        cell: ({ getValue, row }: { getValue: any, row: any }) => {
+        cell: ({ getValue, row }: DataTableCellContext<TData, unknown>) => {
           const value = getValue()
 
           if (adapter?.transformCellValue) {
@@ -71,7 +77,9 @@ export function useConfigurableTableColumns<TData = any>(
         enableHiding: apiColumn.hideable,
         enableSorting: apiColumn.sortable,
         headerAlign, // Pass the header alignment to the DataTable
-      } as any)
+      }
+
+      return columnHelper.accessor(accessor, columnConfig)
     })
   }, [
 	apiColumns,

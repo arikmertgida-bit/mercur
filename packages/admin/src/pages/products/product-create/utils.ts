@@ -3,12 +3,23 @@ import { AttributeType, ProductAttributeBatchAdd } from "@mercurjs/types"
 import { UseFormReturn } from "react-hook-form"
 import { ProductCreateSchemaType } from "./types"
 
+// Mercur adds seller/attribute fields to the create-product payload that
+// aren't part of stock Medusa's `AdminCreateProduct`.
+export type ProductCreatePayload = HttpTypes.AdminCreateProduct & {
+  seller_ids?: string[]
+  origin_country?: string
+  material?: string
+  mid_code?: string
+  hs_code?: string
+  attributes?: ProductAttributeBatchAdd[]
+}
+
 export const normalizeProductFormValues = (
   values: ProductCreateSchemaType & {
     status: HttpTypes.AdminProductStatus
     regionsCurrencyMap: Record<string, string>
   }
-): HttpTypes.AdminCreateProduct => {
+): ProductCreatePayload => {
   const thumbnail = values.media?.find((media) => media.isThumbnail)?.url
   const images = values.media
     ?.filter((media) => !media.isThumbnail)
@@ -66,14 +77,14 @@ export const normalizeProductFormValues = (
       hasAxis,
       values.regionsCurrencyMap
     ),
-  } as any
+  }
 }
 
 export const normalizeVariants = (
   variants: ProductCreateSchemaType["variants"],
   hasAxis: boolean,
   _regionsCurrencyMap: Record<string, string>
-): any[] => {
+): NonNullable<HttpTypes.AdminCreateProduct["variants"]> => {
   return variants.map((variant) => {
     const opts = variant.options
     const hasOpts = opts && Object.keys(opts).length > 0

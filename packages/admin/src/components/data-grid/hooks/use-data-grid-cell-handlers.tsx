@@ -1,7 +1,7 @@
 import { FocusEvent, MouseEvent, useCallback } from "react"
-import { FieldValues, UseFormSetValue } from "react-hook-form"
+import { FieldValues, Path, PathValue, UseFormSetValue } from "react-hook-form"
 import { DataGridMatrix, DataGridUpdateCommand } from "../models"
-import { DataGridCoordinates } from "../types"
+import { DataGridCellValue, DataGridCoordinates } from "../types"
 
 type UseDataGridCellHandlersOptions<TData, TFieldValues extends FieldValues> = {
   matrix: DataGridMatrix<TData, TFieldValues>
@@ -100,15 +100,15 @@ export const useDataGridCellHandlers = <
   )
 
   const getInputChangeHandler = useCallback(
-    // Using `any` here as the generic type of Path<TFieldValues> will
+    // Using `string` here as the generic type of Path<TFieldValues> will
     // not be inferred correctly.
-    (field: any) => {
-      return (next: any, prev: any) => {
+    (field: string) => {
+      return (next: DataGridCellValue, prev: DataGridCellValue) => {
         const command = new DataGridUpdateCommand({
           next,
           prev,
           setter: (value) => {
-            setValue(field, value, {
+            setValue(field as Path<TFieldValues>, value as PathValue<TFieldValues, Path<TFieldValues>>, {
               shouldDirty: true,
               shouldTouch: true,
             })

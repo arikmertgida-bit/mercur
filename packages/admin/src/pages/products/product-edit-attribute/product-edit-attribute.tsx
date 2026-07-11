@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 
 import {
   EditAttributeForm,
+  type EditAttributeAttribute,
   ProductAttributeBatchPayload,
   RouteDrawer,
   SectionNoAccess,
@@ -25,9 +26,9 @@ export const ProductEditAttribute = () => {
     PRODUCT_DETAIL_QUERY,
   );
 
-  const attached = (product as any)?.attributes?.find(
-    (a: any) => a.id === attribute_id,
-  );
+  const attached = (
+    product as { attributes?: EditAttributeAttribute[] } | undefined
+  )?.attributes?.find((a) => a.id === attribute_id);
 
   const {
     product_attribute: catalogAttribute,

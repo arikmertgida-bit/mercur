@@ -56,16 +56,20 @@ export const Component = () => {
     ? {
         id: catalogAttribute.id,
         name: catalogAttribute.name,
-        handle: (catalogAttribute as any).handle ?? null,
+        handle: (catalogAttribute as { handle?: string | null }).handle ?? null,
         type: catalogAttribute.type,
-        is_variant_axis: !!(catalogAttribute as any).is_variant_axis,
-        is_required: !!(catalogAttribute as any).is_required,
+        is_variant_axis: !!(catalogAttribute as { is_variant_axis?: boolean })
+          .is_variant_axis,
+        is_required: !!(catalogAttribute as { is_required?: boolean })
+          .is_required,
         is_scoped: false,
         values: [],
-        all_values: (catalogAttribute.values ?? []).map((v: any) => ({
-          id: v.id,
-          name: v.name,
-        })),
+        all_values: (catalogAttribute.values ?? []).map(
+          (v: { id: string; name: string }) => ({
+            id: v.id,
+            name: v.name,
+          }),
+        ),
       }
     : undefined;
 

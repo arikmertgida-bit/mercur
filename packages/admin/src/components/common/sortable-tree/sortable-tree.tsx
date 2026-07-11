@@ -335,16 +335,21 @@ export function SortableTree<T extends TreeItem>({
           const { id, depth } = item
           const children = (item[childrenProp] || []) as FlattenedItem[]
 
+          // `FlattenedItem` isn't generic over T — it only guarantees the
+          // flattening metadata (id/parentId/depth/index), not T's own
+          // fields, even though `flatten()` always spreads a real T in.
           const disabled =
             typeof enableDrag === "function"
-              ? !enableDrag(item as unknown as T)
+              ? // @ts-expect-error
+                !enableDrag(item)
               : !enableDrag
 
           return (
             <SortableTreeItem
               key={id}
               id={id}
-              value={renderValue(item as unknown as T)}
+              // @ts-expect-error — see comment above
+              value={renderValue(item)}
               disabled={disabled}
               depth={id === activeId && projected ? projected.depth : depth}
               indentationWidth={indentationWidth}
@@ -366,7 +371,8 @@ export function SortableTree<T extends TreeItem>({
                 depth={activeItem.depth}
                 clone
                 childCount={getChildCount(items, activeId, childrenProp) + 1}
-                value={renderValue(activeItem as unknown as T)}
+                // @ts-expect-error — see comment above (FlattenedItem isn't generic over T)
+                value={renderValue(activeItem)}
                 indentationWidth={0}
               />
             ) : null}

@@ -87,8 +87,8 @@ export const AttributeForm = forwardRef<AttributeFormRef, AttributeFormProps>(
     const handleSubmit = form.handleSubmit(async (data) => {
       try {
         await onSubmit(data)
-      } catch (error) {
-        console.error(error)
+      } catch {
+        // onSubmit's mutation already surfaces the error via toast
       }
     })
 

@@ -36,6 +36,7 @@ import {
 } from "@medusajs/ui";
 
 import type { AdminReservation } from "@medusajs/types";
+import type { OfferInventoryItemLink } from "../../../../offers/common/types";
 import {
   DisplayExtensionZone,
   isOrderActionable,
@@ -367,8 +368,8 @@ const Item = ({
   // the runtime shape.
   const offerInventoryLinks =
     (
-      item as unknown as {
-        offer?: { inventory_item_link?: unknown[] | null };
+      item as {
+        offer?: { inventory_item_link?: OfferInventoryItemLink[] | null };
       }
     ).offer?.inventory_item_link ?? [];
   const isInventoryManaged = !!offerInventoryLinks.length;
@@ -379,7 +380,7 @@ const Item = ({
     item.quantity - item.detail.fulfilled_quantity > 0;
 
   const offerSku =
-    (item as unknown as { offer?: { sku?: string | null } }).offer?.sku ?? null;
+    (item as { offer?: { sku?: string | null } }).offer?.sku ?? null;
   const captionSku = offerSku ?? item.variant_sku ?? null;
 
   return (

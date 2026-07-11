@@ -30,22 +30,10 @@ const Root = <TData,>({
 }: TwoColumnPageProps<TData>) => {
   
   if (showJSON && !data) {
-    if (process.env.NODE_ENV === "development") {
-      console.warn(
-        "`showJSON` is true but no data is provided. To display JSON, provide data prop."
-      )
-    }
-
     showJSON = false
   }
 
   if (showMetadata && !data) {
-    if (process.env.NODE_ENV === "development") {
-      console.warn(
-        "`showMetadata` is true but no data is provided. To display metadata, provide data prop."
-      )
-    }
-
     showMetadata = false
   }
 

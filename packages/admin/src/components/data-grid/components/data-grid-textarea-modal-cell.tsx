@@ -6,7 +6,7 @@ import { Controller, ControllerRenderProps } from "react-hook-form"
 import { useCombinedRefs } from "../../../hooks/use-combined-refs"
 import { useDataGridCell, useDataGridCellError } from "../hooks"
 import { useDataGridContext } from "../context"
-import { DataGridCellProps, InputProps } from "../types"
+import { DataGridCellContainerProps, DataGridCellProps, InputProps } from "../types"
 import { DataGridCellContainer } from "./data-grid-cell-container"
 
 type DataGridExpandableTextCellProps<TData, TValue = any> = DataGridCellProps<
@@ -56,8 +56,8 @@ const Inner = ({
   field: ControllerRenderProps<any, string>
   inputProps: InputProps
   fieldLabel?: string
-  container: any
-  errorProps: any
+  container: DataGridCellContainerProps
+  errorProps: ReturnType<typeof useDataGridCellError>
 }) => {
   const { onChange: _, onBlur, ref, value, ...rest } = field
   const { ref: inputRef, onBlur: onInputBlur, onChange, ...input } = inputProps

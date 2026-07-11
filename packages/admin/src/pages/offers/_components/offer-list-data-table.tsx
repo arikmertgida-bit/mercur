@@ -35,10 +35,11 @@ export const OfferListDataTable = () => {
   const { columns: extended, filters: extFilters } =
     useExtendableTable<OfferDTO>({
       model: "offer",
-      columns: baseColumns.slice(0, -1) as unknown as ColumnDef<
-        OfferDTO,
-        unknown
-      >[],
+      // tanstack's ColumnDef<T, TValue> is contravariant in TValue
+      // (cell/header render props), so a heterogeneous per-column accessor
+      // array can't widen to ColumnDef<T, unknown>[] without a cast.
+      // @ts-expect-error
+      columns: baseColumns.slice(0, -1),
     })
   const columns = useMemo(
     () => [...extended, actionColumn as (typeof extended)[number]],

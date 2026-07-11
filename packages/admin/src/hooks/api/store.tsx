@@ -24,9 +24,11 @@ export const storeQueryKeys = queryKeysFactory(STORE_QUERY_KEY);
 export async function retrieveActiveStore(
   query?: HttpTypes.AdminStoreParams,
 ): Promise<HttpTypes.AdminStoreResponse> {
-  const response = await sdk.admin.stores.query(query);
+  const response = (await sdk.admin.stores.query(
+    query
+  )) as HttpTypes.AdminStoreListResponse;
 
-  const activeStore = (response as any).stores?.[0];
+  const activeStore = response.stores?.[0];
 
   if (!activeStore) {
     throw new ClientError("No active store found", "Not Found", 404);

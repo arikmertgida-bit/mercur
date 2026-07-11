@@ -1,7 +1,7 @@
 # Vendor panel — serves the pre-built Vite dist via nginx.
-# The dist/ directory is produced by running `medusa build` in packages/api
-# (the admin-ui and vendor-ui Mercur modules build the Vite apps as part of
-# the Medusa build pipeline, outputting to apps/vendor/dist/).
+# The dist/ directory is produced by running `bun run build` in apps/vendor
+# (`tsc -b && vite build`) — NOT by `medusa build` in packages/api, which
+# skips the panel Vite output entirely ("Skipping admin build").
 #
 # ARCH-01: BACKEND_URL bake edilmez; container başlatılırken
 # docker-entrypoint.sh tarafından JS bundle içine enjekte edilir.

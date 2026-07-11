@@ -18,12 +18,14 @@ type ActiveOrderReturnSectionProps = {
   orderPreview: HttpTypes.AdminOrderPreview
 }
 
-const readReturnId = (change: unknown): string | undefined => {
+type UnknownValue = unknown
+
+const readReturnId = (change: UnknownValue): string | undefined => {
   if (
     change &&
     typeof change === "object" &&
     "return_id" in change &&
-    typeof (change as { return_id?: unknown }).return_id === "string"
+    typeof (change as { return_id?: UnknownValue }).return_id === "string"
   ) {
     return (change as { return_id: string }).return_id
   }

@@ -29,7 +29,7 @@ const Root = () => {
   const canViewMembers = useCan("members");
   const { members } = useMembers(
     { q: emailValue || undefined, limit: 10 },
-    { placeholderData: (prev: any) => prev, enabled: canViewMembers },
+    { placeholderData: (prev) => prev, enabled: canViewMembers },
   );
 
   const memberList = useMemo(

@@ -400,7 +400,7 @@ export const CommissionRuleEdit = () => {
   const { commission_rate, isPending, isError, error } = useCommissionRule(
     id!,
     { fields: "*rules,*values" }
-  ) as unknown as {
+  ) as {
     commission_rate?: CommissionRate;
     isPending: boolean;
     isError: boolean;

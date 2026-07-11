@@ -34,7 +34,7 @@ const Root = ({ children }: { children?: ReactNode }) => {
     isError,
     error,
   } = useProduct(id!, query, {
-    initialData: initialData as unknown as MercurHttpTypes.AdminProductResponse,
+    initialData: initialData as MercurHttpTypes.AdminProductResponse,
   });
   const product = rawProduct as AdminProductWithSeller | undefined;
 

@@ -96,7 +96,7 @@ export const useCreateProductAttribute = (
 ) => {
   return useMutation({
     mutationFn: (payload: Record<string, any>) =>
-      sdk.admin.productAttributes.mutate(payload as any),
+      sdk.admin.productAttributes.mutate(payload),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: productAttributesQueryKeys.lists(),
@@ -171,7 +171,7 @@ export const useUpsertProductAttributeValues = (
       sdk.admin.productAttributes.$id.values.mutate({
         $id: attributeId,
         ...payload,
-      } as any),
+      }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: productAttributesQueryKeys.detail(attributeId),

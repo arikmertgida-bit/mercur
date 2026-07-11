@@ -133,9 +133,9 @@ export const ProductCreateForm = ({
         normalizeProductFormValues({
           ...payload,
           media: uploadedMedia,
-          status: (isDraftSubmission ? "draft" : "published") as any,
+          status: isDraftSubmission ? "draft" : "published",
           regionsCurrencyMap,
-        }) as any,
+        }),
       );
 
       toast.success(

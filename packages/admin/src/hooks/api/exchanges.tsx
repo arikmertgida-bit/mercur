@@ -70,7 +70,7 @@ export const useCreateExchange = (
   return useMutation({
     mutationFn: (payload: HttpTypes.AdminCreateExchange) =>
       sdk.admin.exchanges.mutate(payload),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.details(),
       })
@@ -96,7 +96,7 @@ export const useCancelExchange = (
 ) => {
   return useMutation({
     mutationFn: () => sdk.admin.exchanges.$id.cancel.mutate({ $id: id }),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.details(),
       })
@@ -130,7 +130,7 @@ export const useAddExchangeInboundItems = (
   return useMutation({
     mutationFn: (payload: HttpTypes.AdminAddExchangeInboundItems) =>
       sdk.admin.exchanges.$id.inbound.items.mutate({ $id: id, ...payload }),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.preview(orderId),
       })
@@ -160,7 +160,7 @@ export const useUpdateExchangeInboundItem = (
         ...payload,
       })
     },
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.preview(orderId),
       })
@@ -185,7 +185,7 @@ export const useRemoveExchangeInboundItem = (
         $id: id,
         $actionId: actionId,
       }),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.details(),
       })
@@ -219,7 +219,7 @@ export const useAddExchangeInboundShipping = (
         $id: id,
         ...payload,
       }),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.preview(orderId),
       })
@@ -248,7 +248,7 @@ export const useUpdateExchangeInboundShipping = (
         $actionId: actionId,
         ...payload,
       }),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.preview(orderId),
       })
@@ -273,7 +273,7 @@ export const useDeleteExchangeInboundShipping = (
         $id: id,
         $actionId: actionId,
       }),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.preview(orderId),
       })
@@ -296,7 +296,7 @@ export const useAddExchangeOutboundItems = (
   return useMutation({
     mutationFn: (payload: HttpTypes.AdminAddExchangeOutboundItems) =>
       sdk.admin.exchanges.$id.outbound.items.mutate({ $id: id, ...payload }),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.preview(orderId),
       })
@@ -326,7 +326,7 @@ export const useUpdateExchangeOutboundItems = (
         ...payload,
       })
     },
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.preview(orderId),
       })
@@ -351,7 +351,7 @@ export const useRemoveExchangeOutboundItem = (
         $id: id,
         $actionId: actionId,
       }),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.details(),
       })
@@ -381,7 +381,7 @@ export const useAddExchangeOutboundShipping = (
         $id: id,
         ...payload,
       }),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.preview(orderId),
       })
@@ -410,7 +410,7 @@ export const useUpdateExchangeOutboundShipping = (
         $actionId: actionId,
         ...payload,
       }),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.preview(orderId),
       })
@@ -435,7 +435,7 @@ export const useDeleteExchangeOutboundShipping = (
         $id: id,
         $actionId: actionId,
       }),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.preview(orderId),
       })
@@ -457,7 +457,7 @@ export const useExchangeConfirmRequest = (
   return useMutation({
     mutationFn: (payload: HttpTypes.AdminRequestExchange) =>
       sdk.admin.exchanges.$id.request.mutate({ $id: id, ...payload }),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: returnsQueryKeys.all,
       })
@@ -487,7 +487,7 @@ export const useCancelExchangeRequest = (
 ) => {
   return useMutation({
     mutationFn: () => sdk.admin.exchanges.$id.request.delete({ $id: id }),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.details(),
       })

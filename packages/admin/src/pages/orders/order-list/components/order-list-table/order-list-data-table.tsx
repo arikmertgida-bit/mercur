@@ -4,6 +4,8 @@ import { useOrderTableQuery } from "@hooks/table/query";
 import { useDataTable } from "@hooks/use-data-table";
 import { IconButton, clx } from "@medusajs/ui";
 import { TriangleRightMini } from "@medusajs/icons";
+import type { HttpTypes } from "@medusajs/types";
+import type { OrderGroupDTO } from "@mercurjs/types";
 import { keepPreviousData } from "@tanstack/react-query";
 import { createColumnHelper, type ColumnDef } from "@tanstack/react-table";
 import {
@@ -47,21 +49,41 @@ export type OrderGroupRow = {
   created_at: Date;
   updated_at: Date;
   customer_name: string;
-  payment_status: string | null;
-  fulfillment_status: string | null;
+  payment_status: HttpTypes.AdminOrder["payment_status"] | null;
+  fulfillment_status: HttpTypes.AdminOrder["fulfillment_status"] | null;
   total: number | null;
   currency_code: string;
   children: OrderGroupRow[];
 };
 
+type OrderGroupOrderRow = Pick<
+  HttpTypes.AdminOrder,
+  | "id"
+  | "display_id"
+  | "created_at"
+  | "updated_at"
+  | "currency_code"
+  | "total"
+  | "payment_status"
+  | "fulfillment_status"
+  | "customer"
+> & {
+  // Joined via `withLinkFields` — not part of the base AdminOrder type.
+  seller?: { name?: string | null } | null;
+};
+
+type OrderGroupWithOrders = OrderGroupDTO & {
+  orders?: OrderGroupOrderRow[];
+};
+
 function transformOrderGroups(
-  orderGroups: any[],
+  orderGroups: OrderGroupWithOrders[],
   t: (key: string, options?: Record<string, unknown>) => string,
 ): OrderGroupRow[] {
   return orderGroups.map((group) => {
     const orders = group.orders ?? [];
 
-    const orderIds = orders.map((o: any) => `#${o.display_id}`).join(", ");
+    const orderIds = orders.map((o) => `#${o.display_id}`).join(", ");
 
     const firstOrder = orders[0];
     const customerName = firstOrder?.customer
@@ -70,7 +92,7 @@ function transformOrderGroups(
 
     const currencyCode = firstOrder?.currency_code ?? "usd";
 
-    const children: OrderGroupRow[] = orders.map((order: any) => {
+    const children: OrderGroupRow[] = orders.map((order) => {
       const name = order.customer
         ? `${order.customer.first_name ?? ""} ${order.customer.last_name ?? ""}`.trim()
         : "-";
@@ -263,7 +285,7 @@ const useColumns = () => {
           }
           const status = getValue();
           if (!status) return "-";
-          return <PaymentStatusCell status={status as any} />;
+          return <PaymentStatusCell status={status} />;
         },
       }),
       columnHelper.accessor("fulfillment_status", {
@@ -274,7 +296,7 @@ const useColumns = () => {
           }
           const status = getValue();
           if (!status) return "-";
-          return <FulfillmentStatusCell status={status as any} />;
+          return <FulfillmentStatusCell status={status} />;
         },
       }),
       columnHelper.accessor("total", {
@@ -295,7 +317,11 @@ const useColumns = () => {
 
   const { columns: extended, filters } = useExtendableTable<OrderGroupRow>({
     model: "order",
-    columns: base as unknown as ColumnDef<OrderGroupRow, unknown>[],
+    // tanstack's ColumnDef<T, TValue> is contravariant in TValue (cell/header
+    // render props), so a heterogeneous per-column accessor array can't widen
+    // to ColumnDef<T, unknown>[] without a cast.
+    // @ts-expect-error
+    columns: base,
   });
 
   return { columns: extended, filters };

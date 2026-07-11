@@ -35,6 +35,22 @@ import { TextCell, TextHeader } from "../../../components/table/table-cells/comm
 
 const columnHelper = createColumnHelper<HttpTypes.AdminOrder>()
 
+type FieldValue = string | number | boolean | Date | null | undefined
+
+function getFieldValue(row: HttpTypes.AdminOrder, field: string): FieldValue {
+  let current: HttpTypes.AdminOrder | Record<string, FieldValue> | FieldValue =
+    row
+
+  for (const key of field.split(".")) {
+    if (!current || typeof current !== "object" || current instanceof Date) {
+      return undefined
+    }
+    current = (current as Record<string, FieldValue>)[key]
+  }
+
+  return current as FieldValue
+}
+
 /**
  * Hook to build columns dynamically based on API columns response
  */
@@ -128,7 +144,7 @@ export const useOrderDataTableColumns = (
           
           case "created_at":
           case "updated_at":
-            return columnHelper.accessor(col.field as any, {
+            return columnHelper.accessor(col.field as "created_at" | "updated_at", {
               header: () => <DateHeader />,
               cell: ({ getValue }) => {
                 const date = getValue() ? new Date(getValue() as string) : null
@@ -201,30 +217,22 @@ export const useOrderDataTableColumns = (
             })
           
           default:
-            // Handle relationship fields (e.g., customer.email)
-            if (col.field.includes(".")) {
-              const [relation, field] = col.field.split(".")
-              return columnHelper.accessor((row: any) => {
-                const relationData = row[relation]
-                return relationData?.[field] || ""
-              }, {
+            // Handle relationship fields (e.g., customer.email) and any
+            // other API-driven column whose field isn't a static key of
+            // AdminOrder.
+            return columnHelper.accessor(
+              (row) => getFieldValue(row, col.field),
+              {
                 id: col.id,
                 header: () => <TextHeader text={col.name} />,
                 cell: ({ getValue }) => {
                   const value = getValue()
-                  return <TextCell text={value || ""} />
+                  return (
+                    <TextCell text={typeof value === "string" ? value : ""} />
+                  )
                 },
-              })
-            }
-            
-            // Default text column
-            return columnHelper.accessor(col.field as any, {
-              header: () => <TextHeader text={col.name} />,
-              cell: ({ getValue }) => {
-                const value = getValue()
-                return <TextCell text={value || ""} />
-              },
-            })
+              }
+            )
         }
       })
   }, [apiColumns, visibleColumns])

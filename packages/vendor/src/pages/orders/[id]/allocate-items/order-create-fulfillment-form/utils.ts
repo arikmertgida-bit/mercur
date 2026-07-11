@@ -1,3 +1,5 @@
+import { OfferInventoryLinkRow } from "@lib/inventory-preview"
+
 export type AllocationQuantityMap = Record<string, number | string>
 export type AllocationSelectedMap = Record<string, boolean>
 
@@ -5,7 +7,7 @@ type AllocatableItem = {
   id: string
   quantity: number
   detail?: { fulfilled_quantity?: number | null } | null
-  offer?: { inventory_item_link?: unknown[] | null } | null
+  offer?: { inventory_item_link?: OfferInventoryLinkRow[] | null } | null
 }
 
 type AllocatableReservation = { line_item_id?: string | null }

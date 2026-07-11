@@ -74,13 +74,13 @@ export const metadataFormSchema = z.array(
  */
 export function partialFormValidation<TForm extends FieldValues>(
   form: UseFormReturn<TForm>,
-  fields: FieldPath<any>[],
+  fields: FieldPath<TForm>[],
   schema: z.ZodSchema<any>
 ) {
-  form.clearErrors(fields as any)
+  form.clearErrors(fields)
 
   const values = fields.reduce((acc, key) => {
-    acc[key] = form.getValues(key as any)
+    acc[key] = form.getValues(key)
     return acc
   }, {} as Record<string, unknown>)
 
@@ -88,7 +88,9 @@ export function partialFormValidation<TForm extends FieldValues>(
 
   if (!validationResult.success) {
     validationResult.error.errors.forEach(({ path, message, code }) => {
-      form.setError(path.join(".") as any, {
+      // Runtime path built from the schema's own validation result — can't
+      // be statically narrowed to react-hook-form's FieldPath literal union.
+      form.setError(path.join(".") as FieldPath<TForm>, {
         type: code,
         message,
       })

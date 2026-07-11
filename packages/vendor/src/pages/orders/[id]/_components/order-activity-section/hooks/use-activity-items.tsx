@@ -156,14 +156,14 @@ export const useActivityItems = (order: ExtendedAdminOrder): Activity[] => {
       items.push({
         title: t("orders.activity.events.fulfillment.created"),
         timestamp: fulfillment.created_at,
-        children: <FulfillmentCreatedBody fulfillment={fulfillment as any} />,
+        children: <FulfillmentCreatedBody fulfillment={fulfillment} />,
       })
 
       if (fulfillment.delivered_at) {
         items.push({
           title: t("orders.activity.events.fulfillment.delivered"),
           timestamp: fulfillment.delivered_at,
-          children: <FulfillmentCreatedBody fulfillment={fulfillment as any} />,
+          children: <FulfillmentCreatedBody fulfillment={fulfillment} />,
         })
       }
 
@@ -172,7 +172,7 @@ export const useActivityItems = (order: ExtendedAdminOrder): Activity[] => {
           title: t("orders.activity.events.fulfillment.shipped"),
           timestamp: fulfillment.shipped_at,
           children: (
-            <FulfillmentCreatedBody fulfillment={fulfillment as any} isShipment />
+            <FulfillmentCreatedBody fulfillment={fulfillment} isShipment />
           ),
         })
       }
@@ -279,7 +279,7 @@ export const useActivityItems = (order: ExtendedAdminOrder): Activity[] => {
 
       const translationKey = `orders.activity.events.edit.${edit.status}` as const
       items.push({
-        title: t(translationKey as any, {
+        title: t(translationKey, {
           editId: edit.id.slice(-7),
         }),
         timestamp:
