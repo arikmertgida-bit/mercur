@@ -13,6 +13,9 @@ import {
     isVariableDeclaration,
     isVariableDeclarator,
     isArrayExpression,
+    type ObjectMethod,
+    type ObjectProperty,
+    type SpreadElement,
 } from "@babel/types"
 
 let traverse: typeof _traverse
@@ -27,6 +30,27 @@ if (typeof _traverse === "function") {
     // @ts-expect-error - see comment above: `.default` isn't part of @types/babel__traverse's declared shape
     traverse = _traverse.default
 }
+
+/** Root node accepted by `traverse` — aligned with @babel/traverse's declared input. */
+export type TraverseRoot = Parameters<typeof traverse>[0]
+
+export type {
+    AssignmentExpression,
+    ExportNamedDeclaration,
+    ExportSpecifier,
+    Expression,
+    Node,
+    ObjectMethod,
+    ObjectProperty,
+    SpreadElement,
+    VariableDeclaration,
+    VariableDeclarator,
+} from "@babel/types"
+
+export type ObjectExpressionProperty =
+    | ObjectProperty
+    | ObjectMethod
+    | SpreadElement
 
 export {
     parse,

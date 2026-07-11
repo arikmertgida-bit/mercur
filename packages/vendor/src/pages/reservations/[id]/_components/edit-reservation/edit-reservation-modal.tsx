@@ -30,7 +30,7 @@ export const ReservationEdit = () => {
 
   const { inventory_levels } = useInventoryItemLevels(inventoryItem?.id, undefined, {
     enabled: !!inventoryItem?.id,
-  }) as any
+  })
 
   const { stock_locations } = useStockLocations(
     undefined,

@@ -5,7 +5,7 @@ import {
   UseQueryOptions,
   UseMutationOptions,
 } from "@tanstack/react-query"
-import { client } from "../../lib/client"
+import { adminMessagesApi } from "../../lib/messaging-api"
 import { ClientError } from "@mercurjs/client"
 
 const FILTERS_KEY = "admin_messaging_filters" as const
@@ -47,8 +47,7 @@ export const useAdminFilters = (
 ) => {
   const { data, ...rest } = useQuery({
     queryKey: [FILTERS_KEY],
-    queryFn: async () =>
-      (client as any).admin.messages.filters.query() as Promise<FilterListResponse>,
+    queryFn: async () => adminMessagesApi.filters.query(),
     ...options,
   })
 
@@ -65,8 +64,7 @@ export const useCreateFilter = (
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: (payload) =>
-      (client as any).admin.messages.filters.mutate(payload) as Promise<{ filter_rule: FilterRuleDTO }>,
+    mutationFn: (payload) => adminMessagesApi.filters.mutate(payload),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: [FILTERS_KEY] })
       options?.onSuccess?.(data, variables, context)
@@ -80,14 +78,14 @@ export const useUpdateFilter = (
   options?: UseMutationOptions<
     { filter_rule: FilterRuleDTO },
     ClientError,
-    Record<string, any>
+    Record<string, string | boolean | null | undefined>
   >
 ) => {
   const queryClient = useQueryClient()
 
   return useMutation({
     mutationFn: (payload) =>
-      (client as any).admin.messages.filters.$id.mutate({ $id: id, ...payload }) as Promise<{ filter_rule: FilterRuleDTO }>,
+      adminMessagesApi.filters.$id.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: [FILTERS_KEY] })
       options?.onSuccess?.(data, variables, context)
@@ -102,8 +100,7 @@ export const useDeleteFilter = (
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: (id: string) =>
-      (client as any).admin.messages.filters.$id.delete({ $id: id }) as Promise<{ id: string; deleted: boolean }>,
+    mutationFn: (id: string) => adminMessagesApi.filters.$id.delete({ $id: id }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: [FILTERS_KEY] })
       options?.onSuccess?.(data, variables, context)
@@ -118,8 +115,7 @@ export const useAdminBlockedMessages = (
 ) => {
   const { data, ...rest } = useQuery({
     queryKey: [BLOCKED_KEY, query],
-    queryFn: async () =>
-      (client as any).admin.messages.blocked.query(query ?? {}) as Promise<BlockedListResponse>,
+    queryFn: async () => adminMessagesApi.blocked.query(query ?? {}),
     ...options,
   })
 

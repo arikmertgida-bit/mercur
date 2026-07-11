@@ -16,11 +16,11 @@ import {
 
 export type GetOrderGroupsListWorkflowInput = {
   fields: string[]
-  variables?: Record<string, any> & {
+  variables?: {
     skip?: number
     take?: number
     order?: Record<string, string>
-  }
+  } & Record<string, string | number | boolean | string[] | Record<string, string> | undefined>
   sellerId?: string | string[]
 }
 
@@ -86,13 +86,17 @@ export const getOrderGroupsListWorkflow = createWorkflow(
           if (!group.orders) continue
 
           if (sellerIds) {
-            group.orders = group.orders.filter((order: any) =>
+            group.orders = (group.orders as Array<OrderDetailDTO & { seller?: { id: string } }>).filter(
+              (order) =>
               order.seller?.id ? sellerIds.has(order.seller.id) : false
             )
           }
 
           for (const order of group.orders) {
-            const order_ = order as OrderDetailDTO
+            const order_ = order as OrderDetailDTO & {
+              payment_collections?: OrderDetailDTO["payment_collections"]
+              fulfillments?: OrderDetailDTO["fulfillments"]
+            }
 
             order_.payment_status = getLastPaymentStatus(
               order_
@@ -102,12 +106,10 @@ export const getOrderGroupsListWorkflow = createWorkflow(
             ) as OrderDetailDTO["fulfillment_status"]
 
             if (!requiredPaymentFields) {
-              // @ts-ignore
-              delete order_.payment_collections
+              Reflect.deleteProperty(order_ as object, "payment_collections")
             }
             if (!requiredFulfillmentFields) {
-              // @ts-ignore
-              delete order_.fulfillments
+              Reflect.deleteProperty(order_ as object, "fulfillments")
             }
           }
         }
@@ -119,6 +121,6 @@ export const getOrderGroupsListWorkflow = createWorkflow(
       }
     )
 
-    return new WorkflowResponse(aggregatedOrderGroups as any)
+    return new WorkflowResponse(aggregatedOrderGroups)
   }
 )

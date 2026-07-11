@@ -49,7 +49,7 @@ export const PromotionListDataTable = () => {
 
   const { table } = useDataTable({
     data: (promotions ?? []) as HttpTypes.AdminPromotion[],
-    columns: columns as any,
+    columns,
     count,
     enablePagination: true,
     pageSize: PAGE_SIZE,
@@ -157,10 +157,7 @@ const useColumns = () => {
   const { columns: extended, filters } =
     useExtendableTable<HttpTypes.AdminPromotion>({
       model: "promotion",
-      columns: base as unknown as ColumnDef<
-        HttpTypes.AdminPromotion,
-        unknown
-      >[],
+      columns: base,
     });
 
   const columns = useMemo(

@@ -1,6 +1,8 @@
 import { logger } from "./logger";
 
-export function handleError(error: unknown) {
+type HandledError = string | Error;
+
+export function handleError(error: HandledError) {
   logger.break();
   logger.error(
     `Something went wrong. Please check the error below for more details.`
@@ -16,4 +18,18 @@ export function handleError(error: unknown) {
 
   logger.break();
   process.exit(1);
+}
+
+export function handleCaughtError(error: HandledError | object): void {
+  if (typeof error === "string") {
+    handleError(error);
+    return;
+  }
+
+  if (error instanceof Error) {
+    handleError(error);
+    return;
+  }
+
+  handleError(String(error));
 }

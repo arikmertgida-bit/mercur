@@ -1,6 +1,7 @@
 import { useMemo } from "react"
 import { createColumnHelper, type ColumnDef } from "@tanstack/react-table"
-import type { CustomColumn, SectionAction } from "@mercurjs/dashboard-sdk"
+import type { CustomColumn, CustomListExtension, SectionAction } from "@mercurjs/dashboard-sdk"
+import type { JsonRecord } from "@mercurjs/types"
 
 import { useExtension } from "./context"
 
@@ -11,18 +12,18 @@ function columnId<TData>(col: ColumnDef<TData, unknown>): string | undefined {
   )
 }
 
-export type UseExtendableTableProps<TData> = {
+export type UseExtendableTableProps<TData, TValue = never> = {
   /** Model whose custom-fields `list` block extends this table (e.g. `product`). */
   model: string
   /** Base columns to extend. */
-  columns: ColumnDef<TData, unknown>[]
+  columns: ColumnDef<TData, TValue>[]
 }
 
 export type ExtendableTable<TData> = {
   /** Base columns with custom override/add/hide/order applied. */
   columns: ColumnDef<TData, unknown>[]
   /** Extra list filters contributed by custom-fields configs. */
-  filters: unknown[]
+  filters: CustomListExtension["filters"]
   /** Extra multi-select bulk actions (rank-sorted). */
   bulkActions: SectionAction[]
 }
@@ -35,10 +36,10 @@ export type ExtendableTable<TData> = {
  * `viewDefaults.columnOrder` reorders. Also surfaces the config's `filters` and
  * `bulkActions` for the caller to render.
  */
-export function useExtendableTable<TData>({
+export function useExtendableTable<TData, TValue = never>({
   model,
   columns: baseColumns,
-}: UseExtendableTableProps<TData>): ExtendableTable<TData> {
+}: UseExtendableTableProps<TData, TValue>): ExtendableTable<TData> {
   const ext = useExtension().getListExtension(model)
 
   return useMemo(() => {
@@ -50,7 +51,7 @@ export function useExtendableTable<TData>({
         cell: ({ row }) => {
           const Comp = c.component
           if (!Comp) return null
-          const value = (row.original as Record<string, unknown>)?.[c.id]
+          const value = (row.original as JsonRecord)?.[c.id]
           return <Comp row={row.original} value={value} />
         },
       }) as ColumnDef<TData, unknown>

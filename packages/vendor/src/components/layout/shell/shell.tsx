@@ -94,7 +94,7 @@ const Gutter = ({ children }: PropsWithChildren) => {
 }
 
 const Breadcrumbs = () => {
-  const matches = useMatches() as unknown as UIMatch<
+  const matches = useMatches() as UIMatch<
     unknown,
     {
       breadcrumb?: (match?: UIMatch) => string | ReactNode

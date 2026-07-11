@@ -95,7 +95,7 @@ const useColumns = () => {
   const base = useCustomerTableColumns();
   const { columns, filters } = useExtendableTable<HttpTypes.AdminCustomer>({
     model: "customer",
-    columns: base as unknown as ColumnDef<HttpTypes.AdminCustomer, unknown>[],
+    columns: base,
   });
 
   return { columns: useMemo(() => [...columns], [columns]), filters };

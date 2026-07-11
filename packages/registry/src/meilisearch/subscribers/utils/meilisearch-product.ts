@@ -3,11 +3,37 @@ import { z } from 'zod'
 import { MedusaContainer } from '@medusajs/framework'
 import { IEventBusModuleService } from '@medusajs/framework/types'
 import { ContainerRegistrationKeys, Modules, arrayDifference } from '@medusajs/framework/utils'
+import { JsonRecord } from '@mercurjs/types'
 
 import { MeilisearchProductValidator } from '../../modules/meilisearch/types'
 import { MeilisearchEvents } from '../../modules/meilisearch/types'
 
 const CHUNK_SIZE = 100
+
+type ProductOptionGraph = {
+  title?: string
+  values?: Array<{ value: string }>
+}
+
+type VariantOptionGraph = {
+  value: string
+  option?: { title: string }
+}
+
+type MeilisearchVariantGraph = JsonRecord & {
+  options?: VariantOptionGraph[]
+}
+
+type MeilisearchProductGraph = JsonRecord & {
+  id: string
+  options?: ProductOptionGraph[]
+  variants?: MeilisearchVariantGraph[]
+  sellers?: Array<{ id: string }> | { id: string } | null
+}
+
+type SellerProductsGraph = {
+  products?: Array<{ id: string }>
+}
 
 export function chunkArray<T>(arr: T[], size: number): T[][] {
   const chunks: T[][] = []
@@ -41,26 +67,23 @@ export async function filterProductsByStatus(
   }
 }
 
-function flattenProductOptions(options: any[]): Record<string, string>[] {
+function flattenProductOptions(options: ProductOptionGraph[]): Record<string, string>[] {
   return (options ?? [])
-    .filter((option: any) => option?.title && option?.values)
-    .flatMap((option: any) =>
-      option.values.map((value: any) => ({
-        [option.title.toLowerCase()]: value.value,
+    .filter((option) => option?.title && option?.values)
+    .flatMap((option) =>
+      (option.values ?? []).map((value) => ({
+        [option.title!.toLowerCase()]: value.value,
       }))
     )
 }
 
-function flattenVariantOptions(variant: any): Record<string, unknown> {
-  return (variant.options ?? []).reduce(
-    (entry: Record<string, unknown>, item: any) => {
-      if (item?.option?.title) {
-        entry[item.option.title.toLowerCase()] = item.value
-      }
-      return entry
-    },
-    { ...variant }
-  )
+function flattenVariantOptions(variant: MeilisearchVariantGraph): JsonRecord {
+  return (variant.options ?? []).reduce<JsonRecord>((entry, item) => {
+    if (item?.option?.title) {
+      entry[item.option.title.toLowerCase()] = item.value
+    }
+    return entry
+  }, { ...variant })
 }
 
 export async function findAndTransformMeilisearchProducts(
@@ -94,11 +117,11 @@ export async function findAndTransformMeilisearchProducts(
       : { status: 'published' },
   })
 
-  const transformed = products.map((product: any) => {
+  const transformed = (products as MeilisearchProductGraph[]).map((product) => {
     const { sellers, ...rest } = product
     return {
       ...rest,
-      options: flattenProductOptions(product.options),
+      options: flattenProductOptions(product.options ?? []),
       variants: (product.variants ?? []).map(flattenVariantOptions),
       seller: Array.isArray(sellers) ? (sellers[0] ?? null) : (sellers ?? null),
     }
@@ -123,8 +146,9 @@ export async function reindexSellerProducts(
       filters: { id: sellerId },
     })
 
+    const seller = sellers[0] as SellerProductsGraph | undefined
     const productIds: string[] =
-      (sellers[0] as any)?.products?.map((p: any) => p.id) ?? []
+      seller?.products?.map((p) => p.id) ?? []
 
     if (!productIds.length) {
       return
@@ -143,10 +167,10 @@ export async function reindexSellerProducts(
         })
       )
     )
-  } catch (error: unknown) {
+  } catch (error) {
     logger.error(
       `Meilisearch: Failed to process seller.${action} for seller ${sellerId}:`,
-      error as Error
+      error instanceof Error ? error : new Error(String(error))
     )
     throw error
   }

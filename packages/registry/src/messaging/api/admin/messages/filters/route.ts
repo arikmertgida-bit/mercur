@@ -37,7 +37,7 @@ export const POST = async (
   const { match_type, pattern, description, is_enabled } = req.validatedBody
 
   // Custom rules cannot use regex match type
-  if (match_type === "regex" as any) {
+  if (match_type === "regex") {
     throw new MedusaError(
       MedusaError.Types.INVALID_DATA,
       "Regex match type is reserved for built-in rules only"

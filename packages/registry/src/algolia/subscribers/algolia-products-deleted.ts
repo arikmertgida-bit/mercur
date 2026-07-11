@@ -22,10 +22,10 @@ export default async function algoliaProductsDeletedHandler({
     logger.debug(
       `Algolia sync: Successfully deleted products ${event.data.ids.join(', ')}`
     )
-  } catch (error: unknown) {
+  } catch (error) {
     logger.error(
       `Algolia delete failed for products ${event.data.ids.join(', ')}:`,
-      error as Error
+      error instanceof Error ? error : new Error(String(error))
     )
     throw error
   }

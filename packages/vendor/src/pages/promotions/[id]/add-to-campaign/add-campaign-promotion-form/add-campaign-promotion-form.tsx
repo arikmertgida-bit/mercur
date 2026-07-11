@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { AdminCampaign, AdminPromotion } from "@medusajs/types"
 import { Button, RadioGroup, Select, Text, toast } from "@medusajs/ui"
 import { useEffect } from "react"
-import { useForm, useWatch } from "react-hook-form"
+import { UseFormReturn, useForm, useWatch } from "react-hook-form"
 import { Trans, useTranslation } from "react-i18next"
 import * as zod from "zod"
 import { Form } from "@components/common/form"
@@ -22,12 +22,17 @@ const EditPromotionSchema = zod.object({
   campaign_choice: zod.enum(["none", "existing"]).optional(),
 })
 
-export const AddCampaignPromotionFields = ({
+type CampaignFieldValues = {
+  campaign_id?: string | null
+  campaign_choice?: "none" | "existing" | "new"
+}
+
+export const AddCampaignPromotionFields = <T extends CampaignFieldValues>({
   form,
   campaigns,
   withNewCampaign = true,
 }: {
-  form: any
+  form: UseFormReturn<T>
   campaigns: AdminCampaign[]
   withNewCampaign?: boolean
 }) => {

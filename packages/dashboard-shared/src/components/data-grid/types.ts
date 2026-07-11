@@ -1,3 +1,4 @@
+import type { JsonValue } from "@mercurjs/types"
 import {
   CellContext,
   ColumnDef,
@@ -26,11 +27,11 @@ export type DataGridCoordinates = {
   col: number
 }
 
-export interface DataGridCellProps<TData = unknown, TValue = any> {
+export interface DataGridCellProps<TData = JsonValue, TValue = JsonValue> {
   context: CellContext<TData, TValue>
 }
 
-export interface DataGridCellContext<TData = unknown, TValue = any>
+export interface DataGridCellContext<TData = JsonValue, TValue = JsonValue>
   extends CellContext<TData, TValue> {
   /**
    * The index of the column in the grid.
@@ -68,7 +69,7 @@ export interface InputProps {
   ref: RefObject<HTMLElement>
   onBlur: () => void
   onFocus: () => void
-  onChange: (next: any, prev: any) => void
+  onChange: (next: JsonValue, prev: JsonValue) => void
   "data-row": number
   "data-col": number
   "data-cell-id": string
@@ -130,7 +131,7 @@ export type InternalColumnMeta<TData, TFieldValues extends FieldValues> = {
     }
   | { field?: null | undefined; type?: never }
 ) &
-  ColumnMeta<TData, any>
+  ColumnMeta<TData, JsonValue>
 
 export type GridCell<TFieldValues extends FieldValues> = {
   field: FieldPath<TFieldValues>

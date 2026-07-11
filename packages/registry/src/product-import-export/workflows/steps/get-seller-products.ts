@@ -6,6 +6,10 @@ type GetSellerProductsStepInput = {
   seller_id: string
 }
 
+type ProductSellerRelation = {
+  product: Record<string, string | number | boolean | null>
+}
+
 export const getSellerProductsStep = createStep(
   "get-seller-products",
   async (input: GetSellerProductsStepInput, { container }) => {
@@ -31,7 +35,7 @@ export const getSellerProductsStep = createStep(
       },
     })
 
-    const products = relations.map((r: any) => r.product)
+    const products = (relations as ProductSellerRelation[]).map((relation) => relation.product)
 
     return new StepResponse(products)
   }

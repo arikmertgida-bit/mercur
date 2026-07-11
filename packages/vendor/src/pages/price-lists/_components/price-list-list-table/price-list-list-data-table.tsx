@@ -82,7 +82,7 @@ const useColumns = () => {
   const base = usePricingTableColumns();
   const { columns: extended, filters } = useExtendableTable<ExtendedPriceList>({
     model: "price_list",
-    columns: base as unknown as ColumnDef<ExtendedPriceList, unknown>[],
+    columns: base,
   });
 
   const columns = useMemo(

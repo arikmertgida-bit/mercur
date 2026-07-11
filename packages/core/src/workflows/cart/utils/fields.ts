@@ -1,3 +1,7 @@
+import type { BigNumberInput, LineItemAdjustmentDTO, LineItemTaxLineDTO } from "@medusajs/framework/types"
+import type { JsonRecord } from "@mercurjs/types"
+import type { PrepareVariantLineItemInput } from "./prepare-line-item-data"
+
 export const cartFieldsForRefreshSteps = [
     "id",
     "email",
@@ -156,3 +160,32 @@ export const cartFieldsForPricingContext = [
     "email",
     "customer.groups.id",
 ]
+
+export type CartLineItemWithOffer = {
+    id?: string
+    quantity: BigNumberInput
+    unit_price?: BigNumberInput
+    is_tax_inclusive?: boolean
+    offer?: {
+        id?: string
+        seller_id?: string
+        shipping_profile_id?: string
+        inventory_items?: Array<{
+            id: string
+            requires_shipping?: boolean
+            location_levels?: Array<{
+                location_id: string
+                available_quantity?: BigNumberInput
+            }>
+        }>
+    } | null
+    variant?: PrepareVariantLineItemInput
+    tax_lines?: LineItemTaxLineDTO[]
+    adjustments?: LineItemAdjustmentDTO[]
+    title?: string
+    subtitle?: string
+    thumbnail?: string
+    requires_shipping?: boolean
+    product_id?: string
+    metadata?: JsonRecord | null
+}

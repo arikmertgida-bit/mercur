@@ -1,6 +1,7 @@
-import { type Control } from "react-hook-form"
+import { type Control, type FieldValues } from "react-hook-form"
 import { Input, Switch, Textarea } from "@medusajs/ui"
 import type { CustomFormField } from "@mercurjs/dashboard-sdk"
+import type { JsonRecord } from "@mercurjs/types"
 import { Form } from "../components/common/form"
 import { useExtension } from "./context"
 
@@ -19,9 +20,10 @@ const ZOD_WRAPPER_TYPES = new Set([
 ])
 
 type ZodDef = { type?: string; innerType?: { def?: ZodDef } }
+type ZodSchemaWithDef = { def?: ZodDef }
 
 function zodType(field: CustomFormField): FieldControlType {
-  let def = (field.validation as unknown as { def?: ZodDef })?.def
+  let def = (field.validation as ZodSchemaWithDef)?.def
 
   while (def && ZOD_WRAPPER_TYPES.has(def.type ?? "")) {
     def = def.innerType?.def
@@ -37,11 +39,13 @@ function zodType(field: CustomFormField): FieldControlType {
   }
 }
 
+type ExtensionFormValues = FieldValues & { additional_data: JsonRecord }
+
 type FieldProps = {
   name: string
   field: CustomFormField
-  control: Control<any>
-  data?: unknown
+  control: Control<ExtensionFormValues>
+  data?: JsonRecord
 }
 
 const ExtensionField = ({ name, field, control }: FieldProps) => {
@@ -96,8 +100,8 @@ export type FormExtensionZoneProps = {
   model: string
   zone: string
   tab?: string
-  control: Control<any>
-  data?: unknown
+  control: Control<ExtensionFormValues>
+  data?: JsonRecord
 }
 
 /**

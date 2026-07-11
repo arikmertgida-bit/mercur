@@ -11,7 +11,7 @@ const TELEMETRY_URL = process.env.MERCUR_TELEMETRY_PROXY_URL || 'https://telemet
 
 export interface TelemetryEvent {
     type: string;
-    payload?: Record<string, any>;
+    payload?: Record<string, string | number | boolean | null | string[]>;
 }
 
 
@@ -36,7 +36,7 @@ export const showTelemetryNoticeIfNeeded = () => {
         return;
     }
 
-    console.error(
+    process.stderr.write(
         [
             "",
             "Mercur collects anonymous usage data to improve the CLI experience.",
@@ -44,7 +44,7 @@ export const showTelemetryNoticeIfNeeded = () => {
             `Or by setting ${highlighter.info("MERCUR_DISABLE_TELEMETRY=true")}`,
             `Learn more: ${highlighter.info(TELEMETRY_DOCS_URL)}`,
             "",
-        ].join("\n")
+        ].join("\n") + "\n"
     );
 }
 

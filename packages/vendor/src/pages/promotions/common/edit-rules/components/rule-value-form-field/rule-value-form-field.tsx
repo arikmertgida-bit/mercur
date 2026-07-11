@@ -14,8 +14,15 @@ import { useCurrentSeller } from "../../../../../../hooks/api/sellers";
 import { useComboboxData } from "../../../../../../hooks/use-combobox-data";
 import { sdk } from "../../../../../../lib/client";
 
+import { UseFormReturn, useWatch } from "react-hook-form";
+import { CreatePromotionSchemaType } from "../../../../promotion-create/components/create-promotion-form/form-schema";
+
+type PromotionRuleField = {
+  attribute: string;
+};
+
 type RuleValueFormFieldType = {
-  form: any;
+  form: UseFormReturn<CreatePromotionSchemaType>;
   identifier: string;
   scope:
     | "application_method.buy_rules"
@@ -23,7 +30,7 @@ type RuleValueFormFieldType = {
     | "application_method.target_rules";
   name: string;
   operator: string;
-  fieldRule: any;
+  fieldRule: PromotionRuleField;
   attributes: HttpTypes.AdminRuleAttributeOption[];
   ruleType: RuleTypeValues;
   applicationMethodTargetType: ApplicationMethodTargetTypeValues | undefined;

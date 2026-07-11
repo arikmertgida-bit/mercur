@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod"
+import { JsonRecord } from "@mercurjs/types"
 import { VendorExtendedAdminServiceZone } from "@custom-types/stock-location"
 import { Button, ProgressStatus, ProgressTabs, toast } from "@medusajs/ui"
 import { useForm, useWatch } from "react-hook-form"
@@ -118,7 +119,7 @@ export function CreateShippingOptionsForm({
         provider_id: data.provider_id,
         price_type: data.price_type,
         prices: [...currencyPrices, ...regionPrices],
-        data: fulfillmentOptionData as unknown as Record<string, unknown>,
+        data: fulfillmentOptionData as JsonRecord,
         rules: [
           {
             value: isReturn ? "true" : "false",

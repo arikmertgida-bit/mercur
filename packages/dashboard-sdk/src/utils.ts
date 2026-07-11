@@ -1,8 +1,13 @@
 import fs from "fs"
 import path from "path"
 import type { ParserOptions } from "@babel/parser"
-import { traverse } from "./babel"
+import { traverse, type TraverseRoot } from "./babel"
 import { VALID_FILE_EXTENSIONS } from "./constants"
+import type { MedusaConfigShape } from "./types"
+
+type NestedDefaultExport<T extends object> = T & {
+    default?: NestedDefaultExport<T>
+}
 
 export function normalizePath(filePath: string): string {
     return filePath.replace(/\\/g, "/")
@@ -44,7 +49,9 @@ export function getParserOptions(file: string): ParserOptions {
     return options
 }
 
-export function resolveExports(moduleExports: any) {
+export function resolveExports<T extends object>(
+    moduleExports: NestedDefaultExport<T>,
+): T {
     if (
         "default" in moduleExports &&
         moduleExports.default &&
@@ -55,9 +62,11 @@ export function resolveExports(moduleExports: any) {
     return moduleExports
 }
 
-export async function getFileExports(path: string): Promise<any> {
+export async function getFileExports(
+    filePath: string,
+): Promise<NestedDefaultExport<MedusaConfigShape>> {
     const { unregister } = await safeRegister()
-    const module = require(path)
+    const module = require(filePath)
     unregister()
 
     return resolveExports(module)
@@ -80,30 +89,31 @@ export const safeRegister = async () => {
     return res
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function hasDefaultExport(ast: any): boolean {
+export function hasDefaultExport(ast: TraverseRoot): boolean {
     let found = false
 
     traverse(ast, {
         ExportDefaultDeclaration() {
             found = true
         },
-        AssignmentExpression(path: any) {
+        AssignmentExpression(nodePath) {
             if (
-                path.node.left.type === "MemberExpression" &&
-                path.node.left.object.type === "Identifier" &&
-                path.node.left.object.name === "exports" &&
-                path.node.left.property.type === "Identifier" &&
-                path.node.left.property.name === "default"
+                nodePath.node.type === "AssignmentExpression" &&
+                nodePath.node.left.type === "MemberExpression" &&
+                nodePath.node.left.object.type === "Identifier" &&
+                nodePath.node.left.object.name === "exports" &&
+                nodePath.node.left.property.type === "Identifier" &&
+                nodePath.node.left.property.name === "default"
             ) {
                 found = true
             }
         },
-        ExportNamedDeclaration(path: any) {
-            const specifiers = path.node.specifiers
+        ExportNamedDeclaration(nodePath) {
+            if (nodePath.node.type !== "ExportNamedDeclaration") return
+            const specifiers = nodePath.node.specifiers
             if (
                 specifiers?.some(
-                    (s: any) =>
+                    (s) =>
                         s.type === "ExportSpecifier" &&
                         s.exported.type === "Identifier" &&
                         s.exported.name === "default"

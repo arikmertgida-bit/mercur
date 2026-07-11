@@ -137,7 +137,7 @@ const useColumns = () => {
   const base = useCampaignTableColumns();
   const { columns: extended, filters } = useExtendableTable<AdminCampaign>({
     model: "campaign",
-    columns: base as unknown as ColumnDef<AdminCampaign, unknown>[],
+    columns: base,
   });
 
   const columns = useMemo(

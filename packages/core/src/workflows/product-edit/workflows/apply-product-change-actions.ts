@@ -17,6 +17,7 @@ import {
   ProductAttributeBatchAdd,
   ProductAttributeBatchUpdate,
   ProductChangeActionType,
+  JsonValue,
 } from "@mercurjs/types"
 
 import {
@@ -108,7 +109,7 @@ export const applyProductChangeActionsWorkflow: ReturnWorkflow<
           case ProductChangeActionType.UPDATE: {
             const { field, value } = details as {
               field?: string
-              value?: unknown
+              value?: JsonValue
             }
             if (!field) break
             const u = productUpdatesById.get(productId) ?? { id: productId }

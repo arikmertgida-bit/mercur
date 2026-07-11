@@ -1,5 +1,6 @@
 import { z } from "zod"
 import type { CustomFormField } from "@mercurjs/dashboard-sdk"
+import type { JsonRecord, JsonValue } from "@mercurjs/types"
 import type { ExtensionRegistry } from "./registry"
 
 /**
@@ -39,7 +40,7 @@ export function buildAdditionalDataSchema(
     ? registry.getFormFields(model, zone, tab)
     : registry.getAllFormFields(model)
   for (const { name, field } of fields) {
-    shape[name] = field.validation as unknown as z.ZodTypeAny
+    shape[name] = field.validation as z.ZodTypeAny
   }
   return z.object(shape)
 }
@@ -48,19 +49,19 @@ export function buildAdditionalDataSchema(
 export function buildAdditionalDataDefaults(
   registry: ExtensionRegistry,
   model: string,
-  data?: unknown,
+  data?: JsonRecord,
   zone?: string,
   tab?: string
-): Record<string, unknown> {
-  const defaults: Record<string, unknown> = {}
+): Record<string, JsonValue> {
+  const defaults: Record<string, JsonValue> = {}
   const fields = zone
     ? registry.getFormFields(model, zone, tab)
     : registry.getAllFormFields(model)
   for (const { name, field } of fields) {
     if (typeof field.defaultValue === "function") {
-      defaults[name] = (field.defaultValue as (d: unknown) => unknown)(data)
+      defaults[name] = field.defaultValue(data ?? {}) as JsonValue
     } else if (field.defaultValue !== undefined) {
-      defaults[name] = field.defaultValue
+      defaults[name] = field.defaultValue as JsonValue
     }
   }
   return defaults

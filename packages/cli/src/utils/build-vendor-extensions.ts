@@ -106,7 +106,8 @@ export async function buildVendorExtensions(
 
     return true;
   } catch (error) {
-    console.error(error);
+    const message = error instanceof Error ? error.message : String(error);
+    process.stderr.write(message + "\n");
     return false;
   } finally {
     try {

@@ -69,7 +69,7 @@ export const recordProductAuditChangeWorkflow = createWorkflow(
     return new WorkflowResponse(
       transform(
         { changes },
-        ({ changes }) => changes as unknown as ProductChangeDTO[],
+        ({ changes }) => changes as ProductChangeDTO[],
       ),
     )
   },

@@ -180,8 +180,8 @@ export const createProductsWorkflow: ReturnWorkflow<
       ({ input, createdProducts, hasAxisByIndex }) =>
         input.products.flatMap((p, idx) => {
           const product_id = createdProducts[idx]?.id as string
-          const formOptions = (v: unknown) =>
-            (v as { options?: Record<string, string> }).options ?? {}
+          const formOptions = (v: { options?: Record<string, string> }) =>
+            v.options ?? {}
           return (p.variants ?? []).map((v) => ({
             manage_inventory: false,
             ...v,

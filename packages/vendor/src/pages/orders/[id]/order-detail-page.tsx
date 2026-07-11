@@ -39,7 +39,7 @@ const Root = ({ children }: { children?: ReactNode }) => {
   );
 
   if (order) {
-    order.items = order.items.sort((itemA: any, itemB: any) => {
+    order.items = order.items.sort((itemA, itemB) => {
       if (itemA.created_at > itemB.created_at) {
         return 1;
       }

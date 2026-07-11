@@ -27,32 +27,32 @@ const useDateFilterOptions = () => {
       {
         label: t("filters.date.lastSevenDays"),
         value: {
-          $gte: subDays(today, 7).toISOString(), // 7 days ago
+          $gte: subDays(today, 7).toISOString(),
         },
       },
       {
         label: t("filters.date.lastThirtyDays"),
         value: {
-          $gte: subDays(today, 30).toISOString(), // 30 days ago
+          $gte: subDays(today, 30).toISOString(),
         },
       },
       {
         label: t("filters.date.lastNinetyDays"),
         value: {
-          $gte: subDays(today, 90).toISOString(), // 90 days ago
+          $gte: subDays(today, 90).toISOString(),
         },
       },
       {
         label: t("filters.date.lastTwelveMonths"),
         value: {
-          $gte: subMonths(today, 12).toISOString(), // 12 months ago
+          $gte: subMonths(today, 12).toISOString(),
         },
       },
     ]
   }, [today, t])
 }
 
-export const useDataTableDateFilters: any = (disableRangeOption?: boolean) => {
+export const useDataTableDateFilters = (disableRangeOption?: boolean) => {
   const { t } = useTranslation()
   const { getFullDate } = useDate()
   const dateFilterOptions = useDateFilterOptions()

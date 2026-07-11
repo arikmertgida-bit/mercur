@@ -179,25 +179,24 @@ const CreateProduct = z
     metadata: z.record(z.unknown()).optional(),
   })
   .strict()
-export const VendorCreateProduct = WithAdditionalData(CreateProduct, (schema) =>
-  // `WithAdditionalData`'s modifyCallback is typed to return a `ZodObject`
-  // (Medusa 2.16 moved its framework zod to v4); `.superRefine` yields a
-  // `ZodEffects`. The schema object is still a valid validator at runtime
-  // (it exposes `.parse`), so bridge the v3/v4 instance mismatch here.
-  schema.superRefine((data, ctx) => {
-    if (
-      data.status !== undefined &&
-      FeatureFlag.isFeatureEnabled(MercurFeatureFlags.PRODUCT_REQUEST) &&
-      data.status !== ProductStatus.DRAFT &&
-      data.status !== ProductStatus.PROPOSED
-    ) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        path: ["status"],
-        message: `When the product request flow is enabled, status must be one of: ${ProductStatus.DRAFT}, ${ProductStatus.PROPOSED}.`,
-      })
-    }
-  }) as unknown as typeof CreateProduct
+export const VendorCreateProduct = WithAdditionalData(
+  CreateProduct,
+  // @ts-expect-error superRefine yields ZodEffects; WithAdditionalData expects ZodObject (Medusa framework zod v3/v4 bridge).
+  (schema) =>
+    schema.superRefine((data, ctx) => {
+      if (
+        data.status !== undefined &&
+        FeatureFlag.isFeatureEnabled(MercurFeatureFlags.PRODUCT_REQUEST) &&
+        data.status !== ProductStatus.DRAFT &&
+        data.status !== ProductStatus.PROPOSED
+      ) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["status"],
+          message: `When the product request flow is enabled, status must be one of: ${ProductStatus.DRAFT}, ${ProductStatus.PROPOSED}.`,
+        })
+      }
+    }),
 )
 
 export type VendorUpdateProductType = z.infer<typeof UpdateProduct> &

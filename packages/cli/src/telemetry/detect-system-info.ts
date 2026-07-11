@@ -1,6 +1,12 @@
-export const importRuntime = <T>(m: string): Promise<T> => {
-    return (Function("mm", "return import(mm)") as any)(m);
-};
+type DynamicImport = (moduleName: string) => Promise<object>;
+
+const dynamicImport = new Function(
+  "mm",
+  "return import(mm)"
+) as DynamicImport;
+
+export const importRuntime = <T>(m: string): Promise<T> =>
+  dynamicImport(m) as Promise<T>;
 
 function getVendor() {
     const hasAny = (...keys: string[]) =>
@@ -44,7 +50,6 @@ function getVendor() {
 
 export async function detectSystemInfo() {
     try {
-        //check if it's cloudflare
         const os = await importRuntime<typeof import("os")>("os");
         const cpus = os.cpus();
         return {
@@ -59,8 +64,8 @@ export async function detectSystemInfo() {
             isWSL: await isWsl(),
             isDocker: await isDocker(),
             isTTY:
-                typeof process !== "undefined" && (process as any).stdout
-                    ? (process as any).stdout.isTTY
+                typeof process !== "undefined" && process.stdout
+                    ? process.stdout.isTTY ?? null
                     : null,
         };
     } catch {

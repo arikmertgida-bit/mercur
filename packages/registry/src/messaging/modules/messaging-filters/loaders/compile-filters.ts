@@ -1,7 +1,8 @@
 import { LoaderOptions, IMedusaInternalService } from "@medusajs/framework/types"
+import { MedusaContainer } from "@medusajs/framework"
 import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
 import { FilterRule } from "../models/filter-rule"
-import { CompiledRuleset } from "../types/common"
+import { CompiledRuleset, FilterRuleDTO } from "../types/common"
 
 let compiledRuleset: CompiledRuleset = {
   exactWords: new Set<string>(),
@@ -31,17 +32,22 @@ export function invalidateRuleset(): void {
   }
 }
 
-async function compileFilters(container: any): Promise<void> {
-  // Try module container first (when called from module loader), then app container
-  let rules: any[]
+type MessagingFiltersModuleService = {
+  listFilterRules: (
+    filters: { is_enabled?: boolean },
+    config: { take: number }
+  ) => Promise<FilterRuleDTO[]>
+}
+
+async function compileFilters(container: MedusaContainer): Promise<void> {
+  let rules: FilterRuleDTO[]
   try {
     const service = container.resolve("filterRuleService") as IMedusaInternalService<typeof FilterRule>
-    const [results] = await service.listAndCount({ is_enabled: true } as any, { take: 1000 })
-    rules = results
+    const [results] = await service.listAndCount({ is_enabled: true }, { take: 1000 })
+    rules = results as FilterRuleDTO[]
   } catch {
-    // Fallback: resolve from app container via module name (used by workflow steps)
     try {
-      const service = container.resolve("messagingFilters")
+      const service = container.resolve<MessagingFiltersModuleService>("messagingFilters")
       rules = await service.listFilterRules({ is_enabled: true }, { take: 1000 })
     } catch {
       return
@@ -73,11 +79,9 @@ async function compileFilters(container: any): Promise<void> {
       case "regex": {
         try {
           const regex = new RegExp(rule.pattern, "i")
-          // ReDoS protection: test with a probe string under a time budget
           const probeStart = Date.now()
           regex.test("a".repeat(50))
           if (Date.now() - probeStart > 10) {
-            // Pattern took >10ms on a short string — likely catastrophic backtracking
             try {
               const logger = container.resolve?.(ContainerRegistrationKeys.LOGGER)
               logger?.warn(`[messaging] Skipping ReDoS-prone regex rule ${rule.id}: ${rule.pattern}`)
@@ -99,7 +103,7 @@ async function compileFilters(container: any): Promise<void> {
   compiledRuleset = newRuleset
 }
 
-export async function recompileFilters(container: any): Promise<void> {
+export async function recompileFilters(container: MedusaContainer): Promise<void> {
   await compileFilters(container)
 }
 

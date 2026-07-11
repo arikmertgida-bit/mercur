@@ -89,7 +89,7 @@ export const Notifications = () => {
           >
             responseKey="notifications"
             queryKey={notificationQueryKeys.all}
-            queryFn={(params: any) =>
+            queryFn={(params: HttpTypes.AdminNotificationListParams) =>
               fetchQuery(`/vendor/notifications`, {
                 method: "GET",
                 query: { ...params },
@@ -123,7 +123,7 @@ const Notification = ({
   notification: HttpTypes.AdminNotification
   unread?: boolean
 }) => {
-  const data = notification.data as unknown as NotificationData | undefined
+  const data = notification.data as NotificationData | null | undefined
 
   // We need at least the title to render a notification in the feed
   if (!data?.title) {

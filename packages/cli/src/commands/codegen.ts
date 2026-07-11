@@ -2,7 +2,7 @@ import * as path from "path";
 import { Command } from "commander";
 import { z } from "zod";
 import { writeRouteTypes } from "@/src/codegen";
-import { handleError } from "@/src/utils/handle-error";
+import { handleCaughtError } from "@/src/utils/handle-error";
 import { logger } from "@/src/utils/logger";
 import { spinner } from "@/src/utils/spinner";
 
@@ -37,6 +37,6 @@ async function runCodegen(opts: z.infer<typeof codegenOptionsSchema>) {
     logger.break();
   } catch (error) {
     logger.break();
-    handleError(error);
+    handleCaughtError(error);
   }
 }

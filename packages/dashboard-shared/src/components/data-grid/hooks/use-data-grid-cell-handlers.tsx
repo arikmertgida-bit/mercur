@@ -1,5 +1,6 @@
+import type { JsonValue } from "@mercurjs/types"
 import { FocusEvent, MouseEvent, useCallback } from "react"
-import { FieldValues, UseFormSetValue } from "react-hook-form"
+import { FieldPath, FieldValues, PathValue, UseFormSetValue } from "react-hook-form"
 import { DataGridMatrix, DataGridUpdateCommand } from "../models"
 import { DataGridCoordinates } from "../types"
 
@@ -100,15 +101,13 @@ export const useDataGridCellHandlers = <
   )
 
   const getInputChangeHandler = useCallback(
-    // Using `any` here as the generic type of Path<TFieldValues> will
-    // not be inferred correctly.
-    (field: any) => {
-      return (next: any, prev: any) => {
+    <K extends FieldPath<TFieldValues>>(field: K) => {
+      return (next: JsonValue, prev: JsonValue) => {
         const command = new DataGridUpdateCommand({
           next,
           prev,
           setter: (value) => {
-            setValue(field, value, {
+            setValue(field, value as PathValue<TFieldValues, K>, {
               shouldDirty: true,
               shouldTouch: true,
             })

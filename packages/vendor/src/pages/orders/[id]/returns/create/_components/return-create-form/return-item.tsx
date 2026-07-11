@@ -68,12 +68,12 @@ function ReturnItem({
   // `mercur-confirm-return-receive` runs on the backend.
   const restockRows = locationId
     ? getOfferRestockPreview(
-        item as unknown as LineItemShape,
+        item as LineItemShape,
         formItem?.quantity ?? 0
       )
     : []
   const offerSku =
-    (item as unknown as LineItemShape).offer?.sku ?? item.variant_sku ?? null
+    (item as LineItemShape).offer?.sku ?? item.variant_sku ?? null
 
   return (
     <div

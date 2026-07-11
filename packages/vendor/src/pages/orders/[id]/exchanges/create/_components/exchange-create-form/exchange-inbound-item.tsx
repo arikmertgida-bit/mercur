@@ -190,7 +190,7 @@ function ExchangeInboundItem({
 
       {locationName && quantity > 0 && (
         <ExchangeRestockPreview
-          item={item as unknown as LineItemShape}
+          item={item as LineItemShape}
           quantity={quantity}
           locationName={locationName}
         />

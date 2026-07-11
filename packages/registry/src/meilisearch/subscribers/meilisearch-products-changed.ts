@@ -43,10 +43,10 @@ export default async function meilisearchProductsChangedHandler({
     logger.debug(
       `Meilisearch sync: Successfully synced ${documentsToUpsert.length} products`
     )
-  } catch (error: unknown) {
+  } catch (error) {
     logger.error(
       `Meilisearch sync failed for products [${event.data.ids.join(', ')}]:`,
-      error as Error
+      error instanceof Error ? error : new Error(String(error))
     )
     throw error
   }

@@ -13,7 +13,11 @@ import {
     isVariableDeclarator,
     isCallExpression,
     isObjectExpression,
+    type ObjectExpressionProperty,
+    type TraverseRoot,
+    type VariableDeclarator,
 } from "./babel"
+import type { NodePath } from "@babel/traverse"
 import type { BuiltMercurConfig } from "./types"
 
 type MenuItemConfig = {
@@ -85,10 +89,10 @@ function getRoute(file: string, routesDir: string): string {
 }
 
 function getConfigObjectProperties(
-    path: any
-): any[] | null {
-    if (isVariableDeclarator(path.node)) {
-        const decl = isIdentifier(path.node.id, { name: "config" }) ? path.node : null
+    nodePath: NodePath,
+): ObjectExpressionProperty[] | null {
+    if (isVariableDeclarator(nodePath.node)) {
+        const decl = isIdentifier(nodePath.node.id, { name: "config" }) ? nodePath.node : null
         if (!decl) return null
 
         if (
@@ -104,10 +108,13 @@ function getConfigObjectProperties(
         return null
     }
 
-    const declaration = path.node.declaration
+    const declaration = nodePath.node.type === "ExportNamedDeclaration"
+        ? nodePath.node.declaration
+        : undefined
     if (isVariableDeclaration(declaration)) {
         const configDecl = declaration.declarations.find(
-            (d: any) => isVariableDeclarator(d) && isIdentifier(d.id, { name: "config" })
+            (d): d is VariableDeclarator =>
+                isVariableDeclarator(d) && isIdentifier(d.id, { name: "config" })
         )
         if (
             configDecl &&
@@ -120,7 +127,8 @@ function getConfigObjectProperties(
 
         // Also handle direct object expression (no wrapper call)
         const directDecl = declaration.declarations.find(
-            (d: any) => isVariableDeclarator(d) && isIdentifier(d.id, { name: "config" })
+            (d): d is VariableDeclarator =>
+                isVariableDeclarator(d) && isIdentifier(d.id, { name: "config" })
         )
         if (directDecl && isObjectExpression(directDecl.init)) {
             return directDecl.init.properties
@@ -131,7 +139,7 @@ function getConfigObjectProperties(
 }
 
 function processConfigProperties(
-    properties: any[]
+    properties: ObjectExpressionProperty[],
 ): MenuItemConfig | null {
     const hasProperty = (name: string) =>
         properties.some(
@@ -175,22 +183,22 @@ function processConfigProperties(
 function getRouteConfig(file: string): MenuItemConfig | null {
     try {
         const code = fs.readFileSync(file, "utf-8")
-        const ast = parse(code, getParserOptions(file))
+        const ast = parse(code, getParserOptions(file)) as TraverseRoot
 
         let config: MenuItemConfig | null = null
         let configFound = false
 
         traverse(ast, {
-            VariableDeclarator(path: any) {
+            VariableDeclarator(nodePath) {
                 if (configFound) return
-                const properties = getConfigObjectProperties(path)
+                const properties = getConfigObjectProperties(nodePath)
                 if (!properties) return
                 config = processConfigProperties(properties)
                 if (config) configFound = true
             },
-            ExportNamedDeclaration(path: any) {
+            ExportNamedDeclaration(nodePath) {
                 if (configFound) return
-                const properties = getConfigObjectProperties(path)
+                const properties = getConfigObjectProperties(nodePath)
                 if (!properties) return
                 config = processConfigProperties(properties)
                 if (config) configFound = true

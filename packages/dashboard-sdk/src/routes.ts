@@ -10,6 +10,7 @@ import {
     isObjectProperty,
     isVariableDeclaration,
     isVariableDeclarator,
+    type TraverseRoot,
 } from "./babel"
 import type { BuiltMercurConfig } from "./types"
 
@@ -74,12 +75,14 @@ export function crawlRoutes(dir: string, pattern = "page"): string[] {
     return files
 }
 
-function hasConfigPublic(ast: any): boolean {
+function hasConfigPublic(ast: TraverseRoot): boolean {
     let found = false
 
     traverse(ast, {
-        ExportNamedDeclaration(path: any) {
-            const declaration = path.node.declaration
+        ExportNamedDeclaration(nodePath) {
+            const declaration = nodePath.node.type === "ExportNamedDeclaration"
+                ? nodePath.node.declaration
+                : undefined
             if (!isVariableDeclaration(declaration)) return
 
             for (const decl of declaration.declarations) {
@@ -105,16 +108,19 @@ function hasConfigPublic(ast: any): boolean {
     return found
 }
 
-function getNamedExports(ast: any): { hasHandle: boolean; hasLoader: boolean } {
+function getNamedExports(ast: TraverseRoot): { hasHandle: boolean; hasLoader: boolean } {
     let hasHandle = false
     let hasLoader = false
 
     traverse(ast, {
-        ExportNamedDeclaration(path: any) {
-            const declaration = path.node.declaration
+        ExportNamedDeclaration(nodePath) {
+            const declaration = nodePath.node.type === "ExportNamedDeclaration"
+                ? nodePath.node.declaration
+                : undefined
 
             if (declaration?.type === "VariableDeclaration") {
-                declaration.declarations.forEach((decl: any) => {
+                declaration.declarations.forEach((decl) => {
+                    if (!isVariableDeclarator(decl)) return
                     if (decl.id.type === "Identifier" && decl.id.name === "handle") {
                         hasHandle = true
                     }
@@ -222,7 +228,7 @@ export function formatRoute(route: Route, indent: string = "    "): string {
 export function parseFile(file: string, routesDir: string, index: number): RouteResult | null {
     try {
         const code = fs.readFileSync(file, "utf-8")
-        const ast = parse(code, getParserOptions(file))
+        const ast = parse(code, getParserOptions(file)) as TraverseRoot
 
         if (!hasDefaultExport(ast)) {
             return null

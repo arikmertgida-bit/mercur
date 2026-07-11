@@ -1,8 +1,10 @@
 import { DeleteResponse, PaginatedResponse } from "@medusajs/types"
+import { JsonRecord } from "../json-value"
 import {
   CreateOfferInventoryItemDTO,
   CreateOfferPriceDTO,
   OfferDTO,
+  OfferInventoryItemLinkDTO,
   UpsertOfferPriceDTO,
 } from "../offer"
 
@@ -23,7 +25,7 @@ export interface VendorCreateOfferReq {
   shipping_profile_id: string
   inventory_items: CreateOfferInventoryItemDTO[]
   prices: CreateOfferPriceDTO[]
-  metadata?: Record<string, unknown> | null
+  metadata?: JsonRecord | null
 }
 
 /**
@@ -33,7 +35,7 @@ export interface VendorCreateOfferReq {
 export interface VendorUpdateOfferReq {
   sku?: string
   shipping_profile_id?: string
-  metadata?: Record<string, unknown> | null
+  metadata?: JsonRecord | null
   prices?: UpsertOfferPriceDTO[]
 }
 
@@ -71,8 +73,8 @@ export type VendorOfferDeleteResponse = DeleteResponse<"offer">
  * is included so the client does not need a follow-up GET.
  */
 export interface VendorBatchOfferInventoryItemsResponse {
-  created: unknown[]
-  updated: unknown[]
+  created: OfferInventoryItemLinkDTO[]
+  updated: OfferInventoryItemLinkDTO[]
   deleted: string[]
   offer: OfferDTO
 }

@@ -15,6 +15,7 @@ import {
 import { KeyboundForm } from "@components/utilities/keybound-form"
 import { useCreateOrderFulfillment } from "@hooks/api/orders"
 import { useStockLocations } from "@hooks/api/stock-locations"
+import { LineItemShape } from "@lib/inventory-preview"
 import { getFulfillableQuantity } from "@lib/order-item"
 import { CreateFulfillmentSchema } from "./constants"
 import { OrderCreateFulfillmentItem } from "./order-create-fulfillment-item"
@@ -142,9 +143,8 @@ export function OrderCreateFulfillmentForm({
         // In Mercur the shipping profile is owned by the offer
         // (per-seller); fall back to the product's shipping profile for
         // legacy / non-offer lines.
-        const offerProfileId = (
-          item as unknown as { offer?: { shipping_profile_id?: string } | null }
-        ).offer?.shipping_profile_id ?? null
+        const offerProfileId =
+          (item as LineItemShape).offer?.shipping_profile_id ?? null
         acc[item.id] =
           offerProfileId ?? item.variant?.product?.shipping_profile?.id ?? null
         return acc
@@ -182,8 +182,8 @@ export function OrderCreateFulfillmentForm({
 
       toast.success(t("orders.fulfillment.toast.created"))
       handleSuccess(`/orders/${order.id}`)
-    } catch (e: any) {
-      const message: string = e?.message ?? ""
+    } catch (e) {
+      const message = e instanceof Error ? e.message : ""
 
       if (message.includes("exceeds the reserved quantity")) {
         toast.error(t("orders.fulfillment.error.exceedsReservedQuantity"))
@@ -428,11 +428,8 @@ export function OrderCreateFulfillmentForm({
 
                     <div className="flex flex-col gap-y-2 pt-4">
                       {fulfillableItems.map((item) => {
-                        const offerProfileId = (
-                          item as unknown as {
-                            offer?: { shipping_profile_id?: string } | null
-                          }
-                        ).offer?.shipping_profile_id
+                        const offerProfileId = (item as LineItemShape).offer
+                          ?.shipping_profile_id
                         const itemShippingProfileId =
                           offerProfileId ??
                           item.variant?.product?.shipping_profile?.id

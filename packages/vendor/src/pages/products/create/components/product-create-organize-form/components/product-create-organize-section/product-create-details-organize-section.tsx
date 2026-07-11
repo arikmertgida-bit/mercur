@@ -1,4 +1,5 @@
 import { Heading } from "@medusajs/ui"
+import { InferClientInput, InferClientOutput } from "@mercurjs/client"
 import { useTranslation } from "react-i18next"
 
 import { Form } from "@components/common/form"
@@ -17,9 +18,10 @@ export const ProductCreateOrganizationSection = () => {
 
   const collections = useComboboxData({
     queryKey: ["product_collections"],
-    queryFn: (params: any) => sdk.vendor.collections.query(params) as any,
-    getOptions: (data: any) =>
-      data.collections.map((collection: { id: string; title: string }) => ({
+    queryFn: (params: InferClientInput<typeof sdk.vendor.collections.query>) =>
+      sdk.vendor.collections.query(params),
+    getOptions: (data: InferClientOutput<typeof sdk.vendor.collections.query>) =>
+      data.collections.map((collection) => ({
         label: collection.title,
         value: collection.id,
       })),
@@ -27,9 +29,10 @@ export const ProductCreateOrganizationSection = () => {
 
   const types = useComboboxData({
     queryKey: ["product_types"],
-    queryFn: (params: any) => sdk.vendor.productTypes.query(params) as any,
-    getOptions: (data: any) =>
-      data.product_types.map((type: { id: string; value: string }) => ({
+    queryFn: (params: InferClientInput<typeof sdk.vendor.productTypes.query>) =>
+      sdk.vendor.productTypes.query(params),
+    getOptions: (data: InferClientOutput<typeof sdk.vendor.productTypes.query>) =>
+      data.product_types.map((type) => ({
         label: type.value,
         value: type.id,
       })),
@@ -37,9 +40,10 @@ export const ProductCreateOrganizationSection = () => {
 
   const tags = useComboboxData({
     queryKey: ["product_tags"],
-    queryFn: (params: any) => sdk.vendor.productTags.query(params) as any,
-    getOptions: (data: any) =>
-      data.product_tags.map((tag: { id: string; value: string }) => ({
+    queryFn: (params: InferClientInput<typeof sdk.vendor.productTags.query>) =>
+      sdk.vendor.productTags.query(params),
+    getOptions: (data: InferClientOutput<typeof sdk.vendor.productTags.query>) =>
+      data.product_tags.map((tag) => ({
         label: tag.value,
         value: tag.id,
       })),

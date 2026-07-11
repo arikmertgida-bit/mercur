@@ -43,9 +43,5 @@ export const POST = async (
     req.queryConfig.fields
   )
 
-  res
-    .status(200)
-    .json(
-      batchResults as unknown as HttpTypes.VendorUpdateShippingOptionRulesResponse
-    )
+  res.status(200).json(batchResults)
 }

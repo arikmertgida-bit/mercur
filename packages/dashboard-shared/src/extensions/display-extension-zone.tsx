@@ -1,10 +1,11 @@
 import { Fragment, type ComponentType, type ReactNode } from "react"
+import type { JsonRecord } from "@mercurjs/types"
 import { useExtension } from "./context"
 
 export type DisplayExtensionZoneProps = {
   model: string
   zone: string
-  data?: unknown
+  data?: JsonRecord
   /**
    * Ids of the section's built-in fields — those are overridden inline by
    * `<DisplayField>`, so the zone skips them and only renders genuinely added
@@ -33,13 +34,12 @@ export const DisplayExtensionZone = ({
   return (
     <>
       {added.map(({ id, component: Component }) => {
-        const C = Component as ComponentType<{ data?: unknown }>
-        return <C key={id} data={data} />
+        if (!Component) return null
+        return <Component key={id} data={data} />
       })}
-      {actions.map(({ component: Component }, i) => {
-        const C = Component as ComponentType<{ data?: unknown }>
-        return <C key={`action-${i}`} data={data} />
-      })}
+      {actions.map(({ component: Component }, i) => (
+        <Component key={`action-${i}`} data={data} />
+      ))}
     </>
   )
 }
@@ -49,7 +49,7 @@ export type DisplayFieldProps = {
   zone: string
   /** Stable id of this built-in field (e.g. `title`, `description`). */
   id: string
-  data?: unknown
+  data?: JsonRecord
   /** The built-in default rendering, shown when there is no override. */
   children?: ReactNode
 }
@@ -84,7 +84,7 @@ export type DisplaySectionField = {
 export type DisplaySectionProps = {
   model: string
   zone: string
-  data?: unknown
+  data?: JsonRecord
   /** Built-in fields of this section, each overridable/removable by id. */
   fields: DisplaySectionField[]
 }
@@ -125,12 +125,16 @@ export function useDisplayFieldOverride(
   model: string,
   zone: string,
   id: string
-): { overridden: boolean; Component: ComponentType<{ data?: unknown }> | null } {
+): {
+  overridden: boolean
+  Component: ComponentType<{ data?: JsonRecord }> | null
+} {
   const { fields } = useExtension().getDisplays(model, zone)
   const match = fields.find((f) => f.id === id)
   if (!match) return { overridden: false, Component: null }
   return {
     overridden: true,
-    Component: (match.component as ComponentType<{ data?: unknown }>) ?? null,
+    Component:
+      (match.component as ComponentType<{ data?: JsonRecord }> | null) ?? null,
   }
 }

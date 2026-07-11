@@ -13,6 +13,7 @@ import {
   CreateProductChangeActionDTO,
   ProductChangeActionType,
   ProductChangeDTO,
+  JsonValue,
 } from "@mercurjs/types"
 
 import { validateNoPendingProductChangeStep } from "../steps"
@@ -109,13 +110,13 @@ export const productEditUpdateProductWorkflow: ReturnWorkflow<
     const actions = transform(
       { input, currentProducts },
       ({ input, currentProducts }) => {
-        const current = (currentProducts?.[0] ?? {}) as Record<string, unknown>
+        const current = (currentProducts?.[0] ?? {}) as Record<string, JsonValue | undefined>
         const proposed = input.update ?? {}
 
         // Unwrap relation/image arrays to sorted scalar ids/urls so order-insensitive,
         // shape-insensitive values can be compared with deepEqualObj. Empty strings
         // collapse to null so clearing a text field reads as equal to an unset one.
-        const normalize = (value: unknown): unknown => {
+        const normalize = (value: JsonValue | JsonValue[] | undefined): JsonValue | JsonValue[] | null => {
           if (Array.isArray(value)) {
             return value
               .map((item) => {
@@ -132,7 +133,7 @@ export const productEditUpdateProductWorkflow: ReturnWorkflow<
           return value === "" ? null : (value ?? null)
         }
 
-        const isEqual = (a: unknown, b: unknown): boolean =>
+        const isEqual = (a: JsonValue | JsonValue[] | undefined, b: JsonValue | JsonValue[] | undefined): boolean =>
           deepEqualObj(normalize(a), normalize(b))
 
         const acts: Array<
@@ -140,7 +141,12 @@ export const productEditUpdateProductWorkflow: ReturnWorkflow<
         > = []
 
         if (proposed.status !== undefined) {
-          if (!isEqual(current.status, proposed.status)) {
+          if (
+            !isEqual(
+              current.status as JsonValue | undefined,
+              proposed.status as JsonValue | undefined,
+            )
+          ) {
             acts.push({
               product_id: input.product_id,
               action: ProductChangeActionType.STATUS_CHANGE,
@@ -154,7 +160,7 @@ export const productEditUpdateProductWorkflow: ReturnWorkflow<
 
         for (const field of DIFFABLE_FIELDS) {
           if (!(field in proposed)) continue
-          const proposedValue = (proposed as Record<string, unknown>)[field]
+          const proposedValue = (proposed as Record<string, JsonValue | undefined>)[field]
           const currentValue = current[field]
           if (isEqual(currentValue, proposedValue)) continue
 

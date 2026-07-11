@@ -129,7 +129,10 @@ const AdminFiltersPage = () => {
                 <Select
                   value={formState.match_type}
                   onValueChange={(v) =>
-                    setFormState((s) => ({ ...s, match_type: v as any }))
+                    setFormState((s) => ({
+                      ...s,
+                      match_type: v as "exact" | "contains",
+                    }))
                   }
                 >
                   <Select.Trigger>

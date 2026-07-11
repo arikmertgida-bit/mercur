@@ -353,8 +353,8 @@ function topologicalSortRegistryBlocks(
           (item) => computeItemHash(item, sourceMap.get(item)) === hash
         )
     );
-    console.warn(
-      `Warning: Circular dependencies detected. Some items may not be sorted correctly: ${missingHashes.join(", ")}`
+    process.stderr.write(
+      `Warning: Circular dependencies detected. Some items may not be sorted correctly: ${missingHashes.join(", ")}\n`
     );
 
     // Add remaining items that couldn't be sorted due to circular dependencies

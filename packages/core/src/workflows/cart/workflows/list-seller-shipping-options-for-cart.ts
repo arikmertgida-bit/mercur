@@ -12,7 +12,7 @@ import {
     validatePresenceOfStep,
 } from "@medusajs/medusa/core-flows"
 import { deduplicate, filterObjectByKeys, isDefined } from "@medusajs/framework/utils"
-import { cartFieldsForPricingContext, pricingContextResult, shippingOptionsContextResult } from "../utils"
+import { cartFieldsForPricingContext, CartLineItemWithOffer, pricingContextResult, shippingOptionsContextResult } from "../utils"
 import { SellerDTO } from "@mercurjs/types"
 
 export type ListSellerShippingOptionsForCartWorkflowInput = {
@@ -44,9 +44,9 @@ export const listSellerShippingOptionsForCartWorkflow = createWorkflow(
 
         const cart = transform({ cartQuery }, ({ cartQuery }) => cartQuery.data[0])
         const cartSellers = transform({ cart }, ({ cart }) =>
-            cart.items
-                .map((item: any) => item.offer?.seller_id)
-                .filter((id: unknown): id is string => typeof id === "string")
+            (cart.items as CartLineItemWithOffer[])
+                .map((item) => item.offer?.seller_id)
+                .filter((id): id is string => typeof id === "string")
         )
 
         validatePresenceOfStep({
@@ -247,20 +247,21 @@ export const listSellerShippingOptionsForCartWorkflow = createWorkflow(
                     const locationId =
                         shippingOption.service_zone.fulfillment_set.location.id
 
-                    const itemsAtLocationWithoutAvailableQuantity = cart.items.filter(
-                        (item: any) => {
+                    const itemsAtLocationWithoutAvailableQuantity = (
+                        cart.items as CartLineItemWithOffer[]
+                    ).filter((item) => {
                             const links = item.offer?.inventory_items ?? []
                             if (!links.length) {
                                 return false
                             }
 
-                            return links.some((inventoryItem: any) => {
+                            return links.some((inventoryItem) => {
                                 if (!inventoryItem.requires_shipping) {
                                     return false
                                 }
 
                                 const level = (inventoryItem.location_levels ?? []).find(
-                                    (locationLevel: any) =>
+                                    (locationLevel) =>
                                         locationLevel.location_id === locationId
                                 )
 
@@ -269,8 +270,7 @@ export const listSellerShippingOptionsForCartWorkflow = createWorkflow(
                                     : Number(level.available_quantity ?? 0) <
                                           Number(item.quantity)
                             })
-                        }
-                    )
+                        })
 
                     return {
                         ...shippingOption,

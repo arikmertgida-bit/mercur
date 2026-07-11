@@ -27,7 +27,7 @@ export const ErrorBoundary = () => {
    * so this ensures that we always log it.
    */
   if (process.env.NODE_ENV === "development") {
-    console.error(error)
+    process.stderr.write(`${String(error)}\n`)
   }
 
   let title: string

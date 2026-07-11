@@ -59,8 +59,8 @@ function getColumnName<TData>(column: Column<TData, unknown>): string {
   }
 
   if (process.env.NODE_ENV === "development" && !meta?.name && enableHiding) {
-    console.warn(
-      `Column "${id}" does not have a name. You should add a name to the column definition. Falling back to the column id.`
+    process.stderr.write(
+      `Column "${id}" does not have a name. You should add a name to the column definition. Falling back to the column id.\n`
     )
   }
 

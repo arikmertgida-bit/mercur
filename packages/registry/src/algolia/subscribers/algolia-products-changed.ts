@@ -35,10 +35,10 @@ export default async function algoliaProductsChangedHandler({
     logger.debug(
       `Algolia sync: Successfully synced ${productsToInsert.length} products`
     )
-  } catch (error: unknown) {
+  } catch (error) {
     logger.error(
       `Algolia sync failed for products ${event.data.ids.join(', ')}:`,
-      error as Error
+      error instanceof Error ? error : new Error(String(error))
     )
     throw error
   }

@@ -123,10 +123,7 @@ export const AddExchangeOutboundItemsTable = ({
   const offersResponse = useOffers({
     ...searchParams,
     fields: OFFER_PICKER_FIELDS,
-  }) as unknown as {
-    offers?: OutboundOfferPickerRowExtended[]
-    count?: number
-  }
+  })
   const rawOffers = useMemo(
     () => offersResponse.offers ?? [],
     [offersResponse.offers]

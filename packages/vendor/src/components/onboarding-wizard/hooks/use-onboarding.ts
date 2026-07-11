@@ -195,8 +195,9 @@ export const useOnboarding = (memberEmail: string) => {
         sessionStorage.removeItem("mercur_register_draft");
 
         navigate("/login", { replace: true });
-      } catch (error: any) {
-        toast.error(error.message);
+      } catch (error) {
+        const message = error instanceof Error ? error.message : t("general.error")
+        toast.error(message);
       } finally {
         setIsSubmitting(false);
       }

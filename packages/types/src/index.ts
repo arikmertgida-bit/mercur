@@ -1,5 +1,7 @@
 export * from '@medusajs/types'
 
+export * from "./json-value"
+
 // Seller types
 export * from "./seller"
 

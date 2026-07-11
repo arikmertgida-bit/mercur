@@ -19,12 +19,20 @@ import { generateRuleAttributes } from "../edit-rules-form/utils";
 import { RuleValueFormField } from "../rule-value-form-field";
 import { requiredProductRule } from "./constants";
 
+export type RuleToRemove = {
+  id: string;
+  disguised: boolean;
+  attribute: string;
+};
+
+type PromotionRuleField = CreatePromotionSchemaType["rules"][number];
+
 type RulesFormFieldType = {
   promotion?: HttpTypes.AdminPromotion;
   form: UseFormReturn<CreatePromotionSchemaType>;
   ruleType: "rules" | "target-rules" | "buy-rules";
-  setRulesToRemove?: any;
-  rulesToRemove?: any;
+  setRulesToRemove?: (rules: RuleToRemove[]) => void;
+  rulesToRemove?: RuleToRemove[];
   scope?:
     | "application_method.buy_rules"
     | "rules"
@@ -140,7 +148,7 @@ export const RulesFormField = ({
       <Text className="text-ui-fg-subtle txt-small mb-6">
         {t(`promotions.fields.conditions.${ruleType}.description`)}
       </Text>
-      {fields.map((fieldRule: any, index) => {
+      {fields.map((fieldRule: PromotionRuleField, index) => {
         const identifier = fieldRule.id;
 
         return (
@@ -153,7 +161,7 @@ export const RulesFormField = ({
                     const { onChange, ref, ...fieldProps } = field;
 
                     const existingAttributes =
-                      fields?.map((field: any) => field.attribute) || [];
+                      fields?.map((field) => field.attribute) || [];
                     const attributeOptions =
                       filteredAttributes?.filter((attr) => {
                         if (attr.value === fieldRule.attribute) {
@@ -376,12 +384,12 @@ export const RulesFormField = ({
           className="inline-block"
           disabled={fields.length >= filteredAttributes.length}
           onClick={() => {
-            const newRule = {
+            const newRule: PromotionRuleField = {
               attribute: "",
               operator: "",
               values: [],
               required: false,
-            } as any;
+            };
             append(newRule);
           }}
         >
@@ -395,12 +403,12 @@ export const RulesFormField = ({
             className="text-ui-fg-muted hover:text-ui-fg-subtle ml-2 inline-block"
             onClick={() => {
               const indicesToRemove = fields
-                .map((field: any, index) => (field.required ? null : index))
+                .map((field, index) => (field.required ? null : index))
                 .filter((f) => f !== null);
 
               if (setRulesToRemove) {
                 setRulesToRemove(
-                  fields.filter((field: any) => !field.required),
+                  fields.filter((field) => !field.required) as RuleToRemove[],
                 );
               }
               remove(indicesToRemove);

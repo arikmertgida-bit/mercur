@@ -103,12 +103,14 @@ export const prepareOfferInventoryInput = (
         link.required_quantity ?? 1,
       )
 
+type RawBigNumberField = { value?: BigNumberInput }
+
       for (const lvl of link.inventory_item.location_levels ?? []) {
         const stocked = MathBN.sub(
-          (lvl.raw_stocked_quantity as any)?.value ??
+          (lvl.raw_stocked_quantity as RawBigNumberField | undefined)?.value ??
             lvl.stocked_quantity ??
             0,
-          (lvl.raw_reserved_quantity as any)?.value ??
+          (lvl.raw_reserved_quantity as RawBigNumberField | undefined)?.value ??
             lvl.reserved_quantity ??
             0,
         )

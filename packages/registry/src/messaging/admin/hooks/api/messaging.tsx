@@ -5,8 +5,8 @@ import {
   useQueryClient,
   UseQueryOptions,
 } from "@tanstack/react-query"
-import { client } from "../../lib/client"
 import { ClientError } from "@mercurjs/client"
+import { adminMessagesApi } from "../../lib/messaging-api"
 
 const ADMIN_CONVERSATIONS_KEY = "admin_conversations" as const
 const ADMIN_CONVERSATION_KEY = "admin_conversation" as const
@@ -45,7 +45,7 @@ type AdminConversationListResponse = {
   next_cursor: string | null
 }
 
-type AdminConversationDetailResponse = {
+export type AdminConversationDetailResponse = {
   conversation: AdminConversationDTO
   messages: AdminMessageDTO[]
   next_cursor: string | null
@@ -68,8 +68,7 @@ export const useAdminConversations = (
 ) => {
   const { data, ...rest } = useQuery({
     queryKey: [ADMIN_CONVERSATIONS_KEY, query],
-    queryFn: async () =>
-      (client as any).admin.messages.query(query ?? {}) as Promise<AdminConversationListResponse>,
+    queryFn: async () => adminMessagesApi.query(query ?? {}),
     ...options,
   })
 
@@ -86,11 +85,11 @@ export const useAdminConversation = (
     useInfiniteQuery<AdminConversationDetailResponse, ClientError>({
       queryKey: [ADMIN_CONVERSATION_KEY, id, { limit }],
       queryFn: async ({ pageParam }) =>
-        (client as any).admin.messages.$id.query({
+        adminMessagesApi.$id.query({
           $id: id,
           limit,
           ...(pageParam ? { cursor: pageParam } : {}),
-        }) as Promise<AdminConversationDetailResponse>,
+        }),
       initialPageParam: undefined as string | undefined,
       getNextPageParam: (lastPage) => lastPage.next_cursor ?? undefined,
     })
@@ -113,7 +112,7 @@ export const useBlockCustomer = () => {
 
   return useMutation({
     mutationFn: async (data: { customer_id: string; reason?: string }) =>
-      (client as any).admin.messages["chat-blocks"].mutate(data) as Promise<{ block: any }>,
+      adminMessagesApi["chat-blocks"].mutate(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [ADMIN_CONVERSATIONS_KEY] })
       queryClient.invalidateQueries({ queryKey: [ADMIN_CONVERSATION_KEY] })
@@ -126,7 +125,7 @@ export const useUnblockCustomer = () => {
 
   return useMutation({
     mutationFn: async (customerId: string) =>
-      (client as any).admin.messages["chat-blocks"].$customer_id.delete({ $customer_id: customerId }) as Promise<{ success: boolean }>,
+      adminMessagesApi["chat-blocks"].$customer_id.delete({ $customer_id: customerId }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [ADMIN_CONVERSATIONS_KEY] })
       queryClient.invalidateQueries({ queryKey: [ADMIN_CONVERSATION_KEY] })

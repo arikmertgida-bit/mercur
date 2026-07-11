@@ -1,66 +1,96 @@
 import React from "react"
 import { Badge, StatusBadge, Tooltip } from "@medusajs/ui"
+import { HttpTypes, JsonRecord, JsonValue } from "@mercurjs/types"
 import ReactCountryFlag from "react-country-flag"
 import { getCountryByIso2 } from "./data/countries"
 import { getStylizedAmount } from "./money-amount-helpers"
 
-// Helper function to get nested value from object using dot notation
-const getNestedValue = (obj: any, path: string) => {
-  return path.split('.').reduce((current, key) => current?.[key], obj)
+type DisplayStrategyFn = (value: JsonValue, row?: JsonRecord) => React.ReactNode
+
+const getNestedValue = (obj: JsonRecord, path: string): JsonValue | undefined => {
+  return path.split(".").reduce<JsonValue | undefined>((current, key) => {
+    if (current === null || current === undefined) {
+      return undefined
+    }
+
+    if (typeof current !== "object" || Array.isArray(current)) {
+      return undefined
+    }
+
+    return (current as JsonRecord)[key]
+  }, obj as JsonValue)
 }
 
-// Helper function to format date
-const formatDate = (date: string | Date, format: 'short' | 'long' | 'relative' = 'short') => {
+const formatDate = (
+  date: string | Date,
+  format: "short" | "long" | "relative" = "short"
+) => {
   const dateObj = new Date(date)
-  
+
   switch (format) {
-    case 'short':
-      return dateObj.toLocaleDateString('en-GB', { 
-        day: 'numeric', 
-        month: 'short', 
-        year: 'numeric' 
+    case "short":
+      return dateObj.toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
       })
-    case 'long':
-      return dateObj.toLocaleDateString('en-GB', { 
-        day: 'numeric', 
-        month: 'long', 
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
+    case "long":
+      return dateObj.toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
       })
-    case 'relative':
+    case "relative": {
       const now = new Date()
       const diffInMs = now.getTime() - dateObj.getTime()
       const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24))
-      
-      if (diffInDays === 0) return 'Today'
-      if (diffInDays === 1) return 'Yesterday'
+
+      if (diffInDays === 0) return "Today"
+      if (diffInDays === 1) return "Yesterday"
       if (diffInDays < 7) return `${diffInDays} days ago`
-      
-      return dateObj.toLocaleDateString('en-GB', { 
-        day: 'numeric', 
-        month: 'short' 
+
+      return dateObj.toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "short",
       })
+    }
     default:
       return dateObj.toLocaleDateString()
   }
 }
 
-// Payment status display
+const toDisplayString = (value: JsonValue): string => {
+  if (value === null || value === undefined) {
+    return ""
+  }
+
+  if (typeof value === "string") {
+    return value
+  }
+
+  if (typeof value === "number" || typeof value === "boolean") {
+    return String(value)
+  }
+
+  return JSON.stringify(value)
+}
+
 const PaymentStatusBadge = ({ status }: { status: string }) => {
   const getStatusColor = (status: string) => {
     switch (status?.toLowerCase()) {
-      case 'paid':
-      case 'captured':
-        return 'green'
-      case 'pending':
-      case 'awaiting':
-        return 'orange'
-      case 'failed':
-      case 'canceled':
-        return 'red'
+      case "paid":
+      case "captured":
+        return "green"
+      case "pending":
+      case "awaiting":
+        return "orange"
+      case "failed":
+      case "canceled":
+        return "red"
       default:
-        return 'grey'
+        return "grey"
     }
   }
 
@@ -71,24 +101,23 @@ const PaymentStatusBadge = ({ status }: { status: string }) => {
   )
 }
 
-// Fulfillment status display
 const FulfillmentStatusBadge = ({ status }: { status: string }) => {
   const getStatusColor = (status: string) => {
     switch (status?.toLowerCase()) {
-      case 'fulfilled':
-      case 'shipped':
-        return 'green'
-      case 'partially_fulfilled':
-      case 'preparing':
-        return 'orange'
-      case 'canceled':
-      case 'returned':
-        return 'red'
-      case 'pending':
-      case 'not_fulfilled':
-        return 'grey'
+      case "fulfilled":
+      case "shipped":
+        return "green"
+      case "partially_fulfilled":
+      case "preparing":
+        return "orange"
+      case "canceled":
+      case "returned":
+        return "red"
+      case "pending":
+      case "not_fulfilled":
+        return "grey"
       default:
-        return 'grey'
+        return "grey"
     }
   }
 
@@ -99,7 +128,6 @@ const FulfillmentStatusBadge = ({ status }: { status: string }) => {
   )
 }
 
-// Generic status badge
 const GenericStatusBadge = ({ status }: { status: string }) => {
   return (
     <Badge variant="outline" className="capitalize">
@@ -108,203 +136,235 @@ const GenericStatusBadge = ({ status }: { status: string }) => {
   )
 }
 
-// Display strategies registry
+const objectDisplayValue = (value: JsonValue): string => {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    return "-"
+  }
+
+  const obj = value as JsonRecord
+
+  if (typeof obj.name === "string") return obj.name
+  if (typeof obj.title === "string") return obj.title
+  if (typeof obj.email === "string") return obj.email
+  if (typeof obj.display_name === "string") return obj.display_name
+
+  return JSON.stringify(value)
+}
+
 export const DISPLAY_STRATEGIES = {
-  // Known semantic types with pixel-perfect display
   status: {
-    payment: (value: any) => <PaymentStatusBadge status={value} />,
-    fulfillment: (value: any) => <FulfillmentStatusBadge status={value} />,
-    default: (value: any) => <GenericStatusBadge status={value} />
+    payment: (value: JsonValue) => (
+      <PaymentStatusBadge status={toDisplayString(value)} />
+    ),
+    fulfillment: (value: JsonValue) => (
+      <FulfillmentStatusBadge status={toDisplayString(value)} />
+    ),
+    default: (value: JsonValue) => (
+      <GenericStatusBadge status={toDisplayString(value)} />
+    ),
   },
-  
+
   currency: {
-    default: (value: any, row: any) => {
-      if (value === null || value === undefined) return '-'
-      const currencyCode = row.currency_code || 'USD'
-      const formatted = getStylizedAmount(value, currencyCode)
-      
+    default: (value: JsonValue, row?: JsonRecord) => {
+      if (value === null || value === undefined) return "-"
+      const currencyCode =
+        typeof row?.currency_code === "string" ? row.currency_code : "USD"
+      const formatted = getStylizedAmount(Number(value), currencyCode)
+
       return (
         <div className="flex h-full w-full items-center justify-end text-right">
           <span className="truncate">{formatted}</span>
         </div>
       )
-    }
-  },
-  
-  timestamp: {
-    creation: (value: any) => value ? formatDate(value, 'short') : '-',
-    update: (value: any) => value ? formatDate(value, 'relative') : '-',
-    default: (value: any) => value ? formatDate(value, 'short') : '-'
-  },
-  
-  identifier: {
-    order: (value: any) => `#${value}`,
-    default: (value: any) => value
-  },
-  
-  email: {
-    default: (value: any) => value || '-'
-  },
-  
-  // Generic fallbacks for custom fields
-  enum: {
-    default: (value: any) => <GenericStatusBadge status={value} />
-  },
-  
-  // Base type fallbacks
-  string: {
-    default: (value: any) => value || '-'
-  },
-  
-  number: {
-    default: (value: any) => value?.toLocaleString() || '0'
-  },
-  
-  boolean: {
-    default: (value: any) => (
-      <Badge variant={value ? 'solid' : 'outline'}>
-        {value ? 'Yes' : 'No'}
-      </Badge>
-    )
-  },
-  
-  object: {
-    relationship: (value: any) => {
-      if (!value || typeof value !== 'object') return '-'
-      
-      // Try common display fields
-      if (value.name) return value.name
-      if (value.title) return value.title
-      if (value.email) return value.email
-      if (value.display_name) return value.display_name
-      
-      return JSON.stringify(value)
     },
-    default: (value: any) => {
-      if (!value || typeof value !== 'object') return '-'
-      
-      // Try common display fields
-      if (value.name) return value.name
-      if (value.title) return value.title
-      if (value.email) return value.email
-      
-      return JSON.stringify(value)
-    }
   },
-  
-  // Date types (in addition to timestamp)
+
+  timestamp: {
+    creation: (value: JsonValue) =>
+      value ? formatDate(String(value), "short") : "-",
+    update: (value: JsonValue) =>
+      value ? formatDate(String(value), "relative") : "-",
+    default: (value: JsonValue) =>
+      value ? formatDate(String(value), "short") : "-",
+  },
+
+  identifier: {
+    order: (value: JsonValue) => `#${toDisplayString(value)}`,
+    default: (value: JsonValue) => toDisplayString(value),
+  },
+
+  email: {
+    default: (value: JsonValue) => toDisplayString(value) || "-",
+  },
+
+  enum: {
+    default: (value: JsonValue) => (
+      <GenericStatusBadge status={toDisplayString(value)} />
+    ),
+  },
+
+  string: {
+    default: (value: JsonValue) => toDisplayString(value) || "-",
+  },
+
+  number: {
+    default: (value: JsonValue) => {
+      if (typeof value === "number") {
+        return value.toLocaleString()
+      }
+
+      return "0"
+    },
+  },
+
+  boolean: {
+    default: (value: JsonValue) => (
+      <Badge variant={value ? "solid" : "outline"}>
+        {value ? "Yes" : "No"}
+      </Badge>
+    ),
+  },
+
+  object: {
+    relationship: (value: JsonValue) => objectDisplayValue(value),
+    default: (value: JsonValue) => objectDisplayValue(value),
+  },
+
   date: {
-    default: (value: any) => value ? formatDate(value, 'short') : '-'
+    default: (value: JsonValue) =>
+      value ? formatDate(String(value), "short") : "-",
   },
-  
+
   datetime: {
-    default: (value: any) => value ? formatDate(value, 'long') : '-'
+    default: (value: JsonValue) =>
+      value ? formatDate(String(value), "long") : "-",
   },
-  
-  // Computed columns
+
   computed: {
-    display: (value: any) => value || '-',
-    default: (value: any) => value || '-'
-  }
+    display: (value: JsonValue) => toDisplayString(value) || "-",
+    default: (value: JsonValue) => toDisplayString(value) || "-",
+  },
 }
 
-// Strategy selection function
-export const getDisplayStrategy = (column: any) => {
-  const semanticStrategies = DISPLAY_STRATEGIES[column.semantic_type as keyof typeof DISPLAY_STRATEGIES]
+export const getDisplayStrategy = (
+  column: HttpTypes.AdminColumn
+): DisplayStrategyFn => {
+  const semanticStrategies =
+    DISPLAY_STRATEGIES[column.semantic_type as keyof typeof DISPLAY_STRATEGIES]
   if (semanticStrategies) {
-    const contextStrategy = semanticStrategies[column.context as keyof typeof semanticStrategies]
+    const contextStrategy =
+      semanticStrategies[column.context as keyof typeof semanticStrategies]
     if (contextStrategy) return contextStrategy
-    
+
     const defaultStrategy = semanticStrategies.default
     if (defaultStrategy) return defaultStrategy
   }
-  
-  // Fallback to data type
-  // Map 'text' data type to 'string' strategy
-  const dataType = column.data_type === 'text' ? 'string' : column.data_type
-  const dataTypeStrategies = DISPLAY_STRATEGIES[dataType as keyof typeof DISPLAY_STRATEGIES]
+
+  const dataType = column.data_type === "text" ? "string" : column.data_type
+  const dataTypeStrategies =
+    DISPLAY_STRATEGIES[dataType as keyof typeof DISPLAY_STRATEGIES]
   if (dataTypeStrategies) {
     const defaultStrategy = dataTypeStrategies.default
     if (defaultStrategy) return defaultStrategy
   }
-  
-  // Final fallback
-  return (value: any) => String(value || '-')
+
+  return (value: JsonValue) => toDisplayString(value) || "-"
 }
 
-// Computed column computation functions
 export const COMPUTED_COLUMN_FUNCTIONS = {
-  customer_name: (row: any) => {
-    // Try customer object first
-    if (row.customer?.first_name || row.customer?.last_name) {
-      const fullName = `${row.customer.first_name || ''} ${row.customer.last_name || ''}`.trim()
+  customer_name: (row: JsonRecord) => {
+    const customer =
+      typeof row.customer === "object" &&
+      row.customer !== null &&
+      !Array.isArray(row.customer)
+        ? (row.customer as JsonRecord)
+        : null
+
+    if (customer) {
+      const fullName = `${customer.first_name || ""} ${customer.last_name || ""}`.trim()
       if (fullName) return fullName
+      if (typeof customer.email === "string") return customer.email
+      if (typeof customer.phone === "string") return customer.phone
     }
-    
-    // Fall back to email
-    if (row.customer?.email) {
-      return row.customer.email
-    }
-    
-    // Fall back to phone
-    if (row.customer?.phone) {
-      return row.customer.phone
-    }
-    
-    return 'Guest'
+
+    return "Guest"
   },
-  
-  address_summary: (row: any, column?: any) => {
-    // Determine which address to use based on the column field
-    let address = null
-    if (column?.field === 'shipping_address_display') {
-      address = row.shipping_address
-    } else if (column?.field === 'billing_address_display') {
-      address = row.billing_address
+
+  address_summary: (row: JsonRecord, column?: HttpTypes.AdminColumn) => {
+    let address: JsonRecord | null = null
+
+    const shippingAddress = row.shipping_address
+    const billingAddress = row.billing_address
+
+    if (column?.field === "shipping_address_display") {
+      address =
+        typeof shippingAddress === "object" &&
+        shippingAddress !== null &&
+        !Array.isArray(shippingAddress)
+          ? (shippingAddress as JsonRecord)
+          : null
+    } else if (column?.field === "billing_address_display") {
+      address =
+        typeof billingAddress === "object" &&
+        billingAddress !== null &&
+        !Array.isArray(billingAddress)
+          ? (billingAddress as JsonRecord)
+          : null
     } else {
-      // Fallback to shipping address if no specific field
-      address = row.shipping_address || row.billing_address
+      address =
+        typeof shippingAddress === "object" &&
+        shippingAddress !== null &&
+        !Array.isArray(shippingAddress)
+          ? (shippingAddress as JsonRecord)
+          : typeof billingAddress === "object" &&
+              billingAddress !== null &&
+              !Array.isArray(billingAddress)
+            ? (billingAddress as JsonRecord)
+            : null
     }
-    
-    if (!address) return '-'
-    
-    // Build address parts in a meaningful order
-    const parts = []
-    
-    // Include street address if available
-    if (address.address_1) {
+
+    if (!address) return "-"
+
+    const parts: string[] = []
+
+    if (typeof address.address_1 === "string") {
       parts.push(address.address_1)
     }
-    
-    // City, Province/State, Postal Code
-    const locationParts = []
-    if (address.city) locationParts.push(address.city)
-    if (address.province) locationParts.push(address.province)
-    if (address.postal_code) locationParts.push(address.postal_code)
-    
-    if (locationParts.length > 0) {
-      parts.push(locationParts.join(', '))
+
+    const locationParts: string[] = []
+    if (typeof address.city === "string") locationParts.push(address.city)
+    if (typeof address.province === "string") locationParts.push(address.province)
+    if (typeof address.postal_code === "string") {
+      locationParts.push(address.postal_code)
     }
-    
-    // Country
-    if (address.country_code) {
+
+    if (locationParts.length > 0) {
+      parts.push(locationParts.join(", "))
+    }
+
+    if (typeof address.country_code === "string") {
       parts.push(address.country_code.toUpperCase())
     }
-    
-    return parts.join(' • ') || '-'
+
+    return parts.join(" • ") || "-"
   },
-  
-  country_code: (row: any) => {
-    // Get country code from shipping address
-    const countryCode = row.shipping_address?.country_code
-    
+
+  country_code: (row: JsonRecord) => {
+    const shippingAddress = row.shipping_address
+    const address =
+      typeof shippingAddress === "object" &&
+      shippingAddress !== null &&
+      !Array.isArray(shippingAddress)
+        ? (shippingAddress as JsonRecord)
+        : null
+    const countryCode =
+      typeof address?.country_code === "string" ? address.country_code : null
+
     if (!countryCode) return <div className="flex w-full justify-center">-</div>
-    
-    // Get country information
+
     const country = getCountryByIso2(countryCode)
     const displayName = country?.display_name || countryCode.toUpperCase()
-    
-    // Display country flag with tooltip - centered in the cell
+
     return (
       <div className="flex w-full items-center justify-center">
         <Tooltip content={displayName}>
@@ -322,50 +382,62 @@ export const COMPUTED_COLUMN_FUNCTIONS = {
         </Tooltip>
       </div>
     )
-  }
+  },
 }
 
-// Entity-specific column overrides
 export const ENTITY_COLUMN_OVERRIDES = {
   orders: {
-    // Override for customer column that combines multiple fields
     customer: {
-      accessor: (row: any) => {
-        // Complex logic for combining fields
-        const shipping = row.shipping_address
-        const customer = row.customer
-        
+      accessor: (row: JsonRecord) => {
+        const shipping =
+          typeof row.shipping_address === "object" &&
+          row.shipping_address !== null &&
+          !Array.isArray(row.shipping_address)
+            ? (row.shipping_address as JsonRecord)
+            : null
+        const customer =
+          typeof row.customer === "object" &&
+          row.customer !== null &&
+          !Array.isArray(row.customer)
+            ? (row.customer as JsonRecord)
+            : null
+
         if (shipping?.first_name || shipping?.last_name) {
-          return `${shipping.first_name || ''} ${shipping.last_name || ''}`.trim()
+          return `${shipping.first_name || ""} ${shipping.last_name || ""}`.trim()
         }
         if (customer?.first_name || customer?.last_name) {
-          return `${customer.first_name || ''} ${customer.last_name || ''}`.trim()
+          return `${customer.first_name || ""} ${customer.last_name || ""}`.trim()
         }
-        return customer?.email || 'Guest'
-      }
-    }
-  }
+        return typeof customer?.email === "string" ? customer.email : "Guest"
+      },
+    },
+  },
 }
 
-// Helper function to get entity-specific accessor
-export const getEntityAccessor = (entity: string, fieldName: string, column?: any) => {
-  // Check if this is a computed column
+export const getEntityAccessor = (
+  entity: string,
+  fieldName: string,
+  column?: HttpTypes.AdminColumn
+): ((row: JsonRecord) => JsonValue | React.ReactNode) => {
   if (column?.computed) {
-    const computationFn = COMPUTED_COLUMN_FUNCTIONS[column.computed.type as keyof typeof COMPUTED_COLUMN_FUNCTIONS]
+    const computationFn =
+      COMPUTED_COLUMN_FUNCTIONS[
+        column.computed.type as keyof typeof COMPUTED_COLUMN_FUNCTIONS
+      ]
     if (computationFn) {
-      // Return a wrapper function that passes the column info
-      return (row: any) => computationFn(row, column)
+      return (row: JsonRecord) => computationFn(row, column)
     }
   }
-  
-  const entityOverrides = ENTITY_COLUMN_OVERRIDES[entity as keyof typeof ENTITY_COLUMN_OVERRIDES]
+
+  const entityOverrides =
+    ENTITY_COLUMN_OVERRIDES[entity as keyof typeof ENTITY_COLUMN_OVERRIDES]
   if (entityOverrides) {
-    const fieldOverride = entityOverrides[fieldName as keyof typeof entityOverrides]
+    const fieldOverride =
+      entityOverrides[fieldName as keyof typeof entityOverrides]
     if (fieldOverride?.accessor) {
       return fieldOverride.accessor
     }
   }
-  
-  // Default accessor using dot notation
-  return (row: any) => getNestedValue(row, fieldName)
+
+  return (row: JsonRecord) => getNestedValue(row, fieldName)
 }

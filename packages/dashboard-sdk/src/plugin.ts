@@ -14,7 +14,7 @@ import {
     resolveVirtualModule,
     loadVirtualModule,
 } from "./virtual-modules";
-import type { MercurConfig, BuiltMercurConfig } from "./types";
+import type { MercurConfig, BuiltMercurConfig, MedusaConfigShape, MedusaPluginConfig } from "./types";
 
 function isRouteFile(file: string): boolean {
     const basename = path.basename(file, path.extname(file));
@@ -123,7 +123,7 @@ function resolvePluginRoot(
     }
 }
 
-function resolvePluginExtensions(plugins: any[], configDir: string, appType: "admin" | "vendor"): string[] {
+function resolvePluginExtensions(plugins: MedusaPluginConfig[], configDir: string, appType: "admin" | "vendor"): string[] {
     const nodeModulesRoot = findNodeModulesRoot(configDir);
     const extensions: string[] = [];
 
@@ -186,7 +186,7 @@ async function loadMedusaConfig(
         } finally {
             process.chdir(previousCwd);
         }
-        const medusaConfig = mod.default ?? mod;
+        const medusaConfig: MedusaConfigShape = mod.default ?? mod;
 
         const modules = medusaConfig?.modules ?? {};
 
@@ -225,10 +225,12 @@ async function loadMedusaConfig(
         }
 
         const plugins =
-            medusaConfig?.plugins?.filter(
-                (plugin: { resolve: string }) =>
-                    plugin.resolve !== "@medusajs/draft-order",
-            ) ?? [];
+            medusaConfig?.plugins?.filter((plugin) => {
+                if (typeof plugin === "string") {
+                    return plugin !== "@medusajs/draft-order";
+                }
+                return plugin.resolve !== "@medusajs/draft-order";
+            }) ?? [];
         const pluginExtensions = resolvePluginExtensions(plugins, configDir, appType);
 
         return { base, pluginExtensions, vendorAppUrl };
@@ -236,11 +238,11 @@ async function loadMedusaConfig(
         // Don't fail the build — but never fail silently either: without the Medusa config
         // the panel is built with base "/" and no plugin extensions, and a panel served
         // under a sub-path (e.g. /dashboard) would then request assets that 404.
-        console.warn(
+        process.stderr.write(
             `[@mercurjs/dashboard-sdk] Could not load the Medusa config from "${medusaConfigPath}": ` +
                 `${error instanceof Error ? error.message : String(error)}. ` +
                 `Building with base "/" and no plugin extensions — if this panel is served ` +
-                `under a sub-path (e.g. /dashboard), its assets will not resolve.`,
+                `under a sub-path (e.g. /dashboard), its assets will not resolve.\n`,
         );
         return { pluginExtensions: [] };
     }

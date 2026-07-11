@@ -70,7 +70,7 @@ export function OrderReceiveReturnForm({
   const previewItems = useMemo<PreviewItem[]>(() => {
     const idsMap: Record<string, boolean> = {}
     orderReturn.items.forEach((i) => (idsMap[i.item_id] = true))
-    return (preview.items as unknown as PreviewItem[]).filter((i) => idsMap[i.id])
+    return (preview.items as PreviewItem[]).filter((i) => idsMap[i.id])
   }, [preview.items, orderReturn])
 
   const { mutateAsync: confirmReturnReceive, isPending: isConfirming } =
@@ -159,7 +159,7 @@ export function OrderReceiveReturnForm({
       toast.success(t("general.success"), {
         description: t("orders.returns.receive.toast.success"),
       })
-    } catch (e: unknown) {
+    } catch (e) {
       toast.error(t("general.error"), {
         description:
           e instanceof Error ? e.message : t("errorBoundary.defaultTitle"),
@@ -305,7 +305,7 @@ export function OrderReceiveReturnForm({
 
                   <div className="flex flex-1 flex-row items-center gap-2">
                     <DismissedQuantity
-                      form={form as unknown as DismissedQuantityForm}
+                      form={form as DismissedQuantityForm}
                       item={item}
                       index={ind}
                       returnId={orderReturn.id}

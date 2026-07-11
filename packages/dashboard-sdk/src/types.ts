@@ -72,3 +72,21 @@ export type RouteConfig = {
     translationNs?: string
     public?: boolean
 }
+
+export type MedusaPluginConfig = string | { resolve?: string }
+
+export type MedusaUiModuleOptions = {
+    path?: string
+    appDir?: string
+    viteDevServerHost?: string
+    viteDevServerPort?: number
+}
+
+export type MedusaUiModule = {
+    options?: MedusaUiModuleOptions
+}
+
+export type MedusaConfigShape = {
+    modules?: Record<string, MedusaUiModule>
+    plugins?: MedusaPluginConfig[]
+}

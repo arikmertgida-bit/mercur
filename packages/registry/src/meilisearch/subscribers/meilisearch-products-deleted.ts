@@ -23,10 +23,10 @@ export default async function meilisearchProductsDeletedHandler({
     logger.debug(
       `Meilisearch delete: Successfully removed ${event.data.ids.length} products`
     )
-  } catch (error: unknown) {
+  } catch (error) {
     logger.error(
       `Meilisearch delete failed for products [${event.data.ids.join(', ')}]:`,
-      error as Error
+      error instanceof Error ? error : new Error(String(error))
     )
     throw error
   }

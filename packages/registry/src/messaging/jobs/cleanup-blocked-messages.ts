@@ -30,7 +30,7 @@ export default async function cleanupBlockedMessages(
       return
     }
 
-    const ids = oldLogs.map((log: any) => log.id)
+    const ids = oldLogs.map((log) => log.id)
 
     await service.deleteBlockedMessageLogs(ids)
 

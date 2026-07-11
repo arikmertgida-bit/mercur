@@ -39,7 +39,6 @@ export const OrderGeneralSection = ({ order }: OrderGeneralSectionProps) => {
   const { mutateAsync: cancelOrder } = useCancelOrder(order.id)
 
   const hasAnyFulfilledItem = order.items?.some(
-    // @ts-ignore — detail.fulfilled_quantity is exposed via Mercur query-config
     (i) => (i.detail?.fulfilled_quantity ?? 0) > 0
   )
 

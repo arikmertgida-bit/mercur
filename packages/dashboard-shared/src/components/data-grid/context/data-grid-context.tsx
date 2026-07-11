@@ -1,3 +1,4 @@
+import type { JsonValue } from "@mercurjs/types"
 import { FocusEvent, MouseEvent, createContext } from "react"
 import {
   Control,
@@ -27,7 +28,7 @@ type DataGridContextType<TFieldValues extends FieldValues> = {
   control: Control<TFieldValues>
   getInputChangeHandler: (
     field: Path<TFieldValues>
-  ) => (next: any, prev: any) => void
+  ) => (next: JsonValue, prev: JsonValue) => void
   // Wrapper handlers
   getWrapperFocusHandler: (
     coordinates: DataGridCoordinates
@@ -40,6 +41,7 @@ type DataGridContextType<TFieldValues extends FieldValues> = {
   navigateToField: (field: string) => void
 }
 
-export const DataGridContext = createContext<DataGridContextType<any> | null>(
-  null
-)
+export type DataGridContextValue = DataGridContextType<FieldValues>
+
+export const DataGridContext =
+  createContext<DataGridContextValue | null>(null)

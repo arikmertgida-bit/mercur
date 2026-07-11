@@ -75,7 +75,7 @@ export const EditRulesWrapper = ({
       if (Object.keys(applicationMethodData).length) {
         await updatePromotion({
           application_method: applicationMethodData,
-        } as any);
+        });
       }
 
       if (rulesToCreate.length) {
@@ -85,7 +85,7 @@ export const EditRulesWrapper = ({
               attribute: rule.attribute,
               operator: rule.operator,
               values: rule.values,
-            } as any;
+            };
           }),
         });
       }
@@ -103,7 +103,7 @@ export const EditRulesWrapper = ({
               id: rule.id!,
               attribute: rule.attribute,
               operator: rule.operator,
-              values: rule.values as unknown as string | string[],
+              values: rule.values as string | string[],
             };
           }),
         });

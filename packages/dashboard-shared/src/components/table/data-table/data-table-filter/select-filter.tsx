@@ -1,3 +1,4 @@
+import type { JsonValue } from "@mercurjs/types"
 import { CheckMini, EllipseMiniSolid, XMarkMini } from "@medusajs/icons"
 import { clx } from "@medusajs/ui"
 import { Command } from "cmdk"
@@ -11,7 +12,7 @@ import FilterChip from "./filter-chip"
 import { IFilter } from "./types"
 
 interface SelectFilterProps extends IFilter {
-  options: { label: string; value: unknown }[]
+  options: { label: string; value: JsonValue }[]
   readonly?: boolean
   multiple?: boolean
   searchable?: boolean
@@ -76,7 +77,7 @@ export const SelectFilter = ({
     }
   }
 
-  const handleSelect = (value: unknown) => {
+  const handleSelect = (value: JsonValue) => {
     const isSelected = selectedParams.get().includes(String(value))
 
     if (isSelected) {

@@ -4,15 +4,26 @@ import { ActionType, ClientOptions } from "./types";
 export type { InferClient } from "./types";
 import { kebabCase } from "./utils";
 
-type DistributiveOmit<T, K extends keyof any> = T extends any ? Omit<T, K> : never;
+type JsonPrimitive = string | number | boolean | null
+type JsonObject = { [key: string]: JsonValue }
+type JsonArray = JsonValue[]
+type JsonValue = JsonPrimitive | JsonObject | JsonArray
+type JsonRecord = Record<string, JsonValue>
+type ClientPayloadEntry = JsonValue | Blob | (JsonValue | Blob)[]
+type ClientPayload = Record<string, ClientPayloadEntry>
+type ClientRequestInput = ClientPayload & {
+    fetchOptions?: RequestInit
+}
 
-export type InferClientInput<T> = T extends (input: infer I) => any
+type DistributiveOmit<T, K extends PropertyKey> = T extends object ? Omit<T, K> : never;
+
+export type InferClientInput<T> = T extends (input: infer I) => infer _R
     ? DistributiveOmit<I, 'fetchOptions'>
-    : T extends (input?: infer I) => any
+    : T extends (input?: infer I) => infer _R
     ? DistributiveOmit<NonNullable<I>, 'fetchOptions'>
     : never;
 
-export type InferClientOutput<T> = T extends (...args: any[]) => Promise<infer O>
+export type InferClientOutput<T> = T extends (...args: infer _A) => Promise<infer O>
     ? O
     : never;
 
@@ -27,16 +38,16 @@ export class ClientError extends Error {
     }
 }
 
-const isFileLike = (value: unknown): value is Blob =>
+const isFileLike = (value: ClientPayloadEntry): value is Blob =>
     typeof Blob !== "undefined" && value instanceof Blob;
 
-const payloadHasFiles = (payload: Record<string, any>): boolean =>
+const payloadHasFiles = (payload: ClientPayload): boolean =>
     Object.values(payload).some(
         (value) =>
             isFileLike(value) || (Array.isArray(value) && value.some(isFileLike))
     );
 
-const toFormData = (payload: Record<string, any>): FormData => {
+const toFormData = (payload: ClientPayload): FormData => {
     const formData = new FormData();
 
     for (const [key, value] of Object.entries(payload)) {
@@ -44,7 +55,7 @@ const toFormData = (payload: Record<string, any>): FormData => {
             continue;
         }
 
-        const append = (item: unknown) => {
+        const append = (item: JsonValue | Blob) => {
             if (isFileLike(item)) {
                 formData.append(key, item);
             } else if (typeof item === "object") {
@@ -69,7 +80,7 @@ export function createClient(options: ClientOptions) {
 
     return createRecursiveProxy((path, args) => {
         const action = path.pop() as ActionType;
-        const input: Record<string, any> = args[0] ?? {};
+        const input: ClientRequestInput = (args[0] ?? {}) as ClientRequestInput;
 
         const method =
             action === "query" ? "GET" : action === "mutate" ? "POST" : action === "delete" ? "DELETE" : null;

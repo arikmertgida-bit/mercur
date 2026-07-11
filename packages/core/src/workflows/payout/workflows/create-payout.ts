@@ -1,5 +1,6 @@
 import { createRemoteLinkStep, useQueryGraphStep } from "@medusajs/medusa/core-flows"
 import { WorkflowData, WorkflowResponse, createWorkflow, transform } from "@medusajs/framework/workflows-sdk"
+import { BigNumberInput } from "@medusajs/framework/types"
 import { MathBN, MedusaError } from "@medusajs/framework/utils"
 import { MercurModules } from "@mercurjs/types"
 
@@ -10,6 +11,20 @@ type CreatePayoutWorkflowInput = {
 }
 
 export const createPayoutWorkflowId = "create-payout"
+
+type OrderForPayout = {
+  id: string
+  currency_code: string
+  total: BigNumberInput
+  items?: Array<{ id: string }>
+  shipping_methods?: Array<{ id: string }>
+  seller?: {
+    id: string
+    payout_account?: { id: string }
+  }
+}
+
+type CommissionLineAmount = { amount?: BigNumberInput }
 
 export const createPayoutWorkflow = createWorkflow(
   createPayoutWorkflowId,
@@ -29,14 +44,14 @@ export const createPayoutWorkflow = createWorkflow(
       options: { throwIfKeyNotFound: true },
     }).config({ name: "fetch-order" })
 
-    const order = transform({ orders }, ({ orders }) => orders[0])
+    const order = transform({ orders }, ({ orders }) => orders[0] as OrderForPayout)
 
     const commissionFilters = transform({ order }, ({ order }) => ({
       $or: [
-        { item_id: (order.items ?? []).map((item: any) => item.id) },
+        { item_id: (order.items ?? []).map((item) => item.id) },
         {
-          shipping_method_id: ((order as any).shipping_methods ?? []).map(
-            (method: any) => method.id
+          shipping_method_id: (order.shipping_methods ?? []).map(
+            (method) => method.id
           ),
         },
       ],
@@ -54,8 +69,8 @@ export const createPayoutWorkflow = createWorkflow(
     const payoutInput = transform(
       { order, commissionLines },
       ({ order, commissionLines }) => {
-        const payoutAccountId = (order as any).seller?.payout_account?.id
-        const sellerId = (order as any).seller?.id
+        const payoutAccountId = order.seller?.payout_account?.id
+        const sellerId = order.seller?.id
 
         if (!payoutAccountId) {
           throw new MedusaError(
@@ -64,16 +79,12 @@ export const createPayoutWorkflow = createWorkflow(
           )
         }
 
-        const totalCommission = (commissionLines ?? []).reduce(
-          (acc: number, line: any) =>
-            MathBN.add(acc, line?.amount ?? 0) as unknown as number,
-          0
+        const totalCommission = (commissionLines as CommissionLineAmount[] ?? []).reduce(
+          (acc, line) => MathBN.add(acc, line?.amount ?? 0),
+          0 as BigNumberInput
         )
 
-        const amount = MathBN.sub(
-          order.total,
-          totalCommission
-        ) as unknown as number
+        const amount = Number(MathBN.sub(order.total, totalCommission))
 
         return {
           account_id: payoutAccountId,

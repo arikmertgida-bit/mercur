@@ -68,7 +68,7 @@ export const normalizeProductFormValues = (
 export const normalizeVariants = (
   variants: ProductCreateSchemaType["variants"],
   hasAxis: boolean,
-): any[] => {
+): HttpTypes.AdminCreateProductVariant[] => {
   return variants.map((variant) => {
     const opts = variant.options
     const hasOpts = opts && Object.keys(opts).length > 0

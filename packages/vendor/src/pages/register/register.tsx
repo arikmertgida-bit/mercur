@@ -67,8 +67,8 @@ const RegisterForm = () => {
         JSON.stringify({ first_name, last_name, email }),
       )
       navigate("/onboarding", { state: { email, first_name, last_name } })
-    } catch (error: any) {
-      setServerError(error?.message || t("register.error"))
+    } catch (error) {
+      setServerError(error instanceof Error ? error.message : t("register.error"))
     }
   })
 

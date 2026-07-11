@@ -137,7 +137,7 @@ const PaymentRow = ({
   const { getFullDate } = useDate()
 
   const status = getPaymentStatus(payment)
-  const refunds = (payment.refunds ?? []) as unknown as PaymentRefund[]
+  const refunds = (payment.refunds ?? []) as PaymentRefund[]
   const refundedAmount = refunds.reduce((acc, r) => acc + (r.amount ?? 0), 0)
   const isFullyRefunded =
     refundedAmount > 0 && refundedAmount >= (payment.amount as number)

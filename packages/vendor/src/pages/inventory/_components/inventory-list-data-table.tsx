@@ -47,10 +47,7 @@ export const InventoryListDataTable = () => {
   const { columns, filters: extFilters } =
     useExtendableTable<InventoryTypes.InventoryItemDTO>({
       model: "inventory_item",
-      columns: baseColumns as unknown as ColumnDef<
-        InventoryTypes.InventoryItemDTO,
-        unknown
-      >[],
+      columns: baseColumns,
     });
   const filters = useMemo(
     () => [...baseFilters, ...(extFilters as typeof baseFilters)],

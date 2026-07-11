@@ -3,7 +3,11 @@ import { useInventoryItemLevels } from "@hooks/api/inventory";
 import { useDataTable } from "@hooks/use-data-table";
 import { useLocationListTableColumns } from "./use-location-list-table-columns";
 import { useLocationLevelTableQuery } from "./use-location-list-table-query";
-import { StockLocationDTO } from "@medusajs/types";
+import { HttpTypes, StockLocationDTO } from "@medusajs/types";
+
+type InventoryLevelWithLocations = HttpTypes.AdminInventoryLevel & {
+  stock_locations: StockLocationDTO[];
+};
 
 const PAGE_SIZE = 20;
 
@@ -27,8 +31,7 @@ export const ItemLocationListTable = ({
 
   const filteredLocationLevels = inventory_levels?.filter(
     (level) =>
-      (level as unknown as { stock_locations: StockLocationDTO[] })
-        .stock_locations.length > 0,
+      (level as InventoryLevelWithLocations).stock_locations.length > 0,
   );
 
   const { table } = useDataTable({

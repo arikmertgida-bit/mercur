@@ -67,7 +67,10 @@ export const getOrderGroupDetailWorkflow = createWorkflow(
 
         if (orderGroup.orders) {
           for (const order of orderGroup.orders) {
-            const order_ = order as OrderDetailDTO
+            const order_ = order as OrderDetailDTO & {
+              payment_collections?: OrderDetailDTO["payment_collections"]
+              fulfillments?: OrderDetailDTO["fulfillments"]
+            }
 
             order_.payment_status = getLastPaymentStatus(
               order_
@@ -77,12 +80,10 @@ export const getOrderGroupDetailWorkflow = createWorkflow(
             ) as OrderDetailDTO["fulfillment_status"]
 
             if (!requiredPaymentFields) {
-              // @ts-ignore
-              delete order_.payment_collections
+              Reflect.deleteProperty(order_ as object, "payment_collections")
             }
             if (!requiredFulfillmentFields) {
-              // @ts-ignore
-              delete order_.fulfillments
+              Reflect.deleteProperty(order_ as object, "fulfillments")
             }
           }
         }

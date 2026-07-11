@@ -1,6 +1,6 @@
 import { getConfig } from "@/src/utils/get-config";
 import { getProjectInfo } from "@/src/utils/get-project-info";
-import { handleError } from "@/src/utils/handle-error";
+import { handleCaughtError } from "@/src/utils/handle-error";
 import { logger } from "@/src/utils/logger";
 import { Command } from "commander";
 
@@ -15,11 +15,11 @@ export const info = new Command()
   .action(async (opts) => {
     try {
       logger.info("> project info");
-      console.log(await getProjectInfo(opts.cwd));
+      process.stdout.write(String(await getProjectInfo(opts.cwd)) + "\n");
       logger.break();
       logger.info("> blocks.json");
-      console.log(await getConfig(opts.cwd));
+      process.stdout.write(String(await getConfig(opts.cwd)) + "\n");
     } catch (error) {
-      handleError(error);
+      handleCaughtError(error);
     }
   });

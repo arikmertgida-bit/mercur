@@ -79,7 +79,7 @@ export const stageProductChangeWorkflow = createWorkflow(
     return new WorkflowResponse(
       transform(
         { changes },
-        ({ changes }) => changes[0] as unknown as ProductChangeDTO,
+        ({ changes }) => changes[0] as ProductChangeDTO,
       ),
     )
   },

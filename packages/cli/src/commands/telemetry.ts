@@ -1,6 +1,6 @@
 import { toggleTelemetry, TELEMETRY_DOCS_URL } from "@/src/telemetry";
 import { configStore } from "@/src/telemetry/store";
-import { handleError } from "@/src/utils/handle-error";
+import { handleCaughtError } from "@/src/utils/handle-error";
 import { logger } from "@/src/utils/logger";
 import { Command } from "commander";
 
@@ -46,6 +46,6 @@ export const telemetry = new Command()
         logger.success("Telemetry disabled. No data will be collected.");
       }
     } catch (error) {
-      handleError(error);
+      handleCaughtError(error);
     }
   });

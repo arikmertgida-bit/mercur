@@ -284,14 +284,18 @@ export const useCancelOrder = (
 
 export const useCompleteOrder = (
   orderId: string,
-  options?: UseMutationOptions<any, Error, void>
+  options?: UseMutationOptions<
+    InferClientOutput<typeof sdk.vendor.orders.$id.complete.mutate>,
+    ClientError,
+    void
+  >
 ) => {
   return useMutation({
     mutationFn: () =>
       fetchQuery(`/vendor/orders/${orderId}/complete`, {
         method: "POST",
       }),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.detail(orderId),
       });

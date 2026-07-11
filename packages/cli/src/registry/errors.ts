@@ -18,21 +18,28 @@ export const RegistryErrorCode = {
 export type RegistryErrorCode =
   (typeof RegistryErrorCode)[keyof typeof RegistryErrorCode];
 
+type RegistryErrorContext = Record<
+  string,
+  string | number | boolean | null | undefined | string[]
+>;
+
+type RegistryErrorCause = string | Error;
+
 export class RegistryError extends Error {
   public readonly code: RegistryErrorCode;
   public readonly statusCode?: number;
-  public readonly context?: Record<string, unknown>;
+  public readonly context?: RegistryErrorContext;
   public readonly suggestion?: string;
   public readonly timestamp: Date;
-  public override readonly cause?: unknown;
+  public override readonly cause?: RegistryErrorCause;
 
   constructor(
     message: string,
     options: {
       code?: RegistryErrorCode;
       statusCode?: number;
-      cause?: unknown;
-      context?: Record<string, unknown>;
+      cause?: RegistryErrorCause;
+      context?: RegistryErrorContext;
       suggestion?: string;
     } = {}
   ) {
@@ -54,7 +61,7 @@ export class RegistryError extends Error {
 export class RegistryNotFoundError extends RegistryError {
   constructor(
     public readonly url: string,
-    cause?: unknown
+    cause?: RegistryErrorCause
   ) {
     const message = `The item at ${url} was not found. It may not exist at the registry.`;
 
@@ -73,7 +80,7 @@ export class RegistryNotFoundError extends RegistryError {
 export class RegistryUnauthorizedError extends RegistryError {
   constructor(
     public readonly url: string,
-    cause?: unknown
+    cause?: RegistryErrorCause
   ) {
     const message = `You are not authorized to access the item at ${url}. If this is a remote registry, you may need to authenticate.`;
 
@@ -92,7 +99,7 @@ export class RegistryUnauthorizedError extends RegistryError {
 export class RegistryForbiddenError extends RegistryError {
   constructor(
     public readonly url: string,
-    cause?: unknown
+    cause?: RegistryErrorCause
   ) {
     const message = `You are not authorized to access the item at ${url}. If this is a remote registry, you may need to authenticate.`;
 
@@ -113,7 +120,7 @@ export class RegistryFetchError extends RegistryError {
     public readonly url: string,
     statusCode?: number,
     public readonly responseBody?: string,
-    cause?: unknown
+    cause?: RegistryErrorCause
   ) {
     const baseMessage = statusCode
       ? `Failed to fetch from registry (${statusCode}): ${url}`
@@ -169,7 +176,7 @@ export class RegistryNotConfiguredError extends RegistryError {
 export class RegistryLocalFileError extends RegistryError {
   constructor(
     public readonly filePath: string,
-    cause?: unknown
+    cause?: RegistryErrorCause
   ) {
     super(`Failed to read local registry file: ${filePath}`, {
       code: RegistryErrorCode.LOCAL_FILE_ERROR,
@@ -181,12 +188,14 @@ export class RegistryLocalFileError extends RegistryError {
   }
 }
 
+type RegistryParseFailure = string | Error | z.ZodError;
+
 export class RegistryParseError extends RegistryError {
-  public readonly parseError: unknown;
+  public readonly parseError: RegistryParseFailure;
 
   constructor(
     public readonly item: string,
-    parseError: unknown
+    parseError: RegistryParseFailure
   ) {
     let message = `Failed to parse registry item: ${item}`;
 
@@ -259,7 +268,7 @@ export class ConfigMissingError extends RegistryError {
 export class ConfigParseError extends RegistryError {
   constructor(
     public readonly cwd: string,
-    parseError: unknown
+    parseError: RegistryParseFailure
   ) {
     let message = `Invalid blocks.json configuration in ${cwd}.`;
 

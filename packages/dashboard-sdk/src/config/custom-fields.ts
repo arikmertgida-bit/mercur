@@ -1,15 +1,20 @@
 import type { ComponentType } from "react"
+import type { JsonRecord, JsonValue } from "@mercurjs/types"
 
 /**
  * Minimal structural stand-in for a Zod schema, so the SDK stays free of a zod
  * dependency. `createFormHelper` (in `@mercurjs/dashboard-shared`) produces real
  * zod schemas that satisfy this shape.
  */
+export type FieldParseResult =
+    | { success: true; data: JsonValue }
+    | { success: false; error: JsonRecord }
+
 export type FieldValidation = {
-    safeParse?: (value: unknown) => unknown
-    parse?: (value: unknown) => unknown
+    safeParse?: (value: JsonValue) => FieldParseResult
+    parse?: (value: JsonValue) => JsonValue
     def?: { type?: string }
-    _def?: unknown
+    _def?: JsonRecord
 }
 
 /**
@@ -44,11 +49,11 @@ type ModelShape<TModel> = TModel extends keyof CustomFieldsRegistry
   ? CustomFieldsRegistry[TModel] & DefaultModelShape
   : DefaultModelShape
 
-export type CustomFormField<TData = unknown> = {
+export type CustomFormField<TData = JsonRecord> = {
   /** Zod schema — drives the input type and validation. */
   validation: FieldValidation
   /** Static default or a resolver from the loaded entity. */
-  defaultValue?: ((data: TData) => unknown) | unknown
+  defaultValue?: ((data: TData) => JsonValue) | JsonValue
   label?: string
   description?: string
   placeholder?: string
@@ -85,19 +90,19 @@ export type CustomFormEntry<TModel> =
  * (built-in id + `component: null`) a section field. Built-in ids autocomplete
  * from the model's generated `displayFieldIds`; any other string adds a new row.
  */
-export type CustomDisplayField<TModel = unknown> = {
+export type CustomDisplayField<TModel extends CustomFieldModel = CustomFieldModel> = {
   // eslint-disable-next-line @typescript-eslint/ban-types
   id: ModelShape<TModel>["displayFieldIds"] | (string & {})
-  component: ComponentType<{ data?: unknown }> | null
+  component: ComponentType<{ data?: JsonRecord }> | null
 }
 
 /** Same `{ rank?, component }` shape as list bulk actions. */
 export type SectionAction = {
   rank?: number
-  component: ComponentType<{ data?: unknown }>
+  component: ComponentType<{ data?: JsonRecord }>
 }
 
-export type CustomDisplayEntry<TModel> = {
+export type CustomDisplayEntry<TModel extends CustomFieldModel = CustomFieldModel> = {
   zone: ModelShape<TModel>["displayZones"]
   fields?: CustomDisplayField<TModel>[]
   actions?: SectionAction[]
@@ -106,13 +111,13 @@ export type CustomDisplayEntry<TModel> = {
 export type CustomColumn = {
   id: string
   header?: string
-  component?: ComponentType<{ row?: unknown; value?: unknown }>
+  component?: ComponentType<{ row?: JsonRecord; value?: JsonValue }>
 }
 
 export type CustomListExtension = {
   columns?: CustomColumn[]
   bulkActions?: SectionAction[]
-  filters?: unknown[]
+  filters?: ComponentType<{ context?: JsonRecord }>[]
   viewDefaults?: {
     columnVisibility?: Record<string, boolean>
     columnOrder?: string[]

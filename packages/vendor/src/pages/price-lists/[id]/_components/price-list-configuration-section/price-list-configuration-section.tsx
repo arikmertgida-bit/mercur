@@ -56,7 +56,9 @@ export const PriceListConfigurationSection = ({
 const _CustomerGroupDisplay = ({
   priceList,
 }: {
-  priceList: HttpTypes.AdminPriceList & { price_list_rules: any[] }
+  priceList: HttpTypes.AdminPriceList & {
+    price_list_rules: HttpTypes.AdminPriceListRule[]
+  }
 }) => {
   const { t } = useTranslation()
 

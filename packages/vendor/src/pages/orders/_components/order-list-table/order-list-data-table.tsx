@@ -48,10 +48,7 @@ export const OrderListDataTable = () => {
   const { columns, filters: extFilters } =
     useExtendableTable<HttpTypes.AdminOrder>({
       model: "order",
-      columns: baseColumns as unknown as ColumnDef<
-        HttpTypes.AdminOrder,
-        unknown
-      >[],
+      columns: baseColumns,
     });
 
   const filters = useMemo(

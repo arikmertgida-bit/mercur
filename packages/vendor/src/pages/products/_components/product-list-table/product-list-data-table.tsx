@@ -163,7 +163,7 @@ const useColumns = () => {
   const { columns: extended, filters } = useExtendableTable<ExtendedAdminProduct>(
     {
       model: "product",
-      columns: base as unknown as ColumnDef<ExtendedAdminProduct, unknown>[],
+      columns: base,
     },
   );
 

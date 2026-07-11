@@ -157,9 +157,7 @@ export const ExchangeInboundSection = ({
       limit: 999,
       stock_location_id: locationId,
     } as never,
-    { enabled: !!locationId } as unknown as Parameters<
-      typeof useShippingOptions
-    >[1]
+    { enabled: !!locationId }
   )
 
   const inboundShippingOptions = (shipping_options as Array<{

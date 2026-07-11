@@ -305,7 +305,13 @@ export const create = new Command()
       }
     } catch (error) {
       logger.break();
-      handleError(error);
+      if (typeof error === "string") {
+        handleError(error);
+      } else if (error instanceof Error) {
+        handleError(error);
+      } else {
+        handleError(String(error));
+      }
     }
   });
 
@@ -360,7 +366,7 @@ async function downloadTarStream(url: string) {
     throw new Error(`Failed to download: ${url}`);
   }
 
-  return Readable.from(res.body as unknown as NodeJS.ReadableStream);
+  return Readable.from(res.body);
 }
 
 async function installDeps({
@@ -393,7 +399,7 @@ async function installDeps({
       env: { ...process.env, npm_config_yes: "true" },
     });
     return true;
-  } catch (err: unknown) {
+  } catch (err) {
     logger.error(
       `Error installing dependencies${err instanceof Error ? `: ${err.message}` : ""}.`
     );

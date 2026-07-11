@@ -1,4 +1,4 @@
-import { Button, toast } from "@medusajs/ui";
+import { ClientError, InferClientInput, InferClientOutput } from "@mercurjs/client";
 import { MercurFeatureFlags } from "@mercurjs/types";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -39,9 +39,10 @@ export const ProductOrganizationForm = ({
 
   const collections = useComboboxData({
     queryKey: ["product_collections"],
-    queryFn: (params) => sdk.vendor.collections.query(params as any),
-    getOptions: (data) =>
-      data.collections.map((collection: any) => ({
+    queryFn: (params: InferClientInput<typeof sdk.vendor.collections.query>) =>
+      sdk.vendor.collections.query(params),
+    getOptions: (data: InferClientOutput<typeof sdk.vendor.collections.query>) =>
+      data.collections.map((collection) => ({
         label: collection.title!,
         value: collection.id!,
       })),
@@ -49,9 +50,10 @@ export const ProductOrganizationForm = ({
 
   const types = useComboboxData({
     queryKey: ["product_types"],
-    queryFn: (params) => sdk.vendor.productTypes.query(params as any),
-    getOptions: (data) =>
-      data.product_types.map((type: any) => ({
+    queryFn: (params: InferClientInput<typeof sdk.vendor.productTypes.query>) =>
+      sdk.vendor.productTypes.query(params),
+    getOptions: (data: InferClientOutput<typeof sdk.vendor.productTypes.query>) =>
+      data.product_types.map((type) => ({
         label: type.value,
         value: type.id,
       })),
@@ -59,9 +61,10 @@ export const ProductOrganizationForm = ({
 
   const tags = useComboboxData({
     queryKey: ["product_tags"],
-    queryFn: (params) => sdk.vendor.productTags.query(params as any),
-    getOptions: (data) =>
-      data.product_tags.map((tag: any) => ({
+    queryFn: (params: InferClientInput<typeof sdk.vendor.productTags.query>) =>
+      sdk.vendor.productTags.query(params),
+    getOptions: (data: InferClientOutput<typeof sdk.vendor.productTags.query>) =>
+      data.product_tags.map((tag) => ({
         label: tag.value,
         value: tag.id,
       })),
@@ -86,7 +89,7 @@ export const ProductOrganizationForm = ({
         collection_id: data.collection_id || null,
         categories: data.category_id ? [{ id: data.category_id }] : [],
         tags: data.tag_ids?.map((t) => ({ id: t })),
-      } as any,
+      },
       {
         onSuccess: () => {
           toast.success(
@@ -98,7 +101,7 @@ export const ProductOrganizationForm = ({
           );
           handleSuccess();
         },
-        onError: (error: any) => {
+        onError: (error: ClientError) => {
           toast.error(error.message);
         },
       },

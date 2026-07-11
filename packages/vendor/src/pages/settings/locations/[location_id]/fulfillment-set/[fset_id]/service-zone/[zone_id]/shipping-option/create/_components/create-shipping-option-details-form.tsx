@@ -38,8 +38,8 @@ export const CreateShippingOptionDetailsForm = ({
         method: "GET",
       }),
     queryKey: shippingProfileQueryKeys.lists(),
-    getOptions: (data) =>
-      (data.shipping_profiles || []).map((profile: any) => {
+    getOptions: (data: { shipping_profiles?: Array<{ shipping_profile?: { name?: string; id?: string }; name?: string; id: string }> }) =>
+      (data.shipping_profiles || []).map((profile) => {
         const name = profile.shipping_profile?.name ?? profile.name ?? ""
         const id = profile.shipping_profile?.id ?? profile.id
         return {

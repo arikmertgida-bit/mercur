@@ -4,6 +4,7 @@ import {
 } from "@medusajs/framework/workflows-sdk"
 import { createRemoteLinkStep } from "@medusajs/medusa/core-flows"
 import { Modules } from "@medusajs/framework/utils"
+import { MercurModules } from "@mercurjs/types"
 
 import { createConversationStep } from "../steps/create-conversation"
 import { MESSAGING_MODULE } from "../../../modules/messaging"
@@ -24,10 +25,10 @@ export const createConversationWorkflow = createWorkflow(
         [MESSAGING_MODULE]: { conversation_id: conversation.id },
       },
       {
-        "seller": { seller_id: input.seller_id },
+        [MercurModules.SELLER]: { seller_id: input.seller_id },
         [MESSAGING_MODULE]: { conversation_id: conversation.id },
       },
-    ] as any)
+    ])
 
     return new WorkflowResponse(conversation)
   }

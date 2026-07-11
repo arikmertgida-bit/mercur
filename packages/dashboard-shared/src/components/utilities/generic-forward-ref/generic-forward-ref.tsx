@@ -1,7 +1,13 @@
-import { ReactNode, Ref, RefAttributes, forwardRef } from "react"
+import {
+  ReactNode,
+  Ref,
+  RefAttributes,
+  forwardRef,
+  ForwardRefExoticComponent,
+} from "react"
 
 export function genericForwardRef<T, P = {}>(
   render: (props: P, ref: Ref<T>) => ReactNode
-): (props: P & RefAttributes<T>) => ReactNode {
-  return forwardRef(render) as any
+): ForwardRefExoticComponent<P & RefAttributes<T>> {
+  return forwardRef(render) as ForwardRefExoticComponent<P & RefAttributes<T>>
 }

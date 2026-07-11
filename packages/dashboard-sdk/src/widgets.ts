@@ -16,7 +16,10 @@ import {
     isObjectProperty,
     isStringLiteral,
     isVariableDeclaration,
-    isVariableDeclarator,
+    type Expression,
+    type Node,
+    type ObjectExpressionProperty,
+    type TraverseRoot,
 } from "./babel"
 import type { BuiltMercurConfig } from "./types"
 
@@ -30,7 +33,7 @@ type WidgetResult = {
     entry: string
 }
 
-function extractZones(value: any, zones: string[]): void {
+function extractZones(value: Node | null | undefined, zones: string[]): void {
     if (isStringLiteral(value)) {
         zones.push(value.value)
     } else if (isArrayExpression(value)) {
@@ -40,7 +43,7 @@ function extractZones(value: any, zones: string[]): void {
     }
 }
 
-function readWidgetConfig(properties: any[]): WidgetInfo | null {
+function readWidgetConfig(properties: ObjectExpressionProperty[]): WidgetInfo | null {
     const zones: string[] = []
     let id: string | undefined
 
@@ -58,7 +61,9 @@ function readWidgetConfig(properties: any[]): WidgetInfo | null {
     return { zones, id }
 }
 
-function getConfigProperties(node: any): any[] | null {
+function getConfigProperties(
+    node: Expression | null | undefined,
+): ObjectExpressionProperty[] | null {
     // `defineWidgetConfig({ ... })` or a bare `{ ... }`.
     if (isCallExpression(node) && node.arguments.length > 0 && isObjectExpression(node.arguments[0])) {
         return node.arguments[0].properties
@@ -72,19 +77,18 @@ function getConfigProperties(node: any): any[] | null {
 function getWidgetConfig(file: string): WidgetInfo | null {
     try {
         const code = fs.readFileSync(file, "utf-8")
-        const ast = parse(code, getParserOptions(file))
+        const ast = parse(code, getParserOptions(file)) as TraverseRoot
 
         if (!hasDefaultExport(ast)) return null
 
         let info: WidgetInfo | null = null
 
-        const visit = (declaration: any) => {
+        const visit = (declaration: { type: "VariableDeclaration"; declarations: readonly { id: { type: string; name?: string }; init?: Expression | null | undefined }[] }) => {
             if (info) return
-            if (!isVariableDeclaration(declaration)) return
             for (const decl of declaration.declarations) {
                 if (
-                    isVariableDeclarator(decl) &&
-                    isIdentifier(decl.id, { name: "config" })
+                    decl.id.type === "Identifier" &&
+                    decl.id.name === "config"
                 ) {
                     const props = getConfigProperties(decl.init)
                     if (props) info = readWidgetConfig(props)
@@ -93,11 +97,18 @@ function getWidgetConfig(file: string): WidgetInfo | null {
         }
 
         traverse(ast, {
-            ExportNamedDeclaration(p: any) {
-                visit(p.node.declaration)
+            ExportNamedDeclaration(nodePath) {
+                const declaration = nodePath.node.type === "ExportNamedDeclaration"
+                    ? nodePath.node.declaration
+                    : undefined
+                if (declaration && isVariableDeclaration(declaration)) {
+                    visit(declaration)
+                }
             },
-            VariableDeclaration(p: any) {
-                visit(p.node)
+            VariableDeclaration(nodePath) {
+                if (nodePath.node.type === "VariableDeclaration") {
+                    visit(nodePath.node)
+                }
             },
         })
 

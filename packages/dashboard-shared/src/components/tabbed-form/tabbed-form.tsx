@@ -16,7 +16,9 @@ import { KeyboundForm } from "@components/utilities/keybound-form"
 import { TabDefinition } from "./types"
 import { useTabManagement } from "./use-tab-management"
 
-const TabbedFormContext = createContext<UseFormReturn<any> | null>(null)
+type TabbedFormContextValue = UseFormReturn<FieldValues>
+
+const TabbedFormContext = createContext<TabbedFormContextValue | null>(null)
 
 export const useTabbedForm = <T extends FieldValues = FieldValues>() => {
   const form = useContext(TabbedFormContext)
@@ -26,12 +28,21 @@ export const useTabbedForm = <T extends FieldValues = FieldValues>() => {
   return form as UseFormReturn<T>
 }
 
+type TabComponentWithMeta<T extends FieldValues> = {
+  _tabMeta?: TabDefinition<T>
+}
+
 function resolveTabMeta<T extends FieldValues>(
   child: ReactElement
 ): TabDefinition<T> | null {
-  const type = child.type as any
+  const type = child.type as TabComponentWithMeta<T>
   const meta: TabDefinition<T> | undefined = type?._tabMeta
-  const props = (child.props ?? {}) as Record<string, any>
+  const props = (child.props ?? {}) as Partial<{
+    id: string
+    label: string
+    validationFields: TabDefinition<T>["validationFields"]
+    isVisible: TabDefinition<T>["isVisible"]
+  }>
 
   if (!meta && !props.id) {
     return null
@@ -125,7 +136,7 @@ function Root<T extends FieldValues>({
   })
 
   return (
-    <TabbedFormContext.Provider value={form}>
+    <TabbedFormContext.Provider value={form as TabbedFormContextValue}>
       <RouteFocusModal.Form form={form}>
         <KeyboundForm
           onKeyDown={(e) => {

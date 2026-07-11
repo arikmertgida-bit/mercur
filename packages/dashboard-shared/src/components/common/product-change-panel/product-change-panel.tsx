@@ -1,6 +1,6 @@
 import { ExclamationCircleSolid } from "@medusajs/icons";
 import { Container, Heading, Text, clx } from "@medusajs/ui";
-import { ProductChangeActionDTO } from "@mercurjs/types";
+import { ProductChangeActionDTO, type JsonValue } from "@mercurjs/types";
 import { useQueries } from "@tanstack/react-query";
 import { Fragment, ReactNode, useMemo } from "react";
 import { useTranslation } from "react-i18next";
@@ -167,7 +167,7 @@ const ReferenceValue = ({
   lookups,
 }: {
   field: ReferenceField;
-  value: unknown;
+  value: JsonValue;
   lookups: {
     types: NameLookup;
     collections: NameLookup;
@@ -189,7 +189,7 @@ const ReferenceValue = ({
   );
 };
 
-const hasPreviousValue = (previous: unknown): boolean =>
+const hasPreviousValue = (previous: JsonValue): boolean =>
   previous !== undefined &&
   previous !== null &&
   previous !== "" &&
@@ -422,7 +422,7 @@ export const ProductChangePanel = ({
     const collections = new Set<string>();
     const categories = new Set<string>();
     const tags = new Set<string>();
-    const collect = (field: ReferenceField, value: unknown) => {
+    const collect = (field: ReferenceField, value: JsonValue) => {
       for (const id of extractReferenceIds(field, value)) {
         if (field === "type_id") types.add(id);
         else if (field === "collection_id") collections.add(id);

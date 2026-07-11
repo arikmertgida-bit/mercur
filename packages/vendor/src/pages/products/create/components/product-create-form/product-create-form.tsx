@@ -1,3 +1,4 @@
+import { ClientError, InferClientOutput } from "@mercurjs/client"
 import { MercurFeatureFlags } from "@mercurjs/types"
 import { HttpTypes } from "@medusajs/types"
 import { Button, toast } from "@medusajs/ui"
@@ -115,7 +116,7 @@ export const ProductCreateForm = ({
         status: submittedStatus as HttpTypes.AdminProductStatus,
       }),
       {
-        onSuccess: (data: any) => {
+        onSuccess: (data: InferClientOutput<typeof sdk.vendor.products.mutate>) => {
           if (submittedStatus === "proposed") {
             toast.success(t("products.create.requestSuccessToast"))
           } else {
@@ -128,7 +129,7 @@ export const ProductCreateForm = ({
 
           handleSuccess(`../${data.product.id}`)
         },
-        onError: (error: any) => {
+        onError: (error: ClientError) => {
           toast.error(error.message)
         },
       }

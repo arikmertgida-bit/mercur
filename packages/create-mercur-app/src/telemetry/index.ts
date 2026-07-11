@@ -15,7 +15,7 @@ const TELEMETRY_URL =
 
 export interface TelemetryEvent {
   type: string;
-  payload?: Record<string, unknown>;
+  payload?: Record<string, string | number | boolean | null>;
 }
 
 export const setTelemetryEmail = (email: string) => {
@@ -35,7 +35,7 @@ export const showTelemetryNoticeIfNeeded = () => {
     return;
   }
 
-  console.error(
+  process.stderr.write(
     [
       "",
       "Mercur collects anonymous usage data to improve the CLI experience.",
@@ -43,7 +43,7 @@ export const showTelemetryNoticeIfNeeded = () => {
       `Or by setting ${highlighter.info("MERCUR_DISABLE_TELEMETRY=true")}`,
       `Learn more: ${highlighter.info(TELEMETRY_DOCS_URL)}`,
       "",
-    ].join("\n")
+    ].join("\n") + "\n"
   );
 };
 
@@ -120,11 +120,15 @@ export const getTelemetryEmail = () => {
   return configStore.get("telemetry_email") || undefined;
 };
 
+interface JsonRecord {
+  [key: string]: string | number | boolean | null | JsonRecord | JsonRecord[];
+}
+
 interface ProjectInfo {
   isSrcDir: boolean;
   aliasPrefix: string | null;
   medusaVersion: string | null;
-  config: unknown;
+  config: JsonRecord | null;
   mercurVersion: string | null;
 }
 
@@ -135,7 +139,7 @@ interface ProjectInfo {
  * and keep this package's dependency tree minimal.
  */
 async function getProjectInfo(cwd: string): Promise<ProjectInfo> {
-  const readJson = async (relPath: string): Promise<Record<string, unknown> | null> => {
+  const readJson = async (relPath: string): Promise<JsonRecord | null> => {
     try {
       return await fs.readJSON(path.join(cwd, relPath));
     } catch {
@@ -151,14 +155,14 @@ async function getProjectInfo(cwd: string): Promise<ProjectInfo> {
     readJson("tsconfig.json"),
   ]);
 
-  const dependenciesOf = (pkg: Record<string, unknown> | null) =>
+  const dependenciesOf = (pkg: JsonRecord | null) =>
     (pkg?.dependencies ?? {}) as Record<string, string | undefined>;
 
   const findDep = (name: string): string | null =>
     dependenciesOf(rootPkg)[name] ?? dependenciesOf(apiPkg)[name] ?? null;
 
   const compilerOptions = (tsconfig?.compilerOptions ?? {}) as {
-    paths?: Record<string, unknown>;
+    paths?: Record<string, string | string[]>;
   };
   const paths = compilerOptions.paths ?? {};
   const firstPath = Object.keys(paths)[0];

@@ -23,7 +23,9 @@ export const GET = async (
   const { rule_type: ruleType, rule_attribute_id: ruleAttributeId } = req.params
   const queryConfig = ruleQueryConfigurations[ruleAttributeId]
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
-  const filterableFields: Record<string, any> = { ...req.filterableFields }
+  const filterableFields = {
+    ...(req.filterableFields as Record<string, string | string[] | undefined>),
+  }
 
   if (filterableFields.value) {
     filterableFields[queryConfig.valueAttr] = filterableFields.value
@@ -63,7 +65,7 @@ export const GET = async (
     pagination: req.queryConfig.pagination,
   })
 
-  const values = rows.map((r: any) => ({
+  const values = (rows as Array<Record<string, string>>).map((r) => ({
     label: r[queryConfig.labelAttr],
     value: r[queryConfig.valueAttr],
   }))

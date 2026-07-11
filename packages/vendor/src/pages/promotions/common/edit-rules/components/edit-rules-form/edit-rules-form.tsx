@@ -2,19 +2,24 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { HttpTypes, PromotionRuleDTO } from "@medusajs/types"
 import { Button } from "@medusajs/ui"
 import { useRef, useState } from "react"
-import { useForm } from "react-hook-form"
+import { useForm, UseFormReturn } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { RouteDrawer } from "@components/modals"
 import { KeyboundForm } from "@components/utilities/keybound-form"
 import { RuleTypeValues } from "../../edit-rules"
 import { RulesFormField } from "../rules-form-field"
 import { EditRules, EditRulesType } from "./form-schema"
+import { CreatePromotionSchemaType } from "../../../../promotion-create/components/create-promotion-form/form-schema"
+
+import { RuleToRemove } from "../rules-form-field/rules-form-field"
 
 type EditPromotionFormProps = {
   promotion: HttpTypes.AdminPromotion
   rules: PromotionRuleDTO[]
   ruleType: RuleTypeValues
-  handleSubmit: any
+  handleSubmit: (
+    rulesToRemove?: RuleToRemove[]
+  ) => (data: EditRulesType) => void | Promise<void>
   isSubmitting: boolean
 }
 
@@ -25,7 +30,7 @@ export const EditRulesForm = ({
   isSubmitting,
 }: EditPromotionFormProps) => {
   const { t } = useTranslation()
-  const [rulesToRemove, setRulesToRemove] = useState([])
+  const [rulesToRemove, setRulesToRemove] = useState<RuleToRemove[]>([])
   const rulesToRemoveRef = useRef(rulesToRemove)
 
   rulesToRemoveRef.current = rulesToRemove
@@ -47,7 +52,7 @@ export const EditRulesForm = ({
         >
           <RouteDrawer.Body className="flex-1 overflow-y-auto">
             <RulesFormField
-              form={form as any}
+              form={form as UseFormReturn<CreatePromotionSchemaType>}
               ruleType={ruleType}
               setRulesToRemove={setRulesToRemove}
               rulesToRemove={rulesToRemove}

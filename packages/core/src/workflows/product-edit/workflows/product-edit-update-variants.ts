@@ -10,6 +10,7 @@ import {
   CreateProductChangeActionDTO,
   ProductChangeActionType,
   ProductChangeDTO,
+  JsonValue,
 } from "@mercurjs/types"
 
 import { validateNoPendingProductChangeStep } from "../steps"
@@ -115,15 +116,15 @@ export const productEditUpdateVariantsWorkflow: ReturnWorkflow<
 
         const currentVariantsById = new Map<
           string,
-          Record<string, unknown>
+          Record<string, JsonValue | undefined>
         >()
         for (const v of (currentVariants ?? []) as Array<
-          Record<string, unknown> & { id: string }
+          Record<string, JsonValue | undefined> & { id: string }
         >) {
           currentVariantsById.set(v.id, v)
         }
 
-        const normalize = (value: unknown): unknown => {
+        const normalize = (value: JsonValue | JsonValue[] | undefined): JsonValue | JsonValue[] | null => {
           if (Array.isArray(value)) {
             return value
               .map((item) => {
@@ -140,10 +141,10 @@ export const productEditUpdateVariantsWorkflow: ReturnWorkflow<
           return value ?? null
         }
 
-        const isEqual = (a: unknown, b: unknown): boolean =>
+        const isEqual = (a: JsonValue | JsonValue[] | undefined, b: JsonValue | JsonValue[] | undefined): boolean =>
           JSON.stringify(normalize(a)) === JSON.stringify(normalize(b))
 
-        const toOptionsMap = (value: unknown): Record<string, string> => {
+        const toOptionsMap = (value: JsonValue | JsonValue[] | undefined): Record<string, string> => {
           const out: Record<string, string> = {}
           if (Array.isArray(value)) {
             for (const entry of value) {
@@ -151,13 +152,13 @@ export const productEditUpdateVariantsWorkflow: ReturnWorkflow<
                 ?.title
               if (title) {
                 out[title] = String(
-                  (entry as { value?: unknown })?.value ?? "",
+                  (entry as { value?: JsonValue })?.value ?? "",
                 )
               }
             }
           } else if (value && typeof value === "object") {
             for (const [k, v] of Object.entries(
-              value as Record<string, unknown>,
+              value as Record<string, JsonValue>,
             )) {
               out[k] = String(v ?? "")
             }
@@ -199,7 +200,7 @@ export const productEditUpdateVariantsWorkflow: ReturnWorkflow<
                 if (field === "options") {
                   if (proposedValue === undefined) continue
                   const currentOptions = toOptionsMap(current.options)
-                  if (optionsEqual(currentOptions, toOptionsMap(proposedValue)))
+                  if (optionsEqual(currentOptions, toOptionsMap(proposedValue as JsonValue)))
                     continue
                   changedFields.options = proposedValue
                   previousFields.options = currentOptions
@@ -213,7 +214,7 @@ export const productEditUpdateVariantsWorkflow: ReturnWorkflow<
                   continue
                 }
 
-                if (isEqual(current[field], proposedValue)) continue
+                if (isEqual(current[field], proposedValue as JsonValue | undefined)) continue
 
                 changedFields[field] = proposedValue
                 previousFields[field] = current[field] ?? null

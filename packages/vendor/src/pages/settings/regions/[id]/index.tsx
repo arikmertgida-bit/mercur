@@ -11,11 +11,13 @@ import { SingleColumnPage } from "@components/layout/pages";
 import { usePricePreferences } from "@hooks/api/price-preferences";
 import { REGION_DETAIL_FIELDS } from "./constants";
 
+import { regionLoader } from "./loader";
+
 export { regionLoader as loader } from "./loader";
 export { RegionDetailBreadcrumb as Breadcrumb } from "./breadcrumb";
 
 const RegionDetail = () => {
-  const initialData = useLoaderData() as any;
+  const initialData = useLoaderData() as Awaited<ReturnType<typeof regionLoader>>;
 
   const { id } = useParams();
   const {

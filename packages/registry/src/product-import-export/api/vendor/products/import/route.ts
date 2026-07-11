@@ -7,11 +7,15 @@ import { MedusaError } from "@medusajs/framework/utils"
 import { importSellerProductsWorkflow } from "../../../../workflows/import-seller-products"
 import { fetchSellerByAuthActorId } from "../helpers/helpers"
 
+type ImportProductRequest = AuthenticatedMedusaRequest<{ file: Express.Multer.File }> & {
+  file?: Express.Multer.File
+}
+
 export const POST = async (
-  req: AuthenticatedMedusaRequest<{ file: Express.Multer.File }>,
+  req: ImportProductRequest,
   res: MedusaResponse<{ summary: { created: number } }>
 ) => {
-  const file = (req as any).file as Express.Multer.File | undefined
+  const file = req.file
 
   if (!file) {
     throw new MedusaError(

@@ -1,3 +1,4 @@
+import { JsonValue } from "@mercurjs/types"
 import React, { useMemo } from "react"
 import { createDataTableColumnHelper, DataTableCellContext } from "@medusajs/ui"
 import { HttpTypes } from "@medusajs/types"
@@ -6,8 +7,8 @@ import { getCellRenderer, getColumnValue } from "../../../lib/table/cell-rendere
 
 export interface ColumnAdapter<TData> {
   getColumnAlignment?: (column: HttpTypes.AdminColumn) => "left" | "center" | "right"
-  getCustomAccessor?: (field: string, column: HttpTypes.AdminColumn) => any
-  transformCellValue?: (value: any, row: TData, column: HttpTypes.AdminColumn) => React.ReactNode
+  getCustomAccessor?: (field: string, column: HttpTypes.AdminColumn) => (row: TData) => JsonValue
+  transformCellValue?: (value: JsonValue, row: TData, column: HttpTypes.AdminColumn) => React.ReactNode
 }
 
 export function useConfigurableTableColumns<TData = any>(

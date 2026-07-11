@@ -1,3 +1,4 @@
+import type { JsonRecord, JsonValue } from "@mercurjs/types"
 import { useCallback } from "react"
 import { FieldValues, Path, PathValue, UseFormReturn } from "react-hook-form"
 
@@ -51,7 +52,7 @@ export const useDataGridFormHandlers = <
       }
 
       const convertedValues = convertArrayToPrimitive(values, type)
-      const currentValues = getValues()
+      const currentValues = getValues() as JsonRecord
 
       fields.forEach((field, index) => {
         if (!field) {
@@ -64,7 +65,7 @@ export const useDataGridFormHandlers = <
         setValue(currentValues, field, newValue, type, isHistory)
       })
 
-      reset(currentValues, {
+      reset(currentValues as TFieldValues, {
         keepDirty: true,
         keepTouched: true,
         keepDefaultValues: true,
@@ -111,7 +112,7 @@ function convertToBoolean(value: string | boolean): boolean {
   throw new Error(`String "${value}" cannot be converted to boolean.`)
 }
 
-function covertToString(value: any): string {
+function covertToString(value: JsonValue): string {
   if (typeof value === "undefined" || value === null) {
     return ""
   }
@@ -119,28 +120,37 @@ function covertToString(value: any): string {
   return String(value)
 }
 
-function convertToggleableNumber(value: any): {
-  quantity: number
-  checked: boolean
-  disabledToggle: boolean
-} {
-  let obj = value
+function convertToggleableNumber(value: JsonValue): DataGridToggleableNumber {
+  let obj: JsonValue = value
 
   if (typeof obj === "string") {
     try {
-      obj = JSON.parse(obj)
+      obj = JSON.parse(obj) as JsonValue
     } catch (error) {
       throw new Error(`String "${value}" cannot be converted to object.`, { cause: error })
     }
   }
 
-  return obj
+  if (
+    typeof obj !== "object" ||
+    obj === null ||
+    Array.isArray(obj)
+  ) {
+    throw new Error(`Value cannot be converted to togglable number.`)
+  }
+
+  const record = obj as JsonRecord
+  return {
+    quantity: record.quantity as DataGridToggleableNumber["quantity"],
+    checked: Boolean(record.checked),
+    disabledToggle: Boolean(record.disabledToggle),
+  }
 }
 
 function setValue<
   T extends DataGridToggleableNumber = DataGridToggleableNumber
 >(
-  currentValues: any,
+  currentValues: JsonRecord,
   field: string,
   newValue: T,
   type: string,
@@ -161,7 +171,7 @@ function setValue<
 }
 
 function setValueToggleableNumber(
-  currentValues: any = {},
+  currentValues: JsonRecord = {},
   field: string,
   newValue: DataGridToggleableNumber,
   isHistory?: boolean
@@ -208,9 +218,9 @@ function setValueToggleableNumber(
 }
 
 export function convertArrayToPrimitive(
-  values: any[],
+  values: string[],
   type: DataGridColumnType
-): any[] {
+): JsonValue[] {
   switch (type) {
     case "number":
       return values.map((v) => {
@@ -230,7 +240,6 @@ export function convertArrayToPrimitive(
       return values.map(convertToBoolean)
     case "text":
     case "multiline-text":
-    case "select":
       return values.map(covertToString)
     default:
       throw new Error(`Unsupported target type "${type}".`)

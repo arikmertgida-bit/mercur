@@ -1,4 +1,5 @@
 import { Fragment, type ReactNode } from "react"
+import type { JsonRecord } from "@mercurjs/types"
 import { useExtension } from "./context"
 
 export type WidgetZoneProps = {
@@ -6,7 +7,7 @@ export type WidgetZoneProps = {
    * (`before | after | replace`) are matched against it at render time. */
   id: string
   /** Optional data passed to each widget component (e.g. the detail entity). */
-  data?: unknown
+  data?: JsonRecord
   /** The built-in content, rendered between `before` and `after` widgets. */
   children?: ReactNode
 }

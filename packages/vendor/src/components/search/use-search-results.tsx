@@ -342,10 +342,20 @@ function isAreaEnabled(area: SearchArea, currentArea: SearchArea) {
   return false
 }
 
+type SearchResultItem =
+  | HttpTypes.AdminOrder
+  | HttpTypes.AdminProduct
+  | HttpTypes.AdminProductCategory
+  | HttpTypes.AdminInventoryItem
+  | HttpTypes.AdminCustomer
+  | HttpTypes.AdminCollection
+  | HttpTypes.AdminPromotion
+  | HttpTypes.AdminCampaign
+
 type TransformMap = {
   [K in SearchArea]?: {
     dataKey: string
-    transform: (item: any) => {
+    transform: (item: SearchResultItem) => {
       id: string
       title: string
       subtitle?: string

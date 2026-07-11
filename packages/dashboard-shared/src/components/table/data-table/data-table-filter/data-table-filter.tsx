@@ -1,4 +1,5 @@
 import { Button, clx } from "@medusajs/ui"
+import type { JsonValue } from "@mercurjs/types"
 import { Popover as RadixPopover } from "radix-ui"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { useSearchParams } from "react-router-dom"
@@ -12,7 +13,7 @@ import { StringFilter } from "./string-filter"
 
 type Option = {
   label: string
-  value: unknown
+  value: JsonValue
 }
 
 export type Filter = {
