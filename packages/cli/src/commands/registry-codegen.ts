@@ -6,7 +6,7 @@ import { ROUTE_FILE_PATTERN, writeRegistryRouteTypes } from "@/src/codegen";
 import { preFlightRegistryCodegen } from "@/src/preflights/preflight-registry-codegen";
 import { registrySchema } from "@/src/registry/schema";
 import * as ERRORS from "@/src/utils/errors";
-import { handleError } from "@/src/utils/handle-error";
+import { handleCaughtError } from "@/src/utils/handle-error";
 import { highlighter } from "@/src/utils/highlighter";
 import { logger } from "@/src/utils/logger";
 import { spinner } from "@/src/utils/spinner";
@@ -100,6 +100,6 @@ async function runRegistryCodegen(
     logger.break();
   } catch (error) {
     logger.break();
-    handleError(error);
+    handleCaughtError(error);
   }
 }

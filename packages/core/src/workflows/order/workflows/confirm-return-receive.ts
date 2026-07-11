@@ -84,6 +84,7 @@ type OfferInventoryItemLinkRow = {
 }
 
 type ReturnItemWithOffer = OrderReturnItemDTO & {
+  item_id: string
   item?: {
     id?: string
     variant_id?: string
@@ -228,7 +229,7 @@ export const confirmReturnReceiveWorkflow = createWorkflow(
       variables: { id: input.return_id },
       list: false,
       throw_if_key_not_found: true,
-    }) as unknown as ReturnWithOfferItems
+    }).config({ name: "return-query" }) as ReturnWithOfferItems
 
     const order: OrderDTO = useRemoteQueryStep({
       entry_point: "orders",
@@ -302,8 +303,7 @@ export const confirmReturnReceiveWorkflow = createWorkflow(
 
         const itemMap = retItems.reduce(
           (acc, item) => {
-            const key = (item as unknown as { item_id: string }).item_id
-            acc[key] = item.id
+            acc[item.item_id] = item.id
             return acc
           },
           {} as Record<string, string>,
@@ -345,7 +345,7 @@ export const confirmReturnReceiveWorkflow = createWorkflow(
         })
 
         const hasReceivedAllItems = retItems.every((item) => {
-          const itemId = (item as unknown as { item_id: string }).item_id
+          const itemId = item.item_id
           const received: BigNumberInput = itemUpdates[itemId]
             ? itemUpdates[itemId].received_quantity
             : (item.received_quantity ?? (0 as BigNumberInput))

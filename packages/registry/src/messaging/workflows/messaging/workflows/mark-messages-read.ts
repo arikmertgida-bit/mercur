@@ -34,7 +34,7 @@ export const markMessagesReadWorkflow = createWorkflow(
       unread_count: 0,
     }))
 
-    ;(publishMessageEventStep(unreadEventInput) as any).config({ name: "publish-unread-count" })
+    publishMessageEventStep(unreadEventInput).config({ name: "publish-unread-count" })
 
     return new WorkflowResponse(result)
   }

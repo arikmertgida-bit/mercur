@@ -42,8 +42,8 @@ export const ProductShippingProfileForm = ({
         method: "GET",
         query: params,
       }),
-    getOptions: (data: any) =>
-      (data.shipping_profiles || []).map((sp: any) => ({
+    getOptions: (data: { shipping_profiles?: { id: string; name?: string }[] }) =>
+      (data.shipping_profiles || []).map((sp) => ({
         label: sp.name ?? "",
         value: sp.id,
       })),
@@ -66,7 +66,7 @@ export const ProductShippingProfileForm = ({
       {
         shipping_profile_id:
           data.shipping_profile_id === "" ? null : data.shipping_profile_id,
-      } as any,
+      },
       {
         onSuccess: () => {
           toast.success(t("products.shippingProfile.edit.toasts.success"))

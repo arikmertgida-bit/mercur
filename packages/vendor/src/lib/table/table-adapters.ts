@@ -3,13 +3,17 @@ import {
   DataTableEmptyStateProps,
   DataTableFilter,
 } from "@medusajs/ui"
+import { HttpTypes, JsonRecord, JsonValue } from "@mercurjs/types"
 import { ColumnAdapter } from "../../hooks/table/columns/use-configurable-table-columns"
 
 /**
  * Adapter interface for configurable tables.
  * Defines how to fetch and display data for a specific entity type.
  */
-export interface TableAdapter<TData> {
+export interface TableAdapter<
+  TData extends { id: string },
+  TParams extends JsonRecord = JsonRecord,
+> {
   /**
    * The entity type (e.g., "orders", "products", "customers")
    */
@@ -21,13 +25,13 @@ export interface TableAdapter<TData> {
    */
   useData: (
     fields: string,
-    params: any
+    params: TParams
   ) => {
     data: TData[] | undefined
     count: number | undefined
     isLoading: boolean
     isError: boolean
-    error: any
+    error: Error | null
   }
 
   /**
@@ -49,7 +53,9 @@ export interface TableAdapter<TData> {
    * Transform API columns to table columns.
    * If not provided, will use default column generation.
    */
-  getColumns?: (apiColumns: any[]) => DataTableColumnDef<TData, any>[]
+  getColumns?: (
+    apiColumns: HttpTypes.AdminColumn[]
+  ) => DataTableColumnDef<TData, JsonValue>[]
 
   /**
    * Column adapter for customizing column behavior (alignment, formatting, etc.)
@@ -81,12 +87,12 @@ export interface TableAdapter<TData> {
 /**
  * Helper to create a type-safe table adapter
  */
-export function createTableAdapter<TData>(
-  adapter: TableAdapter<TData>
-): TableAdapter<TData> {
+export function createTableAdapter<
+  TData extends { id: string },
+  TParams extends JsonRecord = JsonRecord,
+>(adapter: TableAdapter<TData, TParams>): TableAdapter<TData, TParams> {
   return {
-    // Provide smart defaults
-    getRowId: (row: any) => row.id,
+    getRowId: (row: TData) => row.id,
     pageSize: 20,
     queryPrefix: "",
     ...adapter,

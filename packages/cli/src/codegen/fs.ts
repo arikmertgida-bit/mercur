@@ -54,8 +54,14 @@ export async function recursiveReadDir(
                             result.pathnames.push(absolutePath);
                         }
                     }
-                } catch (err: any) {
-                    if (err.code !== "ENOENT" || directory === rootDirectory) {
+                } catch (err) {
+                    const code =
+                        err instanceof Error &&
+                        "code" in err &&
+                        typeof err.code === "string"
+                            ? err.code
+                            : undefined;
+                    if (code !== "ENOENT" || directory === rootDirectory) {
                         throw err;
                     }
                     return null;

@@ -2,12 +2,24 @@ import {
   AuthenticatedMedusaRequest,
   MedusaResponse,
 } from "@medusajs/framework"
-import { MedusaError } from "@medusajs/framework/utils"
+import { ContainerRegistrationKeys, MedusaError } from "@medusajs/framework/utils"
 
 import { MESSAGING_MODULE } from "../../../../modules/messaging"
 import type MessagingModuleService from "../../../../modules/messaging/service"
 import { sendMessageWorkflow } from "../../../../workflows/messaging/workflows/send-message"
 import { VendorGetMessagesType, VendorSendReplyType } from "../validators"
+
+type BuyerOrderGraph = {
+  id: string
+  display_id: number | string
+  status: string
+  total: number
+  currency_code: string
+  created_at: string
+  seller?: { id: string }
+}
+
+type BuyerOrderSummary = Omit<BuyerOrderGraph, "seller">
 
 export const GET = async (
   req: AuthenticatedMedusaRequest<VendorGetMessagesType>,
@@ -17,7 +29,6 @@ export const GET = async (
   const sellerId = req.auth_context.actor_id
   const conversationId = req.params.id!
 
-  // Verify ownership
   const conversations = await service.listConversations(
     { id: conversationId, seller_id: sellerId },
     { take: 1 }
@@ -41,12 +52,11 @@ export const GET = async (
     }
   )
 
-  // Resolve buyer first name + recent orders for context sidebar
   let buyer_first_name: string | null = null
-  let buyer_orders: any[] = []
+  let buyer_orders: BuyerOrderSummary[] = []
 
   try {
-    const query = req.scope.resolve("query")
+    const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
 
     const { data: customers } = await query.graph({
       entity: "customer",
@@ -58,7 +68,6 @@ export const GET = async (
       buyer_first_name = customers[0].first_name
     }
 
-    // Get recent orders for this buyer, including linked seller to filter
     const { data: orders } = await query.graph({
       entity: "order",
       fields: ["id", "display_id", "status", "total", "currency_code", "created_at", "seller.id"],
@@ -67,15 +76,13 @@ export const GET = async (
       },
     })
 
-    // Only include orders that belong to this seller
-    buyer_orders = (orders ?? [])
-      .filter((o: any) => o.seller?.id === sellerId)
-      .map(({ seller: _seller, ...rest }: any) => rest)
+    buyer_orders = (orders as BuyerOrderGraph[] ?? [])
+      .filter((order) => order.seller?.id === sellerId)
+      .map(({ seller: _seller, ...rest }) => rest)
   } catch {
     // Continue without enrichment
   }
 
-  // Check block status
   const blockedSet = await service.checkBuyersBlocked([conversation.buyer_id])
   const is_buyer_blocked = blockedSet.has(conversation.buyer_id)
 
@@ -95,7 +102,6 @@ export const POST = async (
   const sellerId = req.auth_context.actor_id
   const conversationId = req.params.id!
 
-  // Verify ownership
   const conversations = await service.listConversations(
     { id: conversationId, seller_id: sellerId },
     { take: 1 }
@@ -110,7 +116,6 @@ export const POST = async (
 
   const conversation = conversations[0]!
 
-  // Check if buyer is blocked from chat
   const blockedSet = await service.checkBuyersBlocked([conversation.buyer_id])
   if (blockedSet.has(conversation.buyer_id)) {
     throw new MedusaError(

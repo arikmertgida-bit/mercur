@@ -45,7 +45,9 @@ export function generatePluginEntryModule(srcDir: string): string {
         index++
     }
 
-    const routeTree = buildRouteTree(routeResults.filter(Boolean) as any[])
+    const routeTree = buildRouteTree(
+        routeResults.filter((route): route is NonNullable<typeof route> => route !== null),
+    )
     const routeImports = routeTree.flatMap((r) => r.imports)
     const routes = routeTree.map((r) => formatRoute(r.route))
 

@@ -20,7 +20,10 @@ import {
   useAcceptRequest,
   useRejectRequest,
 } from "../../../../hooks/api/requests";
+import { JsonValue } from "@mercurjs/types";
+import { InferClientOutput } from "@mercurjs/client";
 import { client } from "../../../../lib/client";
+import { RequestCustomFields } from "../../../../types";
 
 const DetailBreadcrumb = (props: UIMatch) => {
   const { type, id } = props.params || {};
@@ -31,7 +34,7 @@ const DetailBreadcrumb = (props: UIMatch) => {
   if (!request) return null;
 
   const nameKey = ENTITY_NAME_KEY[type!] ?? "name";
-  const name = (request as Record<string, any>)[nameKey];
+  const name = request[nameKey as keyof typeof request];
 
   return <span>{name ?? id}</span>;
 };
@@ -83,7 +86,7 @@ const ENTITY_NAME_KEY: Record<string, string> = {
   product_type: "value",
 };
 
-const formatFieldValue = (key: string, value: unknown): string => {
+const formatFieldValue = (_key: string, value: JsonValue): string => {
   if (value === null || value === undefined) return "-";
   if (typeof value === "boolean") return value ? "Yes" : "No";
   return String(value);
@@ -110,6 +113,9 @@ const SectionRow = ({
   </div>
 );
 
+type SellerDetailResponse = InferClientOutput<typeof client.admin.sellers.$id.query>
+type UserDetailResponse = InferClientOutput<typeof client.admin.users.$id.query>
+
 const useSeller = (id?: string | null) => {
   const { data, ...rest } = useQuery({
     queryKey: ["seller", id],
@@ -117,7 +123,8 @@ const useSeller = (id?: string | null) => {
     enabled: !!id,
   });
 
-  return { seller: (data as any)?.seller, ...rest };
+  const sellerData = data as SellerDetailResponse | undefined
+  return { seller: sellerData?.seller, ...rest };
 };
 
 const useUser = (id?: string | null) => {
@@ -127,7 +134,8 @@ const useUser = (id?: string | null) => {
     enabled: !!id,
   });
 
-  return { user: (data as any)?.user, ...rest };
+  const userData = data as UserDetailResponse | undefined
+  return { user: userData?.user, ...rest };
 };
 
 const RequestDetailPage = () => {
@@ -143,7 +151,7 @@ const RequestDetailPage = () => {
   const { mutateAsync: rejectRequest, isPending: isRejecting } =
     useRejectRequest(type!, id!);
 
-  const customFields = (request?.custom_fields ?? {}) as Record<string, any>;
+  const customFields = (request?.custom_fields ?? {}) as RequestCustomFields;
 
   const { seller } = useSeller(customFields?.submitter_id);
   const { user } = useUser(customFields?.reviewer_id);
@@ -165,7 +173,7 @@ const RequestDetailPage = () => {
   const entityFields = ENTITY_FIELDS[type!] ?? [];
   const typeLabel = TYPE_LABELS[type!] ?? type;
   const nameKey = ENTITY_NAME_KEY[type!] ?? "name";
-  const entityName = (request as Record<string, any>)[nameKey] ?? request.id;
+  const entityName = String(request[nameKey as keyof typeof request] ?? request.id);
 
   const handleAccept = async () => {
     const res = await prompt({
@@ -263,13 +271,13 @@ const RequestDetailPage = () => {
           </div>
         </div>
         {entityFields.map(({ key, label }) => {
-          const value = (request as Record<string, any>)[key];
-          if (value === undefined) return null;
+          const value = request[key as keyof typeof request];
+          if (value === undefined || value === null) return null;
           return (
             <SectionRow
               key={key}
               title={label}
-              value={formatFieldValue(key, value)}
+              value={formatFieldValue(key, value as JsonValue)}
             />
           );
         })}

@@ -1,6 +1,7 @@
 import {
     CartWorkflowDTO,
     CreateOrderDTO,
+    CreateOrderLineItemDTO,
     LinkDefinition,
     PromotionDTO,
     ShippingOptionDTO,
@@ -44,6 +45,7 @@ import {
 import {
     completeCartFields,
     isAdjustmentInSellerScope,
+    CartLineItemWithOffer,
     prepareAdjustmentsData,
     PrepareLineItemDataInput,
     prepareLineItemData,
@@ -187,9 +189,9 @@ export const completeCartWithSplitOrdersWorkflow = createWorkflow(
                         isAdjustmentInSellerScope(sellerIdOfPromotion(adjustment.promotion_id), sellerId)
                     )
                 const cartSellerIds = new Set<string>(
-                    (cart.items ?? [])
-                        .map((item: any) => item.offer?.seller_id)
-                        .filter((id: unknown): id is string => typeof id === "string")
+                    ((cart.items ?? []) as CartLineItemWithOffer[])
+                        .map((item) => item.offer?.seller_id)
+                        .filter((id): id is string => typeof id === "string")
                 )
                 const sellerShippingOptionsMap = new Map()
                 shippingOptionsData.forEach((so) => {
@@ -203,8 +205,8 @@ export const completeCartWithSplitOrdersWorkflow = createWorkflow(
                 const offerIdsByOrderId: Record<string, (string | null)[]> = {}
 
                 Array.from(cartSellerIds).map((sellerId) => {
-                    const sellerCartItems = (cart.items ?? []).filter(
-                        (item: any) => item.offer?.seller_id === sellerId
+                    const sellerCartItems = ((cart.items ?? []) as CartLineItemWithOffer[]).filter(
+                        (item) => item.offer?.seller_id === sellerId
                     )
                     const sellerShippingOptions = sellerShippingOptionsMap.get(sellerId) ?? []
                     const sellerCartShippingMethods = (cart.shipping_methods ?? []).filter((sm) => sellerShippingOptions.some((so) => so.id === sm.shipping_option_id))
@@ -232,10 +234,10 @@ export const completeCartWithSplitOrdersWorkflow = createWorkflow(
                                 : item.variant
                         const input: PrepareLineItemDataInput = {
                             item: itemForLineItem,
-                            variant: variantForLineItem,
+                            variant: variantForLineItem as PrepareLineItemDataInput["variant"],
                             cartId: cart.id,
                             unitPrice: item.unit_price,
-                            isTaxInclusive: item.is_tax_inclusive,
+                            isTaxInclusive: item.is_tax_inclusive ?? false,
                             taxLines: item.tax_lines ?? [],
                             adjustments: sellerAdjustments(item.adjustments ?? [], sellerId),
                         }
@@ -315,7 +317,7 @@ export const completeCartWithSplitOrdersWorkflow = createWorkflow(
                         shipping_address: shippingAddress,
                         billing_address: billingAddress,
                         no_notification: false,
-                        items: allItems,
+                        items: allItems as CreateOrderLineItemDTO[],
                         shipping_methods: shippingMethods,
                         metadata: cart.metadata,
                         promo_codes: promoCodes,
@@ -325,8 +327,7 @@ export const completeCartWithSplitOrdersWorkflow = createWorkflow(
 
                     sellerOrdersMap[sellerId] = orderId
                     offerIdsByOrderId[orderId] = sellerCartItems.map(
-                        (item: any) =>
-                            (item.offer?.id as string | undefined) ?? null,
+                        (item) => item.offer?.id ?? null,
                     )
                 })
 
@@ -433,13 +434,11 @@ export const completeCartWithSplitOrdersWorkflow = createWorkflow(
             const uniqueOffers = transform(
                 { cart: cartData.data },
                 ({ cart }) => {
-                    const byId = new Map<string, unknown>()
-                    for (const item of cart.items ?? []) {
-                        const offer = (item as { offer?: unknown }).offer as
-                            | { id: string }
-                            | undefined
+                    const byId = new Map<string, { id: string }>()
+                    for (const item of (cart.items ?? []) as CartLineItemWithOffer[]) {
+                        const offer = item.offer
                         if (offer?.id && !byId.has(offer.id)) {
-                            byId.set(offer.id, item)
+                            byId.set(offer.id, offer as { id: string })
                         }
                     }
                     return Array.from(byId.keys())

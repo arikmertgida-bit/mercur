@@ -144,7 +144,7 @@ export async function manageEnvFiles({
         }
       })
     );
-  } catch (err: unknown) {
+  } catch (err) {
     logger.error("Unable to manage environment files");
     if (err instanceof Error) {
       logger.error(err.message);

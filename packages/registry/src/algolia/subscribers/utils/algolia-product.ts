@@ -11,6 +11,47 @@ import {
   AlgoliaVariantValidator
 } from '../../modules/algolia/types'
 
+type VariantInventoryGraph = {
+  inventory_items?: Array<{
+    inventory?: {
+      location_levels?: Array<{ location_id: string }>
+    }
+  }>
+}
+
+type StockLocationGraph = {
+  fulfillment_sets?: Array<{
+    service_zones?: Array<{
+      geo_zones?: Array<{ country_code: string }>
+    }>
+  }>
+}
+
+type ProductSellerGraph = {
+  seller?: {
+    id: string
+    handle: string | null
+    status: string | null
+  } | null
+}
+
+type ProductOptionGraph = {
+  title?: string
+  values?: Array<{ value: string }>
+}
+
+type VariantOptionGraph = {
+  value: string
+  option?: { title: string }
+}
+
+type AlgoliaProductGraph = {
+  id: string
+  status?: string
+  options?: ProductOptionGraph[]
+  variants?: Array<Record<string, string | number | boolean | null | VariantOptionGraph[]>>
+}
+
 async function selectProductVariantsSupportedCountries(
   container: MedusaContainer,
   product_id: string
@@ -26,12 +67,12 @@ async function selectProductVariantsSupportedCountries(
 
   let location_ids: string[] = []
 
-  for (const variant of variants) {
+  for (const variant of variants as VariantInventoryGraph[]) {
     const inventory_items =
-      (variant as any).inventory_items?.map((item: any) => item.inventory) || []
+      variant.inventory_items?.map((item) => item.inventory) || []
     const locations = inventory_items
-      .flatMap((inventory_item: any) => inventory_item.location_levels || [])
-      .map((level: any) => level.location_id)
+      .flatMap((inventory_item) => inventory_item?.location_levels || [])
+      .map((level) => level.location_id)
 
     location_ids = location_ids.concat(locations)
   }
@@ -46,12 +87,12 @@ async function selectProductVariantsSupportedCountries(
 
   let country_codes: string[] = []
 
-  for (const location of stock_locations) {
+  for (const location of stock_locations as StockLocationGraph[]) {
     const fulfillmentSets =
-      (location as any).fulfillment_sets?.flatMap((set: any) => set.service_zones || []) || []
+      location.fulfillment_sets?.flatMap((set) => set.service_zones || []) || []
     const codes = fulfillmentSets
-      .flatMap((sz: any) => sz.geo_zones || [])
-      .map((gz: any) => gz.country_code)
+      .flatMap((sz) => sz.geo_zones || [])
+      .map((gz) => gz.country_code)
 
     country_codes = country_codes.concat(codes)
   }
@@ -75,14 +116,12 @@ async function selectProductSeller(
     }
   })
 
-
-
-  const p = product as any
+  const p = product as ProductSellerGraph | undefined
   return p?.seller?.id
     ? {
-        id: p.seller.id as string,
-        handle: p.seller.handle as string | null,
-        status: p.seller.status as string | null
+        id: p.seller.id,
+        handle: p.seller.handle,
+        status: p.seller.status
       }
     : null
 }
@@ -145,7 +184,7 @@ export async function findAndTransformAlgoliaProducts(
       : { status: 'published' }
   })
 
-  for (const product of products as any[]) {
+  for (const product of products as AlgoliaProductGraph[]) {
     product.average_rating = 0
     product.supported_countries = await selectProductVariantsSupportedCountries(
       container,
@@ -154,11 +193,11 @@ export async function findAndTransformAlgoliaProducts(
     product.seller = await selectProductSeller(container, product.id)
 
     product.options = (product.options ?? [])
-      .filter((option: any) => option?.title && option?.values)
-      .map((option: any) => {
-        return option.values.map((value: any) => {
+      .filter((option) => option?.title && option?.values)
+      .map((option) => {
+        return (option.values ?? []).map((value) => {
           const entry: Record<string, string> = {}
-          entry[option.title.toLowerCase()] = value.value
+          entry[option.title!.toLowerCase()] = value.value
           return entry
         })
       })
@@ -168,8 +207,9 @@ export async function findAndTransformAlgoliaProducts(
       .array(AlgoliaVariantValidator)
       .parse(product.variants ?? [])
     product.variants = (product.variants ?? [])
-      .map((variant: any) => {
-        return (variant.options ?? []).reduce((entry: any, item: any) => {
+      .map((variant) => {
+        const variantOptions = (variant.options ?? []) as VariantOptionGraph[]
+        return variantOptions.reduce<Record<string, string | number | boolean | null | VariantOptionGraph[]>>((entry, item) => {
           if (item?.option?.title) {
             entry[item.option.title.toLowerCase()] = item.value
           }

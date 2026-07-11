@@ -24,7 +24,7 @@ const useColumns = () => {
   const { columns: extended, filters } =
     useExtendableTable<ExtendedReservationItem>({
       model: "reservation",
-      columns: base as unknown as ColumnDef<ExtendedReservationItem, unknown>[],
+      columns: base,
     })
 
   const columns = useMemo(

@@ -136,8 +136,8 @@ export const AddCustomerGroupsForm = ({
       )
 
       handleSuccess(`/customers/${customerId}`)
-    } catch (e: any) {
-      toast.error(e.message)
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : t("general.error"))
     } finally {
       setIsPending(false)
     }

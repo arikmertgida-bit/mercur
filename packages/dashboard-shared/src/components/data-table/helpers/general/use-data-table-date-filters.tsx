@@ -52,7 +52,7 @@ const useDateFilterOptions = () => {
   }, [today, t])
 }
 
-export const useDataTableDateFilters: any = (disableRangeOption?: boolean) => {
+export const useDataTableDateFilters = (disableRangeOption?: boolean) => {
   const { t } = useTranslation()
   const { getFullDate } = useDate()
   const dateFilterOptions = useDateFilterOptions()

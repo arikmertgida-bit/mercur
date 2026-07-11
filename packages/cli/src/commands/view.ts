@@ -4,7 +4,7 @@ import { z } from "zod";
 import { getRegistryBlocks } from "../registry/api";
 import { clearRegistryContext } from "../registry/context";
 import { createConfig, getConfig } from "../utils/get-config";
-import { handleError } from "../utils/handle-error";
+import { handleCaughtError } from "../utils/handle-error";
 
 const viewOptionsSchema = z.object({
   cwd: z.string(),
@@ -38,10 +38,10 @@ export const view = new Command()
       const payload = await getRegistryBlocks(items, {
         config,
       });
-      console.log(JSON.stringify(payload, null, 2));
+      process.stdout.write(JSON.stringify(payload, null, 2) + "\n");
       process.exit(0);
     } catch (error) {
-      handleError(error);
+      handleCaughtError(error);
     } finally {
       clearRegistryContext();
     }

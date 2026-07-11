@@ -7,6 +7,7 @@ import {
     CreatePayoutInput,
     CreatePayoutResponse,
     IPayoutProvider,
+    JsonRecord,
     PayoutAccountStatus,
     PayoutStatus,
     PayoutWebhookActionInput,
@@ -24,13 +25,42 @@ const DEFAULT_ACCOUNT_VALIDATION = {
     requiredCapabilities: [],
 }
 
+const readString = (record: JsonRecord, key: string): string | undefined => {
+    const value = record[key]
+    return typeof value === "string" ? value : undefined
+}
+
+const readJsonRecord = (record: JsonRecord, key: string): JsonRecord | undefined => {
+    const value = record[key]
+    if (typeof value !== "object" || value === null || Array.isArray(value)) {
+        return undefined
+    }
+
+    return value
+}
+
+const toJsonRecord = (value: object): JsonRecord =>
+    JSON.parse(JSON.stringify(value)) as JsonRecord
+
+const toStripeMetadata = (record: JsonRecord): Stripe.MetadataParam => {
+    const metadata: Stripe.MetadataParam = {}
+
+    for (const [key, value] of Object.entries(record)) {
+        if (typeof value === "string" || typeof value === "number" || value === null) {
+            metadata[key] = value
+        }
+    }
+
+    return metadata
+}
+
 class StripeConnectProviderService implements IPayoutProvider {
     static identifier = "stripe-connect"
     protected readonly stripe_: Stripe
     protected readonly config_: StripeConnectOptions
 
     constructor(
-        _cradle: Record<string, unknown>,
+        _cradle: Record<string, object>,
         options: StripeConnectOptions
     ) {
         this.config_ = options
@@ -38,19 +68,31 @@ class StripeConnectProviderService implements IPayoutProvider {
     }
 
     protected normalizePayoutParameters(
-        extra: Record<string, unknown>
+        extra: JsonRecord
     ): Partial<Stripe.TransferCreateParams> & { destination: string } {
-        const res = {
-        } as Partial<Stripe.TransferCreateParams>
+        const destination = readString(extra, "id")
 
-        res.destination = extra!.id as string
-        res.source_transaction = extra?.source_transaction as string | undefined
-        res.transfer_group = extra?.order_id as string | undefined
-        res.description = extra?.description as string | undefined
-        res.metadata = { seller_id: extra.seller_id, ...(extra?.metadata ? extra.metadata : {}) } as Stripe.MetadataParam
+        if (!destination) {
+            throw new MedusaError(
+                MedusaError.Types.INVALID_DATA,
+                `"id" is required`
+            )
+        }
 
+        const metadata: Stripe.MetadataParam = {
+            ...(readString(extra, "seller_id")
+                ? { seller_id: readString(extra, "seller_id")! }
+                : {}),
+            ...toStripeMetadata(readJsonRecord(extra, "metadata") ?? {}),
+        }
 
-        return res as Partial<Stripe.TransferCreateParams> & { destination: string }
+        return {
+            destination,
+            source_transaction: readString(extra, "source_transaction"),
+            transfer_group: readString(extra, "order_id"),
+            description: readString(extra, "description"),
+            metadata,
+        }
     }
 
     private getWebhookResultFromAccount_(
@@ -140,7 +182,7 @@ class StripeConnectProviderService implements IPayoutProvider {
         return {
             id: response.id,
             status: PayoutAccountStatus.PENDING,
-            data: response as unknown as Record<string, unknown>
+            data: toJsonRecord(response)
         }
     }
 
@@ -157,7 +199,7 @@ class StripeConnectProviderService implements IPayoutProvider {
 
 
         return {
-            data: transfer as unknown as Record<string, unknown>,
+            data: toJsonRecord(transfer),
             status: PayoutStatus.PAID
         }
     }
@@ -195,7 +237,7 @@ class StripeConnectProviderService implements IPayoutProvider {
         });
 
         return {
-            data: accountLink as unknown as Record<string, unknown>,
+            data: toJsonRecord(accountLink),
         };
     }
 

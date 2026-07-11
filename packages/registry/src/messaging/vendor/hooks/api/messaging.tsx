@@ -7,8 +7,8 @@ import {
   UseMutationOptions,
 } from "@tanstack/react-query"
 import { queryKeysFactory } from "@mercurjs/dashboard-shared"
-import { client } from "../../lib/client"
 import { ClientError } from "@mercurjs/client"
+import { vendorMessagesApi } from "../../lib/messaging-api"
 
 const CONVERSATIONS_QUERY_KEY = "vendor_conversations" as const
 export const conversationsQueryKeys = queryKeysFactory(CONVERSATIONS_QUERY_KEY)
@@ -41,16 +41,25 @@ export type MessageDTO = {
   created_at: string
 }
 
+export type BuyerOrderSummary = {
+  id: string
+  display_id: number | string
+  status: string
+  total: number
+  currency_code: string
+  created_at: string
+}
+
 type ConversationListResponse = {
   conversations: ConversationDTO[]
   next_cursor: string | null
 }
 
-type ConversationDetailResponse = {
+export type ConversationDetailResponse = {
   conversation: ConversationDTO
   messages: MessageDTO[]
   next_cursor: string | null
-  buyer_orders: any[]
+  buyer_orders: BuyerOrderSummary[]
 }
 
 type UnreadResponse = {
@@ -66,8 +75,7 @@ export const useVendorConversations = (
 ) => {
   const { data, ...rest } = useQuery({
     queryKey: conversationsQueryKeys.list(query),
-    queryFn: async () =>
-      (client as any).vendor.messages.query(query ?? {}) as Promise<ConversationListResponse>,
+    queryFn: async () => vendorMessagesApi.query(query ?? {}),
     ...options,
   })
 
@@ -84,11 +92,11 @@ export const useVendorConversation = (
     useInfiniteQuery<ConversationDetailResponse, ClientError>({
       queryKey: conversationsQueryKeys.detail(id, { limit }),
       queryFn: async ({ pageParam }) =>
-        (client as any).vendor.messages.$id.query({
+        vendorMessagesApi.$id.query({
           $id: id,
           limit,
           ...(pageParam ? { cursor: pageParam } : {}),
-        }) as Promise<ConversationDetailResponse>,
+        }),
       initialPageParam: undefined as string | undefined,
       getNextPageParam: (lastPage) => lastPage.next_cursor ?? undefined,
     })
@@ -116,8 +124,7 @@ export const useVendorUnread = (
 ) => {
   const { data, ...rest } = useQuery({
     queryKey: unreadQueryKeys.detail("total"),
-    queryFn: async () =>
-      (client as any).vendor.messages.unread.query() as Promise<UnreadResponse>,
+    queryFn: async () => vendorMessagesApi.unread.query(),
     ...options,
   })
 
@@ -134,7 +141,7 @@ export const useSendVendorReply = (
   return useMutation({
     ...restOptions,
     mutationFn: (payload: { body: string }) =>
-      (client as any).vendor.messages.$id.mutate({ $id: conversationId, ...payload }) as Promise<{ message: MessageDTO }>,
+      vendorMessagesApi.$id.mutate({ $id: conversationId, ...payload }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: conversationsQueryKeys.detail(conversationId),
@@ -161,7 +168,7 @@ export const useMarkVendorRead = (
   return useMutation({
     ...restOptions,
     mutationFn: () =>
-      (client as any).vendor.messages.$id.read.mutate({ $id: conversationId }) as Promise<{ success: boolean }>,
+      vendorMessagesApi.$id.read.mutate({ $id: conversationId }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: conversationsQueryKeys.detail(conversationId),

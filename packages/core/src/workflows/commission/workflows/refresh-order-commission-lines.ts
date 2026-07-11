@@ -7,6 +7,7 @@ import {
   type Hook,
   type ReturnWorkflow,
 } from "@medusajs/framework/workflows-sdk"
+import { BigNumberInput } from "@medusajs/framework/types"
 import { useQueryGraphStep } from "@medusajs/medusa/core-flows"
 import {
   CommissionCalculationContext,
@@ -29,6 +30,7 @@ const orderFields = [
   "customer.groups.*",
   "promotions.*",
   "subtotal",
+  "seller.id",
   "items.*",
   "items.subtotal",
   "items.tax_total",
@@ -39,7 +41,6 @@ const orderFields = [
   "items.product.tags.id",
   "items.product.type_id",
   "items.product.attribute_values.id",
-  "items.offer.seller_id",
   "items.adjustments.*",
   "shipping_methods.*",
   "shipping_methods.total",
@@ -49,6 +50,29 @@ const orderFields = [
   "shipping_methods.shipping_option_id",
   "shipping_address.*",
 ]
+
+type OrderForCommissionRefresh = {
+  id: string
+  currency_code: string
+  seller?: { id: string }
+  items?: Array<{
+    id: string
+    subtotal: BigNumberInput
+    tax_total?: BigNumberInput
+    product?: {
+      id: string
+      collection_id?: string
+      categories?: { id: string }[]
+      tags?: { id: string }[]
+      type_id?: string
+    }
+  }>
+  shipping_methods?: Array<{
+    id: string
+    subtotal: BigNumberInput
+    tax_total?: BigNumberInput
+  }>
+}
 
 export type RefreshOrderCommissionLinesWorkflowInput = {
   order_ids: string[]
@@ -96,11 +120,11 @@ export const refreshOrderCommissionLinesWorkflow: ReturnWorkflow<
     }).config({ name: "fetch-orders" })
 
     const commissionContexts = transform({ orders }, ({ orders }) => {
-      return orders.map((order: any): CommissionCalculationContext => ({
+      return (orders as OrderForCommissionRefresh[]).map((order): CommissionCalculationContext => ({
         currency_code: order.currency_code,
         order_id: order.id,
-        seller_id: order.items?.[0]?.offer?.seller_id,
-        items: (order.items ?? []).map((item: any) => ({
+        seller_id: order.seller?.id,
+        items: (order.items ?? []).map((item) => ({
           id: item.id,
           subtotal: item.subtotal,
           tax_total: item.tax_total,
@@ -120,7 +144,7 @@ export const refreshOrderCommissionLinesWorkflow: ReturnWorkflow<
             }
             : undefined,
         })),
-        shipping_methods: (order.shipping_methods ?? []).map((method: any) => ({
+        shipping_methods: (order.shipping_methods ?? []).map((method) => ({
           id: method.id,
           subtotal: method.subtotal,
           tax_total: method.tax_total,

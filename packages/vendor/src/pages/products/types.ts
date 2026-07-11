@@ -1,8 +1,10 @@
+import { JsonRecord, JsonValue } from "@mercurjs/types"
+
 export interface ProductAttributePossibleValue {
   id: string
   value: string
   rank: number
-  metadata?: Record<string, any>
+  metadata?: JsonRecord
   attribute_id?: string
 }
 
@@ -47,7 +49,7 @@ export interface ExtendedAdminProduct {
   title: string
   options?: ExtendedAdminProductOption[]
   informational_attributes?: ProductInformationalAttribute[]
-  [key: string]: any
+  [key: string]: JsonValue
 }
 
 export interface ProductAttribute {
@@ -65,7 +67,7 @@ export interface ProductAttribute {
     | "unit"
     | "multivalue"
     | "color_picker"
-  metadata?: Record<string, any>
+  metadata?: JsonRecord
   possible_values: ProductAttributePossibleValue[]
   product_categories?: Array<{ id: string; name: string }>
 }

@@ -1,4 +1,4 @@
-import { PaginatedResponse } from "@mercurjs/types"
+import { PaginatedResponse, JsonValue } from "@mercurjs/types"
 
 export enum RequestStatus {
   DRAFT = "draft",
@@ -20,7 +20,7 @@ export interface RequestCustomFields {
 export interface RequestEntityResponse {
   id: string
   custom_fields: RequestCustomFields
-  [key: string]: unknown
+  [key: string]: JsonValue | RequestCustomFields
 }
 
 export interface AdminRequestResponse {

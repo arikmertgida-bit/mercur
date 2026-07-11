@@ -1,4 +1,4 @@
-import { MedusaContainer } from "@medusajs/framework/types"
+import { MedusaContainer, PriceDTO, PriceListRuleDTO } from "@medusajs/framework/types"
 import {
   buildPriceListRules,
   buildPriceSetPricesForCore,
@@ -57,14 +57,28 @@ export const fetchPriceList = async (
   return transformPriceList(priceList)
 }
 
-export const transformPriceList = (priceList: any) => {
+type PriceListWithGraphRules = {
+  price_list_rules?: PriceListRuleDTO[]
+  prices?: PriceDTO[]
+  rules?: ReturnType<typeof buildPriceListRules>
+}
+
+type ProductVariantWithPriceSet = {
+  price_set?: { id: string }
+}
+
+export const transformPriceList = <T extends PriceListWithGraphRules>(
+  priceList: T,
+): T => {
   if (priceList.price_list_rules) {
     priceList.rules = buildPriceListRules(priceList.price_list_rules)
-    delete priceList.price_list_rules
+    Reflect.deleteProperty(priceList as object, "price_list_rules")
   }
 
   if (priceList.prices) {
-    priceList.prices = buildPriceSetPricesForCore(priceList.prices)
+    priceList.prices = buildPriceSetPricesForCore(
+      priceList.prices,
+    ) as PriceDTO[]
   }
 
   return priceList
@@ -84,9 +98,9 @@ export const fetchPriceListPriceIdsForProduct = async (
   })
 
   const priceSetIds: string[] = []
-  for (const variant of variants) {
-    if ((variant as any).price_set?.id) {
-      priceSetIds.push((variant as any).price_set.id)
+  for (const variant of variants as ProductVariantWithPriceSet[]) {
+    if (variant.price_set?.id) {
+      priceSetIds.push(variant.price_set.id)
     }
   }
 
@@ -103,5 +117,5 @@ export const fetchPriceListPriceIdsForProduct = async (
     fields: ["id"],
   })
 
-  return productPrices.map((price: any) => price.id)
+  return (productPrices as Array<{ id: string }>).map((price) => price.id)
 }

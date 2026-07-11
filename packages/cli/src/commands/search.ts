@@ -3,7 +3,7 @@ import path from "path";
 import { z } from "zod";
 import { clearRegistryContext } from "../registry/context";
 import { createConfig, getConfig } from "../utils/get-config";
-import { handleError } from "../utils/handle-error";
+import { handleCaughtError } from "../utils/handle-error";
 import { getRegistry } from "../registry/api";
 
 const searchOptionsSchema = z.object({
@@ -58,10 +58,10 @@ export const search = new Command()
         );
       }
 
-      console.log(JSON.stringify(items, null, 2));
+      process.stdout.write(JSON.stringify(items, null, 2) + "\n");
       process.exit(0);
     } catch (error) {
-      handleError(error);
+      handleCaughtError(error);
     } finally {
       clearRegistryContext();
     }

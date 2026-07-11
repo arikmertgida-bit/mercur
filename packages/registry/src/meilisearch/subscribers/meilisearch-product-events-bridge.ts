@@ -22,10 +22,10 @@ export default async function meilisearchProductEventsBridgeHandler({
         : MeilisearchEvents.PRODUCTS_CHANGED,
       data: { ids: [event.data.id] },
     })
-  } catch (error: unknown) {
+  } catch (error) {
     logger.error(
       `Meilisearch bridge: failed to forward event ${event.name} for product ${event.data.id}:`,
-      error as Error
+      error instanceof Error ? error : new Error(String(error))
     )
     throw error
   }

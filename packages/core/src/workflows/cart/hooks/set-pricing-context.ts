@@ -1,3 +1,4 @@
+import { JsonRecord } from "@mercurjs/types"
 import {
   ContainerRegistrationKeys,
   MedusaError,
@@ -10,7 +11,9 @@ import {
 } from "@medusajs/medusa/core-flows"
 
 const readOfferIdFromItem = (
-  item: { offer_id?: unknown; metadata?: Record<string, unknown> | null } | null
+  item:
+    | { offer_id?: string; metadata?: JsonRecord | null }
+    | null
     | undefined,
 ): string | undefined => {
   if (typeof item?.offer_id === "string" && item.offer_id.length > 0) {
@@ -26,8 +29,8 @@ const readOfferIdFromItem = (
 const collectFromInputItems = (
   items:
     | Array<{
-        offer_id?: unknown
-        metadata?: Record<string, unknown> | null
+        offer_id?: string
+        metadata?: JsonRecord | null
       }>
     | undefined,
 ): string[] => {
@@ -56,7 +59,7 @@ const collectFromCartItems = async (
     | {
         items?: Array<{
           offer?: { id?: string } | null
-          metadata?: Record<string, unknown> | null
+          metadata?: JsonRecord | null
         }>
       }
     | undefined
@@ -74,7 +77,9 @@ const collectFromCartItems = async (
 
 addToCartWorkflow.hooks.setPricingContext(async ({ cart, items }) => {
   const ids = new Set<string>()
-  for (const id of collectFromInputItems(items)) ids.add(id)
+  for (const id of collectFromInputItems(
+    items as Array<{ offer_id?: string; metadata?: JsonRecord | null }>,
+  )) ids.add(id)
   for (const item of (cart?.items ?? []) as Array<{
     offer?: { id?: string } | null
   }>) {
@@ -117,7 +122,9 @@ updateLineItemInCartWorkflow.hooks.setPricingContext(
 refreshCartItemsWorkflow.hooks.setPricingContext(
   async ({ cart_id, items }, { container }) => {
     const ids = new Set<string>()
-    for (const id of collectFromInputItems(items)) ids.add(id)
+    for (const id of collectFromInputItems(
+      items as Array<{ offer_id?: string; metadata?: JsonRecord | null }>,
+    )) ids.add(id)
     if (cart_id) {
       for (const id of await collectFromCartItems(cart_id, container)) {
         ids.add(id)

@@ -145,7 +145,16 @@ export const VendorUpdateApplicationMethod = z
   })
   .strict()
 
-const buygetRefinement = (promo: any) => {
+const buygetRefinement = (promo: {
+  campaign?: { id: string } | null
+  campaign_id?: string | null
+  type?: PromotionType
+  application_method?: {
+    buy_rules?: VendorCreatePromotionRuleType[]
+    apply_to_quantity?: number | null
+    buy_rules_min_quantity?: number | null
+  }
+}) => {
   if (promo.campaign && promo.campaign_id) {
     return false
   }

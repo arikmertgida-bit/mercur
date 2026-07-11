@@ -1,4 +1,4 @@
-import { DeleteResponse, PaginatedResponse } from "@medusajs/types"
+import { DeleteResponse, HttpTypes, PaginatedResponse } from "@medusajs/types"
 import { OrderGroupDTO } from "../order-group"
 
 export interface VendorOrderGroupResponse {
@@ -54,7 +54,7 @@ export type StoreCompleteCartResponse =
     }
   | {
       type: "cart"
-      cart: any
+      cart: HttpTypes.StoreCart
       error: {
         message: string
         name: string

@@ -77,7 +77,8 @@ export const PercentageInput = forwardRef<
     return (
       <div className="relative">
         <Primitive
-          ref={ref as any} // dependency is typed incorrectly
+          // @ts-expect-error react-currency-input-field ref typing mismatch
+          ref={ref}
           min={min}
           max={max}
           autoComplete="off"

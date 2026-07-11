@@ -24,8 +24,9 @@ export const GET = async (
 
     const { data } = await response.json()
     res.json({ conversations: response.status === 200 ? data : [] })
-  } catch (e: any) {
-    logger.error(`TalkJS error: ${e.message}`)
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error)
+    logger.error(`TalkJS error: ${message}`)
     res.status(500).json({ message: "TalkJS error!" })
   }
 }

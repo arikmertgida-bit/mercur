@@ -3,6 +3,7 @@ import { createStep, StepResponse } from "@medusajs/framework/workflows-sdk"
 import { MESSAGING_MODULE } from "../../../modules/messaging"
 import type MessagingModuleService from "../../../modules/messaging/service"
 import { UnblockCustomerInput } from "../../../modules/messaging/types/mutations"
+import { ChatBlockDTO } from "../../../modules/messaging/types/common"
 
 export const unblockCustomerStep = createStep(
   "unblock-customer",
@@ -21,7 +22,7 @@ export const unblockCustomerStep = createStep(
     await service.deleteChatBlocks([existing[0].id])
     return new StepResponse(null, existing[0])
   },
-  async (deletedBlock: any, { container }) => {
+  async (deletedBlock: ChatBlockDTO | null, { container }) => {
     if (!deletedBlock) return
 
     const service = container.resolve<MessagingModuleService>(MESSAGING_MODULE)

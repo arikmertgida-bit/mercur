@@ -1,6 +1,6 @@
 import React from "react"
 import { Badge, StatusBadge, Tooltip } from "@medusajs/ui"
-import { HttpTypes } from "@medusajs/types"
+import { HttpTypes, JsonRecord, JsonValue } from "@mercurjs/types"
 import ReactCountryFlag from "react-country-flag"
 import { getCountryByIso2 } from "../data/countries"
 import { ProductCell } from "../../components/table/table-cells/product/product-cell"
@@ -18,8 +18,8 @@ import {
   getOrderFulfillmentStatus,
 } from "../order-helpers"
 
-export type CellRenderer<TData = any> = (
-  value: any,
+export type CellRenderer<TData extends JsonRecord = JsonRecord> = (
+  value: JsonValue,
   row: TData,
   column: HttpTypes.AdminColumn,
   t: TFunction
@@ -29,8 +29,18 @@ export type RendererRegistry = Map<string, CellRenderer>
 
 const cellRenderers: RendererRegistry = new Map()
 
-const getNestedValue = (obj: any, path: string) => {
-  return path.split(".").reduce((current, key) => current?.[key], obj)
+const getNestedValue = (obj: JsonRecord, path: string): JsonValue | undefined => {
+  return path.split(".").reduce<JsonValue | undefined>((current, key) => {
+    if (current === null || current === undefined) {
+      return undefined
+    }
+
+    if (typeof current !== "object" || Array.isArray(current)) {
+      return undefined
+    }
+
+    return (current as JsonRecord)[key]
+  }, obj as JsonValue)
 }
 
 const TextRenderer: CellRenderer = (value, _row, _column, _t) => {
@@ -323,7 +333,10 @@ export function registerCellRenderer(type: string, renderer: CellRenderer) {
   cellRenderers.set(type, renderer)
 }
 
-export function getColumnValue(row: any, column: HttpTypes.AdminColumn): any {
+export function getColumnValue(
+  row: JsonRecord,
+  column: HttpTypes.AdminColumn
+): JsonValue | undefined {
   if (column.computed) {
     return row
   }

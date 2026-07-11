@@ -1,22 +1,26 @@
+import type { JsonValue } from "@mercurjs/types"
 import { clx, Textarea } from "@medusajs/ui";
 import { Popover as RadixPopover } from "radix-ui";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Controller, ControllerRenderProps } from "react-hook-form";
+import { Controller, ControllerRenderProps, FieldValues } from "react-hook-form";
 
 import { useCombinedRefs } from "../../../hooks/use-combined-refs";
 import { useDataGridCell, useDataGridCellError } from "../hooks";
 import { useDataGridContext } from "../context";
-import { DataGridCellProps, InputProps } from "../types";
+import { DataGridCellProps, DataGridCellContainerProps, InputProps } from "../types";
 import { DataGridCellContainer } from "./data-grid-cell-container";
 
-type DataGridExpandableTextCellProps<TData, TValue = any> = DataGridCellProps<
+const toTextValue = (value: JsonValue | undefined): string =>
+  typeof value === "string" ? value : value == null ? "" : String(value)
+
+type DataGridExpandableTextCellProps<TData, TValue = JsonValue> = DataGridCellProps<
   TData,
   TValue
 > & {
   fieldLabel?: string;
 };
 
-export const DataGridExpandableTextCell = <TData, TValue = any>({
+export const DataGridExpandableTextCell = <TData, TValue = JsonValue>({
   context,
   fieldLabel,
 }: DataGridExpandableTextCellProps<TData, TValue>) => {
@@ -46,6 +50,12 @@ export const DataGridExpandableTextCell = <TData, TValue = any>({
   );
 };
 
+type CellErrorProps = {
+  errors: ReturnType<typeof useDataGridCellError>["errors"]
+  rowErrors: ReturnType<typeof useDataGridCellError>["rowErrors"]
+  cellError?: ReturnType<typeof useDataGridCellError>["cellError"]
+}
+
 const Inner = ({
   field,
   inputProps,
@@ -53,29 +63,30 @@ const Inner = ({
   container,
   errorProps,
 }: {
-  field: ControllerRenderProps<any, string>;
+  field: ControllerRenderProps<FieldValues, string>;
   inputProps: InputProps;
   fieldLabel?: string;
-  container: any;
-  errorProps: any;
+  container: DataGridCellContainerProps;
+  errorProps: CellErrorProps;
 }) => {
   const { onChange: _, onBlur, ref, value, ...rest } = field;
   const { ref: inputRef, onBlur: onInputBlur, onChange, ...input } = inputProps;
   const { setSingleRange, anchor } = useDataGridContext();
   const { row, col } = anchor || { row: 0, col: 0 };
 
-  const [localValue, setLocalValue] = useState(value || "");
+  const textValue = toTextValue(value as JsonValue)
+  const [localValue, setLocalValue] = useState(textValue);
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
-  const [popoverValue, setPopoverValue] = useState(value || "");
+  const [popoverValue, setPopoverValue] = useState(textValue);
   const popoverContentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setLocalValue(value || "");
+    setLocalValue(toTextValue(value as JsonValue));
   }, [value]);
 
   useEffect(() => {
     if (isPopoverOpen) {
-      setPopoverValue(value || "");
+      setPopoverValue(toTextValue(value as JsonValue));
     }
   }, [isPopoverOpen, value]);
 
@@ -130,7 +141,7 @@ const Inner = ({
         return;
       }
       // For single clicks, use the normal handler which sets anchor and focuses container
-      container.overlayProps.onMouseDown?.(e);
+      container.overlayProps.onMouseDown?.(e as React.MouseEvent<HTMLElement>);
     },
     [container.overlayProps, setSingleRange, row, col],
   );
@@ -144,7 +155,7 @@ const Inner = ({
   };
 
   const handlePopoverSave = () => {
-    onChange(popoverValue, value);
+    onChange(popoverValue, textValue);
     setLocalValue(popoverValue);
     setIsPopoverOpen(false);
     onBlur();
@@ -197,7 +208,7 @@ const Inner = ({
           onBlur={() => {
             onBlur();
             onInputBlur();
-            onChange(localValue, value);
+            onChange(localValue, textValue);
           }}
           {...input}
           {...rest}

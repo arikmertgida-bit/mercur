@@ -6,7 +6,7 @@ import {
   ContainerRegistrationKeys,
   promiseAll,
 } from "@medusajs/framework/utils"
-import { BatchMethodRequest } from "@medusajs/framework/types"
+import { BatchMethodRequest, MedusaContainer } from "@medusajs/framework/types"
 import { batchPriceListPricesWorkflow } from "@medusajs/core-flows"
 import { HttpTypes } from "@mercurjs/types"
 
@@ -19,7 +19,7 @@ import {
 
 const listPrices = async (
   ids: string[],
-  scope: any,
+  scope: MedusaContainer,
   fields: string[]
 ) => {
   const query = scope.resolve(ContainerRegistrationKeys.QUERY)

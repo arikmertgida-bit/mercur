@@ -100,7 +100,7 @@ const useColumns = () => {
 
   const { columns: extended, filters } = useExtendableTable<OfferProduct>({
     model: "offer",
-    columns: baseColumns as unknown as ColumnDef<OfferProduct, unknown>[],
+    columns: baseColumns,
   })
 
   const columns = useMemo(

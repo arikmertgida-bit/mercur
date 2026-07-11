@@ -13,6 +13,7 @@ import {
   useVendorConversation,
   useMarkVendorRead,
   useSendVendorReply,
+  BuyerOrderSummary,
   MessageDTO,
 } from "../../../hooks/api/messaging"
 import { useMessagingSSE } from "../../../hooks/api/use-messaging-sse"
@@ -85,7 +86,7 @@ const OrderSidebar = ({
   isBuyerBlocked,
 }: {
   buyerName: string | null
-  orders: any[]
+  orders: BuyerOrderSummary[]
   isBuyerBlocked?: boolean
 }) => {
   return (
@@ -111,7 +112,7 @@ const OrderSidebar = ({
             Recent Orders
           </Text>
           <div className="flex flex-col gap-2">
-            {orders.slice(0, 5).map((order: any) => (
+            {orders.slice(0, 5).map((order) => (
               <div
                 key={order.id}
                 className="flex items-center justify-between rounded border border-ui-border-base px-3 py-2"

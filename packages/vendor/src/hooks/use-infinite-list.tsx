@@ -67,7 +67,7 @@ export const useInfiniteList = <
   const infiniteQueryKey =
     resolvedQueryKey[resolvedQueryKey.length - 1] === "__infinite"
       ? resolvedQueryKey
-      : ([...resolvedQueryKey, "__infinite"] as unknown as TQueryKey)
+      : ([...resolvedQueryKey, "__infinite"] as TQueryKey)
 
   return useInfiniteQuery<
     TResponse,

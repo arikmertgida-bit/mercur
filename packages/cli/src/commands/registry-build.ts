@@ -6,7 +6,7 @@ import { registryItemSchema, registrySchema } from "@/src/registry/schema";
 import { configSchema } from "@/src/schema";
 import * as ERRORS from "@/src/utils/errors";
 import { type ProjectInfo, getProjectInfo } from "@/src/utils/get-project-info";
-import { handleError } from "@/src/utils/handle-error";
+import { handleCaughtError } from "@/src/utils/handle-error";
 import { highlighter } from "@/src/utils/highlighter";
 import { logger } from "@/src/utils/logger";
 import { spinner } from "@/src/utils/spinner";
@@ -153,7 +153,11 @@ async function buildRegistry(opts: z.infer<typeof buildOptionsSchema>) {
           }
           file["content"] = await fs.readFile(absPath, "utf-8");
         } catch (err) {
-          console.error("Error reading file in registry build:", absPath, err);
+          const message =
+            err instanceof Error ? err.message : String(err);
+          process.stderr.write(
+            `Error reading file in registry build: ${absPath} ${message}\n`
+          );
           continue;
         }
       }
@@ -210,7 +214,7 @@ async function buildRegistry(opts: z.infer<typeof buildOptionsSchema>) {
     })
   } catch (error) {
     logger.break();
-    handleError(error);
+    handleCaughtError(error);
   }
 }
 

@@ -31,7 +31,7 @@ class AlgoliaModuleService {
   private options_: ModuleOptions;
   private algolia_: Algoliasearch;
 
-  constructor(_: unknown, options: ModuleOptions) {
+  constructor(_: object, options: ModuleOptions) {
     this.options_ = options;
     this.algolia_ = algoliasearch(this.options_.appId, this.options_.apiKey);
   }

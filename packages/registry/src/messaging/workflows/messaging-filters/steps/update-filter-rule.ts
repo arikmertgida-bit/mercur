@@ -3,6 +3,7 @@ import { MedusaError } from "@medusajs/framework/utils"
 
 import { MESSAGING_FILTERS_MODULE } from "../../../modules/messaging-filters"
 import type MessagingFiltersModuleService from "../../../modules/messaging-filters/service"
+import { FilterRuleDTO } from "../../../modules/messaging-filters/types/common"
 
 type UpdateFilterRuleInput = {
   id: string
@@ -12,6 +13,14 @@ type UpdateFilterRuleInput = {
   is_enabled?: boolean
 }
 
+type FilterRuleCompensationData = {
+  id: string
+  is_enabled: boolean
+  description: string | null
+  pattern: string
+  match_type: FilterRuleDTO["match_type"]
+}
+
 export const updateFilterRuleStep = createStep(
   "update-filter-rule",
   async (input: UpdateFilterRuleInput, { container }) => {
@@ -19,7 +28,6 @@ export const updateFilterRuleStep = createStep(
       MESSAGING_FILTERS_MODULE
     )
 
-    // Retrieve current state for compensation
     const existing = await service.listFilterRules({ id: input.id })
     if (!existing || existing.length === 0) {
       throw new MedusaError(
@@ -30,7 +38,6 @@ export const updateFilterRuleStep = createStep(
 
     const current = existing[0]!
 
-    // Built-in rules: only allow is_enabled and description changes
     if (current.is_builtin) {
       if (input.match_type || input.pattern) {
         throw new MedusaError(
@@ -40,7 +47,7 @@ export const updateFilterRuleStep = createStep(
       }
     }
 
-    const updateData: Record<string, any> = { id: input.id }
+    const updateData: Partial<FilterRuleDTO> & { id: string } = { id: input.id }
     if (input.is_enabled !== undefined) updateData.is_enabled = input.is_enabled
     if (input.description !== undefined) updateData.description = input.description
     if (input.pattern !== undefined && !current.is_builtin) updateData.pattern = input.pattern
@@ -56,7 +63,7 @@ export const updateFilterRuleStep = createStep(
       match_type: current.match_type,
     })
   },
-  async (previousData: any, { container }) => {
+  async (previousData: FilterRuleCompensationData | undefined, { container }) => {
     if (!previousData) return
 
     const service = container.resolve<MessagingFiltersModuleService>(

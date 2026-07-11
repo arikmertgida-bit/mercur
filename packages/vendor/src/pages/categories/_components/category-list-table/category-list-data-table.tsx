@@ -86,7 +86,7 @@ const useColumns = () => {
   const base = useCategoryTableColumns();
   const { columns: extended } = useExtendableTable<CategoryRow>({
     model: "category",
-    columns: base as unknown as ColumnDef<CategoryRow, unknown>[],
+    columns: base,
   });
 
   return useMemo(() => [...extended], [extended]);

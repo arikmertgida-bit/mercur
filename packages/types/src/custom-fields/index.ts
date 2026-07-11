@@ -1,3 +1,5 @@
+import { JsonValue } from "../json-value"
+
 export type BaseField = {
     type: 'string'
     | 'text'
@@ -10,7 +12,7 @@ export type BaseField = {
     | 'array'
     | 'float',
     nullable?: boolean,
-    defaultValue?: any
+    defaultValue?: JsonValue
 }
 
 export type EnumField = Omit<BaseField, 'type'> & {

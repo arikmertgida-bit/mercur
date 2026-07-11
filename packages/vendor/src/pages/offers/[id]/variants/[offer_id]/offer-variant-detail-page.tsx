@@ -38,7 +38,7 @@ const Root = ({ children }: { children?: ReactNode }) => {
     return <TwoColumnPageSkeleton mainSections={2} sidebarSections={2} />
   }
 
-  const typed = offer as unknown as OfferDetail & OfferVariantData
+  const typed = offer as OfferDetail & OfferVariantData
 
   return (
     <>

@@ -60,7 +60,6 @@ export const OrderListDataTable = () => {
     ...searchParams,
   });
 
-
   const { table } = useDataTable({
     data: orders ?? [],
     columns,

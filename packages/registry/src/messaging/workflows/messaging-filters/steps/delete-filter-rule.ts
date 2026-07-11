@@ -3,6 +3,7 @@ import { MedusaError } from "@medusajs/framework/utils"
 
 import { MESSAGING_FILTERS_MODULE } from "../../../modules/messaging-filters"
 import type MessagingFiltersModuleService from "../../../modules/messaging-filters/service"
+import { FilterRuleDTO } from "../../../modules/messaging-filters/types/common"
 
 type DeleteFilterRuleInput = {
   id: string
@@ -36,7 +37,7 @@ export const deleteFilterRuleStep = createStep(
 
     return new StepResponse(undefined, current)
   },
-  async (previousData: any, { container }) => {
+  async (previousData: FilterRuleDTO | undefined, { container }) => {
     if (!previousData) return
 
     const service = container.resolve<MessagingFiltersModuleService>(

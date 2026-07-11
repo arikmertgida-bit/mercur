@@ -23,6 +23,7 @@ export type OfferInventoryLinkRow = {
 
 export type OfferShape = {
   sku?: string | null
+  shipping_profile_id?: string | null
   inventory_item_link?: OfferInventoryLinkRow[] | null
 }
 

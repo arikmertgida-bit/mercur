@@ -1,4 +1,9 @@
-import { ProductChangeActionDTO, ProductChangeActionType } from "@mercurjs/types"
+import {
+  JsonRecord,
+  JsonValue,
+  ProductChangeActionDTO,
+  ProductChangeActionType,
+} from "@mercurjs/types"
 
 export type ImageRef = { url: string }
 
@@ -9,8 +14,8 @@ export type MediaDiff = {
 
 export type FieldDiff = {
   field: string
-  previous: unknown
-  next: unknown
+  previous: JsonValue
+  next: JsonValue
   variant_id?: string
 }
 
@@ -91,37 +96,31 @@ export const NON_EDITABLE_VARIANT_FIELDS = new Set(["manage_inventory"])
 
 const MEDIA_FIELD = "images"
 
-export const isImageList = (value: unknown): value is { url: string }[] =>
-  Array.isArray(value) &&
-  value.length > 0 &&
-  value.every(
-    (entry) =>
-      typeof entry === "object" &&
-      entry !== null &&
-      "url" in entry &&
-      typeof (entry as { url: unknown }).url === "string"
-  )
+const isImageEntry = (entry: JsonValue): entry is { url: string } =>
+  typeof entry === "object" &&
+  entry !== null &&
+  !Array.isArray(entry) &&
+  "url" in entry &&
+  typeof entry.url === "string"
 
-const normalizeImages = (value: unknown): ImageRef[] => {
+export const isImageList = (value: JsonValue): value is { url: string }[] =>
+  Array.isArray(value) && value.length > 0 && value.every(isImageEntry)
+
+const normalizeImages = (value: JsonValue): ImageRef[] => {
   if (!Array.isArray(value)) return []
   const out: ImageRef[] = []
   for (const entry of value) {
     if (typeof entry === "string" && entry) {
       out.push({ url: entry })
-    } else if (
-      entry &&
-      typeof entry === "object" &&
-      "url" in entry &&
-      typeof (entry as { url: unknown }).url === "string"
-    ) {
-      out.push({ url: (entry as { url: string }).url })
+    } else if (isImageEntry(entry)) {
+      out.push({ url: entry.url })
     }
   }
   return out
 }
 
 /** Split an `images` UPDATE (previous vs next arrays) into added / removed. */
-const diffImages = (previous: unknown, next: unknown): MediaDiff => {
+const diffImages = (previous: JsonValue, next: JsonValue): MediaDiff => {
   const before = normalizeImages(previous)
   const after = normalizeImages(next)
   const beforeUrls = new Set(before.map((i) => i.url))
@@ -132,13 +131,17 @@ const diffImages = (previous: unknown, next: unknown): MediaDiff => {
   }
 }
 
+type VariantMediaPatch = { add?: JsonValue; remove?: JsonValue }
+
 /** A variant `images` field is staged as `{ add?: [], remove?: [] }`. */
-const variantMedia = (value: unknown): MediaDiff => {
-  if (!value || typeof value !== "object") return { added: [], removed: [] }
-  const v = value as { add?: unknown; remove?: unknown }
+const variantMedia = (value: JsonValue): MediaDiff => {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    return { added: [], removed: [] }
+  }
+  const v = value as VariantMediaPatch
   return {
-    added: normalizeImages(v.add),
-    removed: normalizeImages(v.remove),
+    added: normalizeImages(v.add ?? null),
+    removed: normalizeImages(v.remove ?? null),
   }
 }
 
@@ -147,7 +150,7 @@ const hasMedia = (m: MediaDiff): boolean =>
 
 export const extractReferenceIds = (
   field: ReferenceField,
-  value: unknown
+  value: JsonValue
 ): string[] => {
   if (value === null || value === undefined || value === "") return []
 
@@ -158,7 +161,7 @@ export const extractReferenceIds = (
         typeof entry === "string"
           ? entry
           : typeof entry === "object" && entry !== null && "id" in entry
-            ? String((entry as { id: unknown }).id ?? "")
+            ? String((entry as { id: JsonValue }).id ?? "")
             : ""
       )
       .filter(Boolean)
@@ -180,12 +183,12 @@ export const humanizeFieldName = (field: string): string =>
     )
     .join(" ")
 
-const formatAttributeValues = (value: unknown): string | null => {
+const formatAttributeValues = (value: JsonValue): string | null => {
   if (Array.isArray(value)) {
     return value.length ? value.join(", ") : null
   }
   if (value && typeof value === "object") {
-    const entries = Object.entries(value as Record<string, unknown>)
+    const entries = Object.entries(value as JsonRecord)
     if (!entries.length) return null
     return entries
       .map(([k, v]) => `${k}: ${Array.isArray(v) ? v.join(", ") : String(v)}`)
@@ -197,7 +200,7 @@ const formatAttributeValues = (value: unknown): string | null => {
 export type BooleanLabels = { true: string; false: string }
 
 export const formatFieldValue = (
-  value: unknown,
+  value: JsonValue,
   field?: string,
   booleanLabels?: BooleanLabels
 ): string => {
@@ -215,20 +218,16 @@ export const formatFieldValue = (
   return JSON.stringify(value)
 }
 
-const toAttributeAdd = (details: Record<string, unknown>): AttributeChange => {
-  const attribute = (details.attribute ?? {}) as Record<string, unknown>
+const toAttributeAdd = (details: JsonRecord): AttributeChange => {
+  const attribute = (details.attribute ?? {}) as JsonRecord
   const id = typeof attribute.id === "string" ? attribute.id : undefined
   const title =
     typeof attribute.title === "string" ? attribute.title : undefined
   const valueIds = Array.isArray(attribute.value_ids)
-    ? (attribute.value_ids as unknown[]).filter(
-        (v): v is string => typeof v === "string"
-      )
+    ? attribute.value_ids.filter((v): v is string => typeof v === "string")
     : []
   const valueNames = Array.isArray(attribute.values)
-    ? (attribute.values as unknown[]).filter(
-        (v): v is string => typeof v === "string"
-      )
+    ? attribute.values.filter((v): v is string => typeof v === "string")
     : []
   return {
     kind: "added",
@@ -241,26 +240,21 @@ const toAttributeAdd = (details: Record<string, unknown>): AttributeChange => {
   }
 }
 
-const toAttributeUpdate = (
-  details: Record<string, unknown>
-): AttributeChange | null => {
-  const update = (details.update ?? {}) as Record<string, unknown>
+const isNamedValue = (v: JsonValue): v is { value: string } =>
+  typeof v === "object" &&
+  v !== null &&
+  !Array.isArray(v) &&
+  typeof v.value === "string"
+
+const toAttributeUpdate = (details: JsonRecord): AttributeChange | null => {
+  const update = (details.update ?? {}) as JsonRecord
   const id = typeof update.id === "string" ? update.id : undefined
   if (!id) return null
-  const add = Array.isArray(update.add) ? (update.add as unknown[]) : []
+  const add = Array.isArray(update.add) ? update.add : []
   const addValueIds = add.filter((v): v is string => typeof v === "string")
-  const addValueNames = add
-    .filter(
-      (v): v is { value: string } =>
-        !!v &&
-        typeof v === "object" &&
-        typeof (v as { value?: unknown }).value === "string"
-    )
-    .map((v) => v.value)
+  const addValueNames = add.filter(isNamedValue).map((v) => v.value)
   const removeValueIds = Array.isArray(update.remove)
-    ? (update.remove as unknown[]).filter(
-        (v): v is string => typeof v === "string"
-      )
+    ? update.remove.filter((v): v is string => typeof v === "string")
     : []
   return {
     kind: "updated",
@@ -294,13 +288,16 @@ export const buildProductChangeView = (
   }
 
   for (const action of actions) {
-    const details = action.details ?? {}
+    const details = (action.details ?? {}) as JsonRecord
 
     switch (action.action) {
       case ProductChangeActionType.UPDATE: {
         const field = String(details.field ?? "—")
         if (field === MEDIA_FIELD) {
-          const diff = diffImages(details.previous_value, details.value)
+          const diff = diffImages(
+            details.previous_value ?? null,
+            details.value ?? null
+          )
           productMedia = {
             added: [...productMedia.added, ...diff.added],
             removed: [...productMedia.removed, ...diff.removed],
@@ -309,25 +306,22 @@ export const buildProductChangeView = (
         }
         productUpdated.push({
           field,
-          previous: details.previous_value,
-          next: details.value,
+          previous: details.previous_value ?? null,
+          next: details.value ?? null,
         })
         break
       }
       case ProductChangeActionType.STATUS_CHANGE: {
         productUpdated.push({
           field: "status",
-          previous: details.previous_status,
-          next: details.status,
+          previous: details.previous_status ?? null,
+          next: details.status ?? null,
         })
         break
       }
       case ProductChangeActionType.VARIANT_UPDATE: {
-        const fields = (details.fields ?? {}) as Record<string, unknown>
-        const previousFields = (details.previous_fields ?? {}) as Record<
-          string,
-          unknown
-        >
+        const fields = (details.fields ?? {}) as JsonRecord
+        const previousFields = (details.previous_fields ?? {}) as JsonRecord
         const variantId =
           details.variant_id !== undefined && details.variant_id !== null
             ? String(details.variant_id)

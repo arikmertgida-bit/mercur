@@ -8,6 +8,7 @@ import {
     ProductDTO,
     ProductVariantDTO,
 } from "@medusajs/framework/types"
+import { JsonRecord, JsonValue } from "@mercurjs/types"
 import {
     generateEntityId,
     isDefined,
@@ -37,7 +38,7 @@ interface PrepareItemLineItemInput {
     variant_sku?: string
     variant_barcode?: string
     variant_title?: string
-    variant_option_values?: Record<string, unknown>
+    variant_option_values?: Record<string, JsonValue>
 
     requires_shipping?: boolean
 
@@ -51,7 +52,7 @@ interface PrepareItemLineItemInput {
     tax_lines?: LineItemTaxLineDTO[]
     adjustments?: LineItemAdjustmentDTO[]
     cart_id?: string
-    metadata?: Record<string, unknown> | null
+    metadata?: JsonRecord | null
 }
 
 type AddItemProductDTO = ProductDTO & {
@@ -80,6 +81,38 @@ export interface PrepareLineItemDataInput {
     cartId?: string
     unitPrice?: BigNumberInput
     isTaxInclusive: boolean
+}
+
+type PreparedLineItem = {
+    id: string
+    quantity: BigNumberInput | undefined
+    title: string | undefined
+    subtitle: string | undefined
+    thumbnail: string | null | undefined
+    product_id: string | undefined
+    product_title: string | undefined
+    product_description: string | null | undefined
+    product_subtitle: string | null | undefined
+    product_type: string | null
+    product_type_id: string | null
+    product_collection: string | null
+    product_handle: string | undefined
+    variant_id: string | undefined
+    variant_sku: string | null | undefined
+    variant_barcode: string | null | undefined
+    variant_title: string | undefined
+    variant_option_values: Record<string, JsonValue> | undefined
+    is_discountable: boolean | undefined
+    is_giftcard: boolean
+    requires_shipping: boolean
+    unit_price: BigNumberInput | undefined
+    compare_at_unit_price: BigNumberInput | undefined
+    is_tax_inclusive: boolean
+    metadata: JsonRecord | null
+    is_custom_price?: boolean
+    tax_lines?: ReturnType<typeof prepareTaxLinesData>
+    adjustments?: ReturnType<typeof prepareAdjustmentsData>
+    cart_id?: string
 }
 
 export function prepareLineItemData(data: PrepareLineItemDataInput) {
@@ -137,7 +170,7 @@ export function prepareLineItemData(data: PrepareLineItemDataInput) {
         ? item.requires_shipping
         : hasShippingProfile || someInventoryRequiresShipping
 
-    let lineItem: any = {
+    let lineItem: PreparedLineItem = {
         id: generateEntityId(undefined, 'ordli'),
         quantity: item?.quantity,
         title: item?.title ?? variant?.product?.title,

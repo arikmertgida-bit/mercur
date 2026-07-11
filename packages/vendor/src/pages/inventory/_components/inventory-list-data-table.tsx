@@ -52,7 +52,7 @@ export const InventoryListDataTable = () => {
   const { columns: extended, filters: extFilters } =
     useExtendableTable<InventoryTypes.InventoryItemDTO>({
       model: "inventory_item",
-      columns: baseColumns.slice(0, -1) as unknown as ColumnDef<
+      columns: baseColumns.slice(0, -1) as ColumnDef<
         InventoryTypes.InventoryItemDTO,
         unknown
       >[],

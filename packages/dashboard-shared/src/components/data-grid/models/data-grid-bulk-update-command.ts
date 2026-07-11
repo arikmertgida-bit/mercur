@@ -1,21 +1,23 @@
+import type { JsonValue } from "@mercurjs/types"
+
 import { Command } from "../../../hooks/use-command-history"
 
 export type DataGridBulkUpdateCommandArgs = {
   fields: string[]
-  next: any[]
-  prev: any[]
-  setter: (fields: string[], values: any[], isHistory?: boolean) => void
+  next: JsonValue[]
+  prev: JsonValue[]
+  setter: (fields: string[], values: JsonValue[], isHistory?: boolean) => void
 }
 
 export class DataGridBulkUpdateCommand implements Command {
   private _fields: string[]
 
-  private _prev: any[]
-  private _next: any[]
+  private _prev: JsonValue[]
+  private _next: JsonValue[]
 
   private _setter: (
     fields: string[],
-    values: any[],
+    values: JsonValue[],
     isHistory?: boolean
   ) => void
 

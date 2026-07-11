@@ -101,3 +101,21 @@ export type RouteHandle = {
     redirectTo?: string
     breadcrumb?: (match: never) => ReactNode
 }
+
+export type MedusaPluginConfig = string | { resolve?: string }
+
+export type MedusaUiModuleOptions = {
+    path?: string
+    appDir?: string
+    viteDevServerHost?: string
+    viteDevServerPort?: number
+}
+
+export type MedusaUiModule = {
+    options?: MedusaUiModuleOptions
+}
+
+export type MedusaConfigShape = {
+    modules?: Record<string, MedusaUiModule>
+    plugins?: MedusaPluginConfig[]
+}

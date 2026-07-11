@@ -56,7 +56,7 @@ import {
   isAmountLessThenRoundingError,
 } from "@lib/money-amount-helpers"
 import { getTotalCaptured } from "@lib/payment"
-import { OfferInventoryLinkRow } from "@lib/inventory-preview"
+import { LineItemShape, OfferInventoryLinkRow } from "@lib/inventory-preview"
 import { getReservationsLimitCount } from "../../../../../lib/orders"
 import {
   CLAIM_POLICY_DAYS,
@@ -430,7 +430,7 @@ const Item = ({
   // `offer` is wired through Mercur's order-line-item-offer link but isn't in
   // Medusa's public AdminOrderLineItem type. Pull it off the runtime shape.
   const offerSku =
-    (item as unknown as { offer?: { sku?: string | null } }).offer?.sku ?? null
+    (item as LineItemShape).offer?.sku ?? item.variant_sku ?? null
   const captionSku = offerSku ?? item.variant_sku ?? null
 
   return (

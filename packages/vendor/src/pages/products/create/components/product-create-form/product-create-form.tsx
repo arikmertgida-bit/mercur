@@ -1,3 +1,4 @@
+import { ClientError, InferClientOutput } from "@mercurjs/client"
 import { MercurFeatureFlags } from "@mercurjs/types"
 import { HttpTypes } from "@medusajs/types"
 import { Button, toast } from "@medusajs/ui"
@@ -88,31 +89,31 @@ export const ProductCreateForm = ({
         ? "proposed"
         : "published"
 
-    try {
-      const data = await mutateAsync(
-        normalizeProductFormValues({
-          ...payload,
-          media: uploadedMedia,
-          status: submittedStatus as HttpTypes.AdminProductStatus,
-        })
-      )
+    await mutateAsync(
+      normalizeProductFormValues({
+        ...payload,
+        media: uploadedMedia,
+        status: submittedStatus as HttpTypes.AdminProductStatus,
+      }),
+      {
+        onSuccess: (data: InferClientOutput<typeof sdk.vendor.products.mutate>) => {
+          if (submittedStatus === "proposed") {
+            toast.success(t("products.create.requestSuccessToast"))
+          } else {
+            toast.success(
+              t("products.create.successToast", {
+                title: data.product.title,
+              })
+            )
+          }
 
-      if (submittedStatus === "proposed") {
-        toast.success(t("products.create.requestSuccessToast"))
-      } else {
-        toast.success(
-          t("products.create.successToast", {
-            title: data.product.title,
-          })
-        )
+          handleSuccess(`../${data.product.id}`)
+        },
+        onError: (error: ClientError) => {
+          toast.error(error.message)
+        },
       }
-
-      handleSuccess(`../${data.product.id}`)
-    } catch (error) {
-      if (error instanceof Error) {
-        toast.error(error.message)
-      }
-    }
+    )
   }
 
   const handleSubmit = form.handleSubmit(async (values) => {

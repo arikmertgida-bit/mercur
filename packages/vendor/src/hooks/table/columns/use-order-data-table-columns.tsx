@@ -204,7 +204,7 @@ export const useOrderDataTableColumns = (
             // Handle relationship fields (e.g., customer.email)
             if (col.field.includes(".")) {
               const [relation, field] = col.field.split(".")
-              return columnHelper.accessor((row: any) => {
+              return columnHelper.accessor((row: HttpTypes.AdminOrder) => {
                 const relationData = row[relation]
                 return relationData?.[field] || ""
               }, {

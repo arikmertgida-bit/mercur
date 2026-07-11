@@ -52,8 +52,8 @@ export const useProductVariantsTableQuery = ({
     title?: string | string[]
     manage_inventory?: boolean
     allow_backorder?: boolean
-    created_at?: any
-    updated_at?: any
+    created_at?: Record<string, string>
+    updated_at?: Record<string, string>
   } = {
     limit: pageSize,
     offset: offset ? Number(offset) : 0,

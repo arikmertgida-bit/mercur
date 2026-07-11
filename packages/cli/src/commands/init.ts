@@ -8,7 +8,7 @@ import { BUILTIN_REGISTRIES, REGISTRY_SCHEMA_URL } from "../registry/constants";
 import { clearRegistryContext } from "../registry/context";
 import { rawConfigSchema } from "../schema";
 import { getConfig, resolveConfigPaths } from "../utils/get-config";
-import { handleError } from "../utils/handle-error";
+import { handleCaughtError } from "../utils/handle-error";
 import { highlighter } from "../utils/highlighter";
 import { logger } from "../utils/logger";
 import { spinner } from "../utils/spinner";
@@ -59,7 +59,7 @@ export const init = new Command()
       })
     } catch (error) {
       logger.break();
-      handleError(error);
+      handleCaughtError(error);
     } finally {
       clearRegistryContext();
     }

@@ -6,7 +6,7 @@ import { z } from "zod";
 import { getRegistryBlocks } from "../registry/api";
 import { clearRegistryContext } from "../registry/context";
 import { createConfig, getConfig } from "../utils/get-config";
-import { handleError } from "../utils/handle-error";
+import { handleCaughtError } from "../utils/handle-error";
 import { highlighter } from "../utils/highlighter";
 import { logger } from "../utils/logger";
 import { transformImports } from "../utils/transform-import";
@@ -94,7 +94,7 @@ export const diff = new Command()
         }
       }
     } catch (error) {
-      handleError(error);
+      handleCaughtError(error);
     } finally {
       clearRegistryContext();
     }

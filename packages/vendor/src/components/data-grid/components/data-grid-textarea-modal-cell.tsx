@@ -1,3 +1,4 @@
+import type { JsonRecord, JsonValue } from "@mercurjs/types"
 import { clx, Textarea } from "@medusajs/ui"
 import { Popover as RadixPopover } from "radix-ui"
 import { useCallback, useEffect, useRef, useState } from "react"
@@ -6,17 +7,17 @@ import { Controller, ControllerRenderProps } from "react-hook-form"
 import { useCombinedRefs } from "../../../hooks/use-combined-refs"
 import { useDataGridCell, useDataGridCellError } from "../hooks"
 import { useDataGridContext } from "../context"
-import { DataGridCellProps, InputProps } from "../types"
+import { DataGridCellProps, DataGridCellContainerProps, InputProps } from "../types"
 import { DataGridCellContainer } from "./data-grid-cell-container"
 
-type DataGridExpandableTextCellProps<TData, TValue = any> = DataGridCellProps<
+type DataGridExpandableTextCellProps<TData, TValue = JsonValue> = DataGridCellProps<
   TData,
   TValue
 > & {
   fieldLabel?: string
 }
 
-export const DataGridExpandableTextCell = <TData, TValue = any>({
+export const DataGridExpandableTextCell = <TData, TValue = JsonValue>({
   context,
   fieldLabel,
 }: DataGridExpandableTextCellProps<TData, TValue>) => {
@@ -46,6 +47,12 @@ export const DataGridExpandableTextCell = <TData, TValue = any>({
   )
 }
 
+type CellErrorProps = {
+  errors: ReturnType<typeof useDataGridCellError>["errors"]
+  rowErrors: ReturnType<typeof useDataGridCellError>["rowErrors"]
+  cellError?: ReturnType<typeof useDataGridCellError>["cellError"]
+}
+
 const Inner = ({
   field,
   inputProps,
@@ -53,11 +60,11 @@ const Inner = ({
   container,
   errorProps,
 }: {
-  field: ControllerRenderProps<any, string>
+  field: ControllerRenderProps<JsonRecord, string>
   inputProps: InputProps
   fieldLabel?: string
-  container: any
-  errorProps: any
+  container: DataGridCellContainerProps
+  errorProps: CellErrorProps
 }) => {
   const { onChange: _, onBlur, ref, value, ...rest } = field
   const { ref: inputRef, onBlur: onInputBlur, onChange, ...input } = inputProps
@@ -79,7 +86,6 @@ const Inner = ({
     }
   }, [isPopoverOpen, value])
 
-  // Prevent DataGrid keyboard handlers from intercepting keys when popover is open
   useEffect(() => {
     if (!isPopoverOpen || !popoverContentRef.current) {
       return
@@ -104,7 +110,6 @@ const Inner = ({
           " ",
         ]
 
-        // Stop the keys from reaching DataGrid, so the textarea can handle them
         if (dataGridKeys.includes(e.key) && e.key !== "Escape") {
           e.stopImmediatePropagation()
         }
@@ -129,10 +134,9 @@ const Inner = ({
         setIsPopoverOpen(true)
         return
       }
-      // For single clicks, use the normal handler which sets anchor and focuses container
       container.overlayProps.onMouseDown?.(e)
     },
-    [container.overlayProps, setSingleRange, row, col]
+    [container.overlayProps, setSingleRange, row, col],
   )
 
   const customContainer = {
@@ -179,7 +183,7 @@ const Inner = ({
           <div
             className={clx(
               "txt-compact-small text-ui-fg-subtle flex size-full cursor-pointer items-center justify-center bg-transparent outline-none",
-              "focus:cursor-text"
+              "focus:cursor-text",
             )}
           >
             <span className="w-full truncate text-center">
@@ -206,7 +210,7 @@ const Inner = ({
       <RadixPopover.Portal>
         <RadixPopover.Content
           className={clx(
-            "bg-ui-bg-base shadow-elevation-flyout flex max-h-[80vh] w-[600px] overflow-hidden p-0 outline-none"
+            "bg-ui-bg-base shadow-elevation-flyout flex max-h-[80vh] w-[600px] overflow-hidden p-0 outline-none",
           )}
           align="start"
           side="bottom"

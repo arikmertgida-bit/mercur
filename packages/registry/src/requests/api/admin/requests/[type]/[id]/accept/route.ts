@@ -1,7 +1,7 @@
 import { AuthenticatedMedusaRequest, MedusaResponse } from "@medusajs/framework"
 import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
 
-import { AdminRequestResponse } from "../../../../../../types"
+import { AdminRequestResponse, RequestEntityResponse } from "../../../../../../types"
 import { acceptRequestWorkflow } from "../../../../../../workflows/requests/workflows"
 import { AdminReviewNoteType } from "../../../validators"
 
@@ -31,5 +31,5 @@ export async function POST(
     filters: { id: entityId },
   })
 
-  res.json({ request: entity as any })
+  res.json({ request: entity as RequestEntityResponse })
 }

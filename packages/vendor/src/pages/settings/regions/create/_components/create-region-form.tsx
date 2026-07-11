@@ -126,7 +126,7 @@ export const CreateRegionForm = ({
       iso_3: c.iso_3,
       num_code: c.num_code,
       region_id: null,
-      region: {} as any,
+      region: null,
     })),
     ...searchParams,
   })

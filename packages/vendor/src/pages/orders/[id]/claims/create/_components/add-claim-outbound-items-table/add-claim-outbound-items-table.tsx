@@ -125,12 +125,9 @@ export const AddClaimOutboundItemsTable = ({
     { enabled: canViewOffers }
   )
 
-  const rawOffersSource = (
-    offersResponse as unknown as { offers?: OfferPickerRowExtended[] }
-  ).offers
   const rawOffers = useMemo<OfferPickerRowExtended[]>(
-    () => rawOffersSource ?? [],
-    [rawOffersSource]
+    () => offersResponse.offers ?? [],
+    [offersResponse.offers]
   )
 
   const offers = useMemo<OfferPickerRowExtended[]>(() => {

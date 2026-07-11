@@ -55,7 +55,11 @@ export const validateSellerPromotions = async (
     fields: ["promotion_id"],
   })
 
-  const foundIds = new Set(sellerPromotions.map((sp: any) => sp.promotion_id))
+  const foundIds = new Set(
+    (sellerPromotions as Array<{ promotion_id: string }>).map(
+      (sp) => sp.promotion_id,
+    ),
+  )
 
   for (const promotionId of promotionIds) {
     if (!foundIds.has(promotionId)) {
@@ -81,7 +85,7 @@ export const refetchBatchRules = async (
       entity: "promotion_rule",
       filters: { id: batchResult.created.map((p) => p.id) },
       fields,
-    }).then((res: any) => res.data)
+    }).then(({ data }) => data)
   }
 
   if (batchResult.updated.length) {
@@ -89,7 +93,7 @@ export const refetchBatchRules = async (
       entity: "promotion_rule",
       filters: { id: batchResult.updated.map((p) => p.id) },
       fields,
-    }).then((res: any) => res.data)
+    }).then(({ data }) => data)
   }
 
   const [createdRes, updatedRes] = await promiseAll([created, updated])

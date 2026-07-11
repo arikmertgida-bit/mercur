@@ -1,3 +1,4 @@
+import type { JsonRecord } from "@mercurjs/types"
 import type { ComponentType } from "react"
 import type {
   ActivityEntry,
@@ -14,7 +15,7 @@ import type {
 export type WidgetPlacement = "before" | "after"
 
 export type Widget = {
-  Component: ComponentType<{ data?: unknown }>
+  Component: ComponentType<{ data?: JsonRecord }>
   zone: string[]
   widgetId: string
   permission?: Permission[]

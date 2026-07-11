@@ -29,7 +29,7 @@ export const PayoutListDataTable = () => {
   const base = usePayoutTableColumns();
   const { columns, filters: extFilters } = useExtendableTable({
     model: "payout",
-    columns: base as unknown as ColumnDef<unknown, unknown>[],
+    columns: base,
   });
   const baseFilters = usePayoutTableFilters();
   const filters = useMemo(

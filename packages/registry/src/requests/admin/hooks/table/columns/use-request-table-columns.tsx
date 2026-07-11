@@ -3,6 +3,7 @@ import { useMemo } from "react";
 import { StatusBadge, Text } from "@medusajs/ui";
 import { DateCell, DateHeader } from "@mercurjs/dashboard-shared";
 import { RequestDTO } from "../../api/requests";
+import { RequestCustomFields } from "../../../../types";
 
 const columnHelper = createColumnHelper<RequestDTO>();
 
@@ -42,7 +43,7 @@ export const useRequestTableColumns = (nameKey: string = "name") => {
           </div>
         ),
         cell: ({ getValue }) => {
-          const customFields = getValue() as any;
+          const customFields = getValue() as RequestCustomFields | undefined;
           const status = customFields?.request_status ?? "draft";
           return (
             <StatusBadge color={statusColor(status)}>

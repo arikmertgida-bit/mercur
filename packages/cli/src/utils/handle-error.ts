@@ -3,7 +3,9 @@ import { RegistryError } from "../registry/errors";
 import { highlighter } from "./highlighter";
 import { logger } from "./logger";
 
-export function handleError(error: unknown) {
+type HandledError = string | Error | z.ZodError | RegistryError;
+
+export function handleError(error: HandledError) {
   logger.break();
   logger.error(
     `Something went wrong. Please check the error below for more details.`
@@ -37,7 +39,6 @@ export function handleError(error: unknown) {
 
   if (error instanceof z.ZodError) {
     logger.error("Validation failed:");
-    // Zod v4 compatible error handling using issues array
     for (const issue of error.issues) {
       const path = issue.path.join(".") || "root";
       logger.error(`- ${highlighter.info(path)}: ${issue.message}`);
@@ -54,4 +55,22 @@ export function handleError(error: unknown) {
 
   logger.break();
   process.exit(1);
+}
+
+export function handleCaughtError(error: HandledError | object): void {
+  if (typeof error === "string") {
+    handleError(error);
+    return;
+  }
+
+  if (
+    error instanceof RegistryError ||
+    error instanceof z.ZodError ||
+    error instanceof Error
+  ) {
+    handleError(error);
+    return;
+  }
+
+  handleError(String(error));
 }

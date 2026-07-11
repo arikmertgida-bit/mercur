@@ -83,7 +83,7 @@ const useColumns = () => {
   const base = useCollectionTableColumns();
   const { columns: extended, filters } = useExtendableTable<CollectionRow>({
     model: "collection",
-    columns: base as unknown as ColumnDef<CollectionRow, unknown>[],
+    columns: base,
   });
 
   const columns = useMemo(() => [...extended], [extended]);

@@ -126,7 +126,7 @@ export const CreatePromotionForm = () => {
         rules: {
           operator: string;
           attribute: string;
-          values: any[] | any;
+          values: string | number | string[];
           disguised?: boolean;
         }[]
       ) => {

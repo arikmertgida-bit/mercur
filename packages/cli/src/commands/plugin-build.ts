@@ -1,5 +1,5 @@
 import path from "path";
-import { handleError } from "@/src/utils/handle-error";
+import { handleCaughtError } from "@/src/utils/handle-error";
 import { buildDashboardExtensions } from "@/src/utils/build-dashboard-extensions";
 import { logger } from "@/src/utils/logger";
 import { spinner } from "@/src/utils/spinner";
@@ -56,6 +56,6 @@ export const pluginBuild = new Command()
       }
     } catch (error) {
       logger.break();
-      handleError(error);
+      handleCaughtError(error);
     }
   });

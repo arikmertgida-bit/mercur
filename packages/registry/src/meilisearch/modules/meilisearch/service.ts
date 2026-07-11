@@ -37,7 +37,7 @@ class MeilisearchModuleService {
   private productIndex_: ReturnType<MeiliSearch['index']>
   private settingsApplied_ = false
 
-  constructor(_: unknown, options: ModuleOptions) {
+  constructor(_: object, options: ModuleOptions) {
     if (!options?.host || !options?.apiKey) {
       const missing = [
         !options?.host && 'MEILISEARCH_HOST',

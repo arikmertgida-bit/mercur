@@ -13,6 +13,10 @@ import {
   StoreCreateConversationType,
   StoreListConversationsType,
 } from "./validators"
+import {
+  ConversationDTO,
+  MessageDTO,
+} from "../../../modules/messaging/types/common"
 
 export const GET = async (
   req: AuthenticatedMedusaRequest<StoreListConversationsType>,
@@ -68,7 +72,7 @@ export const POST = async (
   }
 
   // Find or create conversation
-  let conversation: any
+  let conversation: ConversationDTO
   const existing = await service.listConversations(
     { buyer_id: customerId, seller_id },
     { take: 1 }
@@ -84,7 +88,7 @@ export const POST = async (
     conversation = result
   }
 
-  let message
+  let message: MessageDTO | undefined
   if (body) {
     // Resolve context label for display
     const context_label = await resolveContextLabel(req.scope, context_type ?? null, context_id ?? null)
@@ -106,7 +110,7 @@ export const POST = async (
     message = result
   }
 
-  const response: any = { conversation }
+  const response: { conversation: ConversationDTO; message?: MessageDTO } = { conversation }
   if (message) {
     response.message = message
   }

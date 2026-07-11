@@ -19,6 +19,13 @@ const TABLE_MESSAGE = "message"
 const TABLE_CHAT_BLOCK = "chat_block"
 const MAX_PREVIEW_LENGTH = 100
 
+type AdminConversationSearchRow = ConversationDTO & {
+  seller_name?: string
+  buyer_first_name?: string | null
+  buyer_last_name?: string | null
+  buyer_email?: string | null
+}
+
 function escapeLike(value: string): string {
   return value.replace(/[\\%_]/g, (ch) => `\\${ch}`)
 }
@@ -42,8 +49,8 @@ class MessagingModuleService extends MedusaService({
 }) {
   protected readonly options_: ResolvedMessagingModuleOptions
 
-  constructor(_deps: unknown, options?: MessagingModuleOptions) {
-    // @ts-ignore — MedusaService base accepts arbitrary constructor args
+  constructor(_deps: object, options?: MessagingModuleOptions) {
+    // @ts-expect-error MedusaService base accepts arbitrary constructor args
     super(...arguments)
     this.options_ = {
       rateLimits: {
@@ -124,7 +131,7 @@ class MessagingModuleService extends MedusaService({
       }
     }
 
-    const rows: any[] = await query
+    const rows: ConversationDTO[] = await query
 
     const hasMore = rows.length > limit
     const data = hasMore ? rows.slice(0, limit) : rows
@@ -170,7 +177,7 @@ class MessagingModuleService extends MedusaService({
       }
     }
 
-    const rows: any[] = await query
+    const rows: MessageDTO[] = await query
 
     const hasMore = rows.length > limit
     const data = hasMore ? rows.slice(0, limit) : rows
@@ -282,10 +289,10 @@ class MessagingModuleService extends MedusaService({
       }
     }
 
-    const rows: any[] = await query
+    const rows: AdminConversationSearchRow[] = await query
 
     const hasMore = rows.length > limit
-    const data = (hasMore ? rows.slice(0, limit) : rows).map((row: any) => ({
+    const data = (hasMore ? rows.slice(0, limit) : rows).map((row) => ({
       ...row,
       buyer_name: [row.buyer_first_name, row.buyer_last_name]
         .filter(Boolean)

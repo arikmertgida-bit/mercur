@@ -68,7 +68,7 @@ const CreateAccountSchema = CreateAccountBaseSchema.superRefine(
 
 type DecodedInvite = {
   id: string;
-  jti: any;
+  jti: string;
   exp: string;
   iat: number;
   email: string;
@@ -435,6 +435,8 @@ const InviteSchema = z.object({
   iat: z.number(),
 });
 
-const validateDecodedInvite = (decoded: any): decoded is DecodedInvite => {
+const validateDecodedInvite = (
+  decoded: DecodedInvite
+): decoded is DecodedInvite => {
   return InviteSchema.safeParse(decoded).success;
 };

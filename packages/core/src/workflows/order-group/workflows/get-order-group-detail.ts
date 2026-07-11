@@ -99,12 +99,10 @@ export const getOrderGroupDetailWorkflow = createWorkflow(
             }
 
             if (!requiredPaymentFields) {
-              // @ts-ignore
-              delete order_.payment_collections
+              Reflect.deleteProperty(order_ as object, "payment_collections")
             }
             if (!requiredFulfillmentFields) {
-              // @ts-ignore
-              delete order_.fulfillments
+              Reflect.deleteProperty(order_ as object, "fulfillments")
             }
           }
         }

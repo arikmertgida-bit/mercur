@@ -10,7 +10,7 @@ import { createConfig, getConfig } from "../utils/get-config";
 import { highlighter } from "../utils/highlighter";
 import { logger } from "../utils/logger";
 import { runInit } from "./init";
-import { handleError } from "../utils/handle-error";
+import { handleCaughtError } from "../utils/handle-error";
 import { sendTelemetryEvent, showTelemetryNoticeIfNeeded } from "../telemetry";
 
 export const addOptionsSchema = z.object({
@@ -105,7 +105,7 @@ export const add = new Command()
       })
     } catch (error) {
       logger.break();
-      handleError(error);
+      handleCaughtError(error);
     } finally {
       clearRegistryContext();
     }

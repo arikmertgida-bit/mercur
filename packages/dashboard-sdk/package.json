@@ -38,6 +38,7 @@
     "@babel/parser": "8.0.5",
     "@babel/traverse": "8.0.6",
     "@babel/types": "8.0.6",
+    "@mercurjs/types": "2.3.7",
     "esbuild-register": "^3.6.0"
   },
   "devDependencies": {
