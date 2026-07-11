@@ -2,12 +2,47 @@ import { useMemo } from "react"
 import { createColumnHelper, type ColumnDef } from "@tanstack/react-table"
 import type {
   CustomColumn,
+  CustomListExtension,
   CustomListFilter,
+  ExtendableTableRow,
   SectionAction,
 } from "@mercurjs/dashboard-sdk"
-import type { JsonRecord } from "@mercurjs/types"
+import type { JsonValue } from "@mercurjs/types"
 
 import { useExtension } from "./context"
+
+function isJsonValue(value: JsonValue | null | undefined): value is JsonValue {
+  if (value === null) {
+    return true
+  }
+  if (
+    typeof value === "string" ||
+    typeof value === "number" ||
+    typeof value === "boolean"
+  ) {
+    return true
+  }
+  if (Array.isArray(value)) {
+    return value.every(isJsonValue)
+  }
+  if (typeof value === "object") {
+    return Object.values(value).every(
+      (entry) => entry === undefined || isJsonValue(entry),
+    )
+  }
+  return false
+}
+
+function readRowFieldValue(
+  row: ExtendableTableRow,
+  fieldId: string,
+): JsonValue | undefined {
+  if (!Object.prototype.hasOwnProperty.call(row, fieldId)) {
+    return undefined
+  }
+  const raw = Reflect.get(row, fieldId)
+  return isJsonValue(raw) ? raw : undefined
+}
 
 function columnId<TData>(col: ColumnDef<TData, unknown>): string | undefined {
   return (
@@ -16,7 +51,10 @@ function columnId<TData>(col: ColumnDef<TData, unknown>): string | undefined {
   )
 }
 
-export type UseExtendableTableProps<TData, TValue = never> = {
+export type UseExtendableTableProps<
+  TData extends ExtendableTableRow,
+  TValue = never,
+> = {
   /** Model whose custom-fields `list` block extends this table (e.g. `product`). */
   model: string
   /** Base columns to extend. */
@@ -41,7 +79,10 @@ export type ExtendableTable<TData> = {
  * (merge them into the base filters with `mergeListFilters`) and `bulkActions`
  * for the caller to render.
  */
-export function useExtendableTable<TData, TValue = never>({
+export function useExtendableTable<
+  TData extends ExtendableTableRow,
+  TValue = never,
+>({
   model,
   columns: baseColumns,
 }: UseExtendableTableProps<TData, TValue>): ExtendableTable<TData> {
@@ -56,7 +97,7 @@ export function useExtendableTable<TData, TValue = never>({
         cell: ({ row }) => {
           const Comp = c.component
           if (!Comp) return null
-          const value = (row.original as JsonRecord)?.[c.id]
+          const value = readRowFieldValue(row.original, c.id)
           return <Comp row={row.original} value={value} />
         },
       }) as ColumnDef<TData, unknown>
