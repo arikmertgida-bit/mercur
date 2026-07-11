@@ -23,7 +23,8 @@
     "access": "public"
   },
   "files": [
-    "dist"
+    "dist",
+    "routes-manifest.json"
   ],
   "bin": {
     "mercurjs": "./dist/index.js"
