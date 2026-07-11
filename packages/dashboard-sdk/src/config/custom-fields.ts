@@ -4,17 +4,22 @@ import type { JsonRecord, JsonValue } from "@mercurjs/types"
 /**
  * Minimal structural stand-in for a Zod schema, so the SDK stays free of a zod
  * dependency. `createFormHelper` (in `@mercurjs/dashboard-shared`) produces real
- * zod schemas that satisfy this shape.
+ * zod schemas that satisfy this shape. `data`/the parse return allow
+ * `undefined` because an `.optional()` field's parsed value is legitimately
+ * absent — that's a real, valid outcome distinct from "not JSON-serializable".
  */
 export type FieldParseResult =
-    | { success: true; data: JsonValue }
-    | { success: false; error: JsonRecord }
+    | { success: true; data: JsonValue | undefined }
+    // Real validation libraries (e.g. Zod's `ZodError`) return a rich Error
+    // subclass here, not a plain JSON record — nothing in this SDK reads
+    // `.error`, so `Error` is the honest supertype rather than a JsonRecord
+    // shape no real library actually produces.
+    | { success: false; error: Error }
 
 export type FieldValidation = {
     safeParse?: (value: JsonValue) => FieldParseResult
-    parse?: (value: JsonValue) => JsonValue
+    parse?: (value: JsonValue) => JsonValue | undefined
     def?: { type?: string }
-    _def?: JsonRecord
 }
 
 /**

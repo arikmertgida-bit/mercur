@@ -7,7 +7,7 @@ import { clearAuthToken, getAuthHeaders } from './auth-token'
 
 export const backendUrl = config.backendUrl ?? 'http://localhost:9000'
 
-export const sdk: InferClient<Routes> = createClient({
+export const sdk: InferClient<Routes> = createClient<Routes>({
   baseUrl: backendUrl,
   fetchOptions: {
     credentials: 'omit',
