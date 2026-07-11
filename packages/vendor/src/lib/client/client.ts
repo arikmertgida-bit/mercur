@@ -23,7 +23,7 @@ export const fetchQuery = async (
   }: {
     method: 'GET' | 'POST' | 'DELETE'
     body?: object
-    query?: Record<string, string | number | object>
+    query?: Record<string, string | number | boolean | object>
     headers?: { [key: string]: string }
   }
 ) => {
