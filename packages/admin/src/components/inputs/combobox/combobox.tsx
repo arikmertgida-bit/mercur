@@ -256,7 +256,11 @@ const ComboboxImpl = <T extends Value = string>(
             type="button"
             onClick={(e) => {
               e.preventDefault()
-              handleValueChange(isArrayValue ? ([] as unknown as T) : undefined)
+              // T is an unconstrained `string[] | string` generic; which
+              // branch is live is only known at runtime via `isArrayValue`,
+              // so it can't be narrowed from `[]`/`undefined` without a cast.
+              // @ts-expect-error
+              handleValueChange(isArrayValue ? [] : undefined)
             }}
             className="bg-ui-bg-base hover:bg-ui-bg-base-hover txt-compact-small-plus text-ui-fg-subtle focus-within:border-ui-fg-interactive transition-fg absolute start-0.5 top-0.5 z-[1] flex h-[28px] items-center rounded-[4px] border py-[3px] pe-1 ps-1.5 outline-none"
           >

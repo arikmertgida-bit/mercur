@@ -27,7 +27,7 @@ import {
   type OrderLineItemWithOffer,
 } from "./order-allocate-items-item"
 import { buildAllocationPayload, getAllocatableItems } from "./utils"
-import type { HttpTypes, OrderLineItemDTO } from "@medusajs/types"
+import type { HttpTypes } from "@medusajs/types"
 
 type OrderAllocateItemsFormProps = {
   order: HttpTypes.AdminOrder
@@ -389,9 +389,7 @@ function defaultAllocations(
     const hasInventoryKit = links.length > 1
     const firstLink = links[0]
     const firstInventoryItemId = resolveInventoryItemId(firstLink ?? {})
-    const fulfillable = getFulfillableQuantity(
-      item as unknown as OrderLineItemDTO
-    )
+    const fulfillable = getFulfillableQuantity(item)
 
     if (hasInventoryKit) {
       ret[`${item.id}-`] = fulfillable

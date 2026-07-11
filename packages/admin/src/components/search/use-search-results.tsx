@@ -20,7 +20,7 @@ import {
 } from "../../hooks/api"
 import { Shortcut, ShortcutType } from "../../providers/keybind-provider"
 import { useGlobalShortcuts } from "../../providers/keybind-provider/hooks"
-import { DynamicSearchResult, SearchArea } from "./types"
+import { DynamicSearchResult, DynamicSearchResultItem, SearchArea } from "./types"
 
 type UseSearchProps = {
   q?: string
@@ -358,18 +358,29 @@ function isAreaEnabled(area: SearchArea, currentArea: SearchArea) {
   return false
 }
 
+type TransformMapDataByArea = {
+  order: HttpTypes.AdminOrder
+  product: HttpTypes.AdminProduct
+  category: HttpTypes.AdminProductCategory
+  inventory: HttpTypes.AdminInventoryItem
+  customer: HttpTypes.AdminCustomer
+  seller: { id: string; name: string }
+  collection: HttpTypes.AdminCollection
+  promotion: HttpTypes.AdminPromotion
+  campaign: HttpTypes.AdminCampaign
+  priceList: HttpTypes.AdminPriceList
+  productType: HttpTypes.AdminProductType
+  productTag: HttpTypes.AdminProductTag
+  location: HttpTypes.AdminStockLocation
+}
+
 type TransformMap = {
-  [K in SearchArea]?: {
-    dataKey: string
-    transform: (item: any) => {
-      id: string
-      title: string
-      subtitle?: string
-      to: string
-      value: string
-      thumbnail?: string
-    }
-  }
+  [K in SearchArea]?: K extends keyof TransformMapDataByArea
+    ? {
+        dataKey: string
+        transform: (item: TransformMapDataByArea[K]) => DynamicSearchResultItem
+      }
+    : never
 }
 
 const transformMap: TransformMap = {

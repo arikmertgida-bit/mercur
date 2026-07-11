@@ -13,7 +13,7 @@ export const useMembers = (
   options?: Omit<UseQueryOptions<any, ClientError>, "queryKey" | "queryFn">,
 ) => {
   const { data, ...rest } = useQuery({
-    queryFn: () => sdk.admin.members.query(query as any),
+    queryFn: () => sdk.admin.members.query(query),
     queryKey: membersQueryKeys.list(query ?? {}),
     ...options,
   });

@@ -71,7 +71,7 @@ export const useCreateClaim = (
   return useMutation({
     mutationFn: (payload: HttpTypes.AdminCreateClaim) =>
       sdk.admin.claims.mutate(payload),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.details(),
       })
@@ -97,7 +97,7 @@ export const useCancelClaim = (
 ) => {
   return useMutation({
     mutationFn: () => sdk.admin.claims.$id.cancel.mutate({ $id: id }),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.details(),
       })
@@ -131,7 +131,7 @@ export const useAddClaimItems = (
   return useMutation({
     mutationFn: (payload: HttpTypes.AdminAddClaimItems) =>
       sdk.admin.claims.$id.claimItems.mutate({ $id: id, ...payload }),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.details(),
       })
@@ -166,7 +166,7 @@ export const useUpdateClaimItems = (
         ...payload,
       })
     },
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.details(),
       })
@@ -196,7 +196,7 @@ export const useRemoveClaimItem = (
         $id: id,
         $actionId: actionId,
       }),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.details(),
       })
@@ -223,7 +223,7 @@ export const useAddClaimInboundItems = (
   return useMutation({
     mutationFn: (payload) =>
       sdk.admin.claims.$id.inbound.items.mutate({ $id: id, ...payload }),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.details(),
       })
@@ -258,7 +258,7 @@ export const useUpdateClaimInboundItem = (
         ...payload,
       })
     },
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.details(),
       })
@@ -284,7 +284,7 @@ export const useRemoveClaimInboundItem = (
         $id: id,
         $actionId: actionId,
       }),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.details(),
       })
@@ -318,7 +318,7 @@ export const useAddClaimInboundShipping = (
         $id: id,
         ...payload,
       }),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.details(),
       })
@@ -352,7 +352,7 @@ export const useUpdateClaimInboundShipping = (
         $actionId: actionId,
         ...payload,
       }),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.details(),
       })
@@ -378,7 +378,7 @@ export const useDeleteClaimInboundShipping = (
         $id: id,
         $actionId: actionId,
       }),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.details(),
       })
@@ -405,7 +405,7 @@ export const useAddClaimOutboundItems = (
   return useMutation({
     mutationFn: (payload: HttpTypes.AdminAddClaimOutboundItems) =>
       sdk.admin.claims.$id.outbound.items.mutate({ $id: id, ...payload }),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.details(),
       })
@@ -440,7 +440,7 @@ export const useUpdateClaimOutboundItems = (
         ...payload,
       })
     },
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.details(),
       })
@@ -466,7 +466,7 @@ export const useRemoveClaimOutboundItem = (
         $id: id,
         $actionId: actionId,
       }),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.details(),
       })
@@ -496,7 +496,7 @@ export const useAddClaimOutboundShipping = (
         $id: id,
         ...payload,
       }),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.details(),
       })
@@ -530,7 +530,7 @@ export const useUpdateClaimOutboundShipping = (
         $actionId: actionId,
         ...payload,
       }),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.details(),
       })
@@ -556,7 +556,7 @@ export const useDeleteClaimOutboundShipping = (
         $id: id,
         $actionId: actionId,
       }),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.details(),
       })
@@ -583,7 +583,7 @@ export const useClaimConfirmRequest = (
   return useMutation({
     mutationFn: (payload: HttpTypes.AdminRequestClaim) =>
       sdk.admin.claims.$id.request.mutate({ $id: id, ...payload }),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: returnsQueryKeys.all,
       })
@@ -613,7 +613,7 @@ export const useCancelClaimRequest = (
 ) => {
   return useMutation({
     mutationFn: () => sdk.admin.claims.$id.request.delete({ $id: id }),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.details(),
       })

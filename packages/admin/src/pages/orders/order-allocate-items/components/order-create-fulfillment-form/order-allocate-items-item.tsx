@@ -8,7 +8,7 @@ import {
 import { UseFormReturn, useWatch } from "react-hook-form"
 import { Input, Text, clx } from "@medusajs/ui"
 import * as zod from "zod"
-import type { AdminOrderLineItem, OrderLineItemDTO } from "@medusajs/types"
+import type { AdminOrderLineItem } from "@medusajs/types"
 
 import { Thumbnail } from "../../../../../components/common/thumbnail"
 import { getFulfillableQuantity } from "../../../../../lib/order-item"
@@ -113,7 +113,7 @@ export function OrderAllocateItemsItem({
 
   const minValue = 0
   const maxValue = Math.min(
-    getFulfillableQuantity(item as unknown as OrderLineItemDTO) ?? 0,
+    getFulfillableQuantity(item) ?? 0,
     availableQuantity || Number.MAX_SAFE_INTEGER
   )
 

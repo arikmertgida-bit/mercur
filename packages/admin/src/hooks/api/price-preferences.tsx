@@ -80,7 +80,6 @@ export const useUpsertPricePreference = (
         return sdk.admin.pricePreferences.$id.mutate({
           $id: id,
           ...payload,
-          attribute: (payload as any).attribute ?? undefined,
         })
       }
       return sdk.admin.pricePreferences.mutate(payload)

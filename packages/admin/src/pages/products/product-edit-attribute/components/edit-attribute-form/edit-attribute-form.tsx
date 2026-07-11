@@ -14,7 +14,7 @@ import { useBatchProductAttributes } from "../../../../../hooks/api/products";
 
 type AttributeValue = { id: string; name: string };
 
-type EditAttributeAttribute = {
+export type EditAttributeAttribute = {
   id: string;
   name: string;
   type: AttributeType | string;

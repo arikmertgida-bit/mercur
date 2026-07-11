@@ -21,7 +21,11 @@ const useColumns = () => {
   const { columns: extended, filters } =
     useExtendableTable<HttpTypes.AdminPriceList>({
       model: "price_list",
-      columns: base as unknown as ColumnDef<HttpTypes.AdminPriceList, unknown>[],
+      // tanstack's ColumnDef<T, TValue> is contravariant in TValue
+      // (cell/header render props), so a heterogeneous per-column accessor
+      // array can't widen to ColumnDef<T, unknown>[] without a cast.
+      // @ts-expect-error
+      columns: base,
     })
 
   const columns = useMemo(

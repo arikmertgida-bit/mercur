@@ -49,18 +49,11 @@ export function useDataGridColumnVisibility<
 
 function getColumnName<TData>(column: Column<TData, unknown>): string {
   const id = column.columnDef.id
-  const enableHiding = column.columnDef.enableHiding
   const meta = column?.columnDef.meta as { name?: string } | undefined
 
   if (!id) {
     throw new Error(
       "Column is missing an id, which is a required field. Please provide an id for the column."
-    )
-  }
-
-  if (process.env.NODE_ENV === "development" && !meta?.name && enableHiding) {
-    console.warn(
-      `Column "${id}" does not have a name. You should add a name to the column definition. Falling back to the column id.`
     )
   }
 

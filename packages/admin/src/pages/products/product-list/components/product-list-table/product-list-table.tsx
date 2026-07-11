@@ -311,7 +311,11 @@ const useColumns = () => {
   const base = useProductTableColumns();
   const { columns: extended, filters } = useExtendableTable<ProductDTO>({
     model: "product",
-    columns: base as unknown as ColumnDef<ProductDTO, unknown>[],
+    // tanstack's ColumnDef<T, TValue> is contravariant in TValue (cell/header
+    // render props), so a heterogeneous per-column accessor array can't widen
+    // to ColumnDef<T, unknown>[] without a cast.
+    // @ts-expect-error
+    columns: base,
   });
 
   const columns = useMemo(

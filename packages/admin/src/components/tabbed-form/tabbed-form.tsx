@@ -29,7 +29,7 @@ export const useTabbedForm = <T extends FieldValues = FieldValues>() => {
 function resolveTabMeta<T extends FieldValues>(
   child: ReactElement
 ): TabDefinition<T> | null {
-  const type = child.type as any
+  const type = child.type as { _tabMeta?: TabDefinition<T> }
   const meta: TabDefinition<T> | undefined = type?._tabMeta
 
   if (!meta && !child.props?.id) {
@@ -39,20 +39,6 @@ function resolveTabMeta<T extends FieldValues>(
   const id = child.props?.id ?? meta?.id ?? ""
   const labelKey = meta?.labelKey ?? ""
   const label = child.props?.label
-
-  if (process.env.NODE_ENV !== "production") {
-    if (!id) {
-      console.warn(
-        "[TabbedForm] A child component is missing a tab id. " +
-          "Either set _tabMeta.id or pass an id prop."
-      )
-    }
-    if (!labelKey && !label) {
-      console.warn(
-        `[TabbedForm] Tab "${id}" has no label or labelKey — header will be empty.`
-      )
-    }
-  }
 
   return {
     id,

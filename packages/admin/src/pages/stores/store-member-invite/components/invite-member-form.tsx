@@ -69,7 +69,7 @@ export const InviteMemberForm = () => {
 
   const { members } = useMembers(
     { q: emailValue || undefined, limit: 10 },
-    { placeholderData: (prev: any) => prev },
+    { placeholderData: (prev) => prev },
   );
 
   // Fetch current sellers members and pending invites so we can filter

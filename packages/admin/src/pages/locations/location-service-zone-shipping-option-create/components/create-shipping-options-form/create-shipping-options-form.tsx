@@ -151,7 +151,7 @@ export function CreateShippingOptionsForm({
         shipping_profile_id: data.shipping_profile_id,
         provider_id: data.provider_id,
         prices: allPrices,
-        data: fulfillmentOptionData as unknown as Record<string, unknown>,
+        data: fulfillmentOptionData as Record<string, unknown>,
         rules: [
           {
             value: isReturn ? "true" : "false",

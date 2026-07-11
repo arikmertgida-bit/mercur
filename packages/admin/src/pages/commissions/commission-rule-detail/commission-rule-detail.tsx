@@ -157,7 +157,7 @@ export const CommissionRuleDetail = () => {
   const { commission_rate, isLoading, isError, error } = useCommissionRule(
     id!,
     { fields: "*rules,*values" }
-  ) as unknown as {
+  ) as {
     commission_rate?: CommissionRate;
     isLoading: boolean;
     isError: boolean;

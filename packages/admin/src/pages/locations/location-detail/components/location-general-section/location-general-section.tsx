@@ -335,18 +335,6 @@ function ServiceZone({
       )
       .filter((c) => !!c) as StaticCountry[]
 
-    if (
-      process.env.NODE_ENV === "development" &&
-      countryGeoZones.length !== countries.length
-    ) {
-      console.warn(
-        "Some countries are missing in the static countries list",
-        countryGeoZones
-          .filter((g) => !countries.find((c) => c.iso_2 === g.country_code))
-          .map((g) => g.country_code)
-      )
-    }
-
     return countries.sort((c1, c2) => c1.name.localeCompare(c2.name))
   }, [zone.geo_zones])
 

@@ -4,8 +4,12 @@ import { useFieldArray, useFormContext } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
 import { SortableList } from "../../../../components/common/sortable-list"
+import type {
+  CreateAttributeFormValues,
+  UpdateAttributeFormValues,
+} from "../../attribute-edit/types"
 
-type FormValues = any
+type FormValues = CreateAttributeFormValues | UpdateAttributeFormValues
 
 export const PossibleValuesList = () => {
   const { t } = useTranslation()
@@ -72,7 +76,7 @@ export const PossibleValuesList = () => {
 
       {fields.length > 0 && (
         <SortableList
-          items={fields as any[]}
+          items={fields}
           onChange={handleRankChange}
           renderItem={(item, index) => {
             const fieldError = Array.isArray(valuesError)

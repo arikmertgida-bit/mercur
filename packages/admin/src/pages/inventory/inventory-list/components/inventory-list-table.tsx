@@ -100,10 +100,11 @@ export const InventoryListDataTable = () => {
   const { columns: extended, filters: extFilters } =
     useExtendableTable<ExtendedInventoryItem>({
       model: "inventory_item",
-      columns: baseColumns.slice(0, -1) as unknown as ColumnDef<
-        ExtendedInventoryItem,
-        unknown
-      >[],
+      // tanstack's ColumnDef<T, TValue> is contravariant in TValue
+      // (cell/header render props), so a heterogeneous per-column accessor
+      // array can't widen to ColumnDef<T, unknown>[] without a cast.
+      // @ts-expect-error
+      columns: baseColumns.slice(0, -1),
     })
   const columns = useMemo(
     () => [...extended, actionsColumn],

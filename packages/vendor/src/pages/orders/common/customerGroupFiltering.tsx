@@ -26,7 +26,9 @@ const getSymbol = (a: string | Date, symbol: string, b: string | Date) => {
   }
 }
 
-const isString = (value: unknown): value is string => {
+type UnknownValue = unknown
+
+const isString = (value: UnknownValue): value is string => {
   return typeof value === "string"
 }
 

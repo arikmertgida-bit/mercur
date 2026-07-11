@@ -42,7 +42,7 @@ export const EditInventoryItemForm = ({ item }: EditInventoryItemFormProps) => {
   const { mutateAsync, isPending: isLoading } = useUpdateInventoryItem(item.id)
 
   const handleSubmit = form.handleSubmit(async (values) => {
-    mutateAsync(values as any, {
+    mutateAsync(values, {
       onSuccess: () => {
         toast.success(t("inventory.toast.updateItem"))
         handleSuccess()

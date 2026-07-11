@@ -1,18 +1,18 @@
 import { Command } from "../../../hooks/use-command-history"
 
-export type DataGridUpdateCommandArgs = {
-  prev: any
-  next: any
-  setter: (value: any) => void
+export type DataGridUpdateCommandArgs<T> = {
+  prev: T
+  next: T
+  setter: (value: T) => void
 }
 
-export class DataGridUpdateCommand implements Command {
-  private _prev: any
-  private _next: any
+export class DataGridUpdateCommand<T> implements Command {
+  private _prev: T
+  private _next: T
 
-  private _setter: (value: any) => void
+  private _setter: (value: T) => void
 
-  constructor({ prev, next, setter }: DataGridUpdateCommandArgs) {
+  constructor({ prev, next, setter }: DataGridUpdateCommandArgs<T>) {
     this._prev = prev
     this._next = next
 

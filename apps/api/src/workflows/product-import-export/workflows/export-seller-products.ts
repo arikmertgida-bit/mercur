@@ -8,6 +8,7 @@ import {
   useQueryGraphStep,
 } from "@medusajs/core-flows"
 import { HttpTypes } from "@medusajs/framework/types"
+import { MedusaError } from "@medusajs/framework/utils"
 import { getSellerProductsStep } from "../steps/get-seller-products"
 
 type ExportSellerProductsWorkflowInput = {
@@ -27,8 +28,18 @@ export const exportSellerProductsWorkflow = createWorkflow(
     // it accurate: JSON.stringify serializes Date values to ISO strings.
     const csvProducts = transform(
       { products },
-      ({ products }): HttpTypes.AdminProduct[] =>
-        JSON.parse(JSON.stringify(products))
+      ({ products }): HttpTypes.AdminProduct[] => {
+        try {
+          return JSON.parse(JSON.stringify(products))
+        } catch (error) {
+          throw new MedusaError(
+            MedusaError.Types.UNEXPECTED_STATE,
+            `Failed to serialize seller products for CSV export: ${
+              error instanceof Error ? error.message : String(error)
+            }`
+          )
+        }
+      }
     )
 
     const csvFile = generateProductCsvStep(csvProducts)

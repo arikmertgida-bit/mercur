@@ -104,7 +104,7 @@ export const AddOrderEditItemsTable = ({
   const offersResponse = useOffers({
     ...searchParams,
     fields: OFFER_PICKER_FIELDS,
-  }) as unknown as {
+  }) as {
     offers?: OfferPickerRowExtended[]
     count?: number
   }

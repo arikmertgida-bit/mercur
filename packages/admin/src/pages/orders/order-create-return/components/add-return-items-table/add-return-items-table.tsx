@@ -170,18 +170,18 @@ const sortItems = (
   direction: "asc" | "desc"
 ) => {
   return items.sort((a, b) => {
-    let aValue: any
-    let bValue: any
+    let aValue: string | number = ""
+    let bValue: string | number = ""
 
     if (field === "product_title") {
-      aValue = a.product_title
-      bValue = b.product_title
+      aValue = a.product_title ?? ""
+      bValue = b.product_title ?? ""
     } else if (field === "variant_title") {
-      aValue = a.variant_title
-      bValue = b.variant_title
+      aValue = a.variant_title ?? ""
+      bValue = b.variant_title ?? ""
     } else if (field === "sku") {
-      aValue = a.variant_sku
-      bValue = b.variant_sku
+      aValue = a.variant_sku ?? ""
+      bValue = b.variant_sku ?? ""
     } else if (field === "returnable_quantity") {
       aValue = a.quantity - (a.returned_quantity || 0)
       bValue = b.quantity - (b.returned_quantity || 0)

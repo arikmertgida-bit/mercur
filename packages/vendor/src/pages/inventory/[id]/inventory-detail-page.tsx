@@ -1,5 +1,6 @@
 import { Children, ReactNode } from "react";
 import { useLoaderData, useParams } from "react-router-dom";
+import { InventoryTypes, ProductVariantDTO } from "@medusajs/types";
 
 import { TwoColumnPageSkeleton } from "@components/common/skeleton";
 import { TwoColumnPage } from "@components/layout/pages";
@@ -13,6 +14,10 @@ import { InventoryItemVariantsSection } from "./_components/inventory-item-varia
 import { INVENTORY_DETAIL_FIELDS } from "./constants";
 
 import { loader } from "./loader";
+
+type DetailInventoryItem = InventoryTypes.InventoryItemDTO & {
+  variants?: ProductVariantDTO[] | null;
+};
 
 const Root = ({ children }: { children?: ReactNode }) => {
   const { id } = useParams();
@@ -51,10 +56,10 @@ const Root = ({ children }: { children?: ReactNode }) => {
           <TwoColumnPage.Sidebar>
             <WidgetZone id="inventory.detail.side" data={inventory_item}>
               <InventoryItemVariantsSection
-                variants={(inventory_item as any).variants}
+                variants={(inventory_item as DetailInventoryItem).variants ?? []}
               />
               <InventoryItemAttributeSection
-                inventoryItem={inventory_item as any}
+                inventoryItem={inventory_item as DetailInventoryItem}
               />
             </WidgetZone>
           </TwoColumnPage.Sidebar>

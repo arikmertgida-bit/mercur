@@ -210,7 +210,7 @@ const TaxRegionCardActions = ({
               label: t("actions.delete"),
               onClick: handleDelete,
             },
-          ].filter(Boolean) as unknown as Action[],
+          ].filter((action): action is Action => Boolean(action)),
         },
       ]}
       data-testid={`tax-region-card-action-menu-${taxRegion.id}`}

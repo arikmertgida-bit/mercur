@@ -74,16 +74,32 @@ type OrderGroupRow = Pick<OrderGroupDTO, "id" | "created_at" | "updated_at"> & {
   children: OrderGroupRow[]
 }
 
+// The `orders.*` fields are relations pulled in via `DEFAULT_FIELDS` and
+// aren't part of the base `OrderGroupDTO`.
+type OrderGroupWithOrders = OrderGroupDTO & {
+  orders?: Array<{
+    id: string
+    display_id: number
+    created_at: string | Date
+    updated_at: string | Date
+    payment_status?: string | null
+    fulfillment_status?: string | null
+    total?: number | null
+    currency_code?: string | null
+    seller?: { name?: string | null } | null
+  }>
+}
+
 function transformOrderGroups(
-  orderGroups: any[],
+  orderGroups: OrderGroupWithOrders[],
   t: (key: string, options?: Record<string, unknown>) => string
 ): OrderGroupRow[] {
   return orderGroups.map((group) => {
     const orders = group.orders ?? []
-    const orderIds = orders.map((o: any) => `#${o.display_id}`).join(", ")
+    const orderIds = orders.map((o) => `#${o.display_id}`).join(", ")
     const currencyCode = orders[0]?.currency_code ?? "usd"
 
-    const children: OrderGroupRow[] = orders.map((order: any) => ({
+    const children: OrderGroupRow[] = orders.map((order) => ({
       _type: "order" as const,
       id: order.id,
       display_id: `#${order.display_id}`,

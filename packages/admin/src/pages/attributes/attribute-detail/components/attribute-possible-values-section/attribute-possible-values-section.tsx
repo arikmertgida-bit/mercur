@@ -60,13 +60,14 @@ const PossibleValueActions = ({
           value: value.name,
         })
       )
-    } catch (err: any) {
-      const isInUse = err.message?.includes("can't be deleted")
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "An error occurred"
+      const isInUse = message.includes("can't be deleted")
 
       if (isInUse) {
         setInUseOpen(true)
       } else {
-        toast.error(err.message)
+        toast.error(message)
       }
     }
   }

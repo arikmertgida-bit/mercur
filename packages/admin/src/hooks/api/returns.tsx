@@ -7,7 +7,7 @@ import {
   UseQueryOptions,
 } from "@tanstack/react-query"
 
-import { ClientError } from "@mercurjs/client"
+import { ClientError, InferClientInput } from "@mercurjs/client"
 import { sdk } from "../../lib/client"
 import { queryClient } from "../../lib/query-client"
 import { queryKeysFactory } from "../../lib/query-key-factory"
@@ -18,9 +18,14 @@ export const returnsQueryKeys = queryKeysFactory(RETURNS_QUERY_KEY)
 
 export const useReturn = (
   id: string,
-  query?: Record<string, any>,
+  query?: Omit<InferClientInput<typeof sdk.admin.returns.$id.query>, "$id">,
   options?: Omit<
-    UseQueryOptions<any, ClientError, any, QueryKey>,
+    UseQueryOptions<
+      HttpTypes.AdminReturnResponse,
+      ClientError,
+      HttpTypes.AdminReturnResponse,
+      QueryKey
+    >,
     "queryFn" | "queryKey"
   >
 ) => {
@@ -65,7 +70,7 @@ export const useInitiateReturn = (
   return useMutation({
     mutationFn: (payload: HttpTypes.AdminInitiateReturnRequest) =>
       sdk.admin.returns.mutate(payload),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.details(),
       })
@@ -90,7 +95,7 @@ export const useCancelReturn = (
 ) => {
   return useMutation({
     mutationFn: () => sdk.admin.returns.$id.cancel.mutate({ $id: id }),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.details(),
       })
@@ -128,7 +133,7 @@ export const useConfirmReturnRequest = (
   return useMutation({
     mutationFn: (payload: HttpTypes.AdminConfirmReturnRequest) =>
       sdk.admin.returns.$id.request.mutate({ $id: id, ...payload }),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.details(),
       })
@@ -156,7 +161,7 @@ export const useCancelReturnRequest = (
 ) => {
   return useMutation({
     mutationFn: () => sdk.admin.returns.$id.request.delete({ $id: id }),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.details(),
       })
@@ -192,7 +197,7 @@ export const useAddReturnItem = (
   return useMutation({
     mutationFn: (payload: HttpTypes.AdminAddReturnItems) =>
       sdk.admin.returns.$id.requestItems.mutate({ $id: id, ...payload }),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.details(),
       })
@@ -227,7 +232,7 @@ export const useUpdateReturnItem = (
         ...payload,
       })
     },
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.details(),
       })
@@ -257,7 +262,7 @@ export const useRemoveReturnItem = (
         $id: id,
         $actionId: actionId,
       }),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.details(),
       })
@@ -289,7 +294,7 @@ export const useUpdateReturn = (
     mutationFn: (payload: HttpTypes.AdminUpdateReturnRequest) => {
       return sdk.admin.returns.$id.mutate({ $id: id, ...payload })
     },
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.details(),
       })
@@ -316,7 +321,7 @@ export const useAddReturnShipping = (
   return useMutation({
     mutationFn: (payload: HttpTypes.AdminAddReturnShipping) =>
       sdk.admin.returns.$id.shippingMethod.mutate({ $id: id, ...payload }),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.details(),
       })
@@ -350,7 +355,7 @@ export const useUpdateReturnShipping = (
         $actionId: actionId,
         ...payload,
       }),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.details(),
       })
@@ -380,7 +385,7 @@ export const useDeleteReturnShipping = (
         $id: id,
         $actionId: actionId,
       }),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.details(),
       })
@@ -415,7 +420,7 @@ export const useInitiateReceiveReturn = (
   return useMutation({
     mutationFn: (payload: HttpTypes.AdminInitiateReceiveReturn) =>
       sdk.admin.returns.$id.receive.mutate({ $id: id, ...payload }),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.details(),
       })
@@ -442,7 +447,7 @@ export const useAddReceiveItems = (
   return useMutation({
     mutationFn: (payload: HttpTypes.AdminReceiveItems) =>
       sdk.admin.returns.$id.receiveItems.mutate({ $id: id, ...payload }),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.details(),
       })
@@ -477,7 +482,7 @@ export const useUpdateReceiveItem = (
         ...payload,
       })
     },
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.details(),
       })
@@ -508,7 +513,7 @@ export const useRemoveReceiveItems = (
         $actionId: actionId,
       })
     },
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.details(),
       })
@@ -535,7 +540,7 @@ export const useAddDismissItems = (
   return useMutation({
     mutationFn: (payload: HttpTypes.AdminDismissItems) =>
       sdk.admin.returns.$id.dismissItems.mutate({ $id: id, ...payload }),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.details(),
       })
@@ -570,7 +575,7 @@ export const useUpdateDismissItem = (
         ...payload,
       })
     },
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.details(),
       })
@@ -601,7 +606,7 @@ export const useRemoveDismissItem = (
         $actionId: actionId,
       })
     },
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.details(),
       })
@@ -628,7 +633,7 @@ export const useConfirmReturnReceive = (
   return useMutation({
     mutationFn: (payload: HttpTypes.AdminConfirmReceiveReturn) =>
       sdk.admin.returns.$id.receive.confirm.mutate({ $id: id, ...payload }),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.details(),
       })
@@ -656,7 +661,7 @@ export const useCancelReceiveReturn = (
 ) => {
   return useMutation({
     mutationFn: () => sdk.admin.returns.$id.receive.delete({ $id: id }),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.details(),
       })

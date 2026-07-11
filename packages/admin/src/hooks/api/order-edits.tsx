@@ -20,7 +20,7 @@ export const useCreateOrderEdit = (
   return useMutation({
     mutationFn: (payload: HttpTypes.AdminInitiateOrderEditRequest) =>
       sdk.admin.orderEdits.mutate(payload),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.details(),
       })
@@ -44,7 +44,7 @@ export const useRequestOrderEdit = (
 ) => {
   return useMutation({
     mutationFn: () => sdk.admin.orderEdits.$id.request.mutate({ $id: id }),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.details(),
       })
@@ -76,7 +76,7 @@ export const useConfirmOrderEdit = (
 ) => {
   return useMutation({
     mutationFn: () => sdk.admin.orderEdits.$id.confirm.mutate({ $id: id }),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.details(),
       })
@@ -117,7 +117,7 @@ export const useCancelOrderEdit = (
 ) => {
   return useMutation({
     mutationFn: () => sdk.admin.orderEdits.$id.delete({ $id: orderId }),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.details(),
       })
@@ -150,7 +150,7 @@ export const useAddOrderEditItems = (
   return useMutation({
     mutationFn: (payload: HttpTypes.AdminAddOrderEditItems) =>
       sdk.admin.orderEdits.$id.items.mutate({ $id: id, ...payload }),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.preview(id),
       })
@@ -182,7 +182,7 @@ export const useUpdateOrderEditOriginalItem = (
         ...payload,
       })
     },
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.preview(id),
       })
@@ -214,7 +214,7 @@ export const useUpdateOrderEditAddedItem = (
         ...payload,
       })
     },
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.preview(id),
       })
@@ -242,7 +242,7 @@ export const useRemoveOrderEditItem = (
         $id: id,
         $actionId: actionId,
       }),
-    onSuccess: (data: any, variables: any, context: any) => {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: ordersQueryKeys.preview(id),
       })

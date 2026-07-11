@@ -3,6 +3,7 @@ import {
   InferClientInput,
   InferClientOutput,
 } from "@mercurjs/client"
+import type { HttpTypes } from "@medusajs/types"
 import {
   QueryKey,
   UseMutationOptions,
@@ -123,7 +124,11 @@ type AcceptInvitePayload = {
 
 export const useAcceptInvite = (
   inviteToken: string,
-  options?: UseMutationOptions<{ user: unknown }, ClientError, AcceptInvitePayload>
+  options?: UseMutationOptions<
+    HttpTypes.AdminAcceptInviteResponse,
+    ClientError,
+    AcceptInvitePayload
+  >
 ) => {
   return useMutation({
     mutationFn: ({ auth_token, ...body }) =>

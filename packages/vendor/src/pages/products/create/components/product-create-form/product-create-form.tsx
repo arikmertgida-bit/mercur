@@ -1,4 +1,5 @@
 import { MercurFeatureFlags } from "@mercurjs/types"
+import { HttpTypes } from "@medusajs/types"
 import { Button, toast } from "@medusajs/ui"
 import { ReactNode, useEffect, useMemo, Children } from "react"
 import { useForm, useWatch, DeepPartial } from "react-hook-form"
@@ -111,8 +112,8 @@ export const ProductCreateForm = ({
       normalizeProductFormValues({
         ...payload,
         media: uploadedMedia,
-        status: submittedStatus as any,
-      }) as any,
+        status: submittedStatus as HttpTypes.AdminProductStatus,
+      }),
       {
         onSuccess: (data: any) => {
           if (submittedStatus === "proposed") {

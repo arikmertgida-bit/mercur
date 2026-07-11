@@ -3,6 +3,7 @@ import {
   Badge,
   Button,
   createDataTableColumnHelper,
+  DataTableFilter,
   DataTableRowSelectionState,
   Heading,
   IconButton,
@@ -36,9 +37,28 @@ import { useBatchProductAttributes, useProduct } from "../../../hooks/api/produc
 import { PRODUCT_DETAIL_QUERY } from "../constants";
 import { useAttributeTableQuery } from "../../../hooks/table/query/use-attribute-table-query";
 import { useAttributeTableFilters } from "../../../hooks/table/filters/use-attribute-table-filters";
+import type { Filter } from "../../../components/table/data-table";
 
 const PAGE_SIZE = 20;
 const PREFIX = "add-existing-attrs";
+
+// `useAttributeTableFilters` returns the legacy `_DataTable` filter shape
+// (`key`/`options.value: string`); this page uses the newer `@medusajs/ui`
+// `DataTable`, which expects `DataTableFilter` (`id` instead of `key`).
+function toDataTableFilters(filters: Filter[]): DataTableFilter[] {
+  return filters.map((f): DataTableFilter => {
+    switch (f.type) {
+      case "select":
+        return { id: f.key, label: f.label, type: "select", options: f.options };
+      case "date":
+        return { id: f.key, label: f.label, type: "date" };
+      case "string":
+        return { id: f.key, label: f.label, type: "string" };
+      case "number":
+        return { id: f.key, label: f.label, type: "number" };
+    }
+  });
+}
 const MAX_VISIBLE_VALUES = 2;
 
 const ATTRIBUTE_TYPE_LABELS: Record<string, string> = {
@@ -111,9 +131,10 @@ const Content = ({ productId }: { productId: string }) => {
   const assignedIds = useMemo(
     () =>
       new Set(
-        ((product as any)?.attributes ?? []).map(
-          (a: ProductAttributeDTO) => a.id
-        )
+        (
+          (product as { attributes?: ProductAttributeDTO[] } | undefined)
+            ?.attributes ?? []
+        ).map((a) => a.id)
       ),
     [product]
   );
@@ -153,7 +174,11 @@ const Content = ({ productId }: { productId: string }) => {
     name: "attributes",
   });
 
-  const filters = useAttributeTableFilters();
+  const legacyFilters = useAttributeTableFilters();
+  const filters = useMemo(
+    () => toDataTableFilters(legacyFilters),
+    [legacyFilters]
+  );
   const columns = useColumns();
 
   if (isError) {
@@ -256,7 +281,7 @@ const Content = ({ productId }: { productId: string }) => {
             <DataTable
               data={product_attributes}
               columns={columns}
-              filters={filters as any}
+              filters={filters}
               rowCount={count}
               pageSize={PAGE_SIZE}
               getRowId={(row) => row.id}

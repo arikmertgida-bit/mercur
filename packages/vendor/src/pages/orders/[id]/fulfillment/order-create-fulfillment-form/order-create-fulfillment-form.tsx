@@ -7,7 +7,6 @@ import { AdminOrder, HttpTypes } from "@medusajs/types"
 import { Alert, Button, Heading, Select, Switch, toast } from "@medusajs/ui"
 import { useForm, useWatch } from "react-hook-form"
 
-import { OrderLineItemDTO } from "@medusajs/types"
 import { Form } from "@components/common/form"
 import {
   RouteFocusModal,
@@ -44,7 +43,7 @@ export function OrderCreateFulfillmentForm({
     (order.items || []).filter(
       (item) =>
         item.requires_shipping === requiresShipping &&
-        getFulfillableQuantity(item as any) > 0
+        getFulfillableQuantity(item) > 0
     )
   )
 
@@ -52,7 +51,7 @@ export function OrderCreateFulfillmentForm({
     defaultValues: {
       quantity: fulfillableItems.reduce(
         (acc, item) => {
-          acc[item.id] = getFulfillableQuantity(item as any)
+          acc[item.id] = getFulfillableQuantity(item)
           return acc
         },
         {} as Record<string, number>
@@ -236,7 +235,7 @@ export function OrderCreateFulfillmentForm({
       order?.items?.filter(
         (item) =>
           item.requires_shipping === requiresShipping &&
-          getFulfillableQuantity(item as OrderLineItemDTO) > 0
+          getFulfillableQuantity(item) > 0
       ) || []
 
     setFulfillableItems(itemsToFulfill)
@@ -252,7 +251,7 @@ export function OrderCreateFulfillmentForm({
 
     const quantityMap = itemsToFulfill.reduce(
       (acc, item) => {
-        acc[item.id] = getFulfillableQuantity(item as OrderLineItemDTO)
+        acc[item.id] = getFulfillableQuantity(item)
         return acc
       },
       {} as Record<string, number>

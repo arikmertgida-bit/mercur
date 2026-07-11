@@ -126,7 +126,11 @@ export const CategoryCombobox = forwardRef<
 
   const handleSelect = useCallback(
     (option: ProductCategoryOption) => {
-      return (e: MouseEvent<HTMLButtonElement>) => {
+      // Invoked both from the option button's onClick (React MouseEvent) and
+      // from the window keydown listener ("Enter" key, native DOM
+      // KeyboardEvent) — accept the minimal shape both share instead of one
+      // specific event type.
+      return (e: { preventDefault(): void; stopPropagation(): void }) => {
         e.preventDefault();
         e.stopPropagation();
 
@@ -220,7 +224,7 @@ export const CategoryCombobox = forwardRef<
 
         const index = showLevelUp ? focusedIndex - 1 : focusedIndex;
 
-        handleSelect(options[index])(e as any);
+        handleSelect(options[index])(e);
       }
     },
     [

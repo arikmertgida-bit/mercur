@@ -90,10 +90,10 @@ export const useInventoryTableColumns = () => {
       columnHelper.accessor("location_levels", {
         header: t("inventory.reserved"),
         cell: ({ getValue }) => {
-          const locations = getValue() as any[]
+          const locations = getValue() ?? []
 
           const totalReserved = locations.reduce(
-            (sum: number, level: any) => sum + level.reserved_quantity,
+            (sum, level) => sum + level.reserved_quantity,
             0
           )
 
@@ -111,9 +111,9 @@ export const useInventoryTableColumns = () => {
       columnHelper.accessor("location_levels", {
         header: t("fields.inStock"),
         cell: ({ getValue }) => {
-          const locations = getValue() as any[]
+          const locations = getValue() ?? []
           const totalAvailable = locations.reduce(
-            (sum: number, level: any) => sum + level.available_quantity,
+            (sum, level) => sum + level.available_quantity,
             0
           )
 

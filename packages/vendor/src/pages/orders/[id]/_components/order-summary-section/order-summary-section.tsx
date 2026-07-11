@@ -48,6 +48,7 @@ import {
   isAmountLessThenRoundingError,
 } from "@lib/money-amount-helpers"
 import { getTotalCaptured } from "@lib/payment"
+import { OfferInventoryLinkRow } from "@lib/inventory-preview"
 import { getReservationsLimitCount } from "../../../../../lib/orders"
 import {
   CLAIM_POLICY_DAYS,
@@ -113,8 +114,8 @@ export const OrderSummarySection = ({
     )
 
     return order.items?.some((item) => {
-      const offerLinks = (item as unknown as {
-        offer?: { inventory_item_link?: unknown[] | null }
+      const offerLinks = (item as AdminOrderLineItem & {
+        offer?: { inventory_item_link?: OfferInventoryLinkRow[] | null }
       }).offer?.inventory_item_link
       if (!offerLinks?.length) {
         return false
@@ -372,8 +373,8 @@ const Item = ({
   const price = item.unit_price
 
   const offerInventoryLinks =
-    (item as unknown as {
-      offer?: { inventory_item_link?: unknown[] | null }
+    (item as AdminOrderLineItem & {
+      offer?: { inventory_item_link?: OfferInventoryLinkRow[] | null }
     }).offer?.inventory_item_link ?? []
   const isInventoryManaged = !!offerInventoryLinks.length
   const hasUnfulfilledItems =

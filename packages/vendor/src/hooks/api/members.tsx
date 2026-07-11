@@ -3,6 +3,7 @@ import {
   InferClientInput,
   InferClientOutput,
 } from "@mercurjs/client";
+import { HttpTypes } from "@mercurjs/types";
 import {
   UseMutationOptions,
   UseQueryOptions,
@@ -61,8 +62,18 @@ export const useUpdateMe = (
 
 export const useSellerMembers = (
   sellerId: string,
-  query?: Record<string, any>,
-  options?: UseQueryOptions<any, ClientError>,
+  query?: Omit<
+    InferClientInput<typeof sdk.vendor.sellers.$id.members.query>,
+    "$id"
+  >,
+  // `InferClientOutput` resolves to `unknown` for this route due to a
+  // pre-existing dual-package hazard (see README §14) splitting the SDK's
+  // type resolution — use the real backend response shape directly instead.
+  options?: UseQueryOptions<
+    unknown,
+    ClientError,
+    HttpTypes.VendorSellerMemberListResponse
+  >,
 ) => {
   const { data, ...rest } = useQuery({
     queryFn: () =>
@@ -77,17 +88,22 @@ export const useSellerMembers = (
   };
 };
 
+type MeResponse = InferClientOutput<typeof sdk.vendor.members.me.query>
+
 export const useMember = (id: string) => {
-  const meResult = useMe() as { member?: any }
-  const sellerId = (meResult.member as any)?.seller?.id ?? ""
+  const meResult = useMe() as MeResponse
+  const sellerId = meResult.seller_member?.seller_id ?? ""
 
   const membersResult = useSellerMembers(
     sellerId,
     {},
     { enabled: !!sellerId && !!id }
-  ) as { members?: any[] }
+  ) as HttpTypes.VendorSellerMemberListResponse
 
-  const user = (membersResult.members ?? []).find((m: any) => m.id === id)
+  const sellerMember = (membersResult.seller_members ?? []).find(
+    (m) => m.member_id === id
+  )
+  const user = sellerMember?.member
 
   return { user }
 }

@@ -51,7 +51,7 @@ export const CommissionRulesDataTable = () => {
   );
 
   const data = useMemo(
-    () => (commission_rates ?? []) as unknown as CommissionRate[],
+    () => (commission_rates ?? []) as CommissionRate[],
     [commission_rates]
   );
 

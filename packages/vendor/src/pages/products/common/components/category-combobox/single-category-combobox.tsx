@@ -69,14 +69,14 @@ export const SingleCategoryCombobox = forwardRef<
         q: query,
         parent_category_id: !searchValue ? getParentId(level) : undefined,
         include_descendants_tree: !searchValue ? true : false,
-      } as any,
+      },
       {
         enabled: open,
       }
     )
 
   const { product_categories: selectedCategories } = useProductCategories(
-    { id: value ? [value] : [] } as any,
+    { id: value ? [value] : [] },
     { enabled: !!value }
   )
   const selectedLabel = selectedCategories?.[0]?.name ?? null
@@ -127,7 +127,11 @@ export const SingleCategoryCombobox = forwardRef<
 
   const handleSelect = useCallback(
     (option: ProductCategoryOption) => {
-      return (e: MouseEvent<HTMLButtonElement>) => {
+      // Invoked both from the option button's onClick (React MouseEvent) and
+      // from the window keydown listener ("Enter" key, native DOM
+      // KeyboardEvent) — accept the minimal shape both share instead of
+      // one specific event type.
+      return (e: { preventDefault(): void; stopPropagation(): void }) => {
         e.preventDefault()
         e.stopPropagation()
 
@@ -215,7 +219,7 @@ export const SingleCategoryCombobox = forwardRef<
 
         const index = showLevelUp ? focusedIndex - 1 : focusedIndex
 
-        handleSelect(options[index])(e as any)
+        handleSelect(options[index])(e)
       }
     },
     [open, focusedIndex, options, level, handleSelect, searchValue, showLevelUp]

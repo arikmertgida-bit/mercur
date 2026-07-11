@@ -27,7 +27,7 @@ const Root = () => {
 
   const { members } = useMembers(
     { q: emailValue || undefined, limit: 10 },
-    { placeholderData: (prev: any) => prev },
+    { placeholderData: (prev) => prev },
   );
 
   const memberList = useMemo(

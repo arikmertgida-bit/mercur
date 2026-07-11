@@ -5,7 +5,10 @@ import { useParams } from "react-router-dom";
 import { RouteDrawer } from "../../../components/modals";
 import { useProduct } from "../../../hooks/api/products";
 import { PRODUCT_DETAIL_QUERY } from "../constants";
-import { EditAttributeForm } from "./components/edit-attribute-form";
+import {
+  EditAttributeForm,
+  type EditAttributeAttribute,
+} from "./components/edit-attribute-form";
 
 export const ProductEditAttribute = () => {
   const { id, attribute_id } = useParams();
@@ -20,9 +23,9 @@ export const ProductEditAttribute = () => {
     throw error;
   }
 
-  const attribute = (product as any)?.attributes?.find(
-    (a: any) => a.id === attribute_id,
-  );
+  const attribute = (
+    product as { attributes?: EditAttributeAttribute[] } | undefined
+  )?.attributes?.find((a) => a.id === attribute_id);
 
   const ready = !isLoading && !!product && !!attribute;
 

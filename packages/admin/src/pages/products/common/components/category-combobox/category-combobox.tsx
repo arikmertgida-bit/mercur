@@ -121,7 +121,10 @@ export const CategoryCombobox = forwardRef<
 
   const handleSelect = useCallback(
     (option: ProductCategoryOption) => {
-      return (e: MouseEvent<HTMLButtonElement>) => {
+      // Invoked both from onClick (React MouseEvent) and from the window
+      // "keydown" listener below (native KeyboardEvent) — only the two
+      // methods common to both are used, so accept either structurally.
+      return (e: { preventDefault(): void; stopPropagation(): void }) => {
         e.preventDefault()
         e.stopPropagation()
 
@@ -221,7 +224,7 @@ export const CategoryCombobox = forwardRef<
 
         const index = showLevelUp ? focusedIndex - 1 : focusedIndex
 
-        handleSelect(options[index])(e as any)
+        handleSelect(options[index])(e)
       }
     },
     [open, focusedIndex, options, level, handleSelect, searchValue, showLevelUp]

@@ -62,7 +62,7 @@ export const ManageLocationsForm = ({
 
     const toDelete = toDeleteLocations
       .map((id) => item.location_levels?.find((l) => l.location_id === id)?.id)
-      .filter(Boolean) as unknown as string[]
+      .filter((id): id is string => Boolean(id))
 
     await mutateAsync(
       {

@@ -37,6 +37,16 @@ import { useDataTable } from "@hooks/use-data-table"
 const DEFAULT_FIELDS =
   "id,*orders,*orders.customer,*orders.seller,*orders.sales_channel"
 
+// The order group's `orders` are joined in via `fields: DEFAULT_FIELDS` above
+// (query.graph field selection) — `seller` isn't part of the base AdminOrder type.
+type OrderWithSeller = HttpTypes.AdminOrder & {
+  seller?: { name?: string | null } | null
+}
+
+type OrderGroupWithOrders = {
+  orders?: OrderWithSeller[]
+}
+
 export const OrderRemainingOrdersGroupSection = () => {
   const { id } = useParams()
   const { t } = useTranslation()
@@ -47,15 +57,15 @@ export const OrderRemainingOrdersGroupSection = () => {
   )
 
   const orders = useMemo(() => {
-    const group = order_group as any
+    const group = order_group as OrderGroupWithOrders | undefined
     if (!group?.orders) return []
-    return group.orders.filter((o: any) => o.id !== id)
+    return group.orders.filter((o) => o.id !== id)
   }, [order_group, id])
 
   const columns = useColumns()
 
   const { table } = useDataTable({
-    data: orders as HttpTypes.AdminOrder[],
+    data: orders,
     columns,
     count: orders.length,
     enablePagination: true,
@@ -104,7 +114,7 @@ export const OrderRemainingOrdersGroupSection = () => {
   )
 }
 
-const columnHelper = createColumnHelper<HttpTypes.AdminOrder>()
+const columnHelper = createColumnHelper<OrderWithSeller>()
 
 const useColumns = () => {
   const { t } = useTranslation()
@@ -119,7 +129,7 @@ const useColumns = () => {
         id: "seller",
         header: () => <TextHeader text={t("fields.store")} />,
         cell: ({ row }) => {
-          const seller = (row.original as any).seller
+          const seller = row.original.seller
           return <TextCell text={seller?.name ?? "-"} />
         },
       }),

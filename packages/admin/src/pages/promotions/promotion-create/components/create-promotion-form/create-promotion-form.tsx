@@ -10,7 +10,13 @@ import type {
   PromotionTypeValues,
 } from "@medusajs/types"
 import { toast } from "@medusajs/ui"
-import { DeepPartial, useForm, useWatch } from "react-hook-form"
+import {
+  DeepPartial,
+  FieldPath,
+  FieldPathValue,
+  useForm,
+  useWatch,
+} from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { z } from "zod"
 
@@ -210,12 +216,25 @@ export function CreatePromotionForm({
         for (const [subKey, subValue] of Object.entries(
           value as Record<string, unknown>
         )) {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          setValue(`application_method.${subKey}` as any, subValue as any)
+          // Template defaults are a loosely-typed lookup table, so the field
+          // path/value can't be statically narrowed beyond the form's own
+          // FieldPath/FieldPathValue generics.
+          setValue(
+            `application_method.${subKey}` as FieldPath<CreatePromotionSchemaType>,
+            subValue as FieldPathValue<
+              CreatePromotionSchemaType,
+              FieldPath<CreatePromotionSchemaType>
+            >
+          )
         }
       } else {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        setValue(key as any, value as any)
+        setValue(
+          key as FieldPath<CreatePromotionSchemaType>,
+          value as FieldPathValue<
+            CreatePromotionSchemaType,
+            FieldPath<CreatePromotionSchemaType>
+          >
+        )
       }
     }
 

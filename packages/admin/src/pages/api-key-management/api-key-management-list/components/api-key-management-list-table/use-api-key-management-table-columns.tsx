@@ -12,7 +12,7 @@ import {
   prettifyRedactedToken,
 } from "../../../common/utils";
 import { ApiKeyRowActions } from "./api-key-row-actions";
-import { ApiKeyDTO } from "@mercurjs/types";
+import { ApiKeyDTO } from "@medusajs/types";
 
 const columnHelper = createColumnHelper<ApiKeyDTO>();
 
@@ -71,7 +71,7 @@ export const useApiKeyManagementTableColumns = () => {
       columnHelper.display({
         id: "actions",
         cell: ({ row }) => {
-          return <ApiKeyRowActions apiKey={row.original as any} />;
+          return <ApiKeyRowActions apiKey={row.original} />;
         },
       }),
     ],

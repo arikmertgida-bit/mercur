@@ -121,14 +121,14 @@ export const AddOrderEditItemsTable = ({
     ...searchParams,
     fields: OFFER_PICKER_FIELDS,
   });
-  const rawOffersSource = (offersResponse as any).offers as
+  const rawOffersSource = offersResponse.offers as
     | OfferPickerRowExtended[]
     | undefined;
   const rawOffers = useMemo<OfferPickerRowExtended[]>(
     () => rawOffersSource ?? [],
     [rawOffersSource]
   );
-  const rawCount = (offersResponse as any).count ?? 0;
+  const rawCount = offersResponse.count ?? 0;
 
   // Picker defaults: only offers (1) with a price in the order's currency
   // and (2) with stock. Filter client-side — the alternative is a

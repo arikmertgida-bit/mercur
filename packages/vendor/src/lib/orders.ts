@@ -1,5 +1,7 @@
 import { AdminOrder, AdminOrderLineItem, HttpTypes } from "@medusajs/types"
 
+import { OfferInventoryLinkRow } from "@lib/inventory-preview"
+
 export const getPaymentsFromOrder = (order: HttpTypes.AdminOrder) => {
   return order.payment_collections
     .map((collection: HttpTypes.AdminPaymentCollection) => collection.payments)
@@ -25,8 +27,8 @@ export function getReservationsLimitCount(order: AdminOrder) {
 
   return order.items.reduce((acc: number, item: AdminOrderLineItem) => {
     const offerLinkCount = (
-      item as unknown as {
-        offer?: { inventory_item_link?: unknown[] | null }
+      item as AdminOrderLineItem & {
+        offer?: { inventory_item_link?: OfferInventoryLinkRow[] | null }
       }
     ).offer?.inventory_item_link?.length
     const variantInventoryCount = item.variant?.inventory_items?.length

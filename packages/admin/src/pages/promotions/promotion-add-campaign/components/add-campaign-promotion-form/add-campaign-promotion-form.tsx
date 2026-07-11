@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { AdminCampaign, AdminPromotion } from "@medusajs/types"
 import { Button, RadioGroup, toast } from "@medusajs/ui"
 import { useEffect } from "react"
-import { useForm, useWatch } from "react-hook-form"
+import { UseFormReturn, useForm, useWatch } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import * as zod from "zod"
 import { Form } from "../../../../../components/common/form"
@@ -26,12 +26,20 @@ const EditPromotionSchema = zod.object({
   campaign_choice: zod.enum(["none", "existing"]).optional(),
 })
 
-export const AddCampaignPromotionFields = ({
+// This component is shared by the promotion-create tab (`CreatePromotionSchemaType`)
+// and the edit-campaign drawer (`EditPromotionSchema` below), which model
+// `campaign_choice` with different (but overlapping) enums.
+type CampaignFieldValues = {
+  campaign_id?: string | null
+  campaign_choice?: "none" | "existing" | "new"
+}
+
+export const AddCampaignPromotionFields = <T extends CampaignFieldValues>({
   form,
   withNewCampaign = true,
   promotionCurrencyCode,
 }: {
-  form: any
+  form: UseFormReturn<T>
   withNewCampaign?: boolean
   promotionCurrencyCode?: string
 }) => {

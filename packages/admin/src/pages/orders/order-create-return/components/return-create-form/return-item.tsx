@@ -62,13 +62,10 @@ function ReturnItem({
   // exactly how stock will move before confirming. No-op when the item
   // carries no offer link (legacy / pre-port orders).
   const restockRows = locationId
-    ? getOfferRestockPreview(
-        item as unknown as LineItemShape,
-        formItem?.quantity ?? 0
-      )
+    ? getOfferRestockPreview(item as LineItemShape, formItem?.quantity ?? 0)
     : []
   const offerSku =
-    (item as unknown as LineItemShape).offer?.sku ?? item.variant_sku ?? null
+    (item as LineItemShape).offer?.sku ?? item.variant_sku ?? null
 
   return (
     <div className="bg-ui-bg-subtle shadow-elevation-card-rest my-2 rounded-xl ">

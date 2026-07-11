@@ -18,7 +18,7 @@ const productDetailQuery = (id: string) => {
       sdk.vendor.products.$id.query({
         $id: id,
         ...query,
-      } as any),
+      }),
   };
 };
 

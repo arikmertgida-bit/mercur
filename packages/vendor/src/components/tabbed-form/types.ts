@@ -19,15 +19,5 @@ export interface TabDefinition<T extends FieldValues = FieldValues> {
 export const defineTabMeta = <T extends FieldValues = FieldValues>(
   meta: TabDefinition<T>
 ): TabDefinition<T> => {
-  if (process.env.NODE_ENV !== "production") {
-    if (!meta.id) {
-      console.warn("[TabbedForm] Tab meta is missing required 'id' field")
-    }
-    if (!meta.labelKey && !meta.label) {
-      console.warn(
-        `[TabbedForm] Tab "${meta.id}" has neither 'labelKey' nor 'label' — the tab header will be empty`
-      )
-    }
-  }
   return meta
 }

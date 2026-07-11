@@ -113,9 +113,10 @@ const Content = ({ productId }: { productId: string }) => {
   const assignedIds = useMemo(
     () =>
       new Set(
-        ((product as any)?.attributes ?? []).map(
-          (a: ProductAttributeDTO) => a.id
-        )
+        (
+          (product as { attributes?: ProductAttributeDTO[] } | undefined)
+            ?.attributes ?? []
+        ).map((a) => a.id)
       ),
     [product]
   )
@@ -268,7 +269,7 @@ const Content = ({ productId }: { productId: string }) => {
             <DataTable
               data={product_attributes}
               columns={columns}
-              filters={filters as any}
+              filters={filters}
               rowCount={count}
               pageSize={PAGE_SIZE}
               getRowId={(row) => row.id}

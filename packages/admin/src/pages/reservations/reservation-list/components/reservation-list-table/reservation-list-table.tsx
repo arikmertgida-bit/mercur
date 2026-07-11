@@ -120,20 +120,16 @@ const useColumns = () => {
   const { columns: extended, filters } =
     useExtendableTable<ExtendedReservationItem>({
       model: "reservation",
-      columns: dataColumns as unknown as ColumnDef<
-        ExtendedReservationItem,
-        unknown
-      >[],
+      // tanstack's ColumnDef<T, TValue> is contravariant in TValue
+      // (cell/header render props), so a heterogeneous per-column accessor
+      // array can't widen to ColumnDef<T, unknown>[] without a cast.
+      // @ts-expect-error
+      columns: dataColumns,
     })
 
   const columns = useMemo(
-    () => [
-      ...extended,
-      ...(actionsColumn as unknown as ColumnDef<
-        ExtendedReservationItem,
-        unknown
-      >[]),
-    ],
+    // @ts-expect-error — same ColumnDef<T, TValue> variance limitation as above
+    () => [...extended, ...actionsColumn],
     [extended, actionsColumn]
   )
 

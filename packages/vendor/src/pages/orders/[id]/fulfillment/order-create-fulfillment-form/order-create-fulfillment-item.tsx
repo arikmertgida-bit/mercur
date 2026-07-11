@@ -94,7 +94,7 @@ export function OrderCreateFulfillmentItem({
 
   const minValue = 0
   const maxValue = Math.min(
-    getFulfillableQuantity(item as any),
+    getFulfillableQuantity(item),
     availableQuantity || Number.MAX_SAFE_INTEGER
   )
 
