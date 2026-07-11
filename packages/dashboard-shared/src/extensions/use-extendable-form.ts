@@ -2,7 +2,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useMemo } from "react"
 import { FieldValues, useForm, UseFormProps } from "react-hook-form"
 import { z, ZodObject } from "zod"
-import type { JsonRecord } from "@mercurjs/types"
 
 import { useExtension } from "./context"
 import {
@@ -51,6 +50,7 @@ export interface UseExtendableFormProps<
 export const useExtendableForm = <
   TSchema extends ZodObject<Record<string, z.ZodTypeAny>>,
   TContext = unknown,
+  TData = unknown,
   TTransformedValues extends FieldValues = WithAdditionalData<z.infer<TSchema>>
 >({
   schema: baseSchema,
@@ -60,7 +60,7 @@ export const useExtendableForm = <
   zone,
   tab,
   ...props
-}: UseExtendableFormProps<TSchema, TContext, unknown, TTransformedValues>) => {
+}: UseExtendableFormProps<TSchema, TContext, TData, TTransformedValues>) => {
   const extension = useExtension()
 
   const schema = useMemo(() => {
@@ -81,7 +81,7 @@ export const useExtendableForm = <
       additional_data: buildAdditionalDataDefaults(
         extension,
         model,
-        data as JsonRecord | undefined,
+        data && { ...data },
         zone,
         tab
       ),

@@ -2,7 +2,6 @@ import { Heading, Input } from "@medusajs/ui"
 import { useTranslation } from "react-i18next"
 import { z } from "zod"
 
-import { HttpTypes } from "@medusajs/types"
 import { ProductDTO, AttributeType } from "@mercurjs/types"
 
 import { Form } from "../../../../../components/common/form"
@@ -12,7 +11,7 @@ import { defineTabMeta } from "../../../../../components/tabbed-form/types"
 import { CreateProductVariantSchema } from "./constants"
 
 type DetailsTabProps = {
-  product: HttpTypes.AdminProduct
+  product: ProductDTO
 }
 
 function DetailsTab({ product }: DetailsTabProps) {
@@ -20,9 +19,7 @@ function DetailsTab({ product }: DetailsTabProps) {
   const form = useTabbedForm<z.infer<typeof CreateProductVariantSchema>>()
 
   const variantAttributes =
-    (
-      product as HttpTypes.AdminProduct & Pick<ProductDTO, "attributes">
-    ).attributes?.filter((a) => a.is_variant_axis) ?? []
+    product.attributes?.filter((a) => a.is_variant_axis) ?? []
 
   return (
     <div className="flex flex-1 flex-col items-center overflow-y-auto" data-testid="product-variant-create-form-details-tab">

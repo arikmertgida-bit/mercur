@@ -59,9 +59,9 @@ export function buildAdditionalDataDefaults(
     : registry.getAllFormFields(model)
   for (const { name, field } of fields) {
     if (typeof field.defaultValue === "function") {
-      defaults[name] = field.defaultValue(data ?? {}) as JsonValue
+      defaults[name] = field.defaultValue(data ?? {})
     } else if (field.defaultValue !== undefined) {
-      defaults[name] = field.defaultValue as JsonValue
+      defaults[name] = field.defaultValue
     }
   }
   return defaults
