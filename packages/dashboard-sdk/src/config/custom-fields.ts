@@ -108,10 +108,14 @@ export type CustomDisplayEntry<TModel extends CustomFieldModel = CustomFieldMode
   actions?: SectionAction[]
 }
 
+export type ExtendableTableRow = {
+  id?: string
+}
+
 export type CustomColumn = {
   id: string
   header?: string
-  component?: ComponentType<{ row?: JsonRecord; value?: JsonValue }>
+  component?: ComponentType<{ row?: ExtendableTableRow; value?: JsonValue }>
 }
 
 export type CustomListExtension = {
