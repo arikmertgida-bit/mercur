@@ -1,6 +1,7 @@
 import qs from "qs";
 import { createRecursiveProxy } from "./create-proxy";
 import { ActionType, ClientOptions } from "./types";
+import type { InferClient } from "./types";
 export type { InferClient } from "./types";
 import { kebabCase } from "./utils";
 
@@ -75,10 +76,19 @@ const toFormData = (payload: ClientPayload): FormData => {
     return formData;
 };
 
-export function createClient(options: ClientOptions) {
+/**
+ * `createRecursiveProxy` returns a runtime `Proxy` — its dynamically dispatched
+ * shape can never be verified structurally against an arbitrary generated
+ * `Routes` type by the type checker, no matter how the route tree is shaped.
+ * `TRoutes` is inferred from the call site's contextual type (e.g.
+ * `const sdk: InferClient<Routes> = createClient({...})`), and the one
+ * assertion below is the sole place that bridges the proxy's real runtime
+ * shape to that inferred type.
+ */
+export function createClient<TRoutes>(options: ClientOptions): InferClient<TRoutes> {
     const { baseUrl, fetchOptions: defaultFetchOptions } = options;
 
-    return createRecursiveProxy((path, args) => {
+    const proxy = createRecursiveProxy((path, args) => {
         const action = path.pop() as ActionType;
         const input: ClientRequestInput = (args[0] ?? {}) as ClientRequestInput;
 
@@ -158,4 +168,11 @@ export function createClient(options: ClientOptions) {
             return isJsonRequest ? await response.json() : response;
         });
     })
+
+    // @ts-expect-error — RecursiveProxy is a runtime Proxy; its dynamically
+    // dispatched shape can never be structurally verified against an
+    // arbitrary generated Routes type by the type checker. This is the sole,
+    // deliberate bridge between the proxy's real runtime shape and the
+    // inferred TRoutes contract (see the function doc comment above).
+    return proxy
 }

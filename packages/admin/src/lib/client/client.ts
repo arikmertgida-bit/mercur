@@ -6,7 +6,7 @@ import { assetUrl } from '../../utils/asset-url'
 
 export const backendUrl = config.backendUrl ?? 'http://localhost:9000'
 
-export const sdk: InferClient<Routes> = createClient({
+export const sdk: InferClient<Routes> = createClient<Routes>({
   baseUrl: backendUrl,
   fetchOptions: {
     credentials: 'include',

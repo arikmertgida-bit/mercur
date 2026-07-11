@@ -4,6 +4,6 @@ import { Routes } from '../../../../.mercur'
 
 declare const __BACKEND_URL__: string
 
-export const client: InferClient<Routes> = createClient({
+export const client: InferClient<Routes> = createClient<Routes>({
   baseUrl: __BACKEND_URL__,
 })
