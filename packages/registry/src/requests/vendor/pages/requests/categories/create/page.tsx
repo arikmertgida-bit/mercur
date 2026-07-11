@@ -8,30 +8,41 @@ import {
   Textarea,
   toast,
 } from "@medusajs/ui";
-import { useForm } from "react-hook-form";
+import { useEffect } from "react";
+import { useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import * as zod from "zod";
 
 import {
   Form,
+  HandleInput,
   RouteFocusModal,
+  isValidHandleFormat,
+  toHandle,
   useRouteModal,
 } from "@mercurjs/dashboard-shared";
 import { useCreateVendorRequest } from "../../../../hooks/api/requests";
 
-const CreateCategoryRequestSchema = zod.object({
-  name: zod.string().min(1),
-  handle: zod.string().optional(),
-  description: zod.string().optional(),
-  is_active: zod.boolean().optional(),
-  is_internal: zod.boolean().optional(),
-});
+type TFunction = ReturnType<typeof useTranslation>["t"];
+
+const createCategoryRequestSchema = (t: TFunction) =>
+  zod.object({
+    name: zod.string().min(1),
+    handle: zod
+      .string()
+      .refine(isValidHandleFormat, { message: t("fields.handleInvalidFormat") }),
+    description: zod.string().optional(),
+    is_active: zod.boolean().optional(),
+    is_internal: zod.boolean().optional(),
+  });
+
+type CreateCategoryRequestSchema = ReturnType<typeof createCategoryRequestSchema>;
 
 const CategoryRequestCreateForm = () => {
   const { t } = useTranslation();
   const { handleSuccess } = useRouteModal();
 
-  const form = useForm<zod.infer<typeof CreateCategoryRequestSchema>>({
+  const form = useForm<zod.infer<CreateCategoryRequestSchema>>({
     defaultValues: {
       name: "",
       handle: "",
@@ -39,10 +50,19 @@ const CategoryRequestCreateForm = () => {
       is_active: true,
       is_internal: false,
     },
-    resolver: zodResolver(CreateCategoryRequestSchema),
+    resolver: zodResolver(createCategoryRequestSchema(t)),
   });
 
   const { mutateAsync, isPending } = useCreateVendorRequest("product_category");
+
+  const nameValue = useWatch({ control: form.control, name: "name" });
+
+  useEffect(() => {
+    form.setValue("handle", toHandle(nameValue ?? ""), {
+      shouldValidate: true,
+      shouldDirty: false,
+    });
+  }, [nameValue, form.setValue]);
 
   const handleSubmit = form.handleSubmit(async ({ handle, ...data }) => {
     const payload = handle ? { ...data, handle } : data;
@@ -91,9 +111,11 @@ const CategoryRequestCreateForm = () => {
                 name="handle"
                 render={({ field }) => (
                   <Form.Item>
-                    <Form.Label optional>{t("fields.handle")}</Form.Label>
+                    <Form.Label tooltip={t("categories.handleTooltip")}>
+                      {t("fields.handle")}
+                    </Form.Label>
                     <Form.Control>
-                      <Input autoComplete="off" {...field} />
+                      <HandleInput {...field} disabled />
                     </Form.Control>
                     <Form.ErrorMessage />
                   </Form.Item>

@@ -1,8 +1,12 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Button, Heading, Input, Text, toast } from "@medusajs/ui"
-import { useForm } from "react-hook-form"
+import i18n from "i18next"
+import { useEffect } from "react"
+import { useForm, useWatch } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import * as zod from "zod"
+
+import { isValidHandleFormat, toHandle } from "@mercurjs/dashboard-shared"
 
 import { Form } from "@components/common/form"
 import { HandleInput } from "@components/inputs/handle-input"
@@ -15,7 +19,9 @@ import { useCreateCollection } from "@hooks/api/collections"
 
 const CreateCollectionSchema = zod.object({
   title: zod.string().min(1),
-  handle: zod.string().optional(),
+  handle: zod
+    .string()
+    .refine(isValidHandleFormat, { message: i18n.t("fields.handleInvalidFormat") }),
 })
 
 export const CreateCollectionForm = () => {
@@ -31,6 +37,15 @@ export const CreateCollectionForm = () => {
   })
 
   const { mutateAsync, isPending } = useCreateCollection()
+
+  const titleValue = useWatch({ control: form.control, name: "title" })
+
+  useEffect(() => {
+    form.setValue("handle", toHandle(titleValue ?? ""), {
+      shouldValidate: true,
+      shouldDirty: false,
+    })
+  }, [titleValue, form.setValue])
 
   const handleSubmit = form.handleSubmit(async (data) => {
     await mutateAsync(data, {
@@ -95,13 +110,12 @@ export const CreateCollectionForm = () => {
                   return (
                     <Form.Item>
                       <Form.Label
-                        optional
                         tooltip={t("collections.handleTooltip")}
                       >
                         {t("fields.handle")}
                       </Form.Label>
                       <Form.Control>
-                        <HandleInput {...field} />
+                        <HandleInput {...field} disabled />
                       </Form.Control>
                       <Form.ErrorMessage />
                     </Form.Item>

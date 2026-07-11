@@ -181,12 +181,13 @@ export const AttributeForm = forwardRef<AttributeFormRef, AttributeFormProps>(
             name="handle"
             render={({ field }) => (
               <Form.Item data-testid="attribute-form-handle-field">
-                <Form.Label optional>
+                <Form.Label tooltip={t("attributes.handleTooltip")}>
                   {t("attributes.fields.handle")}
                 </Form.Label>
                 <Form.Control>
                   <HandleInput
                     {...field}
+                    disabled
                     data-testid="attribute-form-handle-input"
                   />
                 </Form.Control>

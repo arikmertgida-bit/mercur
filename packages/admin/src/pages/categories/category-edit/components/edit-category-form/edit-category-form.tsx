@@ -6,6 +6,7 @@ import { z } from "zod"
 import { HttpTypes } from "@medusajs/types"
 import {
   FormExtensionZone,
+  isValidHandleFormat,
   useExtendableForm,
 } from "@mercurjs/dashboard-shared"
 import { Form } from "../../../../../components/common/form"
@@ -17,7 +18,10 @@ import { useDocumentDirection } from "../../../../../hooks/use-document-directio
 
 const EditCategorySchema = z.object({
   name: z.string().min(1, { message: i18n.t("categories.validation.titleRequired") }),
-  handle: z.string().min(1),
+  handle: z
+    .string()
+    .min(1)
+    .refine(isValidHandleFormat, { message: i18n.t("fields.handleInvalidFormat") }),
   description: z.string().optional(),
   status: z.enum(["active", "inactive"]),
   visibility: z.enum(["public", "internal"]),
@@ -94,13 +98,12 @@ export const EditCategoryForm = ({ category }: EditCategoryFormProps) => {
                 return (
                   <Form.Item>
                     <Form.Label
-                      optional
                       tooltip={t("categories.handleTooltip")}
                     >
                       {t("fields.handle")}
                     </Form.Label>
                     <Form.Control>
-                      <HandleInput {...field} />
+                      <HandleInput {...field} disabled />
                     </Form.Control>
                     <Form.ErrorMessage />
                   </Form.Item>

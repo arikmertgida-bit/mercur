@@ -15,6 +15,7 @@ import { useCallback } from "react";
 
 import {
   FormExtensionZone,
+  isValidHandleFormat,
   useExtendableForm,
 } from "@mercurjs/dashboard-shared";
 
@@ -35,7 +36,13 @@ const EditStoreSchema = zod.object({
   name: zod
     .string()
     .min(1, { message: i18n.t("store.validation.nameRequired") }),
-  handle: zod.string().optional().or(zod.literal("")),
+  handle: zod
+    .string()
+    .optional()
+    .or(zod.literal(""))
+    .refine((value) => !value || isValidHandleFormat(value), {
+      message: i18n.t("fields.handleInvalidFormat"),
+    }),
   email: zod
     .string()
     .min(1, { message: i18n.t("store.validation.emailRequired") })
@@ -281,11 +288,11 @@ export const EditStoreForm = ({ seller }: EditStoreFormProps) => {
               name="handle"
               render={({ field }) => (
                 <Form.Item>
-                  <Form.Label optional tooltip={t("store.handleTooltip")}>
+                  <Form.Label tooltip={t("store.handleTooltip")}>
                     {t("fields.handle")}
                   </Form.Label>
                   <Form.Control>
-                    <HandleInput {...field} />
+                    <HandleInput {...field} disabled />
                   </Form.Control>
                   <Form.ErrorMessage />
                 </Form.Item>

@@ -1,5 +1,7 @@
 import { Input } from "@medusajs/ui"
-import { RichTextEditor } from "@mercurjs/dashboard-shared"
+import { RichTextEditor, toHandle } from "@mercurjs/dashboard-shared"
+import { useEffect } from "react"
+import { useWatch } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
 import { uploadRichTextImage } from "@lib/upload-rich-text-image"
@@ -12,6 +14,15 @@ import { ProductCreateSchemaType } from "../../../../types"
 export const ProductCreateGeneralSection = () => {
   const form = useTabbedForm<ProductCreateSchemaType>()
   const { t } = useTranslation()
+
+  const titleValue = useWatch({ control: form.control, name: "title" })
+
+  useEffect(() => {
+    form.setValue("handle", toHandle(titleValue ?? ""), {
+      shouldValidate: true,
+      shouldDirty: false,
+    })
+  }, [titleValue, form.setValue])
 
   return (
     <div id="general" className="flex flex-col gap-y-6" data-testid="product-create-general-section">
@@ -56,13 +67,12 @@ export const ProductCreateGeneralSection = () => {
                 <Form.Item data-testid="product-create-general-section-handle-item">
                   <Form.Label
                     tooltip={t("products.fields.handle.tooltip")}
-                    optional
                     data-testid="product-create-general-section-handle-label"
                   >
                     {t("fields.handle")}
                   </Form.Label>
                   <Form.Control data-testid="product-create-general-section-handle-control">
-                    <HandleInput {...field} placeholder={t("products.fields.handle.placeholder")} data-testid="product-create-general-section-handle-input" />
+                    <HandleInput {...field} disabled placeholder={t("products.fields.handle.placeholder")} data-testid="product-create-general-section-handle-input" />
                   </Form.Control>
                 </Form.Item>
               )

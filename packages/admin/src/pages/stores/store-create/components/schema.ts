@@ -1,6 +1,8 @@
 import i18n from "i18next";
 import { z } from "zod";
 
+import { isValidHandleFormat } from "@mercurjs/dashboard-shared";
+
 export const CreateStoreSchema = z.object({
   name: z
     .string()
@@ -13,7 +15,9 @@ export const CreateStoreSchema = z.object({
   currency_code: z
     .string()
     .min(1, { message: i18n.t("stores.create.validation.currencyRequired") }),
-  handle: z.string().optional().or(z.literal("")),
+  handle: z
+    .string()
+    .refine(isValidHandleFormat, { message: i18n.t("fields.handleInvalidFormat") }),
   member_email: z
     .string()
     .min(1, { message: i18n.t("stores.create.validation.emailRequired") })

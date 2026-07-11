@@ -1,11 +1,15 @@
 import { Button, Heading, Input, Select, Textarea } from "@medusajs/ui";
 import i18n from "i18next";
+import { useEffect } from "react";
+import { useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useLoaderData } from "react-router-dom";
 import * as z from "zod";
 
 import {
   FormExtensionZone,
+  isValidHandleFormat,
+  toHandle,
   useExtendableForm,
 } from "@mercurjs/dashboard-shared";
 
@@ -20,7 +24,9 @@ const StoreStepSchema = z.object({
   phone: z.string().optional(),
   currency_code: z.string().min(1, i18n.t("onboarding.wizard.validation.currencyRequired")),
   description: z.string().optional(),
-  handle: z.string().optional(),
+  handle: z
+    .string()
+    .refine(isValidHandleFormat, { message: i18n.t("fields.handleInvalidFormat") }),
 });
 
 type StoreStepValues = z.infer<typeof StoreStepSchema>;
@@ -60,6 +66,15 @@ export const StoreStep = ({ onSubmit, isPending }: StoreStepProps) => {
   const handleSubmit = form.handleSubmit(async (data) => {
     await onSubmit(data);
   });
+
+  const nameValue = useWatch({ control: form.control, name: "name" });
+
+  useEffect(() => {
+    form.setValue("handle", toHandle(nameValue ?? ""), {
+      shouldValidate: true,
+      shouldDirty: false,
+    });
+  }, [nameValue, form.setValue]);
 
   return (
     <div className="flex flex-col gap-y-8">
@@ -130,13 +145,12 @@ export const StoreStep = ({ onSubmit, isPending }: StoreStepProps) => {
               render={({ field }) => (
                 <Form.Item>
                   <Form.Label
-                    optional
                     tooltip={t("onboarding.wizard.store.handleTooltip")}
                   >
                     {t("onboarding.wizard.store.handle")}
                   </Form.Label>
                   <Form.Control>
-                    <HandleInput {...field} />
+                    <HandleInput {...field} disabled />
                   </Form.Control>
                   <Form.ErrorMessage />
                 </Form.Item>

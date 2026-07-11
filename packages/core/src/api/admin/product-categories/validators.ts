@@ -10,6 +10,14 @@ import {
   booleanString,
 } from "@medusajs/medusa/api/utils/common-validators/common"
 import { AdditionalData } from "@medusajs/framework/types"
+import { isValidHandle } from "@medusajs/framework/utils"
+
+const handleField = z
+  .string()
+  .optional()
+  .refine((value) => !value || isValidHandle(value), {
+    message: "Handle must contain URL safe characters",
+  })
 
 export type AdminProductCategoryParamsType = z.infer<
   typeof AdminProductCategoryParams
@@ -60,7 +68,7 @@ export type AdminCreateProductCategoryType = z.infer<
 const CreateProductCategory = z.object({
   name: z.string(),
   description: z.string().optional(),
-  handle: z.string().optional(),
+  handle: handleField,
   is_internal: z.boolean().optional(),
   is_active: z.boolean().optional(),
   is_restricted: z.boolean().optional(),
@@ -82,7 +90,7 @@ export type AdminUpdateProductCategoryType = z.infer<
 const UpdateProductCategory = z.object({
   name: z.string().optional(),
   description: z.string().optional(),
-  handle: z.string().optional(),
+  handle: handleField,
   is_internal: z.boolean().optional(),
   is_active: z.boolean().optional(),
   is_restricted: z.boolean().optional(),

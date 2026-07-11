@@ -1,36 +1,56 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Heading, Input, Text, toast } from "@medusajs/ui";
-import { useForm } from "react-hook-form";
+import { useEffect } from "react";
+import { useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import * as zod from "zod";
 
 import {
   Form,
+  HandleInput,
   RouteFocusModal,
+  isValidHandleFormat,
+  toHandle,
   useRouteModal,
 } from "@mercurjs/dashboard-shared";
 import { useCreateVendorRequest } from "../../../../hooks/api/requests";
 
-const CreateCollectionRequestSchema = zod.object({
-  title: zod.string().min(1),
-  handle: zod.string().optional(),
-});
+type TFunction = ReturnType<typeof useTranslation>["t"];
+
+const createCollectionRequestSchema = (t: TFunction) =>
+  zod.object({
+    title: zod.string().min(1),
+    handle: zod
+      .string()
+      .refine(isValidHandleFormat, { message: t("fields.handleInvalidFormat") }),
+  });
+
+type CreateCollectionRequestSchema = ReturnType<typeof createCollectionRequestSchema>;
 
 const CollectionRequestCreateForm = () => {
   const { t } = useTranslation();
   const { handleSuccess } = useRouteModal();
 
-  const form = useForm<zod.infer<typeof CreateCollectionRequestSchema>>({
+  const form = useForm<zod.infer<CreateCollectionRequestSchema>>({
     defaultValues: {
       title: "",
       handle: "",
     },
-    resolver: zodResolver(CreateCollectionRequestSchema),
+    resolver: zodResolver(createCollectionRequestSchema(t)),
   });
 
   const { mutateAsync, isPending } = useCreateVendorRequest(
     "product_collection",
   );
+
+  const titleValue = useWatch({ control: form.control, name: "title" });
+
+  useEffect(() => {
+    form.setValue("handle", toHandle(titleValue ?? ""), {
+      shouldValidate: true,
+      shouldDirty: false,
+    });
+  }, [titleValue, form.setValue]);
 
   const handleSubmit = form.handleSubmit(async (data) => {
     await mutateAsync(data, {
@@ -78,9 +98,11 @@ const CollectionRequestCreateForm = () => {
                 name="handle"
                 render={({ field }) => (
                   <Form.Item>
-                    <Form.Label optional>{t("fields.handle")}</Form.Label>
+                    <Form.Label tooltip={t("collections.handleTooltip")}>
+                      {t("fields.handle")}
+                    </Form.Label>
                     <Form.Control>
-                      <Input autoComplete="off" {...field} />
+                      <HandleInput {...field} disabled />
                     </Form.Control>
                     <Form.ErrorMessage />
                   </Form.Item>

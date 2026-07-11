@@ -6,6 +6,7 @@ import type {
 import {
   InjectManager,
   InjectTransactionManager,
+  isValidHandle,
   MedusaContext,
   MedusaError,
   MedusaService,
@@ -50,6 +51,15 @@ class ProductAttributeModuleService extends MedusaService({
     return joinerConfig
   }
 
+  private validateHandle_(data: { handle?: string | null }): void {
+    if (data.handle && !isValidHandle(data.handle)) {
+      throw new MedusaError(
+        MedusaError.Types.INVALID_DATA,
+        `Invalid handle '${data.handle}'. It must contain URL safe characters`,
+      )
+    }
+  }
+
   @InjectTransactionManager()
   // @ts-expect-error — see class-level comment on the base/override signature gap.
   async createProductAttributes(
@@ -57,6 +67,8 @@ class ProductAttributeModuleService extends MedusaService({
     sharedContext?: Context,
   ): Promise<ProductAttributeDTO[]> {
     const input = data.map((attribute) => {
+      this.validateHandle_(attribute)
+
       if (!attribute.handle && !attribute.product_id && attribute.name) {
         return { ...attribute, handle: toHandle(attribute.name) }
       }
@@ -88,6 +100,8 @@ class ProductAttributeModuleService extends MedusaService({
     data: UpdateProductAttributeInput[],
     sharedContext?: Context,
   ): Promise<ProductAttributeDTO[]> {
+    data.forEach((attribute) => this.validateHandle_(attribute))
+
     const idsWithType = data
       .filter((u) => u.id && u.type !== undefined)
       .map((u) => u.id)
@@ -295,6 +309,8 @@ class ProductAttributeModuleService extends MedusaService({
     ])
 
     const input = data.map((value) => {
+      this.validateHandle_(value)
+
       const attribute = attributeById.get(value.attribute_id)
       const isProductScoped = !!attribute?.product_id
       const isSelectType = !!attribute && selectTypes.has(attribute.type)

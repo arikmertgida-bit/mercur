@@ -1,6 +1,8 @@
 import i18n from "i18next"
 import { z } from "zod"
 
+import { isValidHandleFormat } from "@mercurjs/dashboard-shared"
+
 export const CategoryMediaSchema = z.object({
   url: z.string(),
   file: z.any().nullable(), // File
@@ -17,7 +19,9 @@ export const CategoryIconSchema = z.object({
 export const CreateCategoryDetailsSchema = z.object({
   name: z.string().min(1, { message: i18n.t("categories.validation.titleRequired") }),
   description: z.string().optional(),
-  handle: z.string().optional(),
+  handle: z
+    .string()
+    .refine(isValidHandleFormat, { message: i18n.t("fields.handleInvalidFormat") }),
   status: z.enum(["active", "inactive"]),
   visibility: z.enum(["public", "internal"]),
   media: z.array(CategoryMediaSchema).optional(),

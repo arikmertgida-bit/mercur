@@ -22,6 +22,7 @@ import { RouteDrawer, useRouteModal } from "@components/modals";
 import { KeyboundForm } from "@components/utilities/keybound-form";
 import {
   FormExtensionZone,
+  isValidHandleFormat,
   useExtendableForm,
 } from "@mercurjs/dashboard-shared";
 import { MediaSchema } from "@pages/products/product-create/constants";
@@ -43,7 +44,13 @@ const EditStoreSchema = zod.object({
     .string()
     .min(1, { message: i18n.t("stores.create.validation.nameRequired") }),
   description: zod.string().optional().or(zod.literal("")),
-  handle: zod.string().optional().or(zod.literal("")),
+  handle: zod
+    .string()
+    .optional()
+    .or(zod.literal(""))
+    .refine((value) => !value || isValidHandleFormat(value), {
+      message: i18n.t("fields.handleInvalidFormat"),
+    }),
   email: zod
     .string()
     .min(1, { message: i18n.t("stores.create.validation.emailRequired") })
@@ -325,11 +332,11 @@ export const StoreEditForm = ({ seller }: StoreEditFormProps) => {
               name="handle"
               render={({ field }) => (
                 <Form.Item>
-                  <Form.Label optional tooltip={t("stores.handleTooltip")}>
+                  <Form.Label tooltip={t("stores.handleTooltip")}>
                     {t("fields.handle")}
                   </Form.Label>
                   <Form.Control>
-                    <HandleInput {...field} />
+                    <HandleInput {...field} disabled />
                   </Form.Control>
                   <Form.ErrorMessage />
                 </Form.Item>

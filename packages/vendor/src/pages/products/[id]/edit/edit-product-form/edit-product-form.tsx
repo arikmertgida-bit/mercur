@@ -1,10 +1,12 @@
-import { Button, Input, Text, toast } from "@medusajs/ui";
+import { Button, Input, toast } from "@medusajs/ui";
 import { MercurFeatureFlags } from "@mercurjs/types";
+import i18n from "i18next";
 import { useTranslation } from "react-i18next";
 import * as zod from "zod";
 
 import { ExtendedAdminProduct } from "@custom-types/products";
 import { Form } from "@components/common/form";
+import { HandleInput } from "@components/inputs/handle-input";
 import { SwitchBox } from "@components/common/switch-box";
 import { RouteDrawer, useRouteModal } from "@components/modals";
 import { useFeatureFlags, useUpdateProduct } from "@hooks/api";
@@ -15,6 +17,7 @@ import {
   FormExtensionZone,
   RichTextEditor,
   plainTextToHtml,
+  isValidHandleFormat,
   useExtendableForm,
 } from "@mercurjs/dashboard-shared";
 
@@ -25,7 +28,10 @@ type EditProductFormProps = {
 const EditProductSchema = zod.object({
   title: zod.string().min(1),
   subtitle: zod.string().optional(),
-  handle: zod.string().min(1),
+  handle: zod
+    .string()
+    .min(1)
+    .refine(isValidHandleFormat, { message: i18n.t("fields.handleInvalidFormat") }),
   description: zod.string().optional(),
   discountable: zod.boolean(),
 });
@@ -173,21 +179,11 @@ export const EditProductForm = ({ product }: EditProductFormProps) => {
                 render={({ field }) => {
                   return (
                     <Form.Item>
-                      <Form.Label>{t("fields.handle")}</Form.Label>
+                      <Form.Label tooltip={t("products.fields.handle.tooltip")}>
+                        {t("fields.handle")}
+                      </Form.Label>
                       <Form.Control>
-                        <div className="relative">
-                          <div className="absolute inset-y-0 left-0 z-10 flex w-8 items-center justify-center border-r">
-                            <Text
-                              className="text-ui-fg-muted"
-                              size="small"
-                              leading="compact"
-                              weight="plus"
-                            >
-                              /
-                            </Text>
-                          </div>
-                          <Input {...field} className="pl-10" />
-                        </div>
+                        <HandleInput {...field} disabled />
                       </Form.Control>
                       <Form.ErrorMessage />
                     </Form.Item>

@@ -1,9 +1,12 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Button, Heading, Input, Text, toast } from "@medusajs/ui"
 import i18n from "i18next"
-import { useForm } from "react-hook-form"
+import { useEffect } from "react"
+import { useForm, useWatch } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import * as zod from "zod"
+
+import { isValidHandleFormat, toHandle } from "@mercurjs/dashboard-shared"
 
 import { Form } from "../../../../../components/common/form"
 import { HandleInput } from "../../../../../components/inputs/handle-input"
@@ -37,7 +40,9 @@ const CreateCollectionSchema = zod.object({
   title: zod
     .string()
     .min(1, { message: i18n.t("collections.validation.titleRequired") }),
-  handle: zod.string().optional(),
+  handle: zod
+    .string()
+    .refine(isValidHandleFormat, { message: i18n.t("fields.handleInvalidFormat") }),
   media: zod.array(CollectionMediaSchema).optional(),
   icon: CollectionIconSchema.nullable().optional(),
 })
@@ -57,6 +62,15 @@ export const CreateCollectionForm = () => {
   })
 
   const { mutateAsync, isPending } = useCreateCollection()
+
+  const titleValue = useWatch({ control: form.control, name: "title" })
+
+  useEffect(() => {
+    form.setValue("handle", toHandle(titleValue ?? ""), {
+      shouldValidate: true,
+      shouldDirty: false,
+    })
+  }, [titleValue, form.setValue])
 
   const handleSubmit = form.handleSubmit(async (data) => {
     const { media, icon, ...rest } = data
@@ -119,14 +133,13 @@ export const CreateCollectionForm = () => {
                   return (
                     <Form.Item data-testid="collection-create-form-handle-item">
                       <Form.Label
-                        optional
                         tooltip={t("collections.handleTooltip")}
                         data-testid="collection-create-form-handle-label"
                       >
                         {t("fields.handle")}
                       </Form.Label>
                       <Form.Control data-testid="collection-create-form-handle-control">
-                        <HandleInput {...field} data-testid="collection-create-form-handle-input" />
+                        <HandleInput {...field} disabled data-testid="collection-create-form-handle-input" />
                       </Form.Control>
                       <Form.ErrorMessage data-testid="collection-create-form-handle-error" />
                     </Form.Item>

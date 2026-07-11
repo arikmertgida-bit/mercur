@@ -1,1 +1,1 @@
-export * from "./handle-input"
+export { HandleInput } from "@mercurjs/dashboard-shared"
