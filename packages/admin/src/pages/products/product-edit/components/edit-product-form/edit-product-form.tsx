@@ -1,10 +1,14 @@
 import { HttpTypes } from "@medusajs/types";
-import { Button, Input, Select, Text, Textarea, toast } from "@medusajs/ui";
+import { Button, Input, Select, Textarea, toast } from "@medusajs/ui";
+import i18n from "i18next";
 
 import { useTranslation } from "react-i18next";
 import * as zod from "zod";
 
+import { isValidHandleFormat } from "@mercurjs/dashboard-shared";
+
 import { Form } from "../../../../../components/common/form";
+import { HandleInput } from "../../../../../components/inputs/handle-input";
 import { SwitchBox } from "../../../../../components/common/switch-box";
 import { RouteDrawer, useRouteModal } from "../../../../../components/modals";
 import { KeyboundForm } from "../../../../../components/utilities/keybound-form";
@@ -27,7 +31,10 @@ const EditProductSchema = zod.object({
   ]),
   title: zod.string().min(1),
   subtitle: zod.string().optional(),
-  handle: zod.string().min(1),
+  handle: zod
+    .string()
+    .min(1)
+    .refine(isValidHandleFormat, { message: i18n.t("fields.handleInvalidFormat") }),
   material: zod.string().optional(),
   description: zod.string().optional(),
   discountable: zod.boolean(),
@@ -203,36 +210,18 @@ export const EditProductForm = ({ product }: EditProductFormProps) => {
                 render={({ field }) => {
                   return (
                     <Form.Item data-testid="product-edit-form-handle-item">
-                      <Form.Label data-testid="product-edit-form-handle-label">
+                      <Form.Label
+                        tooltip={t("products.fields.handle.tooltip")}
+                        data-testid="product-edit-form-handle-label"
+                      >
                         {t("fields.handle")}
                       </Form.Label>
                       <Form.Control data-testid="product-edit-form-handle-control">
-                        <div
-                          className="relative"
-                          data-testid="product-edit-form-handle-wrapper"
-                        >
-                          <div
-                            className="absolute inset-y-0 left-0 z-10 flex w-8 items-center justify-center border-r"
-                            data-testid="product-edit-form-handle-prefix"
-                          >
-                            <Text
-                              className="text-ui-fg-muted"
-                              size="small"
-                              leading="compact"
-                              weight="plus"
-                              data-testid="product-edit-form-handle-prefix-text"
-                            >
-                              /
-                            </Text>
-                          </div>
-                          <div data-testid="product-edit-form-handle-input-wrapper">
-                            <Input
-                              {...field}
-                              className="pl-10"
-                              data-testid="product-edit-form-handle-input"
-                            />
-                          </div>
-                        </div>
+                        <HandleInput
+                          {...field}
+                          disabled
+                          data-testid="product-edit-form-handle-input"
+                        />
                       </Form.Control>
                       <Form.ErrorMessage data-testid="product-edit-form-handle-error" />
                     </Form.Item>

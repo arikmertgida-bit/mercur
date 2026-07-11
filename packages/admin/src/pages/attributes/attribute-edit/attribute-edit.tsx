@@ -87,11 +87,11 @@ const AttributeEditForm = ({ attribute }: AttributeEditFormProps) => {
               name="handle"
               render={({ field }) => (
                 <Form.Item data-testid="attribute-edit-handle-field">
-                  <Form.Label optional>
+                  <Form.Label tooltip={t("attributes.handleTooltip")}>
                     {t("attributes.fields.handle")}
                   </Form.Label>
                   <Form.Control>
-                    <HandleInput {...field} />
+                    <HandleInput {...field} disabled />
                   </Form.Control>
                   <Form.ErrorMessage />
                 </Form.Item>

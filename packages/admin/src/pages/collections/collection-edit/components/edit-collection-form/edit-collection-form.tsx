@@ -1,14 +1,16 @@
-import { Button, Input, Text, toast } from "@medusajs/ui"
+import { Button, Input, toast } from "@medusajs/ui"
 import i18n from "i18next"
 import { useTranslation } from "react-i18next"
 import * as zod from "zod"
 
 import {
   FormExtensionZone,
+  isValidHandleFormat,
   useExtendableForm,
 } from "@mercurjs/dashboard-shared"
 import { HttpTypes } from "@medusajs/types"
 import { Form } from "../../../../../components/common/form"
+import { HandleInput } from "../../../../../components/inputs/handle-input"
 import { RouteDrawer, useRouteModal } from "../../../../../components/modals"
 import { KeyboundForm } from "../../../../../components/utilities/keybound-form"
 import { useUpdateCollection } from "../../../../../hooks/api/collections"
@@ -21,7 +23,10 @@ const EditCollectionSchema = zod.object({
   title: zod
     .string()
     .min(1, { message: i18n.t("collections.validation.titleRequired") }),
-  handle: zod.string().min(1),
+  handle: zod
+    .string()
+    .min(1)
+    .refine(isValidHandleFormat, { message: i18n.t("fields.handleInvalidFormat") }),
 })
 
 export const EditCollectionForm = ({ collection }: EditCollectionFormProps) => {
@@ -83,19 +88,7 @@ export const EditCollectionForm = ({ collection }: EditCollectionFormProps) => {
                       {t("fields.handle")}
                     </Form.Label>
                     <Form.Control>
-                      <div className="relative">
-                        <div className="absolute inset-y-0 left-0 z-10 flex w-8 items-center justify-center border-r">
-                          <Text
-                            className="text-ui-fg-muted"
-                            size="small"
-                            leading="compact"
-                            weight="plus"
-                          >
-                            /
-                          </Text>
-                        </div>
-                        <Input {...field} className="pl-10" />
-                      </div>
+                      <HandleInput {...field} disabled />
                     </Form.Control>
                     <Form.ErrorMessage />
                   </Form.Item>

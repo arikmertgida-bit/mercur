@@ -1,4 +1,5 @@
 import { z } from "zod"
+import { isValidHandleFormat } from "@mercurjs/dashboard-shared"
 import { i18n } from "../../../components/utilities/i18n/i18n"
 import { optionalInt } from "../../../lib/validation"
 import { decorateVariantsWithDefaultValues } from "./utils"
@@ -40,7 +41,9 @@ export const ProductCreateSchema = z
       message: i18n.t("products.create.errors.requiredTitle"),
     }),
     subtitle: z.string().optional(),
-    handle: z.string().optional(),
+    handle: z
+      .string()
+      .refine(isValidHandleFormat, { message: i18n.t("fields.handleInvalidFormat") }),
     description: z.string().optional(),
     discountable: z.boolean(),
     globally_available: z.boolean(),

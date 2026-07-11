@@ -6,6 +6,14 @@ import {
   WithAdditionalData,
 } from "@medusajs/medusa/api/utils/validators"
 import { AdditionalData } from "@medusajs/framework/types"
+import { isValidHandle } from "@medusajs/framework/utils"
+
+const handleField = z
+  .string()
+  .optional()
+  .refine((value) => !value || isValidHandle(value), {
+    message: "Handle must contain URL safe characters",
+  })
 
 export type AdminCollectionParamsType = z.infer<typeof AdminCollectionParams>
 export const AdminCollectionParams = createSelectParams()
@@ -37,7 +45,7 @@ export type AdminCreateCollectionType = z.infer<typeof CreateCollection> &
   AdditionalData
 const CreateCollection = z.object({
   title: z.string(),
-  handle: z.string().optional(),
+  handle: handleField,
   metadata: z.record(z.unknown()).nullish(),
   media: z.array(CollectionMedia).optional(),
   icon: z.string().nullish(),
@@ -48,7 +56,7 @@ export type AdminUpdateCollectionType = z.infer<typeof UpdateCollection> &
   AdditionalData
 const UpdateCollection = z.object({
   title: z.string().optional(),
-  handle: z.string().optional(),
+  handle: handleField,
   metadata: z.record(z.unknown()).nullish(),
   media: z.array(CollectionMedia).optional(),
   icon: z.string().nullish(),

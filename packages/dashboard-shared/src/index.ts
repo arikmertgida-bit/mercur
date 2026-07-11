@@ -22,6 +22,7 @@ export {
   type VariantGroup,
 } from "./lib/product-change-diff"
 export { supportChatBridge } from "./lib/support-chat-bridge"
+export { toHandle, isValidHandleFormat } from "./lib/handle"
 export * from "./components"
 export * from "./hooks"
 export * from "./extensions"

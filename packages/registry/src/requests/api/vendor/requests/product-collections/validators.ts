@@ -1,11 +1,17 @@
 import { z } from "zod"
 import { createFindParams, createOperatorMap } from "@medusajs/medusa/api/utils/validators"
+import { isValidHandle } from "@medusajs/framework/utils"
 import { RequestStatus } from "../../../../types"
 
 export type VendorCreateProductCollectionRequestType = z.infer<typeof VendorCreateProductCollectionRequest>
 export const VendorCreateProductCollectionRequest = z.object({
   title: z.string(),
-  handle: z.string().optional(),
+  handle: z
+    .string()
+    .optional()
+    .refine((value) => !value || isValidHandle(value), {
+      message: "Handle must contain URL safe characters",
+    }),
   metadata: z.record(z.unknown()).optional(),
 })
 

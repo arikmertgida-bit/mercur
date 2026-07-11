@@ -1,5 +1,9 @@
 import { Heading, Input, Select, Text, Textarea } from "@medusajs/ui"
+import { useEffect } from "react"
+import { useWatch } from "react-hook-form"
 import { useTranslation } from "react-i18next"
+
+import { toHandle } from "@mercurjs/dashboard-shared"
 
 import { Form } from "../../../../../components/common/form"
 import { HandleInput } from "../../../../../components/inputs/handle-input"
@@ -17,6 +21,15 @@ const Root = () => {
   const { t } = useTranslation()
   const form = useTabbedForm<CreateCategorySchema>()
   const direction = useDocumentDirection()
+
+  const nameValue = useWatch({ control: form.control, name: "name" })
+
+  useEffect(() => {
+    form.setValue("handle", toHandle(nameValue ?? ""), {
+      shouldValidate: true,
+      shouldDirty: false,
+    })
+  }, [nameValue, form.setValue])
 
   return (
     <div className="flex flex-col items-center p-16">
@@ -49,11 +62,11 @@ const Root = () => {
             render={({ field }) => {
               return (
                 <Form.Item data-testid="category-create-form-handle-item">
-                  <Form.Label optional tooltip={t("categories.handleTooltip")} data-testid="category-create-form-handle-label">
+                  <Form.Label tooltip={t("categories.handleTooltip")} data-testid="category-create-form-handle-label">
                     {t("fields.handle")}
                   </Form.Label>
                   <Form.Control data-testid="category-create-form-handle-control">
-                    <HandleInput {...field} data-testid="category-create-form-handle-input" />
+                    <HandleInput {...field} disabled data-testid="category-create-form-handle-input" />
                   </Form.Control>
                   <Form.ErrorMessage data-testid="category-create-form-handle-error" />
                 </Form.Item>

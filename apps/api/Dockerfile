@@ -31,6 +31,21 @@ ENV ADMIN_CORS=http://admin:7000,http://localhost:7000
 ENV VENDOR_CORS=http://vendor:7001,http://localhost:7001
 ENV AUTH_CORS=http://admin:7000,http://vendor:7001,http://localhost:7000,http://localhost:7001,http://localhost:3000,http://storefront:3000
 
+# The MinIO file provider options are validated (requireEnv) at config-load
+# time too, for the same reason as CORS above — no real connection happens
+# during build, but the values must be defined or the build step throws.
+# These are build-time PLACEHOLDERS only (never real credentials — unlike
+# CORS these are secrets, so they must not be baked into the image layer).
+# docker-compose.yml's `environment:` block supplies the real MinIO
+# endpoint/credentials at container start, which overrides these ENV
+# defaults per standard Docker precedence.
+ENV MINIO_ENDPOINT=http://minio:9000
+ENV MINIO_FILE_URL=http://localhost:9002/build-placeholder
+ENV MINIO_ACCESS_KEY_ID=build-placeholder
+ENV MINIO_SECRET_ACCESS_KEY=build-placeholder
+ENV MINIO_BUCKET=build-placeholder
+ENV MINIO_REGION=us-east-1
+
 # turbo, apps/api'yi build etmeden önce @mercurjs/core gibi workspace
 # bağımlılıklarını (^build) kendi tsconfig'leriyle önce derler — .medusa
 # çıktısı .dockerignore ile context dışı bırakıldığı için bu adım şart.

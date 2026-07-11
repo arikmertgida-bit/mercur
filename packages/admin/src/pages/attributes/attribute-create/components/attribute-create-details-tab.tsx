@@ -1,6 +1,9 @@
 import { Heading, Input, Textarea } from "@medusajs/ui";
+import { useEffect } from "react";
 import { useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+
+import { toHandle } from "@mercurjs/dashboard-shared";
 
 import { Form } from "../../../../components/common/form";
 import { SwitchBox } from "../../../../components/common/switch-box";
@@ -24,6 +27,14 @@ const Root = () => {
   const { t } = useTranslation();
   const form = useTabbedForm<AttributeCreateFormValues>();
   const isGlobal = useWatch({ control: form.control, name: "is_global" });
+  const nameValue = useWatch({ control: form.control, name: "name" });
+
+  useEffect(() => {
+    form.setValue("handle", toHandle(nameValue ?? ""), {
+      shouldValidate: true,
+      shouldDirty: false,
+    });
+  }, [nameValue, form.setValue]);
 
   return (
     <div
@@ -54,12 +65,13 @@ const Root = () => {
             name="handle"
             render={({ field }) => (
               <Form.Item>
-                <Form.Label optional>
+                <Form.Label tooltip={t("attributes.handleTooltip")}>
                   {t("attributes.fields.handle")}
                 </Form.Label>
                 <Form.Control>
                   <HandleInput
                     {...field}
+                    disabled
                     data-testid="attribute-create-handle-input"
                   />
                 </Form.Control>

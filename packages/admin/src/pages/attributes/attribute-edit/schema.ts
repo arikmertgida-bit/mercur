@@ -1,6 +1,7 @@
-import { TFunction } from "i18next"
+import i18n, { TFunction } from "i18next"
 import { z } from "zod"
 import { AttributeType } from "@mercurjs/types"
+import { isValidHandleFormat } from "@mercurjs/dashboard-shared"
 
 export const ATTRIBUTE_TYPE_OPTIONS = [
   AttributeType.SINGLE_SELECT,
@@ -15,7 +16,9 @@ export const createAttributeSchema = (t: TFunction) =>
   .object({
     name: z.string().min(1, { message: t("attributes.create.titleRequired") }),
     description: z.string().max(250).optional(),
-    handle: z.string().optional(),
+    handle: z
+      .string()
+      .refine(isValidHandleFormat, { message: t("fields.handleInvalidFormat") }),
     is_filterable: z.boolean().default(false),
     is_required: z.boolean().default(false),
     is_variant_axis: z.boolean().default(false),
@@ -66,7 +69,12 @@ export const createAttributeSchema = (t: TFunction) =>
 export const UpdateAttributeSchema = z.object({
   name: z.string().min(1).optional(),
   description: z.string().max(250).optional(),
-  handle: z.string().optional(),
+  handle: z
+    .string()
+    .optional()
+    .refine((value) => !value || isValidHandleFormat(value), {
+      message: i18n.t("fields.handleInvalidFormat"),
+    }),
   is_filterable: z.boolean().optional(),
   is_required: z.boolean().optional(),
   values: z

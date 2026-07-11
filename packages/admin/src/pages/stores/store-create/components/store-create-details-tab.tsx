@@ -1,5 +1,9 @@
 import { Heading, Input, Select } from "@medusajs/ui";
+import { useEffect } from "react";
+import { useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+
+import { toHandle } from "@mercurjs/dashboard-shared";
 
 import { Form } from "../../../../components/common/form";
 import { HandleInput } from "../../../../components/inputs/handle-input";
@@ -12,6 +16,15 @@ const Root = () => {
   const { t } = useTranslation();
   const form = useTabbedForm<CreateStoreSchemaType>();
   const { store } = useStore();
+
+  const nameValue = useWatch({ control: form.control, name: "name" });
+
+  useEffect(() => {
+    form.setValue("handle", toHandle(nameValue ?? ""), {
+      shouldValidate: true,
+      shouldDirty: false,
+    });
+  }, [nameValue, form.setValue]);
 
   return (
     <div className="flex flex-1 flex-col items-center overflow-y-auto px-3">
@@ -38,11 +51,11 @@ const Root = () => {
             name="handle"
             render={({ field }) => (
               <Form.Item>
-                <Form.Label optional tooltip={t("stores.handleTooltip")}>
+                <Form.Label tooltip={t("stores.handleTooltip")}>
                   {t("fields.handle")}
                 </Form.Label>
                 <Form.Control>
-                  <HandleInput {...field} />
+                  <HandleInput {...field} disabled />
                 </Form.Control>
                 <Form.ErrorMessage />
               </Form.Item>
