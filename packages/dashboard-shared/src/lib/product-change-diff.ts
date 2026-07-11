@@ -291,7 +291,10 @@ export const buildProductChangeView = (
   }
 
   for (const action of actions) {
-    const details = action.details
+    // `action.details` is `Record<string, unknown>` because it mirrors a
+    // MikroORM `model.json()` column (packages/core) — the DB only ever
+    // stores JSON there, so narrowing to `JsonRecord` here is safe.
+    const details = action.details as JsonRecord
 
     switch (action.action) {
       case ProductChangeActionType.UPDATE: {

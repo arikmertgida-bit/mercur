@@ -5,7 +5,6 @@ import type {
   ProductImageDTO,
 } from "@medusajs/types"
 import { SellerDTO } from "../seller/common"
-import { JsonRecord } from "../json-value"
 
 // --- Enums ---
 
@@ -152,7 +151,14 @@ export interface ProductChangeActionDTO {
   product_change_id: string | null
   ordering: number
   action: string
-  details: JsonRecord
+  /**
+   * Mirrors the MikroORM `model.json()` column on the ProductChangeAction
+   * entity (packages/core) — that field is inferred as `Record<string,
+   * unknown>` at the ORM layer, so this DTO must stay structurally
+   * compatible with it. Narrow to `JsonRecord` at the consumer boundary
+   * instead of tightening this type (see product-change-diff.ts).
+   */
+  details: Record<string, unknown>
   internal_note: string | null
   applied: boolean
   product_change?: ProductChangeDTO
