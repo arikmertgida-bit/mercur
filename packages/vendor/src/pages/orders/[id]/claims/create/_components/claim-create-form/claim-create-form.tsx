@@ -666,7 +666,12 @@ export const ClaimCreateForm = ({
               </div>
             )}
 
-            <ClaimOutboundSection form={form} disabled={isRequestLoading} />
+            <ClaimOutboundSection
+              order={order}
+              claim={claim}
+              preview={preview}
+              form={form}
+            />
 
             {/* TOTALS SECTION */}
             <div className="mt-8 border-y border-dotted py-4">

@@ -3,9 +3,17 @@ import {
     IRegionModuleService,
     ISalesChannelModuleService,
     MedusaContainer,
+    RegionDTO,
+    SalesChannelDTO,
 } from "@medusajs/framework/types"
 import { ContainerRegistrationKeys, Modules } from "@medusajs/framework/utils"
-import { MercurModules, SellerStatus } from "@mercurjs/types"
+import {
+    MercurModules,
+    ProductDTO,
+    ProductVariantDTO,
+    SellerDTO,
+    SellerStatus,
+} from "@mercurjs/types"
 import { createSellerUser } from "../../../helpers/create-seller-user"
 import { createVendorProduct } from "../../../helpers/create-product"
 import { createCustomerUser } from "../../../helpers/create-customer-user"
@@ -19,48 +27,51 @@ import {
 jest.setTimeout(120000)
 
 /**
- * Admin mirror of `vendor/order-offers.spec.ts`.
- *
- * The admin "add items to order" routes overridden under
- * `packages/core/src/api/admin/{order-edits,exchanges,claims}` accept
- * Medusa's strict `{ variant_id, quantity, metadata? }` payload but
- * read `metadata.offer_id` and resolve it through the shared
- * `resolveOfferItems` helper. That overrides `unit_price` from the
- * offer's price in the order's currency and keeps `metadata.offer_id`
- * for the `link-order-line-items-to-offers` subscriber to attach the
- * `order_line_item ↔ offer` link on confirm.
+ * The `offer` entity (and the `metadata.offer_id` resolution path on
+ * the admin "add items to order" routes) has been removed from the
+ * backend. There is no more `resolveOfferItems` helper and no offer↔
+ * line-item link — items are added directly via `variant_id`.
  *
  * Scope of this spec:
- *   - Happy path: admin add-items with `metadata.offer_id` on the
- *     order's seller resolves to the offer's price.
- *   - An unknown offer id is rejected.
- *   - An offer belonging to a different seller than the order's
- *     seller is rejected (admin still seller-scopes via the
- *     `order_seller` link → `resolveOrderSellerId`).
- *   - The base flow without `metadata.offer_id` still works (default
- *     Medusa behavior is preserved when no offer is provided).
+ *   - Admin can add an item to an order edit via an explicit
+ *     `variant_id` + `unit_price`, exercising the base Medusa
+ *     add-items route.
  */
+
+type RequestHeaders = { headers: Record<string, string> }
+
+type SellerModuleLike = {
+    updateSellers: (
+        input: { id: string; status: SellerStatus }[]
+    ) => Promise<SellerDTO[]>
+}
+
+type SellerSeed = {
+    sellerId: string
+    headers: RequestHeaders
+    product: ProductDTO
+    variant: ProductVariantDTO
+}
 
 const approveSeller = async (
     container: MedusaContainer,
     sellerId: string
-) => {
-    const sellerModule: any = container.resolve(MercurModules.SELLER)
-    await sellerModule.updateSellers({
+): Promise<void> => {
+    const sellerModule = container.resolve<SellerModuleLike>(MercurModules.SELLER)
+    await sellerModule.updateSellers([{
         id: sellerId,
         status: SellerStatus.OPEN,
-    })
+    }])
 }
 
 medusaIntegrationTestRunner({
     testSuite: ({ getContainer, api, dbConnection }) => {
         describe("Admin - Offer ID resolution on add-items routes", () => {
             let appContainer: MedusaContainer
-            let seller1Seed: any
-            let seller2Seed: any
-            let storeHeaders: any
-            let region: any
-            let salesChannel: any
+            let seller1Seed: SellerSeed
+            let storeHeaders: RequestHeaders
+            let region: RegionDTO
+            let salesChannel: SalesChannelDTO
             let prerequisiteCounter = 0
 
             const seedSellerOfferWithShipping = async (opts: {
@@ -69,12 +80,12 @@ medusaIntegrationTestRunner({
                 stocked: number
                 offerPrice: number
                 currency_code?: string
-            }) => {
+            }): Promise<SellerSeed> => {
                 const result = await createSellerUser(appContainer, {
                     email: opts.email,
                     name: opts.name,
                 })
-                await approveSeller(appContainer, (result.seller as any).id)
+                await approveSeller(appContainer, result.seller.id)
                 const headers = result.headers
                 const tag = `_${opts.name}_${Date.now()}_${++prerequisiteCounter}`
 
@@ -107,7 +118,7 @@ medusaIntegrationTestRunner({
                         headers
                     )
                 ).data.fulfillment_set.service_zones.find(
-                    (z: any) => z.name === `SZ${tag}`
+                    (zone: { name: string }) => zone.name === `SZ${tag}`
                 )
                 const shippingProfile = (
                     await api.post(
@@ -154,7 +165,26 @@ medusaIntegrationTestRunner({
 
                 const product = await createVendorProduct(api, headers, {
                     title: `Prod${tag}`,
-                    sku: `V${tag}`,
+                    variants: [
+                        {
+                            title: "Default",
+                            sku: `V${tag}`,
+                            prices: [
+                                {
+                                    amount: opts.offerPrice,
+                                    currency_code:
+                                        opts.currency_code ?? "usd",
+                                },
+                            ],
+                            inventory: [
+                                {
+                                    location_id: stockLocation.id,
+                                    quantity: opts.stocked,
+                                },
+                            ],
+                        },
+                    ],
+                    extra: { shipping_profile_id: shippingProfile.id },
                 })
 
                 await api.post(
@@ -163,47 +193,15 @@ medusaIntegrationTestRunner({
                     headers
                 )
 
-                const offer = (
-                    await api.post(
-                        `/vendor/offers`,
-                        {
-                            sku: `OF${tag}`,
-                            variant_id: product.variants[0].id,
-                            shipping_profile_id: shippingProfile.id,
-                            inventory_items: [
-                                {
-                                    title: `Inv${tag}`,
-                                    required_quantity: 1,
-                                    stock_levels: [
-                                        {
-                                            location_id: stockLocation.id,
-                                            stocked_quantity: opts.stocked,
-                                        },
-                                    ],
-                                },
-                            ],
-                            prices: [
-                                {
-                                    amount: opts.offerPrice,
-                                    currency_code:
-                                        opts.currency_code ?? "usd",
-                                },
-                            ],
-                        },
-                        headers
-                    )
-                ).data.offer
-
                 return {
                     sellerId: result.seller.id,
                     headers,
                     product,
                     variant: product.variants[0],
-                    offer,
                 }
             }
 
-            const completeCartCheckout = async (offerId: string) => {
+            const completeCartCheckout = async (variantId: string) => {
                 const cart = (
                     await api.post(
                         `/store/carts`,
@@ -218,7 +216,7 @@ medusaIntegrationTestRunner({
 
                 await api.post(
                     `/store/carts/${cart.id}/line-items`,
-                    { offer_id: offerId, quantity: 1 },
+                    { variant_id: variantId, quantity: 1 },
                     storeHeaders
                 )
 
@@ -253,7 +251,7 @@ medusaIntegrationTestRunner({
                 const allOptions = Object.values(
                     shippingOptionsResp.data.shipping_options as Record<
                         string,
-                        any[]
+                        { id: string }[]
                     >
                 ).flat()
                 for (const opt of allOptions) {
@@ -291,7 +289,7 @@ medusaIntegrationTestRunner({
                     filters: { id: orderGroupId },
                     fields: ["id", "orders.id"],
                 })
-                return (orderGroup[0] as any).orders[0]
+                return (orderGroup[0] as { orders: { id: string }[] }).orders[0]
             }
 
             beforeAll(async () => {
@@ -348,131 +346,11 @@ medusaIntegrationTestRunner({
                     stocked: 20,
                     offerPrice: 2500,
                 })
-
-                seller2Seed = await seedSellerOfferWithShipping({
-                    email: "admin-offer-seller2@test.com",
-                    name: "AdminOfferS2",
-                    stocked: 20,
-                    offerPrice: 3000,
-                })
             })
 
-            describe("POST /admin/order-edits/:id/items with metadata.offer_id", () => {
-                it("resolves the offer's unit_price from metadata.offer_id", async () => {
-                    const order = await completeCartCheckout(seller1Seed.offer.id)
-
-                    await api.post(
-                        `/admin/order-edits`,
-                        { order_id: order.id },
-                        adminHeaders
-                    )
-
-                    const addResp = await api.post(
-                        `/admin/order-edits/${order.id}/items`,
-                        {
-                            items: [
-                                {
-                                    variant_id: seller1Seed.variant.id,
-                                    quantity: 1,
-                                    metadata: {
-                                        offer_id: seller1Seed.offer.id,
-                                    },
-                                },
-                            ],
-                        },
-                        adminHeaders
-                    )
-
-                    expect(addResp.status).toEqual(200)
-                    expect(addResp.data.order_preview).toBeDefined()
-
-                    // The added item's unit_price should match the offer's
-                    // price (2500), not whatever default the variant resolved
-                    // to. Compare against the original line item's
-                    // unit_price as a sanity guard: both come from the same
-                    // offer, so they should match.
-                    const preview = addResp.data.order_preview
-                    const previewItems = (preview.items ?? []) as Array<{
-                        variant_id?: string
-                        unit_price?: number
-                        metadata?: Record<string, unknown> | null
-                    }>
-                    const addedRow = previewItems.find(
-                        (i) =>
-                            i.variant_id === seller1Seed.variant.id &&
-                            (i.metadata as { offer_id?: string } | null)
-                                ?.offer_id === seller1Seed.offer.id
-                    )
-                    expect(addedRow).toBeDefined()
-                    expect(Number(addedRow?.unit_price)).toEqual(2500)
-                })
-
-                it("rejects an unknown offer_id", async () => {
-                    const order = await completeCartCheckout(seller1Seed.offer.id)
-
-                    await api.post(
-                        `/admin/order-edits`,
-                        { order_id: order.id },
-                        adminHeaders
-                    )
-
-                    const response = await api
-                        .post(
-                            `/admin/order-edits/${order.id}/items`,
-                            {
-                                items: [
-                                    {
-                                        variant_id: seller1Seed.variant.id,
-                                        quantity: 1,
-                                        metadata: {
-                                            offer_id: "offer_does_not_exist",
-                                        },
-                                    },
-                                ],
-                            },
-                            adminHeaders
-                        )
-                        .catch((e) => e.response)
-
-                    expect([400, 404]).toContain(response.status)
-                })
-
-                it("rejects an offer belonging to a different seller than the order's seller", async () => {
-                    // Order is for seller1; admin passes seller2's offer_id.
-                    // `resolveOrderSellerId` resolves seller1 from the
-                    // order_seller link; `resolveOfferItems` then rejects
-                    // because seller2's offer fails the seller check.
-                    const order = await completeCartCheckout(seller1Seed.offer.id)
-
-                    await api.post(
-                        `/admin/order-edits`,
-                        { order_id: order.id },
-                        adminHeaders
-                    )
-
-                    const response = await api
-                        .post(
-                            `/admin/order-edits/${order.id}/items`,
-                            {
-                                items: [
-                                    {
-                                        variant_id: seller2Seed.variant.id,
-                                        quantity: 1,
-                                        metadata: {
-                                            offer_id: seller2Seed.offer.id,
-                                        },
-                                    },
-                                ],
-                            },
-                            adminHeaders
-                        )
-                        .catch((e) => e.response)
-
-                    expect([400, 403, 404]).toContain(response.status)
-                })
-
+            describe("POST /admin/order-edits/:id/items", () => {
                 it("falls back to default Medusa behavior when no offer_id is in metadata", async () => {
-                    const order = await completeCartCheckout(seller1Seed.offer.id)
+                    const order = await completeCartCheckout(seller1Seed.variant.id)
 
                     await api.post(
                         `/admin/order-edits`,

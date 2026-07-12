@@ -267,6 +267,62 @@ export const useAddClaimOutboundItems = (
   });
 };
 
+export const useUpdateClaimOutboundItem = (
+  claimId: string,
+  orderId: string,
+  options?: UseMutationOptions<
+    InferClientOutput<
+      typeof sdk.vendor.claims.$id.outbound.items.$actionId.mutate
+    >,
+    ClientError,
+    Omit<
+      InferClientInput<
+        typeof sdk.vendor.claims.$id.outbound.items.$actionId.mutate
+      >,
+      "$id"
+    > & { actionId: string }
+  >
+) => {
+  return useMutation({
+    mutationFn: ({ actionId, $actionId: _ignored, ...payload }) =>
+      sdk.vendor.claims.$id.outbound.items.$actionId.mutate({
+        $id: claimId,
+        $actionId: actionId,
+        ...payload,
+      }),
+    onSuccess: (data, variables, context) => {
+      invalidateOrder(orderId);
+      options?.onSuccess?.(data, variables, context);
+    },
+    ...options,
+  });
+};
+
+export const useRemoveClaimOutboundItem = (
+  claimId: string,
+  orderId: string,
+  options?: UseMutationOptions<
+    InferClientOutput<
+      typeof sdk.vendor.claims.$id.outbound.items.$actionId.delete
+    >,
+    ClientError,
+    string
+  >
+) => {
+  return useMutation({
+    mutationFn: (actionId: string) =>
+      sdk.vendor.claims.$id.outbound.items.$actionId.delete({
+        $id: claimId,
+        $actionId: actionId,
+      }),
+    onSuccess: (data, variables, context) => {
+      invalidateOrder(orderId);
+      options?.onSuccess?.(data, variables, context);
+    },
+    ...options,
+  });
+};
+
 export const useAddClaimInboundShipping = (
   claimId: string,
   orderId: string,

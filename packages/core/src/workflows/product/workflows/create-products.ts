@@ -213,10 +213,20 @@ export const createProductsWorkflow: ReturnWorkflow<
           const product_id = createdProducts[idx]?.id as string
           const formOptions = (v: { options?: Record<string, string> }) =>
             v.options ?? {}
-          return (p.variants ?? []).map((v) => ({
+          return (p.variants ?? []).map((v, variantIdx) => ({
             manage_inventory: (v.inventory?.length ?? 0) > 0,
             ...v,
             product_id,
+            // Falls back to array order when the caller doesn't set
+            // `variant_rank` (it stays untouched when they do, e.g. the
+            // vendor UI's own counter) so the inventory-item lookup below —
+            // keyed by `product_id:variant_rank` — actually matches the rank
+            // Medusa assigns each variant on creation. Without this
+            // fallback, callers that omit `variant_rank` always produced a
+            // `product_id:undefined` lookup key and every `inventory` entry
+            // was silently dropped, leaving `manage_inventory: true`
+            // variants with zero stock levels.
+            variant_rank: v.variant_rank ?? variantIdx,
             options: hasAxisByIndex[idx]
               ? formOptions(v)
               : { __default__: "__default__", ...formOptions(v) },

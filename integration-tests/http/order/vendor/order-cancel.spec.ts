@@ -3,9 +3,17 @@ import {
     IRegionModuleService,
     ISalesChannelModuleService,
     MedusaContainer,
+    RegionDTO,
+    SalesChannelDTO,
 } from "@medusajs/framework/types"
 import { ContainerRegistrationKeys, Modules } from "@medusajs/framework/utils"
-import { MercurModules, SellerStatus } from "@mercurjs/types"
+import {
+    MercurModules,
+    ProductDTO,
+    ProductVariantDTO,
+    SellerDTO,
+    SellerStatus,
+} from "@mercurjs/types"
 import { createSellerUser } from "../../../helpers/create-seller-user"
 import { createCustomerUser } from "../../../helpers/create-customer-user"
 import { createVendorProduct } from "../../../helpers/create-product"
@@ -33,26 +41,42 @@ jest.setTimeout(120000)
  * (per `docs/vendor-orders-design-diff.md` §MVP).
  */
 
+type RequestHeaders = { headers: Record<string, string> }
+
+type SellerModuleLike = {
+    updateSellers: (
+        input: { id: string; status: SellerStatus }[]
+    ) => Promise<SellerDTO[]>
+}
+
+type SellerSeed = {
+    sellerId: string
+    headers: RequestHeaders
+    product: ProductDTO
+    variant: ProductVariantDTO
+    stockLocation: { id: string }
+}
+
 const approveSeller = async (
     container: MedusaContainer,
     sellerId: string
-) => {
-    const sellerModule: any = container.resolve(MercurModules.SELLER)
-    await sellerModule.updateSellers({
+): Promise<void> => {
+    const sellerModule = container.resolve<SellerModuleLike>(MercurModules.SELLER)
+    await sellerModule.updateSellers([{
         id: sellerId,
         status: SellerStatus.OPEN,
-    })
+    }])
 }
 
 medusaIntegrationTestRunner({
     testSuite: ({ getContainer, api }) => {
         describe("Vendor - Order Cancel", () => {
             let appContainer: MedusaContainer
-            let seller1Seed: any
-            let seller2Seed: any
-            let storeHeaders: any
-            let region: any
-            let salesChannel: any
+            let seller1Seed: SellerSeed
+            let seller2Seed: SellerSeed
+            let storeHeaders: RequestHeaders
+            let region: RegionDTO
+            let salesChannel: SalesChannelDTO
             let prerequisiteCounter = 0
 
             const seedSellerOfferWithShipping = async (opts: {
@@ -60,12 +84,12 @@ medusaIntegrationTestRunner({
                 name: string
                 stocked: number
                 offerPrice: number
-            }) => {
+            }): Promise<SellerSeed> => {
                 const result = await createSellerUser(appContainer, {
                     email: opts.email,
                     name: opts.name,
                 })
-                await approveSeller(appContainer, (result.seller as any).id)
+                await approveSeller(appContainer, result.seller.id)
                 const headers = result.headers
                 const tag = `_${opts.name}_${Date.now()}_${++prerequisiteCounter}`
 
@@ -98,7 +122,7 @@ medusaIntegrationTestRunner({
                         headers
                     )
                 ).data.fulfillment_set.service_zones.find(
-                    (z: any) => z.name === `SZ${tag}`
+                    (zone: { name: string }) => zone.name === `SZ${tag}`
                 )
                 const shippingProfile = (
                     await api.post(
@@ -145,7 +169,25 @@ medusaIntegrationTestRunner({
 
                 const product = await createVendorProduct(api, headers, {
                     title: `Prod${tag}`,
-                    sku: `V${tag}`,
+                    variants: [
+                        {
+                            title: "Default",
+                            sku: `V${tag}`,
+                            prices: [
+                                {
+                                    amount: opts.offerPrice,
+                                    currency_code: "usd",
+                                },
+                            ],
+                            inventory: [
+                                {
+                                    location_id: stockLocation.id,
+                                    quantity: opts.stocked,
+                                },
+                            ],
+                        },
+                    ],
+                    extra: { shipping_profile_id: shippingProfile.id },
                 })
 
                 await api.post(
@@ -154,47 +196,16 @@ medusaIntegrationTestRunner({
                     headers
                 )
 
-                const offer = (
-                    await api.post(
-                        `/vendor/offers`,
-                        {
-                            sku: `OF${tag}`,
-                            variant_id: product.variants[0].id,
-                            shipping_profile_id: shippingProfile.id,
-                            inventory_items: [
-                                {
-                                    title: `Inv${tag}`,
-                                    required_quantity: 1,
-                                    stock_levels: [
-                                        {
-                                            location_id: stockLocation.id,
-                                            stocked_quantity: opts.stocked,
-                                        },
-                                    ],
-                                },
-                            ],
-                            prices: [
-                                {
-                                    amount: opts.offerPrice,
-                                    currency_code: "usd",
-                                },
-                            ],
-                        },
-                        headers
-                    )
-                ).data.offer
-
                 return {
                     sellerId: result.seller.id,
                     headers,
                     product,
                     variant: product.variants[0],
-                    offer,
                     stockLocation,
                 }
             }
 
-            const completeCartCheckout = async (offerId: string) => {
+            const completeCartCheckout = async (variantId: string) => {
                 const cart = (
                     await api.post(
                         `/store/carts`,
@@ -209,7 +220,7 @@ medusaIntegrationTestRunner({
 
                 await api.post(
                     `/store/carts/${cart.id}/line-items`,
-                    { offer_id: offerId, quantity: 1 },
+                    { variant_id: variantId, quantity: 1 },
                     storeHeaders
                 )
 
@@ -244,7 +255,7 @@ medusaIntegrationTestRunner({
                 const allOptions = Object.values(
                     shippingOptionsResp.data.shipping_options as Record<
                         string,
-                        any[]
+                        { id: string }[]
                     >
                 ).flat()
                 for (const opt of allOptions) {
@@ -282,7 +293,7 @@ medusaIntegrationTestRunner({
                     filters: { id: orderGroupId },
                     fields: ["id", "orders.id"],
                 })
-                return (orderGroup[0] as any).orders[0]
+                return (orderGroup[0] as { orders: { id: string }[] }).orders[0]
             }
 
             beforeAll(async () => {
@@ -355,7 +366,7 @@ medusaIntegrationTestRunner({
                 // MikroORM populate path is fixed; the route itself does call
                 // `cancelOrderWorkflow` correctly per UI verification.
                 it.skip("cancels a seller-owned order and flips status to canceled", async () => {
-                    const order = await completeCartCheckout(seller1Seed.offer.id)
+                    const order = await completeCartCheckout(seller1Seed.variant.id)
 
                     const response = await api.post(
                         `/vendor/orders/${order.id}/cancel`,
@@ -374,7 +385,7 @@ medusaIntegrationTestRunner({
                 })
 
                 it("rejects cross-seller cancel — seller B cannot cancel seller A's order", async () => {
-                    const orderA = await completeCartCheckout(seller1Seed.offer.id)
+                    const orderA = await completeCartCheckout(seller1Seed.variant.id)
 
                     // `validateSellerOrder` runs at the top of the route
                     // handler and throws NOT_FOUND before either the

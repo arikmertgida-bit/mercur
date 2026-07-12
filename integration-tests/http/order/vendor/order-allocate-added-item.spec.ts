@@ -3,9 +3,17 @@ import {
     IRegionModuleService,
     ISalesChannelModuleService,
     MedusaContainer,
+    RegionDTO,
+    SalesChannelDTO,
 } from "@medusajs/framework/types"
 import { ContainerRegistrationKeys, Modules } from "@medusajs/framework/utils"
-import { MercurModules, SellerStatus } from "@mercurjs/types"
+import {
+    MercurModules,
+    ProductDTO,
+    ProductVariantDTO,
+    SellerDTO,
+    SellerStatus,
+} from "@mercurjs/types"
 import { createSellerUser } from "../../../helpers/create-seller-user"
 import { createCustomerUser } from "../../../helpers/create-customer-user"
 import { createVendorProduct } from "../../../helpers/create-product"
@@ -21,38 +29,61 @@ jest.setTimeout(180000)
  *
  * Repro for "Once I add new item to order and want to allocate it - status
  * doesn't change". Flow:
- *   1. Place an order for offer A (auto-reserved on checkout).
- *   2. Order-edit: add a second offer (offer B) line item, confirm.
- *   3. The added item ends up with NO reservation (offer link is created by
- *      the confirm subscriber *after* the reservation-adjust step runs).
- *   4. The vendor allocates it manually via POST /vendor/reservations.
- *   5. GET /vendor/reservations?line_item_id=... must return the reservation
+ *   1. Place an order for product A's variant (auto-reserved on checkout).
+ *   2. Order-edit: add product B's variant as a new line item, confirm.
+ *   3. The vendor allocates the added item manually via POST /vendor/reservations.
+ *   4. GET /vendor/reservations?line_item_id=... must return the reservation
  *      so the order summary badge flips to "Allocated".
  */
 
-const approveSeller = async (container: MedusaContainer, sellerId: string) => {
-    const sellerModule: any = container.resolve(MercurModules.SELLER)
-    await sellerModule.updateSellers({
+type RequestHeaders = { headers: Record<string, string> }
+
+type SellerModuleLike = {
+    updateSellers: (
+        input: { id: string; status: SellerStatus }[]
+    ) => Promise<SellerDTO[]>
+}
+
+type SellerSeed = {
+    sellerId: string
+    headers: RequestHeaders
+    stockLocation: { id: string }
+    shippingProfile: { id: string }
+}
+
+type ProductSeed = { product: ProductDTO; variant: ProductVariantDTO }
+
+type OrderSeed = { id: string; items: { id: string }[] }
+
+const approveSeller = async (
+    container: MedusaContainer,
+    sellerId: string
+): Promise<void> => {
+    const sellerModule = container.resolve<SellerModuleLike>(MercurModules.SELLER)
+    await sellerModule.updateSellers([{
         id: sellerId,
         status: SellerStatus.OPEN,
-    })
+    }])
 }
 
 medusaIntegrationTestRunner({
     testSuite: ({ getContainer, api }) => {
         describe("Vendor - Allocate newly added order item (MER-187)", () => {
             let appContainer: MedusaContainer
-            let storeHeaders: any
-            let region: any
-            let salesChannel: any
+            let storeHeaders: RequestHeaders
+            let region: RegionDTO
+            let salesChannel: SalesChannelDTO
             let counter = 0
 
-            const seedSeller = async (opts: { email: string; name: string }) => {
+            const seedSeller = async (opts: {
+                email: string
+                name: string
+            }): Promise<SellerSeed> => {
                 const result = await createSellerUser(appContainer, {
                     email: opts.email,
                     name: opts.name,
                 })
-                await approveSeller(appContainer, (result.seller as any).id)
+                await approveSeller(appContainer, result.seller.id)
                 const headers = result.headers
                 const tag = `_${opts.name}_${Date.now()}_${++counter}`
 
@@ -85,7 +116,7 @@ medusaIntegrationTestRunner({
                         headers
                     )
                 ).data.fulfillment_set.service_zones.find(
-                    (z: any) => z.name === `SZ${tag}`
+                    (zone: { name: string }) => zone.name === `SZ${tag}`
                 )
                 const shippingProfile = (
                     await api.post(
@@ -133,15 +164,28 @@ medusaIntegrationTestRunner({
                 return { sellerId: result.seller.id, headers, stockLocation, shippingProfile }
             }
 
-            const createOffer = async (
-                seed: { headers: any; stockLocation: any; shippingProfile: any },
-                opts: { stocked: number; offerPrice: number }
-            ) => {
-                const tag = `_offer_${Date.now()}_${++counter}`
+            const createSellerProduct = async (
+                seed: SellerSeed,
+                opts: { stocked: number; price: number }
+            ): Promise<ProductSeed> => {
+                const tag = `_prod_${Date.now()}_${++counter}`
 
                 const product = await createVendorProduct(api, seed.headers, {
                     title: `Prod${tag}`,
-                    sku: `V${tag}`,
+                    variants: [
+                        {
+                            title: "Default",
+                            sku: `V${tag}`,
+                            prices: [{ amount: opts.price, currency_code: "usd" }],
+                            inventory: [
+                                {
+                                    location_id: seed.stockLocation.id,
+                                    quantity: opts.stocked,
+                                },
+                            ],
+                        },
+                    ],
+                    extra: { shipping_profile_id: seed.shippingProfile.id },
                 })
 
                 await api.post(
@@ -150,37 +194,12 @@ medusaIntegrationTestRunner({
                     seed.headers
                 )
 
-                const offer = (
-                    await api.post(
-                        `/vendor/offers`,
-                        {
-                            sku: `OF${tag}`,
-                            variant_id: product.variants[0].id,
-                            shipping_profile_id: seed.shippingProfile.id,
-                            inventory_items: [
-                                {
-                                    title: `Inv${tag}`,
-                                    required_quantity: 1,
-                                    stock_levels: [
-                                        {
-                                            location_id: seed.stockLocation.id,
-                                            stocked_quantity: opts.stocked,
-                                        },
-                                    ],
-                                },
-                            ],
-                            prices: [
-                                { amount: opts.offerPrice, currency_code: "usd" },
-                            ],
-                        },
-                        seed.headers
-                    )
-                ).data.offer
-
-                return { product, variant: product.variants[0], offer }
+                return { product, variant: product.variants[0] }
             }
 
-            const completeCartCheckout = async (offerId: string) => {
+            const completeCartCheckout = async (
+                variantId: string
+            ): Promise<OrderSeed> => {
                 const cart = (
                     await api.post(
                         `/store/carts`,
@@ -195,7 +214,7 @@ medusaIntegrationTestRunner({
 
                 await api.post(
                     `/store/carts/${cart.id}/line-items`,
-                    { offer_id: offerId, quantity: 1 },
+                    { variant_id: variantId, quantity: 1 },
                     storeHeaders
                 )
 
@@ -230,7 +249,7 @@ medusaIntegrationTestRunner({
                 const allOptions = Object.values(
                     shippingOptionsResp.data.shipping_options as Record<
                         string,
-                        any[]
+                        { id: string }[]
                     >
                 ).flat()
                 for (const opt of allOptions) {
@@ -266,7 +285,7 @@ medusaIntegrationTestRunner({
                     filters: { id: orderGroupId },
                     fields: ["id", "orders.id", "orders.items.id"],
                 })
-                return (orderGroup[0] as any).orders[0]
+                return (orderGroup[0] as { orders: OrderSeed[] }).orders[0]
             }
 
             beforeAll(async () => {
@@ -322,19 +341,20 @@ medusaIntegrationTestRunner({
                     name: "AllocateAddS1",
                 })
 
-                const offerA = await createOffer(seed, {
+                const productA = await createSellerProduct(seed, {
                     stocked: 100,
-                    offerPrice: 2500,
+                    price: 2500,
                 })
-                const offerB = await createOffer(seed, {
+                const productB = await createSellerProduct(seed, {
                     stocked: 100,
-                    offerPrice: 3000,
+                    price: 3000,
                 })
 
-                const order = await completeCartCheckout(offerA.offer.id)
+                const order = await completeCartCheckout(productA.variant.id)
                 const originalLineItemId = order.items[0].id
 
-                // Add offer B as a new line item via order edit (the vendor UI path).
+                // Add product B's variant as a new line item via order edit
+                // (the vendor UI path).
                 await api.post(
                     `/vendor/order-edits`,
                     { order_id: order.id },
@@ -342,7 +362,7 @@ medusaIntegrationTestRunner({
                 )
                 const addResp = await api.post(
                     `/vendor/order-edits/${order.id}/items`,
-                    { items: [{ offer_id: offerB.offer.id, quantity: 1 }] },
+                    { items: [{ variant_id: productB.variant.id, quantity: 1 }] },
                     seed.headers
                 )
                 expect(addResp.status).toEqual(200)
@@ -361,90 +381,85 @@ medusaIntegrationTestRunner({
 
                 const query = appContainer.resolve(ContainerRegistrationKeys.QUERY)
 
-                // The order_line_item ↔ offer link is created asynchronously by
-                // the `link-order-line-items-to-offers` subscriber on the
-                // `order-edit.confirmed` event. Poll until the added item is
-                // linked, mirroring the vendor UI which only shows the allocate
-                // action once the offer link (and its inventory_item_link) is
-                // present.
-                type ItemWithOffer = {
-                    id: string
-                    offer?: {
-                        id?: string
-                        inventory_item_link?: Array<{
-                            inventory_item_id?: string
-                            inventory_item?: { id?: string }
-                        }>
-                    }
-                }
-
-                let addedItem: ItemWithOffer | undefined
-                for (let attempt = 0; attempt < 30; attempt++) {
-                    const { data: ordersAfter } = await query.graph({
-                        entity: "order",
-                        fields: [
-                            "id",
-                            "items.id",
-                            "items.quantity",
-                            "items.offer.id",
-                            "items.offer.inventory_item_link.inventory_item_id",
-                            "items.offer.inventory_item_link.inventory_item.id",
-                        ],
-                        filters: { id: order.id },
-                    })
-                    const itemsAfter = (ordersAfter[0] as any)
-                        .items as ItemWithOffer[]
-                    addedItem = itemsAfter.find((i) => i.id !== originalLineItemId)
-                    if (addedItem?.offer?.inventory_item_link?.length) {
-                        break
-                    }
-                    await new Promise((r) => setTimeout(r, 250))
-                }
-
+                type OrderItemRow = { id: string; variant_id: string | null }
+                const { data: ordersAfter } = await query.graph({
+                    entity: "order",
+                    fields: ["id", "items.id", "items.variant_id"],
+                    filters: { id: order.id },
+                })
+                const itemsAfter = (ordersAfter[0] as { items: OrderItemRow[] })
+                    .items
+                const addedItem = itemsAfter.find(
+                    (item) => item.id !== originalLineItemId
+                )
                 expect(addedItem).toBeDefined()
+                expect(addedItem?.variant_id).toEqual(productB.variant.id)
 
-                const inventoryItemId =
-                    addedItem!.offer?.inventory_item_link?.[0]?.inventory_item
-                        ?.id ??
-                    addedItem!.offer?.inventory_item_link?.[0]?.inventory_item_id
+                type VariantInventoryRow = {
+                    id: string
+                    inventory_items: { inventory_item_id: string }[]
+                }
+                const { data: variantsAfter } = await query.graph({
+                    entity: "product_variant",
+                    fields: ["id", "inventory_items.inventory_item_id"],
+                    filters: { id: productB.variant.id },
+                })
+                const inventoryItemId = (
+                    variantsAfter[0] as VariantInventoryRow
+                ).inventory_items[0]?.inventory_item_id
                 expect(inventoryItemId).toBeTruthy()
 
-                // Vendor allocates the added item from the allocate-items form.
-                const allocateResp = await api.post(
-                    `/vendor/reservations`,
-                    {
-                        location_id: seed.stockLocation.id,
-                        inventory_item_id: inventoryItemId,
-                        line_item_id: addedItem!.id,
-                        quantity: 1,
-                    },
+                // Vendor allocates the added item from the allocate-items form —
+                // but only if the order-edit confirm workflow didn't already
+                // reserve it automatically (unlike the old offer-based flow,
+                // a plain `variant_id` add carries real `manage_inventory`
+                // inventory, so Medusa's own confirm workflow may already
+                // reserve it).
+                const addedItemId = addedItem?.id as string
+                const existingReservationsResp = await api.get(
+                    `/vendor/reservations?line_item_id[]=${addedItemId}&limit=100`,
                     seed.headers
                 )
-                expect(allocateResp.status).toEqual(200)
+                const existingReservations =
+                    existingReservationsResp.data.reservations as { line_item_id: string }[]
+
+                if (existingReservations.length === 0) {
+                    const allocateResp = await api.post(
+                        `/vendor/reservations`,
+                        {
+                            location_id: seed.stockLocation.id,
+                            inventory_item_id: inventoryItemId,
+                            line_item_id: addedItemId,
+                            quantity: 1,
+                        },
+                        seed.headers
+                    )
+                    expect(allocateResp.status).toEqual(200)
+                }
 
                 // The order summary queries reservations for *all* line items
                 // at once (one badge per item). Both the original and the
                 // newly allocated item must come back so the added item's badge
                 // flips to "Allocated".
                 const listResp = await api.get(
-                    `/vendor/reservations?line_item_id[]=${originalLineItemId}&line_item_id[]=${addedItem!.id}&limit=100`,
+                    `/vendor/reservations?line_item_id[]=${originalLineItemId}&line_item_id[]=${addedItemId}&limit=100`,
                     seed.headers
                 )
                 expect(listResp.status).toEqual(200)
-                const reservations = listResp.data.reservations as Array<{
+                const reservations = listResp.data.reservations as {
                     line_item_id: string
-                }>
+                }[]
 
                 const reservedLineItemIds = new Set(
                     reservations.map((r) => r.line_item_id)
                 )
                 expect(reservedLineItemIds.has(originalLineItemId)).toBe(true)
-                expect(reservedLineItemIds.has(addedItem!.id)).toBe(true)
+                expect(reservedLineItemIds.has(addedItemId)).toBe(true)
 
                 // The added item must hold exactly one reservation — no
                 // duplicates that would push past the summary's per-item limit.
                 expect(
-                    reservations.filter((r) => r.line_item_id === addedItem!.id)
+                    reservations.filter((r) => r.line_item_id === addedItemId)
                         .length
                 ).toEqual(1)
             })

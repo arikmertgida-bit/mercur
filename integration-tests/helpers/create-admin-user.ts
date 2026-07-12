@@ -5,6 +5,7 @@ import {
     IUserModuleService,
     MedusaContainer,
 } from "@medusajs/framework/types"
+import { IRbacModuleService } from "@medusajs/types"
 import {
     ApiKeyType,
     ContainerRegistrationKeys,
@@ -58,7 +59,7 @@ export const createAdminUser = async (
     // `checkPermissions` which 403s when `app_metadata.roles` is empty.
     // Always seed a wildcard role for the test admin user so every admin
     // endpoint — Mercur-owned or Medusa-core — is reachable.
-    const rbac: any = appContainer.resolve("rbac")
+    const rbac = appContainer.resolve<IRbacModuleService>(Modules.RBAC)
     const policy = await rbac.createRbacPolicies({
         key: `wildcard_${Date.now()}_${Math.floor(Math.random() * 1e6)}`,
         resource: "*",

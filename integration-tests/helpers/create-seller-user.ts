@@ -79,12 +79,12 @@ export const createSellerUser = async (
     )
 
     vendorHeaders.headers["authorization"] = `Bearer ${token}`
-    vendorHeaders.headers["x-seller-id"] = (seller as any).id
+    vendorHeaders.headers["x-seller-id"] = seller.id
 
     const headers = {
         headers: {
             authorization: `Bearer ${token}`,
-            "x-seller-id": (seller as any).id,
+            "x-seller-id": seller.id,
         },
     }
 

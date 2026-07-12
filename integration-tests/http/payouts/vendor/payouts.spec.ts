@@ -3,11 +3,17 @@ import {
   IRegionModuleService,
   ISalesChannelModuleService,
   MedusaContainer,
+  RegionDTO,
+  SalesChannelDTO,
 } from "@medusajs/framework/types"
 import { ContainerRegistrationKeys, Modules } from "@medusajs/framework/utils"
 import {
+  CommissionRateDTO,
   CommissionRateType,
   MercurModules,
+  ProductDTO,
+  SellerDTO,
+  UpdateCommissionRateDTO,
 } from "@mercurjs/types"
 import { createSellerUser } from "../../../helpers/create-seller-user"
 import { generatePublishableKey, generateStoreHeaders } from "../../../helpers/create-admin-user"
@@ -16,20 +22,30 @@ import { createPayoutAccountWorkflow, createPayoutWorkflow } from '@mercurjs/cor
 
 jest.setTimeout(120000)
 
+type RequestHeaders = { headers: Record<string, string> }
+
+type CommissionModuleLike = {
+  listCommissionRates: (
+    filter: { is_default: boolean }
+  ) => Promise<CommissionRateDTO[]>
+  updateCommissionRates: (
+    data: UpdateCommissionRateDTO
+  ) => Promise<CommissionRateDTO>
+}
+
 medusaIntegrationTestRunner({
   testSuite: ({ getContainer, api }) => {
     describe("Vendor - Payouts", () => {
       let appContainer: MedusaContainer
-      let commissionService: any
-      let query: any
-      let seller: any
-      let sellerHeaders: any
-      let storeHeaders: any
-      let region: any
-      let salesChannel: any
-      let product: any
-      let offer: any
-      let shippingOption: any
+      let commissionService: CommissionModuleLike
+      let query
+      let seller: SellerDTO
+      let sellerHeaders: RequestHeaders
+      let storeHeaders: RequestHeaders
+      let region: RegionDTO
+      let salesChannel: SalesChannelDTO
+      let product: ProductDTO
+      let shippingOption: { id: string }
 
       beforeAll(async () => {
         appContainer = getContainer()
@@ -79,18 +95,6 @@ medusaIntegrationTestRunner({
           [Modules.PAYMENT]: { payment_provider_id: "pp_system_default" },
         })
 
-        // Create product with variant. Pricing + inventory live on the offer
-        // (see SPEC-002); the product is linked to the sales channel separately.
-        product = await createVendorProduct(api, sellerHeaders, {
-          title: "Payout Test Product",
-          sku: "PAYOUT-TEST-S",
-        })
-        await api.post(
-          `/vendor/sales-channels/${salesChannel.id}/products`,
-          { add: [product.id] },
-          sellerHeaders
-        )
-
         // Create shipping prerequisites and option
         const shippingPrerequisites = await createShippingPrerequisites(sellerHeaders)
         const shippingOptionResponse = await api.post(
@@ -119,32 +123,29 @@ medusaIntegrationTestRunner({
         )
         shippingOption = shippingOptionResponse.data.shipping_option
 
-        // Create a store offer for the product (store add-to-cart resolves the
-        // variant + price from the offer).
-        offer = (
-          await api.post(
-            `/vendor/offers`,
+        // Create product with variant, pricing + inventory on the variant.
+        product = await createVendorProduct(api, sellerHeaders, {
+          title: "Payout Test Product",
+          variants: [
             {
-              sku: "PAYOUT-OFFER-S",
-              variant_id: product.variants[0].id,
-              shipping_profile_id: shippingPrerequisites.shippingProfile.id,
-              inventory_items: [
+              title: "Default",
+              sku: "PAYOUT-TEST-S",
+              prices: [{ currency_code: "usd", amount: 10000 }], // $100
+              inventory: [
                 {
-                  title: "Payout Offer Inventory",
-                  required_quantity: 1,
-                  stock_levels: [
-                    {
-                      location_id: shippingPrerequisites.stockLocation.id,
-                      stocked_quantity: 100,
-                    },
-                  ],
+                  location_id: shippingPrerequisites.stockLocation.id,
+                  quantity: 100,
                 },
               ],
-              prices: [{ currency_code: "usd", amount: 10000 }], // $100
             },
-            sellerHeaders
-          )
-        ).data.offer
+          ],
+          extra: { shipping_profile_id: shippingPrerequisites.shippingProfile.id },
+        })
+        await api.post(
+          `/vendor/sales-channels/${salesChannel.id}/products`,
+          { add: [product.id] },
+          sellerHeaders
+        )
 
         const [defaultRate] = await commissionService.listCommissionRates({
           is_default: true,
@@ -159,7 +160,7 @@ medusaIntegrationTestRunner({
 
       let prerequisiteCounter = 0
 
-      const createShippingPrerequisites = async (headers: any) => {
+      const createShippingPrerequisites = async (headers: RequestHeaders) => {
         const uniqueSuffix = `_payout_${Date.now()}_${++prerequisiteCounter}`
 
         const locationResponse = await api.post(
@@ -193,7 +194,7 @@ medusaIntegrationTestRunner({
           headers
         )
         const serviceZone = serviceZoneResponse.data.fulfillment_set.service_zones.find(
-          (z: any) => z.name === `Payout Service Zone${uniqueSuffix}`
+          (zone: { name: string }) => zone.name === `Payout Service Zone${uniqueSuffix}`
         )
 
         const shippingProfileResponse = await api.post(
@@ -239,10 +240,10 @@ medusaIntegrationTestRunner({
         return response.data.cart
       }
 
-      const addItemToCart = async (cartId: string, offerId: string, quantity: number) => {
+      const addItemToCart = async (cartId: string, variantId: string, quantity: number) => {
         const response = await api.post(
           `/store/carts/${cartId}/line-items`,
-          { offer_id: offerId, quantity },
+          { variant_id: variantId, quantity },
           storeHeaders
         )
         return response.data.cart
@@ -312,7 +313,7 @@ medusaIntegrationTestRunner({
           const order = orderGroup.orders[0]
 
           const itemIds = (order.items ?? [])
-            .map((item: any) => item.id)
+            .map((item) => item.id)
             .filter(Boolean)
           if (itemIds.length) {
             const { data: commissionLines } = await query.graph({
@@ -329,7 +330,7 @@ medusaIntegrationTestRunner({
             })
             for (const item of order.items) {
               item.commission_lines = commissionLines.filter(
-                (line: any) => line.item_id === item.id
+                (line) => line.item_id === item.id
               )
             }
           }
@@ -339,7 +340,7 @@ medusaIntegrationTestRunner({
 
         const placeOrder = async (quantity: number) => {
           const cart = await createCart()
-          await addItemToCart(cart.id, offer.id, quantity)
+          await addItemToCart(cart.id, product.variants[0].id, quantity)
           await updateCartWithAddress(cart.id)
           await addShippingMethodToCart(cart.id, shippingOption.id)
 
@@ -375,12 +376,16 @@ medusaIntegrationTestRunner({
           const payoutsResponse = await api.get(`/vendor/payouts`, sellerHeaders)
 
           expect(payoutsResponse.status).toEqual(200)
-          const listed = payoutsResponse.data.payouts.find(
-            (p: any) => p.id === payout.id
-          )
+          const listed = (
+            payoutsResponse.data.payouts as {
+              id: string
+              amount: number
+              currency_code: string
+            }[]
+          ).find((p) => p.id === payout.id)
           expect(listed).toBeDefined()
-          expect(Number(listed.amount)).toEqual(Number(payout.amount))
-          expect(listed.currency_code).toEqual("usd")
+          expect(Number(listed?.amount)).toEqual(Number(payout.amount))
+          expect(listed?.currency_code).toEqual("usd")
         })
 
         it("should reject creating a payout for a non-existent order", async () => {
@@ -415,7 +420,9 @@ medusaIntegrationTestRunner({
           expect(Number(payout1.amount)).toBeGreaterThan(Number(payout2.amount))
 
           const payoutsResponse = await api.get(`/vendor/payouts`, sellerHeaders)
-          const ids = payoutsResponse.data.payouts.map((p: any) => p.id)
+          const ids = (
+            payoutsResponse.data.payouts as { id: string }[]
+          ).map((p) => p.id)
           expect(ids).toContain(payout1.id)
           expect(ids).toContain(payout2.id)
         })

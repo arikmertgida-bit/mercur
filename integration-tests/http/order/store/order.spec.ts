@@ -3,9 +3,16 @@ import {
     IRegionModuleService,
     ISalesChannelModuleService,
     MedusaContainer,
+    RegionDTO,
+    SalesChannelDTO,
 } from "@medusajs/framework/types"
 import { ContainerRegistrationKeys, Modules } from "@medusajs/framework/utils"
-import { MercurModules, SellerStatus } from "@mercurjs/types"
+import {
+    MercurModules,
+    ProductDTO,
+    SellerDTO,
+    SellerStatus,
+} from "@mercurjs/types"
 import { createSellerUser } from "../../../helpers/create-seller-user"
 import { createCustomerUser } from "../../../helpers/create-customer-user"
 import { generatePublishableKey, generateStoreHeaders } from "../../../helpers/create-admin-user"
@@ -13,31 +20,42 @@ import { createVendorProduct } from "../../../helpers/create-product"
 
 jest.setTimeout(120000)
 
+type RequestHeaders = { headers: Record<string, string> }
+
+type SellerModuleLike = {
+    updateSellers: (
+        input: { id: string; status: SellerStatus }[]
+    ) => Promise<SellerDTO[]>
+}
+
+type OrderRow = {
+    id: string
+    seller?: { id: string } | null
+    status?: string
+    items?: { id: string }[]
+    shipping_address?: { id: string } | null
+}
+
 medusaIntegrationTestRunner({
     testSuite: ({ getContainer, api }) => {
         describe("Vendor - Orders", () => {
             let appContainer: MedusaContainer
-            let seller1: any
-            let seller1Headers: any
-            let seller2: any
-            let seller2Headers: any
-            let _customer: any
-            let storeHeaders: any
-            let region: any
-            let salesChannel: any
-            let product1: any
-            let product2: any
-            let offer1: any
-            let offer2: any
-            let _shippingOption1: any
-            let _shippingOption2: any
+            let seller1: SellerDTO
+            let seller1Headers: RequestHeaders
+            let seller2: SellerDTO
+            let seller2Headers: RequestHeaders
+            let storeHeaders: RequestHeaders
+            let region: RegionDTO
+            let salesChannel: SalesChannelDTO
+            let product1: ProductDTO
+            let product2: ProductDTO
 
-            const approveSeller = async (sellerId: string) => {
-                const sellerModule: any = appContainer.resolve(MercurModules.SELLER)
-                await sellerModule.updateSellers({
+            const approveSeller = async (sellerId: string): Promise<void> => {
+                const sellerModule = appContainer.resolve<SellerModuleLike>(MercurModules.SELLER)
+                await sellerModule.updateSellers([{
                     id: sellerId,
                     status: SellerStatus.OPEN,
-                })
+                }])
             }
 
             beforeAll(async () => {
@@ -70,7 +88,6 @@ medusaIntegrationTestRunner({
                     first_name: "Order",
                     last_name: "Customer",
                 })
-                _customer = customerResult.customer
 
                 const apiKey = await generatePublishableKey(appContainer)
                 storeHeaders = generateStoreHeaders({ publishableKey: apiKey })
@@ -97,35 +114,11 @@ medusaIntegrationTestRunner({
                     [Modules.PAYMENT]: { payment_provider_id: "pp_system_default" },
                 })
 
-                // Create product for seller 1
-                product1 = await createVendorProduct(api, seller1Headers, {
-                    title: "Seller 1 Product",
-                    sku: "SELLER1-S",
-                    variantTitle: "Small",
-                })
-                await api.post(
-                    `/vendor/sales-channels/${salesChannel.id}/products`,
-                    { add: [product1.id] },
-                    seller1Headers
-                )
-
-                // Create product for seller 2
-                product2 = await createVendorProduct(api, seller2Headers, {
-                    title: "Seller 2 Product",
-                    sku: "SELLER2-RED",
-                    variantTitle: "Red",
-                })
-                await api.post(
-                    `/vendor/sales-channels/${salesChannel.id}/products`,
-                    { add: [product2.id] },
-                    seller2Headers
-                )
-
                 // Create shipping prerequisites for seller 1
                 const shippingPrerequisites1 = await createShippingPrerequisites(seller1Headers, "seller1")
 
                 // Create shipping option for seller 1
-                const shippingOption1Response = await api.post(
+                await api.post(
                     `/vendor/shipping-options`,
                     {
                         name: "Seller 1 Shipping",
@@ -149,13 +142,36 @@ medusaIntegrationTestRunner({
                     },
                     seller1Headers
                 )
-                _shippingOption1 = shippingOption1Response.data.shipping_option
+
+                // Create product for seller 1, with pricing + inventory on the variant.
+                product1 = await createVendorProduct(api, seller1Headers, {
+                    title: "Seller 1 Product",
+                    variants: [
+                        {
+                            title: "Small",
+                            sku: "SELLER1-S",
+                            prices: [{ amount: 1000, currency_code: "usd" }],
+                            inventory: [
+                                {
+                                    location_id: shippingPrerequisites1.stockLocation.id,
+                                    quantity: 100,
+                                },
+                            ],
+                        },
+                    ],
+                    extra: { shipping_profile_id: shippingPrerequisites1.shippingProfile.id },
+                })
+                await api.post(
+                    `/vendor/sales-channels/${salesChannel.id}/products`,
+                    { add: [product1.id] },
+                    seller1Headers
+                )
 
                 // Create shipping prerequisites for seller 2
                 const shippingPrerequisites2 = await createShippingPrerequisites(seller2Headers, "seller2")
 
                 // Create shipping option for seller 2
-                const shippingOption2Response = await api.post(
+                await api.post(
                     `/vendor/shipping-options`,
                     {
                         name: "Seller 2 Shipping",
@@ -179,66 +195,35 @@ medusaIntegrationTestRunner({
                     },
                     seller2Headers
                 )
-                _shippingOption2 = shippingOption2Response.data.shipping_option
 
-                // Create offer for seller 1
-                const offer1Response = await api.post(
-                    `/vendor/offers`,
-                    {
-                        sku: `OF-SELLER1-${Date.now()}`,
-                        variant_id: product1.variants[0].id,
-                        shipping_profile_id: shippingPrerequisites1.shippingProfile.id,
-                        inventory_items: [
-                            {
-                                title: "Seller 1 Inventory",
-                                required_quantity: 1,
-                                stock_levels: [
-                                    {
-                                        location_id: shippingPrerequisites1.stockLocation.id,
-                                        stocked_quantity: 100,
-                                    },
-                                ],
-                            },
-                        ],
-                        prices: [
-                            { amount: 1000, currency_code: "usd" },
-                        ],
-                    },
-                    seller1Headers
-                )
-                offer1 = offer1Response.data.offer
-
-                // Create offer for seller 2
-                const offer2Response = await api.post(
-                    `/vendor/offers`,
-                    {
-                        sku: `OF-SELLER2-${Date.now()}`,
-                        variant_id: product2.variants[0].id,
-                        shipping_profile_id: shippingPrerequisites2.shippingProfile.id,
-                        inventory_items: [
-                            {
-                                title: "Seller 2 Inventory",
-                                required_quantity: 1,
-                                stock_levels: [
-                                    {
-                                        location_id: shippingPrerequisites2.stockLocation.id,
-                                        stocked_quantity: 100,
-                                    },
-                                ],
-                            },
-                        ],
-                        prices: [
-                            { amount: 1500, currency_code: "usd" },
-                        ],
-                    },
+                // Create product for seller 2, with pricing + inventory on the variant.
+                product2 = await createVendorProduct(api, seller2Headers, {
+                    title: "Seller 2 Product",
+                    variants: [
+                        {
+                            title: "Red",
+                            sku: "SELLER2-RED",
+                            prices: [{ amount: 1500, currency_code: "usd" }],
+                            inventory: [
+                                {
+                                    location_id: shippingPrerequisites2.stockLocation.id,
+                                    quantity: 100,
+                                },
+                            ],
+                        },
+                    ],
+                    extra: { shipping_profile_id: shippingPrerequisites2.shippingProfile.id },
+                })
+                await api.post(
+                    `/vendor/sales-channels/${salesChannel.id}/products`,
+                    { add: [product2.id] },
                     seller2Headers
                 )
-                offer2 = offer2Response.data.offer
             })
 
             let prerequisiteCounter = 0
 
-            const createShippingPrerequisites = async (headers: any, prefix: string) => {
+            const createShippingPrerequisites = async (headers: RequestHeaders, prefix: string) => {
                 const uniqueSuffix = `_${prefix}_${Date.now()}_${++prerequisiteCounter}`
 
                 // Create stock location
@@ -275,7 +260,7 @@ medusaIntegrationTestRunner({
                     headers
                 )
                 const serviceZone = serviceZoneResponse.data.fulfillment_set.service_zones.find(
-                    (z: any) => z.name === `Service Zone${uniqueSuffix}`
+                    (zone: { name: string }) => zone.name === `Service Zone${uniqueSuffix}`
                 )
 
                 // Create shipping profile
@@ -311,8 +296,6 @@ medusaIntegrationTestRunner({
                 }
             }
 
-
-
             describe("Order Split by Vendor", () => {
                 it("should split orders by vendor when cart has items from multiple sellers", async () => {
                     // 1. Create cart with customer authentication
@@ -332,7 +315,7 @@ medusaIntegrationTestRunner({
                     const addItem1Response = await api.post(
                         `/store/carts/${cart.id}/line-items`,
                         {
-                            offer_id: offer1.id,
+                            variant_id: product1.variants[0].id,
                             quantity: 2,
                         },
                         storeHeaders
@@ -343,7 +326,7 @@ medusaIntegrationTestRunner({
                     const addItem2Response = await api.post(
                         `/store/carts/${cart.id}/line-items`,
                         {
-                            offer_id: offer2.id,
+                            variant_id: product2.variants[0].id,
                             quantity: 1,
                         },
                         storeHeaders
@@ -357,7 +340,7 @@ medusaIntegrationTestRunner({
                         storeHeaders
                     )
 
-                    const sellerShippingOptions = shippingOptionsResponse.data.shipping_options as Record<string, any[]>
+                    const sellerShippingOptions = shippingOptionsResponse.data.shipping_options as Record<string, { id: string }[]>
 
                     // 6. Add shipping methods for each seller
                     for (const [, options] of Object.entries(sellerShippingOptions)) {
@@ -419,11 +402,12 @@ medusaIntegrationTestRunner({
                     expect(orderGroupResponse.status).toEqual(200)
                     const orderGroup = orderGroupResponse.data.order_group
                     expect(orderGroup).toBeDefined()
-                    expect(orderGroup.orders).toBeDefined()
-                    expect(orderGroup.orders.length).toEqual(2)
+                    const orders = orderGroup.orders as OrderRow[]
+                    expect(orders).toBeDefined()
+                    expect(orders.length).toEqual(2)
 
                     // Verify each order belongs to a different seller
-                    const sellerIds = orderGroup.orders.map((order: any) => order.seller.id)
+                    const sellerIds = orders.map((order) => order.seller?.id)
                     expect(sellerIds).toContain(seller1.id)
                     expect(sellerIds).toContain(seller2.id)
 
@@ -431,7 +415,7 @@ medusaIntegrationTestRunner({
                     expect(orderGroup.seller_count).toEqual(2)
 
                     // Verify order details are included
-                    orderGroup.orders.forEach((order: any) => {
+                    orders.forEach((order) => {
                         expect(order.id).toBeDefined()
                         expect(order.status).toBeDefined()
                         expect(order.items).toBeDefined()
@@ -456,7 +440,7 @@ medusaIntegrationTestRunner({
                     const addItemResponse = await api.post(
                         `/store/carts/${cart.id}/line-items`,
                         {
-                            offer_id: offer1.id,
+                            variant_id: product1.variants[0].id,
                             quantity: 3,
                         },
                         storeHeaders
@@ -470,7 +454,7 @@ medusaIntegrationTestRunner({
                         storeHeaders
                     )
 
-                    const sellerShippingOptions = shippingOptionsResponse.data.shipping_options as Record<string, any[]>
+                    const sellerShippingOptions = shippingOptionsResponse.data.shipping_options as Record<string, { id: string }[]>
 
                     // 4. Add shipping method
                     for (const [, options] of Object.entries(sellerShippingOptions)) {
@@ -525,14 +509,15 @@ medusaIntegrationTestRunner({
                     const orderGroup = orderGroupResponse.data.order_group
 
                     // Verify only one order was created
-                    expect(orderGroup.orders).toBeDefined()
-                    expect(orderGroup.orders.length).toEqual(1)
+                    const orders = orderGroup.orders as OrderRow[]
+                    expect(orders).toBeDefined()
+                    expect(orders.length).toEqual(1)
                     expect(orderGroup.seller_count).toEqual(1)
 
                     // Verify order details are included
-                    const order = orderGroup.orders[0]
+                    const order = orders[0]
                     expect(order.id).toBeDefined()
-                    expect(order.seller.id).toEqual(seller1.id)
+                    expect(order.seller?.id).toEqual(seller1.id)
                     expect(order.items).toBeDefined()
                 })
 
@@ -547,13 +532,13 @@ medusaIntegrationTestRunner({
                         },
                         storeHeaders
                     )
-                    let cart = cartResponse.data.cart
+                    const cart = cartResponse.data.cart
 
                     // Add items from both sellers
                     await api.post(
                         `/store/carts/${cart.id}/line-items`,
                         {
-                            offer_id: offer1.id,
+                            variant_id: product1.variants[0].id,
                             quantity: 1,
                         },
                         storeHeaders
@@ -562,7 +547,7 @@ medusaIntegrationTestRunner({
                     await api.post(
                         `/store/carts/${cart.id}/line-items`,
                         {
-                            offer_id: offer2.id,
+                            variant_id: product2.variants[0].id,
                             quantity: 1,
                         },
                         storeHeaders
@@ -574,7 +559,7 @@ medusaIntegrationTestRunner({
                         storeHeaders
                     )
 
-                    const sellerShippingOptions = shippingOptionsResponse.data.shipping_options as Record<string, any[]>
+                    const sellerShippingOptions = shippingOptionsResponse.data.shipping_options as Record<string, { id: string }[]>
 
                     for (const [, options] of Object.entries(sellerShippingOptions)) {
                         if (options.length > 0) {
@@ -619,8 +604,9 @@ medusaIntegrationTestRunner({
                         storeHeaders
                     )
                     const orderGroup = orderGroupResponse.data.order_group
-                    expect(orderGroup.orders).toBeDefined()
-                    expect(orderGroup.orders.length).toEqual(2)
+                    const orderGroupOrders = orderGroup.orders as OrderRow[]
+                    expect(orderGroupOrders).toBeDefined()
+                    expect(orderGroupOrders.length).toEqual(2)
 
                     // 2. Verify seller 1 can view their order
                     const seller1OrdersResponse = await api.get(
@@ -629,12 +615,12 @@ medusaIntegrationTestRunner({
                     )
 
                     expect(seller1OrdersResponse.status).toEqual(200)
-                    const seller1Orders = seller1OrdersResponse.data.orders
+                    const seller1Orders = seller1OrdersResponse.data.orders as OrderRow[]
                     expect(seller1Orders.length).toBeGreaterThanOrEqual(1)
 
                     // Find the order from this order group
                     const seller1OrderFromGroup = seller1Orders.find(
-                        (order: any) => orderGroup.orders.some((o: any) => o.id === order.id)
+                        (order) => orderGroupOrders.some((o) => o.id === order.id)
                     )
                     expect(seller1OrderFromGroup).toBeDefined()
 
@@ -645,27 +631,27 @@ medusaIntegrationTestRunner({
                     )
 
                     expect(seller2OrdersResponse.status).toEqual(200)
-                    const seller2Orders = seller2OrdersResponse.data.orders
+                    const seller2Orders = seller2OrdersResponse.data.orders as OrderRow[]
                     expect(seller2Orders.length).toBeGreaterThanOrEqual(1)
 
                     // Find the order from this order group
                     const seller2OrderFromGroup = seller2Orders.find(
-                        (order: any) => orderGroup.orders.some((o: any) => o.id === order.id)
+                        (order) => orderGroupOrders.some((o) => o.id === order.id)
                     )
                     expect(seller2OrderFromGroup).toBeDefined()
 
                     // 4. Verify sellers can only see their own orders (not each other's)
-                    const seller1OrderIds = seller1Orders.map((o: any) => o.id)
-                    const seller2OrderIds = seller2Orders.map((o: any) => o.id)
+                    const seller1OrderIds = seller1Orders.map((o) => o.id)
+                    const seller2OrderIds = seller2Orders.map((o) => o.id)
 
                     // Seller 1 should not have seller 2's order from this group
-                    const seller2OrderInGroup = orderGroup.orders.find((o: any) => o.seller.id === seller2.id)
+                    const seller2OrderInGroup = orderGroupOrders.find((o) => o.seller?.id === seller2.id)
                     if (seller2OrderInGroup) {
                         expect(seller1OrderIds).not.toContain(seller2OrderInGroup.id)
                     }
 
                     // Seller 2 should not have seller 1's order from this group
-                    const seller1OrderInGroup = orderGroup.orders.find((o: any) => o.seller.id === seller1.id)
+                    const seller1OrderInGroup = orderGroupOrders.find((o) => o.seller?.id === seller1.id)
                     if (seller1OrderInGroup) {
                         expect(seller2OrderIds).not.toContain(seller1OrderInGroup.id)
                     }
