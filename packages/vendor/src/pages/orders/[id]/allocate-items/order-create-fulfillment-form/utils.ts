@@ -1,4 +1,4 @@
-import { OfferInventoryLinkRow } from "@lib/inventory-preview"
+import { VariantInventoryLinkRow } from "@lib/inventory-preview"
 
 export type AllocationQuantityMap = Record<string, number | string>
 export type AllocationSelectedMap = Record<string, boolean>
@@ -7,7 +7,7 @@ type AllocatableItem = {
   id: string
   quantity: number
   detail?: { fulfilled_quantity?: number | null } | null
-  offer?: { inventory_item_link?: OfferInventoryLinkRow[] | null } | null
+  variant?: { inventory_items?: VariantInventoryLinkRow[] | null } | null
 }
 
 type AllocatableReservation = { line_item_id?: string | null }
@@ -16,14 +16,13 @@ type AllocatableReservation = { line_item_id?: string | null }
  * Selects the order line items that can still be allocated.
  *
  * Mirrors `showAllocateButton` in the order summary: an item is allocatable
- * only when it is inventory-managed (`offer.inventory_item_link`), still has
+ * only when it is inventory-managed (`variant.inventory_items`), still has
  * unfulfilled quantity, and does **not** already have a reservation.
  *
  * Regression guard (MER-187): the form previously listed every unfulfilled
  * inventory-managed item — including ones that were already allocated — and
  * pre-selected them all. Submitting then created a *second* reservation for
- * the already-allocated items. Because Mercur offers link inventory to the
- * offer (not the variant), the order summary fetches reservations with a
+ * the already-allocated items. The order summary fetches reservations with a
  * one-per-line-item limit, so the surplus duplicate reservations pushed the
  * freshly-added item's reservation out of the response and its badge stayed
  * "Not allocated" even though allocation reported success. Excluding
@@ -41,7 +40,7 @@ export function getAllocatableItems<T extends AllocatableItem>(
 
   return items.filter(
     (item) =>
-      !!item.offer?.inventory_item_link?.length &&
+      !!item.variant?.inventory_items?.length &&
       item.quantity - (item.detail?.fulfilled_quantity ?? 0) > 0 &&
       !reserved.has(item.id)
   )

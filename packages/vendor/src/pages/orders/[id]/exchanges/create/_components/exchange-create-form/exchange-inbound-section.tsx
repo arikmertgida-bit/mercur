@@ -89,8 +89,8 @@ let itemsToRemove: string[] = []
  *  - No variant-level inventory map (admin queries
  *    `sdk.admin.productVariant.list` which doesn't exist on the vendor
  *    SDK). The per-item restock preview lives on `ExchangeInboundItem`
- *    via Mercur's offer-aware `getOfferRestockPreview`.
- *  - Currency-aware offer picker: the inbound picker still reuses
+ *    via `getVariantRestockPreview`.
+ *  - Currency-aware inbound picker: the inbound picker still reuses
  *    `AddExchangeInboundItemsTable` which already takes `currencyCode`.
  */
 export const ExchangeInboundSection = ({

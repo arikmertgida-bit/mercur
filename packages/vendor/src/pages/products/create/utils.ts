@@ -2,16 +2,29 @@ import { HttpTypes } from "@medusajs/types"
 import { AttributeType, ProductAttributeBatchAdd } from "@mercurjs/types"
 import { ProductCreateSchemaType } from "./types"
 
-export type NormalizedCreateProduct = HttpTypes.AdminCreateProduct & {
+export type NormalizedCreateProductVariant =
+  HttpTypes.AdminCreateProductVariant & {
+    // Mercur extension: initial stock levels to seed on the variant's
+    // auto-created inventory item, keyed by stock location.
+    inventory?: { location_id: string; quantity: number }[]
+  }
+
+export type NormalizedCreateProduct = Omit<
+  HttpTypes.AdminCreateProduct,
+  "variants"
+> & {
   // Mercur's `attributes[]` batch-add extension on top of the stock Medusa
   // create-product payload — not part of `AdminCreateProduct` itself.
   attributes?: ProductAttributeBatchAdd[]
+  shipping_profile_id?: string
+  variants: NormalizedCreateProductVariant[]
 }
 
 export const normalizeProductFormValues = (
   values: ProductCreateSchemaType & {
     status: HttpTypes.AdminProductStatus
-  }
+  },
+  currencyCode?: string
 ): NormalizedCreateProduct => {
   const thumbnail = values.media?.find((media) => media.isThumbnail)?.url
   const images = values.media
@@ -43,6 +56,7 @@ export const normalizeProductFormValues = (
     collection_id: values.collection_id || undefined,
     categories: values.category_id ? [{ id: values.category_id }] : undefined,
     type_id: values.type_id || undefined,
+    shipping_profile_id: values.shipping_profile_id || undefined,
     handle: values.handle?.trim(),
     origin_country: values.origin_country || undefined,
     material: values.material || undefined,
@@ -61,23 +75,52 @@ export const normalizeProductFormValues = (
     variants: normalizeVariants(
       values.variants.filter((variant) => variant.should_create),
       hasAxis,
+      currencyCode,
     ),
   }
+}
+
+const numericOrZero = (value: number | "" | undefined | null): number => {
+  if (value === "" || value === null || value === undefined) return 0
+  return Number(value) || 0
 }
 
 export const normalizeVariants = (
   variants: ProductCreateSchemaType["variants"],
   hasAxis: boolean,
-): HttpTypes.AdminCreateProductVariant[] => {
+  currencyCode?: string,
+): NormalizedCreateProductVariant[] => {
   return variants.map((variant) => {
     const opts = variant.options
     const hasOpts = opts && Object.keys(opts).length > 0
+
+    const prices = currencyCode
+      ? [
+          {
+            currency_code: currencyCode,
+            amount: numericOrZero(variant.prices?.[currencyCode]),
+          },
+        ]
+      : []
+
+    const inventory = Object.entries(variant.inventory ?? {})
+      .filter(([, level]) => level?.checked)
+      .map(([locationId, level]) => ({
+        location_id: locationId,
+        quantity: numericOrZero(level.quantity),
+      }))
 
     return {
       title: variant.title || (hasOpts ? Object.values(opts).join(" / ") : "Default variant"),
       options: hasOpts ? opts : hasAxis ? undefined : { "Default Option": "Default" },
       sku: variant.sku || undefined,
       variant_rank: variant.variant_rank,
+      // `manage_inventory` isn't part of the create-product variant schema —
+      // `createProductsWorkflow` (packages/core) derives it itself from the
+      // presence of `inventory` entries. Sending it trips the endpoint's
+      // `.strict()` Zod schema ("unrecognized field").
+      prices,
+      inventory,
     }
   })
 }
@@ -164,6 +207,8 @@ export const decorateVariantsWithDefaultValues = (
     ...variant,
     title: variant.title || "",
     sku: variant.sku || "",
+    prices: variant.prices ?? {},
+    inventory: variant.inventory ?? {},
   }))
 }
 
@@ -212,6 +257,8 @@ export const generateVariantsFromAttributes = (
         variant_rank: 0,
         options: {},
         is_default: true,
+        prices: {},
+        inventory: {},
       },
     ])
   }
@@ -248,6 +295,8 @@ export const generateVariantsFromAttributes = (
         options: perm,
         should_create: true,
         variant_rank: newVariants.length,
+        prices: {},
+        inventory: {},
       })
     }
   }

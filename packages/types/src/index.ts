@@ -17,9 +17,6 @@ export * as HttpTypes from "./http"
 // Payout types
 export * from "./payout"
 
-// Offer types
-export * from "./offer"
-
 // Product types — explicit re-export overrides Medusa's product surface.
 // Mercur's runtime enums and Mercur-extended DTOs (Omit + intersection over
 // upstream) win over the wholesale `export * from "@medusajs/types"` above.

@@ -14,7 +14,6 @@ import {
 } from "../../../../../components/modals";
 import { useAddOrderEditItems } from "../../../../../hooks/api/order-edits";
 import { AddOrderEditItemsTable } from "../add-order-edit-items-table";
-import type { OfferPickerSelection } from "../add-order-edit-items-table/add-order-edit-items-table";
 import { OrderEditItem } from "./order-edit-item";
 
 type ExchangeInboundSectionProps = {
@@ -22,7 +21,7 @@ type ExchangeInboundSectionProps = {
   preview: AdminOrderPreview;
 };
 
-let addedSelections: OfferPickerSelection[] = [];
+let addedSelections: string[] = [];
 
 export const OrderEditItemsSection = ({
   order,
@@ -38,10 +37,9 @@ export const OrderEditItemsSection = ({
   const onItemsSelected = async () => {
     await addItems(
       {
-        items: addedSelections.map(({ variantId, offerId }) => ({
-          variant_id: variantId,
+        items: addedSelections.map((variant_id) => ({
+          variant_id,
           quantity: 1,
-          metadata: { offer_id: offerId },
         })),
       },
       {
@@ -104,7 +102,6 @@ export const OrderEditItemsSection = ({
               <StackedFocusModal.Header data-testid="order-edit-items-section-add-items-modal-header" />
 
               <AddOrderEditItemsTable
-                currencyCode={order.currency_code}
                 onSelectionChange={(finalSelection) => {
                   addedSelections = finalSelection;
                 }}

@@ -11,7 +11,7 @@ import { Combobox } from "../../../../../components/inputs/combobox"
 import { MoneyAmountCell } from "../../../../../components/table/table-cells/common/money-amount-cell"
 import { useReturnReasons } from "../../../../../hooks/api/return-reasons"
 import {
-  getOfferRestockPreview,
+  getVariantRestockPreview,
   type LineItemShape,
 } from "../../../../../lib/inventory-preview"
 
@@ -28,8 +28,8 @@ type ExchangeInboundItemProps = {
 
   /**
    * Stock location chosen for this exchange. When set, the row renders the
-   * offer-aware restock preview matching the math the backend runs on
-   * receive (see `getOfferRestockPreview`).
+   * variant-aware restock preview matching the math the backend runs on
+   * receive (see `getVariantRestockPreview`).
    */
   locationId?: string
   locationName?: string
@@ -54,10 +54,9 @@ function ExchangeInboundItem({
   const showNote = typeof formItem.note === "string"
 
   const restockRows = locationId
-    ? getOfferRestockPreview(item as LineItemShape, formItem?.quantity ?? 0)
+    ? getVariantRestockPreview(item as LineItemShape, formItem?.quantity ?? 0)
     : []
-  const offerSku =
-    (item as LineItemShape).offer?.sku ?? item.variant_sku ?? null
+  const variantSku = item.variant_sku ?? null
 
   return (
     <div className="bg-ui-bg-subtle shadow-elevation-card-rest my-2 rounded-xl ">
@@ -162,7 +161,7 @@ function ExchangeInboundItem({
             >
               {t("orders.returns.restockPreview", {
                 quantity: formItem?.quantity ?? 0,
-                offerSku: offerSku ?? "—",
+                variantSku: variantSku ?? "—",
                 delta: row.delta,
                 inventoryItem: row.inventoryItemLabel,
                 location: locationName ?? "—",

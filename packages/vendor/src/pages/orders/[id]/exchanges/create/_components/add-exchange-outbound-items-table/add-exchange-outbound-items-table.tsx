@@ -1,15 +1,13 @@
-import { HttpTypes } from "@medusajs/types"
-import { OfferDTO } from "@mercurjs/types"
 import { OnChangeFn, RowSelectionState } from "@tanstack/react-table"
 import { useMemo, useState } from "react"
 import { useTranslation } from "react-i18next"
 
 import { _DataTable } from "@components/table/data-table"
-import { useOffers } from "@hooks/api/offers"
+import { useProducts } from "@hooks/api/products"
 import { useDataTable } from "@hooks/use-data-table"
 
 import {
-  OutboundOfferPickerRow,
+  OutboundVariantPickerRow,
   useExchangeOutboundItemTableColumns,
 } from "./use-exchange-outbound-item-table-columns"
 import { useExchangeOutboundItemTableFilters } from "./use-exchange-outbound-item-table-filters"
@@ -18,83 +16,37 @@ import { useExchangeOutboundItemTableQuery } from "./use-exchange-outbound-item-
 const PAGE_SIZE = 50
 const PREFIX = "rit"
 
-// Field set covers the picker columns + variant_id needed downstream.
-// `prices.*` + `product_variant.*.inventory*` feed the offer picker
-// defaults: only show offers that have a price in the order's currency
-// AND have inventory (or `manage_inventory=false`). Mirrors
-// `add-order-edit-items-table` from the Edit Order flow.
-const OFFER_PICKER_FIELDS = [
+// Field set covers the picker columns + the variant id needed downstream.
+// `sdk.vendor.products.query` is seller-scoped at the API boundary, so the
+// "from this store's own catalog" rule is implicit.
+const PRODUCT_PICKER_FIELDS = [
   "id",
-  "sku",
-  "variant_id",
-  "seller_id",
-  "prices.amount",
-  "prices.currency_code",
-  "product_variant.id",
-  "product_variant.title",
-  "product_variant.product.id",
-  "product_variant.product.title",
-  "product_variant.product.thumbnail",
-  "product_variant.manage_inventory",
-  "product_variant.inventory_quantity",
-  "product_variant.inventory_items.required_quantity",
-  "product_variant.inventory_items.inventory.location_levels.available_quantity",
+  "title",
+  "thumbnail",
+  "variants.id",
+  "variants.sku",
+  "variants.title",
 ].join(",")
 
-// The picker row is an `OfferDTO` joined with the variant inventory
-// surface from the Medusa product module. `OfferDTO` already carries the
-// `prices` and `inventory_items` link relations; `product_variant` is
-// the joined `AdminProductVariant` Medusa returns via the offer ↔ variant
-// module link.
-type OutboundOfferPickerRowExtended = OutboundOfferPickerRow &
-  Pick<OfferDTO, "prices"> & {
-    product_variant?: OutboundOfferPickerRow["product_variant"] &
-      Pick<
-        HttpTypes.AdminProductVariant,
-        "manage_inventory" | "inventory_quantity" | "inventory_items"
-      >
-  }
+type ProductPickerRow = {
+  id?: string | null
+  title?: string | null
+  thumbnail?: string | null
+  variants?: OutboundVariantPickerRow[] | null
+}
 
 type AddExchangeOutboundItemsTableProps = {
   /**
-   * The currency of the order this picker is feeding. Offers without a
-   * matching price are filtered out by the picker defaults.
+   * Receives the picked variant ids. The parent submits them as
+   * `{ variant_id, quantity }` to the exchange "add outbound items"
+   * route, which computes the unit price server-side when none is
+   * supplied.
    */
-  currencyCode?: string
-  /**
-   * Receives the picked **offer IDs**. The modal layer passes them to
-   * `useAddExchangeOutboundItems` as `{ offer_id, quantity }`. The vendor
-   * backend resolves the offer to `variant_id + unit_price` and persists
-   * the `order_line_item ↔ offer` link via subscriber on confirm.
-   */
-  onSelectionChange: (offerIds: string[]) => void
+  onSelectionChange: (variantIds: string[]) => void
   selectedItems?: string[]
 }
 
-const offerHasInventory = (offer: OutboundOfferPickerRowExtended): boolean => {
-  const variant = offer.product_variant
-  if (!variant) return false
-  if (variant.manage_inventory === false) return true
-
-  // Bundle-aware check: for each linked inventory_item, sum available across
-  // location levels, divide by required_quantity. Offer has inventory only
-  // when every linked item can satisfy at least one unit.
-  const links = variant.inventory_items ?? []
-  if (!links.length) {
-    return (variant.inventory_quantity ?? 0) > 0
-  }
-  return links.every((link) => {
-    const available = (link.inventory?.location_levels ?? []).reduce(
-      (acc, lvl) => acc + (lvl.available_quantity ?? 0),
-      0
-    )
-    const required = link.required_quantity ?? 1
-    return required > 0 && available >= required
-  })
-}
-
 export const AddExchangeOutboundItemsTable = ({
-  currencyCode,
   onSelectionChange,
   selectedItems = [],
 }: AddExchangeOutboundItemsTableProps) => {
@@ -120,49 +72,40 @@ export const AddExchangeOutboundItemsTable = ({
     prefix: PREFIX,
   })
 
-  const offersResponse = useOffers({
+  const productsResponse = useProducts({
     ...searchParams,
-    fields: OFFER_PICKER_FIELDS,
+    fields: PRODUCT_PICKER_FIELDS,
   })
-  const rawOffers = useMemo(
-    () => offersResponse.offers ?? [],
-    [offersResponse.offers]
-  )
-  const rawCount = offersResponse.count ?? 0
+  const rawProducts = productsResponse.products as
+    | ProductPickerRow[]
+    | undefined
+  const rawCount = productsResponse.count ?? 0
 
-  // Picker defaults: only offers (1) with a price in the order's currency
-  // and (2) with stock. Filter client-side — the alternative is a
-  // `with_price` + `inventory_quantity_gte` backend param that doesn't
-  // exist on `GET /vendor/offers` today.
-  const offers = useMemo<OutboundOfferPickerRowExtended[]>(() => {
-    return rawOffers.filter((offer) => {
-      if (currencyCode) {
-        const hasPrice = (offer.prices ?? []).some(
-          (p) => p.currency_code === currencyCode
-        )
-        if (!hasPrice) return false
-      }
-      return offerHasInventory(offer)
-    })
-  }, [rawOffers, currencyCode])
+  const variants = useMemo<OutboundVariantPickerRow[]>(() => {
+    const products = rawProducts ?? []
+    return products.flatMap((product) =>
+      (product.variants ?? []).map((variant) => ({
+        ...variant,
+        product: {
+          id: product.id,
+          title: product.title,
+          thumbnail: product.thumbnail,
+        },
+      }))
+    )
+  }, [rawProducts])
 
-  // Surface the post-filter count so the pagination footer reflects what
-  // the seller actually sees. rawCount stays available for debugging if
-  // we ever push the filtering into the backend.
-  const count = offers.length
+  const count = variants.length
   void rawCount
 
   const columns = useExchangeOutboundItemTableColumns()
   const filters = useExchangeOutboundItemTableFilters()
 
   const { table } = useDataTable({
-    data: offers,
+    data: variants,
     columns,
     count,
     enablePagination: true,
-    // Row id = offer id so onSelectionChange yields offer_ids that the
-    // modal layer sends to the backend item-add routes (which accept
-    // `offer_id` and resolve to variant_id + unit_price server-side).
     getRowId: (row) => row.id,
     pageSize: PAGE_SIZE,
     enableRowSelection: () => true,
@@ -175,7 +118,7 @@ export const AddExchangeOutboundItemsTable = ({
   return (
     <div
       className="flex size-full flex-col overflow-hidden"
-      data-testid="add-offers-picker"
+      data-testid="add-variants-picker"
     >
       <_DataTable
         table={table}
@@ -187,7 +130,6 @@ export const AddExchangeOutboundItemsTable = ({
         layout="fill"
         search
         orderBy={[
-          { key: "sku", label: t("fields.sku") },
           { key: "created_at", label: t("fields.createdAt") },
           { key: "updated_at", label: t("fields.updatedAt") },
         ]}

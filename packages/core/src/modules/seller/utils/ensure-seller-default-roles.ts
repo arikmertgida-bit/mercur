@@ -19,7 +19,7 @@ export const SELLER_ROLES: SellerRoleDefinition[] = [
   {
     id: SellerRole.INVENTORY_MANAGEMENT,
     name: "Inventory Management",
-    description: "Manage offers and catalog",
+    description: "Manage products and inventory",
     policyKeys: [],
   },
   {

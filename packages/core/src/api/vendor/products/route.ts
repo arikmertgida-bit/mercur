@@ -10,10 +10,7 @@ import {
   createProductsWorkflow,
   type CreateProductsWorkflowInput,
 } from "../../../workflows/product/workflows/create-products"
-import {
-  enrichProductAttributes,
-  wrapProductVariantsWithOffers,
-} from "../../utils"
+import { enrichProductAttributes } from "../../utils"
 import { VendorCreateProductType, VendorGetProductsParamsType } from "./validators"
 
 export const GET = async (
@@ -21,15 +18,6 @@ export const GET = async (
   res: MedusaResponse<HttpTypes.VendorProductListResponse>
 ) => {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
-
-  const withOffers = req.queryConfig.fields.some((field) =>
-    field.includes("variants.offers")
-  )
-  if (withOffers) {
-    req.queryConfig.fields = req.queryConfig.fields.filter(
-      (field) => !field.includes("variants.offers")
-    )
-  }
 
   const { data: products, metadata } = await query.graph({
     entity: "product",
@@ -39,14 +27,6 @@ export const GET = async (
   })
 
   await enrichProductAttributes(req.scope, products)
-
-  if (withOffers) {
-    await wrapProductVariantsWithOffers(
-      req.scope,
-      products as Parameters<typeof wrapProductVariantsWithOffers>[1],
-      req.seller_context!.seller_id
-    )
-  }
 
   res.json({
     products,
@@ -72,6 +52,7 @@ export const POST = async (
     // `additional_data` is destructured out (confirmed via tsc); a TS/Zod-typing
     // boundary, not a shortcut — `payload.status` is really `ProductStatus | undefined`.
     status: payload.status ?? ProductStatus.PROPOSED,
+    seller_ids: [sellerId],
   }
 
   const { result } = await createProductsWorkflow(req.scope).run({

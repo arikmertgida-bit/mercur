@@ -41,24 +41,22 @@ import { CreateOrderGroupDTO, MercurModules, SellerDTO } from "@mercurjs/types"
 import { createOrderGroupStep } from "../../order-group"
 import { OrderGroupWorkflowEvents } from "../../events"
 import {
-    mirrorLineItemOfferLinksToOrderStep,
     validateSellerCartItemsStep,
     validateSellerCartShippingStep,
 } from "../steps"
 import {
     completeCartFields,
-    CartLineItemWithOffer,
+    CartLineItemWithSeller,
+    getLineItemSellerId,
     prepareAdjustmentsData,
     PrepareLineItemDataInput,
     prepareLineItemData,
     prepareTaxLinesData,
+    prepareVariantInventoryInput,
+    requiredVariantFieldsForInventoryConfirmation,
 } from "../utils"
 import { registerUsageStep } from "../../promotion"
 import { refreshOrderCommissionLinesWorkflow } from "../../commission/workflows/refresh-order-commission-lines"
-import {
-    prepareOfferInventoryInput,
-    requiredOfferFieldsForInventoryConfirmation,
-} from "../../offer/utils"
 
 type CompleteCartWithSplitOrdersWorkflowInput = {
     cart_id: string
@@ -152,10 +150,10 @@ export const completeCartWithSplitOrdersWorkflow = createWorkflow(
                 }
             )
 
-            const { ordersToCreate, sellerOrdersMap, offerIdsByOrderId } = transform({ cart: cartData.data, shippingOptionsData: shippingOptionsData.data }, ({ cart, shippingOptionsData }) => {
+            const { ordersToCreate, sellerOrdersMap, variantIdsByOrderId } = transform({ cart: cartData.data, shippingOptionsData: shippingOptionsData.data }, ({ cart, shippingOptionsData }) => {
                 const cartSellerIds = new Set<string>(
-                    ((cart.items ?? []) as CartLineItemWithOffer[])
-                        .map((item) => item.offer?.seller_id)
+                    ((cart.items ?? []) as CartLineItemWithSeller[])
+                        .map((item) => getLineItemSellerId(item))
                         .filter((id): id is string => typeof id === "string")
                 )
                 const sellerShippingOptionsMap = new Map()
@@ -167,39 +165,19 @@ export const completeCartWithSplitOrdersWorkflow = createWorkflow(
 
                 const sellerOrdersMap: Record<string, string> = {}
                 const ordersToCreate: (CreateOrderDTO & { id: string })[] = []
-                const offerIdsByOrderId: Record<string, (string | null)[]> = {}
+                const variantIdsByOrderId: Record<string, (string | null)[]> = {}
 
                 Array.from(cartSellerIds).map((sellerId) => {
-                    const sellerCartItems = ((cart.items ?? []) as CartLineItemWithOffer[]).filter(
-                        (item) => item.offer?.seller_id === sellerId
+                    const sellerCartItems = ((cart.items ?? []) as CartLineItemWithSeller[]).filter(
+                        (item) => getLineItemSellerId(item) === sellerId
                     )
                     const sellerShippingOptions = sellerShippingOptionsMap.get(sellerId) ?? []
                     const sellerCartShippingMethods = (cart.shipping_methods ?? []).filter((sm) => sellerShippingOptions.some((so) => so.id === sm.shipping_option_id))
 
                     const allItems = sellerCartItems.map((item) => {
-                        const offerShippingProfileId = (
-                            item as { offer?: { shipping_profile_id?: string } | null }
-                        ).offer?.shipping_profile_id
-                        const itemForLineItem = offerShippingProfileId
-                            ? { ...item, requires_shipping: true }
-                            : item
-                        const variantForLineItem =
-                            item.variant && offerShippingProfileId
-                                ? {
-                                      ...item.variant,
-                                      product: {
-                                          ...(item.variant.product ?? {}),
-                                          shipping_profile:
-                                              (item.variant.product as { shipping_profile?: { id: string } } | undefined)
-                                                  ?.shipping_profile ?? {
-                                                  id: offerShippingProfileId,
-                                              },
-                                      },
-                                  }
-                                : item.variant
                         const input: PrepareLineItemDataInput = {
-                            item: itemForLineItem,
-                            variant: variantForLineItem as PrepareLineItemDataInput["variant"],
+                            item,
+                            variant: item.variant as PrepareLineItemDataInput["variant"],
                             cartId: cart.id,
                             unitPrice: item.unit_price,
                             isTaxInclusive: item.is_tax_inclusive ?? false,
@@ -284,15 +262,15 @@ export const completeCartWithSplitOrdersWorkflow = createWorkflow(
                     })
 
                     sellerOrdersMap[sellerId] = orderId
-                    offerIdsByOrderId[orderId] = sellerCartItems.map(
-                        (item) => item.offer?.id ?? null,
+                    variantIdsByOrderId[orderId] = sellerCartItems.map(
+                        (item) => item.variant?.id ?? null,
                     )
                 })
 
                 return {
                     sellerOrdersMap,
                     ordersToCreate,
-                    offerIdsByOrderId,
+                    variantIdsByOrderId,
                 }
             })
 
@@ -333,91 +311,57 @@ export const completeCartWithSplitOrdersWorkflow = createWorkflow(
                 createOrdersStep(ordersToCreate)
             )
 
-            const orderLineOfferPairs = transform(
-                { createdOrders, offerIdsByOrderId },
-                ({ createdOrders, offerIdsByOrderId }) => {
-                    const pairs: Array<{
-                        order_line_item_id: string
-                        offer_id: string
-                    }> = []
-                    for (const order of createdOrders) {
-                        const offerIds = offerIdsByOrderId[order.id] ?? []
-                        const items = order.items ?? []
-                        for (let i = 0; i < items.length; i++) {
-                            const offerId = offerIds[i]
-                            if (offerId) {
-                                pairs.push({
-                                    order_line_item_id: items[i].id,
-                                    offer_id: offerId,
-                                })
-                            }
-                        }
-                    }
-                    return pairs
-                }
-            )
-
-            mirrorLineItemOfferLinksToOrderStep({
-                pairs: orderLineOfferPairs,
-            })
-
-            const offerReservationItems = transform(
-                { createdOrders, orderLineOfferPairs },
-                ({ createdOrders, orderLineOfferPairs }) => {
-                    const offerByOrderLine = new Map(
-                        orderLineOfferPairs.map((p) => [
-                            p.order_line_item_id,
-                            p.offer_id,
-                        ]),
-                    )
-                    const offerItems: Array<{
+            const orderLineVariantItems = transform(
+                { createdOrders, variantIdsByOrderId },
+                ({ createdOrders, variantIdsByOrderId }) => {
+                    const items: Array<{
                         id: string
                         quantity: number
-                        offer?: { id: string } | null
+                        variant_id: string | null
                     }> = []
                     for (const order of createdOrders) {
-                        for (const ordItem of order.items ?? []) {
-                            const offerId = offerByOrderLine.get(ordItem.id)
-                            offerItems.push({
-                                id: ordItem.id,
-                                quantity: Number(ordItem.quantity),
-                                offer: offerId ? { id: offerId } : null,
+                        const variantIds = variantIdsByOrderId[order.id] ?? []
+                        const orderItems = order.items ?? []
+                        for (let i = 0; i < orderItems.length; i++) {
+                            items.push({
+                                id: orderItems[i].id,
+                                quantity: Number(orderItems[i].quantity),
+                                variant_id: variantIds[i] ?? null,
                             })
                         }
                     }
-                    return offerItems
+                    return items
                 }
             )
 
-            const uniqueOffers = transform(
-                { cart: cartData.data },
-                ({ cart }) => {
-                    const byId = new Map<string, { id: string }>()
-                    for (const item of (cart.items ?? []) as CartLineItemWithOffer[]) {
-                        const offer = item.offer
-                        if (offer?.id && !byId.has(offer.id)) {
-                            byId.set(offer.id, offer as { id: string })
-                        }
-                    }
-                    return Array.from(byId.keys())
+            const uniqueVariantIds = transform(
+                { orderLineVariantItems },
+                ({ orderLineVariantItems }) => {
+                    return Array.from(
+                        new Set(
+                            orderLineVariantItems
+                                .map((item) => item.variant_id)
+                                .filter((id): id is string => typeof id === "string")
+                        )
+                    )
                 }
             )
 
-            const { data: offersWithInventory } = useQueryGraphStep({
-                entity: "offer",
-                fields: requiredOfferFieldsForInventoryConfirmation,
-                filters: { id: uniqueOffers },
-            }).config({ name: "fetch-offers-for-reservation" })
+            const { data: variantsWithInventory } = useQueryGraphStep({
+                entity: "product_variant",
+                fields: requiredVariantFieldsForInventoryConfirmation,
+                filters: { id: uniqueVariantIds },
+            }).config({ name: "fetch-variants-for-reservation" })
 
             const formatedInventoryItems = transform(
                 {
                     input: {
                         sales_channel_id,
-                        items: offerReservationItems,
-                        offers: offersWithInventory,
+                        items: orderLineVariantItems,
+                        variants: variantsWithInventory,
                     },
                 },
-                prepareOfferInventoryInput
+                prepareVariantInventoryInput
             )
 
             const updateCompletedAt = transform(

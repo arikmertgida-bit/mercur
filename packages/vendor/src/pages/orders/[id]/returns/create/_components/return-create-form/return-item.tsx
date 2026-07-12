@@ -20,7 +20,7 @@ import { Combobox } from "@components/inputs/combobox"
 import { MoneyAmountCell } from "@components/table/table-cells/common/money-amount-cell"
 import { useReturnReasons } from "@hooks/api/return-reasons"
 import {
-  getOfferRestockPreview,
+  getVariantRestockPreview,
   type LineItemShape,
 } from "@lib/inventory-preview"
 
@@ -63,17 +63,16 @@ function ReturnItem({
   const showReturnReason = typeof formItem?.reason_id === "string"
   const showNote = typeof formItem?.note === "string"
 
-  // Reuse the vendor offer-aware preview so sellers see exactly how their
+  // Reuse the vendor variant-aware preview so sellers see exactly how their
   // stock will move when the receive step lands. Same calculation as
   // `mercur-confirm-return-receive` runs on the backend.
   const restockRows = locationId
-    ? getOfferRestockPreview(
+    ? getVariantRestockPreview(
         item as LineItemShape,
         formItem?.quantity ?? 0
       )
     : []
-  const offerSku =
-    (item as LineItemShape).offer?.sku ?? item.variant_sku ?? null
+  const variantSku = item.variant_sku ?? null
 
   return (
     <div
@@ -171,7 +170,7 @@ function ReturnItem({
         </div>
       </div>
 
-      {/* Offer-aware restock preview — vendor-only addition surfaced under
+      {/* Variant-aware restock preview — vendor-only addition surfaced under
           the item once a location is chosen so the seller sees the impact
           on each linked inventory item before they confirm. */}
       {restockRows.length > 0 && (
@@ -185,7 +184,7 @@ function ReturnItem({
             >
               {t("orders.returns.restockPreview", {
                 quantity: formItem?.quantity ?? 0,
-                offerSku: offerSku ?? "—",
+                variantSku: variantSku ?? "—",
                 delta: row.delta,
                 inventoryItem: row.inventoryItemLabel,
                 location: locationName ?? "—",

@@ -13,9 +13,6 @@
 //   - RestockPreview inline component on inbound rows.
 //
 // Vendor-only architectural concerns preserved:
-//   - Offer-based outbound (`ClaimOutboundSection` / `AddClaimOutboundItemsTable`).
-//     The vendor backend resolves outbound items by `offer_id`, not raw
-//     `variant_id`, so the picker stays.
 //   - The "Carry over promotions" switch is omitted — vendor has no
 //     `/vendor/order-changes/:id` route yet; this is the only admin
 //     feature deferred in the port.
@@ -669,11 +666,7 @@ export const ClaimCreateForm = ({
               </div>
             )}
 
-            <ClaimOutboundSection
-              form={form}
-              currencyCode={currencyCode}
-              disabled={isRequestLoading}
-            />
+            <ClaimOutboundSection form={form} disabled={isRequestLoading} />
 
             {/* TOTALS SECTION */}
             <div className="mt-8 border-y border-dotted py-4">

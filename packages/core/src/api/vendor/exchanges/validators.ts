@@ -66,20 +66,14 @@ export type VendorPostExchangesRequestItemsReturnActionReqType = z.infer<
 
 export const VendorPostExchangesAddItemsReq = z.object({
   items: z.array(
-    z
-      .object({
-        variant_id: z.string().optional(),
-        offer_id: z.string().optional(),
-        quantity: z.number(),
-        unit_price: z.number().optional(),
-        internal_note: z.string().optional(),
-        allow_backorder: z.boolean().optional(),
-        metadata: z.record(z.string(), z.unknown()).optional(),
-      })
-      .refine(
-        (data) => !!data.offer_id || !!data.variant_id,
-        "Each item must include either offer_id or variant_id"
-      )
+    z.object({
+      variant_id: z.string(),
+      quantity: z.number(),
+      unit_price: z.number().optional(),
+      internal_note: z.string().optional(),
+      allow_backorder: z.boolean().optional(),
+      metadata: z.record(z.string(), z.unknown()).optional(),
+    })
   ),
 })
 export type VendorPostExchangesAddItemsReqType = z.infer<

@@ -48,16 +48,6 @@ declare module "@mercurjs/dashboard-sdk" {
     "login.before.before": true
     "login.logo.after": true
     "login.logo.before": true
-    "offer-variants.detail.main.after": true
-    "offer-variants.detail.main.before": true
-    "offer-variants.detail.side.after": true
-    "offer-variants.detail.side.before": true
-    "offers.detail.main.after": true
-    "offers.detail.main.before": true
-    "offers.detail.side.after": true
-    "offers.detail.side.before": true
-    "offers.list.after": true
-    "offers.list.before": true
     "orders.detail.main.after": true
     "orders.detail.main.before": true
     "orders.detail.side.after": true
@@ -135,7 +125,6 @@ declare module "@mercurjs/dashboard-sdk" {
     "customer-groups": true
     "customers": true
     "inventory": true
-    "offers": true
     "orders": true
     "payouts": true
     "price-lists": true
@@ -195,12 +184,6 @@ declare module "@mercurjs/dashboard-sdk" {
       formTabs: Record<string, string>
       displayZones: "general"
       displayFieldIds: "first_name" | "language" | "last_name"
-    }
-    "offer": {
-      formZones: "create" | "edit"
-      formTabs: { "create": "catalogue" | "stockLevelsAndPrices" }
-      displayZones: "associated-product" | "general" | "inventory" | "prices" | "shipping" | "variant-general" | "variants"
-      displayFieldIds: "description" | "discountable" | "handle" | "status" | "subtitle" | "title"
     }
     "order": {
       formZones: never

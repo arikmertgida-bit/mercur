@@ -8,9 +8,11 @@ import {
 } from "@medusajs/framework/workflows-sdk"
 import {
   AdditionalData,
+  CreateProductWorkflowInputDTO,
   ProductTypes,
 } from "@medusajs/framework/types"
 import {
+  createInventoryLevelsWorkflow,
   createProductsWorkflow as stockCreateProductsWorkflow,
   createProductVariantsWorkflow,
   emitEventStep,
@@ -33,8 +35,19 @@ import { ProductWorkflowEvents } from "../events"
 
 
 
+type CreateProductVariantInput =
+  NonNullable<CreateProductDTO["variants"]>[number] & {
+    variant_rank?: number
+    prices?: { amount: number; currency_code: string }[]
+    inventory?: { location_id: string; quantity: number }[]
+  }
+
 export type CreateProductsWorkflowInput = {
-  products: (CreateProductDTO & { seller_ids?: string[] })[]
+  products: (Omit<CreateProductDTO, "variants"> & {
+    seller_ids?: string[]
+    shipping_profile_id?: string | null
+    variants?: CreateProductVariantInput[]
+  })[]
   created_by: string
 } & AdditionalData
 
@@ -73,24 +86,42 @@ export const createProductsWorkflow: ReturnWorkflow<
       filters: { id: referencedAttrIds },
     }).config({ name: "mercur-create-products-axis-attrs" })
 
+    // A product with no sales-channel link is invisible to every publishable
+    // API key scoped to a channel, which silently breaks pricing/checkout for
+    // storefront visitors. Every product is born into the store's configured
+    // default channel unless the platform has none set up yet.
+    const storeQuery = useQueryGraphStep({
+      entity: "store",
+      fields: ["id", "default_sales_channel_id"],
+      options: { isList: false },
+    }).config({ name: "mercur-create-products-store" })
+
     // Stock create hard-requires ≥1 option, but a product's real axis option is
     // only attached after the row exists. So every product is born with this
     // internal placeholder, which `defaultOptionRemovals` strips once a real
     // option is present (axis products) and which is kept for genuinely
     // axis-less products.
-    const stockProducts = transform({ input }, ({ input }) =>
-      input.products.map((p) => {
-        const {
-          attributes: _attributes,
-          variants: _variants,
-          seller_ids: _seller_ids,
-          ...rest
-        } = p
-        return {
-          ...rest,
-          options: [{ title: "__default__", values: ["__default__"] }],
-        }
-      }),
+    const stockProducts = transform(
+      { input, storeQuery },
+      ({ input, storeQuery }): CreateProductWorkflowInputDTO[] => {
+        const defaultSalesChannelId = storeQuery.data?.default_sales_channel_id
+        return input.products.map((p) => {
+          const {
+            attributes: _attributes,
+            variants: _variants,
+            seller_ids: _seller_ids,
+            ...rest
+          } = p
+          return {
+            ...rest,
+            shipping_profile_id: rest.shipping_profile_id ?? undefined,
+            sales_channels: defaultSalesChannelId
+              ? [{ id: defaultSalesChannelId }]
+              : undefined,
+            options: [{ title: "__default__", values: ["__default__"] }],
+          }
+        })
+      },
     )
 
     const hasAxisByIndex = transform(
@@ -121,7 +152,7 @@ export const createProductsWorkflow: ReturnWorkflow<
 
     const createdProducts = stockCreateProductsWorkflow.runAsStep({
       input: {
-        products: stockProducts as ProductTypes.CreateProductDTO[],
+        products: stockProducts,
         additional_data: input.additional_data,
       },
     })
@@ -183,7 +214,7 @@ export const createProductsWorkflow: ReturnWorkflow<
           const formOptions = (v: { options?: Record<string, string> }) =>
             v.options ?? {}
           return (p.variants ?? []).map((v) => ({
-            manage_inventory: false,
+            manage_inventory: (v.inventory?.length ?? 0) > 0,
             ...v,
             product_id,
             options: hasAxisByIndex[idx]
@@ -193,16 +224,96 @@ export const createProductsWorkflow: ReturnWorkflow<
         }),
     )
 
-    when(
+    // `inventory` isn't a real product-variant DTO field — it's consumed
+    // below, after creation, to stock the auto-linked inventory item. Strip
+    // it here so it's never sent to the stock variant-create workflow.
+    const variantsForCreation = transform(
       { productVariants },
-      ({ productVariants }) => productVariants.length > 0,
+      ({ productVariants }) =>
+        productVariants.map(({ inventory: _inventory, ...rest }) => rest),
+    )
+
+    // Inventory levels can't be set as part of variant creation (they live on
+    // a separate module) so we create the variants first, then look up the
+    // inventory items Medusa auto-links to `manage_inventory: true` variants
+    // and stock them at the seller's chosen locations. Variants are matched
+    // back to their form row by `product_id` + `variant_rank`, both stamped
+    // on every row, rather than relying on result-array ordering.
+    when(
+      { variantsForCreation },
+      ({ variantsForCreation }) => variantsForCreation.length > 0,
     ).then(() =>
       createProductVariantsWorkflow.runAsStep({
         input: {
           product_variants:
-            productVariants as ProductTypes.CreateProductVariantDTO[],
+            variantsForCreation as ProductTypes.CreateProductVariantDTO[],
           additional_data: input.additional_data,
         },
+      }),
+    )
+
+    const createdProductIds = transform(
+      { createdProducts },
+      ({ createdProducts }) => createdProducts.map((p) => p.id as string),
+    )
+
+    const variantInventoryItems = useQueryGraphStep({
+      entity: "product_variant",
+      fields: [
+        "id",
+        "product_id",
+        "variant_rank",
+        "inventory_items.inventory_item_id",
+      ],
+      filters: { product_id: createdProductIds },
+    }).config({ name: "mercur-create-products-variant-inventory-items" })
+
+    const inventoryLevelsInput = transform(
+      { productVariants, variantInventoryItems },
+      ({ productVariants, variantInventoryItems }) => {
+        const inventoryItemIdByKey = new Map<string, string>()
+        for (const row of variantInventoryItems.data as {
+          product_id: string | null
+          variant_rank: number | null
+          inventory_items?: { inventory_item_id: string }[]
+        }[]) {
+          const inventoryItemId = row.inventory_items?.[0]?.inventory_item_id
+          if (inventoryItemId && row.product_id !== null && row.variant_rank !== null) {
+            inventoryItemIdByKey.set(`${row.product_id}:${row.variant_rank}`, inventoryItemId)
+          }
+        }
+
+        const levels: {
+          inventory_item_id: string
+          location_id: string
+          stocked_quantity: number
+        }[] = []
+
+        for (const variant of productVariants) {
+          const inventoryItemId = inventoryItemIdByKey.get(
+            `${variant.product_id}:${variant.variant_rank}`,
+          )
+          if (!inventoryItemId) continue
+
+          for (const entry of variant.inventory ?? []) {
+            levels.push({
+              inventory_item_id: inventoryItemId,
+              location_id: entry.location_id,
+              stocked_quantity: entry.quantity,
+            })
+          }
+        }
+
+        return levels
+      },
+    )
+
+    when(
+      { inventoryLevelsInput },
+      ({ inventoryLevelsInput }) => inventoryLevelsInput.length > 0,
+    ).then(() =>
+      createInventoryLevelsWorkflow.runAsStep({
+        input: { inventory_levels: inventoryLevelsInput },
       }),
     )
 

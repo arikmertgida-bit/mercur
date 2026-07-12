@@ -32,7 +32,7 @@ const orderFields = [
   "items.product.categories.id",
   "items.product.tags.id",
   "items.product.type_id",
-  "items.offer.seller_id",
+  "items.product.sellers.id",
   "items.adjustments.*",
   "shipping_methods.*",
   "shipping_methods.total",
@@ -55,8 +55,8 @@ type OrderForCommissionRefresh = {
       categories?: { id: string }[]
       tags?: { id: string }[]
       type_id?: string
+      sellers?: { id: string }[]
     }
-    offer?: { seller_id?: string }
   }>
   shipping_methods?: Array<{
     id: string
@@ -100,8 +100,8 @@ export const refreshOrderCommissionLinesWorkflow = createWorkflow(
               categories: item.product.categories,
               tags: item.product.tags,
               type_id: item.product.type_id,
-              seller: item.offer?.seller_id
-                ? { id: item.offer.seller_id }
+              seller: item.product.sellers?.[0]
+                ? { id: item.product.sellers[0].id }
                 : undefined,
             }
             : undefined,

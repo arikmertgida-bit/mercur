@@ -6,12 +6,11 @@ import {
 import { MedusaError } from "@medusajs/framework/utils"
 import { createStep, StepResponse } from "@medusajs/framework/workflows-sdk"
 import { SellerDTO } from "@mercurjs/types"
+import { CartLineItemWithSeller, getLineItemSellerId } from "../utils"
 
 type ValidateSellerCartShippingStepInput = {
     cart: Omit<CartWorkflowDTO, "items"> & {
-        items: (CartLineItemDTO & {
-            offer?: { id: string; seller_id?: string } | null
-        })[]
+        items: (CartLineItemDTO & Pick<CartLineItemWithSeller, "variant">)[]
     }
     shippingOptions: ShippingOptionDTO & {
         seller: SellerDTO
@@ -28,7 +27,7 @@ export const validateSellerCartShippingStep = createStep(
 
         const itemsWithMissingShippingOptions = (cart.items ?? []).filter(
             (item) => {
-                const sellerId = item.offer?.seller_id
+                const sellerId = getLineItemSellerId(item)
                 return (
                     item.requires_shipping &&
                     (!sellerId || !sellersWithShippingOptions.has(sellerId))

@@ -12,7 +12,7 @@ import { ActionMenu } from "../../../../../components/common/action-menu"
 import { Combobox } from "../../../../../components/inputs/combobox"
 import { useReturnReasons } from "../../../../../hooks/api/return-reasons"
 import {
-  getOfferRestockPreview,
+  getVariantRestockPreview,
   type LineItemShape,
 } from "../../../../../lib/inventory-preview"
 
@@ -29,8 +29,8 @@ type OrderEditItemProps = {
 
   /**
    * Stock location chosen for this return. When set, the row renders the
-   * offer-aware restock preview matching the math the backend runs on
-   * receive (see `getOfferRestockPreview`).
+   * variant-aware restock preview matching the math the backend runs on
+   * receive (see `getVariantRestockPreview`).
    */
   locationId?: string
   /** Display label for the chosen location — surfaced in the preview row. */
@@ -57,15 +57,14 @@ function ReturnItem({
   const showReturnReason = typeof formItem.reason_id === "string"
   const showNote = typeof formItem.note === "string"
 
-  // Offer-aware restock preview — mirrors the math
+  // Variant-aware restock preview — mirrors the math
   // `mercur-confirm-return-receive` runs server-side so the operator sees
-  // exactly how stock will move before confirming. No-op when the item
-  // carries no offer link (legacy / pre-port orders).
+  // exactly how stock will move before confirming. No-op when the variant
+  // carries no inventory link.
   const restockRows = locationId
-    ? getOfferRestockPreview(item as LineItemShape, formItem?.quantity ?? 0)
+    ? getVariantRestockPreview(item as LineItemShape, formItem?.quantity ?? 0)
     : []
-  const offerSku =
-    (item as LineItemShape).offer?.sku ?? item.variant_sku ?? null
+  const variantSku = item.variant_sku ?? null
 
   return (
     <div className="bg-ui-bg-subtle shadow-elevation-card-rest my-2 rounded-xl ">
@@ -168,7 +167,7 @@ function ReturnItem({
             >
               {t("orders.returns.restockPreview", {
                 quantity: formItem?.quantity ?? 0,
-                offerSku: offerSku ?? "—",
+                variantSku: variantSku ?? "—",
                 delta: row.delta,
                 inventoryItem: row.inventoryItemLabel,
                 location: locationName ?? "—",

@@ -47,7 +47,7 @@ const ReturnCreateContent = () => {
     // up a literal `*items` / `+items` on Order and 500s. See
     // packages/core/src/api/vendor/orders/query-config.ts.
     fields:
-      "currency_code,total,items.*,items.variant.*,items.offer.*,items.offer.inventory_item_link.*,items.offer.inventory_item_link.required_quantity,items.offer.inventory_item_link.inventory_item.*,items.offer.inventory_item_link.inventory_item.location_levels.*",
+      "currency_code,total,items.*,items.variant.*,items.variant.inventory_items.*,items.variant.inventory_items.required_quantity,items.variant.inventory_items.inventory.*,items.variant.inventory_items.inventory.location_levels.*",
   })
   const { order: preview } = useOrderPreview(orderId)
 

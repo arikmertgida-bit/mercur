@@ -1558,7 +1558,7 @@
       "create": "Create Return",
       "policyHint": "Returns are accepted within {{days}} days of delivery.",
       "outOfPolicy": "Returns are accepted within {{days}} days of delivery.",
-      "restockPreview": "Receiving {{quantity}} × {{offerSku}} → +{{delta}} to {{inventoryItem}} at {{location}}",
+      "restockPreview": "Receiving {{quantity}} × {{variantSku}} → +{{delta}} to {{inventoryItem}} at {{location}}",
       "noItemsSelected": "Select at least one item to return.",
       "confirm": "Confirm Return",
       "confirmText": "You are about to confirm a Return. This action cannot be undone.",

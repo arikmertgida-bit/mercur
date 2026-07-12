@@ -7,10 +7,7 @@ import { AdditionalData } from "@medusajs/framework/types"
 import { HttpTypes } from "@mercurjs/types"
 
 import { createProductsWorkflow } from "../../../workflows/product/workflows/create-products"
-import {
-  enrichProductAttributes,
-  wrapProductVariantsWithOffers,
-} from "../../utils"
+import { enrichProductAttributes } from "../../utils"
 import { AdminCreateProductType, AdminGetProductsParamsType } from "./validators"
 
 export const GET = async (
@@ -18,15 +15,6 @@ export const GET = async (
   res: MedusaResponse<HttpTypes.AdminProductListResponse>
 ) => {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
-
-  const withOffers = req.queryConfig.fields.some((field) =>
-    field.includes("variants.offers")
-  )
-  if (withOffers) {
-    req.queryConfig.fields = req.queryConfig.fields.filter(
-      (field) => !field.includes("variants.offers")
-    )
-  }
 
   const { data: products, metadata } = await query.graph({
     entity: "product",
@@ -36,13 +24,6 @@ export const GET = async (
   })
 
   await enrichProductAttributes(req.scope, products)
-
-  if (withOffers) {
-    await wrapProductVariantsWithOffers(
-      req.scope,
-      products as Parameters<typeof wrapProductVariantsWithOffers>[1]
-    )
-  }
 
   res.json({
     products,

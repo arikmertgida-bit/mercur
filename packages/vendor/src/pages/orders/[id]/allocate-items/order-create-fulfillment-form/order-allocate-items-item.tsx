@@ -15,7 +15,7 @@ import { getFulfillableQuantity } from "@lib/order-item"
 import { Form } from "@components/common/form"
 import { AllocateItemsSchema } from "./constants"
 
-export type OfferLinkLocationLevel = {
+export type VariantLinkLocationLevel = {
   id?: string
   location_id?: string
   stocked_quantity?: number | null
@@ -24,33 +24,31 @@ export type OfferLinkLocationLevel = {
   available_quantity?: number | null
 }
 
-export type OfferLinkRow = {
+export type VariantLinkRow = {
   id?: string
   inventory_item_id?: string | null
   required_quantity?: number | null
-  inventory_item?: {
+  inventory?: {
     id?: string | null
     sku?: string | null
     title?: string | null
-    location_levels?: OfferLinkLocationLevel[] | null
+    location_levels?: VariantLinkLocationLevel[] | null
   } | null
 }
 
-export type OrderLineItemWithOffer = AdminOrderLineItem & {
-  offer?: {
-    id?: string
-    sku?: string | null
-    inventory_item_link?: OfferLinkRow[] | null
+export type OrderLineItemWithVariant = AdminOrderLineItem & {
+  variant?: {
+    inventory_items?: VariantLinkRow[] | null
   } | null
 }
 
 type OrderEditItemProps = {
-  item: OrderLineItemWithOffer
+  item: OrderLineItemWithVariant
   locationId?: string
   form: UseFormReturn<zod.infer<typeof AllocateItemsSchema>>
   onQuantityChange: (
-    link: OfferLinkRow,
-    lineItem: OrderLineItemWithOffer,
+    link: VariantLinkRow,
+    lineItem: OrderLineItemWithVariant,
     hasInventoryKit: boolean,
     value: number | null,
     isRoot?: boolean
@@ -58,8 +56,8 @@ type OrderEditItemProps = {
   onToggleSelected: (itemId: string, checked: boolean) => void
 }
 
-const resolveInventoryItemId = (link: OfferLinkRow): string | null =>
-  link.inventory_item?.id ?? link.inventory_item_id ?? null
+const resolveInventoryItemId = (link: VariantLinkRow): string | null =>
+  link.inventory?.id ?? link.inventory_item_id ?? null
 
 export function OrderAllocateItemsItem({
   item,
@@ -69,7 +67,7 @@ export function OrderAllocateItemsItem({
   onToggleSelected,
 }: OrderEditItemProps) {
   const { t } = useTranslation()
-  const inventoryLinks = item.offer?.inventory_item_link ?? []
+  const inventoryLinks = item.variant?.inventory_items ?? []
 
   const [isOpen, setIsOpen] = useState(false)
 
@@ -96,7 +94,7 @@ export function OrderAllocateItemsItem({
       }
     }
 
-    const locationInventory = firstLink.inventory_item?.location_levels?.find(
+    const locationInventory = firstLink.inventory?.location_levels?.find(
       (inv) => inv.location_id === locationId
     )
 
@@ -149,14 +147,14 @@ export function OrderAllocateItemsItem({
                 <Text size="small" weight="plus" as="span">
                   {item.product_title}
                 </Text>
-                {(item.offer?.sku ?? item.variant_sku) && (
+                {item.variant_sku && (
                   <Text
                     size="small"
                     weight="plus"
                     as="span"
                     className="text-ui-fg-subtle"
                   >
-                    ({item.offer?.sku ?? item.variant_sku})
+                    ({item.variant_sku})
                   </Text>
                 )}
                 {hasInventoryKit && (
@@ -291,7 +289,7 @@ export function OrderAllocateItemsItem({
       {isOpen &&
         inventoryLinks.map((link, ind) => {
           const inventoryItemId = resolveInventoryItemId(link)
-          const location = link.inventory_item?.location_levels?.find(
+          const location = link.inventory?.location_levels?.find(
             (l) => l.location_id === locationId
           )
           const required = link.required_quantity ?? 1
@@ -314,8 +312,8 @@ export function OrderAllocateItemsItem({
                 )}
                 <div className="flex flex-col">
                   <span className="text-ui-fg-subtle">
-                    {link.inventory_item?.title ??
-                      link.inventory_item?.sku ??
+                    {link.inventory?.title ??
+                      link.inventory?.sku ??
                       `Inventory Item ${ind + 1}`}
                   </span>
                   <span className="text-ui-fg-muted">

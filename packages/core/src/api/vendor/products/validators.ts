@@ -32,7 +32,6 @@ const VendorGetProductsParamsFields = z.object({
   created_at: createOperatorMap().optional(),
   updated_at: createOperatorMap().optional(),
   deleted_at: createOperatorMap().optional(),
-  has_offer: booleanString().optional(),
 })
 
 export type VendorGetProductsParamsType = z.infer<typeof VendorGetProductsParams>
@@ -84,6 +83,14 @@ const CreateProductVariant = z
     material: z.string().optional(),
     metadata: z.record(z.unknown()).optional(),
     options: z.record(z.string()).optional(),
+    prices: z
+      .array(z.object({ amount: z.number(), currency_code: z.string() }))
+      .optional(),
+    inventory: z
+      .array(
+        z.object({ location_id: z.string(), quantity: z.number() })
+      )
+      .optional(),
   })
   .strict()
 
@@ -176,6 +183,7 @@ const CreateProduct = z
     mid_code: z.string().optional(),
     origin_country: z.string().optional(),
     material: z.string().optional(),
+    shipping_profile_id: z.string().nullish(),
     metadata: z.record(z.unknown()).optional(),
   })
   .strict()
@@ -230,6 +238,7 @@ const UpdateProduct = z
     mid_code: z.string().nullish(),
     origin_country: z.string().nullish(),
     material: z.string().nullish(),
+    shipping_profile_id: z.string().nullish(),
     metadata: z.record(z.unknown()).nullish(),
   })
   .strict()

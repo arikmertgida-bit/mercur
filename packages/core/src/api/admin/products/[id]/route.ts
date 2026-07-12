@@ -11,10 +11,7 @@ import { AdditionalData } from "@medusajs/framework/types"
 import { HttpTypes } from "@mercurjs/types"
 
 import { deleteProductsWorkflow, updateProductsWorkflow } from "@medusajs/medusa/core-flows"
-import {
-  enrichProductAttributes,
-  wrapProductVariantsWithOffers,
-} from "../../../utils"
+import { enrichProductAttributes } from "../../../utils"
 import { AdminUpdateProductType } from "../validators"
 
 export const GET = async (
@@ -22,15 +19,6 @@ export const GET = async (
   res: MedusaResponse<HttpTypes.AdminProductResponse>
 ) => {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
-
-  const withOffers = req.queryConfig.fields.some((field) =>
-    field.includes("variants.offers")
-  )
-  if (withOffers) {
-    req.queryConfig.fields = req.queryConfig.fields.filter(
-      (field) => !field.includes("variants.offers")
-    )
-  }
 
   const {
     data: [product],
@@ -48,14 +36,6 @@ export const GET = async (
   }
 
   await enrichProductAttributes(req.scope, [product])
-
-  if (withOffers) {
-    await wrapProductVariantsWithOffers(
-      req.scope,
-      [product] as Parameters<typeof wrapProductVariantsWithOffers>[1],
-      req.filterableFields?.seller_id as string | undefined
-    )
-  }
 
   res.json({ product })
 }

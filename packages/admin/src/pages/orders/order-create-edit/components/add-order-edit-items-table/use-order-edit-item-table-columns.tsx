@@ -6,27 +6,19 @@ import { useTranslation } from "react-i18next"
 import { Thumbnail } from "@components/common/thumbnail"
 import { PlaceholderCell } from "@components/table/table-cells/common/placeholder-cell"
 
-// Row shape coming from `sdk.admin.offers.query` (subset). The `created_at` /
-// `updated_at` fields are surfaced so the `orderBy` keys on the picker
-// satisfy `keyof TData` — the offer model actually carries them; we just
-// don't render them.
-export type OfferPickerRow = {
+// One row per product variant, flattened from `sdk.admin.products.query`.
+export type VariantPickerRow = {
   id: string
   sku?: string | null
-  variant_id?: string | null
-  created_at?: string | null
-  updated_at?: string | null
-  product_variant?: {
+  title?: string | null
+  product?: {
     id?: string | null
     title?: string | null
-    product?: {
-      title?: string | null
-      thumbnail?: string | null
-    } | null
+    thumbnail?: string | null
   } | null
 }
 
-const columnHelper = createColumnHelper<OfferPickerRow>()
+const columnHelper = createColumnHelper<VariantPickerRow>()
 
 export const useOrderEditItemsTableColumns = () => {
   const { t } = useTranslation()
@@ -66,14 +58,13 @@ export const useOrderEditItemsTableColumns = () => {
         id: "product",
         header: t("fields.product"),
         cell: ({ row }) => {
-          const variant = row.original.product_variant
-          const productTitle = variant?.product?.title
+          const productTitle = row.original.product?.title
           if (!productTitle) {
             return <PlaceholderCell />
           }
           return (
             <div className="flex h-full w-full max-w-[300px] items-center gap-x-3 overflow-hidden">
-              <Thumbnail src={variant?.product?.thumbnail} />
+              <Thumbnail src={row.original.product?.thumbnail} />
               <Text
                 size="small"
                 leading="compact"
@@ -98,11 +89,11 @@ export const useOrderEditItemsTableColumns = () => {
           )
         },
       }),
-      columnHelper.display({
+      columnHelper.accessor("title", {
         id: "variant_title",
         header: t("fields.title"),
-        cell: ({ row }) => {
-          const title = row.original.product_variant?.title
+        cell: ({ getValue }) => {
+          const title = getValue()
           if (!title) return <PlaceholderCell />
           return (
             <Text size="small" leading="compact" className="truncate">

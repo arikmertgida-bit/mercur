@@ -11,9 +11,29 @@ import {
     useRemoteQueryStep,
     validatePresenceOfStep,
 } from "@medusajs/medusa/core-flows"
-import { deduplicate, filterObjectByKeys, isDefined } from "@medusajs/framework/utils"
-import { cartFieldsForPricingContext, CartLineItemWithOffer, pricingContextResult, shippingOptionsContextResult } from "../utils"
+import { deduplicate, filterObjectByKeys, isDefined, MathBN } from "@medusajs/framework/utils"
+import { BigNumberInput } from "@medusajs/framework/types"
+import { cartFieldsForPricingContext, CartLineItemWithSeller, getLineItemSellerId, pricingContextResult, shippingOptionsContextResult } from "../utils"
 import { SellerDTO } from "@mercurjs/types"
+
+type CartItemVariantInventoryLevel = {
+    location_id: string
+    stocked_quantity?: BigNumberInput
+    reserved_quantity?: BigNumberInput
+    raw_stocked_quantity?: BigNumberInput
+    raw_reserved_quantity?: BigNumberInput
+}
+
+type CartItemWithInventory = Omit<CartLineItemWithSeller, "variant"> & {
+    variant?: (Omit<NonNullable<CartLineItemWithSeller["variant"]>, "inventory_items"> & {
+        inventory_items?: Array<{
+            inventory?: {
+                requires_shipping?: boolean
+                location_levels?: CartItemVariantInventoryLevel[]
+            } | null
+        }> | null
+    }) | null
+}
 
 export type ListSellerShippingOptionsForCartWorkflowInput = {
     cart_id: string
@@ -33,19 +53,21 @@ export const listSellerShippingOptionsForCartWorkflow = createWorkflow(
                 ...cartFieldsForPricingContext,
                 "items.*",
                 "items.variant.id",
-                "items.offer.id",
-                "items.offer.seller_id",
-                "items.offer.inventory_items.id",
-                "items.offer.inventory_items.requires_shipping",
-                "items.offer.inventory_items.location_levels.*",
+                "items.variant.product.sellers.id",
+                "items.variant.inventory_items.inventory.requires_shipping",
+                "items.variant.inventory_items.inventory.location_levels.location_id",
+                "items.variant.inventory_items.inventory.location_levels.stocked_quantity",
+                "items.variant.inventory_items.inventory.location_levels.reserved_quantity",
+                "items.variant.inventory_items.inventory.location_levels.raw_stocked_quantity",
+                "items.variant.inventory_items.inventory.location_levels.raw_reserved_quantity",
             ],
             options: { throwIfKeyNotFound: true },
         }).config({ name: "get-cart" })
 
         const cart = transform({ cartQuery }, ({ cartQuery }) => cartQuery.data[0])
         const cartSellers = transform({ cart }, ({ cart }) =>
-            (cart.items as CartLineItemWithOffer[])
-                .map((item) => item.offer?.seller_id)
+            (cart.items as CartLineItemWithSeller[])
+                .map((item) => getLineItemSellerId(item))
                 .filter((id): id is string => typeof id === "string")
         )
 
@@ -248,27 +270,35 @@ export const listSellerShippingOptionsForCartWorkflow = createWorkflow(
                         shippingOption.service_zone.fulfillment_set.location.id
 
                     const itemsAtLocationWithoutAvailableQuantity = (
-                        cart.items as CartLineItemWithOffer[]
+                        cart.items as CartItemWithInventory[]
                     ).filter((item) => {
-                            const links = item.offer?.inventory_items ?? []
+                            const links = item.variant?.inventory_items ?? []
                             if (!links.length) {
                                 return false
                             }
 
                             return links.some((inventoryItem) => {
-                                if (!inventoryItem.requires_shipping) {
+                                if (!inventoryItem.inventory?.requires_shipping) {
                                     return false
                                 }
 
-                                const level = (inventoryItem.location_levels ?? []).find(
+                                const level = (
+                                    inventoryItem.inventory?.location_levels ?? []
+                                ).find(
                                     (locationLevel) =>
                                         locationLevel.location_id === locationId
                                 )
 
-                                return !level
-                                    ? true
-                                    : Number(level.available_quantity ?? 0) <
-                                          Number(item.quantity)
+                                if (!level) {
+                                    return true
+                                }
+
+                                const available = MathBN.sub(
+                                    level.raw_stocked_quantity ?? level.stocked_quantity ?? 0,
+                                    level.raw_reserved_quantity ?? level.reserved_quantity ?? 0
+                                )
+
+                                return MathBN.lt(available, item.quantity)
                             })
                         })
 

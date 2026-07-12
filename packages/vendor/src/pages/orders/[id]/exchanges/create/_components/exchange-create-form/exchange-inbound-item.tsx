@@ -11,7 +11,7 @@ import { Combobox } from "@components/inputs/combobox"
 import { MoneyAmountCell } from "@components/table/table-cells/common/money-amount-cell"
 import { useReturnReasons } from "@hooks/api/return-reasons"
 import {
-  getOfferRestockPreview,
+  getVariantRestockPreview,
   type LineItemShape,
 } from "@lib/inventory-preview"
 
@@ -61,7 +61,7 @@ type ExchangeInboundItemProps = {
  *
  * Vendor-specific additions:
  *   - `locationName` prop drives an inline restock preview using the same
- *     `getOfferRestockPreview` math the backend runs at receive time.
+ *     `getVariantRestockPreview` math the backend runs at receive time.
  */
 function ExchangeInboundItem({
   item,
@@ -308,7 +308,7 @@ function ExchangeInboundItem({
 
 /**
  * Vendor-only: inline inventory hint shown when the seller has chosen
- * both a return location and a quantity > 0. Uses the same offer ↔
+ * both a return location and a quantity > 0. Uses the same variant ↔
  * inventory_item math the receive flow runs server-side so the preview
  * matches what will actually happen on confirm.
  */
@@ -322,11 +322,11 @@ const ExchangeRestockPreview = ({
   locationName: string | null
 }) => {
   const { t } = useTranslation()
-  const preview = getOfferRestockPreview(item, quantity)
+  const preview = getVariantRestockPreview(item, quantity)
   if (!preview.length) {
     return null
   }
-  const offerSku = item.offer?.sku ?? item.variant_sku ?? null
+  const variantSku = item.variant_sku ?? null
   return (
     <div className="bg-ui-bg-subtle flex flex-col gap-y-1 rounded-md px-3 py-2">
       {preview.map((row) => (
@@ -338,7 +338,7 @@ const ExchangeRestockPreview = ({
         >
           {t("orders.returns.restockPreview", {
             quantity,
-            offerSku: offerSku ?? "—",
+            variantSku: variantSku ?? "—",
             delta: row.delta,
             inventoryItem: row.inventoryItemLabel,
             location: locationName ?? "—",

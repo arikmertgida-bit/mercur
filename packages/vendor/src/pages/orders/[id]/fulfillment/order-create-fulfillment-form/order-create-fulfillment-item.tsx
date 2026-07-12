@@ -11,31 +11,29 @@ import { getFulfillableQuantity } from "@lib/order-item"
 import { CreateFulfillmentSchema } from "./constants"
 import { InformationCircleSolid } from "@medusajs/icons"
 
-// In Mercur inventory is owned by the offer's inventory item link
-// (per-seller), exposing per-location stock levels. The create-fulfillment
-// row reads available / in-stock quantities from there — the same source the
-// allocate-items flow uses — rather than the product variant, which is not
-// inventory-scoped to the seller and returns no levels here.
-type OfferLocationLevel = {
+// The create-fulfillment row reads available / in-stock quantities from
+// the variant's own inventory item link — the same source the
+// allocate-items flow uses — exposing per-location stock levels.
+type VariantLocationLevel = {
   location_id?: string
   stocked_quantity?: number | null
   available_quantity?: number | null
 }
 
-type OfferInventoryLink = {
-  inventory_item?: {
-    location_levels?: OfferLocationLevel[] | null
+type VariantInventoryLink = {
+  inventory?: {
+    location_levels?: VariantLocationLevel[] | null
   } | null
 }
 
-type OrderLineItemWithOffer = HttpTypes.AdminOrderLineItem & {
-  offer?: {
-    inventory_item_link?: OfferInventoryLink[] | null
+type OrderLineItemWithVariantInventory = HttpTypes.AdminOrderLineItem & {
+  variant?: {
+    inventory_items?: VariantInventoryLink[] | null
   } | null
 }
 
 type OrderEditItemProps = {
-  item: OrderLineItemWithOffer
+  item: OrderLineItemWithVariantInventory
   currencyCode: string
   locationId?: string
   onItemRemove: (itemId: string) => void
@@ -55,7 +53,7 @@ export function OrderCreateFulfillmentItem({
 }: OrderEditItemProps) {
   const { t } = useTranslation()
 
-  const firstLink = item.offer?.inventory_item_link?.[0]
+  const firstLink = item.variant?.inventory_items?.[0]
 
   // Items are fulfilled by default; deselecting via the checkbox excludes
   // the item from the payload. Undefined (never toggled) reads as selected.
@@ -70,7 +68,7 @@ export function OrderCreateFulfillmentItem({
       return { missingLevel: false }
     }
 
-    const locationInventory = firstLink.inventory_item?.location_levels?.find(
+    const locationInventory = firstLink.inventory?.location_levels?.find(
       (inv) => inv.location_id === locationId
     )
 

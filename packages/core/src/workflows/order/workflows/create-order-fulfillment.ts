@@ -38,34 +38,11 @@ import {
   useQueryGraphStep,
   useRemoteQueryStep,
 } from "@medusajs/medusa/core-flows"
-
-type OfferInventoryLink = {
-  inventory_item_id: string
-  required_quantity: number
-  inventory?: {
-    id: string
-    title?: string | null
-    sku?: string | null
-  } | null
-}
-
-type OfferInventoryItemLinkRow = {
-  required_quantity?: number | null
-  inventory_item_id?: string | null
-  inventory_item?: {
-    id: string
-    title?: string | null
-    sku?: string | null
-  } | null
-}
-
-type LineItemOfferRow = {
-  id: string
-  offer?: {
-    id: string
-    inventory_item_link?: OfferInventoryItemLinkRow[] | null
-  } | null
-}
+import {
+  buildVariantInventoryLinkMap,
+  VariantInventoryLink,
+  VariantInventoryRow,
+} from "../utils"
 
 function buildReservationsMap(reservations: ReservationItemDTO[]) {
   const map = new Map<string, ReservationItemDTO[]>()
@@ -79,37 +56,6 @@ function buildReservationsMap(reservations: ReservationItemDTO[]) {
     }
   }
   return map
-}
-
-// Returning Map objects from a workflow `transform()` does not
-// survive the workflow runtime's JSON serialization between steps —
-// downstream resolvers would receive `{}` and crash on `.get(...)`.
-function buildOfferInventoryByLineItem(
-  lineItemOffers: LineItemOfferRow[],
-): Record<string, Record<string, OfferInventoryLink>> {
-  const byLine: Record<string, Record<string, OfferInventoryLink>> = {}
-  for (const row of lineItemOffers) {
-    const links = row.offer?.inventory_item_link ?? []
-    const byInventoryItem: Record<string, OfferInventoryLink> = {}
-    for (const link of links) {
-      const inventoryItemId =
-        link.inventory_item?.id ?? link.inventory_item_id
-      if (!inventoryItemId) continue
-      byInventoryItem[inventoryItemId] = {
-        inventory_item_id: inventoryItemId,
-        required_quantity: link.required_quantity ?? 1,
-        inventory: link.inventory_item
-          ? {
-              id: link.inventory_item.id,
-              title: link.inventory_item.title ?? null,
-              sku: link.inventory_item.sku ?? null,
-            }
-          : null,
-      }
-    }
-    byLine[row.id] = byInventoryItem
-  }
-  return byLine
 }
 
 export const createOrderFulfillmentValidateOrderStepId =
@@ -213,7 +159,7 @@ function prepareFulfillmentData({
   shippingMethod,
   reservations,
   itemsList,
-  offerInventoryByLineItem,
+  variantInventoryByVariantId,
 }: {
   order: OrderDTO
   input: OrderWorkflow.CreateOrderFulfillmentWorkflowInput
@@ -226,7 +172,7 @@ function prepareFulfillmentData({
   shippingMethod: { data?: Record<string, unknown> | null }
   reservations: ReservationItemDTO[]
   itemsList?: OrderLineItemDTO[]
-  offerInventoryByLineItem: Record<string, Record<string, OfferInventoryLink>>
+  variantInventoryByVariantId: Record<string, Record<string, VariantInventoryLink>>
 }) {
   const fulfillableItems = input.items
   const orderItemsMap = new Map<string, Required<OrderDTO>["items"][0]>(
@@ -246,7 +192,8 @@ function prepareFulfillmentData({
     .map((i) => {
       const orderItem = orderItemsMap.get(i.id)!
       const reservations = reservationItemMap.get(i.id)
-      const offerByInventoryItem = offerInventoryByLineItem[i.id]
+      const inventoryByInventoryItem =
+        variantInventoryByVariantId[orderItem.variant_id as string]
 
       if (!reservations?.length) {
         return [
@@ -262,7 +209,7 @@ function prepareFulfillmentData({
       }
 
       return reservations.map((r) => {
-        const link = offerByInventoryItem?.[r.inventory_item_id as string]
+        const link = inventoryByInventoryItem?.[r.inventory_item_id as string]
         const requiredQuantity = link?.required_quantity ?? 1
         return {
           line_item_id: i.id,
@@ -320,7 +267,7 @@ function prepareInventoryUpdate({
   input,
   inputItemsMap,
   itemsList,
-  offerInventoryByLineItem,
+  variantInventoryByVariantId,
 }: {
   reservations: ReservationItemDTO[]
   order: OrderDTO
@@ -330,7 +277,7 @@ function prepareInventoryUpdate({
     OrderWorkflow.CreateOrderFulfillmentWorkflowInput["items"][number]
   >
   itemsList?: OrderLineItemDTO[]
-  offerInventoryByLineItem: Record<string, Record<string, OfferInventoryLink>>
+  variantInventoryByVariantId: Record<string, Record<string, VariantInventoryLink>>
 }) {
   const toDelete: string[] = []
   const toUpdate: {
@@ -350,7 +297,8 @@ function prepareInventoryUpdate({
 
   for (const item of itemsToFulfill) {
     const reservations = reservationMap.get(item.id)
-    const offerByInventoryItem = offerInventoryByLineItem[item.id]
+    const inventoryByInventoryItem =
+      variantInventoryByVariantId[item.variant_id as string]
 
     if (!reservations?.length) {
       continue
@@ -360,7 +308,7 @@ function prepareInventoryUpdate({
 
     reservations.forEach((reservation) => {
       const link =
-        offerByInventoryItem?.[reservation.inventory_item_id as string]
+        inventoryByInventoryItem?.[reservation.inventory_item_id as string]
       const requiredQuantity = link?.required_quantity ?? 1
 
       const adjustmentQuantity = MathBN.mult(inputQuantity, requiredQuantity)
@@ -436,6 +384,12 @@ export const createOrderFulfillmentWorkflow: ReturnWorkflow<
         "region.*",
         "currency_code",
         "items.*",
+        "items.variant.id",
+        "items.variant.inventory_items.inventory_item_id",
+        "items.variant.inventory_items.required_quantity",
+        "items.variant.inventory_items.inventory.id",
+        "items.variant.inventory_items.inventory.title",
+        "items.variant.inventory_items.inventory.sku",
         "items.variant.product.id",
         "items.variant.product.shipping_profile.id",
         "items.variant.weight",
@@ -534,23 +488,17 @@ export const createOrderFulfillmentWorkflow: ReturnWorkflow<
       variables: { filter: { line_item_id: lineItemIds } },
     }).config({ name: "get-reservations" })
 
-    const { data: lineItemOffers } = useQueryGraphStep({
-      entity: "order_line_item",
-      fields: [
-        "id",
-        "offer.id",
-        "offer.inventory_item_link.required_quantity",
-        "offer.inventory_item_link.inventory_item.id",
-        "offer.inventory_item_link.inventory_item.title",
-        "offer.inventory_item_link.inventory_item.sku",
-      ],
-      filters: { id: lineItemIds },
-    }).config({ name: "get-line-item-offers" })
-
-    const offerInventoryByLineItem = transform(
-      { lineItemOffers },
-      ({ lineItemOffers }) =>
-        buildOfferInventoryByLineItem(lineItemOffers as LineItemOfferRow[]),
+    const variantInventoryByVariantId = transform(
+      { order, itemsList: input.items_list },
+      ({ order, itemsList }) => {
+        const items = (itemsList ?? order.items ?? []) as Array<{
+          variant?: VariantInventoryRow | null
+        }>
+        const variants = items
+          .map((i) => i.variant)
+          .filter((v): v is VariantInventoryRow => !!v)
+        return buildVariantInventoryLinkMap(variants)
+      },
     )
 
     const fulfillmentData = transform(
@@ -561,7 +509,7 @@ export const createOrderFulfillmentWorkflow: ReturnWorkflow<
         shippingMethod,
         reservations,
         itemsList: input.items_list,
-        offerInventoryByLineItem,
+        variantInventoryByVariantId,
       },
       prepareFulfillmentData,
     )
@@ -598,7 +546,7 @@ export const createOrderFulfillmentWorkflow: ReturnWorkflow<
         input,
         inputItemsMap,
         itemsList: input.items_list,
-        offerInventoryByLineItem,
+        variantInventoryByVariantId,
       },
       prepareInventoryUpdate,
     )

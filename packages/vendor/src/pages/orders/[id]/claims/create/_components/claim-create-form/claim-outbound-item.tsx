@@ -19,10 +19,10 @@ type ClaimOutboundItemProps = {
 
 /**
  * Vendor port of admin's `ClaimOutboundItem`. The replacement row stays
- * minimal — thumbnail, title/SKU, qty input, remove. Pricing for offers
- * is resolved server-side on confirm so we don't render a money cell
- * here (admin renders `previewItem.total` because the admin draft
- * already has totals attached; vendor only has the form-side snapshot).
+ * minimal — thumbnail, title/SKU, qty input, remove. Pricing is resolved
+ * server-side on confirm so we don't render a money cell here (admin
+ * renders `previewItem.total` because the admin draft already has totals
+ * attached; vendor only has the form-side snapshot).
  */
 function ClaimOutboundItem({
   form,
@@ -32,12 +32,12 @@ function ClaimOutboundItem({
   const { t } = useTranslation()
 
   const row = form.watch(`outbound_items.${index}`)
-  const productTitle = row?.product_title ?? row?.variant_title ?? row?.offer_id
+  const productTitle = row?.product_title ?? row?.variant_title ?? row?.variant_id
 
   return (
     <div
       className="bg-ui-bg-subtle shadow-elevation-card-rest my-2 rounded-xl"
-      data-testid={`claim-outbound-item-${row?.offer_id ?? index}`}
+      data-testid={`claim-outbound-item-${row?.variant_id ?? index}`}
     >
       <div className="flex flex-col items-center gap-x-2 gap-y-2 border-b p-3 text-sm md:flex-row">
         <div className="flex flex-1 items-center gap-x-3">

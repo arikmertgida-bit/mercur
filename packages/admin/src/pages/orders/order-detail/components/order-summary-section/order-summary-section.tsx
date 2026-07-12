@@ -36,7 +36,6 @@ import {
 } from "@medusajs/ui";
 
 import type { AdminReservation } from "@medusajs/types";
-import type { OfferInventoryItemLink } from "../../../../offers/common/types";
 import { DisplayExtensionZone } from "@mercurjs/dashboard-shared";
 import { format } from "date-fns";
 import { ActionMenu } from "../../../../../components/common/action-menu/index.ts";
@@ -311,25 +310,14 @@ const Item = ({
 }) => {
   const { t } = useTranslation();
 
-  // `offer` is wired through Mercur's order-line-item-offer link but
-  // isn't part of Medusa's public AdminOrderLineItem type — pull it off
-  // the runtime shape.
-  const offerInventoryLinks =
-    (
-      item as {
-        offer?: { inventory_item_link?: OfferInventoryItemLink[] | null };
-      }
-    ).offer?.inventory_item_link ?? [];
-  const isInventoryManaged = !!offerInventoryLinks.length;
+  const isInventoryManaged = !!item.variant?.inventory_items?.length;
   const hasInventoryKit =
     (item.variant?.inventory_items?.length || 0) > 1 ||
     item.variant?.inventory_items?.some((i) => i.required_quantity > 1);
   const hasUnfulfilledItems =
     item.quantity - item.detail.fulfilled_quantity > 0;
 
-  const offerSku =
-    (item as { offer?: { sku?: string | null } }).offer?.sku ?? null;
-  const captionSku = offerSku ?? item.variant_sku ?? null;
+  const captionSku = item.variant_sku ?? null;
 
   return (
     <>

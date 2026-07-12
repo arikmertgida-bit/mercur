@@ -33,6 +33,7 @@ import {
   updateReturnsStep,
   useRemoteQueryStep,
 } from "@medusajs/medusa/core-flows"
+import { buildVariantInventoryLinkMap, VariantInventoryRow } from "../utils"
 
 type ConfirmOrderChangesInput = {
   orderId: string
@@ -68,41 +69,25 @@ const confirmOrderChangesStep = createStep(
   },
 )
 
-type OfferLocationLevel = {
-  location_id: string
-}
-
-type OfferInventoryItemLinkRow = {
-  required_quantity?: number | null
-  inventory_item_id?: string | null
-  inventory_item?: {
-    id: string
-    location_levels?: OfferLocationLevel[] | null
-  } | null
-}
-
-type ReturnItemWithOffer = OrderReturnItemDTO & {
+type ReturnItemWithVariant = OrderReturnItemDTO & {
   item_id: string
   item?: {
     id?: string
     variant_id?: string
-    offer?: {
-      id: string
-      inventory_item_link?: OfferInventoryItemLinkRow[] | null
-    } | null
+    variant?: VariantInventoryRow | null
   } | null
 }
 
-type ReturnWithOfferItems = ReturnDTO & {
-  items?: ReturnItemWithOffer[]
+type ReturnWithVariantItems = ReturnDTO & {
+  items: ReturnItemWithVariant[]
 }
 
 function prepareInventoryUpdate({
   orderReturn,
-  returnedQuantityByOffer,
+  returnedQuantityByVariant,
 }: {
-  orderReturn: ReturnWithOfferItems
-  returnedQuantityByOffer: Record<string, BigNumberInput>
+  orderReturn: ReturnWithVariantItems
+  returnedQuantityByVariant: Record<string, BigNumberInput>
 }) {
   const inventoryAdjustment: {
     inventory_item_id: string
@@ -110,47 +95,29 @@ function prepareInventoryUpdate({
     adjustment: BigNumberInput
   }[] = []
 
-  type NormalizedLink = {
-    inventory_item_id: string
-    required_quantity: number
-    location_levels: OfferLocationLevel[]
-  }
-  const offerInventoryById = new Map<string, NormalizedLink[]>()
+  const returnItems: ReturnItemWithVariant[] = orderReturn.items ?? []
+  const variants = returnItems
+    .map((retItem) => retItem.item?.variant)
+    .filter((v): v is VariantInventoryRow => !!v)
+  const variantInventoryByVariantId = buildVariantInventoryLinkMap(variants)
+
   let hasManagedInventory = false
   let hasStockLocation = false
 
-  for (const retItem of orderReturn.items ?? []) {
-    const offer = retItem.item?.offer
-    if (!offer?.id) continue
-    if (offerInventoryById.has(offer.id)) continue
-
-    const rows = offer.inventory_item_link ?? []
-    if (!rows.length) continue
+  for (const links of Object.values(variantInventoryByVariantId)) {
+    const normalized = Object.values(links)
+    if (!normalized.length) continue
     hasManagedInventory = true
-
-    const normalized: NormalizedLink[] = []
-    for (const link of rows) {
-      const inventoryItemId =
-        link.inventory_item?.id ?? link.inventory_item_id
-      if (!inventoryItemId) continue
-      normalized.push({
-        inventory_item_id: inventoryItemId,
-        required_quantity: link.required_quantity ?? 1,
-        location_levels: link.inventory_item?.location_levels ?? [],
-      })
-    }
 
     if (
       normalized.some((link) =>
-        link.location_levels.some(
+        (link.inventory?.location_levels ?? []).some(
           (lvl) => lvl.location_id === orderReturn.location_id,
         ),
       )
     ) {
       hasStockLocation = true
     }
-
-    offerInventoryById.set(offer.id, normalized)
   }
 
   if (hasManagedInventory && !hasStockLocation) {
@@ -162,8 +129,8 @@ function prepareInventoryUpdate({
 
   const locationId = orderReturn.location_id as string
 
-  for (const [offerId, quantity] of Object.entries(returnedQuantityByOffer)) {
-    const links = offerInventoryById.get(offerId) ?? []
+  for (const [variantId, quantity] of Object.entries(returnedQuantityByVariant)) {
+    const links = Object.values(variantInventoryByVariantId[variantId] ?? {})
     for (const link of links) {
       inventoryAdjustment.push({
         inventory_item_id: link.inventory_item_id,
@@ -202,15 +169,16 @@ export const confirmReturnReceiveWorkflow = createWorkflow(
         "items.*",
         "items.item.id",
         "items.item.variant_id",
-        "items.item.offer.id",
-        "items.item.offer.inventory_item_link.required_quantity",
-        "items.item.offer.inventory_item_link.inventory_item.id",
-        "items.item.offer.inventory_item_link.inventory_item.location_levels.location_id",
+        "items.item.variant.id",
+        "items.item.variant.inventory_items.inventory_item_id",
+        "items.item.variant.inventory_items.required_quantity",
+        "items.item.variant.inventory_items.inventory.id",
+        "items.item.variant.inventory_items.inventory.location_levels.location_id",
       ],
       variables: { id: input.return_id },
       list: false,
       throw_if_key_not_found: true,
-    }).config({ name: "return-query" }) as ReturnWithOfferItems
+    }).config({ name: "return-query" }) as ReturnWithVariantItems
 
     const order: OrderDTO = useRemoteQueryStep({
       entry_point: "orders",
@@ -242,19 +210,19 @@ export const confirmReturnReceiveWorkflow = createWorkflow(
       list: false,
     }).config({ name: "order-change-query" })
 
-    const { updateReturnItem, returnedQuantityByOffer, updateReturn } =
+    const { updateReturnItem, returnedQuantityByVariant, updateReturn } =
       transform({ orderChange, orderReturn }, (data) => {
-        const returnedQuantityByOffer: Record<string, BigNumberInput> = {}
+        const returnedQuantityByVariant: Record<string, BigNumberInput> = {}
 
-        const retItems: ReturnItemWithOffer[] = data.orderReturn.items ?? []
+        const retItems: ReturnItemWithVariant[] = data.orderReturn.items ?? []
         const received: OrderChangeActionDTO[] = []
 
-        const offerByLineItemId = new Map<string, string>()
+        const variantByLineItemId = new Map<string, string>()
         for (const ri of retItems) {
           const lineItemId = ri.item?.id
-          const offerId = ri.item?.offer?.id
-          if (lineItemId && offerId) {
-            offerByLineItemId.set(lineItemId, offerId)
+          const variantId = ri.item?.variant_id
+          if (lineItemId && variantId) {
+            variantByLineItemId.set(lineItemId, variantId)
           }
         }
 
@@ -269,12 +237,12 @@ export const confirmReturnReceiveWorkflow = createWorkflow(
 
             if (act.action === ChangeActionType.RECEIVE_RETURN_ITEM) {
               const lineItemId = act.details!.reference_id as string
-              const offerId = offerByLineItemId.get(lineItemId)
-              if (!offerId) {
+              const variantId = variantByLineItemId.get(lineItemId)
+              if (!variantId) {
                 return
               }
-              const current = returnedQuantityByOffer[offerId] ?? 0
-              returnedQuantityByOffer[offerId] = MathBN.add(
+              const current = returnedQuantityByVariant[variantId] ?? 0
+              returnedQuantityByVariant[variantId] = MathBN.add(
                 current,
                 act.details!.quantity as number,
               ) as BigNumberInput
@@ -343,13 +311,13 @@ export const confirmReturnReceiveWorkflow = createWorkflow(
 
         return {
           updateReturnItem: Object.values(itemUpdates),
-          returnedQuantityByOffer,
+          returnedQuantityByVariant,
           updateReturn,
         }
       })
 
     const inventoryAdjustment = transform(
-      { orderReturn, returnedQuantityByOffer },
+      { orderReturn, returnedQuantityByVariant },
       prepareInventoryUpdate,
     )
 

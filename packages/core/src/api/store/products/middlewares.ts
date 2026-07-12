@@ -57,8 +57,8 @@ async function applyVisibleSellerIdsFilter(
 }
 
 /**
- * Resolve the pricing/tax context consumed by the offer-price wrap. Reuses
- * Medusa's product-pricing middlewares so the gate matches vanilla
+ * Resolve the pricing/tax context consumed by `wrapProductVariantsWithCalculatedPrice`.
+ * Reuses Medusa's product-pricing middlewares so the gate matches vanilla
  * `/store/products`: prices compute only when the client requests
  * `variants.calculated_price` or passes `region_id`.
  */

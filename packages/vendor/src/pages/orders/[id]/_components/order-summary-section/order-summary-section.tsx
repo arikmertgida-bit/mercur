@@ -48,7 +48,7 @@ import {
   isAmountLessThenRoundingError,
 } from "@lib/money-amount-helpers"
 import { getTotalCaptured } from "@lib/payment"
-import { LineItemShape, OfferInventoryLinkRow } from "@lib/inventory-preview"
+import { VariantInventoryLinkRow } from "@lib/inventory-preview"
 import { getReservationsLimitCount } from "../../../../../lib/orders"
 import {
   CLAIM_POLICY_DAYS,
@@ -114,10 +114,10 @@ export const OrderSummarySection = ({
     )
 
     return order.items?.some((item) => {
-      const offerLinks = (item as AdminOrderLineItem & {
-        offer?: { inventory_item_link?: OfferInventoryLinkRow[] | null }
-      }).offer?.inventory_item_link
-      if (!offerLinks?.length) {
+      const variantLinks = (item as AdminOrderLineItem & {
+        variant?: { inventory_items?: VariantInventoryLinkRow[] | null }
+      }).variant?.inventory_items
+      if (!variantLinks?.length) {
         return false
       }
       const fulfilled = item.detail?.fulfilled_quantity ?? 0
@@ -372,19 +372,15 @@ const Item = ({
       ?.amount || 0
   const price = item.unit_price
 
-  const offerInventoryLinks =
+  const variantInventoryLinks =
     (item as AdminOrderLineItem & {
-      offer?: { inventory_item_link?: OfferInventoryLinkRow[] | null }
-    }).offer?.inventory_item_link ?? []
-  const isInventoryManaged = !!offerInventoryLinks.length
+      variant?: { inventory_items?: VariantInventoryLinkRow[] | null }
+    }).variant?.inventory_items ?? []
+  const isInventoryManaged = !!variantInventoryLinks.length
   const hasUnfulfilledItems =
     item.quantity - (item.detail?.fulfilled_quantity ?? 0) > 0
 
-  // `offer` is wired through Mercur's order-line-item-offer link but isn't in
-  // Medusa's public AdminOrderLineItem type. Pull it off the runtime shape.
-  const offerSku =
-    (item as LineItemShape).offer?.sku ?? item.variant_sku ?? null
-  const captionSku = offerSku ?? item.variant_sku ?? null
+  const captionSku = item.variant_sku ?? null
 
   return (
     <>

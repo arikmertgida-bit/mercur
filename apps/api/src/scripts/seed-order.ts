@@ -16,14 +16,13 @@ import {
 import { z } from "zod"
 
 /**
- * Seed a completed order for one seller using that seller's offers and a
- * specific seller shipping option. Mirrors the store flow that
- * `complete-cart-with-split-orders` and `add-seller-shipping-method-to-cart`
- * expect:
+ * Seed a completed order for one seller using that seller's own product
+ * variants and a specific seller shipping option. Mirrors the store flow
+ * that `complete-cart-with-split-orders` and
+ * `add-seller-shipping-method-to-cart` expect:
  *
  *   1. create a guest cart (region, sales channel, shipping address)
- *   2. add every active seller offer as a line item (offer_id carries the
- *      pricing context that `setPricingContext` reads)
+ *   2. add every published variant from the seller's catalog as a line item
  *   3. add the seller's shipping option via the seller-aware workflow
  *   4. create a payment collection + a `pp_system_default` session
  *   5. complete the cart, which splits per seller into Orders + OrderGroup
@@ -34,12 +33,9 @@ import { z } from "zod"
 const SELLER_ID = "sel_01KT45ZAGFMME7RWVM0ZAKYGP5"
 const SHIPPING_OPTION_ID = "so_01KTNY6Y4QC677N55P90AXN3QS"
 
-const OfferRowSchema = z.object({
-  id: z.string(),
-  seller_id: z.string(),
-  variant_id: z.string().nullable().optional(),
+const ProductSellerRowSchema = z.object({
+  product_id: z.string(),
 })
-type OfferRow = z.infer<typeof OfferRowSchema>
 
 const ShippingOptionRowSchema = z.object({
   id: z.string(),
@@ -303,45 +299,42 @@ export default async function seedOrderForSeller({ container }: ExecArgs) {
     `Using sales channel '${salesChannel.name}' (${salesChannel.id})`
   )
 
-  // 6. seller offers (own columns only — variant is a remote link)
-  const { data: offerRows } = await query.graph({
-    entity: "offer",
-    fields: ["id", "seller_id", "variant_id"],
+  // 6. seller's own catalog — `product_seller` is the module link between
+  // seller and product; resolve product ids first, then load their variants.
+  const { data: productSellerRows } = await query.graph({
+    entity: "product_seller",
+    fields: ["product_id"],
     filters: { seller_id: SELLER_ID },
   })
-  const offerRowsParseResult = z.array(OfferRowSchema).safeParse(offerRows)
-  if (!offerRowsParseResult.success) {
+  const productSellerParseResult = z
+    .array(ProductSellerRowSchema)
+    .safeParse(productSellerRows)
+  if (!productSellerParseResult.success) {
     throw new Error(
-      `Offers for seller ${SELLER_ID} have an unexpected shape: ${offerRowsParseResult.error.message}`
+      `Seller products for ${SELLER_ID} have an unexpected shape: ${productSellerParseResult.error.message}`
     )
   }
-  const offers = offerRowsParseResult.data.filter(
-    (o): o is OfferRow & { variant_id: string } =>
-      typeof o.variant_id === "string" && o.variant_id.length > 0
-  )
-  if (!offers.length) {
-    throw new Error(`Seller ${SELLER_ID} has no offers with a variant`)
+  const productIds = productSellerParseResult.data.map((r) => r.product_id)
+  if (!productIds.length) {
+    throw new Error(`Seller ${SELLER_ID} has no products`)
   }
 
-  // narrow to published variants by checking the product status via product module
   const productModule = container.resolve(Modules.PRODUCT)
-  const variants = await productModule.listProductVariants(
-    { id: offers.map((o) => o.variant_id) },
-    { relations: ["product"], take: null }
+  const products = await productModule.listProducts(
+    { id: productIds, status: ["published"] },
+    { relations: ["variants"], take: null }
   )
-  const variantsById = new Map(variants.map((v) => [v.id, v]))
-  const publishedOffers = offers.filter((o) => {
-    const v = variantsById.get(o.variant_id)
-    return v?.product?.status === "published"
-  })
-  if (!publishedOffers.length) {
+  const publishedVariantIds = products.flatMap((p) =>
+    (p.variants ?? []).map((v) => v.id)
+  )
+  if (!publishedVariantIds.length) {
     throw new Error(
-      `Seller ${SELLER_ID} has offers but none point to a published product variant`
+      `Seller ${SELLER_ID} has products but none are published with variants`
     )
   }
 
   logger.info(
-    `Using region ${region.id} (${region.currency_code}), country '${optionCountry}', ${publishedOffers.length} offer(s)`
+    `Using region ${region.id} (${region.currency_code}), country '${optionCountry}', ${publishedVariantIds.length} variant(s)`
   )
 
   // 7. create the cart (guest)
@@ -371,30 +364,18 @@ export default async function seedOrderForSeller({ container }: ExecArgs) {
   })
   logger.info(`Created cart ${cart.id}`)
 
-  // 8. add every offer as line items in a single workflow run — calling
-  // addToCartWorkflow once per offer makes the
-  // `beforeRefreshingPaymentCollection` hook re-fire and try to re-link
-  // an already-linked line item, which throws
-  // "Cannot create multiple links between 'cart' and 'offer'"
+  // 8. add every published variant as line items in a single workflow run.
   await addToCartWorkflow(container).run({
     input: {
       cart_id: cart.id,
-      items: publishedOffers.map(
-        (offer) =>
-          ({
-            variant_id: offer.variant_id,
-            quantity: 1,
-            // mirror /store/carts/:id/line-items: offer_id is read by the
-            // validate hook at the top level and by setPricingContext from
-            // either top-level or metadata.offer_id
-            offer_id: offer.id,
-            metadata: { offer_id: offer.id },
-          }) as never,
-      ),
+      items: publishedVariantIds.map((variantId) => ({
+        variant_id: variantId,
+        quantity: 1,
+      })),
     },
   })
-  for (const offer of publishedOffers) {
-    logger.info(`Added offer ${offer.id} (variant ${offer.variant_id})`)
+  for (const variantId of publishedVariantIds) {
+    logger.info(`Added variant ${variantId}`)
   }
 
   // 9. attach the seller's shipping method

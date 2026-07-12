@@ -25,7 +25,7 @@ export const ProductMediaSection = ({
   readOnly = false,
 }: {
   product: Record<string, any>;
-  /** Display media only — no edit kebab, selection, or delete (SPEC-009 offer detail). */
+  /** Display media only — no edit kebab, selection, or delete. */
   readOnly?: boolean;
 }) => {
   const { t } = useTranslation();

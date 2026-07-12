@@ -125,7 +125,19 @@ export const completeCartFields = [
     "items.variant.product.collection.id",
     "items.variant.product.collection.title",
     "items.variant.product.shipping_profile.id",
+    "items.variant.product.sellers.id",
+    "items.variant.manage_inventory",
+    "items.variant.allow_backorder",
     "items.variant.inventory_items.inventory.requires_shipping",
+    "items.variant.inventory_items.inventory_item_id",
+    "items.variant.inventory_items.required_quantity",
+    "items.variant.inventory_items.inventory.location_levels.stocked_quantity",
+    "items.variant.inventory_items.inventory.location_levels.reserved_quantity",
+    "items.variant.inventory_items.inventory.location_levels.raw_stocked_quantity",
+    "items.variant.inventory_items.inventory.location_levels.raw_reserved_quantity",
+    "items.variant.inventory_items.inventory.location_levels.location_id",
+    "items.variant.inventory_items.inventory.location_levels.stock_locations.id",
+    "items.variant.inventory_items.inventory.location_levels.stock_locations.sales_channels.id",
     "customer.id",
     "customer.email",
     "shipping_methods.*",
@@ -139,9 +151,6 @@ export const completeCartFields = [
     "payment_collection.payment_sessions.*",
     "promotions.id",
     'promotions.seller.id',
-    "items.offer.id",
-    "items.offer.seller_id",
-    "items.offer.shipping_profile_id",
 ]
 
 export const cartFieldsForPricingContext = [
@@ -161,25 +170,18 @@ export const cartFieldsForPricingContext = [
     "customer.groups.id",
 ]
 
-export type CartLineItemWithOffer = {
+type CartLineItemVariantWithSellers = Omit<PrepareVariantLineItemInput, "product"> & {
+    product?: (NonNullable<PrepareVariantLineItemInput["product"]> & {
+        sellers?: Array<{ id: string }> | null
+    }) | null
+}
+
+export type CartLineItemWithSeller = {
     id?: string
     quantity: BigNumberInput
     unit_price?: BigNumberInput
     is_tax_inclusive?: boolean
-    offer?: {
-        id?: string
-        seller_id?: string
-        shipping_profile_id?: string
-        inventory_items?: Array<{
-            id: string
-            requires_shipping?: boolean
-            location_levels?: Array<{
-                location_id: string
-                available_quantity?: BigNumberInput
-            }>
-        }>
-    } | null
-    variant?: PrepareVariantLineItemInput
+    variant?: CartLineItemVariantWithSellers
     tax_lines?: LineItemTaxLineDTO[]
     adjustments?: LineItemAdjustmentDTO[]
     title?: string
@@ -188,4 +190,14 @@ export type CartLineItemWithOffer = {
     requires_shipping?: boolean
     product_id?: string
     metadata?: JsonRecord | null
+}
+
+/**
+ * Absolute seller isolation means a product is linked to exactly one seller
+ * via `product_seller` — the first (only) entry is the line item's owner.
+ */
+export const getLineItemSellerId = (
+    item: Pick<CartLineItemWithSeller, "variant">
+): string | undefined => {
+    return item.variant?.product?.sellers?.[0]?.id
 }

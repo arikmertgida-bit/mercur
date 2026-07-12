@@ -15,6 +15,14 @@ import { isPresent } from "@medusajs/framework/utils"
 
 const statusEnum = z.nativeEnum(ProductStatus)
 
+// `metadata` is genuinely open-ended, consumer-defined JSON — Medusa's own
+// module types accept any value. We still refuse `unknown`/`any` at this
+// HTTP boundary: values must be JSON scalars, which is what every metadata
+// consumer in this codebase (JsonViewSection, MetadataSection) actually
+// renders.
+const MetadataValue = z.union([z.string(), z.number(), z.boolean(), z.null()])
+const MetadataSchema = z.record(MetadataValue)
+
 const AdminGetProductsParamsFields = z.object({
   q: z.string().optional(),
   id: z.union([z.string(), z.array(z.string())]).optional(),
@@ -30,7 +38,6 @@ const AdminGetProductsParamsFields = z.object({
   ean: z.string().optional(),
   upc: z.string().optional(),
   barcode: z.string().optional(),
-  has_offer: booleanString().optional(),
   created_at: createOperatorMap().optional(),
   updated_at: createOperatorMap().optional(),
   deleted_at: createOperatorMap().optional(),
@@ -44,7 +51,10 @@ export const AdminGetProductsParams = createFindParams({
   .merge(AdminGetProductsParamsFields)
   .merge(applyAndAndOrOperators(AdminGetProductsParamsFields))
   .transform((data) => {
-    const res = { ...data } as Record<string, unknown>
+    const res: typeof data & {
+      tags?: { id: string[] }
+      categories?: { id: OperatorMap<string> }
+    } = { ...data }
 
     if (isPresent(data.tag_id)) {
       res.tags = { id: data.tag_id as string[] }
@@ -87,8 +97,14 @@ const CreateProductVariant = z
     width: z.number().nullish(),
     origin_country: z.string().nullish(),
     material: z.string().nullish(),
-    metadata: z.record(z.unknown()).nullish(),
+    metadata: MetadataSchema.nullish(),
     options: z.record(z.string()).optional(),
+    prices: z
+      .array(z.object({ amount: z.number(), currency_code: z.string() }))
+      .optional(),
+    inventory: z
+      .array(z.object({ location_id: z.string(), quantity: z.number() }))
+      .optional(),
   })
   .strict()
 
@@ -113,7 +129,7 @@ const UpdateProductVariant = z
     width: z.number().nullish(),
     origin_country: z.string().nullish(),
     material: z.string().nullish(),
-    metadata: z.record(z.unknown()).nullish(),
+    metadata: MetadataSchema.nullish(),
     prices: z
       .array(
         z.object({
@@ -157,7 +173,7 @@ const UnifiedProductAttributeInput = z.union([
       is_filterable: z.boolean().optional(),
       is_required: z.boolean().optional(),
       description: z.string().nullish(),
-      metadata: z.record(z.unknown()).nullish(),
+      metadata: MetadataSchema.nullish(),
     })
     .strict(),
 ])
@@ -232,7 +248,8 @@ const CreateProduct = z
     mid_code: z.string().nullish(),
     origin_country: z.string().nullish(),
     material: z.string().nullish(),
-    metadata: z.record(z.unknown()).nullish(),
+    shipping_profile_id: z.string().nullish(),
+    metadata: MetadataSchema.nullish(),
   })
   .strict()
 export const AdminCreateProduct = WithAdditionalData(CreateProduct)
@@ -269,7 +286,8 @@ export const UpdateProduct = z
     mid_code: z.string().nullish(),
     origin_country: z.string().nullish(),
     material: z.string().nullish(),
-    metadata: z.record(z.unknown()).nullish(),
+    shipping_profile_id: z.string().nullish(),
+    metadata: MetadataSchema.nullish(),
   })
   .strict()
 export const AdminUpdateProduct = WithAdditionalData(UpdateProduct)
@@ -375,7 +393,7 @@ const BatchAttributeAdd = z.union([
       is_filterable: z.boolean().optional(),
       is_required: z.boolean().optional(),
       description: z.string().nullish(),
-      metadata: z.record(z.unknown()).nullish(),
+      metadata: MetadataSchema.nullish(),
     })
     .strict()
     .refine((v) => !v.is_variant_axis || (v.type ?? "multi_select") === "multi_select", {

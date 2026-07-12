@@ -18,7 +18,7 @@ import { StoreAddressSection } from "./store-address-section";
 import { StoreMembersSection } from "./store-members-section";
 import { StoreRequestSection } from "./store-request-section";
 import { StoreOrdersSection } from "./store-orders-section";
-import { StoreOffersSection } from "./store-offers-section";
+import { StoreProductsSection } from "./store-products-section";
 import {
   StoreDetailHeader,
   StoreDetailTitle,
@@ -26,7 +26,7 @@ import {
   StoreDetailEditButton,
 } from "./store-detail-header";
 
-const TABS = ["orders", "offers", "users", "timeOff"] as const;
+const TABS = ["orders", "products", "users", "timeOff"] as const;
 
 type Tab = (typeof TABS)[number];
 
@@ -42,7 +42,7 @@ const TabBar = ({
   const labels: Record<Tab, string> = {
     orders: t("orders.domain"),
     users: t("users.domain"),
-    offers: t("offers.domain"),
+    products: t("products.domain"),
     timeOff: t("store.timeOff.header"),
   };
 
@@ -132,13 +132,13 @@ const Root = ({ children }: { children?: ReactNode }) => {
             <StoreMembersSection sellerId={seller.id} />
           </div>
         )}
-        {activeTab === "offers" && (
+        {activeTab === "products" && (
           <div
             role="tabpanel"
-            id="store-detail-tab-panel-offers"
-            aria-labelledby="store-detail-tab-offers"
+            id="store-detail-tab-panel-products"
+            aria-labelledby="store-detail-tab-products"
           >
-            <StoreOffersSection sellerId={seller.id} />
+            <StoreProductsSection sellerId={seller.id} />
           </div>
         )}
         {activeTab === "timeOff" && (

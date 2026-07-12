@@ -62,28 +62,20 @@ type ExchangeOutboundSectionProps = {
   form: UseFormReturn<CreateExchangeSchemaType>
 }
 
-// See admin: module-scoped scratch buffers populated by the picker
-// callbacks and read once on "Save".
-let offersToAdd: string[] = []
-let offersToRemove: string[] = []
+// Module-scoped scratch buffers populated by the picker callbacks and read
+// once on "Save" — the stacked modal lives in a separate React subtree, so
+// prop-drilling the selection through it isn't practical.
+let variantsToAdd: string[] = []
+let variantsToRemove: string[] = []
 
 /**
  * Vendor port of admin's `ExchangeOutboundSection`. Hosts the outbound
  * (replacement) item picker, the staged outbound list, and the outbound
  * shipping selector.
  *
- * Vendor adaptations vs. admin:
- *  - Offer-based picker. Admin's picker selects **variant IDs** and the
- *    backend resolves a unit price. Mercur picks **offer IDs** so the
- *    seller controls which offer (and therefore which price) is used.
- *    `AddExchangeOutboundItemsTable` already takes `currencyCode` and
- *    yields `string[]` of offer IDs.
- *  - Mutation payload sends `{ offer_id, quantity }`. The vendor backend
- *    resolves the offer to `variant_id + unit_price` and persists the
- *    `order_line_item ↔ offer` link via subscriber on confirm.
- *  - No `useDeleteExchangeOutboundShipping` / `useOrderShippingOptions`
- *    in the vendor surface yet; shipping option changes call add and let
- *    the backend overwrite the previous SHIPPING_ADD action.
+ * No `useDeleteExchangeOutboundShipping` / `useOrderShippingOptions` in the
+ * vendor surface yet; shipping option changes call add and let the backend
+ * overwrite the previous SHIPPING_ADD action.
  */
 export const ExchangeOutboundSection = ({
   order,
@@ -183,15 +175,14 @@ export const ExchangeOutboundSection = ({
   const showOutboundItemsPlaceholder = !outboundItems.length
 
   const onItemsSelected = async () => {
-    if (offersToAdd.length) {
+    if (variantsToAdd.length) {
       await addOutboundItem(
         {
-          // Vendor route resolves `offer_id` server-side.
-          items: offersToAdd.map((offer_id) => ({
-            offer_id,
+          items: variantsToAdd.map((variant_id) => ({
+            variant_id,
             quantity: 1,
-          })) as never,
-        } as never,
+          })),
+        },
         {
           onError: (error) => {
             toast.error(error.message)
@@ -200,11 +191,9 @@ export const ExchangeOutboundSection = ({
       )
     }
 
-    // Admin uses variant_id to find rows to remove; vendor's picker
-    // is offer-based. We match on offer_id stored in the form field.
-    for (const offerToRemove of offersToRemove) {
+    for (const variantToRemove of variantsToRemove) {
       const field = outboundItems.find(
-        (f) => (f as { offer_id?: string | null }).offer_id === offerToRemove
+        (f) => f.variant_id === variantToRemove
       )
       const previewMatch = field
         ? previewOutboundItems.find((i) => i.id === field.item_id)
@@ -275,18 +264,17 @@ export const ExchangeOutboundSection = ({
 
             <AddExchangeOutboundItemsTable
               selectedItems={outboundItems
-                .map((i) => (i as { offer_id?: string | null }).offer_id)
-                .filter(Boolean) as string[]}
-              currencyCode={order.currency_code}
+                .map((i) => i.variant_id)
+                .filter((id): id is string => !!id)}
               onSelectionChange={(finalSelection) => {
                 const alreadySelected = outboundItems
-                  .map((i) => (i as { offer_id?: string | null }).offer_id)
-                  .filter(Boolean) as string[]
+                  .map((i) => i.variant_id)
+                  .filter((id): id is string => !!id)
 
-                offersToAdd = finalSelection.filter(
+                variantsToAdd = finalSelection.filter(
                   (selection) => !alreadySelected.includes(selection)
                 )
-                offersToRemove = alreadySelected.filter(
+                variantsToRemove = alreadySelected.filter(
                   (selection) => !finalSelection.includes(selection)
                 )
               }}
