@@ -8,8 +8,6 @@ import { adminOrderGroupQueryConfig } from "./order-groups/query-config"
 import { AdminGetOrderGroupParams } from "./order-groups/validators"
 import { adminOrdersMiddlewares } from "./orders/middlewares"
 import { adminCustomerGroupsMiddlewares } from "./customer-groups/middlewares"
-import { adminOffersMiddlewares } from "./offers/middlewares"
-import { adminOfferConditionsMiddlewares } from "./offer-conditions/middlewares"
 import { adminPayoutsMiddlewares } from "./payouts/middlewares"
 import { adminSellersMiddlewares } from "./sellers/middlewares"
 import { adminMembersMiddlewares } from "./members/middlewares"
@@ -52,8 +50,6 @@ export const adminMiddlewares: MiddlewareRoute[] = [
   },
   ...adminOrdersMiddlewares,
   ...adminCustomerGroupsMiddlewares,
-  ...adminOffersMiddlewares,
-  ...adminOfferConditionsMiddlewares,
   ...adminPayoutsMiddlewares,
   ...adminSellersMiddlewares,
   ...adminMembersMiddlewares,

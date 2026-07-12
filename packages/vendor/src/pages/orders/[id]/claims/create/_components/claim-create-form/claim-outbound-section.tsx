@@ -9,36 +9,13 @@ import {
 } from "@components/modals"
 
 import { AddClaimOutboundItemsTable } from "../add-claim-outbound-items-table"
+import { ClaimOutboundVariantPickerRow } from "../add-claim-outbound-items-table/use-claim-outbound-item-table-columns"
 import { ClaimOutboundItem } from "./claim-outbound-item"
 import { ItemPlaceholder } from "./item-placeholder"
 import { CreateClaimSchemaType } from "./schema"
 
-// Narrow shape of the picker row the section reads. Matches the
-// `OfferPickerRowExtended` the table builds (id, sku, variant_id, and
-// the nested product_variant.product.{title,thumbnail}). Re-declared
-// here so the section file doesn't have to import the picker's
-// internal types.
-type OfferLookupRow = {
-  id: string
-  sku?: string | null
-  variant_id?: string | null
-  product_variant?: {
-    id?: string | null
-    title?: string | null
-    product?: {
-      title?: string | null
-      thumbnail?: string | null
-    } | null
-  } | null
-}
-
 type ClaimOutboundSectionProps = {
   form: UseFormReturn<CreateClaimSchemaType>
-  /**
-   * Currency of the parent order — restricts the offer picker to offers
-   * with a matching price.
-   */
-  currencyCode?: string
   /**
    * Mirrors the admin component prop surface: when the parent disables
    * adding (e.g. while a draft is still being created or canceled), the
@@ -51,7 +28,7 @@ const STACKED_MODAL_ID = "claim-add-outbound-items"
 
 /**
  * Vendor port of admin's `ClaimOutboundSection`. Hosts the "Add items"
- * trigger (offer picker via `AddClaimOutboundItemsTable`) and the list
+ * trigger (variant picker via `AddClaimOutboundItemsTable`) and the list
  * of replacement items being staged on the claim. Replacement items are
  * kept in form state — they're sent to the backend once on confirm via
  * `useAddClaimOutboundItems` to keep parity with the existing vendor flow
@@ -59,7 +36,6 @@ const STACKED_MODAL_ID = "claim-add-outbound-items"
  */
 export const ClaimOutboundSection = ({
   form,
-  currencyCode,
   disabled,
 }: ClaimOutboundSectionProps) => {
   const { t } = useTranslation()
@@ -77,23 +53,21 @@ export const ClaimOutboundSection = ({
   const showOutboundItemsPlaceholder = !outboundItems.length
 
   const onItemsSelected = (
-    selectedOfferIds: string[],
-    offerLookup: Record<string, OfferLookupRow>
+    selectedVariantIds: string[],
+    variantLookup: Record<string, ClaimOutboundVariantPickerRow>
   ) => {
-    const existing = new Set(outboundItems.map((row) => row.offer_id))
-    selectedOfferIds
+    const existing = new Set(outboundItems.map((row) => row.variant_id))
+    selectedVariantIds
       .filter((id) => !existing.has(id))
       .forEach((id) => {
-        const offer = offerLookup[id]
-        const variant = offer?.product_variant
+        const variant = variantLookup[id]
         append(
           {
-            offer_id: id,
-            variant_id: offer?.variant_id ?? variant?.id ?? null,
+            variant_id: id,
             product_title: variant?.product?.title ?? null,
             variant_title: variant?.title ?? null,
             thumbnail: variant?.product?.thumbnail ?? null,
-            sku: offer?.sku ?? null,
+            sku: variant?.sku ?? null,
             quantity: 1,
           },
           { shouldFocus: false }
@@ -132,10 +106,7 @@ export const ClaimOutboundSection = ({
             </StackedFocusModal.Description>
 
             <StackedFocusModal.Body className="size-full overflow-hidden">
-              <PickerBody
-                currencyCode={currencyCode}
-                onSubmit={onItemsSelected}
-              />
+              <PickerBody onSubmit={onItemsSelected} />
             </StackedFocusModal.Body>
           </StackedFocusModal.Content>
         </StackedFocusModal>
@@ -162,27 +133,25 @@ export const ClaimOutboundSection = ({
  * picker invocation (the StackedFocusModal mounts/unmounts on toggle).
  */
 const PickerBody = ({
-  currencyCode,
   onSubmit,
 }: {
-  currencyCode?: string
   onSubmit: (
-    offerIds: string[],
-    offers: Record<string, OfferLookupRow>
+    variantIds: string[],
+    variants: Record<string, ClaimOutboundVariantPickerRow>
   ) => void
 }) => {
   const { t } = useTranslation()
-  let selectedOfferIds: string[] = []
-  let selectedOfferLookup: Record<string, OfferLookupRow> = {}
+  let selectedVariantIds: string[] = []
+  let selectedVariantLookup: Record<string, ClaimOutboundVariantPickerRow> =
+    {}
 
   return (
     <div className="flex h-full flex-col">
       <div className="flex-1 overflow-hidden">
         <AddClaimOutboundItemsTable
-          currencyCode={currencyCode}
           onSelectionChange={(ids, lookup) => {
-            selectedOfferIds = ids
-            selectedOfferLookup = lookup
+            selectedVariantIds = ids
+            selectedVariantLookup = lookup
           }}
         />
       </div>
@@ -204,7 +173,7 @@ const PickerBody = ({
             variant="primary"
             size="small"
             data-testid="claim-add-outbound-save"
-            onClick={() => onSubmit(selectedOfferIds, selectedOfferLookup)}
+            onClick={() => onSubmit(selectedVariantIds, selectedVariantLookup)}
           >
             {t("actions.save")}
           </Button>

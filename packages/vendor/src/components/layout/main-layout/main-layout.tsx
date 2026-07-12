@@ -424,10 +424,6 @@ export const useCoreRoutes = (): Omit<INavItem, "pathname">[] => {
       to: "/products",
       items: [
         {
-          label: t("offers.domain"),
-          to: "/offers",
-        },
-        {
           label: t("collections.domain"),
           to: "/collections",
         },

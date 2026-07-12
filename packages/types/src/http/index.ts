@@ -28,7 +28,6 @@ export * from "./shipping-option-type"
 export * from "./shipping-profile"
 export * from "./stock-location"
 export * from "./payout"
-export * from "./offer"
 export * from "./commission"
 
 // Explicit re-exports to resolve ambiguity with @medusajs/types (Mercur overrides)

@@ -13,7 +13,7 @@ export const Component = () => {
     // to look up a literal property `*items` / `+items` on Order and
     // 500. Use `<rel>.*` plus bare scalar names.
     fields:
-      "currency_code,items.*,items.variant.*,items.variant.product.title,items.offer.*,items.offer.inventory_item_link.*,items.offer.inventory_item_link.required_quantity,items.offer.inventory_item_link.inventory_item.*,items.offer.inventory_item_link.inventory_item.location_levels.*,shipping_address.*",
+      "currency_code,items.*,items.variant.*,items.variant.product.title,items.variant.inventory_items.*,items.variant.inventory_items.required_quantity,items.variant.inventory_items.inventory.*,items.variant.inventory_items.inventory.location_levels.*,shipping_address.*",
   })
 
   if (isError) {

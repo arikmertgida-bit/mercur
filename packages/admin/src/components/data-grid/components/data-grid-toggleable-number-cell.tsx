@@ -101,7 +101,7 @@ const OuterComponent = ({
 
   return (
     <ConditionalTooltip
-      showTooltip={localValue.disabledToggle && tooltip}
+      showTooltip={Boolean(localValue?.disabledToggle) && Boolean(tooltip)}
       content={tooltip}
     >
       <div className="absolute inset-y-0 left-4 z-[3] flex w-fit items-center justify-center">
@@ -110,8 +110,8 @@ const OuterComponent = ({
           ref={buttonRef}
           size="small"
           className="shrink-0 rtl:rotate-180"
-          checked={localValue.checked}
-          disabled={localValue.disabledToggle}
+          checked={Boolean(localValue?.checked)}
+          disabled={Boolean(localValue?.disabledToggle)}
           onCheckedChange={handleCheckedChange}
         />
       </div>
@@ -172,7 +172,7 @@ const Inner = ({
   }
 
   const handleOnChange = () => {
-    if (localValue.disabledToggle && localValue.quantity === "") {
+    if (localValue?.disabledToggle && localValue.quantity === "") {
       localValue.quantity = 0
     }
 
@@ -199,7 +199,7 @@ const Inner = ({
         decimalsLimit={0}
         autoComplete="off"
         tabIndex={-1}
-        placeholder={!localValue.checked ? placeholder : undefined}
+        placeholder={!localValue?.checked ? placeholder : undefined}
       />
     </div>
   )

@@ -9,8 +9,7 @@ import {
   MedusaError,
 } from "@medusajs/framework/utils"
 
-import { resolveOfferItems, AddItemInput } from "../../../../../vendor/orders/resolve-offer-items"
-import { resolveOrderSellerId } from "../../../../orders/resolve-order-seller-id"
+import { resolveAddItems } from "../../../../../vendor/orders/resolve-add-items"
 
 type AdminAddItemsBody = {
   items: Array<{
@@ -61,25 +60,10 @@ export const POST = async (
     )
   }
 
-  const sellerId = await resolveOrderSellerId(req.scope, claim.order_id)
-
-  const resolverInput: AddItemInput[] = req.validatedBody.items.map((i) => ({
-    variant_id: i.variant_id,
-    offer_id:
-      typeof i.metadata?.offer_id === "string"
-        ? (i.metadata.offer_id as string)
-        : undefined,
-    quantity: i.quantity,
-    unit_price: i.unit_price,
-    internal_note: i.internal_note,
-    metadata: i.metadata ?? undefined,
-  }))
-
-  const items = await resolveOfferItems({
+  const items = await resolveAddItems({
     container: req.scope,
-    sellerId,
     currencyCode,
-    items: resolverInput,
+    items: req.validatedBody.items,
   })
 
   const { result } = await orderClaimAddNewItemWorkflow(req.scope).run({

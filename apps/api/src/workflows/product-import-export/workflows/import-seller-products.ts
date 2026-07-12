@@ -3,7 +3,8 @@ import {
   transform,
   WorkflowResponse,
 } from "@medusajs/framework/workflows-sdk"
-import { parseProductCsvStep, createProductsWorkflow } from "@medusajs/core-flows"
+import { parseProductCsvStep } from "@medusajs/core-flows"
+import { createProductsWorkflow } from "@mercurjs/core/workflows"
 import { validateProductsToImportStep } from "../steps/validate-products-to-import"
 
 type ImportSellerProductsWorkflowInput = {
@@ -19,12 +20,14 @@ export const importSellerProductsWorkflow = createWorkflow(
     validateProductsToImportStep({ products: parsedProducts })
 
     const productsInput = transform(
-      { parsedProducts },
-      ({ parsedProducts }) => ({
+      { parsedProducts, input },
+      ({ parsedProducts, input }) => ({
         products: parsedProducts.map((product) => ({
           ...product,
           status: product.status || "draft",
+          seller_ids: [input.seller_id],
         })),
+        created_by: input.seller_id,
       })
     )
 

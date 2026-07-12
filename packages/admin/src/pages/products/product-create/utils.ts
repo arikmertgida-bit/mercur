@@ -3,15 +3,27 @@ import { AttributeType, ProductAttributeBatchAdd } from "@mercurjs/types"
 import { UseFormReturn } from "react-hook-form"
 import { ProductCreateSchemaType } from "./types"
 
+export type NormalizedCreateProductVariant =
+  HttpTypes.AdminCreateProductVariant & {
+    // Mercur extension: initial stock levels to seed on the variant's
+    // auto-created inventory item, keyed by stock location.
+    inventory?: { location_id: string; quantity: number }[]
+  }
+
 // Mercur adds seller/attribute fields to the create-product payload that
 // aren't part of stock Medusa's `AdminCreateProduct`.
-export type ProductCreatePayload = HttpTypes.AdminCreateProduct & {
+export type ProductCreatePayload = Omit<
+  HttpTypes.AdminCreateProduct,
+  "variants"
+> & {
   seller_ids?: string[]
   origin_country?: string
   material?: string
   mid_code?: string
   hs_code?: string
   attributes?: ProductAttributeBatchAdd[]
+  shipping_profile_id?: string
+  variants: NormalizedCreateProductVariant[]
 }
 
 export const normalizeProductFormValues = (
@@ -62,6 +74,7 @@ export const normalizeProductFormValues = (
     material: values.material || undefined,
     mid_code: values.mid_code || undefined,
     hs_code: values.hs_code || undefined,
+    shipping_profile_id: values.shipping_profile_id || undefined,
     thumbnail,
     title: values.title.trim(),
     subtitle: values.subtitle?.trim(),
@@ -80,20 +93,47 @@ export const normalizeProductFormValues = (
   }
 }
 
+const numericOrZero = (value: number | "" | undefined | null): number => {
+  if (value === "" || value === null || value === undefined) return 0
+  return Number(value) || 0
+}
+
 export const normalizeVariants = (
   variants: ProductCreateSchemaType["variants"],
   hasAxis: boolean,
-  _regionsCurrencyMap: Record<string, string>
-): NonNullable<HttpTypes.AdminCreateProduct["variants"]> => {
+  regionsCurrencyMap: Record<string, string>
+): NormalizedCreateProductVariant[] => {
+  const currencies = Array.from(new Set(Object.values(regionsCurrencyMap)))
+
   return variants.map((variant) => {
     const opts = variant.options
     const hasOpts = opts && Object.keys(opts).length > 0
+
+    const prices = currencies
+      .filter((currency) => variant.prices?.[currency] !== undefined && variant.prices[currency] !== "")
+      .map((currency) => ({
+        currency_code: currency,
+        amount: numericOrZero(variant.prices?.[currency]),
+      }))
+
+    const inventory = Object.entries(variant.inventory ?? {})
+      .filter(([, level]) => level?.checked)
+      .map(([locationId, level]) => ({
+        location_id: locationId,
+        quantity: numericOrZero(level.quantity),
+      }))
 
     return {
       title: variant.title || (hasOpts ? Object.values(opts).join(" / ") : "Default variant"),
       options: hasOpts ? opts : hasAxis ? undefined : { "Default Option": "Default" },
       sku: variant.sku || undefined,
       variant_rank: variant.variant_rank,
+      // `manage_inventory` isn't part of the create-product variant schema —
+      // `createProductsWorkflow` (packages/core) derives it itself from the
+      // presence of `inventory` entries. Sending it trips the endpoint's
+      // `.strict()` Zod schema ("unrecognized field").
+      prices,
+      inventory,
     }
   })
 }
@@ -180,6 +220,8 @@ export const decorateVariantsWithDefaultValues = (
     ...variant,
     title: variant.title || "",
     sku: variant.sku || "",
+    prices: variant.prices ?? {},
+    inventory: variant.inventory ?? {},
   }))
 }
 
@@ -228,6 +270,8 @@ export const generateVariantsFromAttributes = (
         variant_rank: 0,
         options: {},
         is_default: true,
+        prices: {},
+        inventory: {},
       },
     ])
   }
@@ -264,6 +308,8 @@ export const generateVariantsFromAttributes = (
         options: perm,
         should_create: true,
         variant_rank: newVariants.length,
+        prices: {},
+        inventory: {},
       })
     }
   }

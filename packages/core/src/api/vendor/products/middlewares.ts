@@ -9,14 +9,8 @@ import {
   validateAndTransformBody,
   validateAndTransformQuery,
 } from "@medusajs/framework"
-import { ProductStatus } from "@mercurjs/types"
 
-import { applyOfferedProductsFilter } from "../../utils"
-import {
-  getProductIdsRestrictedFromSeller,
-  getProductStatus,
-  getSellerOwnedProductIds,
-} from "./helpers"
+import { getSellerVisibleProductIds } from "./helpers"
 import {
   vendorProductQueryConfig,
   vendorProductVariantQueryConfig,
@@ -36,7 +30,6 @@ import {
 import {
   ContainerRegistrationKeys,
   MedusaError,
-  promiseAll,
 } from "@medusajs/framework/utils"
 
 const applySellerProductLinkFilter = async (
@@ -46,28 +39,11 @@ const applySellerProductLinkFilter = async (
 ) => {
   const sellerId = req.seller_context!.seller_id
 
-  const [ownProductIds, restrictedFromSellerIds] = await promiseAll([
-    getSellerOwnedProductIds(req.scope, sellerId),
-    getProductIdsRestrictedFromSeller(req.scope, sellerId),
-  ])
+  const visibleProductIds = await getSellerVisibleProductIds(req.scope, sellerId)
 
   req.filterableFields ??= {}
   const existingAnd = (req.filterableFields.$and as object[] | undefined) ?? []
-  req.filterableFields.$and = [
-    ...existingAnd,
-    {
-      $or: [
-        {
-          id: ownProductIds,
-          status: { $in: [ProductStatus.DRAFT, ProductStatus.PROPOSED] },
-        },
-        {
-          status: ProductStatus.PUBLISHED,
-          id: { $nin: restrictedFromSellerIds },
-        },
-      ],
-    },
-  ]
+  req.filterableFields.$and = [...existingAnd, { id: visibleProductIds }]
 
   return next()
 }
@@ -80,19 +56,9 @@ const ensureProductVisibleToSeller = async (
   const sellerId = req.seller_context!.seller_id
   const productId = req.params.id
 
-  const [ownProductIds, restrictedFromSellerIds, product] = await promiseAll([
-    getSellerOwnedProductIds(req.scope, sellerId),
-    getProductIdsRestrictedFromSeller(req.scope, sellerId),
-    getProductStatus(req.scope, productId),
-  ])
+  const visibleProductIds = await getSellerVisibleProductIds(req.scope, sellerId)
 
-  const visible =
-    !!product &&
-    (ownProductIds.includes(productId) ||
-      (product.status === ProductStatus.PUBLISHED &&
-        !restrictedFromSellerIds.includes(productId)))
-
-  if (!visible) {
+  if (!visibleProductIds.includes(productId)) {
     return next(
       new MedusaError(
         MedusaError.Types.NOT_FOUND,
@@ -148,7 +114,6 @@ export const vendorProductsMiddlewares: MiddlewareRoute[] = [
         vendorProductQueryConfig.list
       ),
       applySellerProductLinkFilter,
-      applyOfferedProductsFilter,
     ],
   },
   {

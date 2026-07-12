@@ -29,6 +29,19 @@ const ProductCreateVariantSchema = z.object({
   sku: z.string().optional(),
   options: z.record(z.string(), z.string()).optional(),
   variant_rank: z.number(),
+  prices: z
+    .record(z.string(), z.union([z.coerce.number().min(0), z.literal("")]))
+    .default({}),
+  inventory: z
+    .record(
+      z.string(),
+      z.object({
+        checked: z.boolean().default(false),
+        quantity: z.union([z.coerce.number().min(0), z.literal("")]).default(""),
+        disabledToggle: z.boolean().optional(),
+      })
+    )
+    .default({}),
 })
 
 export type ProductCreateVariantSchema = z.infer<
@@ -48,6 +61,7 @@ export const ProductCreateSchema = z
     discountable: z.boolean(),
     type_id: z.string().optional(),
     collection_id: z.string().optional(),
+    shipping_profile_id: z.string().optional(),
     category_id: z.string().min(1, {
       message: i18n.t("products.create.errors.categoryRequired"),
     }),
@@ -144,12 +158,15 @@ export const PRODUCT_CREATE_FORM_DEFAULTS: Partial<
       variant_rank: 0,
       options: {},
       is_default: true,
+      prices: {},
+      inventory: {},
     },
   ]),
   attributes: [],
   media: [],
   category_id: "",
   collection_id: "",
+  shipping_profile_id: "",
   description: "",
   handle: "",
   height: "",

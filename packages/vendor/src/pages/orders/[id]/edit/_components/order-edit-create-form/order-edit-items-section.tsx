@@ -22,7 +22,7 @@ type OrderEditItemsSectionProps = {
 // stacked modal lives in a separate React subtree, so a module-local mutable
 // reference avoids prop-drilling the selection through `StackedFocusModal`.
 // Mirrors admin's pattern.
-let addedOffers: string[] = []
+let addedVariants: string[] = []
 
 export const OrderEditItemsSection = ({
   order,
@@ -45,21 +45,20 @@ export const OrderEditItemsSection = ({
    * CALLBACKS
    */
   const onItemsSelected = async () => {
-    if (!addedOffers.length) {
+    if (!addedVariants.length) {
       setIsOpen("order-edit-add-items", false)
       return
     }
 
     try {
       await addItems({
-        // Vendor route resolves `offer_id` → variant_id + unit_price
-        // server-side. Picker rows are keyed by offer id, not variant id.
-        items: addedOffers.map((offer_id) => ({
-          offer_id,
+        // The backend computes `unit_price` server-side when it is omitted.
+        items: addedVariants.map((variant_id) => ({
+          variant_id,
           quantity: 1,
-        })) as never,
+        })),
       })
-      addedOffers = []
+      addedVariants = []
       setIsOpen("order-edit-add-items", false)
     } catch (e) {
       toast.error(
@@ -117,9 +116,8 @@ export const OrderEditItemsSection = ({
 
               <StackedFocusModal.Body className="size-full overflow-hidden">
                 <AddOrderEditItemsTable
-                  currencyCode={order.currency_code}
                   onSelectionChange={(finalSelection) => {
-                    addedOffers = finalSelection
+                    addedVariants = finalSelection
                   }}
                 />
               </StackedFocusModal.Body>

@@ -11,10 +11,7 @@ import { HttpTypes, ProductChangeDTO } from "@mercurjs/types"
 
 import { productEditDeleteProductWorkflow } from "../../../../workflows/product-edit/workflows/product-edit-delete-product"
 import { productEditUpdateProductWorkflow } from "../../../../workflows/product-edit/workflows/product-edit-update-product"
-import {
-  enrichProductAttributes,
-  wrapProductVariantsWithOffers,
-} from "../../../utils"
+import { enrichProductAttributes } from "../../../utils"
 import { VendorUpdateProductType } from "../validators"
 
 export const GET = async (
@@ -22,15 +19,6 @@ export const GET = async (
   res: MedusaResponse<HttpTypes.VendorProductResponse>
 ) => {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
-
-  const withOffers = req.queryConfig.fields.some((field) =>
-    field.includes("variants.offers")
-  )
-  if (withOffers) {
-    req.queryConfig.fields = req.queryConfig.fields.filter(
-      (field) => !field.includes("variants.offers")
-    )
-  }
 
   const {
     data: [product],
@@ -48,14 +36,6 @@ export const GET = async (
   }
 
   await enrichProductAttributes(req.scope, [product])
-
-  if (withOffers) {
-    await wrapProductVariantsWithOffers(
-      req.scope,
-      [product] as Parameters<typeof wrapProductVariantsWithOffers>[1],
-      req.seller_context!.seller_id
-    )
-  }
 
   res.json({ product })
 }

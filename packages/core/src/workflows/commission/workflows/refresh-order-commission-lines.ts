@@ -41,6 +41,7 @@ const orderFields = [
   "items.product.tags.id",
   "items.product.type_id",
   "items.product.attribute_values.id",
+  "items.product.sellers.id",
   "items.adjustments.*",
   "shipping_methods.*",
   "shipping_methods.total",
@@ -65,6 +66,8 @@ type OrderForCommissionRefresh = {
       categories?: { id: string }[]
       tags?: { id: string }[]
       type_id?: string
+      sellers?: { id: string }[]
+      attribute_values?: { id: string }[]
     }
   }>
   shipping_methods?: Array<{
@@ -136,8 +139,8 @@ export const refreshOrderCommissionLinesWorkflow: ReturnWorkflow<
               categories: item.product.categories,
               tags: item.product.tags,
               type_id: item.product.type_id,
-              seller: item.offer?.seller_id
-                ? { id: item.offer.seller_id }
+              seller: item.product.sellers?.[0]
+                ? { id: item.product.sellers[0].id }
                 : undefined,
               attribute_value_ids: (item.product.attribute_values ?? [])
                 .map((value: { id: string }) => value.id),

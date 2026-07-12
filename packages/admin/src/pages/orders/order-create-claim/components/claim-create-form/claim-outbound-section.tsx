@@ -25,7 +25,6 @@ import {
 } from "../../../../../hooks/api/claims"
 import { OutboundShippingPlaceholder } from "../../../common/placeholders"
 import { AddClaimOutboundItemsTable } from "../add-claim-outbound-items-table"
-import type { ClaimOfferPickerSelection } from "../add-claim-outbound-items-table/add-claim-outbound-items-table"
 import { ClaimOutboundItem } from "./claim-outbound-item"
 import { ItemPlaceholder } from "./item-placeholder"
 import { CreateClaimSchemaType } from "./schema"
@@ -39,7 +38,7 @@ type ClaimOutboundSectionProps = {
   form: UseFormReturn<CreateClaimSchemaType>
 }
 
-let itemsToAdd: ClaimOfferPickerSelection[] = []
+let itemsToAdd: string[] = []
 let itemsToRemove: string[] = []
 
 export const ClaimOutboundSection = ({
@@ -161,10 +160,9 @@ export const ClaimOutboundSection = ({
     if (itemsToAdd.length) {
       await addOutboundItem(
         {
-          items: itemsToAdd.map(({ variantId, offerId }) => ({
-            variant_id: variantId,
+          items: itemsToAdd.map((variant_id) => ({
+            variant_id,
             quantity: 1,
-            metadata: { offer_id: offerId },
           })),
         },
         {
@@ -244,29 +242,19 @@ export const ClaimOutboundSection = ({
             <StackedFocusModal.Header />
 
             <AddClaimOutboundItemsTable
-              // Picker keys on offer id; hydrate from each outbound item's
-              // stored offer_id metadata (or fallback to its variant id if the
-              // item pre-dates the offer-link wiring).
               selectedItems={outboundItems
-                .map(
-                  (i) =>
-                    (typeof i.metadata?.offer_id === "string"
-                      ? i.metadata.offer_id
-                      : null) ?? i.variant_id
-                )
+                .map((i) => i.variant_id)
                 .filter((v): v is string => !!v)}
-              currencyCode={order.currency_code}
               onSelectionChange={(finalSelection) => {
                 const alreadyVariantIds = outboundItems
                   .map((i) => i.variant_id)
                   .filter((v): v is string => !!v)
 
                 itemsToAdd = finalSelection.filter(
-                  ({ variantId }) => !alreadyVariantIds.includes(variantId)
+                  (variantId) => !alreadyVariantIds.includes(variantId)
                 )
-                const finalVariantIds = finalSelection.map((s) => s.variantId)
                 itemsToRemove = alreadyVariantIds.filter(
-                  (variantId) => !finalVariantIds.includes(variantId)
+                  (variantId) => !finalSelection.includes(variantId)
                 )
               }}
             />

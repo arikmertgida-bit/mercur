@@ -25,8 +25,8 @@ import { getReservationsLimitCount } from "@lib/orders"
 import { AllocateItemsSchema } from "./constants"
 import {
   OrderAllocateItemsItem,
-  type OfferLinkRow,
-  type OrderLineItemWithOffer,
+  type VariantLinkRow,
+  type OrderLineItemWithVariant,
 } from "./order-allocate-items-item"
 import { buildAllocationPayload, getAllocatableItems } from "./utils"
 import type { HttpTypes } from "@medusajs/types"
@@ -59,7 +59,7 @@ export function OrderAllocateItemsForm({ order }: OrderAllocateItemsFormProps) {
   const itemsToAllocate = useMemo(
     () =>
       getAllocatableItems(
-        order.items as OrderLineItemWithOffer[],
+        order.items as OrderLineItemWithVariant[],
         reservations ?? []
       ),
     [order.items, reservations]
@@ -155,8 +155,8 @@ export function OrderAllocateItemsForm({ order }: OrderAllocateItemsFormProps) {
   }
 
   const onQuantityChange = (
-    link: OfferLinkRow,
-    lineItem: OrderLineItemWithOffer,
+    link: VariantLinkRow,
+    lineItem: OrderLineItemWithVariant,
     hasInventoryKit: boolean,
     value: number | null,
     isRoot?: boolean
@@ -172,7 +172,7 @@ export function OrderAllocateItemsForm({ order }: OrderAllocateItemsFormProps) {
 
     form.setValue(key as `quantity.${string}`, value ?? "")
 
-    const levels = link.inventory_item?.location_levels
+    const levels = link.inventory?.location_levels
     if (value && levels) {
       const location = levels.find((l) => l.location_id === selectedLocationId)
       if (location && (location.available_quantity ?? 0) < value) {
@@ -187,9 +187,9 @@ export function OrderAllocateItemsForm({ order }: OrderAllocateItemsFormProps) {
     if (hasInventoryKit && isRoot) {
       const item = itemsToAllocate.find((i) => i.id === lineItem.id)
 
-      if (!item || !item.offer?.inventory_item_link) return
+      if (!item || !item.variant?.inventory_items) return
 
-      item.offer.inventory_item_link.forEach((childLink) => {
+      item.variant.inventory_items.forEach((childLink) => {
         const num = value || 0
         const childInventoryItemId = resolveInventoryItemId(childLink)
         if (!childInventoryItemId) return
@@ -201,7 +201,7 @@ export function OrderAllocateItemsForm({ order }: OrderAllocateItemsFormProps) {
           num * required
         )
 
-        const childLevels = childLink.inventory_item?.location_levels
+        const childLevels = childLink.inventory?.location_levels
         if (value && childLevels) {
           const location = childLevels.find(
             (l) => l.location_id === selectedLocationId
@@ -368,8 +368,8 @@ export function OrderAllocateItemsForm({ order }: OrderAllocateItemsFormProps) {
   )
 }
 
-const resolveInventoryItemId = (link: OfferLinkRow): string | null =>
-  link.inventory_item?.id ?? link.inventory_item_id ?? null
+const resolveInventoryItemId = (link: VariantLinkRow): string | null =>
+  link.inventory?.id ?? link.inventory_item_id ?? null
 
 // Clamp a desired quantity to what is actually available at the chosen
 // location so the prefill never proposes more than can be reserved. Until a
@@ -377,14 +377,14 @@ const resolveInventoryItemId = (link: OfferLinkRow): string | null =>
 // returned.
 const clampToAvailable = (
   desired: number,
-  link: OfferLinkRow,
+  link: VariantLinkRow,
   locationId?: string
 ): number => {
   if (!locationId) {
     return desired
   }
 
-  const level = link.inventory_item?.location_levels?.find(
+  const level = link.inventory?.location_levels?.find(
     (l) => l.location_id === locationId
   )
   const available = level?.available_quantity ?? Number.MAX_SAFE_INTEGER
@@ -397,13 +397,13 @@ const clampToAvailable = (
 // trailing-dash aggregator key (UI only); child rows are scaled by the kit's
 // required quantity.
 function defaultAllocations(
-  items: OrderLineItemWithOffer[],
+  items: OrderLineItemWithVariant[],
   locationId?: string
 ) {
   const ret: Record<string, string | number> = {}
 
   items.forEach((item) => {
-    const links = item.offer?.inventory_item_link ?? []
+    const links = item.variant?.inventory_items ?? []
     const hasInventoryKit = links.length > 1
     const firstLink = links[0]
     const firstInventoryItemId = resolveInventoryItemId(firstLink ?? {})
@@ -433,7 +433,7 @@ function defaultAllocations(
   return ret
 }
 
-function defaultSelected(items: OrderLineItemWithOffer[]) {
+function defaultSelected(items: OrderLineItemWithVariant[]) {
   const ret: Record<string, boolean> = {}
   items.forEach((item) => {
     ret[item.id] = true

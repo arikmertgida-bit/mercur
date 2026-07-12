@@ -6,15 +6,15 @@ import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
 
 import {
   enrichProductAttributes,
-  wrapProductVariantsWithOfferPrice,
+  wrapProductVariantsWithCalculatedPrice,
 } from "../../utils"
 import { splitComputedVariantFields } from "./helpers"
 
 export const GET = async (req: MedusaStoreRequest, res: MedusaResponse) => {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
 
-  // `variants.calculated_price` / `variants.offer_id` are computed from the
-  // cheapest offer post-query, not graph columns — strip them before the read.
+  // `variants.calculated_price` is computed from the variant's own price set
+  // post-query, not a graph column — strip it before the read.
   const { fields, withCalculatedPrice } = splitComputedVariantFields(
     req.queryConfig.fields
   )
@@ -40,7 +40,7 @@ export const GET = async (req: MedusaStoreRequest, res: MedusaResponse) => {
   await enrichProductAttributes(req.scope, products)
 
   if (withCalculatedPrice) {
-    await wrapProductVariantsWithOfferPrice(req, products)
+    await wrapProductVariantsWithCalculatedPrice(req, products)
   }
 
   res.json({

@@ -59,6 +59,7 @@ const DIFFABLE_FIELDS = [
   "categories",
   "tags",
   "sales_channels",
+  "shipping_profile_id",
   "metadata",
 ] as const
 

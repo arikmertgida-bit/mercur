@@ -9,7 +9,7 @@ import {
   MedusaError,
 } from "@medusajs/framework/utils"
 
-import { resolveOfferItems } from "../../../orders/resolve-offer-items"
+import { resolveAddItems } from "../../../orders/resolve-add-items"
 import { VendorPostOrderEditsAddItemsReqType } from "../../validators"
 
 export const POST = async (
@@ -33,9 +33,8 @@ export const POST = async (
     )
   }
 
-  const items = await resolveOfferItems({
+  const items = await resolveAddItems({
     container: req.scope,
-    sellerId: req.seller_context!.seller_id,
     currencyCode: order.currency_code,
     items: req.validatedBody.items,
   })

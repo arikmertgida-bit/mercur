@@ -25,7 +25,6 @@ import {
 import { OutboundShippingPlaceholder } from "../../../common/placeholders"
 import { ItemPlaceholder } from "../../../order-create-claim/components/claim-create-form/item-placeholder"
 import { AddExchangeOutboundItemsTable } from "../add-exchange-outbound-items-table"
-import type { ExchangeOfferPickerSelection } from "../add-exchange-outbound-items-table/add-exchange-outbound-items-table"
 import { ExchangeOutboundItem } from "./exchange-outbound-item"
 import { useOrderShippingOptions } from "../../../../../hooks/api/orders"
 import { CreateExchangeSchemaType } from "./schema"
@@ -38,7 +37,7 @@ type ExchangeOutboundSectionProps = {
   form: UseFormReturn<CreateExchangeSchemaType>
 }
 
-let itemsToAdd: ExchangeOfferPickerSelection[] = []
+let itemsToAdd: string[] = []
 let itemsToRemove: string[] = []
 
 export const ExchangeOutboundSection = ({
@@ -160,10 +159,9 @@ export const ExchangeOutboundSection = ({
     if (itemsToAdd.length) {
       await addOutboundItem(
         {
-          items: itemsToAdd.map(({ variantId, offerId }) => ({
-            variant_id: variantId,
+          items: itemsToAdd.map((variant_id) => ({
+            variant_id,
             quantity: 1,
-            metadata: { offer_id: offerId },
           })),
         },
         {
@@ -253,29 +251,19 @@ export const ExchangeOutboundSection = ({
             <StackedFocusModal.Header />
 
             <AddExchangeOutboundItemsTable
-              // Picker keys on offer id; hydrate from each outbound item's
-              // stored offer_id metadata (or fallback to its variant id if the
-              // item pre-dates the offer-link wiring).
               selectedItems={outboundItems
-                .map(
-                  (i) =>
-                    (typeof i.metadata?.offer_id === "string"
-                      ? i.metadata.offer_id
-                      : null) ?? i.variant_id
-                )
+                .map((i) => i.variant_id)
                 .filter((v): v is string => !!v)}
-              currencyCode={order.currency_code}
               onSelectionChange={(finalSelection) => {
                 const alreadyVariantIds = outboundItems
                   .map((i) => i.variant_id)
                   .filter((v): v is string => !!v)
 
                 itemsToAdd = finalSelection.filter(
-                  ({ variantId }) => !alreadyVariantIds.includes(variantId)
+                  (variantId) => !alreadyVariantIds.includes(variantId)
                 )
-                const finalVariantIds = finalSelection.map((s) => s.variantId)
                 itemsToRemove = alreadyVariantIds.filter(
-                  (variantId) => !finalVariantIds.includes(variantId)
+                  (variantId) => !finalSelection.includes(variantId)
                 )
               }}
             />

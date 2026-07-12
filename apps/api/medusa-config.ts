@@ -96,6 +96,9 @@ module.exports = withMercur({
       resolve: './src/modules/seller-follow',
     },
     {
+      resolve: './src/modules/offer-cleanup',
+    },
+    {
       resolve: '@mercurjs/core/modules/admin-ui',
       options: {
         appDir: '',

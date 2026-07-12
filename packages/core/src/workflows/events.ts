@@ -38,17 +38,6 @@ export const MemberInviteWorkflowEvents = {
   ACCEPTED: "member_invite.accepted",
 }
 
-export const OfferWorkflowEvents = {
-  CREATED: "offer.created",
-  UPDATED: "offer.updated",
-  DELETED: "offer.deleted",
-}
-
-export const OfferConditionWorkflowEvents = {
-  CREATED: "offer_condition.created",
-  UPDATED: "offer_condition.updated",
-  DELETED: "offer_condition.deleted",
-}
 export const PaymentWebhookEvents = {
   /**
    * Emitted when a payment provider webhook reaches `/hooks/payment/:provider`.

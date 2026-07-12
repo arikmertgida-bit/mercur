@@ -1,17 +1,24 @@
+import { HttpTypes } from "@medusajs/types";
 import { Input } from "@medusajs/ui";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 import {
   createDataGridHelper,
+  createDataGridLocationStockColumns,
+  createDataGridPriceColumns,
   DataGrid,
 } from "../../../../../components/data-grid";
 import { useRouteModal } from "../../../../../components/modals";
 import { useTabbedForm } from "../../../../../components/tabbed-form/tabbed-form";
 import { defineTabMeta } from "../../../../../components/tabbed-form/types";
+import { useRegions, useShippingProfiles, useStockLocations } from "../../../../../hooks/api";
+import { usePricePreferences } from "../../../../../hooks/api/price-preferences";
 import { ProductCreateVariantSchema } from "../../constants";
 import { ProductCreateSchemaType } from "../../types";
+
+type ShippingProfileLite = { id: string; name?: string | null };
 
 const Root = () => {
   const { t } = useTranslation();
@@ -20,11 +27,54 @@ const Root = () => {
 
   const [search, setSearch] = useState("");
 
+  const { regions } = useRegions({ limit: 9999 });
+  const { stock_locations } = useStockLocations({ limit: 100 });
+  const { shipping_profiles } = useShippingProfiles({ limit: 100 }) as {
+    shipping_profiles?: ShippingProfileLite[];
+  };
+  const { price_preferences: pricePreferences } = usePricePreferences({});
+
+  const currencies = useMemo(() => {
+    return Array.from(
+      new Set((regions ?? []).map((region) => region.currency_code))
+    );
+  }, [regions]);
+
   const variants = useWatch({
     control: form.control,
     name: "variants",
     defaultValue: [],
   });
+
+  // The stock-toggle cell reads `inventory[locationId]` as an object
+  // ({checked, quantity, disabledToggle}) — a variant row with no entry yet
+  // for a given location renders `undefined` there and crashes. Seed every
+  // known location into every row (without touching values already set).
+  useEffect(() => {
+    if (!stock_locations?.length) return;
+
+    const current = form.getValues("variants") ?? [];
+    let changed = false;
+
+    const next = current.map((variant) => {
+      const inventory = { ...(variant.inventory ?? {}) };
+      for (const location of stock_locations) {
+        if (!inventory[location.id]) {
+          inventory[location.id] = {
+            checked: false,
+            quantity: "",
+            disabledToggle: false,
+          };
+          changed = true;
+        }
+      }
+      return { ...variant, inventory };
+    });
+
+    if (changed) {
+      form.setValue("variants", next, { shouldDirty: false });
+    }
+  }, [stock_locations, variants.length, form]);
 
   const watchedAttributes = useWatch({
     control: form.control,
@@ -45,6 +95,10 @@ const Root = () => {
    */
   const columns = useColumns({
     variantAxes,
+    currencies,
+    stockLocations: stock_locations as HttpTypes.AdminStockLocation[] | undefined,
+    shippingProfiles: shipping_profiles ?? [],
+    pricePreferences,
   });
 
   const variantData = useMemo(() => {
@@ -124,15 +178,30 @@ const columnHelper = createDataGridHelper<
   ProductCreateSchemaType
 >();
 
+type ColumnArgs = {
+  variantAxes: { title: string }[];
+  currencies?: string[];
+  stockLocations?: HttpTypes.AdminStockLocation[];
+  shippingProfiles?: ShippingProfileLite[];
+  pricePreferences?: HttpTypes.AdminPricePreference[];
+};
+
 const useColumns = ({
   variantAxes,
-}: {
-  variantAxes: { title: string }[];
-}) => {
+  currencies = [],
+  stockLocations = [],
+  shippingProfiles = [],
+  pricePreferences = [],
+}: ColumnArgs) => {
   const { t } = useTranslation();
 
-  return useMemo(
-    () => [
+  return useMemo(() => {
+    const shippingProfileOptions = shippingProfiles.map((p) => ({
+      value: p.id,
+      label: p.name ?? p.id,
+    }));
+
+    return [
       columnHelper.column({
         id: "attributes",
         header: () => (
@@ -175,7 +244,43 @@ const useColumns = ({
           return <DataGrid.TextCell context={context} />;
         },
       }),
-    ],
-    [variantAxes, t],
-  );
+      columnHelper.column({
+        id: "shipping_profile",
+        name: t("products.fields.shipping_profile.label"),
+        header: t("products.fields.shipping_profile.label"),
+        // Shipping profile is a product-level field, not per-variant — every
+        // row edits the same `shipping_profile_id` so the value stays in
+        // sync across the whole grid.
+        field: () => "shipping_profile_id",
+        type: "select",
+        cell: (context) => (
+          <DataGrid.SelectCell
+            context={context}
+            options={shippingProfileOptions}
+            placeholder=""
+          />
+        ),
+      }),
+      ...createDataGridLocationStockColumns<VariantRow, ProductCreateSchemaType>({
+        stockLocations,
+        getFieldName: (context, index) => {
+          const location = stockLocations[index];
+          if (!location) return null;
+          return `variants.${context.row.original.originalIndex}.inventory.${location.id}`;
+        },
+        t,
+      }),
+      ...createDataGridPriceColumns<VariantRow, ProductCreateSchemaType>({
+        currencies,
+        pricePreferences,
+        getFieldName: (context, value) => {
+          if (context.column.id?.startsWith("currency_prices")) {
+            return `variants.${context.row.original.originalIndex}.prices.${value}`;
+          }
+          return null;
+        },
+        t,
+      }),
+    ];
+  }, [variantAxes, t, currencies, stockLocations, shippingProfiles, pricePreferences]);
 };

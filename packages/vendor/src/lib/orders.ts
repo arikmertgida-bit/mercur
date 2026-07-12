@@ -1,7 +1,5 @@
 import { AdminOrder, AdminOrderLineItem, HttpTypes } from "@medusajs/types"
 
-import { OfferInventoryLinkRow } from "@lib/inventory-preview"
-
 export const getPaymentsFromOrder = (order: HttpTypes.AdminOrder) => {
   return order.payment_collections
     .map((collection: HttpTypes.AdminPaymentCollection) => collection.payments)
@@ -12,11 +10,8 @@ export const getPaymentsFromOrder = (order: HttpTypes.AdminOrder) => {
 /**
  * Returns a limit for number of reservations that order can have.
  *
- * Mercur offers link inventory items to the offer (not the product variant),
- * so `variant.inventory_items` is empty for offer-based orders. Count the
- * offer's `inventory_item_link` rows first — a kit offer reserves one
- * inventory item per link — and only fall back to the variant inventory
- * count (or 1) when there is no offer link. Undercounting here truncates the
+ * A variant can be linked to more than one inventory item (bundles), each
+ * contributing its own reservation row. Undercounting here truncates the
  * reservations query and leaves freshly-allocated items showing as "Not
  * allocated" (MER-187).
  */
@@ -26,13 +21,8 @@ export function getReservationsLimitCount(order: AdminOrder) {
   }
 
   return order.items.reduce((acc: number, item: AdminOrderLineItem) => {
-    const offerLinkCount = (
-      item as AdminOrderLineItem & {
-        offer?: { inventory_item_link?: OfferInventoryLinkRow[] | null }
-      }
-    ).offer?.inventory_item_link?.length
     const variantInventoryCount = item.variant?.inventory_items?.length
 
-    return acc + (offerLinkCount || variantInventoryCount || 1)
+    return acc + (variantInventoryCount || 1)
   }, 0)
 }

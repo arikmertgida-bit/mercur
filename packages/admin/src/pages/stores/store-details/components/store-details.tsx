@@ -24,7 +24,7 @@ import { StoreAddressSection } from "./store-address-section";
 import { StoreMembersSection } from "./store-members-section";
 import { StoreRequestSection } from "./store-request-section";
 import { StoreOrdersSection } from "./store-orders-section";
-import { StoreOffersSection } from "./store-offers-section";
+import { StoreProductsSection } from "./store-products-section";
 import {
   StoreDetailHeader,
   StoreDetailTitle,
@@ -126,12 +126,12 @@ const Root = ({ children }: { children?: ReactNode }) => {
           },
         ]
       : []),
-    ...(can("offers")
+    ...(can("products")
       ? [
           {
-            id: "offers",
-            label: t("offers.domain"),
-            content: <StoreOffersSection sellerId={seller.id} />,
+            id: "products",
+            label: t("products.domain"),
+            content: <StoreProductsSection sellerId={seller.id} />,
           },
         ]
       : []),

@@ -1,10 +1,5 @@
 import { z } from "zod"
 
-// Mirrors admin's ClaimCreateSchema with one architectural divergence:
-// vendor's `outbound_items` carries `offer_id` (Mercur uses sellers'
-// offers to drive replacement shipments, not raw `variant_id`). The
-// remaining fields match admin shape-for-shape so the rest of the form
-// can stay aligned 1:1.
 export const ClaimCreateSchema = z.object({
   inbound_items: z.array(
     z.object({
@@ -17,8 +12,7 @@ export const ClaimCreateSchema = z.object({
   ),
   outbound_items: z.array(
     z.object({
-      offer_id: z.string(),
-      variant_id: z.string().nullish(),
+      variant_id: z.string(),
       product_title: z.string().nullish(),
       variant_title: z.string().nullish(),
       thumbnail: z.string().nullish(),

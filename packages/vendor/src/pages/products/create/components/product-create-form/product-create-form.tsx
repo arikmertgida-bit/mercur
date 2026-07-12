@@ -9,7 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 
 import { RouteFocusModal, useRouteModal } from "@components/modals"
 import { TabbedForm } from "@components/tabbed-form/tabbed-form"
-import { useCreateProduct, useFeatureFlags } from "@hooks/api"
+import { useCreateProduct, useCurrentSeller, useFeatureFlags } from "@hooks/api"
 import { sdk } from "@lib/client"
 
 import { PRODUCT_CREATE_FORM_DEFAULTS, ProductCreateSchema } from "../../constants"
@@ -47,6 +47,7 @@ export const ProductCreateForm = ({
   })
 
   const { mutateAsync, isPending } = useCreateProduct()
+  const { currency_code } = useCurrentSeller()
 
   const { feature_flags } = useFeatureFlags()
   const productRequestEnabled =
@@ -90,11 +91,14 @@ export const ProductCreateForm = ({
         : "published"
 
     await mutateAsync(
-      normalizeProductFormValues({
-        ...payload,
-        media: uploadedMedia,
-        status: submittedStatus as HttpTypes.AdminProductStatus,
-      }),
+      normalizeProductFormValues(
+        {
+          ...payload,
+          media: uploadedMedia,
+          status: submittedStatus as HttpTypes.AdminProductStatus,
+        },
+        currency_code,
+      ),
       {
         onSuccess: (data: InferClientOutput<typeof sdk.vendor.products.mutate>) => {
           if (submittedStatus === "proposed") {

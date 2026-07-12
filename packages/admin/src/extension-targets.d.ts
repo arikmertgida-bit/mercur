@@ -58,16 +58,6 @@ declare module "@mercurjs/dashboard-sdk" {
     "locations.list.item.before": true
     "marketplace.detail.main.after": true
     "marketplace.detail.main.before": true
-    "offer-variants.detail.main.after": true
-    "offer-variants.detail.main.before": true
-    "offer-variants.detail.side.after": true
-    "offer-variants.detail.side.before": true
-    "offers.detail.main.after": true
-    "offers.detail.main.before": true
-    "offers.detail.side.after": true
-    "offers.detail.side.before": true
-    "offers.list.after": true
-    "offers.list.before": true
     "orders.detail.item.after": true
     "orders.detail.item.before": true
     "orders.detail.main.after": true
@@ -167,7 +157,6 @@ declare module "@mercurjs/dashboard-sdk" {
     "customer-groups": true
     "customers": true
     "inventory": true
-    "offers": true
     "orders": true
     "payouts": true
     "price-lists": true
@@ -253,12 +242,6 @@ declare module "@mercurjs/dashboard-sdk" {
       displayZones: "attributes" | "general" | "locations" | "reservations" | "variants"
       displayFieldIds: "available_quantity" | "reserved_quantity" | "sku" | "stocked_quantity" | "title"
     }
-    "offer": {
-      formZones: never
-      formTabs: Record<string, string>
-      displayZones: "associated-product" | "general" | "store" | "variants"
-      displayFieldIds: "description" | "discountable" | "handle" | "status" | "subtitle" | "title"
-    }
     "order": {
       formZones: never
       formTabs: Record<string, string>
@@ -292,7 +275,7 @@ declare module "@mercurjs/dashboard-sdk" {
     "seller": {
       formZones: "create" | "edit"
       formTabs: { "create": "details" | "users" }
-      displayZones: "address" | "company-details" | "configuration" | "general" | "members" | "offers" | "orders" | "payment-details" | "requests"
+      displayZones: "address" | "company-details" | "configuration" | "general" | "members" | "orders" | "payment-details" | "requests"
       displayFieldIds: "currency_code" | "description" | "email" | "handle" | "phone" | "website_url"
     }
     "user": {

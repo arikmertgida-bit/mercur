@@ -6,23 +6,19 @@ import { useTranslation } from "react-i18next"
 import { Thumbnail } from "@components/common/thumbnail"
 import { PlaceholderCell } from "@components/table/table-cells/common/placeholder-cell"
 
-export type ClaimOutboundOfferPickerRow = {
+// One row per product variant, flattened from `sdk.admin.products.query`.
+export type ClaimOutboundVariantPickerRow = {
   id: string
   sku?: string | null
-  variant_id?: string | null
-  created_at?: string | null
-  updated_at?: string | null
-  product_variant?: {
+  title?: string | null
+  product?: {
     id?: string | null
     title?: string | null
-    product?: {
-      title?: string | null
-      thumbnail?: string | null
-    } | null
+    thumbnail?: string | null
   } | null
 }
 
-const columnHelper = createColumnHelper<ClaimOutboundOfferPickerRow>()
+const columnHelper = createColumnHelper<ClaimOutboundVariantPickerRow>()
 
 export const useClaimOutboundItemTableColumns = () => {
   const { t } = useTranslation()
@@ -62,14 +58,13 @@ export const useClaimOutboundItemTableColumns = () => {
         id: "product",
         header: t("fields.product"),
         cell: ({ row }) => {
-          const variant = row.original.product_variant
-          const productTitle = variant?.product?.title
+          const productTitle = row.original.product?.title
           if (!productTitle) {
             return <PlaceholderCell />
           }
           return (
             <div className="flex h-full w-full max-w-[300px] items-center gap-x-3 overflow-hidden">
-              <Thumbnail src={variant?.product?.thumbnail} />
+              <Thumbnail src={row.original.product?.thumbnail} />
               <Text
                 size="small"
                 leading="compact"
@@ -94,11 +89,11 @@ export const useClaimOutboundItemTableColumns = () => {
           )
         },
       }),
-      columnHelper.display({
+      columnHelper.accessor("title", {
         id: "variant_title",
         header: t("fields.title"),
-        cell: ({ row }) => {
-          const title = row.original.product_variant?.title
+        cell: ({ getValue }) => {
+          const title = getValue()
           if (!title) return <PlaceholderCell />
           return (
             <Text size="small" leading="compact" className="truncate">
