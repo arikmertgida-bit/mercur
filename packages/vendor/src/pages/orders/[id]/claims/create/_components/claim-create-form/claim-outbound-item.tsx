@@ -1,4 +1,5 @@
 import { XCircle } from "@medusajs/icons"
+import { AdminOrderLineItem, HttpTypes } from "@medusajs/types"
 import { Input, Text } from "@medusajs/ui"
 import { UseFormReturn } from "react-hook-form"
 import { useTranslation } from "react-i18next"
@@ -6,56 +7,53 @@ import { useTranslation } from "react-i18next"
 import { ActionMenu } from "@components/common/action-menu"
 import { Form } from "@components/common/form"
 import { Thumbnail } from "@components/common/thumbnail"
+import { MoneyAmountCell } from "@components/table/table-cells/common/money-amount-cell"
 
 import { CreateClaimSchemaType } from "./schema"
 
 type ClaimOutboundItemProps = {
+  previewItem: AdminOrderLineItem
+  currencyCode: string
   index: number
 
   onRemove: () => void
+  onUpdate: (payload: HttpTypes.AdminUpdateReturnItems) => void
 
   form: UseFormReturn<CreateClaimSchemaType>
 }
 
-/**
- * Vendor port of admin's `ClaimOutboundItem`. The replacement row stays
- * minimal — thumbnail, title/SKU, qty input, remove. Pricing is resolved
- * server-side on confirm so we don't render a money cell here (admin
- * renders `previewItem.total` because the admin draft already has totals
- * attached; vendor only has the form-side snapshot).
- */
 function ClaimOutboundItem({
+  previewItem,
+  currencyCode,
   form,
   onRemove,
+  onUpdate,
   index,
 }: ClaimOutboundItemProps) {
   const { t } = useTranslation()
 
-  const row = form.watch(`outbound_items.${index}`)
-  const productTitle = row?.product_title ?? row?.variant_title ?? row?.variant_id
-
   return (
     <div
       className="bg-ui-bg-subtle shadow-elevation-card-rest my-2 rounded-xl"
-      data-testid={`claim-outbound-item-${row?.variant_id ?? index}`}
+      data-testid={`claim-outbound-item-${previewItem.variant_id ?? index}`}
     >
       <div className="flex flex-col items-center gap-x-2 gap-y-2 border-b p-3 text-sm md:flex-row">
         <div className="flex flex-1 items-center gap-x-3">
-          <Thumbnail src={row?.thumbnail ?? undefined} />
+          <Thumbnail src={previewItem.thumbnail} />
 
           <div className="flex flex-col">
             <div>
               <Text className="txt-small" as="span" weight="plus">
-                {productTitle}{" "}
+                {previewItem.title}{" "}
               </Text>
 
-              {row?.sku && <span>({row.sku})</span>}
+              {previewItem.variant_sku && (
+                <span>({previewItem.variant_sku})</span>
+              )}
             </div>
-            {row?.variant_title && (
-              <Text as="div" className="text-ui-fg-subtle txt-small">
-                {row.variant_title}
-              </Text>
-            )}
+            <Text as="div" className="text-ui-fg-subtle txt-small">
+              {previewItem.product_title}
+            </Text>
           </div>
         </div>
 
@@ -78,6 +76,10 @@ function ClaimOutboundItem({
                           const payload = val === "" ? null : Number(val)
 
                           field.onChange(payload)
+
+                          if (payload) {
+                            onUpdate({ quantity: payload })
+                          }
                         }}
                       />
                     </Form.Control>
@@ -89,6 +91,13 @@ function ClaimOutboundItem({
             <Text className="txt-small text-ui-fg-subtle">
               {t("fields.qty")}
             </Text>
+          </div>
+
+          <div className="text-ui-fg-subtle txt-small mr-2 flex flex-shrink-0">
+            <MoneyAmountCell
+              currencyCode={currencyCode}
+              amount={previewItem.total}
+            />
           </div>
 
           <ActionMenu

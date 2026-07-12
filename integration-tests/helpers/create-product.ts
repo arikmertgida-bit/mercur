@@ -1,13 +1,23 @@
 import { ContainerRegistrationKeys, Modules } from "@medusajs/framework/utils"
 import type { MedusaContainer } from "@medusajs/framework/types"
-import { MercurModules } from "@mercurjs/types"
+import { MercurModules, ProductDTO } from "@mercurjs/types"
+
+type RequestHeaders = { headers: Record<string, string> }
+
+type CreateVendorProductBody = {
+  status: string
+  title: string
+  variants: VendorVariantInput[]
+  shipping_profile_id?: string
+  attributes?: VendorAttributeInput[]
+}
 
 type ApiClient = {
   post: (
     path: string,
-    body: Record<string, unknown>,
-    headers: unknown
-  ) => Promise<{ data: { product: VendorProduct } }>
+    body: CreateVendorProductBody,
+    headers: RequestHeaders
+  ) => Promise<{ data: { product: ProductDTO } }>
 }
 
 /**
@@ -34,18 +44,14 @@ export const assignProductsToSeller = async (
   )
 }
 
-type VendorProduct = {
-  id: string
-  variants: { id: string; sku?: string }[]
-  [key: string]: unknown
-}
-
 type VendorVariantInput = {
   title: string
   sku?: string
   /** Maps an axis attribute title to the variant's value, e.g. `{ Size: "M" }`. */
   options?: Record<string, string>
-  [key: string]: unknown
+  prices?: { amount: number; currency_code: string }[]
+  inventory?: { location_id: string; quantity: number }[]
+  variant_rank?: number
 }
 
 type VendorAttributeInput =
@@ -59,7 +65,7 @@ type VendorAttributeInput =
       is_filterable?: boolean
       is_required?: boolean
       description?: string | null
-      metadata?: Record<string, unknown> | null
+      metadata?: Record<string, string | number | boolean> | null
     }
 
 type CreateVendorProductOptions = {
@@ -78,7 +84,7 @@ type CreateVendorProductOptions = {
    */
   attributes?: VendorAttributeInput[]
   /** Extra top-level product fields merged into the request body. */
-  extra?: Record<string, unknown>
+  extra?: { shipping_profile_id?: string }
 }
 
 /**
@@ -90,14 +96,14 @@ type CreateVendorProductOptions = {
  */
 export const createVendorProduct = async (
   api: ApiClient,
-  headers: unknown,
+  headers: RequestHeaders,
   opts: CreateVendorProductOptions
-): Promise<VendorProduct> => {
+): Promise<ProductDTO> => {
   const variants = opts.variants ?? [
     { title: opts.variantTitle ?? "Default", sku: opts.sku },
   ]
 
-  const body: Record<string, unknown> = {
+  const body: CreateVendorProductBody = {
     status: opts.status ?? "published",
     title: opts.title,
     variants,

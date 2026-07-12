@@ -12,11 +12,8 @@ export const ClaimCreateSchema = z.object({
   ),
   outbound_items: z.array(
     z.object({
-      variant_id: z.string(),
-      product_title: z.string().nullish(),
-      variant_title: z.string().nullish(),
-      thumbnail: z.string().nullish(),
-      sku: z.string().nullish(),
+      item_id: z.string(),
+      variant_id: z.string().nullish(),
       quantity: z.number(),
     })
   ),
