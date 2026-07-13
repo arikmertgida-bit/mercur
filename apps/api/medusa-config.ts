@@ -98,6 +98,9 @@ module.exports = withMercur({
     {
       resolve: './src/modules/offer-cleanup',
     },
+    {
+      resolve: './src/modules/attribute-legacy-cleanup',
+    },
     // @mercurjs/core's own pluggable search module. Falls back to its built-in
     // in-memory Orama provider when no Meilisearch instance is configured;
     // docker-compose already injects MEILISEARCH_HOST/MEILISEARCH_MASTER_KEY

@@ -10,7 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 
 import { RouteFocusModal, useRouteModal } from "@components/modals"
 import { TabbedForm } from "@components/tabbed-form/tabbed-form"
-import { useCreateProduct, useCurrentSeller, useFeatureFlags } from "@hooks/api"
+import { useCreateProduct, useFeatureFlags, useRegions } from "@hooks/api"
 import { sdk } from "@lib/client"
 
 import { PRODUCT_CREATE_FORM_DEFAULTS, ProductCreateSchema } from "../../constants"
@@ -48,7 +48,16 @@ export const ProductCreateForm = ({
   })
 
   const { mutateAsync, isPending } = useCreateProduct()
-  const { currency_code } = useCurrentSeller()
+
+  // Every region's currency, not just the seller's own onboarding currency —
+  // mirrors `@mercurjs/admin`'s product-create-form (`regionsCurrencyMap`) so
+  // a seller's variant prices cover every currency the marketplace sells in.
+  const { regions } = useRegions({ limit: 9999 })
+  const currencies = useMemo(() => {
+    return Array.from(
+      new Set((regions ?? []).map((region) => region.currency_code))
+    )
+  }, [regions])
 
   const { feature_flags } = useFeatureFlags()
   const productRequestEnabled =
@@ -117,7 +126,7 @@ export const ProductCreateForm = ({
           media: uploadedMedia,
           status: submittedStatus as HttpTypes.AdminProductStatus,
         },
-        currency_code,
+        currencies,
       ),
       {
         onSuccess: (data: InferClientOutput<typeof sdk.vendor.products.mutate>) => {

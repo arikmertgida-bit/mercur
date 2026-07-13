@@ -24,7 +24,7 @@ export const normalizeProductFormValues = (
   values: ProductCreateSchemaType & {
     status: HttpTypes.AdminProductStatus
   },
-  currencyCode?: string
+  currencies: string[]
 ): NormalizedCreateProduct => {
   const thumbnail = values.media?.find((media) => media.isThumbnail)?.url
   const images = values.media
@@ -75,7 +75,7 @@ export const normalizeProductFormValues = (
     variants: normalizeVariants(
       values.variants.filter((variant) => variant.should_create),
       hasAxis,
-      currencyCode,
+      currencies,
     ),
   }
 }
@@ -88,20 +88,25 @@ const numericOrZero = (value: number | "" | undefined | null): number => {
 export const normalizeVariants = (
   variants: ProductCreateSchemaType["variants"],
   hasAxis: boolean,
-  currencyCode?: string,
+  currencies: string[],
 ): NormalizedCreateProductVariant[] => {
   return variants.map((variant) => {
     const opts = variant.options
     const hasOpts = opts && Object.keys(opts).length > 0
 
-    const prices = currencyCode
-      ? [
-          {
-            currency_code: currencyCode,
-            amount: numericOrZero(variant.prices?.[currencyCode]),
-          },
-        ]
-      : []
+    // Only send a price for currencies the seller actually typed a value
+    // for — sending 0 for every marketplace currency would silently create
+    // free-priced entries for currencies the seller left blank.
+    const prices = currencies
+      .filter(
+        (currency) =>
+          variant.prices?.[currency] !== undefined &&
+          variant.prices[currency] !== ""
+      )
+      .map((currency) => ({
+        currency_code: currency,
+        amount: numericOrZero(variant.prices?.[currency]),
+      }))
 
     const inventory = Object.entries(variant.inventory ?? {})
       .filter(([, level]) => level?.checked)
