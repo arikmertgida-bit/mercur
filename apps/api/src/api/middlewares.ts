@@ -20,6 +20,9 @@ import { adminWishlistMiddlewares } from "./admin/wishlist/middlewares";
 import { storeCustomerUploadMiddlewares } from "./store/customer/upload/middlewares";
 import { storeSellerFollowMiddlewares } from "./store/sellers/[handle]/follow/middlewares";
 import { storeSellersFollowingMiddlewares } from "./store/sellers-following/middlewares";
+import { storeCatalogProductsMiddlewares } from "./store/catalog/products/middlewares";
+import { storeSellerProductsMiddlewares } from "./store/sellers/[handle]/products/middlewares";
+import { storeSearchSuggestMiddlewares } from "./store/search/suggest/middlewares";
 
 export default defineMiddlewares({
     routes: [
@@ -28,6 +31,9 @@ export default defineMiddlewares({
         ...storeCustomerUploadMiddlewares,
         ...storeSellerFollowMiddlewares,
         ...storeSellersFollowingMiddlewares,
+        ...storeCatalogProductsMiddlewares,
+        ...storeSellerProductsMiddlewares,
+        ...storeSearchSuggestMiddlewares,
         ...adminProductReportsMiddlewares,
         ...storeProductReportsMiddlewares,
         ...adminReviewsMiddlewares,
