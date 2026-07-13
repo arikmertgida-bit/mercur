@@ -162,10 +162,6 @@ export type Routes = {
         notifications: typeof import("@medusajs/medusa/api/admin/notifications/route") & {
             $id: typeof import("@medusajs/medusa/api/admin/notifications/[id]/route");
         };
-        offers: typeof import("@mercurjs/core/api/admin/offers/route") & {
-            $id: typeof import("@mercurjs/core/api/admin/offers/[id]/route");
-            batch: typeof import("@mercurjs/core/api/admin/offers/batch/route");
-        };
         orderChanges: {
             $id: typeof import("@medusajs/medusa/api/admin/order-changes/[id]/route");
         };
@@ -604,9 +600,6 @@ export type Routes = {
             };
         };
         locales: typeof import("@medusajs/medusa/api/store/locales/route");
-        offers: typeof import("@mercurjs/core/api/store/offers/route") & {
-            $id: typeof import("@mercurjs/core/api/store/offers/[id]/route");
-        };
         orderGroups: typeof import("@mercurjs/core/api/store/order-groups/route") & {
             $id: typeof import("@mercurjs/core/api/store/order-groups/[id]/route");
         };
@@ -797,14 +790,6 @@ export type Routes = {
                 accept: typeof import("@mercurjs/core/api/vendor/members/invites/accept/route");
             };
             me: typeof import("@mercurjs/core/api/vendor/members/me/route");
-        };
-        offers: typeof import("@mercurjs/core/api/vendor/offers/route") & {
-            $id: typeof import("@mercurjs/core/api/vendor/offers/[id]/route") & {
-                inventoryItems: {
-                    batch: typeof import("@mercurjs/core/api/vendor/offers/[id]/inventory-items/batch/route");
-                };
-            };
-            batch: typeof import("@mercurjs/core/api/vendor/offers/batch/route");
         };
         orderEdits: typeof import("@mercurjs/core/api/vendor/order-edits/route") & {
             $id: typeof import("@mercurjs/core/api/vendor/order-edits/[id]/route") & {

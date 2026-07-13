@@ -34,10 +34,9 @@ export const NoResults = ({ title, message, className }: NoResultsProps) => {
 }
 
 type ActionProps = {
-  action?: {
-    to: string
-    label: string
-  }
+  action?:
+    | { to: string; label: string }
+    | { onClick: () => void; label: string }
 }
 
 export type NoRecordsProps = {
@@ -48,23 +47,59 @@ export type NoRecordsProps = {
   icon?: React.ReactNode
 } & ActionProps
 
-const DefaultButton = ({ action }: ActionProps) =>
-  action && (
+const DefaultButton = ({ action }: ActionProps) => {
+  if (!action) {
+    return null
+  }
+
+  if ("onClick" in action) {
+    return (
+      <Button
+        variant="secondary"
+        size="small"
+        type="button"
+        onClick={action.onClick}
+      >
+        {action.label}
+      </Button>
+    )
+  }
+
+  return (
     <Link to={action.to}>
       <Button variant="secondary" size="small">
         {action.label}
       </Button>
     </Link>
   )
+}
 
-const TransparentIconLeftButton = ({ action }: ActionProps) =>
-  action && (
+const TransparentIconLeftButton = ({ action }: ActionProps) => {
+  if (!action) {
+    return null
+  }
+
+  if ("onClick" in action) {
+    return (
+      <Button
+        variant="transparent"
+        className="text-ui-fg-interactive"
+        type="button"
+        onClick={action.onClick}
+      >
+        <PlusMini /> {action.label}
+      </Button>
+    )
+  }
+
+  return (
     <Link to={action.to}>
       <Button variant="transparent" className="text-ui-fg-interactive">
         <PlusMini /> {action.label}
       </Button>
     </Link>
   )
+}
 
 export const NoRecords = ({
   title,

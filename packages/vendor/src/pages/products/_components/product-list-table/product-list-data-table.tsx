@@ -12,15 +12,18 @@ import type { productListLoader } from "../../list-loader";
 import { ActionMenu } from "@components/common/action-menu";
 import { _DataTable } from "@components/table/data-table";
 import { useDeleteProduct, useProducts } from "@hooks/api/products";
+import { useIsSellerActive } from "@hooks/api";
 import { useProductTableColumns } from "@hooks/table/columns/use-product-table-columns";
 import { useProductTableFilters } from "@hooks/table/filters/use-product-table-filters";
 import { useProductTableQuery } from "@hooks/table/query/use-product-table-query";
 import { useDataTable } from "@hooks/use-data-table";
+import { sellerSuspensionBridge } from "@lib/seller-suspension-bridge";
 
 export const PAGE_SIZE = 10;
 
 export const ProductListDataTable = () => {
   const { t } = useTranslation();
+  const isSellerActive = useIsSellerActive();
 
   const { searchParams, raw } = useProductTableQuery({
     pageSize: PAGE_SIZE,
@@ -86,10 +89,12 @@ export const ProductListDataTable = () => {
         icon: <Tag className="text-ui-fg-subtle" />,
         title: t("products.list.noRecordsTitle"),
         message: t("products.list.noRecordsMessage"),
-        action: {
-          to: "create",
-          label: t("actions.create"),
-        },
+        action: isSellerActive
+          ? { to: "create", label: t("actions.create") }
+          : {
+              onClick: () => sellerSuspensionBridge.requestOpen(),
+              label: t("actions.create"),
+            },
       }}
     />
   );
@@ -98,9 +103,15 @@ export const ProductListDataTable = () => {
 const ProductActions = ({ product }: { product: ExtendedAdminProduct }) => {
   const { t } = useTranslation();
   const prompt = usePrompt();
+  const isSellerActive = useIsSellerActive();
   const { mutateAsync } = useDeleteProduct(product.id);
 
   const handleDelete = async () => {
+    if (!isSellerActive) {
+      sellerSuspensionBridge.requestOpen();
+      return;
+    }
+
     const res = await prompt({
       title: t("general.areYouSure"),
       description: t("products.deleteWarning", {

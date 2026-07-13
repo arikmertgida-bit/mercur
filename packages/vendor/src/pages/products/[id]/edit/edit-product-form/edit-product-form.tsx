@@ -9,7 +9,8 @@ import { Form } from "@components/common/form";
 import { HandleInput } from "@components/inputs/handle-input";
 import { SwitchBox } from "@components/common/switch-box";
 import { RouteDrawer, useRouteModal } from "@components/modals";
-import { useFeatureFlags, useUpdateProduct } from "@hooks/api";
+import { useFeatureFlags, useIsSellerActive, useUpdateProduct } from "@hooks/api";
+import { sellerSuspensionBridge } from "@lib/seller-suspension-bridge";
 
 import { KeyboundForm } from "@components/utilities/keybound-form";
 import {
@@ -40,6 +41,7 @@ export const EditProductForm = ({ product }: EditProductFormProps) => {
   const { feature_flags } = useFeatureFlags();
   const isProductRequestEnabled =
     !!feature_flags?.[MercurFeatureFlags.PRODUCT_REQUEST];
+  const isSellerActive = useIsSellerActive();
 
   const form = useExtendableForm({
     schema: EditProductSchema,
@@ -58,6 +60,11 @@ export const EditProductForm = ({ product }: EditProductFormProps) => {
   const { mutateAsync, isPending } = useUpdateProduct(product.id);
 
   const handleSubmit = form.handleSubmit(async (data) => {
+    if (!isSellerActive) {
+      sellerSuspensionBridge.requestOpen();
+      return;
+    }
+
     const { description, discountable, handle, subtitle, title } = data;
     const additional_data = data.additional_data;
 

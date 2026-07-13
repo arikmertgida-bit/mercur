@@ -176,22 +176,58 @@ export const useUpdateProduct = (
   });
 };
 
+type ProductListQueryData = InferClientOutput<typeof sdk.vendor.products.query>;
+
 export const useDeleteProduct = (
   id: string,
-  options?: UseMutationOptions<ProductChangeResponse, ClientError, void>
+  options?: UseMutationOptions<
+    ProductChangeResponse,
+    ClientError,
+    void,
+    { previousLists: [QueryKey, ProductListQueryData | undefined][] }
+  >
 ) => {
   return useMutation({
     mutationFn: () =>
       sdk.vendor.products.$id.delete({ $id: id }) as Promise<
         ProductChangeResponse
       >,
+    // Optimistic removal: the delete applies inline on the server (draft, or
+    // any status once MEDUSA_FF_PRODUCT_REQUEST is off), so the row should
+    // disappear the moment the vendor confirms — not after the next refetch.
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: productsQueryKeys.lists() });
+
+      const previousLists = queryClient.getQueriesData<ProductListQueryData>({
+        queryKey: productsQueryKeys.lists(),
+      });
+
+      queryClient.setQueriesData<ProductListQueryData>(
+        { queryKey: productsQueryKeys.lists() },
+        (old) => {
+          if (!old) {
+            return old;
+          }
+          return {
+            ...old,
+            products: old.products.filter((product) => product.id !== id),
+            count: Math.max(0, old.count - 1),
+          };
+        }
+      );
+
+      return { previousLists };
+    },
+    onError: (_error, _variables, context) => {
+      context?.previousLists.forEach(([queryKey, data]) => {
+        queryClient.setQueryData(queryKey, data);
+      });
+    },
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: productChangeQueryKeys.detail(id),
       });
       queryClient.invalidateQueries({ queryKey: productsQueryKeys.detail(id) });
-      // A draft delete applies inline (the product is gone on the server), so
-      // the list must refetch or the deleted row lingers and 404s on click.
       queryClient.invalidateQueries({ queryKey: productsQueryKeys.lists() });
 
       options?.onSuccess?.(data, variables, context);

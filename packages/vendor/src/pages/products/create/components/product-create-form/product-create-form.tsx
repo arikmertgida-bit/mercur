@@ -10,8 +10,14 @@ import { zodResolver } from "@hookform/resolvers/zod"
 
 import { RouteFocusModal, useRouteModal } from "@components/modals"
 import { TabbedForm } from "@components/tabbed-form/tabbed-form"
-import { useCreateProduct, useFeatureFlags, useRegions } from "@hooks/api"
+import {
+  useCreateProduct,
+  useFeatureFlags,
+  useIsSellerActive,
+  useRegions,
+} from "@hooks/api"
 import { sdk } from "@lib/client"
+import { sellerSuspensionBridge } from "@lib/seller-suspension-bridge"
 
 import { PRODUCT_CREATE_FORM_DEFAULTS, ProductCreateSchema } from "../../constants"
 import { ProductCreateSchemaType } from "../../types"
@@ -62,6 +68,7 @@ export const ProductCreateForm = ({
   const { feature_flags } = useFeatureFlags()
   const productRequestEnabled =
     !!feature_flags?.[MercurFeatureFlags.PRODUCT_REQUEST]
+  const isSellerActive = useIsSellerActive()
 
   const watchedAttributes = useWatch({
     control: form.control,
@@ -88,6 +95,11 @@ export const ProductCreateForm = ({
     values: ProductCreateSchemaType,
     isDraftSubmission: boolean
   ) => {
+    if (!isSellerActive) {
+      sellerSuspensionBridge.requestOpen()
+      return
+    }
+
     const media = values.media || []
     const payload = { ...values, media: undefined }
 

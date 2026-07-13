@@ -442,6 +442,11 @@
   "seller": {
     "domain": "Store"
   },
+  "sellerSuspension": {
+    "title": "Store suspended",
+    "description": "Your store has been suspended by management. You won't be able to create new products until it's reactivated. If you have questions, our support team is here to help.",
+    "help": "Help"
+  },
   "products": {
     "domain": "Products",
     "bulkDelete": {

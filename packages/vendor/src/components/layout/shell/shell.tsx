@@ -19,6 +19,7 @@ import { useGlobalShortcuts } from "../../../providers/keybind-provider/hooks"
 import { useSidebar } from "../../../providers/sidebar-provider"
 import { useMe } from "../../../hooks/api"
 import { ProgressBar } from "../../common/progress-bar"
+import { SellerSuspendedPromptMount } from "../../common/seller-suspended-prompt"
 
 export const Shell = ({ children }: PropsWithChildren) => {
   const globalShortcuts = useGlobalShortcuts()
@@ -28,6 +29,7 @@ export const Shell = ({ children }: PropsWithChildren) => {
 
   return (
     <KeybindProvider shortcuts={globalShortcuts}>
+      <SellerSuspendedPromptMount />
       <div className="relative flex h-screen flex-col items-start overflow-hidden lg:flex-row">
         <NavigationBar loading={loading} />
         <div>

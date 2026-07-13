@@ -3,6 +3,7 @@ import {
   InferClientInput,
   InferClientOutput,
 } from "@mercurjs/client";
+import { SellerStatus } from "@mercurjs/types";
 import {
   UseMutationOptions,
   UseQueryOptions,
@@ -29,6 +30,15 @@ export const useCurrentSeller = () => {
     isError,
     error,
   };
+};
+
+/**
+ * `false` only once the seller is loaded and confirmed not `open` — stays
+ * `true` while loading, so guarded actions don't flash into a blocked state.
+ */
+export const useIsSellerActive = (): boolean => {
+  const { seller } = useCurrentSeller();
+  return !seller || seller.status === SellerStatus.OPEN;
 };
 
 export const useSeller = (

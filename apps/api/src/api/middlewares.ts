@@ -9,7 +9,7 @@ import { storeProductReviewsMiddlewares } from "./store/product-reviews/middlewa
 import { adminReviewImageReportsMiddlewares } from "./admin/review-image-reports/middlewares";
 import { storeReviewImagesMiddlewares } from "./store/review-images/middlewares";
 import { storeMessengerTokenMiddlewares } from "./store/auth/messenger-token/middlewares";
-import { productImportExportMiddlewares } from "./vendor/products/middlewares";
+import { productImportExportMiddlewares, vendorProductActiveSellerMiddlewares } from "./vendor/products/middlewares";
 import { adminRequestsMiddlewares } from "./admin/requests/middlewares";
 import { vendorProductCollectionRequestsMiddlewares } from "./vendor/requests/product-collections/middlewares";
 import { vendorProductCategoryRequestsMiddlewares } from "./vendor/requests/product-categories/middlewares";
@@ -44,6 +44,7 @@ export default defineMiddlewares({
         ...storeReviewImagesMiddlewares,
         ...storeMessengerTokenMiddlewares,
         ...productImportExportMiddlewares,
+        ...vendorProductActiveSellerMiddlewares,
         ...adminRequestsMiddlewares,
         ...vendorProductCollectionRequestsMiddlewares,
         ...vendorProductCategoryRequestsMiddlewares,
