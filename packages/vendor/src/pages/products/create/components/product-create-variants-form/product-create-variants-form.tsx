@@ -13,7 +13,7 @@ import {
 import { useRouteModal } from "@components/modals"
 import { useTabbedForm } from "@components/tabbed-form/tabbed-form"
 import { defineTabMeta } from "@components/tabbed-form/types"
-import { useCurrentSeller, useShippingProfiles, useStockLocations } from "@hooks/api"
+import { useRegions, useShippingProfiles, useStockLocations } from "@hooks/api"
 import { usePricePreferences } from "@hooks/api/price-preferences"
 
 import { ProductCreateVariantSchema } from "../../constants"
@@ -28,12 +28,23 @@ const Root = () => {
 
   const [search, setSearch] = useState("")
 
-  const { currency_code } = useCurrentSeller()
+  const { regions } = useRegions({ limit: 9999 })
   const { stock_locations } = useStockLocations({ limit: 100 })
   const { shipping_profiles } = useShippingProfiles({ limit: 100 }) as {
     shipping_profiles?: ShippingProfileLite[]
   }
   const { price_preferences: pricePreferences } = usePricePreferences({})
+
+  // Mirrors `@mercurjs/admin`'s own product-create-variants-form: price
+  // columns cover every currency the marketplace actually sells in (one per
+  // region), not just the seller's own onboarding currency — a seller's
+  // catalog should be priceable in any region/currency the platform
+  // supports, not only their reporting currency.
+  const currencies = useMemo(() => {
+    return Array.from(
+      new Set((regions ?? []).map((region) => region.currency_code))
+    )
+  }, [regions])
 
   const variants = useWatch({
     control: form.control,
@@ -87,7 +98,7 @@ const Root = () => {
 
   const columns = useColumns({
     variantAxes,
-    currencyCode: currency_code,
+    currencies,
     stockLocations: stock_locations as
       | HttpTypes.AdminStockLocation[]
       | undefined,
@@ -173,7 +184,7 @@ const columnHelper = createDataGridHelper<VariantRow, ProductCreateSchemaType>()
 
 type ColumnArgs = {
   variantAxes: { title: string }[]
-  currencyCode?: string
+  currencies?: string[]
   stockLocations?: HttpTypes.AdminStockLocation[]
   shippingProfiles?: ShippingProfileLite[]
   pricePreferences?: HttpTypes.AdminPricePreference[]
@@ -181,7 +192,7 @@ type ColumnArgs = {
 
 const useColumns = ({
   variantAxes,
-  currencyCode,
+  currencies = [],
   stockLocations = [],
   shippingProfiles = [],
   pricePreferences = [],
@@ -193,7 +204,6 @@ const useColumns = ({
       value: p.id,
       label: p.name ?? p.id,
     }))
-    const currencies = currencyCode ? [currencyCode] : []
 
     return [
       columnHelper.column({
@@ -276,5 +286,5 @@ const useColumns = ({
         t,
       }),
     ]
-  }, [variantAxes, t, currencyCode, stockLocations, shippingProfiles, pricePreferences])
+  }, [variantAxes, t, currencies, stockLocations, shippingProfiles, pricePreferences])
 }

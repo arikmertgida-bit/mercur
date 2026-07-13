@@ -10,6 +10,22 @@
 
 - **Design → code (Figma)**: when the task is turning a Figma design into dashboard UI code — the user shares a `figma.com` URL, selects a Figma node, or asks to "convert / implement / build this design / screen / mockup" in `packages/admin` or `packages/vendor` — load the `figma-ui` skill at `.claude/skills/figma-ui/SKILL.md` first. It reads the design from the Figma MCP (`get_screenshot` as the source of truth, `get_metadata` for structure) and maps it onto the design-system conventions in its `references/` (`components.md`, `spacing.md`, `patterns.md`) before writing JSX. Gate: `bun run lint` + `bun run build` stay green.
 
+## Bundled Mercur Documentation (version-matched, offline)
+
+`@mercurjs/docs` is installed as a real workspace dependency of `apps/api`
+(`apps/api/node_modules/@mercurjs/docs`, symlinked to `packages/docs`) —
+version-matched to the `@mercurjs/*` packages actually running in this repo,
+so it never drifts from stale online docs. Before implementing anything
+non-trivial against a Mercur API/module/workflow you haven't verified in
+this repo's own source, check here first:
+
+1. Index: `apps/api/node_modules/@mercurjs/docs/llms.txt`
+2. Full pages: `apps/api/node_modules/@mercurjs/docs/content/**/*.mdx`
+
+- **Online docs**: https://docs.mercurjs.com
+- **MCP Server**: `https://docs.mercurjs.com/mcp` (configured in this repo's `.mcp.json` as `mercur` — search live docs from inside a session)
+- **llms.txt (online)**: https://docs.mercurjs.com/llms.txt
+
 ## Project Overview
 
 Mercur.js is open source marketplace platform repository built using Medusa.js + Typescript + React. It adds a marketplace layer on top of Medusa.js. This repository is designed for long-running coding-agent work. The goal is not to maximize raw code output. The goal is to leave the repo in a state where the next session can continue without guessing.

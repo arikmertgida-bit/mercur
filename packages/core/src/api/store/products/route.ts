@@ -7,17 +7,18 @@ import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
 import {
   enrichProductAttributes,
   wrapProductVariantsWithCalculatedPrice,
+  wrapProductVariantsWithInventoryQuantity,
 } from "../../utils"
 import { splitComputedVariantFields } from "./helpers"
 
 export const GET = async (req: MedusaStoreRequest, res: MedusaResponse) => {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
 
-  // `variants.calculated_price` is computed from the variant's own price set
-  // post-query, not a graph column — strip it before the read.
-  const { fields, withCalculatedPrice } = splitComputedVariantFields(
-    req.queryConfig.fields
-  )
+  // `variants.calculated_price` and `variants.inventory_quantity` are both
+  // computed post-query (price set / sales-channel-scoped stock), not graph
+  // columns — strip them before the read.
+  const { fields, withCalculatedPrice, withInventoryQuantity } =
+    splitComputedVariantFields(req.queryConfig.fields)
   req.queryConfig.fields = fields
 
   // region_id / currency_code are consumed by setPricingContext only.
@@ -41,6 +42,10 @@ export const GET = async (req: MedusaStoreRequest, res: MedusaResponse) => {
 
   if (withCalculatedPrice) {
     await wrapProductVariantsWithCalculatedPrice(req, products)
+  }
+
+  if (withInventoryQuantity) {
+    await wrapProductVariantsWithInventoryQuantity(req, products)
   }
 
   res.json({
