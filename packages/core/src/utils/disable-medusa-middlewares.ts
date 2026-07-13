@@ -1,4 +1,4 @@
-import { existsSync, readdirSync } from "fs"
+import { existsSync, readdirSync, realpathSync } from "fs"
 import { dirname, join } from "path"
 import resolveCwd from "resolve-cwd"
 import pkgDir from "pkg-dir"
@@ -41,12 +41,27 @@ const OVERRIDES: string[] = [
 
 export const ORIGINAL_MIDDLEWARES: Record<string, unknown[]> = {}
 
+// Bun workspaces symlink each app's `node_modules` back to the monorepo
+// root (e.g. `apps/api/.medusa/server/node_modules -> <root>/node_modules`),
+// so walking up from `process.cwd()` re-discovers the exact same physical
+// `.bun/@medusajs+medusa@<ver>+<hash>` copy under two different string
+// paths. A plain `Set<string>` doesn't dedupe those, so the same copy gets
+// visited twice — resolving symlinks before adding to the set collapses
+// both paths back to the one real directory.
+function addRealDir(dirs: Set<string>, dir: string): void {
+  try {
+    dirs.add(realpathSync(dir))
+  } catch {
+    dirs.add(dir)
+  }
+}
+
 function findMedusaDirs(): string[] {
   const dirs = new Set<string>()
 
   const entry = resolveCwd("@medusajs/medusa")
   const primary = pkgDir.sync(dirname(entry))
-  if (primary) dirs.add(primary)
+  if (primary) addRealDir(dirs, primary)
 
   // Walk up to find `node_modules/.bun/@medusajs+medusa@<ver>+<hash>` copies.
   let cursor = process.cwd()
@@ -62,7 +77,7 @@ function findMedusaDirs(): string[] {
           "@medusajs",
           "medusa"
         )
-        if (existsSync(join(inner, "package.json"))) dirs.add(inner)
+        if (existsSync(join(inner, "package.json"))) addRealDir(dirs, inner)
       }
     }
     const parent = dirname(cursor)
@@ -89,7 +104,15 @@ export function disableMedusaMiddlewares(): void {
       for (const key of Object.keys(mod)) {
         const value = mod[key]
         if (!Array.isArray(value)) continue
-        ORIGINAL_MIDDLEWARES[file] = [...value]
+        // Defense in depth on top of the realpath dedupe above: never let a
+        // revisit of an already-emptied array (length 0) overwrite a
+        // previously captured original, and never recapture a file once
+        // captured. Without this, any future duplicate-path scenario would
+        // silently zero out `ORIGINAL_MIDDLEWARES[file]` again.
+        if (value.length === 0) continue
+        if (!(file in ORIGINAL_MIDDLEWARES)) {
+          ORIGINAL_MIDDLEWARES[file] = [...value]
+        }
         value.length = 0
       }
     }
