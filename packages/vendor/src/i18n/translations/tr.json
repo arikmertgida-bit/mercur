@@ -439,6 +439,11 @@
   "sales_channels": {
     "availableIn": "<0>{{x}}</0> satış kanalından <1>{{y}}</1> tanesinde mevcut"
   },
+  "sellerSuspension": {
+    "title": "Mağaza Askıya Alındı",
+    "description": "Mağazanız yönetim tarafından geçici olarak askıya alınmıştır. Bu süre boyunca yeni ürün oluşturamazsınız. Sorularınız için destek ekibimizle iletişime geçebilirsiniz.",
+    "help": "Yardım"
+  },
   "products": {
     "domain": "Ürünler",
     "list": {

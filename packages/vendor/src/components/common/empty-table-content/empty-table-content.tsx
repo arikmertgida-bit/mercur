@@ -37,12 +37,14 @@ export const NoResults = ({ title, message, className }: NoResultsProps) => {
 }
 
 type ActionProps = {
-  action?: {
-    to: string
-    label: string
-    /** Permission of what the target route does; disabled without it. */
-    permission?: Permission | Permission[]
-  }
+  action?:
+    | {
+        to: string
+        label: string
+        /** Permission of what the target route does; disabled without it. */
+        permission?: Permission | Permission[]
+      }
+    | { onClick: () => void; label: string }
 }
 
 export type NoRecordsProps = {
@@ -57,7 +59,7 @@ const ActionLink = ({
   action,
   children,
 }: {
-  action: NonNullable<ActionProps["action"]>
+  action: { to: string; permission?: Permission | Permission[] }
   children: ReactElement<{ disabled?: boolean }>
 }) => {
   const gate = usePermissionGate(action.permission)
@@ -75,23 +77,59 @@ const ActionLink = ({
   return <Link to={action.to}>{children}</Link>
 }
 
-const DefaultButton = ({ action }: ActionProps) =>
-  action && (
+const DefaultButton = ({ action }: ActionProps) => {
+  if (!action) {
+    return null
+  }
+
+  if ("onClick" in action) {
+    return (
+      <Button
+        variant="secondary"
+        size="small"
+        type="button"
+        onClick={action.onClick}
+      >
+        {action.label}
+      </Button>
+    )
+  }
+
+  return (
     <ActionLink action={action}>
       <Button variant="secondary" size="small">
         {action.label}
       </Button>
     </ActionLink>
   )
+}
 
-const TransparentIconLeftButton = ({ action }: ActionProps) =>
-  action && (
+const TransparentIconLeftButton = ({ action }: ActionProps) => {
+  if (!action) {
+    return null
+  }
+
+  if ("onClick" in action) {
+    return (
+      <Button
+        variant="transparent"
+        className="text-ui-fg-interactive"
+        type="button"
+        onClick={action.onClick}
+      >
+        <PlusMini /> {action.label}
+      </Button>
+    )
+  }
+
+  return (
     <ActionLink action={action}>
       <Button variant="transparent" className="text-ui-fg-interactive">
         <PlusMini /> {action.label}
       </Button>
     </ActionLink>
   )
+}
 
 export const NoRecords = ({
   title,

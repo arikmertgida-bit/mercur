@@ -12,6 +12,8 @@ import {
 import { ActionMenu } from "@components/common/action-menu";
 import { SectionRow } from "@components/common/section";
 import { useDeleteProduct } from "@hooks/api/products";
+import { useIsSellerActive } from "@hooks/api";
+import { sellerSuspensionBridge } from "@lib/seller-suspension-bridge";
 
 const GENERAL_FIELD_IDS = [
   "title",
@@ -45,10 +47,16 @@ export const ProductGeneralSection = ({
   const { t } = useTranslation();
   const prompt = usePrompt();
   const navigate = useNavigate();
+  const isSellerActive = useIsSellerActive();
 
   const { mutateAsync } = useDeleteProduct(product.id);
 
   const handleDelete = async () => {
+    if (!isSellerActive) {
+      sellerSuspensionBridge.requestOpen();
+      return;
+    }
+
     const res = await prompt({
       title: t("general.areYouSure"),
       description: t("products.deleteWarning", {

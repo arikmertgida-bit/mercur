@@ -1800,6 +1800,26 @@
       ],
       "additionalProperties": false
     },
+    "sellerSuspension": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "help": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "description",
+        "help"
+      ],
+      "additionalProperties": false
+    },
     "products": {
       "type": "object",
       "properties": {
