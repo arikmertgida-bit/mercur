@@ -98,6 +98,27 @@ module.exports = withMercur({
     {
       resolve: './src/modules/offer-cleanup',
     },
+    // @mercurjs/core's own pluggable search module. Falls back to its built-in
+    // in-memory Orama provider when no Meilisearch instance is configured;
+    // docker-compose already injects MEILISEARCH_HOST/MEILISEARCH_MASTER_KEY
+    // into this container for the real (persistent, horizontally-scalable) path.
+    {
+      resolve: '@mercurjs/core/modules/search',
+      ...(process.env.MEILISEARCH_HOST
+        ? {
+            options: {
+              provider: {
+                resolve: './src/modules/search-providers/meilisearch',
+                id: 'meilisearch',
+                options: {
+                  host: process.env.MEILISEARCH_HOST,
+                  apiKey: process.env.MEILISEARCH_MASTER_KEY,
+                },
+              },
+            },
+          }
+        : {}),
+    },
     {
       resolve: '@mercurjs/core/modules/admin-ui',
       options: {

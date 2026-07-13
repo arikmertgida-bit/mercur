@@ -654,11 +654,14 @@ export type Routes = {
             $id: typeof import("@medusajs/medusa/api/store/return-reasons/[id]/route");
         };
         returns: typeof import("@medusajs/medusa/api/store/returns/route");
-        search: typeof import("@mercurjs/core/api/store/search/route");
+        search: typeof import("@mercurjs/core/api/store/search/route") & {
+            suggest: typeof import("../src/api/store/search/suggest/route");
+        };
         sellers: typeof import("@mercurjs/core/api/store/sellers/route") & {
             $id: typeof import("@mercurjs/core/api/store/sellers/[id]/route");
             $handle: {
                 follow: typeof import("../src/api/store/sellers/[handle]/follow/route");
+                products: typeof import("../src/api/store/sellers/[handle]/products/route");
             };
         };
         shippingOptions: typeof import("@mercurjs/core/api/store/shipping-options/route") & {
@@ -668,6 +671,9 @@ export type Routes = {
         };
         auth: {
             messengerToken: typeof import("../src/api/store/auth/messenger-token/route");
+        };
+        catalog: {
+            products: typeof import("../src/api/store/catalog/products/route");
         };
         custom: typeof import("../src/api/store/custom/route");
         customer: {

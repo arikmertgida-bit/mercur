@@ -1,0 +1,302 @@
+import { MeiliSearch } from 'meilisearch'
+
+import { AbstractSearchProvider } from '@mercurjs/core/modules/search'
+import {
+  SearchDoc,
+  SearchFacetAttribute,
+  SearchFacetValue,
+  SearchFacets,
+  SearchQueryBase,
+  SearchResults,
+} from '@mercurjs/types'
+
+import {
+  COLOR_ATTRIBUTE_HANDLES,
+  CONDITION_ATTRIBUTE_HANDLES,
+  decodeFacetToken,
+  encodeFacetToken,
+  escapeMeiliFilterValue,
+  MeilisearchIndexedDoc,
+  MeilisearchProviderFilters,
+  MeilisearchProviderOptions,
+  MeilisearchSort,
+  meiliValueList,
+  SIZE_ATTRIBUTE_HANDLES,
+} from './types'
+
+const PRODUCT_INDEX = 'products'
+
+const SEARCHABLE_ATTRIBUTES = ['title', 'description', 'handle', 'sku', 'seller_handle']
+
+const FILTERABLE_ATTRIBUTES = [
+  'type',
+  'seller_handle',
+  'seller_status',
+  'collection_id',
+  'collection_facet',
+  'category_ids',
+  'category_facets',
+  'attribute_tokens',
+  'attribute_facets',
+  'default_price_amount',
+  'size_values',
+  'color_values',
+  'condition_values',
+]
+
+const SORTABLE_ATTRIBUTES = ['default_price_amount', 'created_at']
+
+// Meilisearch's default pagination.maxTotalHits is 1000 — offset+limit beyond
+// that is rejected/truncated, which silently breaks deep pagination on large
+// categories. Raised to support the project's stated multi-million product
+// scale. Raising this further increases the cost of exhaustive hit counting —
+// monitor Meilisearch resource usage before increasing beyond this value.
+const MAX_TOTAL_HITS = 1_000_000
+
+function mapSort(sort: MeilisearchSort | undefined): string[] | undefined {
+  switch (sort) {
+    case 'price_asc':
+      return ['default_price_amount:asc']
+    case 'price_desc':
+      return ['default_price_amount:desc']
+    case 'created_at':
+      return ['created_at:desc']
+    case 'created_at_asc':
+      return ['created_at:asc']
+    default:
+      return undefined
+  }
+}
+
+export class MeilisearchSearchProvider extends AbstractSearchProvider {
+  static identifier = 'search-meilisearch'
+
+  private readonly client_: MeiliSearch
+  private readonly productIndex_: ReturnType<MeiliSearch['index']>
+  private settingsApplied_ = false
+
+  constructor(_cradle: Record<string, unknown>, options: MeilisearchProviderOptions) {
+    super()
+    if (!options?.host || !options?.apiKey) {
+      const missing = [
+        !options?.host && 'host',
+        !options?.apiKey && 'apiKey',
+      ]
+        .filter(Boolean)
+        .join(', ')
+      throw new Error(
+        `[search-meilisearch provider] Missing required option(s): ${missing}`
+      )
+    }
+    this.client_ = new MeiliSearch({ host: options.host, apiKey: options.apiKey })
+    this.productIndex_ = this.client_.index(PRODUCT_INDEX)
+  }
+
+  private async ensureSettings(): Promise<void> {
+    if (this.settingsApplied_) {
+      return
+    }
+    await this.productIndex_.updateSettings({
+      searchableAttributes: SEARCHABLE_ATTRIBUTES,
+      filterableAttributes: FILTERABLE_ATTRIBUTES,
+      sortableAttributes: SORTABLE_ATTRIBUTES,
+      pagination: { maxTotalHits: MAX_TOTAL_HITS },
+    })
+    this.settingsApplied_ = true
+  }
+
+  private enrichDoc(doc: SearchDoc): MeilisearchIndexedDoc {
+    const prices = doc.prices ?? {}
+    // Single-default-region simplification: this deployment currently runs one
+    // active region/currency, so the first indexed price is the default price.
+    // A genuinely multi-region marketplace would need per-region sortable
+    // fields declared ahead of time — revisit if/when that becomes real.
+    const defaultPrice = Object.values(prices)[0]
+    const categoryIds = doc.category_ids ?? []
+    const categoryLabels = doc.categories ?? []
+    const attributes = doc.attributes ?? []
+
+    const valuesForHandles = (handles: Set<string>): string[] =>
+      attributes
+        .filter((attribute) => handles.has(attribute.handle.toLowerCase()))
+        .flatMap((attribute) => attribute.values.map((value) => value.name))
+
+    return {
+      ...doc,
+      default_price_amount: defaultPrice?.calculated_amount ?? null,
+      collection_facet: doc.collection_id
+        ? encodeFacetToken(doc.collection_id, doc.collection ?? doc.collection_id)
+        : undefined,
+      category_facets: categoryIds.map((id, index) =>
+        encodeFacetToken(id, categoryLabels[index] ?? id)
+      ),
+      attribute_facets: attributes.flatMap((attribute) =>
+        attribute.values.map((value) =>
+          encodeFacetToken(attribute.handle, attribute.name, value.id, value.name)
+        )
+      ),
+      size_values: valuesForHandles(SIZE_ATTRIBUTE_HANDLES),
+      color_values: valuesForHandles(COLOR_ATTRIBUTE_HANDLES),
+      condition_values: valuesForHandles(CONDITION_ATTRIBUTE_HANDLES),
+    }
+  }
+
+  async index(docs: SearchDoc[]): Promise<void> {
+    if (!docs.length) {
+      return
+    }
+    await this.ensureSettings()
+    const enriched = docs.map((doc) => this.enrichDoc(doc))
+    await this.productIndex_.addDocuments(enriched, { primaryKey: 'id' })
+  }
+
+  async remove(ids: string[]): Promise<void> {
+    if (!ids.length) {
+      return
+    }
+    await this.productIndex_.deleteDocuments(ids)
+  }
+
+  async search(query: SearchQueryBase): Promise<SearchResults> {
+    await this.ensureSettings()
+
+    const filters = (query.filters ?? {}) as MeilisearchProviderFilters
+    const context = (query.context ?? {}) as { region_id?: string }
+
+    // seller_status is always constrained to "open" server-side — suspended or
+    // terminated sellers' products must never be discoverable, regardless of
+    // what filters the caller sends.
+    const filterParts: string[] = ['seller_status = "open"']
+
+    if (filters.type) {
+      filterParts.push(`type = "${escapeMeiliFilterValue(filters.type)}"`)
+    }
+    if (filters.seller_handle) {
+      filterParts.push(`seller_handle = "${escapeMeiliFilterValue(filters.seller_handle)}"`)
+    }
+    if (filters.collection_ids?.length) {
+      filterParts.push(`collection_id IN [${meiliValueList(filters.collection_ids)}]`)
+    }
+    if (filters.category_ids?.length) {
+      filterParts.push(`category_ids IN [${meiliValueList(filters.category_ids)}]`)
+    }
+    if (filters.attributes) {
+      const tokens = Object.entries(filters.attributes).flatMap(([handle, valueIds]) =>
+        valueIds.map((valueId) => `attr:${handle}:${valueId}`)
+      )
+      if (tokens.length) {
+        filterParts.push(`attribute_tokens IN [${meiliValueList(tokens)}]`)
+      }
+    }
+    if (filters.price_min !== undefined) {
+      filterParts.push(`default_price_amount >= ${filters.price_min}`)
+    }
+    if (filters.price_max !== undefined) {
+      filterParts.push(`default_price_amount <= ${filters.price_max}`)
+    }
+    if (filters.size_values?.length) {
+      filterParts.push(`size_values IN [${meiliValueList(filters.size_values)}]`)
+    }
+    if (filters.color_values?.length) {
+      filterParts.push(`color_values IN [${meiliValueList(filters.color_values)}]`)
+    }
+    if (filters.condition_values?.length) {
+      filterParts.push(`condition_values IN [${meiliValueList(filters.condition_values)}]`)
+    }
+
+    const result = await this.productIndex_.search(query.q ?? '', {
+      filter: filterParts.join(' AND '),
+      limit: query.limit ?? 12,
+      offset: query.offset ?? 0,
+      sort: mapSort(filters.sort),
+      facets: [
+        'collection_facet',
+        'category_facets',
+        'attribute_facets',
+        'size_values',
+        'color_values',
+        'condition_values',
+      ],
+    })
+
+    const regionId = context.region_id
+    const hits: SearchDoc[] = (result.hits as MeilisearchIndexedDoc[]).map((doc) => {
+      const {
+        default_price_amount: _defaultPriceAmount,
+        collection_facet: _collectionFacet,
+        category_facets: _categoryFacets,
+        attribute_facets: _attributeFacets,
+        size_values: _sizeValues,
+        color_values: _colorValues,
+        condition_values: _conditionValues,
+        ...searchDoc
+      } = doc
+      const price = regionId ? searchDoc.prices?.[regionId] ?? null : null
+      return { ...searchDoc, calculated_price: price }
+    })
+
+    const resultWithEstimate = result as { estimatedTotalHits?: number }
+
+    return {
+      hits,
+      count: resultWithEstimate.estimatedTotalHits ?? hits.length,
+      facets: this.buildFacets(result.facetDistribution),
+    }
+  }
+
+  private buildFacets(
+    facetDistribution: Record<string, Record<string, number>> | undefined
+  ): SearchFacets {
+    const collectionDist = facetDistribution?.collection_facet ?? {}
+    const categoryDist = facetDistribution?.category_facets ?? {}
+    const attributeDist = facetDistribution?.attribute_facets ?? {}
+    const sizeDist = facetDistribution?.size_values ?? {}
+    const colorDist = facetDistribution?.color_values ?? {}
+    const conditionDist = facetDistribution?.condition_values ?? {}
+
+    const toFacetValue = (token: string, count: number): SearchFacetValue => {
+      const [id, label] = decodeFacetToken(token)
+      return { id: id ?? token, label: label ?? id ?? token, count }
+    }
+
+    const toPlainFacetValue = (label: string, count: number): SearchFacetValue => ({
+      id: label,
+      label,
+      count,
+    })
+
+    const collections = Object.entries(collectionDist).map(([token, count]) =>
+      toFacetValue(token, count)
+    )
+    const categories = Object.entries(categoryDist).map(([token, count]) =>
+      toFacetValue(token, count)
+    )
+    const sizes = Object.entries(sizeDist).map(([label, count]) =>
+      toPlainFacetValue(label, count)
+    )
+    const colors = Object.entries(colorDist).map(([label, count]) =>
+      toPlainFacetValue(label, count)
+    )
+    const conditions = Object.entries(conditionDist).map(([label, count]) =>
+      toPlainFacetValue(label, count)
+    )
+
+    const byHandle = new Map<string, { label: string; values: SearchFacetValue[] }>()
+    for (const [token, count] of Object.entries(attributeDist)) {
+      const [handle, attributeName, valueId, valueName] = decodeFacetToken(token)
+      if (!handle || !valueId) {
+        continue
+      }
+      const group = byHandle.get(handle) ?? { label: attributeName ?? handle, values: [] }
+      group.values.push({ id: valueId, label: valueName ?? valueId, count })
+      byHandle.set(handle, group)
+    }
+    const attributes: SearchFacetAttribute[] = [...byHandle.entries()].map(
+      ([handle, group]) => ({ handle, label: group.label, values: group.values })
+    )
+
+    return { collections, categories, attributes, sizes, colors, conditions }
+  }
+}
+
+export default MeilisearchSearchProvider
