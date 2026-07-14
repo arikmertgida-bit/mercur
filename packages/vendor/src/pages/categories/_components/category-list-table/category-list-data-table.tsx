@@ -17,13 +17,16 @@ export const CategoryListDataTable = () => {
     pageSize: PAGE_SIZE,
   });
 
+  const imageFields =
+    "media_images.id,media_images.url,media_images.type,media_images.is_thumbnail,media_images.is_banner";
+
   const ancestorsLinkQuery = useLinkQuery(
     "category",
-    "id,name,handle,is_active,is_internal,parent_category",
+    `id,name,handle,is_active,is_internal,parent_category,${imageFields}`,
   );
   const descendantsLinkQuery = useLinkQuery(
     "category",
-    "id,name,category_children,handle,is_internal,is_active",
+    `id,name,category_children,handle,is_internal,is_active,${imageFields}`,
   );
 
   const query = raw.q
