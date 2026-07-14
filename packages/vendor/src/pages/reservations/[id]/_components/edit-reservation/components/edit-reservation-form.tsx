@@ -43,6 +43,8 @@ const AttributeGridRow = ({
   )
 }
 
+const EMPTY_LOCATIONS: HttpTypes.AdminStockLocation[] = []
+
 const getDefaultValues = (
   reservation: HttpTypes.AdminReservationResponse["reservation"]
 ) => {
@@ -56,7 +58,7 @@ const getDefaultValues = (
 export const EditReservationForm = ({
   reservation,
   item,
-  locations = [],
+  locations = EMPTY_LOCATIONS,
 }: EditReservationFormProps) => {
   const { t } = useTranslation()
   const { handleSuccess } = useRouteModal()

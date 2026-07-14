@@ -29,6 +29,7 @@ export const DataGridSkeleton = <TData,>({
           {columns.map((_col, i) => {
             return (
               <div
+                // oxlint-disable-next-line react/no-array-index-key -- fixed-length skeleton placeholder, no persistent/reorderable state
                 key={i}
                 className="bg-ui-bg-base flex h-10 w-[200px] items-center border-b border-r px-4 py-2.5 last:border-r-0"
               >
@@ -42,11 +43,13 @@ export const DataGridSkeleton = <TData,>({
             <div
               className="grid"
               style={{ gridTemplateColumns: `repeat(${colCount}, 1fr)` }}
+              // oxlint-disable-next-line react/no-array-index-key -- fixed-length skeleton placeholder, no persistent/reorderable state
               key={j}
             >
               {columns.map((_col, k) => {
                 return (
                   <div
+                    // oxlint-disable-next-line react/no-array-index-key -- fixed-length skeleton placeholder, no persistent/reorderable state
                     key={k}
                     className="bg-ui-bg-base flex h-10 w-[200px] items-center border-b border-r px-4 py-2.5 last:border-r-0"
                   >

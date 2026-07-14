@@ -146,6 +146,7 @@ const Breadcrumbs = () => {
         const isSingle = crumbs.length === 1
 
         return (
+          // oxlint-disable-next-line react/no-array-index-key -- read-only breadcrumb list derived from the current route match, no stable id, not persistent/reorderable
           <li key={index} className={clx("flex items-center")}>
             {!isLast ? (
               <Link
@@ -158,7 +159,6 @@ const Breadcrumbs = () => {
               <div>
                 {!isSingle && <span className="block lg:hidden">...</span>}
                 <span
-                  key={index}
                   className={clx({
                     "hidden lg:block": !isSingle,
                   })}

@@ -221,6 +221,7 @@ export const DataGridKeyboardShortcutModal = ({
             {searchResults.map((shortcut, index) => {
               return (
                 <div
+                  // oxlint-disable-next-line react/no-array-index-key -- static keyboard-shortcut config list, not persistent/reorderable
                   key={index}
                   className="text-ui-fg-subtle flex items-center justify-between px-6 py-3"
                 >
@@ -228,6 +229,7 @@ export const DataGridKeyboardShortcutModal = ({
                   <div className="flex items-center gap-x-1">
                     {shortcut.keys.Mac?.map((key, index) => {
                       return (
+                        // oxlint-disable-next-line react/no-array-index-key -- static key-combo list, not persistent/reorderable
                         <div className="flex items-center gap-x-1" key={index}>
                           <Kbd>{key}</Kbd>
                         </div>

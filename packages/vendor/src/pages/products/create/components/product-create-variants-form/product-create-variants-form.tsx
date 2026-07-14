@@ -1,6 +1,6 @@
 import { HttpTypes } from "@medusajs/types"
 import { Input } from "@medusajs/ui"
-import { useEffect, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { useWatch } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
@@ -10,7 +10,7 @@ import {
   createDataGridPriceColumns,
   DataGrid,
 } from "@components/data-grid"
-import { useRouteModal } from "@components/modals"
+import { useRouteModal, useStackedModal } from "@components/modals"
 import { useTabbedForm } from "@components/tabbed-form/tabbed-form"
 import { defineTabMeta } from "@components/tabbed-form/types"
 import {
@@ -24,6 +24,10 @@ import { usePricePreferences } from "@hooks/api/price-preferences"
 import { ProductCreateVariantSchema } from "../../constants"
 import { ProductCreateSchemaType } from "../../types"
 import { generateVariantSku } from "../../utils"
+import {
+  ProductCreateVariantMediaDrawer,
+  VARIANT_MEDIA_DRAWER_ID,
+} from "./product-create-variant-media-drawer"
 
 type ShippingProfileLite = { id: string; name?: string | null }
 
@@ -31,8 +35,20 @@ const Root = () => {
   const { t } = useTranslation()
   const form = useTabbedForm<ProductCreateSchemaType>()
   const { setCloseOnEscape } = useRouteModal()
+  const { setIsOpen: setStackedModalOpen } = useStackedModal()
 
   const [search, setSearch] = useState("")
+  const [activeMediaIndex, setActiveMediaIndex] = useState<number | null>(
+    null
+  )
+
+  const openMediaPicker = useCallback(
+    (index: number) => {
+      setActiveMediaIndex(index)
+      setStackedModalOpen(VARIANT_MEDIA_DRAWER_ID, true)
+    },
+    [setStackedModalOpen]
+  )
 
   const { regions } = useRegions({ limit: 9999 })
   const { stock_locations } = useStockLocations({ limit: 100 })
@@ -147,6 +163,42 @@ const Root = () => {
     }
   }, [seller, variants.length, form])
 
+  const watchedMedia = useWatch({
+    control: form.control,
+    name: "media",
+    defaultValue: [],
+  })
+
+  // Görsel column selections reference the product's own `media` entries by
+  // `id`. If a photo is removed from the Detaylar tab after being assigned
+  // to a variant, drop the same id from every variant's selection so a
+  // stale reference never survives to submit.
+  useEffect(() => {
+    const validIds = new Set(
+      (watchedMedia ?? [])
+        .map((media) => media.id)
+        .filter((id): id is string => !!id)
+    )
+
+    const current = form.getValues("variants") ?? []
+    let changed = false
+
+    const next = current.map((variant) => {
+      const media = variant.media ?? []
+      if (media.length === 0) return variant
+
+      const filtered = media.filter((m) => !!m.id && validIds.has(m.id))
+      if (filtered.length === media.length) return variant
+
+      changed = true
+      return { ...variant, media: filtered }
+    })
+
+    if (changed) {
+      form.setValue("variants", next, { shouldDirty: false })
+    }
+  }, [watchedMedia, form])
+
   const watchedAttributes = useWatch({
     control: form.control,
     name: "attributes",
@@ -169,6 +221,7 @@ const Root = () => {
       | undefined,
     shippingProfiles: shipping_profiles ?? [],
     pricePreferences,
+    onOpenMediaPicker: openMediaPicker,
   })
 
   const variantData = useMemo(() => {
@@ -219,6 +272,7 @@ const Root = () => {
       className="flex size-full flex-col divide-y overflow-hidden"
       data-testid="product-create-variants-form"
     >
+      <ProductCreateVariantMediaDrawer activeIndex={activeMediaIndex} />
       <div
         className="min-h-0 flex-1 overflow-hidden"
         data-testid="product-create-variants-form-datagrid"
@@ -253,6 +307,7 @@ type ColumnArgs = {
   stockLocations?: HttpTypes.AdminStockLocation[]
   shippingProfiles?: ShippingProfileLite[]
   pricePreferences?: HttpTypes.AdminPricePreference[]
+  onOpenMediaPicker: (index: number) => void
 }
 
 const useColumns = ({
@@ -261,6 +316,7 @@ const useColumns = ({
   stockLocations = [],
   shippingProfiles = [],
   pricePreferences = [],
+  onOpenMediaPicker,
 }: ColumnArgs) => {
   const { t } = useTranslation()
 
@@ -337,6 +393,29 @@ const useColumns = ({
           />
         ),
       }),
+      // Only shown once the product actually has variant axes — a
+      // single-variant (basit) product's grid stays pixel-identical to
+      // today's, no Görsel column at all.
+      ...(variantAxes.length > 0
+        ? [
+            columnHelper.column({
+              id: "media",
+              name: t("products.create.variants.productVariants.media"),
+              header: t("products.create.variants.productVariants.media"),
+              field: (context) =>
+                `variants.${context.row.original.originalIndex}.media`,
+              type: "select",
+              cell: (context) => (
+                <DataGrid.MediaCell
+                  context={context}
+                  onOpenMediaModal={() =>
+                    onOpenMediaPicker(context.row.original.originalIndex)
+                  }
+                />
+              ),
+            }),
+          ]
+        : []),
       ...createDataGridLocationStockColumns<VariantRow, ProductCreateSchemaType>({
         stockLocations,
         getFieldName: (context, index) => {
@@ -358,5 +437,13 @@ const useColumns = ({
         t,
       }),
     ]
-  }, [variantAxes, t, currencies, stockLocations, shippingProfiles, pricePreferences])
+  }, [
+    variantAxes,
+    t,
+    currencies,
+    stockLocations,
+    shippingProfiles,
+    pricePreferences,
+    onOpenMediaPicker,
+  ])
 }

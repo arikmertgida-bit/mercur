@@ -12,11 +12,13 @@ type AttributeValueInputProps = {
   placeholder?: string
 }
 
+const EMPTY_AVAILABLE_VALUES: { id: string; name: string }[] = []
+
 export const AttributeValueInput = ({
   type,
   value,
   onChange,
-  availableValues = [],
+  availableValues = EMPTY_AVAILABLE_VALUES,
   placeholder,
 }: AttributeValueInputProps) => {
   const { t } = useTranslation()

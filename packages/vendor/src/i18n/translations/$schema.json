@@ -648,6 +648,9 @@
         },
         "cannotUndo": {
           "type": "string"
+        },
+        "request": {
+          "type": "string"
         }
       },
       "required": [
@@ -697,7 +700,8 @@
         "hide",
         "export",
         "import",
-        "cannotUndo"
+        "cannotUndo",
+        "request"
       ],
       "additionalProperties": false
     },
@@ -2220,6 +2224,34 @@
                     "hint"
                   ],
                   "additionalProperties": false
+                },
+                "mediaPicker": {
+                  "type": "object",
+                  "properties": {
+                    "header": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "empty": {
+                      "type": "string"
+                    },
+                    "image": {
+                      "type": "string"
+                    },
+                    "partialFailureToast": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "header",
+                    "description",
+                    "empty",
+                    "image",
+                    "partialFailureToast"
+                  ],
+                  "additionalProperties": false
                 }
               },
               "required": [
@@ -2230,7 +2262,8 @@
                 "optionTitle",
                 "optionValues",
                 "productVariants",
-                "productOptions"
+                "productOptions",
+                "mediaPicker"
               ],
               "additionalProperties": false
             },
@@ -2333,6 +2366,22 @@
                 },
                 "noAttributesDescription": {
                   "type": "string"
+                },
+                "errors": {
+                  "type": "object",
+                  "properties": {
+                    "titleRequired": {
+                      "type": "string"
+                    },
+                    "valuesRequired": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "titleRequired",
+                    "valuesRequired"
+                  ],
+                  "additionalProperties": false
                 }
               },
               "required": [
@@ -2361,7 +2410,8 @@
                 "selectValuePlaceholder",
                 "requiredTooltip",
                 "noAttributesTitle",
-                "noAttributesDescription"
+                "noAttributesDescription",
+                "errors"
               ],
               "additionalProperties": false
             }
@@ -3751,6 +3801,15 @@
             "success"
           ],
           "additionalProperties": false
+        },
+        "attributeRequiredDeleteDisabledTooltip": {
+          "type": "string"
+        },
+        "editAttribute": {
+          "type": "string"
+        },
+        "editAttributeHint": {
+          "type": "string"
         }
       },
       "required": [
@@ -3792,7 +3851,10 @@
         "organization",
         "shippingProfile",
         "toasts",
-        "bulkEdit"
+        "bulkEdit",
+        "attributeRequiredDeleteDisabledTooltip",
+        "editAttribute",
+        "editAttributeHint"
       ],
       "additionalProperties": false
     },
@@ -3952,6 +4014,9 @@
             "empty"
           ],
           "additionalProperties": false
+        },
+        "requestSuccess": {
+          "type": "string"
         }
       },
       "required": [
@@ -3968,7 +4033,8 @@
         "removeProductsWarning_other",
         "products",
         "media",
-        "icon"
+        "icon",
+        "requestSuccess"
       ],
       "additionalProperties": false
     },
@@ -4820,6 +4886,9 @@
                 "stockLevelsAndPrices"
               ],
               "additionalProperties": false
+            },
+            "description": {
+              "type": "string"
             }
           },
           "required": [
@@ -4831,7 +4900,8 @@
             "addPrice",
             "addInventoryItem",
             "stockLevelsWarning",
-            "tabs"
+            "tabs",
+            "description"
           ],
           "additionalProperties": false
         },
@@ -6408,6 +6478,9 @@
                 },
                 "requiresAction": {
                   "type": "string"
+                },
+                "pending": {
+                  "type": "string"
                 }
               },
               "required": [
@@ -6420,7 +6493,8 @@
                 "partiallyCaptured",
                 "refunded",
                 "canceled",
-                "requiresAction"
+                "requiresAction",
+                "pending"
               ],
               "additionalProperties": false
             },
@@ -6453,6 +6527,15 @@
             },
             "outstandingAmount": {
               "type": "string"
+            },
+            "copyLinkError": {
+              "type": "string"
+            },
+            "copyLinkSuccess": {
+              "type": "string"
+            },
+            "copyPaymentLink": {
+              "type": "string"
             }
           },
           "required": [
@@ -6477,7 +6560,10 @@
             "refundAmount",
             "paymentLink",
             "selectPaymentToRefund",
-            "outstandingAmount"
+            "outstandingAmount",
+            "copyLinkError",
+            "copyLinkSuccess",
+            "copyPaymentLink"
           ],
           "additionalProperties": false
         },
@@ -6565,11 +6651,15 @@
                 },
                 "confirmedSuccessfully": {
                   "type": "string"
+                },
+                "requestSent": {
+                  "type": "string"
                 }
               },
               "required": [
                 "canceledSuccessfully",
-                "confirmedSuccessfully"
+                "confirmedSuccessfully",
+                "requestSent"
               ],
               "additionalProperties": false
             },
@@ -6584,6 +6674,9 @@
                 "quantityLowerThanFulfillment"
               ],
               "additionalProperties": false
+            },
+            "removeBlockedFulfilledOrReturned": {
+              "type": "string"
             }
           },
           "required": [
@@ -6608,7 +6701,8 @@
             "activeChangeError",
             "panel",
             "toast",
-            "validation"
+            "validation",
+            "removeBlockedFulfilledOrReturned"
           ],
           "additionalProperties": false
         },
@@ -6937,6 +7031,18 @@
                 "description"
               ],
               "additionalProperties": false
+            },
+            "noItemsSelected": {
+              "type": "string"
+            },
+            "outOfPolicy": {
+              "type": "string"
+            },
+            "policyHint": {
+              "type": "string"
+            },
+            "restockPreview": {
+              "type": "string"
             }
           },
           "required": [
@@ -6976,7 +7082,11 @@
             "placeholders",
             "receive",
             "toast",
-            "panel"
+            "panel",
+            "noItemsSelected",
+            "outOfPolicy",
+            "policyHint",
+            "restockPreview"
           ],
           "additionalProperties": false
         },
@@ -7096,6 +7206,96 @@
                 "description"
               ],
               "additionalProperties": false
+            },
+            "addOutboundItems": {
+              "type": "string"
+            },
+            "addOutboundItemsDescription": {
+              "type": "string"
+            },
+            "claimItems": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "inboundShipping": {
+              "type": "string"
+            },
+            "inboundShippingHint": {
+              "type": "string"
+            },
+            "itemNotePlaceholder": {
+              "type": "string"
+            },
+            "location": {
+              "type": "string"
+            },
+            "locationHint": {
+              "type": "string"
+            },
+            "noClaimableItems": {
+              "type": "string"
+            },
+            "noOutboundItems": {
+              "type": "string"
+            },
+            "noteHint": {
+              "type": "string"
+            },
+            "outOfPolicy": {
+              "type": "string"
+            },
+            "outboundItems": {
+              "type": "string"
+            },
+            "policyHint": {
+              "type": "string"
+            },
+            "reasonPlaceholder": {
+              "type": "string"
+            },
+            "reasons": {
+              "type": "object",
+              "properties": {
+                "missing_item": {
+                  "type": "string"
+                },
+                "other": {
+                  "type": "string"
+                },
+                "production_failure": {
+                  "type": "string"
+                },
+                "wrong_item": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "missing_item",
+                "other",
+                "production_failure",
+                "wrong_item"
+              ],
+              "additionalProperties": false
+            },
+            "remainingQty": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            },
+            "typeLabel": {
+              "type": "string"
+            },
+            "typeLockedAfterStart": {
+              "type": "string"
+            },
+            "typeRefund": {
+              "type": "string"
+            },
+            "typeReplace": {
+              "type": "string"
             }
           },
           "required": [
@@ -7114,7 +7314,30 @@
             "cancel",
             "tooltips",
             "toast",
-            "panel"
+            "panel",
+            "addOutboundItems",
+            "addOutboundItemsDescription",
+            "claimItems",
+            "description",
+            "inboundShipping",
+            "inboundShippingHint",
+            "itemNotePlaceholder",
+            "location",
+            "locationHint",
+            "noClaimableItems",
+            "noOutboundItems",
+            "noteHint",
+            "outOfPolicy",
+            "outboundItems",
+            "policyHint",
+            "reasonPlaceholder",
+            "reasons",
+            "remainingQty",
+            "title",
+            "typeLabel",
+            "typeLockedAfterStart",
+            "typeRefund",
+            "typeReplace"
           ],
           "additionalProperties": false
         },
@@ -7243,6 +7466,69 @@
                 "description"
               ],
               "additionalProperties": false
+            },
+            "addOutboundItems": {
+              "type": "string"
+            },
+            "addOutboundItemsDescription": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "inboundItems": {
+              "type": "string"
+            },
+            "inboundShipping": {
+              "type": "string"
+            },
+            "inboundShippingHint": {
+              "type": "string"
+            },
+            "inboundShippingLockedPlaceholder": {
+              "type": "string"
+            },
+            "inboundShippingPlaceholder": {
+              "type": "string"
+            },
+            "itemNotePlaceholder": {
+              "type": "string"
+            },
+            "location": {
+              "type": "string"
+            },
+            "locationHint": {
+              "type": "string"
+            },
+            "locationPlaceholder": {
+              "type": "string"
+            },
+            "noOutboundItems": {
+              "type": "string"
+            },
+            "noReturnableItems": {
+              "type": "string"
+            },
+            "noteHint": {
+              "type": "string"
+            },
+            "outOfPolicy": {
+              "type": "string"
+            },
+            "outboundItems": {
+              "type": "string"
+            },
+            "policyHint": {
+              "type": "string"
+            },
+            "reasonPlaceholder": {
+              "type": "string"
+            },
+            "remainingQty": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
             }
           },
           "required": [
@@ -7264,7 +7550,28 @@
             "cancel",
             "tooltips",
             "toast",
-            "panel"
+            "panel",
+            "addOutboundItems",
+            "addOutboundItemsDescription",
+            "description",
+            "inboundItems",
+            "inboundShipping",
+            "inboundShippingHint",
+            "inboundShippingLockedPlaceholder",
+            "inboundShippingPlaceholder",
+            "itemNotePlaceholder",
+            "location",
+            "locationHint",
+            "locationPlaceholder",
+            "noOutboundItems",
+            "noReturnableItems",
+            "noteHint",
+            "outOfPolicy",
+            "outboundItems",
+            "policyHint",
+            "reasonPlaceholder",
+            "remainingQty",
+            "title"
           ],
           "additionalProperties": false
         },
@@ -7503,6 +7810,9 @@
                 },
                 "noLocation": {
                   "type": "string"
+                },
+                "exceedsReservedQuantity": {
+                  "type": "string"
                 }
               },
               "required": [
@@ -7510,7 +7820,8 @@
                 "wrongQuantity_other",
                 "noItems",
                 "noShippingOption",
-                "noLocation"
+                "noLocation",
+                "exceedsReservedQuantity"
               ],
               "additionalProperties": false
             },
@@ -11149,6 +11460,9 @@
                 "description"
               ],
               "additionalProperties": false
+            },
+            "selectOperator": {
+              "type": "string"
             }
           },
           "required": [
@@ -11165,7 +11479,8 @@
             "code",
             "value",
             "value_type",
-            "limit"
+            "limit",
+            "selectOperator"
           ],
           "additionalProperties": false
         },
@@ -11202,6 +11517,26 @@
             "list"
           ],
           "additionalProperties": false
+        },
+        "campaignSection": {
+          "type": "object",
+          "properties": {
+            "addToCampaign": {
+              "type": "string"
+            },
+            "noRecordsMessage": {
+              "type": "string"
+            },
+            "noRecordsTitle": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "addToCampaign",
+            "noRecordsMessage",
+            "noRecordsTitle"
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
@@ -11220,7 +11555,8 @@
         "deleteWarning",
         "createPromotionTitle",
         "type",
-        "conditions"
+        "conditions",
+        "campaignSection"
       ],
       "additionalProperties": false
     },
@@ -12770,17 +13106,17 @@
             "nameRequired": {
               "type": "string"
             },
-            "nameTooLong": {
+            "emailInvalid": {
               "type": "string"
             },
-            "emailInvalid": {
+            "emailRequired": {
               "type": "string"
             }
           },
           "required": [
             "nameRequired",
-            "nameTooLong",
-            "emailInvalid"
+            "emailInvalid",
+            "emailRequired"
           ],
           "additionalProperties": false
         },
@@ -15966,12 +16302,20 @@
             },
             "successToast": {
               "type": "string"
+            },
+            "requestHeader": {
+              "type": "string"
+            },
+            "requestSuccessToast": {
+              "type": "string"
             }
           },
           "required": [
             "header",
             "hint",
-            "successToast"
+            "successToast",
+            "requestHeader",
+            "requestSuccessToast"
           ],
           "additionalProperties": false
         },
@@ -16795,6 +17139,12 @@
         },
         "product_attributes": {
           "type": "string"
+        },
+        "handleAutoGeneratedHint": {
+          "type": "string"
+        },
+        "handleInvalidFormat": {
+          "type": "string"
         }
       },
       "required": [
@@ -16986,7 +17336,9 @@
         "inventory_quantity",
         "requires_shipping",
         "variant_attributes",
-        "product_attributes"
+        "product_attributes",
+        "handleAutoGeneratedHint",
+        "handleInvalidFormat"
       ],
       "additionalProperties": false
     },
@@ -17119,13 +17471,69 @@
                 "cancelText"
               ],
               "additionalProperties": false
+            },
+            "saveAsDefault": {
+              "type": "object",
+              "properties": {
+                "cancelText": {
+                  "type": "string"
+                },
+                "confirmText": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "cancelText",
+                "confirmText",
+                "description",
+                "title"
+              ],
+              "additionalProperties": false
+            },
+            "updateExisting": {
+              "type": "object",
+              "properties": {
+                "cancelText": {
+                  "type": "string"
+                },
+                "confirmText": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "cancelText",
+                "confirmText",
+                "description",
+                "title"
+              ],
+              "additionalProperties": false
             }
           },
           "required": [
             "updateDefault",
-            "updateView"
+            "updateView",
+            "saveAsDefault",
+            "updateExisting"
           ],
           "additionalProperties": false
+        },
+        "saveAsSystemDefault": {
+          "type": "string"
+        },
+        "updateNamed": {
+          "type": "string"
         }
       },
       "required": [
@@ -17133,7 +17541,9 @@
         "saveAsNew",
         "updateDefaultForEveryone",
         "updateViewName",
-        "prompts"
+        "prompts",
+        "saveAsSystemDefault",
+        "updateNamed"
       ],
       "additionalProperties": false
     },
@@ -17188,6 +17598,9 @@
             },
             "filterable": {
               "type": "string"
+            },
+            "productAttribute": {
+              "type": "string"
             }
           },
           "required": [
@@ -17197,7 +17610,8 @@
             "type",
             "values",
             "variantAxis",
-            "filterable"
+            "filterable",
+            "productAttribute"
           ],
           "additionalProperties": false
         },

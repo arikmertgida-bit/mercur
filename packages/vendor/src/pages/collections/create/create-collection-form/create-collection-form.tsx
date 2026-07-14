@@ -45,7 +45,7 @@ export const CreateCollectionForm = () => {
       shouldValidate: true,
       shouldDirty: false,
     })
-  }, [titleValue, form.setValue])
+  }, [titleValue, form])
 
   const handleSubmit = form.handleSubmit(async (data) => {
     await mutateAsync(data, {

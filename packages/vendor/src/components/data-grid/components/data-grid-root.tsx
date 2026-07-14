@@ -90,6 +90,7 @@ export interface DataGridRootProps<
 }
 
 const ROW_HEIGHT = 40
+const EMPTY_DATA: never[] = []
 
 const getCommonPinningStyles = <TData,>(
   column: Column<TData>
@@ -126,7 +127,7 @@ export const DataGridRoot = <
   TData,
   TFieldValues extends FieldValues = FieldValues
 >({
-  data = [],
+  data = EMPTY_DATA,
   columns,
   state,
   getSubRows,

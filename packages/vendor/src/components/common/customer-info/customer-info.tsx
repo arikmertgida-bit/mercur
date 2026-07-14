@@ -125,6 +125,7 @@ const AddressPrint = ({
           <Text size="small" leading="compact">
             {getFormattedAddress({ address }).map((line, i) => {
               return (
+                // oxlint-disable-next-line react/no-array-index-key -- read-only formatted address lines, no stable id, not persistent/reorderable
                 <span key={i} className="break-words">
                   {line}
                   <br />

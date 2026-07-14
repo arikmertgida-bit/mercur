@@ -71,7 +71,7 @@ export const SingleCategoryCombobox = forwardRef<
       {
         q: query,
         parent_category_id: !searchValue ? getParentId(level) : undefined,
-        include_descendants_tree: !searchValue ? true : false,
+        include_descendants_tree: !searchValue,
       },
       {
         enabled: open && gate.allowed,
@@ -443,6 +443,7 @@ export const SingleCategoryCombobox = forwardRef<
           {showLoading &&
             Array.from({ length: 5 }).map((_, index) => (
               <div
+                // oxlint-disable-next-line react/no-array-index-key -- fixed-length skeleton placeholder, no persistent/reorderable state
                 key={index}
                 className="grid grid-cols-[20px_1fr_20px] gap-2 px-2 py-1.5"
               >

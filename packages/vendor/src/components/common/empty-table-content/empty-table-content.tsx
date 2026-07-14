@@ -77,6 +77,10 @@ const ActionLink = ({
   return <Link to={action.to}>{children}</Link>
 }
 
+const DEFAULT_NO_RECORDS_ICON = (
+  <ExclamationCircle className="text-ui-fg-subtle" />
+)
+
 const DefaultButton = ({ action }: ActionProps) => {
   if (!action) {
     return null
@@ -137,7 +141,7 @@ export const NoRecords = ({
   action,
   className,
   buttonVariant = "default",
-  icon = <ExclamationCircle className="text-ui-fg-subtle" />,
+  icon = DEFAULT_NO_RECORDS_ICON,
 }: NoRecordsProps) => {
   const { t } = useTranslation()
 

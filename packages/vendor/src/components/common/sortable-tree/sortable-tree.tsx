@@ -86,11 +86,13 @@ interface Props<T extends TreeItem> {
   renderValue: (item: T) => ReactNode
 }
 
+const EMPTY_ITEMS: never[] = []
+
 export function SortableTree<T extends TreeItem>({
   collapsible = true,
   childrenProp = "children", // "children" is the default children prop name
   enableDrag = true,
-  items = [],
+  items = EMPTY_ITEMS,
   indentationWidth = 40,
   onChange,
   renderValue,

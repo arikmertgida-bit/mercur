@@ -1,5 +1,5 @@
 import { ShippingOptionPriceContext } from "./shipping-option-price-context"
-import { PropsWithChildren } from "react"
+import { PropsWithChildren, useMemo } from "react"
 import { ConditionalPriceInfo } from "../../types"
 
 export { useShippingOptionPrice } from "./use-shipping-option-price"
@@ -14,10 +14,13 @@ export const ShippingOptionPriceProvider = ({
   onOpenConditionalPricesModal,
   onCloseConditionalPricesModal,
 }: ShippingOptionPriceProviderProps) => {
+  const value = useMemo(
+    () => ({ onOpenConditionalPricesModal, onCloseConditionalPricesModal }),
+    [onOpenConditionalPricesModal, onCloseConditionalPricesModal],
+  )
+
   return (
-    <ShippingOptionPriceContext.Provider
-      value={{ onOpenConditionalPricesModal, onCloseConditionalPricesModal }}
-    >
+    <ShippingOptionPriceContext.Provider value={value}>
       {children}
     </ShippingOptionPriceContext.Provider>
   )

@@ -1,4 +1,4 @@
-import { PropsWithChildren, useEffect, useState } from "react"
+import { PropsWithChildren, useCallback, useEffect, useMemo, useState } from "react"
 import { ThemeContext, ThemeOption, ThemeValue } from "./theme-context"
 
 const THEME_KEY = "medusa_admin_theme"
@@ -32,14 +32,14 @@ export const ThemeProvider = ({ children }: PropsWithChildren) => {
   const [state, setState] = useState<ThemeOption>(getDefaultValue())
   const [value, setValue] = useState<ThemeValue>(getThemeValue(state))
 
-  const setTheme = (theme: ThemeOption) => {
+  const setTheme = useCallback((theme: ThemeOption) => {
     localStorage.setItem(THEME_KEY, theme)
 
     const themeValue = getThemeValue(theme)
 
     setState(theme)
     setValue(themeValue)
-  }
+  }, [])
 
   useEffect(() => {
     const html = document.querySelector("html")
@@ -76,8 +76,13 @@ export const ThemeProvider = ({ children }: PropsWithChildren) => {
     }
   }, [value])
 
+  const contextValue = useMemo(
+    () => ({ theme: state, setTheme }),
+    [state, setTheme],
+  )
+
   return (
-    <ThemeContext.Provider value={{ theme: state, setTheme }}>
+    <ThemeContext.Provider value={contextValue}>
       {children}
     </ThemeContext.Provider>
   )

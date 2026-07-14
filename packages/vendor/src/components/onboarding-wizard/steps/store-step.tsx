@@ -74,7 +74,7 @@ export const StoreStep = ({ onSubmit, isPending }: StoreStepProps) => {
       shouldValidate: true,
       shouldDirty: false,
     });
-  }, [nameValue, form.setValue]);
+  }, [nameValue, form]);
 
   return (
     <div className="flex flex-col gap-y-8">

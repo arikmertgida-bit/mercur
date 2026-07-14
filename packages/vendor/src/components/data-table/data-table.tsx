@@ -34,6 +34,9 @@ const EMPTY_COMMANDS: PermissionedCommand<DataTableCommand>[] = []
 type VisibilityState = Record<string, boolean>
 type ColumnOrderState = string[]
 
+const EMPTY_DATA: never[] = []
+const EMPTY_COLUMN_VISIBILITY: VisibilityState = {}
+
 type DataTableActionProps = {
   label: string
   disabled?: boolean
@@ -113,7 +116,7 @@ interface DataTableProps<TData> {
 }
 
 export const DataTable = <TData,>({
-  data = [],
+  data = EMPTY_DATA,
   columns,
   filters,
   commands: declaredCommands,
@@ -137,7 +140,7 @@ export const DataTable = <TData,>({
   isLoading = false,
   layout = "auto",
   enableColumnVisibility = false,
-  initialColumnVisibility = {},
+  initialColumnVisibility = EMPTY_COLUMN_VISIBILITY,
   onColumnVisibilityChange,
   columnOrder,
   onColumnOrderChange,
@@ -573,6 +576,7 @@ const DataTableActions = ({ actions }: { actions: DataTableActionProps[] }) => {
   return (
     <div className="flex items-center gap-x-2">
       {actions.map((action, index) => (
+        // oxlint-disable-next-line react/no-array-index-key -- static action config declared by the caller, not persistent/reorderable
         <DataTableAction key={index} {...action} />
       ))}
     </div>

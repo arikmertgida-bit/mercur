@@ -1,6 +1,12 @@
 import { XMarkMini } from "@medusajs/icons"
 import { Button, clx } from "@medusajs/ui"
-import { Children, PropsWithChildren, createContext, useContext } from "react"
+import {
+  Children,
+  PropsWithChildren,
+  createContext,
+  useContext,
+  useMemo,
+} from "react"
 import { useTranslation } from "react-i18next"
 
 type ChipGroupVariant = "base" | "component"
@@ -40,8 +46,13 @@ const Group = ({
 
   const showClearAll = !!onClearAll && Children.count(children) > 0
 
+  const contextValue = useMemo(
+    () => ({ onRemove, variant }),
+    [onRemove, variant],
+  )
+
   return (
-    <GroupContext.Provider value={{ onRemove, variant }}>
+    <GroupContext.Provider value={contextValue}>
       <ul
         role="application"
         className={clx("flex flex-wrap items-center gap-2", className)}

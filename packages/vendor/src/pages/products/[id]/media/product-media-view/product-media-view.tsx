@@ -1,3 +1,4 @@
+import { useCallback, useMemo } from "react"
 import { useSearchParams } from "react-router-dom"
 import { EditProductMediaForm } from "../edit-product-media-form"
 import { ProductMediaGallery } from "../product-media-gallery"
@@ -26,19 +27,21 @@ export const ProductMediaView = ({ product }: ProductMediaViewProps) => {
   const [searchParams, setSearchParams] = useSearchParams()
   const view = getView(searchParams)
 
-  const handleGoToView = (view: View) => {
-    return () => {
-      setSearchParams({ view })
-    }
-  }
+  const goToGallery = useCallback(() => {
+    setSearchParams({ view: View.GALLERY })
+  }, [setSearchParams])
+
+  const goToEdit = useCallback(() => {
+    setSearchParams({ view: View.EDIT })
+  }, [setSearchParams])
+
+  const contextValue = useMemo(
+    () => ({ goToGallery, goToEdit }),
+    [goToGallery, goToEdit],
+  )
 
   return (
-    <ProductMediaViewContext.Provider
-      value={{
-        goToGallery: handleGoToView(View.GALLERY),
-        goToEdit: handleGoToView(View.EDIT),
-      }}
-    >
+    <ProductMediaViewContext.Provider value={contextValue}>
       {renderView(view, product)}
     </ProductMediaViewContext.Provider>
   )

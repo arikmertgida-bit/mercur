@@ -8,7 +8,11 @@
   },
   "rules": {
     "react/react-in-jsx-scope": "off",
-    "typescript/no-non-null-asserted-optional-chain": "off"
+    "typescript/no-non-null-asserted-optional-chain": "off",
+    "eslint/no-shadow": "off",
+    "import/no-named-as-default-member": "off",
+    "eslint/no-underscore-dangle": "off",
+    "import/no-unassigned-import": "off"
   },
   "env": {
     "browser": true,

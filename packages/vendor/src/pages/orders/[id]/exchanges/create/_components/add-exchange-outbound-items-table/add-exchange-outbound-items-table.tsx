@@ -47,9 +47,11 @@ type AddExchangeOutboundItemsTableProps = {
   selectedItems?: string[]
 }
 
+const EMPTY_SELECTED_ITEMS: string[] = []
+
 export const AddExchangeOutboundItemsTable = ({
   onSelectionChange,
-  selectedItems = [],
+  selectedItems = EMPTY_SELECTED_ITEMS,
 }: AddExchangeOutboundItemsTableProps) => {
   const { t } = useTranslation()
 
