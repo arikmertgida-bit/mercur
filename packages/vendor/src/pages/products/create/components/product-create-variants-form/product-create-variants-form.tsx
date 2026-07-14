@@ -13,11 +13,17 @@ import {
 import { useRouteModal } from "@components/modals"
 import { useTabbedForm } from "@components/tabbed-form/tabbed-form"
 import { defineTabMeta } from "@components/tabbed-form/types"
-import { useRegions, useShippingProfiles, useStockLocations } from "@hooks/api"
+import {
+  useCurrentSeller,
+  useRegions,
+  useShippingProfiles,
+  useStockLocations,
+} from "@hooks/api"
 import { usePricePreferences } from "@hooks/api/price-preferences"
 
 import { ProductCreateVariantSchema } from "../../constants"
 import { ProductCreateSchemaType } from "../../types"
+import { generateVariantSku } from "../../utils"
 
 type ShippingProfileLite = { id: string; name?: string | null }
 
@@ -34,6 +40,7 @@ const Root = () => {
     shipping_profiles?: ShippingProfileLite[]
   }
   const { price_preferences: pricePreferences } = usePricePreferences({})
+  const { seller } = useCurrentSeller()
 
   // Mirrors `@mercurjs/admin`'s own product-create-variants-form: price
   // columns cover every currency the marketplace actually sells in (one per
@@ -81,6 +88,64 @@ const Root = () => {
       form.setValue("variants", next, { shouldDirty: false })
     }
   }, [stock_locations, variants.length, form])
+
+  const productTitle = useWatch({
+    control: form.control,
+    name: "title",
+    defaultValue: "",
+  })
+
+  // Title is permanently read-only in the grid (see the "title" column
+  // below), so there is no seller-edited value to preserve — the axis-less
+  // default variant's title unconditionally tracks the product title, and
+  // axis-based variants keep the option-combo title `generateVariantsFromAttributes`
+  // already gives them.
+  useEffect(() => {
+    const trimmedTitle = productTitle.trim()
+    if (!trimmedTitle) return
+
+    const current = form.getValues("variants") ?? []
+    let changed = false
+
+    const next = current.map((variant) => {
+      const hasOptions = !!variant.options && Object.keys(variant.options).length > 0
+
+      if (hasOptions || variant.title === trimmedTitle) {
+        return variant
+      }
+
+      changed = true
+      return { ...variant, title: trimmedTitle }
+    })
+
+    if (changed) {
+      form.setValue("variants", next, { shouldDirty: false })
+    }
+  }, [productTitle, variants.length, form])
+
+  // SKU is store-only, generated once per row, and read-only in the grid —
+  // there is nothing for the seller to edit, so this only ever fills in a
+  // still-empty `sku` (a brand-new variant row) and never overwrites one
+  // that already has a value.
+  useEffect(() => {
+    if (!seller) return
+
+    const current = form.getValues("variants") ?? []
+    let changed = false
+
+    const next = current.map((variant) => {
+      if (variant.sku) {
+        return variant
+      }
+
+      changed = true
+      return { ...variant, sku: generateVariantSku(seller) }
+    })
+
+    if (changed) {
+      form.setValue("variants", next, { shouldDirty: false })
+    }
+  }, [seller, variants.length, form])
 
   const watchedAttributes = useWatch({
     control: form.control,
@@ -230,22 +295,29 @@ const useColumns = ({
         id: "title",
         name: t("fields.title"),
         header: t("fields.title"),
-        field: (context) =>
-          `variants.${context.row.original.originalIndex}.title`,
-        type: "text",
+        // Always auto-derived (product title for the axis-less default
+        // variant, option combo for axis-based variants) — permanently
+        // read-only, sellers never edit this field directly.
         cell: (context) => {
-          return <DataGrid.TextCell context={context} />
+          return (
+            <DataGrid.ReadonlyCell context={context}>
+              {context.row.original.title}
+            </DataGrid.ReadonlyCell>
+          )
         },
       }),
       columnHelper.column({
         id: "sku",
         name: t("fields.sku"),
         header: t("fields.sku"),
-        field: (context) =>
-          `variants.${context.row.original.originalIndex}.sku`,
-        type: "text",
+        // Store-only, auto-generated, and permanently read-only — sellers
+        // never edit this field, so it isn't wired to a form `field` path.
         cell: (context) => {
-          return <DataGrid.TextCell context={context} />
+          return (
+            <DataGrid.ReadonlyCell context={context}>
+              {context.row.original.sku}
+            </DataGrid.ReadonlyCell>
+          )
         },
       }),
       columnHelper.column({

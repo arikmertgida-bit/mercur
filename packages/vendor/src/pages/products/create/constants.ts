@@ -146,6 +146,13 @@ export const EditProductMediaSchema = z.object({
   media: z.array(MediaSchema),
 })
 
+// Shared with the auto-fill logic in `product-create-variants-form.tsx`: a
+// variant still carrying this placeholder hasn't had a title typed by the
+// seller yet, so it's safe to overwrite with the product title.
+export const DEFAULT_VARIANT_TITLE = i18n.t(
+  "products.create.defaults.variantTitle"
+)
+
 export const PRODUCT_CREATE_FORM_DEFAULTS: Partial<
   z.infer<typeof ProductCreateSchema>
 > = {
@@ -153,7 +160,7 @@ export const PRODUCT_CREATE_FORM_DEFAULTS: Partial<
   tags: [],
   variants: decorateVariantsWithDefaultValues([
     {
-      title: i18n.t("products.create.defaults.variantTitle"),
+      title: DEFAULT_VARIANT_TITLE,
       should_create: true,
       variant_rank: 0,
       options: {},

@@ -43,6 +43,11 @@ export interface DataTableRootProps<TData> {
    */
   navigateTo?: (row: Row<TData>) => string
   /**
+   * Called when a row is clicked. Only fires for rows without a `navigateTo`
+   * link, so it can drive non-navigation interactions like expanding a group.
+   */
+  onRowClick?: (row: Row<TData>) => void
+  /**
    * Bulk actions to render
    */
   commands?: BulkCommand[]
@@ -87,6 +92,7 @@ export const DataTableRoot = <TData,>({
   columns,
   pagination,
   navigateTo,
+  onRowClick,
   commands,
   count = 0,
   noResults = false,
@@ -208,6 +214,8 @@ export const DataTableRoot = <TData,>({
             <Table.Body className="border-b-0">
               {table.getRowModel().rows.map((row) => {
                 const to = navigateTo ? navigateTo(row) : undefined
+                const handleRowClick =
+                  !to && onRowClick ? () => onRowClick(row) : undefined
                 const isRowDisabled = hasSelect && !row.getCanSelect()
 
                 const isOdd = row.depth % 2 !== 0
@@ -218,12 +226,13 @@ export const DataTableRoot = <TData,>({
                   <Table.Row
                     key={row.id}
                     data-selected={row.getIsSelected()}
+                    onClick={handleRowClick}
                     className={clx(
                       "transition-fg group/row group relative [&_td:last-of-type]:w-[1%] [&_td:last-of-type]:whitespace-nowrap",
                       "has-[[data-row-link]:focus-visible]:bg-ui-bg-base-hover",
                       {
                         "bg-ui-bg-subtle hover:bg-ui-bg-subtle-hover": isOdd,
-                        "cursor-pointer": !!to,
+                        "cursor-pointer": !!to || !!handleRowClick,
                         "bg-ui-bg-highlight hover:bg-ui-bg-highlight-hover":
                           row.getIsSelected(),
                         "!bg-ui-bg-disabled !hover:bg-ui-bg-disabled":
