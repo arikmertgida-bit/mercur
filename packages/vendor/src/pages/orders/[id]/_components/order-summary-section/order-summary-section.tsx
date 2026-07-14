@@ -778,7 +778,7 @@ const CostBreakdown = ({
             .sort((m1, m2) =>
               (m1.created_at as string).localeCompare(m2.created_at as string)
             )
-            .map((sm, i) => {
+            .map((sm) => {
               return (
                 <div
                   key={sm.id}
@@ -789,7 +789,7 @@ const CostBreakdown = ({
                       {sm.name}
                       {sm.detail?.return_id &&
                         ` (${t("fields.returnShipping")})`}{" "}
-                      <ShippingInfoPopover key={i} shippingMethod={sm} />
+                      <ShippingInfoPopover shippingMethod={sm} />
                     </span>
                   </div>
                   <div className="relative flex-1">

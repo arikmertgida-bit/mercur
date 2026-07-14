@@ -36,9 +36,11 @@ const EditCategoryProductsSchema = z.object({
 const PAGE_SIZE = 50
 const PREFIX = "p"
 
+const EMPTY_PRODUCTS: Pick<ExtendedAdminProduct, "id">[] = []
+
 export const EditCategoryProductsForm = ({
   categoryId,
-  products = [],
+  products = EMPTY_PRODUCTS,
 }: EditCategoryProductsFormProps) => {
   const { t } = useTranslation()
   const { handleSuccess } = useRouteModal()

@@ -13,6 +13,7 @@ import React, {
   forwardRef,
   useContext,
   useId,
+  useMemo,
 } from "react"
 import {
   Controller,
@@ -44,8 +45,10 @@ const Field = <
 >({
   ...props
 }: ControllerProps<TFieldValues, TName>) => {
+  const contextValue = useMemo(() => ({ name: props.name }), [props.name])
+
   return (
-    <FormFieldContext.Provider value={{ name: props.name }}>
+    <FormFieldContext.Provider value={contextValue}>
       <Controller {...props} />
     </FormFieldContext.Provider>
   )
@@ -87,9 +90,10 @@ const useFormField = () => {
 const Item = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => {
     const id = useId()
+    const contextValue = useMemo(() => ({ id }), [id])
 
     return (
-      <FormItemContext.Provider value={{ id }}>
+      <FormItemContext.Provider value={contextValue}>
         <div
           ref={ref}
           className={clx("flex flex-col space-y-2", className)}

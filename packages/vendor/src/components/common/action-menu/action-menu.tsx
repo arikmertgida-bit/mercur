@@ -58,6 +58,7 @@ export const ActionMenu = ({
           const isLast = index === groups.length - 1
 
           return (
+            // oxlint-disable-next-line react/no-array-index-key -- static menu spec declared by the caller, not a persistent/reorderable list; Action has no stable id field
             <DropdownMenu.Group key={index}>
               {group.actions.map((action, index) => {
                 const Wrapper = action.disabledTooltip
@@ -74,6 +75,7 @@ export const ActionMenu = ({
 
                 if (action.onClick) {
                   return (
+                    // oxlint-disable-next-line react/no-array-index-key -- static menu spec declared by the caller, not a persistent/reorderable list; Action has no stable id field
                     <Wrapper key={index}>
                       <DropdownMenu.Item
                         disabled={action.disabled}
@@ -96,6 +98,7 @@ export const ActionMenu = ({
                 }
 
                 return (
+                  // oxlint-disable-next-line react/no-array-index-key -- static menu spec declared by the caller, not a persistent/reorderable list; Action has no stable id field
                   <Wrapper key={index}>
                     <DropdownMenu.Item
                       className={clx(

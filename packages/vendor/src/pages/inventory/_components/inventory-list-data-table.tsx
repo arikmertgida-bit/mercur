@@ -1,7 +1,7 @@
 import { InventoryTypes } from "@medusajs/types";
 
 import { useExtendableTable, useLinkQuery } from "@mercurjs/dashboard-shared";
-import { ColumnDef, RowSelectionState } from "@tanstack/react-table";
+import { RowSelectionState } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";

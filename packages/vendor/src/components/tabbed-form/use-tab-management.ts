@@ -31,6 +31,7 @@ const validateTabRange = async <T extends FieldValues>(
   toIndex: number
 ): Promise<boolean> => {
   for (let i = fromIndex; i <= toIndex; i++) {
+    // oxlint-disable-next-line eslint/no-await-in-loop -- intentional short-circuit: stop at the first invalid tab instead of validating all tabs in parallel
     if (!(await validateTab(form, tabs[i]))) {
       return false
     }

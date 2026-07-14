@@ -484,7 +484,7 @@
       "tabs": {
         "details": "Detaylar",
         "organize": "Organize Et",
-        "variants": "Varyantlar",
+        "variants": "Yayınla",
         "attributes": "Öznitelikler"
       },
       "errors": {
@@ -517,13 +517,20 @@
           "alert": "Varyantlar oluşturmak için seçenekler ekleyin.",
           "tip": "İşaretlenmeyen varyantlar oluşturulmayacaktır. Ürün seçeneklerinizdeki varyasyonları bu listeye uyacak şekilde oluşturup düzenleyebilirsiniz.",
           "searchPlaceholder": "Ara",
-          "media": "Medya"
+          "media": "Görsel"
         },
         "productOptions": {
           "label": "Ürün seçenekleri",
           "hint": "Ürün için seçenekleri belirleyin, örneğin renk, boyut vb."
         },
-        "optionsHeader": "Seçenekler"
+        "optionsHeader": "Seçenekler",
+        "mediaPicker": {
+          "header": "Görsel Ata",
+          "description": "Bu varyanta ait olan ürün fotoğraflarını seçin.",
+          "empty": "Önce Detaylar sekmesinden fotoğraf yükleyin.",
+          "image": "Görsel {{index}}",
+          "partialFailureToast": "Ürün oluşturuldu, ancak şu varyantlara görsel atanamadı: {{variants}}. Ürünün düzenleme ekranından tekrar deneyebilirsiniz."
+        }
       },
       "successToast": "Ürün {{title}} başarıyla oluşturuldu.",
       "attributes": {

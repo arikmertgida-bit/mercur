@@ -1,6 +1,5 @@
 import { useTranslation } from "react-i18next";
 import { keepPreviousData } from "@tanstack/react-query";
-import { type ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
 
 import { HttpTypes } from "@mercurjs/types";

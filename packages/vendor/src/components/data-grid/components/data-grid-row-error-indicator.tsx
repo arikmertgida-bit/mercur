@@ -20,6 +20,7 @@ export const DataGridRowErrorIndicator = ({
       content={
         <ul className="flex flex-col gap-y-3">
           {rowErrors.map((error, index) => (
+            // oxlint-disable-next-line react/no-array-index-key -- transient validation errors recomputed fully each pass, no id field, no persistent/reorderable state
             <DataGridRowErrorLine key={index} error={error} />
           ))}
         </ul>

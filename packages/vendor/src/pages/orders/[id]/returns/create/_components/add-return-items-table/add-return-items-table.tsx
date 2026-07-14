@@ -59,10 +59,12 @@ const getRemainingQuantity = (item: OrderLineItem): number => {
   return fulfilled - requested - returned
 }
 
+const EMPTY_SELECTED_ITEMS: string[] = []
+
 export const AddReturnItemsTable = ({
   order,
   onSelectionChange,
-  selectedItems = [],
+  selectedItems = EMPTY_SELECTED_ITEMS,
 }: AddReturnItemsTableProps) => {
   const { t } = useTranslation()
 

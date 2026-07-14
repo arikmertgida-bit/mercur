@@ -145,6 +145,7 @@ const BadgeListRenderer: CellRenderer = (value, row, column, t) => {
   return (
     <div className="flex gap-1">
       {items.map((item, index) => (
+        // oxlint-disable-next-line react/no-array-index-key -- generic read-only cell renderer, heterogeneous item shape with no guaranteed id
         <Badge key={index} size="xsmall">
           {typeof item === "string" ? item : item.name || item.title || "-"}
         </Badge>

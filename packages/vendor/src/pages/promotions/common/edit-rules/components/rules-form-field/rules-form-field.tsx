@@ -152,7 +152,7 @@ export const RulesFormField = ({
         const identifier = fieldRule.id;
 
         return (
-          <Fragment key={`${fieldRule.id}.${index}.${fieldRule.attribute}`}>
+          <Fragment key={fieldRule.id}>
             <div className="bg-ui-bg-subtle border-ui-border-base flex flex-row gap-2 rounded-xl border px-2 py-2">
               <div className="grow">
                 <Form.Field
@@ -214,9 +214,9 @@ export const RulesFormField = ({
                               </Select.Trigger>
 
                               <Select.Content>
-                                {attributeOptions?.map((c, i) => (
+                                {attributeOptions?.map((c) => (
                                   <Select.Item
-                                    key={`${identifier}-attribute-option-${i}`}
+                                    key={`${identifier}-attribute-option-${c.value}`}
                                     value={c.value}
                                   >
                                     <span className="text-ui-fg-subtle">

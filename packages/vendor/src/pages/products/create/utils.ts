@@ -284,6 +284,7 @@ export const decorateVariantsWithDefaultValues = (
     sku: variant.sku || "",
     prices: variant.prices ?? {},
     inventory: variant.inventory ?? {},
+    media: variant.media ?? [],
   }))
 }
 
@@ -334,6 +335,7 @@ export const generateVariantsFromAttributes = (
         is_default: true,
         prices: {},
         inventory: {},
+        media: [],
       },
     ])
   }
@@ -372,9 +374,78 @@ export const generateVariantsFromAttributes = (
         variant_rank: newVariants.length,
         prices: {},
         inventory: {},
+        media: [],
       })
     }
   }
 
   return newVariants
+}
+
+// --- Variant → image linking (post-create follow-up) ---
+
+export type VariantMediaUpdate = {
+  variantId: string
+  variantTitle: string
+  thumbnail?: string
+  imageIds: string[]
+}
+
+/**
+ * Resolves each variant's locally-picked `media` (client ids, from the
+ * still-unsaved form) into the real `variant_id` / real product `image_id`s
+ * the backend now has, after the product create call has returned. Every
+ * lookup is defensive — a variant whose SKU, media, or uploaded URL can't be
+ * matched is simply skipped, never thrown.
+ */
+export const buildVariantMediaUpdates = (
+  variants: ProductCreateSchemaType["variants"],
+  clientMediaIdToUrl: Map<string, string>,
+  urlToImageId: Map<string, string>,
+  skuToVariantId: Map<string, string>
+): VariantMediaUpdate[] => {
+  const updates: VariantMediaUpdate[] = []
+
+  for (const variant of variants) {
+    if (!variant.should_create || !variant.media?.length || !variant.sku) {
+      continue
+    }
+
+    const variantId = skuToVariantId.get(variant.sku)
+    if (!variantId) {
+      continue
+    }
+
+    let thumbnail: string | undefined
+    const imageIds: string[] = []
+
+    for (const media of variant.media) {
+      if (!media.id) {
+        continue
+      }
+
+      const uploadedUrl = clientMediaIdToUrl.get(media.id)
+      if (!uploadedUrl) {
+        continue
+      }
+
+      if (media.isThumbnail) {
+        thumbnail = uploadedUrl
+        continue
+      }
+
+      const imageId = urlToImageId.get(uploadedUrl)
+      if (imageId) {
+        imageIds.push(imageId)
+      }
+    }
+
+    if (!thumbnail && imageIds.length === 0) {
+      continue
+    }
+
+    updates.push({ variantId, variantTitle: variant.title, thumbnail, imageIds })
+  }
+
+  return updates
 }

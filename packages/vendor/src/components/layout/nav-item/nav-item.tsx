@@ -66,6 +66,7 @@ const NavItemTooltip = ({
           <span>{shortcut?.label}</span>
           <div className="flex items-center gap-x-1">
             {shortcut?.keys.Mac?.map((key, index) => (
+              // oxlint-disable-next-line react/no-array-index-key -- static key-combo list, not persistent/reorderable
               <div className="flex items-center gap-x-1" key={index}>
                 <Kbd key={key}>{key}</Kbd>
                 {index < (shortcut.keys.Mac?.length || 0) - 1 && (

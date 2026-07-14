@@ -6,7 +6,7 @@ import { TwoColumnPageSkeleton } from "@components/common/skeleton";
 import { TwoColumnPage } from "@components/layout/pages";
 import { WidgetZone, useLinkQuery } from "@mercurjs/dashboard-shared";
 import { useMe, useSeller } from "@/hooks/api";
-import { SellerStatus } from "@mercurjs/types";
+import { HttpTypes, SellerStatus } from "@mercurjs/types";
 
 import { StoreAddressSection } from "./_components/store-address-section";
 import { StoreTimeOffSection } from "./_components/store-time-off-section";
@@ -24,6 +24,34 @@ const ME_SELLER_FIELDS =
   "+seller.*,+seller.address.*,+seller.payment_details.*,+seller.professional_details.*";
 const SELLER_DETAIL_FIELDS =
   "+address.*,+payment_details.*,+professional_details.*";
+
+type StatusAlert = {
+  variant: "error";
+  title: string;
+  description: string;
+};
+
+const StatusBanner = ({
+  seller,
+  statusAlert,
+}: {
+  seller: HttpTypes.StoreSellerResponse["seller"];
+  statusAlert: StatusAlert | null;
+}) => (
+  <>
+    <WidgetZone id="seller.setup" data={seller} />
+    {statusAlert && (
+      <Alert variant={statusAlert.variant} dismissible className="p-5">
+        <div className="text-ui-fg-subtle txt-small pb-2 font-medium leading-[20px]">
+          {statusAlert.title}
+        </div>
+        <Text className="text-ui-fg-subtle txt-small leading-normal">
+          {statusAlert.description}
+        </Text>
+      </Alert>
+    )}
+  </>
+);
 
 const Root = ({ children }: { children?: ReactNode }) => {
   const { t } = useTranslation();
@@ -66,22 +94,6 @@ const Root = ({ children }: { children?: ReactNode }) => {
     }
   })();
 
-  const StatusBanner = () => (
-    <>
-      <WidgetZone id="seller.setup" data={seller} />
-      {statusAlert && (
-        <Alert variant={statusAlert.variant} dismissible className="p-5">
-          <div className="text-ui-fg-subtle txt-small pb-2 font-medium leading-[20px]">
-            {statusAlert.title}
-          </div>
-          <Text className="text-ui-fg-subtle txt-small leading-normal">
-            {statusAlert.description}
-          </Text>
-        </Alert>
-      )}
-    </>
-  );
-
   if (Children.count(children) > 0) {
     return (
       <TwoColumnPage data={seller} hasOutlet>
@@ -93,7 +105,7 @@ const Root = ({ children }: { children?: ReactNode }) => {
   return (
     <TwoColumnPage data={seller} hasOutlet>
       <TwoColumnPage.Main>
-        <StatusBanner />
+        <StatusBanner seller={seller} statusAlert={statusAlert} />
         <StoreGeneralSection seller={seller} />
         <StoreTimeOffSection seller={seller} />
       </TwoColumnPage.Main>

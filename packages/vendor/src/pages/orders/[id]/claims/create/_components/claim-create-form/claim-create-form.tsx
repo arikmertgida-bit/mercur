@@ -351,6 +351,7 @@ export const ClaimCreateForm = ({
         ?.actions?.find((a) => a.action === "RETURN_ITEM")?.id
 
       if (actionId) {
+        // oxlint-disable-next-line eslint/no-await-in-loop -- sequential mutations on the same order-change/claim record; parallelizing risks a backend race
         await removeInboundItem(actionId, {
           onError: (error) => {
             toast.error(error.message)

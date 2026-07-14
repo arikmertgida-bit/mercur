@@ -6,6 +6,7 @@ import {
   KeyboardEvent,
   forwardRef,
   useImperativeHandle,
+  useMemo,
   useRef,
   useState,
 } from "react"
@@ -54,6 +55,19 @@ export const ChipInput = forwardRef<HTMLInputElement, ChipInputProps>(
     const [duplicateIndex, setDuplicateIndex] = useState<number | null>(null)
 
     const chips = isControlled ? (value as string[]) : uncontrolledValue
+
+    // Stable per-occurrence key so removing one chip (by value) doesn't
+    // shift the identity of unrelated chips that share the same position.
+    const chipsWithKeys = useMemo(() => {
+      const occurrenceCounts = new Map<string, number>()
+
+      return chips.map((chip) => {
+        const occurrence = occurrenceCounts.get(chip) ?? 0
+        occurrenceCounts.set(chip, occurrence + 1)
+
+        return { value: chip, key: `${chip}__${occurrence}` }
+      })
+    }, [chips])
 
     const handleAddChip = (chip: string) => {
       const cleanValue = chip.trim()
@@ -137,9 +151,9 @@ export const ChipInput = forwardRef<HTMLInputElement, ChipInputProps>(
         tabIndex={-1}
         onClick={() => innerRef.current?.focus()}
       >
-        {chips.map((v, index) => {
+        {chipsWithKeys.map(({ value: v, key: chipKey }, index) => {
           return (
-            <AnimatePresence key={`${v}-${index}`}>
+            <AnimatePresence key={chipKey}>
               <Badge
                 size="2xsmall"
                 className={clx("gap-x-0.5 pl-1.5 pr-1.5", {

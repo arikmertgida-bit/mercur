@@ -348,6 +348,7 @@ export const DataTableRoot = <TData,>({
             <CommandBar.Seperator />
             {commands?.map((command, index) => {
               return (
+                // oxlint-disable-next-line react/no-array-index-key -- static command-bar config declared by the caller, not persistent/reorderable
                 <Fragment key={index}>
                   <CommandBar.Command
                     label={command.label}

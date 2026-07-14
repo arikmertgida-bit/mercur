@@ -1,6 +1,5 @@
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { type ColumnDef } from "@tanstack/react-table";
 import { HttpTypes } from "@medusajs/types";
 import { useExtendableTable, useLinkQuery } from "@mercurjs/dashboard-shared";
 

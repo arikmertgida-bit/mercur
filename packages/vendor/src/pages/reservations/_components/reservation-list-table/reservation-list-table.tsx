@@ -2,7 +2,7 @@ import { Button, Container, Heading, Text } from "@medusajs/ui"
 
 import { useMemo } from "react"
 import { useTranslation } from "react-i18next"
-import { createColumnHelper, type ColumnDef } from "@tanstack/react-table"
+import { createColumnHelper } from "@tanstack/react-table"
 import { useExtendableTable, useLinkQuery } from "@mercurjs/dashboard-shared"
 import { _DataTable } from "@components/table/data-table"
 import { useReservationItems } from "@hooks/api/reservations"

@@ -9,6 +9,7 @@ import {
 } from "@medusajs/ui";
 import { Command } from "cmdk";
 import { Dialog as RadixDialog } from "radix-ui";
+import type { DialogProps } from "@radix-ui/react-dialog";
 import {
   Children,
   ComponentPropsWithoutRef,
@@ -248,6 +249,7 @@ export const Search = () => {
                         return (
                           <div
                             className="flex items-center gap-x-1"
+                            // oxlint-disable-next-line react/no-array-index-key -- static key-combo list, not persistent/reorderable
                             key={index}
                           >
                             <Kbd>{key}</Kbd>
@@ -288,7 +290,7 @@ const CommandPalette = forwardRef<
 ));
 CommandPalette.displayName = Command.displayName;
 
-interface CommandDialogProps extends RadixDialog.DialogProps {
+interface CommandDialogProps extends DialogProps {
   isLoading?: boolean;
 }
 
@@ -523,6 +525,7 @@ const CommandLoading = forwardRef<
         <Skeleton className="h-5 w-10" />
       </div>
       {Array.from({ length: 7 }).map((_, index) => (
+        // oxlint-disable-next-line react/no-array-index-key -- fixed-length skeleton placeholder, no persistent/reorderable state
         <div key={index} className="w-full p-2">
           <Skeleton className="h-5 w-full" />
         </div>

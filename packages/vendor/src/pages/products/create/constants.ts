@@ -42,6 +42,10 @@ const ProductCreateVariantSchema = z.object({
       })
     )
     .default({}),
+  // Subset of the product's own `media` field-array, selected per variant
+  // (matched by `MediaSchema.id`, the same stable client id `FileUpload`
+  // assigns on upload). Only populated when the product has variant axes.
+  media: z.array(MediaSchema).default([]),
 })
 
 export type ProductCreateVariantSchema = z.infer<
@@ -167,6 +171,7 @@ export const PRODUCT_CREATE_FORM_DEFAULTS: Partial<
       is_default: true,
       prices: {},
       inventory: {},
+      media: [],
     },
   ]),
   attributes: [],

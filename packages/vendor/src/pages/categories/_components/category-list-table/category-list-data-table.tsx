@@ -1,5 +1,4 @@
 import { keepPreviousData } from "@tanstack/react-query";
-import { type ColumnDef } from "@tanstack/react-table";
 import { useExtendableTable, useLinkQuery } from "@mercurjs/dashboard-shared";
 import { useMemo } from "react";
 import { AdminProductCategoryResponse } from "@medusajs/types";

@@ -2,6 +2,7 @@ import { ClientError, InferClientOutput } from "@mercurjs/client"
 import { MercurFeatureFlags } from "@mercurjs/types"
 import { HttpTypes } from "@medusajs/types"
 import { Button, toast } from "@medusajs/ui"
+import { TFunction } from "i18next"
 import { ReactNode, useEffect, useMemo, Children } from "react"
 import { useForm, useWatch, DeepPartial } from "react-hook-form"
 import { useTranslation } from "react-i18next"
@@ -22,8 +23,10 @@ import { sellerSuspensionBridge } from "@lib/seller-suspension-bridge"
 import { PRODUCT_CREATE_FORM_DEFAULTS, ProductCreateSchema } from "../../constants"
 import { ProductCreateSchemaType } from "../../types"
 import {
+  buildVariantMediaUpdates,
   generateVariantsFromAttributes,
   normalizeProductFormValues,
+  VariantMediaUpdate,
 } from "../../utils"
 import { ProductCreateAttributesForm } from "../product-create-attributes-form"
 import { ProductCreateDetailsForm } from "../product-create-details-form"
@@ -37,6 +40,56 @@ type ProductCreateFormProps = {
 }
 
 type UploadedFile = { id?: string; url: string }
+type UploadedMediaEntry = UploadedFile & {
+  isThumbnail: boolean
+  // The local, pre-upload `media[].id` this file came from — carried
+  // through so the post-create variant-image follow-up (see
+  // `applyVariantMediaUpdates` below) can resolve a seller's Görsel
+  // selections (still keyed by that local id) to the just-uploaded URL.
+  clientMediaId?: string
+}
+
+/**
+ * Fires the per-variant `thumbnail`/`images.add` follow-up calls (see
+ * `VendorUpdateProductVariant` — `packages/core/src/api/vendor/products/validators.ts`)
+ * once the product and its real variant/image ids exist. Runs after the
+ * product is already created and the seller already navigated away, so a
+ * failed variant here never blocks or reverts the product itself — it only
+ * surfaces as a toast naming the affected variants.
+ */
+const applyVariantMediaUpdates = async (
+  productId: string,
+  updates: VariantMediaUpdate[],
+  t: TFunction
+): Promise<void> => {
+  if (updates.length === 0) {
+    return
+  }
+
+  const results = await Promise.allSettled(
+    updates.map((update) =>
+      sdk.vendor.products.$id.variants.$variantId.mutate({
+        $id: productId,
+        $variantId: update.variantId,
+        thumbnail: update.thumbnail,
+        images: update.imageIds.length ? { add: update.imageIds } : undefined,
+      })
+    )
+  )
+
+  const failedVariantTitles = results
+    .map((result, index) => ({ result, update: updates[index] }))
+    .filter(({ result }) => result.status === "rejected")
+    .map(({ update }) => update.variantTitle)
+
+  if (failedVariantTitles.length > 0) {
+    toast.warning(
+      t("products.create.variants.mediaPicker.partialFailureToast", {
+        variants: failedVariantTitles.join(", "),
+      })
+    )
+  }
+}
 
 export const ProductCreateForm = ({
   children,
@@ -103,10 +156,14 @@ export const ProductCreateForm = ({
     const media = values.media || []
     const payload = { ...values, media: undefined }
 
-    let uploadedMedia: (UploadedFile & { isThumbnail: boolean })[] = []
+    let uploadedMedia: UploadedMediaEntry[] = []
     try {
       const filesToUpload = media
-        .map((m, i) => ({ file: m.file, isThumbnail: m.isThumbnail, index: i }))
+        .map((m) => ({
+          file: m.file,
+          isThumbnail: m.isThumbnail,
+          clientMediaId: m.id,
+        }))
         .filter((m) => !!m.file)
 
       if (filesToUpload.length) {
@@ -117,6 +174,7 @@ export const ProductCreateForm = ({
         uploadedMedia = uploadedFiles.map((file, i) => ({
           ...file,
           isThumbnail: filesToUpload[i].isThumbnail,
+          clientMediaId: filesToUpload[i].clientMediaId,
         }))
       }
     } catch (error) {
@@ -153,6 +211,51 @@ export const ProductCreateForm = ({
           }
 
           handleSuccess(`../${data.product.id}`)
+
+          // Görsel seçimleri, product-image ilişkisini yalnızca ürün
+          // gerçekten oluştuktan sonra kurabilen ayrı bir uçla (bkz. plan)
+          // uygulanır — başarısız olsa bile ürün zaten oluşturuldu, bu
+          // yüzden navigasyonu/toast'ı bloklamadan arka planda çalışır.
+          try {
+            const clientMediaIdToUrl = new Map(
+              uploadedMedia
+                .filter(
+                  (m): m is UploadedMediaEntry & { clientMediaId: string } =>
+                    !!m.clientMediaId
+                )
+                .map((m) => [m.clientMediaId, m.url])
+            )
+            const urlToImageId = new Map(
+              (data.product.images ?? []).map((image) => [
+                image.url,
+                image.id,
+              ])
+            )
+            const skuToVariantId = new Map(
+              (data.product.variants ?? [])
+                .filter(
+                  (
+                    v
+                  ): v is (typeof data.product.variants)[number] & {
+                    sku: string
+                  } => !!v.sku
+                )
+                .map((v) => [v.sku, v.id])
+            )
+
+            const variantMediaUpdates = buildVariantMediaUpdates(
+              values.variants,
+              clientMediaIdToUrl,
+              urlToImageId,
+              skuToVariantId
+            )
+
+            void applyVariantMediaUpdates(data.product.id, variantMediaUpdates, t)
+          } catch (error) {
+            if (error instanceof Error) {
+              toast.error(error.message)
+            }
+          }
         },
         onError: (error: ClientError) => {
           toast.error(error.message)
@@ -194,6 +297,7 @@ export const ProductCreateForm = ({
       form={form}
       onSubmit={handleSubmit}
       isLoading={isPending}
+      // oxlint-disable-next-line react/no-unstable-nested-components -- TabbedForm footer render-prop, invoked as a function by TabbedForm, never mounted as JSX
       footer={({ isLastTab, onNext, isLoading }) => (
         <div
           className="flex items-center justify-end gap-x-2"

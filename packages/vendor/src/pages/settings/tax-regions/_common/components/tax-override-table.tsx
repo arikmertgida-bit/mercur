@@ -52,6 +52,7 @@ export const TaxOverrideTable = ({
         {Array.from({ length: 3 }).map((_, index) => {
           return (
             <div
+              // oxlint-disable-next-line react/no-array-index-key -- fixed-length skeleton placeholder, no persistent/reorderable state
               key={index}
               className="bg-ui-bg-field-component h-[52px] w-full animate-pulse"
             />
@@ -110,6 +111,7 @@ export const TaxOverrideTable = ({
           : Array.from({ length: 3 }).map((_, index) => {
               return (
                 <div
+                  // oxlint-disable-next-line react/no-array-index-key -- fixed-length skeleton placeholder, no persistent/reorderable state
                   key={index}
                   className="bg-ui-bg-field-component h-[60px] w-full animate-pulse"
                 />

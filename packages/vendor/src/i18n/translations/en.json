@@ -504,7 +504,7 @@
       "tabs": {
         "details": "Details",
         "organize": "Organize",
-        "variants": "Variants",
+        "variants": "Publish",
         "attributes": "Attributes"
       },
       "defaults": {
@@ -548,6 +548,13 @@
         "productOptions": {
           "label": "Product options",
           "hint": "Define the options for the product, e.g. color, size, etc."
+        },
+        "mediaPicker": {
+          "header": "Assign images",
+          "description": "Choose which of the product's photos belong to this variant.",
+          "empty": "Upload photos in the Details tab first.",
+          "image": "Image {{index}}",
+          "partialFailureToast": "The product was created, but images could not be assigned to: {{variants}}. You can retry from the product's edit page."
         }
       },
       "successToast": "Product {{title}} was successfully created.",

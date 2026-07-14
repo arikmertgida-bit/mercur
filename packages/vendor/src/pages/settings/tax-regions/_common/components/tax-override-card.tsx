@@ -241,7 +241,10 @@ const ReferenceValues = ({
     <Tooltip
       content={
         <ul>
-          {labels?.map((label: string, index) => <li key={index}>{label}</li>)}
+          {labels?.map((label: string, index) => (
+            // oxlint-disable-next-line react/no-array-index-key -- read-only resolved label strings from a single fetch, no persistent/reorderable state
+            <li key={index}>{label}</li>
+          ))}
           {additional > 0 && (
             <li>
               {t("taxRegions.fields.targets.additionalValues", {

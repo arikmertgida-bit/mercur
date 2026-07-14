@@ -87,6 +87,7 @@ export const StoreTimeOffSection = ({ seller }: StoreTimeOffSectionProps) => {
         id: "note",
         header: t("store.timeOff.columns.note"),
         accessorFn: (row: TimeOffEntry) => row.note || "-",
+        // oxlint-disable-next-line react/no-unstable-nested-components -- TanStack Table cell render-prop, invoked as a function by the table, never mounted as JSX
         cell: ({ row }: { row: { original: TimeOffEntry } }) => (
           <span
             className="block max-w-[240px] truncate"
@@ -99,6 +100,7 @@ export const StoreTimeOffSection = ({ seller }: StoreTimeOffSectionProps) => {
       {
         id: "actions",
         header: "",
+        // oxlint-disable-next-line react/no-unstable-nested-components -- TanStack Table cell render-prop, invoked as a function by the table, never mounted as JSX
         cell: () => (
           <div className="flex justify-end">
             <DropdownMenu>

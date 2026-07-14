@@ -1,6 +1,6 @@
 import { toast, usePrompt } from "@medusajs/ui";
 import { keepPreviousData } from "@tanstack/react-query";
-import { createColumnHelper, type ColumnDef } from "@tanstack/react-table";
+import { createColumnHelper } from "@tanstack/react-table";
 import { useExtendableTable } from "@mercurjs/dashboard-shared";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";

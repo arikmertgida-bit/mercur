@@ -48,6 +48,7 @@ export const OrderActivityCollapsible = ({
           {activities.map((item, index) => {
             return (
               <OrderActivityItem
+                // oxlint-disable-next-line react/no-array-index-key -- read-only order activity log derived from order data, no stable id, not persistent/reorderable
                 key={index}
                 title={item.title}
                 timestamp={item.timestamp}

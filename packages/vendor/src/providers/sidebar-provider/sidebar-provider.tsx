@@ -1,4 +1,4 @@
-import { PropsWithChildren, useEffect, useState } from "react"
+import { PropsWithChildren, useCallback, useEffect, useMemo, useState } from "react"
 import { useLocation } from "react-router-dom"
 import { SidebarContext } from "./sidebar-context"
 
@@ -8,13 +8,13 @@ export const SidebarProvider = ({ children }: PropsWithChildren) => {
 
   const { pathname } = useLocation()
 
-  const toggle = (view: "desktop" | "mobile") => {
+  const toggle = useCallback((view: "desktop" | "mobile") => {
     if (view === "desktop") {
-      setDesktop(!desktop)
+      setDesktop((prev) => !prev)
     } else {
-      setMobile(!mobile)
+      setMobile((prev) => !prev)
     }
-  }
+  }, [])
 
   // close the mobile sidebar on route change
   // this is to prevent the sidebar from staying open
@@ -23,9 +23,12 @@ export const SidebarProvider = ({ children }: PropsWithChildren) => {
     setMobile(false)
   }, [pathname])
 
+  const value = useMemo(
+    () => ({ desktop, mobile, toggle }),
+    [desktop, mobile, toggle],
+  )
+
   return (
-    <SidebarContext.Provider value={{ desktop, mobile, toggle }}>
-      {children}
-    </SidebarContext.Provider>
+    <SidebarContext.Provider value={value}>{children}</SidebarContext.Provider>
   )
 }

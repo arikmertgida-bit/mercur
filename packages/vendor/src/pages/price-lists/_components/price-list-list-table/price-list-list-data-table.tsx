@@ -1,5 +1,5 @@
 import { keepPreviousData } from "@tanstack/react-query";
-import { createColumnHelper, type ColumnDef } from "@tanstack/react-table";
+import { createColumnHelper } from "@tanstack/react-table";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useExtendableTable, useLinkQuery } from "@mercurjs/dashboard-shared";
