@@ -155,7 +155,8 @@ const ChildrenDisplay = ({
     product_category: withChildren,
     isLoading,
   } = useProductCategory(category.id, {
-    fields: "id,name,category_children",
+    include_descendants_tree: true,
+    fields: "id,name,*category_children",
   })
 
   const chips = useMemo(() => getCategoryChildren(withChildren), [withChildren])
