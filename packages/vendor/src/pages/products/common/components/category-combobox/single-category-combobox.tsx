@@ -115,10 +115,15 @@ export const SingleCategoryCombobox = forwardRef<
   }
 
   function handleLevelDown(option: ProductCategoryOption) {
-    return (e: MouseEvent<HTMLButtonElement>) => {
+    // Invoked both from the option button's onClick (React MouseEvent) and
+    // from the window keydown listener ("Enter" key, native DOM
+    // KeyboardEvent) — accept the minimal shape both share instead of one
+    // specific event type.
+    return (e: { preventDefault(): void; stopPropagation(): void }) => {
       e.preventDefault()
       e.stopPropagation()
 
+      onSearchValueChange("")
       setLevel([...level, { id: option.value, label: option.label }])
 
       innerRef.current?.focus()
@@ -146,6 +151,18 @@ export const SingleCategoryCombobox = forwardRef<
     },
     // oxlint-disable-next-line react-hooks/exhaustive-deps
     [value, onChange, handleOpenChange]
+  )
+
+  const handleOptionClick = useCallback(
+    (option: ProductCategoryOption) => {
+      // A category with children can only be drilled into, never selected
+      // directly — only leaf categories are valid product categories here.
+      return option.has_children
+        ? handleLevelDown(option)
+        : handleSelect(option)
+    },
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
+    [handleSelect, level]
   )
 
   function handleOpenChange(open: boolean) {
@@ -219,10 +236,18 @@ export const SingleCategoryCombobox = forwardRef<
 
         const index = showLevelUp ? focusedIndex - 1 : focusedIndex
 
-        handleSelect(options[index])(e)
+        handleOptionClick(options[index])(e)
       }
     },
-    [open, focusedIndex, options, level, handleSelect, searchValue, showLevelUp]
+    [
+      open,
+      focusedIndex,
+      options,
+      level,
+      handleOptionClick,
+      searchValue,
+      showLevelUp,
+    ]
   )
 
   useEffect(() => {
@@ -369,7 +394,7 @@ export const SingleCategoryCombobox = forwardRef<
                     "grid h-full w-full appearance-none grid-cols-[20px_1fr] items-center gap-2 overflow-hidden rounded-md px-2 py-1.5 text-start outline-none",
                     "data-[active=true]:bg-ui-bg-field-hover"
                   )}
-                  onClick={handleSelect(option)}
+                  onClick={handleOptionClick(option)}
                   onMouseEnter={() =>
                     setFocusedIndex(showLevelUp ? index + 1 : index)
                   }

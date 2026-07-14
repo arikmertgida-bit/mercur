@@ -75,7 +75,12 @@ export const CategoryListDataTable = () => {
       count={count}
       pageSize={PAGE_SIZE}
       isLoading={isLoading}
-      navigateTo={(row) => row.id}
+      navigateTo={(row) => (row.getCanExpand() ? "" : row.original.id)}
+      onRowClick={(row) => {
+        if (row.getCanExpand()) {
+          row.toggleExpanded()
+        }
+      }}
       queryObject={raw}
       search
       pagination
