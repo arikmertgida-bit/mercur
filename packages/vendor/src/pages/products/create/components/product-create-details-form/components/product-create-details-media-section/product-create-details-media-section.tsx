@@ -33,7 +33,9 @@ import { useTranslation } from "react-i18next"
 import { ActionMenu } from "@components/common/action-menu"
 import { useTabbedForm } from "@components/tabbed-form/tabbed-form"
 import { UploadMediaFormItem } from "../../../../../common/components/upload-media-form-item"
+import { MAX_PRODUCT_MEDIA_COUNT } from "../../../../constants"
 import { ProductCreateSchemaType } from "../../../../types"
+import { ProductCreateMediaLimitModal } from "./product-create-media-limit-modal"
 
 const dropAnimationConfig: DropAnimation = {
   sideEffects: defaultDropAnimationSideEffects({
@@ -55,6 +57,7 @@ export const ProductCreateMediaSection = () => {
   })
 
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null)
+  const [limitModalOpen, setLimitModalOpen] = useState(false)
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -117,7 +120,18 @@ export const ProductCreateMediaSection = () => {
 
   return (
     <div id="media" className="flex flex-col gap-y-2" data-testid="product-create-media-section">
-      <UploadMediaFormItem form={form} append={append} showHint={false} />
+      <ProductCreateMediaLimitModal
+        open={limitModalOpen}
+        onOpenChange={setLimitModalOpen}
+      />
+      <UploadMediaFormItem
+        form={form}
+        append={append}
+        showHint={false}
+        maxCount={MAX_PRODUCT_MEDIA_COUNT}
+        existingCount={fields.length}
+        onLimitExceeded={() => setLimitModalOpen(true)}
+      />
       <DndContext
         sensors={sensors}
         onDragEnd={handleDragEnd}

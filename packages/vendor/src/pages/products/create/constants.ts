@@ -2,14 +2,19 @@ import { z } from "zod"
 import { isValidHandleFormat } from "@mercurjs/dashboard-shared"
 import { i18n } from "../../../components/utilities/i18n/i18n"
 import { optionalInt } from "../../../lib/validation"
-import { decorateVariantsWithDefaultValues } from "./utils"
+import { decorateVariantsWithDefaultValues, hasVariantMediaColumn } from "./utils"
 
 export const MediaSchema = z.object({
   id: z.string().optional(),
   url: z.string(),
   isThumbnail: z.boolean(),
-  file: z.any().nullable(), // File
+  file: z.instanceof(File).nullable(),
 })
+
+// Sellers upload product photography from phone cameras; capping the
+// gallery keeps the create-product payload and storefront gallery
+// predictable across every product.
+export const MAX_PRODUCT_MEDIA_COUNT = 12
 
 const ProductCreateVariantSchema = z.object({
   should_create: z.boolean(),
@@ -29,15 +34,21 @@ const ProductCreateVariantSchema = z.object({
   sku: z.string().optional(),
   options: z.record(z.string(), z.string()).optional(),
   variant_rank: z.number(),
+  // `z.literal("")` MUST come before `z.coerce.number()` in this union:
+  // Zod tries union members in order, and `z.coerce.number()` happily
+  // coerces an empty string to `0` (`Number("") === 0`) — tried first, it
+  // would silently turn "left blank" into a valid zero, making an empty
+  // cell indistinguishable from an intentionally entered 0 everywhere this
+  // field is read (including the required-price/-stock checks below).
   prices: z
-    .record(z.string(), z.union([z.coerce.number().min(0), z.literal("")]))
+    .record(z.string(), z.union([z.literal(""), z.coerce.number().min(0)]))
     .default({}),
   inventory: z
     .record(
       z.string(),
       z.object({
         checked: z.boolean().default(false),
-        quantity: z.union([z.coerce.number().min(0), z.literal("")]).default(""),
+        quantity: z.union([z.literal(""), z.coerce.number().min(0)]).default(""),
         disabledToggle: z.boolean().optional(),
       })
     )
@@ -65,7 +76,9 @@ export const ProductCreateSchema = z
     discountable: z.boolean(),
     type_id: z.string().optional(),
     collection_id: z.string().optional(),
-    shipping_profile_id: z.string().optional(),
+    shipping_profile_id: z.string().min(1, {
+      message: i18n.t("products.create.errors.shippingProfileRequired"),
+    }),
     category_id: z.string().min(1, {
       message: i18n.t("products.create.errors.categoryRequired"),
     }),
@@ -130,6 +143,7 @@ export const ProductCreateSchema = z
     }
 
     const skus = new Set<string>()
+    const requireMedia = hasVariantMediaColumn(data.attributes)
 
     data.variants.forEach((v, index) => {
       if (v.sku) {
@@ -142,6 +156,49 @@ export const ProductCreateSchema = z
         }
 
         skus.add(v.sku)
+      }
+
+      if (!v.should_create) {
+        return
+      }
+
+      const hasPrice = Object.values(v.prices).some(
+        (amount) => typeof amount === "number"
+      )
+      if (!hasPrice) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: [`variants.${index}.prices`],
+          message: i18n.t("products.create.errors.priceRequired"),
+        })
+      }
+
+      // `> 0`, not just `typeof === "number"`: the stock grid's toggle
+      // cell (`DataGridTogglableNumberCell`) auto-fills `quantity: 0` the
+      // instant the location switch is flipped on, before the seller ever
+      // types a number — so "toggled but left blank" and "toggled and
+      // typed 0" are indistinguishable as data. Requiring a positive
+      // quantity is the only way to actually catch the blank case.
+      const hasStock = Object.values(v.inventory).some(
+        (level) =>
+          level.checked &&
+          typeof level.quantity === "number" &&
+          level.quantity > 0
+      )
+      if (!hasStock) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: [`variants.${index}.inventory`],
+          message: i18n.t("products.create.errors.stockRequired"),
+        })
+      }
+
+      if (requireMedia && v.media.length === 0) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: [`variants.${index}.media`],
+          message: i18n.t("products.create.errors.mediaRequired"),
+        })
       }
     })
   })

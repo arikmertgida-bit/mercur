@@ -66,21 +66,31 @@ const applyVariantMediaUpdates = async (
     return
   }
 
-  const results = await Promise.allSettled(
-    updates.map((update) =>
-      sdk.vendor.products.$id.variants.$variantId.mutate({
+  // Sequential, not Promise.allSettled: every variant update for the same
+  // product goes through productEditUpdateVariantsWorkflow, which stages a
+  // `product_change` record and hard-rejects
+  // ("There is already an active update request for this product") while
+  // one is already pending for that product_id
+  // (validateNoPendingProductChangeStep). Firing these concurrently means
+  // only whichever request's staging step wins the race succeeds — every
+  // other one observes the not-yet-cleared pending change and fails, which
+  // is exactly the "some variants never got their image" symptom this was
+  // producing on multi-variant products.
+  const failedVariantTitles: string[] = []
+
+  for (const update of updates) {
+    try {
+      // oxlint-disable-next-line no-await-in-loop -- intentionally sequential, not parallel: see the comment above this loop
+      await sdk.vendor.products.$id.variants.$variantId.mutate({
         $id: productId,
         $variantId: update.variantId,
         thumbnail: update.thumbnail,
         images: update.imageIds.length ? { add: update.imageIds } : undefined,
       })
-    )
-  )
-
-  const failedVariantTitles = results
-    .map((result, index) => ({ result, update: updates[index] }))
-    .filter(({ result }) => result.status === "rejected")
-    .map(({ update }) => update.variantTitle)
+    } catch {
+      failedVariantTitles.push(update.variantTitle)
+    }
+  }
 
   if (failedVariantTitles.length > 0) {
     toast.warning(
@@ -264,9 +274,20 @@ export const ProductCreateForm = ({
     )
   }
 
-  const handleSubmit = form.handleSubmit(async (values) => {
-    await submitProduct(values, false)
-  })
+  const handleSubmit = form.handleSubmit(
+    async (values) => {
+      await submitProduct(values, false)
+    },
+    () => {
+      // Zod's superRefine (required shipping profile / price / stock /
+      // variant media) already populated `formState.errors` — the
+      // Variants-tab DataGrid highlights each affected row on its own via
+      // that same error state. This toast is just the unmissable signal
+      // that publish was blocked, since a per-row badge alone is easy to
+      // miss on a long grid.
+      toast.error(t("products.create.errors.formIncomplete"))
+    }
+  )
 
   const handleSaveAsDraft = async () => {
     // Drafts only require a title; bypass the full schema so users can save

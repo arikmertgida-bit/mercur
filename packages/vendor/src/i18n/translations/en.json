@@ -173,7 +173,8 @@
     "hide": "Hide",
     "export": "Export",
     "import": "Import",
-    "cannotUndo": "This action cannot be undone"
+    "cannotUndo": "This action cannot be undone",
+    "ok": "OK"
   },
   "operators": {
     "in": "In"
@@ -524,7 +525,12 @@
         "requiredAttribute": "This attribute is required.",
         "requiredAttributeSelect": "This attribute is required by the marketplace. Please select value.",
         "requiredAttributeEnter": "This attribute is required by the marketplace. Please enter value.",
-        "requiredAttributeMultiSelect": "This attribute is required by the marketplace. Please select at least one value."
+        "requiredAttributeMultiSelect": "This attribute is required by the marketplace. Please select at least one value.",
+        "shippingProfileRequired": "Please select a shipping profile.",
+        "priceRequired": "Please enter a price for this variant in at least one currency.",
+        "stockRequired": "Please set a stock quantity for this variant in at least one location.",
+        "mediaRequired": "Please add at least one image for this variant.",
+        "formIncomplete": "Some required fields are missing — check the highlighted rows before publishing."
       },
       "variants": {
         "header": "Variants",
@@ -698,7 +704,11 @@
       "removeSelected": "Remove Selected",
       "selectImages": "Select Images",
       "selectImagesHint": "Click images to add them to this variant.",
-      "editLabel": "Edit"
+      "editLabel": "Edit",
+      "limitExceeded": {
+        "title": "Image limit reached",
+        "description": "You can upload up to {{max}} images per product. The first {{max}} were added — the rest were skipped."
+      }
     },
     "variantMedia": {
       "label": "Variant Media",

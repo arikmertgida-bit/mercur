@@ -20,6 +20,17 @@ export type NormalizedCreateProduct = Omit<
   variants: NormalizedCreateProductVariant[]
 }
 
+/**
+ * True when at least one variant-axis attribute is set up — the same
+ * condition `product-create-variants-form.tsx` uses to decide whether the
+ * per-variant Görsel column is shown at all. Shared here so the required-
+ * media validation in `ProductCreateSchema` never drifts out of sync with
+ * what the seller can actually see in the grid.
+ */
+export const hasVariantMediaColumn = (
+  attributes: ProductCreateSchemaType["attributes"] | undefined
+): boolean => (attributes ?? []).some((attr) => attr.use_for_variants && attr.title)
+
 export const normalizeProductFormValues = (
   values: ProductCreateSchemaType & {
     status: HttpTypes.AdminProductStatus
@@ -429,14 +440,19 @@ export const buildVariantMediaUpdates = (
         continue
       }
 
-      if (media.isThumbnail) {
-        thumbnail = uploadedUrl
-        continue
-      }
-
+      // A selected image being the product's own designated thumbnail
+      // doesn't make it any less one of this variant's images — it must
+      // still be linked via `images.add`. Previously this `continue`d
+      // instead, so a variant whose picked photo happened to be the
+      // product thumbnail silently lost its only image (the resulting
+      // `imageIds` stayed empty and `images` was never sent at all).
       const imageId = urlToImageId.get(uploadedUrl)
       if (imageId) {
         imageIds.push(imageId)
+      }
+
+      if (media.isThumbnail) {
+        thumbnail = uploadedUrl
       }
     }
 

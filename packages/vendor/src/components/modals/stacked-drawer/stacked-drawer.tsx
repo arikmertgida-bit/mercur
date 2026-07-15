@@ -34,7 +34,19 @@ export const Root: ComponentType<StackedDrawerProps> = ({
   }, []);
 
   return (
-    <Drawer open={getIsOpen(id)} onOpenChange={(open) => setIsOpen(id, open)}>
+    <Drawer
+      open={getIsOpen(id)}
+      onOpenChange={(open) => setIsOpen(id, open)}
+      // A StackedDrawer always opens on top of an already-open parent
+      // modal (RouteFocusModal / StackedFocusModal), which already owns
+      // body scroll-lock and focus trapping. Radix Dialog defaults to
+      // `modal=true`, so without this the drawer re-applies its own
+      // scroll-lock on mount/unmount on top of the parent's — the two
+      // locks fighting over the scrollbar-compensation padding is what
+      // causes the parent modal to visibly jump (CLS) when the drawer
+      // opens or closes.
+      modal={false}
+    >
       {children}
     </Drawer>
   );
@@ -66,7 +78,7 @@ type ContentProps = ComponentPropsWithoutRef<typeof Drawer.Content>;
 const Content: ForwardRefExoticComponent<ContentProps> = forwardRef<
   HTMLDivElement,
   ComponentPropsWithoutRef<typeof Drawer.Content>
->(({ className, ...props }, ref) => {
+>(({ className, onFocusOutside, ...props }, ref) => {
   return (
     <Drawer.Content
       ref={ref}
@@ -74,6 +86,15 @@ const Content: ForwardRefExoticComponent<ContentProps> = forwardRef<
       overlayProps={{
         className: "bg-transparent",
       }}
+      // The trigger that opens a StackedDrawer (e.g. a button inside the
+      // parent modal's own content) still has DOM focus at the instant
+      // this non-modal (`modal={false}`, see Root above) drawer mounts —
+      // that focus is, by definition, outside this drawer's content.
+      // Without overriding this, Radix's DismissableLayer reads that as
+      // "focus moved outside" and closes the drawer immediately after
+      // opening it. Consumers can still opt back into the default
+      // dismiss-on-focus-outside behavior by passing their own handler.
+      onFocusOutside={onFocusOutside ?? ((event) => event.preventDefault())}
       {...props}
     />
   );

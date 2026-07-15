@@ -43,7 +43,16 @@ export const Root: ComponentType<StackedFocusModalProps> = ({
   };
 
   return (
-    <FocusModal open={getIsOpen(id)} onOpenChange={handleOpenChange}>
+    <FocusModal
+      open={getIsOpen(id)}
+      onOpenChange={handleOpenChange}
+      // Same nested-Dialog scroll-lock fix as StackedDrawer — a
+      // StackedFocusModal always opens on top of an already-open parent
+      // RouteFocusModal, which already owns body scroll-lock; stacking a
+      // second `modal=true` Dialog causes a visible layout jump (CLS) when
+      // it mounts/unmounts.
+      modal={false}
+    >
       {children}
     </FocusModal>
   );
@@ -73,7 +82,7 @@ Description.displayName = "StackedFocusModal.Description";
 const Content = forwardRef<
   HTMLDivElement,
   ComponentPropsWithoutRef<typeof FocusModal.Content>
->(({ className, ...props }, ref) => {
+>(({ className, onFocusOutside, ...props }, ref) => {
   return (
     <FocusModal.Content
       ref={ref}
@@ -81,6 +90,11 @@ const Content = forwardRef<
       overlayProps={{
         className: "bg-transparent",
       }}
+      // Same rationale as StackedDrawer.Content: the trigger that opens a
+      // StackedFocusModal still has focus, outside this non-modal dialog,
+      // at the instant it mounts — without this it would close itself
+      // immediately. Consumers can still opt back in with their own handler.
+      onFocusOutside={onFocusOutside ?? ((event) => event.preventDefault())}
       {...props}
     />
   );

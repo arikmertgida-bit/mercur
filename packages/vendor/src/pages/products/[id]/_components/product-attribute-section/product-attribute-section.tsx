@@ -254,11 +254,6 @@ export const ProductAttributeSection = ({
                   to: "attributes/add",
                   icon: <Plus />,
                 },
-                {
-                  label: t("products.create.attributes.createNew"),
-                  to: "attributes/create",
-                  icon: <PencilSquare />,
-                },
               ],
             },
           ]}
