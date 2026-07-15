@@ -21,7 +21,10 @@ const SUPPORTED_FORMATS_FILE_EXTENSIONS = ['.jpeg', '.png', '.webp', '.heic', '.
 export const UploadMediaFormItem = ({
   form,
   append,
-  showHint = true
+  showHint = true,
+  maxCount,
+  existingCount = 0,
+  onLimitExceeded
 }: {
   form:
     | UseFormReturn<ProductCreateSchemaType>
@@ -29,6 +32,13 @@ export const UploadMediaFormItem = ({
     | UseFormReturn<z.infer<typeof EditStoreSchema>>;
   append: (value: Media) => void;
   showHint?: boolean;
+  /** When set, caps how many files `onUploaded` will append in total
+   * (`existingCount` already-present + newly selected). Files beyond the
+   * cap are discarded and reported via `onLimitExceeded` instead of being
+   * silently dropped. Omit to leave uploads uncapped (existing behavior). */
+  maxCount?: number;
+  existingCount?: number;
+  onLimitExceeded?: (skippedCount: number) => void;
 }) => {
   const { t } = useTranslation();
 
@@ -74,9 +84,24 @@ export const UploadMediaFormItem = ({
         return;
       }
 
-      files.forEach(f => append({ ...f, isThumbnail: false }));
+      const availableSlots =
+        maxCount === undefined
+          ? files.length
+          : Math.max(0, maxCount - existingCount);
+      const filesToAppend = files.slice(0, availableSlots);
+      const skippedFiles = files.slice(availableSlots);
+
+      // Previews are created eagerly via `URL.createObjectURL` in
+      // FileUpload — revoke the ones we're discarding so they don't leak.
+      skippedFiles.forEach(f => URL.revokeObjectURL(f.url));
+
+      filesToAppend.forEach(f => append({ ...f, isThumbnail: false }));
+
+      if (skippedFiles.length > 0) {
+        onLimitExceeded?.(skippedFiles.length);
+      }
     },
-    [form, append, hasInvalidFiles]
+    [form, append, hasInvalidFiles, maxCount, existingCount, onLimitExceeded]
   );
 
   return (

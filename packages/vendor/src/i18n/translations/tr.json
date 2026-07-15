@@ -169,11 +169,7 @@
     "export": "Dışa Aktar",
     "import": "İçe Aktar",
     "cannotUndo": "Bu işlem geri alınamaz",
-    "saveChanges": "Değişiklikleri kaydet",
-    "saveAndClose": "Kaydet ve kapat",
-    "request": "Talep",
-    "editVariantImages": "Varyant görsellerini düzenle",
-    "editImages": "Görselleri düzenle"
+    "ok": "Tamam"
   },
   "operators": {
     "in": "İçinde"
@@ -492,14 +488,11 @@
         "options": "Lütfen en az bir seçenek oluşturun.",
         "uniqueSku": "SKU benzersiz olmalıdır.",
         "requiredAttribute": "This attribute is required.",
-        "primaryCategoryRequired": "Birincil kategori zorunludur",
-        "categoryRequired": "Lütfen bir kategori seçin",
-        "titleRequired": "Başlık zorunludur",
-        "handleInvalidFormat": "Handle yalnızca küçük harf, rakam ve tire içermelidir",
-        "handleMustContainLetter": "Handle en az bir harf içermelidir",
-        "requiredAttributeSelect": "Bu özellik pazar yeri tarafından zorunlu kılınmıştır. Lütfen bir değer seçin.",
-        "requiredAttributeEnter": "Bu özellik pazar yeri tarafından zorunlu kılınmıştır. Lütfen bir değer girin.",
-        "requiredAttributeMultiSelect": "Bu özellik pazar yeri tarafından zorunlu kılınmıştır. Lütfen en az bir değer seçin."
+        "shippingProfileRequired": "Lütfen bir kargo profili seçin.",
+        "priceRequired": "Lütfen bu varyant için en az bir para biriminde fiyat girin.",
+        "stockRequired": "Lütfen bu varyant için en az bir lokasyonda stok miktarı girin.",
+        "mediaRequired": "Lütfen bu varyant için en az bir görsel ekleyin.",
+        "formIncomplete": "Eksik alanlar var — yayınlamadan önce işaretli satırları kontrol edin."
       },
       "variants": {
         "header": "Varyantlar",
@@ -656,16 +649,10 @@
         "variantDescription": "Bu varyantın görseli yok. Varyanta görsel ekleyin."
       },
       "successToast": "Medya başarıyla güncellendi.",
-      "manageImageVariants": "İlişkili varyantları yönet",
-      "fileTooLarge": "Bir veya daha fazla dosya {{size}} olan maksimum dosya boyutunu aşıyor: {{name}}",
-      "variantImages": "Varyant görselleri",
-      "showAvailableImages": "Mevcut görselleri göster",
-      "availableImages": "Görselleri seç",
-      "selectToAdd": "Varyanta ürün görselleri ekleyin. Yeni görseller eklemek için önce ürüne ekleyin.",
-      "removeSelected": "Seçilenleri Kaldır",
-      "selectImages": "Görselleri Seç",
-      "selectImagesHint": "Bu varyanta eklemek için görsellere tıklayın.",
-      "editLabel": "Düzenle"
+      "limitExceeded": {
+        "title": "Görsel yükleme sınırına ulaşıldı",
+        "description": "Bir ürüne en fazla {{max}} görsel yükleyebilirsiniz. İlk {{max}} görsel eklendi, kalanlar atlandı."
+      }
     },
     "discountableHint": "İşaretlenmediğinde, bu ürüne indirim uygulanmayacaktır.",
     "noSalesChannels": "Hiçbir satış kanalında mevcut değil",

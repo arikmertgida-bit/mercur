@@ -23,7 +23,7 @@ import { usePricePreferences } from "@hooks/api/price-preferences"
 
 import { ProductCreateVariantSchema } from "../../constants"
 import { ProductCreateSchemaType } from "../../types"
-import { generateVariantSku } from "../../utils"
+import { generateVariantSku, hasVariantMediaColumn } from "../../utils"
 import {
   ProductCreateVariantMediaDrawer,
   VARIANT_MEDIA_DRAWER_ID,
@@ -205,6 +205,8 @@ const Root = () => {
     defaultValue: [],
   })
 
+  const showMediaColumn = hasVariantMediaColumn(watchedAttributes)
+
   const variantAxes = useMemo(() => {
     return (watchedAttributes ?? [])
       .filter((attr) => attr.use_for_variants && attr.title)
@@ -215,6 +217,7 @@ const Root = () => {
 
   const columns = useColumns({
     variantAxes,
+    showMediaColumn,
     currencies,
     stockLocations: stock_locations as
       | HttpTypes.AdminStockLocation[]
@@ -303,6 +306,7 @@ const columnHelper = createDataGridHelper<VariantRow, ProductCreateSchemaType>()
 
 type ColumnArgs = {
   variantAxes: { title: string }[]
+  showMediaColumn: boolean
   currencies?: string[]
   stockLocations?: HttpTypes.AdminStockLocation[]
   shippingProfiles?: ShippingProfileLite[]
@@ -312,6 +316,7 @@ type ColumnArgs = {
 
 const useColumns = ({
   variantAxes,
+  showMediaColumn,
   currencies = [],
   stockLocations = [],
   shippingProfiles = [],
@@ -396,7 +401,7 @@ const useColumns = ({
       // Only shown once the product actually has variant axes — a
       // single-variant (basit) product's grid stays pixel-identical to
       // today's, no Görsel column at all.
-      ...(variantAxes.length > 0
+      ...(showMediaColumn
         ? [
             columnHelper.column({
               id: "media",
@@ -439,6 +444,7 @@ const useColumns = ({
     ]
   }, [
     variantAxes,
+    showMediaColumn,
     t,
     currencies,
     stockLocations,

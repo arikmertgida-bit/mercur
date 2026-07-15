@@ -651,6 +651,9 @@
         },
         "request": {
           "type": "string"
+        },
+        "ok": {
+          "type": "string"
         }
       },
       "required": [
@@ -701,7 +704,8 @@
         "export",
         "import",
         "cannotUndo",
-        "request"
+        "request",
+        "ok"
       ],
       "additionalProperties": false
     },
@@ -2120,6 +2124,21 @@
                 },
                 "requiredAttributeMultiSelect": {
                   "type": "string"
+                },
+                "shippingProfileRequired": {
+                  "type": "string"
+                },
+                "priceRequired": {
+                  "type": "string"
+                },
+                "stockRequired": {
+                  "type": "string"
+                },
+                "mediaRequired": {
+                  "type": "string"
+                },
+                "formIncomplete": {
+                  "type": "string"
                 }
               },
               "required": [
@@ -2134,7 +2153,12 @@
                 "categoryRequired",
                 "requiredAttributeSelect",
                 "requiredAttributeEnter",
-                "requiredAttributeMultiSelect"
+                "requiredAttributeMultiSelect",
+                "shippingProfileRequired",
+                "priceRequired",
+                "stockRequired",
+                "mediaRequired",
+                "formIncomplete"
               ],
               "additionalProperties": false
             },
@@ -2810,6 +2834,22 @@
             },
             "editLabel": {
               "type": "string"
+            },
+            "limitExceeded": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "title",
+                "description"
+              ],
+              "additionalProperties": false
             }
           },
           "required": [
@@ -2839,7 +2879,8 @@
             "removeSelected",
             "selectImages",
             "selectImagesHint",
-            "editLabel"
+            "editLabel",
+            "limitExceeded"
           ],
           "additionalProperties": false
         },
