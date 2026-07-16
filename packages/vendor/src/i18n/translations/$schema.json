@@ -12905,6 +12905,12 @@
             },
             "uploadBannerHint": {
               "type": "string"
+            },
+            "logoTooSmall": {
+              "type": "string"
+            },
+            "bannerTooSmall": {
+              "type": "string"
             }
           },
           "required": [
@@ -12915,7 +12921,9 @@
             "uploadLogoLabel",
             "uploadLogoHint",
             "uploadBannerLabel",
-            "uploadBannerHint"
+            "uploadBannerHint",
+            "logoTooSmall",
+            "bannerTooSmall"
           ],
           "additionalProperties": false
         },

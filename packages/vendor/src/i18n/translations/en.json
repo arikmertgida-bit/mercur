@@ -3110,7 +3110,9 @@
       "uploadLogoLabel": "Upload logo",
       "uploadLogoHint": "Drag and drop your logo here or click to upload.",
       "uploadBannerLabel": "Upload banner",
-      "uploadBannerHint": "Drag and drop your banner here or click to upload."
+      "uploadBannerHint": "Drag and drop your banner here or click to upload.",
+      "logoTooSmall": "Image is small ({{width}}×{{height}}px). At least {{minWidth}}×{{minHeight}}px is recommended, otherwise it may look blurry.",
+      "bannerTooSmall": "Image is small ({{width}}×{{height}}px). At least {{minWidth}}×{{minHeight}}px is recommended, otherwise it may look blurry."
     },
     "editCompany": {
       "header": "Edit Company"

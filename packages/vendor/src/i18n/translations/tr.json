@@ -2891,7 +2891,9 @@
       "uploadLogoLabel": "Logo yükle",
       "uploadLogoHint": "Logonuzu buraya sürükleyip bırakın veya yüklemek için tıklayın.",
       "uploadBannerLabel": "Banner yükle",
-      "uploadBannerHint": "Banner'ınızı buraya sürükleyip bırakın veya yüklemek için tıklayın."
+      "uploadBannerHint": "Banner'ınızı buraya sürükleyip bırakın veya yüklemek için tıklayın.",
+      "logoTooSmall": "Görsel küçük ({{width}}×{{height}}px). En az {{minWidth}}×{{minHeight}}px önerilir, aksi hâlde bulanık görünebilir.",
+      "bannerTooSmall": "Görsel küçük ({{width}}×{{height}}px). En az {{minWidth}}×{{minHeight}}px önerilir, aksi hâlde bulanık görünebilir."
     },
     "toast": {
       "update": "Mağaza başarıyla güncellendi",
