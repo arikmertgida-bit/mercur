@@ -46,6 +46,13 @@ ENV MINIO_SECRET_ACCESS_KEY=build-placeholder
 ENV MINIO_BUCKET=build-placeholder
 ENV MINIO_REGION=us-east-1
 
+# Same build-time-placeholder treatment for the Meilisearch-backed catalog
+# search lib (src/lib/search/), asserted at config-load time via requireEnv.
+# docker-compose.yml's `environment:` block supplies the real host/key at
+# container start.
+ENV MEILISEARCH_HOST=http://meilisearch:7700
+ENV MEILISEARCH_MASTER_KEY=build-placeholder
+
 # turbo, apps/api'yi build etmeden önce @mercurjs/core gibi workspace
 # bağımlılıklarını (^build) kendi tsconfig'leriyle önce derler — .medusa
 # çıktısı .dockerignore ile context dışı bırakıldığı için bu adım şart.
