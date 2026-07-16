@@ -1,3 +1,4 @@
+import type { Query } from "@medusajs/framework"
 import { ExecArgs } from "@medusajs/framework/types"
 import {
   ContainerRegistrationKeys,
@@ -79,7 +80,7 @@ const ShippingOptionRowSchema = z.object({
 
 export default async function seedOrderForSeller({ container }: ExecArgs) {
   const logger = container.resolve(ContainerRegistrationKeys.LOGGER)
-  const query = container.resolve(ContainerRegistrationKeys.QUERY)
+  const query = container.resolve<Query>(ContainerRegistrationKeys.QUERY)
   const link = container.resolve(ContainerRegistrationKeys.LINK)
   const salesChannelModule = container.resolve(Modules.SALES_CHANNEL)
   const regionModule = container.resolve(Modules.REGION)

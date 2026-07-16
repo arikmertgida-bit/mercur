@@ -22,7 +22,9 @@
         "MINIO_ACCESS_KEY_ID",
         "MINIO_SECRET_ACCESS_KEY",
         "MINIO_BUCKET",
-        "MINIO_REGION"
+        "MINIO_REGION",
+        "MEILISEARCH_HOST",
+        "MEILISEARCH_MASTER_KEY"
       ]
     },
     "lint": {

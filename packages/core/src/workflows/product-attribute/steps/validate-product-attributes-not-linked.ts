@@ -1,3 +1,4 @@
+import { Query } from "@medusajs/framework"
 import { createStep, StepResponse } from "@medusajs/framework/workflows-sdk"
 import { ContainerRegistrationKeys, MedusaError } from "@medusajs/framework/utils"
 
@@ -11,7 +12,7 @@ export const validateProductAttributesNotLinkedStep = createStep(
       return new StepResponse(void 0)
     }
 
-    const query = container.resolve(ContainerRegistrationKeys.QUERY)
+    const query = container.resolve<Query>(ContainerRegistrationKeys.QUERY)
     const { data } = await query.graph({
       entity: "product_attribute_value",
       fields: ["id", "attribute_id", "products.id"],
