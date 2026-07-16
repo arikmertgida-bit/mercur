@@ -91,25 +91,50 @@ export type HydratedCatalogProduct = Omit<CatalogProductRow, 'sellers'> & {
   seller: z.infer<typeof CatalogProductSellerSchema> | null
 }
 
-const BASE_PRODUCT_FIELDS = [
+// Split in two on purpose — see the comment on `hydrateOrderedProducts`
+// below for why these can never be requested in a single `query.graph` call.
+const DECORATION_PRODUCT_FIELDS = [
   '*',
   'images.*',
   'options.*',
   'options.values.*',
-  'variants.*',
-  'variants.options.*',
-  'variants.options.option.*',
-  'variants.prices.*',
   'categories.*',
   'collection.*',
   'tags.*',
   'sellers.*',
 ]
 
+const VARIANT_PRODUCT_FIELDS = [
+  'id',
+  'variants.*',
+  'variants.options.*',
+  'variants.options.option.*',
+  'variants.prices.*',
+]
+
+const ProductVariantsOnlyRowSchema = z.object({
+  id: z.string(),
+  variants: z.array(CatalogProductVariantSchema).nullable().default([]),
+})
+
 // Hydrates Meilisearch hit ids back into full product rows via the DB, in the
 // order Meilisearch returned them (relevance/sort order), dropping any id
 // that no longer resolves. When `pricingContext` is passed, calculated
 // (region/currency-correct) prices are requested too.
+//
+// Deliberately two parallel `query.graph` calls instead of one combined
+// call: requesting `variants.options.option.*` (or `variants.*`) together
+// with the product-level one-to-many relations (`images.*`, `categories.*`,
+// `collection.*`, `tags.*`, `sellers.*`, `options.*`) in a *single* graph
+// query made Medusa's remote-joiner blow up to ~3.3-3.6s for as few as 14
+// products/73 variants — confirmed via a real production timing script,
+// reproduced with and without `calculated_price` (so it's not a pricing
+// cost), and confirmed to disappear (~130-170ms per call, ~170ms total run
+// in parallel) the moment the variant-relation fields and the product
+// decoration fields are requested in separate calls. This was the root
+// cause of the storefront's `/sellers/[handle]` LCP regression after the
+// v2.2.0 rebase (this hydration lib is new in that rebase — see
+// claude-progress.md Session 43/46).
 export async function hydrateOrderedProducts(
   query: Query,
   orderedIds: string[],
@@ -119,20 +144,38 @@ export async function hydrateOrderedProducts(
     return []
   }
 
-  const fields = pricingContext
-    ? [...BASE_PRODUCT_FIELDS, 'variants.calculated_price.*']
-    : BASE_PRODUCT_FIELDS
+  const variantFields = pricingContext
+    ? [...VARIANT_PRODUCT_FIELDS, 'variants.calculated_price.*']
+    : VARIANT_PRODUCT_FIELDS
 
-  const { data: rows } = await query.graph({
-    entity: 'product',
-    fields,
-    filters: { id: orderedIds },
-    ...(pricingContext
-      ? { context: { variants: { calculated_price: pricingContext } } }
-      : {}),
+  const [{ data: decorationRows }, { data: variantRows }] = await Promise.all([
+    query.graph({
+      entity: 'product',
+      fields: DECORATION_PRODUCT_FIELDS,
+      filters: { id: orderedIds },
+    }),
+    query.graph({
+      entity: 'product',
+      fields: variantFields,
+      filters: { id: orderedIds },
+      ...(pricingContext
+        ? { context: { variants: { calculated_price: pricingContext } } }
+        : {}),
+    }),
+  ])
+
+  const variantsById = new Map(
+    parseRows(ProductVariantsOnlyRowSchema, variantRows as object[]).map(
+      (row) => [row.id, row.variants] as const
+    )
+  )
+
+  const mergedRows = (decorationRows as object[]).map((row) => {
+    const { id } = row as { id: string }
+    return { ...row, variants: variantsById.get(id) ?? [] }
   })
 
-  const validRows = parseRows(CatalogProductRowSchema, rows as object[])
+  const validRows = parseRows(CatalogProductRowSchema, mergedRows)
   const rowsById = new Map(validRows.map((row) => [row.id, row] as const))
 
   return orderedIds
