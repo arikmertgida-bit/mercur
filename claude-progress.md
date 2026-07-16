@@ -41,6 +41,90 @@ the root `overrides`. (One incidental React-19 compat cast left in
 
 ---
 
+### Session 43: 2026-07-16 -- v2.2.0-rc.1 -> v2.2.0 (final) rebase, Offers excluded
+
+**Goal.** Rebase `kayi-main` from upstream `v2.2.0-rc.1` onto the real final
+`v2.2.0` tag (26 Kayı commits onto 35 new upstream commits / 218 changed
+files), keeping every Kayı customization behaviorally intact and Offers
+permanently excluded, on a throwaway branch (`upgrade/v2.2.0-final`) pending
+explicit push approval.
+
+**Landed.**
+- `git rebase --rebase-merges --onto v2.2.0 v2.2.0-rc.1 upgrade/v2.2.0-final`
+  completed clean across all 26 commits. Conflicts resolved file-by-file
+  (package.json version bumps, i18n key unions/reverts cross-checked against
+  `kayi-main`'s real final content, `bun.lock` regenerated at the end, and
+  every Offers-touching conflict resolved by keeping the deletion — no
+  `offer_id`, `/vendor/offers`, `/admin/offers`, `/store/offers`, or "Master
+  Product" concept came back anywhere).
+- **Search rebuilt as a self-contained lib**: upstream deleted
+  `@mercurjs/core/modules/search` (Orama default provider + store `/search`
+  route) outright in this range. Our Meilisearch integration
+  (`/store/catalog/products`, `/store/search/suggest`,
+  `/store/sellers/:handle/products`) moved from
+  `apps/api/src/modules/search-providers/meilisearch` (a provider plugged
+  into the now-gone module) to `apps/api/src/lib/search/` — plain functions
+  (`searchProducts`/`indexDocs`/`removeDocs`) backed by a lazy singleton
+  reading `MEILISEARCH_HOST`/`MEILISEARCH_MASTER_KEY` directly, zero Medusa
+  module-system dependency. Dropped the boot-time full-reindex event (only
+  meaningful for the in-memory Orama provider this deployment never used).
+  `meilisearch` bumped 0.47.0 -> ^0.59.0 to match the monorepo; 0.59 is
+  ESM-only and renamed its export, so the client now loads via a dynamic
+  `import('meilisearch')` inside the singleton.
+- **Real bugs found and fixed while getting a fully clean build+deploy**
+  (all pre-existing, none caused by this session's own edits): a stale
+  `@mercurjs/types` pin (`2.2.0-rc.1`) in `packages/dashboard-sdk` resolving
+  `JsonRecord`/`JsonValue` against a pre-upgrade copy; a duplicated
+  `@medusajs/types` in the dependency graph making
+  `payout-stripe-connect`'s `ModuleProvider` export un-inferrable (TS2742,
+  same class of bug as the 2026-07-09 container.resolve incident, fixed the
+  same way — explicit type annotations, not casts) at 5 call sites across
+  `packages/core` and `apps/api`; `turbo.json`'s build task env allowlist
+  missing the two new Meilisearch vars; the Dockerfile needing the same
+  build-time placeholder treatment already used for MinIO; and
+  `offer-cleanup`'s `Migration20260712120000` (hardcoded prod-specific price
+  row deletes) crashing outright on any fresh database instead of no-oping.
+- **CRLF regression, same root cause as 2026-07-10**: `apps/vendor/docker-entrypoint.sh`
+  (+ `scripts/deploy.sh`, `scripts/dev.sh`) had CRLF line endings on disk
+  despite `.gitattributes` correctly declaring `eol=lf` — the git-tracked
+  blob was already correct, only the working-tree checkout was stale.
+  `rm` + `git checkout --` fixed it (no commit needed). Crash-looped
+  `kayi_vendor` with the exact `exec /docker-entrypoint.sh: no such file or
+  directory` symptom until fixed.
+
+**Verified.**
+- `bun run build`: all 14/14 tasks green (fresh `bun install`, no cache).
+- `node scripts/check-constitution.mjs` (root): **0 violations**.
+- Scoped integration tests (`order-edit|product-attribute|product-edit|returns`)
+  against a real throwaway Postgres: 66/73 passing. The 7 remaining failures
+  (`product-edit-draft-delete.spec.ts`, `product-publish-approval.spec.ts`)
+  are a seller-auto-approval timing/failure issue unrelated to search or
+  offers, pre-dates this session (both spec files existed on `kayi-main`
+  before the rebase, `auto-approve-seller.ts` untouched) — flagged, not
+  fixed, out of this session's scope.
+- Real Docker rebuild + redeploy against the live database (backed up first
+  via `pg_dump` to the session scratchpad before touching anything): all 10
+  containers healthy, zero errors in backend logs post-boot. Live-curled
+  `/store/search/suggest`, `/store/catalog/products`,
+  `/store/sellers/:handle/products` — all returning real indexed/hydrated
+  product data. Cart create + add-line-item verified variant-based
+  (`variant_id`, no `offer_id`). Generated route manifest
+  (`packages/cli/routes-manifest.json`) has zero `offer`-matching routes.
+
+**Owed / next.**
+- Two backend bugs flagged in a prior session, deliberately untouched again
+  this session: `packages/core/src/api/admin/sellers/[id]/products/route.ts`
+  order-param 500, and `create-products.ts` never writing the
+  `inventory_item_seller` link.
+- The seller-auto-approval test-timing issue found above (product-edit-draft-delete.spec.ts,
+  product-publish-approval.spec.ts) is a new, real, unrelated finding —
+  needs its own investigation session.
+- Push to `origin/kayi-main` (fork) + root repo submodule pointer commit
+  both still pending explicit user approval — nothing pushed yet, only
+  committed locally on `upgrade/v2.2.0-final`.
+
+---
+
 Landed the **foundation + Slice 1 (Widgets) + Slice 2 (Navigation)** of the
 live SPEC-021 contract, each tracked as its own `passing` sub-spec
 (SPEC-022 widgets, SPEC-023 navigation).
