@@ -1,4 +1,4 @@
-import type { SearchFacets } from '@mercurjs/types'
+import type { SearchFacets } from './search/types'
 
 // Maps the generic SearchFacets shape onto the flat, hardcoded keys the
 // storefront's sidebar (`useMeiliRefinementList`) already reads.

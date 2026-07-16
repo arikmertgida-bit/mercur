@@ -13,6 +13,14 @@ function requireEnv(name: string): string {
   return value
 }
 
+// The Meilisearch-backed catalog search (`/store/catalog/products`,
+// `/store/search/suggest`, `/store/sellers/:handle/products`) lives outside
+// any registered module (see `src/lib/search/`), so nothing else forces these
+// to be present at boot — assert them here instead of failing lazily on the
+// first search request.
+requireEnv('MEILISEARCH_HOST')
+requireEnv('MEILISEARCH_MASTER_KEY')
+
 module.exports = withMercur({
   projectConfig: {
     databaseUrl: process.env.DATABASE_URL,
@@ -100,27 +108,6 @@ module.exports = withMercur({
     },
     {
       resolve: './src/modules/attribute-legacy-cleanup',
-    },
-    // @mercurjs/core's own pluggable search module. Falls back to its built-in
-    // in-memory Orama provider when no Meilisearch instance is configured;
-    // docker-compose already injects MEILISEARCH_HOST/MEILISEARCH_MASTER_KEY
-    // into this container for the real (persistent, horizontally-scalable) path.
-    {
-      resolve: '@mercurjs/core/modules/search',
-      ...(process.env.MEILISEARCH_HOST
-        ? {
-            options: {
-              provider: {
-                resolve: './src/modules/search-providers/meilisearch',
-                id: 'meilisearch',
-                options: {
-                  host: process.env.MEILISEARCH_HOST,
-                  apiKey: process.env.MEILISEARCH_MASTER_KEY,
-                },
-              },
-            },
-          }
-        : {}),
     },
     {
       resolve: '@mercurjs/core/modules/admin-ui',

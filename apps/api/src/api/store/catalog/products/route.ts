@@ -1,14 +1,13 @@
 import { MedusaRequest, MedusaResponse } from '@medusajs/framework/http'
 import type { Query } from '@medusajs/framework'
 import { ContainerRegistrationKeys, QueryContext } from '@medusajs/framework/utils'
-import { MercurModules } from '@mercurjs/types'
-import { SearchModuleService } from '@mercurjs/core/modules/search'
 
 import { hydrateOrderedProducts } from '../../../../lib/catalog-hydration'
 import { toFacetDistribution } from '../../../../lib/facet-distribution'
 import { toStringArray } from '../../../../lib/query-params'
 import { resolveRegionByCountryCode } from '../../../../lib/resolve-region'
-import { MeilisearchProviderFilters } from '../../../../modules/search-providers/meilisearch/types'
+import { searchProducts } from '../../../../lib/search/meilisearch-client'
+import { MeilisearchProviderFilters } from '../../../../lib/search/meilisearch-types'
 import { StoreGetCatalogProductsParamsType } from './validators'
 
 export const GET = async (
@@ -16,7 +15,6 @@ export const GET = async (
   res: MedusaResponse
 ) => {
   const query = req.scope.resolve<Query>(ContainerRegistrationKeys.QUERY)
-  const search = req.scope.resolve<SearchModuleService>(MercurModules.SEARCH)
 
   const {
     limit,
@@ -46,7 +44,7 @@ export const GET = async (
     sort,
   }
 
-  const searchResult = await search.search({
+  const searchResult = await searchProducts({
     q,
     limit,
     offset,

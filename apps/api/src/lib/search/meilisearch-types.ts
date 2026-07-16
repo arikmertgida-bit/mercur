@@ -1,9 +1,4 @@
-import { SearchDoc } from '@mercurjs/types'
-
-export type MeilisearchProviderOptions = {
-  host: string
-  apiKey: string
-}
+import { SearchDoc } from './types'
 
 export type MeilisearchSort =
   | 'price_asc'
@@ -11,8 +6,8 @@ export type MeilisearchSort =
   | 'created_at'
   | 'created_at_asc'
 
-// This provider's own filter contract. `SearchQueryBase.filters` is typed
-// `Record<string, unknown>` upstream — each provider owns its shape.
+// This deployment's own filter contract for `/store/catalog/products`,
+// `/store/search/suggest` and `/store/sellers/:handle/products`.
 export type MeilisearchProviderFilters = {
   type?: string
   seller_handle?: string
@@ -30,7 +25,7 @@ export type MeilisearchProviderFilters = {
 // Attribute handle aliases (English + Turkish) this deployment matches
 // against for the storefront's three fixed sidebar filter axes. The
 // project's attribute system lets admins configure arbitrary handles, so this
-// is a best-effort match, not a guarantee — see service.ts.
+// is a best-effort match, not a guarantee — see meilisearch-client.ts.
 export const SIZE_ATTRIBUTE_HANDLES = new Set(['size', 'beden'])
 export const COLOR_ATTRIBUTE_HANDLES = new Set(['color', 'renk'])
 export const CONDITION_ATTRIBUTE_HANDLES = new Set(['condition', 'durum'])

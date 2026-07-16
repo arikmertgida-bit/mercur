@@ -1,7 +1,7 @@
 import { SubscriberArgs, SubscriberConfig } from '@medusajs/framework'
 import { ContainerRegistrationKeys } from '@medusajs/framework/utils'
 
-import { getProductIdsForSeller, reindexProductsById } from '@mercurjs/core/modules/search'
+import { getProductIdsForSeller, reindexProductsById } from '../lib/search/sync'
 
 // Re-indexing (not deleting) is deliberate: it re-fetches the seller's current
 // status onto every affected product doc, so the provider's own
