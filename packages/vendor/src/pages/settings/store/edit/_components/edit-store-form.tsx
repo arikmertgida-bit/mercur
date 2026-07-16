@@ -72,6 +72,29 @@ const SUPPORTED_FORMATS_FILE_EXTENSIONS = [
   ".svg",
 ];
 
+// Storefront tarafında (`/sellers/[handle]`) uygulanan aynı minimum boyut
+// kuralıyla eşleşir — logo dairesel alanda ~96px'e kadar gösterilir (retina
+// için pay bırakılmıştır), banner tam genişlikte fill+cover ile render edilir.
+const LOGO_MIN_DIMENSIONS = { width: 300, height: 300 };
+const BANNER_MIN_DIMENSIONS = { width: 1200, height: 300 };
+
+const getImageDimensions = (
+  file: File,
+): Promise<{ width: number; height: number }> =>
+  new Promise((resolve, reject) => {
+    const url = URL.createObjectURL(file);
+    const img = new window.Image();
+    img.onload = () => {
+      URL.revokeObjectURL(url);
+      resolve({ width: img.naturalWidth, height: img.naturalHeight });
+    };
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      reject(new Error("Image could not be read."));
+    };
+    img.src = url;
+  });
+
 const stripWebsiteProtocol = (url: string | null | undefined): string =>
   url ? url.replace(/^https?:\/\//i, "") : "";
 
@@ -228,6 +251,31 @@ export const EditStoreForm = ({ seller }: EditStoreFormProps) => {
     [form, t],
   );
 
+  const warnIfTooSmall = useCallback(
+    async (
+      file: File,
+      min: typeof LOGO_MIN_DIMENSIONS,
+      toastKey: "store.edit.logoTooSmall" | "store.edit.bannerTooSmall",
+    ) => {
+      try {
+        const { width, height } = await getImageDimensions(file);
+        if (width < min.width || height < min.height) {
+          toast.warning(
+            t(toastKey, {
+              width,
+              height,
+              minWidth: min.width,
+              minHeight: min.height,
+            }),
+          );
+        }
+      } catch {
+        // Boyut okunamadıysa uyarı gösterilmeden yüklemeye devam edilir
+      }
+    },
+    [t],
+  );
+
   const onLogoUploaded = (files: FileType[]) => {
     form.clearErrors("media");
     if (hasInvalidFiles(files, "media")) {
@@ -235,6 +283,7 @@ export const EditStoreForm = ({ seller }: EditStoreFormProps) => {
     }
 
     form.setValue("media", [{ ...files[0], isThumbnail: false }]);
+    void warnIfTooSmall(files[0].file, LOGO_MIN_DIMENSIONS, "store.edit.logoTooSmall");
   };
 
   const onBannerUploaded = (files: FileType[]) => {
@@ -244,6 +293,7 @@ export const EditStoreForm = ({ seller }: EditStoreFormProps) => {
     }
 
     form.setValue("bannerMedia", [{ ...files[0], isThumbnail: false }]);
+    void warnIfTooSmall(files[0].file, BANNER_MIN_DIMENSIONS, "store.edit.bannerTooSmall");
   };
 
   const currencyCode = seller.currency_code?.toUpperCase() ?? "";
