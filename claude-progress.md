@@ -41,6 +41,70 @@ the root `overrides`. (One incidental React-19 compat cast left in
 
 ---
 
+### Session 44: 2026-07-16 -- post-v2.2.0 bug sweep (Session 43's 4 owed items)
+
+**Goal.** Root-cause and permanently fix the 4 items Session 43 left owed:
+admin seller-products sort 500, missing `inventory_item_seller` link,
+seller-auto-approve test race, duplicate i18n keys. Branch
+`fix/post-v220-bug-sweep` off `kayi-main`, pending explicit push approval.
+
+**Landed.**
+- `packages/core/src/api/admin/sellers/[id]/products/route.ts`: moved
+  `pagination` (carries `order`) off the `product_seller` join-entity query
+  onto the real `product` entity query — that mismatch was the 500.
+- `packages/core/src/workflows/inventory-item/steps/associate-sellers-with-inventory-item.ts`
+  (new) + wired into `create-products.ts` right after inventory levels are
+  set: every `manage_inventory:true` variant's auto-created inventory item
+  now gets linked to the product's seller(s). Backfilled the 56 pre-existing
+  production inventory items via a real, compensable workflow call (one-shot
+  `bun medusa exec`, script deleted after) — 0 remaining gaps confirmed.
+- `integration-tests/helpers/create-seller-user.ts`: optional `autoApprove`
+  flag runs the real `approveSellerWorkflow` inline, deterministically,
+  before returning. Opted into only by the 2 previously-failing specs
+  (`product-edit-draft-delete.spec.ts`, `product-publish-approval.spec.ts`).
+  **Tried and reverted** making the approval inline+synchronous inside
+  `createSellerAccountWorkflow` itself (the architecturally "cleaner" fix) —
+  it collapses the `pending_approval` window ~40 other integration-test
+  files deliberately depend on (confirmed: broke 102/170 tests in
+  `http/seller/*` alone). The event bus (`event-bus-local` and
+  `event-bus-redis` both) is fire-and-forget by design — `emit()` never
+  awaits subscriber completion — so this race is real but the production
+  window is narrow enough (real HTTP round-trip latency) that a test-scoped
+  fix is the right tradeoff over a system-wide behavior change.
+- 28 admin i18n translation files (`ar,bg,bs,cs,de,el,es,fa,fr,he,hu,id,it,
+  ja,ko,lt,mk,mn,nl,pl,ptBR,ro,ru,th,tr,uk,vi,zhCN` — task named only 5,
+  grep found the rest, user approved fixing all): merged (not "picked one")
+  duplicate `views`/`commissions`/`store.scheduledClosure` keys — both
+  copies of each had disjoint, actively-referenced content, so upstream's
+  vanilla v2.2.0 duplication was silently dropping real translation strings
+  at parse time (JS last-key-wins), not just a lint nit.
+
+**Verified.**
+- `bun run build`: 14/14 green.
+- `node scripts/check-constitution.mjs`: 0 violations.
+- `bun run test:integration:http -- "product-edit"`: 23/23 passing (both
+  previously-failing specs included), against a real throwaway Postgres.
+- Full `docker compose build backend admin vendor` + `up -d` against the
+  real production DB: all healthy, live-curled 200s, real store/admin/vendor
+  traffic in backend logs. Inventory-item backfill and the sort fix were
+  live-verified at the query layer (temp `bun medusa exec` scripts against
+  real production data, deleted after) rather than via admin HTTP+JWT, to
+  avoid touching admin credentials.
+
+**Owed / next.**
+- **New finding, not fixed**: `http/seller/admin/seller.spec.ts`,
+  `.../vendor/seller.spec.ts`, `.../store/seller.spec.ts` fail 102/170 on a
+  clean, untouched `kayi-main` baseline (confirmed via `git stash` + re-run)
+  — the same seller-auto-approve race, much wider blast radius, timing/
+  machine-dependent (didn't reproduce in Session 43's environment). Fixing
+  it for real means resolving the same "sync vs. keep pending_approval
+  testable" tension at ~40-file scale — a separate, larger initiative.
+- 4 commits sit on `fix/post-v220-bug-sweep`; not merged into `kayi-main`,
+  not pushed to `origin`, root repo's `mercur` submodule pointer left
+  uncommitted — all pending explicit approval per this task's own gate.
+
+---
+
 ### Session 43: 2026-07-16 -- v2.2.0-rc.1 -> v2.2.0 (final) rebase, Offers excluded
 
 **Goal.** Rebase `kayi-main` from upstream `v2.2.0-rc.1` onto the real final
