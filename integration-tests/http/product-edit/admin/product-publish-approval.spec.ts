@@ -40,6 +40,7 @@ medusaIntegrationTestRunner({
         const a = await createSellerUser(container, {
           email: "publish-seller@test.com",
           name: "Publish Seller",
+          autoApprove: true,
         })
         sellerHeaders = a.headers
       })

@@ -7,7 +7,10 @@ import {
     Modules,
 } from "@medusajs/framework/utils"
 import Scrypt from "scrypt-kdf"
-import { createSellerAccountWorkflow } from "@mercurjs/core/workflows"
+import {
+    approveSellerWorkflow,
+    createSellerAccountWorkflow,
+} from "@mercurjs/core/workflows"
 
 export const vendorHeaders = {
     headers: { "x-medusa-access-token": "test_token" },
@@ -15,7 +18,7 @@ export const vendorHeaders = {
 
 export const createSellerUser = async (
     container: MedusaContainer,
-    options?: { email?: string; name?: string }
+    options?: { email?: string; name?: string; autoApprove?: boolean }
 ) => {
     const email = options?.email ?? "seller@medusa.js"
     const name = options?.name ?? "Test Seller"
@@ -51,6 +54,20 @@ export const createSellerUser = async (
             },
         },
     })
+
+    // New sellers start `pending_approval`; in real usage the
+    // `auto-approve-seller` subscriber flips this to `open` shortly after
+    // the `seller.created` event fires, but that happens on the event bus's
+    // own schedule (fire-and-forget, not awaited by this workflow — see
+    // `event-bus-local`'s `groupOrEmitEvent`). A caller that needs an
+    // already-open seller right away (e.g. to immediately create a vendor
+    // product) can't rely on that timing and must ask for it explicitly
+    // here, via the same real workflow the subscriber runs — not a delay.
+    if (options?.autoApprove) {
+        await approveSellerWorkflow(container).run({
+            input: { seller_id: seller.id },
+        })
+    }
 
     const query = container.resolve(ContainerRegistrationKeys.QUERY)
 
