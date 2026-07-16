@@ -13,13 +13,12 @@ export const GET = async (
 ) => {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY);
 
-  const { data: sellerProducts, metadata } = await query.graph({
+  const { data: sellerProducts } = await query.graph({
     entity: "product_seller",
     fields: ["product_id"],
     filters: {
       seller_id: req.params.id,
     },
-    pagination: req.queryConfig.pagination,
   });
 
   const productIds = sellerProducts.map((entry) => entry.product_id);
@@ -28,18 +27,19 @@ export const GET = async (
     return res.json({
       products: [],
       count: 0,
-      offset: metadata?.skip ?? 0,
-      limit: metadata?.take ?? 0,
+      offset: req.queryConfig.pagination?.skip ?? 0,
+      limit: req.queryConfig.pagination?.take ?? 0,
     });
   }
 
-  const { data: products } = await query.graph({
+  const { data: products, metadata } = await query.graph({
     entity: "product",
     fields: req.queryConfig.fields,
     filters: {
       ...req.filterableFields,
       id: productIds,
     },
+    pagination: req.queryConfig.pagination,
   });
 
   res.json({
