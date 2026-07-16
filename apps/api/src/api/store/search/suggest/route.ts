@@ -1,11 +1,10 @@
 import { MedusaRequest, MedusaResponse } from '@medusajs/framework/http'
 import type { Query } from '@medusajs/framework'
 import { ContainerRegistrationKeys } from '@medusajs/framework/utils'
-import { MercurModules } from '@mercurjs/types'
-import { SearchModuleService } from '@mercurjs/core/modules/search'
 
 import { hydrateOrderedProducts } from '../../../../lib/catalog-hydration'
 import { getPopularCategoryNames } from '../../../../lib/popular-categories'
+import { searchProducts } from '../../../../lib/search/meilisearch-client'
 import { StoreGetSearchSuggestParamsType } from './validators'
 
 export const GET = async (
@@ -13,7 +12,6 @@ export const GET = async (
   res: MedusaResponse
 ) => {
   const query = req.scope.resolve<Query>(ContainerRegistrationKeys.QUERY)
-  const search = req.scope.resolve<SearchModuleService>(MercurModules.SEARCH)
 
   const { q, limit } = req.validatedQuery
   const trimmedQuery = q?.trim() ?? ''
@@ -23,7 +21,7 @@ export const GET = async (
     return res.json({ products: [], popular_categories: popularCategories })
   }
 
-  const searchResult = await search.search({
+  const searchResult = await searchProducts({
     q: trimmedQuery,
     limit,
     offset: 0,

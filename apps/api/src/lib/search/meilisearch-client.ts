@@ -1,15 +1,5 @@
 import { MeiliSearch } from 'meilisearch'
 
-import { AbstractSearchProvider } from '@mercurjs/core/modules/search'
-import {
-  SearchDoc,
-  SearchFacetAttribute,
-  SearchFacetValue,
-  SearchFacets,
-  SearchQueryBase,
-  SearchResults,
-} from '@mercurjs/types'
-
 import {
   COLOR_ATTRIBUTE_HANDLES,
   CONDITION_ATTRIBUTE_HANDLES,
@@ -18,10 +8,17 @@ import {
   escapeMeiliFilterValue,
   MeilisearchIndexedDoc,
   MeilisearchProviderFilters,
-  MeilisearchProviderOptions,
   MeilisearchSort,
   meiliValueList,
   SIZE_ATTRIBUTE_HANDLES,
+} from './meilisearch-types'
+import {
+  SearchDoc,
+  SearchFacetAttribute,
+  SearchFacetValue,
+  SearchFacets,
+  SearchQueryBase,
+  SearchResults,
 } from './types'
 
 const PRODUCT_INDEX = 'products'
@@ -68,27 +65,13 @@ function mapSort(sort: MeilisearchSort | undefined): string[] | undefined {
   }
 }
 
-export class MeilisearchSearchProvider extends AbstractSearchProvider {
-  static identifier = 'search-meilisearch'
-
+class MeilisearchProductIndex {
   private readonly client_: MeiliSearch
   private readonly productIndex_: ReturnType<MeiliSearch['index']>
   private settingsApplied_ = false
 
-  constructor(_cradle: Record<string, unknown>, options: MeilisearchProviderOptions) {
-    super()
-    if (!options?.host || !options?.apiKey) {
-      const missing = [
-        !options?.host && 'host',
-        !options?.apiKey && 'apiKey',
-      ]
-        .filter(Boolean)
-        .join(', ')
-      throw new Error(
-        `[search-meilisearch provider] Missing required option(s): ${missing}`
-      )
-    }
-    this.client_ = new MeiliSearch({ host: options.host, apiKey: options.apiKey })
+  constructor(host: string, apiKey: string) {
+    this.client_ = new MeiliSearch({ host, apiKey })
     this.productIndex_ = this.client_.index(PRODUCT_INDEX)
   }
 
@@ -299,4 +282,31 @@ export class MeilisearchSearchProvider extends AbstractSearchProvider {
   }
 }
 
-export default MeilisearchSearchProvider
+let singleton: MeilisearchProductIndex | null = null
+
+function getProductIndex(): MeilisearchProductIndex {
+  if (singleton) {
+    return singleton
+  }
+  const host = process.env.MEILISEARCH_HOST
+  const apiKey = process.env.MEILISEARCH_MASTER_KEY
+  if (!host || !apiKey) {
+    throw new Error(
+      '[search] Missing required environment variable(s): MEILISEARCH_HOST, MEILISEARCH_MASTER_KEY'
+    )
+  }
+  singleton = new MeilisearchProductIndex(host, apiKey)
+  return singleton
+}
+
+export async function indexDocs(docs: SearchDoc[]): Promise<void> {
+  return getProductIndex().index(docs)
+}
+
+export async function removeDocs(ids: string[]): Promise<void> {
+  return getProductIndex().remove(ids)
+}
+
+export async function searchProducts(query: SearchQueryBase): Promise<SearchResults> {
+  return getProductIndex().search(query)
+}

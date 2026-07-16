@@ -1,7 +1,7 @@
 import { SubscriberArgs, SubscriberConfig } from '@medusajs/framework'
 import { ContainerRegistrationKeys } from '@medusajs/framework/utils'
 
-import { reindexProductsById } from '@mercurjs/core/modules/search'
+import { reindexProductsById } from '../lib/search/sync'
 
 export default async function searchSyncProductChangedHandler({
   event,

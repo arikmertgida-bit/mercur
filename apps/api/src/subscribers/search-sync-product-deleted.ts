@@ -1,7 +1,7 @@
 import { SubscriberArgs, SubscriberConfig } from '@medusajs/framework'
 import { ContainerRegistrationKeys } from '@medusajs/framework/utils'
 
-import { removeProducts } from '@mercurjs/core/modules/search'
+import { removeProducts } from '../lib/search/sync'
 
 export default async function searchSyncProductDeletedHandler({
   event,
@@ -10,7 +10,7 @@ export default async function searchSyncProductDeletedHandler({
   const logger = container.resolve(ContainerRegistrationKeys.LOGGER)
 
   try {
-    await removeProducts(container, [event.data.id])
+    await removeProducts([event.data.id])
   } catch (error) {
     logger.error(
       `Search index removal failed for product ${event.data.id}:`,
