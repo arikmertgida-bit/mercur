@@ -8,6 +8,38 @@
       "updateFailed": "ビューの更新に失敗しました",
       "deleted": "ビューを削除しました",
       "deleteFailed": "ビューの削除に失敗しました"
+    },
+    "save": "保存",
+    "saveAsNew": "新しいビューとして保存",
+    "saveAsSystemDefault": "システムのデフォルトとして保存",
+    "updateDefaultForEveryone": "全員のデフォルトを更新",
+    "updateViewName": "ビューを更新",
+    "updateNamed": "「{{name}}」を更新",
+    "prompts": {
+      "updateDefault": {
+        "title": "デフォルトビューを更新",
+        "description": "すべてのユーザーのデフォルトビューが更新されます。よろしいですか？",
+        "confirmText": "全員に反映",
+        "cancelText": "キャンセル"
+      },
+      "updateView": {
+        "title": "ビューを更新",
+        "description": "「{{name}}」を更新してもよろしいですか？",
+        "confirmText": "更新",
+        "cancelText": "キャンセル"
+      },
+      "saveAsDefault": {
+        "title": "システムのデフォルトとして保存",
+        "description": "現在の設定がシステムのデフォルトとして保存されます。個人用ビューを持たないユーザーには、この設定がデフォルトで表示されます。よろしいですか？",
+        "confirmText": "デフォルトとして保存",
+        "cancelText": "キャンセル"
+      },
+      "updateExisting": {
+        "title": "既存のビューを更新",
+        "description": "現在の設定で「{{name}}」を更新しますか？",
+        "confirmText": "更新",
+        "cancelText": "キャンセル"
+      }
     }
   },
   "commissions": {
@@ -15,6 +47,100 @@
       "name": "ルール名",
       "attribute": "属性",
       "fee": "手数料"
+    },
+    "domain": "手数料",
+    "create": {
+      "header": "手数料ルールを作成",
+      "details": "詳細",
+      "commission": "手数料",
+      "successToast": "手数料ルールを作成しました。"
+    },
+    "edit": {
+      "header": "手数料ルールを編集",
+      "successToast": "手数料ルールを更新しました。"
+    },
+    "commissionEdit": {
+      "header": "手数料を編集",
+      "successToast": "手数料を更新しました。"
+    },
+    "delete": {
+      "title": "手数料ルールを削除",
+      "description": "手数料ルール {{name}} を削除しようとしています。この操作は元に戻せません。",
+      "successToast": "手数料ルールを削除しました。"
+    },
+    "fields": {
+      "code": "コード",
+      "value": "値",
+      "status": "ステータス",
+      "enabled": "有効",
+      "enabledHint": "この手数料ルールの有効・無効を切り替えます。",
+      "stores": "ストア",
+      "productTypes": "商品タイプ",
+      "categories": "カテゴリ",
+      "taxIncluded": "税込",
+      "taxIncludedHint": "チェックすると、税込みの合計金額に対して手数料が計算されます。チェックしない場合、税額は除外され全額がストアに渡ります。",
+      "shippingIncluded": "送料込み",
+      "shippingIncludedHint": "チェックすると、送料込みの合計金額に対して手数料が計算されます。チェックしない場合、送料は全額ストアに渡ります。",
+      "type": {
+        "label": "タイプ",
+        "percentage": "プロモーション値",
+        "fixed": "固定",
+        "percentageHint": "注文合計に対する割合で課金します。",
+        "fixedHint": "注文ごとに固定金額を課金します。"
+      },
+      "scopeType": {
+        "label": "タイプ",
+        "store": "ストア",
+        "productType": "商品タイプ",
+        "category": "カテゴリー",
+        "storeProductType": "ストア＋商品タイプ",
+        "storeCategory": "ストア＋カテゴリー",
+        "storeHint": "特定のストアに適用します。",
+        "productTypeHint": "特定の商品タイプに適用します。",
+        "categoryHint": "特定のカテゴリーに適用します。",
+        "storeProductTypeHint": "特定のストア内の商品タイプに適用します。",
+        "storeCategoryHint": "特定のストア内のカテゴリーに適用します。"
+      }
+    },
+    "global": {
+      "title": "グローバル手数料",
+      "code": "コード",
+      "type": "タイプ",
+      "value": "値",
+      "tax": "税金",
+      "shipping": "配送",
+      "included": "手数料に含む",
+      "notIncluded": "手数料に含まない",
+      "edit": {
+        "header": "グローバル手数料を編集",
+        "successToast": "グローバル手数料を更新しました。"
+      }
+    },
+    "rules": {
+      "title": "手数料ルール",
+      "columns": {
+        "rule": "ルール",
+        "scope": "適用範囲",
+        "type": "タイプ",
+        "value": "値",
+        "status": "ステータス"
+      },
+      "empty": {
+        "heading": "手数料ルールがまだありません",
+        "description": "特定のストア、商品タイプ、カテゴリーに対してグローバル手数料を上書きする手数料ルールを作成します。"
+      }
+    },
+    "status": {
+      "enabled": "アクティブ",
+      "disabled": "非アクティブ"
+    },
+    "validation": {
+      "titleRequired": "タイトルを入力してください",
+      "codeRequired": "コードを入力してください",
+      "value": "値を入力してください",
+      "storesRequired": "少なくとも1つのストアを選択してください",
+      "productTypesRequired": "少なくとも1つの商品タイプを選択してください",
+      "categoriesRequired": "少なくとも1つのカテゴリーを選択してください"
     }
   },
   "$schema": "./$schema.json",
@@ -2841,6 +2967,17 @@
       "validation": {
         "closedFromRequired": "閉店開始日を入力してください",
         "closedFromInPast": "閉店開始日を過去の日付にすることはできません"
+      },
+      "header": "休業予定",
+      "edit": {
+        "header": "ストアの休業を予定",
+        "description": "このストアの休業予定日を設定します。",
+        "successToast": "休業予定を更新しました"
+      },
+      "fields": {
+        "closedFrom": "休業開始日",
+        "closedTo": "休業終了日",
+        "closedToHint": "空欄の場合、ストアは無期限に休業状態となります。"
       }
     },
     "domain": "ストア",
@@ -2940,19 +3077,6 @@
         "title": "休業期間がまだありません",
         "message": "このストアには予定された休業期間がありません",
         "action": "作成"
-      }
-    },
-    "scheduledClosure": {
-      "header": "休業予定",
-      "edit": {
-        "header": "ストアの休業を予定",
-        "description": "このストアの休業予定日を設定します。",
-        "successToast": "休業予定を更新しました"
-      },
-      "fields": {
-        "closedFrom": "休業開始日",
-        "closedTo": "休業終了日",
-        "closedToHint": "空欄の場合、ストアは無期限に休業状態となります。"
       }
     }
   },
@@ -3801,40 +3925,6 @@
       "description": "説明"
     }
   },
-  "views": {
-    "save": "保存",
-    "saveAsNew": "新しいビューとして保存",
-    "saveAsSystemDefault": "システムのデフォルトとして保存",
-    "updateDefaultForEveryone": "全員のデフォルトを更新",
-    "updateViewName": "ビューを更新",
-    "updateNamed": "「{{name}}」を更新",
-    "prompts": {
-      "updateDefault": {
-        "title": "デフォルトビューを更新",
-        "description": "すべてのユーザーのデフォルトビューが更新されます。よろしいですか？",
-        "confirmText": "全員に反映",
-        "cancelText": "キャンセル"
-      },
-      "updateView": {
-        "title": "ビューを更新",
-        "description": "「{{name}}」を更新してもよろしいですか？",
-        "confirmText": "更新",
-        "cancelText": "キャンセル"
-      },
-      "saveAsDefault": {
-        "title": "システムのデフォルトとして保存",
-        "description": "現在の設定がシステムのデフォルトとして保存されます。個人用ビューを持たないユーザーには、この設定がデフォルトで表示されます。よろしいですか？",
-        "confirmText": "デフォルトとして保存",
-        "cancelText": "キャンセル"
-      },
-      "updateExisting": {
-        "title": "既存のビューを更新",
-        "description": "現在の設定で「{{name}}」を更新しますか？",
-        "confirmText": "更新",
-        "cancelText": "キャンセル"
-      }
-    }
-  },
   "requests": {
     "domain": "リクエスト",
     "seller": "ストア",
@@ -4008,102 +4098,6 @@
   },
   "commissionLines": {
     "domain": "手数料明細"
-  },
-  "commissions": {
-    "domain": "手数料",
-    "create": {
-      "header": "手数料ルールを作成",
-      "details": "詳細",
-      "commission": "手数料",
-      "successToast": "手数料ルールを作成しました。"
-    },
-    "edit": {
-      "header": "手数料ルールを編集",
-      "successToast": "手数料ルールを更新しました。"
-    },
-    "commissionEdit": {
-      "header": "手数料を編集",
-      "successToast": "手数料を更新しました。"
-    },
-    "delete": {
-      "title": "手数料ルールを削除",
-      "description": "手数料ルール {{name}} を削除しようとしています。この操作は元に戻せません。",
-      "successToast": "手数料ルールを削除しました。"
-    },
-    "fields": {
-      "code": "コード",
-      "value": "値",
-      "status": "ステータス",
-      "enabled": "有効",
-      "enabledHint": "この手数料ルールの有効・無効を切り替えます。",
-      "stores": "ストア",
-      "productTypes": "商品タイプ",
-      "categories": "カテゴリ",
-      "taxIncluded": "税込",
-      "taxIncludedHint": "チェックすると、税込みの合計金額に対して手数料が計算されます。チェックしない場合、税額は除外され全額がストアに渡ります。",
-      "shippingIncluded": "送料込み",
-      "shippingIncludedHint": "チェックすると、送料込みの合計金額に対して手数料が計算されます。チェックしない場合、送料は全額ストアに渡ります。",
-      "type": {
-        "label": "タイプ",
-        "percentage": "プロモーション値",
-        "fixed": "固定",
-        "percentageHint": "注文合計に対する割合で課金します。",
-        "fixedHint": "注文ごとに固定金額を課金します。"
-      },
-      "scopeType": {
-        "label": "タイプ",
-        "store": "ストア",
-        "productType": "商品タイプ",
-        "category": "カテゴリー",
-        "storeProductType": "ストア＋商品タイプ",
-        "storeCategory": "ストア＋カテゴリー",
-        "storeHint": "特定のストアに適用します。",
-        "productTypeHint": "特定の商品タイプに適用します。",
-        "categoryHint": "特定のカテゴリーに適用します。",
-        "storeProductTypeHint": "特定のストア内の商品タイプに適用します。",
-        "storeCategoryHint": "特定のストア内のカテゴリーに適用します。"
-      }
-    },
-    "global": {
-      "title": "グローバル手数料",
-      "code": "コード",
-      "type": "タイプ",
-      "value": "値",
-      "tax": "税金",
-      "shipping": "配送",
-      "included": "手数料に含む",
-      "notIncluded": "手数料に含まない",
-      "edit": {
-        "header": "グローバル手数料を編集",
-        "successToast": "グローバル手数料を更新しました。"
-      }
-    },
-    "rules": {
-      "title": "手数料ルール",
-      "columns": {
-        "rule": "ルール",
-        "scope": "適用範囲",
-        "type": "タイプ",
-        "value": "値",
-        "status": "ステータス"
-      },
-      "empty": {
-        "heading": "手数料ルールがまだありません",
-        "description": "特定のストア、商品タイプ、カテゴリーに対してグローバル手数料を上書きする手数料ルールを作成します。"
-      }
-    },
-    "status": {
-      "enabled": "アクティブ",
-      "disabled": "非アクティブ"
-    },
-    "validation": {
-      "titleRequired": "タイトルを入力してください",
-      "codeRequired": "コードを入力してください",
-      "value": "値を入力してください",
-      "storesRequired": "少なくとも1つのストアを選択してください",
-      "productTypesRequired": "少なくとも1つの商品タイプを選択してください",
-      "categoriesRequired": "少なくとも1つのカテゴリーを選択してください"
-    }
   },
   "commissionRates": {
     "domain": "手数料率",

@@ -8,6 +8,38 @@
       "updateFailed": "Nepodařilo se aktualizovat zobrazení",
       "deleted": "Zobrazení bylo úspěšně smazáno",
       "deleteFailed": "Nepodařilo se smazat zobrazení"
+    },
+    "save": "Uložit",
+    "saveAsNew": "Uložit jako nové zobrazení",
+    "saveAsSystemDefault": "Uložit jako výchozí systémové",
+    "updateDefaultForEveryone": "Aktualizovat výchozí pro všechny",
+    "updateViewName": "Aktualizovat zobrazení",
+    "updateNamed": "Aktualizovat „{{name}}“",
+    "prompts": {
+      "updateDefault": {
+        "title": "Aktualizovat výchozí zobrazení",
+        "description": "Tímto se aktualizuje výchozí zobrazení pro všechny uživatele. Jste si jisti?",
+        "confirmText": "Aktualizovat pro všechny",
+        "cancelText": "Zrušit"
+      },
+      "updateView": {
+        "title": "Aktualizovat zobrazení",
+        "description": "Opravdu chcete aktualizovat „{{name}}“?",
+        "confirmText": "Aktualizovat",
+        "cancelText": "Zrušit"
+      },
+      "saveAsDefault": {
+        "title": "Uložit jako výchozí systémové",
+        "description": "Tímto se aktuální konfigurace uloží jako výchozí systémová. Všichni uživatelé uvidí tuto konfiguraci jako výchozí, pokud nemají vlastní osobní zobrazení. Jste si jisti?",
+        "confirmText": "Uložit jako výchozí",
+        "cancelText": "Zrušit"
+      },
+      "updateExisting": {
+        "title": "Aktualizovat existující zobrazení",
+        "description": "Aktualizovat „{{name}}“ aktuální konfigurací?",
+        "confirmText": "Aktualizovat",
+        "cancelText": "Zrušit"
+      }
     }
   },
   "commissions": {
@@ -15,6 +47,100 @@
       "name": "Název pravidla",
       "attribute": "Atribut",
       "fee": "Poplatek"
+    },
+    "domain": "Provize",
+    "create": {
+      "header": "Vytvořit pravidlo provize",
+      "details": "Detaily",
+      "commission": "Provize",
+      "successToast": "Pravidlo provize bylo úspěšně vytvořeno."
+    },
+    "edit": {
+      "header": "Upravit pravidlo provize",
+      "successToast": "Pravidlo provize bylo úspěšně aktualizováno."
+    },
+    "commissionEdit": {
+      "header": "Upravit provizi",
+      "successToast": "Provize byla úspěšně aktualizována."
+    },
+    "delete": {
+      "title": "Smazat pravidlo provize",
+      "description": "Chystáte se smazat pravidlo provize {{name}}. Tuto akci nelze vrátit zpět.",
+      "successToast": "Pravidlo provize bylo úspěšně smazáno."
+    },
+    "fields": {
+      "code": "Kód",
+      "value": "Hodnota",
+      "status": "Stav",
+      "enabled": "Povoleno",
+      "enabledHint": "Povolte nebo zakažte toto pravidlo provize.",
+      "stores": "Obchody",
+      "productTypes": "Typy produktů",
+      "categories": "Kategorie",
+      "taxIncluded": "Včetně daně",
+      "taxIncludedHint": "Pokud zaškrtnete, provize se počítá z celkové částky včetně daně. Pokud nezaškrtnete, daň je vyloučena a jde celá obchodu.",
+      "shippingIncluded": "Včetně dopravy",
+      "shippingIncludedHint": "Pokud zaškrtnete, provize se počítá z celkové částky včetně dopravy. Pokud nezaškrtnete, poplatky za dopravu jdou celé obchodu.",
+      "type": {
+        "label": "Typ",
+        "percentage": "Hodnota propagace",
+        "fixed": "Pevná",
+        "percentageHint": "Účtujte procento z celkové hodnoty objednávky.",
+        "fixedHint": "Účtujte pevnou částku za objednávku."
+      },
+      "scopeType": {
+        "label": "Typ",
+        "store": "Obchod",
+        "productType": "Typ produktu",
+        "category": "Kategorie",
+        "storeProductType": "Obchod + typ produktu",
+        "storeCategory": "Obchod + kategorie",
+        "storeHint": "Použít na konkrétní obchody.",
+        "productTypeHint": "Použít na konkrétní typy produktů.",
+        "categoryHint": "Použít na konkrétní kategorie.",
+        "storeProductTypeHint": "Použít na typy produktů v konkrétních obchodech.",
+        "storeCategoryHint": "Použít na kategorie v konkrétních obchodech."
+      }
+    },
+    "global": {
+      "title": "Globální provize",
+      "code": "Kód",
+      "type": "Typ",
+      "value": "Hodnota",
+      "tax": "Daň",
+      "shipping": "Doprava",
+      "included": "Zahrnuto v provizi",
+      "notIncluded": "Nezahrnuto v provizi",
+      "edit": {
+        "header": "Upravit globální provizi",
+        "successToast": "Globální provize byla úspěšně aktualizována."
+      }
+    },
+    "rules": {
+      "title": "Pravidla provizí",
+      "columns": {
+        "rule": "Pravidlo",
+        "scope": "Rozsah",
+        "type": "Typ",
+        "value": "Hodnota",
+        "status": "Stav"
+      },
+      "empty": {
+        "heading": "Zatím žádná pravidla provizí",
+        "description": "Vytvořte pravidlo provize, které přepíše globální provizi\npro konkrétní obchody, typy produktů nebo kategorie."
+      }
+    },
+    "status": {
+      "enabled": "Aktivní",
+      "disabled": "Neaktivní"
+    },
+    "validation": {
+      "titleRequired": "Zadejte prosím název",
+      "codeRequired": "Zadejte prosím kód",
+      "value": "Zadejte prosím hodnotu",
+      "storesRequired": "Vyberte prosím alespoň jeden obchod",
+      "productTypesRequired": "Vyberte prosím alespoň jeden typ produktu",
+      "categoriesRequired": "Vyberte prosím alespoň jednu kategorii"
     }
   },
   "$schema": "./$schema.json",
@@ -2837,6 +2963,17 @@
       "validation": {
         "closedFromRequired": "Datum zahájení uzavření je povinné",
         "closedFromInPast": "Datum zahájení uzavření nemůže být v minulosti"
+      },
+      "header": "Plánované uzavření",
+      "edit": {
+        "header": "Naplánovat uzavření obchodu",
+        "description": "Nastavte data plánovaného uzavření tohoto obchodu.",
+        "successToast": "Plánované uzavření bylo aktualizováno"
+      },
+      "fields": {
+        "closedFrom": "Uzavřít od",
+        "closedTo": "Uzavřít do",
+        "closedToHint": "Pokud je prázdné, obchod zůstane uzavřen na neurčito."
       }
     },
     "domain": "Obchod",
@@ -2936,19 +3073,6 @@
         "title": "Zatím žádné volno",
         "message": "Tento obchod nemá naplánované volno",
         "action": "Vytvořit"
-      }
-    },
-    "scheduledClosure": {
-      "header": "Plánované uzavření",
-      "edit": {
-        "header": "Naplánovat uzavření obchodu",
-        "description": "Nastavte data plánovaného uzavření tohoto obchodu.",
-        "successToast": "Plánované uzavření bylo aktualizováno"
-      },
-      "fields": {
-        "closedFrom": "Uzavřít od",
-        "closedTo": "Uzavřít do",
-        "closedToHint": "Pokud je prázdné, obchod zůstane uzavřen na neurčito."
       }
     }
   },
@@ -3796,40 +3920,6 @@
       "description": "Popis"
     }
   },
-  "views": {
-    "save": "Uložit",
-    "saveAsNew": "Uložit jako nové zobrazení",
-    "saveAsSystemDefault": "Uložit jako výchozí systémové",
-    "updateDefaultForEveryone": "Aktualizovat výchozí pro všechny",
-    "updateViewName": "Aktualizovat zobrazení",
-    "updateNamed": "Aktualizovat „{{name}}“",
-    "prompts": {
-      "updateDefault": {
-        "title": "Aktualizovat výchozí zobrazení",
-        "description": "Tímto se aktualizuje výchozí zobrazení pro všechny uživatele. Jste si jisti?",
-        "confirmText": "Aktualizovat pro všechny",
-        "cancelText": "Zrušit"
-      },
-      "updateView": {
-        "title": "Aktualizovat zobrazení",
-        "description": "Opravdu chcete aktualizovat „{{name}}“?",
-        "confirmText": "Aktualizovat",
-        "cancelText": "Zrušit"
-      },
-      "saveAsDefault": {
-        "title": "Uložit jako výchozí systémové",
-        "description": "Tímto se aktuální konfigurace uloží jako výchozí systémová. Všichni uživatelé uvidí tuto konfiguraci jako výchozí, pokud nemají vlastní osobní zobrazení. Jste si jisti?",
-        "confirmText": "Uložit jako výchozí",
-        "cancelText": "Zrušit"
-      },
-      "updateExisting": {
-        "title": "Aktualizovat existující zobrazení",
-        "description": "Aktualizovat „{{name}}“ aktuální konfigurací?",
-        "confirmText": "Aktualizovat",
-        "cancelText": "Zrušit"
-      }
-    }
-  },
   "requests": {
     "domain": "Žádosti",
     "seller": "Obchod",
@@ -4003,102 +4093,6 @@
   },
   "commissionLines": {
     "domain": "Řádky provizí"
-  },
-  "commissions": {
-    "domain": "Provize",
-    "create": {
-      "header": "Vytvořit pravidlo provize",
-      "details": "Detaily",
-      "commission": "Provize",
-      "successToast": "Pravidlo provize bylo úspěšně vytvořeno."
-    },
-    "edit": {
-      "header": "Upravit pravidlo provize",
-      "successToast": "Pravidlo provize bylo úspěšně aktualizováno."
-    },
-    "commissionEdit": {
-      "header": "Upravit provizi",
-      "successToast": "Provize byla úspěšně aktualizována."
-    },
-    "delete": {
-      "title": "Smazat pravidlo provize",
-      "description": "Chystáte se smazat pravidlo provize {{name}}. Tuto akci nelze vrátit zpět.",
-      "successToast": "Pravidlo provize bylo úspěšně smazáno."
-    },
-    "fields": {
-      "code": "Kód",
-      "value": "Hodnota",
-      "status": "Stav",
-      "enabled": "Povoleno",
-      "enabledHint": "Povolte nebo zakažte toto pravidlo provize.",
-      "stores": "Obchody",
-      "productTypes": "Typy produktů",
-      "categories": "Kategorie",
-      "taxIncluded": "Včetně daně",
-      "taxIncludedHint": "Pokud zaškrtnete, provize se počítá z celkové částky včetně daně. Pokud nezaškrtnete, daň je vyloučena a jde celá obchodu.",
-      "shippingIncluded": "Včetně dopravy",
-      "shippingIncludedHint": "Pokud zaškrtnete, provize se počítá z celkové částky včetně dopravy. Pokud nezaškrtnete, poplatky za dopravu jdou celé obchodu.",
-      "type": {
-        "label": "Typ",
-        "percentage": "Hodnota propagace",
-        "fixed": "Pevná",
-        "percentageHint": "Účtujte procento z celkové hodnoty objednávky.",
-        "fixedHint": "Účtujte pevnou částku za objednávku."
-      },
-      "scopeType": {
-        "label": "Typ",
-        "store": "Obchod",
-        "productType": "Typ produktu",
-        "category": "Kategorie",
-        "storeProductType": "Obchod + typ produktu",
-        "storeCategory": "Obchod + kategorie",
-        "storeHint": "Použít na konkrétní obchody.",
-        "productTypeHint": "Použít na konkrétní typy produktů.",
-        "categoryHint": "Použít na konkrétní kategorie.",
-        "storeProductTypeHint": "Použít na typy produktů v konkrétních obchodech.",
-        "storeCategoryHint": "Použít na kategorie v konkrétních obchodech."
-      }
-    },
-    "global": {
-      "title": "Globální provize",
-      "code": "Kód",
-      "type": "Typ",
-      "value": "Hodnota",
-      "tax": "Daň",
-      "shipping": "Doprava",
-      "included": "Zahrnuto v provizi",
-      "notIncluded": "Nezahrnuto v provizi",
-      "edit": {
-        "header": "Upravit globální provizi",
-        "successToast": "Globální provize byla úspěšně aktualizována."
-      }
-    },
-    "rules": {
-      "title": "Pravidla provizí",
-      "columns": {
-        "rule": "Pravidlo",
-        "scope": "Rozsah",
-        "type": "Typ",
-        "value": "Hodnota",
-        "status": "Stav"
-      },
-      "empty": {
-        "heading": "Zatím žádná pravidla provizí",
-        "description": "Vytvořte pravidlo provize, které přepíše globální provizi\npro konkrétní obchody, typy produktů nebo kategorie."
-      }
-    },
-    "status": {
-      "enabled": "Aktivní",
-      "disabled": "Neaktivní"
-    },
-    "validation": {
-      "titleRequired": "Zadejte prosím název",
-      "codeRequired": "Zadejte prosím kód",
-      "value": "Zadejte prosím hodnotu",
-      "storesRequired": "Vyberte prosím alespoň jeden obchod",
-      "productTypesRequired": "Vyberte prosím alespoň jeden typ produktu",
-      "categoriesRequired": "Vyberte prosím alespoň jednu kategorii"
-    }
   },
   "commissionRates": {
     "domain": "Sazby provizí",

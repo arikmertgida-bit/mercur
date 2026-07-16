@@ -8,6 +8,38 @@
       "updateFailed": "Ansicht konnte nicht aktualisiert werden",
       "deleted": "Ansicht erfolgreich gelöscht",
       "deleteFailed": "Ansicht konnte nicht gelöscht werden"
+    },
+    "save": "Speichern",
+    "saveAsNew": "Als neue Ansicht speichern",
+    "saveAsSystemDefault": "Als Systemstandard speichern",
+    "updateDefaultForEveryone": "Standard für alle aktualisieren",
+    "updateViewName": "Ansicht aktualisieren",
+    "updateNamed": "\"{{name}}\" aktualisieren",
+    "prompts": {
+      "updateDefault": {
+        "title": "Standardansicht aktualisieren",
+        "description": "Dies aktualisiert die Standardansicht für alle Benutzer. Sind Sie sicher?",
+        "confirmText": "Für alle aktualisieren",
+        "cancelText": "Abbrechen"
+      },
+      "updateView": {
+        "title": "Ansicht aktualisieren",
+        "description": "Möchten Sie \"{{name}}\" wirklich aktualisieren?",
+        "confirmText": "Aktualisieren",
+        "cancelText": "Abbrechen"
+      },
+      "saveAsDefault": {
+        "title": "Als Systemstandard speichern",
+        "description": "Dies speichert die aktuelle Konfiguration als Systemstandard. Alle Benutzer sehen diese Konfiguration standardmäßig, sofern sie keine eigenen persönlichen Ansichten haben. Sind Sie sicher?",
+        "confirmText": "Als Standard speichern",
+        "cancelText": "Abbrechen"
+      },
+      "updateExisting": {
+        "title": "Vorhandene Ansicht aktualisieren",
+        "description": "\"{{name}}\" mit der aktuellen Konfiguration aktualisieren?",
+        "confirmText": "Aktualisieren",
+        "cancelText": "Abbrechen"
+      }
     }
   },
   "commissions": {
@@ -15,6 +47,100 @@
       "name": "Regelname",
       "attribute": "Attribut",
       "fee": "Gebühr"
+    },
+    "domain": "Provisionen",
+    "create": {
+      "header": "Provisionsregel erstellen",
+      "details": "Einzelheiten",
+      "commission": "Provision",
+      "successToast": "Provisionsregel wurde erfolgreich erstellt."
+    },
+    "edit": {
+      "header": "Provisionsregel bearbeiten",
+      "successToast": "Provisionsregel wurde erfolgreich aktualisiert."
+    },
+    "commissionEdit": {
+      "header": "Provision bearbeiten",
+      "successToast": "Provision wurde erfolgreich aktualisiert."
+    },
+    "delete": {
+      "title": "Provisionsregel löschen",
+      "description": "Sie sind dabei, die Provisionsregel {{name}} zu löschen. Diese Aktion kann nicht rückgängig gemacht werden.",
+      "successToast": "Provisionsregel wurde erfolgreich gelöscht."
+    },
+    "fields": {
+      "code": "Code",
+      "value": "Wert",
+      "status": "Status",
+      "enabled": "Aktiviert",
+      "enabledHint": "Aktivieren oder deaktivieren Sie diese Provisionsregel.",
+      "stores": "Shops",
+      "productTypes": "Produkttypen",
+      "categories": "Kategorien",
+      "taxIncluded": "Steuer inbegriffen",
+      "taxIncludedHint": "Wenn aktiviert, wird die Provision auf den Gesamtbetrag inklusive Steuer berechnet. Wenn nicht aktiviert, wird die Steuer ausgeschlossen und geht vollständig an den Shop.",
+      "shippingIncluded": "Versand inbegriffen",
+      "shippingIncludedHint": "Wenn aktiviert, wird die Provision auf den Gesamtbetrag inklusive Versand berechnet. Wenn nicht aktiviert, gehen die Versandkosten vollständig an den Shop.",
+      "type": {
+        "label": "Typ",
+        "percentage": "Werbewert",
+        "fixed": "Behoben",
+        "percentageHint": "Berechnen Sie einen Prozentsatz der Bestellsumme.",
+        "fixedHint": "Berechnen Sie einen festen Betrag pro Bestellung."
+      },
+      "scopeType": {
+        "label": "Typ",
+        "store": "Shop",
+        "productType": "Produkttyp",
+        "category": "Kategorie",
+        "storeProductType": "Shop + Produkttyp",
+        "storeCategory": "Shop + Kategorie",
+        "storeHint": "Auf bestimmte Shops anwenden.",
+        "productTypeHint": "Auf bestimmte Produkttypen anwenden.",
+        "categoryHint": "Auf bestimmte Kategorien anwenden.",
+        "storeProductTypeHint": "Auf Produkttypen innerhalb bestimmter Shops anwenden.",
+        "storeCategoryHint": "Auf Kategorien innerhalb bestimmter Shops anwenden."
+      }
+    },
+    "global": {
+      "title": "Globale Provision",
+      "code": "Code",
+      "type": "Typ",
+      "value": "Wert",
+      "tax": "Steuer",
+      "shipping": "Versand",
+      "included": "In der Provision enthalten",
+      "notIncluded": "Nicht in der Provision enthalten",
+      "edit": {
+        "header": "Globale Provision bearbeiten",
+        "successToast": "Globale Provision wurde erfolgreich aktualisiert."
+      }
+    },
+    "rules": {
+      "title": "Provisionsregeln",
+      "columns": {
+        "rule": "Regel",
+        "scope": "Geltungsbereich",
+        "type": "Typ",
+        "value": "Wert",
+        "status": "Status"
+      },
+      "empty": {
+        "heading": "Noch keine Provisionsregeln",
+        "description": "Erstellen Sie eine Provisionsregel, um die globale Provision für\nbestimmte Shops, Produkttypen oder Kategorien zu überschreiben."
+      }
+    },
+    "status": {
+      "enabled": "Aktiv",
+      "disabled": "Inaktiv"
+    },
+    "validation": {
+      "titleRequired": "Bitte geben Sie einen Titel ein",
+      "codeRequired": "Bitte geben Sie einen Code ein",
+      "value": "Bitte geben Sie einen Wert ein",
+      "storesRequired": "Bitte wählen Sie mindestens einen Shop aus",
+      "productTypesRequired": "Bitte wählen Sie mindestens einen Produkttyp aus",
+      "categoriesRequired": "Bitte wählen Sie mindestens eine Kategorie aus"
     }
   },
   "$schema": "./$schema.json",
@@ -2841,6 +2967,17 @@
       "validation": {
         "closedFromRequired": "Das Startdatum der Schließung ist erforderlich",
         "closedFromInPast": "Das Startdatum der Schließung darf nicht in der Vergangenheit liegen"
+      },
+      "header": "Geplante Schließung",
+      "edit": {
+        "header": "Shop-Schließung planen",
+        "description": "Konfigurieren Sie die geplanten Schließungstermine für diesen Shop.",
+        "successToast": "Geplante Schließung aktualisiert"
+      },
+      "fields": {
+        "closedFrom": "Schließen ab",
+        "closedTo": "Schließen bis",
+        "closedToHint": "Wenn leer, bleibt der Shop unbegrenzt geschlossen."
       }
     },
     "domain": "Shop",
@@ -2940,19 +3077,6 @@
         "title": "Noch keine Abwesenheit",
         "message": "Dieser Shop hat keine geplante Abwesenheit",
         "action": "Erstellen"
-      }
-    },
-    "scheduledClosure": {
-      "header": "Geplante Schließung",
-      "edit": {
-        "header": "Shop-Schließung planen",
-        "description": "Konfigurieren Sie die geplanten Schließungstermine für diesen Shop.",
-        "successToast": "Geplante Schließung aktualisiert"
-      },
-      "fields": {
-        "closedFrom": "Schließen ab",
-        "closedTo": "Schließen bis",
-        "closedToHint": "Wenn leer, bleibt der Shop unbegrenzt geschlossen."
       }
     }
   },
@@ -3801,40 +3925,6 @@
       "description": "Beschreibung"
     }
   },
-  "views": {
-    "save": "Speichern",
-    "saveAsNew": "Als neue Ansicht speichern",
-    "saveAsSystemDefault": "Als Systemstandard speichern",
-    "updateDefaultForEveryone": "Standard für alle aktualisieren",
-    "updateViewName": "Ansicht aktualisieren",
-    "updateNamed": "\"{{name}}\" aktualisieren",
-    "prompts": {
-      "updateDefault": {
-        "title": "Standardansicht aktualisieren",
-        "description": "Dies aktualisiert die Standardansicht für alle Benutzer. Sind Sie sicher?",
-        "confirmText": "Für alle aktualisieren",
-        "cancelText": "Abbrechen"
-      },
-      "updateView": {
-        "title": "Ansicht aktualisieren",
-        "description": "Möchten Sie \"{{name}}\" wirklich aktualisieren?",
-        "confirmText": "Aktualisieren",
-        "cancelText": "Abbrechen"
-      },
-      "saveAsDefault": {
-        "title": "Als Systemstandard speichern",
-        "description": "Dies speichert die aktuelle Konfiguration als Systemstandard. Alle Benutzer sehen diese Konfiguration standardmäßig, sofern sie keine eigenen persönlichen Ansichten haben. Sind Sie sicher?",
-        "confirmText": "Als Standard speichern",
-        "cancelText": "Abbrechen"
-      },
-      "updateExisting": {
-        "title": "Vorhandene Ansicht aktualisieren",
-        "description": "\"{{name}}\" mit der aktuellen Konfiguration aktualisieren?",
-        "confirmText": "Aktualisieren",
-        "cancelText": "Abbrechen"
-      }
-    }
-  },
   "requests": {
     "domain": "Anfragen",
     "seller": "Shop",
@@ -4008,102 +4098,6 @@
   },
   "commissionLines": {
     "domain": "Provisionspositionen"
-  },
-  "commissions": {
-    "domain": "Provisionen",
-    "create": {
-      "header": "Provisionsregel erstellen",
-      "details": "Einzelheiten",
-      "commission": "Provision",
-      "successToast": "Provisionsregel wurde erfolgreich erstellt."
-    },
-    "edit": {
-      "header": "Provisionsregel bearbeiten",
-      "successToast": "Provisionsregel wurde erfolgreich aktualisiert."
-    },
-    "commissionEdit": {
-      "header": "Provision bearbeiten",
-      "successToast": "Provision wurde erfolgreich aktualisiert."
-    },
-    "delete": {
-      "title": "Provisionsregel löschen",
-      "description": "Sie sind dabei, die Provisionsregel {{name}} zu löschen. Diese Aktion kann nicht rückgängig gemacht werden.",
-      "successToast": "Provisionsregel wurde erfolgreich gelöscht."
-    },
-    "fields": {
-      "code": "Code",
-      "value": "Wert",
-      "status": "Status",
-      "enabled": "Aktiviert",
-      "enabledHint": "Aktivieren oder deaktivieren Sie diese Provisionsregel.",
-      "stores": "Shops",
-      "productTypes": "Produkttypen",
-      "categories": "Kategorien",
-      "taxIncluded": "Steuer inbegriffen",
-      "taxIncludedHint": "Wenn aktiviert, wird die Provision auf den Gesamtbetrag inklusive Steuer berechnet. Wenn nicht aktiviert, wird die Steuer ausgeschlossen und geht vollständig an den Shop.",
-      "shippingIncluded": "Versand inbegriffen",
-      "shippingIncludedHint": "Wenn aktiviert, wird die Provision auf den Gesamtbetrag inklusive Versand berechnet. Wenn nicht aktiviert, gehen die Versandkosten vollständig an den Shop.",
-      "type": {
-        "label": "Typ",
-        "percentage": "Werbewert",
-        "fixed": "Behoben",
-        "percentageHint": "Berechnen Sie einen Prozentsatz der Bestellsumme.",
-        "fixedHint": "Berechnen Sie einen festen Betrag pro Bestellung."
-      },
-      "scopeType": {
-        "label": "Typ",
-        "store": "Shop",
-        "productType": "Produkttyp",
-        "category": "Kategorie",
-        "storeProductType": "Shop + Produkttyp",
-        "storeCategory": "Shop + Kategorie",
-        "storeHint": "Auf bestimmte Shops anwenden.",
-        "productTypeHint": "Auf bestimmte Produkttypen anwenden.",
-        "categoryHint": "Auf bestimmte Kategorien anwenden.",
-        "storeProductTypeHint": "Auf Produkttypen innerhalb bestimmter Shops anwenden.",
-        "storeCategoryHint": "Auf Kategorien innerhalb bestimmter Shops anwenden."
-      }
-    },
-    "global": {
-      "title": "Globale Provision",
-      "code": "Code",
-      "type": "Typ",
-      "value": "Wert",
-      "tax": "Steuer",
-      "shipping": "Versand",
-      "included": "In der Provision enthalten",
-      "notIncluded": "Nicht in der Provision enthalten",
-      "edit": {
-        "header": "Globale Provision bearbeiten",
-        "successToast": "Globale Provision wurde erfolgreich aktualisiert."
-      }
-    },
-    "rules": {
-      "title": "Provisionsregeln",
-      "columns": {
-        "rule": "Regel",
-        "scope": "Geltungsbereich",
-        "type": "Typ",
-        "value": "Wert",
-        "status": "Status"
-      },
-      "empty": {
-        "heading": "Noch keine Provisionsregeln",
-        "description": "Erstellen Sie eine Provisionsregel, um die globale Provision für\nbestimmte Shops, Produkttypen oder Kategorien zu überschreiben."
-      }
-    },
-    "status": {
-      "enabled": "Aktiv",
-      "disabled": "Inaktiv"
-    },
-    "validation": {
-      "titleRequired": "Bitte geben Sie einen Titel ein",
-      "codeRequired": "Bitte geben Sie einen Code ein",
-      "value": "Bitte geben Sie einen Wert ein",
-      "storesRequired": "Bitte wählen Sie mindestens einen Shop aus",
-      "productTypesRequired": "Bitte wählen Sie mindestens einen Produkttyp aus",
-      "categoriesRequired": "Bitte wählen Sie mindestens eine Kategorie aus"
-    }
   },
   "commissionRates": {
     "domain": "Provisionssätze",

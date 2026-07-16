@@ -8,6 +8,38 @@
       "updateFailed": "Görünüm güncellenemedi",
       "deleted": "Görünüm başarıyla silindi",
       "deleteFailed": "Görünüm silinemedi"
+    },
+    "save": "Kaydet",
+    "saveAsNew": "Yeni görünüm olarak kaydet",
+    "saveAsSystemDefault": "Sistem varsayılanı olarak kaydet",
+    "updateDefaultForEveryone": "Herkes için varsayılanı güncelle",
+    "updateViewName": "Görünümü güncelle",
+    "updateNamed": "\"{{name}}\" güncelle",
+    "prompts": {
+      "updateDefault": {
+        "title": "Varsayılan görünümü güncelle",
+        "description": "Bu işlem tüm kullanıcılar için varsayılan görünümü güncelleyecek. Emin misiniz?",
+        "confirmText": "Herkes için güncelle",
+        "cancelText": "İptal"
+      },
+      "updateView": {
+        "title": "Görünümü güncelle",
+        "description": "\"{{name}}\" öğesini güncellemek istediğinizden emin misiniz?",
+        "confirmText": "Güncelle",
+        "cancelText": "İptal"
+      },
+      "saveAsDefault": {
+        "title": "Sistem varsayılanı olarak kaydet",
+        "description": "Bu işlem mevcut yapılandırmayı sistem varsayılanı olarak kaydedecek. Kendi kişisel görünümleri olmadığı sürece tüm kullanıcılar varsayılan olarak bu yapılandırmayı görecek. Emin misiniz?",
+        "confirmText": "Varsayılan olarak kaydet",
+        "cancelText": "İptal"
+      },
+      "updateExisting": {
+        "title": "Mevcut görünümü güncelle",
+        "description": "\"{{name}}\" mevcut yapılandırma ile güncellensin mi?",
+        "confirmText": "Güncelle",
+        "cancelText": "İptal"
+      }
     }
   },
   "commissions": {
@@ -15,6 +47,100 @@
       "name": "Kural Adı",
       "attribute": "Özellik",
       "fee": "Ücret"
+    },
+    "domain": "Komisyonlar",
+    "create": {
+      "header": "Komisyon Kuralı Oluştur",
+      "details": "Detaylar",
+      "commission": "Komisyon",
+      "successToast": "Komisyon kuralı başarıyla oluşturuldu."
+    },
+    "edit": {
+      "header": "Komisyon Kuralını Düzenle",
+      "successToast": "Komisyon kuralı başarıyla güncellendi."
+    },
+    "commissionEdit": {
+      "header": "Komisyonu Düzenle",
+      "successToast": "Komisyon başarıyla güncellendi."
+    },
+    "delete": {
+      "title": "Komisyon kuralını sil",
+      "description": "{{name}} komisyon kuralını silmek üzeresiniz. Bu işlem geri alınamaz.",
+      "successToast": "Komisyon kuralı başarıyla silindi."
+    },
+    "fields": {
+      "code": "Kod",
+      "value": "Değer",
+      "status": "Durum",
+      "enabled": "Etkin",
+      "enabledHint": "Bu komisyon kuralını etkinleştirin veya devre dışı bırakın.",
+      "stores": "Mağazalar",
+      "productTypes": "Ürün Tipleri",
+      "categories": "Kategoriler",
+      "taxIncluded": "Vergi dahil",
+      "taxIncludedHint": "İşaretlenirse, komisyon vergi dahil toplam üzerinden hesaplanır. İşaretlenmezse, vergi hariç tutulur ve tamamen mağazaya gider.",
+      "shippingIncluded": "Kargo dahil",
+      "shippingIncludedHint": "İşaretlenirse, komisyon kargo dahil toplam üzerinden hesaplanır. İşaretlenmezse, kargo ücretleri tamamen mağazaya gider.",
+      "type": {
+        "label": "Tür",
+        "percentage": "Promosyon Değeri",
+        "fixed": "Sabit",
+        "percentageHint": "Sipariş toplamının bir yüzdesini tahsil edin.",
+        "fixedHint": "Sipariş başına sabit bir tutar tahsil edin."
+      },
+      "scopeType": {
+        "label": "Tür",
+        "store": "Mağaza",
+        "productType": "Ürün Türü",
+        "category": "Kategori",
+        "storeProductType": "Mağaza + Ürün Türü",
+        "storeCategory": "Mağaza + Kategori",
+        "storeHint": "Belirli mağazalara uygula.",
+        "productTypeHint": "Belirli ürün türlerine uygula.",
+        "categoryHint": "Belirli kategorilere uygula.",
+        "storeProductTypeHint": "Belirli mağazalar içindeki ürün türlerine uygula.",
+        "storeCategoryHint": "Belirli mağazalar içindeki kategorilere uygula."
+      }
+    },
+    "global": {
+      "title": "Genel Komisyon",
+      "code": "Kod",
+      "type": "Tür",
+      "value": "Değer",
+      "tax": "Vergi",
+      "shipping": "Teslimat",
+      "included": "Komisyona dahil",
+      "notIncluded": "Komisyona dahil değil",
+      "edit": {
+        "header": "Genel Komisyonu Düzenle",
+        "successToast": "Genel komisyon başarıyla güncellendi."
+      }
+    },
+    "rules": {
+      "title": "Komisyon Kuralları",
+      "columns": {
+        "rule": "Kural",
+        "scope": "Kapsam",
+        "type": "Tür",
+        "value": "Değer",
+        "status": "Durum"
+      },
+      "empty": {
+        "heading": "Henüz komisyon kuralı yok",
+        "description": "Belirli mağazalar, ürün türleri veya kategoriler için\ngenel komisyonu geçersiz kılmak üzere bir komisyon kuralı oluşturun."
+      }
+    },
+    "status": {
+      "enabled": "Aktif",
+      "disabled": "Pasif"
+    },
+    "validation": {
+      "titleRequired": "Lütfen bir başlık girin",
+      "codeRequired": "Lütfen bir kod girin",
+      "value": "Lütfen bir değer girin",
+      "storesRequired": "Lütfen en az bir mağaza seçin",
+      "productTypesRequired": "Lütfen en az bir ürün türü seçin",
+      "categoriesRequired": "Lütfen en az bir kategori seçin"
     }
   },
   "$schema": "./$schema.json",
@@ -2840,6 +2966,17 @@
       "validation": {
         "closedFromRequired": "Kapanış başlangıç tarihi zorunludur",
         "closedFromInPast": "Kapanış başlangıç tarihi geçmişte olamaz"
+      },
+      "header": "Planlanmış Kapanış",
+      "edit": {
+        "header": "Mağaza Kapanışı Planla",
+        "description": "Bu mağaza için planlanmış kapanış tarihlerini yapılandırın.",
+        "successToast": "Planlanmış kapanış güncellendi"
+      },
+      "fields": {
+        "closedFrom": "Kapanış başlangıcı",
+        "closedTo": "Kapanış bitişi",
+        "closedToHint": "Boş bırakılırsa, mağaza süresiz olarak kapalı kalacaktır."
       }
     },
     "domain": "Mağaza",
@@ -2939,19 +3076,6 @@
         "title": "Henüz izin yok",
         "message": "Bu mağazanın planlanmış izni yok",
         "action": "Oluştur"
-      }
-    },
-    "scheduledClosure": {
-      "header": "Planlanmış Kapanış",
-      "edit": {
-        "header": "Mağaza Kapanışı Planla",
-        "description": "Bu mağaza için planlanmış kapanış tarihlerini yapılandırın.",
-        "successToast": "Planlanmış kapanış güncellendi"
-      },
-      "fields": {
-        "closedFrom": "Kapanış başlangıcı",
-        "closedTo": "Kapanış bitişi",
-        "closedToHint": "Boş bırakılırsa, mağaza süresiz olarak kapalı kalacaktır."
       }
     }
   },
@@ -3800,40 +3924,6 @@
       "description": "Açıklama"
     }
   },
-  "views": {
-    "save": "Kaydet",
-    "saveAsNew": "Yeni görünüm olarak kaydet",
-    "saveAsSystemDefault": "Sistem varsayılanı olarak kaydet",
-    "updateDefaultForEveryone": "Herkes için varsayılanı güncelle",
-    "updateViewName": "Görünümü güncelle",
-    "updateNamed": "\"{{name}}\" güncelle",
-    "prompts": {
-      "updateDefault": {
-        "title": "Varsayılan görünümü güncelle",
-        "description": "Bu işlem tüm kullanıcılar için varsayılan görünümü güncelleyecek. Emin misiniz?",
-        "confirmText": "Herkes için güncelle",
-        "cancelText": "İptal"
-      },
-      "updateView": {
-        "title": "Görünümü güncelle",
-        "description": "\"{{name}}\" öğesini güncellemek istediğinizden emin misiniz?",
-        "confirmText": "Güncelle",
-        "cancelText": "İptal"
-      },
-      "saveAsDefault": {
-        "title": "Sistem varsayılanı olarak kaydet",
-        "description": "Bu işlem mevcut yapılandırmayı sistem varsayılanı olarak kaydedecek. Kendi kişisel görünümleri olmadığı sürece tüm kullanıcılar varsayılan olarak bu yapılandırmayı görecek. Emin misiniz?",
-        "confirmText": "Varsayılan olarak kaydet",
-        "cancelText": "İptal"
-      },
-      "updateExisting": {
-        "title": "Mevcut görünümü güncelle",
-        "description": "\"{{name}}\" mevcut yapılandırma ile güncellensin mi?",
-        "confirmText": "Güncelle",
-        "cancelText": "İptal"
-      }
-    }
-  },
   "requests": {
     "domain": "Talepler",
     "seller": "Mağaza",
@@ -4007,102 +4097,6 @@
   },
   "commissionLines": {
     "domain": "Komisyon Satırları"
-  },
-  "commissions": {
-    "domain": "Komisyonlar",
-    "create": {
-      "header": "Komisyon Kuralı Oluştur",
-      "details": "Detaylar",
-      "commission": "Komisyon",
-      "successToast": "Komisyon kuralı başarıyla oluşturuldu."
-    },
-    "edit": {
-      "header": "Komisyon Kuralını Düzenle",
-      "successToast": "Komisyon kuralı başarıyla güncellendi."
-    },
-    "commissionEdit": {
-      "header": "Komisyonu Düzenle",
-      "successToast": "Komisyon başarıyla güncellendi."
-    },
-    "delete": {
-      "title": "Komisyon kuralını sil",
-      "description": "{{name}} komisyon kuralını silmek üzeresiniz. Bu işlem geri alınamaz.",
-      "successToast": "Komisyon kuralı başarıyla silindi."
-    },
-    "fields": {
-      "code": "Kod",
-      "value": "Değer",
-      "status": "Durum",
-      "enabled": "Etkin",
-      "enabledHint": "Bu komisyon kuralını etkinleştirin veya devre dışı bırakın.",
-      "stores": "Mağazalar",
-      "productTypes": "Ürün Tipleri",
-      "categories": "Kategoriler",
-      "taxIncluded": "Vergi dahil",
-      "taxIncludedHint": "İşaretlenirse, komisyon vergi dahil toplam üzerinden hesaplanır. İşaretlenmezse, vergi hariç tutulur ve tamamen mağazaya gider.",
-      "shippingIncluded": "Kargo dahil",
-      "shippingIncludedHint": "İşaretlenirse, komisyon kargo dahil toplam üzerinden hesaplanır. İşaretlenmezse, kargo ücretleri tamamen mağazaya gider.",
-      "type": {
-        "label": "Tür",
-        "percentage": "Promosyon Değeri",
-        "fixed": "Sabit",
-        "percentageHint": "Sipariş toplamının bir yüzdesini tahsil edin.",
-        "fixedHint": "Sipariş başına sabit bir tutar tahsil edin."
-      },
-      "scopeType": {
-        "label": "Tür",
-        "store": "Mağaza",
-        "productType": "Ürün Türü",
-        "category": "Kategori",
-        "storeProductType": "Mağaza + Ürün Türü",
-        "storeCategory": "Mağaza + Kategori",
-        "storeHint": "Belirli mağazalara uygula.",
-        "productTypeHint": "Belirli ürün türlerine uygula.",
-        "categoryHint": "Belirli kategorilere uygula.",
-        "storeProductTypeHint": "Belirli mağazalar içindeki ürün türlerine uygula.",
-        "storeCategoryHint": "Belirli mağazalar içindeki kategorilere uygula."
-      }
-    },
-    "global": {
-      "title": "Genel Komisyon",
-      "code": "Kod",
-      "type": "Tür",
-      "value": "Değer",
-      "tax": "Vergi",
-      "shipping": "Teslimat",
-      "included": "Komisyona dahil",
-      "notIncluded": "Komisyona dahil değil",
-      "edit": {
-        "header": "Genel Komisyonu Düzenle",
-        "successToast": "Genel komisyon başarıyla güncellendi."
-      }
-    },
-    "rules": {
-      "title": "Komisyon Kuralları",
-      "columns": {
-        "rule": "Kural",
-        "scope": "Kapsam",
-        "type": "Tür",
-        "value": "Değer",
-        "status": "Durum"
-      },
-      "empty": {
-        "heading": "Henüz komisyon kuralı yok",
-        "description": "Belirli mağazalar, ürün türleri veya kategoriler için\ngenel komisyonu geçersiz kılmak üzere bir komisyon kuralı oluşturun."
-      }
-    },
-    "status": {
-      "enabled": "Aktif",
-      "disabled": "Pasif"
-    },
-    "validation": {
-      "titleRequired": "Lütfen bir başlık girin",
-      "codeRequired": "Lütfen bir kod girin",
-      "value": "Lütfen bir değer girin",
-      "storesRequired": "Lütfen en az bir mağaza seçin",
-      "productTypesRequired": "Lütfen en az bir ürün türü seçin",
-      "categoriesRequired": "Lütfen en az bir kategori seçin"
-    }
   },
   "commissionRates": {
     "domain": "Komisyon Oranları",

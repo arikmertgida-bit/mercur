@@ -8,6 +8,38 @@
       "updateFailed": "فشل تحديث العرض",
       "deleted": "تم حذف العرض بنجاح",
       "deleteFailed": "فشل حذف العرض"
+    },
+    "save": "حفظ",
+    "saveAsNew": "حفظ كعرض جديد",
+    "saveAsSystemDefault": "حفظ كافتراضي للنظام",
+    "updateDefaultForEveryone": "تحديث الافتراضي للجميع",
+    "updateViewName": "تحديث العرض",
+    "updateNamed": "تحديث \"{{name}}\"",
+    "prompts": {
+      "updateDefault": {
+        "title": "تحديث العرض الافتراضي",
+        "description": "سيؤدي هذا إلى تحديث العرض الافتراضي لجميع المستخدمين. هل أنت متأكد؟",
+        "confirmText": "تحديث للجميع",
+        "cancelText": "إلغاء"
+      },
+      "updateView": {
+        "title": "تحديث العرض",
+        "description": "هل أنت متأكد من رغبتك في تحديث \"{{name}}\"؟",
+        "confirmText": "تحديث",
+        "cancelText": "إلغاء"
+      },
+      "saveAsDefault": {
+        "title": "حفظ كافتراضي للنظام",
+        "description": "سيؤدي هذا إلى حفظ التكوين الحالي كافتراضي للنظام. سيرى جميع المستخدمين هذا التكوين افتراضيًا ما لم يكن لديهم عروض شخصية خاصة بهم. هل أنت متأكد؟",
+        "confirmText": "حفظ كافتراضي",
+        "cancelText": "إلغاء"
+      },
+      "updateExisting": {
+        "title": "تحديث العرض الموجود",
+        "description": "هل تريد تحديث \"{{name}}\" بالتكوين الحالي؟",
+        "confirmText": "تحديث",
+        "cancelText": "إلغاء"
+      }
     }
   },
   "commissions": {
@@ -15,6 +47,100 @@
       "name": "اسم القاعدة",
       "attribute": "السمة",
       "fee": "الرسوم"
+    },
+    "domain": "العمولات",
+    "create": {
+      "header": "إنشاء قاعدة عمولة",
+      "details": "تفاصيل",
+      "commission": "العمولة",
+      "successToast": "تم إنشاء قاعدة العمولة بنجاح."
+    },
+    "edit": {
+      "header": "تعديل قاعدة العمولة",
+      "successToast": "تم تحديث قاعدة العمولة بنجاح."
+    },
+    "commissionEdit": {
+      "header": "تعديل العمولة",
+      "successToast": "تم تحديث العمولة بنجاح."
+    },
+    "delete": {
+      "title": "حذف قاعدة العمولة",
+      "description": "أنت على وشك حذف قاعدة العمولة {{name}}. لا يمكن التراجع عن هذا الإجراء.",
+      "successToast": "تم حذف قاعدة العمولة بنجاح."
+    },
+    "fields": {
+      "code": "الرمز",
+      "value": "قيمة",
+      "status": "الحالة",
+      "enabled": "ممكّن",
+      "enabledHint": "تفعيل أو تعطيل قاعدة العمولة هذه.",
+      "stores": "المتاجر",
+      "productTypes": "أنواع المنتجات",
+      "categories": "الفئات",
+      "taxIncluded": "شامل الضريبة",
+      "taxIncludedHint": "إذا تم التحديد، تُحسب العمولة على الإجمالي شاملاً الضريبة. إذا لم يتم التحديد، تُستبعد الضريبة وتذهب بالكامل إلى المتجر.",
+      "shippingIncluded": "شامل الشحن",
+      "shippingIncludedHint": "إذا تم التحديد، تُحسب العمولة على الإجمالي شاملاً الشحن. إذا لم يتم التحديد، تذهب رسوم الشحن بالكامل إلى المتجر.",
+      "type": {
+        "label": "النوع",
+        "percentage": "قيمة العرض الترويجي",
+        "fixed": "ثابت",
+        "percentageHint": "فرض نسبة مئوية من إجمالي الطلب.",
+        "fixedHint": "فرض مبلغ ثابت لكل طلب."
+      },
+      "scopeType": {
+        "label": "النوع",
+        "store": "متجر",
+        "productType": "نوع المنتج",
+        "category": "الفئة",
+        "storeProductType": "المتجر + نوع المنتج",
+        "storeCategory": "المتجر + الفئة",
+        "storeHint": "التطبيق على متاجر محددة.",
+        "productTypeHint": "التطبيق على أنواع منتجات محددة.",
+        "categoryHint": "التطبيق على فئات محددة.",
+        "storeProductTypeHint": "التطبيق على أنواع المنتجات ضمن متاجر محددة.",
+        "storeCategoryHint": "التطبيق على الفئات ضمن متاجر محددة."
+      }
+    },
+    "global": {
+      "title": "العمولة العامة",
+      "code": "الرمز",
+      "type": "النوع",
+      "value": "قيمة",
+      "tax": "الضريبة",
+      "shipping": "الشحن",
+      "included": "مشمول في العمولة",
+      "notIncluded": "غير مشمول في العمولة",
+      "edit": {
+        "header": "تعديل العمولة العامة",
+        "successToast": "تم تحديث العمولة العامة بنجاح."
+      }
+    },
+    "rules": {
+      "title": "قواعد العمولة",
+      "columns": {
+        "rule": "القاعدة",
+        "scope": "النطاق",
+        "type": "النوع",
+        "value": "قيمة",
+        "status": "الحالة"
+      },
+      "empty": {
+        "heading": "لا توجد قواعد عمولة بعد",
+        "description": "أنشئ قاعدة عمولة لتجاوز العمولة العامة\nلمتاجر أو أنواع منتجات أو فئات محددة."
+      }
+    },
+    "status": {
+      "enabled": "نشط",
+      "disabled": "غير نشط"
+    },
+    "validation": {
+      "titleRequired": "يرجى إدخال عنوان",
+      "codeRequired": "يرجى إدخال رمز",
+      "value": "يرجى إدخال قيمة",
+      "storesRequired": "يرجى اختيار متجر واحد على الأقل",
+      "productTypesRequired": "يرجى اختيار نوع منتج واحد على الأقل",
+      "categoriesRequired": "يرجى اختيار فئة واحدة على الأقل"
     }
   },
   "$schema": "./$schema.json",
@@ -2840,6 +2966,17 @@
       "validation": {
         "closedFromRequired": "تاريخ بدء الإغلاق مطلوب",
         "closedFromInPast": "لا يمكن أن يكون تاريخ بدء الإغلاق في الماضي"
+      },
+      "header": "إغلاق مجدول",
+      "edit": {
+        "header": "جدولة إغلاق المتجر",
+        "description": "قم بتكوين تواريخ الإغلاق المجدولة لهذا المتجر.",
+        "successToast": "تم تحديث الإغلاق المجدول"
+      },
+      "fields": {
+        "closedFrom": "الإغلاق من",
+        "closedTo": "الإغلاق حتى",
+        "closedToHint": "إذا تُرك فارغًا، سيبقى المتجر مغلقًا إلى أجل غير مسمى."
       }
     },
     "domain": "المتجر",
@@ -2939,19 +3076,6 @@
         "title": "لا توجد إجازة بعد",
         "message": "لا يملك هذا المتجر إجازة مجدولة",
         "action": "إنشاء"
-      }
-    },
-    "scheduledClosure": {
-      "header": "إغلاق مجدول",
-      "edit": {
-        "header": "جدولة إغلاق المتجر",
-        "description": "قم بتكوين تواريخ الإغلاق المجدولة لهذا المتجر.",
-        "successToast": "تم تحديث الإغلاق المجدول"
-      },
-      "fields": {
-        "closedFrom": "الإغلاق من",
-        "closedTo": "الإغلاق حتى",
-        "closedToHint": "إذا تُرك فارغًا، سيبقى المتجر مغلقًا إلى أجل غير مسمى."
       }
     }
   },
@@ -3800,40 +3924,6 @@
       "description": "الوصف"
     }
   },
-  "views": {
-    "save": "حفظ",
-    "saveAsNew": "حفظ كعرض جديد",
-    "saveAsSystemDefault": "حفظ كافتراضي للنظام",
-    "updateDefaultForEveryone": "تحديث الافتراضي للجميع",
-    "updateViewName": "تحديث العرض",
-    "updateNamed": "تحديث \"{{name}}\"",
-    "prompts": {
-      "updateDefault": {
-        "title": "تحديث العرض الافتراضي",
-        "description": "سيؤدي هذا إلى تحديث العرض الافتراضي لجميع المستخدمين. هل أنت متأكد؟",
-        "confirmText": "تحديث للجميع",
-        "cancelText": "إلغاء"
-      },
-      "updateView": {
-        "title": "تحديث العرض",
-        "description": "هل أنت متأكد من رغبتك في تحديث \"{{name}}\"؟",
-        "confirmText": "تحديث",
-        "cancelText": "إلغاء"
-      },
-      "saveAsDefault": {
-        "title": "حفظ كافتراضي للنظام",
-        "description": "سيؤدي هذا إلى حفظ التكوين الحالي كافتراضي للنظام. سيرى جميع المستخدمين هذا التكوين افتراضيًا ما لم يكن لديهم عروض شخصية خاصة بهم. هل أنت متأكد؟",
-        "confirmText": "حفظ كافتراضي",
-        "cancelText": "إلغاء"
-      },
-      "updateExisting": {
-        "title": "تحديث العرض الموجود",
-        "description": "هل تريد تحديث \"{{name}}\" بالتكوين الحالي؟",
-        "confirmText": "تحديث",
-        "cancelText": "إلغاء"
-      }
-    }
-  },
   "requests": {
     "domain": "الطلبات",
     "seller": "متجر",
@@ -4007,102 +4097,6 @@
   },
   "commissionLines": {
     "domain": "بنود العمولة"
-  },
-  "commissions": {
-    "domain": "العمولات",
-    "create": {
-      "header": "إنشاء قاعدة عمولة",
-      "details": "تفاصيل",
-      "commission": "العمولة",
-      "successToast": "تم إنشاء قاعدة العمولة بنجاح."
-    },
-    "edit": {
-      "header": "تعديل قاعدة العمولة",
-      "successToast": "تم تحديث قاعدة العمولة بنجاح."
-    },
-    "commissionEdit": {
-      "header": "تعديل العمولة",
-      "successToast": "تم تحديث العمولة بنجاح."
-    },
-    "delete": {
-      "title": "حذف قاعدة العمولة",
-      "description": "أنت على وشك حذف قاعدة العمولة {{name}}. لا يمكن التراجع عن هذا الإجراء.",
-      "successToast": "تم حذف قاعدة العمولة بنجاح."
-    },
-    "fields": {
-      "code": "الرمز",
-      "value": "قيمة",
-      "status": "الحالة",
-      "enabled": "ممكّن",
-      "enabledHint": "تفعيل أو تعطيل قاعدة العمولة هذه.",
-      "stores": "المتاجر",
-      "productTypes": "أنواع المنتجات",
-      "categories": "الفئات",
-      "taxIncluded": "شامل الضريبة",
-      "taxIncludedHint": "إذا تم التحديد، تُحسب العمولة على الإجمالي شاملاً الضريبة. إذا لم يتم التحديد، تُستبعد الضريبة وتذهب بالكامل إلى المتجر.",
-      "shippingIncluded": "شامل الشحن",
-      "shippingIncludedHint": "إذا تم التحديد، تُحسب العمولة على الإجمالي شاملاً الشحن. إذا لم يتم التحديد، تذهب رسوم الشحن بالكامل إلى المتجر.",
-      "type": {
-        "label": "النوع",
-        "percentage": "قيمة العرض الترويجي",
-        "fixed": "ثابت",
-        "percentageHint": "فرض نسبة مئوية من إجمالي الطلب.",
-        "fixedHint": "فرض مبلغ ثابت لكل طلب."
-      },
-      "scopeType": {
-        "label": "النوع",
-        "store": "متجر",
-        "productType": "نوع المنتج",
-        "category": "الفئة",
-        "storeProductType": "المتجر + نوع المنتج",
-        "storeCategory": "المتجر + الفئة",
-        "storeHint": "التطبيق على متاجر محددة.",
-        "productTypeHint": "التطبيق على أنواع منتجات محددة.",
-        "categoryHint": "التطبيق على فئات محددة.",
-        "storeProductTypeHint": "التطبيق على أنواع المنتجات ضمن متاجر محددة.",
-        "storeCategoryHint": "التطبيق على الفئات ضمن متاجر محددة."
-      }
-    },
-    "global": {
-      "title": "العمولة العامة",
-      "code": "الرمز",
-      "type": "النوع",
-      "value": "قيمة",
-      "tax": "الضريبة",
-      "shipping": "الشحن",
-      "included": "مشمول في العمولة",
-      "notIncluded": "غير مشمول في العمولة",
-      "edit": {
-        "header": "تعديل العمولة العامة",
-        "successToast": "تم تحديث العمولة العامة بنجاح."
-      }
-    },
-    "rules": {
-      "title": "قواعد العمولة",
-      "columns": {
-        "rule": "القاعدة",
-        "scope": "النطاق",
-        "type": "النوع",
-        "value": "قيمة",
-        "status": "الحالة"
-      },
-      "empty": {
-        "heading": "لا توجد قواعد عمولة بعد",
-        "description": "أنشئ قاعدة عمولة لتجاوز العمولة العامة\nلمتاجر أو أنواع منتجات أو فئات محددة."
-      }
-    },
-    "status": {
-      "enabled": "نشط",
-      "disabled": "غير نشط"
-    },
-    "validation": {
-      "titleRequired": "يرجى إدخال عنوان",
-      "codeRequired": "يرجى إدخال رمز",
-      "value": "يرجى إدخال قيمة",
-      "storesRequired": "يرجى اختيار متجر واحد على الأقل",
-      "productTypesRequired": "يرجى اختيار نوع منتج واحد على الأقل",
-      "categoriesRequired": "يرجى اختيار فئة واحدة على الأقل"
-    }
   },
   "commissionRates": {
     "domain": "معدلات العمولة",

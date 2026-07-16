@@ -4,6 +4,100 @@
       "name": "Nazwa reguły",
       "attribute": "Atrybut",
       "fee": "Opłata"
+    },
+    "domain": "Prowizje",
+    "create": {
+      "header": "Utwórz regułę prowizji",
+      "details": "Szczegóły",
+      "commission": "Prowizja",
+      "successToast": "Reguła prowizji została pomyślnie utworzona."
+    },
+    "edit": {
+      "header": "Edytuj regułę prowizji",
+      "successToast": "Reguła prowizji została pomyślnie zaktualizowana."
+    },
+    "commissionEdit": {
+      "header": "Edytuj prowizję",
+      "successToast": "Prowizja została pomyślnie zaktualizowana."
+    },
+    "delete": {
+      "title": "Usuń regułę prowizji",
+      "description": "Zamierzasz usunąć regułę prowizji {{name}}. Tej operacji nie można cofnąć.",
+      "successToast": "Reguła prowizji została pomyślnie usunięta."
+    },
+    "fields": {
+      "code": "Kod",
+      "value": "Wartość",
+      "status": "Status",
+      "enabled": "Włączony",
+      "enabledHint": "Włącz lub wyłącz tę regułę prowizji.",
+      "stores": "Sklepy",
+      "productTypes": "Typy Produktów",
+      "categories": "Kategorie",
+      "taxIncluded": "Podatek wliczony",
+      "taxIncludedHint": "Jeśli zaznaczone, prowizja jest naliczana od sumy z podatkiem. Jeśli odznaczone, podatek jest wyłączony i w całości trafia do sklepu.",
+      "shippingIncluded": "Dostawa wliczona",
+      "shippingIncludedHint": "Jeśli zaznaczone, prowizja jest naliczana od sumy z dostawą. Jeśli odznaczone, opłaty za dostawę w całości trafiają do sklepu.",
+      "type": {
+        "label": "Typ",
+        "percentage": "Wartość procentowa",
+        "fixed": "Stała",
+        "percentageHint": "Pobierz procent od wartości zamówienia.",
+        "fixedHint": "Pobierz stałą kwotę za zamówienie."
+      },
+      "scopeType": {
+        "label": "Typ",
+        "store": "Sklep",
+        "productType": "Typ produktu",
+        "category": "Kategoria",
+        "storeProductType": "Sklep + typ produktu",
+        "storeCategory": "Sklep + kategoria",
+        "storeHint": "Zastosuj do określonych sklepów.",
+        "productTypeHint": "Zastosuj do określonych typów produktów.",
+        "categoryHint": "Zastosuj do określonych kategorii.",
+        "storeProductTypeHint": "Zastosuj do typów produktów w określonych sklepach.",
+        "storeCategoryHint": "Zastosuj do kategorii w określonych sklepach."
+      }
+    },
+    "global": {
+      "title": "Prowizja globalna",
+      "code": "Kod",
+      "type": "Typ",
+      "value": "Wartość",
+      "tax": "Podatek",
+      "shipping": "Wysyłka",
+      "included": "Wliczone w prowizję",
+      "notIncluded": "Niewliczone w prowizję",
+      "edit": {
+        "header": "Edytuj prowizję globalną",
+        "successToast": "Prowizja globalna została pomyślnie zaktualizowana."
+      }
+    },
+    "rules": {
+      "title": "Reguły prowizji",
+      "columns": {
+        "rule": "Reguła",
+        "scope": "Zakres",
+        "type": "Typ",
+        "value": "Wartość",
+        "status": "Status"
+      },
+      "empty": {
+        "heading": "Brak reguł prowizji",
+        "description": "Utwórz regułę prowizji, aby zastąpić prowizję globalną\ndla określonych sklepów, typów produktów lub kategorii."
+      }
+    },
+    "status": {
+      "enabled": "Aktywny",
+      "disabled": "Nieaktywna"
+    },
+    "validation": {
+      "titleRequired": "Wprowadź tytuł",
+      "codeRequired": "Wprowadź kod",
+      "value": "Wprowadź wartość",
+      "storesRequired": "Wybierz co najmniej jeden sklep",
+      "productTypesRequired": "Wybierz co najmniej jeden typ produktu",
+      "categoriesRequired": "Wybierz co najmniej jedną kategorię"
     }
   },
   "$schema": "./$schema.json",
@@ -4207,102 +4301,6 @@
     "delete": {
       "description": "Zamierzasz usunąć ofertę {{sku}}. Tej akcji nie można cofnąć.",
       "successToast": "Oferta została usunięta"
-    }
-  },
-  "commissions": {
-    "domain": "Prowizje",
-    "create": {
-      "header": "Utwórz regułę prowizji",
-      "details": "Szczegóły",
-      "commission": "Prowizja",
-      "successToast": "Reguła prowizji została pomyślnie utworzona."
-    },
-    "edit": {
-      "header": "Edytuj regułę prowizji",
-      "successToast": "Reguła prowizji została pomyślnie zaktualizowana."
-    },
-    "commissionEdit": {
-      "header": "Edytuj prowizję",
-      "successToast": "Prowizja została pomyślnie zaktualizowana."
-    },
-    "delete": {
-      "title": "Usuń regułę prowizji",
-      "description": "Zamierzasz usunąć regułę prowizji {{name}}. Tej operacji nie można cofnąć.",
-      "successToast": "Reguła prowizji została pomyślnie usunięta."
-    },
-    "fields": {
-      "code": "Kod",
-      "value": "Wartość",
-      "status": "Status",
-      "enabled": "Włączony",
-      "enabledHint": "Włącz lub wyłącz tę regułę prowizji.",
-      "stores": "Sklepy",
-      "productTypes": "Typy Produktów",
-      "categories": "Kategorie",
-      "taxIncluded": "Podatek wliczony",
-      "taxIncludedHint": "Jeśli zaznaczone, prowizja jest naliczana od sumy z podatkiem. Jeśli odznaczone, podatek jest wyłączony i w całości trafia do sklepu.",
-      "shippingIncluded": "Dostawa wliczona",
-      "shippingIncludedHint": "Jeśli zaznaczone, prowizja jest naliczana od sumy z dostawą. Jeśli odznaczone, opłaty za dostawę w całości trafiają do sklepu.",
-      "type": {
-        "label": "Typ",
-        "percentage": "Wartość procentowa",
-        "fixed": "Stała",
-        "percentageHint": "Pobierz procent od wartości zamówienia.",
-        "fixedHint": "Pobierz stałą kwotę za zamówienie."
-      },
-      "scopeType": {
-        "label": "Typ",
-        "store": "Sklep",
-        "productType": "Typ produktu",
-        "category": "Kategoria",
-        "storeProductType": "Sklep + typ produktu",
-        "storeCategory": "Sklep + kategoria",
-        "storeHint": "Zastosuj do określonych sklepów.",
-        "productTypeHint": "Zastosuj do określonych typów produktów.",
-        "categoryHint": "Zastosuj do określonych kategorii.",
-        "storeProductTypeHint": "Zastosuj do typów produktów w określonych sklepach.",
-        "storeCategoryHint": "Zastosuj do kategorii w określonych sklepach."
-      }
-    },
-    "global": {
-      "title": "Prowizja globalna",
-      "code": "Kod",
-      "type": "Typ",
-      "value": "Wartość",
-      "tax": "Podatek",
-      "shipping": "Wysyłka",
-      "included": "Wliczone w prowizję",
-      "notIncluded": "Niewliczone w prowizję",
-      "edit": {
-        "header": "Edytuj prowizję globalną",
-        "successToast": "Prowizja globalna została pomyślnie zaktualizowana."
-      }
-    },
-    "rules": {
-      "title": "Reguły prowizji",
-      "columns": {
-        "rule": "Reguła",
-        "scope": "Zakres",
-        "type": "Typ",
-        "value": "Wartość",
-        "status": "Status"
-      },
-      "empty": {
-        "heading": "Brak reguł prowizji",
-        "description": "Utwórz regułę prowizji, aby zastąpić prowizję globalną\ndla określonych sklepów, typów produktów lub kategorii."
-      }
-    },
-    "status": {
-      "enabled": "Aktywny",
-      "disabled": "Nieaktywna"
-    },
-    "validation": {
-      "titleRequired": "Wprowadź tytuł",
-      "codeRequired": "Wprowadź kod",
-      "value": "Wprowadź wartość",
-      "storesRequired": "Wybierz co najmniej jeden sklep",
-      "productTypesRequired": "Wybierz co najmniej jeden typ produktu",
-      "categoriesRequired": "Wybierz co najmniej jedną kategorię"
     }
   }
 }

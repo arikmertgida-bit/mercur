@@ -8,6 +8,38 @@
       "updateFailed": "更新视图失败",
       "deleted": "视图已成功删除",
       "deleteFailed": "删除视图失败"
+    },
+    "save": "保存",
+    "saveAsNew": "另存为新视图",
+    "saveAsSystemDefault": "保存为系统默认",
+    "updateDefaultForEveryone": "为所有人更新默认视图",
+    "updateViewName": "更新视图",
+    "updateNamed": "更新“{{name}}”",
+    "prompts": {
+      "updateDefault": {
+        "title": "更新默认视图",
+        "description": "此操作将更新所有用户的默认视图，确定要继续吗？",
+        "confirmText": "为所有人更新",
+        "cancelText": "取消"
+      },
+      "updateView": {
+        "title": "更新视图",
+        "description": "确定要更新“{{name}}”吗？",
+        "confirmText": "更新",
+        "cancelText": "取消"
+      },
+      "saveAsDefault": {
+        "title": "保存为系统默认",
+        "description": "此操作将把当前配置保存为系统默认设置。除非用户有自己的个人视图，否则所有用户默认都将看到此配置。确定要继续吗？",
+        "confirmText": "保存为默认",
+        "cancelText": "取消"
+      },
+      "updateExisting": {
+        "title": "更新现有视图",
+        "description": "是否使用当前配置更新“{{name}}”？",
+        "confirmText": "更新",
+        "cancelText": "取消"
+      }
     }
   },
   "commissions": {
@@ -15,6 +47,100 @@
       "name": "规则名称",
       "attribute": "属性",
       "fee": "费用"
+    },
+    "domain": "佣金",
+    "create": {
+      "header": "创建佣金规则",
+      "details": "详情",
+      "commission": "佣金",
+      "successToast": "佣金规则已成功创建。"
+    },
+    "edit": {
+      "header": "编辑佣金规则",
+      "successToast": "佣金规则已成功更新。"
+    },
+    "commissionEdit": {
+      "header": "编辑佣金",
+      "successToast": "佣金已成功更新。"
+    },
+    "delete": {
+      "title": "删除佣金规则",
+      "description": "您即将删除佣金规则 {{name}}。此操作无法撤销。",
+      "successToast": "佣金规则已成功删除。"
+    },
+    "fields": {
+      "code": "代码",
+      "value": "值",
+      "status": "状态",
+      "enabled": "已启用",
+      "enabledHint": "启用或禁用此佣金规则。",
+      "stores": "店铺",
+      "productTypes": "产品类型",
+      "categories": "分类",
+      "taxIncluded": "含税",
+      "taxIncludedHint": "勾选后，佣金将按含税总额计算；取消勾选后，税额将被排除并全部归店铺所有。",
+      "shippingIncluded": "含运费",
+      "shippingIncludedHint": "勾选后，佣金将按含运费总额计算；取消勾选后，运费将全部归店铺所有。",
+      "type": {
+        "label": "类型",
+        "percentage": "促销价值",
+        "fixed": "固定",
+        "percentageHint": "按订单总额的百分比收取。",
+        "fixedHint": "每笔订单收取固定金额。"
+      },
+      "scopeType": {
+        "label": "类型",
+        "store": "商店",
+        "productType": "商品类型",
+        "category": "分类",
+        "storeProductType": "店铺 + 商品类型",
+        "storeCategory": "店铺 + 分类",
+        "storeHint": "应用于特定店铺。",
+        "productTypeHint": "应用于特定商品类型。",
+        "categoryHint": "应用于特定分类。",
+        "storeProductTypeHint": "应用于特定店铺内的商品类型。",
+        "storeCategoryHint": "应用于特定店铺内的分类。"
+      }
+    },
+    "global": {
+      "title": "全局佣金",
+      "code": "代码",
+      "type": "类型",
+      "value": "值",
+      "tax": "税费",
+      "shipping": "配送",
+      "included": "计入佣金",
+      "notIncluded": "不计入佣金",
+      "edit": {
+        "header": "编辑全局佣金",
+        "successToast": "全局佣金已成功更新。"
+      }
+    },
+    "rules": {
+      "title": "佣金规则",
+      "columns": {
+        "rule": "规则",
+        "scope": "适用范围",
+        "type": "类型",
+        "value": "值",
+        "status": "状态"
+      },
+      "empty": {
+        "heading": "暂无佣金规则",
+        "description": "创建佣金规则，为特定店铺、商品类型或分类\n覆盖全局佣金设置。"
+      }
+    },
+    "status": {
+      "enabled": "活跃",
+      "disabled": "不活跃"
+    },
+    "validation": {
+      "titleRequired": "请输入标题",
+      "codeRequired": "请输入代码",
+      "value": "请输入值",
+      "storesRequired": "请至少选择一个店铺",
+      "productTypesRequired": "请至少选择一个商品类型",
+      "categoriesRequired": "请至少选择一个分类"
     }
   },
   "$schema": "./$schema.json",
@@ -2837,6 +2963,17 @@
       "validation": {
         "closedFromRequired": "必须填写关闭开始日期",
         "closedFromInPast": "关闭开始日期不能是过去的日期"
+      },
+      "header": "计划闭店",
+      "edit": {
+        "header": "安排店铺闭店",
+        "description": "为此店铺设置计划闭店日期。",
+        "successToast": "计划闭店已更新"
+      },
+      "fields": {
+        "closedFrom": "闭店开始",
+        "closedTo": "闭店结束",
+        "closedToHint": "如果留空，店铺将无限期保持关闭状态。"
       }
     },
     "domain": "商店",
@@ -2936,19 +3073,6 @@
         "title": "暂无休店安排",
         "message": "该店铺暂无休店安排",
         "action": "创建"
-      }
-    },
-    "scheduledClosure": {
-      "header": "计划闭店",
-      "edit": {
-        "header": "安排店铺闭店",
-        "description": "为此店铺设置计划闭店日期。",
-        "successToast": "计划闭店已更新"
-      },
-      "fields": {
-        "closedFrom": "闭店开始",
-        "closedTo": "闭店结束",
-        "closedToHint": "如果留空，店铺将无限期保持关闭状态。"
       }
     }
   },
@@ -3796,40 +3920,6 @@
       "description": "描述"
     }
   },
-  "views": {
-    "save": "保存",
-    "saveAsNew": "另存为新视图",
-    "saveAsSystemDefault": "保存为系统默认",
-    "updateDefaultForEveryone": "为所有人更新默认视图",
-    "updateViewName": "更新视图",
-    "updateNamed": "更新“{{name}}”",
-    "prompts": {
-      "updateDefault": {
-        "title": "更新默认视图",
-        "description": "此操作将更新所有用户的默认视图，确定要继续吗？",
-        "confirmText": "为所有人更新",
-        "cancelText": "取消"
-      },
-      "updateView": {
-        "title": "更新视图",
-        "description": "确定要更新“{{name}}”吗？",
-        "confirmText": "更新",
-        "cancelText": "取消"
-      },
-      "saveAsDefault": {
-        "title": "保存为系统默认",
-        "description": "此操作将把当前配置保存为系统默认设置。除非用户有自己的个人视图，否则所有用户默认都将看到此配置。确定要继续吗？",
-        "confirmText": "保存为默认",
-        "cancelText": "取消"
-      },
-      "updateExisting": {
-        "title": "更新现有视图",
-        "description": "是否使用当前配置更新“{{name}}”？",
-        "confirmText": "更新",
-        "cancelText": "取消"
-      }
-    }
-  },
   "requests": {
     "domain": "申请",
     "seller": "商店",
@@ -4003,102 +4093,6 @@
   },
   "commissionLines": {
     "domain": "佣金明细"
-  },
-  "commissions": {
-    "domain": "佣金",
-    "create": {
-      "header": "创建佣金规则",
-      "details": "详情",
-      "commission": "佣金",
-      "successToast": "佣金规则已成功创建。"
-    },
-    "edit": {
-      "header": "编辑佣金规则",
-      "successToast": "佣金规则已成功更新。"
-    },
-    "commissionEdit": {
-      "header": "编辑佣金",
-      "successToast": "佣金已成功更新。"
-    },
-    "delete": {
-      "title": "删除佣金规则",
-      "description": "您即将删除佣金规则 {{name}}。此操作无法撤销。",
-      "successToast": "佣金规则已成功删除。"
-    },
-    "fields": {
-      "code": "代码",
-      "value": "值",
-      "status": "状态",
-      "enabled": "已启用",
-      "enabledHint": "启用或禁用此佣金规则。",
-      "stores": "店铺",
-      "productTypes": "产品类型",
-      "categories": "分类",
-      "taxIncluded": "含税",
-      "taxIncludedHint": "勾选后，佣金将按含税总额计算；取消勾选后，税额将被排除并全部归店铺所有。",
-      "shippingIncluded": "含运费",
-      "shippingIncludedHint": "勾选后，佣金将按含运费总额计算；取消勾选后，运费将全部归店铺所有。",
-      "type": {
-        "label": "类型",
-        "percentage": "促销价值",
-        "fixed": "固定",
-        "percentageHint": "按订单总额的百分比收取。",
-        "fixedHint": "每笔订单收取固定金额。"
-      },
-      "scopeType": {
-        "label": "类型",
-        "store": "商店",
-        "productType": "商品类型",
-        "category": "分类",
-        "storeProductType": "店铺 + 商品类型",
-        "storeCategory": "店铺 + 分类",
-        "storeHint": "应用于特定店铺。",
-        "productTypeHint": "应用于特定商品类型。",
-        "categoryHint": "应用于特定分类。",
-        "storeProductTypeHint": "应用于特定店铺内的商品类型。",
-        "storeCategoryHint": "应用于特定店铺内的分类。"
-      }
-    },
-    "global": {
-      "title": "全局佣金",
-      "code": "代码",
-      "type": "类型",
-      "value": "值",
-      "tax": "税费",
-      "shipping": "配送",
-      "included": "计入佣金",
-      "notIncluded": "不计入佣金",
-      "edit": {
-        "header": "编辑全局佣金",
-        "successToast": "全局佣金已成功更新。"
-      }
-    },
-    "rules": {
-      "title": "佣金规则",
-      "columns": {
-        "rule": "规则",
-        "scope": "适用范围",
-        "type": "类型",
-        "value": "值",
-        "status": "状态"
-      },
-      "empty": {
-        "heading": "暂无佣金规则",
-        "description": "创建佣金规则，为特定店铺、商品类型或分类\n覆盖全局佣金设置。"
-      }
-    },
-    "status": {
-      "enabled": "活跃",
-      "disabled": "不活跃"
-    },
-    "validation": {
-      "titleRequired": "请输入标题",
-      "codeRequired": "请输入代码",
-      "value": "请输入值",
-      "storesRequired": "请至少选择一个店铺",
-      "productTypesRequired": "请至少选择一个商品类型",
-      "categoriesRequired": "请至少选择一个分类"
-    }
   },
   "commissionRates": {
     "domain": "佣金费率",

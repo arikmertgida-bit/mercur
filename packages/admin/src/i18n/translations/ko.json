@@ -8,6 +8,38 @@
       "updateFailed": "보기 업데이트에 실패했습니다",
       "deleted": "보기가 삭제되었습니다",
       "deleteFailed": "보기 삭제에 실패했습니다"
+    },
+    "save": "저장",
+    "saveAsNew": "새 보기로 저장",
+    "saveAsSystemDefault": "시스템 기본값으로 저장",
+    "updateDefaultForEveryone": "모두를 위한 기본값 업데이트",
+    "updateViewName": "보기 업데이트",
+    "updateNamed": "\"{{name}}\" 업데이트",
+    "prompts": {
+      "updateDefault": {
+        "title": "기본 보기 업데이트",
+        "description": "모든 사용자의 기본 보기가 업데이트됩니다. 계속하시겠습니까?",
+        "confirmText": "모두를 위해 업데이트",
+        "cancelText": "취소"
+      },
+      "updateView": {
+        "title": "보기 업데이트",
+        "description": "\"{{name}}\"을(를) 업데이트하시겠습니까?",
+        "confirmText": "업데이트",
+        "cancelText": "취소"
+      },
+      "saveAsDefault": {
+        "title": "시스템 기본값으로 저장",
+        "description": "현재 설정이 시스템 기본값으로 저장됩니다. 개인 보기를 따로 설정하지 않은 모든 사용자는 이 설정을 기본값으로 보게 됩니다. 계속하시겠습니까?",
+        "confirmText": "기본값으로 저장",
+        "cancelText": "취소"
+      },
+      "updateExisting": {
+        "title": "기존 보기 업데이트",
+        "description": "현재 설정으로 \"{{name}}\"을(를) 업데이트하시겠습니까?",
+        "confirmText": "업데이트",
+        "cancelText": "취소"
+      }
     }
   },
   "commissions": {
@@ -15,6 +47,100 @@
       "name": "규칙 이름",
       "attribute": "속성",
       "fee": "수수료"
+    },
+    "domain": "수수료",
+    "create": {
+      "header": "수수료 규칙 생성",
+      "details": "상세 정보",
+      "commission": "수수료",
+      "successToast": "수수료 규칙이 성공적으로 생성되었습니다."
+    },
+    "edit": {
+      "header": "수수료 규칙 편집",
+      "successToast": "수수료 규칙이 성공적으로 업데이트되었습니다."
+    },
+    "commissionEdit": {
+      "header": "수수료 편집",
+      "successToast": "수수료가 성공적으로 업데이트되었습니다."
+    },
+    "delete": {
+      "title": "수수료 규칙 삭제",
+      "description": "수수료 규칙 {{name}}을(를) 삭제하려고 합니다. 이 작업은 되돌릴 수 없습니다.",
+      "successToast": "수수료 규칙이 성공적으로 삭제되었습니다."
+    },
+    "fields": {
+      "code": "코드",
+      "value": "값",
+      "status": "상태",
+      "enabled": "활성화됨",
+      "enabledHint": "이 수수료 규칙을 활성화하거나 비활성화하세요.",
+      "stores": "스토어",
+      "productTypes": "제품 유형",
+      "categories": "카테고리",
+      "taxIncluded": "세금 포함",
+      "taxIncludedHint": "선택하면 세금을 포함한 총액을 기준으로 수수료가 계산됩니다. 선택 해제하면 세금은 제외되어 전액 스토어에 귀속됩니다.",
+      "shippingIncluded": "배송비 포함",
+      "shippingIncludedHint": "선택하면 배송비를 포함한 총액을 기준으로 수수료가 계산됩니다. 선택 해제하면 배송비는 전액 스토어에 귀속됩니다.",
+      "type": {
+        "label": "유형",
+        "percentage": "퍼센트",
+        "fixed": "고정",
+        "percentageHint": "주문 총액의 일정 비율을 청구합니다.",
+        "fixedHint": "주문당 고정 금액을 청구합니다."
+      },
+      "scopeType": {
+        "label": "유형",
+        "store": "스토어",
+        "productType": "상품 유형",
+        "category": "카테고리",
+        "storeProductType": "스토어 + 상품 유형",
+        "storeCategory": "스토어 + 카테고리",
+        "storeHint": "특정 스토어에 적용합니다.",
+        "productTypeHint": "특정 상품 유형에 적용합니다.",
+        "categoryHint": "특정 카테고리에 적용합니다.",
+        "storeProductTypeHint": "특정 스토어 내 상품 유형에 적용합니다.",
+        "storeCategoryHint": "특정 스토어 내 카테고리에 적용합니다."
+      }
+    },
+    "global": {
+      "title": "전역 수수료",
+      "code": "코드",
+      "type": "유형",
+      "value": "값",
+      "tax": "세금",
+      "shipping": "배송",
+      "included": "수수료에 포함됨",
+      "notIncluded": "수수료에 포함되지 않음",
+      "edit": {
+        "header": "전역 수수료 편집",
+        "successToast": "전역 수수료가 성공적으로 업데이트되었습니다."
+      }
+    },
+    "rules": {
+      "title": "수수료 규칙",
+      "columns": {
+        "rule": "규칙",
+        "scope": "범위",
+        "type": "유형",
+        "value": "값",
+        "status": "상태"
+      },
+      "empty": {
+        "heading": "아직 수수료 규칙이 없습니다",
+        "description": "특정 스토어, 상품 유형 또는 카테고리에 대해\n전역 수수료를 재정의할 수수료 규칙을 생성하세요."
+      }
+    },
+    "status": {
+      "enabled": "활성",
+      "disabled": "비활성"
+    },
+    "validation": {
+      "titleRequired": "제목을 입력해 주세요",
+      "codeRequired": "코드를 입력해 주세요",
+      "value": "값을 입력해 주세요",
+      "storesRequired": "하나 이상의 스토어를 선택해 주세요",
+      "productTypesRequired": "하나 이상의 상품 유형을 선택해 주세요",
+      "categoriesRequired": "하나 이상의 카테고리를 선택해 주세요"
     }
   },
   "$schema": "./$schema.json",
@@ -2837,6 +2963,17 @@
       "validation": {
         "closedFromRequired": "휴무 시작일을 입력해야 합니다",
         "closedFromInPast": "휴무 시작일은 과거 날짜로 설정할 수 없습니다"
+      },
+      "header": "예정된 휴점",
+      "edit": {
+        "header": "스토어 휴점 예약",
+        "description": "이 스토어의 예정된 휴점 날짜를 설정하세요.",
+        "successToast": "예정된 휴점이 업데이트되었습니다"
+      },
+      "fields": {
+        "closedFrom": "휴점 시작일",
+        "closedTo": "휴점 종료일",
+        "closedToHint": "비워두면 스토어는 무기한 휴점 상태로 유지됩니다."
       }
     },
     "domain": "스토어",
@@ -2936,19 +3073,6 @@
         "title": "예정된 휴무가 없습니다",
         "message": "이 스토어는 예정된 휴무가 없습니다",
         "action": "생성"
-      }
-    },
-    "scheduledClosure": {
-      "header": "예정된 휴점",
-      "edit": {
-        "header": "스토어 휴점 예약",
-        "description": "이 스토어의 예정된 휴점 날짜를 설정하세요.",
-        "successToast": "예정된 휴점이 업데이트되었습니다"
-      },
-      "fields": {
-        "closedFrom": "휴점 시작일",
-        "closedTo": "휴점 종료일",
-        "closedToHint": "비워두면 스토어는 무기한 휴점 상태로 유지됩니다."
       }
     }
   },
@@ -3796,40 +3920,6 @@
       "description": "설명"
     }
   },
-  "views": {
-    "save": "저장",
-    "saveAsNew": "새 보기로 저장",
-    "saveAsSystemDefault": "시스템 기본값으로 저장",
-    "updateDefaultForEveryone": "모두를 위한 기본값 업데이트",
-    "updateViewName": "보기 업데이트",
-    "updateNamed": "\"{{name}}\" 업데이트",
-    "prompts": {
-      "updateDefault": {
-        "title": "기본 보기 업데이트",
-        "description": "모든 사용자의 기본 보기가 업데이트됩니다. 계속하시겠습니까?",
-        "confirmText": "모두를 위해 업데이트",
-        "cancelText": "취소"
-      },
-      "updateView": {
-        "title": "보기 업데이트",
-        "description": "\"{{name}}\"을(를) 업데이트하시겠습니까?",
-        "confirmText": "업데이트",
-        "cancelText": "취소"
-      },
-      "saveAsDefault": {
-        "title": "시스템 기본값으로 저장",
-        "description": "현재 설정이 시스템 기본값으로 저장됩니다. 개인 보기를 따로 설정하지 않은 모든 사용자는 이 설정을 기본값으로 보게 됩니다. 계속하시겠습니까?",
-        "confirmText": "기본값으로 저장",
-        "cancelText": "취소"
-      },
-      "updateExisting": {
-        "title": "기존 보기 업데이트",
-        "description": "현재 설정으로 \"{{name}}\"을(를) 업데이트하시겠습니까?",
-        "confirmText": "업데이트",
-        "cancelText": "취소"
-      }
-    }
-  },
   "requests": {
     "domain": "요청",
     "seller": "스토어",
@@ -4003,102 +4093,6 @@
   },
   "commissionLines": {
     "domain": "수수료 내역"
-  },
-  "commissions": {
-    "domain": "수수료",
-    "create": {
-      "header": "수수료 규칙 생성",
-      "details": "상세 정보",
-      "commission": "수수료",
-      "successToast": "수수료 규칙이 성공적으로 생성되었습니다."
-    },
-    "edit": {
-      "header": "수수료 규칙 편집",
-      "successToast": "수수료 규칙이 성공적으로 업데이트되었습니다."
-    },
-    "commissionEdit": {
-      "header": "수수료 편집",
-      "successToast": "수수료가 성공적으로 업데이트되었습니다."
-    },
-    "delete": {
-      "title": "수수료 규칙 삭제",
-      "description": "수수료 규칙 {{name}}을(를) 삭제하려고 합니다. 이 작업은 되돌릴 수 없습니다.",
-      "successToast": "수수료 규칙이 성공적으로 삭제되었습니다."
-    },
-    "fields": {
-      "code": "코드",
-      "value": "값",
-      "status": "상태",
-      "enabled": "활성화됨",
-      "enabledHint": "이 수수료 규칙을 활성화하거나 비활성화하세요.",
-      "stores": "스토어",
-      "productTypes": "제품 유형",
-      "categories": "카테고리",
-      "taxIncluded": "세금 포함",
-      "taxIncludedHint": "선택하면 세금을 포함한 총액을 기준으로 수수료가 계산됩니다. 선택 해제하면 세금은 제외되어 전액 스토어에 귀속됩니다.",
-      "shippingIncluded": "배송비 포함",
-      "shippingIncludedHint": "선택하면 배송비를 포함한 총액을 기준으로 수수료가 계산됩니다. 선택 해제하면 배송비는 전액 스토어에 귀속됩니다.",
-      "type": {
-        "label": "유형",
-        "percentage": "퍼센트",
-        "fixed": "고정",
-        "percentageHint": "주문 총액의 일정 비율을 청구합니다.",
-        "fixedHint": "주문당 고정 금액을 청구합니다."
-      },
-      "scopeType": {
-        "label": "유형",
-        "store": "스토어",
-        "productType": "상품 유형",
-        "category": "카테고리",
-        "storeProductType": "스토어 + 상품 유형",
-        "storeCategory": "스토어 + 카테고리",
-        "storeHint": "특정 스토어에 적용합니다.",
-        "productTypeHint": "특정 상품 유형에 적용합니다.",
-        "categoryHint": "특정 카테고리에 적용합니다.",
-        "storeProductTypeHint": "특정 스토어 내 상품 유형에 적용합니다.",
-        "storeCategoryHint": "특정 스토어 내 카테고리에 적용합니다."
-      }
-    },
-    "global": {
-      "title": "전역 수수료",
-      "code": "코드",
-      "type": "유형",
-      "value": "값",
-      "tax": "세금",
-      "shipping": "배송",
-      "included": "수수료에 포함됨",
-      "notIncluded": "수수료에 포함되지 않음",
-      "edit": {
-        "header": "전역 수수료 편집",
-        "successToast": "전역 수수료가 성공적으로 업데이트되었습니다."
-      }
-    },
-    "rules": {
-      "title": "수수료 규칙",
-      "columns": {
-        "rule": "규칙",
-        "scope": "범위",
-        "type": "유형",
-        "value": "값",
-        "status": "상태"
-      },
-      "empty": {
-        "heading": "아직 수수료 규칙이 없습니다",
-        "description": "특정 스토어, 상품 유형 또는 카테고리에 대해\n전역 수수료를 재정의할 수수료 규칙을 생성하세요."
-      }
-    },
-    "status": {
-      "enabled": "활성",
-      "disabled": "비활성"
-    },
-    "validation": {
-      "titleRequired": "제목을 입력해 주세요",
-      "codeRequired": "코드를 입력해 주세요",
-      "value": "값을 입력해 주세요",
-      "storesRequired": "하나 이상의 스토어를 선택해 주세요",
-      "productTypesRequired": "하나 이상의 상품 유형을 선택해 주세요",
-      "categoriesRequired": "하나 이상의 카테고리를 선택해 주세요"
-    }
   },
   "commissionRates": {
     "domain": "수수료율",

@@ -8,6 +8,38 @@
       "updateFailed": "Nepavyko atnaujinti rodinio",
       "deleted": "Rodinys sėkmingai ištrintas",
       "deleteFailed": "Nepavyko ištrinti rodinio"
+    },
+    "save": "Išsaugoti",
+    "saveAsNew": "Išsaugoti kaip naują rodinį",
+    "saveAsSystemDefault": "Išsaugoti kaip sistemos numatytąjį",
+    "updateDefaultForEveryone": "Atnaujinti numatytąjį visiems",
+    "updateViewName": "Atnaujinti rodinį",
+    "updateNamed": "Atnaujinti „{{name}}“",
+    "prompts": {
+      "updateDefault": {
+        "title": "Atnaujinti numatytąjį rodinį",
+        "description": "Tai atnaujins numatytąjį rodinį visiems naudotojams. Ar tikrai?",
+        "confirmText": "Atnaujinti visiems",
+        "cancelText": "Atšaukti"
+      },
+      "updateView": {
+        "title": "Atnaujinti rodinį",
+        "description": "Ar tikrai norite atnaujinti „{{name}}“?",
+        "confirmText": "Atnaujinti",
+        "cancelText": "Atšaukti"
+      },
+      "saveAsDefault": {
+        "title": "Išsaugoti kaip sistemos numatytąjį",
+        "description": "Tai išsaugos dabartinę konfigūraciją kaip sistemos numatytąją. Ją pagal nutylėjimą matys visi naudotojai, nebent turi savo asmeninius rodinius. Ar tikrai?",
+        "confirmText": "Išsaugoti kaip numatytąjį",
+        "cancelText": "Atšaukti"
+      },
+      "updateExisting": {
+        "title": "Atnaujinti esamą rodinį",
+        "description": "Atnaujinti „{{name}}“ dabartine konfigūracija?",
+        "confirmText": "Atnaujinti",
+        "cancelText": "Atšaukti"
+      }
     }
   },
   "commissions": {
@@ -15,6 +47,100 @@
       "name": "Taisyklės pavadinimas",
       "attribute": "Atributas",
       "fee": "Mokestis"
+    },
+    "domain": "Komisiniai mokesčiai",
+    "create": {
+      "header": "Sukurti komisinio mokesčio taisyklę",
+      "details": "Aprašymas",
+      "commission": "Komisinis mokestis",
+      "successToast": "Komisinio mokesčio taisyklė sėkmingai sukurta."
+    },
+    "edit": {
+      "header": "Redaguoti komisinio mokesčio taisyklę",
+      "successToast": "Komisinio mokesčio taisyklė sėkmingai atnaujinta."
+    },
+    "commissionEdit": {
+      "header": "Redaguoti komisinį mokestį",
+      "successToast": "Komisinis mokestis sėkmingai atnaujintas."
+    },
+    "delete": {
+      "title": "Ištrinti komisinio mokesčio taisyklę",
+      "description": "Ketinate ištrinti komisinio mokesčio taisyklę {{name}}. Šio veiksmo anuliuoti negalėsite.",
+      "successToast": "Komisinio mokesčio taisyklė sėkmingai ištrinta."
+    },
+    "fields": {
+      "code": "Kodas",
+      "value": "reikšmė",
+      "status": "Būsena",
+      "enabled": "Įjungtas",
+      "enabledHint": "Įjunkite arba išjunkite šią komisinio mokesčio taisyklę.",
+      "stores": "Parduotuvės",
+      "productTypes": "Prekių tipai",
+      "categories": "Kategorijos",
+      "taxIncluded": "Su mokesčiais",
+      "taxIncludedHint": "Pažymėjus, komisinis mokestis skaičiuojamas nuo sumos, įskaitant mokesčius. Nepažymėjus, mokesčiai neįtraukiami ir visi tenka parduotuvei.",
+      "shippingIncluded": "Su siuntimu",
+      "shippingIncludedHint": "Pažymėjus, komisinis mokestis skaičiuojamas nuo sumos, įskaitant siuntimą. Nepažymėjus, siuntimo mokesčiai visi tenka parduotuvei.",
+      "type": {
+        "label": "Tipas",
+        "percentage": "Vertė",
+        "fixed": "Fiksuota",
+        "percentageHint": "Taikyti procentą nuo bendros užsakymo sumos.",
+        "fixedHint": "Taikyti fiksuotą sumą už užsakymą."
+      },
+      "scopeType": {
+        "label": "Tipas",
+        "store": "Parduotuvė",
+        "productType": "Produkto tipas",
+        "category": "Kategorija",
+        "storeProductType": "Parduotuvė + produkto tipas",
+        "storeCategory": "Parduotuvė + kategorija",
+        "storeHint": "Taikyti konkrečioms parduotuvėms.",
+        "productTypeHint": "Taikyti konkretiems produktų tipams.",
+        "categoryHint": "Taikyti konkrečioms kategorijoms.",
+        "storeProductTypeHint": "Taikyti produktų tipams konkrečiose parduotuvėse.",
+        "storeCategoryHint": "Taikyti kategorijoms konkrečiose parduotuvėse."
+      }
+    },
+    "global": {
+      "title": "Globalus komisinis mokestis",
+      "code": "Kodas",
+      "type": "Tipas",
+      "value": "reikšmė",
+      "tax": "Mokestis",
+      "shipping": "Siuntimas",
+      "included": "Įtraukta į komisinį mokestį",
+      "notIncluded": "Neįtraukta į komisinį mokestį",
+      "edit": {
+        "header": "Redaguoti globalų komisinį mokestį",
+        "successToast": "Globalus komisinis mokestis sėkmingai atnaujintas."
+      }
+    },
+    "rules": {
+      "title": "Komisinio mokesčio taisyklės",
+      "columns": {
+        "rule": "Taisyklė",
+        "scope": "Taikymo sritis",
+        "type": "Tipas",
+        "value": "reikšmė",
+        "status": "Būsena"
+      },
+      "empty": {
+        "heading": "Kol kas nėra komisinio mokesčio taisyklių",
+        "description": "Sukurkite komisinio mokesčio taisyklę, kad perrašytumėte globalų komisinį mokestį\nkonkrečioms parduotuvėms, produktų tipams ar kategorijoms."
+      }
+    },
+    "status": {
+      "enabled": "Aktyvus",
+      "disabled": "Išjungta"
+    },
+    "validation": {
+      "titleRequired": "Įveskite pavadinimą",
+      "codeRequired": "Įveskite kodą",
+      "value": "Įveskite reikšmę",
+      "storesRequired": "Pasirinkite bent vieną parduotuvę",
+      "productTypesRequired": "Pasirinkite bent vieną produkto tipą",
+      "categoriesRequired": "Pasirinkite bent vieną kategoriją"
     }
   },
   "$schema": "./$schema.json",
@@ -2840,6 +2966,17 @@
       "validation": {
         "closedFromRequired": "Uždarymo pradžios data yra privaloma",
         "closedFromInPast": "Uždarymo pradžios data negali būti praeityje"
+      },
+      "header": "Suplanuotas uždarymas",
+      "edit": {
+        "header": "Suplanuoti parduotuvės uždarymą",
+        "description": "Nustatykite šios parduotuvės suplanuoto uždarymo datas.",
+        "successToast": "Suplanuotas uždarymas atnaujintas"
+      },
+      "fields": {
+        "closedFrom": "Uždaryti nuo",
+        "closedTo": "Uždaryti iki",
+        "closedToHint": "Jei tuščia, parduotuvė liks uždaryta neribotą laiką."
       }
     },
     "domain": "Parduotuvė",
@@ -2939,19 +3076,6 @@
         "title": "Kol kas nėra nedarbo laikotarpių",
         "message": "Ši parduotuvė neturi suplanuotų nedarbo laikotarpių",
         "action": "Sukurti"
-      }
-    },
-    "scheduledClosure": {
-      "header": "Suplanuotas uždarymas",
-      "edit": {
-        "header": "Suplanuoti parduotuvės uždarymą",
-        "description": "Nustatykite šios parduotuvės suplanuoto uždarymo datas.",
-        "successToast": "Suplanuotas uždarymas atnaujintas"
-      },
-      "fields": {
-        "closedFrom": "Uždaryti nuo",
-        "closedTo": "Uždaryti iki",
-        "closedToHint": "Jei tuščia, parduotuvė liks uždaryta neribotą laiką."
       }
     }
   },
@@ -3800,40 +3924,6 @@
       "description": "Aprašymas"
     }
   },
-  "views": {
-    "save": "Išsaugoti",
-    "saveAsNew": "Išsaugoti kaip naują rodinį",
-    "saveAsSystemDefault": "Išsaugoti kaip sistemos numatytąjį",
-    "updateDefaultForEveryone": "Atnaujinti numatytąjį visiems",
-    "updateViewName": "Atnaujinti rodinį",
-    "updateNamed": "Atnaujinti „{{name}}“",
-    "prompts": {
-      "updateDefault": {
-        "title": "Atnaujinti numatytąjį rodinį",
-        "description": "Tai atnaujins numatytąjį rodinį visiems naudotojams. Ar tikrai?",
-        "confirmText": "Atnaujinti visiems",
-        "cancelText": "Atšaukti"
-      },
-      "updateView": {
-        "title": "Atnaujinti rodinį",
-        "description": "Ar tikrai norite atnaujinti „{{name}}“?",
-        "confirmText": "Atnaujinti",
-        "cancelText": "Atšaukti"
-      },
-      "saveAsDefault": {
-        "title": "Išsaugoti kaip sistemos numatytąjį",
-        "description": "Tai išsaugos dabartinę konfigūraciją kaip sistemos numatytąją. Ją pagal nutylėjimą matys visi naudotojai, nebent turi savo asmeninius rodinius. Ar tikrai?",
-        "confirmText": "Išsaugoti kaip numatytąjį",
-        "cancelText": "Atšaukti"
-      },
-      "updateExisting": {
-        "title": "Atnaujinti esamą rodinį",
-        "description": "Atnaujinti „{{name}}“ dabartine konfigūracija?",
-        "confirmText": "Atnaujinti",
-        "cancelText": "Atšaukti"
-      }
-    }
-  },
   "requests": {
     "domain": "Užklausos",
     "seller": "Parduotuvė",
@@ -4007,102 +4097,6 @@
   },
   "commissionLines": {
     "domain": "Komisinio mokesčio eilutės"
-  },
-  "commissions": {
-    "domain": "Komisiniai mokesčiai",
-    "create": {
-      "header": "Sukurti komisinio mokesčio taisyklę",
-      "details": "Aprašymas",
-      "commission": "Komisinis mokestis",
-      "successToast": "Komisinio mokesčio taisyklė sėkmingai sukurta."
-    },
-    "edit": {
-      "header": "Redaguoti komisinio mokesčio taisyklę",
-      "successToast": "Komisinio mokesčio taisyklė sėkmingai atnaujinta."
-    },
-    "commissionEdit": {
-      "header": "Redaguoti komisinį mokestį",
-      "successToast": "Komisinis mokestis sėkmingai atnaujintas."
-    },
-    "delete": {
-      "title": "Ištrinti komisinio mokesčio taisyklę",
-      "description": "Ketinate ištrinti komisinio mokesčio taisyklę {{name}}. Šio veiksmo anuliuoti negalėsite.",
-      "successToast": "Komisinio mokesčio taisyklė sėkmingai ištrinta."
-    },
-    "fields": {
-      "code": "Kodas",
-      "value": "reikšmė",
-      "status": "Būsena",
-      "enabled": "Įjungtas",
-      "enabledHint": "Įjunkite arba išjunkite šią komisinio mokesčio taisyklę.",
-      "stores": "Parduotuvės",
-      "productTypes": "Prekių tipai",
-      "categories": "Kategorijos",
-      "taxIncluded": "Su mokesčiais",
-      "taxIncludedHint": "Pažymėjus, komisinis mokestis skaičiuojamas nuo sumos, įskaitant mokesčius. Nepažymėjus, mokesčiai neįtraukiami ir visi tenka parduotuvei.",
-      "shippingIncluded": "Su siuntimu",
-      "shippingIncludedHint": "Pažymėjus, komisinis mokestis skaičiuojamas nuo sumos, įskaitant siuntimą. Nepažymėjus, siuntimo mokesčiai visi tenka parduotuvei.",
-      "type": {
-        "label": "Tipas",
-        "percentage": "Vertė",
-        "fixed": "Fiksuota",
-        "percentageHint": "Taikyti procentą nuo bendros užsakymo sumos.",
-        "fixedHint": "Taikyti fiksuotą sumą už užsakymą."
-      },
-      "scopeType": {
-        "label": "Tipas",
-        "store": "Parduotuvė",
-        "productType": "Produkto tipas",
-        "category": "Kategorija",
-        "storeProductType": "Parduotuvė + produkto tipas",
-        "storeCategory": "Parduotuvė + kategorija",
-        "storeHint": "Taikyti konkrečioms parduotuvėms.",
-        "productTypeHint": "Taikyti konkretiems produktų tipams.",
-        "categoryHint": "Taikyti konkrečioms kategorijoms.",
-        "storeProductTypeHint": "Taikyti produktų tipams konkrečiose parduotuvėse.",
-        "storeCategoryHint": "Taikyti kategorijoms konkrečiose parduotuvėse."
-      }
-    },
-    "global": {
-      "title": "Globalus komisinis mokestis",
-      "code": "Kodas",
-      "type": "Tipas",
-      "value": "reikšmė",
-      "tax": "Mokestis",
-      "shipping": "Siuntimas",
-      "included": "Įtraukta į komisinį mokestį",
-      "notIncluded": "Neįtraukta į komisinį mokestį",
-      "edit": {
-        "header": "Redaguoti globalų komisinį mokestį",
-        "successToast": "Globalus komisinis mokestis sėkmingai atnaujintas."
-      }
-    },
-    "rules": {
-      "title": "Komisinio mokesčio taisyklės",
-      "columns": {
-        "rule": "Taisyklė",
-        "scope": "Taikymo sritis",
-        "type": "Tipas",
-        "value": "reikšmė",
-        "status": "Būsena"
-      },
-      "empty": {
-        "heading": "Kol kas nėra komisinio mokesčio taisyklių",
-        "description": "Sukurkite komisinio mokesčio taisyklę, kad perrašytumėte globalų komisinį mokestį\nkonkrečioms parduotuvėms, produktų tipams ar kategorijoms."
-      }
-    },
-    "status": {
-      "enabled": "Aktyvus",
-      "disabled": "Išjungta"
-    },
-    "validation": {
-      "titleRequired": "Įveskite pavadinimą",
-      "codeRequired": "Įveskite kodą",
-      "value": "Įveskite reikšmę",
-      "storesRequired": "Pasirinkite bent vieną parduotuvę",
-      "productTypesRequired": "Pasirinkite bent vieną produkto tipą",
-      "categoriesRequired": "Pasirinkite bent vieną kategoriją"
-    }
   },
   "commissionRates": {
     "domain": "Komisinio mokesčio tarifai",

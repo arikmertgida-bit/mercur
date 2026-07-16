@@ -8,6 +8,38 @@
       "updateFailed": "עדכון התצוגה נכשל",
       "deleted": "התצוגה נמחקה בהצלחה",
       "deleteFailed": "מחיקת התצוגה נכשלה"
+    },
+    "save": "שמור",
+    "saveAsNew": "שמור כתצוגה חדשה",
+    "saveAsSystemDefault": "שמור כברירת מחדל של המערכת",
+    "updateDefaultForEveryone": "עדכן ברירת מחדל לכולם",
+    "updateViewName": "עדכן תצוגה",
+    "updateNamed": "עדכן את \"{{name}}\"",
+    "prompts": {
+      "updateDefault": {
+        "title": "עדכן תצוגת ברירת מחדל",
+        "description": "פעולה זו תעדכן את תצוגת ברירת המחדל עבור כל המשתמשים. האם אתה בטוח?",
+        "confirmText": "עדכן לכולם",
+        "cancelText": "בטל"
+      },
+      "updateView": {
+        "title": "עדכן תצוגה",
+        "description": "האם אתה בטוח שברצונך לעדכן את \"{{name}}\"?",
+        "confirmText": "עדכן",
+        "cancelText": "בטל"
+      },
+      "saveAsDefault": {
+        "title": "שמור כברירת מחדל של המערכת",
+        "description": "פעולה זו תשמור את התצורה הנוכחית כברירת מחדל של המערכת. כל המשתמשים יראו תצורה זו כברירת מחדל אלא אם יש להם תצוגות אישיות משלהם. האם אתה בטוח?",
+        "confirmText": "שמור כברירת מחדל",
+        "cancelText": "בטל"
+      },
+      "updateExisting": {
+        "title": "עדכן תצוגה קיימת",
+        "description": "לעדכן את \"{{name}}\" עם התצורה הנוכחית?",
+        "confirmText": "עדכן",
+        "cancelText": "בטל"
+      }
     }
   },
   "commissions": {
@@ -15,6 +47,100 @@
       "name": "שם הכלל",
       "attribute": "מאפיין",
       "fee": "עמלה"
+    },
+    "domain": "עמלות",
+    "create": {
+      "header": "צור כלל עמלה",
+      "details": "פרטים",
+      "commission": "עמלה",
+      "successToast": "כלל העמלה נוצר בהצלחה."
+    },
+    "edit": {
+      "header": "ערוך כלל עמלה",
+      "successToast": "כלל העמלה עודכן בהצלחה."
+    },
+    "commissionEdit": {
+      "header": "ערוך עמלה",
+      "successToast": "העמלה עודכנה בהצלחה."
+    },
+    "delete": {
+      "title": "מחק כלל עמלה",
+      "description": "אתה עומד למחוק את כלל העמלה {{name}}. פעולה זו אינה ניתנת לביטול.",
+      "successToast": "כלל העמלה נמחק בהצלחה."
+    },
+    "fields": {
+      "code": "קוד",
+      "value": "ערך",
+      "status": "סטטוס",
+      "enabled": "מופעל",
+      "enabledHint": "הפעל או השבת כלל עמלה זה.",
+      "stores": "חנויות",
+      "productTypes": "סוגי מוצרים",
+      "categories": "קטגוריות",
+      "taxIncluded": "כולל מס",
+      "taxIncludedHint": "אם מסומן, העמלה מחושבת על הסכום הכולל כולל מס. אם לא מסומן, המס אינו נכלל ומועבר במלואו לחנות.",
+      "shippingIncluded": "כולל משלוח",
+      "shippingIncludedHint": "אם מסומן, העמלה מחושבת על הסכום הכולל כולל משלוח. אם לא מסומן, דמי המשלוח מועברים במלואם לחנות.",
+      "type": {
+        "label": "סוג",
+        "percentage": "אחוז",
+        "fixed": "קבוע",
+        "percentageHint": "גבה אחוז מסך ההזמנה.",
+        "fixedHint": "גבה סכום קבוע לכל הזמנה."
+      },
+      "scopeType": {
+        "label": "סוג",
+        "store": "חנות",
+        "productType": "סוג מוצר",
+        "category": "קטגוריה",
+        "storeProductType": "חנות + סוג מוצר",
+        "storeCategory": "חנות + קטגוריה",
+        "storeHint": "החל על חנויות ספציפיות.",
+        "productTypeHint": "החל על סוגי מוצרים ספציפיים.",
+        "categoryHint": "החל על קטגוריות ספציפיות.",
+        "storeProductTypeHint": "החל על סוגי מוצרים בתוך חנויות ספציפיות.",
+        "storeCategoryHint": "החל על קטגוריות בתוך חנויות ספציפיות."
+      }
+    },
+    "global": {
+      "title": "עמלה גלובלית",
+      "code": "קוד",
+      "type": "סוג",
+      "value": "ערך",
+      "tax": "מס",
+      "shipping": "משלוח",
+      "included": "כלול בעמלה",
+      "notIncluded": "לא כלול בעמלה",
+      "edit": {
+        "header": "ערוך עמלה גלובלית",
+        "successToast": "העמלה הגלובלית עודכנה בהצלחה."
+      }
+    },
+    "rules": {
+      "title": "כללי עמלה",
+      "columns": {
+        "rule": "כלל",
+        "scope": "היקף",
+        "type": "סוג",
+        "value": "ערך",
+        "status": "סטטוס"
+      },
+      "empty": {
+        "heading": "אין כללי עמלה עדיין",
+        "description": "צור כלל עמלה כדי לעקוף את העמלה הגלובלית עבור\nחנויות, סוגי מוצרים או קטגוריות ספציפיים."
+      }
+    },
+    "status": {
+      "enabled": "פעיל",
+      "disabled": "לא פעיל"
+    },
+    "validation": {
+      "titleRequired": "יש להזין כותרת",
+      "codeRequired": "יש להזין קוד",
+      "value": "יש להזין ערך",
+      "storesRequired": "יש לבחור לפחות חנות אחת",
+      "productTypesRequired": "יש לבחור לפחות סוג מוצר אחד",
+      "categoriesRequired": "יש לבחור לפחות קטגוריה אחת"
     }
   },
   "$schema": "./$schema.json",
@@ -2837,6 +2963,17 @@
       "validation": {
         "closedFromRequired": "תאריך תחילת הסגירה נדרש",
         "closedFromInPast": "תאריך תחילת הסגירה לא יכול להיות בעבר"
+      },
+      "header": "סגירה מתוזמנת",
+      "edit": {
+        "header": "תזמן סגירת חנות",
+        "description": "הגדר את תאריכי הסגירה המתוזמנים עבור חנות זו.",
+        "successToast": "הסגירה המתוזמנת עודכנה"
+      },
+      "fields": {
+        "closedFrom": "סגור מתאריך",
+        "closedTo": "סגור עד",
+        "closedToHint": "אם ריק, החנות תישאר סגורה ללא הגבלת זמן."
       }
     },
     "domain": "חנות",
@@ -2936,19 +3073,6 @@
         "title": "אין חופשה עדיין",
         "message": "לחנות זו אין חופשה מתוזמנת",
         "action": "צור"
-      }
-    },
-    "scheduledClosure": {
-      "header": "סגירה מתוזמנת",
-      "edit": {
-        "header": "תזמן סגירת חנות",
-        "description": "הגדר את תאריכי הסגירה המתוזמנים עבור חנות זו.",
-        "successToast": "הסגירה המתוזמנת עודכנה"
-      },
-      "fields": {
-        "closedFrom": "סגור מתאריך",
-        "closedTo": "סגור עד",
-        "closedToHint": "אם ריק, החנות תישאר סגורה ללא הגבלת זמן."
       }
     }
   },
@@ -3796,40 +3920,6 @@
       "description": "תיאור"
     }
   },
-  "views": {
-    "save": "שמור",
-    "saveAsNew": "שמור כתצוגה חדשה",
-    "saveAsSystemDefault": "שמור כברירת מחדל של המערכת",
-    "updateDefaultForEveryone": "עדכן ברירת מחדל לכולם",
-    "updateViewName": "עדכן תצוגה",
-    "updateNamed": "עדכן את \"{{name}}\"",
-    "prompts": {
-      "updateDefault": {
-        "title": "עדכן תצוגת ברירת מחדל",
-        "description": "פעולה זו תעדכן את תצוגת ברירת המחדל עבור כל המשתמשים. האם אתה בטוח?",
-        "confirmText": "עדכן לכולם",
-        "cancelText": "בטל"
-      },
-      "updateView": {
-        "title": "עדכן תצוגה",
-        "description": "האם אתה בטוח שברצונך לעדכן את \"{{name}}\"?",
-        "confirmText": "עדכן",
-        "cancelText": "בטל"
-      },
-      "saveAsDefault": {
-        "title": "שמור כברירת מחדל של המערכת",
-        "description": "פעולה זו תשמור את התצורה הנוכחית כברירת מחדל של המערכת. כל המשתמשים יראו תצורה זו כברירת מחדל אלא אם יש להם תצוגות אישיות משלהם. האם אתה בטוח?",
-        "confirmText": "שמור כברירת מחדל",
-        "cancelText": "בטל"
-      },
-      "updateExisting": {
-        "title": "עדכן תצוגה קיימת",
-        "description": "לעדכן את \"{{name}}\" עם התצורה הנוכחית?",
-        "confirmText": "עדכן",
-        "cancelText": "בטל"
-      }
-    }
-  },
   "requests": {
     "domain": "בקשות",
     "seller": "חנות",
@@ -4003,102 +4093,6 @@
   },
   "commissionLines": {
     "domain": "שורות עמלה"
-  },
-  "commissions": {
-    "domain": "עמלות",
-    "create": {
-      "header": "צור כלל עמלה",
-      "details": "פרטים",
-      "commission": "עמלה",
-      "successToast": "כלל העמלה נוצר בהצלחה."
-    },
-    "edit": {
-      "header": "ערוך כלל עמלה",
-      "successToast": "כלל העמלה עודכן בהצלחה."
-    },
-    "commissionEdit": {
-      "header": "ערוך עמלה",
-      "successToast": "העמלה עודכנה בהצלחה."
-    },
-    "delete": {
-      "title": "מחק כלל עמלה",
-      "description": "אתה עומד למחוק את כלל העמלה {{name}}. פעולה זו אינה ניתנת לביטול.",
-      "successToast": "כלל העמלה נמחק בהצלחה."
-    },
-    "fields": {
-      "code": "קוד",
-      "value": "ערך",
-      "status": "סטטוס",
-      "enabled": "מופעל",
-      "enabledHint": "הפעל או השבת כלל עמלה זה.",
-      "stores": "חנויות",
-      "productTypes": "סוגי מוצרים",
-      "categories": "קטגוריות",
-      "taxIncluded": "כולל מס",
-      "taxIncludedHint": "אם מסומן, העמלה מחושבת על הסכום הכולל כולל מס. אם לא מסומן, המס אינו נכלל ומועבר במלואו לחנות.",
-      "shippingIncluded": "כולל משלוח",
-      "shippingIncludedHint": "אם מסומן, העמלה מחושבת על הסכום הכולל כולל משלוח. אם לא מסומן, דמי המשלוח מועברים במלואם לחנות.",
-      "type": {
-        "label": "סוג",
-        "percentage": "אחוז",
-        "fixed": "קבוע",
-        "percentageHint": "גבה אחוז מסך ההזמנה.",
-        "fixedHint": "גבה סכום קבוע לכל הזמנה."
-      },
-      "scopeType": {
-        "label": "סוג",
-        "store": "חנות",
-        "productType": "סוג מוצר",
-        "category": "קטגוריה",
-        "storeProductType": "חנות + סוג מוצר",
-        "storeCategory": "חנות + קטגוריה",
-        "storeHint": "החל על חנויות ספציפיות.",
-        "productTypeHint": "החל על סוגי מוצרים ספציפיים.",
-        "categoryHint": "החל על קטגוריות ספציפיות.",
-        "storeProductTypeHint": "החל על סוגי מוצרים בתוך חנויות ספציפיות.",
-        "storeCategoryHint": "החל על קטגוריות בתוך חנויות ספציפיות."
-      }
-    },
-    "global": {
-      "title": "עמלה גלובלית",
-      "code": "קוד",
-      "type": "סוג",
-      "value": "ערך",
-      "tax": "מס",
-      "shipping": "משלוח",
-      "included": "כלול בעמלה",
-      "notIncluded": "לא כלול בעמלה",
-      "edit": {
-        "header": "ערוך עמלה גלובלית",
-        "successToast": "העמלה הגלובלית עודכנה בהצלחה."
-      }
-    },
-    "rules": {
-      "title": "כללי עמלה",
-      "columns": {
-        "rule": "כלל",
-        "scope": "היקף",
-        "type": "סוג",
-        "value": "ערך",
-        "status": "סטטוס"
-      },
-      "empty": {
-        "heading": "אין כללי עמלה עדיין",
-        "description": "צור כלל עמלה כדי לעקוף את העמלה הגלובלית עבור\nחנויות, סוגי מוצרים או קטגוריות ספציפיים."
-      }
-    },
-    "status": {
-      "enabled": "פעיל",
-      "disabled": "לא פעיל"
-    },
-    "validation": {
-      "titleRequired": "יש להזין כותרת",
-      "codeRequired": "יש להזין קוד",
-      "value": "יש להזין ערך",
-      "storesRequired": "יש לבחור לפחות חנות אחת",
-      "productTypesRequired": "יש לבחור לפחות סוג מוצר אחד",
-      "categoriesRequired": "יש לבחור לפחות קטגוריה אחת"
-    }
   },
   "commissionRates": {
     "domain": "שיעורי עמלה",

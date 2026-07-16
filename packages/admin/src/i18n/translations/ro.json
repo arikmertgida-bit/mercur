@@ -8,6 +8,38 @@
       "updateFailed": "Actualizarea vizualizării a eșuat",
       "deleted": "Vizualizarea a fost ștearsă cu succes",
       "deleteFailed": "Ștergerea vizualizării a eșuat"
+    },
+    "save": "Salva",
+    "saveAsNew": "Salvează ca vizualizare nouă",
+    "saveAsSystemDefault": "Salvează ca implicit de sistem",
+    "updateDefaultForEveryone": "Actualizează implicit pentru toți",
+    "updateViewName": "Actualizează vizualizarea",
+    "updateNamed": "Actualizează \"{{name}}\"",
+    "prompts": {
+      "updateDefault": {
+        "title": "Actualizează vizualizarea implicită",
+        "description": "Aceasta va actualiza vizualizarea implicită pentru toți utilizatorii. Sigur doriți să continuați?",
+        "confirmText": "Actualizează pentru toți",
+        "cancelText": "Anula"
+      },
+      "updateView": {
+        "title": "Actualizează vizualizarea",
+        "description": "Sigur doriți să actualizați \"{{name}}\"?",
+        "confirmText": "Actualizează",
+        "cancelText": "Anula"
+      },
+      "saveAsDefault": {
+        "title": "Salvează ca implicit de sistem",
+        "description": "Aceasta va salva configurația curentă ca implicit de sistem. Toți utilizatorii vor vedea această configurație implicit, cu excepția celor care au propriile vizualizări personale. Sigur doriți să continuați?",
+        "confirmText": "Salvează ca implicit",
+        "cancelText": "Anula"
+      },
+      "updateExisting": {
+        "title": "Actualizează vizualizarea existentă",
+        "description": "Actualizați \"{{name}}\" cu configurația curentă?",
+        "confirmText": "Actualizează",
+        "cancelText": "Anula"
+      }
     }
   },
   "commissions": {
@@ -15,6 +47,100 @@
       "name": "Numele regulii",
       "attribute": "Atribut",
       "fee": "Comision"
+    },
+    "domain": "Comisioane",
+    "create": {
+      "header": "Creează regulă de comision",
+      "details": "Detalii",
+      "commission": "Comision",
+      "successToast": "Regula de comision a fost creată cu succes."
+    },
+    "edit": {
+      "header": "Editează regula de comision",
+      "successToast": "Regula de comision a fost actualizată cu succes."
+    },
+    "commissionEdit": {
+      "header": "Editează comisionul",
+      "successToast": "Comisionul a fost actualizat cu succes."
+    },
+    "delete": {
+      "title": "Șterge regula de comision",
+      "description": "Urmează să ștergeți regula de comision {{name}}. Această acțiune nu poate fi anulată.",
+      "successToast": "Regula de comision a fost ștearsă cu succes."
+    },
+    "fields": {
+      "code": "Cod",
+      "value": "Valoare",
+      "status": "Stare",
+      "enabled": "Activat",
+      "enabledHint": "Activați sau dezactivați această regulă de comision.",
+      "stores": "Magazine",
+      "productTypes": "Tipuri de produse",
+      "categories": "Categorii",
+      "taxIncluded": "Taxă inclusă",
+      "taxIncludedHint": "Dacă este bifat, comisionul se calculează pe totalul cu taxă inclusă. Dacă nu, taxa este exclusă și revine integral magazinului.",
+      "shippingIncluded": "Livrare inclusă",
+      "shippingIncludedHint": "Dacă este bifat, comisionul se calculează pe totalul cu livrare inclusă. Dacă nu, taxele de livrare revin integral magazinului.",
+      "type": {
+        "label": "Tip",
+        "percentage": "Valoarea de promovare",
+        "fixed": "Fix",
+        "percentageHint": "Percepe un procent din totalul comenzii.",
+        "fixedHint": "Percepe o sumă fixă per comandă."
+      },
+      "scopeType": {
+        "label": "Tip",
+        "store": "Magazin",
+        "productType": "Tip de produs",
+        "category": "Categorie",
+        "storeProductType": "Magazin + tip de produs",
+        "storeCategory": "Magazin + categorie",
+        "storeHint": "Se aplică pentru magazine specifice.",
+        "productTypeHint": "Se aplică pentru tipuri de produse specifice.",
+        "categoryHint": "Se aplică pentru categorii specifice.",
+        "storeProductTypeHint": "Se aplică pentru tipuri de produse din magazine specifice.",
+        "storeCategoryHint": "Se aplică pentru categorii din magazine specifice."
+      }
+    },
+    "global": {
+      "title": "Comision global",
+      "code": "Cod",
+      "type": "Tip",
+      "value": "Valoare",
+      "tax": "Taxa",
+      "shipping": "Transport",
+      "included": "Inclus în comision",
+      "notIncluded": "Neinclus în comision",
+      "edit": {
+        "header": "Editează comisionul global",
+        "successToast": "Comisionul global a fost actualizat cu succes."
+      }
+    },
+    "rules": {
+      "title": "Reguli de comision",
+      "columns": {
+        "rule": "Regulă",
+        "scope": "Domeniu de aplicare",
+        "type": "Tip",
+        "value": "Valoare",
+        "status": "Stare"
+      },
+      "empty": {
+        "heading": "Nicio regulă de comision încă",
+        "description": "Creați o regulă de comision pentru a suprascrie comisionul global\npentru magazine, tipuri de produse sau categorii specifice."
+      }
+    },
+    "status": {
+      "enabled": "Activ",
+      "disabled": "Inactiv"
+    },
+    "validation": {
+      "titleRequired": "Vă rugăm introduceți un titlu",
+      "codeRequired": "Vă rugăm introduceți un cod",
+      "value": "Vă rugăm introduceți o valoare",
+      "storesRequired": "Vă rugăm selectați cel puțin un magazin",
+      "productTypesRequired": "Vă rugăm selectați cel puțin un tip de produs",
+      "categoriesRequired": "Vă rugăm selectați cel puțin o categorie"
     }
   },
   "$schema": "./$schema.json",
@@ -2840,6 +2966,17 @@
       "validation": {
         "closedFromRequired": "Data de început a închiderii este obligatorie",
         "closedFromInPast": "Data de început a închiderii nu poate fi în trecut"
+      },
+      "header": "Închidere programată",
+      "edit": {
+        "header": "Programează închiderea magazinului",
+        "description": "Configurați datele de închidere programată pentru acest magazin.",
+        "successToast": "Închiderea programată a fost actualizată"
+      },
+      "fields": {
+        "closedFrom": "Închis de la",
+        "closedTo": "Închis până la",
+        "closedToHint": "Dacă este gol, magazinul va rămâne închis pe termen nedefinit."
       }
     },
     "domain": "Magazin",
@@ -2939,19 +3076,6 @@
         "title": "Niciun concediu încă",
         "message": "Acest magazin nu are concediu programat",
         "action": "Crea"
-      }
-    },
-    "scheduledClosure": {
-      "header": "Închidere programată",
-      "edit": {
-        "header": "Programează închiderea magazinului",
-        "description": "Configurați datele de închidere programată pentru acest magazin.",
-        "successToast": "Închiderea programată a fost actualizată"
-      },
-      "fields": {
-        "closedFrom": "Închis de la",
-        "closedTo": "Închis până la",
-        "closedToHint": "Dacă este gol, magazinul va rămâne închis pe termen nedefinit."
       }
     }
   },
@@ -3800,40 +3924,6 @@
       "description": "Descriere"
     }
   },
-  "views": {
-    "save": "Salva",
-    "saveAsNew": "Salvează ca vizualizare nouă",
-    "saveAsSystemDefault": "Salvează ca implicit de sistem",
-    "updateDefaultForEveryone": "Actualizează implicit pentru toți",
-    "updateViewName": "Actualizează vizualizarea",
-    "updateNamed": "Actualizează \"{{name}}\"",
-    "prompts": {
-      "updateDefault": {
-        "title": "Actualizează vizualizarea implicită",
-        "description": "Aceasta va actualiza vizualizarea implicită pentru toți utilizatorii. Sigur doriți să continuați?",
-        "confirmText": "Actualizează pentru toți",
-        "cancelText": "Anula"
-      },
-      "updateView": {
-        "title": "Actualizează vizualizarea",
-        "description": "Sigur doriți să actualizați \"{{name}}\"?",
-        "confirmText": "Actualizează",
-        "cancelText": "Anula"
-      },
-      "saveAsDefault": {
-        "title": "Salvează ca implicit de sistem",
-        "description": "Aceasta va salva configurația curentă ca implicit de sistem. Toți utilizatorii vor vedea această configurație implicit, cu excepția celor care au propriile vizualizări personale. Sigur doriți să continuați?",
-        "confirmText": "Salvează ca implicit",
-        "cancelText": "Anula"
-      },
-      "updateExisting": {
-        "title": "Actualizează vizualizarea existentă",
-        "description": "Actualizați \"{{name}}\" cu configurația curentă?",
-        "confirmText": "Actualizează",
-        "cancelText": "Anula"
-      }
-    }
-  },
   "requests": {
     "domain": "Cereri",
     "seller": "Magazin",
@@ -4007,102 +4097,6 @@
   },
   "commissionLines": {
     "domain": "Linii de comision"
-  },
-  "commissions": {
-    "domain": "Comisioane",
-    "create": {
-      "header": "Creează regulă de comision",
-      "details": "Detalii",
-      "commission": "Comision",
-      "successToast": "Regula de comision a fost creată cu succes."
-    },
-    "edit": {
-      "header": "Editează regula de comision",
-      "successToast": "Regula de comision a fost actualizată cu succes."
-    },
-    "commissionEdit": {
-      "header": "Editează comisionul",
-      "successToast": "Comisionul a fost actualizat cu succes."
-    },
-    "delete": {
-      "title": "Șterge regula de comision",
-      "description": "Urmează să ștergeți regula de comision {{name}}. Această acțiune nu poate fi anulată.",
-      "successToast": "Regula de comision a fost ștearsă cu succes."
-    },
-    "fields": {
-      "code": "Cod",
-      "value": "Valoare",
-      "status": "Stare",
-      "enabled": "Activat",
-      "enabledHint": "Activați sau dezactivați această regulă de comision.",
-      "stores": "Magazine",
-      "productTypes": "Tipuri de produse",
-      "categories": "Categorii",
-      "taxIncluded": "Taxă inclusă",
-      "taxIncludedHint": "Dacă este bifat, comisionul se calculează pe totalul cu taxă inclusă. Dacă nu, taxa este exclusă și revine integral magazinului.",
-      "shippingIncluded": "Livrare inclusă",
-      "shippingIncludedHint": "Dacă este bifat, comisionul se calculează pe totalul cu livrare inclusă. Dacă nu, taxele de livrare revin integral magazinului.",
-      "type": {
-        "label": "Tip",
-        "percentage": "Valoarea de promovare",
-        "fixed": "Fix",
-        "percentageHint": "Percepe un procent din totalul comenzii.",
-        "fixedHint": "Percepe o sumă fixă per comandă."
-      },
-      "scopeType": {
-        "label": "Tip",
-        "store": "Magazin",
-        "productType": "Tip de produs",
-        "category": "Categorie",
-        "storeProductType": "Magazin + tip de produs",
-        "storeCategory": "Magazin + categorie",
-        "storeHint": "Se aplică pentru magazine specifice.",
-        "productTypeHint": "Se aplică pentru tipuri de produse specifice.",
-        "categoryHint": "Se aplică pentru categorii specifice.",
-        "storeProductTypeHint": "Se aplică pentru tipuri de produse din magazine specifice.",
-        "storeCategoryHint": "Se aplică pentru categorii din magazine specifice."
-      }
-    },
-    "global": {
-      "title": "Comision global",
-      "code": "Cod",
-      "type": "Tip",
-      "value": "Valoare",
-      "tax": "Taxa",
-      "shipping": "Transport",
-      "included": "Inclus în comision",
-      "notIncluded": "Neinclus în comision",
-      "edit": {
-        "header": "Editează comisionul global",
-        "successToast": "Comisionul global a fost actualizat cu succes."
-      }
-    },
-    "rules": {
-      "title": "Reguli de comision",
-      "columns": {
-        "rule": "Regulă",
-        "scope": "Domeniu de aplicare",
-        "type": "Tip",
-        "value": "Valoare",
-        "status": "Stare"
-      },
-      "empty": {
-        "heading": "Nicio regulă de comision încă",
-        "description": "Creați o regulă de comision pentru a suprascrie comisionul global\npentru magazine, tipuri de produse sau categorii specifice."
-      }
-    },
-    "status": {
-      "enabled": "Activ",
-      "disabled": "Inactiv"
-    },
-    "validation": {
-      "titleRequired": "Vă rugăm introduceți un titlu",
-      "codeRequired": "Vă rugăm introduceți un cod",
-      "value": "Vă rugăm introduceți o valoare",
-      "storesRequired": "Vă rugăm selectați cel puțin un magazin",
-      "productTypesRequired": "Vă rugăm selectați cel puțin un tip de produs",
-      "categoriesRequired": "Vă rugăm selectați cel puțin o categorie"
-    }
   },
   "commissionRates": {
     "domain": "Rate de comision",

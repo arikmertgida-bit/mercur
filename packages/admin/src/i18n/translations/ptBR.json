@@ -8,6 +8,38 @@
       "updateFailed": "Falha ao atualizar visualização",
       "deleted": "Visualização excluída com sucesso",
       "deleteFailed": "Falha ao excluir visualização"
+    },
+    "save": "Salvar",
+    "saveAsNew": "Salvar como nova visualização",
+    "saveAsSystemDefault": "Salvar como padrão do sistema",
+    "updateDefaultForEveryone": "Atualizar padrão para todos",
+    "updateViewName": "Atualizar visualização",
+    "updateNamed": "Atualizar \"{{name}}\"",
+    "prompts": {
+      "updateDefault": {
+        "title": "Atualizar visualização padrão",
+        "description": "Isso atualizará a visualização padrão para todos os usuários. Tem certeza?",
+        "confirmText": "Atualizar para todos",
+        "cancelText": "Cancelar"
+      },
+      "updateView": {
+        "title": "Atualizar visualização",
+        "description": "Tem certeza de que deseja atualizar \"{{name}}\"?",
+        "confirmText": "Atualizar",
+        "cancelText": "Cancelar"
+      },
+      "saveAsDefault": {
+        "title": "Salvar como padrão do sistema",
+        "description": "Isso salvará a configuração atual como padrão do sistema. Todos os usuários verão esta configuração por padrão, a menos que tenham suas próprias visualizações pessoais. Tem certeza?",
+        "confirmText": "Salvar como padrão",
+        "cancelText": "Cancelar"
+      },
+      "updateExisting": {
+        "title": "Atualizar visualização existente",
+        "description": "Atualizar \"{{name}}\" com a configuração atual?",
+        "confirmText": "Atualizar",
+        "cancelText": "Cancelar"
+      }
     }
   },
   "commissions": {
@@ -15,6 +47,100 @@
       "name": "Nome da regra",
       "attribute": "Atributo",
       "fee": "Taxa"
+    },
+    "domain": "Comissões",
+    "create": {
+      "header": "Criar regra de comissão",
+      "details": "Detalhes",
+      "commission": "Comissão",
+      "successToast": "A regra de comissão foi criada com sucesso."
+    },
+    "edit": {
+      "header": "Editar regra de comissão",
+      "successToast": "A regra de comissão foi atualizada com sucesso."
+    },
+    "commissionEdit": {
+      "header": "Editar comissão",
+      "successToast": "A comissão foi atualizada com sucesso."
+    },
+    "delete": {
+      "title": "Excluir regra de comissão",
+      "description": "Você está prestes a excluir a regra de comissão {{name}}. Esta ação não pode ser desfeita.",
+      "successToast": "A regra de comissão foi excluída com sucesso."
+    },
+    "fields": {
+      "code": "Código",
+      "value": "Valor",
+      "status": "Status",
+      "enabled": "Habilitado",
+      "enabledHint": "Habilite ou desabilite esta regra de comissão.",
+      "stores": "Lojas",
+      "productTypes": "Tipos de Produto",
+      "categories": "Categorias",
+      "taxIncluded": "Imposto incluído",
+      "taxIncludedHint": "Se marcado, a comissão é calculada sobre o total incluindo o imposto. Se desmarcado, o imposto é excluído e vai integralmente para a loja.",
+      "shippingIncluded": "Envio incluído",
+      "shippingIncludedHint": "Se marcado, a comissão é calculada sobre o total incluindo o envio. Se desmarcado, as taxas de envio vão integralmente para a loja.",
+      "type": {
+        "label": "Tipo",
+        "percentage": "Valor da Promoção",
+        "fixed": "Fixo",
+        "percentageHint": "Cobrar um percentual do total do pedido.",
+        "fixedHint": "Cobrar um valor fixo por pedido."
+      },
+      "scopeType": {
+        "label": "Tipo",
+        "store": "Loja",
+        "productType": "Tipo de produto",
+        "category": "Categoria",
+        "storeProductType": "Loja + Tipo de produto",
+        "storeCategory": "Loja + Categoria",
+        "storeHint": "Aplicar a lojas específicas.",
+        "productTypeHint": "Aplicar a tipos de produto específicos.",
+        "categoryHint": "Aplicar a categorias específicas.",
+        "storeProductTypeHint": "Aplicar a tipos de produto dentro de lojas específicas.",
+        "storeCategoryHint": "Aplicar a categorias dentro de lojas específicas."
+      }
+    },
+    "global": {
+      "title": "Comissão global",
+      "code": "Código",
+      "type": "Tipo",
+      "value": "Valor",
+      "tax": "Imposto",
+      "shipping": "Envio",
+      "included": "Incluído na comissão",
+      "notIncluded": "Não incluído na comissão",
+      "edit": {
+        "header": "Editar comissão global",
+        "successToast": "A comissão global foi atualizada com sucesso."
+      }
+    },
+    "rules": {
+      "title": "Regras de comissão",
+      "columns": {
+        "rule": "Regra",
+        "scope": "Escopo",
+        "type": "Tipo",
+        "value": "Valor",
+        "status": "Status"
+      },
+      "empty": {
+        "heading": "Nenhuma regra de comissão ainda",
+        "description": "Crie uma regra de comissão para substituir a comissão global de\nlojas, tipos de produto ou categorias específicas."
+      }
+    },
+    "status": {
+      "enabled": "Ativo",
+      "disabled": "Inativo"
+    },
+    "validation": {
+      "titleRequired": "Informe um título",
+      "codeRequired": "Informe um código",
+      "value": "Informe um valor",
+      "storesRequired": "Selecione pelo menos uma loja",
+      "productTypesRequired": "Selecione pelo menos um tipo de produto",
+      "categoriesRequired": "Selecione pelo menos uma categoria"
     }
   },
   "$schema": "./$schema.json",
@@ -2841,6 +2967,17 @@
       "validation": {
         "closedFromRequired": "A data de início do fechamento é obrigatória",
         "closedFromInPast": "A data de início do fechamento não pode estar no passado"
+      },
+      "header": "Fechamento programado",
+      "edit": {
+        "header": "Agendar fechamento da loja",
+        "description": "Configure as datas de fechamento programado desta loja.",
+        "successToast": "Fechamento programado atualizado"
+      },
+      "fields": {
+        "closedFrom": "Fechar a partir de",
+        "closedTo": "Fechar até",
+        "closedToHint": "Se estiver vazio, a loja permanecerá fechada indefinidamente."
       }
     },
     "domain": "Loja",
@@ -2940,19 +3077,6 @@
         "title": "Nenhum período de folga ainda",
         "message": "Esta loja não possui períodos de folga agendados",
         "action": "Criar"
-      }
-    },
-    "scheduledClosure": {
-      "header": "Fechamento programado",
-      "edit": {
-        "header": "Agendar fechamento da loja",
-        "description": "Configure as datas de fechamento programado desta loja.",
-        "successToast": "Fechamento programado atualizado"
-      },
-      "fields": {
-        "closedFrom": "Fechar a partir de",
-        "closedTo": "Fechar até",
-        "closedToHint": "Se estiver vazio, a loja permanecerá fechada indefinidamente."
       }
     }
   },
@@ -3801,40 +3925,6 @@
       "description": "Descrição"
     }
   },
-  "views": {
-    "save": "Salvar",
-    "saveAsNew": "Salvar como nova visualização",
-    "saveAsSystemDefault": "Salvar como padrão do sistema",
-    "updateDefaultForEveryone": "Atualizar padrão para todos",
-    "updateViewName": "Atualizar visualização",
-    "updateNamed": "Atualizar \"{{name}}\"",
-    "prompts": {
-      "updateDefault": {
-        "title": "Atualizar visualização padrão",
-        "description": "Isso atualizará a visualização padrão para todos os usuários. Tem certeza?",
-        "confirmText": "Atualizar para todos",
-        "cancelText": "Cancelar"
-      },
-      "updateView": {
-        "title": "Atualizar visualização",
-        "description": "Tem certeza de que deseja atualizar \"{{name}}\"?",
-        "confirmText": "Atualizar",
-        "cancelText": "Cancelar"
-      },
-      "saveAsDefault": {
-        "title": "Salvar como padrão do sistema",
-        "description": "Isso salvará a configuração atual como padrão do sistema. Todos os usuários verão esta configuração por padrão, a menos que tenham suas próprias visualizações pessoais. Tem certeza?",
-        "confirmText": "Salvar como padrão",
-        "cancelText": "Cancelar"
-      },
-      "updateExisting": {
-        "title": "Atualizar visualização existente",
-        "description": "Atualizar \"{{name}}\" com a configuração atual?",
-        "confirmText": "Atualizar",
-        "cancelText": "Cancelar"
-      }
-    }
-  },
   "requests": {
     "domain": "Solicitações",
     "seller": "Loja",
@@ -4008,102 +4098,6 @@
   },
   "commissionLines": {
     "domain": "Linhas de comissão"
-  },
-  "commissions": {
-    "domain": "Comissões",
-    "create": {
-      "header": "Criar regra de comissão",
-      "details": "Detalhes",
-      "commission": "Comissão",
-      "successToast": "A regra de comissão foi criada com sucesso."
-    },
-    "edit": {
-      "header": "Editar regra de comissão",
-      "successToast": "A regra de comissão foi atualizada com sucesso."
-    },
-    "commissionEdit": {
-      "header": "Editar comissão",
-      "successToast": "A comissão foi atualizada com sucesso."
-    },
-    "delete": {
-      "title": "Excluir regra de comissão",
-      "description": "Você está prestes a excluir a regra de comissão {{name}}. Esta ação não pode ser desfeita.",
-      "successToast": "A regra de comissão foi excluída com sucesso."
-    },
-    "fields": {
-      "code": "Código",
-      "value": "Valor",
-      "status": "Status",
-      "enabled": "Habilitado",
-      "enabledHint": "Habilite ou desabilite esta regra de comissão.",
-      "stores": "Lojas",
-      "productTypes": "Tipos de Produto",
-      "categories": "Categorias",
-      "taxIncluded": "Imposto incluído",
-      "taxIncludedHint": "Se marcado, a comissão é calculada sobre o total incluindo o imposto. Se desmarcado, o imposto é excluído e vai integralmente para a loja.",
-      "shippingIncluded": "Envio incluído",
-      "shippingIncludedHint": "Se marcado, a comissão é calculada sobre o total incluindo o envio. Se desmarcado, as taxas de envio vão integralmente para a loja.",
-      "type": {
-        "label": "Tipo",
-        "percentage": "Valor da Promoção",
-        "fixed": "Fixo",
-        "percentageHint": "Cobrar um percentual do total do pedido.",
-        "fixedHint": "Cobrar um valor fixo por pedido."
-      },
-      "scopeType": {
-        "label": "Tipo",
-        "store": "Loja",
-        "productType": "Tipo de produto",
-        "category": "Categoria",
-        "storeProductType": "Loja + Tipo de produto",
-        "storeCategory": "Loja + Categoria",
-        "storeHint": "Aplicar a lojas específicas.",
-        "productTypeHint": "Aplicar a tipos de produto específicos.",
-        "categoryHint": "Aplicar a categorias específicas.",
-        "storeProductTypeHint": "Aplicar a tipos de produto dentro de lojas específicas.",
-        "storeCategoryHint": "Aplicar a categorias dentro de lojas específicas."
-      }
-    },
-    "global": {
-      "title": "Comissão global",
-      "code": "Código",
-      "type": "Tipo",
-      "value": "Valor",
-      "tax": "Imposto",
-      "shipping": "Envio",
-      "included": "Incluído na comissão",
-      "notIncluded": "Não incluído na comissão",
-      "edit": {
-        "header": "Editar comissão global",
-        "successToast": "A comissão global foi atualizada com sucesso."
-      }
-    },
-    "rules": {
-      "title": "Regras de comissão",
-      "columns": {
-        "rule": "Regra",
-        "scope": "Escopo",
-        "type": "Tipo",
-        "value": "Valor",
-        "status": "Status"
-      },
-      "empty": {
-        "heading": "Nenhuma regra de comissão ainda",
-        "description": "Crie uma regra de comissão para substituir a comissão global de\nlojas, tipos de produto ou categorias específicas."
-      }
-    },
-    "status": {
-      "enabled": "Ativo",
-      "disabled": "Inativo"
-    },
-    "validation": {
-      "titleRequired": "Informe um título",
-      "codeRequired": "Informe um código",
-      "value": "Informe um valor",
-      "storesRequired": "Selecione pelo menos uma loja",
-      "productTypesRequired": "Selecione pelo menos um tipo de produto",
-      "categoriesRequired": "Selecione pelo menos uma categoria"
-    }
   },
   "commissionRates": {
     "domain": "Taxas de comissão",

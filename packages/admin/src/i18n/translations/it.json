@@ -8,6 +8,38 @@
       "updateFailed": "Impossibile aggiornare la vista",
       "deleted": "Vista eliminata con successo",
       "deleteFailed": "Impossibile eliminare la vista"
+    },
+    "save": "Salva",
+    "saveAsNew": "Salva come nuova vista",
+    "saveAsSystemDefault": "Salva come predefinita di sistema",
+    "updateDefaultForEveryone": "Aggiorna predefinita per tutti",
+    "updateViewName": "Aggiorna vista",
+    "updateNamed": "Aggiorna \"{{name}}\"",
+    "prompts": {
+      "updateDefault": {
+        "title": "Aggiorna vista predefinita",
+        "description": "Questa operazione aggiornerà la vista predefinita per tutti gli utenti. Sei sicuro?",
+        "confirmText": "Aggiorna per tutti",
+        "cancelText": "Annulla"
+      },
+      "updateView": {
+        "title": "Aggiorna vista",
+        "description": "Sei sicuro di voler aggiornare \"{{name}}\"?",
+        "confirmText": "Aggiorna",
+        "cancelText": "Annulla"
+      },
+      "saveAsDefault": {
+        "title": "Salva come predefinita di sistema",
+        "description": "Questa operazione salverà la configurazione attuale come predefinita di sistema. Tutti gli utenti vedranno questa configurazione per impostazione predefinita a meno che non abbiano proprie viste personali. Sei sicuro?",
+        "confirmText": "Salva come predefinita",
+        "cancelText": "Annulla"
+      },
+      "updateExisting": {
+        "title": "Aggiorna vista esistente",
+        "description": "Aggiornare \"{{name}}\" con la configurazione attuale?",
+        "confirmText": "Aggiorna",
+        "cancelText": "Annulla"
+      }
     }
   },
   "commissions": {
@@ -15,6 +47,100 @@
       "name": "Nome della regola",
       "attribute": "Attributo",
       "fee": "Commissione"
+    },
+    "domain": "Commissioni",
+    "create": {
+      "header": "Crea regola di commissione",
+      "details": "Dettagli",
+      "commission": "Commissione",
+      "successToast": "La regola di commissione è stata creata con successo."
+    },
+    "edit": {
+      "header": "Modifica regola di commissione",
+      "successToast": "La regola di commissione è stata aggiornata con successo."
+    },
+    "commissionEdit": {
+      "header": "Modifica commissione",
+      "successToast": "La commissione è stata aggiornata con successo."
+    },
+    "delete": {
+      "title": "Elimina regola di commissione",
+      "description": "Stai per eliminare la regola di commissione {{name}}. Questa azione non può essere annullata.",
+      "successToast": "La regola di commissione è stata eliminata con successo."
+    },
+    "fields": {
+      "code": "Codice",
+      "value": "Valore",
+      "status": "Stato",
+      "enabled": "Abilitato",
+      "enabledHint": "Abilita o disabilita questa regola di commissione.",
+      "stores": "Negozi",
+      "productTypes": "Tipi di prodotto",
+      "categories": "Categorie",
+      "taxIncluded": "Tasse incluse",
+      "taxIncludedHint": "Se selezionato, la commissione viene calcolata sul totale comprensivo di tasse. Se deselezionato, le tasse sono escluse e vanno interamente al negozio.",
+      "shippingIncluded": "Spedizione inclusa",
+      "shippingIncludedHint": "Se selezionato, la commissione viene calcolata sul totale comprensivo di spedizione. Se deselezionato, le spese di spedizione vanno interamente al negozio.",
+      "type": {
+        "label": "Tipo",
+        "percentage": "Valore Promozionale",
+        "fixed": "Fisso",
+        "percentageHint": "Applica una percentuale sul totale dell'ordine.",
+        "fixedHint": "Applica un importo fisso per ordine."
+      },
+      "scopeType": {
+        "label": "Tipo",
+        "store": "Negozio",
+        "productType": "Tipo prodotto",
+        "category": "Categoria",
+        "storeProductType": "Negozio + Tipo prodotto",
+        "storeCategory": "Negozio + Categoria",
+        "storeHint": "Applica a negozi specifici.",
+        "productTypeHint": "Applica a tipi di prodotto specifici.",
+        "categoryHint": "Applica a categorie specifiche.",
+        "storeProductTypeHint": "Applica a tipi di prodotto all'interno di negozi specifici.",
+        "storeCategoryHint": "Applica a categorie all'interno di negozi specifici."
+      }
+    },
+    "global": {
+      "title": "Commissione globale",
+      "code": "Codice",
+      "type": "Tipo",
+      "value": "Valore",
+      "tax": "Tassa",
+      "shipping": "Spedizione",
+      "included": "Incluso nella commissione",
+      "notIncluded": "Non incluso nella commissione",
+      "edit": {
+        "header": "Modifica commissione globale",
+        "successToast": "La commissione globale è stata aggiornata con successo."
+      }
+    },
+    "rules": {
+      "title": "Regole di commissione",
+      "columns": {
+        "rule": "Regola",
+        "scope": "Ambito",
+        "type": "Tipo",
+        "value": "Valore",
+        "status": "Stato"
+      },
+      "empty": {
+        "heading": "Nessuna regola di commissione ancora",
+        "description": "Crea una regola di commissione per sovrascrivere la commissione globale per\nnegozi, tipi di prodotto o categorie specifici."
+      }
+    },
+    "status": {
+      "enabled": "Attivo",
+      "disabled": "Inattivo"
+    },
+    "validation": {
+      "titleRequired": "Inserisci un titolo",
+      "codeRequired": "Inserisci un codice",
+      "value": "Inserisci un valore",
+      "storesRequired": "Seleziona almeno un negozio",
+      "productTypesRequired": "Seleziona almeno un tipo di prodotto",
+      "categoriesRequired": "Seleziona almeno una categoria"
     }
   },
   "$schema": "./$schema.json",
@@ -2841,6 +2967,17 @@
       "validation": {
         "closedFromRequired": "La data di inizio della chiusura è obbligatoria",
         "closedFromInPast": "La data di inizio della chiusura non può essere nel passato"
+      },
+      "header": "Chiusura programmata",
+      "edit": {
+        "header": "Programma chiusura negozio",
+        "description": "Configura le date di chiusura programmata per questo negozio.",
+        "successToast": "Chiusura programmata aggiornata"
+      },
+      "fields": {
+        "closedFrom": "Chiuso dal",
+        "closedTo": "Chiuso fino al",
+        "closedToHint": "Se vuoto, il negozio rimarrà chiuso a tempo indeterminato."
       }
     },
     "domain": "Negozio",
@@ -2940,19 +3077,6 @@
         "title": "Nessuna chiusura ancora",
         "message": "Questo negozio non ha chiusure programmate",
         "action": "Crea"
-      }
-    },
-    "scheduledClosure": {
-      "header": "Chiusura programmata",
-      "edit": {
-        "header": "Programma chiusura negozio",
-        "description": "Configura le date di chiusura programmata per questo negozio.",
-        "successToast": "Chiusura programmata aggiornata"
-      },
-      "fields": {
-        "closedFrom": "Chiuso dal",
-        "closedTo": "Chiuso fino al",
-        "closedToHint": "Se vuoto, il negozio rimarrà chiuso a tempo indeterminato."
       }
     }
   },
@@ -3801,40 +3925,6 @@
       "description": "Descrizione"
     }
   },
-  "views": {
-    "save": "Salva",
-    "saveAsNew": "Salva come nuova vista",
-    "saveAsSystemDefault": "Salva come predefinita di sistema",
-    "updateDefaultForEveryone": "Aggiorna predefinita per tutti",
-    "updateViewName": "Aggiorna vista",
-    "updateNamed": "Aggiorna \"{{name}}\"",
-    "prompts": {
-      "updateDefault": {
-        "title": "Aggiorna vista predefinita",
-        "description": "Questa operazione aggiornerà la vista predefinita per tutti gli utenti. Sei sicuro?",
-        "confirmText": "Aggiorna per tutti",
-        "cancelText": "Annulla"
-      },
-      "updateView": {
-        "title": "Aggiorna vista",
-        "description": "Sei sicuro di voler aggiornare \"{{name}}\"?",
-        "confirmText": "Aggiorna",
-        "cancelText": "Annulla"
-      },
-      "saveAsDefault": {
-        "title": "Salva come predefinita di sistema",
-        "description": "Questa operazione salverà la configurazione attuale come predefinita di sistema. Tutti gli utenti vedranno questa configurazione per impostazione predefinita a meno che non abbiano proprie viste personali. Sei sicuro?",
-        "confirmText": "Salva come predefinita",
-        "cancelText": "Annulla"
-      },
-      "updateExisting": {
-        "title": "Aggiorna vista esistente",
-        "description": "Aggiornare \"{{name}}\" con la configurazione attuale?",
-        "confirmText": "Aggiorna",
-        "cancelText": "Annulla"
-      }
-    }
-  },
   "requests": {
     "domain": "Richieste",
     "seller": "Negozio",
@@ -4008,102 +4098,6 @@
   },
   "commissionLines": {
     "domain": "Righe commissione"
-  },
-  "commissions": {
-    "domain": "Commissioni",
-    "create": {
-      "header": "Crea regola di commissione",
-      "details": "Dettagli",
-      "commission": "Commissione",
-      "successToast": "La regola di commissione è stata creata con successo."
-    },
-    "edit": {
-      "header": "Modifica regola di commissione",
-      "successToast": "La regola di commissione è stata aggiornata con successo."
-    },
-    "commissionEdit": {
-      "header": "Modifica commissione",
-      "successToast": "La commissione è stata aggiornata con successo."
-    },
-    "delete": {
-      "title": "Elimina regola di commissione",
-      "description": "Stai per eliminare la regola di commissione {{name}}. Questa azione non può essere annullata.",
-      "successToast": "La regola di commissione è stata eliminata con successo."
-    },
-    "fields": {
-      "code": "Codice",
-      "value": "Valore",
-      "status": "Stato",
-      "enabled": "Abilitato",
-      "enabledHint": "Abilita o disabilita questa regola di commissione.",
-      "stores": "Negozi",
-      "productTypes": "Tipi di prodotto",
-      "categories": "Categorie",
-      "taxIncluded": "Tasse incluse",
-      "taxIncludedHint": "Se selezionato, la commissione viene calcolata sul totale comprensivo di tasse. Se deselezionato, le tasse sono escluse e vanno interamente al negozio.",
-      "shippingIncluded": "Spedizione inclusa",
-      "shippingIncludedHint": "Se selezionato, la commissione viene calcolata sul totale comprensivo di spedizione. Se deselezionato, le spese di spedizione vanno interamente al negozio.",
-      "type": {
-        "label": "Tipo",
-        "percentage": "Valore Promozionale",
-        "fixed": "Fisso",
-        "percentageHint": "Applica una percentuale sul totale dell'ordine.",
-        "fixedHint": "Applica un importo fisso per ordine."
-      },
-      "scopeType": {
-        "label": "Tipo",
-        "store": "Negozio",
-        "productType": "Tipo prodotto",
-        "category": "Categoria",
-        "storeProductType": "Negozio + Tipo prodotto",
-        "storeCategory": "Negozio + Categoria",
-        "storeHint": "Applica a negozi specifici.",
-        "productTypeHint": "Applica a tipi di prodotto specifici.",
-        "categoryHint": "Applica a categorie specifiche.",
-        "storeProductTypeHint": "Applica a tipi di prodotto all'interno di negozi specifici.",
-        "storeCategoryHint": "Applica a categorie all'interno di negozi specifici."
-      }
-    },
-    "global": {
-      "title": "Commissione globale",
-      "code": "Codice",
-      "type": "Tipo",
-      "value": "Valore",
-      "tax": "Tassa",
-      "shipping": "Spedizione",
-      "included": "Incluso nella commissione",
-      "notIncluded": "Non incluso nella commissione",
-      "edit": {
-        "header": "Modifica commissione globale",
-        "successToast": "La commissione globale è stata aggiornata con successo."
-      }
-    },
-    "rules": {
-      "title": "Regole di commissione",
-      "columns": {
-        "rule": "Regola",
-        "scope": "Ambito",
-        "type": "Tipo",
-        "value": "Valore",
-        "status": "Stato"
-      },
-      "empty": {
-        "heading": "Nessuna regola di commissione ancora",
-        "description": "Crea una regola di commissione per sovrascrivere la commissione globale per\nnegozi, tipi di prodotto o categorie specifici."
-      }
-    },
-    "status": {
-      "enabled": "Attivo",
-      "disabled": "Inattivo"
-    },
-    "validation": {
-      "titleRequired": "Inserisci un titolo",
-      "codeRequired": "Inserisci un codice",
-      "value": "Inserisci un valore",
-      "storesRequired": "Seleziona almeno un negozio",
-      "productTypesRequired": "Seleziona almeno un tipo di prodotto",
-      "categoriesRequired": "Seleziona almeno una categoria"
-    }
   },
   "commissionRates": {
     "domain": "Tariffe di commissione",

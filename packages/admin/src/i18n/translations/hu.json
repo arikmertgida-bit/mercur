@@ -8,6 +8,38 @@
       "updateFailed": "A nézet frissítése nem sikerült",
       "deleted": "Nézet sikeresen törölve",
       "deleteFailed": "A nézet törlése nem sikerült"
+    },
+    "save": "Mentés",
+    "saveAsNew": "Mentés új nézetként",
+    "saveAsSystemDefault": "Mentés rendszer-alapértelmezettként",
+    "updateDefaultForEveryone": "Alapértelmezett frissítése mindenki számára",
+    "updateViewName": "Nézet frissítése",
+    "updateNamed": "„{{name}}” frissítése",
+    "prompts": {
+      "updateDefault": {
+        "title": "Alapértelmezett nézet frissítése",
+        "description": "Ez frissíti az alapértelmezett nézetet minden felhasználó számára. Biztos benne?",
+        "confirmText": "Frissítés mindenki számára",
+        "cancelText": "Mégse"
+      },
+      "updateView": {
+        "title": "Nézet frissítése",
+        "description": "Biztosan frissíti a következőt: „{{name}}”?",
+        "confirmText": "Frissítés",
+        "cancelText": "Mégse"
+      },
+      "saveAsDefault": {
+        "title": "Mentés rendszer-alapértelmezettként",
+        "description": "Ez elmenti a jelenlegi konfigurációt rendszer-alapértelmezettként. Minden felhasználó ezt fogja látni alapértelmezés szerint, kivéve, ha saját személyes nézettel rendelkezik. Biztos benne?",
+        "confirmText": "Mentés alapértelmezettként",
+        "cancelText": "Mégse"
+      },
+      "updateExisting": {
+        "title": "Meglévő nézet frissítése",
+        "description": "Frissíti a(z) „{{name}}” nézetet a jelenlegi konfigurációval?",
+        "confirmText": "Frissítés",
+        "cancelText": "Mégse"
+      }
     }
   },
   "commissions": {
@@ -15,6 +47,100 @@
       "name": "Szabály neve",
       "attribute": "Attribútum",
       "fee": "Díj"
+    },
+    "domain": "Jutalékok",
+    "create": {
+      "header": "Jutalékszabály létrehozása",
+      "details": "Részletek",
+      "commission": "Jutalék",
+      "successToast": "A jutalékszabály sikeresen létrehozva."
+    },
+    "edit": {
+      "header": "Jutalékszabály szerkesztése",
+      "successToast": "A jutalékszabály sikeresen frissítve."
+    },
+    "commissionEdit": {
+      "header": "Jutalék szerkesztése",
+      "successToast": "A jutalék sikeresen frissítve."
+    },
+    "delete": {
+      "title": "Jutalékszabály törlése",
+      "description": "A(z) {{name}} jutalékszabályt fogja törölni. Ez a művelet nem vonható vissza.",
+      "successToast": "A jutalékszabály sikeresen törölve."
+    },
+    "fields": {
+      "code": "Kód",
+      "value": "Érték",
+      "status": "Státusz",
+      "enabled": "Engedélyezve",
+      "enabledHint": "Ennek a jutalékszabálynak az engedélyezése vagy letiltása.",
+      "stores": "Áruházak",
+      "productTypes": "Terméktípusok",
+      "categories": "Kategóriák",
+      "taxIncluded": "Adóval együtt",
+      "taxIncludedHint": "Ha be van jelölve, a jutalék az adóval együtt számított összeg alapján kerül kiszámításra. Ha nincs bejelölve, az adó kimarad, és teljes egészében az üzlethez kerül.",
+      "shippingIncluded": "Szállítási költséggel együtt",
+      "shippingIncludedHint": "Ha be van jelölve, a jutalék a szállítási költséggel együtt számított összeg alapján kerül kiszámításra. Ha nincs bejelölve, a szállítási díj teljes egészében az üzlethez kerül.",
+      "type": {
+        "label": "Típus",
+        "percentage": "Promóció Értéke",
+        "fixed": "Fix",
+        "percentageHint": "A rendelés teljes összegének százalékos díja.",
+        "fixedHint": "Fix összegű díj rendelésenként."
+      },
+      "scopeType": {
+        "label": "Típus",
+        "store": "Áruház",
+        "productType": "Terméktípus",
+        "category": "Kategória",
+        "storeProductType": "Üzlet + terméktípus",
+        "storeCategory": "Üzlet + kategória",
+        "storeHint": "Alkalmazás meghatározott üzletekre.",
+        "productTypeHint": "Alkalmazás meghatározott terméktípusokra.",
+        "categoryHint": "Alkalmazás meghatározott kategóriákra.",
+        "storeProductTypeHint": "Alkalmazás meghatározott üzletek terméktípusaira.",
+        "storeCategoryHint": "Alkalmazás meghatározott üzletek kategóriáira."
+      }
+    },
+    "global": {
+      "title": "Globális jutalék",
+      "code": "Kód",
+      "type": "Típus",
+      "value": "Érték",
+      "tax": "Adó",
+      "shipping": "Szállítás",
+      "included": "Beleszámít a jutalékba",
+      "notIncluded": "Nem számít bele a jutalékba",
+      "edit": {
+        "header": "Globális jutalék szerkesztése",
+        "successToast": "A globális jutalék sikeresen frissítve."
+      }
+    },
+    "rules": {
+      "title": "Jutalékszabályok",
+      "columns": {
+        "rule": "Szabály",
+        "scope": "Hatókör",
+        "type": "Típus",
+        "value": "Érték",
+        "status": "Státusz"
+      },
+      "empty": {
+        "heading": "Még nincsenek jutalékszabályok",
+        "description": "Hozzon létre jutalékszabályt, hogy felülírja a globális jutalékot\nmeghatározott üzletekre, terméktípusokra vagy kategóriákra."
+      }
+    },
+    "status": {
+      "enabled": "Aktív",
+      "disabled": "Inaktív"
+    },
+    "validation": {
+      "titleRequired": "Kérjük, adjon meg egy címet",
+      "codeRequired": "Adjon meg egy kódot",
+      "value": "Adjon meg egy értéket",
+      "storesRequired": "Kérjük, válasszon legalább egy áruházat",
+      "productTypesRequired": "Válasszon legalább egy terméktípust",
+      "categoriesRequired": "Kérjük, válasszon legalább egy kategóriát"
     }
   },
   "$schema": "./$schema.json",
@@ -2839,6 +2965,17 @@
       "validation": {
         "closedFromRequired": "A zárás kezdő dátuma kötelező",
         "closedFromInPast": "A zárás kezdő dátuma nem lehet a múltban"
+      },
+      "header": "Ütemezett bezárás",
+      "edit": {
+        "header": "Áruház bezárásának ütemezése",
+        "description": "Állítsa be ennek az áruháznak az ütemezett bezárási időpontjait.",
+        "successToast": "Az ütemezett bezárás frissítve"
+      },
+      "fields": {
+        "closedFrom": "Bezárás ettől",
+        "closedTo": "Bezárás eddig",
+        "closedToHint": "Ha üresen hagyja, az áruház határozatlan ideig zárva marad."
       }
     },
     "domain": "Áruház",
@@ -2938,19 +3075,6 @@
         "title": "Még nincs beütemezett szünet",
         "message": "Ennek az áruháznak nincs beütemezett szünete",
         "action": "Létrehozás"
-      }
-    },
-    "scheduledClosure": {
-      "header": "Ütemezett bezárás",
-      "edit": {
-        "header": "Áruház bezárásának ütemezése",
-        "description": "Állítsa be ennek az áruháznak az ütemezett bezárási időpontjait.",
-        "successToast": "Az ütemezett bezárás frissítve"
-      },
-      "fields": {
-        "closedFrom": "Bezárás ettől",
-        "closedTo": "Bezárás eddig",
-        "closedToHint": "Ha üresen hagyja, az áruház határozatlan ideig zárva marad."
       }
     }
   },
@@ -3799,40 +3923,6 @@
       "description": "Leírás"
     }
   },
-  "views": {
-    "save": "Mentés",
-    "saveAsNew": "Mentés új nézetként",
-    "saveAsSystemDefault": "Mentés rendszer-alapértelmezettként",
-    "updateDefaultForEveryone": "Alapértelmezett frissítése mindenki számára",
-    "updateViewName": "Nézet frissítése",
-    "updateNamed": "„{{name}}” frissítése",
-    "prompts": {
-      "updateDefault": {
-        "title": "Alapértelmezett nézet frissítése",
-        "description": "Ez frissíti az alapértelmezett nézetet minden felhasználó számára. Biztos benne?",
-        "confirmText": "Frissítés mindenki számára",
-        "cancelText": "Mégse"
-      },
-      "updateView": {
-        "title": "Nézet frissítése",
-        "description": "Biztosan frissíti a következőt: „{{name}}”?",
-        "confirmText": "Frissítés",
-        "cancelText": "Mégse"
-      },
-      "saveAsDefault": {
-        "title": "Mentés rendszer-alapértelmezettként",
-        "description": "Ez elmenti a jelenlegi konfigurációt rendszer-alapértelmezettként. Minden felhasználó ezt fogja látni alapértelmezés szerint, kivéve, ha saját személyes nézettel rendelkezik. Biztos benne?",
-        "confirmText": "Mentés alapértelmezettként",
-        "cancelText": "Mégse"
-      },
-      "updateExisting": {
-        "title": "Meglévő nézet frissítése",
-        "description": "Frissíti a(z) „{{name}}” nézetet a jelenlegi konfigurációval?",
-        "confirmText": "Frissítés",
-        "cancelText": "Mégse"
-      }
-    }
-  },
   "requests": {
     "domain": "Kérelmek",
     "seller": "Áruház",
@@ -4006,102 +4096,6 @@
   },
   "commissionLines": {
     "domain": "Jutaléksorok"
-  },
-  "commissions": {
-    "domain": "Jutalékok",
-    "create": {
-      "header": "Jutalékszabály létrehozása",
-      "details": "Részletek",
-      "commission": "Jutalék",
-      "successToast": "A jutalékszabály sikeresen létrehozva."
-    },
-    "edit": {
-      "header": "Jutalékszabály szerkesztése",
-      "successToast": "A jutalékszabály sikeresen frissítve."
-    },
-    "commissionEdit": {
-      "header": "Jutalék szerkesztése",
-      "successToast": "A jutalék sikeresen frissítve."
-    },
-    "delete": {
-      "title": "Jutalékszabály törlése",
-      "description": "A(z) {{name}} jutalékszabályt fogja törölni. Ez a művelet nem vonható vissza.",
-      "successToast": "A jutalékszabály sikeresen törölve."
-    },
-    "fields": {
-      "code": "Kód",
-      "value": "Érték",
-      "status": "Státusz",
-      "enabled": "Engedélyezve",
-      "enabledHint": "Ennek a jutalékszabálynak az engedélyezése vagy letiltása.",
-      "stores": "Áruházak",
-      "productTypes": "Terméktípusok",
-      "categories": "Kategóriák",
-      "taxIncluded": "Adóval együtt",
-      "taxIncludedHint": "Ha be van jelölve, a jutalék az adóval együtt számított összeg alapján kerül kiszámításra. Ha nincs bejelölve, az adó kimarad, és teljes egészében az üzlethez kerül.",
-      "shippingIncluded": "Szállítási költséggel együtt",
-      "shippingIncludedHint": "Ha be van jelölve, a jutalék a szállítási költséggel együtt számított összeg alapján kerül kiszámításra. Ha nincs bejelölve, a szállítási díj teljes egészében az üzlethez kerül.",
-      "type": {
-        "label": "Típus",
-        "percentage": "Promóció Értéke",
-        "fixed": "Fix",
-        "percentageHint": "A rendelés teljes összegének százalékos díja.",
-        "fixedHint": "Fix összegű díj rendelésenként."
-      },
-      "scopeType": {
-        "label": "Típus",
-        "store": "Áruház",
-        "productType": "Terméktípus",
-        "category": "Kategória",
-        "storeProductType": "Üzlet + terméktípus",
-        "storeCategory": "Üzlet + kategória",
-        "storeHint": "Alkalmazás meghatározott üzletekre.",
-        "productTypeHint": "Alkalmazás meghatározott terméktípusokra.",
-        "categoryHint": "Alkalmazás meghatározott kategóriákra.",
-        "storeProductTypeHint": "Alkalmazás meghatározott üzletek terméktípusaira.",
-        "storeCategoryHint": "Alkalmazás meghatározott üzletek kategóriáira."
-      }
-    },
-    "global": {
-      "title": "Globális jutalék",
-      "code": "Kód",
-      "type": "Típus",
-      "value": "Érték",
-      "tax": "Adó",
-      "shipping": "Szállítás",
-      "included": "Beleszámít a jutalékba",
-      "notIncluded": "Nem számít bele a jutalékba",
-      "edit": {
-        "header": "Globális jutalék szerkesztése",
-        "successToast": "A globális jutalék sikeresen frissítve."
-      }
-    },
-    "rules": {
-      "title": "Jutalékszabályok",
-      "columns": {
-        "rule": "Szabály",
-        "scope": "Hatókör",
-        "type": "Típus",
-        "value": "Érték",
-        "status": "Státusz"
-      },
-      "empty": {
-        "heading": "Még nincsenek jutalékszabályok",
-        "description": "Hozzon létre jutalékszabályt, hogy felülírja a globális jutalékot\nmeghatározott üzletekre, terméktípusokra vagy kategóriákra."
-      }
-    },
-    "status": {
-      "enabled": "Aktív",
-      "disabled": "Inaktív"
-    },
-    "validation": {
-      "titleRequired": "Kérjük, adjon meg egy címet",
-      "codeRequired": "Adjon meg egy kódot",
-      "value": "Adjon meg egy értéket",
-      "storesRequired": "Kérjük, válasszon legalább egy áruházat",
-      "productTypesRequired": "Válasszon legalább egy terméktípust",
-      "categoriesRequired": "Kérjük, válasszon legalább egy kategóriát"
-    }
   },
   "commissionRates": {
     "domain": "Jutalékkulcsok",

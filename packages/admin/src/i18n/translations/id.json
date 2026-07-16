@@ -8,6 +8,38 @@
       "updateFailed": "Gagal memperbarui tampilan",
       "deleted": "Tampilan berhasil dihapus",
       "deleteFailed": "Gagal menghapus tampilan"
+    },
+    "save": "Simpan",
+    "saveAsNew": "Simpan sebagai tampilan baru",
+    "saveAsSystemDefault": "Simpan sebagai default sistem",
+    "updateDefaultForEveryone": "Perbarui default untuk semua orang",
+    "updateViewName": "Perbarui tampilan",
+    "updateNamed": "Perbarui \"{{name}}\"",
+    "prompts": {
+      "updateDefault": {
+        "title": "Perbarui tampilan default",
+        "description": "Ini akan memperbarui tampilan default untuk semua pengguna. Apakah Anda yakin?",
+        "confirmText": "Perbarui untuk semua orang",
+        "cancelText": "Batal"
+      },
+      "updateView": {
+        "title": "Perbarui tampilan",
+        "description": "Apakah Anda yakin ingin memperbarui \"{{name}}\"?",
+        "confirmText": "Perbarui",
+        "cancelText": "Batal"
+      },
+      "saveAsDefault": {
+        "title": "Simpan sebagai default sistem",
+        "description": "Ini akan menyimpan konfigurasi saat ini sebagai default sistem. Semua pengguna akan melihat konfigurasi ini secara default kecuali mereka memiliki tampilan pribadi sendiri. Apakah Anda yakin?",
+        "confirmText": "Simpan sebagai default",
+        "cancelText": "Batal"
+      },
+      "updateExisting": {
+        "title": "Perbarui tampilan yang ada",
+        "description": "Perbarui \"{{name}}\" dengan konfigurasi saat ini?",
+        "confirmText": "Perbarui",
+        "cancelText": "Batal"
+      }
     }
   },
   "commissions": {
@@ -15,6 +47,100 @@
       "name": "Nama Aturan",
       "attribute": "Atribut",
       "fee": "Biaya"
+    },
+    "domain": "Komisi",
+    "create": {
+      "header": "Buat Aturan Komisi",
+      "details": "Detail",
+      "commission": "Komisi",
+      "successToast": "Aturan komisi berhasil dibuat."
+    },
+    "edit": {
+      "header": "Edit Aturan Komisi",
+      "successToast": "Aturan komisi berhasil diperbarui."
+    },
+    "commissionEdit": {
+      "header": "Edit Komisi",
+      "successToast": "Komisi berhasil diperbarui."
+    },
+    "delete": {
+      "title": "Hapus aturan komisi",
+      "description": "Anda akan menghapus aturan komisi {{name}}. Tindakan ini tidak dapat dibatalkan.",
+      "successToast": "Aturan komisi berhasil dihapus."
+    },
+    "fields": {
+      "code": "Kode",
+      "value": "Nilai",
+      "status": "Status",
+      "enabled": "Diaktifkan",
+      "enabledHint": "Aktifkan atau nonaktifkan aturan komisi ini.",
+      "stores": "Toko",
+      "productTypes": "Jenis Produk",
+      "categories": "Kategori",
+      "taxIncluded": "Termasuk pajak",
+      "taxIncludedHint": "Jika dicentang, komisi dihitung dari total termasuk pajak. Jika tidak dicentang, pajak dikecualikan dan sepenuhnya menjadi milik toko.",
+      "shippingIncluded": "Termasuk pengiriman",
+      "shippingIncludedHint": "Jika dicentang, komisi dihitung dari total termasuk biaya pengiriman. Jika tidak dicentang, biaya pengiriman sepenuhnya menjadi milik toko.",
+      "type": {
+        "label": "Jenis",
+        "percentage": "Persentase",
+        "fixed": "Tetap",
+        "percentageHint": "Kenakan persentase dari total pesanan.",
+        "fixedHint": "Kenakan jumlah tetap per pesanan."
+      },
+      "scopeType": {
+        "label": "Jenis",
+        "store": "Toko",
+        "productType": "Jenis Produk",
+        "category": "Kategori",
+        "storeProductType": "Toko + Jenis Produk",
+        "storeCategory": "Toko + Kategori",
+        "storeHint": "Terapkan pada toko tertentu.",
+        "productTypeHint": "Terapkan pada jenis produk tertentu.",
+        "categoryHint": "Terapkan pada kategori tertentu.",
+        "storeProductTypeHint": "Terapkan pada jenis produk dalam toko tertentu.",
+        "storeCategoryHint": "Terapkan pada kategori dalam toko tertentu."
+      }
+    },
+    "global": {
+      "title": "Komisi Global",
+      "code": "Kode",
+      "type": "Jenis",
+      "value": "Nilai",
+      "tax": "Pajak",
+      "shipping": "Pengiriman",
+      "included": "Termasuk dalam komisi",
+      "notIncluded": "Tidak termasuk dalam komisi",
+      "edit": {
+        "header": "Edit Komisi Global",
+        "successToast": "Komisi global berhasil diperbarui."
+      }
+    },
+    "rules": {
+      "title": "Aturan Komisi",
+      "columns": {
+        "rule": "Aturan",
+        "scope": "Cakupan",
+        "type": "Jenis",
+        "value": "Nilai",
+        "status": "Status"
+      },
+      "empty": {
+        "heading": "Belum ada aturan komisi",
+        "description": "Buat aturan komisi untuk mengganti komisi global untuk\ntoko, jenis produk, atau kategori tertentu."
+      }
+    },
+    "status": {
+      "enabled": "Aktif",
+      "disabled": "Tidak aktif"
+    },
+    "validation": {
+      "titleRequired": "Silakan masukkan judul",
+      "codeRequired": "Silakan masukkan kode",
+      "value": "Silakan masukkan nilai",
+      "storesRequired": "Silakan pilih setidaknya satu toko",
+      "productTypesRequired": "Silakan pilih setidaknya satu jenis produk",
+      "categoriesRequired": "Silakan pilih setidaknya satu kategori"
     }
   },
   "$schema": "./$schema.json",
@@ -2837,6 +2963,17 @@
       "validation": {
         "closedFromRequired": "Tanggal mulai penutupan wajib diisi",
         "closedFromInPast": "Tanggal mulai penutupan tidak boleh di masa lalu"
+      },
+      "header": "Penutupan Terjadwal",
+      "edit": {
+        "header": "Jadwalkan Penutupan Toko",
+        "description": "Atur tanggal penutupan terjadwal untuk toko ini.",
+        "successToast": "Penutupan terjadwal diperbarui"
+      },
+      "fields": {
+        "closedFrom": "Tutup mulai",
+        "closedTo": "Tutup hingga",
+        "closedToHint": "Jika kosong, toko akan tetap tutup tanpa batas waktu."
       }
     },
     "domain": "Toko",
@@ -2936,19 +3073,6 @@
         "title": "Belum ada cuti",
         "message": "Toko ini belum memiliki jadwal cuti",
         "action": "Buat"
-      }
-    },
-    "scheduledClosure": {
-      "header": "Penutupan Terjadwal",
-      "edit": {
-        "header": "Jadwalkan Penutupan Toko",
-        "description": "Atur tanggal penutupan terjadwal untuk toko ini.",
-        "successToast": "Penutupan terjadwal diperbarui"
-      },
-      "fields": {
-        "closedFrom": "Tutup mulai",
-        "closedTo": "Tutup hingga",
-        "closedToHint": "Jika kosong, toko akan tetap tutup tanpa batas waktu."
       }
     }
   },
@@ -3796,40 +3920,6 @@
       "description": "Deskripsi"
     }
   },
-  "views": {
-    "save": "Simpan",
-    "saveAsNew": "Simpan sebagai tampilan baru",
-    "saveAsSystemDefault": "Simpan sebagai default sistem",
-    "updateDefaultForEveryone": "Perbarui default untuk semua orang",
-    "updateViewName": "Perbarui tampilan",
-    "updateNamed": "Perbarui \"{{name}}\"",
-    "prompts": {
-      "updateDefault": {
-        "title": "Perbarui tampilan default",
-        "description": "Ini akan memperbarui tampilan default untuk semua pengguna. Apakah Anda yakin?",
-        "confirmText": "Perbarui untuk semua orang",
-        "cancelText": "Batal"
-      },
-      "updateView": {
-        "title": "Perbarui tampilan",
-        "description": "Apakah Anda yakin ingin memperbarui \"{{name}}\"?",
-        "confirmText": "Perbarui",
-        "cancelText": "Batal"
-      },
-      "saveAsDefault": {
-        "title": "Simpan sebagai default sistem",
-        "description": "Ini akan menyimpan konfigurasi saat ini sebagai default sistem. Semua pengguna akan melihat konfigurasi ini secara default kecuali mereka memiliki tampilan pribadi sendiri. Apakah Anda yakin?",
-        "confirmText": "Simpan sebagai default",
-        "cancelText": "Batal"
-      },
-      "updateExisting": {
-        "title": "Perbarui tampilan yang ada",
-        "description": "Perbarui \"{{name}}\" dengan konfigurasi saat ini?",
-        "confirmText": "Perbarui",
-        "cancelText": "Batal"
-      }
-    }
-  },
   "requests": {
     "domain": "Permintaan",
     "seller": "Toko",
@@ -4003,102 +4093,6 @@
   },
   "commissionLines": {
     "domain": "Baris Komisi"
-  },
-  "commissions": {
-    "domain": "Komisi",
-    "create": {
-      "header": "Buat Aturan Komisi",
-      "details": "Detail",
-      "commission": "Komisi",
-      "successToast": "Aturan komisi berhasil dibuat."
-    },
-    "edit": {
-      "header": "Edit Aturan Komisi",
-      "successToast": "Aturan komisi berhasil diperbarui."
-    },
-    "commissionEdit": {
-      "header": "Edit Komisi",
-      "successToast": "Komisi berhasil diperbarui."
-    },
-    "delete": {
-      "title": "Hapus aturan komisi",
-      "description": "Anda akan menghapus aturan komisi {{name}}. Tindakan ini tidak dapat dibatalkan.",
-      "successToast": "Aturan komisi berhasil dihapus."
-    },
-    "fields": {
-      "code": "Kode",
-      "value": "Nilai",
-      "status": "Status",
-      "enabled": "Diaktifkan",
-      "enabledHint": "Aktifkan atau nonaktifkan aturan komisi ini.",
-      "stores": "Toko",
-      "productTypes": "Jenis Produk",
-      "categories": "Kategori",
-      "taxIncluded": "Termasuk pajak",
-      "taxIncludedHint": "Jika dicentang, komisi dihitung dari total termasuk pajak. Jika tidak dicentang, pajak dikecualikan dan sepenuhnya menjadi milik toko.",
-      "shippingIncluded": "Termasuk pengiriman",
-      "shippingIncludedHint": "Jika dicentang, komisi dihitung dari total termasuk biaya pengiriman. Jika tidak dicentang, biaya pengiriman sepenuhnya menjadi milik toko.",
-      "type": {
-        "label": "Jenis",
-        "percentage": "Persentase",
-        "fixed": "Tetap",
-        "percentageHint": "Kenakan persentase dari total pesanan.",
-        "fixedHint": "Kenakan jumlah tetap per pesanan."
-      },
-      "scopeType": {
-        "label": "Jenis",
-        "store": "Toko",
-        "productType": "Jenis Produk",
-        "category": "Kategori",
-        "storeProductType": "Toko + Jenis Produk",
-        "storeCategory": "Toko + Kategori",
-        "storeHint": "Terapkan pada toko tertentu.",
-        "productTypeHint": "Terapkan pada jenis produk tertentu.",
-        "categoryHint": "Terapkan pada kategori tertentu.",
-        "storeProductTypeHint": "Terapkan pada jenis produk dalam toko tertentu.",
-        "storeCategoryHint": "Terapkan pada kategori dalam toko tertentu."
-      }
-    },
-    "global": {
-      "title": "Komisi Global",
-      "code": "Kode",
-      "type": "Jenis",
-      "value": "Nilai",
-      "tax": "Pajak",
-      "shipping": "Pengiriman",
-      "included": "Termasuk dalam komisi",
-      "notIncluded": "Tidak termasuk dalam komisi",
-      "edit": {
-        "header": "Edit Komisi Global",
-        "successToast": "Komisi global berhasil diperbarui."
-      }
-    },
-    "rules": {
-      "title": "Aturan Komisi",
-      "columns": {
-        "rule": "Aturan",
-        "scope": "Cakupan",
-        "type": "Jenis",
-        "value": "Nilai",
-        "status": "Status"
-      },
-      "empty": {
-        "heading": "Belum ada aturan komisi",
-        "description": "Buat aturan komisi untuk mengganti komisi global untuk\ntoko, jenis produk, atau kategori tertentu."
-      }
-    },
-    "status": {
-      "enabled": "Aktif",
-      "disabled": "Tidak aktif"
-    },
-    "validation": {
-      "titleRequired": "Silakan masukkan judul",
-      "codeRequired": "Silakan masukkan kode",
-      "value": "Silakan masukkan nilai",
-      "storesRequired": "Silakan pilih setidaknya satu toko",
-      "productTypesRequired": "Silakan pilih setidaknya satu jenis produk",
-      "categoriesRequired": "Silakan pilih setidaknya satu kategori"
-    }
   },
   "commissionRates": {
     "domain": "Tarif Komisi",

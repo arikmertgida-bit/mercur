@@ -8,6 +8,38 @@
       "updateFailed": "Bijwerken van weergave mislukt",
       "deleted": "Weergave succesvol verwijderd",
       "deleteFailed": "Verwijderen van weergave mislukt"
+    },
+    "save": "Opslaan",
+    "saveAsNew": "Opslaan als nieuwe weergave",
+    "saveAsSystemDefault": "Opslaan als systeemstandaard",
+    "updateDefaultForEveryone": "Standaard voor iedereen bijwerken",
+    "updateViewName": "Weergave bijwerken",
+    "updateNamed": "\"{{name}}\" bijwerken",
+    "prompts": {
+      "updateDefault": {
+        "title": "Standaardweergave bijwerken",
+        "description": "Dit werkt de standaardweergave voor alle gebruikers bij. Weet je het zeker?",
+        "confirmText": "Bijwerken voor iedereen",
+        "cancelText": "Annuleren"
+      },
+      "updateView": {
+        "title": "Weergave bijwerken",
+        "description": "Weet je zeker dat je \"{{name}}\" wilt bijwerken?",
+        "confirmText": "Bijwerken",
+        "cancelText": "Annuleren"
+      },
+      "saveAsDefault": {
+        "title": "Opslaan als systeemstandaard",
+        "description": "Dit slaat de huidige configuratie op als systeemstandaard. Alle gebruikers zien deze configuratie standaard, tenzij ze hun eigen persoonlijke weergaven hebben. Weet je het zeker?",
+        "confirmText": "Opslaan als standaard",
+        "cancelText": "Annuleren"
+      },
+      "updateExisting": {
+        "title": "Bestaande weergave bijwerken",
+        "description": "\"{{name}}\" bijwerken met de huidige configuratie?",
+        "confirmText": "Bijwerken",
+        "cancelText": "Annuleren"
+      }
     }
   },
   "commissions": {
@@ -15,6 +47,100 @@
       "name": "Regelnaam",
       "attribute": "Attribuut",
       "fee": "Vergoeding"
+    },
+    "domain": "Commissies",
+    "create": {
+      "header": "Commissieregel aanmaken",
+      "details": "Details",
+      "commission": "Commissie",
+      "successToast": "Commissieregel is succesvol aangemaakt."
+    },
+    "edit": {
+      "header": "Commissieregel bewerken",
+      "successToast": "Commissieregel is succesvol bijgewerkt."
+    },
+    "commissionEdit": {
+      "header": "Commissie bewerken",
+      "successToast": "Commissie is succesvol bijgewerkt."
+    },
+    "delete": {
+      "title": "Commissieregel verwijderen",
+      "description": "Je staat op het punt commissieregel {{name}} te verwijderen. Deze actie kan niet ongedaan worden gemaakt.",
+      "successToast": "Commissieregel is succesvol verwijderd."
+    },
+    "fields": {
+      "code": "Code",
+      "value": "Waarde",
+      "status": "Status",
+      "enabled": "Ingeschakeld",
+      "enabledHint": "Schakel deze commissieregel in of uit.",
+      "stores": "Winkels",
+      "productTypes": "Producttypen",
+      "categories": "Categorieën",
+      "taxIncluded": "Belasting inbegrepen",
+      "taxIncludedHint": "Indien aangevinkt, wordt commissie berekend over het totaal inclusief belasting. Indien niet aangevinkt, wordt belasting uitgesloten en gaat deze volledig naar de winkel.",
+      "shippingIncluded": "Verzending inbegrepen",
+      "shippingIncludedHint": "Indien aangevinkt, wordt commissie berekend over het totaal inclusief verzending. Indien niet aangevinkt, gaan verzendkosten volledig naar de winkel.",
+      "type": {
+        "label": "Type",
+        "percentage": "Percentage",
+        "fixed": "Vast",
+        "percentageHint": "Bereken een percentage van het besteltotaal.",
+        "fixedHint": "Bereken een vast bedrag per bestelling."
+      },
+      "scopeType": {
+        "label": "Type",
+        "store": "Winkel",
+        "productType": "Producttype",
+        "category": "Categorie",
+        "storeProductType": "Winkel + producttype",
+        "storeCategory": "Winkel + categorie",
+        "storeHint": "Toepassen op specifieke winkels.",
+        "productTypeHint": "Toepassen op specifieke producttypen.",
+        "categoryHint": "Toepassen op specifieke categorieën.",
+        "storeProductTypeHint": "Toepassen op producttypen binnen specifieke winkels.",
+        "storeCategoryHint": "Toepassen op categorieën binnen specifieke winkels."
+      }
+    },
+    "global": {
+      "title": "Globale commissie",
+      "code": "Code",
+      "type": "Type",
+      "value": "Waarde",
+      "tax": "Belasting",
+      "shipping": "Verzending",
+      "included": "Inbegrepen in commissie",
+      "notIncluded": "Niet inbegrepen in commissie",
+      "edit": {
+        "header": "Globale commissie bewerken",
+        "successToast": "Globale commissie is succesvol bijgewerkt."
+      }
+    },
+    "rules": {
+      "title": "Commissieregels",
+      "columns": {
+        "rule": "Regel",
+        "scope": "Bereik",
+        "type": "Type",
+        "value": "Waarde",
+        "status": "Status"
+      },
+      "empty": {
+        "heading": "Nog geen commissieregels",
+        "description": "Maak een commissieregel aan om de globale commissie te overschrijven voor\nspecifieke winkels, producttypen of categorieën."
+      }
+    },
+    "status": {
+      "enabled": "Actief",
+      "disabled": "Inactief"
+    },
+    "validation": {
+      "titleRequired": "Voer een titel in",
+      "codeRequired": "Voer een code in",
+      "value": "Voer een waarde in",
+      "storesRequired": "Selecteer ten minste één winkel",
+      "productTypesRequired": "Selecteer ten minste één producttype",
+      "categoriesRequired": "Selecteer ten minste één categorie"
     }
   },
   "$schema": "./$schema.json",
@@ -2839,6 +2965,17 @@
       "validation": {
         "closedFromRequired": "Startdatum van sluiting is verplicht",
         "closedFromInPast": "Startdatum van sluiting mag niet in het verleden liggen"
+      },
+      "header": "Geplande sluiting",
+      "edit": {
+        "header": "Winkelsluiting plannen",
+        "description": "Configureer de geplande sluitingsdata voor deze winkel.",
+        "successToast": "Geplande sluiting bijgewerkt"
+      },
+      "fields": {
+        "closedFrom": "Gesloten vanaf",
+        "closedTo": "Gesloten tot",
+        "closedToHint": "Indien leeg, blijft de winkel voor onbepaalde tijd gesloten."
       }
     },
     "domain": "Winkel",
@@ -2938,19 +3075,6 @@
         "title": "Nog geen vrije periode",
         "message": "Deze winkel heeft geen geplande vrije periode",
         "action": "Aanmaken"
-      }
-    },
-    "scheduledClosure": {
-      "header": "Geplande sluiting",
-      "edit": {
-        "header": "Winkelsluiting plannen",
-        "description": "Configureer de geplande sluitingsdata voor deze winkel.",
-        "successToast": "Geplande sluiting bijgewerkt"
-      },
-      "fields": {
-        "closedFrom": "Gesloten vanaf",
-        "closedTo": "Gesloten tot",
-        "closedToHint": "Indien leeg, blijft de winkel voor onbepaalde tijd gesloten."
       }
     }
   },
@@ -3799,40 +3923,6 @@
       "description": "Beschrijving"
     }
   },
-  "views": {
-    "save": "Opslaan",
-    "saveAsNew": "Opslaan als nieuwe weergave",
-    "saveAsSystemDefault": "Opslaan als systeemstandaard",
-    "updateDefaultForEveryone": "Standaard voor iedereen bijwerken",
-    "updateViewName": "Weergave bijwerken",
-    "updateNamed": "\"{{name}}\" bijwerken",
-    "prompts": {
-      "updateDefault": {
-        "title": "Standaardweergave bijwerken",
-        "description": "Dit werkt de standaardweergave voor alle gebruikers bij. Weet je het zeker?",
-        "confirmText": "Bijwerken voor iedereen",
-        "cancelText": "Annuleren"
-      },
-      "updateView": {
-        "title": "Weergave bijwerken",
-        "description": "Weet je zeker dat je \"{{name}}\" wilt bijwerken?",
-        "confirmText": "Bijwerken",
-        "cancelText": "Annuleren"
-      },
-      "saveAsDefault": {
-        "title": "Opslaan als systeemstandaard",
-        "description": "Dit slaat de huidige configuratie op als systeemstandaard. Alle gebruikers zien deze configuratie standaard, tenzij ze hun eigen persoonlijke weergaven hebben. Weet je het zeker?",
-        "confirmText": "Opslaan als standaard",
-        "cancelText": "Annuleren"
-      },
-      "updateExisting": {
-        "title": "Bestaande weergave bijwerken",
-        "description": "\"{{name}}\" bijwerken met de huidige configuratie?",
-        "confirmText": "Bijwerken",
-        "cancelText": "Annuleren"
-      }
-    }
-  },
   "requests": {
     "domain": "Aanvragen",
     "seller": "Winkel",
@@ -4006,102 +4096,6 @@
   },
   "commissionLines": {
     "domain": "Commissieregels"
-  },
-  "commissions": {
-    "domain": "Commissies",
-    "create": {
-      "header": "Commissieregel aanmaken",
-      "details": "Details",
-      "commission": "Commissie",
-      "successToast": "Commissieregel is succesvol aangemaakt."
-    },
-    "edit": {
-      "header": "Commissieregel bewerken",
-      "successToast": "Commissieregel is succesvol bijgewerkt."
-    },
-    "commissionEdit": {
-      "header": "Commissie bewerken",
-      "successToast": "Commissie is succesvol bijgewerkt."
-    },
-    "delete": {
-      "title": "Commissieregel verwijderen",
-      "description": "Je staat op het punt commissieregel {{name}} te verwijderen. Deze actie kan niet ongedaan worden gemaakt.",
-      "successToast": "Commissieregel is succesvol verwijderd."
-    },
-    "fields": {
-      "code": "Code",
-      "value": "Waarde",
-      "status": "Status",
-      "enabled": "Ingeschakeld",
-      "enabledHint": "Schakel deze commissieregel in of uit.",
-      "stores": "Winkels",
-      "productTypes": "Producttypen",
-      "categories": "Categorieën",
-      "taxIncluded": "Belasting inbegrepen",
-      "taxIncludedHint": "Indien aangevinkt, wordt commissie berekend over het totaal inclusief belasting. Indien niet aangevinkt, wordt belasting uitgesloten en gaat deze volledig naar de winkel.",
-      "shippingIncluded": "Verzending inbegrepen",
-      "shippingIncludedHint": "Indien aangevinkt, wordt commissie berekend over het totaal inclusief verzending. Indien niet aangevinkt, gaan verzendkosten volledig naar de winkel.",
-      "type": {
-        "label": "Type",
-        "percentage": "Percentage",
-        "fixed": "Vast",
-        "percentageHint": "Bereken een percentage van het besteltotaal.",
-        "fixedHint": "Bereken een vast bedrag per bestelling."
-      },
-      "scopeType": {
-        "label": "Type",
-        "store": "Winkel",
-        "productType": "Producttype",
-        "category": "Categorie",
-        "storeProductType": "Winkel + producttype",
-        "storeCategory": "Winkel + categorie",
-        "storeHint": "Toepassen op specifieke winkels.",
-        "productTypeHint": "Toepassen op specifieke producttypen.",
-        "categoryHint": "Toepassen op specifieke categorieën.",
-        "storeProductTypeHint": "Toepassen op producttypen binnen specifieke winkels.",
-        "storeCategoryHint": "Toepassen op categorieën binnen specifieke winkels."
-      }
-    },
-    "global": {
-      "title": "Globale commissie",
-      "code": "Code",
-      "type": "Type",
-      "value": "Waarde",
-      "tax": "Belasting",
-      "shipping": "Verzending",
-      "included": "Inbegrepen in commissie",
-      "notIncluded": "Niet inbegrepen in commissie",
-      "edit": {
-        "header": "Globale commissie bewerken",
-        "successToast": "Globale commissie is succesvol bijgewerkt."
-      }
-    },
-    "rules": {
-      "title": "Commissieregels",
-      "columns": {
-        "rule": "Regel",
-        "scope": "Bereik",
-        "type": "Type",
-        "value": "Waarde",
-        "status": "Status"
-      },
-      "empty": {
-        "heading": "Nog geen commissieregels",
-        "description": "Maak een commissieregel aan om de globale commissie te overschrijven voor\nspecifieke winkels, producttypen of categorieën."
-      }
-    },
-    "status": {
-      "enabled": "Actief",
-      "disabled": "Inactief"
-    },
-    "validation": {
-      "titleRequired": "Voer een titel in",
-      "codeRequired": "Voer een code in",
-      "value": "Voer een waarde in",
-      "storesRequired": "Selecteer ten minste één winkel",
-      "productTypesRequired": "Selecteer ten minste één producttype",
-      "categoriesRequired": "Selecteer ten minste één categorie"
-    }
   },
   "commissionRates": {
     "domain": "Commissietarieven",

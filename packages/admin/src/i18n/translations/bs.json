@@ -8,6 +8,38 @@
       "updateFailed": "Ažuriranje prikaza nije uspjelo",
       "deleted": "Prikaz je uspješno obrisan",
       "deleteFailed": "Brisanje prikaza nije uspjelo"
+    },
+    "save": "Sačuvaj",
+    "saveAsNew": "Sačuvaj kao novi prikaz",
+    "saveAsSystemDefault": "Sačuvaj kao podrazumijevani sistemski",
+    "updateDefaultForEveryone": "Ažuriraj podrazumijevani za sve",
+    "updateViewName": "Ažuriraj prikaz",
+    "updateNamed": "Ažuriraj \"{{name}}\"",
+    "prompts": {
+      "updateDefault": {
+        "title": "Ažuriraj podrazumijevani prikaz",
+        "description": "Ovo će ažurirati podrazumijevani prikaz za sve korisnike. Jeste li sigurni?",
+        "confirmText": "Ažuriraj za sve",
+        "cancelText": "Otkaži"
+      },
+      "updateView": {
+        "title": "Ažuriraj prikaz",
+        "description": "Jeste li sigurni da želite ažurirati \"{{name}}\"?",
+        "confirmText": "Ažuriraj",
+        "cancelText": "Otkaži"
+      },
+      "saveAsDefault": {
+        "title": "Sačuvaj kao podrazumijevani sistemski",
+        "description": "Ovo će sačuvati trenutnu konfiguraciju kao podrazumijevanu sistemsku. Svi korisnici će vidjeti ovu konfiguraciju podrazumijevano, osim ako imaju vlastite lične prikaze. Jeste li sigurni?",
+        "confirmText": "Sačuvaj kao podrazumijevano",
+        "cancelText": "Otkaži"
+      },
+      "updateExisting": {
+        "title": "Ažuriraj postojeći prikaz",
+        "description": "Ažurirati \"{{name}}\" sa trenutnom konfiguracijom?",
+        "confirmText": "Ažuriraj",
+        "cancelText": "Otkaži"
+      }
     }
   },
   "commissions": {
@@ -15,6 +47,100 @@
       "name": "Naziv pravila",
       "attribute": "Atribut",
       "fee": "Provizija"
+    },
+    "domain": "Provizije",
+    "create": {
+      "header": "Kreiraj pravilo provizije",
+      "details": "Detalji",
+      "commission": "Provizija",
+      "successToast": "Pravilo provizije je uspješno kreirano."
+    },
+    "edit": {
+      "header": "Uredi pravilo provizije",
+      "successToast": "Pravilo provizije je uspješno ažurirano."
+    },
+    "commissionEdit": {
+      "header": "Uredi proviziju",
+      "successToast": "Provizija je uspješno ažurirana."
+    },
+    "delete": {
+      "title": "Obriši pravilo provizije",
+      "description": "Upravo ćete obrisati pravilo provizije {{name}}. Ova radnja se ne može poništiti.",
+      "successToast": "Pravilo provizije je uspješno obrisano."
+    },
+    "fields": {
+      "code": "Kod",
+      "value": "Vrijednost",
+      "status": "Status",
+      "enabled": "Omogućeno",
+      "enabledHint": "Omogućite ili onemogućite ovo pravilo provizije.",
+      "stores": "Prodavnice",
+      "productTypes": "Tipovi proizvoda",
+      "categories": "Kategorije",
+      "taxIncluded": "Porez uključen",
+      "taxIncludedHint": "Ako je označeno, provizija se izračunava na ukupan iznos uključujući porez. Ako nije označeno, porez je isključen i u potpunosti pripada prodavnici.",
+      "shippingIncluded": "Dostava uključena",
+      "shippingIncludedHint": "Ako je označeno, provizija se izračunava na ukupan iznos uključujući dostavu. Ako nije označeno, troškovi dostave u potpunosti pripadaju prodavnici.",
+      "type": {
+        "label": "Vrsta",
+        "percentage": "Postotak",
+        "fixed": "Fiksno",
+        "percentageHint": "Naplatite procenat od ukupnog iznosa narudžbe.",
+        "fixedHint": "Naplatite fiksan iznos po narudžbi."
+      },
+      "scopeType": {
+        "label": "Vrsta",
+        "store": "Trgovina",
+        "productType": "Vrsta proizvoda",
+        "category": "Kategorija",
+        "storeProductType": "Prodavnica + vrsta proizvoda",
+        "storeCategory": "Prodavnica + kategorija",
+        "storeHint": "Primijeni na određene prodavnice.",
+        "productTypeHint": "Primijeni na određene vrste proizvoda.",
+        "categoryHint": "Primijeni na određene kategorije.",
+        "storeProductTypeHint": "Primijeni na vrste proizvoda unutar određenih prodavnica.",
+        "storeCategoryHint": "Primijeni na kategorije unutar određenih prodavnica."
+      }
+    },
+    "global": {
+      "title": "Globalna provizija",
+      "code": "Kod",
+      "type": "Vrsta",
+      "value": "Vrijednost",
+      "tax": "Porez",
+      "shipping": "Dostava",
+      "included": "Uključeno u proviziju",
+      "notIncluded": "Nije uključeno u proviziju",
+      "edit": {
+        "header": "Uredi globalnu proviziju",
+        "successToast": "Globalna provizija je uspješno ažurirana."
+      }
+    },
+    "rules": {
+      "title": "Pravila provizije",
+      "columns": {
+        "rule": "Pravilo",
+        "scope": "Opseg",
+        "type": "Vrsta",
+        "value": "Vrijednost",
+        "status": "Status"
+      },
+      "empty": {
+        "heading": "Još nema pravila provizije",
+        "description": "Kreirajte pravilo provizije kako biste zamijenili globalnu proviziju za\nodređene prodavnice, vrste proizvoda ili kategorije."
+      }
+    },
+    "status": {
+      "enabled": "Aktivno",
+      "disabled": "Neaktivno"
+    },
+    "validation": {
+      "titleRequired": "Unesite naslov",
+      "codeRequired": "Unesite šifru",
+      "value": "Unesite vrijednost",
+      "storesRequired": "Odaberite najmanje jednu prodavnicu",
+      "productTypesRequired": "Odaberite najmanje jednu vrstu proizvoda",
+      "categoriesRequired": "Odaberite najmanje jednu kategoriju"
     }
   },
   "$schema": "./$schema.json",
@@ -2839,6 +2965,17 @@
       "validation": {
         "closedFromRequired": "Datum početka zatvaranja je obavezan",
         "closedFromInPast": "Datum početka zatvaranja ne može biti u prošlosti"
+      },
+      "header": "Zakazano zatvaranje",
+      "edit": {
+        "header": "Zakaži zatvaranje prodavnice",
+        "description": "Konfigurišite datume zakazanog zatvaranja za ovu prodavnicu.",
+        "successToast": "Zakazano zatvaranje je ažurirano"
+      },
+      "fields": {
+        "closedFrom": "Zatvoreno od",
+        "closedTo": "Zatvoreno do",
+        "closedToHint": "Ako je prazno, prodavnica će ostati zatvorena neograničeno."
       }
     },
     "domain": "Trgovina",
@@ -2938,19 +3075,6 @@
         "title": "Još nema zakazanih odsustava",
         "message": "Ova prodavnica nema zakazano odsustvo",
         "action": "Kreiraj"
-      }
-    },
-    "scheduledClosure": {
-      "header": "Zakazano zatvaranje",
-      "edit": {
-        "header": "Zakaži zatvaranje prodavnice",
-        "description": "Konfigurišite datume zakazanog zatvaranja za ovu prodavnicu.",
-        "successToast": "Zakazano zatvaranje je ažurirano"
-      },
-      "fields": {
-        "closedFrom": "Zatvoreno od",
-        "closedTo": "Zatvoreno do",
-        "closedToHint": "Ako je prazno, prodavnica će ostati zatvorena neograničeno."
       }
     }
   },
@@ -3798,40 +3922,6 @@
       "description": "Opis"
     }
   },
-  "views": {
-    "save": "Sačuvaj",
-    "saveAsNew": "Sačuvaj kao novi prikaz",
-    "saveAsSystemDefault": "Sačuvaj kao podrazumijevani sistemski",
-    "updateDefaultForEveryone": "Ažuriraj podrazumijevani za sve",
-    "updateViewName": "Ažuriraj prikaz",
-    "updateNamed": "Ažuriraj \"{{name}}\"",
-    "prompts": {
-      "updateDefault": {
-        "title": "Ažuriraj podrazumijevani prikaz",
-        "description": "Ovo će ažurirati podrazumijevani prikaz za sve korisnike. Jeste li sigurni?",
-        "confirmText": "Ažuriraj za sve",
-        "cancelText": "Otkaži"
-      },
-      "updateView": {
-        "title": "Ažuriraj prikaz",
-        "description": "Jeste li sigurni da želite ažurirati \"{{name}}\"?",
-        "confirmText": "Ažuriraj",
-        "cancelText": "Otkaži"
-      },
-      "saveAsDefault": {
-        "title": "Sačuvaj kao podrazumijevani sistemski",
-        "description": "Ovo će sačuvati trenutnu konfiguraciju kao podrazumijevanu sistemsku. Svi korisnici će vidjeti ovu konfiguraciju podrazumijevano, osim ako imaju vlastite lične prikaze. Jeste li sigurni?",
-        "confirmText": "Sačuvaj kao podrazumijevano",
-        "cancelText": "Otkaži"
-      },
-      "updateExisting": {
-        "title": "Ažuriraj postojeći prikaz",
-        "description": "Ažurirati \"{{name}}\" sa trenutnom konfiguracijom?",
-        "confirmText": "Ažuriraj",
-        "cancelText": "Otkaži"
-      }
-    }
-  },
   "requests": {
     "domain": "Zahtjevi",
     "seller": "Trgovina",
@@ -4005,102 +4095,6 @@
   },
   "commissionLines": {
     "domain": "Stavke provizije"
-  },
-  "commissions": {
-    "domain": "Provizije",
-    "create": {
-      "header": "Kreiraj pravilo provizije",
-      "details": "Detalji",
-      "commission": "Provizija",
-      "successToast": "Pravilo provizije je uspješno kreirano."
-    },
-    "edit": {
-      "header": "Uredi pravilo provizije",
-      "successToast": "Pravilo provizije je uspješno ažurirano."
-    },
-    "commissionEdit": {
-      "header": "Uredi proviziju",
-      "successToast": "Provizija je uspješno ažurirana."
-    },
-    "delete": {
-      "title": "Obriši pravilo provizije",
-      "description": "Upravo ćete obrisati pravilo provizije {{name}}. Ova radnja se ne može poništiti.",
-      "successToast": "Pravilo provizije je uspješno obrisano."
-    },
-    "fields": {
-      "code": "Kod",
-      "value": "Vrijednost",
-      "status": "Status",
-      "enabled": "Omogućeno",
-      "enabledHint": "Omogućite ili onemogućite ovo pravilo provizije.",
-      "stores": "Prodavnice",
-      "productTypes": "Tipovi proizvoda",
-      "categories": "Kategorije",
-      "taxIncluded": "Porez uključen",
-      "taxIncludedHint": "Ako je označeno, provizija se izračunava na ukupan iznos uključujući porez. Ako nije označeno, porez je isključen i u potpunosti pripada prodavnici.",
-      "shippingIncluded": "Dostava uključena",
-      "shippingIncludedHint": "Ako je označeno, provizija se izračunava na ukupan iznos uključujući dostavu. Ako nije označeno, troškovi dostave u potpunosti pripadaju prodavnici.",
-      "type": {
-        "label": "Vrsta",
-        "percentage": "Postotak",
-        "fixed": "Fiksno",
-        "percentageHint": "Naplatite procenat od ukupnog iznosa narudžbe.",
-        "fixedHint": "Naplatite fiksan iznos po narudžbi."
-      },
-      "scopeType": {
-        "label": "Vrsta",
-        "store": "Trgovina",
-        "productType": "Vrsta proizvoda",
-        "category": "Kategorija",
-        "storeProductType": "Prodavnica + vrsta proizvoda",
-        "storeCategory": "Prodavnica + kategorija",
-        "storeHint": "Primijeni na određene prodavnice.",
-        "productTypeHint": "Primijeni na određene vrste proizvoda.",
-        "categoryHint": "Primijeni na određene kategorije.",
-        "storeProductTypeHint": "Primijeni na vrste proizvoda unutar određenih prodavnica.",
-        "storeCategoryHint": "Primijeni na kategorije unutar određenih prodavnica."
-      }
-    },
-    "global": {
-      "title": "Globalna provizija",
-      "code": "Kod",
-      "type": "Vrsta",
-      "value": "Vrijednost",
-      "tax": "Porez",
-      "shipping": "Dostava",
-      "included": "Uključeno u proviziju",
-      "notIncluded": "Nije uključeno u proviziju",
-      "edit": {
-        "header": "Uredi globalnu proviziju",
-        "successToast": "Globalna provizija je uspješno ažurirana."
-      }
-    },
-    "rules": {
-      "title": "Pravila provizije",
-      "columns": {
-        "rule": "Pravilo",
-        "scope": "Opseg",
-        "type": "Vrsta",
-        "value": "Vrijednost",
-        "status": "Status"
-      },
-      "empty": {
-        "heading": "Još nema pravila provizije",
-        "description": "Kreirajte pravilo provizije kako biste zamijenili globalnu proviziju za\nodređene prodavnice, vrste proizvoda ili kategorije."
-      }
-    },
-    "status": {
-      "enabled": "Aktivno",
-      "disabled": "Neaktivno"
-    },
-    "validation": {
-      "titleRequired": "Unesite naslov",
-      "codeRequired": "Unesite šifru",
-      "value": "Unesite vrijednost",
-      "storesRequired": "Odaberite najmanje jednu prodavnicu",
-      "productTypesRequired": "Odaberite najmanje jednu vrstu proizvoda",
-      "categoriesRequired": "Odaberite najmanje jednu kategoriju"
-    }
   },
   "commissionRates": {
     "domain": "Stope provizije",

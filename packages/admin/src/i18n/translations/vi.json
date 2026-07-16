@@ -8,6 +8,38 @@
       "updateFailed": "Không thể cập nhật chế độ xem",
       "deleted": "Đã xóa chế độ xem thành công",
       "deleteFailed": "Không thể xóa chế độ xem"
+    },
+    "save": "Lưu",
+    "saveAsNew": "Lưu thành chế độ xem mới",
+    "saveAsSystemDefault": "Lưu làm mặc định hệ thống",
+    "updateDefaultForEveryone": "Cập nhật mặc định cho tất cả mọi người",
+    "updateViewName": "Cập nhật chế độ xem",
+    "updateNamed": "Cập nhật \"{{name}}\"",
+    "prompts": {
+      "updateDefault": {
+        "title": "Cập nhật chế độ xem mặc định",
+        "description": "Thao tác này sẽ cập nhật chế độ xem mặc định cho tất cả người dùng. Bạn có chắc chắn không?",
+        "confirmText": "Cập nhật cho tất cả mọi người",
+        "cancelText": "Hủy"
+      },
+      "updateView": {
+        "title": "Cập nhật chế độ xem",
+        "description": "Bạn có chắc muốn cập nhật \"{{name}}\" không?",
+        "confirmText": "Cập nhật",
+        "cancelText": "Hủy"
+      },
+      "saveAsDefault": {
+        "title": "Lưu làm mặc định hệ thống",
+        "description": "Thao tác này sẽ lưu cấu hình hiện tại làm mặc định hệ thống. Tất cả người dùng sẽ thấy cấu hình này theo mặc định trừ khi họ có chế độ xem cá nhân riêng. Bạn có chắc chắn không?",
+        "confirmText": "Lưu làm mặc định",
+        "cancelText": "Hủy"
+      },
+      "updateExisting": {
+        "title": "Cập nhật chế độ xem hiện có",
+        "description": "Cập nhật \"{{name}}\" với cấu hình hiện tại?",
+        "confirmText": "Cập nhật",
+        "cancelText": "Hủy"
+      }
     }
   },
   "commissions": {
@@ -15,6 +47,100 @@
       "name": "Tên quy tắc",
       "attribute": "Thuộc tính",
       "fee": "Phí"
+    },
+    "domain": "Hoa hồng",
+    "create": {
+      "header": "Tạo quy tắc hoa hồng",
+      "details": "Chi tiết",
+      "commission": "Hoa hồng",
+      "successToast": "Đã tạo quy tắc hoa hồng thành công."
+    },
+    "edit": {
+      "header": "Chỉnh sửa quy tắc hoa hồng",
+      "successToast": "Đã cập nhật quy tắc hoa hồng thành công."
+    },
+    "commissionEdit": {
+      "header": "Chỉnh sửa hoa hồng",
+      "successToast": "Đã cập nhật hoa hồng thành công."
+    },
+    "delete": {
+      "title": "Xóa quy tắc hoa hồng",
+      "description": "Bạn sắp xóa quy tắc hoa hồng {{name}}. Hành động này không thể hoàn tác.",
+      "successToast": "Đã xóa quy tắc hoa hồng thành công."
+    },
+    "fields": {
+      "code": "Mã",
+      "value": "Giá trị",
+      "status": "Trạng thái",
+      "enabled": "Đã bật",
+      "enabledHint": "Bật hoặc tắt quy tắc hoa hồng này.",
+      "stores": "Cửa hàng",
+      "productTypes": "Loại sản phẩm",
+      "categories": "Danh mục",
+      "taxIncluded": "Bao gồm thuế",
+      "taxIncludedHint": "Nếu chọn, hoa hồng được tính trên tổng bao gồm thuế. Nếu không chọn, thuế sẽ không tính vào hoa hồng và thuộc hoàn toàn về cửa hàng.",
+      "shippingIncluded": "Bao gồm phí vận chuyển",
+      "shippingIncludedHint": "Nếu chọn, hoa hồng được tính trên tổng bao gồm phí vận chuyển. Nếu không chọn, phí vận chuyển sẽ thuộc hoàn toàn về cửa hàng.",
+      "type": {
+        "label": "Loại",
+        "percentage": "Giá trị khuyến mãi",
+        "fixed": "Cố định",
+        "percentageHint": "Tính phí theo phần trăm tổng đơn hàng.",
+        "fixedHint": "Tính phí cố định cho mỗi đơn hàng."
+      },
+      "scopeType": {
+        "label": "Loại",
+        "store": "Cửa hàng",
+        "productType": "Loại sản phẩm",
+        "category": "Danh mục",
+        "storeProductType": "Cửa hàng + Loại sản phẩm",
+        "storeCategory": "Cửa hàng + Danh mục",
+        "storeHint": "Áp dụng cho các cửa hàng cụ thể.",
+        "productTypeHint": "Áp dụng cho các loại sản phẩm cụ thể.",
+        "categoryHint": "Áp dụng cho các danh mục cụ thể.",
+        "storeProductTypeHint": "Áp dụng cho các loại sản phẩm trong các cửa hàng cụ thể.",
+        "storeCategoryHint": "Áp dụng cho các danh mục trong các cửa hàng cụ thể."
+      }
+    },
+    "global": {
+      "title": "Hoa hồng toàn cục",
+      "code": "Mã",
+      "type": "Loại",
+      "value": "Giá trị",
+      "tax": "Thuế",
+      "shipping": "Vận chuyển",
+      "included": "Bao gồm trong hoa hồng",
+      "notIncluded": "Không bao gồm trong hoa hồng",
+      "edit": {
+        "header": "Chỉnh sửa hoa hồng toàn cục",
+        "successToast": "Đã cập nhật hoa hồng toàn cục thành công."
+      }
+    },
+    "rules": {
+      "title": "Quy tắc hoa hồng",
+      "columns": {
+        "rule": "Quy tắc",
+        "scope": "Phạm vi",
+        "type": "Loại",
+        "value": "Giá trị",
+        "status": "Trạng thái"
+      },
+      "empty": {
+        "heading": "Chưa có quy tắc hoa hồng nào",
+        "description": "Tạo quy tắc hoa hồng để ghi đè hoa hồng toàn cục cho\ncác cửa hàng, loại sản phẩm hoặc danh mục cụ thể."
+      }
+    },
+    "status": {
+      "enabled": "Hoạt động",
+      "disabled": "Không hoạt động"
+    },
+    "validation": {
+      "titleRequired": "Vui lòng nhập tiêu đề",
+      "codeRequired": "Vui lòng nhập mã",
+      "value": "Vui lòng nhập giá trị",
+      "storesRequired": "Vui lòng chọn ít nhất một cửa hàng",
+      "productTypesRequired": "Vui lòng chọn ít nhất một loại sản phẩm",
+      "categoriesRequired": "Vui lòng chọn ít nhất một danh mục"
     }
   },
   "$schema": "./$schema.json",
@@ -2837,6 +2963,17 @@
       "validation": {
         "closedFromRequired": "Ngày bắt đầu đóng cửa là bắt buộc",
         "closedFromInPast": "Ngày bắt đầu đóng cửa không thể ở trong quá khứ"
+      },
+      "header": "Lịch tạm đóng cửa",
+      "edit": {
+        "header": "Lên lịch tạm đóng cửa",
+        "description": "Thiết lập ngày tạm đóng cửa cho cửa hàng này.",
+        "successToast": "Đã cập nhật lịch tạm đóng cửa"
+      },
+      "fields": {
+        "closedFrom": "Đóng cửa từ",
+        "closedTo": "Đóng cửa đến",
+        "closedToHint": "Nếu để trống, cửa hàng sẽ đóng cửa vô thời hạn."
       }
     },
     "domain": "Cửa hàng",
@@ -2936,19 +3073,6 @@
         "title": "Chưa có ngày nghỉ nào",
         "message": "Cửa hàng này chưa lên lịch nghỉ",
         "action": "Tạo"
-      }
-    },
-    "scheduledClosure": {
-      "header": "Lịch tạm đóng cửa",
-      "edit": {
-        "header": "Lên lịch tạm đóng cửa",
-        "description": "Thiết lập ngày tạm đóng cửa cho cửa hàng này.",
-        "successToast": "Đã cập nhật lịch tạm đóng cửa"
-      },
-      "fields": {
-        "closedFrom": "Đóng cửa từ",
-        "closedTo": "Đóng cửa đến",
-        "closedToHint": "Nếu để trống, cửa hàng sẽ đóng cửa vô thời hạn."
       }
     }
   },
@@ -3796,40 +3920,6 @@
       "description": "Mô tả"
     }
   },
-  "views": {
-    "save": "Lưu",
-    "saveAsNew": "Lưu thành chế độ xem mới",
-    "saveAsSystemDefault": "Lưu làm mặc định hệ thống",
-    "updateDefaultForEveryone": "Cập nhật mặc định cho tất cả mọi người",
-    "updateViewName": "Cập nhật chế độ xem",
-    "updateNamed": "Cập nhật \"{{name}}\"",
-    "prompts": {
-      "updateDefault": {
-        "title": "Cập nhật chế độ xem mặc định",
-        "description": "Thao tác này sẽ cập nhật chế độ xem mặc định cho tất cả người dùng. Bạn có chắc chắn không?",
-        "confirmText": "Cập nhật cho tất cả mọi người",
-        "cancelText": "Hủy"
-      },
-      "updateView": {
-        "title": "Cập nhật chế độ xem",
-        "description": "Bạn có chắc muốn cập nhật \"{{name}}\" không?",
-        "confirmText": "Cập nhật",
-        "cancelText": "Hủy"
-      },
-      "saveAsDefault": {
-        "title": "Lưu làm mặc định hệ thống",
-        "description": "Thao tác này sẽ lưu cấu hình hiện tại làm mặc định hệ thống. Tất cả người dùng sẽ thấy cấu hình này theo mặc định trừ khi họ có chế độ xem cá nhân riêng. Bạn có chắc chắn không?",
-        "confirmText": "Lưu làm mặc định",
-        "cancelText": "Hủy"
-      },
-      "updateExisting": {
-        "title": "Cập nhật chế độ xem hiện có",
-        "description": "Cập nhật \"{{name}}\" với cấu hình hiện tại?",
-        "confirmText": "Cập nhật",
-        "cancelText": "Hủy"
-      }
-    }
-  },
   "requests": {
     "domain": "Yêu cầu",
     "seller": "Cửa hàng",
@@ -4003,102 +4093,6 @@
   },
   "commissionLines": {
     "domain": "Dòng hoa hồng"
-  },
-  "commissions": {
-    "domain": "Hoa hồng",
-    "create": {
-      "header": "Tạo quy tắc hoa hồng",
-      "details": "Chi tiết",
-      "commission": "Hoa hồng",
-      "successToast": "Đã tạo quy tắc hoa hồng thành công."
-    },
-    "edit": {
-      "header": "Chỉnh sửa quy tắc hoa hồng",
-      "successToast": "Đã cập nhật quy tắc hoa hồng thành công."
-    },
-    "commissionEdit": {
-      "header": "Chỉnh sửa hoa hồng",
-      "successToast": "Đã cập nhật hoa hồng thành công."
-    },
-    "delete": {
-      "title": "Xóa quy tắc hoa hồng",
-      "description": "Bạn sắp xóa quy tắc hoa hồng {{name}}. Hành động này không thể hoàn tác.",
-      "successToast": "Đã xóa quy tắc hoa hồng thành công."
-    },
-    "fields": {
-      "code": "Mã",
-      "value": "Giá trị",
-      "status": "Trạng thái",
-      "enabled": "Đã bật",
-      "enabledHint": "Bật hoặc tắt quy tắc hoa hồng này.",
-      "stores": "Cửa hàng",
-      "productTypes": "Loại sản phẩm",
-      "categories": "Danh mục",
-      "taxIncluded": "Bao gồm thuế",
-      "taxIncludedHint": "Nếu chọn, hoa hồng được tính trên tổng bao gồm thuế. Nếu không chọn, thuế sẽ không tính vào hoa hồng và thuộc hoàn toàn về cửa hàng.",
-      "shippingIncluded": "Bao gồm phí vận chuyển",
-      "shippingIncludedHint": "Nếu chọn, hoa hồng được tính trên tổng bao gồm phí vận chuyển. Nếu không chọn, phí vận chuyển sẽ thuộc hoàn toàn về cửa hàng.",
-      "type": {
-        "label": "Loại",
-        "percentage": "Giá trị khuyến mãi",
-        "fixed": "Cố định",
-        "percentageHint": "Tính phí theo phần trăm tổng đơn hàng.",
-        "fixedHint": "Tính phí cố định cho mỗi đơn hàng."
-      },
-      "scopeType": {
-        "label": "Loại",
-        "store": "Cửa hàng",
-        "productType": "Loại sản phẩm",
-        "category": "Danh mục",
-        "storeProductType": "Cửa hàng + Loại sản phẩm",
-        "storeCategory": "Cửa hàng + Danh mục",
-        "storeHint": "Áp dụng cho các cửa hàng cụ thể.",
-        "productTypeHint": "Áp dụng cho các loại sản phẩm cụ thể.",
-        "categoryHint": "Áp dụng cho các danh mục cụ thể.",
-        "storeProductTypeHint": "Áp dụng cho các loại sản phẩm trong các cửa hàng cụ thể.",
-        "storeCategoryHint": "Áp dụng cho các danh mục trong các cửa hàng cụ thể."
-      }
-    },
-    "global": {
-      "title": "Hoa hồng toàn cục",
-      "code": "Mã",
-      "type": "Loại",
-      "value": "Giá trị",
-      "tax": "Thuế",
-      "shipping": "Vận chuyển",
-      "included": "Bao gồm trong hoa hồng",
-      "notIncluded": "Không bao gồm trong hoa hồng",
-      "edit": {
-        "header": "Chỉnh sửa hoa hồng toàn cục",
-        "successToast": "Đã cập nhật hoa hồng toàn cục thành công."
-      }
-    },
-    "rules": {
-      "title": "Quy tắc hoa hồng",
-      "columns": {
-        "rule": "Quy tắc",
-        "scope": "Phạm vi",
-        "type": "Loại",
-        "value": "Giá trị",
-        "status": "Trạng thái"
-      },
-      "empty": {
-        "heading": "Chưa có quy tắc hoa hồng nào",
-        "description": "Tạo quy tắc hoa hồng để ghi đè hoa hồng toàn cục cho\ncác cửa hàng, loại sản phẩm hoặc danh mục cụ thể."
-      }
-    },
-    "status": {
-      "enabled": "Hoạt động",
-      "disabled": "Không hoạt động"
-    },
-    "validation": {
-      "titleRequired": "Vui lòng nhập tiêu đề",
-      "codeRequired": "Vui lòng nhập mã",
-      "value": "Vui lòng nhập giá trị",
-      "storesRequired": "Vui lòng chọn ít nhất một cửa hàng",
-      "productTypesRequired": "Vui lòng chọn ít nhất một loại sản phẩm",
-      "categoriesRequired": "Vui lòng chọn ít nhất một danh mục"
-    }
   },
   "commissionRates": {
     "domain": "Mức hoa hồng",
