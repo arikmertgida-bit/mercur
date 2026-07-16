@@ -427,7 +427,8 @@ export const buildVariantMediaUpdates = (
       continue
     }
 
-    let thumbnail: string | undefined
+    let explicitThumbnail: string | undefined
+    let firstResolvedUrl: string | undefined
     const imageIds: string[] = []
 
     for (const media of variant.media) {
@@ -451,10 +452,21 @@ export const buildVariantMediaUpdates = (
         imageIds.push(imageId)
       }
 
+      firstResolvedUrl ??= uploadedUrl
+
       if (media.isThumbnail) {
-        thumbnail = uploadedUrl
+        explicitThumbnail = uploadedUrl
       }
     }
+
+    // `media.isThumbnail` only means "this photo is the whole PRODUCT's main
+    // thumbnail" — it may not even be among this variant's own selection.
+    // The storefront's color swatch reads `variant.thumbnail` directly, so
+    // every variant with at least one selected photo needs its own real
+    // thumbnail, independent of which photo the seller picked as the
+    // product's main one. Fall back to the first resolved photo from this
+    // variant's own selection.
+    const thumbnail = explicitThumbnail ?? firstResolvedUrl
 
     if (!thumbnail && imageIds.length === 0) {
       continue
