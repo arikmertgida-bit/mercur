@@ -28,6 +28,7 @@ import {
 
 import { addProductAttributesToProductWorkflow } from "../../product-attribute/workflows/add-product-attributes-to-product"
 import { recordProductAuditChangeWorkflow } from "../../product-edit/workflows/record-product-audit-change"
+import { associateSellersWithInventoryItemStep } from "../../inventory-item/steps"
 import {
   associateSellersWithProductStep,
 } from "../steps"
@@ -324,6 +325,52 @@ export const createProductsWorkflow: ReturnWorkflow<
     ).then(() =>
       createInventoryLevelsWorkflow.runAsStep({
         input: { inventory_levels: inventoryLevelsInput },
+      }),
+    )
+
+    // Every inventory item Medusa auto-creates for a `manage_inventory: true`
+    // variant must be linked back to the product's own seller(s) — otherwise
+    // the vendor panel's Inventory view (scoped by `inventory_item_seller`,
+    // see `applySellerInventoryItemLinkFilter`) never lists it.
+    const sellerInventoryItemLinks = transform(
+      { input, createdProducts, variantInventoryItems },
+      ({ input, createdProducts, variantInventoryItems }) => {
+        const inventoryItemIdsByProductId = new Map<string, string[]>()
+        for (const row of variantInventoryItems.data as {
+          product_id: string | null
+          inventory_items?: { inventory_item_id: string }[]
+        }[]) {
+          const inventoryItemId = row.inventory_items?.[0]?.inventory_item_id
+          if (!inventoryItemId || !row.product_id) continue
+
+          const existing = inventoryItemIdsByProductId.get(row.product_id) ?? []
+          existing.push(inventoryItemId)
+          inventoryItemIdsByProductId.set(row.product_id, existing)
+        }
+
+        const links: { inventory_item_id: string; seller_id: string }[] = []
+        input.products.forEach((p, idx) => {
+          const product_id = createdProducts[idx]?.id
+          if (!product_id) return
+
+          const inventoryItemIds =
+            inventoryItemIdsByProductId.get(product_id) ?? []
+          for (const seller_id of p.seller_ids ?? []) {
+            for (const inventory_item_id of inventoryItemIds) {
+              links.push({ inventory_item_id, seller_id })
+            }
+          }
+        })
+        return links
+      },
+    )
+
+    when(
+      { sellerInventoryItemLinks },
+      ({ sellerInventoryItemLinks }) => sellerInventoryItemLinks.length > 0,
+    ).then(() =>
+      associateSellersWithInventoryItemStep({ links: sellerInventoryItemLinks }).config({
+        name: "mercur-create-products-associate-sellers-inventory-items",
       }),
     )
 
