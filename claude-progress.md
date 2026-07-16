@@ -41,6 +41,55 @@ the root `overrides`. (One incidental React-19 compat cast left in
 
 ---
 
+### Session 45: 2026-07-16 -- storefront /sellers/[handle] LCP regression (remote-joiner perf bug)
+
+**Goal.** User reported a severe post-v2.2.0 storefront slowdown (LCP
+0.10-0.15s -> 3.59s, worst on `/sellers/[handle]`, LCP element `img.object-
+cover`). Branch `fix/catalog-hydration-remote-joiner-perf` off `kayi-main`,
+pending push approval.
+
+**Landed.**
+- Root-caused via a real production timing script (`bun medusa exec`,
+  deleted after): `hydrateOrderedProducts()`
+  (`apps/api/src/lib/catalog-hydration.ts`, new in the v2.2.0 rebase's
+  Meilisearch lib rebuild) requested variant-level relations
+  (`variants.options.*`, `variants.options.option.*`) together with several
+  product-level one-to-many relations (`images.*`, `options.*`,
+  `categories.*`, `collection.*`, `tags.*`, `sellers.*`) in one
+  `query.graph()` call. Medusa's remote-joiner took ~3.3-3.6s to resolve as
+  few as 14 products/73 variants from that combination — reproduced cold
+  and warm, confirmed independent of `calculated_price`/pricing context
+  (same slowdown with it removed entirely). Isolated to the interaction
+  between variant-nested and product-nested one-to-many relations
+  specifically (not `variants.*` wildcard, not pricing, not data volume —
+  price/price_set table counts were normal, ~100 rows).
+- Fix: split into two parallel `query.graph()` calls (variant-shaped fields
+  incl. pricing vs. product-level decoration fields), merged by product id
+  in application code. Backs 3 routes: `GET /store/sellers/:handle/products`,
+  `GET /store/catalog/products`, `GET /store/search/suggest`.
+
+**Verified.**
+- `bun run build` (apps/api): green. `check-constitution.mjs`: 0 violations.
+- Real Docker rebuild + redeploy, live-curled against the real production DB:
+  - `/store/sellers/ornek-magaza/products`: 3.05-3.10s -> 0.15-0.32s
+  - `/store/catalog/products`: 0.13s: `/store/search/suggest`: 0.07s
+  - storefront `/tr/sellers/ornek-magaza` full SSR page: 0.27s
+  - Response shape/content confirmed unchanged (images, categories,
+    variants, variant options, calculated_price, seller all present).
+
+**Owed / next.**
+- Not pushed (branch + `kayi-main` + `origin`), pending explicit approval.
+- Noted but not changed: `SellerPage` (storefront) awaits `getSellerByHandle`
+  before its `Promise.all` of the other page-level fetches — a small
+  (~15ms) sequential step, now proportionally more visible after this fix
+  but not worth its own change unless further requested.
+- The same remote-joiner combination (variant-nested + product-nested
+  one-to-many relations in one `query.graph` call) is worth keeping in mind
+  as a general Medusa V2 gotcha for any *other* hydration code written
+  against this schema shape in the future.
+
+---
+
 ### Session 44: 2026-07-16 -- post-v2.2.0 bug sweep (Session 43's 4 owed items)
 
 **Goal.** Root-cause and permanently fix the 4 items Session 43 left owed:
