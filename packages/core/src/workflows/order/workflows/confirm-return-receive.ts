@@ -1,5 +1,6 @@
 import {
   BigNumberInput,
+  IOrderModuleService,
   OrderChangeActionDTO,
   OrderChangeDTO,
   OrderDTO,
@@ -44,7 +45,7 @@ type ConfirmOrderChangesInput = {
 const confirmOrderChangesStep = createStep(
   "mercur-confirm-order-changes",
   async (input: ConfirmOrderChangesInput, { container }) => {
-    const orderModuleService = container.resolve(Modules.ORDER)
+    const orderModuleService = container.resolve<IOrderModuleService>(Modules.ORDER)
     const currentChanges: Partial<OrderChangeDTO>[] = []
     const orderChanges = await orderModuleService.confirmOrderChange(
       input.changes.map((action) => {
@@ -61,7 +62,7 @@ const confirmOrderChangesStep = createStep(
   },
   async (currentChanges, { container }) => {
     if (!currentChanges?.length) return
-    const orderModuleService = container.resolve(Modules.ORDER)
+    const orderModuleService = container.resolve<IOrderModuleService>(Modules.ORDER)
     await orderModuleService.undoLastChange(
       currentChanges[0].order_id!,
       currentChanges[0],

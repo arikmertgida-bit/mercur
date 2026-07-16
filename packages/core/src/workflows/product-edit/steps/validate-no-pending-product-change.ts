@@ -1,3 +1,4 @@
+import { Query } from "@medusajs/framework"
 import {
   ContainerRegistrationKeys,
   MedusaError,
@@ -22,7 +23,7 @@ export const validateNoPendingProductChangeStep = createStep(
       return new StepResponse(void 0)
     }
 
-    const query = container.resolve(ContainerRegistrationKeys.QUERY)
+    const query = container.resolve<Query>(ContainerRegistrationKeys.QUERY)
 
     const { data: changes } = await query.graph({
       entity: "product_change",

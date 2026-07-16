@@ -1,3 +1,4 @@
+import type { Query } from '@medusajs/framework'
 import { MedusaContainer } from '@medusajs/framework/types'
 import { ContainerRegistrationKeys } from '@medusajs/framework/utils'
 
@@ -27,7 +28,7 @@ export const reindexProductsById = async (
     return
   }
 
-  const query = container.resolve(ContainerRegistrationKeys.QUERY)
+  const query = container.resolve<Query>(ContainerRegistrationKeys.QUERY)
   const { data: products } = await query.graph({
     entity: 'product',
     fields: searchProductFields,
@@ -51,7 +52,7 @@ export const getProductIdsForSeller = async (
   container: MedusaContainer,
   sellerId: string
 ): Promise<string[]> => {
-  const query = container.resolve(ContainerRegistrationKeys.QUERY)
+  const query = container.resolve<Query>(ContainerRegistrationKeys.QUERY)
   const { data: links } = await query.graph({
     entity: 'product_seller',
     fields: ['product_id'],

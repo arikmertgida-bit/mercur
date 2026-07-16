@@ -1,4 +1,4 @@
-import { MeiliSearch } from 'meilisearch'
+import type { Meilisearch as MeilisearchClient } from 'meilisearch' with { 'resolution-mode': 'import' }
 
 import {
   COLOR_ATTRIBUTE_HANDLES,
@@ -66,13 +66,22 @@ function mapSort(sort: MeilisearchSort | undefined): string[] | undefined {
 }
 
 class MeilisearchProductIndex {
-  private readonly client_: MeiliSearch
-  private readonly productIndex_: ReturnType<MeiliSearch['index']>
+  private readonly client_: MeilisearchClient
+  private readonly productIndex_: ReturnType<MeilisearchClient['index']>
   private settingsApplied_ = false
 
-  constructor(host: string, apiKey: string) {
-    this.client_ = new MeiliSearch({ host, apiKey })
+  private constructor(client: MeilisearchClient) {
+    this.client_ = client
     this.productIndex_ = this.client_.index(PRODUCT_INDEX)
+  }
+
+  // `meilisearch` ships pure ESM (>=0.5x) while apps/api is a CommonJS
+  // package — a static `import` at the top of the file would fail to
+  // compile. A dynamic import is the supported way to consume an ESM-only
+  // dependency from CJS.
+  static async create(host: string, apiKey: string): Promise<MeilisearchProductIndex> {
+    const { Meilisearch } = await import('meilisearch')
+    return new MeilisearchProductIndex(new Meilisearch({ host, apiKey }))
   }
 
   private async ensureSettings(): Promise<void> {
@@ -282,9 +291,9 @@ class MeilisearchProductIndex {
   }
 }
 
-let singleton: MeilisearchProductIndex | null = null
+let singleton: Promise<MeilisearchProductIndex> | null = null
 
-function getProductIndex(): MeilisearchProductIndex {
+function getProductIndex(): Promise<MeilisearchProductIndex> {
   if (singleton) {
     return singleton
   }
@@ -295,18 +304,18 @@ function getProductIndex(): MeilisearchProductIndex {
       '[search] Missing required environment variable(s): MEILISEARCH_HOST, MEILISEARCH_MASTER_KEY'
     )
   }
-  singleton = new MeilisearchProductIndex(host, apiKey)
+  singleton = MeilisearchProductIndex.create(host, apiKey)
   return singleton
 }
 
 export async function indexDocs(docs: SearchDoc[]): Promise<void> {
-  return getProductIndex().index(docs)
+  return (await getProductIndex()).index(docs)
 }
 
 export async function removeDocs(ids: string[]): Promise<void> {
-  return getProductIndex().remove(ids)
+  return (await getProductIndex()).remove(ids)
 }
 
 export async function searchProducts(query: SearchQueryBase): Promise<SearchResults> {
-  return getProductIndex().search(query)
+  return (await getProductIndex()).search(query)
 }

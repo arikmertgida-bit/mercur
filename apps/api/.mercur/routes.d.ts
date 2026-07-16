@@ -647,9 +647,6 @@ export type Routes = {
             $id: typeof import("@medusajs/medusa/api/store/return-reasons/[id]/route");
         };
         returns: typeof import("@medusajs/medusa/api/store/returns/route");
-        search: typeof import("@mercurjs/core/api/store/search/route") & {
-            suggest: typeof import("../src/api/store/search/suggest/route");
-        };
         sellers: typeof import("@mercurjs/core/api/store/sellers/route") & {
             $id: typeof import("@mercurjs/core/api/store/sellers/[id]/route");
             $handle: {
@@ -686,6 +683,9 @@ export type Routes = {
         };
         reviews: typeof import("../src/api/store/reviews/route") & {
             $id: typeof import("../src/api/store/reviews/[id]/route");
+        };
+        search: {
+            suggest: typeof import("../src/api/store/search/suggest/route");
         };
         sellersFollowing: typeof import("../src/api/store/sellers-following/route");
         wishlist: typeof import("../src/api/store/wishlist/route") & {

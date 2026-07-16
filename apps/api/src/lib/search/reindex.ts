@@ -1,3 +1,4 @@
+import type { Query } from '@medusajs/framework'
 import { MedusaContainer } from '@medusajs/framework/types'
 import { ContainerRegistrationKeys } from '@medusajs/framework/utils'
 
@@ -7,7 +8,7 @@ import { buildProductDocs, SearchProductRow, SearchRegion } from './build-docs'
 export const loadRegions = async (
   container: MedusaContainer
 ): Promise<SearchRegion[]> => {
-  const query = container.resolve(ContainerRegistrationKeys.QUERY)
+  const query = container.resolve<Query>(ContainerRegistrationKeys.QUERY)
   const { data } = await query.graph({
     entity: 'region',
     fields: ['id', 'currency_code', 'automatic_taxes', 'countries.iso_2'],
