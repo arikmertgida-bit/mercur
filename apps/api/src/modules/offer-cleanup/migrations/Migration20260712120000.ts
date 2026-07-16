@@ -18,9 +18,19 @@ export class Migration20260712120000 extends Migration {
     "price_01KXA31APGNQ8YJWRH97MS5GD6",
   ];
 
+  // Guarded on the table's existence: this migration targets 4 specific rows
+  // left over from this deployment's own production database at the time the
+  // offer module was removed. A fresh database (new environment, integration
+  // tests) never has the `price` table populated with these rows — in some
+  // module-load orderings it may not even have the `price` table yet — so the
+  // delete must no-op rather than fail the whole migration chain.
   override async up(): Promise<void> {
     this.addSql(
-      `delete from "price" where "id" in (${this.priceIds.map((id) => `'${id}'`).join(", ")});`
+      `do $$ begin
+        if to_regclass('public.price') is not null then
+          delete from "price" where "id" in (${this.priceIds.map((id) => `'${id}'`).join(", ")});
+        end if;
+      end $$;`
     );
   }
 
