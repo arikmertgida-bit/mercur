@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react"
 import { z } from "zod"
 
-declare const __BACKEND_URL__: string
+import { client } from "../lib/client"
 
 interface CustomerAvatarInfo {
   avatarUrl: string | null
 }
 
-const CustomerAvatarResponseSchema = z.object({
-  avatar_url: z.string().nullable(),
+const CustomerMetadataSchema = z.object({
+  avatar_url: z.string().nullable().optional(),
 })
 
 const avatarCache = new Map<string, CustomerAvatarInfo>()
@@ -23,13 +23,10 @@ function fetchCustomerAvatar(customerId: string): Promise<CustomerAvatarInfo> {
   const pending = inFlight.get(customerId)
   if (pending) return pending
 
-  const promise = fetch(`${__BACKEND_URL__}/admin/customer-avatar/${customerId}`, {
-    credentials: "include",
-  })
-    .then(async (res): Promise<CustomerAvatarInfo> => {
-      if (!res.ok) return EMPTY
-      const raw = await res.json()
-      const parsed = CustomerAvatarResponseSchema.safeParse(raw)
+  const promise = client.admin.customers.$id
+    .query({ $id: customerId })
+    .then((raw): CustomerAvatarInfo => {
+      const parsed = CustomerMetadataSchema.safeParse(raw.customer?.metadata)
       if (!parsed.success) return EMPTY
       const result: CustomerAvatarInfo = { avatarUrl: parsed.data.avatar_url ?? null }
       avatarCache.set(customerId, result)

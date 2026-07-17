@@ -9,6 +9,7 @@ import {
   useSyncExternalStore,
 } from "react"
 import { z } from "zod"
+import { client } from "../../lib/client"
 import {
   connectSocket,
   disconnectSocket,
@@ -108,8 +109,6 @@ interface MessengerProviderProps {
   persistSession?: boolean
 }
 
-declare const __BACKEND_URL__: string
-
 const MessengerTokenResponseSchema = z.object({ token: z.string().optional() })
 
 /**
@@ -161,13 +160,7 @@ function isStoredTokenValid(): boolean {
  */
 async function fetchMessengerToken(): Promise<string | null> {
   try {
-    const res = await fetch(`${__BACKEND_URL__}/vendor/auth/messenger-token`, {
-      method: "GET",
-      credentials: "include",
-      headers: { "Content-Type": "application/json" },
-    })
-    if (!res.ok) return null
-    const raw = await res.json()
+    const raw = await client.vendor.auth.messengerToken.query()
     const parsed = MessengerTokenResponseSchema.safeParse(raw)
     return parsed.success ? (parsed.data.token ?? null) : null
   } catch {

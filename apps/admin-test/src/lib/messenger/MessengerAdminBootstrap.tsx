@@ -1,9 +1,8 @@
 import { useEffect, useRef, useState, type ReactNode } from "react"
 import { toast } from "@medusajs/ui"
+import { client } from "../client"
 import { AdminUserMeSchema } from "./schemas"
 import { MessengerAdminProvider, useMessengerAdmin } from "../../providers/messenger-provider/MessengerAdminProvider"
-
-declare const __BACKEND_URL__: string
 
 /** While logged out, poll fast so a fresh login is picked up in seconds. */
 const FAST_POLL_INTERVAL_MS = 2_000
@@ -35,14 +34,7 @@ function useAdminSessionId(): string | null {
 
     const resolveAdminId = async (): Promise<void> => {
       try {
-        const res = await fetch(`${__BACKEND_URL__}/admin/users/me`, {
-          credentials: "include",
-        })
-        if (!res.ok) {
-          if (!cancelled) setAdminId(null)
-          return
-        }
-        const raw: Record<string, string | number | boolean | undefined | null> = await res.json()
+        const raw = await client.admin.users.me.query({})
         const parsed = AdminUserMeSchema.safeParse(raw)
         const resolvedId = parsed.success ? parsed.data.user.id : null
         if (!cancelled) {
