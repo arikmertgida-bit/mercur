@@ -26,10 +26,10 @@ module.exports = withMercur({
     databaseUrl: process.env.DATABASE_URL,
     redisUrl: REDIS_URL,
     http: {
-      storeCors: process.env.STORE_CORS!,
-      adminCors: process.env.ADMIN_CORS!,
-      vendorCors: process.env.VENDOR_CORS!,
-      authCors: process.env.AUTH_CORS!,
+      storeCors: requireEnv('STORE_CORS'),
+      adminCors: requireEnv('ADMIN_CORS'),
+      vendorCors: requireEnv('VENDOR_CORS'),
+      authCors: requireEnv('AUTH_CORS'),
       jwtSecret: process.env.JWT_SECRET || "supersecret",
       cookieSecret: process.env.COOKIE_SECRET || "supersecret",
     }
@@ -135,7 +135,7 @@ module.exports = withMercur({
     },
     {
       resolve: '@medusajs/medusa/workflow-engine-redis',
-      options: { redis: { url: REDIS_URL } },
+      options: { redis: { redisUrl: REDIS_URL } },
     },
     {
       resolve: '@medusajs/medusa/locking',

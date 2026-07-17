@@ -2,11 +2,21 @@ import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
 import { mercurDashboardPlugin } from '@mercurjs/dashboard-sdk/vite'
 
+// docker-entrypoint.sh looks for this exact token in the built JS and
+// sed-replaces it with the real BACKEND_URL at container start (ARCH-01).
+// It must only be baked in for production builds — `vite dev`/`bun run dev`
+// serves straight from source with no entrypoint step to do the replacement,
+// so a real fallback (the dashboard-sdk's own localhost:9000 default) still
+// applies there.
+const RUNTIME_BACKEND_URL_TOKEN = '__VITE_RUNTIME_BACKEND_URL__'
+
 // https://vite.dev/config/
-export default defineConfig(({ mode }) => {
+export default defineConfig(({ mode, command }) => {
   const env = loadEnv(mode, process.cwd(), '')
   const backendUrl =
-    env.VITE_MERCUR_BACKEND_URL || env.MERCUR_BACKEND_URL
+    env.VITE_MERCUR_BACKEND_URL ||
+    env.MERCUR_BACKEND_URL ||
+    (command === 'build' ? RUNTIME_BACKEND_URL_TOKEN : undefined)
 
   return {
     define: {
