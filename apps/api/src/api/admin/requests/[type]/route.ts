@@ -1,7 +1,12 @@
 import { AuthenticatedMedusaRequest, MedusaResponse } from "@medusajs/framework"
 import { ContainerRegistrationKeys, MedusaError } from "@medusajs/framework/utils"
 
-import { AdminRequestListResponse, parseRequestEntity, parseRequestEntityType } from "../../../../types/requests"
+import {
+  AdminRequestListResponse,
+  isRequestEntity,
+  parseRequestEntitySafe,
+  parseRequestEntityType,
+} from "../../../../types/requests"
 import { AdminGetRequestsParamsType } from "../validators"
 
 export async function GET(
@@ -22,8 +27,10 @@ export async function GET(
     pagination: req.queryConfig.pagination,
   })
 
+  const requests = entities.map(parseRequestEntitySafe).filter(isRequestEntity)
+
   res.json({
-    requests: entities.map(parseRequestEntity),
+    requests,
     count: metadata?.count ?? 0,
     offset: metadata?.skip ?? 0,
     limit: metadata?.take ?? 0,
