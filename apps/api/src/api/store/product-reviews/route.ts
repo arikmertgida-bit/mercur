@@ -1,10 +1,12 @@
-import { MedusaRequest, MedusaResponse } from "@medusajs/framework/http"
+import { MedusaResponse, MedusaStoreRequest } from "@medusajs/framework/http"
 import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
 import type { Query } from "@medusajs/framework"
 
 import productReview from "../../../links/product-review"
 import { REVIEW_IMAGE_MODULE } from "../../../modules/review-images"
 import ReviewImageService from "../../../modules/review-images/service"
+import { REVIEW_SOCIAL_MODULE } from "../../../modules/review-social"
+import ReviewSocialModuleService from "../../../modules/review-social/service"
 import { ProductReviewRowSchema, parseRows } from "../../../lib/graph-schemas"
 import { StoreGetProductReviewsParamsType } from "./validators"
 
@@ -19,6 +21,10 @@ export type StoreProductReviewRow = {
   updated_at: string | Date
   customer: { first_name: string; last_name: string } | null
   images: Array<{ id: string; url: string; is_hidden: boolean }>
+  seller: { id: string; name: string; handle: string; logo: string | null } | null
+  likes_count: number
+  is_liked_by_me: boolean
+  reply_status: "waiting_for_reply" | "replied"
 }
 
 export type StoreProductReviewsResponse = {
@@ -28,11 +34,12 @@ export type StoreProductReviewsResponse = {
 }
 
 export const GET = async (
-  req: MedusaRequest<never, StoreGetProductReviewsParamsType>,
+  req: MedusaStoreRequest<never, StoreGetProductReviewsParamsType>,
   res: MedusaResponse<StoreProductReviewsResponse>
 ) => {
   const query = req.scope.resolve<Query>(ContainerRegistrationKeys.QUERY)
   const productId = req.validatedQuery.product_id
+  const currentCustomerId = req.auth_context?.actor_id
 
   const { data: relations, metadata } = await query.graph({
     entity: productReview.entryPoint,
@@ -65,6 +72,21 @@ export const GET = async (
       imagesByReview[image.review_id] = list
     }
   }
+
+  const { data: products } = await query.graph({
+    entity: "product",
+    filters: { id: productId },
+    fields: ["id", "sellers.id", "sellers.name", "sellers.handle", "sellers.logo"],
+  })
+  const productSeller = products[0]?.sellers?.[0] ?? null
+
+  const reviewSocialService = req.scope.resolve<ReviewSocialModuleService>(
+    REVIEW_SOCIAL_MODULE
+  )
+  const { likesCountByReview, likedByMe } = await reviewSocialService.getReviewLikesInfo(
+    reviewIds,
+    currentCustomerId
+  )
 
   const { data: allRatingsRelations } = await query.graph({
     entity: productReview.entryPoint,
@@ -100,6 +122,17 @@ export const GET = async (
           }
         : null,
       images: imagesByReview[review.id] ?? [],
+      seller: productSeller
+        ? {
+            id: productSeller.id,
+            name: productSeller.name,
+            handle: productSeller.handle,
+            logo: productSeller.logo ?? null,
+          }
+        : null,
+      likes_count: likesCountByReview[review.id] ?? 0,
+      is_liked_by_me: likedByMe.has(review.id),
+      reply_status: review.seller_note ? "replied" : "waiting_for_reply",
     })),
     count: metadata?.count ?? 0,
     average_rating: averageRating,
