@@ -73,16 +73,22 @@ medusaIntegrationTestRunner({
                 suspendedSeller = suspendedResult.seller
                 suspendedSellerHeaders = suspendedResult.headers
 
-                await api.post(
-                    `/admin/sellers/${approvedSeller.id}/approve`,
-                    {},
-                    adminHeaders
-                )
-                await api.post(
-                    `/admin/sellers/${suspendedSeller.id}/approve`,
-                    {},
-                    adminHeaders
-                )
+                // Kayı's `auto-approve-seller` subscriber (fire-and-forget on
+                // the event bus) may have already gotten there first — a 400
+                // here only ever means "already open", so it's safe to
+                // swallow; any other failure still propagates and fails
+                // `beforeEach` (and every test in this file) as it should.
+                const approveIfPending = (sellerId: string) =>
+                    api
+                        .post(`/admin/sellers/${sellerId}/approve`, {}, adminHeaders)
+                        .catch((e) => {
+                            if (e.response?.status !== 400) {
+                                throw e
+                            }
+                        })
+
+                await approveIfPending(approvedSeller.id)
+                await approveIfPending(suspendedSeller.id)
             })
 
             // Products are master records: creation no longer links a seller.

@@ -5,6 +5,7 @@ import {
   createAdminUser,
 } from "../../../helpers/create-admin-user"
 import { createSellerUser } from "../../../helpers/create-seller-user"
+import { ensureSellerPendingApproval } from "../../../helpers/seller-status"
 
 jest.setTimeout(50000)
 
@@ -47,6 +48,24 @@ medusaIntegrationTestRunner({
         sellerC = resultC.seller
         memberC = resultC.member
       })
+
+      /**
+       * Pure setup noise: several tests below chain an approve call before
+       * the actual transition under test, without asserting on it — Kayı's
+       * `auto-approve-seller` subscriber (fire-and-forget on the event bus)
+       * may have already gotten there first. A 400 here only ever means
+       * "already open" — nothing else could have transitioned a
+       * freshly-created seller this early — so it's safe to swallow; any
+       * other failure still propagates and fails the test.
+       */
+      const approveIfPending = (sellerId: string) =>
+        api
+          .post(`/admin/sellers/${sellerId}/approve`, {}, adminHeaders)
+          .catch((e) => {
+            if (e.response?.status !== 400) {
+              throw e
+            }
+          })
 
       describe("POST /admin/sellers", () => {
         it("should create a seller with required fields", async () => {
@@ -400,11 +419,7 @@ medusaIntegrationTestRunner({
         })
 
         it("should filter by status open", async () => {
-          await api.post(
-            `/admin/sellers/${sellerA.id}/approve`,
-            {},
-            adminHeaders
-          )
+          await approveIfPending(sellerA.id)
 
           const response = await api.get(
             `/admin/sellers?status=open`,
@@ -575,6 +590,8 @@ medusaIntegrationTestRunner({
 
       describe("GET /admin/sellers/:id", () => {
         it("should retrieve a seller by id with all fields", async () => {
+          await ensureSellerPendingApproval(appContainer, sellerA.id)
+
           const response = await api.get(
             `/admin/sellers/${sellerA.id}`,
             adminHeaders
@@ -687,6 +704,8 @@ medusaIntegrationTestRunner({
 
       describe("POST /admin/sellers/:id/approve", () => {
         it("should approve a pending_approval seller", async () => {
+          await ensureSellerPendingApproval(appContainer, sellerA.id)
+
           const response = await api.post(
             `/admin/sellers/${sellerA.id}/approve`,
             {},
@@ -698,11 +717,7 @@ medusaIntegrationTestRunner({
         })
 
         it("should fail when seller is already open", async () => {
-          await api.post(
-            `/admin/sellers/${sellerA.id}/approve`,
-            {},
-            adminHeaders
-          )
+          await approveIfPending(sellerA.id)
 
           const response = await api
             .post(`/admin/sellers/${sellerA.id}/approve`, {}, adminHeaders)
@@ -712,11 +727,7 @@ medusaIntegrationTestRunner({
         })
 
         it("should fail when seller is suspended", async () => {
-          await api.post(
-            `/admin/sellers/${sellerA.id}/approve`,
-            {},
-            adminHeaders
-          )
+          await approveIfPending(sellerA.id)
           await api.post(
             `/admin/sellers/${sellerA.id}/suspend`,
             {},
@@ -731,11 +742,7 @@ medusaIntegrationTestRunner({
         })
 
         it("should fail when seller is terminated", async () => {
-          await api.post(
-            `/admin/sellers/${sellerA.id}/approve`,
-            {},
-            adminHeaders
-          )
+          await approveIfPending(sellerA.id)
           await api.post(
             `/admin/sellers/${sellerA.id}/suspend`,
             {},
@@ -757,11 +764,7 @@ medusaIntegrationTestRunner({
 
       describe("POST /admin/sellers/:id/suspend", () => {
         it("should suspend an open seller", async () => {
-          await api.post(
-            `/admin/sellers/${sellerA.id}/approve`,
-            {},
-            adminHeaders
-          )
+          await approveIfPending(sellerA.id)
 
           const response = await api.post(
             `/admin/sellers/${sellerA.id}/suspend`,
@@ -774,11 +777,7 @@ medusaIntegrationTestRunner({
         })
 
         it("should accept optional reason", async () => {
-          await api.post(
-            `/admin/sellers/${sellerA.id}/approve`,
-            {},
-            adminHeaders
-          )
+          await approveIfPending(sellerA.id)
 
           const response = await api.post(
             `/admin/sellers/${sellerA.id}/suspend`,
@@ -805,11 +804,7 @@ medusaIntegrationTestRunner({
         })
 
         it("should fail when seller is already suspended", async () => {
-          await api.post(
-            `/admin/sellers/${sellerA.id}/approve`,
-            {},
-            adminHeaders
-          )
+          await approveIfPending(sellerA.id)
           await api.post(
             `/admin/sellers/${sellerA.id}/suspend`,
             {},
@@ -824,11 +819,7 @@ medusaIntegrationTestRunner({
         })
 
         it("should fail when seller is terminated", async () => {
-          await api.post(
-            `/admin/sellers/${sellerA.id}/approve`,
-            {},
-            adminHeaders
-          )
+          await approveIfPending(sellerA.id)
           await api.post(
             `/admin/sellers/${sellerA.id}/suspend`,
             {},
@@ -850,11 +841,7 @@ medusaIntegrationTestRunner({
 
       describe("POST /admin/sellers/:id/unsuspend", () => {
         it("should unsuspend a suspended seller", async () => {
-          await api.post(
-            `/admin/sellers/${sellerA.id}/approve`,
-            {},
-            adminHeaders
-          )
+          await approveIfPending(sellerA.id)
           await api.post(
             `/admin/sellers/${sellerA.id}/suspend`,
             {},
@@ -872,11 +859,7 @@ medusaIntegrationTestRunner({
         })
 
         it("should fail when seller is open", async () => {
-          await api.post(
-            `/admin/sellers/${sellerA.id}/approve`,
-            {},
-            adminHeaders
-          )
+          await approveIfPending(sellerA.id)
 
           const response = await api
             .post(`/admin/sellers/${sellerA.id}/unsuspend`, {}, adminHeaders)
@@ -894,11 +877,7 @@ medusaIntegrationTestRunner({
         })
 
         it("should fail when seller is terminated", async () => {
-          await api.post(
-            `/admin/sellers/${sellerA.id}/approve`,
-            {},
-            adminHeaders
-          )
+          await approveIfPending(sellerA.id)
           await api.post(
             `/admin/sellers/${sellerA.id}/suspend`,
             {},
@@ -920,11 +899,7 @@ medusaIntegrationTestRunner({
 
       describe("POST /admin/sellers/:id/terminate", () => {
         it("should terminate a suspended seller", async () => {
-          await api.post(
-            `/admin/sellers/${sellerA.id}/approve`,
-            {},
-            adminHeaders
-          )
+          await approveIfPending(sellerA.id)
           await api.post(
             `/admin/sellers/${sellerA.id}/suspend`,
             {},
@@ -942,11 +917,7 @@ medusaIntegrationTestRunner({
         })
 
         it("should accept optional reason", async () => {
-          await api.post(
-            `/admin/sellers/${sellerA.id}/approve`,
-            {},
-            adminHeaders
-          )
+          await approveIfPending(sellerA.id)
           await api.post(
             `/admin/sellers/${sellerA.id}/suspend`,
             {},
@@ -966,6 +937,8 @@ medusaIntegrationTestRunner({
         })
 
         it("should terminate a pending_approval seller", async () => {
+          await ensureSellerPendingApproval(appContainer, sellerA.id)
+
           const response = await api.post(
             `/admin/sellers/${sellerA.id}/terminate`,
             {},
@@ -977,11 +950,7 @@ medusaIntegrationTestRunner({
         })
 
         it("should fail when seller is open (must suspend first)", async () => {
-          await api.post(
-            `/admin/sellers/${sellerA.id}/approve`,
-            {},
-            adminHeaders
-          )
+          await approveIfPending(sellerA.id)
 
           const response = await api
             .post(`/admin/sellers/${sellerA.id}/terminate`, {}, adminHeaders)
@@ -991,11 +960,7 @@ medusaIntegrationTestRunner({
         })
 
         it("should fail when seller is already terminated", async () => {
-          await api.post(
-            `/admin/sellers/${sellerA.id}/approve`,
-            {},
-            adminHeaders
-          )
+          await approveIfPending(sellerA.id)
           await api.post(
             `/admin/sellers/${sellerA.id}/suspend`,
             {},
@@ -1017,11 +982,7 @@ medusaIntegrationTestRunner({
 
       describe("POST /admin/sellers/:id/unterminate", () => {
         it("should unterminate a terminated seller", async () => {
-          await api.post(
-            `/admin/sellers/${sellerA.id}/approve`,
-            {},
-            adminHeaders
-          )
+          await approveIfPending(sellerA.id)
           await api.post(
             `/admin/sellers/${sellerA.id}/suspend`,
             {},
@@ -1044,11 +1005,7 @@ medusaIntegrationTestRunner({
         })
 
         it("should fail when seller is open", async () => {
-          await api.post(
-            `/admin/sellers/${sellerA.id}/approve`,
-            {},
-            adminHeaders
-          )
+          await approveIfPending(sellerA.id)
 
           const response = await api
             .post(`/admin/sellers/${sellerA.id}/unterminate`, {}, adminHeaders)
@@ -1066,11 +1023,7 @@ medusaIntegrationTestRunner({
         })
 
         it("should fail when seller is suspended", async () => {
-          await api.post(
-            `/admin/sellers/${sellerA.id}/approve`,
-            {},
-            adminHeaders
-          )
+          await approveIfPending(sellerA.id)
           await api.post(
             `/admin/sellers/${sellerA.id}/suspend`,
             {},
@@ -1087,6 +1040,8 @@ medusaIntegrationTestRunner({
 
       describe("Full Status Lifecycle", () => {
         it("should complete full cycle: pending_approval → open → suspended → terminated → suspended → open", async () => {
+          await ensureSellerPendingApproval(appContainer, sellerA.id)
+
           // pending_approval → open
           let response = await api.post(
             `/admin/sellers/${sellerA.id}/approve`,
