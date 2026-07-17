@@ -7,6 +7,7 @@ import {
   generateStoreHeaders,
 } from "../../../helpers/create-admin-user"
 import { createSellerUser } from "../../../helpers/create-seller-user"
+import { ensureSellerPendingApproval } from "../../../helpers/seller-status"
 
 // Each test's setup provisions three sellers (each a full account workflow +
 // password hash), so use the same generous timeout as the other heavy
@@ -47,22 +48,23 @@ medusaIntegrationTestRunner({
         })
         sellerC = resultC.seller
 
-        // Approve all three sellers so they become OPEN
-        await api.post(
-          `/admin/sellers/${sellerA.id}/approve`,
-          {},
-          adminHeaders
-        )
-        await api.post(
-          `/admin/sellers/${sellerB.id}/approve`,
-          {},
-          adminHeaders
-        )
-        await api.post(
-          `/admin/sellers/${sellerC.id}/approve`,
-          {},
-          adminHeaders
-        )
+        // Approve all three sellers so they become OPEN. Kayı's
+        // `auto-approve-seller` subscriber (fire-and-forget on the event
+        // bus) may have already gotten there first — a 400 here only ever
+        // means "already open", so it's safe to swallow; any other failure
+        // still propagates and fails `beforeEach` as it should.
+        const approveIfPending = (sellerId: string) =>
+          api
+            .post(`/admin/sellers/${sellerId}/approve`, {}, adminHeaders)
+            .catch((e) => {
+              if (e.response?.status !== 400) {
+                throw e
+              }
+            })
+
+        await approveIfPending(sellerA.id)
+        await approveIfPending(sellerB.id)
+        await approveIfPending(sellerC.id)
 
         // Set seller B as premium
         await api.post(
@@ -241,6 +243,7 @@ medusaIntegrationTestRunner({
               name: "Pending Seller",
             }
           )
+          await ensureSellerPendingApproval(appContainer, pendingSeller.id)
 
           const response = await api.get(`/store/sellers`, storeHeaders)
 
@@ -257,11 +260,17 @@ medusaIntegrationTestRunner({
             }
           )
 
-          await api.post(
-            `/admin/sellers/${suspendedSeller.id}/approve`,
-            {},
-            adminHeaders
-          )
+          await api
+            .post(
+              `/admin/sellers/${suspendedSeller.id}/approve`,
+              {},
+              adminHeaders
+            )
+            .catch((e) => {
+              if (e.response?.status !== 400) {
+                throw e
+              }
+            })
           await api.post(
             `/admin/sellers/${suspendedSeller.id}/suspend`,
             {},
@@ -343,6 +352,7 @@ medusaIntegrationTestRunner({
               name: "Pending Seller 2",
             }
           )
+          await ensureSellerPendingApproval(appContainer, pendingSeller.id)
 
           const response = await api
             .get(`/store/sellers/${pendingSeller.id}`, storeHeaders)
@@ -360,11 +370,17 @@ medusaIntegrationTestRunner({
             }
           )
 
-          await api.post(
-            `/admin/sellers/${suspendedSeller.id}/approve`,
-            {},
-            adminHeaders
-          )
+          await api
+            .post(
+              `/admin/sellers/${suspendedSeller.id}/approve`,
+              {},
+              adminHeaders
+            )
+            .catch((e) => {
+              if (e.response?.status !== 400) {
+                throw e
+              }
+            })
           await api.post(
             `/admin/sellers/${suspendedSeller.id}/suspend`,
             {},

@@ -56,12 +56,19 @@ medusaIntegrationTestRunner({
         _memberC = resultC.member
         _headersC = resultC.headers
 
-        // Approve sellerA so tests have both pending and open sellers
-        await api.post(
-          `/admin/sellers/${sellerA.id}/approve`,
-          {},
-          adminHeaders
-        )
+        // Approve sellerA so tests have an open seller to work against.
+        // Kayı's `auto-approve-seller` subscriber (fire-and-forget on the
+        // event bus) may have already gotten there first — a 400 here only
+        // ever means "already open", so it's safe to swallow; any other
+        // failure still propagates and fails `beforeEach` (and every test
+        // in this file) as it should.
+        await api
+          .post(`/admin/sellers/${sellerA.id}/approve`, {}, adminHeaders)
+          .catch((e) => {
+            if (e.response?.status !== 400) {
+              throw e
+            }
+          })
       })
 
       /**

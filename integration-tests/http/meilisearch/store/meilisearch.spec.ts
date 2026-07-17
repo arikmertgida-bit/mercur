@@ -51,8 +51,21 @@ medusaIntegrationTestRunner({
         })
         sellerSuspended = resultSuspended.seller
 
-        await api.post(`/admin/sellers/${sellerActive.id}/approve`, {}, adminHeaders)
-        await api.post(`/admin/sellers/${sellerSuspended.id}/approve`, {}, adminHeaders)
+        // Kayı's `auto-approve-seller` subscriber (fire-and-forget on the
+        // event bus) may have already gotten there first — a 400 here only
+        // ever means "already open", so it's safe to swallow; any other
+        // failure still propagates and fails `beforeEach` as it should.
+        const approveIfPending = (sellerId: string) =>
+          api
+            .post(`/admin/sellers/${sellerId}/approve`, {}, adminHeaders)
+            .catch((e) => {
+              if (e.response?.status !== 400) {
+                throw e
+              }
+            })
+
+        await approveIfPending(sellerActive.id)
+        await approveIfPending(sellerSuspended.id)
 
         const productActiveRes = await api.post(
           `/vendor/products`,
