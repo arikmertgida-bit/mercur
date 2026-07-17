@@ -505,7 +505,7 @@ export type Routes = {
                 subscribe: typeof import("@medusajs/medusa/api/admin/workflows-executions/[workflow_id]/subscribe/route");
             };
         };
-        custom: typeof import("../src/api/admin/custom/route") & {
+        custom: {
             messengerToken: typeof import("../src/api/admin/custom/messenger-token/route");
             vendorSupportConversations: typeof import("../src/api/admin/custom/vendor-support-conversations/route");
         };
@@ -666,7 +666,6 @@ export type Routes = {
         catalog: {
             products: typeof import("../src/api/store/catalog/products/route");
         };
-        custom: typeof import("../src/api/store/custom/route");
         customer: {
             defaultImages: typeof import("../src/api/store/customer/default-images/route");
             upload: typeof import("../src/api/store/customer/upload/route");
