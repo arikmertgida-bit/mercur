@@ -73,6 +73,23 @@ export type RequestEntityResponse = z.infer<typeof RequestEntityResponseSchema>
 export const parseRequestEntity = <T>(entity: T): RequestEntityResponse =>
   RequestEntityResponseSchema.parse(entity)
 
+// Entities created outside the request/approval workflow (e.g. an admin creating a
+// category directly through the standard Medusa admin panel, which never goes through
+// `createProductCategoryRequestWorkflow`) never get a `custom_fields` link row at all —
+// that's expected, not corrupt data, since they were never actually "requested". List
+// endpoints use this lenient variant so one such row doesn't 500 the entire list; it
+// simply excludes rows with no request history, which is exactly what a request/approval
+// queue should show. Detail/accept/reject endpoints keep the strict `parseRequestEntity`
+// above — reaching one of those for an unlinked entity is a genuine caller error.
+export const parseRequestEntitySafe = <T>(entity: T): RequestEntityResponse | null => {
+  const result = RequestEntityResponseSchema.safeParse(entity)
+  return result.success ? result.data : null
+}
+
+export const isRequestEntity = (
+  entity: RequestEntityResponse | null
+): entity is RequestEntityResponse => entity !== null
+
 // No shared `parseRequestEntityList` helper: query.graph() over the 4-way
 // `RequestEntityType` union returns a union of 4 distinct array types
 // (`ProductCategory[] | ProductCollection[] | ...`), which does not unify
