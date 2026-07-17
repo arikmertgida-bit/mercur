@@ -1,11 +1,9 @@
 import { useEffect, useRef, useState, type ReactNode } from "react"
 import { toast } from "@medusajs/ui"
+import { client } from "../client"
 import { SellerMeSchema } from "./schemas"
-import type { JsonRecord } from "../json-record"
 import { MessengerProvider, useMessenger } from "../../providers/messenger-provider/MessengerProvider"
 import { AdminChat } from "../../components/layout/admin-chat/AdminChat"
-
-declare const __BACKEND_URL__: string
 
 /** While logged out / no store selected, poll fast so a fresh login is picked up in seconds. */
 const FAST_POLL_INTERVAL_MS = 2_000
@@ -37,17 +35,7 @@ function useSellerSession(): { sellerId: string | null; sellerName: string | und
 
     const resolveSeller = async (): Promise<void> => {
       try {
-        const res = await fetch(`${__BACKEND_URL__}/vendor/sellers/me`, {
-          credentials: "include",
-        })
-        if (!res.ok) {
-          if (!cancelled) {
-            setSellerId(null)
-            setSellerName(undefined)
-          }
-          return
-        }
-        const raw: JsonRecord = await res.json()
+        const raw = await client.vendor.sellers.me.query()
         const parsed = SellerMeSchema.safeParse(raw)
         const resolvedId = parsed.success ? (parsed.data.seller?.id ?? null) : null
         const resolvedName = parsed.success ? (parsed.data.seller?.name ?? undefined) : undefined

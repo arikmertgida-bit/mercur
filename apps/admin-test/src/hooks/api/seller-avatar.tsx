@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import type { UseQueryResult } from '@tanstack/react-query'
 
-declare const __BACKEND_URL__: string
+import { client } from '../../lib/client'
 
 interface SellerAvatarResponse {
   avatar_url: string | null
@@ -18,14 +18,10 @@ export const useAdminSellerAvatar = (
       if (!sellerId || !sellerId.startsWith('sel_')) {
         return { avatar_url: null }
       }
-      const res = await fetch(`${__BACKEND_URL__}/admin/seller-avatar/${sellerId}`, {
-        credentials: "include",
+      const { seller } = await client.admin.sellers.$id.query({
+        $id: sellerId,
       })
-      if (!res.ok) {
-        return { avatar_url: null }
-      }
-      const raw = await res.json() as { avatar_url: string | null }
-      return { avatar_url: raw.avatar_url }
+      return { avatar_url: seller.logo ?? null }
     },
     enabled: !!sellerId && sellerId.startsWith('sel_'),
     staleTime: 5 * 60 * 1000, // 5 minutes cache

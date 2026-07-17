@@ -5,6 +5,7 @@ import { ChatBubbleLeftRight, PaperClip, PaperPlane, EllipsisHorizontal, XMark, 
 import { useMessengerAdmin } from "../../../providers/messenger-provider/MessengerAdminProvider"
 import type { Conversation, Message, MessageContext, Participant, UserType } from "../../../lib/messenger/types"
 import { AdminProductSchema } from "../../../lib/messenger/schemas"
+import { client } from "../../../lib/client"
 import { logger } from "../../../lib/logger"
 import { getCatchMessage } from "../../../lib/errors"
 import { ThreadListItem } from "./ThreadListItem"
@@ -15,8 +16,6 @@ import { DynamicAvatar } from "./DynamicAvatar"
 import { useAdminSellerAvatar } from "../../../hooks/api/seller-avatar"
 import { useCustomerAvatar } from "../../../hooks/useCustomerAvatar"
 import { resolveParticipantDisplayName } from "../../../lib/messenger/resolve-participant-display-name"
-
-declare const __BACKEND_URL__: string
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -142,12 +141,9 @@ export function MessengerAdminInbox({ adminId }: MessengerAdminInboxProps): Reac
     if (isProduct && conv.productId) {
       const pid = conv.productId
       setIsContextLoading(true)
-      fetch(`${__BACKEND_URL__}/admin/products/${pid}?fields=id,title,thumbnail,handle`, {
-        credentials: "include",
-      })
-        .then(async (r) => {
-          if (!r.ok) { setActiveContext(null); return }
-          const raw = await r.json()
+      client.admin.products.$id
+        .query({ $id: pid })
+        .then((raw) => {
           const parsed = AdminProductSchema.safeParse(raw)
           if (!parsed.success) { setActiveContext(null); return }
           setActiveContext({

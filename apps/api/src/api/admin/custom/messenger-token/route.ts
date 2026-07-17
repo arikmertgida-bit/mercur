@@ -19,9 +19,11 @@ const JWT_SECRET: string = rawJwtSecret
  * - Token 8 saatte sona erer
  * - Payload yalnızca messenger'ın ihtiyacı olan alanları içerir
  */
+type MessengerTokenResponse = { token: string } | { error: string }
+
 export async function GET(
   req: AuthenticatedMedusaRequest,
-  res: MedusaResponse
+  res: MedusaResponse<MessengerTokenResponse>
 ): Promise<void> {
   const actorId = req.auth_context?.actor_id
   const actorType = req.auth_context?.actor_type ?? "user"

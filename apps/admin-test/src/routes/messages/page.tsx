@@ -1,12 +1,11 @@
 import { useQuery, type UseQueryResult } from "@tanstack/react-query"
 import { Heading } from "@medusajs/ui"
 import { useTranslation } from "react-i18next"
+import { client } from "../../lib/client"
 import { AdminUserMeSchema, type AdminUserMe } from "../../lib/messenger/schemas"
 import { MessengerAdminProvider } from "../../providers/messenger-provider/MessengerAdminProvider"
 import { MessengerAdminInbox } from "./components/MessengerAdminInbox"
 import { MessagesIcon } from "./components/MessagesIcon"
-
-declare const __BACKEND_URL__: string
 
 export const config = {
   label: "Messages",
@@ -18,11 +17,7 @@ function useAdminMe(): UseQueryResult<AdminUserMe, Error> {
   return useQuery({
     queryKey: ["admin-me"],
     queryFn: async (): Promise<AdminUserMe> => {
-      const res = await fetch(`${__BACKEND_URL__}/admin/users/me`, {
-        credentials: "include",
-      })
-      if (!res.ok) throw new Error("Failed to fetch admin user")
-      const raw = await res.json()
+      const raw = await client.admin.users.me.query({})
       const parsed = AdminUserMeSchema.safeParse(raw)
       if (!parsed.success) throw new Error("Unexpected response shape from /admin/users/me")
       return parsed.data
