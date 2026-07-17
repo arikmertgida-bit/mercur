@@ -3,10 +3,10 @@
 # The lines below set STORE_CORS/ADMIN_CORS/VENDOR_CORS/AUTH_CORS as plain
 # ENV values. None of these are secrets — they are public CORS allow-lists
 # (origin URLs only), required at build time purely because
-# medusa-config.ts reads them with a non-null assertion. BuildKit's linter
-# flags AUTH_CORS solely because its name contains "AUTH"; this directive
-# suppresses that specific false positive without disabling other real
-# secret checks.
+# medusa-config.ts validates them via requireEnv() (throws if unset).
+# BuildKit's linter flags AUTH_CORS solely because its name contains "AUTH";
+# this directive suppresses that specific false positive without disabling
+# other real secret checks.
 FROM node:22-alpine
 
 # `medusa build`'in ürettiği .medusa/server/package.json, @mercurjs/* paketlerini
@@ -22,7 +22,7 @@ COPY . .
 
 RUN bun install --frozen-lockfile
 
-# CORS değerleri medusa-config.ts içinde non-null assertion ile okunuyor;
+# CORS değerleri medusa-config.ts içinde requireEnv() ile okunuyor;
 # derleme anında gerçek bağlantı açılmıyor ama tanımlı olmaları gerekiyor.
 # Burada docker-compose.yml'deki çalışma zamanı değerleriyle birebir aynı
 # değerler kullanılır, böylece derleme ve çalışma zamanı arasında fark olmaz.
