@@ -6,6 +6,8 @@ import type {} from '@mercurjs/core/types/seller-context'
 import { SellerSummarySchema, parseFirstRow } from '../../../../lib/graph-schemas'
 import { emitReviewSellerReplyEvent } from '../../../../lib/review-events'
 import { VendorReviewResponse } from '../../../../modules/reviews/types'
+import { REVIEW_SOCIAL_MODULE } from '../../../../modules/review-social'
+import ReviewSocialModuleService from '../../../../modules/review-social/service'
 import { updateReviewWorkflow } from '../../../../workflows/review/workflows'
 import { validateSellerReview } from '../helpers'
 import { VendorUpdateReviewType } from '../validators'
@@ -88,6 +90,11 @@ export const POST = async (
     sellerId,
     sellerName: seller?.name ?? 'Satıcı'
   })
+
+  const reviewSocialService = req.scope.resolve<ReviewSocialModuleService>(
+    REVIEW_SOCIAL_MODULE
+  )
+  await reviewSocialService.syncSellerReply(id!, sellerId, req.validatedBody.seller_note)
 
   res.json({
     review

@@ -5,6 +5,8 @@ import { storeProductReportsMiddlewares } from "./store/product-reports/middlewa
 import { adminReviewsMiddlewares } from "./admin/reviews/middlewares";
 import { vendorReviewsMiddlewares } from "./vendor/reviews/middlewares";
 import { storeReviewMiddlewares } from "./store/reviews/middlewares";
+import { storeReviewLikeMiddlewares } from "./store/reviews/[id]/like/middlewares";
+import { storeReviewRepliesMiddlewares } from "./store/review-replies/middlewares";
 import { storeProductReviewsMiddlewares } from "./store/product-reviews/middlewares";
 import { adminReviewImageReportsMiddlewares } from "./admin/review-image-reports/middlewares";
 import { storeReviewImagesMiddlewares } from "./store/review-images/middlewares";
@@ -39,6 +41,8 @@ export default defineMiddlewares({
         ...adminReviewsMiddlewares,
         ...vendorReviewsMiddlewares,
         ...storeReviewMiddlewares,
+        ...storeReviewLikeMiddlewares,
+        ...storeReviewRepliesMiddlewares,
         ...storeProductReviewsMiddlewares,
         ...adminReviewImageReportsMiddlewares,
         ...storeReviewImagesMiddlewares,
