@@ -4,7 +4,7 @@ import { Heading, Prompt, DropdownMenu, IconButton } from "@medusajs/ui"
 import { ChatBubbleLeftRight, PaperClip, PaperPlane, EllipsisHorizontal, XMark, XMarkMini } from "@medusajs/icons"
 import { useMessenger } from "../../../providers/messenger-provider/MessengerProvider"
 import { useCustomerAvatar } from "../../../hooks/useCustomerAvatar"
-import { fetchQuery } from "../../../lib/fetchQuery"
+import { client } from "../../../lib/client"
 import { resolveParticipantDisplayName } from "../../../lib/messenger/resolve-participant-display-name"
 import type { Message, MessageContext, ProductContextData, Participant } from "../../../lib/messenger/types"
 import { ThreadListItem } from "./ThreadListItem"
@@ -116,10 +116,11 @@ export function MessengerVendorInbox({ sellerId: _sellerId, sellerLogo }: Messen
 
     if (isProduct && conv.productId) {
       const pid = conv.productId
-      fetchQuery<{
-        product: ProductContextData & { thumbnail: string | null; handle: string | null }
-      }>(`/vendor/products/${pid}`, { method: "GET" })
-        .then(({ product }) => {
+      client.vendor.products.$id
+        .query({ $id: pid })
+        .then(({ product }: {
+          product: ProductContextData & { thumbnail: string | null; handle: string | null }
+        }) => {
           setActiveContext({
             type: "PRODUCT",
             data: {

@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next"
 import { Prompt, DropdownMenu, IconButton } from "@medusajs/ui"
 import { PaperClip, PaperPlane, EllipsisHorizontal, XMarkMini } from "@medusajs/icons"
 import { useMessenger } from "../../../providers/messenger-provider/MessengerProvider"
-import { fetchQuery } from "../../../lib/fetchQuery"
+import { client } from "../../../lib/client"
 import type { Message } from "../../../lib/messenger/types"
 import { logger } from "../../../lib/logger"
 import { getCatchMessage } from "../../../lib/errors"
@@ -13,10 +13,6 @@ function formatTime(iso: string, locale: string): string {
     hour: "2-digit",
     minute: "2-digit",
   })
-}
-
-interface AdminContactResponse {
-  adminUserId: string
 }
 
 function TypingDots(): React.JSX.Element {
@@ -81,9 +77,10 @@ export function MessengerChat({ currentUserId, otherName }: MessengerChatProps):
     if (initializedRef.current || !currentUserId) return
     initializedRef.current = true
 
-    fetchQuery<AdminContactResponse>("/vendor/support/admin-contact", { method: "GET" })
+    client.vendor.support.adminContact
+      .query()
       .then(async (data) => {
-        const aid = data.adminUserId
+        const aid = "adminUserId" in data ? data.adminUserId : null
         if (!aid) throw new Error("No admin user found")
         setAdminUserId(aid)
         const existing = conversations.find((c) => c.type === "ADMIN_SUPPORT")

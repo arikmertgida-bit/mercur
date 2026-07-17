@@ -4,6 +4,8 @@ import { getCatchMessage } from "../../../../lib/errors"
 import { resolveAdminSupportUserId } from "../../../../lib/admin-support-contact"
 import { resolveKayiLogger } from "../../../../lib/logger"
 
+type AdminContactResponse = { adminUserId: string } | { error: string }
+
 /**
  * GET /vendor/support/admin-contact
  *
@@ -11,7 +13,7 @@ import { resolveKayiLogger } from "../../../../lib/logger"
  */
 export async function GET(
   req: AuthenticatedMedusaRequest,
-  res: MedusaResponse
+  res: MedusaResponse<AdminContactResponse>
 ): Promise<void> {
   const logger = resolveKayiLogger(req.scope)
 

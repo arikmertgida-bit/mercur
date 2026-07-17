@@ -10,6 +10,7 @@ import {
 } from "react"
 import { z } from "zod"
 import i18next from "i18next"
+import { client } from "../../lib/client"
 import { logger } from "../../lib/logger"
 import { getCatchMessage } from "../../lib/errors"
 import {
@@ -58,8 +59,6 @@ import type {
   TypingUpdatePayload,
 } from "../../lib/messenger/types"
 
-declare const __BACKEND_URL__: string
-
 const MessengerTokenResponseSchema = z.object({ token: z.string().optional() })
 
 const JwtPayloadSchema = z.object({
@@ -107,15 +106,7 @@ function isStoredTokenValid(currentAdminId: string | null): boolean {
  */
 async function fetchMessengerToken(): Promise<string | null> {
   try {
-    const res = await fetch(`${__BACKEND_URL__}/admin/custom/messenger-token`, {
-      method: "GET",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-    if (!res.ok) return null
-    const raw: Record<string, string | number | boolean | undefined | null> = await res.json()
+    const raw = await client.admin.custom.messengerToken.query()
     const parsed = MessengerTokenResponseSchema.safeParse(raw)
     return parsed.success ? (parsed.data.token ?? null) : null
   } catch {
