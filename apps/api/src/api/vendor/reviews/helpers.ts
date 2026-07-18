@@ -7,6 +7,7 @@ import type { Query } from "@medusajs/framework"
 
 import productReview from "../../../links/product-review"
 import sellerReview from "../../../links/seller-review"
+import { ProductSellerIdsRowSchema, parseFirstRow } from "../../../lib/graph-schemas"
 
 /**
  * Bir değerlendirmenin bu satıcıya ait olduğunu doğrular. Review modelinin
@@ -59,7 +60,8 @@ export const validateSellerReview = async (
     fields: ["id", "sellers.id"],
   })
 
-  const belongsToSeller = products[0]?.sellers?.some(
+  const product = parseFirstRow(ProductSellerIdsRowSchema, products)
+  const belongsToSeller = product?.sellers?.some(
     (seller) => seller.id === sellerId
   )
 

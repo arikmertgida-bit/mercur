@@ -6,6 +6,7 @@ import { MiddlewareRoute } from "@medusajs/medusa"
 
 import { adminRequestQueryConfig } from "./query-config"
 import { AdminGetRequestsParams, AdminReviewNote } from "./validators"
+import { applyAdminRequestCustomFieldsFilter } from "./helpers"
 
 export const adminRequestsMiddlewares: MiddlewareRoute[] = [
   {
@@ -16,6 +17,7 @@ export const adminRequestsMiddlewares: MiddlewareRoute[] = [
         AdminGetRequestsParams,
         adminRequestQueryConfig.list
       ),
+      applyAdminRequestCustomFieldsFilter(),
     ],
   },
   {
