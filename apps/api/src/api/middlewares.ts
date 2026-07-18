@@ -25,6 +25,7 @@ import { storeSellersFollowingMiddlewares } from "./store/sellers-following/midd
 import { storeCatalogProductsMiddlewares } from "./store/catalog/products/middlewares";
 import { storeSellerProductsMiddlewares } from "./store/sellers/[handle]/products/middlewares";
 import { storeSearchSuggestMiddlewares } from "./store/search/suggest/middlewares";
+import { storeCampaignsMiddlewares } from "./store/campaigns/middlewares";
 
 export default defineMiddlewares({
     routes: [
@@ -36,6 +37,7 @@ export default defineMiddlewares({
         ...storeCatalogProductsMiddlewares,
         ...storeSellerProductsMiddlewares,
         ...storeSearchSuggestMiddlewares,
+        ...storeCampaignsMiddlewares,
         ...adminProductReportsMiddlewares,
         ...storeProductReportsMiddlewares,
         ...adminReviewsMiddlewares,

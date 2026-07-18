@@ -662,6 +662,7 @@ export type Routes = {
         auth: {
             messengerToken: typeof import("../src/api/store/auth/messenger-token/route");
         };
+        campaigns: typeof import("../src/api/store/campaigns/route");
         catalog: {
             products: typeof import("../src/api/store/catalog/products/route");
         };
@@ -680,8 +681,15 @@ export type Routes = {
                 report: typeof import("../src/api/store/review-images/[id]/report/route");
             };
         };
+        reviewReplies: typeof import("../src/api/store/review-replies/route") & {
+            $id: typeof import("../src/api/store/review-replies/[id]/route") & {
+                like: typeof import("../src/api/store/review-replies/[id]/like/route");
+            };
+        };
         reviews: typeof import("../src/api/store/reviews/route") & {
-            $id: typeof import("../src/api/store/reviews/[id]/route");
+            $id: typeof import("../src/api/store/reviews/[id]/route") & {
+                like: typeof import("../src/api/store/reviews/[id]/like/route");
+            };
         };
         search: {
             suggest: typeof import("../src/api/store/search/suggest/route");
