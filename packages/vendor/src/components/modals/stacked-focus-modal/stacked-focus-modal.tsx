@@ -82,7 +82,7 @@ Description.displayName = "StackedFocusModal.Description";
 const Content = forwardRef<
   HTMLDivElement,
   ComponentPropsWithoutRef<typeof FocusModal.Content>
->(({ className, onFocusOutside, ...props }, ref) => {
+>(({ className, onFocusOutside, onWheel, onTouchMove, ...props }, ref) => {
   return (
     <FocusModal.Content
       ref={ref}
@@ -95,6 +95,19 @@ const Content = forwardRef<
       // at the instant it mounts — without this it would close itself
       // immediately. Consumers can still opt back in with their own handler.
       onFocusOutside={onFocusOutside ?? ((event) => event.preventDefault())}
+      // Same nested-scroll-lock fix as StackedDrawer.Content: the parent
+      // RouteFocusModal is still `modal=true`, so its `react-remove-scroll`
+      // lock keeps intercepting wheel/touchmove events at the document level
+      // for anything outside its own content subtree — including this
+      // modal's separate portal. Stop propagation so the lock never sees it.
+      onWheel={(event) => {
+        event.stopPropagation()
+        onWheel?.(event)
+      }}
+      onTouchMove={(event) => {
+        event.stopPropagation()
+        onTouchMove?.(event)
+      }}
       {...props}
     />
   );
