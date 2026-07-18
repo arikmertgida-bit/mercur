@@ -890,6 +890,18 @@
         "canceledSuccessfully": "Ürün güncelleme talebi başarıyla iptal edildi."
       }
     },
+    "stock": {
+      "header": "Stok Takibi",
+      "available": "Mevcut",
+      "lowStock": "Düşük stok",
+      "edit": {
+        "header": "Stoğu Düzenle",
+        "description": "Her lokasyon için canlı stok miktarını güncelleyin. Değişiklikler doğrudan Envanter'e kaydedilir.",
+        "location": "Lokasyon",
+        "quantity": "Miktar",
+        "successToast": "Stok başarıyla güncellendi"
+      }
+    },
     "attributeVariations": "Varyasyonlar",
     "attributeVariantsDescription": "Varyantlar için kullanılan özellikler",
     "attributeProductInformation": "Ürün Bilgisi",

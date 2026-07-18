@@ -70,7 +70,7 @@ const Root = () => {
           </Text>
         </div>
 
-        <div className="flex items-center justify-center gap-x-2">
+        <div className="flex items-center justify-start gap-x-2">
           <Button
             type="button"
             variant="secondary"

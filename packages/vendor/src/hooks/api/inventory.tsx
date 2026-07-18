@@ -288,6 +288,8 @@ export type InventoryItemLocationLevel = {
   reserved_quantity: number
   incoming_quantity: number
   available_quantity: number
+  // Present because the query always requests `+stock_locations` below.
+  stock_locations?: { id: string; name: string }[]
 }
 
 export type InventoryItemWithLevels = {

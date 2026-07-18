@@ -16,15 +16,31 @@ export const loadRegions = async (
   return data as SearchRegion[]
 }
 
+// Same store -> default_sales_channel_id lookup already used to scope
+// seller stock locations (see createSellerStockLocationsWorkflow) — reused
+// here to decide which locations' stock counts toward `in_stock`.
+export const loadDefaultSalesChannelId = async (
+  container: MedusaContainer
+): Promise<string | null> => {
+  const query = container.resolve<Query>(ContainerRegistrationKeys.QUERY)
+  const { data } = await query.graph({
+    entity: 'store',
+    fields: ['id', 'default_sales_channel_id'],
+  })
+  return data[0]?.default_sales_channel_id ?? null
+}
+
 export const indexProductPage = async (
   container: MedusaContainer,
   products: SearchProductRow[],
-  regions: SearchRegion[]
+  regions: SearchRegion[],
+  defaultSalesChannelId: string | null
 ): Promise<void> => {
   const { docs: productDocs } = await buildProductDocs(
     container,
     products,
-    regions
+    regions,
+    defaultSalesChannelId
   )
 
   if (!productDocs.length) {

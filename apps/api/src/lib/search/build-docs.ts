@@ -36,6 +36,21 @@ type ProductSellerRow = {
   status?: string | null
 }
 
+export type InventoryLocationLevelRow = {
+  stocked_quantity?: number | null
+  reserved_quantity?: number | null
+  stock_locations?: { sales_channels?: { id: string }[] | null }[] | null
+}
+
+export type ProductVariantInventoryRow = ProductVariantRow & {
+  manage_inventory?: boolean | null
+  inventory_items?:
+    | {
+        inventory?: { location_levels?: InventoryLocationLevelRow[] | null } | null
+      }[]
+    | null
+}
+
 export type SearchProductRow = {
   id: string
   title: string
@@ -47,7 +62,7 @@ export type SearchProductRow = {
   collection_id?: string | null
   collection?: { id?: string; title?: string | null } | null
   categories?: { id: string; name?: string | null }[] | null
-  variants?: ProductVariantRow[] | null
+  variants?: ProductVariantInventoryRow[] | null
   product_attribute_values?: ProductAttributeValueRow[] | null
   sellers?: ProductSellerRow[] | null
 }
@@ -68,6 +83,10 @@ export const searchProductFields = [
   'categories.id',
   'categories.name',
   'variants.id',
+  'variants.manage_inventory',
+  'variants.inventory_items.inventory.location_levels.stocked_quantity',
+  'variants.inventory_items.inventory.location_levels.reserved_quantity',
+  'variants.inventory_items.inventory.location_levels.stock_locations.sales_channels.id',
   'product_attribute_values.id',
   'product_attribute_values.name',
   'product_attribute_values.attribute.id',
@@ -164,12 +183,55 @@ const buildAttributes = (
   return { tokens, attributes: [...byAttribute.values()] }
 }
 
+// A product stays discoverable if at least one of its variants is
+// purchasable — either untracked (`manage_inventory: false`, always
+// available) or has positive available stock (stocked - reserved) at a
+// location linked to the store's default sales channel. One dead variant
+// doesn't hide a product whose other variants still sell.
+const isVariantInStock = (
+  variant: ProductVariantInventoryRow,
+  defaultSalesChannelId: string | null
+): boolean => {
+  if (variant.manage_inventory === false) {
+    return true
+  }
+
+  if (!defaultSalesChannelId) {
+    return true
+  }
+
+  return (variant.inventory_items ?? []).some((item) =>
+    (item.inventory?.location_levels ?? []).some((level) => {
+      const isLinkedToDefaultChannel = (level.stock_locations ?? []).some(
+        (location) =>
+          (location.sales_channels ?? []).some(
+            (channel) => channel.id === defaultSalesChannelId
+          )
+      )
+      if (!isLinkedToDefaultChannel) {
+        return false
+      }
+      const available = (level.stocked_quantity ?? 0) - (level.reserved_quantity ?? 0)
+      return available > 0
+    })
+  )
+}
+
+const resolveInStock = (
+  product: SearchProductRow,
+  defaultSalesChannelId: string | null
+): boolean =>
+  (product.variants ?? []).some((variant) =>
+    isVariantInStock(variant, defaultSalesChannelId)
+  )
+
 // Per-region buybox comes from the store price helper via a faked request (no
 // HTTP) so the stored number matches `/store/products`.
 export const buildProductDocs = async (
   container: MedusaContainer,
   products: SearchProductRow[],
-  regions: SearchRegion[]
+  regions: SearchRegion[],
+  defaultSalesChannelId: string | null
 ): Promise<{
   docs: SearchDoc[]
   attributesByProduct: Map<
@@ -225,6 +287,7 @@ export const buildProductDocs = async (
       attribute_tokens: attrs.tokens,
       attributes: attrs.attributes,
       prices: pricesByProduct.get(product.id) ?? {},
+      in_stock: resolveInStock(product, defaultSalesChannelId),
     }
   })
 

@@ -10,7 +10,7 @@ import { queryClient } from "@lib/query-client"
 // options-preview remote joiner rejects bare `*relation` wildcards with
 // "Cannot resolve alias path \"\"".
 export const VARIANT_DETAIL_FIELDS =
-  "+options.id,+options.value,+options.option.id,+options.option.title,+thumbnail,+images.id,+images.url,+images.rank,+images.variants.id,+product.images.id,+product.images.url,+product.images.rank,+product.images.variants.id"
+  "+options.id,+options.value,+options.option.id,+options.option.title,+thumbnail,+images.id,+images.url,+images.rank,+images.variants.id,+product.images.id,+product.images.url,+product.images.rank,+product.images.variants.id,+inventory_items.inventory_item_id"
 
 const variantDetailQuery = (productId: string, variantId: string) => ({
   queryKey: variantsQueryKeys.detail(variantId, { fields: VARIANT_DETAIL_FIELDS }),

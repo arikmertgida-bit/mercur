@@ -139,7 +139,11 @@ export const EditProductMediaForm = ({ product }: ProductMediaViewProps) => {
       return entry
     })
 
-    const thumbnail = withUpdatedUrls.find((m) => m.isThumbnail)?.url
+    // Same self-healing fallback as product-create: an already-broken
+    // product (created before that fix, with no thumbnail at all) gets one
+    // assigned the next time its media is touched here.
+    const thumbnail =
+      withUpdatedUrls.find((m) => m.isThumbnail)?.url ?? withUpdatedUrls[0]?.url
 
     await mutateAsync(
       {

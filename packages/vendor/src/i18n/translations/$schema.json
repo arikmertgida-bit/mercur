@@ -2678,6 +2678,55 @@
           ],
           "additionalProperties": false
         },
+        "stock": {
+          "type": "object",
+          "properties": {
+            "header": {
+              "type": "string"
+            },
+            "available": {
+              "type": "string"
+            },
+            "lowStock": {
+              "type": "string"
+            },
+            "edit": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "location": {
+                  "type": "string"
+                },
+                "quantity": {
+                  "type": "string"
+                },
+                "successToast": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "header",
+                "description",
+                "location",
+                "quantity",
+                "successToast"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "header",
+            "available",
+            "lowStock",
+            "edit"
+          ],
+          "additionalProperties": false
+        },
         "attributes": {
           "type": "string"
         },
@@ -3854,6 +3903,7 @@
         "import",
         "deleteWarning",
         "variants",
+        "stock",
         "attributes",
         "attributeVariations",
         "attributeVariantsDescription",

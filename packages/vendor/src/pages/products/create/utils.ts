@@ -37,9 +37,14 @@ export const normalizeProductFormValues = (
   },
   currencies: string[]
 ): NormalizedCreateProduct => {
-  const thumbnail = values.media?.find((media) => media.isThumbnail)?.url
+  // If the seller never explicitly marks a photo as the thumbnail, the first
+  // uploaded one becomes it — otherwise `thumbnail` stays empty and the
+  // storefront gallery has no lead image to render at all.
+  const thumbnailMedia =
+    values.media?.find((media) => media.isThumbnail) ?? values.media?.[0]
+  const thumbnail = thumbnailMedia?.url
   const images = values.media
-    ?.filter((media) => !media.isThumbnail)
+    ?.filter((media) => media !== thumbnailMedia)
     .map((media) => ({ url: media.url }))
 
   const hasAxis = (values.attributes ?? []).some(

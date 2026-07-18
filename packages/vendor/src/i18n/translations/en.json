@@ -656,6 +656,18 @@
         "successToast": "Stocks and prices updated successfully"
       }
     },
+    "stock": {
+      "header": "Stock Tracking",
+      "available": "Available",
+      "lowStock": "Low stock",
+      "edit": {
+        "header": "Edit Stock",
+        "description": "Update the live stock quantity for each location. Changes are saved directly to Inventory.",
+        "location": "Location",
+        "quantity": "Quantity",
+        "successToast": "Stock updated successfully"
+      }
+    },
     "attributes": "Attributes",
     "attributeVariations": "Variations",
     "attributeVariantsDescription": "Attributes used for variants",

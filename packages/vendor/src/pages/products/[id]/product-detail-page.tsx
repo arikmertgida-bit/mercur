@@ -15,6 +15,7 @@ import { ProductMediaSection } from "./_components/product-media-section";
 import { ProductOrganizationSection } from "./_components/product-organization-section";
 import { ProductVariantSection } from "./_components/product-variant-section";
 import { ProductAttributeSection } from "./_components/product-attribute-section";
+import { ProductStockSection } from "./_components/product-stock-section";
 import { ProductShippingProfileSection } from "./_components/product-shipping-profile-section";
 import { ProductSalesChannelSection } from "./_components/product-sales-channel-section";
 
@@ -53,6 +54,7 @@ const Root = ({ children }: { children?: ReactNode }) => {
         <WidgetZone id="product.detail.side" data={product}>
           <ProductOrganizationSection product={product} />
           <ProductAttributeSection product={product} />
+          <ProductStockSection product={product} />
         </WidgetZone>
       </TwoColumnPage.Sidebar>
     </TwoColumnPage>
@@ -67,6 +69,7 @@ export const ProductDetailPage = Object.assign(Root, {
   MainMediaSection: ProductMediaSection,
   MainVariantSection: ProductVariantSection,
   MainAttributeSection: ProductAttributeSection,
+  SidebarStockSection: ProductStockSection,
   SidebarShippingProfileSection: ProductShippingProfileSection,
   SidebarOrganizationSection: ProductOrganizationSection,
   SidebarSalesChannelSection: ProductSalesChannelSection,
