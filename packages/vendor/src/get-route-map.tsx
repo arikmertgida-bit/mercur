@@ -138,6 +138,10 @@ export function getRouteMap({
                             lazy: () => import("./pages/products/[id]/edit"),
                           },
                           {
+                            path: "stock",
+                            lazy: () => import("./pages/products/[id]/stock"),
+                          },
+                          {
                             path: "edit-variant",
                             handle: { permissions: "products:edit" },
                             lazy: () =>
@@ -236,6 +240,11 @@ export function getRouteMap({
                                 handle: { permissions: "products:edit" },
                                 lazy: () =>
                                   import("./pages/product-variants/product-variant-detail/media"),
+                              },
+                              {
+                                path: "stock",
+                                lazy: () =>
+                                  import("./pages/product-variants/product-variant-detail/stock"),
                               },
                             ],
                           },

@@ -23,6 +23,9 @@ export interface SearchDoc {
   // Price snapshot per region, computed at index time.
   prices?: Record<string, SearchDocPrice>
   calculated_price?: SearchDocPrice | null
+  // Whether at least one variant is currently purchasable — computed at
+  // index time from live inventory, always filtered on server-side.
+  in_stock: boolean
 }
 
 export interface SearchDocAttribute {

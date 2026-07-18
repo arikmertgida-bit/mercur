@@ -27,6 +27,7 @@ const SEARCHABLE_ATTRIBUTES = ['title', 'description', 'handle', 'sku', 'seller_
 
 const FILTERABLE_ATTRIBUTES = [
   'type',
+  'in_stock',
   'seller_handle',
   'seller_status',
   'collection_id',
@@ -88,12 +89,21 @@ class MeilisearchProductIndex {
     if (this.settingsApplied_) {
       return
     }
-    await this.productIndex_.updateSettings({
-      searchableAttributes: SEARCHABLE_ATTRIBUTES,
-      filterableAttributes: FILTERABLE_ATTRIBUTES,
-      sortableAttributes: SORTABLE_ATTRIBUTES,
-      pagination: { maxTotalHits: MAX_TOTAL_HITS },
-    })
+    // `updateSettings` only enqueues the change — Meilisearch applies it
+    // asynchronously. Awaiting the promise alone resolves as soon as the
+    // task is queued, not once it's live, so a search immediately after a
+    // settings change (e.g. a newly added filterable attribute, right after
+    // a fresh deploy) can 400 against attributes that technically exist but
+    // aren't indexed yet. `waitTask()` blocks until Meilisearch actually
+    // finishes applying it.
+    await this.productIndex_
+      .updateSettings({
+        searchableAttributes: SEARCHABLE_ATTRIBUTES,
+        filterableAttributes: FILTERABLE_ATTRIBUTES,
+        sortableAttributes: SORTABLE_ATTRIBUTES,
+        pagination: { maxTotalHits: MAX_TOTAL_HITS },
+      })
+      .waitTask()
     this.settingsApplied_ = true
   }
 
@@ -155,10 +165,11 @@ class MeilisearchProductIndex {
     const filters = (query.filters ?? {}) as MeilisearchProviderFilters
     const context = (query.context ?? {}) as { region_id?: string }
 
-    // seller_status is always constrained to "open" server-side — suspended or
-    // terminated sellers' products must never be discoverable, regardless of
-    // what filters the caller sends.
-    const filterParts: string[] = ['seller_status = "open"']
+    // seller_status is always constrained to "open" and in_stock to "true"
+    // server-side — suspended sellers' products and out-of-stock products
+    // must never be discoverable, regardless of what filters the caller
+    // sends.
+    const filterParts: string[] = ['seller_status = "open"', 'in_stock = true']
 
     if (filters.type) {
       filterParts.push(`type = "${escapeMeiliFilterValue(filters.type)}"`)

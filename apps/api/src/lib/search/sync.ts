@@ -3,7 +3,7 @@ import { MedusaContainer } from '@medusajs/framework/types'
 import { ContainerRegistrationKeys } from '@medusajs/framework/utils'
 
 import { removeDocs } from './meilisearch-client'
-import { indexProductPage, loadRegions } from './reindex'
+import { indexProductPage, loadDefaultSalesChannelId, loadRegions } from './reindex'
 import { searchProductFields, SearchProductRow } from './build-docs'
 
 const uniq = (ids: (string | undefined | null)[]): string[] =>
@@ -39,8 +39,16 @@ export const reindexProductsById = async (
   const staleIds = ids.filter((id) => !publishedIds.has(id))
 
   if (products.length) {
-    const regions = await loadRegions(container)
-    await indexProductPage(container, products as SearchProductRow[], regions)
+    const [regions, defaultSalesChannelId] = await Promise.all([
+      loadRegions(container),
+      loadDefaultSalesChannelId(container),
+    ])
+    await indexProductPage(
+      container,
+      products as SearchProductRow[],
+      regions,
+      defaultSalesChannelId
+    )
   }
 
   if (staleIds.length) {
