@@ -78,7 +78,7 @@ type ContentProps = ComponentPropsWithoutRef<typeof Drawer.Content>;
 const Content: ForwardRefExoticComponent<ContentProps> = forwardRef<
   HTMLDivElement,
   ComponentPropsWithoutRef<typeof Drawer.Content>
->(({ className, onFocusOutside, ...props }, ref) => {
+>(({ className, onFocusOutside, onWheel, onTouchMove, ...props }, ref) => {
   return (
     <Drawer.Content
       ref={ref}
@@ -95,6 +95,22 @@ const Content: ForwardRefExoticComponent<ContentProps> = forwardRef<
       // opening it. Consumers can still opt back into the default
       // dismiss-on-focus-outside behavior by passing their own handler.
       onFocusOutside={onFocusOutside ?? ((event) => event.preventDefault())}
+      // The parent RouteFocusModal stays `modal=true` (Radix default), so
+      // its `react-remove-scroll` lock is still active and installs a
+      // document-level wheel/touchmove listener that `preventDefault()`s
+      // any event whose target isn't inside that outer dialog's own content
+      // subtree. This drawer renders in a separate sibling portal, so
+      // without stopping propagation here the lock swallows every wheel/
+      // touch scroll over this drawer's body — the scrollbar is visible but
+      // the wheel does nothing.
+      onWheel={(event) => {
+        event.stopPropagation()
+        onWheel?.(event)
+      }}
+      onTouchMove={(event) => {
+        event.stopPropagation()
+        onTouchMove?.(event)
+      }}
       {...props}
     />
   );

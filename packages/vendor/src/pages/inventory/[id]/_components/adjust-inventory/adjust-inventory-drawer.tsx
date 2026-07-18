@@ -16,9 +16,11 @@ export const AdjustInventoryDrawer = () => {
     isPending: isLoading,
     isError,
     error,
-  } = useInventoryItem(id!);
+  } = useInventoryItem(id!, undefined, { refetchOnMount: "always" });
 
-  const { inventory_levels } = useInventoryItemLevels(id!);
+  const { inventory_levels } = useInventoryItemLevels(id!, undefined, {
+    refetchOnMount: "always",
+  });
 
   const inventoryLevel = inventory_levels?.find(
     (level: InventoryTypes.InventoryLevelDTO) =>
