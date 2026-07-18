@@ -32,6 +32,7 @@
       "incorrect_categorization": "Incorrect categorization",
       "inappropriate_media": "Inappropriate media",
       "dmca_violation": "DMCA violation",
+      "seller_complaint": "Complaint about the seller",
       "other": "Other"
     },
     "actions": {

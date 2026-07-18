@@ -10,6 +10,7 @@ export const StoreReportProduct = z.object({
     "incorrect_categorization",
     "inappropriate_media",
     "dmca_violation",
+    "seller_complaint",
     "other",
   ]),
   comment: z.string().min(1).max(1000),
