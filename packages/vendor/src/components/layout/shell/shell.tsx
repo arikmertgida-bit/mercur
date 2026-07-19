@@ -224,10 +224,17 @@ const DesktopSidebarContainer = ({ children }: PropsWithChildren) => {
 
 const MobileSidebarContainer = ({ children }: PropsWithChildren) => {
   const { t } = useTranslation()
-  const { mobile, toggle } = useSidebar()
+  const { mobile, closeMobile } = useSidebar()
 
   return (
-    <RadixDialog.Root open={mobile} onOpenChange={() => toggle("mobile")}>
+    <RadixDialog.Root
+      open={mobile}
+      onOpenChange={(open) => {
+        if (!open) {
+          closeMobile()
+        }
+      }}
+    >
       <RadixDialog.Portal>
         <RadixDialog.Overlay
           className={clx(

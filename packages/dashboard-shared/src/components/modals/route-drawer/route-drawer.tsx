@@ -1,5 +1,6 @@
 import { Drawer, clx } from "@medusajs/ui"
 import { ComponentType, PropsWithChildren, useEffect, useState } from "react"
+import { useTranslation } from "react-i18next"
 import { Path, useNavigate } from "react-router-dom"
 import { useStateAwareTo } from "../hooks/use-state-aware-to"
 import { RouteModalForm } from "../route-modal-form"
@@ -11,6 +12,7 @@ type RouteDrawerProps = PropsWithChildren<{
 }>
 
 const Root: ComponentType<RouteDrawerProps> = ({ prev = "..", children }: RouteDrawerProps) => {
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const [open, setOpen] = useState(false)
   const [stackedModalOpen, onStackedModalOpen] = useState(false)
@@ -45,11 +47,13 @@ const Root: ComponentType<RouteDrawerProps> = ({ prev = "..", children }: RouteD
       <RouteModalProvider prev={to}>
         <StackedModalProvider onOpenChange={onStackedModalOpen}>
           <Drawer.Content
-            aria-describedby={undefined}
             className={clx({
               "!bg-ui-bg-disabled !inset-y-5 !right-5": stackedModalOpen,
             })}
           >
+            <Drawer.Description className="sr-only">
+              {t("general.drawerAccessibleDescription")}
+            </Drawer.Description>
             {children}
           </Drawer.Content>
         </StackedModalProvider>

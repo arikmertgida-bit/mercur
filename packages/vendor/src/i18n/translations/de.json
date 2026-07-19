@@ -3,6 +3,7 @@
   "general": {
     "unknownError": "Ein unbekannter Fehler ist aufgetreten",
     "notAvailable": "N/A",
+    "drawerAccessibleDescription": "Verwenden Sie dieses Panel, um die Details dieser Ressource anzuzeigen oder zu bearbeiten.",
     "ascending": "Aufsteigend",
     "descending": "Absteigend",
     "add": "Hinzufügen",

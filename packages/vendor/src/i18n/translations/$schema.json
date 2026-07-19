@@ -11,6 +11,9 @@
           "notAvailable": {
             "type": "string"
           },
+          "drawerAccessibleDescription": {
+            "type": "string"
+          },
         "fullList": {
           "type": "string"
         },

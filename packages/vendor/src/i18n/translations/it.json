@@ -3,6 +3,7 @@
   "general": {
     "unknownError": "Si è verificato un errore sconosciuto",
     "notAvailable": "N/A",
+    "drawerAccessibleDescription": "Usa questo pannello per visualizzare o modificare i dettagli di questa risorsa.",
     "ascending": "Crescente",
     "descending": "Decrescente",
     "add": "Aggiungi",

@@ -23,6 +23,7 @@ import { Shell } from "../../layout/shell";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useMe, useSelectSeller, useSellers } from "../../../hooks/api";
 import { useSearch } from "../../../providers/search-provider";
+import { useSidebar } from "../../../providers/sidebar-provider";
 import { UserMenu } from "../user-menu";
 import { useDocumentDirection } from "../../../hooks/use-document-direction";
 import menuItemsModule from "virtual:mercur/menu-items";
@@ -384,16 +385,24 @@ const Searchbar = () => {
 const SupportNavItem = () => {
   const { t } = useTranslation();
   const [unreadCount, setUnreadCount] = useState(0);
+  const { mobile, closeMobile } = useSidebar();
 
   useEffect(() => {
     return supportChatBridge.subscribeUnreadCount(setUnreadCount);
   }, []);
 
+  const handleClick = () => {
+    if (mobile) {
+      closeMobile();
+    }
+    supportChatBridge.requestOpen();
+  };
+
   return (
     <div className="px-3" data-testid="sidebar-nav-item-support">
       <button
         type="button"
-        onClick={() => supportChatBridge.requestOpen()}
+        onClick={handleClick}
         className={clx(BASE_NAV_LINK_CLASSES, "w-full")}
         data-testid="sidebar-nav-link-support"
       >

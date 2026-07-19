@@ -8,13 +8,16 @@ import {
   Textarea,
   toast,
 } from "@medusajs/ui";
-import { useForm } from "react-hook-form";
+import { useEffect } from "react";
+import { useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import * as zod from "zod";
 
 import {
   Form,
+  HandleInput,
   RouteFocusModal,
+  toHandle,
   useRouteModal,
 } from "@mercurjs/dashboard-shared";
 import { useCreateProductCategoryRequest } from "../../../../hooks/api/requests";
@@ -43,6 +46,15 @@ const CategoryRequestCreateForm = () => {
   });
 
   const { mutateAsync, isPending } = useCreateProductCategoryRequest();
+
+  const nameValue = useWatch({ control: form.control, name: "name" });
+
+  useEffect(() => {
+    form.setValue("handle", toHandle(nameValue ?? ""), {
+      shouldValidate: true,
+      shouldDirty: false,
+    });
+  }, [nameValue, form]);
 
   const handleSubmit = form.handleSubmit(async ({ handle, ...data }) => {
     const payload = handle ? { ...data, handle } : data;
@@ -93,7 +105,7 @@ const CategoryRequestCreateForm = () => {
                   <Form.Item>
                     <Form.Label optional>{t("fields.handle")}</Form.Label>
                     <Form.Control>
-                      <Input autoComplete="off" {...field} />
+                      <HandleInput {...field} disabled />
                     </Form.Control>
                     <Form.ErrorMessage />
                   </Form.Item>
