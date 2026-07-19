@@ -11,6 +11,7 @@ export type SidebarContextValue = {
   desktop: boolean
   mobile: boolean
   toggle: (view: "desktop" | "mobile") => void
+  closeMobile: () => void
   setDesktop: Dispatch<SetStateAction<boolean>>
   setMobile: Dispatch<SetStateAction<boolean>>
 }

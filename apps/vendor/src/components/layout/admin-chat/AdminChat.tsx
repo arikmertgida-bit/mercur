@@ -39,6 +39,9 @@ export function AdminChat({ currentUserId }: AdminChatProps) {
           <Drawer.Title asChild>
             <Heading>{t("messenger.adminChatTitle")}</Heading>
           </Drawer.Title>
+          <Drawer.Description className="sr-only">
+            {t("messenger.adminChatDescription")}
+          </Drawer.Description>
         </Drawer.Header>
         <Drawer.Body className="overflow-y-auto p-0 flex flex-col">
           <MessengerChat currentUserId={currentUserId} />

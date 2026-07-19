@@ -37,6 +37,7 @@ import { useSearch } from "../../../providers/search-provider";
 import {
   SIDEBAR_MENU_CONTENT,
   SIDEBAR_RAIL_FADE,
+  useSidebar,
   useSidebarMenuPlacement,
 } from "../../../providers/sidebar-provider";
 import { UserMenu } from "../user-menu";
@@ -520,16 +521,24 @@ const Searchbar = () => {
 const SupportNavItem = () => {
   const { t } = useTranslation();
   const [unreadCount, setUnreadCount] = useState(0);
+  const { mobile, closeMobile } = useSidebar();
 
   useEffect(() => {
     return supportChatBridge.subscribeUnreadCount(setUnreadCount);
   }, []);
 
+  const handleClick = () => {
+    if (mobile) {
+      closeMobile();
+    }
+    supportChatBridge.requestOpen();
+  };
+
   return (
     <div className="px-3" data-testid="sidebar-nav-item-support">
       <button
         type="button"
-        onClick={() => supportChatBridge.requestOpen()}
+        onClick={handleClick}
         className={clx(BASE_NAV_LINK_CLASSES, "w-full")}
         data-testid="sidebar-nav-link-support"
       >

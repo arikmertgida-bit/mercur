@@ -9,6 +9,10 @@ export const SidebarProvider = ({ children }: PropsWithChildren) => {
 
   const { pathname } = useLocation()
 
+  const closeMobile = useCallback(() => {
+    setMobile(false)
+  }, [])
+
   // close the mobile sidebar on route change
   // this is to prevent the sidebar from staying open
   // when navigating to a new page
@@ -30,10 +34,11 @@ export const SidebarProvider = ({ children }: PropsWithChildren) => {
       desktop,
       mobile,
       toggle,
+      closeMobile,
       setDesktop,
       setMobile,
     }),
-    [desktop, mobile, toggle]
+    [desktop, mobile, toggle, closeMobile]
   )
 
   return (

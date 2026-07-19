@@ -1,12 +1,15 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Heading, Input, Text, toast } from "@medusajs/ui";
-import { useForm } from "react-hook-form";
+import { useEffect } from "react";
+import { useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import * as zod from "zod";
 
 import {
   Form,
+  HandleInput,
   RouteFocusModal,
+  toHandle,
   useRouteModal,
 } from "@mercurjs/dashboard-shared";
 import { useCreateProductCollectionRequest } from "../../../../hooks/api/requests";
@@ -29,6 +32,15 @@ const CollectionRequestCreateForm = () => {
   });
 
   const { mutateAsync, isPending } = useCreateProductCollectionRequest();
+
+  const titleValue = useWatch({ control: form.control, name: "title" });
+
+  useEffect(() => {
+    form.setValue("handle", toHandle(titleValue ?? ""), {
+      shouldValidate: true,
+      shouldDirty: false,
+    });
+  }, [titleValue, form]);
 
   const handleSubmit = form.handleSubmit(async (data) => {
     await mutateAsync(data, {
@@ -78,7 +90,7 @@ const CollectionRequestCreateForm = () => {
                   <Form.Item>
                     <Form.Label optional>{t("fields.handle")}</Form.Label>
                     <Form.Control>
-                      <Input autoComplete="off" {...field} />
+                      <HandleInput {...field} disabled />
                     </Form.Control>
                     <Form.ErrorMessage />
                   </Form.Item>

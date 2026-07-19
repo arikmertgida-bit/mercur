@@ -226,6 +226,9 @@
         "notAvailable": {
           "type": "string"
         },
+        "drawerAccessibleDescription": {
+          "type": "string"
+        },
         "ascending": {
           "type": "string"
         },

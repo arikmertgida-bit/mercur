@@ -3,6 +3,7 @@
   "general": {
     "unknownError": "An unknown error occurred",
     "notAvailable": "N/A",
+    "drawerAccessibleDescription": "Use this panel to view or edit the details of this resource.",
     "fullList": "All",
     "ascending": "Ascending",
     "descending": "Descending",
