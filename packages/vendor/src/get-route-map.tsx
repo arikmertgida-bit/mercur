@@ -1484,6 +1484,7 @@ export function getRouteMap({
     // PUBLIC LAYOUT
     {
       element: <PublicLayout />,
+      hydrateFallbackElement: <RouteHydrateFallback />,
       children: [
         {
           errorElement: <ErrorBoundary />,
