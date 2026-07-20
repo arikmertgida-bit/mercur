@@ -20,6 +20,7 @@ export default defineConfig(({ mode }) => {
       mercurDashboardPlugin({
         medusaConfigPath: '../api/medusa-config.ts',
         name: 'Kayı.com',
+        logo: '/logo.png',
         ...(backendUrl ? { backendUrl } : {}),
         ...(vendorUrl ? { vendorUrl } : {}),
       }),
