@@ -3,6 +3,7 @@ import type { AdminReviewResponse } from "@mercurjs/types";
 
 import { t } from "i18next";
 import { Outlet, type RouteObject, type UIMatch } from "react-router-dom";
+import { Spinner } from "@medusajs/icons";
 
 import { ProtectedRoute } from "@components/authentication/protected-route";
 import { MainLayout } from "@components/layout/main-layout";
@@ -17,6 +18,17 @@ import {
 
 import { TaxRegionDetailBreadcrumb } from "./pages/tax-regions/tax-region-detail/breadcrumb";
 import { taxRegionLoader } from "./pages/tax-regions/tax-region-detail/loader";
+
+/**
+ * Shared with ProtectedRoute's own auth-loading state so initial data-loader
+ * hydration on a deep link/refresh shows the same spinner instead of a blank
+ * flash (and silences React Router's HydrateFallback dev warning).
+ */
+const RouteHydrateFallback = () => (
+  <div className="flex min-h-screen items-center justify-center">
+    <Spinner className="text-ui-fg-interactive animate-spin" />
+  </div>
+);
 
 /**
  * Merges custom routes into base routes. Custom routes with a matching path
@@ -74,6 +86,7 @@ export function getRouteMap({
     {
       element: <ProtectedRoute />,
       errorElement: <ErrorBoundary />,
+      hydrateFallbackElement: <RouteHydrateFallback />,
       children: [
         {
           element: <MainLayout />,
@@ -1202,6 +1215,7 @@ export function getRouteMap({
     {
       element: <ProtectedRoute />,
       errorElement: <ErrorBoundary />,
+      hydrateFallbackElement: <RouteHydrateFallback />,
       children: [
         {
           path: "/settings",
@@ -2309,6 +2323,7 @@ export function getRouteMap({
     },
     {
       element: <PublicLayout />,
+      hydrateFallbackElement: <RouteHydrateFallback />,
       children: [
         {
           errorElement: <ErrorBoundary />,
