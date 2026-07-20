@@ -167,7 +167,7 @@ const LoginFooter = () => {
   const { feature_flags } = useFeatureFlags();
 
   return (
-    <div className="mt-auto flex flex-col gap-y-2">
+    <div className="flex flex-col gap-y-2">
       <span className="text-ui-fg-muted txt-small">
         <Trans
           t={t}
@@ -206,18 +206,16 @@ const Root = ({ children }: { children?: ReactNode }) => {
       {Children.count(children) > 0 ? (
         children
       ) : (
-        <>
-          <div className="flex flex-1 flex-col items-center justify-center gap-y-4 text-center">
+        <div className="flex w-full flex-1 flex-col justify-center gap-y-6">
+          <div className="flex flex-col items-center gap-y-4 text-center">
             <LoginLogo />
             <WidgetZone id="login.before" />
             <LoginHeader />
           </div>
-          <div className="mt-6 w-full">
-            <LoginForm />
-          </div>
+          <LoginForm />
           <WidgetZone id="login.after" />
           <LoginFooter />
-        </>
+        </div>
       )}
     </AuthLayout>
   );

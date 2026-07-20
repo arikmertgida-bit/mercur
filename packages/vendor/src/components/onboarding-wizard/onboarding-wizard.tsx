@@ -7,6 +7,7 @@ import { queryClient } from "@lib/query-client";
 import { WizardSidebar } from "./wizard-sidebar";
 import { WizardPreview } from "./wizard-preview";
 import { WizardStep } from "./wizard-step";
+import { DEFAULT_WIZARD_STEP_ID, WIZARD_STEPS } from "./constants";
 import { useOnboarding } from "./hooks/use-onboarding";
 import { StoreStep } from "./steps/store-step";
 import { AddressStep } from "./steps/address-step";
@@ -36,6 +37,8 @@ export const OnboardingWizard = ({ memberEmail }: OnboardingWizardProps) => {
     submitPaymentStep,
     skipPaymentStep,
   } = useOnboarding(memberEmail);
+
+  const currentStepId = WIZARD_STEPS[currentStep]?.id ?? DEFAULT_WIZARD_STEP_ID;
 
   const handleBack = async () => {
     if (currentStep === 0) {
@@ -105,7 +108,7 @@ export const OnboardingWizard = ({ memberEmail }: OnboardingWizardProps) => {
       >
         <AnimatePresence mode="wait">{renderStep()}</AnimatePresence>
       </WizardSidebar>
-      <WizardPreview />
+      <WizardPreview stepId={currentStepId} />
     </div>
   );
 };

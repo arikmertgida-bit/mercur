@@ -19,11 +19,11 @@ export const AuthLayout = ({ children }: AuthLayoutProps) => {
           {children}
         </div>
       </div>
-      <div className="relative hidden flex-1 overflow-hidden lg:flex">
+      <div className="bg-ui-bg-subtle relative hidden flex-1 overflow-hidden lg:flex">
         <img
           src={assetUrl(AUTH_ILLUSTRATION_PATH)}
           alt=""
-          className="h-full w-full object-cover"
+          className="absolute inset-0 h-full w-full object-contain"
         />
       </div>
     </div>
