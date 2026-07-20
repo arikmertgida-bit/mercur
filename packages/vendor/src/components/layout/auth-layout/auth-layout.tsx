@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 
 import { assetUrl } from "../../../utils/asset-url";
+import { AUTH_ILLUSTRATION_PATH } from "../../../utils/asset-paths";
 import { AuthLanguageSelect } from "./auth-language-select";
 
 type AuthLayoutProps = {
@@ -20,7 +21,7 @@ export const AuthLayout = ({ children }: AuthLayoutProps) => {
       </div>
       <div className="relative hidden flex-1 overflow-hidden lg:flex">
         <img
-          src={assetUrl("/onboarding/illustration.svg")}
+          src={assetUrl(AUTH_ILLUSTRATION_PATH)}
           alt=""
           className="h-full w-full object-cover"
         />

@@ -22,6 +22,7 @@ import AvatarBox from "@components/common/logo-box/avatar-box";
 import { useSignInForInvite, useSignUpForInvite } from "@hooks/api/auth";
 import { useAcceptInvite } from "@hooks/api/invites";
 import { assetUrl } from "@/utils/asset-url";
+import { AUTH_ILLUSTRATION_PATH } from "@/utils/asset-paths";
 import { useSelectSeller } from "@hooks/api";
 import { isFetchError } from "@lib/is-fetch-error";
 import { sdk } from "@lib/client";
@@ -120,7 +121,7 @@ export const Invite = () => {
       </div>
       <div className="hidden lg:flex flex-1 relative overflow-hidden">
         <img
-          src={assetUrl("/onboarding/illustration.svg")}
+          src={assetUrl(AUTH_ILLUSTRATION_PATH)}
           alt=""
           className="h-full w-full object-cover"
         />

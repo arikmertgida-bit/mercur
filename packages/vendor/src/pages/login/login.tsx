@@ -38,7 +38,7 @@ const LoginHeader = () => {
   const { t } = useTranslation();
 
   return (
-    <div className="mb-6 flex flex-col">
+    <div className="flex flex-col items-center text-center">
       <Heading>{t("login.title", { name: config.name ?? "Kayı.com" })}</Heading>
       <Text size="small" className="text-ui-fg-subtle">
         {t("login.hint")}
@@ -207,10 +207,12 @@ const Root = ({ children }: { children?: ReactNode }) => {
         children
       ) : (
         <>
-          <LoginLogo />
-          <WidgetZone id="login.before" />
-          <div className="mt-6">
+          <div className="flex flex-1 flex-col items-center justify-center gap-y-4 text-center">
+            <LoginLogo />
+            <WidgetZone id="login.before" />
             <LoginHeader />
+          </div>
+          <div className="mt-6 w-full">
             <LoginForm />
           </div>
           <WidgetZone id="login.after" />
