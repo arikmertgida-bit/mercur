@@ -1,0 +1,131 @@
+{
+  "productImportExport": {
+    "import": "Importer",
+    "export": "Exporter",
+    "done": "Terminé",
+    "importHeader": "Importer des produits",
+    "importDescription": "Téléchargez un fichier CSV pour importer des produits dans votre boutique.",
+    "importHint": "Téléchargez un fichier CSV contenant vos produits. Vous pouvez",
+    "downloadTemplate": "télécharger le modèle",
+    "uploadLabel": "Télécharger un fichier CSV",
+    "uploadHint": "Seuls les fichiers .csv sont pris en charge",
+    "importingActivity": "Importation des produits...",
+    "importSuccessToast": "{{count}} produit(s) importé(s) avec succès.",
+    "importCompleteTitle": "Importation terminée",
+    "importCompleteDescription": "{{count}} produit(s) ont été créés avec succès.",
+    "exportHeader": "Exporter des produits",
+    "exportDescription": "Exportez vos produits sous forme de fichier CSV.",
+    "exportBody": "Cette opération exportera tous vos produits vers un fichier CSV. Le téléchargement démarrera automatiquement lorsque l'export sera prêt.",
+    "exportSuccessToast": "Produits exportés avec succès."
+  },
+  "customFields": {
+    "title": "Champs personnalisés",
+    "description": "Gérez vos champs personnalisés et leurs configurations",
+    "noFields": "Aucun champ personnalisé configuré pour le moment"
+  },
+  "messenger": {
+    "supportTeam": "Équipe support",
+    "support": "Support",
+    "adminChatTitle": "Discuter avec l'administrateur",
+    "adminChatDescription": "Envoyez un message à l'équipe support de la marketplace et consultez l'historique de vos conversations.",
+    "unknown": "Inconnu",
+    "imageMessage": "Image",
+    "noMessages": "Aucun message pour le moment",
+    "startConversation": "Démarrer la conversation",
+    "seen": "Vu",
+    "sent": "Envoyé",
+    "notificationTitle": "{{senderName}} vous a envoyé un message",
+    "notificationBody": "{{preview}}",
+    "image": "Image",
+    "close": "Fermer",
+    "noConversations": "Aucune conversation pour le moment",
+    "participants": "participants",
+    "searchConversations": "Rechercher des conversations...",
+    "typeMessage": "Écrire un message...",
+    "selectConversation": "Sélectionnez une conversation",
+    "startMessaging": "Sélectionnez une conversation pour commencer à discuter",
+    "connected": "Connecté",
+    "disconnected": "Déconnecté"
+  },
+  "messages": {
+    "domain": "Messages",
+    "management": "Équipe support",
+    "helpSupport": "Équipe support",
+    "me": "Moi",
+    "productQuestion": "Question sur le produit",
+    "storeQuestion": "Question sur la boutique",
+    "imageUploadFailed": "Échec du téléchargement de l'image",
+    "connectionLost": "Connexion perdue. Reconnexion en cours...",
+    "delete": "Supprimer",
+    "deleteForEveryone": "Supprimer pour tout le monde",
+    "close": "Fermer",
+    "customer": "Client",
+    "store": "Boutique",
+    "back": "Retour",
+    "participant": "participant",
+    "noMessages": "Aucun message",
+    "chatOptions": "Options de discussion",
+    "deleteOnlyForMe": "Supprimer seulement pour moi",
+    "storeContext": "Question sur la boutique",
+    "product": "Produit",
+    "deleteConfirmTitle": "Supprimer le message",
+    "deleteConfirmDesc": "Êtes-vous sûr de vouloir supprimer ce message ?",
+    "error": "Impossible de récupérer les informations de l'utilisateur.",
+    "supportName": "Équipe support",
+    "supportSubject": "Discussion avec le support",
+    "emptyState": "Aucun message pour le moment. Démarrez la conversation.",
+    "viewPromotion": "Voir la promotion",
+    "imageAlt": "Image",
+    "placeholder": "Écrire un message...",
+    "send": "Envoyer le message",
+    "attachImage": "Joindre une image",
+    "removeAttachment": "Retirer l'image jointe",
+    "viewImage": "Voir l'image en taille réelle",
+    "pendingImageAlt": "Image à envoyer",
+    "deletedMessage": "[Ce message a été supprimé]"
+  },
+  "requests": {
+    "domain": "Demandes",
+    "status": {
+      "draft": "Brouillon",
+      "pending": "En attente",
+      "accepted": "Acceptée",
+      "rejected": "Rejetée"
+    },
+    "filters": {
+      "status": "Statut"
+    },
+    "columns": {
+      "name": "Nom"
+    },
+    "categories": {
+      "navLabel": "Catégories",
+      "heading": "Demandes de catégories",
+      "noRecords": "Aucune demande de catégorie trouvée"
+    },
+    "collections": {
+      "navLabel": "Collections",
+      "heading": "Demandes de collections",
+      "noRecords": "Aucune demande de collection trouvée"
+    },
+    "tags": {
+      "navLabel": "Étiquettes",
+      "heading": "Demandes d'étiquettes",
+      "noRecords": "Aucune demande d'étiquette trouvée"
+    },
+    "types": {
+      "navLabel": "Types",
+      "heading": "Demandes de types",
+      "noRecords": "Aucune demande de type trouvée"
+    }
+  },
+  "reviews": {
+    "domain": "Avis",
+    "noRecords": "Aucun avis trouvé",
+    "columns": {
+      "rating": "Note",
+      "reference": "Référence",
+      "customerNote": "Note du client"
+    }
+  }
+}

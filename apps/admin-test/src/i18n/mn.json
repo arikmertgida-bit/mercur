@@ -1,0 +1,227 @@
+{
+  "customFields": {
+    "title": "Захиалгат талбарууд",
+    "description": "Захиалгат талбарууд болон тохиргоогоо удирдана уу",
+    "noFields": "Одоогоор захиалгат талбар тохируулаагүй байна"
+  },
+  "actions": {
+    "continue": "Үргэлжлүүлэх",
+    "cancel": "Цуцлах",
+    "delete": "Устгах"
+  },
+  "productReports": {
+    "domain": "Бүтээгдэхүүний гомдлууд",
+    "subtitle": "Хэрэглэгчдийн хянуулахаар тэмдэглэсэн бүтээгдэхүүнүүд",
+    "filterAll": "Бүх төлөв",
+    "columns": {
+      "product": "Бүтээгдэхүүн",
+      "reporter": "Мэдээлсэн хүн",
+      "reason": "Шалтгаан",
+      "status": "Төлөв"
+    },
+    "status": {
+      "pending": "Хүлээгдэж буй",
+      "resolved": "Шийдэгдсэн",
+      "dismissed": "Няцаагдсан"
+    },
+    "reasons": {
+      "inaccurate_product_details": "Бүтээгдэхүүний буруу мэдээлэл",
+      "pricing_irregularities": "Үнийн зөрчил",
+      "prohibited_item": "Хориотой бараа",
+      "counterfeit_trademark": "Хуурамч бараа / барааны тэмдгийн зөрчил",
+      "incorrect_categorization": "Буруу ангилал",
+      "inappropriate_media": "Зохисгүй медиа контент",
+      "dmca_violation": "DMCA зөрчил",
+      "seller_complaint": "Худалдагчийн талаарх гомдол",
+      "other": "Бусад"
+    },
+    "actions": {
+      "resolve": "Шийдэгдсэн гэж тэмдэглэх",
+      "dismiss": "Няцаах"
+    },
+    "resolvePrompt": {
+      "title": "Гомдлыг шийдэгдсэн гэж тэмдэглэх үү?",
+      "description": "Энэ гомдол шийдэгдсэн гэж тэмдэглэгдэж, хүлээгдэж буй жагсаалтаас хасагдана."
+    },
+    "dismissPrompt": {
+      "title": "Энэ гомдлыг няцаах уу?",
+      "description": "Энэ гомдол няцаагдсан гэж тэмдэглэгдэж, хүлээгдэж буй жагсаалтаас хасагдана."
+    },
+    "deletePrompt": {
+      "title": "Энэ гомдлыг устгах уу?",
+      "description": "Энэ үйлдэл нь гомдлыг бүрмөсөн устгана. Энэ үйлдлийг буцаах боломжгүй."
+    },
+    "updateSuccess": "Гомдлыг шинэчиллээ",
+    "updateError": "Гомдлыг шинэчилж чадсангүй",
+    "deleteSuccess": "Гомдлыг устгалаа",
+    "deleteError": "Гомдлыг устгаж чадсангүй"
+  },
+  "wishlistModeration": {
+    "domain": "Хүслийн жагсаалт",
+    "subtitle": "Хянах зорилготой хэрэглэгчийн хүслийн жагсаалтууд",
+    "noProducts": "Бүтээгдэхүүн алга",
+    "columns": {
+      "customer": "Хэрэглэгч",
+      "products": "Бүтээгдэхүүн",
+      "created": "Үүсгэсэн"
+    },
+    "deletePrompt": {
+      "title": "Энэ хүслийн жагсаалтыг устгах уу?",
+      "description": "Энэ үйлдэл нь хэрэглэгчийн хүслийн жагсаалт болон түүний бүх зүйлийг бүрмөсөн устгана. Энэ үйлдлийг буцаах боломжгүй."
+    },
+    "deleteSuccess": "Хүслийн жагсаалтыг устгалаа",
+    "deleteError": "Хүслийн жагсаалтыг устгаж чадсангүй"
+  },
+  "reportedImages": {
+    "domain": "Мэдээлэгдсэн зургууд",
+    "subtitle": "Хэрэглэгчдийн зохисгүй гэж тэмдэглэсэн зургуудыг хянана уу",
+    "filterAll": "Бүх төлөв",
+    "imageRemoved": "Зургийг устгалаа",
+    "columns": {
+      "image": "Зураг",
+      "reporter": "Мэдээлсэн хүн",
+      "reason": "Шалтгаан",
+      "status": "Төлөв"
+    },
+    "status": {
+      "pending": "Хүлээгдэж буй",
+      "resolved": "Шийдэгдсэн"
+    },
+    "actions": {
+      "remove": "Зургийг устгах",
+      "dismiss": "Гомдлыг няцаах"
+    },
+    "removePrompt": {
+      "title": "Энэ зургийг устгах уу?",
+      "description": "Зураг үнэлгээнээс бүрмөсөн устгагдана. Энэ үйлдлийг буцаах боломжгүй."
+    },
+    "dismissPrompt": {
+      "title": "Энэ гомдлыг няцаах уу?",
+      "description": "Зураг нийтлэгдсэн хэвээр байх бөгөөд гомдол шийдэгдсэн гэж тэмдэглэгдэнэ."
+    },
+    "resolveSuccess": "Гомдол шийдэгдлээ",
+    "resolveError": "Гомдлыг шийдэж чадсангүй"
+  },
+  "messenger": {
+    "searchConversations": "Харилцан яриа хайх...",
+    "noConversations": "Одоогоор харилцан яриа алга",
+    "startConversation": "Харилцан ярианы эхлүүлэх",
+    "selectConversation": "Харилцан яриаг сонгоно уу",
+    "startMessaging": "Мессеж бичиж эхлэхийн тулд харилцан яриаг сонгоно уу",
+    "typeMessage": "Мессеж бичих...",
+    "seen": "Харсан",
+    "sent": "Илгээсэн",
+    "notificationTitle": "{{senderName}} танд мессеж илгээлээ",
+    "notificationBody": "{{preview}}",
+    "image": "Зураг",
+    "support": "Дэмжлэг",
+    "direct": "Шууд",
+    "unknown": "Тодорхойгүй",
+    "supportTeam": "Дэмжлэгийн баг",
+    "connected": "Холбогдсон",
+    "disconnected": "Тасарсан",
+    "conversationOptions": "Харилцан ярианы сонголтууд"
+  },
+  "messages": {
+    "domain": "Мессежүүд",
+    "product": "Бүтээгдэхүүн",
+    "store": "Дэлгүүр",
+    "delete": "Устгах",
+    "deleteForEveryone": "Бүгдэд нь устгах",
+    "close": "Хаах",
+    "connectionLost": "Холболт тасарлаа. Дахин холбогдож байна...",
+    "imageUploadFailed": "Зураг байршуулж чадсангүй",
+    "deleteConfirmTitle": "Мессежийг устгах",
+    "deleteConfirmDesc": "Та энэ мессежийг устгахдаа итгэлтэй байна уу?",
+    "productQuestion": "Бүтээгдэхүүний талаарх асуулт",
+    "storeQuestion": "Дэлгүүрийн талаарх асуулт",
+    "customerMessage": "Хэрэглэгчийн мессеж",
+    "sellerMessage": "Худалдагчийн мессеж",
+    "directMessage": "Шууд мессеж",
+    "storeContext": "Дэлгүүрийн талаарх асуулт",
+    "back": "Буцах",
+    "failedToGetUserInfo": "Хэрэглэгчийн мэдээллийг авч чадсангүй.",
+    "send": "Мессеж илгээх",
+    "attachImage": "Зураг хавсаргах",
+    "removeAttachment": "Хавсаргасан зургийг устгах",
+    "viewImage": "Зургийг бүтэн хэмжээгээр харах",
+    "pendingImageAlt": "Илгээх зураг",
+    "imageAlt": "Зураг"
+  },
+  "requests": {
+    "domain": "Хүсэлтүүд",
+    "status": {
+      "draft": "Ноорог",
+      "pending": "Хүлээгдэж буй",
+      "accepted": "Батлагдсан",
+      "rejected": "Татгалзсан"
+    },
+    "filters": {
+      "status": "Төлөв"
+    },
+    "columns": {
+      "name": "Нэр"
+    },
+    "categories": {
+      "navLabel": "Ангилалууд",
+      "heading": "Ангиллын хүсэлтүүд",
+      "noRecords": "Ангиллын хүсэлт олдсонгүй"
+    },
+    "collections": {
+      "navLabel": "Цуглуулгууд",
+      "heading": "Цуглуулгын хүсэлтүүд",
+      "noRecords": "Цуглуулгын хүсэлт олдсонгүй"
+    },
+    "tags": {
+      "navLabel": "Шошгууд",
+      "heading": "Шошгын хүсэлтүүд",
+      "noRecords": "Шошгын хүсэлт олдсонгүй"
+    },
+    "types": {
+      "navLabel": "Төрлүүд",
+      "heading": "Төрлийн хүсэлтүүд",
+      "noRecords": "Төрлийн хүсэлт олдсонгүй"
+    },
+    "typeLabels": {
+      "product_category": "Ангилал",
+      "product_collection": "Цуглуулга",
+      "product_tag": "Шошго",
+      "product_type": "Төрөл"
+    },
+    "fields": {
+      "name": "Нэр",
+      "handle": "Тодорхойлогч",
+      "description": "Тайлбар",
+      "active": "Идэвхтэй",
+      "internal": "Дотоод",
+      "title": "Гарчиг",
+      "value": "Утга"
+    },
+    "values": {
+      "yes": "Тийм",
+      "no": "Үгүй"
+    },
+    "detail": {
+      "pendingReview": "Хянагдаж байна",
+      "accept": "Зөвшөөрөх",
+      "reject": "Татгалзах",
+      "acceptPromptTitle": "Хүсэлтийг зөвшөөрөх",
+      "acceptPromptDescription": "Та энэ хүсэлтийг зөвшөөрөхдөө итгэлтэй байна уу? Энэ үйлдэл нь холбогдох объектыг үүсгэнэ.",
+      "rejectPromptTitle": "Хүсэлтийг татгалзах",
+      "rejectPromptDescription": "Та энэ хүсэлтийг татгалзахдаа итгэлтэй байна уу? Энэ үйлдлийг буцаах боломжгүй.",
+      "acceptSuccess": "Хүсэлт зөвшөөрөгдлөө",
+      "rejectSuccess": "Хүсэлт татгалзагдлаа",
+      "submitter": "Илгээгч",
+      "reviewer": "Хянагч"
+    }
+  },
+  "reviews": {
+    "domain": "Сэтгэгдлүүд",
+    "noRecords": "Сэтгэгдэл олдсонгүй",
+    "columns": {
+      "rating": "Үнэлгээ",
+      "reference": "Лавлагаа",
+      "customerNote": "Үйлчлүүлэгчийн тэмдэглэл"
+    }
+  }
+}

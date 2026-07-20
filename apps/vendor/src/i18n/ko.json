@@ -1,0 +1,131 @@
+{
+  "productImportExport": {
+    "import": "가져오기",
+    "export": "내보내기",
+    "done": "완료",
+    "importHeader": "상품 가져오기",
+    "importDescription": "CSV 파일을 업로드하여 스토어에 상품을 가져옵니다.",
+    "importHint": "상품 정보가 담긴 CSV 파일을 업로드하세요.",
+    "downloadTemplate": "템플릿 다운로드",
+    "uploadLabel": "CSV 파일 업로드",
+    "uploadHint": ".csv 파일만 지원됩니다",
+    "importingActivity": "상품을 가져오는 중...",
+    "importSuccessToast": "{{count}}개의 상품을 성공적으로 가져왔습니다.",
+    "importCompleteTitle": "가져오기 완료",
+    "importCompleteDescription": "{{count}}개의 상품이 성공적으로 생성되었습니다.",
+    "exportHeader": "상품 내보내기",
+    "exportDescription": "상품을 CSV 파일로 내보냅니다.",
+    "exportBody": "모든 상품을 CSV 파일로 내보냅니다. 내보내기가 준비되면 다운로드가 자동으로 시작됩니다.",
+    "exportSuccessToast": "상품을 성공적으로 내보냈습니다."
+  },
+  "customFields": {
+    "title": "사용자 지정 필드",
+    "description": "사용자 지정 필드와 구성을 관리하세요",
+    "noFields": "아직 구성된 사용자 지정 필드가 없습니다"
+  },
+  "messenger": {
+    "supportTeam": "지원팀",
+    "support": "지원",
+    "adminChatTitle": "관리자와 채팅",
+    "adminChatDescription": "마켓플레이스 관리팀에게 메시지를 보내고 대화 내역을 확인하세요.",
+    "unknown": "알 수 없음",
+    "imageMessage": "이미지",
+    "noMessages": "아직 메시지가 없습니다",
+    "startConversation": "대화 시작",
+    "seen": "읽음",
+    "sent": "전송됨",
+    "notificationTitle": "{{senderName}}님이 메시지를 보냈습니다",
+    "notificationBody": "{{preview}}",
+    "image": "이미지",
+    "close": "닫기",
+    "noConversations": "아직 대화가 없습니다",
+    "participants": "참여자",
+    "searchConversations": "대화 검색...",
+    "typeMessage": "메시지를 입력하세요...",
+    "selectConversation": "대화를 선택하세요",
+    "startMessaging": "메시지를 시작하려면 대화를 선택하세요",
+    "connected": "연결됨",
+    "disconnected": "연결 끊김"
+  },
+  "messages": {
+    "domain": "메시지",
+    "management": "지원팀",
+    "helpSupport": "지원팀",
+    "me": "나",
+    "productQuestion": "상품 문의",
+    "storeQuestion": "스토어 문의",
+    "imageUploadFailed": "이미지 업로드에 실패했습니다",
+    "connectionLost": "연결이 끊겼습니다. 재연결 중...",
+    "delete": "삭제",
+    "deleteForEveryone": "모두에게서 삭제",
+    "close": "닫기",
+    "customer": "고객",
+    "store": "스토어",
+    "back": "뒤로",
+    "participant": "참여자",
+    "noMessages": "메시지 없음",
+    "chatOptions": "채팅 옵션",
+    "deleteOnlyForMe": "나에게서만 삭제",
+    "storeContext": "스토어 문의",
+    "product": "상품",
+    "deleteConfirmTitle": "메시지 삭제",
+    "deleteConfirmDesc": "이 메시지를 삭제하시겠습니까?",
+    "error": "사용자 정보를 가져올 수 없습니다.",
+    "supportName": "지원팀",
+    "supportSubject": "지원 채팅",
+    "emptyState": "아직 메시지가 없습니다. 대화를 시작하세요.",
+    "viewPromotion": "프로모션 보기",
+    "imageAlt": "이미지",
+    "placeholder": "메시지를 입력하세요...",
+    "send": "메시지 보내기",
+    "attachImage": "이미지 첨부",
+    "removeAttachment": "첨부된 이미지 제거",
+    "viewImage": "이미지를 전체 크기로 보기",
+    "pendingImageAlt": "전송할 이미지",
+    "deletedMessage": "[이 메시지는 삭제되었습니다]"
+  },
+  "requests": {
+    "domain": "요청",
+    "status": {
+      "draft": "초안",
+      "pending": "대기 중",
+      "accepted": "승인됨",
+      "rejected": "거부됨"
+    },
+    "filters": {
+      "status": "상태"
+    },
+    "columns": {
+      "name": "이름"
+    },
+    "categories": {
+      "navLabel": "카테고리",
+      "heading": "카테고리 요청",
+      "noRecords": "카테고리 요청이 없습니다"
+    },
+    "collections": {
+      "navLabel": "컬렉션",
+      "heading": "컬렉션 요청",
+      "noRecords": "컬렉션 요청이 없습니다"
+    },
+    "tags": {
+      "navLabel": "태그",
+      "heading": "태그 요청",
+      "noRecords": "태그 요청이 없습니다"
+    },
+    "types": {
+      "navLabel": "유형",
+      "heading": "유형 요청",
+      "noRecords": "유형 요청이 없습니다"
+    }
+  },
+  "reviews": {
+    "domain": "리뷰",
+    "noRecords": "리뷰가 없습니다",
+    "columns": {
+      "rating": "평점",
+      "reference": "참조",
+      "customerNote": "고객 메모"
+    }
+  }
+}

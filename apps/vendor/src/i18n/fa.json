@@ -1,0 +1,131 @@
+{
+  "productImportExport": {
+    "import": "درون‌ریزی",
+    "export": "برون‌ریزی",
+    "done": "انجام شد",
+    "importHeader": "درون‌ریزی محصولات",
+    "importDescription": "یک فایل CSV بارگذاری کنید تا محصولات به فروشگاه شما وارد شوند.",
+    "importHint": "یک فایل CSV حاوی محصولات خود را بارگذاری کنید. می‌توانید",
+    "downloadTemplate": "قالب را دانلود کنید",
+    "uploadLabel": "بارگذاری فایل CSV",
+    "uploadHint": "فقط فایل‌های .csv پشتیبانی می‌شوند",
+    "importingActivity": "در حال درون‌ریزی محصولات...",
+    "importSuccessToast": "{{count}} محصول با موفقیت درون‌ریزی شد.",
+    "importCompleteTitle": "درون‌ریزی کامل شد",
+    "importCompleteDescription": "{{count}} محصول با موفقیت ایجاد شد.",
+    "exportHeader": "برون‌ریزی محصولات",
+    "exportDescription": "محصولات خود را به‌صورت فایل CSV برون‌ریزی کنید.",
+    "exportBody": "با این کار تمام محصولات شما به یک فایل CSV برون‌ریزی می‌شود. با آماده شدن فایل، دانلود به‌طور خودکار آغاز خواهد شد.",
+    "exportSuccessToast": "محصولات با موفقیت برون‌ریزی شدند."
+  },
+  "customFields": {
+    "title": "فیلدهای سفارشی",
+    "description": "فیلدهای سفارشی و تنظیمات خود را مدیریت کنید",
+    "noFields": "هنوز هیچ فیلد سفارشی پیکربندی نشده است"
+  },
+  "messenger": {
+    "supportTeam": "تیم پشتیبانی",
+    "support": "پشتیبانی",
+    "adminChatTitle": "گفتگو با مدیر",
+    "adminChatDescription": "پیامی برای تیم پشتیبانی بازار ارسال کنید و تاریخچه گفتگوهای خود را مشاهده کنید.",
+    "unknown": "نامشخص",
+    "imageMessage": "تصویر",
+    "noMessages": "هنوز پیامی وجود ندارد",
+    "startConversation": "شروع گفتگو",
+    "seen": "دیده شد",
+    "sent": "ارسال شد",
+    "notificationTitle": "{{senderName}} برای شما پیامی ارسال کرد",
+    "notificationBody": "{{preview}}",
+    "image": "تصویر",
+    "close": "بستن",
+    "noConversations": "هنوز گفتگویی وجود ندارد",
+    "participants": "شرکت‌کنندگان",
+    "searchConversations": "جستجوی گفتگوها...",
+    "typeMessage": "پیامی بنویسید...",
+    "selectConversation": "یک گفتگو را انتخاب کنید",
+    "startMessaging": "برای شروع پیام‌رسانی، یک گفتگو انتخاب کنید",
+    "connected": "متصل",
+    "disconnected": "قطع شد"
+  },
+  "messages": {
+    "domain": "پیام‌ها",
+    "management": "تیم پشتیبانی",
+    "helpSupport": "تیم پشتیبانی",
+    "me": "من",
+    "productQuestion": "سؤال درباره محصول",
+    "storeQuestion": "سؤال درباره فروشگاه",
+    "imageUploadFailed": "بارگذاری تصویر ناموفق بود",
+    "connectionLost": "اتصال قطع شد. در حال اتصال مجدد...",
+    "delete": "حذف",
+    "deleteForEveryone": "حذف برای همه",
+    "close": "بستن",
+    "customer": "مشتری",
+    "store": "فروشگاه",
+    "back": "بازگشت",
+    "participant": "شرکت‌کننده",
+    "noMessages": "پیامی وجود ندارد",
+    "chatOptions": "گزینه‌های گفتگو",
+    "deleteOnlyForMe": "فقط برای من حذف شود",
+    "storeContext": "سؤال درباره فروشگاه",
+    "product": "محصول",
+    "deleteConfirmTitle": "حذف پیام",
+    "deleteConfirmDesc": "آیا مطمئن هستید که می‌خواهید این پیام را حذف کنید؟",
+    "error": "دریافت اطلاعات کاربر ممکن نشد.",
+    "supportName": "تیم پشتیبانی",
+    "supportSubject": "گفتگوی پشتیبانی",
+    "emptyState": "هنوز پیامی وجود ندارد. گفتگو را شروع کنید.",
+    "viewPromotion": "مشاهده تخفیف",
+    "imageAlt": "تصویر",
+    "placeholder": "پیامی بنویسید...",
+    "send": "ارسال پیام",
+    "attachImage": "پیوست تصویر",
+    "removeAttachment": "حذف تصویر پیوست‌شده",
+    "viewImage": "مشاهده تصویر در اندازه کامل",
+    "pendingImageAlt": "تصویر در حال ارسال",
+    "deletedMessage": "[این پیام حذف شد]"
+  },
+  "requests": {
+    "domain": "درخواست‌ها",
+    "status": {
+      "draft": "پیش‌نویس",
+      "pending": "در انتظار",
+      "accepted": "پذیرفته شد",
+      "rejected": "رد شد"
+    },
+    "filters": {
+      "status": "وضعیت"
+    },
+    "columns": {
+      "name": "نام"
+    },
+    "categories": {
+      "navLabel": "دسته‌بندی‌ها",
+      "heading": "درخواست‌های دسته‌بندی",
+      "noRecords": "درخواست دسته‌بندی یافت نشد"
+    },
+    "collections": {
+      "navLabel": "مجموعه‌ها",
+      "heading": "درخواست‌های مجموعه",
+      "noRecords": "درخواست مجموعه یافت نشد"
+    },
+    "tags": {
+      "navLabel": "برچسب‌ها",
+      "heading": "درخواست‌های برچسب",
+      "noRecords": "درخواست برچسب یافت نشد"
+    },
+    "types": {
+      "navLabel": "انواع",
+      "heading": "درخواست‌های نوع",
+      "noRecords": "درخواست نوع یافت نشد"
+    }
+  },
+  "reviews": {
+    "domain": "نظرات",
+    "noRecords": "نظری یافت نشد",
+    "columns": {
+      "rating": "امتیاز",
+      "reference": "مرجع",
+      "customerNote": "یادداشت مشتری"
+    }
+  }
+}

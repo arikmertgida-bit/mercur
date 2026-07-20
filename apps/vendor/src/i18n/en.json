@@ -83,5 +83,49 @@
     "viewImage": "View image in full size",
     "pendingImageAlt": "Image to send",
     "deletedMessage": "[This message was deleted]"
+  },
+  "requests": {
+    "domain": "Requests",
+    "status": {
+      "draft": "Draft",
+      "pending": "Pending",
+      "accepted": "Accepted",
+      "rejected": "Rejected"
+    },
+    "filters": {
+      "status": "Status"
+    },
+    "columns": {
+      "name": "Name"
+    },
+    "categories": {
+      "navLabel": "Categories",
+      "heading": "Category Requests",
+      "noRecords": "No category requests found"
+    },
+    "collections": {
+      "navLabel": "Collections",
+      "heading": "Collection Requests",
+      "noRecords": "No collection requests found"
+    },
+    "tags": {
+      "navLabel": "Tags",
+      "heading": "Tag Requests",
+      "noRecords": "No tag requests found"
+    },
+    "types": {
+      "navLabel": "Types",
+      "heading": "Type Requests",
+      "noRecords": "No type requests found"
+    }
+  },
+  "reviews": {
+    "domain": "Reviews",
+    "noRecords": "No reviews found",
+    "columns": {
+      "rating": "Rating",
+      "reference": "Reference",
+      "customerNote": "Customer Note"
+    }
   }
 }

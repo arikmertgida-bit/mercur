@@ -17,7 +17,8 @@ import { ActionMenu, NoRecords, Thumbnail } from "@mercurjs/dashboard-shared"
 import { client } from "../../lib/client"
 
 export const config = {
-  label: "Reported Images",
+  label: "domain",
+  translationNs: "reportedImages",
   icon: Photo,
   rank: 88,
 }

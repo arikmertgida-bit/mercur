@@ -1,0 +1,131 @@
+{
+  "productImportExport": {
+    "import": "导入",
+    "export": "导出",
+    "done": "完成",
+    "importHeader": "导入产品",
+    "importDescription": "上传CSV文件以将产品导入您的店铺。",
+    "importHint": "上传包含您产品信息的CSV文件。您可以",
+    "downloadTemplate": "下载模板",
+    "uploadLabel": "上传CSV文件",
+    "uploadHint": "仅支持 .csv 文件",
+    "importingActivity": "正在导入产品...",
+    "importSuccessToast": "已成功导入 {{count}} 个产品。",
+    "importCompleteTitle": "导入完成",
+    "importCompleteDescription": "已成功创建 {{count}} 个产品。",
+    "exportHeader": "导出产品",
+    "exportDescription": "将您的产品导出为CSV文件。",
+    "exportBody": "此操作会将您的所有产品导出为CSV文件。导出准备好后将自动开始下载。",
+    "exportSuccessToast": "产品导出成功。"
+  },
+  "customFields": {
+    "title": "自定义字段",
+    "description": "管理您的自定义字段和配置",
+    "noFields": "尚未配置任何自定义字段"
+  },
+  "messenger": {
+    "supportTeam": "支持团队",
+    "support": "支持",
+    "adminChatTitle": "与管理员聊天",
+    "adminChatDescription": "向市场管理团队发送消息并查看您的聊天记录。",
+    "unknown": "未知",
+    "imageMessage": "图片",
+    "noMessages": "暂无消息",
+    "startConversation": "开始对话",
+    "seen": "已读",
+    "sent": "已发送",
+    "notificationTitle": "{{senderName}} 给您发送了一条消息",
+    "notificationBody": "{{preview}}",
+    "image": "图片",
+    "close": "关闭",
+    "noConversations": "暂无对话",
+    "participants": "参与者",
+    "searchConversations": "搜索对话...",
+    "typeMessage": "输入消息...",
+    "selectConversation": "选择一个对话",
+    "startMessaging": "选择一个对话开始聊天",
+    "connected": "已连接",
+    "disconnected": "已断开连接"
+  },
+  "messages": {
+    "domain": "消息",
+    "management": "支持团队",
+    "helpSupport": "支持团队",
+    "me": "我",
+    "productQuestion": "产品问题",
+    "storeQuestion": "店铺问题",
+    "imageUploadFailed": "图片上传失败",
+    "connectionLost": "连接已断开，正在重新连接...",
+    "delete": "删除",
+    "deleteForEveryone": "为所有人删除",
+    "close": "关闭",
+    "customer": "客户",
+    "store": "店铺",
+    "back": "返回",
+    "participant": "参与者",
+    "noMessages": "暂无消息",
+    "chatOptions": "聊天选项",
+    "deleteOnlyForMe": "仅为我删除",
+    "storeContext": "店铺问题",
+    "product": "产品",
+    "deleteConfirmTitle": "删除消息",
+    "deleteConfirmDesc": "确定要删除此消息吗？",
+    "error": "无法获取用户信息。",
+    "supportName": "支持团队",
+    "supportSubject": "支持聊天",
+    "emptyState": "暂无消息，开始对话吧。",
+    "viewPromotion": "查看促销活动",
+    "imageAlt": "图片",
+    "placeholder": "输入消息...",
+    "send": "发送消息",
+    "attachImage": "附加图片",
+    "removeAttachment": "移除已附加的图片",
+    "viewImage": "查看原图",
+    "pendingImageAlt": "待发送的图片",
+    "deletedMessage": "[此消息已被删除]"
+  },
+  "requests": {
+    "domain": "请求",
+    "status": {
+      "draft": "草稿",
+      "pending": "待处理",
+      "accepted": "已接受",
+      "rejected": "已拒绝"
+    },
+    "filters": {
+      "status": "状态"
+    },
+    "columns": {
+      "name": "名称"
+    },
+    "categories": {
+      "navLabel": "分类",
+      "heading": "分类请求",
+      "noRecords": "未找到分类请求"
+    },
+    "collections": {
+      "navLabel": "系列",
+      "heading": "系列请求",
+      "noRecords": "未找到系列请求"
+    },
+    "tags": {
+      "navLabel": "标签",
+      "heading": "标签请求",
+      "noRecords": "未找到标签请求"
+    },
+    "types": {
+      "navLabel": "类型",
+      "heading": "类型请求",
+      "noRecords": "未找到类型请求"
+    }
+  },
+  "reviews": {
+    "domain": "评价",
+    "noRecords": "未找到评价",
+    "columns": {
+      "rating": "评分",
+      "reference": "参考编号",
+      "customerNote": "客户备注"
+    }
+  }
+}

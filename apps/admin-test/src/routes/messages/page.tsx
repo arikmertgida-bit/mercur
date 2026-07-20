@@ -8,7 +8,8 @@ import { MessengerAdminInbox } from "./components/MessengerAdminInbox"
 import { MessagesIcon } from "./components/MessagesIcon"
 
 export const config = {
-  label: "Messages",
+  label: "domain",
+  translationNs: "messages",
   icon: MessagesIcon,
   rank: 90,
 }

@@ -10,7 +10,8 @@ import { MessengerVendorInbox } from "./components/MessengerVendorInbox"
 import { MessagesIcon } from "./components/MessagesIcon"
 
 export const config = {
-  label: "Messages",
+  label: "domain",
+  translationNs: "messages",
   icon: MessagesIcon,
   rank: 90,
 }

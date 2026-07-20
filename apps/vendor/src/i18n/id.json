@@ -1,0 +1,131 @@
+{
+  "productImportExport": {
+    "import": "Impor",
+    "export": "Ekspor",
+    "done": "Selesai",
+    "importHeader": "Impor Produk",
+    "importDescription": "Unggah file CSV untuk mengimpor produk ke toko Anda.",
+    "importHint": "Unggah file CSV yang berisi produk Anda. Anda dapat",
+    "downloadTemplate": "mengunduh template",
+    "uploadLabel": "Unggah file CSV",
+    "uploadHint": "Hanya file .csv yang didukung",
+    "importingActivity": "Mengimpor produk...",
+    "importSuccessToast": "Berhasil mengimpor {{count}} produk.",
+    "importCompleteTitle": "Impor Selesai",
+    "importCompleteDescription": "{{count}} produk berhasil dibuat.",
+    "exportHeader": "Ekspor Produk",
+    "exportDescription": "Ekspor produk Anda sebagai file CSV.",
+    "exportBody": "Tindakan ini akan mengekspor semua produk Anda ke file CSV. Unduhan akan dimulai secara otomatis setelah ekspor siap.",
+    "exportSuccessToast": "Produk berhasil diekspor."
+  },
+  "customFields": {
+    "title": "Kolom Kustom",
+    "description": "Kelola kolom kustom dan konfigurasi Anda",
+    "noFields": "Belum ada kolom kustom yang dikonfigurasi"
+  },
+  "messenger": {
+    "supportTeam": "Tim Dukungan",
+    "support": "Dukungan",
+    "adminChatTitle": "Obrolan dengan Admin",
+    "adminChatDescription": "Kirim pesan ke tim dukungan marketplace dan lihat riwayat percakapan Anda.",
+    "unknown": "Tidak dikenal",
+    "imageMessage": "Gambar",
+    "noMessages": "Belum ada pesan",
+    "startConversation": "Mulai percakapan",
+    "seen": "Dilihat",
+    "sent": "Terkirim",
+    "notificationTitle": "{{senderName}} mengirimi Anda pesan",
+    "notificationBody": "{{preview}}",
+    "image": "Gambar",
+    "close": "Tutup",
+    "noConversations": "Belum ada percakapan",
+    "participants": "peserta",
+    "searchConversations": "Cari percakapan...",
+    "typeMessage": "Ketik pesan...",
+    "selectConversation": "Pilih percakapan",
+    "startMessaging": "Pilih percakapan untuk mulai mengirim pesan",
+    "connected": "Terhubung",
+    "disconnected": "Terputus"
+  },
+  "messages": {
+    "domain": "Pesan",
+    "management": "Tim Dukungan",
+    "helpSupport": "Tim Dukungan",
+    "me": "Saya",
+    "productQuestion": "Pertanyaan Produk",
+    "storeQuestion": "Pertanyaan Toko",
+    "imageUploadFailed": "Gagal mengunggah gambar",
+    "connectionLost": "Koneksi terputus. Menghubungkan kembali...",
+    "delete": "Hapus",
+    "deleteForEveryone": "Hapus untuk semua orang",
+    "close": "Tutup",
+    "customer": "Pelanggan",
+    "store": "Toko",
+    "back": "Kembali",
+    "participant": "peserta",
+    "noMessages": "Tidak ada pesan",
+    "chatOptions": "Opsi obrolan",
+    "deleteOnlyForMe": "Hapus hanya untuk saya",
+    "storeContext": "Pertanyaan Toko",
+    "product": "Produk",
+    "deleteConfirmTitle": "Hapus pesan",
+    "deleteConfirmDesc": "Apakah Anda yakin ingin menghapus pesan ini?",
+    "error": "Tidak dapat mengambil informasi pengguna.",
+    "supportName": "Tim Dukungan",
+    "supportSubject": "Obrolan Dukungan",
+    "emptyState": "Belum ada pesan. Mulai percakapan.",
+    "viewPromotion": "Lihat Promosi",
+    "imageAlt": "Gambar",
+    "placeholder": "Ketik pesan...",
+    "send": "Kirim pesan",
+    "attachImage": "Lampirkan gambar",
+    "removeAttachment": "Hapus gambar terlampir",
+    "viewImage": "Lihat gambar ukuran penuh",
+    "pendingImageAlt": "Gambar yang akan dikirim",
+    "deletedMessage": "[Pesan ini telah dihapus]"
+  },
+  "requests": {
+    "domain": "Permintaan",
+    "status": {
+      "draft": "Draf",
+      "pending": "Tertunda",
+      "accepted": "Diterima",
+      "rejected": "Ditolak"
+    },
+    "filters": {
+      "status": "Status"
+    },
+    "columns": {
+      "name": "Nama"
+    },
+    "categories": {
+      "navLabel": "Kategori",
+      "heading": "Permintaan Kategori",
+      "noRecords": "Tidak ada permintaan kategori ditemukan"
+    },
+    "collections": {
+      "navLabel": "Koleksi",
+      "heading": "Permintaan Koleksi",
+      "noRecords": "Tidak ada permintaan koleksi ditemukan"
+    },
+    "tags": {
+      "navLabel": "Tag",
+      "heading": "Permintaan Tag",
+      "noRecords": "Tidak ada permintaan tag ditemukan"
+    },
+    "types": {
+      "navLabel": "Jenis",
+      "heading": "Permintaan Jenis",
+      "noRecords": "Tidak ada permintaan jenis ditemukan"
+    }
+  },
+  "reviews": {
+    "domain": "Ulasan",
+    "noRecords": "Tidak ada ulasan ditemukan",
+    "columns": {
+      "rating": "Peringkat",
+      "reference": "Referensi",
+      "customerNote": "Catatan pelanggan"
+    }
+  }
+}

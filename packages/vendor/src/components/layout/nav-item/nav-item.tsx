@@ -38,20 +38,11 @@ export type INavItem = {
   translationNs?: string;
 };
 
-const NestedNavLabel = ({
-  label,
-  translationNs,
-}: {
-  label: string;
-  translationNs?: string;
-}) => {
-  const { t } = useTranslation(translationNs);
-  return (
-    <Text size="small" weight="plus" leading="compact">
-      {translationNs ? t(label) : label}
-    </Text>
-  );
-};
+const resolveNavLabel = (
+  t: (key: string) => string,
+  label: string,
+  translationNs?: string,
+) => (translationNs ? t(`${translationNs}.${label}`) : label);
 
 export const BASE_NAV_LINK_CLASSES =
   "text-ui-fg-subtle transition-fg hover:bg-ui-bg-subtle-hover flex items-center gap-x-2 rounded-md py-0.5 pl-0.5 pr-2 outline-none [&>svg]:text-ui-fg-subtle focus-visible:shadow-borders-focus";
@@ -129,11 +120,12 @@ export const NavItem = ({
   from,
   translationNs,
 }: INavItem) => {
-  const { t } = useTranslation(translationNs);
+  const { t } = useTranslation();
   const { pathname } = useLocation();
 
   const displayLabel = translationNs ? t(label) : label;
   const [open, setOpen] = useState(getIsOpen(to, items, pathname));
+  const resolvedLabel = resolveNavLabel(t, label, translationNs);
 
   useEffect(() => {
     setOpen(getIsOpen(to, items, pathname));
@@ -209,7 +201,7 @@ export const NavItem = ({
             leading="compact"
             className={clx("shrink-0 whitespace-nowrap", SIDEBAR_RAIL_FADE)}
           >
-            {displayLabel}
+            {resolvedLabel}
           </Text>
         </NavLink>
       </NavItemTooltip>
@@ -229,7 +221,7 @@ export const NavItem = ({
               <Icon icon={icon} type={type} />
             </div>
             <Text size="small" weight="plus" leading="compact">
-              {displayLabel}
+              {resolvedLabel}
             </Text>
           </RadixCollapsible.Trigger>
           <RadixCollapsible.Content>
@@ -256,12 +248,17 @@ export const NavItem = ({
                       data-testid={`sidebar-nav-link-nested-${to.replace(/\//g, "-").replace(/^-/, "")}`}
                     >
                       <Text size="small" weight="plus" leading="compact">
-                        {displayLabel}
+                        {resolvedLabel}
                       </Text>
                     </NavLink>
                   </NavItemTooltip>
                 </li>
                 {items.map((item) => {
+                  const resolvedItemLabel = resolveNavLabel(
+                    t,
+                    item.label,
+                    item.translationNs,
+                  );
                   return (
                     <li key={item.to} className="flex h-7 items-center">
                       <NavItemTooltip to={item.to}>
@@ -280,10 +277,9 @@ export const NavItem = ({
                           }}
                           data-testid={`sidebar-nav-link-nested-${item.to.replace(/\//g, "-").replace(/^-/, "")}`}
                         >
-                          <NestedNavLabel
-                            label={item.label}
-                            translationNs={item.translationNs}
-                          />
+                          <Text size="small" weight="plus" leading="compact">
+                            {resolvedItemLabel}
+                          </Text>
                         </NavLink>
                       </NavItemTooltip>
                     </li>

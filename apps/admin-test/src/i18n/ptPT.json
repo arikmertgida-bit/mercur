@@ -1,0 +1,227 @@
+{
+  "customFields": {
+    "title": "Campos personalizados",
+    "description": "Faça a gestão dos seus campos personalizados e configurações",
+    "noFields": "Ainda não existem campos personalizados configurados"
+  },
+  "actions": {
+    "continue": "Continuar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar"
+  },
+  "productReports": {
+    "domain": "Denúncias de produtos",
+    "subtitle": "Produtos assinalados por clientes para revisão",
+    "filterAll": "Todos os estados",
+    "columns": {
+      "product": "Produto",
+      "reporter": "Denunciado por",
+      "reason": "Motivo",
+      "status": "Estado"
+    },
+    "status": {
+      "pending": "Pendente",
+      "resolved": "Resolvido",
+      "dismissed": "Rejeitado"
+    },
+    "reasons": {
+      "inaccurate_product_details": "Detalhes do produto imprecisos",
+      "pricing_irregularities": "Irregularidades de preço",
+      "prohibited_item": "Artigo proibido",
+      "counterfeit_trademark": "Contrafação / violação de marca",
+      "incorrect_categorization": "Categorização incorreta",
+      "inappropriate_media": "Conteúdo multimédia inadequado",
+      "dmca_violation": "Violação de DMCA",
+      "seller_complaint": "Queixa sobre o vendedor",
+      "other": "Outro"
+    },
+    "actions": {
+      "resolve": "Marcar como resolvido",
+      "dismiss": "Rejeitar"
+    },
+    "resolvePrompt": {
+      "title": "Marcar a denúncia como resolvida?",
+      "description": "Esta denúncia será marcada como resolvida e removida da fila de pendentes."
+    },
+    "dismissPrompt": {
+      "title": "Rejeitar esta denúncia?",
+      "description": "Esta denúncia será marcada como rejeitada e removida da fila de pendentes."
+    },
+    "deletePrompt": {
+      "title": "Eliminar esta denúncia?",
+      "description": "Esta ação irá eliminar permanentemente a denúncia. Esta ação não pode ser anulada."
+    },
+    "updateSuccess": "Denúncia atualizada",
+    "updateError": "Não foi possível atualizar a denúncia",
+    "deleteSuccess": "Denúncia eliminada",
+    "deleteError": "Não foi possível eliminar a denúncia"
+  },
+  "wishlistModeration": {
+    "domain": "Listas de desejos",
+    "subtitle": "Listas de desejos de clientes, para efeitos de moderação",
+    "noProducts": "Sem produtos",
+    "columns": {
+      "customer": "Cliente",
+      "products": "Produtos",
+      "created": "Criada"
+    },
+    "deletePrompt": {
+      "title": "Eliminar esta lista de desejos?",
+      "description": "Esta ação irá eliminar permanentemente a lista de desejos do cliente e todas as suas entradas. Esta ação não pode ser anulada."
+    },
+    "deleteSuccess": "Lista de desejos eliminada",
+    "deleteError": "Não foi possível eliminar a lista de desejos"
+  },
+  "reportedImages": {
+    "domain": "Imagens denunciadas",
+    "subtitle": "Reveja imagens assinaladas por clientes como inadequadas",
+    "filterAll": "Todos os estados",
+    "imageRemoved": "Imagem removida",
+    "columns": {
+      "image": "Imagem",
+      "reporter": "Denunciada por",
+      "reason": "Motivo",
+      "status": "Estado"
+    },
+    "status": {
+      "pending": "Pendente",
+      "resolved": "Resolvido"
+    },
+    "actions": {
+      "remove": "Remover imagem",
+      "dismiss": "Rejeitar denúncia"
+    },
+    "removePrompt": {
+      "title": "Remover esta imagem?",
+      "description": "A imagem será eliminada permanentemente da avaliação. Esta ação não pode ser anulada."
+    },
+    "dismissPrompt": {
+      "title": "Rejeitar esta denúncia?",
+      "description": "A imagem permanecerá publicada e a denúncia será marcada como resolvida."
+    },
+    "resolveSuccess": "Denúncia resolvida",
+    "resolveError": "Não foi possível resolver a denúncia"
+  },
+  "messenger": {
+    "searchConversations": "Pesquisar conversas...",
+    "noConversations": "Ainda não há conversas",
+    "startConversation": "Iniciar uma conversa",
+    "selectConversation": "Selecione uma conversa",
+    "startMessaging": "Selecione uma conversa para começar a conversar",
+    "typeMessage": "Escreva uma mensagem...",
+    "seen": "Visto",
+    "sent": "Enviado",
+    "notificationTitle": "{{senderName}} enviou-lhe uma mensagem",
+    "notificationBody": "{{preview}}",
+    "image": "Imagem",
+    "support": "Suporte",
+    "direct": "Direto",
+    "unknown": "Desconhecido",
+    "supportTeam": "Equipa de suporte",
+    "connected": "Ligado",
+    "disconnected": "Desligado",
+    "conversationOptions": "Opções da conversa"
+  },
+  "messages": {
+    "domain": "Mensagens",
+    "product": "Produto",
+    "store": "Loja",
+    "delete": "Eliminar",
+    "deleteForEveryone": "Eliminar para todos",
+    "close": "Fechar",
+    "connectionLost": "Ligação perdida. A reconectar...",
+    "imageUploadFailed": "Falha ao carregar a imagem",
+    "deleteConfirmTitle": "Eliminar mensagem",
+    "deleteConfirmDesc": "Tem a certeza de que pretende eliminar esta mensagem?",
+    "productQuestion": "Questão sobre o produto",
+    "storeQuestion": "Questão sobre a loja",
+    "customerMessage": "Mensagem do cliente",
+    "sellerMessage": "Mensagem do vendedor",
+    "directMessage": "Mensagem direta",
+    "storeContext": "Questão sobre a loja",
+    "back": "Voltar",
+    "failedToGetUserInfo": "Não foi possível obter as informações do utilizador.",
+    "send": "Enviar mensagem",
+    "attachImage": "Anexar imagem",
+    "removeAttachment": "Remover imagem anexada",
+    "viewImage": "Ver imagem em tamanho completo",
+    "pendingImageAlt": "Imagem a enviar",
+    "imageAlt": "Imagem"
+  },
+  "requests": {
+    "domain": "Pedidos",
+    "status": {
+      "draft": "Rascunho",
+      "pending": "Pendente",
+      "accepted": "Aceite",
+      "rejected": "Rejeitado"
+    },
+    "filters": {
+      "status": "Estado"
+    },
+    "columns": {
+      "name": "Nome"
+    },
+    "categories": {
+      "navLabel": "Categorias",
+      "heading": "Pedidos de categorias",
+      "noRecords": "Não foram encontrados pedidos de categorias"
+    },
+    "collections": {
+      "navLabel": "Coleções",
+      "heading": "Pedidos de coleções",
+      "noRecords": "Não foram encontrados pedidos de coleções"
+    },
+    "tags": {
+      "navLabel": "Etiquetas",
+      "heading": "Pedidos de etiquetas",
+      "noRecords": "Não foram encontrados pedidos de etiquetas"
+    },
+    "types": {
+      "navLabel": "Tipos",
+      "heading": "Pedidos de tipos",
+      "noRecords": "Não foram encontrados pedidos de tipos"
+    },
+    "typeLabels": {
+      "product_category": "Categoria",
+      "product_collection": "Coleção",
+      "product_tag": "Etiqueta",
+      "product_type": "Tipo"
+    },
+    "fields": {
+      "name": "Nome",
+      "handle": "Identificador",
+      "description": "Descrição",
+      "active": "Ativo",
+      "internal": "Interno",
+      "title": "Título",
+      "value": "Valor"
+    },
+    "values": {
+      "yes": "Sim",
+      "no": "Não"
+    },
+    "detail": {
+      "pendingReview": "Em análise",
+      "accept": "Aceitar",
+      "reject": "Rejeitar",
+      "acceptPromptTitle": "Aceitar pedido",
+      "acceptPromptDescription": "Tem a certeza de que pretende aceitar este pedido? Esta ação irá criar a entidade.",
+      "rejectPromptTitle": "Rejeitar pedido",
+      "rejectPromptDescription": "Tem a certeza de que pretende rejeitar este pedido? Esta ação não pode ser anulada.",
+      "acceptSuccess": "Pedido aceite",
+      "rejectSuccess": "Pedido rejeitado",
+      "submitter": "Requerente",
+      "reviewer": "Revisor"
+    }
+  },
+  "reviews": {
+    "domain": "Avaliações",
+    "noRecords": "Não foram encontradas avaliações",
+    "columns": {
+      "rating": "Classificação",
+      "reference": "Referência",
+      "customerNote": "Nota do cliente"
+    }
+  }
+}

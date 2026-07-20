@@ -6,7 +6,8 @@ import type { RouteConfig } from "@mercurjs/dashboard-sdk";
 declare const __TALK_JS_APP_ID__: string | undefined;
 
 export const config: RouteConfig = {
-  label: "Messages",
+  label: "domain",
+  translationNs: "messages",
   icon: ChatBubbleLeftRight,
 };
 

@@ -1,0 +1,131 @@
+{
+  "productImportExport": {
+    "import": "Uvezi",
+    "export": "Izvezi",
+    "done": "Gotovo",
+    "importHeader": "Uvoz proizvoda",
+    "importDescription": "Otpremite CSV datoteku da biste uvezli proizvode u svoju prodavnicu.",
+    "importHint": "Otpremite CSV datoteku sa svojim proizvodima. Možete",
+    "downloadTemplate": "preuzeti šablon",
+    "uploadLabel": "Otpremi CSV datoteku",
+    "uploadHint": "Podržane su samo .csv datoteke",
+    "importingActivity": "Uvoz proizvoda u toku...",
+    "importSuccessToast": "Uspješno uvezeno proizvoda: {{count}}.",
+    "importCompleteTitle": "Uvoz završen",
+    "importCompleteDescription": "Uspješno kreirano proizvoda: {{count}}.",
+    "exportHeader": "Izvoz proizvoda",
+    "exportDescription": "Izvezite svoje proizvode kao CSV datoteku.",
+    "exportBody": "Ovo će izvesti sve vaše proizvode u CSV datoteku. Preuzimanje će početi automatski čim izvoz bude spreman.",
+    "exportSuccessToast": "Proizvodi su uspješno izvezeni."
+  },
+  "customFields": {
+    "title": "Prilagođena polja",
+    "description": "Upravljajte svojim prilagođenim poljima i konfiguracijama",
+    "noFields": "Još uvijek nema podešenih prilagođenih polja"
+  },
+  "messenger": {
+    "supportTeam": "Tim za podršku",
+    "support": "Podrška",
+    "adminChatTitle": "Razgovor sa administratorom",
+    "adminChatDescription": "Pošaljite poruku timu za podršku tržišta i pregledajte historiju razgovora.",
+    "unknown": "Nepoznato",
+    "imageMessage": "Slika",
+    "noMessages": "Još uvijek nema poruka",
+    "startConversation": "Započnite razgovor",
+    "seen": "Viđeno",
+    "sent": "Poslano",
+    "notificationTitle": "{{senderName}} vam je poslao/la poruku",
+    "notificationBody": "{{preview}}",
+    "image": "Slika",
+    "close": "Zatvori",
+    "noConversations": "Još uvijek nema razgovora",
+    "participants": "učesnici",
+    "searchConversations": "Pretraži razgovore...",
+    "typeMessage": "Napišite poruku...",
+    "selectConversation": "Odaberite razgovor",
+    "startMessaging": "Odaberite razgovor da biste započeli razgovor",
+    "connected": "Povezano",
+    "disconnected": "Nije povezano"
+  },
+  "messages": {
+    "domain": "Poruke",
+    "management": "Tim za podršku",
+    "helpSupport": "Tim za podršku",
+    "me": "Ja",
+    "productQuestion": "Pitanje o proizvodu",
+    "storeQuestion": "Pitanje o prodavnici",
+    "imageUploadFailed": "Otpremanje slike nije uspjelo",
+    "connectionLost": "Veza je izgubljena. Ponovno povezivanje...",
+    "delete": "Obriši",
+    "deleteForEveryone": "Obriši za sve",
+    "close": "Zatvori",
+    "customer": "Kupac",
+    "store": "Prodavnica",
+    "back": "Nazad",
+    "participant": "učesnik",
+    "noMessages": "Nema poruka",
+    "chatOptions": "Opcije razgovora",
+    "deleteOnlyForMe": "Obriši samo za mene",
+    "storeContext": "Pitanje o prodavnici",
+    "product": "Proizvod",
+    "deleteConfirmTitle": "Obriši poruku",
+    "deleteConfirmDesc": "Jeste li sigurni da želite obrisati ovu poruku?",
+    "error": "Nije bilo moguće dobiti informacije o korisniku.",
+    "supportName": "Tim za podršku",
+    "supportSubject": "Razgovor sa podrškom",
+    "emptyState": "Još uvijek nema poruka. Započnite razgovor.",
+    "viewPromotion": "Pogledaj promociju",
+    "imageAlt": "Slika",
+    "placeholder": "Napišite poruku...",
+    "send": "Pošalji poruku",
+    "attachImage": "Priloži sliku",
+    "removeAttachment": "Ukloni priloženu sliku",
+    "viewImage": "Pogledaj sliku u punoj veličini",
+    "pendingImageAlt": "Slika za slanje",
+    "deletedMessage": "[Ova poruka je obrisana]"
+  },
+  "requests": {
+    "domain": "Zahtjevi",
+    "status": {
+      "draft": "Nacrt",
+      "pending": "Na čekanju",
+      "accepted": "Prihvaćen",
+      "rejected": "Odbijen"
+    },
+    "filters": {
+      "status": "Status"
+    },
+    "columns": {
+      "name": "Naziv"
+    },
+    "categories": {
+      "navLabel": "Kategorije",
+      "heading": "Zahtjevi za kategorije",
+      "noRecords": "Nisu pronađeni zahtjevi za kategorije"
+    },
+    "collections": {
+      "navLabel": "Kolekcije",
+      "heading": "Zahtjevi za kolekcije",
+      "noRecords": "Nisu pronađeni zahtjevi za kolekcije"
+    },
+    "tags": {
+      "navLabel": "Oznake",
+      "heading": "Zahtjevi za oznake",
+      "noRecords": "Nisu pronađeni zahtjevi za oznake"
+    },
+    "types": {
+      "navLabel": "Tipovi",
+      "heading": "Zahtjevi za tipove",
+      "noRecords": "Nisu pronađeni zahtjevi za tipove"
+    }
+  },
+  "reviews": {
+    "domain": "Recenzije",
+    "noRecords": "Nisu pronađene recenzije",
+    "columns": {
+      "rating": "Ocjena",
+      "reference": "Referenca",
+      "customerNote": "Napomena kupca"
+    }
+  }
+}

@@ -137,8 +137,7 @@ export const VendorCreateShippingOption = z
   })
   .strict()
   .refine((data) => isDefined(data.type_id) !== isDefined(data.type), {
-    message:
-      "Exactly one of 'type' or 'type_id' must be provided, but not both",
+    message: "vendor_error.shipping_option_type_xor_required",
     path: ["type_id", "type"],
   })
 
@@ -177,7 +176,7 @@ export const VendorUpdateShippingOption = z
       return hasType !== hasTypeId
     },
     {
-      message: "Only one of 'type' or 'type_id' can be provided",
+      message: "vendor_error.shipping_option_type_mutually_exclusive",
       path: ["type_id", "type"],
     }
   )

@@ -1,0 +1,131 @@
+{
+  "productImportExport": {
+    "import": "Importeren",
+    "export": "Exporteren",
+    "done": "Klaar",
+    "importHeader": "Producten importeren",
+    "importDescription": "Upload een CSV-bestand om producten in uw winkel te importeren.",
+    "importHint": "Upload een CSV-bestand met uw producten. U kunt",
+    "downloadTemplate": "de sjabloon downloaden",
+    "uploadLabel": "CSV-bestand uploaden",
+    "uploadHint": "Alleen .csv-bestanden worden ondersteund",
+    "importingActivity": "Producten worden geïmporteerd...",
+    "importSuccessToast": "{{count}} product(en) succesvol geïmporteerd.",
+    "importCompleteTitle": "Import voltooid",
+    "importCompleteDescription": "{{count}} product(en) zijn succesvol aangemaakt.",
+    "exportHeader": "Producten exporteren",
+    "exportDescription": "Exporteer uw producten als een CSV-bestand.",
+    "exportBody": "Hiermee worden al uw producten geëxporteerd naar een CSV-bestand. De download start automatisch zodra de export gereed is.",
+    "exportSuccessToast": "Producten succesvol geëxporteerd."
+  },
+  "customFields": {
+    "title": "Aangepaste velden",
+    "description": "Beheer uw aangepaste velden en configuraties",
+    "noFields": "Nog geen aangepaste velden geconfigureerd"
+  },
+  "messenger": {
+    "supportTeam": "Supportteam",
+    "support": "Support",
+    "adminChatTitle": "Chatten met beheerder",
+    "adminChatDescription": "Stuur een bericht naar het supportteam van de marketplace en bekijk uw gespreksgeschiedenis.",
+    "unknown": "Onbekend",
+    "imageMessage": "Afbeelding",
+    "noMessages": "Nog geen berichten",
+    "startConversation": "Start het gesprek",
+    "seen": "Gezien",
+    "sent": "Verzonden",
+    "notificationTitle": "{{senderName}} heeft u een bericht gestuurd",
+    "notificationBody": "{{preview}}",
+    "image": "Afbeelding",
+    "close": "Sluiten",
+    "noConversations": "Nog geen gesprekken",
+    "participants": "deelnemers",
+    "searchConversations": "Gesprekken zoeken...",
+    "typeMessage": "Typ een bericht...",
+    "selectConversation": "Selecteer een gesprek",
+    "startMessaging": "Selecteer een gesprek om te beginnen met chatten",
+    "connected": "Verbonden",
+    "disconnected": "Verbinding verbroken"
+  },
+  "messages": {
+    "domain": "Berichten",
+    "management": "Supportteam",
+    "helpSupport": "Supportteam",
+    "me": "Ik",
+    "productQuestion": "Productvraag",
+    "storeQuestion": "Winkelvraag",
+    "imageUploadFailed": "Uploaden van afbeelding mislukt",
+    "connectionLost": "Verbinding verbroken. Opnieuw verbinden...",
+    "delete": "Verwijderen",
+    "deleteForEveryone": "Verwijderen voor iedereen",
+    "close": "Sluiten",
+    "customer": "Klant",
+    "store": "Winkel",
+    "back": "Terug",
+    "participant": "deelnemer",
+    "noMessages": "Geen berichten",
+    "chatOptions": "Chatopties",
+    "deleteOnlyForMe": "Alleen voor mij verwijderen",
+    "storeContext": "Winkelvraag",
+    "product": "Product",
+    "deleteConfirmTitle": "Bericht verwijderen",
+    "deleteConfirmDesc": "Weet u zeker dat u dit bericht wilt verwijderen?",
+    "error": "Kon gebruikersinformatie niet ophalen.",
+    "supportName": "Supportteam",
+    "supportSubject": "Supportchat",
+    "emptyState": "Nog geen berichten. Start het gesprek.",
+    "viewPromotion": "Promotie bekijken",
+    "imageAlt": "Afbeelding",
+    "placeholder": "Typ een bericht...",
+    "send": "Bericht verzenden",
+    "attachImage": "Afbeelding bijvoegen",
+    "removeAttachment": "Bijgevoegde afbeelding verwijderen",
+    "viewImage": "Afbeelding op volledig formaat bekijken",
+    "pendingImageAlt": "Te verzenden afbeelding",
+    "deletedMessage": "[Dit bericht is verwijderd]"
+  },
+  "requests": {
+    "domain": "Aanvragen",
+    "status": {
+      "draft": "Concept",
+      "pending": "In behandeling",
+      "accepted": "Geaccepteerd",
+      "rejected": "Afgewezen"
+    },
+    "filters": {
+      "status": "Status"
+    },
+    "columns": {
+      "name": "Naam"
+    },
+    "categories": {
+      "navLabel": "Categorieën",
+      "heading": "Categorieaanvragen",
+      "noRecords": "Geen categorieaanvragen gevonden"
+    },
+    "collections": {
+      "navLabel": "Collecties",
+      "heading": "Collectieaanvragen",
+      "noRecords": "Geen collectieaanvragen gevonden"
+    },
+    "tags": {
+      "navLabel": "Tags",
+      "heading": "Tagaanvragen",
+      "noRecords": "Geen tagaanvragen gevonden"
+    },
+    "types": {
+      "navLabel": "Typen",
+      "heading": "Typeaanvragen",
+      "noRecords": "Geen typeaanvragen gevonden"
+    }
+  },
+  "reviews": {
+    "domain": "Beoordelingen",
+    "noRecords": "Geen beoordelingen gevonden",
+    "columns": {
+      "rating": "Beoordeling",
+      "reference": "Referentie",
+      "customerNote": "Klantnotitie"
+    }
+  }
+}

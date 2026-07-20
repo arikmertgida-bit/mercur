@@ -4,7 +4,21 @@ export type ActionType = "query" | "mutate" | "delete";
 
 export type ClientOptions = {
     baseUrl: string;
-    fetchOptions?: RequestInit;
+    fetchOptions?: Omit<RequestInit, "headers"> & {
+        /**
+         * A plain `HeadersInit` is captured once at `createClient()` time and
+         * never re-evaluated, so it goes stale if header values (e.g. the
+         * active UI language) change during the session. Pass a thunk to
+         * resolve headers fresh on every request instead.
+         */
+        headers?: HeadersInit | (() => HeadersInit);
+    };
+    /**
+     * Resolved fresh on every request and merged on top of `fetchOptions`'s
+     * headers — use this for auth headers (e.g. a bearer token) that must
+     * reflect the latest signed-in state rather than the state at
+     * `createClient()` time.
+     */
     headers?: () => Record<string, string>;
 };
 

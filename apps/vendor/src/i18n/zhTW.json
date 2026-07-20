@@ -1,0 +1,131 @@
+{
+  "productImportExport": {
+    "import": "匯入",
+    "export": "匯出",
+    "done": "完成",
+    "importHeader": "匯入產品",
+    "importDescription": "上傳CSV檔案以將產品匯入您的商店。",
+    "importHint": "上傳包含您產品資訊的CSV檔案。您可以",
+    "downloadTemplate": "下載範本",
+    "uploadLabel": "上傳CSV檔案",
+    "uploadHint": "僅支援 .csv 檔案",
+    "importingActivity": "正在匯入產品...",
+    "importSuccessToast": "已成功匯入 {{count}} 個產品。",
+    "importCompleteTitle": "匯入完成",
+    "importCompleteDescription": "已成功建立 {{count}} 個產品。",
+    "exportHeader": "匯出產品",
+    "exportDescription": "將您的產品匯出為CSV檔案。",
+    "exportBody": "此操作會將您的所有產品匯出為CSV檔案。匯出準備完成後將自動開始下載。",
+    "exportSuccessToast": "產品匯出成功。"
+  },
+  "customFields": {
+    "title": "自訂欄位",
+    "description": "管理您的自訂欄位與設定",
+    "noFields": "尚未設定任何自訂欄位"
+  },
+  "messenger": {
+    "supportTeam": "支援團隊",
+    "support": "支援",
+    "adminChatTitle": "與管理員聊天",
+    "adminChatDescription": "向市集管理團隊傳送訊息並查看您的對話紀錄。",
+    "unknown": "未知",
+    "imageMessage": "圖片",
+    "noMessages": "尚無訊息",
+    "startConversation": "開始對話",
+    "seen": "已讀",
+    "sent": "已傳送",
+    "notificationTitle": "{{senderName}} 傳送了一則訊息給您",
+    "notificationBody": "{{preview}}",
+    "image": "圖片",
+    "close": "關閉",
+    "noConversations": "尚無對話",
+    "participants": "參與者",
+    "searchConversations": "搜尋對話...",
+    "typeMessage": "輸入訊息...",
+    "selectConversation": "選擇一個對話",
+    "startMessaging": "選擇一個對話以開始聊天",
+    "connected": "已連線",
+    "disconnected": "已中斷連線"
+  },
+  "messages": {
+    "domain": "訊息",
+    "management": "支援團隊",
+    "helpSupport": "支援團隊",
+    "me": "我",
+    "productQuestion": "產品問題",
+    "storeQuestion": "商店問題",
+    "imageUploadFailed": "圖片上傳失敗",
+    "connectionLost": "連線已中斷，正在重新連線...",
+    "delete": "刪除",
+    "deleteForEveryone": "為所有人刪除",
+    "close": "關閉",
+    "customer": "顧客",
+    "store": "商店",
+    "back": "返回",
+    "participant": "參與者",
+    "noMessages": "尚無訊息",
+    "chatOptions": "聊天選項",
+    "deleteOnlyForMe": "僅為我刪除",
+    "storeContext": "商店問題",
+    "product": "產品",
+    "deleteConfirmTitle": "刪除訊息",
+    "deleteConfirmDesc": "確定要刪除此訊息嗎？",
+    "error": "無法取得使用者資訊。",
+    "supportName": "支援團隊",
+    "supportSubject": "支援聊天",
+    "emptyState": "尚無訊息，開始對話吧。",
+    "viewPromotion": "查看促銷活動",
+    "imageAlt": "圖片",
+    "placeholder": "輸入訊息...",
+    "send": "傳送訊息",
+    "attachImage": "附加圖片",
+    "removeAttachment": "移除已附加的圖片",
+    "viewImage": "查看原始尺寸圖片",
+    "pendingImageAlt": "待傳送的圖片",
+    "deletedMessage": "[此訊息已被刪除]"
+  },
+  "requests": {
+    "domain": "請求",
+    "status": {
+      "draft": "草稿",
+      "pending": "待處理",
+      "accepted": "已接受",
+      "rejected": "已拒絕"
+    },
+    "filters": {
+      "status": "狀態"
+    },
+    "columns": {
+      "name": "名稱"
+    },
+    "categories": {
+      "navLabel": "分類",
+      "heading": "分類請求",
+      "noRecords": "找不到分類請求"
+    },
+    "collections": {
+      "navLabel": "系列",
+      "heading": "系列請求",
+      "noRecords": "找不到系列請求"
+    },
+    "tags": {
+      "navLabel": "標籤",
+      "heading": "標籤請求",
+      "noRecords": "找不到標籤請求"
+    },
+    "types": {
+      "navLabel": "類型",
+      "heading": "類型請求",
+      "noRecords": "找不到類型請求"
+    }
+  },
+  "reviews": {
+    "domain": "評論",
+    "noRecords": "找不到評論",
+    "columns": {
+      "rating": "評分",
+      "reference": "參考編號",
+      "customerNote": "顧客備註"
+    }
+  }
+}

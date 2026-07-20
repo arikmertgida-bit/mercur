@@ -1782,8 +1782,7 @@
       "title": "İade Oluştur",
       "sendNotificationHint": "Oluşturulan iade hakkında müşterilere bilgi verin.",
       "systemPayment": "Sistem ödemesi",
-      "systemPaymentDesc": "Ödemelerinizden biri bir sistem ödemesidir. Bu tür ödemeler için işlemler Mercur tarafından yönetilmez.",
-      "error": {
+      "systemPaymentDesc": "Ödemelerinizden biri bir sistem ödemesidir. Bu tür ödemeler için işlemler Kayı.com tarafından yönetilmez.",      "error": {
         "amountToLarge": "Orijinal sipariş tutarından daha fazlasını iade edemezsiniz.",
         "amountNegative": "İade tutarı pozitif bir sayı olmalıdır.",
         "reasonRequired": "Lütfen bir iade sebebi seçin."
@@ -2909,8 +2908,7 @@
       "header": "Profili Düzenle",
       "languageHint": "Yönetim panelinde kullanmak istediğiniz dili seçin. Bu, mağazanızın dilini değiştirmez.",
       "languagePlaceholder": "Dili seçin",
-      "usageInsightsHint": "Kullanım istatistiklerini paylaşarak Mercur'nın iyileştirilmesine yardımcı olun. Topladığımız bilgiler ve nasıl kullandığımız hakkında daha fazla bilgiye <0>dokümantasyonda</0> ulaşabilirsiniz."
-    },
+      "usageInsightsHint": "Kullanım istatistiklerini paylaşarak Kayı.com'un iyileştirilmesine yardımcı olun. Topladığımız bilgiler ve nasıl kullandığımız hakkında daha fazla bilgiye <0>dokümantasyonda</0> ulaşabilirsiniz."    },
     "toast": {
       "edit": "Profil değişiklikleri kaydedildi"
     }
@@ -3264,8 +3262,7 @@
       "createPublishableHeader": "Yayınlanabilir API Anahtarı Oluştur",
       "createPublishableHint": "Belirli satış kanallarına yönelik taleplerin kapsamını sınırlamak için yeni bir yayınlanabilir API anahtarı oluşturun.",
       "createSecretHeader": "Gizli API Anahtarı Oluştur",
-      "createSecretHint": "Doğrulanmış bir yönetici kullanıcısı olarak Mercur API'ye erişmek için yeni bir gizli API anahtarı oluşturun.",
-      "secretKeyCreatedHeader": "Gizli Anahtar Oluşturuldu",
+      "createSecretHint": "Doğrulanmış bir yönetici kullanıcısı olarak Kayı.com API'ye erişmek için yeni bir gizli API anahtarı oluşturun.",      "secretKeyCreatedHeader": "Gizli Anahtar Oluşturuldu",
       "secretKeyCreatedHint": "Yeni gizli anahtarınız oluşturuldu. Şimdi kopyalayın ve güvenli bir şekilde saklayın. Bu anahtar yalnızca bir kez görüntülenecektir.",
       "copySecretTokenSuccess": "Gizli anahtar panoya kopyalandı.",
       "copySecretTokenFailure": "Gizli anahtar panoya kopyalanamadı.",
@@ -3362,22 +3359,19 @@
   },
   "login": {
     "forgotPassword": "Şifrenizi mi unuttunuz? - <0>Sıfırla</0>",
-    "title": "Mercur'ya Hoş Geldiniz",
-    "hint": "Hesap alanına erişmek için oturum açın",
+    "title": "Kayı.com'a Hoş Geldiniz",    "hint": "Hesap alanına erişmek için oturum açın",
     "sessionExpired": "Oturum süresi doldu"
   },
   "invite": {
-    "title": "Mercur'ya Hoş Geldiniz",
-    "hint": "Aşağıda hesabınızı oluşturun",
+    "title": "Kayı.com'a Hoş Geldiniz",    "hint": "Aşağıda hesabınızı oluşturun",
     "backToLogin": "Girişe geri dön",
     "createAccount": "Hesap oluştur",
     "alreadyHaveAccount": "Zaten bir hesabınız var mı? - <0>Giriş Yap</0>",
     "emailTooltip": "E-postanız değiştirilemez. Başka bir e-posta kullanmak istiyorsanız, yeni bir davet gönderilmelidir.",
     "invalidInvite": "Davet geçersiz veya süresi dolmuş.",
     "successTitle": "Hesabınız kaydedildi",
-    "successHint": "Hemen Mercur Yönetici ile başlayın.",
-    "successAction": "Mercur Yöneticiye Başla",
-    "invalidTokenTitle": "Davet tokeniniz geçersiz",
+    "successHint": "Hemen Kayı.com Yönetici ile başlayın.",
+    "successAction": "Kayı.com Yöneticiye Başla",    "invalidTokenTitle": "Davet tokeniniz geçersiz",
     "invalidTokenHint": "Yeni bir davet bağlantısı talep etmeyi deneyin.",
     "passwordMismatch": "Şifreler uyuşmuyor",
     "toast": {
@@ -3409,8 +3403,7 @@
   },
   "workflowExecutions": {
     "domain": "İş Akışları",
-    "subtitle": "Mercur uygulamanızdaki iş akışı yürütmelerini görüntüleyin ve takip edin.",
-    "transactionIdLabel": "İşlem Kimliği",
+    "subtitle": "Kayı.com uygulamanızdaki iş akışı yürütmelerini görüntüleyin ve takip edin.",    "transactionIdLabel": "İşlem Kimliği",
     "workflowIdLabel": "İş Akışı Kimliği",
     "progressLabel": "İlerleme",
     "stepsCompletedLabel_one": "{{count}} adımın {{completed}}'i tamamlandı",
@@ -3493,7 +3486,16 @@
       "value": "Değer"
     }
   },
-  "errors": {
+  "notifications": {
+    "domain": "Bildirimler",
+    "emptyState": {
+      "title": "Bildirim yok",
+      "description": "Şu anda herhangi bir bildiriminiz yok, ancak olduğunda burada görünecekler."
+    },
+    "accessibility": {
+      "description": "Kayı.com aktiviteleri hakkında bildirimler burada listelenecek."
+    }
+  },  "errors": {
     "serverError": "Sunucu hatası - Daha sonra tekrar deneyin.",
     "invalidCredentials": "Yanlış e-posta veya şifre"
   },

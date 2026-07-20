@@ -1,0 +1,131 @@
+{
+  "productImportExport": {
+    "import": "Увези",
+    "export": "Извези",
+    "done": "Готово",
+    "importHeader": "Увоз на производи",
+    "importDescription": "Прикачете CSV датотека за да увезете производи во вашата продавница.",
+    "importHint": "Прикачете CSV датотека со вашите производи. Можете да",
+    "downloadTemplate": "го преземете шаблонот",
+    "uploadLabel": "Прикачи CSV датотека",
+    "uploadHint": "Поддржани се само .csv датотеки",
+    "importingActivity": "Увезување производи...",
+    "importSuccessToast": "Успешно увезени {{count}} производ(и).",
+    "importCompleteTitle": "Увозот е завршен",
+    "importCompleteDescription": "Успешно креирани {{count}} производ(и).",
+    "exportHeader": "Извоз на производи",
+    "exportDescription": "Извезете ги вашите производи како CSV датотека.",
+    "exportBody": "Ова ќе ги извезе сите ваши производи во CSV датотека. Преземањето ќе започне автоматски штом извозот е подготвен.",
+    "exportSuccessToast": "Производите се успешно извезени."
+  },
+  "customFields": {
+    "title": "Прилагодени полиња",
+    "description": "Управувајте со вашите прилагодени полиња и конфигурации",
+    "noFields": "Сè уште нема конфигурирано прилагодени полиња"
+  },
+  "messenger": {
+    "supportTeam": "Тим за поддршка",
+    "support": "Поддршка",
+    "adminChatTitle": "Разговор со администраторот",
+    "adminChatDescription": "Испратете порака до тимот за поддршка на пазарот и прегледајте ја историјата на разговорите.",
+    "unknown": "Непознато",
+    "imageMessage": "Слика",
+    "noMessages": "Сè уште нема пораки",
+    "startConversation": "Започнете разговор",
+    "seen": "Видено",
+    "sent": "Испратено",
+    "notificationTitle": "{{senderName}} ви испрати порака",
+    "notificationBody": "{{preview}}",
+    "image": "Слика",
+    "close": "Затвори",
+    "noConversations": "Сè уште нема разговори",
+    "participants": "учесници",
+    "searchConversations": "Пребарај разговори...",
+    "typeMessage": "Напишете порака...",
+    "selectConversation": "Изберете разговор",
+    "startMessaging": "Изберете разговор за да започнете со разговор",
+    "connected": "Поврзано",
+    "disconnected": "Исклучено"
+  },
+  "messages": {
+    "domain": "Пораки",
+    "management": "Тим за поддршка",
+    "helpSupport": "Тим за поддршка",
+    "me": "Јас",
+    "productQuestion": "Прашање за производ",
+    "storeQuestion": "Прашање за продавницата",
+    "imageUploadFailed": "Прикачувањето на сликата не успеа",
+    "connectionLost": "Врската е изгубена. Повторно поврзување...",
+    "delete": "Избриши",
+    "deleteForEveryone": "Избриши за сите",
+    "close": "Затвори",
+    "customer": "Купец",
+    "store": "Продавница",
+    "back": "Назад",
+    "participant": "учесник",
+    "noMessages": "Нема пораки",
+    "chatOptions": "Опции на разговорот",
+    "deleteOnlyForMe": "Избриши само за мене",
+    "storeContext": "Прашање за продавницата",
+    "product": "Производ",
+    "deleteConfirmTitle": "Избриши порака",
+    "deleteConfirmDesc": "Дали сте сигурни дека сакате да ја избришете оваа порака?",
+    "error": "Не можеа да се преземат информациите за корисникот.",
+    "supportName": "Тим за поддршка",
+    "supportSubject": "Разговор со поддршка",
+    "emptyState": "Сè уште нема пораки. Започнете разговор.",
+    "viewPromotion": "Прегледај промоција",
+    "imageAlt": "Слика",
+    "placeholder": "Напишете порака...",
+    "send": "Испрати порака",
+    "attachImage": "Прикачи слика",
+    "removeAttachment": "Отстрани ја прикачената слика",
+    "viewImage": "Прегледај ја сликата во целосна големина",
+    "pendingImageAlt": "Слика за испраќање",
+    "deletedMessage": "[Оваа порака е избришана]"
+  },
+  "requests": {
+    "domain": "Барања",
+    "status": {
+      "draft": "Нацрт",
+      "pending": "Чека",
+      "accepted": "Прифатено",
+      "rejected": "Одбиено"
+    },
+    "filters": {
+      "status": "Статус"
+    },
+    "columns": {
+      "name": "Име"
+    },
+    "categories": {
+      "navLabel": "Категории",
+      "heading": "Барања за категории",
+      "noRecords": "Не се пронајдени барања за категории"
+    },
+    "collections": {
+      "navLabel": "Колекции",
+      "heading": "Барања за колекции",
+      "noRecords": "Не се пронајдени барања за колекции"
+    },
+    "tags": {
+      "navLabel": "Ознаки",
+      "heading": "Барања за ознаки",
+      "noRecords": "Не се пронајдени барања за ознаки"
+    },
+    "types": {
+      "navLabel": "Типови",
+      "heading": "Барања за типови",
+      "noRecords": "Не се пронајдени барања за типови"
+    }
+  },
+  "reviews": {
+    "domain": "Рецензии",
+    "noRecords": "Не се пронајдени рецензии",
+    "columns": {
+      "rating": "Оценка",
+      "reference": "Референца",
+      "customerNote": "Забелешка од купувачот"
+    }
+  }
+}

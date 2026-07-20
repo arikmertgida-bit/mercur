@@ -1,0 +1,131 @@
+{
+  "productImportExport": {
+    "import": "Импортиране",
+    "export": "Експортиране",
+    "done": "Готово",
+    "importHeader": "Импортиране на продукти",
+    "importDescription": "Качете CSV файл, за да импортирате продукти в магазина си.",
+    "importHint": "Качете CSV файл с вашите продукти. Можете да",
+    "downloadTemplate": "изтеглите шаблона",
+    "uploadLabel": "Качване на CSV файл",
+    "uploadHint": "Поддържат се само файлове с разширение .csv",
+    "importingActivity": "Импортиране на продукти...",
+    "importSuccessToast": "{{count}} продукт(а) бяха успешно импортирани.",
+    "importCompleteTitle": "Импортирането завърши",
+    "importCompleteDescription": "{{count}} продукт(а) бяха успешно създадени.",
+    "exportHeader": "Експортиране на продукти",
+    "exportDescription": "Експортирайте продуктите си като CSV файл.",
+    "exportBody": "Това ще експортира всички ваши продукти в CSV файл. Изтеглянето ще започне автоматично, щом експортът е готов.",
+    "exportSuccessToast": "Продуктите бяха успешно експортирани."
+  },
+  "customFields": {
+    "title": "Персонализирани полета",
+    "description": "Управлявайте персонализираните си полета и конфигурации",
+    "noFields": "Все още няма конфигурирани персонализирани полета"
+  },
+  "messenger": {
+    "supportTeam": "Екип за поддръжка",
+    "support": "Поддръжка",
+    "adminChatTitle": "Чат с администратор",
+    "adminChatDescription": "Изпратете съобщение до екипа за поддръжка на пазара и вижте историята на разговорите си.",
+    "unknown": "Неизвестен",
+    "imageMessage": "Изображение",
+    "noMessages": "Все още няма съобщения",
+    "startConversation": "Започнете разговор",
+    "seen": "Видяно",
+    "sent": "Изпратено",
+    "notificationTitle": "{{senderName}} ви изпрати съобщение",
+    "notificationBody": "{{preview}}",
+    "image": "Изображение",
+    "close": "Затвори",
+    "noConversations": "Все още няма разговори",
+    "participants": "участници",
+    "searchConversations": "Търсене на разговори...",
+    "typeMessage": "Напишете съобщение...",
+    "selectConversation": "Изберете разговор",
+    "startMessaging": "Изберете разговор, за да започнете да пишете",
+    "connected": "Свързан",
+    "disconnected": "Изключен"
+  },
+  "messages": {
+    "domain": "Съобщения",
+    "management": "Екип за поддръжка",
+    "helpSupport": "Екип за поддръжка",
+    "me": "Аз",
+    "productQuestion": "Въпрос за продукта",
+    "storeQuestion": "Въпрос за магазина",
+    "imageUploadFailed": "Качването на изображението се провали",
+    "connectionLost": "Връзката е загубена. Свързване отново...",
+    "delete": "Изтрий",
+    "deleteForEveryone": "Изтрий за всички",
+    "close": "Затвори",
+    "customer": "Клиент",
+    "store": "Магазин",
+    "back": "Назад",
+    "participant": "участник",
+    "noMessages": "Няма съобщения",
+    "chatOptions": "Опции на чата",
+    "deleteOnlyForMe": "Изтрий само за мен",
+    "storeContext": "Въпрос за магазина",
+    "product": "Продукт",
+    "deleteConfirmTitle": "Изтриване на съобщение",
+    "deleteConfirmDesc": "Сигурни ли сте, че искате да изтриете това съобщение?",
+    "error": "Информацията за потребителя не можа да бъде получена.",
+    "supportName": "Екип за поддръжка",
+    "supportSubject": "Чат с поддръжката",
+    "emptyState": "Все още няма съобщения. Започнете разговор.",
+    "viewPromotion": "Преглед на промоцията",
+    "imageAlt": "Изображение",
+    "placeholder": "Напишете съобщение...",
+    "send": "Изпрати съобщение",
+    "attachImage": "Прикачи изображение",
+    "removeAttachment": "Премахни прикаченото изображение",
+    "viewImage": "Преглед на изображението в пълен размер",
+    "pendingImageAlt": "Изображение за изпращане",
+    "deletedMessage": "[Това съобщение беше изтрито]"
+  },
+  "requests": {
+    "domain": "Заявки",
+    "status": {
+      "draft": "Чернова",
+      "pending": "Изчаква",
+      "accepted": "Приета",
+      "rejected": "Отхвърлена"
+    },
+    "filters": {
+      "status": "Статус"
+    },
+    "columns": {
+      "name": "Име"
+    },
+    "categories": {
+      "navLabel": "Категории",
+      "heading": "Заявки за категории",
+      "noRecords": "Не са намерени заявки за категории"
+    },
+    "collections": {
+      "navLabel": "Колекции",
+      "heading": "Заявки за колекции",
+      "noRecords": "Не са намерени заявки за колекции"
+    },
+    "tags": {
+      "navLabel": "Етикети",
+      "heading": "Заявки за етикети",
+      "noRecords": "Не са намерени заявки за етикети"
+    },
+    "types": {
+      "navLabel": "Типове",
+      "heading": "Заявки за типове",
+      "noRecords": "Не са намерени заявки за типове"
+    }
+  },
+  "reviews": {
+    "domain": "Отзиви",
+    "noRecords": "Не са намерени отзиви",
+    "columns": {
+      "rating": "Оценка",
+      "reference": "Референция",
+      "customerNote": "Бележка от клиента"
+    }
+  }
+}

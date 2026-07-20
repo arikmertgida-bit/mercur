@@ -1,0 +1,227 @@
+{
+  "customFields": {
+    "title": "自訂欄位",
+    "description": "管理您的自訂欄位與設定",
+    "noFields": "尚未設定任何自訂欄位"
+  },
+  "actions": {
+    "continue": "繼續",
+    "cancel": "取消",
+    "delete": "刪除"
+  },
+  "productReports": {
+    "domain": "產品檢舉",
+    "subtitle": "顧客標記待審核的產品",
+    "filterAll": "所有狀態",
+    "columns": {
+      "product": "產品",
+      "reporter": "檢舉人",
+      "reason": "原因",
+      "status": "狀態"
+    },
+    "status": {
+      "pending": "待處理",
+      "resolved": "已解決",
+      "dismissed": "已駁回"
+    },
+    "reasons": {
+      "inaccurate_product_details": "產品資訊不準確",
+      "pricing_irregularities": "定價異常",
+      "prohibited_item": "違禁商品",
+      "counterfeit_trademark": "仿冒品 / 商標侵權",
+      "incorrect_categorization": "分類錯誤",
+      "inappropriate_media": "不當媒體內容",
+      "dmca_violation": "DMCA 侵權",
+      "seller_complaint": "關於賣家的申訴",
+      "other": "其他"
+    },
+    "actions": {
+      "resolve": "標記為已解決",
+      "dismiss": "駁回"
+    },
+    "resolvePrompt": {
+      "title": "將檢舉標記為已解決？",
+      "description": "此檢舉將被標記為已解決，並從待處理佇列中移除。"
+    },
+    "dismissPrompt": {
+      "title": "駁回此檢舉？",
+      "description": "此檢舉將被標記為已駁回，並從待處理佇列中移除。"
+    },
+    "deletePrompt": {
+      "title": "刪除此檢舉？",
+      "description": "此操作將永久刪除該檢舉。此操作無法復原。"
+    },
+    "updateSuccess": "檢舉已更新",
+    "updateError": "檢舉更新失敗",
+    "deleteSuccess": "檢舉已刪除",
+    "deleteError": "檢舉刪除失敗"
+  },
+  "wishlistModeration": {
+    "domain": "願望清單",
+    "subtitle": "用於審核目的的顧客願望清單",
+    "noProducts": "尚無產品",
+    "columns": {
+      "customer": "顧客",
+      "products": "產品",
+      "created": "建立時間"
+    },
+    "deletePrompt": {
+      "title": "刪除此願望清單？",
+      "description": "此操作將永久刪除該顧客的願望清單及其所有項目。此操作無法復原。"
+    },
+    "deleteSuccess": "願望清單已刪除",
+    "deleteError": "願望清單刪除失敗"
+  },
+  "reportedImages": {
+    "domain": "被檢舉的圖片",
+    "subtitle": "審查顧客標記為不當的圖片",
+    "filterAll": "所有狀態",
+    "imageRemoved": "圖片已移除",
+    "columns": {
+      "image": "圖片",
+      "reporter": "檢舉人",
+      "reason": "原因",
+      "status": "狀態"
+    },
+    "status": {
+      "pending": "待處理",
+      "resolved": "已解決"
+    },
+    "actions": {
+      "remove": "移除圖片",
+      "dismiss": "駁回檢舉"
+    },
+    "removePrompt": {
+      "title": "移除此圖片？",
+      "description": "該圖片將從評論中永久刪除。此操作無法復原。"
+    },
+    "dismissPrompt": {
+      "title": "駁回此檢舉？",
+      "description": "圖片將保持發佈狀態，檢舉將被標記為已解決。"
+    },
+    "resolveSuccess": "檢舉已解決",
+    "resolveError": "檢舉解決失敗"
+  },
+  "messenger": {
+    "searchConversations": "搜尋對話...",
+    "noConversations": "尚無對話",
+    "startConversation": "開始一個對話",
+    "selectConversation": "選擇一個對話",
+    "startMessaging": "選擇一個對話以開始聊天",
+    "typeMessage": "輸入訊息...",
+    "seen": "已讀",
+    "sent": "已傳送",
+    "notificationTitle": "{{senderName}} 傳送了一則訊息給您",
+    "notificationBody": "{{preview}}",
+    "image": "圖片",
+    "support": "支援",
+    "direct": "私訊",
+    "unknown": "未知",
+    "supportTeam": "支援團隊",
+    "connected": "已連線",
+    "disconnected": "已中斷連線",
+    "conversationOptions": "對話選項"
+  },
+  "messages": {
+    "domain": "訊息",
+    "product": "產品",
+    "store": "商店",
+    "delete": "刪除",
+    "deleteForEveryone": "為所有人刪除",
+    "close": "關閉",
+    "connectionLost": "連線已中斷，正在重新連線...",
+    "imageUploadFailed": "圖片上傳失敗",
+    "deleteConfirmTitle": "刪除訊息",
+    "deleteConfirmDesc": "確定要刪除此訊息嗎？",
+    "productQuestion": "產品問題",
+    "storeQuestion": "商店問題",
+    "customerMessage": "顧客訊息",
+    "sellerMessage": "賣家訊息",
+    "directMessage": "私訊",
+    "storeContext": "商店問題",
+    "back": "返回",
+    "failedToGetUserInfo": "無法取得使用者資訊。",
+    "send": "傳送訊息",
+    "attachImage": "附加圖片",
+    "removeAttachment": "移除已附加的圖片",
+    "viewImage": "查看原始尺寸圖片",
+    "pendingImageAlt": "待傳送的圖片",
+    "imageAlt": "圖片"
+  },
+  "requests": {
+    "domain": "請求",
+    "status": {
+      "draft": "草稿",
+      "pending": "待處理",
+      "accepted": "已接受",
+      "rejected": "已拒絕"
+    },
+    "filters": {
+      "status": "狀態"
+    },
+    "columns": {
+      "name": "名稱"
+    },
+    "categories": {
+      "navLabel": "分類",
+      "heading": "分類請求",
+      "noRecords": "找不到分類請求"
+    },
+    "collections": {
+      "navLabel": "系列",
+      "heading": "系列請求",
+      "noRecords": "找不到系列請求"
+    },
+    "tags": {
+      "navLabel": "標籤",
+      "heading": "標籤請求",
+      "noRecords": "找不到標籤請求"
+    },
+    "types": {
+      "navLabel": "類型",
+      "heading": "類型請求",
+      "noRecords": "找不到類型請求"
+    },
+    "typeLabels": {
+      "product_category": "分類",
+      "product_collection": "系列",
+      "product_tag": "標籤",
+      "product_type": "類型"
+    },
+    "fields": {
+      "name": "名稱",
+      "handle": "識別碼",
+      "description": "描述",
+      "active": "啟用",
+      "internal": "內部",
+      "title": "標題",
+      "value": "值"
+    },
+    "values": {
+      "yes": "是",
+      "no": "否"
+    },
+    "detail": {
+      "pendingReview": "待審核",
+      "accept": "接受",
+      "reject": "拒絕",
+      "acceptPromptTitle": "接受請求",
+      "acceptPromptDescription": "確定要接受此請求嗎？此操作將建立相應的實體。",
+      "rejectPromptTitle": "拒絕請求",
+      "rejectPromptDescription": "確定要拒絕此請求嗎？此操作無法復原。",
+      "acceptSuccess": "請求已接受",
+      "rejectSuccess": "請求已拒絕",
+      "submitter": "提交人",
+      "reviewer": "審核人"
+    }
+  },
+  "reviews": {
+    "domain": "評論",
+    "noRecords": "找不到評論",
+    "columns": {
+      "rating": "評分",
+      "reference": "參考編號",
+      "customerNote": "顧客備註"
+    }
+  }
+}

@@ -1813,8 +1813,7 @@
       "title": "Kreiraj povrat",
       "sendNotificationHint": "Obavijestite kupce o kreiranom povratu.",
       "systemPayment": "Sistemska uplata",
-      "systemPaymentDesc": "Jedna ili više vaših uplata je sistenska uplata. Budite svjesni da Mercur ne upravlja obradom uplata i povrata za takve uplate.",
-      "error": {
+      "systemPaymentDesc": "Jedna ili više vaših uplata je sistenska uplata. Budite svjesni da Kayı.com ne upravlja obradom uplata i povrata za takve uplate.",      "error": {
         "amountToLarge": "Nije moguće vratiti više od originalnog iznosa narudžbe.",
         "amountNegative": "Iznos povrata mora biti pozitivan broj.",
         "reasonRequired": "Molimo odaberite razlog za povrat."
@@ -2908,7 +2907,7 @@
       "header": "Uredi profil",
       "languageHint": "Jezik koji želite koristiti u administratorskoj nadzornoj ploči. Ovo neće promijeniti jezik vašeg trgovine.",
       "languagePlaceholder": "Odaberite jezik",
-      "usageInsightsHint": "Podijelite uvide u korištenje i pomozite nam poboljšati Medusu. Više o tome što prikupljamo i kako to koristimo možete pročitati u našoj <0>dokumentaciji</0>."
+      "usageInsightsHint": "Podijelite uvide u korištenje i pomozite nam poboljšati Kayı.com. Više o tome što prikupljamo i kako to koristimo možete pročitati u našoj <0>dokumentaciji</0>."
     },
     "toast": {
       "edit": "Promjene na profilu su spremljene"
@@ -3262,8 +3261,7 @@
       "createPublishableHeader": "Kreiraj javni API ključ",
       "createPublishableHint": "Kreirajte novi javni API ključ kako biste ograničili opseg zahtjeva na određene prodajne kanale.",
       "createSecretHeader": "Kreiraj tajni API ključ",
-      "createSecretHint": "Kreirajte novi tajni API ključ za pristup Mercur API-ju kao autentifikovani administrativni korisnik.",
-      "secretKeyCreatedHeader": "Tajni ključ kreiran",
+      "createSecretHint": "Kreirajte novi tajni API ključ za pristup Kayı.com API-ju kao autentifikovani administrativni korisnik.",      "secretKeyCreatedHeader": "Tajni ključ kreiran",
       "secretKeyCreatedHint": "Vaš novi tajni ključ je generisan. Kopirajte ga i sigurno sačuvajte sada. Ovo je jedini put kada će biti prikazan.",
       "copySecretTokenSuccess": "Tajni ključ je uspješno kopiran u međuspremnik.",
       "copySecretTokenFailure": "Neuspješno kopiranje tajnog ključa u međuspremnik.",
@@ -3360,22 +3358,19 @@
   },
   "login": {
     "forgotPassword": "Zaboravili ste lozinku? - <0>Poništi</0>",
-    "title": "Dobrodošli u Mercur",
-    "hint": "Prijavite se da biste pristupili korisničkom području",
+    "title": "Dobrodošli u Kayı.com",    "hint": "Prijavite se da biste pristupili korisničkom području",
     "sessionExpired": "Sesija je istekla"
   },
   "invite": {
-    "title": "Dobrodošli u Mercur",
-    "hint": "Kreirajte svoj račun ispod",
+    "title": "Dobrodošli u Kayı.com",    "hint": "Kreirajte svoj račun ispod",
     "backToLogin": "Povratak na prijavu",
     "createAccount": "Kreiraj račun",
     "alreadyHaveAccount": "Već imate račun? - <0>Prijavite se</0>",
     "emailTooltip": "Vaš email se ne može mijenjati. Ako želite koristiti drugi email, mora se poslati nova pozivnica.",
     "invalidInvite": "Pozivnica je nevažeća ili je istekao rok.",
     "successTitle": "Vaš račun je registriran",
-    "successHint": "Počnite odmah s Mercur Admin.",
-    "successAction": "Započnite Mercur Admin",
-    "invalidTokenTitle": "Vaš pozivni token je nevažeći",
+    "successHint": "Počnite odmah s Kayı.com Admin.",
+    "successAction": "Započnite Kayı.com Admin",    "invalidTokenTitle": "Vaš pozivni token je nevažeći",
     "invalidTokenHint": "Pokušajte zatražiti novi pozivni link.",
     "passwordMismatch": "Lozinke se ne podudaraju",
     "toast": {
@@ -3407,8 +3402,7 @@
   },
   "workflowExecutions": {
     "domain": "Radni tokovi",
-    "subtitle": "Pregledajte i pratite izvršenja radnih tokova u vašoj Mercur aplikaciji.",
-    "transactionIdLabel": "ID transakcije",
+    "subtitle": "Pregledajte i pratite izvršenja radnih tokova u vašoj Kayı.com aplikaciji.",    "transactionIdLabel": "ID transakcije",
     "workflowIdLabel": "ID radnog toka",
     "progressLabel": "Napredak",
     "stepsCompletedLabel_one": "{{completed}} od {{count}} koraka",
@@ -3491,7 +3485,16 @@
       "value": "Vrijednost"
     }
   },
-  "errors": {
+  "notifications": {
+    "domain": "Obavijesti",
+    "emptyState": {
+      "title": "Nema obavijesti",
+      "description": "Nemate obavijesti u ovom trenutku, ali kada ih budete imali, bit će ovdje."
+    },
+    "accessibility": {
+      "description": "Obavijesti o Kayı.com aktivnostima bit će ovdje prikazane."
+    }
+  },  "errors": {
     "serverError": "Greška na serveru - Pokušajte ponovo kasnije.",
     "invalidCredentials": "Pogrešan email ili lozinka"
   },

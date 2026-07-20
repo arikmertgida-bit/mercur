@@ -10,14 +10,14 @@ export const useRequestTableFilters = (): Filter[] => {
     const filters: Filter[] = [
       {
         key: "request_status",
-        label: "Status",
+        label: t("requests.filters.status"),
         type: "select",
         multiple: true,
         options: [
-          { label: "Draft", value: "draft" },
-          { label: "Pending", value: "pending" },
-          { label: "Accepted", value: "accepted" },
-          { label: "Rejected", value: "rejected" },
+          { label: t("requests.status.draft"), value: "draft" },
+          { label: t("requests.status.pending"), value: "pending" },
+          { label: t("requests.status.accepted"), value: "accepted" },
+          { label: t("requests.status.rejected"), value: "rejected" },
         ],
       },
     ];

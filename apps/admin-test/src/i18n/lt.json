@@ -1,0 +1,227 @@
+{
+  "customFields": {
+    "title": "Pasirinktiniai laukai",
+    "description": "Tvarkykite savo pasirinktinius laukus ir konfigūracijas",
+    "noFields": "Kol kas nesukonfigūruota jokių pasirinktinių laukų"
+  },
+  "actions": {
+    "continue": "Tęsti",
+    "cancel": "Atšaukti",
+    "delete": "Ištrinti"
+  },
+  "productReports": {
+    "domain": "Produktų skundai",
+    "subtitle": "Pirkėjų pažymėti produktai, kuriuos reikia peržiūrėti",
+    "filterAll": "Visos būsenos",
+    "columns": {
+      "product": "Produktas",
+      "reporter": "Pranešė",
+      "reason": "Priežastis",
+      "status": "Būsena"
+    },
+    "status": {
+      "pending": "Laukiama",
+      "resolved": "Išspręsta",
+      "dismissed": "Atmesta"
+    },
+    "reasons": {
+      "inaccurate_product_details": "Netikslūs produkto duomenys",
+      "pricing_irregularities": "Kainodaros neatitikimai",
+      "prohibited_item": "Draudžiama prekė",
+      "counterfeit_trademark": "Falsifikatas / prekės ženklo pažeidimas",
+      "incorrect_categorization": "Neteisingas priskyrimas kategorijai",
+      "inappropriate_media": "Netinkamas medijos turinys",
+      "dmca_violation": "DMCA pažeidimas",
+      "seller_complaint": "Skundas dėl pardavėjo",
+      "other": "Kita"
+    },
+    "actions": {
+      "resolve": "Pažymėti kaip išspręstą",
+      "dismiss": "Atmesti"
+    },
+    "resolvePrompt": {
+      "title": "Pažymėti skundą kaip išspręstą?",
+      "description": "Šis skundas bus pažymėtas kaip išspręstas ir pašalintas iš laukiančiųjų eilės."
+    },
+    "dismissPrompt": {
+      "title": "Atmesti šį skundą?",
+      "description": "Šis skundas bus pažymėtas kaip atmestas ir pašalintas iš laukiančiųjų eilės."
+    },
+    "deletePrompt": {
+      "title": "Ištrinti šį skundą?",
+      "description": "Tai negrįžtamai ištrins skundą. Šio veiksmo negalima anuliuoti."
+    },
+    "updateSuccess": "Skundas atnaujintas",
+    "updateError": "Nepavyko atnaujinti skundo",
+    "deleteSuccess": "Skundas ištrintas",
+    "deleteError": "Nepavyko ištrinti skundo"
+  },
+  "wishlistModeration": {
+    "domain": "Norų sąrašai",
+    "subtitle": "Pirkėjų norų sąrašai, moderavimo tikslais",
+    "noProducts": "Nėra produktų",
+    "columns": {
+      "customer": "Pirkėjas",
+      "products": "Produktai",
+      "created": "Sukurta"
+    },
+    "deletePrompt": {
+      "title": "Ištrinti šį norų sąrašą?",
+      "description": "Tai negrįžtamai ištrins pirkėjo norų sąrašą ir visus jo įrašus. Šio veiksmo negalima anuliuoti."
+    },
+    "deleteSuccess": "Norų sąrašas ištrintas",
+    "deleteError": "Nepavyko ištrinti norų sąrašo"
+  },
+  "reportedImages": {
+    "domain": "Pažymėtos nuotraukos",
+    "subtitle": "Peržiūrėkite nuotraukas, kurias pirkėjai pažymėjo kaip netinkamas",
+    "filterAll": "Visos būsenos",
+    "imageRemoved": "Nuotrauka pašalinta",
+    "columns": {
+      "image": "Nuotrauka",
+      "reporter": "Pranešė",
+      "reason": "Priežastis",
+      "status": "Būsena"
+    },
+    "status": {
+      "pending": "Laukiama",
+      "resolved": "Išspręsta"
+    },
+    "actions": {
+      "remove": "Pašalinti nuotrauką",
+      "dismiss": "Atmesti skundą"
+    },
+    "removePrompt": {
+      "title": "Pašalinti šią nuotrauką?",
+      "description": "Nuotrauka bus negrįžtamai ištrinta iš atsiliepimo. Šio veiksmo negalima anuliuoti."
+    },
+    "dismissPrompt": {
+      "title": "Atmesti šį skundą?",
+      "description": "Nuotrauka liks paskelbta, o skundas bus pažymėtas kaip išspręstas."
+    },
+    "resolveSuccess": "Skundas išspręstas",
+    "resolveError": "Nepavyko išspręsti skundo"
+  },
+  "messenger": {
+    "searchConversations": "Ieškoti pokalbių...",
+    "noConversations": "Kol kas nėra pokalbių",
+    "startConversation": "Pradėti pokalbį",
+    "selectConversation": "Pasirinkite pokalbį",
+    "startMessaging": "Pasirinkite pokalbį, kad pradėtumėte rašyti",
+    "typeMessage": "Įveskite žinutę...",
+    "seen": "Peržiūrėta",
+    "sent": "Išsiųsta",
+    "notificationTitle": "{{senderName}} jums atsiuntė žinutę",
+    "notificationBody": "{{preview}}",
+    "image": "Nuotrauka",
+    "support": "Pagalba",
+    "direct": "Tiesioginis",
+    "unknown": "Nežinoma",
+    "supportTeam": "Pagalbos komanda",
+    "connected": "Prisijungta",
+    "disconnected": "Atsijungta",
+    "conversationOptions": "Pokalbio parinktys"
+  },
+  "messages": {
+    "domain": "Žinutės",
+    "product": "Produktas",
+    "store": "Parduotuvė",
+    "delete": "Ištrinti",
+    "deleteForEveryone": "Ištrinti visiems",
+    "close": "Uždaryti",
+    "connectionLost": "Ryšys prarastas. Jungiamasi iš naujo...",
+    "imageUploadFailed": "Nepavyko įkelti nuotraukos",
+    "deleteConfirmTitle": "Ištrinti žinutę",
+    "deleteConfirmDesc": "Ar tikrai norite ištrinti šią žinutę?",
+    "productQuestion": "Klausimas apie produktą",
+    "storeQuestion": "Klausimas apie parduotuvę",
+    "customerMessage": "Pirkėjo žinutė",
+    "sellerMessage": "Pardavėjo žinutė",
+    "directMessage": "Tiesioginė žinutė",
+    "storeContext": "Klausimas apie parduotuvę",
+    "back": "Atgal",
+    "failedToGetUserInfo": "Nepavyko gauti vartotojo informacijos.",
+    "send": "Siųsti žinutę",
+    "attachImage": "Pridėti nuotrauką",
+    "removeAttachment": "Pašalinti pridėtą nuotrauką",
+    "viewImage": "Peržiūrėti nuotrauką pilnu dydžiu",
+    "pendingImageAlt": "Siunčiama nuotrauka",
+    "imageAlt": "Nuotrauka"
+  },
+  "requests": {
+    "domain": "Užklausos",
+    "status": {
+      "draft": "Juodraštis",
+      "pending": "Laukiama",
+      "accepted": "Priimta",
+      "rejected": "Atmesta"
+    },
+    "filters": {
+      "status": "Būsena"
+    },
+    "columns": {
+      "name": "Pavadinimas"
+    },
+    "categories": {
+      "navLabel": "Kategorijos",
+      "heading": "Kategorijų užklausos",
+      "noRecords": "Kategorijų užklausų nerasta"
+    },
+    "collections": {
+      "navLabel": "Kolekcijos",
+      "heading": "Kolekcijų užklausos",
+      "noRecords": "Kolekcijų užklausų nerasta"
+    },
+    "tags": {
+      "navLabel": "Žymos",
+      "heading": "Žymų užklausos",
+      "noRecords": "Žymų užklausų nerasta"
+    },
+    "types": {
+      "navLabel": "Tipai",
+      "heading": "Tipų užklausos",
+      "noRecords": "Tipų užklausų nerasta"
+    },
+    "typeLabels": {
+      "product_category": "Kategorija",
+      "product_collection": "Kolekcija",
+      "product_tag": "Žyma",
+      "product_type": "Tipas"
+    },
+    "fields": {
+      "name": "Pavadinimas",
+      "handle": "Identifikatorius",
+      "description": "Aprašymas",
+      "active": "Aktyvus",
+      "internal": "Vidinis",
+      "title": "Pavadinimas",
+      "value": "Reikšmė"
+    },
+    "values": {
+      "yes": "Taip",
+      "no": "Ne"
+    },
+    "detail": {
+      "pendingReview": "Laukiama peržiūros",
+      "accept": "Priimti",
+      "reject": "Atmesti",
+      "acceptPromptTitle": "Priimti užklausą",
+      "acceptPromptDescription": "Ar tikrai norite priimti šią užklausą? Šis veiksmas sukurs objektą.",
+      "rejectPromptTitle": "Atmesti užklausą",
+      "rejectPromptDescription": "Ar tikrai norite atmesti šią užklausą? Šio veiksmo negalima anuliuoti.",
+      "acceptSuccess": "Užklausa priimta",
+      "rejectSuccess": "Užklausa atmesta",
+      "submitter": "Pateikėjas",
+      "reviewer": "Tikrintojas"
+    }
+  },
+  "reviews": {
+    "domain": "Atsiliepimai",
+    "noRecords": "Atsiliepimų nerasta",
+    "columns": {
+      "rating": "Įvertinimas",
+      "reference": "Nuoroda",
+      "customerNote": "Kliento pastaba"
+    }
+  }
+}

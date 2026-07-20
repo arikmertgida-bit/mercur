@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { Badge, Button, Container, Heading, Input, Label, Text } from "@medusajs/ui"
+import i18n from "i18next"
 import type { RouteConfig } from "@mercurjs/dashboard-sdk"
 
 import { useAdminConversations, AdminConversationDTO } from "../../hooks/api/messaging"
@@ -8,11 +9,12 @@ import { useAdminMessagingSSE } from "../../hooks/api/use-admin-messaging-sse"
 import { useMessagingLayout } from "../../hooks/use-messaging-layout"
 
 export const config: RouteConfig = {
-  label: "Messages",
+  label: "domain",
+  translationNs: "messages",
 }
 
 export const handle = {
-  breadcrumb: () => "Messages",
+  breadcrumb: () => i18n.t("messages.domain"),
 }
 
 const formatDate = (dateStr: string | null): string => {

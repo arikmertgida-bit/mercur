@@ -1,0 +1,131 @@
+{
+  "productImportExport": {
+    "import": "Importuj",
+    "export": "Eksportuj",
+    "done": "Gotowe",
+    "importHeader": "Importuj produkty",
+    "importDescription": "Prześlij plik CSV, aby zaimportować produkty do swojego sklepu.",
+    "importHint": "Prześlij plik CSV ze swoimi produktami. Możesz",
+    "downloadTemplate": "pobrać szablon",
+    "uploadLabel": "Prześlij plik CSV",
+    "uploadHint": "Obsługiwane są tylko pliki .csv",
+    "importingActivity": "Importowanie produktów...",
+    "importSuccessToast": "Pomyślnie zaimportowano {{count}} produkt(y/ów).",
+    "importCompleteTitle": "Import zakończony",
+    "importCompleteDescription": "Pomyślnie utworzono {{count}} produkt(y/ów).",
+    "exportHeader": "Eksportuj produkty",
+    "exportDescription": "Eksportuj swoje produkty jako plik CSV.",
+    "exportBody": "Spowoduje to wyeksportowanie wszystkich produktów do pliku CSV. Pobieranie rozpocznie się automatycznie, gdy eksport będzie gotowy.",
+    "exportSuccessToast": "Produkty zostały pomyślnie wyeksportowane."
+  },
+  "customFields": {
+    "title": "Pola niestandardowe",
+    "description": "Zarządzaj swoimi polami niestandardowymi i konfiguracjami",
+    "noFields": "Nie skonfigurowano jeszcze żadnych pól niestandardowych"
+  },
+  "messenger": {
+    "supportTeam": "Zespół wsparcia",
+    "support": "Wsparcie",
+    "adminChatTitle": "Czat z administratorem",
+    "adminChatDescription": "Wyślij wiadomość do zespołu wsparcia marketplace i przeglądaj historię rozmów.",
+    "unknown": "Nieznany",
+    "imageMessage": "Zdjęcie",
+    "noMessages": "Brak wiadomości",
+    "startConversation": "Rozpocznij rozmowę",
+    "seen": "Wyświetlono",
+    "sent": "Wysłano",
+    "notificationTitle": "{{senderName}} wysłał(a) Ci wiadomość",
+    "notificationBody": "{{preview}}",
+    "image": "Zdjęcie",
+    "close": "Zamknij",
+    "noConversations": "Brak rozmów",
+    "participants": "uczestnicy",
+    "searchConversations": "Szukaj rozmów...",
+    "typeMessage": "Wpisz wiadomość...",
+    "selectConversation": "Wybierz rozmowę",
+    "startMessaging": "Wybierz rozmowę, aby rozpocząć czat",
+    "connected": "Połączono",
+    "disconnected": "Rozłączono"
+  },
+  "messages": {
+    "domain": "Wiadomości",
+    "management": "Zespół wsparcia",
+    "helpSupport": "Zespół wsparcia",
+    "me": "Ja",
+    "productQuestion": "Pytanie o produkt",
+    "storeQuestion": "Pytanie o sklep",
+    "imageUploadFailed": "Nie udało się przesłać zdjęcia",
+    "connectionLost": "Utracono połączenie. Ponowne łączenie...",
+    "delete": "Usuń",
+    "deleteForEveryone": "Usuń dla wszystkich",
+    "close": "Zamknij",
+    "customer": "Klient",
+    "store": "Sklep",
+    "back": "Wstecz",
+    "participant": "uczestnik",
+    "noMessages": "Brak wiadomości",
+    "chatOptions": "Opcje czatu",
+    "deleteOnlyForMe": "Usuń tylko dla mnie",
+    "storeContext": "Pytanie o sklep",
+    "product": "Produkt",
+    "deleteConfirmTitle": "Usuń wiadomość",
+    "deleteConfirmDesc": "Czy na pewno chcesz usunąć tę wiadomość?",
+    "error": "Nie udało się pobrać informacji o użytkowniku.",
+    "supportName": "Zespół wsparcia",
+    "supportSubject": "Czat wsparcia",
+    "emptyState": "Brak wiadomości. Rozpocznij rozmowę.",
+    "viewPromotion": "Zobacz promocję",
+    "imageAlt": "Zdjęcie",
+    "placeholder": "Wpisz wiadomość...",
+    "send": "Wyślij wiadomość",
+    "attachImage": "Załącz zdjęcie",
+    "removeAttachment": "Usuń załączone zdjęcie",
+    "viewImage": "Zobacz zdjęcie w pełnym rozmiarze",
+    "pendingImageAlt": "Zdjęcie do wysłania",
+    "deletedMessage": "[Ta wiadomość została usunięta]"
+  },
+  "requests": {
+    "domain": "Wnioski",
+    "status": {
+      "draft": "Szkic",
+      "pending": "Oczekujący",
+      "accepted": "Zaakceptowany",
+      "rejected": "Odrzucony"
+    },
+    "filters": {
+      "status": "Status"
+    },
+    "columns": {
+      "name": "Nazwa"
+    },
+    "categories": {
+      "navLabel": "Kategorie",
+      "heading": "Wnioski o kategorie",
+      "noRecords": "Nie znaleziono wniosków o kategorie"
+    },
+    "collections": {
+      "navLabel": "Kolekcje",
+      "heading": "Wnioski o kolekcje",
+      "noRecords": "Nie znaleziono wniosków o kolekcje"
+    },
+    "tags": {
+      "navLabel": "Tagi",
+      "heading": "Wnioski o tagi",
+      "noRecords": "Nie znaleziono wniosków o tagi"
+    },
+    "types": {
+      "navLabel": "Typy",
+      "heading": "Wnioski o typy",
+      "noRecords": "Nie znaleziono wniosków o typy"
+    }
+  },
+  "reviews": {
+    "domain": "Recenzje",
+    "noRecords": "Nie znaleziono recenzji",
+    "columns": {
+      "rating": "Ocena",
+      "reference": "Numer referencyjny",
+      "customerNote": "Notatka klienta"
+    }
+  }
+}

@@ -1,0 +1,227 @@
+{
+  "customFields": {
+    "title": "ฟิลด์ที่กำหนดเอง",
+    "description": "จัดการฟิลด์ที่กำหนดเองและการตั้งค่าของคุณ",
+    "noFields": "ยังไม่มีการตั้งค่าฟิลด์ที่กำหนดเอง"
+  },
+  "actions": {
+    "continue": "ดำเนินการต่อ",
+    "cancel": "ยกเลิก",
+    "delete": "ลบ"
+  },
+  "productReports": {
+    "domain": "รายงานสินค้า",
+    "subtitle": "สินค้าที่ถูกลูกค้าติดธงเพื่อตรวจสอบ",
+    "filterAll": "สถานะทั้งหมด",
+    "columns": {
+      "product": "สินค้า",
+      "reporter": "ผู้รายงาน",
+      "reason": "เหตุผล",
+      "status": "สถานะ"
+    },
+    "status": {
+      "pending": "รอดำเนินการ",
+      "resolved": "แก้ไขแล้ว",
+      "dismissed": "ปฏิเสธแล้ว"
+    },
+    "reasons": {
+      "inaccurate_product_details": "ข้อมูลสินค้าไม่ถูกต้อง",
+      "pricing_irregularities": "ความผิดปกติด้านราคา",
+      "prohibited_item": "สินค้าต้องห้าม",
+      "counterfeit_trademark": "สินค้าปลอม / ละเมิดเครื่องหมายการค้า",
+      "incorrect_categorization": "การจัดหมวดหมู่ไม่ถูกต้อง",
+      "inappropriate_media": "สื่อที่ไม่เหมาะสม",
+      "dmca_violation": "การละเมิด DMCA",
+      "seller_complaint": "ข้อร้องเรียนเกี่ยวกับผู้ขาย",
+      "other": "อื่นๆ"
+    },
+    "actions": {
+      "resolve": "ทำเครื่องหมายว่าแก้ไขแล้ว",
+      "dismiss": "ปฏิเสธ"
+    },
+    "resolvePrompt": {
+      "title": "ทำเครื่องหมายรายงานว่าแก้ไขแล้วหรือไม่?",
+      "description": "รายงานนี้จะถูกทำเครื่องหมายว่าแก้ไขแล้ว และลบออกจากคิวที่รอดำเนินการ"
+    },
+    "dismissPrompt": {
+      "title": "ปฏิเสธรายงานนี้หรือไม่?",
+      "description": "รายงานนี้จะถูกทำเครื่องหมายว่าปฏิเสธแล้ว และลบออกจากคิวที่รอดำเนินการ"
+    },
+    "deletePrompt": {
+      "title": "ลบรายงานนี้หรือไม่?",
+      "description": "การดำเนินการนี้จะลบรายงานอย่างถาวร ไม่สามารถยกเลิกการดำเนินการนี้ได้"
+    },
+    "updateSuccess": "อัปเดตรายงานแล้ว",
+    "updateError": "ไม่สามารถอัปเดตรายงานได้",
+    "deleteSuccess": "ลบรายงานแล้ว",
+    "deleteError": "ไม่สามารถลบรายงานได้"
+  },
+  "wishlistModeration": {
+    "domain": "รายการโปรด",
+    "subtitle": "รายการโปรดของลูกค้า เพื่อวัตถุประสงค์ในการตรวจสอบ",
+    "noProducts": "ไม่มีสินค้า",
+    "columns": {
+      "customer": "ลูกค้า",
+      "products": "สินค้า",
+      "created": "สร้างเมื่อ"
+    },
+    "deletePrompt": {
+      "title": "ลบรายการโปรดนี้หรือไม่?",
+      "description": "การดำเนินการนี้จะลบรายการโปรดของลูกค้าและรายการทั้งหมดอย่างถาวร ไม่สามารถยกเลิกการดำเนินการนี้ได้"
+    },
+    "deleteSuccess": "ลบรายการโปรดแล้ว",
+    "deleteError": "ไม่สามารถลบรายการโปรดได้"
+  },
+  "reportedImages": {
+    "domain": "รูปภาพที่ถูกรายงาน",
+    "subtitle": "ตรวจสอบรูปภาพที่ลูกค้าติดธงว่าไม่เหมาะสม",
+    "filterAll": "สถานะทั้งหมด",
+    "imageRemoved": "ลบรูปภาพแล้ว",
+    "columns": {
+      "image": "รูปภาพ",
+      "reporter": "ผู้รายงาน",
+      "reason": "เหตุผล",
+      "status": "สถานะ"
+    },
+    "status": {
+      "pending": "รอดำเนินการ",
+      "resolved": "แก้ไขแล้ว"
+    },
+    "actions": {
+      "remove": "ลบรูปภาพ",
+      "dismiss": "ปฏิเสธรายงาน"
+    },
+    "removePrompt": {
+      "title": "ลบรูปภาพนี้หรือไม่?",
+      "description": "รูปภาพจะถูกลบออกจากรีวิวอย่างถาวร ไม่สามารถยกเลิกการดำเนินการนี้ได้"
+    },
+    "dismissPrompt": {
+      "title": "ปฏิเสธรายงานนี้หรือไม่?",
+      "description": "รูปภาพจะยังคงเผยแพร่อยู่ และรายงานจะถูกทำเครื่องหมายว่าแก้ไขแล้ว"
+    },
+    "resolveSuccess": "แก้ไขรายงานแล้ว",
+    "resolveError": "ไม่สามารถแก้ไขรายงานได้"
+  },
+  "messenger": {
+    "searchConversations": "ค้นหาการสนทนา...",
+    "noConversations": "ยังไม่มีการสนทนา",
+    "startConversation": "เริ่มการสนทนา",
+    "selectConversation": "เลือกการสนทนา",
+    "startMessaging": "เลือกการสนทนาเพื่อเริ่มส่งข้อความ",
+    "typeMessage": "พิมพ์ข้อความ...",
+    "seen": "เห็นแล้ว",
+    "sent": "ส่งแล้ว",
+    "notificationTitle": "{{senderName}} ส่งข้อความถึงคุณ",
+    "notificationBody": "{{preview}}",
+    "image": "รูปภาพ",
+    "support": "การสนับสนุน",
+    "direct": "ข้อความส่วนตัว",
+    "unknown": "ไม่ทราบ",
+    "supportTeam": "ทีมสนับสนุน",
+    "connected": "เชื่อมต่อแล้ว",
+    "disconnected": "ตัดการเชื่อมต่อแล้ว",
+    "conversationOptions": "ตัวเลือกการสนทนา"
+  },
+  "messages": {
+    "domain": "ข้อความ",
+    "product": "สินค้า",
+    "store": "ร้านค้า",
+    "delete": "ลบ",
+    "deleteForEveryone": "ลบสำหรับทุกคน",
+    "close": "ปิด",
+    "connectionLost": "การเชื่อมต่อขาดหาย กำลังเชื่อมต่อใหม่...",
+    "imageUploadFailed": "อัปโหลดรูปภาพไม่สำเร็จ",
+    "deleteConfirmTitle": "ลบข้อความ",
+    "deleteConfirmDesc": "คุณแน่ใจหรือไม่ว่าต้องการลบข้อความนี้?",
+    "productQuestion": "คำถามเกี่ยวกับสินค้า",
+    "storeQuestion": "คำถามเกี่ยวกับร้านค้า",
+    "customerMessage": "ข้อความจากลูกค้า",
+    "sellerMessage": "ข้อความจากผู้ขาย",
+    "directMessage": "ข้อความส่วนตัว",
+    "storeContext": "คำถามเกี่ยวกับร้านค้า",
+    "back": "ย้อนกลับ",
+    "failedToGetUserInfo": "ไม่สามารถดึงข้อมูลผู้ใช้ได้",
+    "send": "ส่งข้อความ",
+    "attachImage": "แนบรูปภาพ",
+    "removeAttachment": "ลบรูปภาพที่แนบ",
+    "viewImage": "ดูรูปภาพขนาดเต็ม",
+    "pendingImageAlt": "รูปภาพที่จะส่ง",
+    "imageAlt": "รูปภาพ"
+  },
+  "requests": {
+    "domain": "คำขอ",
+    "status": {
+      "draft": "ฉบับร่าง",
+      "pending": "รอดำเนินการ",
+      "accepted": "อนุมัติแล้ว",
+      "rejected": "ปฏิเสธแล้ว"
+    },
+    "filters": {
+      "status": "สถานะ"
+    },
+    "columns": {
+      "name": "ชื่อ"
+    },
+    "categories": {
+      "navLabel": "หมวดหมู่",
+      "heading": "คำขอหมวดหมู่",
+      "noRecords": "ไม่พบคำขอหมวดหมู่"
+    },
+    "collections": {
+      "navLabel": "คอลเลกชัน",
+      "heading": "คำขอคอลเลกชัน",
+      "noRecords": "ไม่พบคำขอคอลเลกชัน"
+    },
+    "tags": {
+      "navLabel": "แท็ก",
+      "heading": "คำขอแท็ก",
+      "noRecords": "ไม่พบคำขอแท็ก"
+    },
+    "types": {
+      "navLabel": "ประเภท",
+      "heading": "คำขอประเภท",
+      "noRecords": "ไม่พบคำขอประเภท"
+    },
+    "typeLabels": {
+      "product_category": "หมวดหมู่",
+      "product_collection": "คอลเลกชัน",
+      "product_tag": "แท็ก",
+      "product_type": "ประเภท"
+    },
+    "fields": {
+      "name": "ชื่อ",
+      "handle": "ตัวระบุ",
+      "description": "คำอธิบาย",
+      "active": "ใช้งาน",
+      "internal": "ภายใน",
+      "title": "ชื่อเรื่อง",
+      "value": "ค่า"
+    },
+    "values": {
+      "yes": "ใช่",
+      "no": "ไม่ใช่"
+    },
+    "detail": {
+      "pendingReview": "รอการตรวจสอบ",
+      "accept": "ยอมรับ",
+      "reject": "ปฏิเสธ",
+      "acceptPromptTitle": "ยอมรับคำขอ",
+      "acceptPromptDescription": "คุณแน่ใจหรือไม่ว่าต้องการยอมรับคำขอนี้? การดำเนินการนี้จะสร้างเอนทิตีดังกล่าว",
+      "rejectPromptTitle": "ปฏิเสธคำขอ",
+      "rejectPromptDescription": "คุณแน่ใจหรือไม่ว่าต้องการปฏิเสธคำขอนี้? ไม่สามารถยกเลิกการดำเนินการนี้ได้",
+      "acceptSuccess": "ยอมรับคำขอแล้ว",
+      "rejectSuccess": "ปฏิเสธคำขอแล้ว",
+      "submitter": "ผู้ส่งคำขอ",
+      "reviewer": "ผู้ตรวจสอบ"
+    }
+  },
+  "reviews": {
+    "domain": "รีวิว",
+    "noRecords": "ไม่พบรีวิว",
+    "columns": {
+      "rating": "คะแนน",
+      "reference": "หมายเลขอ้างอิง",
+      "customerNote": "หมายเหตุลูกค้า"
+    }
+  }
+}

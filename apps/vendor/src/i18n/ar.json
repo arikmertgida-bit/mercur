@@ -1,0 +1,131 @@
+{
+  "productImportExport": {
+    "import": "استيراد",
+    "export": "تصدير",
+    "done": "تم",
+    "importHeader": "استيراد المنتجات",
+    "importDescription": "قم بتحميل ملف CSV لاستيراد المنتجات إلى متجرك.",
+    "importHint": "قم بتحميل ملف CSV يحتوي على منتجاتك. يمكنك",
+    "downloadTemplate": "تنزيل القالب",
+    "uploadLabel": "تحميل ملف CSV",
+    "uploadHint": "يتم دعم ملفات .csv فقط",
+    "importingActivity": "جارٍ استيراد المنتجات...",
+    "importSuccessToast": "تم استيراد {{count}} منتج بنجاح.",
+    "importCompleteTitle": "اكتمل الاستيراد",
+    "importCompleteDescription": "تم إنشاء {{count}} منتج بنجاح.",
+    "exportHeader": "تصدير المنتجات",
+    "exportDescription": "قم بتصدير منتجاتك كملف CSV.",
+    "exportBody": "سيؤدي هذا إلى تصدير جميع منتجاتك إلى ملف CSV. سيبدأ التنزيل تلقائيًا عند اكتمال التصدير.",
+    "exportSuccessToast": "تم تصدير المنتجات بنجاح."
+  },
+  "customFields": {
+    "title": "الحقول المخصصة",
+    "description": "إدارة الحقول المخصصة والإعدادات الخاصة بك",
+    "noFields": "لم يتم تكوين أي حقول مخصصة بعد"
+  },
+  "messenger": {
+    "supportTeam": "فريق الدعم",
+    "support": "الدعم",
+    "adminChatTitle": "الدردشة مع المسؤول",
+    "adminChatDescription": "أرسل رسالة إلى فريق إدارة السوق واطّلع على سجل محادثاتك.",
+    "unknown": "غير معروف",
+    "imageMessage": "صورة",
+    "noMessages": "لا توجد رسائل بعد",
+    "startConversation": "ابدأ المحادثة",
+    "seen": "تمت المشاهدة",
+    "sent": "تم الإرسال",
+    "notificationTitle": "أرسل لك {{senderName}} رسالة",
+    "notificationBody": "{{preview}}",
+    "image": "صورة",
+    "close": "إغلاق",
+    "noConversations": "لا توجد محادثات بعد",
+    "participants": "المشاركون",
+    "searchConversations": "البحث في المحادثات...",
+    "typeMessage": "اكتب رسالة...",
+    "selectConversation": "اختر محادثة",
+    "startMessaging": "اختر محادثة لبدء المراسلة",
+    "connected": "متصل",
+    "disconnected": "غير متصل"
+  },
+  "messages": {
+    "domain": "الرسائل",
+    "management": "فريق الدعم",
+    "helpSupport": "فريق الدعم",
+    "me": "أنا",
+    "productQuestion": "سؤال عن المنتج",
+    "storeQuestion": "سؤال عن المتجر",
+    "imageUploadFailed": "فشل تحميل الصورة",
+    "connectionLost": "انقطع الاتصال. جارٍ إعادة الاتصال...",
+    "delete": "حذف",
+    "deleteForEveryone": "حذف للجميع",
+    "close": "إغلاق",
+    "customer": "العميل",
+    "store": "المتجر",
+    "back": "رجوع",
+    "participant": "مشارك",
+    "noMessages": "لا توجد رسائل",
+    "chatOptions": "خيارات الدردشة",
+    "deleteOnlyForMe": "حذف لي فقط",
+    "storeContext": "سؤال عن المتجر",
+    "product": "المنتج",
+    "deleteConfirmTitle": "حذف الرسالة",
+    "deleteConfirmDesc": "هل أنت متأكد أنك تريد حذف هذه الرسالة؟",
+    "error": "تعذّر الحصول على معلومات المستخدم.",
+    "supportName": "فريق الدعم",
+    "supportSubject": "دردشة الدعم",
+    "emptyState": "لا توجد رسائل بعد. ابدأ المحادثة.",
+    "viewPromotion": "عرض العرض الترويجي",
+    "imageAlt": "صورة",
+    "placeholder": "اكتب رسالة...",
+    "send": "إرسال الرسالة",
+    "attachImage": "إرفاق صورة",
+    "removeAttachment": "إزالة الصورة المرفقة",
+    "viewImage": "عرض الصورة بالحجم الكامل",
+    "pendingImageAlt": "الصورة المراد إرسالها",
+    "deletedMessage": "[تم حذف هذه الرسالة]"
+  },
+  "requests": {
+    "domain": "الطلبات",
+    "status": {
+      "draft": "مسودة",
+      "pending": "قيد الانتظار",
+      "accepted": "مقبول",
+      "rejected": "مرفوض"
+    },
+    "filters": {
+      "status": "الحالة"
+    },
+    "columns": {
+      "name": "الاسم"
+    },
+    "categories": {
+      "navLabel": "الفئات",
+      "heading": "طلبات الفئات",
+      "noRecords": "لم يتم العثور على طلبات فئات"
+    },
+    "collections": {
+      "navLabel": "المجموعات",
+      "heading": "طلبات المجموعات",
+      "noRecords": "لم يتم العثور على طلبات مجموعات"
+    },
+    "tags": {
+      "navLabel": "الوسوم",
+      "heading": "طلبات الوسوم",
+      "noRecords": "لم يتم العثور على طلبات وسوم"
+    },
+    "types": {
+      "navLabel": "الأنواع",
+      "heading": "طلبات الأنواع",
+      "noRecords": "لم يتم العثور على طلبات أنواع"
+    }
+  },
+  "reviews": {
+    "domain": "التقييمات",
+    "noRecords": "لم يتم العثور على تقييمات",
+    "columns": {
+      "rating": "التقييم",
+      "reference": "المرجع",
+      "customerNote": "ملاحظة العميل"
+    }
+  }
+}

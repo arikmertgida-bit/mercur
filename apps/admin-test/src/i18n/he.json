@@ -1,0 +1,227 @@
+{
+  "customFields": {
+    "title": "שדות מותאמים אישית",
+    "description": "נהל את השדות המותאמים אישית ואת ההגדרות שלך",
+    "noFields": "עדיין לא הוגדרו שדות מותאמים אישית"
+  },
+  "actions": {
+    "continue": "המשך",
+    "cancel": "ביטול",
+    "delete": "מחק"
+  },
+  "productReports": {
+    "domain": "דיווחי מוצרים",
+    "subtitle": "מוצרים שסומנו על ידי לקוחות לבדיקה",
+    "filterAll": "כל הסטטוסים",
+    "columns": {
+      "product": "מוצר",
+      "reporter": "דווח על ידי",
+      "reason": "סיבה",
+      "status": "סטטוס"
+    },
+    "status": {
+      "pending": "ממתין",
+      "resolved": "טופל",
+      "dismissed": "נדחה"
+    },
+    "reasons": {
+      "inaccurate_product_details": "פרטי מוצר לא מדויקים",
+      "pricing_irregularities": "אי-סדרים בתמחור",
+      "prohibited_item": "פריט אסור",
+      "counterfeit_trademark": "זיוף / הפרת סימן מסחרי",
+      "incorrect_categorization": "קטגוריזציה שגויה",
+      "inappropriate_media": "תוכן מדיה לא הולם",
+      "dmca_violation": "הפרת DMCA",
+      "seller_complaint": "תלונה על המוכר",
+      "other": "אחר"
+    },
+    "actions": {
+      "resolve": "סמן כטופל",
+      "dismiss": "דחה"
+    },
+    "resolvePrompt": {
+      "title": "לסמן את הדיווח כטופל?",
+      "description": "דיווח זה יסומן כטופל ויוסר מתור הממתינים."
+    },
+    "dismissPrompt": {
+      "title": "לדחות דיווח זה?",
+      "description": "דיווח זה יסומן כנדחה ויוסר מתור הממתינים."
+    },
+    "deletePrompt": {
+      "title": "למחוק דיווח זה?",
+      "description": "פעולה זו תמחק את הדיווח לצמיתות. לא ניתן לבטל פעולה זו."
+    },
+    "updateSuccess": "הדיווח עודכן",
+    "updateError": "עדכון הדיווח נכשל",
+    "deleteSuccess": "הדיווח נמחק",
+    "deleteError": "מחיקת הדיווח נכשלה"
+  },
+  "wishlistModeration": {
+    "domain": "רשימות משאלות",
+    "subtitle": "רשימות משאלות של לקוחות, למטרות פיקוח",
+    "noProducts": "אין מוצרים",
+    "columns": {
+      "customer": "לקוח",
+      "products": "מוצרים",
+      "created": "נוצרה"
+    },
+    "deletePrompt": {
+      "title": "למחוק רשימת משאלות זו?",
+      "description": "פעולה זו תמחק לצמיתות את רשימת המשאלות של הלקוח ואת כל הפריטים בה. לא ניתן לבטל פעולה זו."
+    },
+    "deleteSuccess": "רשימת המשאלות נמחקה",
+    "deleteError": "מחיקת רשימת המשאלות נכשלה"
+  },
+  "reportedImages": {
+    "domain": "תמונות שדווחו",
+    "subtitle": "בדוק תמונות שסומנו על ידי לקוחות כלא הולמות",
+    "filterAll": "כל הסטטוסים",
+    "imageRemoved": "התמונה הוסרה",
+    "columns": {
+      "image": "תמונה",
+      "reporter": "דווחה על ידי",
+      "reason": "סיבה",
+      "status": "סטטוס"
+    },
+    "status": {
+      "pending": "ממתין",
+      "resolved": "טופל"
+    },
+    "actions": {
+      "remove": "הסר תמונה",
+      "dismiss": "דחה דיווח"
+    },
+    "removePrompt": {
+      "title": "להסיר תמונה זו?",
+      "description": "התמונה תימחק לצמיתות מהביקורת. לא ניתן לבטל פעולה זו."
+    },
+    "dismissPrompt": {
+      "title": "לדחות דיווח זה?",
+      "description": "התמונה תישאר מפורסמת והדיווח יסומן כטופל."
+    },
+    "resolveSuccess": "הדיווח טופל",
+    "resolveError": "טיפול בדיווח נכשל"
+  },
+  "messenger": {
+    "searchConversations": "חיפוש שיחות...",
+    "noConversations": "אין עדיין שיחות",
+    "startConversation": "התחל שיחה",
+    "selectConversation": "בחר שיחה",
+    "startMessaging": "בחר שיחה כדי להתחיל להתכתב",
+    "typeMessage": "הקלד הודעה...",
+    "seen": "נצפה",
+    "sent": "נשלח",
+    "notificationTitle": "{{senderName}} שלח/ה לך הודעה",
+    "notificationBody": "{{preview}}",
+    "image": "תמונה",
+    "support": "תמיכה",
+    "direct": "ישיר",
+    "unknown": "לא ידוע",
+    "supportTeam": "צוות התמיכה",
+    "connected": "מחובר",
+    "disconnected": "מנותק",
+    "conversationOptions": "אפשרויות שיחה"
+  },
+  "messages": {
+    "domain": "הודעות",
+    "product": "מוצר",
+    "store": "חנות",
+    "delete": "מחק",
+    "deleteForEveryone": "מחק עבור כולם",
+    "close": "סגור",
+    "connectionLost": "החיבור אבד. מתחבר מחדש...",
+    "imageUploadFailed": "העלאת התמונה נכשלה",
+    "deleteConfirmTitle": "מחיקת הודעה",
+    "deleteConfirmDesc": "האם אתה בטוח שברצונך למחוק הודעה זו?",
+    "productQuestion": "שאלה על מוצר",
+    "storeQuestion": "שאלה על החנות",
+    "customerMessage": "הודעה מלקוח",
+    "sellerMessage": "הודעה ממוכר",
+    "directMessage": "הודעה ישירה",
+    "storeContext": "שאלה על החנות",
+    "back": "חזרה",
+    "failedToGetUserInfo": "לא ניתן היה לאחזר את פרטי המשתמש.",
+    "send": "שלח הודעה",
+    "attachImage": "צרף תמונה",
+    "removeAttachment": "הסר תמונה מצורפת",
+    "viewImage": "צפה בתמונה בגודל מלא",
+    "pendingImageAlt": "תמונה לשליחה",
+    "imageAlt": "תמונה"
+  },
+  "requests": {
+    "domain": "בקשות",
+    "status": {
+      "draft": "טיוטה",
+      "pending": "ממתין",
+      "accepted": "אושר",
+      "rejected": "נדחה"
+    },
+    "filters": {
+      "status": "סטטוס"
+    },
+    "columns": {
+      "name": "שם"
+    },
+    "categories": {
+      "navLabel": "קטגוריות",
+      "heading": "בקשות קטגוריה",
+      "noRecords": "לא נמצאו בקשות קטגוריה"
+    },
+    "collections": {
+      "navLabel": "אוספים",
+      "heading": "בקשות אוסף",
+      "noRecords": "לא נמצאו בקשות אוסף"
+    },
+    "tags": {
+      "navLabel": "תגיות",
+      "heading": "בקשות תגית",
+      "noRecords": "לא נמצאו בקשות תגית"
+    },
+    "types": {
+      "navLabel": "סוגים",
+      "heading": "בקשות סוג",
+      "noRecords": "לא נמצאו בקשות סוג"
+    },
+    "typeLabels": {
+      "product_category": "קטגוריה",
+      "product_collection": "אוסף",
+      "product_tag": "תגית",
+      "product_type": "סוג"
+    },
+    "fields": {
+      "name": "שם",
+      "handle": "מזהה",
+      "description": "תיאור",
+      "active": "פעיל",
+      "internal": "פנימי",
+      "title": "כותרת",
+      "value": "ערך"
+    },
+    "values": {
+      "yes": "כן",
+      "no": "לא"
+    },
+    "detail": {
+      "pendingReview": "ממתין לבדיקה",
+      "accept": "אישור",
+      "reject": "דחייה",
+      "acceptPromptTitle": "אישור הבקשה",
+      "acceptPromptDescription": "האם אתה בטוח שברצונך לאשר בקשה זו? פעולה זו תיצור את הישות.",
+      "rejectPromptTitle": "דחיית הבקשה",
+      "rejectPromptDescription": "האם אתה בטוח שברצונך לדחות בקשה זו? לא ניתן לבטל פעולה זו.",
+      "acceptSuccess": "הבקשה אושרה",
+      "rejectSuccess": "הבקשה נדחתה",
+      "submitter": "המגיש",
+      "reviewer": "הבודק"
+    }
+  },
+  "reviews": {
+    "domain": "ביקורות",
+    "noRecords": "לא נמצאו ביקורות",
+    "columns": {
+      "rating": "דירוג",
+      "reference": "מזהה",
+      "customerNote": "הערת לקוח"
+    }
+  }
+}

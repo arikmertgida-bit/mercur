@@ -1,0 +1,227 @@
+{
+  "customFields": {
+    "title": "فیلدهای سفارشی",
+    "description": "فیلدهای سفارشی و تنظیمات خود را مدیریت کنید",
+    "noFields": "هنوز هیچ فیلد سفارشی پیکربندی نشده است"
+  },
+  "actions": {
+    "continue": "ادامه",
+    "cancel": "لغو",
+    "delete": "حذف"
+  },
+  "productReports": {
+    "domain": "گزارش‌های محصول",
+    "subtitle": "محصولاتی که مشتریان برای بررسی علامت‌گذاری کرده‌اند",
+    "filterAll": "همه وضعیت‌ها",
+    "columns": {
+      "product": "محصول",
+      "reporter": "گزارش‌دهنده",
+      "reason": "دلیل",
+      "status": "وضعیت"
+    },
+    "status": {
+      "pending": "در انتظار",
+      "resolved": "حل شده",
+      "dismissed": "رد شده"
+    },
+    "reasons": {
+      "inaccurate_product_details": "جزئیات نادرست محصول",
+      "pricing_irregularities": "بی‌نظمی در قیمت‌گذاری",
+      "prohibited_item": "کالای ممنوعه",
+      "counterfeit_trademark": "تقلبی / نقض علامت تجاری",
+      "incorrect_categorization": "دسته‌بندی نادرست",
+      "inappropriate_media": "محتوای رسانه‌ای نامناسب",
+      "dmca_violation": "نقض DMCA",
+      "seller_complaint": "شکایت درباره فروشنده",
+      "other": "سایر"
+    },
+    "actions": {
+      "resolve": "علامت‌گذاری به‌عنوان حل‌شده",
+      "dismiss": "رد کردن"
+    },
+    "resolvePrompt": {
+      "title": "گزارش به‌عنوان حل‌شده علامت‌گذاری شود؟",
+      "description": "این گزارش به‌عنوان حل‌شده علامت‌گذاری شده و از صف در انتظار حذف می‌شود."
+    },
+    "dismissPrompt": {
+      "title": "این گزارش رد شود؟",
+      "description": "این گزارش به‌عنوان رد‌شده علامت‌گذاری شده و از صف در انتظار حذف می‌شود."
+    },
+    "deletePrompt": {
+      "title": "این گزارش حذف شود؟",
+      "description": "این کار گزارش را برای همیشه حذف می‌کند. این عملیات قابل بازگشت نیست."
+    },
+    "updateSuccess": "گزارش به‌روزرسانی شد",
+    "updateError": "به‌روزرسانی گزارش ناموفق بود",
+    "deleteSuccess": "گزارش حذف شد",
+    "deleteError": "حذف گزارش ناموفق بود"
+  },
+  "wishlistModeration": {
+    "domain": "لیست‌های علاقه‌مندی",
+    "subtitle": "لیست‌های علاقه‌مندی مشتریان، برای اهداف نظارتی",
+    "noProducts": "بدون محصول",
+    "columns": {
+      "customer": "مشتری",
+      "products": "محصولات",
+      "created": "تاریخ ایجاد"
+    },
+    "deletePrompt": {
+      "title": "این لیست علاقه‌مندی حذف شود؟",
+      "description": "این کار لیست علاقه‌مندی مشتری و همه موارد آن را برای همیشه حذف می‌کند. این عملیات قابل بازگشت نیست."
+    },
+    "deleteSuccess": "لیست علاقه‌مندی حذف شد",
+    "deleteError": "حذف لیست علاقه‌مندی ناموفق بود"
+  },
+  "reportedImages": {
+    "domain": "تصاویر گزارش‌شده",
+    "subtitle": "تصاویری که مشتریان به‌عنوان نامناسب گزارش کرده‌اند را بررسی کنید",
+    "filterAll": "همه وضعیت‌ها",
+    "imageRemoved": "تصویر حذف شد",
+    "columns": {
+      "image": "تصویر",
+      "reporter": "گزارش‌دهنده",
+      "reason": "دلیل",
+      "status": "وضعیت"
+    },
+    "status": {
+      "pending": "در انتظار",
+      "resolved": "حل شده"
+    },
+    "actions": {
+      "remove": "حذف تصویر",
+      "dismiss": "رد کردن گزارش"
+    },
+    "removePrompt": {
+      "title": "این تصویر حذف شود؟",
+      "description": "تصویر برای همیشه از نظر حذف خواهد شد. این عملیات قابل بازگشت نیست."
+    },
+    "dismissPrompt": {
+      "title": "این گزارش رد شود؟",
+      "description": "تصویر منتشرشده باقی می‌ماند و گزارش به‌عنوان حل‌شده علامت‌گذاری می‌شود."
+    },
+    "resolveSuccess": "گزارش حل شد",
+    "resolveError": "حل گزارش ناموفق بود"
+  },
+  "messenger": {
+    "searchConversations": "جستجوی گفتگوها...",
+    "noConversations": "هنوز گفتگویی وجود ندارد",
+    "startConversation": "شروع یک گفتگو",
+    "selectConversation": "یک گفتگو را انتخاب کنید",
+    "startMessaging": "برای شروع پیام‌رسانی، یک گفتگو انتخاب کنید",
+    "typeMessage": "پیامی بنویسید...",
+    "seen": "دیده شد",
+    "sent": "ارسال شد",
+    "notificationTitle": "{{senderName}} برای شما پیامی ارسال کرد",
+    "notificationBody": "{{preview}}",
+    "image": "تصویر",
+    "support": "پشتیبانی",
+    "direct": "مستقیم",
+    "unknown": "نامشخص",
+    "supportTeam": "تیم پشتیبانی",
+    "connected": "متصل",
+    "disconnected": "قطع شد",
+    "conversationOptions": "گزینه‌های گفتگو"
+  },
+  "messages": {
+    "domain": "پیام‌ها",
+    "product": "محصول",
+    "store": "فروشگاه",
+    "delete": "حذف",
+    "deleteForEveryone": "حذف برای همه",
+    "close": "بستن",
+    "connectionLost": "اتصال قطع شد. در حال اتصال مجدد...",
+    "imageUploadFailed": "بارگذاری تصویر ناموفق بود",
+    "deleteConfirmTitle": "حذف پیام",
+    "deleteConfirmDesc": "آیا مطمئن هستید که می‌خواهید این پیام را حذف کنید؟",
+    "productQuestion": "سؤال درباره محصول",
+    "storeQuestion": "سؤال درباره فروشگاه",
+    "customerMessage": "پیام از مشتری",
+    "sellerMessage": "پیام از فروشنده",
+    "directMessage": "پیام مستقیم",
+    "storeContext": "سؤال درباره فروشگاه",
+    "back": "بازگشت",
+    "failedToGetUserInfo": "دریافت اطلاعات کاربر ممکن نشد.",
+    "send": "ارسال پیام",
+    "attachImage": "پیوست تصویر",
+    "removeAttachment": "حذف تصویر پیوست‌شده",
+    "viewImage": "مشاهده تصویر در اندازه کامل",
+    "pendingImageAlt": "تصویر در حال ارسال",
+    "imageAlt": "تصویر"
+  },
+  "requests": {
+    "domain": "درخواست‌ها",
+    "status": {
+      "draft": "پیش‌نویس",
+      "pending": "در انتظار",
+      "accepted": "پذیرفته شد",
+      "rejected": "رد شد"
+    },
+    "filters": {
+      "status": "وضعیت"
+    },
+    "columns": {
+      "name": "نام"
+    },
+    "categories": {
+      "navLabel": "دسته‌بندی‌ها",
+      "heading": "درخواست‌های دسته‌بندی",
+      "noRecords": "درخواست دسته‌بندی یافت نشد"
+    },
+    "collections": {
+      "navLabel": "مجموعه‌ها",
+      "heading": "درخواست‌های مجموعه",
+      "noRecords": "درخواست مجموعه یافت نشد"
+    },
+    "tags": {
+      "navLabel": "برچسب‌ها",
+      "heading": "درخواست‌های برچسب",
+      "noRecords": "درخواست برچسب یافت نشد"
+    },
+    "types": {
+      "navLabel": "انواع",
+      "heading": "درخواست‌های نوع",
+      "noRecords": "درخواست نوع یافت نشد"
+    },
+    "typeLabels": {
+      "product_category": "دسته‌بندی",
+      "product_collection": "مجموعه",
+      "product_tag": "برچسب",
+      "product_type": "نوع"
+    },
+    "fields": {
+      "name": "نام",
+      "handle": "شناسه",
+      "description": "توضیحات",
+      "active": "فعال",
+      "internal": "داخلی",
+      "title": "عنوان",
+      "value": "مقدار"
+    },
+    "values": {
+      "yes": "بله",
+      "no": "خیر"
+    },
+    "detail": {
+      "pendingReview": "در انتظار بررسی",
+      "accept": "پذیرفتن",
+      "reject": "رد کردن",
+      "acceptPromptTitle": "پذیرفتن درخواست",
+      "acceptPromptDescription": "آیا مطمئن هستید که می‌خواهید این درخواست را بپذیرید؟ این عملیات موجودیت مربوطه را ایجاد خواهد کرد.",
+      "rejectPromptTitle": "رد کردن درخواست",
+      "rejectPromptDescription": "آیا مطمئن هستید که می‌خواهید این درخواست را رد کنید؟ این عملیات قابل بازگشت نیست.",
+      "acceptSuccess": "درخواست پذیرفته شد",
+      "rejectSuccess": "درخواست رد شد",
+      "submitter": "ارسال‌کننده",
+      "reviewer": "بررسی‌کننده"
+    }
+  },
+  "reviews": {
+    "domain": "نظرات",
+    "noRecords": "نظری یافت نشد",
+    "columns": {
+      "rating": "امتیاز",
+      "reference": "مرجع",
+      "customerNote": "یادداشت مشتری"
+    }
+  }
+}

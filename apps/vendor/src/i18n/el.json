@@ -1,0 +1,131 @@
+{
+  "productImportExport": {
+    "import": "Εισαγωγή",
+    "export": "Εξαγωγή",
+    "done": "Τέλος",
+    "importHeader": "Εισαγωγή προϊόντων",
+    "importDescription": "Ανεβάστε ένα αρχείο CSV για να εισαγάγετε προϊόντα στο κατάστημά σας.",
+    "importHint": "Ανεβάστε ένα αρχείο CSV με τα προϊόντα σας. Μπορείτε να",
+    "downloadTemplate": "κατεβάσετε το πρότυπο",
+    "uploadLabel": "Μεταφόρτωση αρχείου CSV",
+    "uploadHint": "Υποστηρίζονται μόνο αρχεία .csv",
+    "importingActivity": "Εισαγωγή προϊόντων...",
+    "importSuccessToast": "{{count}} προϊόν/-τα εισήχθησαν με επιτυχία.",
+    "importCompleteTitle": "Η εισαγωγή ολοκληρώθηκε",
+    "importCompleteDescription": "{{count}} προϊόν/-τα δημιουργήθηκαν με επιτυχία.",
+    "exportHeader": "Εξαγωγή προϊόντων",
+    "exportDescription": "Εξαγάγετε τα προϊόντα σας ως αρχείο CSV.",
+    "exportBody": "Αυτό θα εξαγάγει όλα τα προϊόντα σας σε ένα αρχείο CSV. Η λήψη θα ξεκινήσει αυτόματα μόλις η εξαγωγή είναι έτοιμη.",
+    "exportSuccessToast": "Τα προϊόντα εξήχθησαν με επιτυχία."
+  },
+  "customFields": {
+    "title": "Προσαρμοσμένα πεδία",
+    "description": "Διαχειριστείτε τα προσαρμοσμένα πεδία και τις ρυθμίσεις σας",
+    "noFields": "Δεν έχουν διαμορφωθεί ακόμη προσαρμοσμένα πεδία"
+  },
+  "messenger": {
+    "supportTeam": "Ομάδα υποστήριξης",
+    "support": "Υποστήριξη",
+    "adminChatTitle": "Συνομιλία με τον διαχειριστή",
+    "adminChatDescription": "Στείλτε ένα μήνυμα στην ομάδα υποστήριξης της αγοράς και δείτε το ιστορικό των συνομιλιών σας.",
+    "unknown": "Άγνωστος",
+    "imageMessage": "Εικόνα",
+    "noMessages": "Δεν υπάρχουν ακόμη μηνύματα",
+    "startConversation": "Ξεκινήστε τη συνομιλία",
+    "seen": "Αναγνώστηκε",
+    "sent": "Εστάλη",
+    "notificationTitle": "Ο/Η {{senderName}} σας έστειλε ένα μήνυμα",
+    "notificationBody": "{{preview}}",
+    "image": "Εικόνα",
+    "close": "Κλείσιμο",
+    "noConversations": "Δεν υπάρχουν ακόμη συνομιλίες",
+    "participants": "συμμετέχοντες",
+    "searchConversations": "Αναζήτηση συνομιλιών...",
+    "typeMessage": "Πληκτρολογήστε ένα μήνυμα...",
+    "selectConversation": "Επιλέξτε μια συνομιλία",
+    "startMessaging": "Επιλέξτε μια συνομιλία για να ξεκινήσετε",
+    "connected": "Συνδεδεμένος",
+    "disconnected": "Αποσυνδεδεμένος"
+  },
+  "messages": {
+    "domain": "Μηνύματα",
+    "management": "Ομάδα υποστήριξης",
+    "helpSupport": "Ομάδα υποστήριξης",
+    "me": "Εγώ",
+    "productQuestion": "Ερώτηση για προϊόν",
+    "storeQuestion": "Ερώτηση για το κατάστημα",
+    "imageUploadFailed": "Η μεταφόρτωση της εικόνας απέτυχε",
+    "connectionLost": "Η σύνδεση χάθηκε. Επανασύνδεση...",
+    "delete": "Διαγραφή",
+    "deleteForEveryone": "Διαγραφή για όλους",
+    "close": "Κλείσιμο",
+    "customer": "Πελάτης",
+    "store": "Κατάστημα",
+    "back": "Πίσω",
+    "participant": "συμμετέχων",
+    "noMessages": "Δεν υπάρχουν μηνύματα",
+    "chatOptions": "Επιλογές συνομιλίας",
+    "deleteOnlyForMe": "Διαγραφή μόνο για εμένα",
+    "storeContext": "Ερώτηση για το κατάστημα",
+    "product": "Προϊόν",
+    "deleteConfirmTitle": "Διαγραφή μηνύματος",
+    "deleteConfirmDesc": "Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτό το μήνυμα;",
+    "error": "Δεν ήταν δυνατή η ανάκτηση των πληροφοριών χρήστη.",
+    "supportName": "Ομάδα υποστήριξης",
+    "supportSubject": "Συνομιλία υποστήριξης",
+    "emptyState": "Δεν υπάρχουν ακόμη μηνύματα. Ξεκινήστε τη συνομιλία.",
+    "viewPromotion": "Προβολή προσφοράς",
+    "imageAlt": "Εικόνα",
+    "placeholder": "Πληκτρολογήστε ένα μήνυμα...",
+    "send": "Αποστολή μηνύματος",
+    "attachImage": "Επισύναψη εικόνας",
+    "removeAttachment": "Αφαίρεση επισυναπτόμενης εικόνας",
+    "viewImage": "Προβολή εικόνας σε πλήρες μέγεθος",
+    "pendingImageAlt": "Εικόνα προς αποστολή",
+    "deletedMessage": "[Αυτό το μήνυμα διαγράφηκε]"
+  },
+  "requests": {
+    "domain": "Αιτήματα",
+    "status": {
+      "draft": "Πρόχειρο",
+      "pending": "Εκκρεμεί",
+      "accepted": "Εγκρίθηκε",
+      "rejected": "Απορρίφθηκε"
+    },
+    "filters": {
+      "status": "Κατάσταση"
+    },
+    "columns": {
+      "name": "Όνομα"
+    },
+    "categories": {
+      "navLabel": "Κατηγορίες",
+      "heading": "Αιτήματα κατηγοριών",
+      "noRecords": "Δεν βρέθηκαν αιτήματα κατηγοριών"
+    },
+    "collections": {
+      "navLabel": "Συλλογές",
+      "heading": "Αιτήματα συλλογών",
+      "noRecords": "Δεν βρέθηκαν αιτήματα συλλογών"
+    },
+    "tags": {
+      "navLabel": "Ετικέτες",
+      "heading": "Αιτήματα ετικετών",
+      "noRecords": "Δεν βρέθηκαν αιτήματα ετικετών"
+    },
+    "types": {
+      "navLabel": "Τύποι",
+      "heading": "Αιτήματα τύπων",
+      "noRecords": "Δεν βρέθηκαν αιτήματα τύπων"
+    }
+  },
+  "reviews": {
+    "domain": "Αξιολογήσεις",
+    "noRecords": "Δεν βρέθηκαν αξιολογήσεις",
+    "columns": {
+      "rating": "Βαθμολογία",
+      "reference": "Αναφορά",
+      "customerNote": "Σημείωση πελάτη"
+    }
+  }
+}

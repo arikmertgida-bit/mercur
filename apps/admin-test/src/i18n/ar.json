@@ -1,0 +1,227 @@
+{
+  "customFields": {
+    "title": "الحقول المخصصة",
+    "description": "إدارة الحقول المخصصة والإعدادات الخاصة بك",
+    "noFields": "لم يتم تكوين أي حقول مخصصة بعد"
+  },
+  "actions": {
+    "continue": "متابعة",
+    "cancel": "إلغاء",
+    "delete": "حذف"
+  },
+  "productReports": {
+    "domain": "بلاغات المنتجات",
+    "subtitle": "منتجات وضع العملاء عليها علامة للمراجعة",
+    "filterAll": "جميع الحالات",
+    "columns": {
+      "product": "المنتج",
+      "reporter": "المُبلِّغ",
+      "reason": "السبب",
+      "status": "الحالة"
+    },
+    "status": {
+      "pending": "قيد الانتظار",
+      "resolved": "تم الحل",
+      "dismissed": "مرفوض"
+    },
+    "reasons": {
+      "inaccurate_product_details": "تفاصيل منتج غير دقيقة",
+      "pricing_irregularities": "مخالفات في التسعير",
+      "prohibited_item": "منتج محظور",
+      "counterfeit_trademark": "تقليد / انتهاك علامة تجارية",
+      "incorrect_categorization": "تصنيف غير صحيح",
+      "inappropriate_media": "وسائط غير لائقة",
+      "dmca_violation": "انتهاك DMCA",
+      "seller_complaint": "شكوى بخصوص البائع",
+      "other": "أخرى"
+    },
+    "actions": {
+      "resolve": "تعليم كمحلول",
+      "dismiss": "رفض"
+    },
+    "resolvePrompt": {
+      "title": "هل تريد تعليم البلاغ كمحلول؟",
+      "description": "سيتم تعليم هذا البلاغ كمحلول وإزالته من قائمة الانتظار."
+    },
+    "dismissPrompt": {
+      "title": "هل تريد رفض هذا البلاغ؟",
+      "description": "سيتم تعليم هذا البلاغ كمرفوض وإزالته من قائمة الانتظار."
+    },
+    "deletePrompt": {
+      "title": "هل تريد حذف هذا البلاغ؟",
+      "description": "سيؤدي هذا إلى حذف البلاغ نهائيًا. لا يمكن التراجع عن هذا الإجراء."
+    },
+    "updateSuccess": "تم تحديث البلاغ",
+    "updateError": "تعذّر تحديث البلاغ",
+    "deleteSuccess": "تم حذف البلاغ",
+    "deleteError": "تعذّر حذف البلاغ"
+  },
+  "wishlistModeration": {
+    "domain": "قوائم الرغبات",
+    "subtitle": "قوائم رغبات العملاء، لأغراض الإشراف",
+    "noProducts": "لا توجد منتجات",
+    "columns": {
+      "customer": "العميل",
+      "products": "المنتجات",
+      "created": "تاريخ الإنشاء"
+    },
+    "deletePrompt": {
+      "title": "هل تريد حذف قائمة الرغبات هذه؟",
+      "description": "سيؤدي هذا إلى حذف قائمة رغبات العميل وجميع عناصرها نهائيًا. لا يمكن التراجع عن هذا الإجراء."
+    },
+    "deleteSuccess": "تم حذف قائمة الرغبات",
+    "deleteError": "تعذّر حذف قائمة الرغبات"
+  },
+  "reportedImages": {
+    "domain": "الصور المُبلَّغ عنها",
+    "subtitle": "راجع الصور التي أبلغ عنها العملاء بأنها غير لائقة",
+    "filterAll": "جميع الحالات",
+    "imageRemoved": "تمت إزالة الصورة",
+    "columns": {
+      "image": "الصورة",
+      "reporter": "المُبلِّغ",
+      "reason": "السبب",
+      "status": "الحالة"
+    },
+    "status": {
+      "pending": "قيد الانتظار",
+      "resolved": "تم الحل"
+    },
+    "actions": {
+      "remove": "إزالة الصورة",
+      "dismiss": "رفض البلاغ"
+    },
+    "removePrompt": {
+      "title": "هل تريد إزالة هذه الصورة؟",
+      "description": "سيتم حذف الصورة نهائيًا من التقييم. لا يمكن التراجع عن هذا الإجراء."
+    },
+    "dismissPrompt": {
+      "title": "هل تريد رفض هذا البلاغ؟",
+      "description": "ستبقى الصورة منشورة وسيتم تعليم البلاغ كمحلول."
+    },
+    "resolveSuccess": "تم حل البلاغ",
+    "resolveError": "تعذّر حل البلاغ"
+  },
+  "messenger": {
+    "searchConversations": "البحث في المحادثات...",
+    "noConversations": "لا توجد محادثات بعد",
+    "startConversation": "ابدأ محادثة",
+    "selectConversation": "اختر محادثة",
+    "startMessaging": "اختر محادثة لبدء المراسلة",
+    "typeMessage": "اكتب رسالة...",
+    "seen": "تمت المشاهدة",
+    "sent": "تم الإرسال",
+    "notificationTitle": "أرسل لك {{senderName}} رسالة",
+    "notificationBody": "{{preview}}",
+    "image": "صورة",
+    "support": "الدعم",
+    "direct": "مباشر",
+    "unknown": "غير معروف",
+    "supportTeam": "فريق الدعم",
+    "connected": "متصل",
+    "disconnected": "غير متصل",
+    "conversationOptions": "خيارات المحادثة"
+  },
+  "messages": {
+    "domain": "الرسائل",
+    "product": "المنتج",
+    "store": "المتجر",
+    "delete": "حذف",
+    "deleteForEveryone": "حذف للجميع",
+    "close": "إغلاق",
+    "connectionLost": "انقطع الاتصال. جارٍ إعادة الاتصال...",
+    "imageUploadFailed": "فشل تحميل الصورة",
+    "deleteConfirmTitle": "حذف الرسالة",
+    "deleteConfirmDesc": "هل أنت متأكد أنك تريد حذف هذه الرسالة؟",
+    "productQuestion": "سؤال عن المنتج",
+    "storeQuestion": "سؤال عن المتجر",
+    "customerMessage": "رسالة من العميل",
+    "sellerMessage": "رسالة من البائع",
+    "directMessage": "رسالة مباشرة",
+    "storeContext": "سؤال عن المتجر",
+    "back": "رجوع",
+    "failedToGetUserInfo": "تعذّر الحصول على معلومات المستخدم.",
+    "send": "إرسال الرسالة",
+    "attachImage": "إرفاق صورة",
+    "removeAttachment": "إزالة الصورة المرفقة",
+    "viewImage": "عرض الصورة بالحجم الكامل",
+    "pendingImageAlt": "الصورة المراد إرسالها",
+    "imageAlt": "صورة"
+  },
+  "requests": {
+    "domain": "الطلبات",
+    "status": {
+      "draft": "مسودة",
+      "pending": "قيد الانتظار",
+      "accepted": "مقبول",
+      "rejected": "مرفوض"
+    },
+    "filters": {
+      "status": "الحالة"
+    },
+    "columns": {
+      "name": "الاسم"
+    },
+    "categories": {
+      "navLabel": "الفئات",
+      "heading": "طلبات الفئات",
+      "noRecords": "لم يتم العثور على طلبات فئات"
+    },
+    "collections": {
+      "navLabel": "المجموعات",
+      "heading": "طلبات المجموعات",
+      "noRecords": "لم يتم العثور على طلبات مجموعات"
+    },
+    "tags": {
+      "navLabel": "الوسوم",
+      "heading": "طلبات الوسوم",
+      "noRecords": "لم يتم العثور على طلبات وسوم"
+    },
+    "types": {
+      "navLabel": "الأنواع",
+      "heading": "طلبات الأنواع",
+      "noRecords": "لم يتم العثور على طلبات أنواع"
+    },
+    "typeLabels": {
+      "product_category": "فئة",
+      "product_collection": "مجموعة",
+      "product_tag": "وسم",
+      "product_type": "نوع"
+    },
+    "fields": {
+      "name": "الاسم",
+      "handle": "المعرّف",
+      "description": "الوصف",
+      "active": "نشِط",
+      "internal": "داخلي",
+      "title": "العنوان",
+      "value": "القيمة"
+    },
+    "values": {
+      "yes": "نعم",
+      "no": "لا"
+    },
+    "detail": {
+      "pendingReview": "قيد المراجعة",
+      "accept": "قبول",
+      "reject": "رفض",
+      "acceptPromptTitle": "قبول الطلب",
+      "acceptPromptDescription": "هل أنت متأكد أنك تريد قبول هذا الطلب؟ سيؤدي هذا الإجراء إلى إنشاء الكيان.",
+      "rejectPromptTitle": "رفض الطلب",
+      "rejectPromptDescription": "هل أنت متأكد أنك تريد رفض هذا الطلب؟ لا يمكن التراجع عن هذا الإجراء.",
+      "acceptSuccess": "تم قبول الطلب",
+      "rejectSuccess": "تم رفض الطلب",
+      "submitter": "مقدم الطلب",
+      "reviewer": "المراجع"
+    }
+  },
+  "reviews": {
+    "domain": "التقييمات",
+    "noRecords": "لم يتم العثور على تقييمات",
+    "columns": {
+      "rating": "التقييم",
+      "reference": "المرجع",
+      "customerNote": "ملاحظة العميل"
+    }
+  }
+}

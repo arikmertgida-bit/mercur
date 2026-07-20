@@ -2909,8 +2909,7 @@
       "header": "Editați profilul",
       "languageHint": "Limba pe care doriți să o utilizați în tabloul de bord administrativ. ",
       "languagePlaceholder": "Selectați limba",
-      "usageInsightsHint": "Distribuiți informații despre utilizare și ajutați-ne să îmbunătățim Mercur.  <0>documentare</0>."
-    },
+      "usageInsightsHint": "Distribuiți informații despre utilizare și ajutați-ne să îmbunătățim Kayı.com.  <0>documentare</0>."    },
     "toast": {
       "edit": "Modificările profilurilor au fost salvate"
     }
@@ -3264,8 +3263,7 @@
       "createPublishableHeader": "Creați cheia API publicabilă",
       "createPublishableHint": "Creați o nouă cheie API publicabilă pentru a limita sfera solicitărilor la anumite canale de vânzare.",
       "createSecretHeader": "Creați cheia API secretă",
-      "createSecretHint": "Creați o nouă cheie API secretă pentru a accesa API-ul Mercur ca utilizator administrator autentificat.",
-      "secretKeyCreatedHeader": "Cheie secretă creată",
+      "createSecretHint": "Creați o nouă cheie API secretă pentru a accesa API-ul Kayı.com ca utilizator administrator autentificat.",      "secretKeyCreatedHeader": "Cheie secretă creată",
       "secretKeyCreatedHint": "Noua ta cheie secretă a fost generată. ",
       "copySecretTokenSuccess": "Cheia secretă a fost copiată în clipboard.",
       "copySecretTokenFailure": "Nu s-a putut copia cheia secretă în clipboard.",
@@ -3362,22 +3360,19 @@
   },
   "login": {
     "forgotPassword": "Aţi uitat parola?  <0>Resetați</0>",
-    "title": "Bun venit la Mercur",
-    "hint": "Conectați-vă pentru a accesa zona de cont",
+    "title": "Bun venit la Kayı.com",    "hint": "Conectați-vă pentru a accesa zona de cont",
     "sessionExpired": "Sesiune expirată"
   },
   "invite": {
-    "title": "Bun venit la Mercur",
-    "hint": "Creează-ți contul mai jos",
+    "title": "Bun venit la Kayı.com",    "hint": "Creează-ți contul mai jos",
     "backToLogin": "Înapoi la autentificare",
     "createAccount": "Creează cont",
     "alreadyHaveAccount": "Aveți deja un cont?  <0>Log in</0>",
     "emailTooltip": "E-mailul dvs. nu poate fi schimbat. ",
     "invalidInvite": "Invitația este nevalidă sau a expirat.",
     "successTitle": "Contul dvs. a fost înregistrat",
-    "successHint": "Începeți imediat cu Mercur Admin.",
-    "successAction": "Porniți Mercur Admin",
-    "invalidTokenTitle": "Indicatorul dvs. de invitație este nevalid",
+    "successHint": "Începeți imediat cu Kayı.com Admin.",
+    "successAction": "Porniți Kayı.com Admin",    "invalidTokenTitle": "Indicatorul dvs. de invitație este nevalid",
     "invalidTokenHint": "Încercați să solicitați un nou link de invitație.",
     "passwordMismatch": "Parolele nu se potrivesc",
     "toast": {
@@ -3409,8 +3404,7 @@
   },
   "workflowExecutions": {
     "domain": "Fluxuri de lucru",
-    "subtitle": "Vizualizați și urmăriți execuțiile fluxului de lucru în aplicația dvs. Mercur.",
-    "transactionIdLabel": "ID tranzacție",
+    "subtitle": "Vizualizați și urmăriți execuțiile fluxului de lucru în aplicația dvs. Kayı.com.",    "transactionIdLabel": "ID tranzacție",
     "workflowIdLabel": "ID flux de lucru",
     "progressLabel": "Progres",
     "list": {
@@ -3493,7 +3487,16 @@
       "value": "Valoare"
     }
   },
-  "errors": {
+  "notifications": {
+    "domain": "Notificări",
+    "emptyState": {
+      "title": "Fără notificări",
+      "description": "Nu aveți notificări momentan, dar odată ce o faceți vor locui aici."
+    },
+    "accessibility": {
+      "description": "notificările despre activitățile Kayı.com vor fi listate aici."
+    }
+  },  "errors": {
     "serverError": "Eroare de server - Încercați din nou mai târziu.",
     "invalidCredentials": "E-mail sau parolă greșită"
   },

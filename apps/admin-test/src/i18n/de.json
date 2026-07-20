@@ -1,0 +1,227 @@
+{
+  "customFields": {
+    "title": "Benutzerdefinierte Felder",
+    "description": "Verwalten Sie Ihre benutzerdefinierten Felder und Konfigurationen",
+    "noFields": "Noch keine benutzerdefinierten Felder konfiguriert"
+  },
+  "actions": {
+    "continue": "Weiter",
+    "cancel": "Abbrechen",
+    "delete": "Löschen"
+  },
+  "productReports": {
+    "domain": "Produktmeldungen",
+    "subtitle": "Von Kunden zur Überprüfung markierte Produkte",
+    "filterAll": "Alle Status",
+    "columns": {
+      "product": "Produkt",
+      "reporter": "Gemeldet von",
+      "reason": "Grund",
+      "status": "Status"
+    },
+    "status": {
+      "pending": "Ausstehend",
+      "resolved": "Gelöst",
+      "dismissed": "Abgelehnt"
+    },
+    "reasons": {
+      "inaccurate_product_details": "Ungenaue Produktdetails",
+      "pricing_irregularities": "Preisunregelmäßigkeiten",
+      "prohibited_item": "Verbotener Artikel",
+      "counterfeit_trademark": "Fälschung / Markenverletzung",
+      "incorrect_categorization": "Falsche Kategorisierung",
+      "inappropriate_media": "Unangemessene Medien",
+      "dmca_violation": "DMCA-Verstoß",
+      "seller_complaint": "Beschwerde über den Verkäufer",
+      "other": "Sonstiges"
+    },
+    "actions": {
+      "resolve": "Als gelöst markieren",
+      "dismiss": "Ablehnen"
+    },
+    "resolvePrompt": {
+      "title": "Meldung als gelöst markieren?",
+      "description": "Diese Meldung wird als gelöst markiert und aus der Warteschlange entfernt."
+    },
+    "dismissPrompt": {
+      "title": "Diese Meldung ablehnen?",
+      "description": "Diese Meldung wird als abgelehnt markiert und aus der Warteschlange entfernt."
+    },
+    "deletePrompt": {
+      "title": "Diese Meldung löschen?",
+      "description": "Dadurch wird die Meldung dauerhaft gelöscht. Diese Aktion kann nicht rückgängig gemacht werden."
+    },
+    "updateSuccess": "Meldung aktualisiert",
+    "updateError": "Meldung konnte nicht aktualisiert werden",
+    "deleteSuccess": "Meldung gelöscht",
+    "deleteError": "Meldung konnte nicht gelöscht werden"
+  },
+  "wishlistModeration": {
+    "domain": "Wunschlisten",
+    "subtitle": "Kunden-Wunschlisten zur Moderation",
+    "noProducts": "Keine Produkte",
+    "columns": {
+      "customer": "Kunde",
+      "products": "Produkte",
+      "created": "Erstellt"
+    },
+    "deletePrompt": {
+      "title": "Diese Wunschliste löschen?",
+      "description": "Dadurch werden die Wunschliste des Kunden und alle ihre Einträge dauerhaft gelöscht. Diese Aktion kann nicht rückgängig gemacht werden."
+    },
+    "deleteSuccess": "Wunschliste gelöscht",
+    "deleteError": "Wunschliste konnte nicht gelöscht werden"
+  },
+  "reportedImages": {
+    "domain": "Gemeldete Bilder",
+    "subtitle": "Von Kunden als unangemessen gemeldete Bilder überprüfen",
+    "filterAll": "Alle Status",
+    "imageRemoved": "Bild entfernt",
+    "columns": {
+      "image": "Bild",
+      "reporter": "Gemeldet von",
+      "reason": "Grund",
+      "status": "Status"
+    },
+    "status": {
+      "pending": "Ausstehend",
+      "resolved": "Gelöst"
+    },
+    "actions": {
+      "remove": "Bild entfernen",
+      "dismiss": "Meldung ablehnen"
+    },
+    "removePrompt": {
+      "title": "Dieses Bild entfernen?",
+      "description": "Das Bild wird dauerhaft aus der Bewertung gelöscht. Diese Aktion kann nicht rückgängig gemacht werden."
+    },
+    "dismissPrompt": {
+      "title": "Diese Meldung ablehnen?",
+      "description": "Das Bild bleibt veröffentlicht und die Meldung wird als gelöst markiert."
+    },
+    "resolveSuccess": "Meldung gelöst",
+    "resolveError": "Meldung konnte nicht gelöst werden"
+  },
+  "messenger": {
+    "searchConversations": "Gespräche durchsuchen...",
+    "noConversations": "Noch keine Gespräche",
+    "startConversation": "Gespräch starten",
+    "selectConversation": "Wählen Sie ein Gespräch aus",
+    "startMessaging": "Wählen Sie ein Gespräch, um mit dem Chatten zu beginnen",
+    "typeMessage": "Nachricht eingeben...",
+    "seen": "Gesehen",
+    "sent": "Gesendet",
+    "notificationTitle": "{{senderName}} hat Ihnen eine Nachricht gesendet",
+    "notificationBody": "{{preview}}",
+    "image": "Bild",
+    "support": "Support",
+    "direct": "Direkt",
+    "unknown": "Unbekannt",
+    "supportTeam": "Support-Team",
+    "connected": "Verbunden",
+    "disconnected": "Getrennt",
+    "conversationOptions": "Gesprächsoptionen"
+  },
+  "messages": {
+    "domain": "Nachrichten",
+    "product": "Produkt",
+    "store": "Geschäft",
+    "delete": "Löschen",
+    "deleteForEveryone": "Für alle löschen",
+    "close": "Schließen",
+    "connectionLost": "Verbindung verloren. Verbindung wird wiederhergestellt...",
+    "imageUploadFailed": "Bild-Upload fehlgeschlagen",
+    "deleteConfirmTitle": "Nachricht löschen",
+    "deleteConfirmDesc": "Möchten Sie diese Nachricht wirklich löschen?",
+    "productQuestion": "Produktfrage",
+    "storeQuestion": "Frage zum Geschäft",
+    "customerMessage": "Kundennachricht",
+    "sellerMessage": "Verkäufernachricht",
+    "directMessage": "Direktnachricht",
+    "storeContext": "Frage zum Geschäft",
+    "back": "Zurück",
+    "failedToGetUserInfo": "Benutzerinformationen konnten nicht abgerufen werden.",
+    "send": "Nachricht senden",
+    "attachImage": "Bild anhängen",
+    "removeAttachment": "Angehängtes Bild entfernen",
+    "viewImage": "Bild in voller Größe ansehen",
+    "pendingImageAlt": "Zu sendendes Bild",
+    "imageAlt": "Bild"
+  },
+  "requests": {
+    "domain": "Anfragen",
+    "status": {
+      "draft": "Entwurf",
+      "pending": "Ausstehend",
+      "accepted": "Angenommen",
+      "rejected": "Abgelehnt"
+    },
+    "filters": {
+      "status": "Status"
+    },
+    "columns": {
+      "name": "Name"
+    },
+    "categories": {
+      "navLabel": "Kategorien",
+      "heading": "Kategorieanfragen",
+      "noRecords": "Keine Kategorieanfragen gefunden"
+    },
+    "collections": {
+      "navLabel": "Kollektionen",
+      "heading": "Kollektionsanfragen",
+      "noRecords": "Keine Kollektionsanfragen gefunden"
+    },
+    "tags": {
+      "navLabel": "Tags",
+      "heading": "Tag-Anfragen",
+      "noRecords": "Keine Tag-Anfragen gefunden"
+    },
+    "types": {
+      "navLabel": "Typen",
+      "heading": "Typanfragen",
+      "noRecords": "Keine Typanfragen gefunden"
+    },
+    "typeLabels": {
+      "product_category": "Kategorie",
+      "product_collection": "Kollektion",
+      "product_tag": "Tag",
+      "product_type": "Typ"
+    },
+    "fields": {
+      "name": "Name",
+      "handle": "Handle",
+      "description": "Beschreibung",
+      "active": "Aktiv",
+      "internal": "Intern",
+      "title": "Titel",
+      "value": "Wert"
+    },
+    "values": {
+      "yes": "Ja",
+      "no": "Nein"
+    },
+    "detail": {
+      "pendingReview": "Wird geprüft",
+      "accept": "Annehmen",
+      "reject": "Ablehnen",
+      "acceptPromptTitle": "Anfrage annehmen",
+      "acceptPromptDescription": "Möchten Sie diese Anfrage wirklich annehmen? Dadurch wird die Entität erstellt.",
+      "rejectPromptTitle": "Anfrage ablehnen",
+      "rejectPromptDescription": "Möchten Sie diese Anfrage wirklich ablehnen? Diese Aktion kann nicht rückgängig gemacht werden.",
+      "acceptSuccess": "Anfrage angenommen",
+      "rejectSuccess": "Anfrage abgelehnt",
+      "submitter": "Einreicher",
+      "reviewer": "Prüfer"
+    }
+  },
+  "reviews": {
+    "domain": "Bewertungen",
+    "noRecords": "Keine Bewertungen gefunden",
+    "columns": {
+      "rating": "Bewertung",
+      "reference": "Referenz",
+      "customerNote": "Kundenhinweis"
+    }
+  }
+}

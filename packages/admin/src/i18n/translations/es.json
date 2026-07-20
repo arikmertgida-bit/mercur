@@ -1870,8 +1870,7 @@
       "title": "Crear Reembolso",
       "sendNotificationHint": "Notificar a los clientes sobre el reembolso creado.",
       "systemPayment": "Pago del sistema",
-      "systemPaymentDesc": "Uno o más de tus pagos son pagos del sistema. Ten en cuenta que Mercur no maneja las capturas y reembolsos para dichos pagos.",
-      "error": {
+      "systemPaymentDesc": "Uno o más de tus pagos son pagos del sistema. Ten en cuenta que Kayı.com no maneja las capturas y reembolsos para dichos pagos.",      "error": {
         "amountToLarge": "No se puede reembolsar más que el monto original del pedido.",
         "amountNegative": "El monto del reembolso debe ser un número positivo.",
         "reasonRequired": "Por favor, selecciona una razón para el reembolso."
@@ -2926,8 +2925,7 @@
       "header": "Editar Perfil",
       "languageHint": "El idioma que deseas usar en el panel de administración. Esto no cambia el idioma de tu tienda.",
       "languagePlaceholder": "Selecciona idioma",
-      "usageInsightsHint": "Comparte información de uso y ayúdanos a mejorar Mercur. Puedes leer más sobre lo que recopilamos y cómo lo usamos en nuestra <0>documentación</0>."
-    },
+      "usageInsightsHint": "Comparte información de uso y ayúdanos a mejorar Kayı.com. Puedes leer más sobre lo que recopilamos y cómo lo usamos en nuestra <0>documentación</0>."    },
     "toast": {
       "edit": "Cambios en el perfil guardados"
     }
@@ -3280,8 +3278,7 @@
       "createPublishableHeader": "Crear Clave API Publicable",
       "createPublishableHint": "Crea una nueva clave API publicable para limitar el alcance de las solicitudes a canales de venta específicos.",
       "createSecretHeader": "Crear Clave API Secreta",
-      "createSecretHint": "Crea una nueva clave API secreta para acceder a la API de Mercur como usuario administrador autenticado.",
-      "secretKeyCreatedHeader": "Clave Secreta Creada",
+      "createSecretHint": "Crea una nueva clave API secreta para acceder a la API de Kayı.com como usuario administrador autenticado.",      "secretKeyCreatedHeader": "Clave Secreta Creada",
       "secretKeyCreatedHint": "Tu nueva clave secreta ha sido generada. Cópiala y guárdala de manera segura ahora. Esta es la única vez que se mostrará.",
       "copySecretTokenSuccess": "Clave secreta copiada al portapapeles.",
       "copySecretTokenFailure": "No se pudo copiar la clave secreta al portapapeles.",
@@ -3378,22 +3375,19 @@
   },
   "login": {
     "forgotPassword": "¿Olvidaste la contraseña? - <0>Restablecer</0>",
-    "title": "Bienvenido a Mercur",
-    "hint": "Inicia sesión para acceder a la área de cuentas",
+    "title": "Bienvenido a Kayı.com",    "hint": "Inicia sesión para acceder a la área de cuentas",
     "sessionExpired": "Sesión caducada"
   },
   "invite": {
-    "title": "Bienvenido a Mercur",
-    "hint": "Crea tu cuenta a continuación",
+    "title": "Bienvenido a Kayı.com",    "hint": "Crea tu cuenta a continuación",
     "backToLogin": "Volver al login",
     "createAccount": "Crear cuenta",
     "alreadyHaveAccount": "¿Ya tienes una cuenta? - <0>Iniciar sesión</0>",
     "emailTooltip": "Tu correo electrónico no puede ser cambiado. Si deseas usar otro correo, debe enviarse una nueva invitación.",
     "invalidInvite": "La invitación es inválida o ha expirado.",
     "successTitle": "Tu cuenta ha sido registrada",
-    "successHint": "Comienza a usar Mercur Admin de inmediato.",
-    "successAction": "Iniciar Mercur Admin",
-    "invalidTokenTitle": "Tu token de invitación es inválido",
+    "successHint": "Comienza a usar Kayı.com Admin de inmediato.",
+    "successAction": "Iniciar Kayı.com Admin",    "invalidTokenTitle": "Tu token de invitación es inválido",
     "invalidTokenHint": "Intenta solicitar un nuevo enlace de invitación.",
     "passwordMismatch": "Las contraseñas no coinciden",
     "toast": {
@@ -3425,8 +3419,7 @@
   },
   "workflowExecutions": {
     "domain": "Flujos de trabajo",
-    "subtitle": "Visualiza y realiza un seguimiento de las ejecuciones de flujos de trabajo en tu aplicación Mercur.",
-    "transactionIdLabel": "ID de Transacción",
+    "subtitle": "Visualiza y realiza un seguimiento de las ejecuciones de flujos de trabajo en tu aplicación Kayı.com.",    "transactionIdLabel": "ID de Transacción",
     "workflowIdLabel": "ID de Flujo de Trabajo",
     "progressLabel": "Progreso",
     "stepsCompletedLabel_one": "{{completed}} de {{count}} paso",
@@ -3509,7 +3502,16 @@
       "value": "Valor"
     }
   },
-  "errors": {
+  "notifications": {
+    "domain": "Notificaciones",
+    "emptyState": {
+      "title": "Sin notificaciones",
+      "description": "No tienes notificaciones por el momento, pero una vez las tengas aparecerán aquí."
+    },
+    "accessibility": {
+      "description": "Las notificaciones sobre las actividades de Kayı.com se mostrarán aquí."
+    }
+  },  "errors": {
     "serverError": "Error de servidor - Intenta nuevamente más tarde.",
     "invalidCredentials": "Correo electrónico o contraseña incorrectos"
   },

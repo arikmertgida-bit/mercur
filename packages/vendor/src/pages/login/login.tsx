@@ -39,7 +39,7 @@ const LoginHeader = () => {
 
   return (
     <div className="mb-6 flex flex-col">
-      <Heading>{t("login.title", { name: config.name ?? "Mercur" })}</Heading>
+      <Heading>{t("login.title", { name: config.name ?? "Kayı.com" })}</Heading>
       <Text size="small" className="text-ui-fg-subtle">
         {t("login.hint")}
       </Text>

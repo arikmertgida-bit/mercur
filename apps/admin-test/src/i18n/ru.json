@@ -1,0 +1,227 @@
+{
+  "customFields": {
+    "title": "Пользовательские поля",
+    "description": "Управляйте своими пользовательскими полями и настройками",
+    "noFields": "Пользовательские поля пока не настроены"
+  },
+  "actions": {
+    "continue": "Продолжить",
+    "cancel": "Отмена",
+    "delete": "Удалить"
+  },
+  "productReports": {
+    "domain": "Жалобы на товары",
+    "subtitle": "Товары, отмеченные покупателями для проверки",
+    "filterAll": "Все статусы",
+    "columns": {
+      "product": "Товар",
+      "reporter": "Пожаловался",
+      "reason": "Причина",
+      "status": "Статус"
+    },
+    "status": {
+      "pending": "Ожидает",
+      "resolved": "Решено",
+      "dismissed": "Отклонено"
+    },
+    "reasons": {
+      "inaccurate_product_details": "Неточные сведения о товаре",
+      "pricing_irregularities": "Нарушения ценообразования",
+      "prohibited_item": "Запрещённый товар",
+      "counterfeit_trademark": "Подделка / нарушение товарного знака",
+      "incorrect_categorization": "Неправильная категоризация",
+      "inappropriate_media": "Неприемлемые медиаматериалы",
+      "dmca_violation": "Нарушение DMCA",
+      "seller_complaint": "Жалоба на продавца",
+      "other": "Другое"
+    },
+    "actions": {
+      "resolve": "Отметить как решённое",
+      "dismiss": "Отклонить"
+    },
+    "resolvePrompt": {
+      "title": "Отметить жалобу как решённую?",
+      "description": "Эта жалоба будет отмечена как решённая и удалена из очереди ожидающих."
+    },
+    "dismissPrompt": {
+      "title": "Отклонить эту жалобу?",
+      "description": "Эта жалоба будет отмечена как отклонённая и удалена из очереди ожидающих."
+    },
+    "deletePrompt": {
+      "title": "Удалить эту жалобу?",
+      "description": "Это приведёт к безвозвратному удалению жалобы. Это действие нельзя отменить."
+    },
+    "updateSuccess": "Жалоба обновлена",
+    "updateError": "Не удалось обновить жалобу",
+    "deleteSuccess": "Жалоба удалена",
+    "deleteError": "Не удалось удалить жалобу"
+  },
+  "wishlistModeration": {
+    "domain": "Списки желаний",
+    "subtitle": "Списки желаний покупателей, для целей модерации",
+    "noProducts": "Нет товаров",
+    "columns": {
+      "customer": "Покупатель",
+      "products": "Товары",
+      "created": "Создан"
+    },
+    "deletePrompt": {
+      "title": "Удалить этот список желаний?",
+      "description": "Это приведёт к безвозвратному удалению списка желаний покупателя и всех его позиций. Это действие нельзя отменить."
+    },
+    "deleteSuccess": "Список желаний удалён",
+    "deleteError": "Не удалось удалить список желаний"
+  },
+  "reportedImages": {
+    "domain": "Жалобы на изображения",
+    "subtitle": "Просмотрите изображения, отмеченные покупателями как неприемлемые",
+    "filterAll": "Все статусы",
+    "imageRemoved": "Изображение удалено",
+    "columns": {
+      "image": "Изображение",
+      "reporter": "Пожаловался",
+      "reason": "Причина",
+      "status": "Статус"
+    },
+    "status": {
+      "pending": "Ожидает",
+      "resolved": "Решено"
+    },
+    "actions": {
+      "remove": "Удалить изображение",
+      "dismiss": "Отклонить жалобу"
+    },
+    "removePrompt": {
+      "title": "Удалить это изображение?",
+      "description": "Изображение будет безвозвратно удалено из отзыва. Это действие нельзя отменить."
+    },
+    "dismissPrompt": {
+      "title": "Отклонить эту жалобу?",
+      "description": "Изображение останется опубликованным, а жалоба будет отмечена как решённая."
+    },
+    "resolveSuccess": "Жалоба решена",
+    "resolveError": "Не удалось решить жалобу"
+  },
+  "messenger": {
+    "searchConversations": "Поиск по диалогам...",
+    "noConversations": "Пока нет диалогов",
+    "startConversation": "Начать разговор",
+    "selectConversation": "Выберите диалог",
+    "startMessaging": "Выберите диалог, чтобы начать переписку",
+    "typeMessage": "Введите сообщение...",
+    "seen": "Прочитано",
+    "sent": "Отправлено",
+    "notificationTitle": "{{senderName}} отправил(а) вам сообщение",
+    "notificationBody": "{{preview}}",
+    "image": "Изображение",
+    "support": "Поддержка",
+    "direct": "Личное",
+    "unknown": "Неизвестно",
+    "supportTeam": "Служба поддержки",
+    "connected": "Подключено",
+    "disconnected": "Отключено",
+    "conversationOptions": "Настройки диалога"
+  },
+  "messages": {
+    "domain": "Сообщения",
+    "product": "Товар",
+    "store": "Магазин",
+    "delete": "Удалить",
+    "deleteForEveryone": "Удалить для всех",
+    "close": "Закрыть",
+    "connectionLost": "Соединение потеряно. Повторное подключение...",
+    "imageUploadFailed": "Не удалось загрузить изображение",
+    "deleteConfirmTitle": "Удалить сообщение",
+    "deleteConfirmDesc": "Вы уверены, что хотите удалить это сообщение?",
+    "productQuestion": "Вопрос о товаре",
+    "storeQuestion": "Вопрос о магазине",
+    "customerMessage": "Сообщение от покупателя",
+    "sellerMessage": "Сообщение от продавца",
+    "directMessage": "Личное сообщение",
+    "storeContext": "Вопрос о магазине",
+    "back": "Назад",
+    "failedToGetUserInfo": "Не удалось получить информацию о пользователе.",
+    "send": "Отправить сообщение",
+    "attachImage": "Прикрепить изображение",
+    "removeAttachment": "Удалить прикреплённое изображение",
+    "viewImage": "Просмотреть изображение в полном размере",
+    "pendingImageAlt": "Изображение для отправки",
+    "imageAlt": "Изображение"
+  },
+  "requests": {
+    "domain": "Запросы",
+    "status": {
+      "draft": "Черновик",
+      "pending": "На рассмотрении",
+      "accepted": "Принят",
+      "rejected": "Отклонён"
+    },
+    "filters": {
+      "status": "Статус"
+    },
+    "columns": {
+      "name": "Название"
+    },
+    "categories": {
+      "navLabel": "Категории",
+      "heading": "Запросы категорий",
+      "noRecords": "Запросы категорий не найдены"
+    },
+    "collections": {
+      "navLabel": "Коллекции",
+      "heading": "Запросы коллекций",
+      "noRecords": "Запросы коллекций не найдены"
+    },
+    "tags": {
+      "navLabel": "Теги",
+      "heading": "Запросы тегов",
+      "noRecords": "Запросы тегов не найдены"
+    },
+    "types": {
+      "navLabel": "Типы",
+      "heading": "Запросы типов",
+      "noRecords": "Запросы типов не найдены"
+    },
+    "typeLabels": {
+      "product_category": "Категория",
+      "product_collection": "Коллекция",
+      "product_tag": "Тег",
+      "product_type": "Тип"
+    },
+    "fields": {
+      "name": "Название",
+      "handle": "Идентификатор",
+      "description": "Описание",
+      "active": "Активен",
+      "internal": "Внутренний",
+      "title": "Заголовок",
+      "value": "Значение"
+    },
+    "values": {
+      "yes": "Да",
+      "no": "Нет"
+    },
+    "detail": {
+      "pendingReview": "На рассмотрении",
+      "accept": "Принять",
+      "reject": "Отклонить",
+      "acceptPromptTitle": "Принять запрос",
+      "acceptPromptDescription": "Вы уверены, что хотите принять этот запрос? Это действие создаст соответствующий объект.",
+      "rejectPromptTitle": "Отклонить запрос",
+      "rejectPromptDescription": "Вы уверены, что хотите отклонить этот запрос? Это действие нельзя отменить.",
+      "acceptSuccess": "Запрос принят",
+      "rejectSuccess": "Запрос отклонён",
+      "submitter": "Отправитель",
+      "reviewer": "Проверяющий"
+    }
+  },
+  "reviews": {
+    "domain": "Отзывы",
+    "noRecords": "Отзывы не найдены",
+    "columns": {
+      "rating": "Рейтинг",
+      "reference": "Артикул",
+      "customerNote": "Заметка клиента"
+    }
+  }
+}

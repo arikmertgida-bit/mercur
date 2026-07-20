@@ -1,0 +1,131 @@
+{
+  "productImportExport": {
+    "import": "インポート",
+    "export": "エクスポート",
+    "done": "完了",
+    "importHeader": "商品をインポート",
+    "importDescription": "CSVファイルをアップロードして、ストアに商品をインポートします。",
+    "importHint": "商品情報を含むCSVファイルをアップロードしてください。",
+    "downloadTemplate": "テンプレートをダウンロード",
+    "uploadLabel": "CSVファイルをアップロード",
+    "uploadHint": ".csvファイルのみサポートされています",
+    "importingActivity": "商品をインポート中...",
+    "importSuccessToast": "{{count}}件の商品を正常にインポートしました。",
+    "importCompleteTitle": "インポート完了",
+    "importCompleteDescription": "{{count}}件の商品が正常に作成されました。",
+    "exportHeader": "商品をエクスポート",
+    "exportDescription": "商品をCSVファイルとしてエクスポートします。",
+    "exportBody": "すべての商品がCSVファイルにエクスポートされます。エクスポートの準備ができ次第、自動的にダウンロードが開始されます。",
+    "exportSuccessToast": "商品を正常にエクスポートしました。"
+  },
+  "customFields": {
+    "title": "カスタムフィールド",
+    "description": "カスタムフィールドと設定を管理します",
+    "noFields": "まだカスタムフィールドが設定されていません"
+  },
+  "messenger": {
+    "supportTeam": "サポートチーム",
+    "support": "サポート",
+    "adminChatTitle": "管理者とチャット",
+    "adminChatDescription": "マーケットプレイスの管理チームにメッセージを送信し、会話履歴を確認します。",
+    "unknown": "不明",
+    "imageMessage": "画像",
+    "noMessages": "まだメッセージはありません",
+    "startConversation": "会話を開始",
+    "seen": "既読",
+    "sent": "送信済み",
+    "notificationTitle": "{{senderName}}さんからメッセージが届きました",
+    "notificationBody": "{{preview}}",
+    "image": "画像",
+    "close": "閉じる",
+    "noConversations": "まだ会話はありません",
+    "participants": "参加者",
+    "searchConversations": "会話を検索...",
+    "typeMessage": "メッセージを入力...",
+    "selectConversation": "会話を選択してください",
+    "startMessaging": "会話を選択してメッセージを開始してください",
+    "connected": "接続済み",
+    "disconnected": "切断されました"
+  },
+  "messages": {
+    "domain": "メッセージ",
+    "management": "サポートチーム",
+    "helpSupport": "サポートチーム",
+    "me": "自分",
+    "productQuestion": "商品に関する質問",
+    "storeQuestion": "ストアに関する質問",
+    "imageUploadFailed": "画像のアップロードに失敗しました",
+    "connectionLost": "接続が切断されました。再接続中...",
+    "delete": "削除",
+    "deleteForEveryone": "全員に対して削除",
+    "close": "閉じる",
+    "customer": "顧客",
+    "store": "ストア",
+    "back": "戻る",
+    "participant": "参加者",
+    "noMessages": "メッセージがありません",
+    "chatOptions": "チャットオプション",
+    "deleteOnlyForMe": "自分のみ削除",
+    "storeContext": "ストアに関する質問",
+    "product": "商品",
+    "deleteConfirmTitle": "メッセージを削除",
+    "deleteConfirmDesc": "このメッセージを削除してもよろしいですか?",
+    "error": "ユーザー情報を取得できませんでした。",
+    "supportName": "サポートチーム",
+    "supportSubject": "サポートチャット",
+    "emptyState": "まだメッセージはありません。会話を開始してください。",
+    "viewPromotion": "プロモーションを見る",
+    "imageAlt": "画像",
+    "placeholder": "メッセージを入力...",
+    "send": "メッセージを送信",
+    "attachImage": "画像を添付",
+    "removeAttachment": "添付画像を削除",
+    "viewImage": "画像を原寸大で表示",
+    "pendingImageAlt": "送信予定の画像",
+    "deletedMessage": "[このメッセージは削除されました]"
+  },
+  "requests": {
+    "domain": "リクエスト",
+    "status": {
+      "draft": "下書き",
+      "pending": "保留中",
+      "accepted": "承認済み",
+      "rejected": "却下"
+    },
+    "filters": {
+      "status": "ステータス"
+    },
+    "columns": {
+      "name": "名前"
+    },
+    "categories": {
+      "navLabel": "カテゴリ",
+      "heading": "カテゴリリクエスト",
+      "noRecords": "カテゴリリクエストが見つかりません"
+    },
+    "collections": {
+      "navLabel": "コレクション",
+      "heading": "コレクションリクエスト",
+      "noRecords": "コレクションリクエストが見つかりません"
+    },
+    "tags": {
+      "navLabel": "タグ",
+      "heading": "タグリクエスト",
+      "noRecords": "タグリクエストが見つかりません"
+    },
+    "types": {
+      "navLabel": "タイプ",
+      "heading": "タイプリクエスト",
+      "noRecords": "タイプリクエストが見つかりません"
+    }
+  },
+  "reviews": {
+    "domain": "レビュー",
+    "noRecords": "レビューが見つかりません",
+    "columns": {
+      "rating": "評価",
+      "reference": "参照番号",
+      "customerNote": "顧客メモ"
+    }
+  }
+}
