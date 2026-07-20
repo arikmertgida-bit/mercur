@@ -12,6 +12,19 @@ const FAST_POLL_MAX_ATTEMPTS = 30
 const IDLE_POLL_INTERVAL_MS = 60_000
 
 /**
+ * Routes reachable with zero session cookie — polling `/vendor/sellers/me`
+ * here can never succeed and only spams the console with 401s. `/onboarding`
+ * and `/store-select` are deliberately excluded: both require a session
+ * (post sign-up / post sign-in, pre store-selection), which is exactly the
+ * "no store selected" case this hook is meant to poll through.
+ */
+const UNAUTHENTICATED_ROUTES = ["/login", "/register", "/reset-password"]
+
+function isOnUnauthenticatedRoute(): boolean {
+  return UNAUTHENTICATED_ROUTES.includes(window.location.pathname)
+}
+
+/**
  * Resolves the current vendor session's seller id via cookie-based auth
  * (see lib/client.ts). Re-checks on window focus, fast (every 2s, capped)
  * while unresolved so a fresh login/store-selection is picked up without a
@@ -34,6 +47,9 @@ function useSellerSession(): { sellerId: string | null; sellerName: string | und
     }
 
     const resolveSeller = async (): Promise<void> => {
+      if (isOnUnauthenticatedRoute()) {
+        return
+      }
       try {
         const raw = await client.vendor.sellers.me.query()
         const parsed = SellerMeSchema.safeParse(raw)

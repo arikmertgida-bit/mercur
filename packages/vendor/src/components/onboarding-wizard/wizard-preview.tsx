@@ -21,7 +21,7 @@ export const WizardPreview = ({ stepId }: WizardPreviewProps) => {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.35, ease: [0.23, 1, 0.32, 1] }}
-          className="absolute inset-0 h-full w-full object-contain"
+          className="absolute inset-0 h-full w-full object-cover"
         />
       </AnimatePresence>
     </div>
