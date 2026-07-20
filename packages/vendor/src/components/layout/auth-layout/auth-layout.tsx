@@ -23,7 +23,7 @@ export const AuthLayout = ({ children }: AuthLayoutProps) => {
         <img
           src={assetUrl(AUTH_ILLUSTRATION_PATH)}
           alt=""
-          className="absolute inset-0 h-full w-full object-contain"
+          className="absolute inset-0 h-full w-full object-cover"
         />
       </div>
     </div>
