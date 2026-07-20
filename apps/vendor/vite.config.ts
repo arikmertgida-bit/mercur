@@ -27,10 +27,14 @@ export default defineConfig(({ mode, command }) => {
       react(),
       mercurDashboardPlugin({
         medusaConfigPath: '../api/medusa-config.ts',
+        name: 'Kayı.com',
         // Sellers upload product photography straight from phone cameras,
         // where 2MB is routinely too tight — raised to 3MB (default is 2MB,
         // see packages/dashboard-sdk/src/plugin.ts).
         imageLimit: 3 * 1024 * 1024,
+        i18n: {
+          defaultLanguage: 'tr',
+        },
         ...(backendUrl ? { backendUrl } : {}),
       }),
     ],

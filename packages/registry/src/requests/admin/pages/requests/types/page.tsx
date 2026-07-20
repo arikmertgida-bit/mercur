@@ -1,15 +1,17 @@
 import { useTranslation } from "react-i18next";
+import i18n from "i18next";
 import { keepPreviousData } from "@tanstack/react-query";
 import { Container, Heading } from "@medusajs/ui";
 import type { RouteConfig } from "@mercurjs/dashboard-sdk";
 
 export const config: RouteConfig = {
-  label: "Types",
+  label: "types.navLabel",
+  translationNs: "requests",
   nested: "/requests",
 };
 
 export const handle = {
-  breadcrumb: () => "Types",
+  breadcrumb: () => i18n.t("requests.types.navLabel"),
 };
 
 import { useRequests } from "../../../hooks/api/requests";
@@ -51,7 +53,7 @@ const TypeRequestsPage = () => {
     <SingleColumnPage>
       <Container className="divide-y p-0">
         <div className="flex items-center justify-between px-6 py-4">
-          <Heading>Type Requests</Heading>
+          <Heading>{t("requests.types.heading")}</Heading>
         </div>
         <_DataTable
           columns={columns}
@@ -67,7 +69,7 @@ const TypeRequestsPage = () => {
             { key: "updated_at", label: t("fields.updatedAt") },
           ]}
           queryObject={raw}
-          noRecords={{ message: "No type requests found" }}
+          noRecords={{ message: t("requests.types.noRecords") }}
         />
       </Container>
     </SingleColumnPage>

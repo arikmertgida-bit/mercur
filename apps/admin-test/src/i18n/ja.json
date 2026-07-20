@@ -1,0 +1,227 @@
+{
+  "customFields": {
+    "title": "カスタムフィールド",
+    "description": "カスタムフィールドと設定を管理します",
+    "noFields": "まだカスタムフィールドが設定されていません"
+  },
+  "actions": {
+    "continue": "続ける",
+    "cancel": "キャンセル",
+    "delete": "削除"
+  },
+  "productReports": {
+    "domain": "商品の通報",
+    "subtitle": "顧客によって確認のために通報された商品",
+    "filterAll": "すべてのステータス",
+    "columns": {
+      "product": "商品",
+      "reporter": "通報者",
+      "reason": "理由",
+      "status": "ステータス"
+    },
+    "status": {
+      "pending": "保留中",
+      "resolved": "解決済み",
+      "dismissed": "却下"
+    },
+    "reasons": {
+      "inaccurate_product_details": "不正確な商品情報",
+      "pricing_irregularities": "価格の不正",
+      "prohibited_item": "禁止されている商品",
+      "counterfeit_trademark": "模倣品 / 商標権侵害",
+      "incorrect_categorization": "誤ったカテゴリ分け",
+      "inappropriate_media": "不適切なメディア",
+      "dmca_violation": "DMCA違反",
+      "seller_complaint": "出品者に関する苦情",
+      "other": "その他"
+    },
+    "actions": {
+      "resolve": "解決済みにする",
+      "dismiss": "却下する"
+    },
+    "resolvePrompt": {
+      "title": "通報を解決済みにしますか?",
+      "description": "この通報は解決済みとしてマークされ、保留中のキューから削除されます。"
+    },
+    "dismissPrompt": {
+      "title": "この通報を却下しますか?",
+      "description": "この通報は却下としてマークされ、保留中のキューから削除されます。"
+    },
+    "deletePrompt": {
+      "title": "この通報を削除しますか?",
+      "description": "この操作により通報は完全に削除されます。この操作は元に戻せません。"
+    },
+    "updateSuccess": "通報を更新しました",
+    "updateError": "通報の更新に失敗しました",
+    "deleteSuccess": "通報を削除しました",
+    "deleteError": "通報の削除に失敗しました"
+  },
+  "wishlistModeration": {
+    "domain": "ウィッシュリスト",
+    "subtitle": "モデレーション用の顧客ウィッシュリスト",
+    "noProducts": "商品がありません",
+    "columns": {
+      "customer": "顧客",
+      "products": "商品",
+      "created": "作成日"
+    },
+    "deletePrompt": {
+      "title": "このウィッシュリストを削除しますか?",
+      "description": "顧客のウィッシュリストとそのすべての項目が完全に削除されます。この操作は元に戻せません。"
+    },
+    "deleteSuccess": "ウィッシュリストを削除しました",
+    "deleteError": "ウィッシュリストの削除に失敗しました"
+  },
+  "reportedImages": {
+    "domain": "通報された画像",
+    "subtitle": "顧客によって不適切として通報された画像を確認します",
+    "filterAll": "すべてのステータス",
+    "imageRemoved": "画像が削除されました",
+    "columns": {
+      "image": "画像",
+      "reporter": "通報者",
+      "reason": "理由",
+      "status": "ステータス"
+    },
+    "status": {
+      "pending": "保留中",
+      "resolved": "解決済み"
+    },
+    "actions": {
+      "remove": "画像を削除",
+      "dismiss": "通報を却下"
+    },
+    "removePrompt": {
+      "title": "この画像を削除しますか?",
+      "description": "画像はレビューから完全に削除されます。この操作は元に戻せません。"
+    },
+    "dismissPrompt": {
+      "title": "この通報を却下しますか?",
+      "description": "画像は公開されたままとなり、通報は解決済みとしてマークされます。"
+    },
+    "resolveSuccess": "通報を解決しました",
+    "resolveError": "通報の解決に失敗しました"
+  },
+  "messenger": {
+    "searchConversations": "会話を検索...",
+    "noConversations": "まだ会話はありません",
+    "startConversation": "会話を開始する",
+    "selectConversation": "会話を選択してください",
+    "startMessaging": "会話を選択してメッセージを開始してください",
+    "typeMessage": "メッセージを入力...",
+    "seen": "既読",
+    "sent": "送信済み",
+    "notificationTitle": "{{senderName}}さんからメッセージが届きました",
+    "notificationBody": "{{preview}}",
+    "image": "画像",
+    "support": "サポート",
+    "direct": "ダイレクト",
+    "unknown": "不明",
+    "supportTeam": "サポートチーム",
+    "connected": "接続済み",
+    "disconnected": "切断されました",
+    "conversationOptions": "会話のオプション"
+  },
+  "messages": {
+    "domain": "メッセージ",
+    "product": "商品",
+    "store": "ストア",
+    "delete": "削除",
+    "deleteForEveryone": "全員に対して削除",
+    "close": "閉じる",
+    "connectionLost": "接続が切断されました。再接続中...",
+    "imageUploadFailed": "画像のアップロードに失敗しました",
+    "deleteConfirmTitle": "メッセージを削除",
+    "deleteConfirmDesc": "このメッセージを削除してもよろしいですか?",
+    "productQuestion": "商品に関する質問",
+    "storeQuestion": "ストアに関する質問",
+    "customerMessage": "顧客からのメッセージ",
+    "sellerMessage": "出品者からのメッセージ",
+    "directMessage": "ダイレクトメッセージ",
+    "storeContext": "ストアに関する質問",
+    "back": "戻る",
+    "failedToGetUserInfo": "ユーザー情報を取得できませんでした。",
+    "send": "メッセージを送信",
+    "attachImage": "画像を添付",
+    "removeAttachment": "添付画像を削除",
+    "viewImage": "画像を原寸大で表示",
+    "pendingImageAlt": "送信予定の画像",
+    "imageAlt": "画像"
+  },
+  "requests": {
+    "domain": "リクエスト",
+    "status": {
+      "draft": "下書き",
+      "pending": "保留中",
+      "accepted": "承認済み",
+      "rejected": "却下"
+    },
+    "filters": {
+      "status": "ステータス"
+    },
+    "columns": {
+      "name": "名前"
+    },
+    "categories": {
+      "navLabel": "カテゴリ",
+      "heading": "カテゴリリクエスト",
+      "noRecords": "カテゴリリクエストが見つかりません"
+    },
+    "collections": {
+      "navLabel": "コレクション",
+      "heading": "コレクションリクエスト",
+      "noRecords": "コレクションリクエストが見つかりません"
+    },
+    "tags": {
+      "navLabel": "タグ",
+      "heading": "タグリクエスト",
+      "noRecords": "タグリクエストが見つかりません"
+    },
+    "types": {
+      "navLabel": "タイプ",
+      "heading": "タイプリクエスト",
+      "noRecords": "タイプリクエストが見つかりません"
+    },
+    "typeLabels": {
+      "product_category": "カテゴリ",
+      "product_collection": "コレクション",
+      "product_tag": "タグ",
+      "product_type": "タイプ"
+    },
+    "fields": {
+      "name": "名前",
+      "handle": "ハンドル",
+      "description": "説明",
+      "active": "有効",
+      "internal": "内部",
+      "title": "タイトル",
+      "value": "値"
+    },
+    "values": {
+      "yes": "はい",
+      "no": "いいえ"
+    },
+    "detail": {
+      "pendingReview": "審査待ち",
+      "accept": "承認",
+      "reject": "却下",
+      "acceptPromptTitle": "リクエストを承認",
+      "acceptPromptDescription": "このリクエストを承認してもよろしいですか?この操作によりエンティティが作成されます。",
+      "rejectPromptTitle": "リクエストを却下",
+      "rejectPromptDescription": "このリクエストを却下してもよろしいですか?この操作は元に戻せません。",
+      "acceptSuccess": "リクエストが承認されました",
+      "rejectSuccess": "リクエストが却下されました",
+      "submitter": "申請者",
+      "reviewer": "審査者"
+    }
+  },
+  "reviews": {
+    "domain": "レビュー",
+    "noRecords": "レビューが見つかりません",
+    "columns": {
+      "rating": "評価",
+      "reference": "参照番号",
+      "customerNote": "顧客メモ"
+    }
+  }
+}

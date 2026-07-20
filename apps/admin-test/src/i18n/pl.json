@@ -1,0 +1,227 @@
+{
+  "customFields": {
+    "title": "Pola niestandardowe",
+    "description": "Zarządzaj swoimi polami niestandardowymi i konfiguracjami",
+    "noFields": "Nie skonfigurowano jeszcze żadnych pól niestandardowych"
+  },
+  "actions": {
+    "continue": "Kontynuuj",
+    "cancel": "Anuluj",
+    "delete": "Usuń"
+  },
+  "productReports": {
+    "domain": "Zgłoszenia produktów",
+    "subtitle": "Produkty oznaczone przez klientów do sprawdzenia",
+    "filterAll": "Wszystkie statusy",
+    "columns": {
+      "product": "Produkt",
+      "reporter": "Zgłoszone przez",
+      "reason": "Powód",
+      "status": "Status"
+    },
+    "status": {
+      "pending": "Oczekujące",
+      "resolved": "Rozwiązane",
+      "dismissed": "Odrzucone"
+    },
+    "reasons": {
+      "inaccurate_product_details": "Niedokładne dane produktu",
+      "pricing_irregularities": "Nieprawidłowości cenowe",
+      "prohibited_item": "Zabroniony przedmiot",
+      "counterfeit_trademark": "Podróbka / naruszenie znaku towarowego",
+      "incorrect_categorization": "Nieprawidłowa kategoryzacja",
+      "inappropriate_media": "Nieodpowiednie media",
+      "dmca_violation": "Naruszenie DMCA",
+      "seller_complaint": "Skarga dotycząca sprzedawcy",
+      "other": "Inne"
+    },
+    "actions": {
+      "resolve": "Oznacz jako rozwiązane",
+      "dismiss": "Odrzuć"
+    },
+    "resolvePrompt": {
+      "title": "Oznaczyć zgłoszenie jako rozwiązane?",
+      "description": "To zgłoszenie zostanie oznaczone jako rozwiązane i usunięte z kolejki oczekujących."
+    },
+    "dismissPrompt": {
+      "title": "Odrzucić to zgłoszenie?",
+      "description": "To zgłoszenie zostanie oznaczone jako odrzucone i usunięte z kolejki oczekujących."
+    },
+    "deletePrompt": {
+      "title": "Usunąć to zgłoszenie?",
+      "description": "Spowoduje to trwałe usunięcie zgłoszenia. Tej czynności nie można cofnąć."
+    },
+    "updateSuccess": "Zgłoszenie zaktualizowane",
+    "updateError": "Nie udało się zaktualizować zgłoszenia",
+    "deleteSuccess": "Zgłoszenie usunięte",
+    "deleteError": "Nie udało się usunąć zgłoszenia"
+  },
+  "wishlistModeration": {
+    "domain": "Listy życzeń",
+    "subtitle": "Listy życzeń klientów, do celów moderacji",
+    "noProducts": "Brak produktów",
+    "columns": {
+      "customer": "Klient",
+      "products": "Produkty",
+      "created": "Utworzono"
+    },
+    "deletePrompt": {
+      "title": "Usunąć tę listę życzeń?",
+      "description": "Spowoduje to trwałe usunięcie listy życzeń klienta oraz wszystkich jej pozycji. Tej czynności nie można cofnąć."
+    },
+    "deleteSuccess": "Lista życzeń usunięta",
+    "deleteError": "Nie udało się usunąć listy życzeń"
+  },
+  "reportedImages": {
+    "domain": "Zgłoszone zdjęcia",
+    "subtitle": "Przejrzyj zdjęcia oznaczone przez klientów jako nieodpowiednie",
+    "filterAll": "Wszystkie statusy",
+    "imageRemoved": "Zdjęcie usunięte",
+    "columns": {
+      "image": "Zdjęcie",
+      "reporter": "Zgłoszone przez",
+      "reason": "Powód",
+      "status": "Status"
+    },
+    "status": {
+      "pending": "Oczekujące",
+      "resolved": "Rozwiązane"
+    },
+    "actions": {
+      "remove": "Usuń zdjęcie",
+      "dismiss": "Odrzuć zgłoszenie"
+    },
+    "removePrompt": {
+      "title": "Usunąć to zdjęcie?",
+      "description": "Zdjęcie zostanie trwale usunięte z opinii. Tej czynności nie można cofnąć."
+    },
+    "dismissPrompt": {
+      "title": "Odrzucić to zgłoszenie?",
+      "description": "Zdjęcie pozostanie opublikowane, a zgłoszenie zostanie oznaczone jako rozwiązane."
+    },
+    "resolveSuccess": "Zgłoszenie rozwiązane",
+    "resolveError": "Nie udało się rozwiązać zgłoszenia"
+  },
+  "messenger": {
+    "searchConversations": "Szukaj rozmów...",
+    "noConversations": "Brak rozmów",
+    "startConversation": "Rozpocznij rozmowę",
+    "selectConversation": "Wybierz rozmowę",
+    "startMessaging": "Wybierz rozmowę, aby rozpocząć czat",
+    "typeMessage": "Wpisz wiadomość...",
+    "seen": "Wyświetlono",
+    "sent": "Wysłano",
+    "notificationTitle": "{{senderName}} wysłał(a) Ci wiadomość",
+    "notificationBody": "{{preview}}",
+    "image": "Zdjęcie",
+    "support": "Wsparcie",
+    "direct": "Bezpośrednia",
+    "unknown": "Nieznany",
+    "supportTeam": "Zespół wsparcia",
+    "connected": "Połączono",
+    "disconnected": "Rozłączono",
+    "conversationOptions": "Opcje rozmowy"
+  },
+  "messages": {
+    "domain": "Wiadomości",
+    "product": "Produkt",
+    "store": "Sklep",
+    "delete": "Usuń",
+    "deleteForEveryone": "Usuń dla wszystkich",
+    "close": "Zamknij",
+    "connectionLost": "Utracono połączenie. Ponowne łączenie...",
+    "imageUploadFailed": "Nie udało się przesłać zdjęcia",
+    "deleteConfirmTitle": "Usuń wiadomość",
+    "deleteConfirmDesc": "Czy na pewno chcesz usunąć tę wiadomość?",
+    "productQuestion": "Pytanie o produkt",
+    "storeQuestion": "Pytanie o sklep",
+    "customerMessage": "Wiadomość klienta",
+    "sellerMessage": "Wiadomość sprzedawcy",
+    "directMessage": "Wiadomość bezpośrednia",
+    "storeContext": "Pytanie o sklep",
+    "back": "Wstecz",
+    "failedToGetUserInfo": "Nie udało się pobrać informacji o użytkowniku.",
+    "send": "Wyślij wiadomość",
+    "attachImage": "Załącz zdjęcie",
+    "removeAttachment": "Usuń załączone zdjęcie",
+    "viewImage": "Zobacz zdjęcie w pełnym rozmiarze",
+    "pendingImageAlt": "Zdjęcie do wysłania",
+    "imageAlt": "Zdjęcie"
+  },
+  "requests": {
+    "domain": "Wnioski",
+    "status": {
+      "draft": "Szkic",
+      "pending": "Oczekujący",
+      "accepted": "Zaakceptowany",
+      "rejected": "Odrzucony"
+    },
+    "filters": {
+      "status": "Status"
+    },
+    "columns": {
+      "name": "Nazwa"
+    },
+    "categories": {
+      "navLabel": "Kategorie",
+      "heading": "Wnioski o kategorie",
+      "noRecords": "Nie znaleziono wniosków o kategorie"
+    },
+    "collections": {
+      "navLabel": "Kolekcje",
+      "heading": "Wnioski o kolekcje",
+      "noRecords": "Nie znaleziono wniosków o kolekcje"
+    },
+    "tags": {
+      "navLabel": "Tagi",
+      "heading": "Wnioski o tagi",
+      "noRecords": "Nie znaleziono wniosków o tagi"
+    },
+    "types": {
+      "navLabel": "Typy",
+      "heading": "Wnioski o typy",
+      "noRecords": "Nie znaleziono wniosków o typy"
+    },
+    "typeLabels": {
+      "product_category": "Kategoria",
+      "product_collection": "Kolekcja",
+      "product_tag": "Tag",
+      "product_type": "Typ"
+    },
+    "fields": {
+      "name": "Nazwa",
+      "handle": "Uchwyt",
+      "description": "Opis",
+      "active": "Aktywny",
+      "internal": "Wewnętrzny",
+      "title": "Tytuł",
+      "value": "Wartość"
+    },
+    "values": {
+      "yes": "Tak",
+      "no": "Nie"
+    },
+    "detail": {
+      "pendingReview": "Oczekuje na weryfikację",
+      "accept": "Akceptuj",
+      "reject": "Odrzuć",
+      "acceptPromptTitle": "Akceptuj wniosek",
+      "acceptPromptDescription": "Czy na pewno chcesz zaakceptować ten wniosek? Ta czynność utworzy odpowiedni obiekt.",
+      "rejectPromptTitle": "Odrzuć wniosek",
+      "rejectPromptDescription": "Czy na pewno chcesz odrzucić ten wniosek? Tej czynności nie można cofnąć.",
+      "acceptSuccess": "Wniosek zaakceptowany",
+      "rejectSuccess": "Wniosek odrzucony",
+      "submitter": "Zgłaszający",
+      "reviewer": "Weryfikujący"
+    }
+  },
+  "reviews": {
+    "domain": "Recenzje",
+    "noRecords": "Nie znaleziono recenzji",
+    "columns": {
+      "rating": "Ocena",
+      "reference": "Numer referencyjny",
+      "customerNote": "Notatka klienta"
+    }
+  }
+}

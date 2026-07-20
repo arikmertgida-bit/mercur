@@ -74,7 +74,8 @@
     "true": "真",
     "false": "假",
     "decrement": "減少",
-    "increment": "增加"
+    "increment": "增加",
+    "drawerAccessibleDescription": "使用此面板檢視或編輯此資源的詳細資訊。"
   },
   "json": {
     "header": "JSON",
@@ -173,7 +174,8 @@
     "cannotUndo": "此操作無法復原",
     "saveChanges": "儲存變更",
     "saveAndClose": "儲存並關閉",
-    "request": "申請"
+    "request": "申請",
+    "ok": "確定"
   },
   "operators": {
     "in": "包含於"
@@ -494,7 +496,12 @@
         "handleMustContainLetter": "代稱必須至少包含一個字母",
         "requiredAttributeSelect": "此屬性為市集平台要求的必填項目，請選擇數值。",
         "requiredAttributeEnter": "此屬性為市集平台要求的必填項目，請輸入數值。",
-        "requiredAttributeMultiSelect": "此屬性為市集平台要求的必填項目，請至少選擇一個數值。"
+        "requiredAttributeMultiSelect": "此屬性為市集平台要求的必填項目，請至少選擇一個數值。",
+        "formIncomplete": "缺少部分必填欄位——請在發布前檢查醒目提示的資料列。",
+        "mediaRequired": "請為此款式至少新增一張圖片。",
+        "priceRequired": "請至少以一種貨幣為此款式輸入價格。",
+        "shippingProfileRequired": "請選擇一個物流方案。",
+        "stockRequired": "請至少為此款式在一個地點設定庫存數量。"
       },
       "variants": {
         "header": "變體",
@@ -518,7 +525,14 @@
           "label": "商品選項",
           "hint": "定義商品的選項，例如顏色、尺寸等。"
         },
-        "optionsHeader": "選項"
+        "optionsHeader": "選項",
+        "mediaPicker": {
+          "description": "選擇此商品的哪些照片屬於此款式。",
+          "empty": "請先在「詳細資料」分頁上傳照片。",
+          "header": "指派圖片",
+          "image": "圖片 {{index}}",
+          "partialFailureToast": "商品已建立,但無法為以下款式指派圖片:{{variants}}。您可以在商品編輯頁面重試。"
+        }
       },
       "successToast": "商品 {{title}} 已成功建立。",
       "attributes": {
@@ -653,7 +667,11 @@
       "removeSelected": "移除已選擇",
       "selectImages": "選擇圖片",
       "selectImagesHint": "點選圖片以新增至此款式。",
-      "editLabel": "編輯"
+      "editLabel": "編輯",
+      "limitExceeded": {
+        "description": "每個商品最多可上傳 {{max}} 張圖片。已新增前 {{max}} 張——其餘已略過。",
+        "title": "已達圖片數量上限"
+      }
     },
     "variantMedia": {
       "label": "變體媒體",
@@ -822,27 +840,6 @@
       "tableItemAvailable": "可用 {{availableCount}} 個",
       "tableItem_one": "{{availableCount}} 個可用,於 {{locationCount}} 個地點",
       "tableItem_other": "{{availableCount}} 個可用,於 {{locationCount}} 個地點",
-      "inventory": {
-        "notManaged": "未管理",
-        "navigateToItem": "前往庫存項目",
-        "inventoryKit": "庫存套件",
-        "inventoryKitHint": "此變體是否由多個庫存項目組成？",
-        "validation": {
-          "itemId": "請選擇庫存項目。",
-          "quantity": "數量必填。請輸入正整數。"
-        },
-        "editItemDetails": "編輯項目詳細資料",
-        "manageInventoryLabel": "管理庫存",
-        "manageInventoryHint": "啟用後，建立訂單與退貨時將自動調整庫存數量。",
-        "allowBackordersLabel": "允許缺貨下單",
-        "allowBackordersHint": "啟用後，即使可用數量為 0 顧客仍可購買此變體。",
-        "toast": {
-          "levelsBatch": "庫存層級已更新。",
-          "update": "庫存項目更新成功。",
-          "updateLevel": "庫存層級更新成功。",
-          "itemsManageSuccess": "庫存項目已成功更新。"
-        }
-      },
       "validation": {
         "titleRequired": "請輸入標題",
         "optionRequired": "請選擇一個數值"
@@ -933,6 +930,18 @@
       "description": "一次編輯多項商品。",
       "noChanges": "沒有變更可儲存。",
       "success": "商品已成功更新。"
+    },
+    "stock": {
+      "available": "可用",
+      "edit": {
+        "description": "更新每個地點的即時庫存數量。變更會直接儲存至庫存。",
+        "header": "編輯庫存",
+        "location": "地點",
+        "quantity": "數量",
+        "successToast": "庫存更新成功"
+      },
+      "header": "庫存追蹤",
+      "lowStock": "庫存不足"
     }
   },
   "collections": {
@@ -1164,7 +1173,6 @@
         "emptyTitle": "沒有顧客群組"
       },
       "add": {
-        "success": "顧客已加入：{{groups}}。",
         "list": {
           "noRecordsMessage": "請先建立顧客群組。"
         },
@@ -1172,7 +1180,6 @@
         "successMany": "顧客已成功加入 {{groups}} 個群組。"
       },
       "removed": {
-        "success": "顧客已從以下群組移除：{{groups}}。",
         "list": {
           "noRecordsMessage": "請先建立顧客群組。"
         },
@@ -1366,7 +1373,6 @@
       "capture": "收取付款",
       "capture_short": "收取",
       "refund": "退款",
-      "markAsPaid": "標記為已付款",
       "statusLabel": "付款狀態",
       "statusTitle": "付款狀態",
       "status": {
@@ -1384,8 +1390,6 @@
       },
       "capturePayment": "將收取 {{amount}} 的付款。",
       "capturePaymentSuccess": "已成功收取 {{amount}} 的付款",
-      "markAsPaidPayment": "將標記 {{amount}} 的付款為已付款。",
-      "markAsPaidPaymentSuccess": "已成功標記 {{amount}} 的付款為已付款",
       "createRefund": "建立退款",
       "refundPaymentSuccess": "已成功退款 {{amount}}",
       "createRefundWrongQuantity": "數量應為 1 到 {{number}} 之間的數字",
@@ -1745,7 +1749,7 @@
       "title": "建立退款",
       "sendNotificationHint": "通知顧客有關已建立的退款。",
       "systemPayment": "系統付款",
-      "systemPaymentDesc": "您的一個或多個付款是系統付款。請注意，此類付款的收取和退款不由 Medusa 處理。",
+      "systemPaymentDesc": "您的一個或多個付款是系統付款。請注意，此類付款的收取和退款不由 Kayı.com 處理。",
       "error": {
         "amountToLarge": "無法退款超過原始訂單金額。",
         "amountNegative": "退款金額必須為正數。",
@@ -2436,7 +2440,6 @@
     "toasts": {
       "promotionCreateSuccess": "促銷 ({{code}}) 已成功建立。"
     },
-    "create": {},
     "edit": {
       "title": "編輯促銷詳情",
       "rules": {
@@ -2809,7 +2812,7 @@
       "header": "編輯個人資料",
       "languageHint": "您在管理儀表板中要使用的語言。此設定不會更改您商店的語言。",
       "languagePlaceholder": "選擇語言",
-      "usageInsightsHint": "分享使用情況並幫助我們改進 Medusa。您可以在我們的<0>說明文件</0>中閱讀更多關於我們收集的內容以及如何使用的資訊。"
+      "usageInsightsHint": "分享使用情況並幫助我們改進 Kayı.com。您可以在我們的<0>說明文件</0>中閱讀更多關於我們收集的內容以及如何使用的資訊。"
     },
     "toast": {
       "edit": "個人資料變更已儲存"
@@ -2888,7 +2891,6 @@
     "currencyAlreadyAdded": "此貨幣已加入您的商店。",
     "localeAlreadyAdded": "此語系已加入您的商店。",
     "edit": {
-      "header": "編輯商店",
       "websiteHint": "必須包含通訊協定（例如 https://）",
       "mediaHeading": "媒體",
       "mediaTipLabel": "提示：",
@@ -2896,7 +2898,9 @@
       "uploadLogoLabel": "上傳商標",
       "uploadLogoHint": "將商標拖放至此處，或點選上傳。",
       "uploadBannerLabel": "上傳橫幅",
-      "uploadBannerHint": "將橫幅拖放至此處，或點選上傳。"
+      "uploadBannerHint": "將橫幅拖放至此處，或點選上傳。",
+      "bannerTooSmall": "圖片較小 ({{width}}×{{height}}px)。建議至少為 {{minWidth}}×{{minHeight}}px,否則可能顯得模糊。",
+      "logoTooSmall": "圖片較小 ({{width}}×{{height}}px)。建議至少為 {{minWidth}}×{{minHeight}}px,否則可能顯得模糊。"
     },
     "toast": {
       "update": "商店已成功更新",
@@ -3231,7 +3235,7 @@
       "createPublishableHeader": "建立可發佈 API 金鑰",
       "createPublishableHint": "建立新的可發佈 API 金鑰以將請求範圍限制在特定銷售管道。",
       "createSecretHeader": "建立私密 API 金鑰",
-      "createSecretHint": "建立新的私密 API 金鑰以作為已驗證管理員存取 Medusa API。",
+      "createSecretHint": "建立新的私密 API 金鑰以作為已驗證管理員存取 Kayı.com API。",
       "secretKeyCreatedHeader": "私密金鑰已建立",
       "secretKeyCreatedHint": "新的私密金鑰已產生。請立即複製並安全儲存，之後將無法再次顯示。",
       "copySecretTokenSuccess": "私密金鑰已複製到剪貼簿。",
@@ -3363,7 +3367,7 @@
   },
   "login": {
     "forgotPassword": "忘記密碼？ - <0>重設</0>",
-    "title": "歡迎使用 Medusa",
+    "title": "歡迎使用 Kayı.com",
     "hint": "登入以存取帳戶區域",
     "submit": "登入",
     "sessionExpired": "工作階段已過期",
@@ -3375,7 +3379,7 @@
     }
   },
   "invite": {
-    "title": "歡迎使用 Medusa",
+    "title": "歡迎使用 Kayı.com",
     "hint": "在下方建立您的帳戶",
     "backToLogin": "返回登入",
     "createAccount": "建立帳戶",
@@ -3383,8 +3387,7 @@
     "emailTooltip": "您的電子郵件無法變更。如果您想使用其他電子郵件，必須發送新的邀請。",
     "invalidInvite": "邀請無效或已過期。",
     "successTitle": "您的帳戶已註冊",
-    "successHint": "立即開始使用 Medusa 管理後臺。",
-    "successAction": "啟動 Medusa 管理後臺",
+    "successHint": "立即開始使用 Kayı.com 管理後臺。",
     "invalidTokenTitle": "您的邀請令牌無效",
     "invalidTokenHint": "請嘗試請求新的邀請連結。",
     "passwordMismatch": "密碼不符合",
@@ -3420,7 +3423,7 @@
   },
   "workflowExecutions": {
     "domain": "工作流程",
-    "subtitle": "檢視並追蹤您 Medusa 應用程式中的工作流程執行情況。",
+    "subtitle": "檢視並追蹤您 Kayı.com 應用程式中的工作流程執行情況。",
     "transactionIdLabel": "交易 ID",
     "workflowIdLabel": "工作流程 ID",
     "progressLabel": "進度",
@@ -3535,7 +3538,7 @@
       "description": "您目前沒有任何通知，但一旦有通知，它們將會顯示在此處。"
     },
     "accessibility": {
-      "description": "有關 Medusa 活動的通知將列在此處。"
+      "description": "有關 Kayı.com 活動的通知將列在此處。"
     }
   },
   "errors": {
@@ -3730,7 +3733,6 @@
     "endDate": "結束日期",
     "draft": "草稿",
     "values": "值",
-    "brand": "Brand",
     "images": "媒體",
     "type_id": "類型",
     "collection_id": "商品系列",
@@ -3756,7 +3758,9 @@
     "inventory_quantity": "庫存數量",
     "requires_shipping": "需要運送",
     "variant_attributes": "款式屬性",
-    "product_attributes": "商品屬性"
+    "product_attributes": "商品屬性",
+    "handleAutoGeneratedHint": "根據名稱自動產生。僅限小寫字母、數字和連字號——此欄位無法直接編輯。",
+    "handleInvalidFormat": "Handle 只能包含小寫字母、數字和連字號"
   },
   "dateTime": {
     "years_one": "年",
@@ -3978,7 +3982,7 @@
       "manageEntities": "管理實體",
       "manageLocales": "管理語系"
     },
-    "subtitle": "管理您在 Medusa 中資料的翻譯",
+    "subtitle": "管理您在 Kayı.com 中資料的翻譯",
     "list": {
       "metrics": "已翻譯 {{translated}} / {{total}} 項"
     },
@@ -4137,7 +4141,7 @@
         "accountNameRequired": "請輸入帳戶名稱"
       },
       "preview": {
-        "title": "歡迎使用 Mercur",
+        "title": "歡迎使用 Kayı.com",
         "description": "管理您商店、商品、訂單與撥款的全方位賣家後台。",
         "placeholder": "應用程式預覽"
       }
@@ -4146,7 +4150,12 @@
   "auth": {
     "login": {
       "authenticationFailed": "驗證失敗",
-      "cloud": "使用 Mercur 登入"
+      "cloud": "使用 Kayı.com 登入"
     }
+  },
+  "sellerSuspension": {
+    "description": "您的商店已被管理方暫停。在重新啟用之前,您將無法建立新商品。如有疑問,我們的支援團隊隨時為您提供協助。",
+    "help": "說明",
+    "title": "商店已暫停"
   }
 }

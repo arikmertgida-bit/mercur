@@ -1,0 +1,227 @@
+{
+  "customFields": {
+    "title": "自定义字段",
+    "description": "管理您的自定义字段和配置",
+    "noFields": "尚未配置任何自定义字段"
+  },
+  "actions": {
+    "continue": "继续",
+    "cancel": "取消",
+    "delete": "删除"
+  },
+  "productReports": {
+    "domain": "产品举报",
+    "subtitle": "客户标记待审核的产品",
+    "filterAll": "所有状态",
+    "columns": {
+      "product": "产品",
+      "reporter": "举报人",
+      "reason": "原因",
+      "status": "状态"
+    },
+    "status": {
+      "pending": "待处理",
+      "resolved": "已解决",
+      "dismissed": "已驳回"
+    },
+    "reasons": {
+      "inaccurate_product_details": "产品信息不准确",
+      "pricing_irregularities": "定价异常",
+      "prohibited_item": "违禁商品",
+      "counterfeit_trademark": "假冒 / 商标侵权",
+      "incorrect_categorization": "分类错误",
+      "inappropriate_media": "不当媒体内容",
+      "dmca_violation": "DMCA 侵权",
+      "seller_complaint": "关于卖家的投诉",
+      "other": "其他"
+    },
+    "actions": {
+      "resolve": "标记为已解决",
+      "dismiss": "驳回"
+    },
+    "resolvePrompt": {
+      "title": "将举报标记为已解决？",
+      "description": "此举报将被标记为已解决，并从待处理队列中移除。"
+    },
+    "dismissPrompt": {
+      "title": "驳回此举报？",
+      "description": "此举报将被标记为已驳回，并从待处理队列中移除。"
+    },
+    "deletePrompt": {
+      "title": "删除此举报？",
+      "description": "此操作将永久删除该举报。此操作无法撤销。"
+    },
+    "updateSuccess": "举报已更新",
+    "updateError": "举报更新失败",
+    "deleteSuccess": "举报已删除",
+    "deleteError": "举报删除失败"
+  },
+  "wishlistModeration": {
+    "domain": "心愿单",
+    "subtitle": "用于审核目的的客户心愿单",
+    "noProducts": "暂无产品",
+    "columns": {
+      "customer": "客户",
+      "products": "产品",
+      "created": "创建时间"
+    },
+    "deletePrompt": {
+      "title": "删除此心愿单？",
+      "description": "此操作将永久删除该客户的心愿单及其所有条目。此操作无法撤销。"
+    },
+    "deleteSuccess": "心愿单已删除",
+    "deleteError": "心愿单删除失败"
+  },
+  "reportedImages": {
+    "domain": "被举报的图片",
+    "subtitle": "审查客户标记为不当的图片",
+    "filterAll": "所有状态",
+    "imageRemoved": "图片已移除",
+    "columns": {
+      "image": "图片",
+      "reporter": "举报人",
+      "reason": "原因",
+      "status": "状态"
+    },
+    "status": {
+      "pending": "待处理",
+      "resolved": "已解决"
+    },
+    "actions": {
+      "remove": "移除图片",
+      "dismiss": "驳回举报"
+    },
+    "removePrompt": {
+      "title": "移除此图片？",
+      "description": "该图片将从评价中永久删除。此操作无法撤销。"
+    },
+    "dismissPrompt": {
+      "title": "驳回此举报？",
+      "description": "图片将保持发布状态，举报将被标记为已解决。"
+    },
+    "resolveSuccess": "举报已解决",
+    "resolveError": "举报解决失败"
+  },
+  "messenger": {
+    "searchConversations": "搜索对话...",
+    "noConversations": "暂无对话",
+    "startConversation": "开始一个对话",
+    "selectConversation": "选择一个对话",
+    "startMessaging": "选择一个对话开始聊天",
+    "typeMessage": "输入消息...",
+    "seen": "已读",
+    "sent": "已发送",
+    "notificationTitle": "{{senderName}} 给您发送了一条消息",
+    "notificationBody": "{{preview}}",
+    "image": "图片",
+    "support": "支持",
+    "direct": "私信",
+    "unknown": "未知",
+    "supportTeam": "支持团队",
+    "connected": "已连接",
+    "disconnected": "已断开连接",
+    "conversationOptions": "对话选项"
+  },
+  "messages": {
+    "domain": "消息",
+    "product": "产品",
+    "store": "店铺",
+    "delete": "删除",
+    "deleteForEveryone": "为所有人删除",
+    "close": "关闭",
+    "connectionLost": "连接已断开，正在重新连接...",
+    "imageUploadFailed": "图片上传失败",
+    "deleteConfirmTitle": "删除消息",
+    "deleteConfirmDesc": "确定要删除此消息吗？",
+    "productQuestion": "产品问题",
+    "storeQuestion": "店铺问题",
+    "customerMessage": "客户消息",
+    "sellerMessage": "卖家消息",
+    "directMessage": "私信",
+    "storeContext": "店铺问题",
+    "back": "返回",
+    "failedToGetUserInfo": "无法获取用户信息。",
+    "send": "发送消息",
+    "attachImage": "附加图片",
+    "removeAttachment": "移除已附加的图片",
+    "viewImage": "查看原图",
+    "pendingImageAlt": "待发送的图片",
+    "imageAlt": "图片"
+  },
+  "requests": {
+    "domain": "请求",
+    "status": {
+      "draft": "草稿",
+      "pending": "待处理",
+      "accepted": "已接受",
+      "rejected": "已拒绝"
+    },
+    "filters": {
+      "status": "状态"
+    },
+    "columns": {
+      "name": "名称"
+    },
+    "categories": {
+      "navLabel": "分类",
+      "heading": "分类请求",
+      "noRecords": "未找到分类请求"
+    },
+    "collections": {
+      "navLabel": "系列",
+      "heading": "系列请求",
+      "noRecords": "未找到系列请求"
+    },
+    "tags": {
+      "navLabel": "标签",
+      "heading": "标签请求",
+      "noRecords": "未找到标签请求"
+    },
+    "types": {
+      "navLabel": "类型",
+      "heading": "类型请求",
+      "noRecords": "未找到类型请求"
+    },
+    "typeLabels": {
+      "product_category": "分类",
+      "product_collection": "系列",
+      "product_tag": "标签",
+      "product_type": "类型"
+    },
+    "fields": {
+      "name": "名称",
+      "handle": "标识符",
+      "description": "描述",
+      "active": "启用",
+      "internal": "内部",
+      "title": "标题",
+      "value": "值"
+    },
+    "values": {
+      "yes": "是",
+      "no": "否"
+    },
+    "detail": {
+      "pendingReview": "待审核",
+      "accept": "接受",
+      "reject": "拒绝",
+      "acceptPromptTitle": "接受请求",
+      "acceptPromptDescription": "确定要接受此请求吗？此操作将创建相应的实体。",
+      "rejectPromptTitle": "拒绝请求",
+      "rejectPromptDescription": "确定要拒绝此请求吗？此操作无法撤销。",
+      "acceptSuccess": "请求已接受",
+      "rejectSuccess": "请求已拒绝",
+      "submitter": "提交人",
+      "reviewer": "审核人"
+    }
+  },
+  "reviews": {
+    "domain": "评价",
+    "noRecords": "未找到评价",
+    "columns": {
+      "rating": "评分",
+      "reference": "参考编号",
+      "customerNote": "客户备注"
+    }
+  }
+}

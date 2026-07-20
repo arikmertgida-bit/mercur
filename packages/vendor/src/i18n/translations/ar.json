@@ -74,7 +74,8 @@
     "true": "مفعل",
     "false": "غير مفعل",
     "decrement": "إنقاص",
-    "increment": "زيادة"
+    "increment": "زيادة",
+    "drawerAccessibleDescription": "استخدم هذه اللوحة لعرض أو تعديل تفاصيل هذا المورد."
   },
   "json": {
     "header": "JSON",
@@ -173,7 +174,8 @@
     "saveAndClose": "حفظ وإغلاق",
     "request": "طلب",
     "editVariantImages": "تعديل صور المتغير",
-    "editImages": "تعديل الصور"
+    "editImages": "تعديل الصور",
+    "ok": "موافق"
   },
   "operators": {
     "in": "في"
@@ -508,7 +510,12 @@
         "handleMustContainLetter": "يجب أن يحتوي المُعرّف على حرف واحد على الأقل",
         "requiredAttributeSelect": "هذه السمة مطلوبة من قبل السوق. يرجى اختيار قيمة.",
         "requiredAttributeEnter": "هذه السمة مطلوبة من قبل السوق. يرجى إدخال قيمة.",
-        "requiredAttributeMultiSelect": "هذه السمة مطلوبة من قبل السوق. يرجى اختيار قيمة واحدة على الأقل."
+        "requiredAttributeMultiSelect": "هذه السمة مطلوبة من قبل السوق. يرجى اختيار قيمة واحدة على الأقل.",
+        "formIncomplete": "بعض الحقول المطلوبة مفقودة — تحقق من الصفوف المميزة قبل النشر.",
+        "mediaRequired": "يرجى إضافة صورة واحدة على الأقل لهذا المتغير.",
+        "priceRequired": "يرجى إدخال سعر لهذا المتغير بعملة واحدة على الأقل.",
+        "shippingProfileRequired": "يرجى اختيار ملف شحن.",
+        "stockRequired": "يرجى تحديد كمية المخزون لهذا المتغير في موقع واحد على الأقل."
       },
       "variants": {
         "header": "البدائل",
@@ -532,7 +539,14 @@
           "label": "خيارات المنتج",
           "hint": "حدد الخيارات للمنتج، مثل اللون، الحجم، إلخ."
         },
-        "optionsHeader": "الخيارات"
+        "optionsHeader": "الخيارات",
+        "mediaPicker": {
+          "description": "اختر أي صور المنتج تخص هذا المتغير.",
+          "empty": "قم بتحميل الصور في علامة التبويب التفاصيل أولاً.",
+          "header": "تعيين الصور",
+          "image": "الصورة {{index}}",
+          "partialFailureToast": "تم إنشاء المنتج، ولكن تعذر تعيين الصور لـ: {{variants}}. يمكنك إعادة المحاولة من صفحة تعديل المنتج."
+        }
       },
       "successToast": "تم إنشاء المنتج {{title}} بنجاح.",
       "attributes": {
@@ -667,7 +681,11 @@
       "removeSelected": "إزالة المحدد",
       "selectImages": "اختر الصور",
       "selectImagesHint": "انقر على الصور لإضافتها إلى هذا المتغير.",
-      "editLabel": "تحرير"
+      "editLabel": "تحرير",
+      "limitExceeded": {
+        "description": "يمكنك تحميل ما يصل إلى {{max}} صورة لكل منتج. تمت إضافة أول {{max}} صورة — تم تخطي الباقي.",
+        "title": "تم الوصول إلى الحد الأقصى للصور"
+      }
     },
     "discountableHint": "عند عدم التحديد، لن يتم تطبيق الخصومات على هذا المنتج.",
     "noSalesChannels": "غير متاح في أي قنوات بيع",
@@ -812,27 +830,6 @@
       "tableItemAvailable": "{{availableCount}} متاح",
       "tableItem_one": "{{availableCount}} متاح في {{locationCount}} موقع",
       "tableItem_other": "{{availableCount}} متاح في {{locationCount}} مواقع",
-      "inventory": {
-        "notManaged": "غير مُدار",
-        "navigateToItem": "الانتقال إلى عنصر المخزون",
-        "inventoryKit": "مجموعة المخزون",
-        "inventoryKitHint": "هل يتكون هذا البديل من عدة عناصر مخزون؟",
-        "validation": {
-          "itemId": "يرجى اختيار عنصر المخزون.",
-          "quantity": "الكمية مطلوبة. يرجى إدخال رقم موجب."
-        },
-        "editItemDetails": "تحرير تفاصيل العنصر",
-        "manageInventoryLabel": "إدارة المخزون",
-        "manageInventoryHint": "عند التمكين، سنقوم بتغيير كمية المخزون لك عند إنشاء الطلبات والإرجاعات.",
-        "allowBackordersLabel": "السماح بالطلبات المسبقة",
-        "allowBackordersHint": "عند التمكين، يمكن للعملاء شراء البديل حتى إذا لم يكن هناك كمية متاحة.",
-        "toast": {
-          "levelsBatch": "تم تحديث مستويات المخزون.",
-          "update": "تم تحديث عنصر المخزون بنجاح.",
-          "updateLevel": "تم تحديث مستوى المخزون بنجاح.",
-          "itemsManageSuccess": "تم تحديث عناصر المخزون بنجاح."
-        }
-      },
       "validation": {
         "titleRequired": "يرجى إدخال عنوان",
         "optionRequired": "يرجى اختيار قيمة"
@@ -933,6 +930,18 @@
       "description": "تعديل عدة منتجات دفعة واحدة.",
       "noChanges": "لا توجد تغييرات لحفظها.",
       "success": "تم تحديث المنتجات بنجاح."
+    },
+    "stock": {
+      "available": "متاح",
+      "edit": {
+        "description": "قم بتحديث كمية المخزون الحية لكل موقع. يتم حفظ التغييرات مباشرة في المخزون.",
+        "header": "تعديل المخزون",
+        "location": "الموقع",
+        "quantity": "الكمية",
+        "successToast": "تم تحديث المخزون بنجاح"
+      },
+      "header": "تتبع المخزون",
+      "lowStock": "مخزون منخفض"
     }
   },
   "collections": {
@@ -1164,7 +1173,6 @@
         "emptyTitle": "لا يوجد مجموعات عملاء."
       },
       "add": {
-        "success": "تمت إضافة العميل إلى: {{groups}}.",
         "list": {
           "noRecordsMessage": "يرجى إنشاء مجموعة عملاء أولاً."
         },
@@ -1172,7 +1180,6 @@
         "successMany": "تمت إضافة العميل إلى {{groups}} مجموعات بنجاح."
       },
       "removed": {
-        "success": "تمت إزالة العميل من: {{groups}}.",
         "list": {
           "noRecordsMessage": "يرجى إنشاء مجموعة عملاء أولاً."
         },
@@ -1328,7 +1335,6 @@
       "capture": "استلام الدفع",
       "capture_short": "استلام",
       "refund": "استرداد",
-      "markAsPaid": "وضع علامة مدفوع",
       "statusLabel": "حالة الدفع",
       "statusTitle": "حالة الدفع",
       "status": {
@@ -1346,8 +1352,6 @@
       },
       "capturePayment": "سيتم استلام الدفع بمبلغ {{amount}}.",
       "capturePaymentSuccess": "تم استلام الدفع بمبلغ {{amount}} بنجاح",
-      "markAsPaidPayment": "سيتم وضع علامة مدفوع على الدفع بمبلغ {{amount}}.",
-      "markAsPaidPaymentSuccess": "تم وضع علامة مدفوع على الدفع بمبلغ {{amount}} بنجاح",
       "createRefund": "إنشاء استرداد",
       "refundPaymentSuccess": "تم استرداد المبلغ {{amount}} بنجاح",
       "createRefundWrongQuantity": "يجب أن تكون الكمية رقمًا بين 1 و {{number}}",
@@ -1421,7 +1425,6 @@
       "sendNotificationHint": "إخطار العميل بالإرجاع.",
       "returnTotal": "إجمالي الإرجاع",
       "inboundTotal": "إجمالي الوارد",
-      "refundAmount": "مبلغ الاسترداد",
       "outstandingAmount": "المبلغ المستحق",
       "reason": "السبب",
       "reasonHint": "اختر سبب رغبة العميل في إرجاع العناصر.",
@@ -1709,7 +1712,7 @@
       "title": "إنشاء استرداد",
       "sendNotificationHint": "إخطار العملاء بالاسترداد المُنشأ.",
       "systemPayment": "الدفع بالنظام",
-      "systemPaymentDesc": "واحدة أو أكثر من دفعاتك هي دفعة نظام. كن على علم بأن الاستلام والاسترداد لا يتم التعامل معها بواسطة Medusa لمثل هذه الدفعات.",
+      "systemPaymentDesc": "واحدة أو أكثر من دفعاتك هي دفعة نظام. كن على علم بأن الاستلام والاسترداد لا يتم التعامل معها بواسطة Kayı.com لمثل هذه الدفعات.",
       "error": {
         "amountToLarge": "لا يمكن استرداد أكثر من المبلغ الأصلي للطلب.",
         "amountNegative": "يجب أن يكون مبلغ الاسترداد رقمًا موجبًا.",
@@ -2133,8 +2136,6 @@
       "header": "إنشاء منطقة ضريبية",
       "hint": "إنشاء منطقة ضريبية جديدة لتحديد معدلات الضرائب لدولة معينة.",
       "errors": {
-        "rateIsRequired": "معدل الضريبة مطلوب عند إنشاء معدل ضريبة افتراضي.",
-        "nameIsRequired": "الاسم مطلوب عند إنشاء معدل ضريبة افتراضي.",
         "missingProvider": "المزوّد مطلوب عند إنشاء منطقة ضريبية.",
         "missingCountry": "الدولة مطلوبة عند إنشاء منطقة ضريبية."
       },
@@ -2439,7 +2440,6 @@
     "toasts": {
       "promotionCreateSuccess": "تم إنشاء العرض الترويجي ({{code}}) بنجاح."
     },
-    "create": {},
     "edit": {
       "title": "تحرير تفاصيل العرض الترويجي",
       "rules": {
@@ -2812,7 +2812,7 @@
       "header": "تحرير الملف الشخصي",
       "languageHint": "اللغة التي تريد استخدامها في لوحة الإدارة. هذا لا يغير لغة متجرك.",
       "languagePlaceholder": "اختر اللغة",
-      "usageInsightsHint": "شارك رؤى الاستخدام وساعدنا في تحسين Medusa. يمكنك قراءة المزيد حول ما نجمعه وكيف نستخدمه في <0>التوثيق</0>."
+      "usageInsightsHint": "شارك رؤى الاستخدام وساعدنا في تحسين Kayı.com. يمكنك قراءة المزيد حول ما نجمعه وكيف نستخدمه في <0>التوثيق</0>."
     },
     "toast": {
       "edit": "تم حفظ تغييرات الملف الشخصي"
@@ -2884,7 +2884,6 @@
     "removeCurrencyWarning_other": "أنت على وشك إزالة {{count}} عملات من متجرك. تأكد من إزالة جميع الأسعار التي تستخدم العملات قبل المتابعة.",
     "currencyAlreadyAdded": "تمت إضافة العملة بالفعل إلى متجرك.",
     "edit": {
-      "header": "تحرير المتجر",
       "websiteHint": "يجب أن يتضمن البروتوكول (مثل https://)",
       "mediaHeading": "الوسائط",
       "mediaTipLabel": "نصيحة:",
@@ -2892,7 +2891,9 @@
       "uploadLogoLabel": "تحميل الشعار",
       "uploadLogoHint": "اسحب شعارك وأفلته هنا أو انقر للتحميل.",
       "uploadBannerLabel": "تحميل اللافتة",
-      "uploadBannerHint": "اسحب لافتتك وأفلتها هنا أو انقر للتحميل."
+      "uploadBannerHint": "اسحب لافتتك وأفلتها هنا أو انقر للتحميل.",
+      "bannerTooSmall": "الصورة صغيرة ({{width}}×{{height}}px). يُوصى بحجم {{minWidth}}×{{minHeight}}px على الأقل، وإلا فقد تبدو ضبابية.",
+      "logoTooSmall": "الصورة صغيرة ({{width}}×{{height}}px). يُوصى بحجم {{minWidth}}×{{minHeight}}px على الأقل، وإلا فقد تبدو ضبابية."
     },
     "toast": {
       "update": "تم تحديث المتجر بنجاح",
@@ -3133,7 +3134,6 @@
       "createTaxRate": "إنشاء معدل ضريبة",
       "createTaxRateHint": "إنشاء معدل ضريبة جديد للمنطقة.",
       "deleteRateDescription": "أنت على وشك حذف معدل الضريبة {{name}}. لا يمكن التراجع عن هذا الإجراء.",
-      "editTaxRate": "تحرير معدل الضريبة",
       "editRateAction": "تحرير المعدل",
       "editOverridesAction": "تحرير التجاوزات",
       "editOverridesTitle": "تحرير تجاوزات معدل الضريبة",
@@ -3235,7 +3235,7 @@
       "createPublishableHeader": "إنشاء مفتاح API قابل للنشر",
       "createPublishableHint": "إنشاء مفتاح API قابل للنشر جديد لتحديد نطاق الطلبات إلى قنوات بيع محددة.",
       "createSecretHeader": "إنشاء مفتاح API سري",
-      "createSecretHint": "إنشاء مفتاح API سري جديد للوصول إلى API Medusa كمستخدم إداري مصادق.",
+      "createSecretHint": "إنشاء مفتاح API سري جديد للوصول إلى API Kayı.com كمستخدم إداري مصادق.",
       "secretKeyCreatedHeader": "تم إنشاء المفتاح السري",
       "secretKeyCreatedHint": "تم إنشاء مفتاحك السري الجديد. انسخه واحفظه بأمان الآن. هذه هي المرة الوحيدة التي سيتم عرضها.",
       "copySecretTokenSuccess": "تم نسخ المفتاح السري إلى الحافظة.",
@@ -3332,7 +3332,7 @@
   },
   "login": {
     "forgotPassword": "نسيت كلمة المرور؟ - <0>إعادة تعيين</0>",
-    "title": "مرحبًا بك في مدوسا",
+    "title": "مرحبًا بك في Kayı.com",
     "hint": "سجل الدخول للوصول إلى منطقة الحساب",
     "submit": "تسجيل الدخول",
     "sessionExpired": "انتهت صلاحية الجلسة",
@@ -3344,7 +3344,7 @@
     }
   },
   "invite": {
-    "title": "مرحبًا بك في مدوسا",
+    "title": "مرحبًا بك في Kayı.com",
     "hint": "أنشئ حسابك أدناه",
     "backToLogin": "العودة إلى تسجيل الدخول",
     "createAccount": "إنشاء حساب",
@@ -3352,8 +3352,7 @@
     "emailTooltip": "لا يمكن تغيير بريدك الإلكتروني. إذا كنت ترغب في استخدام بريد إلكتروني آخر، يجب إرسال دعوة جديدة.",
     "invalidInvite": "الدعوة غير صالحة أو انتهت صلاحيتها.",
     "successTitle": "تم تسجيل حسابك بنجاح",
-    "successHint": "ابدأ باستخدام مدوسا الآن.",
-    "successAction": "ابدأ مدوسا",
+    "successHint": "ابدأ باستخدام Kayı.com الآن.",
     "invalidTokenTitle": "رمز الدعوة غير صالح",
     "invalidTokenHint": "حاول طلب رابط دعوة جديد.",
     "passwordMismatch": "كلمات المرور غير متطابقة",
@@ -3389,7 +3388,7 @@
   },
   "workflowExecutions": {
     "domain": "تنفيذات سير العمل",
-    "subtitle": "عرض وتتبع تنفيذات سير العمل في تطبيق مدوسا الخاص بك.",
+    "subtitle": "عرض وتتبع تنفيذات سير العمل في تطبيق Kayı.com الخاص بك.",
     "transactionIdLabel": "معرف المعاملة",
     "workflowIdLabel": "معرف سير العمل",
     "progressLabel": "التقدم",
@@ -3482,7 +3481,7 @@
       "description": "ليس لديك أي إشعارات في الوقت الحالي، ولكن بمجرد أن تحصل عليها ستظهر هنا."
     },
     "accessibility": {
-      "description": "سيتم سرد الإشعارات حول أنشطة مدوسا هنا."
+      "description": "سيتم سرد الإشعارات حول أنشطة Kayı.com هنا."
     }
   },
   "errors": {
@@ -3670,7 +3669,6 @@
     "endDate": "تاريخ الانتهاء",
     "draft": "مسودة",
     "values": "القيم",
-    "brand": "Brand",
     "reference": "المرجع",
     "reference_id": "معرّف المرجع",
     "images": "الوسائط",
@@ -3703,7 +3701,9 @@
     "inventory_quantity": "كمية المخزون",
     "requires_shipping": "يتطلب الشحن",
     "variant_attributes": "سمات المتغير",
-    "product_attributes": "سمات المنتج"
+    "product_attributes": "سمات المنتج",
+    "handleAutoGeneratedHint": "يُنشأ تلقائيًا من الاسم. أحرف صغيرة وأرقام وشرطات فقط — لا يمكن تعديل هذا الحقل مباشرة.",
+    "handleInvalidFormat": "يجب أن يحتوي المعرف على أحرف صغيرة وأرقام وشرطات فقط"
   },
   "dateTime": {
     "years_one": "سنة",
@@ -3891,7 +3891,7 @@
       "manageEntities": "أدر الكيانات",
       "manageLocales": "أدر اللغات المحلية"
     },
-    "subtitle": "أدر ترجمات بياناتك في Medusa",
+    "subtitle": "أدر ترجمات بياناتك في Kayı.com",
     "list": {
       "metrics": "{{translated}} من {{total}} ترجمة"
     },
@@ -4085,7 +4085,7 @@
         "accountNameRequired": "يرجى إدخال اسم الحساب"
       },
       "preview": {
-        "title": "مرحبًا بك في Mercur",
+        "title": "مرحبًا بك في Kayı.com",
         "description": "بوابة البائع الشاملة لإدارة متجرك ومنتجاتك وطلباتك ومدفوعاتك.",
         "placeholder": "معاينة التطبيق"
       }
@@ -4150,7 +4150,12 @@
   "auth": {
     "login": {
       "authenticationFailed": "فشلت المصادقة",
-      "cloud": "تسجيل الدخول باستخدام Mercur"
+      "cloud": "تسجيل الدخول باستخدام Kayı.com"
     }
+  },
+  "sellerSuspension": {
+    "description": "تم تعليق متجرك من قبل الإدارة. لن تتمكن من إنشاء منتجات جديدة حتى يتم إعادة تفعيله. إذا كانت لديك أسئلة، فريق الدعم لدينا هنا لمساعدتك.",
+    "help": "مساعدة",
+    "title": "المتجر معلق"
   }
 }

@@ -372,7 +372,7 @@ const VendorBatchAttributeAdd = z.union([
     .refine(
       (v) => !v.is_variant_axis || (v.type ?? "multi_select") === "multi_select",
       {
-        message: "is_variant_axis is only allowed on multi_select attributes",
+        message: "vendor_error.variant_axis_multi_select_only",
         path: ["is_variant_axis"],
       },
     )
@@ -382,7 +382,7 @@ const VendorBatchAttributeAdd = z.union([
         v.type !== undefined ||
         typeof v.value === "boolean",
       {
-        message: "inline non-axis attributes require an explicit type",
+        message: "vendor_error.inline_attribute_requires_type",
         path: ["type"],
       },
     ),

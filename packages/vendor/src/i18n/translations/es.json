@@ -74,7 +74,8 @@
     "true": "Verdadero",
     "false": "Falso",
     "decrement": "Disminuir",
-    "increment": "Aumentar"
+    "increment": "Aumentar",
+    "drawerAccessibleDescription": "Usa este panel para ver o editar los detalles de este recurso."
   },
   "shippingOptionTypes": {
     "domain": "Tipos de Opciones de Envío",
@@ -195,7 +196,8 @@
     "import": "Importar",
     "request": "Solicitar",
     "editVariantImages": "Editar imágenes de la variante",
-    "editImages": "Editar imágenes"
+    "editImages": "Editar imágenes",
+    "ok": "Aceptar"
   },
   "operators": {
     "in": "En"
@@ -516,7 +518,12 @@
         "handleMustContainLetter": "El handle debe contener al menos una letra",
         "requiredAttributeSelect": "El marketplace exige este atributo. Selecciona un valor.",
         "requiredAttributeEnter": "El marketplace exige este atributo. Introduce un valor.",
-        "requiredAttributeMultiSelect": "El marketplace exige este atributo. Selecciona al menos un valor."
+        "requiredAttributeMultiSelect": "El marketplace exige este atributo. Selecciona al menos un valor.",
+        "formIncomplete": "Faltan algunos campos obligatorios; revisa las filas resaltadas antes de publicar.",
+        "mediaRequired": "Agrega al menos una imagen para esta variante.",
+        "priceRequired": "Introduce un precio para esta variante en al menos una moneda.",
+        "shippingProfileRequired": "Selecciona un perfil de envío.",
+        "stockRequired": "Establece una cantidad de stock para esta variante en al menos una ubicación."
       },
       "variants": {
         "header": "Variantes",
@@ -540,7 +547,14 @@
           "label": "Opciones de producto",
           "hint": "Define las opciones del producto, por ejemplo, color, tamaño, etc."
         },
-        "optionsHeader": "Opciones"
+        "optionsHeader": "Opciones",
+        "mediaPicker": {
+          "description": "Elige qué fotos del producto pertenecen a esta variante.",
+          "empty": "Sube fotos en la pestaña Detalles primero.",
+          "header": "Asignar imágenes",
+          "image": "Imagen {{index}}",
+          "partialFailureToast": "El producto se creó, pero no se pudieron asignar imágenes a: {{variants}}. Puedes volver a intentarlo desde la página de edición del producto."
+        }
       },
       "successToast": "Producto {{title}} creado correctamente.",
       "attributes": {
@@ -675,7 +689,11 @@
       "removeSelected": "Eliminar seleccionadas",
       "selectImages": "Seleccionar imágenes",
       "selectImagesHint": "Haz clic en las imágenes para añadirlas a esta variante.",
-      "editLabel": "Editar"
+      "editLabel": "Editar",
+      "limitExceeded": {
+        "description": "Puedes subir hasta {{max}} imágenes por producto. Se añadieron las primeras {{max}} — el resto se omitió.",
+        "title": "Se alcanzó el límite de imágenes"
+      }
     },
     "discountableHint": "Si no está marcado, no se aplicarán descuentos a este producto.",
     "noSalesChannels": "No disponible en ningún canal de venta",
@@ -820,27 +838,6 @@
       "tableItemAvailable": "{{availableCount}} disponible",
       "tableItem_one": "{{availableCount}} disponible en {{locationCount}} ubicación",
       "tableItem_other": "{{availableCount}} disponible en {{locationCount}} ubicaciones",
-      "inventory": {
-        "notManaged": "No gestionado",
-        "navigateToItem": "Ir al ítem de inventario",
-        "inventoryKit": "Kit de Inventario",
-        "inventoryKitHint": "¿Esta variante consiste en varios ítems de inventario?",
-        "validation": {
-          "itemId": "Por favor, selecciona un ítem de inventario.",
-          "quantity": "Se requiere la cantidad. Por favor, ingresa un número positivo."
-        },
-        "editItemDetails": "Editar detalles del ítem",
-        "manageInventoryLabel": "Gestionar inventario",
-        "manageInventoryHint": "Cuando se habilite, cambiaremos la cantidad de inventario por ti cuando se creen pedidos y devoluciones.",
-        "allowBackordersLabel": "Permitir pedidos pendientes",
-        "allowBackordersHint": "Cuando se habilite, los clientes podrán comprar la variante incluso si no hay cantidad disponible.",
-        "toast": {
-          "levelsBatch": "Niveles de inventario actualizados.",
-          "update": "Ítem de inventario actualizado correctamente.",
-          "updateLevel": "Nivel de inventario actualizado correctamente.",
-          "itemsManageSuccess": "Ítems de inventario actualizados correctamente."
-        }
-      },
       "validation": {
         "titleRequired": "Introduce un título",
         "optionRequired": "Selecciona un valor"
@@ -955,6 +952,18 @@
       "description": "Edita varios productos a la vez.",
       "noChanges": "No hay cambios que guardar.",
       "success": "Los productos se actualizaron correctamente."
+    },
+    "stock": {
+      "available": "Disponible",
+      "edit": {
+        "description": "Actualiza la cantidad de stock en tiempo real para cada ubicación. Los cambios se guardan directamente en Inventario.",
+        "header": "Editar stock",
+        "location": "Ubicación",
+        "quantity": "Cantidad",
+        "successToast": "Stock actualizado correctamente"
+      },
+      "header": "Seguimiento de stock",
+      "lowStock": "Stock bajo"
     }
   },
   "collections": {
@@ -1186,7 +1195,6 @@
         "emptyTitle": "No hay grupos de clientes"
       },
       "add": {
-        "success": "Cliente agregado a: {{groups}}.",
         "list": {
           "noRecordsMessage": "Por favor, crea un grupo de clientes primero."
         },
@@ -1194,7 +1202,6 @@
         "successMany": "El cliente se añadió correctamente a {{groups}} grupos."
       },
       "removed": {
-        "success": "Cliente eliminado de: {{groups}}.",
         "list": {
           "noRecordsMessage": "Por favor, crea un grupo de clientes primero."
         },
@@ -1394,7 +1401,6 @@
       "capture": "Capturar pago",
       "capture_short": "Capturar",
       "refund": "Reembolso",
-      "markAsPaid": "Marcar como pagado",
       "statusLabel": "Estado del pago",
       "statusTitle": "Estado del pago",
       "status": {
@@ -1412,8 +1418,6 @@
       },
       "capturePayment": "Se capturará el pago de {{amount}}.",
       "capturePaymentSuccess": "Pago de {{amount}} capturado correctamente",
-      "markAsPaidPayment": "El pago de {{amount}} será marcado como pagado.",
-      "markAsPaidPaymentSuccess": "Pago de {{amount}} marcado como pagado correctamente",
       "createRefund": "Crear reembolso",
       "refundPaymentSuccess": "Reembolso de {{amount}} exitoso",
       "createRefundWrongQuantity": "La cantidad debe ser un número entre 1 y {{number}}",
@@ -1760,7 +1764,7 @@
       "title": "Crear Reembolso",
       "sendNotificationHint": "Notificar a los clientes sobre el reembolso creado.",
       "systemPayment": "Pago del sistema",
-      "systemPaymentDesc": "Uno o más de tus pagos son pagos del sistema. Ten en cuenta que Medusa no maneja las capturas y reembolsos para dichos pagos.",
+      "systemPaymentDesc": "Uno o más de tus pagos son pagos del sistema. Ten en cuenta que Kayı.com no maneja las capturas y reembolsos para dichos pagos.",
       "error": {
         "amountToLarge": "No se puede reembolsar más que el monto original del pedido.",
         "amountNegative": "El monto del reembolso debe ser un número positivo.",
@@ -2458,7 +2462,6 @@
     "toasts": {
       "promotionCreateSuccess": "La promoción ({{code}}) fue creada correctamente."
     },
-    "create": {},
     "edit": {
       "title": "Editar Detalles de la Promoción",
       "rules": {
@@ -2831,7 +2834,7 @@
       "header": "Editar Perfil",
       "languageHint": "El idioma que deseas usar en el panel de administración. Esto no cambia el idioma de tu tienda.",
       "languagePlaceholder": "Selecciona idioma",
-      "usageInsightsHint": "Comparte información de uso y ayúdanos a mejorar Medusa. Puedes leer más sobre lo que recopilamos y cómo lo usamos en nuestra <0>documentación</0>."
+      "usageInsightsHint": "Comparte información de uso y ayúdanos a mejorar Kayı.com. Puedes leer más sobre lo que recopilamos y cómo lo usamos en nuestra <0>documentación</0>."
     },
     "toast": {
       "edit": "Cambios en el perfil guardados"
@@ -2900,11 +2903,9 @@
       "manageEntities": "Gestionar entidades",
       "manageLocales": "Gestionar idiomas"
     },
-    "title": "Traducción de dominios",
-    "subtitle": "Gestiona las traducciones de tus datos en Medusa",
+    "subtitle": "Gestiona las traducciones de tus datos en Kayı.com",
     "bulk": {
       "header": "Editor de Traducciones en Masa",
-      "locale": "Idioma",
       "mainColumn": "Idioma"
     },
     "edit": {
@@ -2951,7 +2952,6 @@
     "currencyAlreadyAdded": "La moneda ya ha sido agregada a tu tienda.",
     "localeAlreadyAdded": "El idioma ya ha sido agregado a tu tienda.",
     "edit": {
-      "header": "Editar Tienda",
       "websiteHint": "Debe incluir el protocolo (p. ej. https://)",
       "mediaHeading": "Medios",
       "mediaTipLabel": "Consejo:",
@@ -2959,7 +2959,9 @@
       "uploadLogoLabel": "Subir logotipo",
       "uploadLogoHint": "Arrastra y suelta tu logotipo aquí o haz clic para subirlo.",
       "uploadBannerLabel": "Subir banner",
-      "uploadBannerHint": "Arrastra y suelta tu banner aquí o haz clic para subirlo."
+      "uploadBannerHint": "Arrastra y suelta tu banner aquí o haz clic para subirlo.",
+      "bannerTooSmall": "La imagen es pequeña ({{width}}×{{height}}px). Se recomienda al menos {{minWidth}}×{{minHeight}}px, de lo contrario puede verse borrosa.",
+      "logoTooSmall": "La imagen es pequeña ({{width}}×{{height}}px). Se recomienda al menos {{minWidth}}×{{minHeight}}px, de lo contrario puede verse borrosa."
     },
     "toast": {
       "update": "Tienda actualizada exitosamente",
@@ -3294,7 +3296,7 @@
       "createPublishableHeader": "Crear Clave API Publicable",
       "createPublishableHint": "Crea una nueva clave API publicable para limitar el alcance de las solicitudes a canales de venta específicos.",
       "createSecretHeader": "Crear Clave API Secreta",
-      "createSecretHint": "Crea una nueva clave API secreta para acceder a la API de Medusa como usuario administrador autenticado.",
+      "createSecretHint": "Crea una nueva clave API secreta para acceder a la API de Kayı.com como usuario administrador autenticado.",
       "secretKeyCreatedHeader": "Clave Secreta Creada",
       "secretKeyCreatedHint": "Tu nueva clave secreta ha sido generada. Cópiala y guárdala de manera segura ahora. Esta es la única vez que se mostrará.",
       "copySecretTokenSuccess": "Clave secreta copiada al portapapeles.",
@@ -3391,7 +3393,7 @@
   },
   "login": {
     "forgotPassword": "¿Olvidaste la contraseña? - <0>Restablecer</0>",
-    "title": "Bienvenido a Medusa",
+    "title": "Bienvenido a Kayı.com",
     "hint": "Inicia sesión para acceder a la área de cuentas",
     "submit": "Iniciar sesión",
     "sessionExpired": "Sesión caducada",
@@ -3403,7 +3405,7 @@
     }
   },
   "invite": {
-    "title": "Bienvenido a Medusa",
+    "title": "Bienvenido a Kayı.com",
     "hint": "Crea tu cuenta a continuación",
     "backToLogin": "Volver al login",
     "createAccount": "Crear cuenta",
@@ -3411,8 +3413,7 @@
     "emailTooltip": "Tu correo electrónico no puede ser cambiado. Si deseas usar otro correo, debe enviarse una nueva invitación.",
     "invalidInvite": "La invitación es inválida o ha expirado.",
     "successTitle": "Tu cuenta ha sido registrada",
-    "successHint": "Comienza a usar Medusa Admin de inmediato.",
-    "successAction": "Iniciar Medusa Admin",
+    "successHint": "Comienza a usar Kayı.com Admin de inmediato.",
     "invalidTokenTitle": "Tu token de invitación es inválido",
     "invalidTokenHint": "Intenta solicitar un nuevo enlace de invitación.",
     "passwordMismatch": "Las contraseñas no coinciden",
@@ -3448,7 +3449,7 @@
   },
   "workflowExecutions": {
     "domain": "Flujos de trabajo",
-    "subtitle": "Visualiza y realiza un seguimiento de las ejecuciones de flujos de trabajo en tu aplicación Medusa.",
+    "subtitle": "Visualiza y realiza un seguimiento de las ejecuciones de flujos de trabajo en tu aplicación Kayı.com.",
     "transactionIdLabel": "ID de Transacción",
     "workflowIdLabel": "ID de Flujo de Trabajo",
     "progressLabel": "Progreso",
@@ -3541,7 +3542,7 @@
       "description": "No tienes notificaciones por el momento, pero una vez las tengas aparecerán aquí."
     },
     "accessibility": {
-      "description": "Las notificaciones sobre las actividades de Medusa se mostrarán aquí."
+      "description": "Las notificaciones sobre las actividades de Kayı.com se mostrarán aquí."
     }
   },
   "errors": {
@@ -3735,7 +3736,6 @@
     "endDate": "Fecha de finalización",
     "draft": "Borrador",
     "values": "Valores",
-    "brand": "Brand",
     "images": "Medios",
     "type_id": "Tipo",
     "collection_id": "Colección",
@@ -3762,7 +3762,9 @@
     "inventory_quantity": "Cantidad de inventario",
     "requires_shipping": "Requiere envío",
     "variant_attributes": "Atributos de la variante",
-    "product_attributes": "Atributos del producto"
+    "product_attributes": "Atributos del producto",
+    "handleAutoGeneratedHint": "Se genera automáticamente a partir del nombre. Solo letras minúsculas, números y guiones — este campo no se puede editar directamente.",
+    "handleInvalidFormat": "El identificador solo puede contener letras minúsculas, números y guiones"
   },
   "dateTime": {
     "years_one": "Año",
@@ -4105,7 +4107,7 @@
         "accountNameRequired": "Introduce un nombre de cuenta"
       },
       "preview": {
-        "title": "Bienvenido a Mercur",
+        "title": "Bienvenido a Kayı.com",
         "description": "Tu portal de vendedor todo en uno para gestionar tu tienda, productos, pedidos y pagos.",
         "placeholder": "Vista previa de la aplicación"
       }
@@ -4148,7 +4150,12 @@
   "auth": {
     "login": {
       "authenticationFailed": "Error de autenticación",
-      "cloud": "Iniciar sesión con Mercur"
+      "cloud": "Iniciar sesión con Kayı.com"
     }
+  },
+  "sellerSuspension": {
+    "description": "Tu tienda ha sido suspendida por la administración. No podrás crear nuevos productos hasta que se reactive. Si tienes preguntas, nuestro equipo de soporte está aquí para ayudarte.",
+    "help": "Ayuda",
+    "title": "Tienda suspendida"
   }
 }

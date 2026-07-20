@@ -1,0 +1,227 @@
+{
+  "customFields": {
+    "title": "Προσαρμοσμένα πεδία",
+    "description": "Διαχειριστείτε τα προσαρμοσμένα πεδία και τις ρυθμίσεις σας",
+    "noFields": "Δεν έχουν διαμορφωθεί ακόμη προσαρμοσμένα πεδία"
+  },
+  "actions": {
+    "continue": "Συνέχεια",
+    "cancel": "Ακύρωση",
+    "delete": "Διαγραφή"
+  },
+  "productReports": {
+    "domain": "Αναφορές προϊόντων",
+    "subtitle": "Προϊόντα που έχουν επισημανθεί από πελάτες για έλεγχο",
+    "filterAll": "Όλες οι καταστάσεις",
+    "columns": {
+      "product": "Προϊόν",
+      "reporter": "Αναφέρθηκε από",
+      "reason": "Αιτία",
+      "status": "Κατάσταση"
+    },
+    "status": {
+      "pending": "Εκκρεμεί",
+      "resolved": "Επιλύθηκε",
+      "dismissed": "Απορρίφθηκε"
+    },
+    "reasons": {
+      "inaccurate_product_details": "Ανακριβή στοιχεία προϊόντος",
+      "pricing_irregularities": "Ανωμαλίες τιμολόγησης",
+      "prohibited_item": "Απαγορευμένο προϊόν",
+      "counterfeit_trademark": "Απομίμηση / παραβίαση εμπορικού σήματος",
+      "incorrect_categorization": "Εσφαλμένη κατηγοριοποίηση",
+      "inappropriate_media": "Ακατάλληλο υλικό",
+      "dmca_violation": "Παραβίαση DMCA",
+      "seller_complaint": "Παράπονο για τον πωλητή",
+      "other": "Άλλο"
+    },
+    "actions": {
+      "resolve": "Σήμανση ως επιλυμένο",
+      "dismiss": "Απόρριψη"
+    },
+    "resolvePrompt": {
+      "title": "Σήμανση της αναφοράς ως επιλυμένης;",
+      "description": "Αυτή η αναφορά θα σημανθεί ως επιλυμένη και θα αφαιρεθεί από την ουρά εκκρεμοτήτων."
+    },
+    "dismissPrompt": {
+      "title": "Απόρριψη αυτής της αναφοράς;",
+      "description": "Αυτή η αναφορά θα σημανθεί ως απορριφθείσα και θα αφαιρεθεί από την ουρά εκκρεμοτήτων."
+    },
+    "deletePrompt": {
+      "title": "Διαγραφή αυτής της αναφοράς;",
+      "description": "Αυτή η ενέργεια θα διαγράψει οριστικά την αναφορά. Δεν μπορεί να αναιρεθεί."
+    },
+    "updateSuccess": "Η αναφορά ενημερώθηκε",
+    "updateError": "Αποτυχία ενημέρωσης της αναφοράς",
+    "deleteSuccess": "Η αναφορά διαγράφηκε",
+    "deleteError": "Αποτυχία διαγραφής της αναφοράς"
+  },
+  "wishlistModeration": {
+    "domain": "Λίστες επιθυμιών",
+    "subtitle": "Λίστες επιθυμιών πελατών, για σκοπούς εποπτείας",
+    "noProducts": "Δεν υπάρχουν προϊόντα",
+    "columns": {
+      "customer": "Πελάτης",
+      "products": "Προϊόντα",
+      "created": "Δημιουργήθηκε"
+    },
+    "deletePrompt": {
+      "title": "Διαγραφή αυτής της λίστας επιθυμιών;",
+      "description": "Αυτή η ενέργεια θα διαγράψει οριστικά τη λίστα επιθυμιών του πελάτη και όλες τις καταχωρίσεις της. Δεν μπορεί να αναιρεθεί."
+    },
+    "deleteSuccess": "Η λίστα επιθυμιών διαγράφηκε",
+    "deleteError": "Αποτυχία διαγραφής της λίστας επιθυμιών"
+  },
+  "reportedImages": {
+    "domain": "Αναφερθείσες εικόνες",
+    "subtitle": "Ελέγξτε εικόνες που έχουν επισημανθεί από πελάτες ως ακατάλληλες",
+    "filterAll": "Όλες οι καταστάσεις",
+    "imageRemoved": "Η εικόνα αφαιρέθηκε",
+    "columns": {
+      "image": "Εικόνα",
+      "reporter": "Αναφέρθηκε από",
+      "reason": "Αιτία",
+      "status": "Κατάσταση"
+    },
+    "status": {
+      "pending": "Εκκρεμεί",
+      "resolved": "Επιλύθηκε"
+    },
+    "actions": {
+      "remove": "Αφαίρεση εικόνας",
+      "dismiss": "Απόρριψη αναφοράς"
+    },
+    "removePrompt": {
+      "title": "Αφαίρεση αυτής της εικόνας;",
+      "description": "Η εικόνα θα διαγραφεί οριστικά από την κριτική. Δεν μπορεί να αναιρεθεί."
+    },
+    "dismissPrompt": {
+      "title": "Απόρριψη αυτής της αναφοράς;",
+      "description": "Η εικόνα θα παραμείνει δημοσιευμένη και η αναφορά θα σημανθεί ως επιλυμένη."
+    },
+    "resolveSuccess": "Η αναφορά επιλύθηκε",
+    "resolveError": "Αποτυχία επίλυσης της αναφοράς"
+  },
+  "messenger": {
+    "searchConversations": "Αναζήτηση συνομιλιών...",
+    "noConversations": "Δεν υπάρχουν ακόμη συνομιλίες",
+    "startConversation": "Ξεκινήστε μια συνομιλία",
+    "selectConversation": "Επιλέξτε μια συνομιλία",
+    "startMessaging": "Επιλέξτε μια συνομιλία για να ξεκινήσετε",
+    "typeMessage": "Πληκτρολογήστε ένα μήνυμα...",
+    "seen": "Αναγνώστηκε",
+    "sent": "Εστάλη",
+    "notificationTitle": "Ο/Η {{senderName}} σας έστειλε ένα μήνυμα",
+    "notificationBody": "{{preview}}",
+    "image": "Εικόνα",
+    "support": "Υποστήριξη",
+    "direct": "Απευθείας",
+    "unknown": "Άγνωστος",
+    "supportTeam": "Ομάδα υποστήριξης",
+    "connected": "Συνδεδεμένος",
+    "disconnected": "Αποσυνδεδεμένος",
+    "conversationOptions": "Επιλογές συνομιλίας"
+  },
+  "messages": {
+    "domain": "Μηνύματα",
+    "product": "Προϊόν",
+    "store": "Κατάστημα",
+    "delete": "Διαγραφή",
+    "deleteForEveryone": "Διαγραφή για όλους",
+    "close": "Κλείσιμο",
+    "connectionLost": "Η σύνδεση χάθηκε. Επανασύνδεση...",
+    "imageUploadFailed": "Η μεταφόρτωση της εικόνας απέτυχε",
+    "deleteConfirmTitle": "Διαγραφή μηνύματος",
+    "deleteConfirmDesc": "Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτό το μήνυμα;",
+    "productQuestion": "Ερώτηση για προϊόν",
+    "storeQuestion": "Ερώτηση για το κατάστημα",
+    "customerMessage": "Μήνυμα πελάτη",
+    "sellerMessage": "Μήνυμα πωλητή",
+    "directMessage": "Απευθείας μήνυμα",
+    "storeContext": "Ερώτηση για το κατάστημα",
+    "back": "Πίσω",
+    "failedToGetUserInfo": "Δεν ήταν δυνατή η ανάκτηση των πληροφοριών χρήστη.",
+    "send": "Αποστολή μηνύματος",
+    "attachImage": "Επισύναψη εικόνας",
+    "removeAttachment": "Αφαίρεση επισυναπτόμενης εικόνας",
+    "viewImage": "Προβολή εικόνας σε πλήρες μέγεθος",
+    "pendingImageAlt": "Εικόνα προς αποστολή",
+    "imageAlt": "Εικόνα"
+  },
+  "requests": {
+    "domain": "Αιτήματα",
+    "status": {
+      "draft": "Πρόχειρο",
+      "pending": "Εκκρεμεί",
+      "accepted": "Εγκρίθηκε",
+      "rejected": "Απορρίφθηκε"
+    },
+    "filters": {
+      "status": "Κατάσταση"
+    },
+    "columns": {
+      "name": "Όνομα"
+    },
+    "categories": {
+      "navLabel": "Κατηγορίες",
+      "heading": "Αιτήματα κατηγοριών",
+      "noRecords": "Δεν βρέθηκαν αιτήματα κατηγοριών"
+    },
+    "collections": {
+      "navLabel": "Συλλογές",
+      "heading": "Αιτήματα συλλογών",
+      "noRecords": "Δεν βρέθηκαν αιτήματα συλλογών"
+    },
+    "tags": {
+      "navLabel": "Ετικέτες",
+      "heading": "Αιτήματα ετικετών",
+      "noRecords": "Δεν βρέθηκαν αιτήματα ετικετών"
+    },
+    "types": {
+      "navLabel": "Τύποι",
+      "heading": "Αιτήματα τύπων",
+      "noRecords": "Δεν βρέθηκαν αιτήματα τύπων"
+    },
+    "typeLabels": {
+      "product_category": "Κατηγορία",
+      "product_collection": "Συλλογή",
+      "product_tag": "Ετικέτα",
+      "product_type": "Τύπος"
+    },
+    "fields": {
+      "name": "Όνομα",
+      "handle": "Handle",
+      "description": "Περιγραφή",
+      "active": "Ενεργό",
+      "internal": "Εσωτερικό",
+      "title": "Τίτλος",
+      "value": "Τιμή"
+    },
+    "values": {
+      "yes": "Ναι",
+      "no": "Όχι"
+    },
+    "detail": {
+      "pendingReview": "Εκκρεμεί έλεγχος",
+      "accept": "Αποδοχή",
+      "reject": "Απόρριψη",
+      "acceptPromptTitle": "Αποδοχή αιτήματος",
+      "acceptPromptDescription": "Είστε βέβαιοι ότι θέλετε να αποδεχτείτε αυτό το αίτημα; Αυτή η ενέργεια θα δημιουργήσει την οντότητα.",
+      "rejectPromptTitle": "Απόρριψη αιτήματος",
+      "rejectPromptDescription": "Είστε βέβαιοι ότι θέλετε να απορρίψετε αυτό το αίτημα; Δεν μπορεί να αναιρεθεί.",
+      "acceptSuccess": "Το αίτημα έγινε αποδεκτό",
+      "rejectSuccess": "Το αίτημα απορρίφθηκε",
+      "submitter": "Υποβάλλων",
+      "reviewer": "Ελεγκτής"
+    }
+  },
+  "reviews": {
+    "domain": "Αξιολογήσεις",
+    "noRecords": "Δεν βρέθηκαν αξιολογήσεις",
+    "columns": {
+      "rating": "Βαθμολογία",
+      "reference": "Αναφορά",
+      "customerNote": "Σημείωση πελάτη"
+    }
+  }
+}

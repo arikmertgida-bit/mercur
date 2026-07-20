@@ -1,0 +1,227 @@
+{
+  "customFields": {
+    "title": "Kolom Kustom",
+    "description": "Kelola kolom kustom dan konfigurasi Anda",
+    "noFields": "Belum ada kolom kustom yang dikonfigurasi"
+  },
+  "actions": {
+    "continue": "Lanjutkan",
+    "cancel": "Batal",
+    "delete": "Hapus"
+  },
+  "productReports": {
+    "domain": "Laporan Produk",
+    "subtitle": "Produk yang ditandai pelanggan untuk ditinjau",
+    "filterAll": "Semua status",
+    "columns": {
+      "product": "Produk",
+      "reporter": "Dilaporkan oleh",
+      "reason": "Alasan",
+      "status": "Status"
+    },
+    "status": {
+      "pending": "Tertunda",
+      "resolved": "Terselesaikan",
+      "dismissed": "Ditolak"
+    },
+    "reasons": {
+      "inaccurate_product_details": "Detail produk tidak akurat",
+      "pricing_irregularities": "Ketidakwajaran harga",
+      "prohibited_item": "Barang terlarang",
+      "counterfeit_trademark": "Barang palsu / pelanggaran merek dagang",
+      "incorrect_categorization": "Kategorisasi salah",
+      "inappropriate_media": "Media tidak pantas",
+      "dmca_violation": "Pelanggaran DMCA",
+      "seller_complaint": "Keluhan tentang penjual",
+      "other": "Lainnya"
+    },
+    "actions": {
+      "resolve": "Tandai terselesaikan",
+      "dismiss": "Tolak"
+    },
+    "resolvePrompt": {
+      "title": "Tandai laporan sebagai terselesaikan?",
+      "description": "Laporan ini akan ditandai sebagai terselesaikan dan dihapus dari antrean tertunda."
+    },
+    "dismissPrompt": {
+      "title": "Tolak laporan ini?",
+      "description": "Laporan ini akan ditandai sebagai ditolak dan dihapus dari antrean tertunda."
+    },
+    "deletePrompt": {
+      "title": "Hapus laporan ini?",
+      "description": "Tindakan ini akan menghapus laporan secara permanen. Tindakan ini tidak dapat dibatalkan."
+    },
+    "updateSuccess": "Laporan diperbarui",
+    "updateError": "Gagal memperbarui laporan",
+    "deleteSuccess": "Laporan dihapus",
+    "deleteError": "Gagal menghapus laporan"
+  },
+  "wishlistModeration": {
+    "domain": "Daftar Keinginan",
+    "subtitle": "Daftar keinginan pelanggan, untuk tujuan moderasi",
+    "noProducts": "Tidak ada produk",
+    "columns": {
+      "customer": "Pelanggan",
+      "products": "Produk",
+      "created": "Dibuat"
+    },
+    "deletePrompt": {
+      "title": "Hapus daftar keinginan ini?",
+      "description": "Tindakan ini akan menghapus daftar keinginan pelanggan beserta semua entrinya secara permanen. Tindakan ini tidak dapat dibatalkan."
+    },
+    "deleteSuccess": "Daftar keinginan dihapus",
+    "deleteError": "Gagal menghapus daftar keinginan"
+  },
+  "reportedImages": {
+    "domain": "Gambar Dilaporkan",
+    "subtitle": "Tinjau gambar yang ditandai pelanggan sebagai tidak pantas",
+    "filterAll": "Semua status",
+    "imageRemoved": "Gambar dihapus",
+    "columns": {
+      "image": "Gambar",
+      "reporter": "Dilaporkan oleh",
+      "reason": "Alasan",
+      "status": "Status"
+    },
+    "status": {
+      "pending": "Tertunda",
+      "resolved": "Terselesaikan"
+    },
+    "actions": {
+      "remove": "Hapus gambar",
+      "dismiss": "Tolak laporan"
+    },
+    "removePrompt": {
+      "title": "Hapus gambar ini?",
+      "description": "Gambar akan dihapus secara permanen dari ulasan. Tindakan ini tidak dapat dibatalkan."
+    },
+    "dismissPrompt": {
+      "title": "Tolak laporan ini?",
+      "description": "Gambar akan tetap dipublikasikan dan laporan akan ditandai sebagai terselesaikan."
+    },
+    "resolveSuccess": "Laporan terselesaikan",
+    "resolveError": "Gagal menyelesaikan laporan"
+  },
+  "messenger": {
+    "searchConversations": "Cari percakapan...",
+    "noConversations": "Belum ada percakapan",
+    "startConversation": "Mulai percakapan",
+    "selectConversation": "Pilih percakapan",
+    "startMessaging": "Pilih percakapan untuk mulai mengirim pesan",
+    "typeMessage": "Ketik pesan...",
+    "seen": "Dilihat",
+    "sent": "Terkirim",
+    "notificationTitle": "{{senderName}} mengirimi Anda pesan",
+    "notificationBody": "{{preview}}",
+    "image": "Gambar",
+    "support": "Dukungan",
+    "direct": "Langsung",
+    "unknown": "Tidak dikenal",
+    "supportTeam": "Tim Dukungan",
+    "connected": "Terhubung",
+    "disconnected": "Terputus",
+    "conversationOptions": "Opsi percakapan"
+  },
+  "messages": {
+    "domain": "Pesan",
+    "product": "Produk",
+    "store": "Toko",
+    "delete": "Hapus",
+    "deleteForEveryone": "Hapus untuk semua orang",
+    "close": "Tutup",
+    "connectionLost": "Koneksi terputus. Menghubungkan kembali...",
+    "imageUploadFailed": "Gagal mengunggah gambar",
+    "deleteConfirmTitle": "Hapus pesan",
+    "deleteConfirmDesc": "Apakah Anda yakin ingin menghapus pesan ini?",
+    "productQuestion": "Pertanyaan Produk",
+    "storeQuestion": "Pertanyaan Toko",
+    "customerMessage": "Pesan pelanggan",
+    "sellerMessage": "Pesan penjual",
+    "directMessage": "Pesan langsung",
+    "storeContext": "Pertanyaan Toko",
+    "back": "Kembali",
+    "failedToGetUserInfo": "Tidak dapat mengambil informasi pengguna.",
+    "send": "Kirim pesan",
+    "attachImage": "Lampirkan gambar",
+    "removeAttachment": "Hapus gambar terlampir",
+    "viewImage": "Lihat gambar ukuran penuh",
+    "pendingImageAlt": "Gambar yang akan dikirim",
+    "imageAlt": "Gambar"
+  },
+  "requests": {
+    "domain": "Permintaan",
+    "status": {
+      "draft": "Draf",
+      "pending": "Tertunda",
+      "accepted": "Diterima",
+      "rejected": "Ditolak"
+    },
+    "filters": {
+      "status": "Status"
+    },
+    "columns": {
+      "name": "Nama"
+    },
+    "categories": {
+      "navLabel": "Kategori",
+      "heading": "Permintaan Kategori",
+      "noRecords": "Tidak ada permintaan kategori ditemukan"
+    },
+    "collections": {
+      "navLabel": "Koleksi",
+      "heading": "Permintaan Koleksi",
+      "noRecords": "Tidak ada permintaan koleksi ditemukan"
+    },
+    "tags": {
+      "navLabel": "Tag",
+      "heading": "Permintaan Tag",
+      "noRecords": "Tidak ada permintaan tag ditemukan"
+    },
+    "types": {
+      "navLabel": "Jenis",
+      "heading": "Permintaan Jenis",
+      "noRecords": "Tidak ada permintaan jenis ditemukan"
+    },
+    "typeLabels": {
+      "product_category": "Kategori",
+      "product_collection": "Koleksi",
+      "product_tag": "Tag",
+      "product_type": "Jenis"
+    },
+    "fields": {
+      "name": "Nama",
+      "handle": "Handle",
+      "description": "Deskripsi",
+      "active": "Aktif",
+      "internal": "Internal",
+      "title": "Judul",
+      "value": "Nilai"
+    },
+    "values": {
+      "yes": "Ya",
+      "no": "Tidak"
+    },
+    "detail": {
+      "pendingReview": "Menunggu peninjauan",
+      "accept": "Terima",
+      "reject": "Tolak",
+      "acceptPromptTitle": "Terima permintaan",
+      "acceptPromptDescription": "Apakah Anda yakin ingin menerima permintaan ini? Tindakan ini akan membuat entitas tersebut.",
+      "rejectPromptTitle": "Tolak permintaan",
+      "rejectPromptDescription": "Apakah Anda yakin ingin menolak permintaan ini? Tindakan ini tidak dapat dibatalkan.",
+      "acceptSuccess": "Permintaan diterima",
+      "rejectSuccess": "Permintaan ditolak",
+      "submitter": "Pengaju",
+      "reviewer": "Peninjau"
+    }
+  },
+  "reviews": {
+    "domain": "Ulasan",
+    "noRecords": "Tidak ada ulasan ditemukan",
+    "columns": {
+      "rating": "Peringkat",
+      "reference": "Referensi",
+      "customerNote": "Catatan pelanggan"
+    }
+  }
+}

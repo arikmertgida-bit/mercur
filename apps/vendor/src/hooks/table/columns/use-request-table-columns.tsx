@@ -1,5 +1,6 @@
 import { createColumnHelper } from "@tanstack/react-table";
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { StatusBadge, Text } from "@medusajs/ui";
 import { DateCell, DateHeader } from "@mercurjs/dashboard-shared";
 
@@ -36,13 +37,15 @@ const toDisplayDate = (value: string | undefined): Date =>
   typeof value === "string" ? new Date(value) : new Date(0);
 
 export const useRequestTableColumns = (nameKey: VendorRequestNameKey = "name") => {
+  const { t } = useTranslation();
+
   return useMemo(
     () => [
       columnHelper.display({
         id: "display_name",
         header: () => (
           <div className="flex h-full w-full items-center">
-            <span className="truncate">Name</span>
+            <span className="truncate">{t("requests.columns.name")}</span>
           </div>
         ),
         cell: ({ row }) => {
@@ -57,14 +60,14 @@ export const useRequestTableColumns = (nameKey: VendorRequestNameKey = "name") =
       columnHelper.accessor("custom_fields", {
         header: () => (
           <div className="flex h-full w-full items-center">
-            <span className="truncate">Status</span>
+            <span className="truncate">{t("requests.filters.status")}</span>
           </div>
         ),
         cell: ({ getValue }) => {
           const status = getValue().request_status;
           return (
             <StatusBadge color={statusColor(status)}>
-              {status.charAt(0).toUpperCase() + status.slice(1)}
+              {t(`requests.status.${status}`)}
             </StatusBadge>
           );
         },
@@ -74,6 +77,6 @@ export const useRequestTableColumns = (nameKey: VendorRequestNameKey = "name") =
         cell: ({ getValue }) => <DateCell date={toDisplayDate(getValue())} />,
       }),
     ],
-    [nameKey],
+    [nameKey, t],
   );
 };

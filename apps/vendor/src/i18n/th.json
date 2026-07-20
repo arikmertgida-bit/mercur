@@ -1,0 +1,131 @@
+{
+  "productImportExport": {
+    "import": "นำเข้า",
+    "export": "ส่งออก",
+    "done": "เสร็จสิ้น",
+    "importHeader": "นำเข้าสินค้า",
+    "importDescription": "อัปโหลดไฟล์ CSV เพื่อนำเข้าสินค้าไปยังร้านค้าของคุณ",
+    "importHint": "อัปโหลดไฟล์ CSV ที่มีสินค้าของคุณ คุณสามารถ",
+    "downloadTemplate": "ดาวน์โหลดเทมเพลต",
+    "uploadLabel": "อัปโหลดไฟล์ CSV",
+    "uploadHint": "รองรับเฉพาะไฟล์ .csv เท่านั้น",
+    "importingActivity": "กำลังนำเข้าสินค้า...",
+    "importSuccessToast": "นำเข้าสินค้าสำเร็จ {{count}} รายการ",
+    "importCompleteTitle": "การนำเข้าเสร็จสมบูรณ์",
+    "importCompleteDescription": "สร้างสินค้าสำเร็จ {{count}} รายการ",
+    "exportHeader": "ส่งออกสินค้า",
+    "exportDescription": "ส่งออกสินค้าของคุณเป็นไฟล์ CSV",
+    "exportBody": "การดำเนินการนี้จะส่งออกสินค้าทั้งหมดของคุณไปยังไฟล์ CSV การดาวน์โหลดจะเริ่มโดยอัตโนมัติเมื่อการส่งออกพร้อมใช้งาน",
+    "exportSuccessToast": "ส่งออกสินค้าสำเร็จแล้ว"
+  },
+  "customFields": {
+    "title": "ฟิลด์ที่กำหนดเอง",
+    "description": "จัดการฟิลด์ที่กำหนดเองและการตั้งค่าของคุณ",
+    "noFields": "ยังไม่มีการตั้งค่าฟิลด์ที่กำหนดเอง"
+  },
+  "messenger": {
+    "supportTeam": "ทีมสนับสนุน",
+    "support": "การสนับสนุน",
+    "adminChatTitle": "แชทกับผู้ดูแลระบบ",
+    "adminChatDescription": "ส่งข้อความถึงทีมผู้ดูแลตลาดกลางและดูประวัติการสนทนาของคุณ",
+    "unknown": "ไม่ทราบ",
+    "imageMessage": "รูปภาพ",
+    "noMessages": "ยังไม่มีข้อความ",
+    "startConversation": "เริ่มการสนทนา",
+    "seen": "เห็นแล้ว",
+    "sent": "ส่งแล้ว",
+    "notificationTitle": "{{senderName}} ส่งข้อความถึงคุณ",
+    "notificationBody": "{{preview}}",
+    "image": "รูปภาพ",
+    "close": "ปิด",
+    "noConversations": "ยังไม่มีการสนทนา",
+    "participants": "ผู้เข้าร่วม",
+    "searchConversations": "ค้นหาการสนทนา...",
+    "typeMessage": "พิมพ์ข้อความ...",
+    "selectConversation": "เลือกการสนทนา",
+    "startMessaging": "เลือกการสนทนาเพื่อเริ่มส่งข้อความ",
+    "connected": "เชื่อมต่อแล้ว",
+    "disconnected": "ตัดการเชื่อมต่อแล้ว"
+  },
+  "messages": {
+    "domain": "ข้อความ",
+    "management": "ทีมสนับสนุน",
+    "helpSupport": "ทีมสนับสนุน",
+    "me": "ฉัน",
+    "productQuestion": "คำถามเกี่ยวกับสินค้า",
+    "storeQuestion": "คำถามเกี่ยวกับร้านค้า",
+    "imageUploadFailed": "อัปโหลดรูปภาพไม่สำเร็จ",
+    "connectionLost": "การเชื่อมต่อขาดหาย กำลังเชื่อมต่อใหม่...",
+    "delete": "ลบ",
+    "deleteForEveryone": "ลบสำหรับทุกคน",
+    "close": "ปิด",
+    "customer": "ลูกค้า",
+    "store": "ร้านค้า",
+    "back": "ย้อนกลับ",
+    "participant": "ผู้เข้าร่วม",
+    "noMessages": "ไม่มีข้อความ",
+    "chatOptions": "ตัวเลือกแชท",
+    "deleteOnlyForMe": "ลบเฉพาะฉัน",
+    "storeContext": "คำถามเกี่ยวกับร้านค้า",
+    "product": "สินค้า",
+    "deleteConfirmTitle": "ลบข้อความ",
+    "deleteConfirmDesc": "คุณแน่ใจหรือไม่ว่าต้องการลบข้อความนี้?",
+    "error": "ไม่สามารถดึงข้อมูลผู้ใช้ได้",
+    "supportName": "ทีมสนับสนุน",
+    "supportSubject": "แชทฝ่ายสนับสนุน",
+    "emptyState": "ยังไม่มีข้อความ เริ่มการสนทนาเลย",
+    "viewPromotion": "ดูโปรโมชัน",
+    "imageAlt": "รูปภาพ",
+    "placeholder": "พิมพ์ข้อความ...",
+    "send": "ส่งข้อความ",
+    "attachImage": "แนบรูปภาพ",
+    "removeAttachment": "ลบรูปภาพที่แนบ",
+    "viewImage": "ดูรูปภาพขนาดเต็ม",
+    "pendingImageAlt": "รูปภาพที่จะส่ง",
+    "deletedMessage": "[ข้อความนี้ถูกลบแล้ว]"
+  },
+  "requests": {
+    "domain": "คำขอ",
+    "status": {
+      "draft": "ฉบับร่าง",
+      "pending": "รอดำเนินการ",
+      "accepted": "อนุมัติแล้ว",
+      "rejected": "ปฏิเสธแล้ว"
+    },
+    "filters": {
+      "status": "สถานะ"
+    },
+    "columns": {
+      "name": "ชื่อ"
+    },
+    "categories": {
+      "navLabel": "หมวดหมู่",
+      "heading": "คำขอหมวดหมู่",
+      "noRecords": "ไม่พบคำขอหมวดหมู่"
+    },
+    "collections": {
+      "navLabel": "คอลเลกชัน",
+      "heading": "คำขอคอลเลกชัน",
+      "noRecords": "ไม่พบคำขอคอลเลกชัน"
+    },
+    "tags": {
+      "navLabel": "แท็ก",
+      "heading": "คำขอแท็ก",
+      "noRecords": "ไม่พบคำขอแท็ก"
+    },
+    "types": {
+      "navLabel": "ประเภท",
+      "heading": "คำขอประเภท",
+      "noRecords": "ไม่พบคำขอประเภท"
+    }
+  },
+  "reviews": {
+    "domain": "รีวิว",
+    "noRecords": "ไม่พบรีวิว",
+    "columns": {
+      "rating": "คะแนน",
+      "reference": "หมายเลขอ้างอิง",
+      "customerNote": "หมายเหตุลูกค้า"
+    }
+  }
+}

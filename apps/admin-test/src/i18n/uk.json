@@ -1,0 +1,227 @@
+{
+  "customFields": {
+    "title": "Користувацькі поля",
+    "description": "Керуйте своїми користувацькими полями та налаштуваннями",
+    "noFields": "Користувацькі поля ще не налаштовано"
+  },
+  "actions": {
+    "continue": "Продовжити",
+    "cancel": "Скасувати",
+    "delete": "Видалити"
+  },
+  "productReports": {
+    "domain": "Скарги на товари",
+    "subtitle": "Товари, позначені покупцями для перевірки",
+    "filterAll": "Усі статуси",
+    "columns": {
+      "product": "Товар",
+      "reporter": "Поскаржився",
+      "reason": "Причина",
+      "status": "Статус"
+    },
+    "status": {
+      "pending": "Очікує",
+      "resolved": "Вирішено",
+      "dismissed": "Відхилено"
+    },
+    "reasons": {
+      "inaccurate_product_details": "Неточні дані про товар",
+      "pricing_irregularities": "Порушення ціноутворення",
+      "prohibited_item": "Заборонений товар",
+      "counterfeit_trademark": "Підробка / порушення торгової марки",
+      "incorrect_categorization": "Неправильна категоризація",
+      "inappropriate_media": "Неприйнятний медіаконтент",
+      "dmca_violation": "Порушення DMCA",
+      "seller_complaint": "Скарга на продавця",
+      "other": "Інше"
+    },
+    "actions": {
+      "resolve": "Позначити як вирішено",
+      "dismiss": "Відхилити"
+    },
+    "resolvePrompt": {
+      "title": "Позначити скаргу як вирішену?",
+      "description": "Ця скарга буде позначена як вирішена та видалена з черги очікування."
+    },
+    "dismissPrompt": {
+      "title": "Відхилити цю скаргу?",
+      "description": "Ця скарга буде позначена як відхилена та видалена з черги очікування."
+    },
+    "deletePrompt": {
+      "title": "Видалити цю скаргу?",
+      "description": "Це остаточно видалить скаргу. Цю дію неможливо скасувати."
+    },
+    "updateSuccess": "Скаргу оновлено",
+    "updateError": "Не вдалося оновити скаргу",
+    "deleteSuccess": "Скаргу видалено",
+    "deleteError": "Не вдалося видалити скаргу"
+  },
+  "wishlistModeration": {
+    "domain": "Списки бажань",
+    "subtitle": "Списки бажань покупців для цілей модерації",
+    "noProducts": "Немає товарів",
+    "columns": {
+      "customer": "Покупець",
+      "products": "Товари",
+      "created": "Створено"
+    },
+    "deletePrompt": {
+      "title": "Видалити цей список бажань?",
+      "description": "Це остаточно видалить список бажань покупця та всі його записи. Цю дію неможливо скасувати."
+    },
+    "deleteSuccess": "Список бажань видалено",
+    "deleteError": "Не вдалося видалити список бажань"
+  },
+  "reportedImages": {
+    "domain": "Скарги на зображення",
+    "subtitle": "Перегляньте зображення, позначені покупцями як неприйнятні",
+    "filterAll": "Усі статуси",
+    "imageRemoved": "Зображення видалено",
+    "columns": {
+      "image": "Зображення",
+      "reporter": "Поскаржився",
+      "reason": "Причина",
+      "status": "Статус"
+    },
+    "status": {
+      "pending": "Очікує",
+      "resolved": "Вирішено"
+    },
+    "actions": {
+      "remove": "Видалити зображення",
+      "dismiss": "Відхилити скаргу"
+    },
+    "removePrompt": {
+      "title": "Видалити це зображення?",
+      "description": "Зображення буде остаточно видалено з відгуку. Цю дію неможливо скасувати."
+    },
+    "dismissPrompt": {
+      "title": "Відхилити цю скаргу?",
+      "description": "Зображення залишиться опублікованим, а скаргу буде позначено як вирішену."
+    },
+    "resolveSuccess": "Скаргу вирішено",
+    "resolveError": "Не вдалося вирішити скаргу"
+  },
+  "messenger": {
+    "searchConversations": "Пошук розмов...",
+    "noConversations": "Розмов ще немає",
+    "startConversation": "Почати розмову",
+    "selectConversation": "Виберіть розмову",
+    "startMessaging": "Виберіть розмову, щоб почати листування",
+    "typeMessage": "Введіть повідомлення...",
+    "seen": "Переглянуто",
+    "sent": "Надіслано",
+    "notificationTitle": "{{senderName}} надіслав(-ла) вам повідомлення",
+    "notificationBody": "{{preview}}",
+    "image": "Зображення",
+    "support": "Підтримка",
+    "direct": "Особисте",
+    "unknown": "Невідомо",
+    "supportTeam": "Служба підтримки",
+    "connected": "Підключено",
+    "disconnected": "Відключено",
+    "conversationOptions": "Налаштування розмови"
+  },
+  "messages": {
+    "domain": "Повідомлення",
+    "product": "Товар",
+    "store": "Магазин",
+    "delete": "Видалити",
+    "deleteForEveryone": "Видалити для всіх",
+    "close": "Закрити",
+    "connectionLost": "З'єднання втрачено. Повторне підключення...",
+    "imageUploadFailed": "Не вдалося завантажити зображення",
+    "deleteConfirmTitle": "Видалити повідомлення",
+    "deleteConfirmDesc": "Ви впевнені, що хочете видалити це повідомлення?",
+    "productQuestion": "Питання про товар",
+    "storeQuestion": "Питання про магазин",
+    "customerMessage": "Повідомлення від покупця",
+    "sellerMessage": "Повідомлення від продавця",
+    "directMessage": "Особисте повідомлення",
+    "storeContext": "Питання про магазин",
+    "back": "Назад",
+    "failedToGetUserInfo": "Не вдалося отримати інформацію про користувача.",
+    "send": "Надіслати повідомлення",
+    "attachImage": "Додати зображення",
+    "removeAttachment": "Прибрати додане зображення",
+    "viewImage": "Переглянути зображення у повному розмірі",
+    "pendingImageAlt": "Зображення для надсилання",
+    "imageAlt": "Зображення"
+  },
+  "requests": {
+    "domain": "Запити",
+    "status": {
+      "draft": "Чернетка",
+      "pending": "Очікує",
+      "accepted": "Прийнято",
+      "rejected": "Відхилено"
+    },
+    "filters": {
+      "status": "Статус"
+    },
+    "columns": {
+      "name": "Назва"
+    },
+    "categories": {
+      "navLabel": "Категорії",
+      "heading": "Запити на категорії",
+      "noRecords": "Запитів на категорії не знайдено"
+    },
+    "collections": {
+      "navLabel": "Колекції",
+      "heading": "Запити на колекції",
+      "noRecords": "Запитів на колекції не знайдено"
+    },
+    "tags": {
+      "navLabel": "Теги",
+      "heading": "Запити на теги",
+      "noRecords": "Запитів на теги не знайдено"
+    },
+    "types": {
+      "navLabel": "Типи",
+      "heading": "Запити на типи",
+      "noRecords": "Запитів на типи не знайдено"
+    },
+    "typeLabels": {
+      "product_category": "Категорія",
+      "product_collection": "Колекція",
+      "product_tag": "Тег",
+      "product_type": "Тип"
+    },
+    "fields": {
+      "name": "Назва",
+      "handle": "Ідентифікатор",
+      "description": "Опис",
+      "active": "Активний",
+      "internal": "Внутрішній",
+      "title": "Заголовок",
+      "value": "Значення"
+    },
+    "values": {
+      "yes": "Так",
+      "no": "Ні"
+    },
+    "detail": {
+      "pendingReview": "Очікує на розгляд",
+      "accept": "Прийняти",
+      "reject": "Відхилити",
+      "acceptPromptTitle": "Прийняти запит",
+      "acceptPromptDescription": "Ви впевнені, що хочете прийняти цей запит? Ця дія створить відповідний об'єкт.",
+      "rejectPromptTitle": "Відхилити запит",
+      "rejectPromptDescription": "Ви впевнені, що хочете відхилити цей запит? Цю дію неможливо скасувати.",
+      "acceptSuccess": "Запит прийнято",
+      "rejectSuccess": "Запит відхилено",
+      "submitter": "Відправник",
+      "reviewer": "Перевіряючий"
+    }
+  },
+  "reviews": {
+    "domain": "Відгуки",
+    "noRecords": "Відгуків не знайдено",
+    "columns": {
+      "rating": "Рейтинг",
+      "reference": "Референс",
+      "customerNote": "Примітка клієнта"
+    }
+  }
+}

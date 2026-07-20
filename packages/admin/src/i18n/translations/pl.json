@@ -1836,7 +1836,7 @@
       "title": "Utwórz zwrot",
       "sendNotificationHint": "Powiadom klientów o utworzonym zwrocie.",
       "systemPayment": "Płatność systemowa",
-      "systemPaymentDesc": "Jedna lub więcej Twoich płatności to płatność systemowa. Pamiętaj, że realizacje i zwroty nie są obsługiwane przez Medusę dla takich płatności.",
+      "systemPaymentDesc": "Jedna lub więcej Twoich płatności to płatność systemowa. Pamiętaj, że realizacje i zwroty nie są obsługiwane przez Kayı.com dla takich płatności.",
       "error": {
         "amountToLarge": "Nie można zwrócić więcej niż oryginalną kwotę zamówienia.",
         "amountNegative": "Kwota zwrotu musi być liczbą dodatnią.",
@@ -3304,7 +3304,7 @@
       "createPublishableHeader": "Utwórz klucz API do publikacji",
       "createPublishableHint": "Utwórz nowy publikowany klucz API, aby ograniczyć zakres żądań do określonych kanałów sprzedaży.",
       "createSecretHeader": "Utwórz tajny klucz API",
-      "createSecretHint": "Utwórz nowy tajny klucz API, aby uzyskać dostęp do API Medusa jako uwierzytelniony użytkownik administracyjny.",
+      "createSecretHint": "Utwórz nowy tajny klucz API, aby uzyskać dostęp do API Kayı.com jako uwierzytelniony użytkownik administracyjny.",
       "secretKeyCreatedHeader": "Utworzono tajny klucz",
       "secretKeyCreatedHint": "Twój nowy tajny klucz został wygenerowany. Skopiuj i bezpiecznie przechowuj teraz. Jest to jedyny raz, kiedy zostanie wyświetlony.",
       "copySecretTokenSuccess": "Tajny klucz został skopiowany do schowka.",
@@ -3547,12 +3547,12 @@
   },
   "login": {
     "forgotPassword": "Zapomniałeś hasła? - <0>Resetuj</0>",
-    "title": "Witamy w Mercur",
+    "title": "Witamy w Kayı.com",
     "hint": "Zaloguj się, aby uzyskać dostęp do obszaru konta",
     "sessionExpired": "Sesja wygasła"
   },
   "invite": {
-    "title": "Witamy w Mercur",
+    "title": "Witamy w Kayı.com",
     "hint": "Utwórz swoje konto poniżej",
     "backToLogin": "Powrót do logowania",
     "createAccount": "Utwórz konto",
@@ -3560,7 +3560,7 @@
     "emailTooltip": "Nie można zmienić Twojego adresu e-mail. Jeśli chcesz skorzystać z innego adresu e-mail, należy wysłać nowe zaproszenie.",
     "invalidInvite": "Zaproszenie jest nieprawidłowe lub wygasło.",
     "successTitle": "Twoje konto zostało zarejestrowane",
-    "successHint": "Zacznij od razu z Medusa Admin.",
+    "successHint": "Zacznij od razu z Kayı.com Admin.",
     "successAction": "Uruchom administratora Meduzy",
     "invalidTokenTitle": "Twój token zaproszenia jest nieprawidłowy",
     "invalidTokenHint": "Spróbuj poprosić o nowy link z zaproszeniem.",
@@ -3594,7 +3594,7 @@
   },
   "workflowExecutions": {
     "domain": "Przepływy pracy",
-    "subtitle": "Przeglądaj i śledź wykonania przepływu pracy w aplikacji Medusa.",
+    "subtitle": "Przeglądaj i śledź wykonania przepływu pracy w aplikacji Kayı.com.",
     "transactionIdLabel": "Identyfikator transakcji",
     "workflowIdLabel": "Identyfikator przepływu pracy",
     "progressLabel": "Postęp",

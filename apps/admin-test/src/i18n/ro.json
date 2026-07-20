@@ -1,0 +1,227 @@
+{
+  "customFields": {
+    "title": "Câmpuri personalizate",
+    "description": "Gestionează câmpurile personalizate și configurațiile tale",
+    "noFields": "Niciun câmp personalizat configurat încă"
+  },
+  "actions": {
+    "continue": "Continuă",
+    "cancel": "Anulează",
+    "delete": "Șterge"
+  },
+  "productReports": {
+    "domain": "Sesizări produse",
+    "subtitle": "Produse marcate de clienți pentru revizuire",
+    "filterAll": "Toate stările",
+    "columns": {
+      "product": "Produs",
+      "reporter": "Semnalat de",
+      "reason": "Motiv",
+      "status": "Stare"
+    },
+    "status": {
+      "pending": "În așteptare",
+      "resolved": "Rezolvat",
+      "dismissed": "Respins"
+    },
+    "reasons": {
+      "inaccurate_product_details": "Detalii de produs inexacte",
+      "pricing_irregularities": "Neregularități de preț",
+      "prohibited_item": "Articol interzis",
+      "counterfeit_trademark": "Contrafacere / încălcare de marcă",
+      "incorrect_categorization": "Categorisire incorectă",
+      "inappropriate_media": "Conținut media necorespunzător",
+      "dmca_violation": "Încălcare DMCA",
+      "seller_complaint": "Reclamație despre vânzător",
+      "other": "Altele"
+    },
+    "actions": {
+      "resolve": "Marchează ca rezolvat",
+      "dismiss": "Respinge"
+    },
+    "resolvePrompt": {
+      "title": "Marchezi sesizarea ca rezolvată?",
+      "description": "Această sesizare va fi marcată ca rezolvată și eliminată din coada de așteptare."
+    },
+    "dismissPrompt": {
+      "title": "Respingi această sesizare?",
+      "description": "Această sesizare va fi marcată ca respinsă și eliminată din coada de așteptare."
+    },
+    "deletePrompt": {
+      "title": "Ștergi această sesizare?",
+      "description": "Această acțiune va șterge definitiv sesizarea. Această acțiune nu poate fi anulată."
+    },
+    "updateSuccess": "Sesizare actualizată",
+    "updateError": "Actualizarea sesizării a eșuat",
+    "deleteSuccess": "Sesizare ștearsă",
+    "deleteError": "Ștergerea sesizării a eșuat"
+  },
+  "wishlistModeration": {
+    "domain": "Liste de dorințe",
+    "subtitle": "Liste de dorințe ale clienților, în scopuri de moderare",
+    "noProducts": "Niciun produs",
+    "columns": {
+      "customer": "Client",
+      "products": "Produse",
+      "created": "Creată"
+    },
+    "deletePrompt": {
+      "title": "Ștergi această listă de dorințe?",
+      "description": "Această acțiune va șterge definitiv lista de dorințe a clientului și toate intrările sale. Această acțiune nu poate fi anulată."
+    },
+    "deleteSuccess": "Listă de dorințe ștearsă",
+    "deleteError": "Ștergerea listei de dorințe a eșuat"
+  },
+  "reportedImages": {
+    "domain": "Imagini semnalate",
+    "subtitle": "Revizuiește imaginile semnalate de clienți ca necorespunzătoare",
+    "filterAll": "Toate stările",
+    "imageRemoved": "Imagine eliminată",
+    "columns": {
+      "image": "Imagine",
+      "reporter": "Semnalată de",
+      "reason": "Motiv",
+      "status": "Stare"
+    },
+    "status": {
+      "pending": "În așteptare",
+      "resolved": "Rezolvat"
+    },
+    "actions": {
+      "remove": "Elimină imaginea",
+      "dismiss": "Respinge sesizarea"
+    },
+    "removePrompt": {
+      "title": "Elimini această imagine?",
+      "description": "Imaginea va fi ștearsă definitiv din recenzie. Această acțiune nu poate fi anulată."
+    },
+    "dismissPrompt": {
+      "title": "Respingi această sesizare?",
+      "description": "Imaginea va rămâne publicată, iar sesizarea va fi marcată ca rezolvată."
+    },
+    "resolveSuccess": "Sesizare rezolvată",
+    "resolveError": "Rezolvarea sesizării a eșuat"
+  },
+  "messenger": {
+    "searchConversations": "Caută conversații...",
+    "noConversations": "Nicio conversație încă",
+    "startConversation": "Începe o conversație",
+    "selectConversation": "Selectează o conversație",
+    "startMessaging": "Selectează o conversație pentru a începe să discuți",
+    "typeMessage": "Scrie un mesaj...",
+    "seen": "Văzut",
+    "sent": "Trimis",
+    "notificationTitle": "{{senderName}} ți-a trimis un mesaj",
+    "notificationBody": "{{preview}}",
+    "image": "Imagine",
+    "support": "Suport",
+    "direct": "Direct",
+    "unknown": "Necunoscut",
+    "supportTeam": "Echipa de suport",
+    "connected": "Conectat",
+    "disconnected": "Deconectat",
+    "conversationOptions": "Opțiuni conversație"
+  },
+  "messages": {
+    "domain": "Mesaje",
+    "product": "Produs",
+    "store": "Magazin",
+    "delete": "Șterge",
+    "deleteForEveryone": "Șterge pentru toată lumea",
+    "close": "Închide",
+    "connectionLost": "Conexiune pierdută. Se reconectează...",
+    "imageUploadFailed": "Încărcarea imaginii a eșuat",
+    "deleteConfirmTitle": "Șterge mesajul",
+    "deleteConfirmDesc": "Sigur dorești să ștergi acest mesaj?",
+    "productQuestion": "Întrebare despre produs",
+    "storeQuestion": "Întrebare despre magazin",
+    "customerMessage": "Mesaj de la client",
+    "sellerMessage": "Mesaj de la vânzător",
+    "directMessage": "Mesaj direct",
+    "storeContext": "Întrebare despre magazin",
+    "back": "Înapoi",
+    "failedToGetUserInfo": "Nu s-au putut obține informațiile despre utilizator.",
+    "send": "Trimite mesaj",
+    "attachImage": "Atașează imagine",
+    "removeAttachment": "Elimină imaginea atașată",
+    "viewImage": "Vezi imaginea la dimensiune completă",
+    "pendingImageAlt": "Imagine de trimis",
+    "imageAlt": "Imagine"
+  },
+  "requests": {
+    "domain": "Cereri",
+    "status": {
+      "draft": "Ciornă",
+      "pending": "În așteptare",
+      "accepted": "Acceptată",
+      "rejected": "Respinsă"
+    },
+    "filters": {
+      "status": "Stare"
+    },
+    "columns": {
+      "name": "Nume"
+    },
+    "categories": {
+      "navLabel": "Categorii",
+      "heading": "Cereri de categorii",
+      "noRecords": "Nu s-au găsit cereri de categorii"
+    },
+    "collections": {
+      "navLabel": "Colecții",
+      "heading": "Cereri de colecții",
+      "noRecords": "Nu s-au găsit cereri de colecții"
+    },
+    "tags": {
+      "navLabel": "Etichete",
+      "heading": "Cereri de etichete",
+      "noRecords": "Nu s-au găsit cereri de etichete"
+    },
+    "types": {
+      "navLabel": "Tipuri",
+      "heading": "Cereri de tipuri",
+      "noRecords": "Nu s-au găsit cereri de tipuri"
+    },
+    "typeLabels": {
+      "product_category": "Categorie",
+      "product_collection": "Colecție",
+      "product_tag": "Etichetă",
+      "product_type": "Tip"
+    },
+    "fields": {
+      "name": "Nume",
+      "handle": "Identificator",
+      "description": "Descriere",
+      "active": "Activ",
+      "internal": "Intern",
+      "title": "Titlu",
+      "value": "Valoare"
+    },
+    "values": {
+      "yes": "Da",
+      "no": "Nu"
+    },
+    "detail": {
+      "pendingReview": "În curs de revizuire",
+      "accept": "Acceptă",
+      "reject": "Respinge",
+      "acceptPromptTitle": "Acceptă cererea",
+      "acceptPromptDescription": "Sigur dorești să accepți această cerere? Această acțiune va crea entitatea.",
+      "rejectPromptTitle": "Respinge cererea",
+      "rejectPromptDescription": "Sigur dorești să respingi această cerere? Această acțiune nu poate fi anulată.",
+      "acceptSuccess": "Cerere acceptată",
+      "rejectSuccess": "Cerere respinsă",
+      "submitter": "Solicitant",
+      "reviewer": "Evaluator"
+    }
+  },
+  "reviews": {
+    "domain": "Recenzii",
+    "noRecords": "Nu s-au găsit recenzii",
+    "columns": {
+      "rating": "Evaluare",
+      "reference": "Referință",
+      "customerNote": "Notă client"
+    }
+  }
+}

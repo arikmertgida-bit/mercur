@@ -1,0 +1,227 @@
+{
+  "customFields": {
+    "title": "Campos personalizados",
+    "description": "Gestiona tus campos personalizados y configuraciones",
+    "noFields": "Aún no hay campos personalizados configurados"
+  },
+  "actions": {
+    "continue": "Continuar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar"
+  },
+  "productReports": {
+    "domain": "Reportes de productos",
+    "subtitle": "Productos marcados por clientes para revisión",
+    "filterAll": "Todos los estados",
+    "columns": {
+      "product": "Producto",
+      "reporter": "Reportado por",
+      "reason": "Motivo",
+      "status": "Estado"
+    },
+    "status": {
+      "pending": "Pendiente",
+      "resolved": "Resuelto",
+      "dismissed": "Descartado"
+    },
+    "reasons": {
+      "inaccurate_product_details": "Detalles de producto inexactos",
+      "pricing_irregularities": "Irregularidades de precio",
+      "prohibited_item": "Artículo prohibido",
+      "counterfeit_trademark": "Falsificación / infracción de marca",
+      "incorrect_categorization": "Categorización incorrecta",
+      "inappropriate_media": "Contenido multimedia inapropiado",
+      "dmca_violation": "Infracción DMCA",
+      "seller_complaint": "Queja sobre el vendedor",
+      "other": "Otro"
+    },
+    "actions": {
+      "resolve": "Marcar como resuelto",
+      "dismiss": "Descartar"
+    },
+    "resolvePrompt": {
+      "title": "¿Marcar el reporte como resuelto?",
+      "description": "Este reporte se marcará como resuelto y se eliminará de la cola pendiente."
+    },
+    "dismissPrompt": {
+      "title": "¿Descartar este reporte?",
+      "description": "Este reporte se marcará como descartado y se eliminará de la cola pendiente."
+    },
+    "deletePrompt": {
+      "title": "¿Eliminar este reporte?",
+      "description": "Esto eliminará permanentemente el reporte. Esta acción no se puede deshacer."
+    },
+    "updateSuccess": "Reporte actualizado",
+    "updateError": "No se pudo actualizar el reporte",
+    "deleteSuccess": "Reporte eliminado",
+    "deleteError": "No se pudo eliminar el reporte"
+  },
+  "wishlistModeration": {
+    "domain": "Listas de deseos",
+    "subtitle": "Listas de deseos de clientes, con fines de moderación",
+    "noProducts": "Sin productos",
+    "columns": {
+      "customer": "Cliente",
+      "products": "Productos",
+      "created": "Creada"
+    },
+    "deletePrompt": {
+      "title": "¿Eliminar esta lista de deseos?",
+      "description": "Esto eliminará permanentemente la lista de deseos del cliente y todas sus entradas. Esta acción no se puede deshacer."
+    },
+    "deleteSuccess": "Lista de deseos eliminada",
+    "deleteError": "No se pudo eliminar la lista de deseos"
+  },
+  "reportedImages": {
+    "domain": "Imágenes reportadas",
+    "subtitle": "Revisa las imágenes marcadas por clientes como inapropiadas",
+    "filterAll": "Todos los estados",
+    "imageRemoved": "Imagen eliminada",
+    "columns": {
+      "image": "Imagen",
+      "reporter": "Reportada por",
+      "reason": "Motivo",
+      "status": "Estado"
+    },
+    "status": {
+      "pending": "Pendiente",
+      "resolved": "Resuelto"
+    },
+    "actions": {
+      "remove": "Eliminar imagen",
+      "dismiss": "Descartar reporte"
+    },
+    "removePrompt": {
+      "title": "¿Eliminar esta imagen?",
+      "description": "La imagen se eliminará permanentemente de la reseña. Esta acción no se puede deshacer."
+    },
+    "dismissPrompt": {
+      "title": "¿Descartar este reporte?",
+      "description": "La imagen permanecerá publicada y el reporte se marcará como resuelto."
+    },
+    "resolveSuccess": "Reporte resuelto",
+    "resolveError": "No se pudo resolver el reporte"
+  },
+  "messenger": {
+    "searchConversations": "Buscar conversaciones...",
+    "noConversations": "Aún no hay conversaciones",
+    "startConversation": "Iniciar una conversación",
+    "selectConversation": "Selecciona una conversación",
+    "startMessaging": "Selecciona una conversación para empezar a chatear",
+    "typeMessage": "Escribe un mensaje...",
+    "seen": "Visto",
+    "sent": "Enviado",
+    "notificationTitle": "{{senderName}} te envió un mensaje",
+    "notificationBody": "{{preview}}",
+    "image": "Imagen",
+    "support": "Soporte",
+    "direct": "Directo",
+    "unknown": "Desconocido",
+    "supportTeam": "Equipo de soporte",
+    "connected": "Conectado",
+    "disconnected": "Desconectado",
+    "conversationOptions": "Opciones de la conversación"
+  },
+  "messages": {
+    "domain": "Mensajes",
+    "product": "Producto",
+    "store": "Tienda",
+    "delete": "Eliminar",
+    "deleteForEveryone": "Eliminar para todos",
+    "close": "Cerrar",
+    "connectionLost": "Conexión perdida. Reconectando...",
+    "imageUploadFailed": "Error al subir la imagen",
+    "deleteConfirmTitle": "Eliminar mensaje",
+    "deleteConfirmDesc": "¿Seguro que quieres eliminar este mensaje?",
+    "productQuestion": "Pregunta sobre el producto",
+    "storeQuestion": "Pregunta sobre la tienda",
+    "customerMessage": "Mensaje del cliente",
+    "sellerMessage": "Mensaje del vendedor",
+    "directMessage": "Mensaje directo",
+    "storeContext": "Pregunta sobre la tienda",
+    "back": "Atrás",
+    "failedToGetUserInfo": "No se pudo obtener la información del usuario.",
+    "send": "Enviar mensaje",
+    "attachImage": "Adjuntar imagen",
+    "removeAttachment": "Quitar imagen adjunta",
+    "viewImage": "Ver imagen en tamaño completo",
+    "pendingImageAlt": "Imagen a enviar",
+    "imageAlt": "Imagen"
+  },
+  "requests": {
+    "domain": "Solicitudes",
+    "status": {
+      "draft": "Borrador",
+      "pending": "Pendiente",
+      "accepted": "Aceptada",
+      "rejected": "Rechazada"
+    },
+    "filters": {
+      "status": "Estado"
+    },
+    "columns": {
+      "name": "Nombre"
+    },
+    "categories": {
+      "navLabel": "Categorías",
+      "heading": "Solicitudes de categorías",
+      "noRecords": "No se encontraron solicitudes de categorías"
+    },
+    "collections": {
+      "navLabel": "Colecciones",
+      "heading": "Solicitudes de colecciones",
+      "noRecords": "No se encontraron solicitudes de colecciones"
+    },
+    "tags": {
+      "navLabel": "Etiquetas",
+      "heading": "Solicitudes de etiquetas",
+      "noRecords": "No se encontraron solicitudes de etiquetas"
+    },
+    "types": {
+      "navLabel": "Tipos",
+      "heading": "Solicitudes de tipos",
+      "noRecords": "No se encontraron solicitudes de tipos"
+    },
+    "typeLabels": {
+      "product_category": "Categoría",
+      "product_collection": "Colección",
+      "product_tag": "Etiqueta",
+      "product_type": "Tipo"
+    },
+    "fields": {
+      "name": "Nombre",
+      "handle": "Identificador",
+      "description": "Descripción",
+      "active": "Activo",
+      "internal": "Interno",
+      "title": "Título",
+      "value": "Valor"
+    },
+    "values": {
+      "yes": "Sí",
+      "no": "No"
+    },
+    "detail": {
+      "pendingReview": "En revisión",
+      "accept": "Aceptar",
+      "reject": "Rechazar",
+      "acceptPromptTitle": "Aceptar solicitud",
+      "acceptPromptDescription": "¿Seguro que quieres aceptar esta solicitud? Esta acción creará la entidad.",
+      "rejectPromptTitle": "Rechazar solicitud",
+      "rejectPromptDescription": "¿Seguro que quieres rechazar esta solicitud? Esta acción no se puede deshacer.",
+      "acceptSuccess": "Solicitud aceptada",
+      "rejectSuccess": "Solicitud rechazada",
+      "submitter": "Solicitante",
+      "reviewer": "Revisor"
+    }
+  },
+  "reviews": {
+    "domain": "Reseñas",
+    "noRecords": "No se encontraron reseñas",
+    "columns": {
+      "rating": "Calificación",
+      "reference": "Referencia",
+      "customerNote": "Nota del cliente"
+    }
+  }
+}

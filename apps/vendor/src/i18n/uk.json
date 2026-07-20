@@ -1,0 +1,131 @@
+{
+  "productImportExport": {
+    "import": "Імпорт",
+    "export": "Експорт",
+    "done": "Готово",
+    "importHeader": "Імпорт товарів",
+    "importDescription": "Завантажте файл CSV, щоб імпортувати товари у ваш магазин.",
+    "importHint": "Завантажте файл CSV зі своїми товарами. Ви можете",
+    "downloadTemplate": "завантажити шаблон",
+    "uploadLabel": "Завантажити файл CSV",
+    "uploadHint": "Підтримуються лише файли .csv",
+    "importingActivity": "Імпортування товарів...",
+    "importSuccessToast": "Успішно імпортовано товарів: {{count}}.",
+    "importCompleteTitle": "Імпорт завершено",
+    "importCompleteDescription": "Успішно створено товарів: {{count}}.",
+    "exportHeader": "Експорт товарів",
+    "exportDescription": "Експортуйте свої товари у вигляді файлу CSV.",
+    "exportBody": "Це експортує всі ваші товари у файл CSV. Завантаження почнеться автоматично, щойно експорт буде готовий.",
+    "exportSuccessToast": "Товари успішно експортовано."
+  },
+  "customFields": {
+    "title": "Користувацькі поля",
+    "description": "Керуйте своїми користувацькими полями та налаштуваннями",
+    "noFields": "Користувацькі поля ще не налаштовано"
+  },
+  "messenger": {
+    "supportTeam": "Служба підтримки",
+    "support": "Підтримка",
+    "adminChatTitle": "Чат з адміністратором",
+    "adminChatDescription": "Надішліть повідомлення команді підтримки маркетплейсу та перегляньте історію переписки.",
+    "unknown": "Невідомо",
+    "imageMessage": "Зображення",
+    "noMessages": "Повідомлень ще немає",
+    "startConversation": "Почати розмову",
+    "seen": "Переглянуто",
+    "sent": "Надіслано",
+    "notificationTitle": "{{senderName}} надіслав(-ла) вам повідомлення",
+    "notificationBody": "{{preview}}",
+    "image": "Зображення",
+    "close": "Закрити",
+    "noConversations": "Розмов ще немає",
+    "participants": "учасники",
+    "searchConversations": "Пошук розмов...",
+    "typeMessage": "Введіть повідомлення...",
+    "selectConversation": "Виберіть розмову",
+    "startMessaging": "Виберіть розмову, щоб почати листування",
+    "connected": "Підключено",
+    "disconnected": "Відключено"
+  },
+  "messages": {
+    "domain": "Повідомлення",
+    "management": "Служба підтримки",
+    "helpSupport": "Служба підтримки",
+    "me": "Я",
+    "productQuestion": "Питання про товар",
+    "storeQuestion": "Питання про магазин",
+    "imageUploadFailed": "Не вдалося завантажити зображення",
+    "connectionLost": "З'єднання втрачено. Повторне підключення...",
+    "delete": "Видалити",
+    "deleteForEveryone": "Видалити для всіх",
+    "close": "Закрити",
+    "customer": "Клієнт",
+    "store": "Магазин",
+    "back": "Назад",
+    "participant": "учасник",
+    "noMessages": "Немає повідомлень",
+    "chatOptions": "Налаштування чату",
+    "deleteOnlyForMe": "Видалити лише для мене",
+    "storeContext": "Питання про магазин",
+    "product": "Товар",
+    "deleteConfirmTitle": "Видалити повідомлення",
+    "deleteConfirmDesc": "Ви впевнені, що хочете видалити це повідомлення?",
+    "error": "Не вдалося отримати інформацію про користувача.",
+    "supportName": "Служба підтримки",
+    "supportSubject": "Чат підтримки",
+    "emptyState": "Повідомлень ще немає. Почніть розмову.",
+    "viewPromotion": "Переглянути акцію",
+    "imageAlt": "Зображення",
+    "placeholder": "Введіть повідомлення...",
+    "send": "Надіслати повідомлення",
+    "attachImage": "Додати зображення",
+    "removeAttachment": "Прибрати додане зображення",
+    "viewImage": "Переглянути зображення у повному розмірі",
+    "pendingImageAlt": "Зображення для надсилання",
+    "deletedMessage": "[Це повідомлення видалено]"
+  },
+  "requests": {
+    "domain": "Запити",
+    "status": {
+      "draft": "Чернетка",
+      "pending": "Очікує",
+      "accepted": "Прийнято",
+      "rejected": "Відхилено"
+    },
+    "filters": {
+      "status": "Статус"
+    },
+    "columns": {
+      "name": "Назва"
+    },
+    "categories": {
+      "navLabel": "Категорії",
+      "heading": "Запити на категорії",
+      "noRecords": "Запитів на категорії не знайдено"
+    },
+    "collections": {
+      "navLabel": "Колекції",
+      "heading": "Запити на колекції",
+      "noRecords": "Запитів на колекції не знайдено"
+    },
+    "tags": {
+      "navLabel": "Теги",
+      "heading": "Запити на теги",
+      "noRecords": "Запитів на теги не знайдено"
+    },
+    "types": {
+      "navLabel": "Типи",
+      "heading": "Запити на типи",
+      "noRecords": "Запитів на типи не знайдено"
+    }
+  },
+  "reviews": {
+    "domain": "Відгуки",
+    "noRecords": "Відгуків не знайдено",
+    "columns": {
+      "rating": "Рейтинг",
+      "reference": "Референс",
+      "customerNote": "Примітка клієнта"
+    }
+  }
+}

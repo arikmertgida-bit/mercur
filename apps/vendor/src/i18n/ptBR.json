@@ -1,0 +1,131 @@
+{
+  "productImportExport": {
+    "import": "Importar",
+    "export": "Exportar",
+    "done": "Concluído",
+    "importHeader": "Importar produtos",
+    "importDescription": "Envie um arquivo CSV para importar produtos para a sua loja.",
+    "importHint": "Envie um arquivo CSV com seus produtos. Você pode",
+    "downloadTemplate": "baixar o modelo",
+    "uploadLabel": "Enviar arquivo CSV",
+    "uploadHint": "Apenas arquivos .csv são suportados",
+    "importingActivity": "Importando produtos...",
+    "importSuccessToast": "{{count}} produto(s) importado(s) com sucesso.",
+    "importCompleteTitle": "Importação concluída",
+    "importCompleteDescription": "{{count}} produto(s) foram criados com sucesso.",
+    "exportHeader": "Exportar produtos",
+    "exportDescription": "Exporte seus produtos como um arquivo CSV.",
+    "exportBody": "Isso exportará todos os seus produtos para um arquivo CSV. O download começará automaticamente assim que a exportação estiver pronta.",
+    "exportSuccessToast": "Produtos exportados com sucesso."
+  },
+  "customFields": {
+    "title": "Campos personalizados",
+    "description": "Gerencie seus campos personalizados e configurações",
+    "noFields": "Nenhum campo personalizado configurado ainda"
+  },
+  "messenger": {
+    "supportTeam": "Equipe de suporte",
+    "support": "Suporte",
+    "adminChatTitle": "Conversar com o administrador",
+    "adminChatDescription": "Envie uma mensagem para a equipe de suporte do marketplace e veja seu histórico de conversas.",
+    "unknown": "Desconhecido",
+    "imageMessage": "Imagem",
+    "noMessages": "Ainda não há mensagens",
+    "startConversation": "Iniciar a conversa",
+    "seen": "Visto",
+    "sent": "Enviado",
+    "notificationTitle": "{{senderName}} enviou uma mensagem para você",
+    "notificationBody": "{{preview}}",
+    "image": "Imagem",
+    "close": "Fechar",
+    "noConversations": "Ainda não há conversas",
+    "participants": "participantes",
+    "searchConversations": "Buscar conversas...",
+    "typeMessage": "Digite uma mensagem...",
+    "selectConversation": "Selecione uma conversa",
+    "startMessaging": "Selecione uma conversa para começar a conversar",
+    "connected": "Conectado",
+    "disconnected": "Desconectado"
+  },
+  "messages": {
+    "domain": "Mensagens",
+    "management": "Equipe de suporte",
+    "helpSupport": "Equipe de suporte",
+    "me": "Eu",
+    "productQuestion": "Dúvida sobre o produto",
+    "storeQuestion": "Dúvida sobre a loja",
+    "imageUploadFailed": "Falha ao enviar a imagem",
+    "connectionLost": "Conexão perdida. Reconectando...",
+    "delete": "Excluir",
+    "deleteForEveryone": "Excluir para todos",
+    "close": "Fechar",
+    "customer": "Cliente",
+    "store": "Loja",
+    "back": "Voltar",
+    "participant": "participante",
+    "noMessages": "Sem mensagens",
+    "chatOptions": "Opções de conversa",
+    "deleteOnlyForMe": "Excluir apenas para mim",
+    "storeContext": "Dúvida sobre a loja",
+    "product": "Produto",
+    "deleteConfirmTitle": "Excluir mensagem",
+    "deleteConfirmDesc": "Tem certeza de que deseja excluir esta mensagem?",
+    "error": "Não foi possível obter as informações do usuário.",
+    "supportName": "Equipe de suporte",
+    "supportSubject": "Chat de suporte",
+    "emptyState": "Ainda não há mensagens. Inicie a conversa.",
+    "viewPromotion": "Ver promoção",
+    "imageAlt": "Imagem",
+    "placeholder": "Digite uma mensagem...",
+    "send": "Enviar mensagem",
+    "attachImage": "Anexar imagem",
+    "removeAttachment": "Remover imagem anexada",
+    "viewImage": "Ver imagem em tamanho completo",
+    "pendingImageAlt": "Imagem a enviar",
+    "deletedMessage": "[Esta mensagem foi excluída]"
+  },
+  "requests": {
+    "domain": "Solicitações",
+    "status": {
+      "draft": "Rascunho",
+      "pending": "Pendente",
+      "accepted": "Aceita",
+      "rejected": "Rejeitada"
+    },
+    "filters": {
+      "status": "Status"
+    },
+    "columns": {
+      "name": "Nome"
+    },
+    "categories": {
+      "navLabel": "Categorias",
+      "heading": "Solicitações de categorias",
+      "noRecords": "Nenhuma solicitação de categoria encontrada"
+    },
+    "collections": {
+      "navLabel": "Coleções",
+      "heading": "Solicitações de coleções",
+      "noRecords": "Nenhuma solicitação de coleção encontrada"
+    },
+    "tags": {
+      "navLabel": "Tags",
+      "heading": "Solicitações de tags",
+      "noRecords": "Nenhuma solicitação de tag encontrada"
+    },
+    "types": {
+      "navLabel": "Tipos",
+      "heading": "Solicitações de tipos",
+      "noRecords": "Nenhuma solicitação de tipo encontrada"
+    }
+  },
+  "reviews": {
+    "domain": "Avaliações",
+    "noRecords": "Nenhuma avaliação encontrada",
+    "columns": {
+      "rating": "Avaliação",
+      "reference": "Referência",
+      "customerNote": "Observação do cliente"
+    }
+  }
+}

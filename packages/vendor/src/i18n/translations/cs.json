@@ -74,7 +74,8 @@
     "true": "Pravda",
     "false": "Nepravda",
     "decrement": "Snížit",
-    "increment": "Zvýšit"
+    "increment": "Zvýšit",
+    "drawerAccessibleDescription": "Pomocí tohoto panelu zobrazíte nebo upravíte podrobnosti tohoto zdroje."
   },
   "json": {
     "header": "JSON",
@@ -173,7 +174,8 @@
     "saveAndClose": "Uložit a zavřít",
     "request": "Žádost",
     "editVariantImages": "Upravit obrázky varianty",
-    "editImages": "Upravit obrázky"
+    "editImages": "Upravit obrázky",
+    "ok": "OK"
   },
   "operators": {
     "in": "V"
@@ -494,7 +496,12 @@
         "handleMustContainLetter": "Identifikátor musí obsahovat alespoň jedno písmeno",
         "requiredAttributeSelect": "Tento atribut je vyžadován tržištěm. Vyberte prosím hodnotu.",
         "requiredAttributeEnter": "Tento atribut je vyžadován tržištěm. Zadejte prosím hodnotu.",
-        "requiredAttributeMultiSelect": "Tento atribut je vyžadován tržištěm. Vyberte prosím alespoň jednu hodnotu."
+        "requiredAttributeMultiSelect": "Tento atribut je vyžadován tržištěm. Vyberte prosím alespoň jednu hodnotu.",
+        "formIncomplete": "Chybí některá povinná pole — před publikováním zkontrolujte zvýrazněné řádky.",
+        "mediaRequired": "Přidejte alespoň jeden obrázek pro tuto variantu.",
+        "priceRequired": "Zadejte cenu této varianty alespoň v jedné měně.",
+        "shippingProfileRequired": "Vyberte přepravní profil.",
+        "stockRequired": "Nastavte skladové množství této varianty alespoň pro jedno místo."
       },
       "variants": {
         "header": "Varianty",
@@ -518,7 +525,14 @@
           "label": "Možnosti produktů",
           "hint": "Definujte možnosti pro produkt, např. barvu, velikost atd."
         },
-        "optionsHeader": "Možnosti"
+        "optionsHeader": "Možnosti",
+        "mediaPicker": {
+          "description": "Vyberte, které fotografie produktu patří k této variantě.",
+          "empty": "Nejprve nahrajte fotografie na kartě Podrobnosti.",
+          "header": "Přiřadit obrázky",
+          "image": "Obrázek {{index}}",
+          "partialFailureToast": "Produkt byl vytvořen, ale obrázky se nepodařilo přiřadit k: {{variants}}. Zkuste to znovu na stránce úprav produktu."
+        }
       },
       "successToast": "Produkt {{title}} byl úspěšně vytvořen.",
       "attributes": {
@@ -653,7 +667,11 @@
       "removeSelected": "Odstranit vybrané",
       "selectImages": "Vyberte obrázky",
       "selectImagesHint": "Kliknutím na obrázky je přidáte k této variantě.",
-      "editLabel": "Upravit"
+      "editLabel": "Upravit",
+      "limitExceeded": {
+        "description": "Můžete nahrát až {{max}} obrázků na produkt. Prvních {{max}} bylo přidáno — zbytek byl přeskočen.",
+        "title": "Dosažen limit obrázků"
+      }
     },
     "discountableHint": "Když není zaškrtnuto, slevy nebudou na tento produkt aplikovány.",
     "noSalesChannels": "Není dostupné v žádných prodejních kanálech",
@@ -798,27 +816,6 @@
       "tableItemAvailable": "{{availableCount}} dostupné",
       "tableItem_one": "{{availableCount}} dostupné na {{locationCount}} lokaci",
       "tableItem_other": "{{availableCount}} dostupné na {{locationCount}} lokacích",
-      "inventory": {
-        "notManaged": "Nespravováno",
-        "navigateToItem": "Přejít na inventární položku",
-        "inventoryKit": "Sada inventáře",
-        "inventoryKitHint": "Skládá se tato varianta z několika inventárních položek?",
-        "validation": {
-          "itemId": "Prosím vyberte inventární položku.",
-          "quantity": "Množství je povinné. Prosím zadejte kladné číslo."
-        },
-        "editItemDetails": "Upravit detaily položky",
-        "manageInventoryLabel": "Spravovat inventář",
-        "manageInventoryHint": "Když je povoleno, změníme množství inventáře za vás, když jsou vytvořeny objednávky a vrácení.",
-        "allowBackordersLabel": "Povolit zpětné objednávky",
-        "allowBackordersHint": "Když je povoleno, zákazníci mohou zakoupit variantu, i když není dostupné množství.",
-        "toast": {
-          "levelsBatch": "Úrovně inventáře byly aktualizovány.",
-          "update": "Inventární položka byla úspěšně aktualizována.",
-          "updateLevel": "Úroveň inventáře byla úspěšně aktualizována.",
-          "itemsManageSuccess": "Inventární položky byly úspěšně aktualizovány."
-        }
-      },
       "validation": {
         "titleRequired": "Zadejte prosím název",
         "optionRequired": "Vyberte prosím hodnotu"
@@ -933,6 +930,18 @@
       "description": "Upravte více produktů najednou.",
       "noChanges": "Žádné změny k uložení.",
       "success": "Produkty byly úspěšně aktualizovány."
+    },
+    "stock": {
+      "available": "Dostupné",
+      "edit": {
+        "description": "Aktualizujte aktuální skladové množství pro každé místo. Změny se ukládají přímo do Skladu.",
+        "header": "Upravit sklad",
+        "location": "Umístění",
+        "quantity": "Množství",
+        "successToast": "Sklad byl úspěšně aktualizován"
+      },
+      "header": "Sledování skladu",
+      "lowStock": "Nízký sklad"
     }
   },
   "collections": {
@@ -1164,7 +1173,6 @@
         "emptyTitle": "Žádné skupiny zákazníků"
       },
       "add": {
-        "success": "Zákazník přidán do: {{groups}}.",
         "list": {
           "noRecordsMessage": "Nejprve vytvořte skupinu zákazníků."
         },
@@ -1172,7 +1180,6 @@
         "successMany": "Zákazník byl úspěšně přidán do {{groups}} skupin."
       },
       "removed": {
-        "success": "Zákazník odstraněn z: {{groups}}.",
         "list": {
           "noRecordsMessage": "Nejprve vytvořte skupinu zákazníků."
         },
@@ -1354,7 +1361,6 @@
       "capture": "Zachytit platbu",
       "capture_short": "Zachytit",
       "refund": "Vrácení peněz",
-      "markAsPaid": "Označit jako zaplaceno",
       "statusLabel": "Stav platby",
       "statusTitle": "Stav platby",
       "status": {
@@ -1372,8 +1378,6 @@
       },
       "capturePayment": "Platba ve výši {{amount}} bude zachycena.",
       "capturePaymentSuccess": "Platba ve výši {{amount}} byla úspěšně zachycena",
-      "markAsPaidPayment": "Platba ve výši {{amount}} bude označena jako zaplacená.",
-      "markAsPaidPaymentSuccess": "Platba ve výši {{amount}} byla úspěšně označena jako zaplacená",
       "createRefund": "Vytvořit vrácení peněz",
       "refundPaymentSuccess": "Vrácení peněz ve výši {{amount}} bylo úspěšné",
       "createRefundWrongQuantity": "Množství by mělo být číslo mezi 1 a {{number}}",
@@ -1733,7 +1737,7 @@
       "title": "Vytvořit vrácení peněz",
       "sendNotificationHint": "Oznámit zákazníkům o vytvořeném vrácení peněz.",
       "systemPayment": "Systémová platba",
-      "systemPaymentDesc": "Jedna nebo více vašich plateb je systémová platba. Upozorňujeme, že zachycení a vrácení peněz nejsou zpracovávány Medusou pro takové platby.",
+      "systemPaymentDesc": "Jedna nebo více vašich plateb je systémová platba. Upozorňujeme, že zachycení a vrácení peněz nejsou zpracovávány společností Kayı.com pro takové platby.",
       "error": {
         "amountToLarge": "Nelze vrátit více než původní částku objednávky.",
         "amountNegative": "Částka k vrácení musí být kladné číslo.",
@@ -2436,7 +2440,6 @@
     "toasts": {
       "promotionCreateSuccess": "Propagace ({{code}}) byla úspěšně vytvořena."
     },
-    "create": {},
     "edit": {
       "title": "Upravit detaily propagace",
       "rules": {
@@ -2809,7 +2812,7 @@
       "header": "Upravit profil",
       "languageHint": "Jazyk, který chcete používat v administrativním dashboardu. To nezmění jazyk vašeho obchodu.",
       "languagePlaceholder": "Vyberte jazyk",
-      "usageInsightsHint": "Sdílejte přehledy používání a pomozte nám zlepšit Medusu. Více o tom, co shromažďujeme a jak to používáme, si můžete přečíst v naší <0>dokumentaci</0>."
+      "usageInsightsHint": "Sdílejte přehledy používání a pomozte nám zlepšit Kayı.com. Více o tom, co shromažďujeme a jak to používáme, si můžete přečíst v naší <0>dokumentaci</0>."
     },
     "toast": {
       "edit": "Změny profilu byly uloženy"
@@ -2883,7 +2886,6 @@
     "removeCurrencyWarning_other": "Chystáte se odstranit {{count}} měn z vašeho obchodu. Ujistěte se, že jste odstranili všechny ceny používající tyto měny před pokračováním.",
     "currencyAlreadyAdded": "Měna již byla přidána do vašeho obchodu.",
     "edit": {
-      "header": "Upravit obchod",
       "websiteHint": "Musí obsahovat protokol (např. https://)",
       "mediaHeading": "Média",
       "mediaTipLabel": "Tip:",
@@ -2891,7 +2893,9 @@
       "uploadLogoLabel": "Nahrát logo",
       "uploadLogoHint": "Přetáhněte sem své logo nebo klikněte pro nahrání.",
       "uploadBannerLabel": "Nahrát banner",
-      "uploadBannerHint": "Přetáhněte sem svůj banner nebo klikněte pro nahrání."
+      "uploadBannerHint": "Přetáhněte sem svůj banner nebo klikněte pro nahrání.",
+      "bannerTooSmall": "Obrázek je malý ({{width}}×{{height}}px). Doporučuje se alespoň {{minWidth}}×{{minHeight}}px, jinak může vypadat rozmazaně.",
+      "logoTooSmall": "Obrázek je malý ({{width}}×{{height}}px). Doporučuje se alespoň {{minWidth}}×{{minHeight}}px, jinak může vypadat rozmazaně."
     },
     "toast": {
       "update": "Obchod byl úspěšně aktualizován",
@@ -3231,7 +3235,7 @@
       "createPublishableHeader": "Vytvořit publikovatelný API klíč",
       "createPublishableHint": "Vytvořte nový publikovatelný API klíč pro omezení rozsahu požadavků na specifické prodejní kanály.",
       "createSecretHeader": "Vytvořit tajný API klíč",
-      "createSecretHint": "Vytvořte nový tajný API klíč pro přístup k Medusa API jako autentizovaný administrativní uživatel.",
+      "createSecretHint": "Vytvořte nový tajný API klíč pro přístup k Kayı.com API jako autentizovaný administrativní uživatel.",
       "secretKeyCreatedHeader": "Tajný klíč byl vytvořen",
       "secretKeyCreatedHint": "Váš nový tajný klíč byl vygenerován. Zkopírujte a bezpečně uložte nyní. Toto je jediný čas, kdy bude zobrazen.",
       "copySecretTokenSuccess": "Tajný klíč byl zkopírován do schránky.",
@@ -3328,7 +3332,7 @@
   },
   "login": {
     "forgotPassword": "Zapomněli jste heslo? - <0>Obnovit</0>",
-    "title": "Vítejte v Meduse",
+    "title": "Vítejte v Kayı.com",
     "hint": "Přihlaste se pro přístup do oblasti účtu",
     "submit": "Přihlásit se",
     "sessionExpired": "Relace vypršela",
@@ -3340,7 +3344,7 @@
     }
   },
   "invite": {
-    "title": "Vítejte v Meduse",
+    "title": "Vítejte v Kayı.com",
     "hint": "Vytvořte si svůj účet níže",
     "backToLogin": "Zpět na přihlášení",
     "createAccount": "Vytvořit účet",
@@ -3348,8 +3352,7 @@
     "emailTooltip": "Váš e-mail nelze změnit. Pokud byste chtěli použít jiný e-mail, musí být odeslána nová pozvánka.",
     "invalidInvite": "Pozvánka je neplatná nebo vypršela.",
     "successTitle": "Váš účet byl zaregistrován",
-    "successHint": "Začněte s Medusa Admin hned teď.",
-    "successAction": "Začít Medusa Admin",
+    "successHint": "Začněte s Kayı.com Admin hned teď.",
     "invalidTokenTitle": "Váš pozvánkový token je neplatný",
     "invalidTokenHint": "Zkuste požádat o nový odkaz na pozvánku.",
     "passwordMismatch": "Hesla se neshodují",
@@ -3385,7 +3388,7 @@
   },
   "workflowExecutions": {
     "domain": "Pracovní postupy",
-    "subtitle": "Zobrazit a sledovat provádění pracovních postupů ve vaší aplikaci Medusa.",
+    "subtitle": "Zobrazit a sledovat provádění pracovních postupů ve vaší aplikaci Kayı.com.",
     "transactionIdLabel": "ID transakce",
     "workflowIdLabel": "ID pracovního postupu",
     "progressLabel": "Pokrok",
@@ -3478,7 +3481,7 @@
       "description": "Momentálně nemáte žádná oznámení, ale jakmile nějaká budete mít, budou zde."
     },
     "accessibility": {
-      "description": "oznámení o aktivitách Medusy budou zde uvedena."
+      "description": "oznámení o aktivitách Kayı.com budou zde uvedena."
     }
   },
   "errors": {
@@ -3669,7 +3672,6 @@
     "endDate": "Datum konce",
     "draft": "Koncept",
     "values": "Hodnoty",
-    "brand": "Brand",
     "images": "Média",
     "type_id": "Typ",
     "collection_id": "Kolekce",
@@ -3699,7 +3701,9 @@
     "inventory_quantity": "Množství inventáře",
     "requires_shipping": "Vyžaduje dopravu",
     "variant_attributes": "Atributy varianty",
-    "product_attributes": "Atributy produktu"
+    "product_attributes": "Atributy produktu",
+    "handleAutoGeneratedHint": "Automaticky generováno z názvu. Pouze malá písmena, čísla a spojovníky — toto pole nelze upravovat přímo.",
+    "handleInvalidFormat": "Handle smí obsahovat pouze malá písmena, čísla a spojovníky"
   },
   "dateTime": {
     "years_one": "Rok",
@@ -3887,7 +3891,7 @@
       "manageEntities": "Spravovat entity",
       "manageLocales": "Spravovat jazykové mutace"
     },
-    "subtitle": "Spravujte překlady svých dat v Medusa",
+    "subtitle": "Spravujte překlady svých dat v Kayı.com",
     "list": {
       "metrics": "{{translated}} z {{total}} překladů"
     },
@@ -4081,7 +4085,7 @@
         "accountNameRequired": "Zadejte prosím název účtu"
       },
       "preview": {
-        "title": "Vítejte v Mercur",
+        "title": "Vítejte v Kayı.com",
         "description": "Váš univerzální prodejní portál pro správu obchodu, produktů, objednávek a výplat.",
         "placeholder": "Náhled aplikace"
       }
@@ -4146,7 +4150,12 @@
   "auth": {
     "login": {
       "authenticationFailed": "Ověření se nezdařilo",
-      "cloud": "Přihlásit se přes Mercur"
+      "cloud": "Přihlásit se přes Kayı.com"
     }
+  },
+  "sellerSuspension": {
+    "description": "Váš obchod byl pozastaven administrací. Dokud nebude znovu aktivován, nebudete moci vytvářet nové produkty. Máte-li dotazy, náš tým podpory je tu, aby vám pomohl.",
+    "help": "Nápověda",
+    "title": "Obchod pozastaven"
   }
 }

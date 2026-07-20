@@ -1,0 +1,227 @@
+{
+  "customFields": {
+    "title": "Aangepaste velden",
+    "description": "Beheer uw aangepaste velden en configuraties",
+    "noFields": "Nog geen aangepaste velden geconfigureerd"
+  },
+  "actions": {
+    "continue": "Doorgaan",
+    "cancel": "Annuleren",
+    "delete": "Verwijderen"
+  },
+  "productReports": {
+    "domain": "Productmeldingen",
+    "subtitle": "Producten die door klanten zijn gemarkeerd voor beoordeling",
+    "filterAll": "Alle statussen",
+    "columns": {
+      "product": "Product",
+      "reporter": "Gemeld door",
+      "reason": "Reden",
+      "status": "Status"
+    },
+    "status": {
+      "pending": "In behandeling",
+      "resolved": "Opgelost",
+      "dismissed": "Afgewezen"
+    },
+    "reasons": {
+      "inaccurate_product_details": "Onjuiste productgegevens",
+      "pricing_irregularities": "Prijsonregelmatigheden",
+      "prohibited_item": "Verboden artikel",
+      "counterfeit_trademark": "Namaak / merkinbreuk",
+      "incorrect_categorization": "Onjuiste categorisering",
+      "inappropriate_media": "Ongepaste media",
+      "dmca_violation": "DMCA-schending",
+      "seller_complaint": "Klacht over de verkoper",
+      "other": "Overig"
+    },
+    "actions": {
+      "resolve": "Markeren als opgelost",
+      "dismiss": "Afwijzen"
+    },
+    "resolvePrompt": {
+      "title": "Melding markeren als opgelost?",
+      "description": "Deze melding wordt gemarkeerd als opgelost en verwijderd uit de wachtrij."
+    },
+    "dismissPrompt": {
+      "title": "Deze melding afwijzen?",
+      "description": "Deze melding wordt gemarkeerd als afgewezen en verwijderd uit de wachtrij."
+    },
+    "deletePrompt": {
+      "title": "Deze melding verwijderen?",
+      "description": "Hiermee wordt de melding permanent verwijderd. Deze actie kan niet ongedaan worden gemaakt."
+    },
+    "updateSuccess": "Melding bijgewerkt",
+    "updateError": "Melding kon niet worden bijgewerkt",
+    "deleteSuccess": "Melding verwijderd",
+    "deleteError": "Melding kon niet worden verwijderd"
+  },
+  "wishlistModeration": {
+    "domain": "Verlanglijstjes",
+    "subtitle": "Verlanglijstjes van klanten, voor moderatiedoeleinden",
+    "noProducts": "Geen producten",
+    "columns": {
+      "customer": "Klant",
+      "products": "Producten",
+      "created": "Aangemaakt"
+    },
+    "deletePrompt": {
+      "title": "Dit verlanglijstje verwijderen?",
+      "description": "Hiermee worden het verlanglijstje van de klant en alle bijbehorende items permanent verwijderd. Deze actie kan niet ongedaan worden gemaakt."
+    },
+    "deleteSuccess": "Verlanglijstje verwijderd",
+    "deleteError": "Verlanglijstje kon niet worden verwijderd"
+  },
+  "reportedImages": {
+    "domain": "Gemelde afbeeldingen",
+    "subtitle": "Bekijk afbeeldingen die door klanten als ongepast zijn gemeld",
+    "filterAll": "Alle statussen",
+    "imageRemoved": "Afbeelding verwijderd",
+    "columns": {
+      "image": "Afbeelding",
+      "reporter": "Gemeld door",
+      "reason": "Reden",
+      "status": "Status"
+    },
+    "status": {
+      "pending": "In behandeling",
+      "resolved": "Opgelost"
+    },
+    "actions": {
+      "remove": "Afbeelding verwijderen",
+      "dismiss": "Melding afwijzen"
+    },
+    "removePrompt": {
+      "title": "Deze afbeelding verwijderen?",
+      "description": "De afbeelding wordt permanent uit de recensie verwijderd. Deze actie kan niet ongedaan worden gemaakt."
+    },
+    "dismissPrompt": {
+      "title": "Deze melding afwijzen?",
+      "description": "De afbeelding blijft gepubliceerd en de melding wordt gemarkeerd als opgelost."
+    },
+    "resolveSuccess": "Melding opgelost",
+    "resolveError": "Melding kon niet worden opgelost"
+  },
+  "messenger": {
+    "searchConversations": "Gesprekken zoeken...",
+    "noConversations": "Nog geen gesprekken",
+    "startConversation": "Start een gesprek",
+    "selectConversation": "Selecteer een gesprek",
+    "startMessaging": "Selecteer een gesprek om te beginnen met chatten",
+    "typeMessage": "Typ een bericht...",
+    "seen": "Gezien",
+    "sent": "Verzonden",
+    "notificationTitle": "{{senderName}} heeft u een bericht gestuurd",
+    "notificationBody": "{{preview}}",
+    "image": "Afbeelding",
+    "support": "Support",
+    "direct": "Direct",
+    "unknown": "Onbekend",
+    "supportTeam": "Supportteam",
+    "connected": "Verbonden",
+    "disconnected": "Verbinding verbroken",
+    "conversationOptions": "Gespreksopties"
+  },
+  "messages": {
+    "domain": "Berichten",
+    "product": "Product",
+    "store": "Winkel",
+    "delete": "Verwijderen",
+    "deleteForEveryone": "Verwijderen voor iedereen",
+    "close": "Sluiten",
+    "connectionLost": "Verbinding verbroken. Opnieuw verbinden...",
+    "imageUploadFailed": "Uploaden van afbeelding mislukt",
+    "deleteConfirmTitle": "Bericht verwijderen",
+    "deleteConfirmDesc": "Weet u zeker dat u dit bericht wilt verwijderen?",
+    "productQuestion": "Productvraag",
+    "storeQuestion": "Winkelvraag",
+    "customerMessage": "Klantbericht",
+    "sellerMessage": "Verkopersbericht",
+    "directMessage": "Direct bericht",
+    "storeContext": "Winkelvraag",
+    "back": "Terug",
+    "failedToGetUserInfo": "Kon gebruikersinformatie niet ophalen.",
+    "send": "Bericht verzenden",
+    "attachImage": "Afbeelding bijvoegen",
+    "removeAttachment": "Bijgevoegde afbeelding verwijderen",
+    "viewImage": "Afbeelding op volledig formaat bekijken",
+    "pendingImageAlt": "Te verzenden afbeelding",
+    "imageAlt": "Afbeelding"
+  },
+  "requests": {
+    "domain": "Aanvragen",
+    "status": {
+      "draft": "Concept",
+      "pending": "In behandeling",
+      "accepted": "Geaccepteerd",
+      "rejected": "Afgewezen"
+    },
+    "filters": {
+      "status": "Status"
+    },
+    "columns": {
+      "name": "Naam"
+    },
+    "categories": {
+      "navLabel": "Categorieën",
+      "heading": "Categorieaanvragen",
+      "noRecords": "Geen categorieaanvragen gevonden"
+    },
+    "collections": {
+      "navLabel": "Collecties",
+      "heading": "Collectieaanvragen",
+      "noRecords": "Geen collectieaanvragen gevonden"
+    },
+    "tags": {
+      "navLabel": "Tags",
+      "heading": "Tagaanvragen",
+      "noRecords": "Geen tagaanvragen gevonden"
+    },
+    "types": {
+      "navLabel": "Typen",
+      "heading": "Typeaanvragen",
+      "noRecords": "Geen typeaanvragen gevonden"
+    },
+    "typeLabels": {
+      "product_category": "Categorie",
+      "product_collection": "Collectie",
+      "product_tag": "Tag",
+      "product_type": "Type"
+    },
+    "fields": {
+      "name": "Naam",
+      "handle": "Handle",
+      "description": "Beschrijving",
+      "active": "Actief",
+      "internal": "Intern",
+      "title": "Titel",
+      "value": "Waarde"
+    },
+    "values": {
+      "yes": "Ja",
+      "no": "Nee"
+    },
+    "detail": {
+      "pendingReview": "Wordt beoordeeld",
+      "accept": "Accepteren",
+      "reject": "Afwijzen",
+      "acceptPromptTitle": "Aanvraag accepteren",
+      "acceptPromptDescription": "Weet u zeker dat u deze aanvraag wilt accepteren? Hiermee wordt de entiteit aangemaakt.",
+      "rejectPromptTitle": "Aanvraag afwijzen",
+      "rejectPromptDescription": "Weet u zeker dat u deze aanvraag wilt afwijzen? Deze actie kan niet ongedaan worden gemaakt.",
+      "acceptSuccess": "Aanvraag geaccepteerd",
+      "rejectSuccess": "Aanvraag afgewezen",
+      "submitter": "Indiener",
+      "reviewer": "Beoordelaar"
+    }
+  },
+  "reviews": {
+    "domain": "Beoordelingen",
+    "noRecords": "Geen beoordelingen gevonden",
+    "columns": {
+      "rating": "Beoordeling",
+      "reference": "Referentie",
+      "customerNote": "Klantnotitie"
+    }
+  }
+}

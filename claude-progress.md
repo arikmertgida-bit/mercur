@@ -41,6 +41,78 @@ the root `overrides`. (One incidental React-19 compat cast left in
 
 ---
 
+### Session 46: 2026-07-20 -- Vendor panel Turkish default + full 31-language i18n + backend error translation
+
+**Goal.** Default the vendor panel to Turkish, fix missing/stale translation
+keys across all 31 language files, and translate backend API errors into the
+vendor's active panel language.
+
+**Landed.**
+- `apps/vendor/vite.config.ts`: `i18n.defaultLanguage: 'tr'`.
+- `packages/vendor/src/components/utilities/i18n/i18n.tsx`: fixed a real bug
+  surfaced by the above — `config.i18n.defaultLanguage` was being passed as
+  i18next's `lng` (forces that language for every session, permanently
+  bypassing cookie/localStorage/header detection) instead of `fallbackLng`
+  (only used when nothing is detected). Caught live via Playwright: a
+  returning user's saved `de`/`ja`/`ar` preference was silently ignored
+  until fixed.
+- All 30 non-English `packages/vendor/src/i18n/translations/*.json`: added
+  the ~26-29 keys each was missing vs `en.json` (hand-translated, not
+  machine/English-copy), removed genuine stale keys (verified zero code
+  usages), preserved legitimate CLDR plural-suffixed keys (`_few`/`_many`/
+  etc. — Polish's apparent "125 extra keys" were valid plurals, not
+  orphans). `__tests__/validate-translations.spec.ts` extended to assert
+  every locale (not just `en.json`) matches the schema key-for-key,
+  plural-aware — now a durable regression guard, 31/31 green.
+- Backend error translation (`/vendor/*` only, `/admin` and `/store`
+  untouched): `packages/client` widened `ClientOptions.fetchOptions.headers`
+  to accept a thunk (resolved per-request, not once at client construction)
+  so `Accept-Language` always reflects the panel's *current* language;
+  `packages/vendor/src/lib/client/client.ts` wires it from the shared i18n
+  instance. New `apps/api/src/lib/vendor-error-i18n/` (host-owned, not the
+  `mercur` fork's upstream-tracked surface): 3-tier translator — Zod
+  validation messages parsed from `zodValidator`'s exact `formatError()`
+  output (deterministic, field-by-field), `MedusaError` NOT_FOUND messages
+  via regex template (covers Medusa's own `"X with id: v was not found"`
+  and Mercur's two hand-written phrasings), a translated generic sentence
+  per `MedusaError.Types` otherwise, and a translated (never-English)
+  catch-all for anything unmodeled. Wired via `defineMiddlewares({
+  errorHandler })` in `apps/api/src/api/middlewares.ts` — a documented,
+  first-class Medusa extension point — delegating untouched to the default
+  handler for non-`/vendor` paths or English sessions. 4 custom `.refine()`
+  messages in `packages/core/src/api/vendor/{products,shipping-options}
+  /validators.ts` converted from literal English strings to stable
+  `vendor_error.*` codes so they translate deterministically too.
+
+**Verified.**
+- `bun run lint` (oxlint): zero new warnings (confirmed pre-existing errors
+  unchanged via `git stash` diff).
+- `bun run build`: all 14 buildable packages green, incl. `@acme/api` and
+  `@acme/vendor` (needed placeholder env vars locally — this repo builds
+  `/apps/api` against real env only inside Docker; `tsc --noEmit` on
+  `apps/api` alone is also clean with no env at all).
+- `translateVendorError` sanity-checked directly against realistic
+  Medusa-formatted messages (required/too-small/multi-issue/custom-code
+  validation, all 3 real NOT_FOUND phrasings, generic type fallbacks, a
+  fully unstructured error) across tr/de/ja/ar — correct in all cases.
+- Live: rebuilt and redeployed `kayi_backend` + `kayi_vendor` Docker images;
+  Playwright screenshots confirm a fresh session renders the login page
+  fully in Turkish, and returning sessions with a saved `de`/`ja`/`ar`
+  preference render in that language (incl. correct RTL layout for Arabic)
+  — this is what caught the `lng`-vs-`fallbackLng` bug above.
+- Did not verify authenticated vendor error responses end-to-end via curl
+  (no seller credentials available/created — out of scope per this
+  project's stance on the agent staying out of credential/account
+  creation); covered instead by the direct `translateVendorError` checks
+  against the exact message formats Medusa/Mercur actually produce.
+
+**Owed / next.** None blocking. If real seller credentials become
+available, a live `POST /vendor/products` with a missing field + varying
+`Accept-Language` would be the natural end-to-end confirmation beyond what
+was already verified at the function level.
+
+---
+
 ### Session 45: 2026-07-16 -- storefront /sellers/[handle] LCP regression (remote-joiner perf bug)
 
 **Goal.** User reported a severe post-v2.2.0 storefront slowdown (LCP

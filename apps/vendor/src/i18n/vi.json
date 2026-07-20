@@ -1,0 +1,131 @@
+{
+  "productImportExport": {
+    "import": "Nhập",
+    "export": "Xuất",
+    "done": "Xong",
+    "importHeader": "Nhập sản phẩm",
+    "importDescription": "Tải lên tệp CSV để nhập sản phẩm vào cửa hàng của bạn.",
+    "importHint": "Tải lên tệp CSV chứa sản phẩm của bạn. Bạn có thể",
+    "downloadTemplate": "tải xuống mẫu",
+    "uploadLabel": "Tải lên tệp CSV",
+    "uploadHint": "Chỉ hỗ trợ tệp .csv",
+    "importingActivity": "Đang nhập sản phẩm...",
+    "importSuccessToast": "Đã nhập thành công {{count}} sản phẩm.",
+    "importCompleteTitle": "Nhập hoàn tất",
+    "importCompleteDescription": "Đã tạo thành công {{count}} sản phẩm.",
+    "exportHeader": "Xuất sản phẩm",
+    "exportDescription": "Xuất sản phẩm của bạn dưới dạng tệp CSV.",
+    "exportBody": "Thao tác này sẽ xuất tất cả sản phẩm của bạn ra tệp CSV. Quá trình tải xuống sẽ tự động bắt đầu khi việc xuất hoàn tất.",
+    "exportSuccessToast": "Đã xuất sản phẩm thành công."
+  },
+  "customFields": {
+    "title": "Trường tùy chỉnh",
+    "description": "Quản lý các trường tùy chỉnh và cấu hình của bạn",
+    "noFields": "Chưa có trường tùy chỉnh nào được cấu hình"
+  },
+  "messenger": {
+    "supportTeam": "Đội hỗ trợ",
+    "support": "Hỗ trợ",
+    "adminChatTitle": "Trò chuyện với quản trị viên",
+    "adminChatDescription": "Gửi tin nhắn cho đội hỗ trợ của sàn thương mại và xem lại lịch sử trò chuyện của bạn.",
+    "unknown": "Không xác định",
+    "imageMessage": "Hình ảnh",
+    "noMessages": "Chưa có tin nhắn nào",
+    "startConversation": "Bắt đầu cuộc trò chuyện",
+    "seen": "Đã xem",
+    "sent": "Đã gửi",
+    "notificationTitle": "{{senderName}} đã gửi cho bạn một tin nhắn",
+    "notificationBody": "{{preview}}",
+    "image": "Hình ảnh",
+    "close": "Đóng",
+    "noConversations": "Chưa có cuộc trò chuyện nào",
+    "participants": "người tham gia",
+    "searchConversations": "Tìm kiếm cuộc trò chuyện...",
+    "typeMessage": "Nhập tin nhắn...",
+    "selectConversation": "Chọn một cuộc trò chuyện",
+    "startMessaging": "Chọn một cuộc trò chuyện để bắt đầu nhắn tin",
+    "connected": "Đã kết nối",
+    "disconnected": "Đã ngắt kết nối"
+  },
+  "messages": {
+    "domain": "Tin nhắn",
+    "management": "Đội hỗ trợ",
+    "helpSupport": "Đội hỗ trợ",
+    "me": "Tôi",
+    "productQuestion": "Câu hỏi về sản phẩm",
+    "storeQuestion": "Câu hỏi về cửa hàng",
+    "imageUploadFailed": "Tải lên hình ảnh không thành công",
+    "connectionLost": "Mất kết nối. Đang kết nối lại...",
+    "delete": "Xóa",
+    "deleteForEveryone": "Xóa cho tất cả mọi người",
+    "close": "Đóng",
+    "customer": "Khách hàng",
+    "store": "Cửa hàng",
+    "back": "Quay lại",
+    "participant": "người tham gia",
+    "noMessages": "Không có tin nhắn",
+    "chatOptions": "Tùy chọn trò chuyện",
+    "deleteOnlyForMe": "Chỉ xóa cho tôi",
+    "storeContext": "Câu hỏi về cửa hàng",
+    "product": "Sản phẩm",
+    "deleteConfirmTitle": "Xóa tin nhắn",
+    "deleteConfirmDesc": "Bạn có chắc chắn muốn xóa tin nhắn này không?",
+    "error": "Không thể lấy thông tin người dùng.",
+    "supportName": "Đội hỗ trợ",
+    "supportSubject": "Trò chuyện hỗ trợ",
+    "emptyState": "Chưa có tin nhắn nào. Hãy bắt đầu cuộc trò chuyện.",
+    "viewPromotion": "Xem khuyến mãi",
+    "imageAlt": "Hình ảnh",
+    "placeholder": "Nhập tin nhắn...",
+    "send": "Gửi tin nhắn",
+    "attachImage": "Đính kèm hình ảnh",
+    "removeAttachment": "Xóa hình ảnh đính kèm",
+    "viewImage": "Xem hình ảnh kích thước đầy đủ",
+    "pendingImageAlt": "Hình ảnh sẽ gửi",
+    "deletedMessage": "[Tin nhắn này đã bị xóa]"
+  },
+  "requests": {
+    "domain": "Yêu cầu",
+    "status": {
+      "draft": "Bản nháp",
+      "pending": "Đang chờ",
+      "accepted": "Đã chấp nhận",
+      "rejected": "Đã từ chối"
+    },
+    "filters": {
+      "status": "Trạng thái"
+    },
+    "columns": {
+      "name": "Tên"
+    },
+    "categories": {
+      "navLabel": "Danh mục",
+      "heading": "Yêu cầu danh mục",
+      "noRecords": "Không tìm thấy yêu cầu danh mục nào"
+    },
+    "collections": {
+      "navLabel": "Bộ sưu tập",
+      "heading": "Yêu cầu bộ sưu tập",
+      "noRecords": "Không tìm thấy yêu cầu bộ sưu tập nào"
+    },
+    "tags": {
+      "navLabel": "Thẻ",
+      "heading": "Yêu cầu thẻ",
+      "noRecords": "Không tìm thấy yêu cầu thẻ nào"
+    },
+    "types": {
+      "navLabel": "Loại",
+      "heading": "Yêu cầu loại",
+      "noRecords": "Không tìm thấy yêu cầu loại nào"
+    }
+  },
+  "reviews": {
+    "domain": "Đánh giá",
+    "noRecords": "Không tìm thấy đánh giá nào",
+    "columns": {
+      "rating": "Xếp hạng",
+      "reference": "Mã tham chiếu",
+      "customerNote": "Ghi chú của khách hàng"
+    }
+  }
+}

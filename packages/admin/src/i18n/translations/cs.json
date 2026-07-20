@@ -1838,7 +1838,7 @@
       "title": "Vytvořit vrácení peněz",
       "sendNotificationHint": "Oznámit zákazníkům o vytvořeném vrácení peněz.",
       "systemPayment": "Systémová platba",
-      "systemPaymentDesc": "Jedna nebo více vašich plateb je systémová platba. Upozorňujeme, že zachycení a vrácení peněz nejsou zpracovávány Medusou pro takové platby.",
+      "systemPaymentDesc": "Jedna nebo více vašich plateb je systémová platba. Upozorňujeme, že zachycení a vrácení peněz nejsou zpracovávány společností Kayı.com pro takové platby.",
       "error": {
         "amountToLarge": "Nelze vrátit více než původní částku objednávky.",
         "amountNegative": "Částka k vrácení musí být kladné číslo.",
@@ -2906,7 +2906,7 @@
       "header": "Upravit profil",
       "languageHint": "Jazyk, který chcete používat v administrativním dashboardu. To nezmění jazyk vašeho obchodu.",
       "languagePlaceholder": "Vyberte jazyk",
-      "usageInsightsHint": "Sdílejte přehledy používání a pomozte nám zlepšit Medusu. Více o tom, co shromažďujeme a jak to používáme, si můžete přečíst v naší <0>dokumentaci</0>."
+      "usageInsightsHint": "Sdílejte přehledy používání a pomozte nám zlepšit Kayı.com. Více o tom, co shromažďujeme a jak to používáme, si můžete přečíst v naší <0>dokumentaci</0>."
     },
     "toast": {
       "edit": "Změny profilu byly uloženy"
@@ -3260,7 +3260,7 @@
       "createPublishableHeader": "Vytvořit publikovatelný API klíč",
       "createPublishableHint": "Vytvořte nový publikovatelný API klíč pro omezení rozsahu požadavků na specifické prodejní kanály.",
       "createSecretHeader": "Vytvořit tajný API klíč",
-      "createSecretHint": "Vytvořte nový tajný API klíč pro přístup k Medusa API jako autentizovaný administrativní uživatel.",
+      "createSecretHint": "Vytvořte nový tajný API klíč pro přístup k Kayı.com API jako autentizovaný administrativní uživatel.",
       "secretKeyCreatedHeader": "Tajný klíč byl vytvořen",
       "secretKeyCreatedHint": "Váš nový tajný klíč byl vygenerován. Zkopírujte a bezpečně uložte nyní. Toto je jediný čas, kdy bude zobrazen.",
       "copySecretTokenSuccess": "Tajný klíč byl zkopírován do schránky.",
@@ -3358,12 +3358,12 @@
   },
   "login": {
     "forgotPassword": "Zapomněli jste heslo? - <0>Obnovit</0>",
-    "title": "Vítejte v Meduse",
+    "title": "Vítejte v Kayı.com",
     "hint": "Přihlaste se pro přístup do oblasti účtu",
     "sessionExpired": "Relace vypršela"
   },
   "invite": {
-    "title": "Vítejte v Meduse",
+    "title": "Vítejte v Kayı.com",
     "hint": "Vytvořte si svůj účet níže",
     "backToLogin": "Zpět na přihlášení",
     "createAccount": "Vytvořit účet",
@@ -3371,8 +3371,8 @@
     "emailTooltip": "Váš e-mail nelze změnit. Pokud byste chtěli použít jiný e-mail, musí být odeslána nová pozvánka.",
     "invalidInvite": "Pozvánka je neplatná nebo vypršela.",
     "successTitle": "Váš účet byl zaregistrován",
-    "successHint": "Začněte s Medusa Admin hned teď.",
-    "successAction": "Začít Medusa Admin",
+    "successHint": "Začněte s Kayı.com Admin hned teď.",
+    "successAction": "Začít Kayı.com Admin",
     "invalidTokenTitle": "Váš pozvánkový token je neplatný",
     "invalidTokenHint": "Zkuste požádat o nový odkaz na pozvánku.",
     "passwordMismatch": "Hesla se neshodují",
@@ -3405,7 +3405,7 @@
   },
   "workflowExecutions": {
     "domain": "Pracovní postupy",
-    "subtitle": "Zobrazit a sledovat provádění pracovních postupů ve vaší aplikaci Medusa.",
+    "subtitle": "Zobrazit a sledovat provádění pracovních postupů ve vaší aplikaci Kayı.com.",
     "transactionIdLabel": "ID transakce",
     "workflowIdLabel": "ID pracovního postupu",
     "progressLabel": "Pokrok",
@@ -3496,7 +3496,7 @@
       "description": "Momentálně nemáte žádná oznámení, ale jakmile nějaká budete mít, budou zde."
     },
     "accessibility": {
-      "description": "oznámení o aktivitách Medusy budou zde uvedena."
+      "description": "oznámení o aktivitách Kayı.com budou zde uvedena."
     }
   },
   "errors": {

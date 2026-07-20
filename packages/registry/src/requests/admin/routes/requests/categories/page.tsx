@@ -1,15 +1,17 @@
 import { useTranslation } from "react-i18next";
+import i18n from "i18next";
 import { keepPreviousData } from "@tanstack/react-query";
 import { Container, Heading } from "@medusajs/ui";
 import type { RouteConfig } from "@mercurjs/dashboard-sdk";
 
 export const config: RouteConfig = {
-  label: "Categories",
+  label: "categories.navLabel",
+  translationNs: "requests",
   nested: "/requests",
 };
 
 export const handle = {
-  breadcrumb: () => "Categories",
+  breadcrumb: () => i18n.t("requests.categories.navLabel"),
 };
 
 import { useRequests } from "../../../hooks/api/requests";
@@ -51,7 +53,7 @@ const CategoryRequestsPage = () => {
     <SingleColumnPage>
       <Container className="divide-y p-0">
         <div className="flex items-center justify-between px-6 py-4">
-          <Heading>Category Requests</Heading>
+          <Heading>{t("requests.categories.heading")}</Heading>
         </div>
         <_DataTable
           columns={columns}
@@ -67,7 +69,7 @@ const CategoryRequestsPage = () => {
             { key: "updated_at", label: t("fields.updatedAt") },
           ]}
           queryObject={raw}
-          noRecords={{ message: "No category requests found" }}
+          noRecords={{ message: t("requests.categories.noRecords") }}
         />
       </Container>
     </SingleColumnPage>

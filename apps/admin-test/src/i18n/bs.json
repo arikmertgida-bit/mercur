@@ -1,0 +1,227 @@
+{
+  "customFields": {
+    "title": "Prilagođena polja",
+    "description": "Upravljajte svojim prilagođenim poljima i konfiguracijama",
+    "noFields": "Još uvijek nema podešenih prilagođenih polja"
+  },
+  "actions": {
+    "continue": "Nastavi",
+    "cancel": "Otkaži",
+    "delete": "Obriši"
+  },
+  "productReports": {
+    "domain": "Prijave proizvoda",
+    "subtitle": "Proizvodi koje su kupci označili za pregled",
+    "filterAll": "Svi statusi",
+    "columns": {
+      "product": "Proizvod",
+      "reporter": "Prijavio",
+      "reason": "Razlog",
+      "status": "Status"
+    },
+    "status": {
+      "pending": "Na čekanju",
+      "resolved": "Riješeno",
+      "dismissed": "Odbačeno"
+    },
+    "reasons": {
+      "inaccurate_product_details": "Netačni podaci o proizvodu",
+      "pricing_irregularities": "Nepravilnosti u cijeni",
+      "prohibited_item": "Zabranjen artikal",
+      "counterfeit_trademark": "Krivotvorina / kršenje zaštitnog znaka",
+      "incorrect_categorization": "Pogrešna kategorizacija",
+      "inappropriate_media": "Neprikladan medijski sadržaj",
+      "dmca_violation": "Kršenje DMCA",
+      "seller_complaint": "Žalba na prodavca",
+      "other": "Ostalo"
+    },
+    "actions": {
+      "resolve": "Označi kao riješeno",
+      "dismiss": "Odbaci"
+    },
+    "resolvePrompt": {
+      "title": "Označiti prijavu kao riješenu?",
+      "description": "Ova prijava će biti označena kao riješena i uklonjena iz reda čekanja."
+    },
+    "dismissPrompt": {
+      "title": "Odbaciti ovu prijavu?",
+      "description": "Ova prijava će biti označena kao odbačena i uklonjena iz reda čekanja."
+    },
+    "deletePrompt": {
+      "title": "Obrisati ovu prijavu?",
+      "description": "Ovo će trajno obrisati prijavu. Ova radnja se ne može poništiti."
+    },
+    "updateSuccess": "Prijava ažurirana",
+    "updateError": "Ažuriranje prijave nije uspjelo",
+    "deleteSuccess": "Prijava obrisana",
+    "deleteError": "Brisanje prijave nije uspjelo"
+  },
+  "wishlistModeration": {
+    "domain": "Liste želja",
+    "subtitle": "Liste želja kupaca, u svrhu moderacije",
+    "noProducts": "Nema proizvoda",
+    "columns": {
+      "customer": "Kupac",
+      "products": "Proizvodi",
+      "created": "Kreirano"
+    },
+    "deletePrompt": {
+      "title": "Obrisati ovu listu želja?",
+      "description": "Ovo će trajno obrisati listu želja kupca i sve njene stavke. Ova radnja se ne može poništiti."
+    },
+    "deleteSuccess": "Lista želja obrisana",
+    "deleteError": "Brisanje liste želja nije uspjelo"
+  },
+  "reportedImages": {
+    "domain": "Prijavljene slike",
+    "subtitle": "Pregledajte slike koje su kupci prijavili kao neprikladne",
+    "filterAll": "Svi statusi",
+    "imageRemoved": "Slika uklonjena",
+    "columns": {
+      "image": "Slika",
+      "reporter": "Prijavio",
+      "reason": "Razlog",
+      "status": "Status"
+    },
+    "status": {
+      "pending": "Na čekanju",
+      "resolved": "Riješeno"
+    },
+    "actions": {
+      "remove": "Ukloni sliku",
+      "dismiss": "Odbaci prijavu"
+    },
+    "removePrompt": {
+      "title": "Ukloniti ovu sliku?",
+      "description": "Slika će biti trajno obrisana iz recenzije. Ova radnja se ne može poništiti."
+    },
+    "dismissPrompt": {
+      "title": "Odbaciti ovu prijavu?",
+      "description": "Slika će ostati objavljena, a prijava će biti označena kao riješena."
+    },
+    "resolveSuccess": "Prijava riješena",
+    "resolveError": "Rješavanje prijave nije uspjelo"
+  },
+  "messenger": {
+    "searchConversations": "Pretraži razgovore...",
+    "noConversations": "Još uvijek nema razgovora",
+    "startConversation": "Započnite razgovor",
+    "selectConversation": "Odaberite razgovor",
+    "startMessaging": "Odaberite razgovor da biste započeli razgovor",
+    "typeMessage": "Napišite poruku...",
+    "seen": "Viđeno",
+    "sent": "Poslano",
+    "notificationTitle": "{{senderName}} vam je poslao/la poruku",
+    "notificationBody": "{{preview}}",
+    "image": "Slika",
+    "support": "Podrška",
+    "direct": "Direktno",
+    "unknown": "Nepoznato",
+    "supportTeam": "Tim za podršku",
+    "connected": "Povezano",
+    "disconnected": "Nije povezano",
+    "conversationOptions": "Opcije razgovora"
+  },
+  "messages": {
+    "domain": "Poruke",
+    "product": "Proizvod",
+    "store": "Prodavnica",
+    "delete": "Obriši",
+    "deleteForEveryone": "Obriši za sve",
+    "close": "Zatvori",
+    "connectionLost": "Veza je izgubljena. Ponovno povezivanje...",
+    "imageUploadFailed": "Otpremanje slike nije uspjelo",
+    "deleteConfirmTitle": "Obriši poruku",
+    "deleteConfirmDesc": "Jeste li sigurni da želite obrisati ovu poruku?",
+    "productQuestion": "Pitanje o proizvodu",
+    "storeQuestion": "Pitanje o prodavnici",
+    "customerMessage": "Poruka kupca",
+    "sellerMessage": "Poruka prodavca",
+    "directMessage": "Direktna poruka",
+    "storeContext": "Pitanje o prodavnici",
+    "back": "Nazad",
+    "failedToGetUserInfo": "Nije bilo moguće dobiti informacije o korisniku.",
+    "send": "Pošalji poruku",
+    "attachImage": "Priloži sliku",
+    "removeAttachment": "Ukloni priloženu sliku",
+    "viewImage": "Pogledaj sliku u punoj veličini",
+    "pendingImageAlt": "Slika za slanje",
+    "imageAlt": "Slika"
+  },
+  "requests": {
+    "domain": "Zahtjevi",
+    "status": {
+      "draft": "Nacrt",
+      "pending": "Na čekanju",
+      "accepted": "Prihvaćen",
+      "rejected": "Odbijen"
+    },
+    "filters": {
+      "status": "Status"
+    },
+    "columns": {
+      "name": "Naziv"
+    },
+    "categories": {
+      "navLabel": "Kategorije",
+      "heading": "Zahtjevi za kategorije",
+      "noRecords": "Nisu pronađeni zahtjevi za kategorije"
+    },
+    "collections": {
+      "navLabel": "Kolekcije",
+      "heading": "Zahtjevi za kolekcije",
+      "noRecords": "Nisu pronađeni zahtjevi za kolekcije"
+    },
+    "tags": {
+      "navLabel": "Oznake",
+      "heading": "Zahtjevi za oznake",
+      "noRecords": "Nisu pronađeni zahtjevi za oznake"
+    },
+    "types": {
+      "navLabel": "Tipovi",
+      "heading": "Zahtjevi za tipove",
+      "noRecords": "Nisu pronađeni zahtjevi za tipove"
+    },
+    "typeLabels": {
+      "product_category": "Kategorija",
+      "product_collection": "Kolekcija",
+      "product_tag": "Oznaka",
+      "product_type": "Tip"
+    },
+    "fields": {
+      "name": "Naziv",
+      "handle": "Identifikator",
+      "description": "Opis",
+      "active": "Aktivan",
+      "internal": "Interni",
+      "title": "Naslov",
+      "value": "Vrijednost"
+    },
+    "values": {
+      "yes": "Da",
+      "no": "Ne"
+    },
+    "detail": {
+      "pendingReview": "Čeka pregled",
+      "accept": "Prihvati",
+      "reject": "Odbij",
+      "acceptPromptTitle": "Prihvati zahtjev",
+      "acceptPromptDescription": "Jeste li sigurni da želite prihvatiti ovaj zahtjev? Ova radnja će kreirati entitet.",
+      "rejectPromptTitle": "Odbij zahtjev",
+      "rejectPromptDescription": "Jeste li sigurni da želite odbiti ovaj zahtjev? Ova radnja se ne može poništiti.",
+      "acceptSuccess": "Zahtjev prihvaćen",
+      "rejectSuccess": "Zahtjev odbijen",
+      "submitter": "Podnosilac",
+      "reviewer": "Recenzent"
+    }
+  },
+  "reviews": {
+    "domain": "Recenzije",
+    "noRecords": "Nisu pronađene recenzije",
+    "columns": {
+      "rating": "Ocjena",
+      "reference": "Referenca",
+      "customerNote": "Napomena kupca"
+    }
+  }
+}

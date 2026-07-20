@@ -74,7 +74,8 @@
     "true": "Tačno",
     "false": "Netačno",
     "decrement": "Smanji",
-    "increment": "Povećaj"
+    "increment": "Povećaj",
+    "drawerAccessibleDescription": "Koristite ovaj panel za pregled ili uređivanje detalja ovog resursa."
   },
   "json": {
     "header": "JSON",
@@ -173,7 +174,8 @@
     "saveAndClose": "Sačuvaj i zatvori",
     "request": "Zahtjev",
     "editVariantImages": "Uredi slike varijante",
-    "editImages": "Uredi slike"
+    "editImages": "Uredi slike",
+    "ok": "U redu"
   },
   "operators": {
     "in": "U"
@@ -494,7 +496,12 @@
         "handleMustContainLetter": "Identifikator (handle) mora sadržavati najmanje jedno slovo",
         "requiredAttributeSelect": "Ovaj atribut je obavezan prema pravilima tržišta. Odaberite vrijednost.",
         "requiredAttributeEnter": "Ovaj atribut je obavezan prema pravilima tržišta. Unesite vrijednost.",
-        "requiredAttributeMultiSelect": "Ovaj atribut je obavezan prema pravilima tržišta. Odaberite najmanje jednu vrijednost."
+        "requiredAttributeMultiSelect": "Ovaj atribut je obavezan prema pravilima tržišta. Odaberite najmanje jednu vrijednost.",
+        "formIncomplete": "Nedostaju neka obavezna polja — provjerite označene redove prije objavljivanja.",
+        "mediaRequired": "Dodajte barem jednu sliku za ovu varijantu.",
+        "priceRequired": "Unesite cijenu za ovu varijantu u barem jednoj valuti.",
+        "shippingProfileRequired": "Odaberite profil dostave.",
+        "stockRequired": "Postavite zalihu za ovu varijantu u barem jednoj lokaciji."
       },
       "variants": {
         "header": "Varijante",
@@ -518,7 +525,14 @@
           "label": "Opcije proizvoda",
           "hint": "Definišite opcije za proizvod, npr. boja, veličina, itd."
         },
-        "optionsHeader": "Opcije"
+        "optionsHeader": "Opcije",
+        "mediaPicker": {
+          "description": "Odaberite koje fotografije proizvoda pripadaju ovoj varijanti.",
+          "empty": "Prvo otpremite fotografije na kartici Detalji.",
+          "header": "Dodijeli slike",
+          "image": "Slika {{index}}",
+          "partialFailureToast": "Proizvod je kreiran, ali slike nisu mogle biti dodijeljene: {{variants}}. Možete ponovo pokušati sa stranice za uređivanje proizvoda."
+        }
       },
       "successToast": "Proizvod {{title}} je uspješno kreiran.",
       "attributes": {
@@ -653,7 +667,11 @@
       "removeSelected": "Ukloni odabrano",
       "selectImages": "Odaberite slike",
       "selectImagesHint": "Kliknite na slike da biste ih dodali ovoj varijanti.",
-      "editLabel": "Uredi"
+      "editLabel": "Uredi",
+      "limitExceeded": {
+        "description": "Možete otpremiti do {{max}} slika po proizvodu. Prvih {{max}} je dodano — ostale su preskočene.",
+        "title": "Dostignut je limit slika"
+      }
     },
     "discountableHint": "Kada je neoznačeno, popusti neće biti primijenjeni na ovaj proizvod.",
     "noSalesChannels": "Nema dostupnosti u prodajnim kanalima",
@@ -798,27 +816,6 @@
       "tableItemAvailable": "{{availableCount}} dostupno",
       "tableItem_one": "{{availableCount}} dostupno na {{locationCount}} lokaciji",
       "tableItem_other": "{{availableCount}} dostupno na {{locationCount}} lokacija",
-      "inventory": {
-        "notManaged": "Nije upravljano",
-        "navigateToItem": "Idi na stavku inventara",
-        "inventoryKit": "Inventarni komplet",
-        "inventoryKitHint": "Da li ova varijanta sadrži više stavki inventara?",
-        "validation": {
-          "itemId": "Molimo odaberite stavku inventara.",
-          "quantity": "Količina je obavezna. Unesite pozitivan broj."
-        },
-        "editItemDetails": "Uredi detalje stavke",
-        "manageInventoryLabel": "Upravljaj inventarom",
-        "manageInventoryHint": "Kada je omogućeno, mijenjat ćemo količinu inventara kada se kreiraju narudžbe i povrati.",
-        "allowBackordersLabel": "Dozvoli unaprijed naručivanje",
-        "allowBackordersHint": "Kada je omogućeno, kupci mogu kupiti varijantu čak i ako nema dostupne količine.",
-        "toast": {
-          "levelsBatch": "Nivoi inventara ažurirani.",
-          "update": "Stavka inventara uspješno ažurirana.",
-          "updateLevel": "Nivo inventara uspješno ažuriran.",
-          "itemsManageSuccess": "Stavke inventara uspješno ažurirane."
-        }
-      },
       "validation": {
         "titleRequired": "Unesite naslov",
         "optionRequired": "Odaberite vrijednost"
@@ -933,6 +930,18 @@
       "description": "Uredite više proizvoda odjednom.",
       "noChanges": "Nema promjena za spašavanje.",
       "success": "Proizvodi su uspješno ažurirani."
+    },
+    "stock": {
+      "available": "Dostupno",
+      "edit": {
+        "description": "Ažurirajte trenutnu zalihu za svaku lokaciju. Promjene se spremaju direktno u Zalihe.",
+        "header": "Uredi zalihu",
+        "location": "Lokacija",
+        "quantity": "Količina",
+        "successToast": "Zaliha je uspješno ažurirana"
+      },
+      "header": "Praćenje zaliha",
+      "lowStock": "Niska zaliha"
     }
   },
   "collections": {
@@ -1164,7 +1173,6 @@
         "emptyTitle": "Nema grupacija kupaca"
       },
       "add": {
-        "success": "Kupac je dodan u: {{groups}}.",
         "list": {
           "noRecordsMessage": "Prvo kreirajte grupu kupaca."
         },
@@ -1172,7 +1180,6 @@
         "successMany": "Kupac je uspješno dodan u {{groups}} grupa."
       },
       "removed": {
-        "success": "Kupac je uklonjen iz: {{groups}}.",
         "list": {
           "noRecordsMessage": "Prvo kreirajte grupu kupaca."
         },
@@ -1328,7 +1335,6 @@
       "capture": "Preuzmi uplatu",
       "capture_short": "Preuzmi",
       "refund": "Povrat",
-      "markAsPaid": "Označi kao plaćeno",
       "statusLabel": "Status uplate",
       "statusTitle": "Status uplate",
       "status": {
@@ -1346,8 +1352,6 @@
       },
       "capturePayment": "Uplata od {{amount}} će biti preuzeta.",
       "capturePaymentSuccess": "Uplata od {{amount}} uspješno preuzeta",
-      "markAsPaidPayment": "Uplata od {{amount}} će biti označena kao plaćena.",
-      "markAsPaidPaymentSuccess": "Uplata od {{amount}} uspješno označena kao plaćena",
       "createRefund": "Kreiraj povrat",
       "refundPaymentSuccess": "Povrat iznosa {{amount}} uspješan",
       "createRefundWrongQuantity": "Količina treba biti broj između 1 i {{number}}",
@@ -1708,7 +1712,7 @@
       "title": "Kreiraj povrat",
       "sendNotificationHint": "Obavijestite kupce o kreiranom povratu.",
       "systemPayment": "Sistemska uplata",
-      "systemPaymentDesc": "Jedna ili više vaših uplata je sistenska uplata. Budite svjesni da Medusa ne upravlja obradom uplata i povrata za takve uplate.",
+      "systemPaymentDesc": "Jedna ili više vaših uplata je sistenska uplata. Budite svjesni da Kayı.com ne upravlja obradom uplata i povrata za takve uplate.",
       "error": {
         "amountToLarge": "Nije moguće vratiti više od originalnog iznosa narudžbe.",
         "amountNegative": "Iznos povrata mora biti pozitivan broj.",
@@ -2132,8 +2136,6 @@
       "header": "Kreiraj Poresku Regiju",
       "hint": "Kreirajte novu poresku regiju kako biste definirali poreske stope za određenu zemlju.",
       "errors": {
-        "rateIsRequired": "Poreska stopa je obavezna pri kreiranju osnovne poreske stope.",
-        "nameIsRequired": "Ime je obavezno pri kreiranju osnovne poreske stope.",
         "missingProvider": "Provajder je obavezan prilikom kreiranja poreske regije.",
         "missingCountry": "Zemlja je obavezna prilikom kreiranja poreske regije."
       },
@@ -2438,7 +2440,6 @@
     "toasts": {
       "promotionCreateSuccess": "Promocija ({{code}}) je uspješno kreirana."
     },
-    "create": {},
     "edit": {
       "title": "Uredi detalje promocije",
       "rules": {
@@ -2811,7 +2812,7 @@
       "header": "Uredi profil",
       "languageHint": "Jezik koji želite koristiti u administratorskoj nadzornoj ploči. Ovo neće promijeniti jezik vašeg trgovine.",
       "languagePlaceholder": "Odaberite jezik",
-      "usageInsightsHint": "Podijelite uvide u korištenje i pomozite nam poboljšati Medusu. Više o tome što prikupljamo i kako to koristimo možete pročitati u našoj <0>dokumentaciji</0>."
+      "usageInsightsHint": "Podijelite uvide u korištenje i pomozite nam poboljšati Kayı.com. Više o tome što prikupljamo i kako to koristimo možete pročitati u našoj <0>dokumentaciji</0>."
     },
     "toast": {
       "edit": "Promjene na profilu su spremljene"
@@ -2885,7 +2886,6 @@
     "removeCurrencyWarning_other": "Spremate se izbrisati {{count}} valuta iz svoje trgovine. Pobrinite se da ste uklonili sve cijene koje koriste ove valute prije nego što nastavite.",
     "currencyAlreadyAdded": "Valuta je već dodana u vašu trgovinu.",
     "edit": {
-      "header": "Uredi trgovinu",
       "websiteHint": "Mora sadržavati protokol (npr. https://)",
       "mediaHeading": "Mediji",
       "mediaTipLabel": "Savjet:",
@@ -2893,7 +2893,9 @@
       "uploadLogoLabel": "Otpremi logo",
       "uploadLogoHint": "Prevucite i ispustite logo ovdje ili kliknite za otpremanje.",
       "uploadBannerLabel": "Otpremi baner",
-      "uploadBannerHint": "Prevucite i ispustite baner ovdje ili kliknite za otpremanje."
+      "uploadBannerHint": "Prevucite i ispustite baner ovdje ili kliknite za otpremanje.",
+      "bannerTooSmall": "Slika je mala ({{width}}×{{height}}px). Preporučuje se najmanje {{minWidth}}×{{minHeight}}px, u suprotnom može izgledati mutno.",
+      "logoTooSmall": "Slika je mala ({{width}}×{{height}}px). Preporučuje se najmanje {{minWidth}}×{{minHeight}}px, u suprotnom može izgledati mutno."
     },
     "toast": {
       "update": "Trgovina uspješno ažurirana",
@@ -3233,7 +3235,7 @@
       "createPublishableHeader": "Kreiraj javni API ključ",
       "createPublishableHint": "Kreirajte novi javni API ključ kako biste ograničili opseg zahtjeva na određene prodajne kanale.",
       "createSecretHeader": "Kreiraj tajni API ključ",
-      "createSecretHint": "Kreirajte novi tajni API ključ za pristup Medusa API-ju kao autentifikovani administrativni korisnik.",
+      "createSecretHint": "Kreirajte novi tajni API ključ za pristup Kayı.com API-ju kao autentifikovani administrativni korisnik.",
       "secretKeyCreatedHeader": "Tajni ključ kreiran",
       "secretKeyCreatedHint": "Vaš novi tajni ključ je generisan. Kopirajte ga i sigurno sačuvajte sada. Ovo je jedini put kada će biti prikazan.",
       "copySecretTokenSuccess": "Tajni ključ je uspješno kopiran u međuspremnik.",
@@ -3330,7 +3332,7 @@
   },
   "login": {
     "forgotPassword": "Zaboravili ste lozinku? - <0>Poništi</0>",
-    "title": "Dobrodošli u Medusa",
+    "title": "Dobrodošli u Kayı.com",
     "hint": "Prijavite se da biste pristupili korisničkom području",
     "submit": "Prijavi se",
     "sessionExpired": "Sesija je istekla",
@@ -3342,7 +3344,7 @@
     }
   },
   "invite": {
-    "title": "Dobrodošli u Medusa",
+    "title": "Dobrodošli u Kayı.com",
     "hint": "Kreirajte svoj račun ispod",
     "backToLogin": "Povratak na prijavu",
     "createAccount": "Kreiraj račun",
@@ -3350,8 +3352,7 @@
     "emailTooltip": "Vaš email se ne može mijenjati. Ako želite koristiti drugi email, mora se poslati nova pozivnica.",
     "invalidInvite": "Pozivnica je nevažeća ili je istekao rok.",
     "successTitle": "Vaš račun je registriran",
-    "successHint": "Počnite odmah s Medusa Admin.",
-    "successAction": "Započnite Medusa Admin",
+    "successHint": "Počnite odmah s Kayı.com Admin.",
     "invalidTokenTitle": "Vaš pozivni token je nevažeći",
     "invalidTokenHint": "Pokušajte zatražiti novi pozivni link.",
     "passwordMismatch": "Lozinke se ne podudaraju",
@@ -3387,7 +3388,7 @@
   },
   "workflowExecutions": {
     "domain": "Radni tokovi",
-    "subtitle": "Pregledajte i pratite izvršenja radnih tokova u vašoj Medusa aplikaciji.",
+    "subtitle": "Pregledajte i pratite izvršenja radnih tokova u vašoj Kayı.com aplikaciji.",
     "transactionIdLabel": "ID transakcije",
     "workflowIdLabel": "ID radnog toka",
     "progressLabel": "Napredak",
@@ -3480,7 +3481,7 @@
       "description": "Nemate obavijesti u ovom trenutku, ali kada ih budete imali, bit će ovdje."
     },
     "accessibility": {
-      "description": "Obavijesti o Medusa aktivnostima bit će ovdje prikazane."
+      "description": "Obavijesti o Kayı.com aktivnostima bit će ovdje prikazane."
     }
   },
   "errors": {
@@ -3668,7 +3669,6 @@
     "endDate": "Datum završetka",
     "draft": "Skica",
     "values": "Vrijednosti",
-    "brand": "Brand",
     "reference": "Referenca",
     "reference_id": "ID reference",
     "images": "Mediji",
@@ -3701,7 +3701,9 @@
     "inventory_quantity": "Količina u skladištu",
     "requires_shipping": "Potrebna dostava",
     "variant_attributes": "Atributi varijante",
-    "product_attributes": "Atributi proizvoda"
+    "product_attributes": "Atributi proizvoda",
+    "handleAutoGeneratedHint": "Automatski se generira iz naziva. Samo mala slova, brojevi i crtice — ovo polje se ne može direktno uređivati.",
+    "handleInvalidFormat": "Handle smije sadržavati samo mala slova, brojeve i crtice"
   },
   "dateTime": {
     "years_one": "Godina",
@@ -3889,7 +3891,7 @@
       "manageEntities": "Upravljaj entitetima",
       "manageLocales": "Upravljaj jezicima"
     },
-    "subtitle": "Upravljajte prijevodima vaših podataka u Medusi",
+    "subtitle": "Upravljajte prijevodima vaših podataka u Kayı.com",
     "list": {
       "metrics": "{{translated}} od {{total}} prijevoda"
     },
@@ -4083,7 +4085,7 @@
         "accountNameRequired": "Unesite naziv računa"
       },
       "preview": {
-        "title": "Dobrodošli u Mercur",
+        "title": "Dobrodošli u Kayı.com",
         "description": "Vaš sveobuhvatni portal za prodavce za upravljanje prodavnicom, proizvodima, narudžbama i isplatama.",
         "placeholder": "Pregled aplikacije"
       }
@@ -4148,7 +4150,12 @@
   "auth": {
     "login": {
       "authenticationFailed": "Autentifikacija nije uspjela",
-      "cloud": "Prijavi se putem Mercur-a"
+      "cloud": "Prijavi se putem Kayı.com-a"
     }
+  },
+  "sellerSuspension": {
+    "description": "Vaša prodavnica je suspendovana od strane uprave. Nećete moći kreirati nove proizvode dok se ne ponovo aktivira. Ako imate pitanja, naš tim za podršku je tu da pomogne.",
+    "help": "Pomoć",
+    "title": "Prodavnica suspendovana"
   }
 }

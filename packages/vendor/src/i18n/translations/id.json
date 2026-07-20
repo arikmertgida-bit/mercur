@@ -74,7 +74,8 @@
     "true": "Benar",
     "false": "Salah",
     "decrement": "Kurangi",
-    "increment": "Tambah"
+    "increment": "Tambah",
+    "drawerAccessibleDescription": "Gunakan panel ini untuk melihat atau mengedit detail sumber daya ini."
   },
   "json": {
     "header": "JSON",
@@ -173,7 +174,8 @@
     "saveAndClose": "Simpan dan tutup",
     "request": "Permintaan",
     "editVariantImages": "Edit gambar varian",
-    "editImages": "Edit gambar"
+    "editImages": "Edit gambar",
+    "ok": "OK"
   },
   "operators": {
     "in": "Dalam"
@@ -494,7 +496,12 @@
         "handleMustContainLetter": "Handle harus berisi setidaknya satu huruf",
         "requiredAttributeSelect": "Atribut ini diwajibkan oleh marketplace. Silakan pilih nilai.",
         "requiredAttributeEnter": "Atribut ini diwajibkan oleh marketplace. Silakan masukkan nilai.",
-        "requiredAttributeMultiSelect": "Atribut ini diwajibkan oleh marketplace. Silakan pilih setidaknya satu nilai."
+        "requiredAttributeMultiSelect": "Atribut ini diwajibkan oleh marketplace. Silakan pilih setidaknya satu nilai.",
+        "formIncomplete": "Beberapa kolom wajib belum diisi — periksa baris yang disorot sebelum mempublikasikan.",
+        "mediaRequired": "Tambahkan minimal satu gambar untuk varian ini.",
+        "priceRequired": "Masukkan harga untuk varian ini dalam setidaknya satu mata uang.",
+        "shippingProfileRequired": "Silakan pilih profil pengiriman.",
+        "stockRequired": "Tetapkan jumlah stok untuk varian ini di setidaknya satu lokasi."
       },
       "variants": {
         "header": "Varian",
@@ -518,7 +525,14 @@
           "label": "Opsi produk",
           "hint": "Definisikan opsi untuk produk, misal: warna, ukuran, dll."
         },
-        "optionsHeader": "Opsi"
+        "optionsHeader": "Opsi",
+        "mediaPicker": {
+          "description": "Pilih foto produk mana yang termasuk dalam varian ini.",
+          "empty": "Unggah foto di tab Detail terlebih dahulu.",
+          "header": "Tetapkan gambar",
+          "image": "Gambar {{index}}",
+          "partialFailureToast": "Produk telah dibuat, tetapi gambar tidak dapat ditetapkan ke: {{variants}}. Anda dapat mencoba lagi dari halaman edit produk."
+        }
       },
       "successToast": "Produk {{title}} berhasil dibuat.",
       "attributes": {
@@ -653,7 +667,11 @@
       "removeSelected": "Hapus yang Dipilih",
       "selectImages": "Pilih Gambar",
       "selectImagesHint": "Klik gambar untuk menambahkannya ke varian ini.",
-      "editLabel": "Edit"
+      "editLabel": "Edit",
+      "limitExceeded": {
+        "description": "Anda dapat mengunggah hingga {{max}} gambar per produk. {{max}} gambar pertama ditambahkan — sisanya dilewati.",
+        "title": "Batas gambar tercapai"
+      }
     },
     "discountableHint": "Jika tidak dicentang, diskon tidak akan diterapkan pada produk ini.",
     "noSalesChannels": "Tidak tersedia di saluran penjualan mana pun",
@@ -798,27 +816,6 @@
       "tableItemAvailable": "{{availableCount}} tersedia",
       "tableItem_one": "{{availableCount}} tersedia di {{locationCount}} lokasi",
       "tableItem_other": "{{availableCount}} tersedia di {{locationCount}} lokasi",
-      "inventory": {
-        "notManaged": "Tidak dikelola",
-        "navigateToItem": "Pergi ke item inventaris",
-        "inventoryKit": "Kit Inventaris",
-        "inventoryKitHint": "Apakah varian ini terdiri dari beberapa item inventaris?",
-        "validation": {
-          "itemId": "Pilih item inventaris.",
-          "quantity": "Kuantitas wajib diisi. Masukkan angka positif."
-        },
-        "editItemDetails": "Edit detail item",
-        "manageInventoryLabel": "Kelola inventaris",
-        "manageInventoryHint": "Jika diaktifkan, kami akan mengubah kuantitas inventaris untuk Anda saat pesanan dan pengembalian dibuat.",
-        "allowBackordersLabel": "Izinkan pesanan kembali",
-        "allowBackordersHint": "Jika diaktifkan, pelanggan dapat membeli varian meskipun tidak ada kuantitas yang tersedia.",
-        "toast": {
-          "levelsBatch": "Level inventaris diperbarui.",
-          "update": "Item inventaris berhasil diperbarui.",
-          "updateLevel": "Level inventaris berhasil diperbarui.",
-          "itemsManageSuccess": "Item inventaris berhasil diperbarui."
-        }
-      },
       "validation": {
         "titleRequired": "Silakan masukkan judul",
         "optionRequired": "Silakan pilih nilai"
@@ -933,6 +930,18 @@
       "description": "Edit beberapa produk sekaligus.",
       "noChanges": "Tidak ada perubahan untuk disimpan.",
       "success": "Produk berhasil diperbarui."
+    },
+    "stock": {
+      "available": "Tersedia",
+      "edit": {
+        "description": "Perbarui jumlah stok langsung untuk setiap lokasi. Perubahan disimpan langsung ke Inventaris.",
+        "header": "Edit stok",
+        "location": "Lokasi",
+        "quantity": "Jumlah",
+        "successToast": "Stok berhasil diperbarui"
+      },
+      "header": "Pelacakan stok",
+      "lowStock": "Stok menipis"
     }
   },
   "collections": {
@@ -1164,7 +1173,6 @@
         "emptyTitle": "Tidak ada grup pelanggan"
       },
       "add": {
-        "success": "Pelanggan ditambahkan ke: {{groups}}.",
         "list": {
           "noRecordsMessage": "Buat grup pelanggan terlebih dahulu."
         },
@@ -1172,7 +1180,6 @@
         "successMany": "Pelanggan berhasil ditambahkan ke {{groups}} grup."
       },
       "removed": {
-        "success": "Pelanggan dihapus dari: {{groups}}.",
         "list": {
           "noRecordsMessage": "Buat grup pelanggan terlebih dahulu."
         },
@@ -1328,7 +1335,6 @@
       "capture": "Ambil pembayaran",
       "capture_short": "Ambil",
       "refund": "Pengembalian dana",
-      "markAsPaid": "Tandai sebagai dibayar",
       "statusLabel": "Status pembayaran",
       "statusTitle": "Status Pembayaran",
       "status": {
@@ -1346,8 +1352,6 @@
       },
       "capturePayment": "Pembayaran sebesar {{amount}} akan diambil.",
       "capturePaymentSuccess": "Pembayaran sebesar {{amount}} berhasil diambil",
-      "markAsPaidPayment": "Pembayaran sebesar {{amount}} akan ditandai sebagai dibayar.",
-      "markAsPaidPaymentSuccess": "Pembayaran sebesar {{amount}} berhasil ditandai sebagai dibayar",
       "createRefund": "Buat Pengembalian Dana",
       "refundPaymentSuccess": "Pengembalian dana sebesar {{amount}} berhasil",
       "createRefundWrongQuantity": "Kuantitas harus berupa angka antara 1 dan {{number}}",
@@ -1708,7 +1712,7 @@
       "title": "Buat Pengembalian Dana",
       "sendNotificationHint": "Beritahu pelanggan tentang pengembalian dana yang dibuat.",
       "systemPayment": "Pembayaran sistem",
-      "systemPaymentDesc": "Satu atau lebih pembayaran Anda adalah pembayaran sistem. Perlu diketahui, pengambilan dan pengembalian dana tidak ditangani oleh Medusa untuk pembayaran tersebut.",
+      "systemPaymentDesc": "Satu atau lebih pembayaran Anda adalah pembayaran sistem. Perlu diketahui, pengambilan dan pengembalian dana tidak ditangani oleh Kayı.com untuk pembayaran tersebut.",
       "error": {
         "amountToLarge": "Tidak dapat mengembalikan dana lebih dari jumlah pesanan awal.",
         "amountNegative": "Jumlah pengembalian dana harus berupa angka positif.",
@@ -2436,7 +2440,6 @@
     "toasts": {
       "promotionCreateSuccess": "Promosi ({{code}}) berhasil dibuat."
     },
-    "create": {},
     "edit": {
       "title": "Edit Detail Promosi",
       "rules": {
@@ -2809,7 +2812,7 @@
       "header": "Edit Profil",
       "languageHint": "Bahasa yang ingin Anda gunakan di dasbor admin. Ini tidak mengubah bahasa toko Anda.",
       "languagePlaceholder": "Pilih bahasa",
-      "usageInsightsHint": "Bagikan wawasan penggunaan dan bantu kami meningkatkan Medusa. Anda dapat membaca lebih lanjut tentang apa yang kami kumpulkan dan bagaimana kami menggunakannya di <0>dokumentasi</0> kami."
+      "usageInsightsHint": "Bagikan wawasan penggunaan dan bantu kami meningkatkan Kayı.com. Anda dapat membaca lebih lanjut tentang apa yang kami kumpulkan dan bagaimana kami menggunakannya di <0>dokumentasi</0> kami."
     },
     "toast": {
       "edit": "Perubahan profil tersimpan"
@@ -2883,7 +2886,6 @@
     "removeCurrencyWarning_other": "Anda akan menghapus {{count}} mata uang dari toko Anda. Pastikan Anda telah menghapus semua harga menggunakan mata uang tersebut sebelum melanjutkan.",
     "currencyAlreadyAdded": "Mata uang sudah ditambahkan ke toko Anda.",
     "edit": {
-      "header": "Edit Toko",
       "websiteHint": "Harus menyertakan protokol (mis. https://)",
       "mediaHeading": "Media",
       "mediaTipLabel": "Tip:",
@@ -2891,7 +2893,9 @@
       "uploadLogoLabel": "Unggah logo",
       "uploadLogoHint": "Seret dan lepas logo Anda di sini atau klik untuk mengunggah.",
       "uploadBannerLabel": "Unggah banner",
-      "uploadBannerHint": "Seret dan lepas banner Anda di sini atau klik untuk mengunggah."
+      "uploadBannerHint": "Seret dan lepas banner Anda di sini atau klik untuk mengunggah.",
+      "bannerTooSmall": "Gambar terlalu kecil ({{width}}×{{height}}px). Disarankan minimal {{minWidth}}×{{minHeight}}px, jika tidak gambar mungkin terlihat buram.",
+      "logoTooSmall": "Gambar terlalu kecil ({{width}}×{{height}}px). Disarankan minimal {{minWidth}}×{{minHeight}}px, jika tidak gambar mungkin terlihat buram."
     },
     "toast": {
       "update": "Toko berhasil diperbarui",
@@ -3231,7 +3235,7 @@
       "createPublishableHeader": "Buat Kunci API yang Dapat Dipublikasikan",
       "createPublishableHint": "Buat kunci API yang dapat dipublikasikan baru untuk membatasi cakupan permintaan ke saluran penjualan tertentu.",
       "createSecretHeader": "Buat Kunci API Rahasia",
-      "createSecretHint": "Buat kunci API rahasia baru untuk mengakses Medusa API sebagai pengguna admin terautentikasi.",
+      "createSecretHint": "Buat kunci API rahasia baru untuk mengakses Kayı.com API sebagai pengguna admin terautentikasi.",
       "secretKeyCreatedHeader": "Kunci Rahasia Dibuat",
       "secretKeyCreatedHint": "Kunci rahasia baru Anda telah dibuat. Salin dan simpan dengan aman sekarang. Ini adalah satu-satunya saat akan ditampilkan.",
       "copySecretTokenSuccess": "Kunci rahasia berhasil disalin ke papan klip.",
@@ -3328,7 +3332,7 @@
   },
   "login": {
     "forgotPassword": "Lupa kata sandi? - <0>Setel ulang</0>",
-    "title": "Selamat datang di Medusa",
+    "title": "Selamat datang di Kayı.com",
     "hint": "Masuk untuk mengakses area akun",
     "submit": "Masuk",
     "sessionExpired": "Sesi berakhir",
@@ -3340,7 +3344,7 @@
     }
   },
   "invite": {
-    "title": "Selamat datang di Medusa",
+    "title": "Selamat datang di Kayı.com",
     "hint": "Buat akun Anda di bawah",
     "backToLogin": "Kembali ke login",
     "createAccount": "Buat akun",
@@ -3348,8 +3352,7 @@
     "emailTooltip": "Alamat email Anda tidak dapat diubah. Jika Anda ingin menggunakan email lain, undangan baru harus dikirim.",
     "invalidInvite": "Undangan tidak valid atau sudah kedaluwarsa.",
     "successTitle": "Akun Anda telah terdaftar",
-    "successHint": "Mulai gunakan Medusa Admin sekarang juga.",
-    "successAction": "Mulai Medusa Admin",
+    "successHint": "Mulai gunakan Kayı.com Admin sekarang juga.",
     "invalidTokenTitle": "Token undangan Anda tidak valid",
     "invalidTokenHint": "Coba minta tautan undangan baru.",
     "passwordMismatch": "Kata sandi tidak cocok",
@@ -3385,7 +3388,7 @@
   },
   "workflowExecutions": {
     "domain": "Alur Kerja",
-    "subtitle": "Lihat dan pantau eksekusi alur kerja di aplikasi Medusa Anda.",
+    "subtitle": "Lihat dan pantau eksekusi alur kerja di aplikasi Kayı.com Anda.",
     "transactionIdLabel": "ID Transaksi",
     "workflowIdLabel": "ID Alur Kerja",
     "progressLabel": "Kemajuan",
@@ -3478,7 +3481,7 @@
       "description": "Anda belum memiliki notifikasi saat ini, tetapi setelah ada, akan muncul di sini."
     },
     "accessibility": {
-      "description": "Notifikasi tentang aktivitas Medusa akan dicantumkan di sini."
+      "description": "Notifikasi tentang aktivitas Kayı.com akan dicantumkan di sini."
     }
   },
   "errors": {
@@ -3666,7 +3669,6 @@
     "endDate": "Tanggal akhir",
     "draft": "Draf",
     "values": "Nilai",
-    "brand": "Brand",
     "reference": "Referensi",
     "reference_id": "ID Referensi",
     "images": "Media",
@@ -3699,7 +3701,9 @@
     "inventory_quantity": "Kuantitas inventaris",
     "requires_shipping": "Membutuhkan pengiriman",
     "variant_attributes": "Atribut varian",
-    "product_attributes": "Atribut produk"
+    "product_attributes": "Atribut produk",
+    "handleAutoGeneratedHint": "Dibuat otomatis dari nama. Hanya huruf kecil, angka, dan tanda hubung — kolom ini tidak dapat diedit langsung.",
+    "handleInvalidFormat": "Handle hanya boleh berisi huruf kecil, angka, dan tanda hubung"
   },
   "dateTime": {
     "years_one": "Tahun",
@@ -3887,7 +3891,7 @@
       "manageEntities": "Kelola entitas",
       "manageLocales": "Kelola lokal"
     },
-    "subtitle": "Kelola terjemahan data Anda di Medusa",
+    "subtitle": "Kelola terjemahan data Anda di Kayı.com",
     "list": {
       "metrics": "{{translated}} dari {{total}} terjemahan"
     },
@@ -4081,7 +4085,7 @@
         "accountNameRequired": "Silakan masukkan nama akun"
       },
       "preview": {
-        "title": "Selamat datang di Mercur",
+        "title": "Selamat datang di Kayı.com",
         "description": "Portal vendor serba guna Anda untuk mengelola toko, produk, pesanan, dan pencairan dana.",
         "placeholder": "Pratinjau aplikasi"
       }
@@ -4146,7 +4150,12 @@
   "auth": {
     "login": {
       "authenticationFailed": "Autentikasi gagal",
-      "cloud": "Masuk dengan Mercur"
+      "cloud": "Masuk dengan Kayı.com"
     }
+  },
+  "sellerSuspension": {
+    "description": "Toko Anda telah ditangguhkan oleh pihak manajemen. Anda tidak akan dapat membuat produk baru hingga diaktifkan kembali. Jika Anda memiliki pertanyaan, tim dukungan kami siap membantu.",
+    "help": "Bantuan",
+    "title": "Toko ditangguhkan"
   }
 }

@@ -44,7 +44,7 @@ const ReviewListPage = () => {
     <SingleColumnPage>
       <Container className="divide-y p-0">
         <div className="flex items-center justify-between px-6 py-4">
-          <Heading>Reviews</Heading>
+          <Heading>{t("reviews.domain")}</Heading>
         </div>
         <_DataTable
           columns={columns}
@@ -67,7 +67,7 @@ const ReviewListPage = () => {
           ]}
           queryObject={raw}
           noRecords={{
-            message: "No reviews found",
+            message: t("reviews.noRecords"),
           }}
         />
       </Container>
@@ -78,6 +78,7 @@ const ReviewListPage = () => {
 export default ReviewListPage;
 
 export const config: RouteConfig = {
-  label: "Reviews",
+  label: "domain",
+  translationNs: "reviews",
   icon: Star,
 };

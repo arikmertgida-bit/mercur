@@ -1,0 +1,227 @@
+{
+  "customFields": {
+    "title": "Прилагодени полиња",
+    "description": "Управувајте со вашите прилагодени полиња и конфигурации",
+    "noFields": "Сè уште нема конфигурирано прилагодени полиња"
+  },
+  "actions": {
+    "continue": "Продолжи",
+    "cancel": "Откажи",
+    "delete": "Избриши"
+  },
+  "productReports": {
+    "domain": "Пријави за производи",
+    "subtitle": "Производи означени од купувачи за преглед",
+    "filterAll": "Сите статуси",
+    "columns": {
+      "product": "Производ",
+      "reporter": "Пријавено од",
+      "reason": "Причина",
+      "status": "Статус"
+    },
+    "status": {
+      "pending": "Чека",
+      "resolved": "Решено",
+      "dismissed": "Отфрлено"
+    },
+    "reasons": {
+      "inaccurate_product_details": "Неточни податоци за производот",
+      "pricing_irregularities": "Неправилности во цената",
+      "prohibited_item": "Забранет артикал",
+      "counterfeit_trademark": "Фалсификат / повреда на трговска марка",
+      "incorrect_categorization": "Погрешна категоризација",
+      "inappropriate_media": "Несоодветна медиумска содржина",
+      "dmca_violation": "Прекршување на DMCA",
+      "seller_complaint": "Поплака за продавачот",
+      "other": "Друго"
+    },
+    "actions": {
+      "resolve": "Означи како решено",
+      "dismiss": "Отфрли"
+    },
+    "resolvePrompt": {
+      "title": "Да се означи пријавата како решена?",
+      "description": "Оваа пријава ќе биде означена како решена и отстранета од редот на чекање."
+    },
+    "dismissPrompt": {
+      "title": "Да се отфрли оваа пријава?",
+      "description": "Оваа пријава ќе биде означена како отфрлена и отстранета од редот на чекање."
+    },
+    "deletePrompt": {
+      "title": "Да се избрише оваа пријава?",
+      "description": "Ова трајно ќе ја избрише пријавата. Оваа дејност не може да се врати."
+    },
+    "updateSuccess": "Пријавата е ажурирана",
+    "updateError": "Ажурирањето на пријавата не успеа",
+    "deleteSuccess": "Пријавата е избришана",
+    "deleteError": "Бришењето на пријавата не успеа"
+  },
+  "wishlistModeration": {
+    "domain": "Листи на желби",
+    "subtitle": "Листи на желби на купувачите, за модерациски цели",
+    "noProducts": "Нема производи",
+    "columns": {
+      "customer": "Купувач",
+      "products": "Производи",
+      "created": "Креирано"
+    },
+    "deletePrompt": {
+      "title": "Да се избрише оваа листа на желби?",
+      "description": "Ова трајно ќе ја избрише листата на желби на купувачот и сите нејзини ставки. Оваа дејност не може да се врати."
+    },
+    "deleteSuccess": "Листата на желби е избришана",
+    "deleteError": "Бришењето на листата на желби не успеа"
+  },
+  "reportedImages": {
+    "domain": "Пријавени слики",
+    "subtitle": "Прегледајте слики означени од купувачи како несоодветни",
+    "filterAll": "Сите статуси",
+    "imageRemoved": "Сликата е отстранета",
+    "columns": {
+      "image": "Слика",
+      "reporter": "Пријавено од",
+      "reason": "Причина",
+      "status": "Статус"
+    },
+    "status": {
+      "pending": "Чека",
+      "resolved": "Решено"
+    },
+    "actions": {
+      "remove": "Отстрани слика",
+      "dismiss": "Отфрли пријава"
+    },
+    "removePrompt": {
+      "title": "Да се отстрани оваа слика?",
+      "description": "Сликата трајно ќе биде избришана од рецензијата. Оваа дејност не може да се врати."
+    },
+    "dismissPrompt": {
+      "title": "Да се отфрли оваа пријава?",
+      "description": "Сликата ќе остане објавена, а пријавата ќе биде означена како решена."
+    },
+    "resolveSuccess": "Пријавата е решена",
+    "resolveError": "Решавањето на пријавата не успеа"
+  },
+  "messenger": {
+    "searchConversations": "Пребарај разговори...",
+    "noConversations": "Сè уште нема разговори",
+    "startConversation": "Започнете разговор",
+    "selectConversation": "Изберете разговор",
+    "startMessaging": "Изберете разговор за да започнете со разговор",
+    "typeMessage": "Напишете порака...",
+    "seen": "Видено",
+    "sent": "Испратено",
+    "notificationTitle": "{{senderName}} ви испрати порака",
+    "notificationBody": "{{preview}}",
+    "image": "Слика",
+    "support": "Поддршка",
+    "direct": "Директно",
+    "unknown": "Непознато",
+    "supportTeam": "Тим за поддршка",
+    "connected": "Поврзано",
+    "disconnected": "Исклучено",
+    "conversationOptions": "Опции на разговорот"
+  },
+  "messages": {
+    "domain": "Пораки",
+    "product": "Производ",
+    "store": "Продавница",
+    "delete": "Избриши",
+    "deleteForEveryone": "Избриши за сите",
+    "close": "Затвори",
+    "connectionLost": "Врската е изгубена. Повторно поврзување...",
+    "imageUploadFailed": "Прикачувањето на сликата не успеа",
+    "deleteConfirmTitle": "Избриши порака",
+    "deleteConfirmDesc": "Дали сте сигурни дека сакате да ја избришете оваа порака?",
+    "productQuestion": "Прашање за производот",
+    "storeQuestion": "Прашање за продавницата",
+    "customerMessage": "Порака од купувач",
+    "sellerMessage": "Порака од продавач",
+    "directMessage": "Директна порака",
+    "storeContext": "Прашање за продавницата",
+    "back": "Назад",
+    "failedToGetUserInfo": "Не можеа да се преземат информациите за корисникот.",
+    "send": "Испрати порака",
+    "attachImage": "Прикачи слика",
+    "removeAttachment": "Отстрани ја прикачената слика",
+    "viewImage": "Прегледај ја сликата во целосна големина",
+    "pendingImageAlt": "Слика за испраќање",
+    "imageAlt": "Слика"
+  },
+  "requests": {
+    "domain": "Барања",
+    "status": {
+      "draft": "Нацрт",
+      "pending": "Чека",
+      "accepted": "Прифатено",
+      "rejected": "Одбиено"
+    },
+    "filters": {
+      "status": "Статус"
+    },
+    "columns": {
+      "name": "Име"
+    },
+    "categories": {
+      "navLabel": "Категории",
+      "heading": "Барања за категории",
+      "noRecords": "Не се пронајдени барања за категории"
+    },
+    "collections": {
+      "navLabel": "Колекции",
+      "heading": "Барања за колекции",
+      "noRecords": "Не се пронајдени барања за колекции"
+    },
+    "tags": {
+      "navLabel": "Ознаки",
+      "heading": "Барања за ознаки",
+      "noRecords": "Не се пронајдени барања за ознаки"
+    },
+    "types": {
+      "navLabel": "Типови",
+      "heading": "Барања за типови",
+      "noRecords": "Не се пронајдени барања за типови"
+    },
+    "typeLabels": {
+      "product_category": "Категорија",
+      "product_collection": "Колекција",
+      "product_tag": "Ознака",
+      "product_type": "Тип"
+    },
+    "fields": {
+      "name": "Име",
+      "handle": "Идентификатор",
+      "description": "Опис",
+      "active": "Активно",
+      "internal": "Внатрешно",
+      "title": "Наслов",
+      "value": "Вредност"
+    },
+    "values": {
+      "yes": "Да",
+      "no": "Не"
+    },
+    "detail": {
+      "pendingReview": "Чека преглед",
+      "accept": "Прифати",
+      "reject": "Одбиј",
+      "acceptPromptTitle": "Прифати барање",
+      "acceptPromptDescription": "Дали сте сигурни дека сакате да го прифатите ова барање? Ова дејство ќе го создаде ентитетот.",
+      "rejectPromptTitle": "Одбиј барање",
+      "rejectPromptDescription": "Дали сте сигурни дека сакате да го одбиете ова барање? Оваа дејност не може да се врати.",
+      "acceptSuccess": "Барањето е прифатено",
+      "rejectSuccess": "Барањето е одбиено",
+      "submitter": "Поднесувач",
+      "reviewer": "Проверувач"
+    }
+  },
+  "reviews": {
+    "domain": "Рецензии",
+    "noRecords": "Не се пронајдени рецензии",
+    "columns": {
+      "rating": "Оценка",
+      "reference": "Референца",
+      "customerNote": "Забелешка од купувачот"
+    }
+  }
+}

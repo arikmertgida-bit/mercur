@@ -1,0 +1,227 @@
+{
+  "customFields": {
+    "title": "Trường tùy chỉnh",
+    "description": "Quản lý các trường tùy chỉnh và cấu hình của bạn",
+    "noFields": "Chưa có trường tùy chỉnh nào được cấu hình"
+  },
+  "actions": {
+    "continue": "Tiếp tục",
+    "cancel": "Hủy",
+    "delete": "Xóa"
+  },
+  "productReports": {
+    "domain": "Báo cáo sản phẩm",
+    "subtitle": "Sản phẩm bị khách hàng gắn cờ để xem xét",
+    "filterAll": "Tất cả trạng thái",
+    "columns": {
+      "product": "Sản phẩm",
+      "reporter": "Người báo cáo",
+      "reason": "Lý do",
+      "status": "Trạng thái"
+    },
+    "status": {
+      "pending": "Đang chờ",
+      "resolved": "Đã giải quyết",
+      "dismissed": "Đã bỏ qua"
+    },
+    "reasons": {
+      "inaccurate_product_details": "Thông tin sản phẩm không chính xác",
+      "pricing_irregularities": "Bất thường về giá",
+      "prohibited_item": "Sản phẩm bị cấm",
+      "counterfeit_trademark": "Hàng giả / vi phạm nhãn hiệu",
+      "incorrect_categorization": "Phân loại sai",
+      "inappropriate_media": "Hình ảnh/nội dung không phù hợp",
+      "dmca_violation": "Vi phạm DMCA",
+      "seller_complaint": "Khiếu nại về người bán",
+      "other": "Khác"
+    },
+    "actions": {
+      "resolve": "Đánh dấu đã giải quyết",
+      "dismiss": "Bỏ qua"
+    },
+    "resolvePrompt": {
+      "title": "Đánh dấu báo cáo là đã giải quyết?",
+      "description": "Báo cáo này sẽ được đánh dấu là đã giải quyết và xóa khỏi hàng đợi."
+    },
+    "dismissPrompt": {
+      "title": "Bỏ qua báo cáo này?",
+      "description": "Báo cáo này sẽ được đánh dấu là đã bỏ qua và xóa khỏi hàng đợi."
+    },
+    "deletePrompt": {
+      "title": "Xóa báo cáo này?",
+      "description": "Thao tác này sẽ xóa vĩnh viễn báo cáo. Không thể hoàn tác hành động này."
+    },
+    "updateSuccess": "Đã cập nhật báo cáo",
+    "updateError": "Không thể cập nhật báo cáo",
+    "deleteSuccess": "Đã xóa báo cáo",
+    "deleteError": "Không thể xóa báo cáo"
+  },
+  "wishlistModeration": {
+    "domain": "Danh sách yêu thích",
+    "subtitle": "Danh sách yêu thích của khách hàng, phục vụ mục đích kiểm duyệt",
+    "noProducts": "Không có sản phẩm",
+    "columns": {
+      "customer": "Khách hàng",
+      "products": "Sản phẩm",
+      "created": "Ngày tạo"
+    },
+    "deletePrompt": {
+      "title": "Xóa danh sách yêu thích này?",
+      "description": "Thao tác này sẽ xóa vĩnh viễn danh sách yêu thích của khách hàng và tất cả các mục trong đó. Không thể hoàn tác hành động này."
+    },
+    "deleteSuccess": "Đã xóa danh sách yêu thích",
+    "deleteError": "Không thể xóa danh sách yêu thích"
+  },
+  "reportedImages": {
+    "domain": "Hình ảnh bị báo cáo",
+    "subtitle": "Xem xét hình ảnh bị khách hàng đánh dấu là không phù hợp",
+    "filterAll": "Tất cả trạng thái",
+    "imageRemoved": "Đã xóa hình ảnh",
+    "columns": {
+      "image": "Hình ảnh",
+      "reporter": "Người báo cáo",
+      "reason": "Lý do",
+      "status": "Trạng thái"
+    },
+    "status": {
+      "pending": "Đang chờ",
+      "resolved": "Đã giải quyết"
+    },
+    "actions": {
+      "remove": "Xóa hình ảnh",
+      "dismiss": "Bỏ qua báo cáo"
+    },
+    "removePrompt": {
+      "title": "Xóa hình ảnh này?",
+      "description": "Hình ảnh sẽ bị xóa vĩnh viễn khỏi đánh giá. Không thể hoàn tác hành động này."
+    },
+    "dismissPrompt": {
+      "title": "Bỏ qua báo cáo này?",
+      "description": "Hình ảnh sẽ vẫn được hiển thị và báo cáo sẽ được đánh dấu là đã giải quyết."
+    },
+    "resolveSuccess": "Đã giải quyết báo cáo",
+    "resolveError": "Không thể giải quyết báo cáo"
+  },
+  "messenger": {
+    "searchConversations": "Tìm kiếm cuộc trò chuyện...",
+    "noConversations": "Chưa có cuộc trò chuyện nào",
+    "startConversation": "Bắt đầu một cuộc trò chuyện",
+    "selectConversation": "Chọn một cuộc trò chuyện",
+    "startMessaging": "Chọn một cuộc trò chuyện để bắt đầu nhắn tin",
+    "typeMessage": "Nhập tin nhắn...",
+    "seen": "Đã xem",
+    "sent": "Đã gửi",
+    "notificationTitle": "{{senderName}} đã gửi cho bạn một tin nhắn",
+    "notificationBody": "{{preview}}",
+    "image": "Hình ảnh",
+    "support": "Hỗ trợ",
+    "direct": "Trực tiếp",
+    "unknown": "Không xác định",
+    "supportTeam": "Đội hỗ trợ",
+    "connected": "Đã kết nối",
+    "disconnected": "Đã ngắt kết nối",
+    "conversationOptions": "Tùy chọn cuộc trò chuyện"
+  },
+  "messages": {
+    "domain": "Tin nhắn",
+    "product": "Sản phẩm",
+    "store": "Cửa hàng",
+    "delete": "Xóa",
+    "deleteForEveryone": "Xóa cho tất cả mọi người",
+    "close": "Đóng",
+    "connectionLost": "Mất kết nối. Đang kết nối lại...",
+    "imageUploadFailed": "Tải lên hình ảnh không thành công",
+    "deleteConfirmTitle": "Xóa tin nhắn",
+    "deleteConfirmDesc": "Bạn có chắc chắn muốn xóa tin nhắn này không?",
+    "productQuestion": "Câu hỏi về sản phẩm",
+    "storeQuestion": "Câu hỏi về cửa hàng",
+    "customerMessage": "Tin nhắn từ khách hàng",
+    "sellerMessage": "Tin nhắn từ người bán",
+    "directMessage": "Tin nhắn trực tiếp",
+    "storeContext": "Câu hỏi về cửa hàng",
+    "back": "Quay lại",
+    "failedToGetUserInfo": "Không thể lấy thông tin người dùng.",
+    "send": "Gửi tin nhắn",
+    "attachImage": "Đính kèm hình ảnh",
+    "removeAttachment": "Xóa hình ảnh đính kèm",
+    "viewImage": "Xem hình ảnh kích thước đầy đủ",
+    "pendingImageAlt": "Hình ảnh sẽ gửi",
+    "imageAlt": "Hình ảnh"
+  },
+  "requests": {
+    "domain": "Yêu cầu",
+    "status": {
+      "draft": "Bản nháp",
+      "pending": "Đang chờ",
+      "accepted": "Đã chấp nhận",
+      "rejected": "Đã từ chối"
+    },
+    "filters": {
+      "status": "Trạng thái"
+    },
+    "columns": {
+      "name": "Tên"
+    },
+    "categories": {
+      "navLabel": "Danh mục",
+      "heading": "Yêu cầu danh mục",
+      "noRecords": "Không tìm thấy yêu cầu danh mục nào"
+    },
+    "collections": {
+      "navLabel": "Bộ sưu tập",
+      "heading": "Yêu cầu bộ sưu tập",
+      "noRecords": "Không tìm thấy yêu cầu bộ sưu tập nào"
+    },
+    "tags": {
+      "navLabel": "Thẻ",
+      "heading": "Yêu cầu thẻ",
+      "noRecords": "Không tìm thấy yêu cầu thẻ nào"
+    },
+    "types": {
+      "navLabel": "Loại",
+      "heading": "Yêu cầu loại",
+      "noRecords": "Không tìm thấy yêu cầu loại nào"
+    },
+    "typeLabels": {
+      "product_category": "Danh mục",
+      "product_collection": "Bộ sưu tập",
+      "product_tag": "Thẻ",
+      "product_type": "Loại"
+    },
+    "fields": {
+      "name": "Tên",
+      "handle": "Định danh",
+      "description": "Mô tả",
+      "active": "Hoạt động",
+      "internal": "Nội bộ",
+      "title": "Tiêu đề",
+      "value": "Giá trị"
+    },
+    "values": {
+      "yes": "Có",
+      "no": "Không"
+    },
+    "detail": {
+      "pendingReview": "Đang chờ xem xét",
+      "accept": "Chấp nhận",
+      "reject": "Từ chối",
+      "acceptPromptTitle": "Chấp nhận yêu cầu",
+      "acceptPromptDescription": "Bạn có chắc chắn muốn chấp nhận yêu cầu này không? Thao tác này sẽ tạo ra thực thể.",
+      "rejectPromptTitle": "Từ chối yêu cầu",
+      "rejectPromptDescription": "Bạn có chắc chắn muốn từ chối yêu cầu này không? Không thể hoàn tác hành động này.",
+      "acceptSuccess": "Đã chấp nhận yêu cầu",
+      "rejectSuccess": "Đã từ chối yêu cầu",
+      "submitter": "Người gửi",
+      "reviewer": "Người xét duyệt"
+    }
+  },
+  "reviews": {
+    "domain": "Đánh giá",
+    "noRecords": "Không tìm thấy đánh giá nào",
+    "columns": {
+      "rating": "Xếp hạng",
+      "reference": "Mã tham chiếu",
+      "customerNote": "Ghi chú của khách hàng"
+    }
+  }
+}

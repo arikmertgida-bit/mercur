@@ -74,7 +74,8 @@
     "true": "真",
     "false": "偽",
     "decrement": "減らす",
-    "increment": "増やす"
+    "increment": "増やす",
+    "drawerAccessibleDescription": "このパネルでリソースの詳細を表示または編集できます。"
   },
   "json": {
     "header": "JSON",
@@ -173,7 +174,8 @@
     "saveAndClose": "保存して閉じる",
     "request": "リクエスト",
     "editVariantImages": "バリアント画像を編集",
-    "editImages": "画像を編集"
+    "editImages": "画像を編集",
+    "ok": "OK"
   },
   "operators": {
     "in": "含む"
@@ -494,7 +496,12 @@
         "handleMustContainLetter": "ハンドルには少なくとも1文字のアルファベットを含めてください",
         "requiredAttributeSelect": "この属性はマーケットプレイスで必須です。値を選択してください。",
         "requiredAttributeEnter": "この属性はマーケットプレイスで必須です。値を入力してください。",
-        "requiredAttributeMultiSelect": "この属性はマーケットプレイスで必須です。少なくとも1つの値を選択してください。"
+        "requiredAttributeMultiSelect": "この属性はマーケットプレイスで必須です。少なくとも1つの値を選択してください。",
+        "formIncomplete": "必須項目が入力されていません。公開する前にハイライトされた行を確認してください。",
+        "mediaRequired": "このバリエーションには少なくとも1枚の画像を追加してください。",
+        "priceRequired": "このバリエーションには少なくとも1つの通貨で価格を入力してください。",
+        "shippingProfileRequired": "配送プロファイルを選択してください。",
+        "stockRequired": "このバリエーションには少なくとも1つの拠点で在庫数を設定してください。"
       },
       "variants": {
         "header": "バリエーション",
@@ -518,7 +525,14 @@
           "label": "商品オプション",
           "hint": "色、サイズなど、商品のオプションを定義します。"
         },
-        "optionsHeader": "オプション"
+        "optionsHeader": "オプション",
+        "mediaPicker": {
+          "description": "この商品の写真のうち、このバリエーションに属するものを選択してください。",
+          "empty": "まず「詳細」タブで写真をアップロードしてください。",
+          "header": "画像を割り当てる",
+          "image": "画像 {{index}}",
+          "partialFailureToast": "商品は作成されましたが、次の項目に画像を割り当てられませんでした: {{variants}}。商品の編集ページから再試行できます。"
+        }
       },
       "successToast": "商品「{{title}}」が正常に作成されました。",
       "attributes": {
@@ -653,7 +667,11 @@
       "removeSelected": "選択項目を削除",
       "selectImages": "画像を選択",
       "selectImagesHint": "画像をクリックしてこのバリアントに追加してください。",
-      "editLabel": "編集"
+      "editLabel": "編集",
+      "limitExceeded": {
+        "description": "商品ごとに最大 {{max}} 枚の画像をアップロードできます。最初の {{max}} 枚が追加され、残りはスキップされました。",
+        "title": "画像の上限に達しました"
+      }
     },
     "discountableHint": "チェックを外すと、この商品に割引は適用されません。",
     "noSalesChannels": "どの販売チャネルでも利用できません",
@@ -798,27 +816,6 @@
       "tableItemAvailable": "{{availableCount}}個利用可能",
       "tableItem_one": "{{locationCount}}の拠点で{{availableCount}}個利用可能",
       "tableItem_other": "{{locationCount}}の拠点で{{availableCount}}個利用可能",
-      "inventory": {
-        "notManaged": "管理されていません",
-        "navigateToItem": "在庫アイテムに移動",
-        "inventoryKit": "在庫キット",
-        "inventoryKitHint": "このバリエーションは複数の在庫アイテムで構成されていますか？",
-        "validation": {
-          "itemId": "在庫アイテムを選択してください。",
-          "quantity": "数量は必須です。正の数値を入力してください。"
-        },
-        "editItemDetails": "アイテム詳細を編集",
-        "manageInventoryLabel": "在庫を管理",
-        "manageInventoryHint": "有効にすると、注文や返品が作成されたときに在庫数量を変更します。",
-        "allowBackordersLabel": "取り寄せを許可",
-        "allowBackordersHint": "有効にすると、利用可能な数量がない場合でも顧客がバリエーションを購入できます。",
-        "toast": {
-          "levelsBatch": "在庫レベルが更新されました。",
-          "update": "在庫アイテムが正常に更新されました。",
-          "updateLevel": "在庫レベルが正常に更新されました。",
-          "itemsManageSuccess": "在庫アイテムが正常に更新されました。"
-        }
-      },
       "validation": {
         "titleRequired": "タイトルを入力してください",
         "optionRequired": "値を選択してください"
@@ -933,6 +930,18 @@
       "description": "複数の商品を一度に編集します。",
       "noChanges": "保存する変更がありません。",
       "success": "商品を更新しました。"
+    },
+    "stock": {
+      "available": "利用可能",
+      "edit": {
+        "description": "各拠点のリアルタイム在庫数を更新します。変更は在庫に直接保存されます。",
+        "header": "在庫を編集",
+        "location": "場所",
+        "quantity": "数量",
+        "successToast": "在庫が正常に更新されました"
+      },
+      "header": "在庫トラッキング",
+      "lowStock": "在庫少"
     }
   },
   "collections": {
@@ -1164,7 +1173,6 @@
         "emptyTitle": "顧客グループがまだありません"
       },
       "add": {
-        "success": "顧客を追加しました：{{groups}}",
         "list": {
           "noRecordsMessage": "まず顧客グループを作成してください。"
         },
@@ -1172,7 +1180,6 @@
         "successMany": "顧客を {{groups}} グループに追加しました。"
       },
       "removed": {
-        "success": "顧客を削除しました：{{groups}}",
         "list": {
           "noRecordsMessage": "まず顧客グループを作成してください。"
         },
@@ -1318,7 +1325,6 @@
       "capture": "支払いが確定",
       "capture_short": "確定済み",
       "refund": "返金",
-      "markAsPaid": "支払い済みとしてマーク",
       "statusLabel": "支払いステータス",
       "statusTitle": "支払いステータス",
       "status": {
@@ -1336,8 +1342,6 @@
       },
       "capturePayment": "{{amount}}の支払いが確定されます。",
       "capturePaymentSuccess": "{{amount}}の支払いが正常に確定されました",
-      "markAsPaidPayment": "{{amount}}の支払いが支払い済みとしてマークされます。",
-      "markAsPaidPaymentSuccess": "{{amount}}の支払いが正常に支払い済みとしてマークされました",
       "createRefund": "返金を作成",
       "refundPaymentSuccess": "{{amount}}の返金が成功しました",
       "createRefundWrongQuantity": "数量は1から{{number}}の間の数字である必要があります",
@@ -1411,7 +1415,6 @@
       "sendNotificationHint": "顧客に返品について通知します。",
       "returnTotal": "返品合計",
       "inboundTotal": "入庫合計",
-      "refundAmount": "返金額",
       "outstandingAmount": "未払い金額",
       "reason": "理由",
       "reasonHint": "顧客がアイテムを返品したい理由を選択してください。",
@@ -1699,7 +1702,7 @@
       "title": "返金を作成",
       "sendNotificationHint": "作成された返金について顧客に通知します。",
       "systemPayment": "システム支払い",
-      "systemPaymentDesc": "1つ以上の支払いがシステム支払いです。このような支払いの取り込みと返金はMedusaでは処理されないことに注意してください。",
+      "systemPaymentDesc": "1つ以上の支払いがシステム支払いです。このような支払いの取り込みと返金はKayı.comでは処理されないことに注意してください。",
       "error": {
         "amountToLarge": "元の注文金額を超えて返金することはできません。",
         "amountNegative": "返金額は正の数でなければなりません。",
@@ -2133,8 +2136,6 @@
       "header": "税地域を作成",
       "hint": "特定の国の税率を定義するための新しい税地域を作成します。",
       "errors": {
-        "rateIsRequired": "デフォルトの税率を作成する際は税率が必要です。",
-        "nameIsRequired": "デフォルトの税率を作成する際は名前が必要です。",
         "missingProvider": "税地域を作成する際はプロバイダーが必須です。",
         "missingCountry": "税地域を作成する際は国が必須です。"
       },
@@ -2439,7 +2440,6 @@
     "toasts": {
       "promotionCreateSuccess": "プロモーション「{{code}}」が正常に作成されました。"
     },
-    "create": {},
     "edit": {
       "title": "プロモーションの詳細を編集",
       "rules": {
@@ -2488,7 +2488,6 @@
         }
       },
       "status": {
-        "title": "ステータス",
         "label": "ステータス",
         "draft": {
           "title": "下書き",
@@ -2813,7 +2812,7 @@
       "header": "プロフィールを編集",
       "languageHint": "管理ダッシュボードで使用する言語です。これにより、ストアの言語は変更されません。",
       "languagePlaceholder": "言語を選択",
-      "usageInsightsHint": "使用状況のインサイトを共有し、Medusaの改善にご協力ください。収集内容やその使用方法については、<0>ドキュメント</0>をご覧ください。"
+      "usageInsightsHint": "使用状況のインサイトを共有し、Kayı.comの改善にご協力ください。収集内容やその使用方法については、<0>ドキュメント</0>をご覧ください。"
     },
     "toast": {
       "edit": "プロフィールの変更が保存されました"
@@ -2885,7 +2884,6 @@
     "removeCurrencyWarning_other": "{{count}}個の通貨をストアから削除しようとしています。進む前に、それらの通貨を使用しているすべての価格が削除されていることを確認してください。",
     "currencyAlreadyAdded": "この通貨はすでにストアに追加されています。",
     "edit": {
-      "header": "ストアを編集",
       "websiteHint": "プロトコルを含めてください（例：https://）",
       "mediaHeading": "メディア",
       "mediaTipLabel": "ヒント：",
@@ -2893,7 +2891,9 @@
       "uploadLogoLabel": "ロゴをアップロード",
       "uploadLogoHint": "ここにロゴをドラッグ＆ドロップするか、クリックしてアップロードしてください。",
       "uploadBannerLabel": "バナーをアップロード",
-      "uploadBannerHint": "ここにバナーをドラッグ＆ドロップするか、クリックしてアップロードしてください。"
+      "uploadBannerHint": "ここにバナーをドラッグ＆ドロップするか、クリックしてアップロードしてください。",
+      "bannerTooSmall": "画像が小さいです ({{width}}×{{height}}px)。少なくとも {{minWidth}}×{{minHeight}}px を推奨します。それより小さいとぼやけて見えることがあります。",
+      "logoTooSmall": "画像が小さいです ({{width}}×{{height}}px)。少なくとも {{minWidth}}×{{minHeight}}px を推奨します。それより小さいとぼやけて見えることがあります。"
     },
     "toast": {
       "update": "ストアが正常に更新されました。",
@@ -3134,7 +3134,6 @@
       "createTaxRate": "税率を作成",
       "createTaxRateHint": "地域の新しい税率を作成します。",
       "deleteRateDescription": "税率「{{name}}」を削除しようとしています。この操作は取り消せません。",
-      "editTaxRate": "税率を編集",
       "editRateAction": "税率を編集",
       "editOverridesAction": "上書きを編集",
       "editOverridesTitle": "税率の上書きを編集",
@@ -3236,7 +3235,7 @@
       "createPublishableHeader": "公開可能なAPIキーを作成",
       "createPublishableHint": "特定の販売チャネルへのリクエストの範囲を制限するための新しい公開可能なAPIキーを作成します。",
       "createSecretHeader": "秘密のAPIキーを作成",
-      "createSecretHint": "認証された管理者ユーザーとしてMedusa APIにアクセスするための新しい秘密のAPIキーを作成します。",
+      "createSecretHint": "認証された管理者ユーザーとしてKayı.com APIにアクセスするための新しい秘密のAPIキーを作成します。",
       "secretKeyCreatedHeader": "秘密のキーが作成されました",
       "secretKeyCreatedHint": "新しい秘密のキーが生成されました。今すぐコピーして安全に保管してください。これが表示される唯一の機会です。",
       "copySecretTokenSuccess": "秘密のキーがクリップボードにコピーされました。",
@@ -3333,7 +3332,7 @@
   },
   "login": {
     "forgotPassword": "パスワードをお忘れですか？ - <0>リセット</0>",
-    "title": "Medusaへようこそ",
+    "title": "Kayı.comへようこそ",
     "hint": "アカウントエリアにアクセスするにはサインインしてください",
     "submit": "ログイン",
     "sessionExpired": "セッションの有効期限が切れました",
@@ -3345,7 +3344,7 @@
     }
   },
   "invite": {
-    "title": "Medusaへようこそ",
+    "title": "Kayı.comへようこそ",
     "hint": "以下でアカウントを作成してください",
     "backToLogin": "ログインに戻る",
     "createAccount": "アカウントを作成",
@@ -3353,8 +3352,7 @@
     "emailTooltip": "Eメールは変更できません。別のEメールを使用したい場合は、新しい招待を送信する必要があります。",
     "invalidInvite": "招待が無効であるか、期限が切れています。",
     "successTitle": "アカウントが登録されました",
-    "successHint": "Medusa Adminをすぐに始めましょう。",
-    "successAction": "Medusa Adminを開始",
+    "successHint": "Kayı.com Adminをすぐに始めましょう。",
     "invalidTokenTitle": "招待トークンが無効です",
     "invalidTokenHint": "新しい招待リンクをリクエストしてみてください。",
     "passwordMismatch": "パスワードが一致しません",
@@ -3390,7 +3388,7 @@
   },
   "workflowExecutions": {
     "domain": "ワークフロー",
-    "subtitle": "Medusaアプリケーションでのワークフロー実行を表示し、追跡します。",
+    "subtitle": "Kayı.comアプリケーションでのワークフロー実行を表示し、追跡します。",
     "transactionIdLabel": "トランザクションID",
     "workflowIdLabel": "ワークフローID",
     "progressLabel": "進捗",
@@ -3483,7 +3481,7 @@
       "description": "現在通知はありませんが、通知が届くとここに表示されます。"
     },
     "accessibility": {
-      "description": "Medusaの活動に関する通知がここに表示されます。"
+      "description": "Kayı.comの活動に関する通知がここに表示されます。"
     }
   },
   "errors": {
@@ -3671,7 +3669,6 @@
     "endDate": "終了日",
     "draft": "下書き",
     "values": "値",
-    "brand": "Brand",
     "reference": "参照",
     "reference_id": "参照ID",
     "images": "メディア",
@@ -3704,7 +3701,9 @@
     "inventory_quantity": "在庫数量",
     "requires_shipping": "配送が必要",
     "variant_attributes": "バリアント属性",
-    "product_attributes": "商品属性"
+    "product_attributes": "商品属性",
+    "handleAutoGeneratedHint": "名前から自動生成されます。小文字・数字・ハイフンのみ使用可能です。このフィールドは直接編集できません。",
+    "handleInvalidFormat": "ハンドルには小文字、数字、ハイフンのみ使用できます"
   },
   "dateTime": {
     "years_one": "年",
@@ -3892,7 +3891,7 @@
       "manageEntities": "エンティティを管理",
       "manageLocales": "ロケールを管理"
     },
-    "subtitle": "Medusa内のデータの翻訳を管理します",
+    "subtitle": "Kayı.com内のデータの翻訳を管理します",
     "list": {
       "metrics": "{{total}} 件中 {{translated}} 件の翻訳"
     },
@@ -4086,7 +4085,7 @@
         "accountNameRequired": "口座名義を入力してください"
       },
       "preview": {
-        "title": "Mercurへようこそ",
+        "title": "Kayı.comへようこそ",
         "description": "ストア、商品、注文、支払いを一元管理できるベンダーポータルです。",
         "placeholder": "アプリプレビュー"
       }
@@ -4151,7 +4150,12 @@
   "auth": {
     "login": {
       "authenticationFailed": "認証に失敗しました",
-      "cloud": "Mercurでログイン"
+      "cloud": "Kayı.comでログイン"
     }
+  },
+  "sellerSuspension": {
+    "description": "運営によりストアが一時停止されました。再開されるまで新しい商品を作成することはできません。ご不明な点がございましたら、サポートチームがお手伝いいたします。",
+    "help": "ヘルプ",
+    "title": "ストア停止中"
   }
 }

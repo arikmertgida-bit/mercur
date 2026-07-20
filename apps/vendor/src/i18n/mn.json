@@ -1,0 +1,131 @@
+{
+  "productImportExport": {
+    "import": "Импортлох",
+    "export": "Экспортлох",
+    "done": "Дууссан",
+    "importHeader": "Бүтээгдэхүүн импортлох",
+    "importDescription": "Дэлгүүртээ бүтээгдэхүүн импортлохын тулд CSV файл байршуулна уу.",
+    "importHint": "Бүтээгдэхүүнүүдээ агуулсан CSV файл байршуулна уу. Та",
+    "downloadTemplate": "загварыг татаж авах боломжтой",
+    "uploadLabel": "CSV файл байршуулах",
+    "uploadHint": "Зөвхөн .csv файлыг дэмждэг",
+    "importingActivity": "Бүтээгдэхүүн импортлож байна...",
+    "importSuccessToast": "{{count}} бүтээгдэхүүнийг амжилттай импортлолоо.",
+    "importCompleteTitle": "Импортлолт дууслаа",
+    "importCompleteDescription": "{{count}} бүтээгдэхүүнийг амжилттай үүсгэлээ.",
+    "exportHeader": "Бүтээгдэхүүн экспортлох",
+    "exportDescription": "Бүтээгдэхүүнүүдээ CSV файл болгон экспортлоно уу.",
+    "exportBody": "Энэ үйлдэл нь таны бүх бүтээгдэхүүнийг CSV файл руу экспортлох болно. Экспортлолт бэлэн болмогц татаж авалт автоматаар эхэлнэ.",
+    "exportSuccessToast": "Бүтээгдэхүүнийг амжилттай экспортлолоо."
+  },
+  "customFields": {
+    "title": "Захиалгат талбарууд",
+    "description": "Захиалгат талбарууд болон тохиргоогоо удирдана уу",
+    "noFields": "Одоогоор захиалгат талбар тохируулаагүй байна"
+  },
+  "messenger": {
+    "supportTeam": "Дэмжлэгийн баг",
+    "support": "Дэмжлэг",
+    "adminChatTitle": "Админтай чатлах",
+    "adminChatDescription": "Зах зээлийн удирдлагын багт мессеж илгээж, харилцан яриа хийсэн түүхээ харна уу.",
+    "unknown": "Тодорхойгүй",
+    "imageMessage": "Зураг",
+    "noMessages": "Одоогоор мессеж алга",
+    "startConversation": "Харилцан яриаг эхлүүлэх",
+    "seen": "Харсан",
+    "sent": "Илгээсэн",
+    "notificationTitle": "{{senderName}} танд мессеж илгээлээ",
+    "notificationBody": "{{preview}}",
+    "image": "Зураг",
+    "close": "Хаах",
+    "noConversations": "Одоогоор харилцан яриа алга",
+    "participants": "оролцогчид",
+    "searchConversations": "Харилцан яриа хайх...",
+    "typeMessage": "Мессеж бичих...",
+    "selectConversation": "Харилцан яриаг сонгоно уу",
+    "startMessaging": "Мессеж бичиж эхлэхийн тулд харилцан яриаг сонгоно уу",
+    "connected": "Холбогдсон",
+    "disconnected": "Тасарсан"
+  },
+  "messages": {
+    "domain": "Мессежүүд",
+    "management": "Дэмжлэгийн баг",
+    "helpSupport": "Дэмжлэгийн баг",
+    "me": "Би",
+    "productQuestion": "Бүтээгдэхүүний талаарх асуулт",
+    "storeQuestion": "Дэлгүүрийн талаарх асуулт",
+    "imageUploadFailed": "Зураг байршуулж чадсангүй",
+    "connectionLost": "Холболт тасарлаа. Дахин холбогдож байна...",
+    "delete": "Устгах",
+    "deleteForEveryone": "Бүгдэд нь устгах",
+    "close": "Хаах",
+    "customer": "Хэрэглэгч",
+    "store": "Дэлгүүр",
+    "back": "Буцах",
+    "participant": "оролцогч",
+    "noMessages": "Мессеж алга",
+    "chatOptions": "Чатын тохиргоо",
+    "deleteOnlyForMe": "Зөвхөн надаас устгах",
+    "storeContext": "Дэлгүүрийн талаарх асуулт",
+    "product": "Бүтээгдэхүүн",
+    "deleteConfirmTitle": "Мессежийг устгах",
+    "deleteConfirmDesc": "Та энэ мессежийг устгахдаа итгэлтэй байна уу?",
+    "error": "Хэрэглэгчийн мэдээллийг авч чадсангүй.",
+    "supportName": "Дэмжлэгийн баг",
+    "supportSubject": "Дэмжлэгийн чат",
+    "emptyState": "Одоогоор мессеж алга. Харилцан яриаг эхлүүлнэ үү.",
+    "viewPromotion": "Урамшуулал харах",
+    "imageAlt": "Зураг",
+    "placeholder": "Мессеж бичих...",
+    "send": "Мессеж илгээх",
+    "attachImage": "Зураг хавсаргах",
+    "removeAttachment": "Хавсаргасан зургийг устгах",
+    "viewImage": "Зургийг бүтэн хэмжээгээр харах",
+    "pendingImageAlt": "Илгээх зураг",
+    "deletedMessage": "[Энэ мессежийг устгасан байна]"
+  },
+  "requests": {
+    "domain": "Хүсэлтүүд",
+    "status": {
+      "draft": "Ноорог",
+      "pending": "Хүлээгдэж буй",
+      "accepted": "Батлагдсан",
+      "rejected": "Татгалзсан"
+    },
+    "filters": {
+      "status": "Төлөв"
+    },
+    "columns": {
+      "name": "Нэр"
+    },
+    "categories": {
+      "navLabel": "Ангилалууд",
+      "heading": "Ангиллын хүсэлтүүд",
+      "noRecords": "Ангиллын хүсэлт олдсонгүй"
+    },
+    "collections": {
+      "navLabel": "Цуглуулгууд",
+      "heading": "Цуглуулгын хүсэлтүүд",
+      "noRecords": "Цуглуулгын хүсэлт олдсонгүй"
+    },
+    "tags": {
+      "navLabel": "Шошгууд",
+      "heading": "Шошгын хүсэлтүүд",
+      "noRecords": "Шошгын хүсэлт олдсонгүй"
+    },
+    "types": {
+      "navLabel": "Төрлүүд",
+      "heading": "Төрлийн хүсэлтүүд",
+      "noRecords": "Төрлийн хүсэлт олдсонгүй"
+    }
+  },
+  "reviews": {
+    "domain": "Сэтгэгдлүүд",
+    "noRecords": "Сэтгэгдэл олдсонгүй",
+    "columns": {
+      "rating": "Үнэлгээ",
+      "reference": "Лавлагаа",
+      "customerNote": "Үйлчлүүлэгчийн тэмдэглэл"
+    }
+  }
+}

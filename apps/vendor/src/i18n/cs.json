@@ -1,0 +1,131 @@
+{
+  "productImportExport": {
+    "import": "Importovat",
+    "export": "Exportovat",
+    "done": "Hotovo",
+    "importHeader": "Importovat produkty",
+    "importDescription": "Nahrajte soubor CSV pro import produktů do vašeho obchodu.",
+    "importHint": "Nahrajte soubor CSV s vašimi produkty. Můžete",
+    "downloadTemplate": "stáhnout šablonu",
+    "uploadLabel": "Nahrát soubor CSV",
+    "uploadHint": "Podporovány jsou pouze soubory .csv",
+    "importingActivity": "Importují se produkty...",
+    "importSuccessToast": "Úspěšně importováno {{count}} produkt(ů).",
+    "importCompleteTitle": "Import dokončen",
+    "importCompleteDescription": "Bylo úspěšně vytvořeno {{count}} produkt(ů).",
+    "exportHeader": "Exportovat produkty",
+    "exportDescription": "Exportujte své produkty jako soubor CSV.",
+    "exportBody": "Tímto exportujete všechny své produkty do souboru CSV. Stahování se spustí automaticky, jakmile bude export připraven.",
+    "exportSuccessToast": "Produkty byly úspěšně exportovány."
+  },
+  "customFields": {
+    "title": "Vlastní pole",
+    "description": "Spravujte svá vlastní pole a konfigurace",
+    "noFields": "Zatím nejsou nakonfigurována žádná vlastní pole"
+  },
+  "messenger": {
+    "supportTeam": "Tým podpory",
+    "support": "Podpora",
+    "adminChatTitle": "Chatovat s administrátorem",
+    "adminChatDescription": "Odešlete zprávu týmu podpory tržiště a zobrazte si historii konverzace.",
+    "unknown": "Neznámý",
+    "imageMessage": "Obrázek",
+    "noMessages": "Zatím žádné zprávy",
+    "startConversation": "Zahájit konverzaci",
+    "seen": "Zobrazeno",
+    "sent": "Odesláno",
+    "notificationTitle": "{{senderName}} vám poslal(a) zprávu",
+    "notificationBody": "{{preview}}",
+    "image": "Obrázek",
+    "close": "Zavřít",
+    "noConversations": "Zatím žádné konverzace",
+    "participants": "účastníci",
+    "searchConversations": "Hledat konverzace...",
+    "typeMessage": "Napište zprávu...",
+    "selectConversation": "Vyberte konverzaci",
+    "startMessaging": "Vyberte konverzaci a začněte psát",
+    "connected": "Připojeno",
+    "disconnected": "Odpojeno"
+  },
+  "messages": {
+    "domain": "Zprávy",
+    "management": "Tým podpory",
+    "helpSupport": "Tým podpory",
+    "me": "Já",
+    "productQuestion": "Dotaz k produktu",
+    "storeQuestion": "Dotaz k obchodu",
+    "imageUploadFailed": "Nahrání obrázku se nezdařilo",
+    "connectionLost": "Spojení ztraceno. Obnovuje se připojení...",
+    "delete": "Smazat",
+    "deleteForEveryone": "Smazat pro všechny",
+    "close": "Zavřít",
+    "customer": "Zákazník",
+    "store": "Obchod",
+    "back": "Zpět",
+    "participant": "účastník",
+    "noMessages": "Žádné zprávy",
+    "chatOptions": "Možnosti chatu",
+    "deleteOnlyForMe": "Smazat pouze pro mě",
+    "storeContext": "Dotaz k obchodu",
+    "product": "Produkt",
+    "deleteConfirmTitle": "Smazat zprávu",
+    "deleteConfirmDesc": "Opravdu chcete tuto zprávu smazat?",
+    "error": "Nepodařilo se načíst informace o uživateli.",
+    "supportName": "Tým podpory",
+    "supportSubject": "Chat s podporou",
+    "emptyState": "Zatím žádné zprávy. Zahajte konverzaci.",
+    "viewPromotion": "Zobrazit akci",
+    "imageAlt": "Obrázek",
+    "placeholder": "Napište zprávu...",
+    "send": "Odeslat zprávu",
+    "attachImage": "Připojit obrázek",
+    "removeAttachment": "Odebrat připojený obrázek",
+    "viewImage": "Zobrazit obrázek v plné velikosti",
+    "pendingImageAlt": "Obrázek k odeslání",
+    "deletedMessage": "[Tato zpráva byla smazána]"
+  },
+  "requests": {
+    "domain": "Žádosti",
+    "status": {
+      "draft": "Koncept",
+      "pending": "Čeká na vyřízení",
+      "accepted": "Přijato",
+      "rejected": "Zamítnuto"
+    },
+    "filters": {
+      "status": "Stav"
+    },
+    "columns": {
+      "name": "Název"
+    },
+    "categories": {
+      "navLabel": "Kategorie",
+      "heading": "Žádosti o kategorie",
+      "noRecords": "Nebyly nalezeny žádné žádosti o kategorie"
+    },
+    "collections": {
+      "navLabel": "Kolekce",
+      "heading": "Žádosti o kolekce",
+      "noRecords": "Nebyly nalezeny žádné žádosti o kolekce"
+    },
+    "tags": {
+      "navLabel": "Štítky",
+      "heading": "Žádosti o štítky",
+      "noRecords": "Nebyly nalezeny žádné žádosti o štítky"
+    },
+    "types": {
+      "navLabel": "Typy",
+      "heading": "Žádosti o typy",
+      "noRecords": "Nebyly nalezeny žádné žádosti o typy"
+    }
+  },
+  "reviews": {
+    "domain": "Recenze",
+    "noRecords": "Nebyly nalezeny žádné recenze",
+    "columns": {
+      "rating": "Hodnocení",
+      "reference": "Reference",
+      "customerNote": "Poznámka zákazníka"
+    }
+  }
+}

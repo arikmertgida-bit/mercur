@@ -1,0 +1,227 @@
+{
+  "customFields": {
+    "title": "Özel Alanlar",
+    "description": "Özel alanlarınızı ve yapılandırmalarınızı yönetin",
+    "noFields": "Henüz yapılandırılmış özel alan yok"
+  },
+  "actions": {
+    "continue": "Devam Et",
+    "cancel": "İptal",
+    "delete": "Sil"
+  },
+  "productReports": {
+    "domain": "Ürün Şikayetleri",
+    "subtitle": "Müşteriler tarafından incelenmek üzere işaretlenen ürünler",
+    "filterAll": "Tüm durumlar",
+    "columns": {
+      "product": "Ürün",
+      "reporter": "Şikayet Eden",
+      "reason": "Neden",
+      "status": "Durum"
+    },
+    "status": {
+      "pending": "Bekliyor",
+      "resolved": "Çözüldü",
+      "dismissed": "Reddedildi"
+    },
+    "reasons": {
+      "inaccurate_product_details": "Hatalı ürün bilgileri",
+      "pricing_irregularities": "Fiyatlandırma usulsüzlüğü",
+      "prohibited_item": "Yasaklı ürün",
+      "counterfeit_trademark": "Sahte ürün / marka ihlali",
+      "incorrect_categorization": "Yanlış kategorilendirme",
+      "inappropriate_media": "Uygunsuz görsel/medya",
+      "dmca_violation": "DMCA ihlali",
+      "seller_complaint": "Satıcı hakkında şikayet",
+      "other": "Diğer"
+    },
+    "actions": {
+      "resolve": "Çözüldü olarak işaretle",
+      "dismiss": "Reddet"
+    },
+    "resolvePrompt": {
+      "title": "Şikayet çözüldü olarak işaretlensin mi?",
+      "description": "Bu şikayet çözüldü olarak işaretlenecek ve bekleyen kuyruktan kaldırılacaktır."
+    },
+    "dismissPrompt": {
+      "title": "Bu şikayet reddedilsin mi?",
+      "description": "Bu şikayet reddedildi olarak işaretlenecek ve bekleyen kuyruktan kaldırılacaktır."
+    },
+    "deletePrompt": {
+      "title": "Bu şikayet silinsin mi?",
+      "description": "Bu işlem şikayeti kalıcı olarak silecektir. Bu işlem geri alınamaz."
+    },
+    "updateSuccess": "Şikayet güncellendi",
+    "updateError": "Şikayet güncellenemedi",
+    "deleteSuccess": "Şikayet silindi",
+    "deleteError": "Şikayet silinemedi"
+  },
+  "wishlistModeration": {
+    "domain": "İstek Listeleri",
+    "subtitle": "Denetim amacıyla müşteri istek listeleri",
+    "noProducts": "Ürün yok",
+    "columns": {
+      "customer": "Müşteri",
+      "products": "Ürünler",
+      "created": "Oluşturulma"
+    },
+    "deletePrompt": {
+      "title": "Bu istek listesi silinsin mi?",
+      "description": "Bu işlem müşterinin istek listesini ve tüm öğelerini kalıcı olarak silecektir. Bu işlem geri alınamaz."
+    },
+    "deleteSuccess": "İstek listesi silindi",
+    "deleteError": "İstek listesi silinemedi"
+  },
+  "reportedImages": {
+    "domain": "Şikayet Edilen Görseller",
+    "subtitle": "Müşteriler tarafından uygunsuz olarak işaretlenen görselleri incele",
+    "filterAll": "Tüm durumlar",
+    "imageRemoved": "Görsel kaldırıldı",
+    "columns": {
+      "image": "Görsel",
+      "reporter": "Şikayet Eden",
+      "reason": "Neden",
+      "status": "Durum"
+    },
+    "status": {
+      "pending": "Bekliyor",
+      "resolved": "Çözüldü"
+    },
+    "actions": {
+      "remove": "Görseli kaldır",
+      "dismiss": "Şikayeti reddet"
+    },
+    "removePrompt": {
+      "title": "Bu görsel kaldırılsın mı?",
+      "description": "Görsel değerlendirmeden kalıcı olarak silinecektir. Bu işlem geri alınamaz."
+    },
+    "dismissPrompt": {
+      "title": "Bu şikayet reddedilsin mi?",
+      "description": "Görsel yayında kalacak ve şikayet çözüldü olarak işaretlenecektir."
+    },
+    "resolveSuccess": "Şikayet çözüldü",
+    "resolveError": "Şikayet çözülemedi"
+  },
+  "messenger": {
+    "searchConversations": "Konuşmalarda ara...",
+    "noConversations": "Henüz konuşma yok",
+    "startConversation": "Bir konuşma başlat",
+    "selectConversation": "Bir konuşma seçin",
+    "startMessaging": "Mesajlaşmaya başlamak için bir konuşma seçin",
+    "typeMessage": "Bir mesaj yazın...",
+    "seen": "Görüldü",
+    "sent": "Gönderildi",
+    "notificationTitle": "{{senderName}} size bir mesaj gönderdi",
+    "notificationBody": "{{preview}}",
+    "image": "Görsel",
+    "support": "Destek",
+    "direct": "Direkt",
+    "unknown": "Bilinmiyor",
+    "supportTeam": "Destek Ekibi",
+    "connected": "Bağlandı",
+    "disconnected": "Bağlantı kesildi",
+    "conversationOptions": "Konuşma seçenekleri"
+  },
+  "messages": {
+    "domain": "Mesajlar",
+    "product": "Ürün",
+    "store": "Mağaza",
+    "delete": "Sil",
+    "deleteForEveryone": "Herkes için sil",
+    "close": "Kapat",
+    "connectionLost": "Bağlantı kesildi. Yeniden bağlanılıyor...",
+    "imageUploadFailed": "Görsel yüklenemedi",
+    "deleteConfirmTitle": "Mesajı sil",
+    "deleteConfirmDesc": "Bu mesajı silmek istediğinizden emin misiniz?",
+    "productQuestion": "Ürün Sorusu",
+    "storeQuestion": "Mağaza Sorusu",
+    "customerMessage": "Müşteri Mesajı",
+    "sellerMessage": "Satıcı Mesajı",
+    "directMessage": "Direkt Mesaj",
+    "storeContext": "Mağaza Sorusu",
+    "back": "Geri",
+    "failedToGetUserInfo": "Kullanıcı bilgileri alınamadı.",
+    "send": "Mesaj gönder",
+    "attachImage": "Görsel ekle",
+    "removeAttachment": "Eklenen görseli kaldır",
+    "viewImage": "Görseli tam boyutta görüntüle",
+    "pendingImageAlt": "Gönderilecek görsel",
+    "imageAlt": "Görsel"
+  },
+  "requests": {
+    "domain": "Talepler",
+    "status": {
+      "draft": "Taslak",
+      "pending": "Beklemede",
+      "accepted": "Kabul Edildi",
+      "rejected": "Reddedildi"
+    },
+    "filters": {
+      "status": "Durum"
+    },
+    "columns": {
+      "name": "Ad"
+    },
+    "categories": {
+      "navLabel": "Kategoriler",
+      "heading": "Kategori Talepleri",
+      "noRecords": "Kategori talebi bulunamadı"
+    },
+    "collections": {
+      "navLabel": "Koleksiyonlar",
+      "heading": "Koleksiyon Talepleri",
+      "noRecords": "Koleksiyon talebi bulunamadı"
+    },
+    "tags": {
+      "navLabel": "Etiketler",
+      "heading": "Etiket Talepleri",
+      "noRecords": "Etiket talebi bulunamadı"
+    },
+    "types": {
+      "navLabel": "Türler",
+      "heading": "Tür Talepleri",
+      "noRecords": "Tür talebi bulunamadı"
+    },
+    "typeLabels": {
+      "product_category": "Kategori",
+      "product_collection": "Koleksiyon",
+      "product_tag": "Etiket",
+      "product_type": "Tür"
+    },
+    "fields": {
+      "name": "Ad",
+      "handle": "Handle",
+      "description": "Açıklama",
+      "active": "Aktif",
+      "internal": "Dahili",
+      "title": "Başlık",
+      "value": "Değer"
+    },
+    "values": {
+      "yes": "Evet",
+      "no": "Hayır"
+    },
+    "detail": {
+      "pendingReview": "İncelemede",
+      "accept": "Kabul Et",
+      "reject": "Reddet",
+      "acceptPromptTitle": "Talebi kabul et",
+      "acceptPromptDescription": "Bu talebi kabul etmek istediğinizden emin misiniz? Bu işlem ilgili varlığı oluşturacaktır.",
+      "rejectPromptTitle": "Talebi reddet",
+      "rejectPromptDescription": "Bu talebi reddetmek istediğinizden emin misiniz? Bu işlem geri alınamaz.",
+      "acceptSuccess": "Talep kabul edildi",
+      "rejectSuccess": "Talep reddedildi",
+      "submitter": "Gönderen",
+      "reviewer": "İnceleyen"
+    }
+  },
+  "reviews": {
+    "domain": "Değerlendirmeler",
+    "noRecords": "Değerlendirme bulunamadı",
+    "columns": {
+      "rating": "Puan",
+      "reference": "Referans",
+      "customerNote": "Müşteri Notu"
+    }
+  }
+}

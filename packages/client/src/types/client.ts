@@ -4,7 +4,15 @@ export type ActionType = "query" | "mutate" | "delete";
 
 export type ClientOptions = {
     baseUrl: string;
-    fetchOptions?: RequestInit;
+    fetchOptions?: Omit<RequestInit, "headers"> & {
+        /**
+         * A plain `HeadersInit` is captured once at `createClient()` time and
+         * never re-evaluated, so it goes stale if header values (e.g. the
+         * active UI language) change during the session. Pass a thunk to
+         * resolve headers fresh on every request instead.
+         */
+        headers?: HeadersInit | (() => HeadersInit);
+    };
 };
 
 type AddParamsToFn<Fn, TParams> =

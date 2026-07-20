@@ -26,8 +26,10 @@ import { storeCatalogProductsMiddlewares } from "./store/catalog/products/middle
 import { storeSellerProductsMiddlewares } from "./store/sellers/[handle]/products/middlewares";
 import { storeSearchSuggestMiddlewares } from "./store/search/suggest/middlewares";
 import { storeCampaignsMiddlewares } from "./store/campaigns/middlewares";
+import { vendorAwareErrorHandler } from "../lib/vendor-error-i18n";
 
 export default defineMiddlewares({
+    errorHandler: vendorAwareErrorHandler,
     routes: [
         ...storeWishlistMiddlewares,
         ...adminWishlistMiddlewares,

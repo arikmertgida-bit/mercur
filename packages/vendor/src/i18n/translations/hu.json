@@ -74,7 +74,8 @@
     "true": "Igaz",
     "false": "Hamis",
     "decrement": "Csökkentés",
-    "increment": "Növelés"
+    "increment": "Növelés",
+    "drawerAccessibleDescription": "Ezen a panelen tekintheti meg vagy szerkesztheti az erőforrás részleteit."
   },
   "json": {
     "header": "JSON",
@@ -173,7 +174,8 @@
     "saveAndClose": "Mentés és bezárás",
     "request": "Kérés",
     "editVariantImages": "Variáns képeinek szerkesztése",
-    "editImages": "Képek szerkesztése"
+    "editImages": "Képek szerkesztése",
+    "ok": "OK"
   },
   "operators": {
     "in": "In"
@@ -494,7 +496,12 @@
         "handleMustContainLetter": "Az azonosítónak legalább egy betűt tartalmaznia kell",
         "requiredAttributeSelect": "Ez a jellemző kötelező a piactér számára. Kérjük, válasszon értéket.",
         "requiredAttributeEnter": "Ez a jellemző kötelező a piactér számára. Kérjük, adjon meg értéket.",
-        "requiredAttributeMultiSelect": "Ez a jellemző kötelező a piactér számára. Kérjük, válasszon legalább egy értéket."
+        "requiredAttributeMultiSelect": "Ez a jellemző kötelező a piactér számára. Kérjük, válasszon legalább egy értéket.",
+        "formIncomplete": "Néhány kötelező mező hiányzik — közzététel előtt ellenőrizze a kiemelt sorokat.",
+        "mediaRequired": "Adjon hozzá legalább egy képet ehhez a variánshoz.",
+        "priceRequired": "Adjon meg egy árat ehhez a variánshoz legalább egy pénznemben.",
+        "shippingProfileRequired": "Válasszon szállítási profilt.",
+        "stockRequired": "Állítson be egy készletmennyiséget ehhez a variánshoz legalább egy helyszínen."
       },
       "variants": {
         "header": "Variánsok",
@@ -518,7 +525,14 @@
           "label": "Termékopciók",
           "hint": "Az opciók segítségével meghatározhatja a termék tulajdonságait, például a színt vagy a méretet."
         },
-        "optionsHeader": "Opciók"
+        "optionsHeader": "Opciók",
+        "mediaPicker": {
+          "description": "Válassza ki, mely termékfotók tartoznak ehhez a varánshoz.",
+          "empty": "Először töltsön fel fényképeket a Részletek fülön.",
+          "header": "Képek hozzárendelése",
+          "image": "{{index}}. kép",
+          "partialFailureToast": "A termék létrejött, de a képeket nem sikerült hozzárendelni ehhez: {{variants}}. Próbálja meg újra a termék szerkesztési oldalán."
+        }
       },
       "successToast": "A {{title}} termék sikeresen létrehozva.",
       "attributes": {
@@ -653,7 +667,11 @@
       "removeSelected": "Kijelöltek eltávolítása",
       "selectImages": "Képek kiválasztása",
       "selectImagesHint": "Kattintson a képekre, hogy hozzáadja őket ehhez a varánshoz.",
-      "editLabel": "Szerkesztés"
+      "editLabel": "Szerkesztés",
+      "limitExceeded": {
+        "description": "Termékenként legfeljebb {{max}} képet tölthet fel. Az első {{max}} hozzáadva — a többi kimaradt.",
+        "title": "Elérte a képkorlátot"
+      }
     },
     "discountableHint": "Ha kikapcsolja, a termékre nem alkalmazhatók kedvezmények.",
     "noSalesChannels": "A termék nem érhető el egyetlen értékesítési csatornán sem.",
@@ -798,27 +816,6 @@
       "tableItemAvailable": "{{availableCount}} elérhető",
       "tableItem_one": "{{availableCount}} elérhető {{locationCount}} helyszínen",
       "tableItem_other": "{{availableCount}} elérhető {{locationCount}} helyszínen",
-      "inventory": {
-        "notManaged": "Nem kezelt",
-        "navigateToItem": "Ugrás a készletelemhez",
-        "inventoryKit": "Készletcsomag",
-        "inventoryKitHint": "Ez a variáns egy készletcsomag, amely több készletelemet tartalmaz?",
-        "validation": {
-          "itemId": "Készletelem kiválasztása kötelező.",
-          "quantity": "A mennyiség mező kitöltése kötelező."
-        },
-        "editItemDetails": "Készletelem részleteinek szerkesztése",
-        "manageInventoryLabel": "Készlet automatikus kezelése",
-        "manageInventoryHint": "Ha engedélyezve van, akkor a megrendelések és visszáru létrehozásakor megváltoztatjuk a készlet mennyiségét.",
-        "allowBackordersLabel": "Visszarendelések engedélyezése",
-        "allowBackordersHint": "Ha engedélyezve van, a vásárlók akkor is megvásárolhatják a változatot, ha nem áll rendelkezésre elegendő mennyiség.",
-        "toast": {
-          "levelsBatch": "Készletszintek frissítve.",
-          "update": "Készletelem frissítve.",
-          "updateLevel": "Készletszint frissítve.",
-          "itemsManageSuccess": "Készletelemek sikeresen frissítve."
-        }
-      },
       "validation": {
         "titleRequired": "Kérjük, adjon meg egy címet",
         "optionRequired": "Válasszon egy értéket"
@@ -933,6 +930,18 @@
       "description": "Több termék egyidejű szerkesztése.",
       "noChanges": "Nincs menthető változtatás.",
       "success": "A termékek sikeresen frissítve."
+    },
+    "stock": {
+      "available": "Elérhető",
+      "edit": {
+        "description": "Frissítse az élő készletmennyiséget minden helyszínen. A módosítások közvetlenül a Készletbe mentődnek.",
+        "header": "Készlet szerkesztése",
+        "location": "Helyszín",
+        "quantity": "Mennyiség",
+        "successToast": "A készlet sikeresen frissítve"
+      },
+      "header": "Készletkövetés",
+      "lowStock": "Alacsony készlet"
     }
   },
   "collections": {
@@ -1164,7 +1173,6 @@
         "emptyTitle": "Nincsenek vásárlói csoportok"
       },
       "add": {
-        "success": "Vásárló hozzáadva: {{groups}}.",
         "list": {
           "noRecordsMessage": "Kérjük, először hozzon létre egy vásárlói csoportot."
         },
@@ -1172,7 +1180,6 @@
         "successMany": "A vásárló sikeresen hozzáadva {{groups}} csoporthoz."
       },
       "removed": {
-        "success": "Vásárló eltávolítva innen: {{groups}}.",
         "list": {
           "noRecordsMessage": "Kérjük, először hozzon létre egy vásárlói csoportot."
         },
@@ -1328,7 +1335,6 @@
       "capture": "Beszedés",
       "capture_short": "Beszedés",
       "refund": "Visszatérítés",
-      "markAsPaid": "Megjelölés fizetettként",
       "statusLabel": "Fizetési státusz",
       "statusTitle": "Fizetési státusz",
       "status": {
@@ -1346,8 +1352,6 @@
       },
       "capturePayment": "A(z) {{amount}} összeg beszedésre kerül.",
       "capturePaymentSuccess": "{{amount}} sikeresen beszedve",
-      "markAsPaidPayment": "{{amount}} fizetettként lesz megjelölve",
-      "markAsPaidPaymentSuccess": "{{amount}} sikeresen megjelölve fizetettként",
       "createRefund": "Visszatérítés létrehozása",
       "refundPaymentSuccess": "{{amount}} sikeresen visszatérítve",
       "createRefundWrongQuantity": "A mennyiség egy 1 és {{number}} közötti szám lehet",
@@ -1708,7 +1712,7 @@
       "title": "Visszatérítés létrehozása",
       "sendNotificationHint": "Értesítse a vásárlókat a létrehozott visszatérítésről.",
       "systemPayment": "Rendszerfizetés",
-      "systemPaymentDesc": "Az Ön fizetései közül egy vagy több rendszerfizetés. Vegye figyelembe, hogy a beszedéseket és visszatérítéseket a Medusa nem kezeli az ilyen fizetések esetében.",
+      "systemPaymentDesc": "Az Ön fizetései közül egy vagy több rendszerfizetés. Vegye figyelembe, hogy a beszedéseket és visszatérítéseket a Kayı.com nem kezeli az ilyen fizetések esetében.",
       "error": {
         "amountToLarge": "Nem lehet többet visszatéríteni, mint az eredeti rendelési összeg.",
         "amountNegative": "A visszatérítési összegnek pozitív számnak kell lennie.",
@@ -2132,8 +2136,6 @@
       "header": "Adórégió Létrehozása",
       "hint": "Hozzon létre egy új adórégiót, hogy meghatározza az adókulcsokat egy adott ország számára.",
       "errors": {
-        "rateIsRequired": "Adókulcs szükséges, amikor alapértelmezett adókulcsot hoz létre.",
-        "nameIsRequired": "Név szükséges, amikor alapértelmezett adókulcsot hoz létre.",
         "missingProvider": "Szolgáltató megadása kötelező adózási régió létrehozásakor.",
         "missingCountry": "Ország megadása kötelező adózási régió létrehozásakor."
       },
@@ -2438,7 +2440,6 @@
     "toasts": {
       "promotionCreateSuccess": "A(z) {{code}} promóció sikeresen létrehozva."
     },
-    "create": {},
     "edit": {
       "title": "Promóció Részleteinek Szerkesztése",
       "rules": {
@@ -2811,7 +2812,7 @@
       "header": "Profil Szerkesztése",
       "languageHint": "Az admin vezérlőpulton használni kívánt nyelv. Ez nem változtatja meg az áruház nyelvét.",
       "languagePlaceholder": "Nyelv kiválasztása",
-      "usageInsightsHint": "Ossza meg a használati betekintéseket, és segítsen nekünk javítani a Medusát. További információt arról, hogy mit gyűjtünk és hogyan használjuk, megtalálhat a <0>dokumentációban</0>."
+      "usageInsightsHint": "Ossza meg a használati betekintéseket, és segítsen nekünk javítani a Kayı.com-ot. További információt arról, hogy mit gyűjtünk és hogyan használjuk, megtalálhat a <0>dokumentációban</0>."
     },
     "toast": {
       "edit": "Profilváltozások mentve"
@@ -2885,7 +2886,6 @@
     "removeCurrencyWarning_other": "{{count}} pénznemek eltávolítására készül az áruházból. Győződjön meg róla, hogy eltávolította az összes árat, amely ezeket a pénznemeket használja, mielőtt folytatná.",
     "currencyAlreadyAdded": "A pénznem már hozzá lett adva az áruházhoz.",
     "edit": {
-      "header": "Áruház Szerkesztése",
       "websiteHint": "Tartalmaznia kell a protokollt (pl. https://)",
       "mediaHeading": "Média",
       "mediaTipLabel": "Tipp:",
@@ -2893,7 +2893,9 @@
       "uploadLogoLabel": "Logó feltöltése",
       "uploadLogoHint": "Húzza ide a logót, vagy kattintson a feltöltéshez.",
       "uploadBannerLabel": "Banner feltöltése",
-      "uploadBannerHint": "Húzza ide a bannert, vagy kattintson a feltöltéshez."
+      "uploadBannerHint": "Húzza ide a bannert, vagy kattintson a feltöltéshez.",
+      "bannerTooSmall": "A kép kicsi ({{width}}×{{height}}px). Legalább {{minWidth}}×{{minHeight}}px javasolt, különben elmosódottnak tűnhet.",
+      "logoTooSmall": "A kép kicsi ({{width}}×{{height}}px). Legalább {{minWidth}}×{{minHeight}}px javasolt, különben elmosódottnak tűnhet."
     },
     "toast": {
       "update": "Áruház sikeresen frissítve",
@@ -3132,7 +3134,6 @@
       "createTaxRate": "Adókulcs Létrehozása",
       "createTaxRateHint": "Hozzon létre egy új adókulcsot a régióhoz.",
       "deleteRateDescription": "A(z) {{name}} adókulcs törlésére készül. Ez a művelet nem vonható vissza.",
-      "editTaxRate": "Adókulcs Szerkesztése",
       "editRateAction": "Kulcs szerkesztése",
       "editOverridesAction": "Felülírások szerkesztése",
       "editOverridesTitle": "Adókulcs Felülírások Szerkesztése",
@@ -3234,7 +3235,7 @@
       "createPublishableHeader": "Publikus API Kulcs Létrehozása",
       "createPublishableHint": "Hozzon létre egy új publikus API kulcsot, hogy korlátozza a kérések hatókörét meghatározott értékesítési csatornákra.",
       "createSecretHeader": "Titkos API Kulcs Létrehozása",
-      "createSecretHint": "Hozzon létre egy új titkos API kulcsot, hogy hozzáférjen a Medusa API-hoz hitelesített adminisztrátorként.",
+      "createSecretHint": "Hozzon létre egy új titkos API kulcsot, hogy hozzáférjen a Kayı.com API-hoz hitelesített adminisztrátorként.",
       "secretKeyCreatedHeader": "Titkos Kulcs Létrehozva",
       "secretKeyCreatedHint": "Az új titkos kulcs létrehozva. Másolja és tárolja biztonságosan most. Ez az egyetlen alkalom, amikor megjelenik.",
       "copySecretTokenSuccess": "A titkos kulcs sikeresen másolva a vágólapra.",
@@ -3331,7 +3332,7 @@
   },
   "login": {
     "forgotPassword": "Elfelejtette a jelszavát? - <0>Visszaállítás</0>",
-    "title": "Üdvözöljük a Medusában",
+    "title": "Üdvözöljük a Kayı.com-ban",
     "hint": "Jelentkezzen be az adminisztrációs terület eléréséhez",
     "submit": "Bejelentkezés",
     "sessionExpired": "A munkamenet lejárt",
@@ -3343,7 +3344,7 @@
     }
   },
   "invite": {
-    "title": "Üdvözöljük a Medusában",
+    "title": "Üdvözöljük a Kayı.com-ban",
     "hint": "Hozza létre fiókját alább",
     "backToLogin": "Vissza a bejelentkezéshez",
     "createAccount": "Fiók létrehozása",
@@ -3351,8 +3352,7 @@
     "emailTooltip": "Az email cím nem módosítható. Ha másik email címet szeretne használni, új meghívót kell küldeni.",
     "invalidInvite": "A meghívó érvénytelen vagy lejárt.",
     "successTitle": "Fiókja regisztrálva lett",
-    "successHint": "Kezdje el azonnal használni a Medusa Admin-t.",
-    "successAction": "Medusa Admin indítása",
+    "successHint": "Kezdje el azonnal használni a Kayı.com Admin-t.",
     "invalidTokenTitle": "Meghívó tokenje érvénytelen",
     "invalidTokenHint": "Próbáljon új meghívó linket kérni.",
     "passwordMismatch": "A jelszavak nem egyeznek",
@@ -3388,7 +3388,7 @@
   },
   "workflowExecutions": {
     "domain": "Munkafolyamatok",
-    "subtitle": "Tekintse meg és kövesse nyomon a munkafolyamat végrehajtásokat a Medusa alkalmazásában.",
+    "subtitle": "Tekintse meg és kövesse nyomon a munkafolyamat végrehajtásokat a Kayı.com alkalmazásában.",
     "transactionIdLabel": "Tranzakció Azonosító",
     "workflowIdLabel": "Munkafolyamat Azonosító",
     "progressLabel": "Haladás",
@@ -3481,7 +3481,7 @@
       "description": "Jelenleg nincsenek értesítései, de amint lesznek, itt fognak megjelenni."
     },
     "accessibility": {
-      "description": "értesítések a Medusa tevékenységeiről itt lesznek felsorolva."
+      "description": "értesítések a Kayı.com tevékenységeiről itt lesznek felsorolva."
     }
   },
   "errors": {
@@ -3669,7 +3669,6 @@
     "endDate": "Befejezési dátum",
     "draft": "Piszkozat",
     "values": "Értékek",
-    "brand": "Brand",
     "reference": "Hivatkozás",
     "reference_id": "Hivatkozási azonosító",
     "images": "Média",
@@ -3702,7 +3701,9 @@
     "inventory_quantity": "Készlet mennyisége",
     "requires_shipping": "Szállítás szükséges",
     "variant_attributes": "Variánsjellemzők",
-    "product_attributes": "Termékjellemzők"
+    "product_attributes": "Termékjellemzők",
+    "handleAutoGeneratedHint": "Automatikusan generálódik a névből. Csak kisbetűk, számok és kötőjelek — ez a mező közvetlenül nem szerkeszthető.",
+    "handleInvalidFormat": "A handle csak kisbetűket, számokat és kötőjeleket tartalmazhat"
   },
   "dateTime": {
     "years_one": "Év",
@@ -3890,7 +3891,7 @@
       "manageEntities": "Entitások kezelése",
       "manageLocales": "Nyelvi verziók kezelése"
     },
-    "subtitle": "Kezelje az adatai fordításait a Medusában",
+    "subtitle": "Kezelje az adatai fordításait a Kayı.com-ban",
     "list": {
       "metrics": "{{translated}} / {{total}} fordítás"
     },
@@ -4084,7 +4085,7 @@
         "accountNameRequired": "Kérjük, adja meg a számlatulajdonos nevét"
       },
       "preview": {
-        "title": "Üdvözöljük a Mercurban",
+        "title": "Üdvözöljük a Kayı.com-ban",
         "description": "Egyablakos eladói portál az üzlete, termékei, rendelései és kifizetései kezeléséhez.",
         "placeholder": "Alkalmazás előnézete"
       }
@@ -4149,7 +4150,12 @@
   "auth": {
     "login": {
       "authenticationFailed": "Sikertelen hitelesítés",
-      "cloud": "Bejelentkezés Mercurral"
+      "cloud": "Bejelentkezés a Kayı.com-mal"
     }
+  },
+  "sellerSuspension": {
+    "description": "Áruházát a vezetés felfüggesztette. Amíg nem aktiválják újra, nem tud új termékeket létrehozni. Ha kérdése van, ügyfélszolgálati csapatunk készséggel segít.",
+    "help": "Súgó",
+    "title": "Áruház felfüggesztve"
   }
 }

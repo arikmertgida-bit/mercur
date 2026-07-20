@@ -1,0 +1,131 @@
+{
+  "productImportExport": {
+    "import": "Importuoti",
+    "export": "Eksportuoti",
+    "done": "Atlikta",
+    "importHeader": "Importuoti produktus",
+    "importDescription": "Įkelkite CSV failą, kad importuotumėte produktus į savo parduotuvę.",
+    "importHint": "Įkelkite CSV failą su savo produktais. Galite",
+    "downloadTemplate": "atsisiųsti šabloną",
+    "uploadLabel": "Įkelti CSV failą",
+    "uploadHint": "Palaikomi tik .csv failai",
+    "importingActivity": "Importuojami produktai...",
+    "importSuccessToast": "Sėkmingai importuota produktų: {{count}}.",
+    "importCompleteTitle": "Importavimas baigtas",
+    "importCompleteDescription": "Sėkmingai sukurta produktų: {{count}}.",
+    "exportHeader": "Eksportuoti produktus",
+    "exportDescription": "Eksportuokite savo produktus kaip CSV failą.",
+    "exportBody": "Tai eksportuos visus jūsų produktus į CSV failą. Atsisiuntimas prasidės automatiškai, kai tik eksportas bus paruoštas.",
+    "exportSuccessToast": "Produktai sėkmingai eksportuoti."
+  },
+  "customFields": {
+    "title": "Pasirinktiniai laukai",
+    "description": "Tvarkykite savo pasirinktinius laukus ir konfigūracijas",
+    "noFields": "Kol kas nesukonfigūruota jokių pasirinktinių laukų"
+  },
+  "messenger": {
+    "supportTeam": "Pagalbos komanda",
+    "support": "Pagalba",
+    "adminChatTitle": "Kalbėtis su administratoriumi",
+    "adminChatDescription": "Siųskite žinutę prekyvietės pagalbos komandai ir peržiūrėkite savo pokalbių istoriją.",
+    "unknown": "Nežinoma",
+    "imageMessage": "Nuotrauka",
+    "noMessages": "Kol kas nėra žinučių",
+    "startConversation": "Pradėti pokalbį",
+    "seen": "Peržiūrėta",
+    "sent": "Išsiųsta",
+    "notificationTitle": "{{senderName}} jums atsiuntė žinutę",
+    "notificationBody": "{{preview}}",
+    "image": "Nuotrauka",
+    "close": "Uždaryti",
+    "noConversations": "Kol kas nėra pokalbių",
+    "participants": "dalyviai",
+    "searchConversations": "Ieškoti pokalbių...",
+    "typeMessage": "Įveskite žinutę...",
+    "selectConversation": "Pasirinkite pokalbį",
+    "startMessaging": "Pasirinkite pokalbį, kad pradėtumėte rašyti",
+    "connected": "Prisijungta",
+    "disconnected": "Atsijungta"
+  },
+  "messages": {
+    "domain": "Žinutės",
+    "management": "Pagalbos komanda",
+    "helpSupport": "Pagalbos komanda",
+    "me": "Aš",
+    "productQuestion": "Klausimas apie produktą",
+    "storeQuestion": "Klausimas apie parduotuvę",
+    "imageUploadFailed": "Nepavyko įkelti nuotraukos",
+    "connectionLost": "Ryšys prarastas. Jungiamasi iš naujo...",
+    "delete": "Ištrinti",
+    "deleteForEveryone": "Ištrinti visiems",
+    "close": "Uždaryti",
+    "customer": "Klientas",
+    "store": "Parduotuvė",
+    "back": "Atgal",
+    "participant": "dalyvis",
+    "noMessages": "Nėra žinučių",
+    "chatOptions": "Pokalbio parinktys",
+    "deleteOnlyForMe": "Ištrinti tik sau",
+    "storeContext": "Klausimas apie parduotuvę",
+    "product": "Produktas",
+    "deleteConfirmTitle": "Ištrinti žinutę",
+    "deleteConfirmDesc": "Ar tikrai norite ištrinti šią žinutę?",
+    "error": "Nepavyko gauti vartotojo informacijos.",
+    "supportName": "Pagalbos komanda",
+    "supportSubject": "Pagalbos pokalbis",
+    "emptyState": "Kol kas nėra žinučių. Pradėkite pokalbį.",
+    "viewPromotion": "Peržiūrėti akciją",
+    "imageAlt": "Nuotrauka",
+    "placeholder": "Įveskite žinutę...",
+    "send": "Siųsti žinutę",
+    "attachImage": "Pridėti nuotrauką",
+    "removeAttachment": "Pašalinti pridėtą nuotrauką",
+    "viewImage": "Peržiūrėti nuotrauką pilnu dydžiu",
+    "pendingImageAlt": "Siunčiama nuotrauka",
+    "deletedMessage": "[Ši žinutė buvo ištrinta]"
+  },
+  "requests": {
+    "domain": "Užklausos",
+    "status": {
+      "draft": "Juodraštis",
+      "pending": "Laukiama",
+      "accepted": "Priimta",
+      "rejected": "Atmesta"
+    },
+    "filters": {
+      "status": "Būsena"
+    },
+    "columns": {
+      "name": "Pavadinimas"
+    },
+    "categories": {
+      "navLabel": "Kategorijos",
+      "heading": "Kategorijų užklausos",
+      "noRecords": "Kategorijų užklausų nerasta"
+    },
+    "collections": {
+      "navLabel": "Kolekcijos",
+      "heading": "Kolekcijų užklausos",
+      "noRecords": "Kolekcijų užklausų nerasta"
+    },
+    "tags": {
+      "navLabel": "Žymos",
+      "heading": "Žymų užklausos",
+      "noRecords": "Žymų užklausų nerasta"
+    },
+    "types": {
+      "navLabel": "Tipai",
+      "heading": "Tipų užklausos",
+      "noRecords": "Tipų užklausų nerasta"
+    }
+  },
+  "reviews": {
+    "domain": "Atsiliepimai",
+    "noRecords": "Atsiliepimų nerasta",
+    "columns": {
+      "rating": "Įvertinimas",
+      "reference": "Nuoroda",
+      "customerNote": "Kliento pastaba"
+    }
+  }
+}

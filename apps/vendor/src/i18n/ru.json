@@ -1,0 +1,131 @@
+{
+  "productImportExport": {
+    "import": "Импорт",
+    "export": "Экспорт",
+    "done": "Готово",
+    "importHeader": "Импорт товаров",
+    "importDescription": "Загрузите CSV-файл, чтобы импортировать товары в свой магазин.",
+    "importHint": "Загрузите CSV-файл со своими товарами. Вы можете",
+    "downloadTemplate": "скачать шаблон",
+    "uploadLabel": "Загрузить CSV-файл",
+    "uploadHint": "Поддерживаются только файлы .csv",
+    "importingActivity": "Импорт товаров...",
+    "importSuccessToast": "Успешно импортировано товаров: {{count}}.",
+    "importCompleteTitle": "Импорт завершён",
+    "importCompleteDescription": "Успешно создано товаров: {{count}}.",
+    "exportHeader": "Экспорт товаров",
+    "exportDescription": "Экспортируйте свои товары в виде CSV-файла.",
+    "exportBody": "Это действие экспортирует все ваши товары в CSV-файл. Загрузка начнётся автоматически, как только экспорт будет готов.",
+    "exportSuccessToast": "Товары успешно экспортированы."
+  },
+  "customFields": {
+    "title": "Пользовательские поля",
+    "description": "Управляйте своими пользовательскими полями и настройками",
+    "noFields": "Пользовательские поля пока не настроены"
+  },
+  "messenger": {
+    "supportTeam": "Служба поддержки",
+    "support": "Поддержка",
+    "adminChatTitle": "Чат с администратором",
+    "adminChatDescription": "Отправьте сообщение команде поддержки маркетплейса и просмотрите историю переписки.",
+    "unknown": "Неизвестно",
+    "imageMessage": "Изображение",
+    "noMessages": "Пока нет сообщений",
+    "startConversation": "Начать разговор",
+    "seen": "Прочитано",
+    "sent": "Отправлено",
+    "notificationTitle": "{{senderName}} отправил(а) вам сообщение",
+    "notificationBody": "{{preview}}",
+    "image": "Изображение",
+    "close": "Закрыть",
+    "noConversations": "Пока нет диалогов",
+    "participants": "участники",
+    "searchConversations": "Поиск по диалогам...",
+    "typeMessage": "Введите сообщение...",
+    "selectConversation": "Выберите диалог",
+    "startMessaging": "Выберите диалог, чтобы начать переписку",
+    "connected": "Подключено",
+    "disconnected": "Отключено"
+  },
+  "messages": {
+    "domain": "Сообщения",
+    "management": "Служба поддержки",
+    "helpSupport": "Служба поддержки",
+    "me": "Я",
+    "productQuestion": "Вопрос о товаре",
+    "storeQuestion": "Вопрос о магазине",
+    "imageUploadFailed": "Не удалось загрузить изображение",
+    "connectionLost": "Соединение потеряно. Повторное подключение...",
+    "delete": "Удалить",
+    "deleteForEveryone": "Удалить для всех",
+    "close": "Закрыть",
+    "customer": "Покупатель",
+    "store": "Магазин",
+    "back": "Назад",
+    "participant": "участник",
+    "noMessages": "Нет сообщений",
+    "chatOptions": "Настройки чата",
+    "deleteOnlyForMe": "Удалить только для себя",
+    "storeContext": "Вопрос о магазине",
+    "product": "Товар",
+    "deleteConfirmTitle": "Удалить сообщение",
+    "deleteConfirmDesc": "Вы уверены, что хотите удалить это сообщение?",
+    "error": "Не удалось получить информацию о пользователе.",
+    "supportName": "Служба поддержки",
+    "supportSubject": "Чат с поддержкой",
+    "emptyState": "Пока нет сообщений. Начните разговор.",
+    "viewPromotion": "Посмотреть акцию",
+    "imageAlt": "Изображение",
+    "placeholder": "Введите сообщение...",
+    "send": "Отправить сообщение",
+    "attachImage": "Прикрепить изображение",
+    "removeAttachment": "Удалить прикреплённое изображение",
+    "viewImage": "Просмотреть изображение в полном размере",
+    "pendingImageAlt": "Изображение для отправки",
+    "deletedMessage": "[Это сообщение удалено]"
+  },
+  "requests": {
+    "domain": "Запросы",
+    "status": {
+      "draft": "Черновик",
+      "pending": "На рассмотрении",
+      "accepted": "Принят",
+      "rejected": "Отклонён"
+    },
+    "filters": {
+      "status": "Статус"
+    },
+    "columns": {
+      "name": "Название"
+    },
+    "categories": {
+      "navLabel": "Категории",
+      "heading": "Запросы категорий",
+      "noRecords": "Запросы категорий не найдены"
+    },
+    "collections": {
+      "navLabel": "Коллекции",
+      "heading": "Запросы коллекций",
+      "noRecords": "Запросы коллекций не найдены"
+    },
+    "tags": {
+      "navLabel": "Теги",
+      "heading": "Запросы тегов",
+      "noRecords": "Запросы тегов не найдены"
+    },
+    "types": {
+      "navLabel": "Типы",
+      "heading": "Запросы типов",
+      "noRecords": "Запросы типов не найдены"
+    }
+  },
+  "reviews": {
+    "domain": "Отзывы",
+    "noRecords": "Отзывы не найдены",
+    "columns": {
+      "rating": "Рейтинг",
+      "reference": "Артикул",
+      "customerNote": "Заметка клиента"
+    }
+  }
+}

@@ -1,0 +1,227 @@
+{
+  "customFields": {
+    "title": "Персонализирани полета",
+    "description": "Управлявайте персонализираните си полета и конфигурации",
+    "noFields": "Все още няма конфигурирани персонализирани полета"
+  },
+  "actions": {
+    "continue": "Продължи",
+    "cancel": "Отказ",
+    "delete": "Изтрий"
+  },
+  "productReports": {
+    "domain": "Сигнали за продукти",
+    "subtitle": "Продукти, маркирани от клиенти за преглед",
+    "filterAll": "Всички статуси",
+    "columns": {
+      "product": "Продукт",
+      "reporter": "Подадено от",
+      "reason": "Причина",
+      "status": "Статус"
+    },
+    "status": {
+      "pending": "Изчаква",
+      "resolved": "Разрешен",
+      "dismissed": "Отхвърлен"
+    },
+    "reasons": {
+      "inaccurate_product_details": "Неточни данни за продукта",
+      "pricing_irregularities": "Нередности в цената",
+      "prohibited_item": "Забранен артикул",
+      "counterfeit_trademark": "Фалшификат / нарушение на търговска марка",
+      "incorrect_categorization": "Неправилна категоризация",
+      "inappropriate_media": "Неподходящо медийно съдържание",
+      "dmca_violation": "Нарушение на DMCA",
+      "seller_complaint": "Оплакване за продавача",
+      "other": "Друго"
+    },
+    "actions": {
+      "resolve": "Маркирай като разрешен",
+      "dismiss": "Отхвърли"
+    },
+    "resolvePrompt": {
+      "title": "Да се маркира ли сигналът като разрешен?",
+      "description": "Този сигнал ще бъде маркиран като разрешен и премахнат от опашката с чакащи."
+    },
+    "dismissPrompt": {
+      "title": "Да се отхвърли ли този сигнал?",
+      "description": "Този сигнал ще бъде маркиран като отхвърлен и премахнат от опашката с чакащи."
+    },
+    "deletePrompt": {
+      "title": "Да се изтрие ли този сигнал?",
+      "description": "Това ще изтрие сигнала окончателно. Това действие не може да бъде отменено."
+    },
+    "updateSuccess": "Сигналът е актуализиран",
+    "updateError": "Неуспешно актуализиране на сигнала",
+    "deleteSuccess": "Сигналът е изтрит",
+    "deleteError": "Неуспешно изтриване на сигнала"
+  },
+  "wishlistModeration": {
+    "domain": "Списъци с желания",
+    "subtitle": "Списъци с желания на клиенти, за целите на модерацията",
+    "noProducts": "Няма продукти",
+    "columns": {
+      "customer": "Клиент",
+      "products": "Продукти",
+      "created": "Създаден"
+    },
+    "deletePrompt": {
+      "title": "Да се изтрие ли този списък с желания?",
+      "description": "Това ще изтрие окончателно списъка с желания на клиента и всички негови елементи. Това действие не може да бъде отменено."
+    },
+    "deleteSuccess": "Списъкът с желания е изтрит",
+    "deleteError": "Неуспешно изтриване на списъка с желания"
+  },
+  "reportedImages": {
+    "domain": "Сигнализирани изображения",
+    "subtitle": "Прегледайте изображения, сигнализирани от клиенти като неподходящи",
+    "filterAll": "Всички статуси",
+    "imageRemoved": "Изображението е премахнато",
+    "columns": {
+      "image": "Изображение",
+      "reporter": "Подадено от",
+      "reason": "Причина",
+      "status": "Статус"
+    },
+    "status": {
+      "pending": "Изчаква",
+      "resolved": "Разрешен"
+    },
+    "actions": {
+      "remove": "Премахни изображението",
+      "dismiss": "Отхвърли сигнала"
+    },
+    "removePrompt": {
+      "title": "Да се премахне ли това изображение?",
+      "description": "Изображението ще бъде окончателно изтрито от отзива. Това действие не може да бъде отменено."
+    },
+    "dismissPrompt": {
+      "title": "Да се отхвърли ли този сигнал?",
+      "description": "Изображението ще остане публикувано, а сигналът ще бъде маркиран като разрешен."
+    },
+    "resolveSuccess": "Сигналът е разрешен",
+    "resolveError": "Неуспешно разрешаване на сигнала"
+  },
+  "messenger": {
+    "searchConversations": "Търсене на разговори...",
+    "noConversations": "Все още няма разговори",
+    "startConversation": "Започнете разговор",
+    "selectConversation": "Изберете разговор",
+    "startMessaging": "Изберете разговор, за да започнете да пишете",
+    "typeMessage": "Напишете съобщение...",
+    "seen": "Видяно",
+    "sent": "Изпратено",
+    "notificationTitle": "{{senderName}} ви изпрати съобщение",
+    "notificationBody": "{{preview}}",
+    "image": "Изображение",
+    "support": "Поддръжка",
+    "direct": "Директно",
+    "unknown": "Неизвестен",
+    "supportTeam": "Екип за поддръжка",
+    "connected": "Свързан",
+    "disconnected": "Изключен",
+    "conversationOptions": "Опции за разговора"
+  },
+  "messages": {
+    "domain": "Съобщения",
+    "product": "Продукт",
+    "store": "Магазин",
+    "delete": "Изтрий",
+    "deleteForEveryone": "Изтрий за всички",
+    "close": "Затвори",
+    "connectionLost": "Връзката е загубена. Свързване отново...",
+    "imageUploadFailed": "Качването на изображението се провали",
+    "deleteConfirmTitle": "Изтриване на съобщение",
+    "deleteConfirmDesc": "Сигурни ли сте, че искате да изтриете това съобщение?",
+    "productQuestion": "Въпрос за продукта",
+    "storeQuestion": "Въпрос за магазина",
+    "customerMessage": "Съобщение от клиент",
+    "sellerMessage": "Съобщение от продавач",
+    "directMessage": "Директно съобщение",
+    "storeContext": "Въпрос за магазина",
+    "back": "Назад",
+    "failedToGetUserInfo": "Информацията за потребителя не можа да бъде получена.",
+    "send": "Изпрати съобщение",
+    "attachImage": "Прикачи изображение",
+    "removeAttachment": "Премахни прикаченото изображение",
+    "viewImage": "Преглед на изображението в пълен размер",
+    "pendingImageAlt": "Изображение за изпращане",
+    "imageAlt": "Изображение"
+  },
+  "requests": {
+    "domain": "Заявки",
+    "status": {
+      "draft": "Чернова",
+      "pending": "Изчаква",
+      "accepted": "Приета",
+      "rejected": "Отхвърлена"
+    },
+    "filters": {
+      "status": "Статус"
+    },
+    "columns": {
+      "name": "Име"
+    },
+    "categories": {
+      "navLabel": "Категории",
+      "heading": "Заявки за категории",
+      "noRecords": "Не са намерени заявки за категории"
+    },
+    "collections": {
+      "navLabel": "Колекции",
+      "heading": "Заявки за колекции",
+      "noRecords": "Не са намерени заявки за колекции"
+    },
+    "tags": {
+      "navLabel": "Етикети",
+      "heading": "Заявки за етикети",
+      "noRecords": "Не са намерени заявки за етикети"
+    },
+    "types": {
+      "navLabel": "Типове",
+      "heading": "Заявки за типове",
+      "noRecords": "Не са намерени заявки за типове"
+    },
+    "typeLabels": {
+      "product_category": "Категория",
+      "product_collection": "Колекция",
+      "product_tag": "Етикет",
+      "product_type": "Тип"
+    },
+    "fields": {
+      "name": "Име",
+      "handle": "Идентификатор",
+      "description": "Описание",
+      "active": "Активен",
+      "internal": "Вътрешен",
+      "title": "Заглавие",
+      "value": "Стойност"
+    },
+    "values": {
+      "yes": "Да",
+      "no": "Не"
+    },
+    "detail": {
+      "pendingReview": "Изчаква преглед",
+      "accept": "Приеми",
+      "reject": "Отхвърли",
+      "acceptPromptTitle": "Приеми заявката",
+      "acceptPromptDescription": "Сигурни ли сте, че искате да приемете тази заявка? Това действие ще създаде обекта.",
+      "rejectPromptTitle": "Отхвърли заявката",
+      "rejectPromptDescription": "Сигурни ли сте, че искате да отхвърлите тази заявка? Това действие не може да бъде отменено.",
+      "acceptSuccess": "Заявката е приета",
+      "rejectSuccess": "Заявката е отхвърлена",
+      "submitter": "Подател",
+      "reviewer": "Проверяващ"
+    }
+  },
+  "reviews": {
+    "domain": "Отзиви",
+    "noRecords": "Не са намерени отзиви",
+    "columns": {
+      "rating": "Оценка",
+      "reference": "Референция",
+      "customerNote": "Бележка от клиента"
+    }
+  }
+}

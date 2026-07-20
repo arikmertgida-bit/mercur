@@ -1813,7 +1813,7 @@
       "title": "Visszatérítés létrehozása",
       "sendNotificationHint": "Értesítse a vásárlókat a létrehozott visszatérítésről.",
       "systemPayment": "Rendszerfizetés",
-      "systemPaymentDesc": "Az Ön fizetései közül egy vagy több rendszerfizetés. Vegye figyelembe, hogy a beszedéseket és visszatérítéseket a Medusa nem kezeli az ilyen fizetések esetében.",
+      "systemPaymentDesc": "Az Ön fizetései közül egy vagy több rendszerfizetés. Vegye figyelembe, hogy a beszedéseket és visszatérítéseket a Kayı.com nem kezeli az ilyen fizetések esetében.",
       "error": {
         "amountToLarge": "Nem lehet többet visszatéríteni, mint az eredeti rendelési összeg.",
         "amountNegative": "A visszatérítési összegnek pozitív számnak kell lennie.",
@@ -2908,7 +2908,7 @@
       "header": "Profil Szerkesztése",
       "languageHint": "Az admin vezérlőpulton használni kívánt nyelv. Ez nem változtatja meg az áruház nyelvét.",
       "languagePlaceholder": "Nyelv kiválasztása",
-      "usageInsightsHint": "Ossza meg a használati betekintéseket, és segítsen nekünk javítani a Medusát. További információt arról, hogy mit gyűjtünk és hogyan használjuk, megtalálhat a <0>dokumentációban</0>."
+      "usageInsightsHint": "Ossza meg a használati betekintéseket, és segítsen nekünk javítani a Kayı.com-ot. További információt arról, hogy mit gyűjtünk és hogyan használjuk, megtalálhat a <0>dokumentációban</0>."
     },
     "toast": {
       "edit": "Profilváltozások mentve"
@@ -3263,7 +3263,7 @@
       "createPublishableHeader": "Publikus API Kulcs Létrehozása",
       "createPublishableHint": "Hozzon létre egy új publikus API kulcsot, hogy korlátozza a kérések hatókörét meghatározott értékesítési csatornákra.",
       "createSecretHeader": "Titkos API Kulcs Létrehozása",
-      "createSecretHint": "Hozzon létre egy új titkos API kulcsot, hogy hozzáférjen a Medusa API-hoz hitelesített adminisztrátorként.",
+      "createSecretHint": "Hozzon létre egy új titkos API kulcsot, hogy hozzáférjen a Kayı.com API-hoz hitelesített adminisztrátorként.",
       "secretKeyCreatedHeader": "Titkos Kulcs Létrehozva",
       "secretKeyCreatedHint": "Az új titkos kulcs létrehozva. Másolja és tárolja biztonságosan most. Ez az egyetlen alkalom, amikor megjelenik.",
       "copySecretTokenSuccess": "A titkos kulcs sikeresen másolva a vágólapra.",
@@ -3361,12 +3361,12 @@
   },
   "login": {
     "forgotPassword": "Elfelejtette a jelszavát? - <0>Visszaállítás</0>",
-    "title": "Üdvözöljük a Medusában",
+    "title": "Üdvözöljük a Kayı.com-ban",
     "hint": "Jelentkezzen be az adminisztrációs terület eléréséhez",
     "sessionExpired": "A munkamenet lejárt"
   },
   "invite": {
-    "title": "Üdvözöljük a Medusában",
+    "title": "Üdvözöljük a Kayı.com-ban",
     "hint": "Hozza létre fiókját alább",
     "backToLogin": "Vissza a bejelentkezéshez",
     "createAccount": "Fiók létrehozása",
@@ -3374,8 +3374,8 @@
     "emailTooltip": "Az email cím nem módosítható. Ha másik email címet szeretne használni, új meghívót kell küldeni.",
     "invalidInvite": "A meghívó érvénytelen vagy lejárt.",
     "successTitle": "Fiókja regisztrálva lett",
-    "successHint": "Kezdje el azonnal használni a Medusa Admin-t.",
-    "successAction": "Medusa Admin indítása",
+    "successHint": "Kezdje el azonnal használni a Kayı.com Admin-t.",
+    "successAction": "Kayı.com Admin indítása",
     "invalidTokenTitle": "Meghívó tokenje érvénytelen",
     "invalidTokenHint": "Próbáljon új meghívó linket kérni.",
     "passwordMismatch": "A jelszavak nem egyeznek",
@@ -3408,7 +3408,7 @@
   },
   "workflowExecutions": {
     "domain": "Munkafolyamatok",
-    "subtitle": "Tekintse meg és kövesse nyomon a munkafolyamat végrehajtásokat a Medusa alkalmazásában.",
+    "subtitle": "Tekintse meg és kövesse nyomon a munkafolyamat végrehajtásokat a Kayı.com alkalmazásában.",
     "transactionIdLabel": "Tranzakció Azonosító",
     "workflowIdLabel": "Munkafolyamat Azonosító",
     "progressLabel": "Haladás",
@@ -3499,7 +3499,7 @@
       "description": "Jelenleg nincsenek értesítései, de amint lesznek, itt fognak megjelenni."
     },
     "accessibility": {
-      "description": "értesítések a Medusa tevékenységeiről itt lesznek felsorolva."
+      "description": "értesítések a Kayı.com tevékenységeiről itt lesznek felsorolva."
     }
   },
   "errors": {

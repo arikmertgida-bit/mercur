@@ -1,16 +1,18 @@
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import i18n from "i18next";
 import { keepPreviousData } from "@tanstack/react-query";
 import { Button, Container, Heading } from "@medusajs/ui";
 import type { RouteConfig } from "@mercurjs/dashboard-sdk";
 
 export const config: RouteConfig = {
-  label: "Tags",
+  label: "tags.navLabel",
+  translationNs: "requests",
   nested: "/requests",
 };
 
 export const handle = {
-  breadcrumb: () => "Tags",
+  breadcrumb: () => i18n.t("requests.tags.navLabel"),
 };
 
 import { useVendorRequests } from "../../../hooks/api/requests";
@@ -52,7 +54,7 @@ const VendorTagRequestsPage = () => {
     <SingleColumnPage>
       <Container className="divide-y p-0">
         <div className="flex items-center justify-between px-6 py-4">
-          <Heading>Tag Requests</Heading>
+          <Heading>{t("requests.tags.heading")}</Heading>
           <Button size="small" variant="secondary" asChild>
             <Link to="create">{t("actions.create")}</Link>
           </Button>
@@ -70,7 +72,7 @@ const VendorTagRequestsPage = () => {
             { key: "updated_at", label: t("fields.updatedAt") },
           ]}
           queryObject={raw}
-          noRecords={{ message: "No tag requests found" }}
+          noRecords={{ message: t("requests.tags.noRecords") }}
         />
       </Container>
     </SingleColumnPage>

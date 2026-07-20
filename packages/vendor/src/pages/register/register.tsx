@@ -28,9 +28,9 @@ const RegisterHeader = () => {
 
   return (
     <div className="mb-6 flex flex-col">
-      <Heading>{t("register.title", { name: config.name ?? "Mercur" })}</Heading>
+      <Heading>{t("register.title", { name: config.name ?? "Kayı.com" })}</Heading>
       <Text size="small" className="text-ui-fg-subtle">
-        {t("register.hint", { name: config.name ?? "Mercur" })}
+        {t("register.hint", { name: config.name ?? "Kayı.com" })}
       </Text>
     </div>
   )

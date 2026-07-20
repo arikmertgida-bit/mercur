@@ -1,0 +1,131 @@
+{
+  "productImportExport": {
+    "import": "Importálás",
+    "export": "Exportálás",
+    "done": "Kész",
+    "importHeader": "Termékek importálása",
+    "importDescription": "Töltsön fel egy CSV-fájlt a termékek importálásához a boltjába.",
+    "importHint": "Töltsön fel egy CSV-fájlt a termékeivel. Lehetősége van",
+    "downloadTemplate": "letölteni a sablont",
+    "uploadLabel": "CSV-fájl feltöltése",
+    "uploadHint": "Csak .csv fájlok támogatottak",
+    "importingActivity": "Termékek importálása folyamatban...",
+    "importSuccessToast": "{{count}} termék sikeresen importálva.",
+    "importCompleteTitle": "Importálás befejezve",
+    "importCompleteDescription": "{{count}} termék sikeresen létrejött.",
+    "exportHeader": "Termékek exportálása",
+    "exportDescription": "Exportálja termékeit CSV-fájlként.",
+    "exportBody": "Ez az összes terméket exportálja egy CSV-fájlba. A letöltés automatikusan elindul, amint az exportálás elkészült.",
+    "exportSuccessToast": "A termékek sikeresen exportálva lettek."
+  },
+  "customFields": {
+    "title": "Egyéni mezők",
+    "description": "Kezelje egyéni mezőit és beállításait",
+    "noFields": "Még nincsenek beállított egyéni mezők"
+  },
+  "messenger": {
+    "supportTeam": "Ügyfélszolgálati csapat",
+    "support": "Támogatás",
+    "adminChatTitle": "Csevegés az adminisztrátorral",
+    "adminChatDescription": "Küldjön üzenetet a piactér ügyfélszolgálatának, és tekintse meg a beszélgetési előzményeket.",
+    "unknown": "Ismeretlen",
+    "imageMessage": "Kép",
+    "noMessages": "Még nincsenek üzenetek",
+    "startConversation": "Beszélgetés indítása",
+    "seen": "Megtekintve",
+    "sent": "Elküldve",
+    "notificationTitle": "{{senderName}} üzenetet küldött Önnek",
+    "notificationBody": "{{preview}}",
+    "image": "Kép",
+    "close": "Bezárás",
+    "noConversations": "Még nincsenek beszélgetések",
+    "participants": "résztvevő",
+    "searchConversations": "Beszélgetések keresése...",
+    "typeMessage": "Írjon egy üzenetet...",
+    "selectConversation": "Válasszon beszélgetést",
+    "startMessaging": "Válasszon egy beszélgetést a csevegés megkezdéséhez",
+    "connected": "Csatlakozva",
+    "disconnected": "Kapcsolat bontva"
+  },
+  "messages": {
+    "domain": "Üzenetek",
+    "management": "Ügyfélszolgálati csapat",
+    "helpSupport": "Ügyfélszolgálati csapat",
+    "me": "Én",
+    "productQuestion": "Termékkel kapcsolatos kérdés",
+    "storeQuestion": "Bolttal kapcsolatos kérdés",
+    "imageUploadFailed": "A kép feltöltése sikertelen",
+    "connectionLost": "A kapcsolat megszakadt. Újracsatlakozás...",
+    "delete": "Törlés",
+    "deleteForEveryone": "Törlés mindenki számára",
+    "close": "Bezárás",
+    "customer": "Vásárló",
+    "store": "Bolt",
+    "back": "Vissza",
+    "participant": "résztvevő",
+    "noMessages": "Nincsenek üzenetek",
+    "chatOptions": "Csevegés beállításai",
+    "deleteOnlyForMe": "Törlés csak nekem",
+    "storeContext": "Bolttal kapcsolatos kérdés",
+    "product": "Termék",
+    "deleteConfirmTitle": "Üzenet törlése",
+    "deleteConfirmDesc": "Biztosan törli ezt az üzenetet?",
+    "error": "Nem sikerült lekérni a felhasználói adatokat.",
+    "supportName": "Ügyfélszolgálati csapat",
+    "supportSubject": "Ügyfélszolgálati csevegés",
+    "emptyState": "Még nincsenek üzenetek. Kezdje el a beszélgetést.",
+    "viewPromotion": "Akció megtekintése",
+    "imageAlt": "Kép",
+    "placeholder": "Írjon egy üzenetet...",
+    "send": "Üzenet küldése",
+    "attachImage": "Kép csatolása",
+    "removeAttachment": "Csatolt kép eltávolítása",
+    "viewImage": "Kép megtekintése teljes méretben",
+    "pendingImageAlt": "Elküldendő kép",
+    "deletedMessage": "[Ez az üzenet törölve lett]"
+  },
+  "requests": {
+    "domain": "Kérések",
+    "status": {
+      "draft": "Piszkozat",
+      "pending": "Függőben",
+      "accepted": "Elfogadva",
+      "rejected": "Elutasítva"
+    },
+    "filters": {
+      "status": "Állapot"
+    },
+    "columns": {
+      "name": "Név"
+    },
+    "categories": {
+      "navLabel": "Kategóriák",
+      "heading": "Kategóriakérések",
+      "noRecords": "Nem található kategóriakérés"
+    },
+    "collections": {
+      "navLabel": "Kollekciók",
+      "heading": "Kollekciókérések",
+      "noRecords": "Nem található kollekciókérés"
+    },
+    "tags": {
+      "navLabel": "Címkék",
+      "heading": "Címkekérések",
+      "noRecords": "Nem található címkekérés"
+    },
+    "types": {
+      "navLabel": "Típusok",
+      "heading": "Típuskérések",
+      "noRecords": "Nem található típuskérés"
+    }
+  },
+  "reviews": {
+    "domain": "Értékelések",
+    "noRecords": "Nem található értékelés",
+    "columns": {
+      "rating": "Értékelés",
+      "reference": "Hivatkozás",
+      "customerNote": "Vásárlói megjegyzés"
+    }
+  }
+}

@@ -1,5 +1,6 @@
 import { createColumnHelper } from "@tanstack/react-table";
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { StatusBadge, Text } from "@medusajs/ui";
 import { DateCell, DateHeader } from "@mercurjs/dashboard-shared";
 import { ReviewDTO } from "../../api/reviews";
@@ -13,12 +14,14 @@ const ratingColor = (rating: number) => {
 };
 
 export const useReviewTableColumns = () => {
+  const { t } = useTranslation();
+
   return useMemo(
     () => [
       columnHelper.accessor("rating", {
         header: () => (
           <div className="flex h-full w-full items-center">
-            <span className="truncate">Rating</span>
+            <span className="truncate">{t("reviews.columns.rating")}</span>
           </div>
         ),
         cell: ({ getValue }) => {
@@ -31,7 +34,7 @@ export const useReviewTableColumns = () => {
       columnHelper.accessor("reference", {
         header: () => (
           <div className="flex h-full w-full items-center">
-            <span className="truncate">Reference</span>
+            <span className="truncate">{t("reviews.columns.reference")}</span>
           </div>
         ),
         cell: ({ getValue }) => {
@@ -46,7 +49,7 @@ export const useReviewTableColumns = () => {
       columnHelper.accessor("customer_note", {
         header: () => (
           <div className="flex h-full w-full items-center">
-            <span className="truncate">Customer Note</span>
+            <span className="truncate">{t("reviews.columns.customerNote")}</span>
           </div>
         ),
         cell: ({ getValue }) => {
@@ -72,6 +75,6 @@ export const useReviewTableColumns = () => {
         },
       }),
     ],
-    [],
+    [t],
   );
 };

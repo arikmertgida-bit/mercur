@@ -17,7 +17,8 @@ import { ActionMenu, NoRecords } from "@mercurjs/dashboard-shared"
 import { client } from "../../lib/client"
 
 export const config = {
-  label: "Product Reports",
+  label: "domain",
+  translationNs: "productReports",
   icon: ExclamationCircle,
   rank: 89,
 }

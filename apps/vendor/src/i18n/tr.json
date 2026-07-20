@@ -1,0 +1,131 @@
+{
+  "productImportExport": {
+    "import": "İçe Aktar",
+    "export": "Dışa Aktar",
+    "done": "Tamam",
+    "importHeader": "Ürünleri İçe Aktar",
+    "importDescription": "Mağazanıza ürün içe aktarmak için bir CSV dosyası yükleyin.",
+    "importHint": "Ürünlerinizi içeren bir CSV dosyası yükleyin. İsterseniz",
+    "downloadTemplate": "şablonu indirebilirsiniz",
+    "uploadLabel": "CSV dosyası yükle",
+    "uploadHint": "Yalnızca .csv dosyaları desteklenir",
+    "importingActivity": "Ürünler içe aktarılıyor...",
+    "importSuccessToast": "{{count}} ürün başarıyla içe aktarıldı.",
+    "importCompleteTitle": "İçe Aktarma Tamamlandı",
+    "importCompleteDescription": "{{count}} ürün başarıyla oluşturuldu.",
+    "exportHeader": "Ürünleri Dışa Aktar",
+    "exportDescription": "Ürünlerinizi bir CSV dosyası olarak dışa aktarın.",
+    "exportBody": "Bu işlem tüm ürünlerinizi bir CSV dosyasına aktaracaktır. Dosya hazır olduğunda indirme otomatik olarak başlayacaktır.",
+    "exportSuccessToast": "Ürünler başarıyla dışa aktarıldı."
+  },
+  "customFields": {
+    "title": "Özel Alanlar",
+    "description": "Özel alanlarınızı ve yapılandırmalarınızı yönetin",
+    "noFields": "Henüz yapılandırılmış özel alan yok"
+  },
+  "messenger": {
+    "supportTeam": "Destek Ekibi",
+    "support": "Destek",
+    "adminChatTitle": "Yönetici ile Sohbet Et",
+    "adminChatDescription": "Pazar yeri yönetim ekibine mesaj gönderin ve konuşma geçmişinizi görüntüleyin.",
+    "unknown": "Bilinmiyor",
+    "imageMessage": "Görsel",
+    "noMessages": "Henüz mesaj yok",
+    "startConversation": "Konuşmayı başlatın",
+    "seen": "Görüldü",
+    "sent": "Gönderildi",
+    "notificationTitle": "{{senderName}} size bir mesaj gönderdi",
+    "notificationBody": "{{preview}}",
+    "image": "Görsel",
+    "close": "Kapat",
+    "noConversations": "Henüz konuşma yok",
+    "participants": "katılımcı",
+    "searchConversations": "Konuşmalarda ara...",
+    "typeMessage": "Bir mesaj yazın...",
+    "selectConversation": "Bir konuşma seçin",
+    "startMessaging": "Mesajlaşmaya başlamak için bir konuşma seçin",
+    "connected": "Bağlandı",
+    "disconnected": "Bağlantı kesildi"
+  },
+  "messages": {
+    "domain": "Mesajlar",
+    "management": "Destek Ekibi",
+    "helpSupport": "Destek Ekibi",
+    "me": "Ben",
+    "productQuestion": "Ürün Sorusu",
+    "storeQuestion": "Mağaza Sorusu",
+    "imageUploadFailed": "Görsel yüklenemedi",
+    "connectionLost": "Bağlantı kesildi. Yeniden bağlanılıyor...",
+    "delete": "Sil",
+    "deleteForEveryone": "Herkes için sil",
+    "close": "Kapat",
+    "customer": "Müşteri",
+    "store": "Mağaza",
+    "back": "Geri",
+    "participant": "katılımcı",
+    "noMessages": "Mesaj yok",
+    "chatOptions": "Sohbet seçenekleri",
+    "deleteOnlyForMe": "Yalnızca benden sil",
+    "storeContext": "Mağaza Sorusu",
+    "product": "Ürün",
+    "deleteConfirmTitle": "Mesajı sil",
+    "deleteConfirmDesc": "Bu mesajı silmek istediğinizden emin misiniz?",
+    "error": "Kullanıcı bilgileri alınamadı.",
+    "supportName": "Destek Ekibi",
+    "supportSubject": "Destek Sohbeti",
+    "emptyState": "Henüz mesaj yok. Konuşmayı başlatın.",
+    "viewPromotion": "Promosyonu Görüntüle",
+    "imageAlt": "Görsel",
+    "placeholder": "Bir mesaj yazın...",
+    "send": "Mesaj gönder",
+    "attachImage": "Görsel ekle",
+    "removeAttachment": "Eklenen görseli kaldır",
+    "viewImage": "Görseli tam boyutta görüntüle",
+    "pendingImageAlt": "Gönderilecek görsel",
+    "deletedMessage": "[Bu mesaj silindi]"
+  },
+  "requests": {
+    "domain": "Talepler",
+    "status": {
+      "draft": "Taslak",
+      "pending": "Beklemede",
+      "accepted": "Kabul Edildi",
+      "rejected": "Reddedildi"
+    },
+    "filters": {
+      "status": "Durum"
+    },
+    "columns": {
+      "name": "Ad"
+    },
+    "categories": {
+      "navLabel": "Kategoriler",
+      "heading": "Kategori Talepleri",
+      "noRecords": "Kategori talebi bulunamadı"
+    },
+    "collections": {
+      "navLabel": "Koleksiyonlar",
+      "heading": "Koleksiyon Talepleri",
+      "noRecords": "Koleksiyon talebi bulunamadı"
+    },
+    "tags": {
+      "navLabel": "Etiketler",
+      "heading": "Etiket Talepleri",
+      "noRecords": "Etiket talebi bulunamadı"
+    },
+    "types": {
+      "navLabel": "Türler",
+      "heading": "Tür Talepleri",
+      "noRecords": "Tür talebi bulunamadı"
+    }
+  },
+  "reviews": {
+    "domain": "Değerlendirmeler",
+    "noRecords": "Değerlendirme bulunamadı",
+    "columns": {
+      "rating": "Puan",
+      "reference": "Referans",
+      "customerNote": "Müşteri Notu"
+    }
+  }
+}

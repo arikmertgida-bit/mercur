@@ -140,9 +140,14 @@ export function createClient<TRoutes>(options: ClientOptions): InferClient<TRout
             defaultHeaders["Content-Type"] = "application/json";
         }
 
+        const resolvedDefaultHeaders =
+            typeof defaultFetchOptions?.headers === "function"
+                ? defaultFetchOptions.headers()
+                : defaultFetchOptions?.headers;
+
         const headers = new Headers({
             ...defaultHeaders,
-            ...defaultFetchOptions?.headers,
+            ...resolvedDefaultHeaders,
             ...inputFetchOptions?.headers,
         });
 

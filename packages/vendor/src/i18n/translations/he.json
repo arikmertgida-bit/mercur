@@ -74,7 +74,8 @@
     "true": "נכון",
     "false": "שקר",
     "decrement": "הפחת",
-    "increment": "הוסף"
+    "increment": "הוסף",
+    "drawerAccessibleDescription": "השתמש בלוח זה כדי להציג או לערוך את פרטי המשאב הזה."
   },
   "json": {
     "header": "JSON",
@@ -173,7 +174,8 @@
     "saveAndClose": "שמור וסגור",
     "request": "בקשה",
     "editVariantImages": "ערוך תמונות וריאנט",
-    "editImages": "ערוך תמונות"
+    "editImages": "ערוך תמונות",
+    "ok": "אישור"
   },
   "operators": {
     "in": "ב"
@@ -494,7 +496,12 @@
         "handleMustContainLetter": "הכינוי חייב להכיל לפחות אות אחת",
         "requiredAttributeSelect": "מאפיין זה נדרש על ידי השוק. יש לבחור ערך.",
         "requiredAttributeEnter": "מאפיין זה נדרש על ידי השוק. יש להזין ערך.",
-        "requiredAttributeMultiSelect": "מאפיין זה נדרש על ידי השוק. יש לבחור לפחות ערך אחד."
+        "requiredAttributeMultiSelect": "מאפיין זה נדרש על ידי השוק. יש לבחור לפחות ערך אחד.",
+        "formIncomplete": "חסרים כמה שדות חובה — בדוק את השורות המודגשות לפני הפרסום.",
+        "mediaRequired": "אנא הוסף לפחות תמונה אחת לווריאציה זו.",
+        "priceRequired": "אנא הזן מחיר לווריאציה זו במטבע אחד לפחות.",
+        "shippingProfileRequired": "אנא בחר פרופיל משלוח.",
+        "stockRequired": "אנא הגדר כמות מלאי לווריאציה זו במיקום אחד לפחות."
       },
       "variants": {
         "header": "וריאנטים",
@@ -518,7 +525,14 @@
           "label": "אפשרויות מוצר",
           "hint": "הגדר את האפשרויות למוצר, לדוגמה צבע, גודל וכו'"
         },
-        "optionsHeader": "אפשרויות"
+        "optionsHeader": "אפשרויות",
+        "mediaPicker": {
+          "description": "בחר אילו תמונות של המוצר שייכות לווריאציה זו.",
+          "empty": "העלה תמונות בכרטיסייה פרטים תחילה.",
+          "header": "הקצאת תמונות",
+          "image": "תמונה {{index}}",
+          "partialFailureToast": "המוצר נוצר, אך לא ניתן היה להקצות תמונות עבור: {{variants}}. ניתן לנסות שוב מדף עריכת המוצר."
+        }
       },
       "successToast": "המוצר {{title}} נוצר בהצלחה.",
       "attributes": {
@@ -653,7 +667,11 @@
       "removeSelected": "הסר נבחרים",
       "selectImages": "בחר תמונות",
       "selectImagesHint": "לחץ על תמונות כדי להוסיף אותן לוריאנט זה.",
-      "editLabel": "ערוך"
+      "editLabel": "ערוך",
+      "limitExceeded": {
+        "description": "ניתן להעלות עד {{max}} תמונות למוצר. {{max}} הראשונות נוספו — השאר דולגו.",
+        "title": "הגעת למגבלת התמונות"
+      }
     },
     "discountableHint": "כאשר לא מסומן, הנחות לא יחולו על מוצר זה.",
     "noSalesChannels": "לא זמין באף ערוץ מכירות",
@@ -798,27 +816,6 @@
       "tableItemAvailable": "{{availableCount}} זמינים",
       "tableItem_one": "{{availableCount}} זמינים ב-{{locationCount}} מיקום",
       "tableItem_other": "{{availableCount}} זמינים ב-{{locationCount}} מיקומים",
-      "inventory": {
-        "notManaged": "לא מנוהל",
-        "navigateToItem": "עבור לפריט מלאי",
-        "inventoryKit": "ערכת מלאי",
-        "inventoryKitHint": "האם וריאנט זה מורכב ממספר פריטי מלאי?",
-        "validation": {
-          "itemId": "אנא בחר פריט מלאי.",
-          "quantity": "נדרשת כמות. אנא הזן מספר חיובי."
-        },
-        "editItemDetails": "ערוך פרטי פריט",
-        "manageInventoryLabel": "נהל מלאי",
-        "manageInventoryHint": "כאשר מופעל, נשנה את כמות המלאי עבורך כאשר הזמנות והחזרות נוצרות.",
-        "allowBackordersLabel": "אפשר הזמנות מראש",
-        "allowBackordersHint": "כאשר מופעל, לקוחות יכולים לרכוש את הוריאנט גם אם אין כמות זמינה.",
-        "toast": {
-          "levelsBatch": "רמות מלאי עודכנו.",
-          "update": "פריט מלאי עודכן בהצלחה.",
-          "updateLevel": "רמת מלאי עודכנה בהצלחה.",
-          "itemsManageSuccess": "פריטי מלאי עודכנו בהצלחה."
-        }
-      },
       "validation": {
         "titleRequired": "יש להזין כותרת",
         "optionRequired": "יש לבחור ערך"
@@ -933,6 +930,18 @@
       "description": "ערוך מספר מוצרים בו זמנית.",
       "noChanges": "אין שינויים לשמירה.",
       "success": "המוצרים עודכנו בהצלחה."
+    },
+    "stock": {
+      "available": "זמין",
+      "edit": {
+        "description": "עדכן את כמות המלאי בזמן אמת עבור כל מיקום. השינויים נשמרים ישירות במלאי.",
+        "header": "עריכת מלאי",
+        "location": "מיקום",
+        "quantity": "כמות",
+        "successToast": "המלאי עודכן בהצלחה"
+      },
+      "header": "מעקב מלאי",
+      "lowStock": "מלאי נמוך"
     }
   },
   "collections": {
@@ -1164,7 +1173,6 @@
         "emptyTitle": "אין קבוצות לקוחות"
       },
       "add": {
-        "success": "הלקוח נוסף ל: {{groups}}.",
         "list": {
           "noRecordsMessage": "אנא צור קבוצת לקוחות תחילה."
         },
@@ -1172,7 +1180,6 @@
         "successMany": "הלקוח נוסף בהצלחה ל-{{groups}} קבוצות."
       },
       "removed": {
-        "success": "הלקוח הוסר מ: {{groups}}.",
         "list": {
           "noRecordsMessage": "אנא צור קבוצת לקוחות תחילה."
         },
@@ -1328,7 +1335,6 @@
       "capture": "תפוס תשלום",
       "capture_short": "תפוס",
       "refund": "החזר",
-      "markAsPaid": "סמן כשולם",
       "statusLabel": "סטטוס תשלום",
       "statusTitle": "סטטוס תשלום",
       "status": {
@@ -1346,8 +1352,6 @@
       },
       "capturePayment": "תשלום של {{amount}} יתפס.",
       "capturePaymentSuccess": "תשלום של {{amount}} נתפס בהצלחה",
-      "markAsPaidPayment": "תשלום של {{amount}} יסומן כשולם.",
-      "markAsPaidPaymentSuccess": "תשלום של {{amount}} סומן כשולם בהצלחה",
       "createRefund": "צור החזר",
       "refundPaymentSuccess": "החזר של {{amount}} בוצע בהצלחה",
       "createRefundWrongQuantity": "הכמות צריכה להיות מספר בין 1 ל{{number}}",
@@ -1708,7 +1712,7 @@
       "title": "צור החזר",
       "sendNotificationHint": "הודע ללקוחות על ההחזר שנוצר.",
       "systemPayment": "תשלום מערכת",
-      "systemPaymentDesc": "אחד או יותר מהתשלומים שלך הוא תשלום מערכת. שים לב, תפיסות והחזרים אינם מנוהלים על ידי Medusa עבור תשלומים אלו.",
+      "systemPaymentDesc": "אחד או יותר מהתשלומים שלך הוא תשלום מערכת. שים לב, תפיסות והחזרים אינם מנוהלים על ידי Kayı.com עבור תשלומים אלו.",
       "error": {
         "amountToLarge": "לא ניתן להחזיר יותר מסכום ההזמנה המקורי.",
         "amountNegative": "סכום ההחזר חייב להיות מספר חיובי.",
@@ -2436,7 +2440,6 @@
     "toasts": {
       "promotionCreateSuccess": "המבצע ({{code}}) נוצר בהצלחה."
     },
-    "create": {},
     "edit": {
       "title": "ערוך פרטי מבצע",
       "rules": {
@@ -2809,7 +2812,7 @@
       "header": "ערוך פרופיל",
       "languageHint": "השפה שברצונך להשתמש בלוח הבקרה של המנהל. זה לא משנה את שפת החנות שלך.",
       "languagePlaceholder": "בחר שפה",
-      "usageInsightsHint": "שתף תובנות שימוש ועזור לנו לשפר את Medusa. ניתן לקרוא עוד על מה אנו אוספים ואיך אנו משתמשים בזה ב<0>התיעוד</0> שלנו."
+      "usageInsightsHint": "שתף תובנות שימוש ועזור לנו לשפר את Kayı.com. ניתן לקרוא עוד על מה אנו אוספים ואיך אנו משתמשים בזה ב<0>התיעוד</0> שלנו."
     },
     "toast": {
       "edit": "השינויים בפרופיל נשמרו"
@@ -2883,7 +2886,6 @@
     "removeCurrencyWarning_other": "אתה עומד להסיר {{count}} מטבעות מהחנות שלך. ודא שהסרת את כל המחירים המשתמשים במטבעות לפני ההמשך.",
     "currencyAlreadyAdded": "המטבע כבר נוסף לחנות שלך.",
     "edit": {
-      "header": "ערוך חנות",
       "websiteHint": "חייב לכלול פרוטוקול (לדוגמה https://)",
       "mediaHeading": "מדיה",
       "mediaTipLabel": "טיפ:",
@@ -2891,7 +2893,9 @@
       "uploadLogoLabel": "העלה לוגו",
       "uploadLogoHint": "גרור ושחרר את הלוגו שלך כאן או לחץ להעלאה.",
       "uploadBannerLabel": "העלה באנר",
-      "uploadBannerHint": "גרור ושחרר את הבאנר שלך כאן או לחץ להעלאה."
+      "uploadBannerHint": "גרור ושחרר את הבאנר שלך כאן או לחץ להעלאה.",
+      "bannerTooSmall": "התמונה קטנה ({{width}}×{{height}}px). מומלץ לפחות {{minWidth}}×{{minHeight}}px, אחרת היא עלולה להיראות מטושטשת.",
+      "logoTooSmall": "התמונה קטנה ({{width}}×{{height}}px). מומלץ לפחות {{minWidth}}×{{minHeight}}px, אחרת היא עלולה להיראות מטושטשת."
     },
     "toast": {
       "update": "החנות עודכנה בהצלחה",
@@ -3231,7 +3235,7 @@
       "createPublishableHeader": "צור מפתח API לפרסום",
       "createPublishableHint": "צור מפתח API חדש לפרסום כדי להגביל את היקף הבקשות לערוצי מכירה ספציפיים.",
       "createSecretHeader": "צור מפתח API סודי",
-      "createSecretHint": "צור מפתח API סודי חדש לגישה ל-Medusa API כמשתמש מנהל מאומת.",
+      "createSecretHint": "צור מפתח API סודי חדש לגישה ל-Kayı.com API כמשתמש מנהל מאומת.",
       "secretKeyCreatedHeader": "מפתח סודי נוצר",
       "secretKeyCreatedHint": "המפתח הסודי החדש שלך נוצר. העתק ואחסן אותו בצורה מאובטחת עכשיו. זו הפעם היחידה שהוא יוצג.",
       "copySecretTokenSuccess": "המפתח הסודי הועתק ללוח.",
@@ -3328,7 +3332,7 @@
   },
   "login": {
     "forgotPassword": "שכחת סיסמה? - <0>איפוס</0>",
-    "title": "ברוכים הבאים ל-Medusa",
+    "title": "ברוכים הבאים ל-Kayı.com",
     "hint": "התחבר כדי לגשת לאזור החשבון",
     "submit": "התחבר",
     "sessionExpired": "הסשן פג",
@@ -3340,7 +3344,7 @@
     }
   },
   "invite": {
-    "title": "ברוכים הבאים ל-Medusa",
+    "title": "ברוכים הבאים ל-Kayı.com",
     "hint": "צור את החשבון שלך למטה",
     "backToLogin": "חזרה להתחברות",
     "createAccount": "צור חשבון",
@@ -3348,8 +3352,7 @@
     "emailTooltip": "לא ניתן לשנות את האימייל שלך. אם ברצונך להשתמש באימייל אחר, יש לשלוח הזמנה חדשה.",
     "invalidInvite": "ההזמנה אינה חוקית או פג תוקפה.",
     "successTitle": "החשבון שלך נרשם",
-    "successHint": "התחל להשתמש ב-Medusa Admin מיד.",
-    "successAction": "התחל עם Medusa Admin",
+    "successHint": "התחל להשתמש ב-Kayı.com Admin מיד.",
     "invalidTokenTitle": "אסימון ההזמנה שלך אינו תקף",
     "invalidTokenHint": "נסה לבקש קישור הזמנה חדש.",
     "passwordMismatch": "הסיסמאות אינן תואמות",
@@ -3385,7 +3388,7 @@
   },
   "workflowExecutions": {
     "domain": "תהליכי עבודה",
-    "subtitle": "צפה ועקוב אחר ביצועי תהליך העבודה באפליקציית Medusa שלך.",
+    "subtitle": "צפה ועקוב אחר ביצועי תהליך העבודה באפליקציית Kayı.com שלך.",
     "transactionIdLabel": "מזהה עסקה",
     "workflowIdLabel": "מזהה תהליך עבודה",
     "progressLabel": "התקדמות",
@@ -3478,7 +3481,7 @@
       "description": "אין לך התראות כרגע, אך ברגע שיהיו לך הן יופיעו כאן."
     },
     "accessibility": {
-      "description": "התראות על פעילויות Medusa יוצגו כאן."
+      "description": "התראות על פעילויות Kayı.com יוצגו כאן."
     }
   },
   "errors": {
@@ -3666,7 +3669,6 @@
     "endDate": "תאריך סיום",
     "draft": "טיוטה",
     "values": "ערכים",
-    "brand": "Brand",
     "reference": "מזהה יחוס",
     "reference_id": "מזהה יחוס",
     "images": "מדיה",
@@ -3699,7 +3701,9 @@
     "inventory_quantity": "כמות במלאי",
     "requires_shipping": "דורש שילוח",
     "variant_attributes": "מאפייני וריאנט",
-    "product_attributes": "מאפייני מוצר"
+    "product_attributes": "מאפייני מוצר",
+    "handleAutoGeneratedHint": "נוצר אוטומטית מהשם. אותיות קטנות, ספרות ומקפים בלבד — לא ניתן לערוך שדה זה ישירות.",
+    "handleInvalidFormat": "המזהה יכול להכיל רק אותיות קטנות, ספרות ומקפים"
   },
   "dateTime": {
     "years_one": "שנה",
@@ -3887,7 +3891,7 @@
       "manageEntities": "נהל ישויות",
       "manageLocales": "נהל אזורים"
     },
-    "subtitle": "נהל תרגומים של הנתונים שלך ב-Medusa",
+    "subtitle": "נהל תרגומים של הנתונים שלך ב-Kayı.com",
     "list": {
       "metrics": "{{translated}} מתוך {{total}} תרגומים"
     },
@@ -4081,7 +4085,7 @@
         "accountNameRequired": "יש להזין שם חשבון"
       },
       "preview": {
-        "title": "ברוך הבא ל-Mercur",
+        "title": "ברוך הבא ל-Kayı.com",
         "description": "פורטל הספקים הכל-באחד שלך לניהול החנות, המוצרים, ההזמנות והתשלומים.",
         "placeholder": "תצוגה מקדימה של האפליקציה"
       }
@@ -4146,7 +4150,12 @@
   "auth": {
     "login": {
       "authenticationFailed": "האימות נכשל",
-      "cloud": "התחבר עם Mercur"
+      "cloud": "התחבר עם Kayı.com"
     }
+  },
+  "sellerSuspension": {
+    "description": "החנות שלך הושעתה על ידי ההנהלה. לא תוכל ליצור מוצרים חדשים עד להפעלתה מחדש. אם יש לך שאלות, צוות התמיכה שלנו כאן כדי לעזור.",
+    "help": "עזרה",
+    "title": "החנות הושעתה"
   }
 }

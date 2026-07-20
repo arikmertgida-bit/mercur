@@ -1,0 +1,131 @@
+{
+  "productImportExport": {
+    "import": "Importă",
+    "export": "Exportă",
+    "done": "Gata",
+    "importHeader": "Importă produse",
+    "importDescription": "Încarcă un fișier CSV pentru a importa produse în magazinul tău.",
+    "importHint": "Încarcă un fișier CSV cu produsele tale. Poți",
+    "downloadTemplate": "descărca șablonul",
+    "uploadLabel": "Încarcă fișier CSV",
+    "uploadHint": "Sunt acceptate doar fișiere .csv",
+    "importingActivity": "Se importă produsele...",
+    "importSuccessToast": "{{count}} produs(e) importat(e) cu succes.",
+    "importCompleteTitle": "Import finalizat",
+    "importCompleteDescription": "{{count}} produs(e) au fost create cu succes.",
+    "exportHeader": "Exportă produse",
+    "exportDescription": "Exportă produsele tale ca fișier CSV.",
+    "exportBody": "Această acțiune va exporta toate produsele tale într-un fișier CSV. Descărcarea va începe automat când exportul este pregătit.",
+    "exportSuccessToast": "Produsele au fost exportate cu succes."
+  },
+  "customFields": {
+    "title": "Câmpuri personalizate",
+    "description": "Gestionează câmpurile personalizate și configurațiile tale",
+    "noFields": "Niciun câmp personalizat configurat încă"
+  },
+  "messenger": {
+    "supportTeam": "Echipa de suport",
+    "support": "Suport",
+    "adminChatTitle": "Discută cu administratorul",
+    "adminChatDescription": "Trimite un mesaj echipei de suport a marketplace-ului și vizualizează istoricul conversațiilor tale.",
+    "unknown": "Necunoscut",
+    "imageMessage": "Imagine",
+    "noMessages": "Niciun mesaj încă",
+    "startConversation": "Începe conversația",
+    "seen": "Văzut",
+    "sent": "Trimis",
+    "notificationTitle": "{{senderName}} ți-a trimis un mesaj",
+    "notificationBody": "{{preview}}",
+    "image": "Imagine",
+    "close": "Închide",
+    "noConversations": "Nicio conversație încă",
+    "participants": "participanți",
+    "searchConversations": "Caută conversații...",
+    "typeMessage": "Scrie un mesaj...",
+    "selectConversation": "Selectează o conversație",
+    "startMessaging": "Selectează o conversație pentru a începe să discuți",
+    "connected": "Conectat",
+    "disconnected": "Deconectat"
+  },
+  "messages": {
+    "domain": "Mesaje",
+    "management": "Echipa de suport",
+    "helpSupport": "Echipa de suport",
+    "me": "Eu",
+    "productQuestion": "Întrebare despre produs",
+    "storeQuestion": "Întrebare despre magazin",
+    "imageUploadFailed": "Încărcarea imaginii a eșuat",
+    "connectionLost": "Conexiune pierdută. Se reconectează...",
+    "delete": "Șterge",
+    "deleteForEveryone": "Șterge pentru toată lumea",
+    "close": "Închide",
+    "customer": "Client",
+    "store": "Magazin",
+    "back": "Înapoi",
+    "participant": "participant",
+    "noMessages": "Niciun mesaj",
+    "chatOptions": "Opțiuni chat",
+    "deleteOnlyForMe": "Șterge doar pentru mine",
+    "storeContext": "Întrebare despre magazin",
+    "product": "Produs",
+    "deleteConfirmTitle": "Șterge mesajul",
+    "deleteConfirmDesc": "Sigur dorești să ștergi acest mesaj?",
+    "error": "Nu s-au putut obține informațiile despre utilizator.",
+    "supportName": "Echipa de suport",
+    "supportSubject": "Chat de suport",
+    "emptyState": "Niciun mesaj încă. Începe conversația.",
+    "viewPromotion": "Vezi promoția",
+    "imageAlt": "Imagine",
+    "placeholder": "Scrie un mesaj...",
+    "send": "Trimite mesaj",
+    "attachImage": "Atașează imagine",
+    "removeAttachment": "Elimină imaginea atașată",
+    "viewImage": "Vezi imaginea la dimensiune completă",
+    "pendingImageAlt": "Imagine de trimis",
+    "deletedMessage": "[Acest mesaj a fost șters]"
+  },
+  "requests": {
+    "domain": "Cereri",
+    "status": {
+      "draft": "Ciornă",
+      "pending": "În așteptare",
+      "accepted": "Acceptată",
+      "rejected": "Respinsă"
+    },
+    "filters": {
+      "status": "Stare"
+    },
+    "columns": {
+      "name": "Nume"
+    },
+    "categories": {
+      "navLabel": "Categorii",
+      "heading": "Cereri de categorii",
+      "noRecords": "Nu s-au găsit cereri de categorii"
+    },
+    "collections": {
+      "navLabel": "Colecții",
+      "heading": "Cereri de colecții",
+      "noRecords": "Nu s-au găsit cereri de colecții"
+    },
+    "tags": {
+      "navLabel": "Etichete",
+      "heading": "Cereri de etichete",
+      "noRecords": "Nu s-au găsit cereri de etichete"
+    },
+    "types": {
+      "navLabel": "Tipuri",
+      "heading": "Cereri de tipuri",
+      "noRecords": "Nu s-au găsit cereri de tipuri"
+    }
+  },
+  "reviews": {
+    "domain": "Recenzii",
+    "noRecords": "Nu s-au găsit recenzii",
+    "columns": {
+      "rating": "Evaluare",
+      "reference": "Referință",
+      "customerNote": "Notă client"
+    }
+  }
+}

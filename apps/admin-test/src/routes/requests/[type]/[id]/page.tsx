@@ -22,27 +22,33 @@ import {
 } from "../../../../hooks/api/requests";
 import { client } from "../../../../lib/client";
 
-const TYPE_LABELS: Record<string, string> = {
-  product_category: "Category",
-  product_collection: "Collection",
-  product_tag: "Tag",
-  product_type: "Type",
+const useTypeLabels = (): Record<string, string> => {
+  const { t } = useTranslation();
+  return {
+    product_category: t("requests.typeLabels.product_category"),
+    product_collection: t("requests.typeLabels.product_collection"),
+    product_tag: t("requests.typeLabels.product_tag"),
+    product_type: t("requests.typeLabels.product_type"),
+  };
 };
 
-const ENTITY_FIELDS: Record<string, { key: string; label: string }[]> = {
-  product_category: [
-    { key: "name", label: "Name" },
-    { key: "handle", label: "Handle" },
-    { key: "description", label: "Description" },
-    { key: "is_active", label: "Active" },
-    { key: "is_internal", label: "Internal" },
-  ],
-  product_collection: [
-    { key: "title", label: "Title" },
-    { key: "handle", label: "Handle" },
-  ],
-  product_tag: [{ key: "value", label: "Value" }],
-  product_type: [{ key: "value", label: "Value" }],
+const useEntityFields = (): Record<string, { key: string; label: string }[]> => {
+  const { t } = useTranslation();
+  return {
+    product_category: [
+      { key: "name", label: t("requests.fields.name") },
+      { key: "handle", label: t("requests.fields.handle") },
+      { key: "description", label: t("requests.fields.description") },
+      { key: "is_active", label: t("requests.fields.active") },
+      { key: "is_internal", label: t("requests.fields.internal") },
+    ],
+    product_collection: [
+      { key: "title", label: t("requests.fields.title") },
+      { key: "handle", label: t("requests.fields.handle") },
+    ],
+    product_tag: [{ key: "value", label: t("requests.fields.value") }],
+    product_type: [{ key: "value", label: t("requests.fields.value") }],
+  };
 };
 
 const ENTITY_NAME_KEY: Record<string, string> = {
@@ -61,9 +67,13 @@ type RequestFieldValue = string | number | boolean | Date | null | undefined;
 const toDisplayName = (value: RequestFieldValue, fallback: string): string =>
   typeof value === "string" && value.length > 0 ? value : fallback;
 
-const formatFieldValue = (value: RequestFieldValue): string => {
+const formatFieldValue = (
+  value: RequestFieldValue,
+  t: (key: string) => string,
+): string => {
   if (value === null || value === undefined) return "-";
-  if (typeof value === "boolean") return value ? "Yes" : "No";
+  if (typeof value === "boolean")
+    return value ? t("requests.values.yes") : t("requests.values.no");
   return String(value);
 };
 
@@ -143,6 +153,8 @@ const RequestDetailPage = () => {
   const { type, id } = useParams<{ type: string; id: string }>();
   const { t } = useTranslation();
   const prompt = usePrompt();
+  const entityFieldsByType = useEntityFields();
+  const typeLabels = useTypeLabels();
 
   const { request, isLoading, isError, error } = useRequest(
     type ?? "",
@@ -176,16 +188,15 @@ const RequestDetailPage = () => {
 
   const status = customFields.request_status;
   const isPending = status === "pending";
-  const entityFields = ENTITY_FIELDS[type] ?? [];
-  const typeLabel = TYPE_LABELS[type] ?? type;
+  const entityFields = entityFieldsByType[type] ?? [];
+  const typeLabel = typeLabels[type] ?? type;
   const nameKey = ENTITY_NAME_KEY[type] ?? "name";
   const entityName = toDisplayName(request[nameKey], request.id);
 
   const handleAccept = async () => {
     const res = await prompt({
-      title: "Accept request",
-      description:
-        "Are you sure you want to accept this request? This action will create the entity.",
+      title: t("requests.detail.acceptPromptTitle"),
+      description: t("requests.detail.acceptPromptDescription"),
       verificationText: entityName,
       confirmText: t("actions.confirm"),
       cancelText: t("actions.cancel"),
@@ -196,7 +207,7 @@ const RequestDetailPage = () => {
     await acceptRequest(
       {},
       {
-        onSuccess: () => toast.success("Request accepted"),
+        onSuccess: () => toast.success(t("requests.detail.acceptSuccess")),
         onError: (err) => toast.error(err.message),
       },
     );
@@ -204,9 +215,8 @@ const RequestDetailPage = () => {
 
   const handleReject = async () => {
     const res = await prompt({
-      title: "Reject request",
-      description:
-        "Are you sure you want to reject this request? This action cannot be undone.",
+      title: t("requests.detail.rejectPromptTitle"),
+      description: t("requests.detail.rejectPromptDescription"),
       verificationText: entityName,
       confirmText: t("actions.confirm"),
       cancelText: t("actions.cancel"),
@@ -217,7 +227,7 @@ const RequestDetailPage = () => {
     await rejectRequest(
       {},
       {
-        onSuccess: () => toast.success("Request rejected"),
+        onSuccess: () => toast.success(t("requests.detail.rejectSuccess")),
         onError: (err) => toast.error(err.message),
       },
     );
@@ -237,7 +247,7 @@ const RequestDetailPage = () => {
             <div className="flex w-full flex-col divide-y divide-dashed">
               <div className="flex items-center gap-2 px-6 py-4">
                 <ExclamationCircleSolid className="text-orange-500" />
-                <Heading level="h2">Pending review</Heading>
+                <Heading level="h2">{t("requests.detail.pendingReview")}</Heading>
               </div>
               <div className="bg-ui-bg-subtle flex items-center justify-end gap-x-2 rounded-b-xl px-4 py-4">
                 <Button
@@ -246,7 +256,7 @@ const RequestDetailPage = () => {
                   onClick={handleReject}
                   disabled={isAccepting || isRejecting}
                 >
-                  Reject
+                  {t("requests.detail.reject")}
                 </Button>
                 <Button
                   variant="primary"
@@ -254,7 +264,7 @@ const RequestDetailPage = () => {
                   onClick={handleAccept}
                   disabled={isAccepting || isRejecting}
                 >
-                  Accept
+                  {t("requests.detail.accept")}
                 </Button>
               </div>
             </div>
@@ -267,7 +277,7 @@ const RequestDetailPage = () => {
           <Heading>{entityName}</Heading>
           <div className="flex items-center gap-x-4">
             <StatusBadge color={statusColor(status)}>
-              {status.charAt(0).toUpperCase() + status.slice(1)}
+              {t(`requests.status.${status}`)}
             </StatusBadge>
             <Badge size="2xsmall" color="grey">
               {typeLabel}
@@ -278,14 +288,14 @@ const RequestDetailPage = () => {
           const value = request[key];
           if (value === undefined) return null;
           return (
-            <SectionRow key={key} title={label} value={formatFieldValue(value)} />
+            <SectionRow key={key} title={label} value={formatFieldValue(value, t)} />
           );
         })}
       </Container>
 
       <Container className="divide-y p-0">
         <div className="px-6 py-4">
-          <Heading level="h2">Submitter</Heading>
+          <Heading level="h2">{t("requests.detail.submitter")}</Heading>
         </div>
         <div className="px-6 py-4">
           {seller ? (
@@ -321,7 +331,7 @@ const RequestDetailPage = () => {
       {customFields.reviewer_id && (
         <Container className="divide-y p-0">
           <div className="px-6 py-4">
-            <Heading level="h2">Reviewer</Heading>
+            <Heading level="h2">{t("requests.detail.reviewer")}</Heading>
           </div>
           <div className="px-6 py-4">
             {user ? (

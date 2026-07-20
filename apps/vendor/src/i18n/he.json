@@ -1,0 +1,131 @@
+{
+  "productImportExport": {
+    "import": "ייבוא",
+    "export": "ייצוא",
+    "done": "סיום",
+    "importHeader": "ייבוא מוצרים",
+    "importDescription": "העלה קובץ CSV כדי לייבא מוצרים לחנות שלך.",
+    "importHint": "העלה קובץ CSV עם המוצרים שלך. באפשרותך",
+    "downloadTemplate": "להוריד את התבנית",
+    "uploadLabel": "העלאת קובץ CSV",
+    "uploadHint": "נתמכים רק קבצי .csv",
+    "importingActivity": "מייבא מוצרים...",
+    "importSuccessToast": "{{count}} מוצרים יובאו בהצלחה.",
+    "importCompleteTitle": "הייבוא הושלם",
+    "importCompleteDescription": "{{count}} מוצרים נוצרו בהצלחה.",
+    "exportHeader": "ייצוא מוצרים",
+    "exportDescription": "ייצא את המוצרים שלך כקובץ CSV.",
+    "exportBody": "פעולה זו תייצא את כל המוצרים שלך לקובץ CSV. ההורדה תתחיל אוטומטית ברגע שהייצוא יהיה מוכן.",
+    "exportSuccessToast": "המוצרים יוצאו בהצלחה."
+  },
+  "customFields": {
+    "title": "שדות מותאמים אישית",
+    "description": "נהל את השדות המותאמים אישית ואת ההגדרות שלך",
+    "noFields": "עדיין לא הוגדרו שדות מותאמים אישית"
+  },
+  "messenger": {
+    "supportTeam": "צוות התמיכה",
+    "support": "תמיכה",
+    "adminChatTitle": "צ'אט עם המנהל",
+    "adminChatDescription": "שלח הודעה לצוות התמיכה של השוק וצפה בהיסטוריית השיחות שלך.",
+    "unknown": "לא ידוע",
+    "imageMessage": "תמונה",
+    "noMessages": "אין עדיין הודעות",
+    "startConversation": "התחל את השיחה",
+    "seen": "נצפה",
+    "sent": "נשלח",
+    "notificationTitle": "{{senderName}} שלח/ה לך הודעה",
+    "notificationBody": "{{preview}}",
+    "image": "תמונה",
+    "close": "סגור",
+    "noConversations": "אין עדיין שיחות",
+    "participants": "משתתפים",
+    "searchConversations": "חיפוש שיחות...",
+    "typeMessage": "הקלד הודעה...",
+    "selectConversation": "בחר שיחה",
+    "startMessaging": "בחר שיחה כדי להתחיל להתכתב",
+    "connected": "מחובר",
+    "disconnected": "מנותק"
+  },
+  "messages": {
+    "domain": "הודעות",
+    "management": "צוות התמיכה",
+    "helpSupport": "צוות התמיכה",
+    "me": "אני",
+    "productQuestion": "שאלה על מוצר",
+    "storeQuestion": "שאלה על החנות",
+    "imageUploadFailed": "העלאת התמונה נכשלה",
+    "connectionLost": "החיבור אבד. מתחבר מחדש...",
+    "delete": "מחק",
+    "deleteForEveryone": "מחק עבור כולם",
+    "close": "סגור",
+    "customer": "לקוח",
+    "store": "חנות",
+    "back": "חזרה",
+    "participant": "משתתף",
+    "noMessages": "אין הודעות",
+    "chatOptions": "אפשרויות צ'אט",
+    "deleteOnlyForMe": "מחק רק עבורי",
+    "storeContext": "שאלה על החנות",
+    "product": "מוצר",
+    "deleteConfirmTitle": "מחיקת הודעה",
+    "deleteConfirmDesc": "האם אתה בטוח שברצונך למחוק הודעה זו?",
+    "error": "לא ניתן היה לאחזר את פרטי המשתמש.",
+    "supportName": "צוות התמיכה",
+    "supportSubject": "צ'אט תמיכה",
+    "emptyState": "אין עדיין הודעות. התחל את השיחה.",
+    "viewPromotion": "צפה במבצע",
+    "imageAlt": "תמונה",
+    "placeholder": "הקלד הודעה...",
+    "send": "שלח הודעה",
+    "attachImage": "צרף תמונה",
+    "removeAttachment": "הסר תמונה מצורפת",
+    "viewImage": "צפה בתמונה בגודל מלא",
+    "pendingImageAlt": "תמונה לשליחה",
+    "deletedMessage": "[הודעה זו נמחקה]"
+  },
+  "requests": {
+    "domain": "בקשות",
+    "status": {
+      "draft": "טיוטה",
+      "pending": "ממתין",
+      "accepted": "אושר",
+      "rejected": "נדחה"
+    },
+    "filters": {
+      "status": "סטטוס"
+    },
+    "columns": {
+      "name": "שם"
+    },
+    "categories": {
+      "navLabel": "קטגוריות",
+      "heading": "בקשות קטגוריה",
+      "noRecords": "לא נמצאו בקשות קטגוריה"
+    },
+    "collections": {
+      "navLabel": "אוספים",
+      "heading": "בקשות אוסף",
+      "noRecords": "לא נמצאו בקשות אוסף"
+    },
+    "tags": {
+      "navLabel": "תגיות",
+      "heading": "בקשות תגית",
+      "noRecords": "לא נמצאו בקשות תגית"
+    },
+    "types": {
+      "navLabel": "סוגים",
+      "heading": "בקשות סוג",
+      "noRecords": "לא נמצאו בקשות סוג"
+    }
+  },
+  "reviews": {
+    "domain": "ביקורות",
+    "noRecords": "לא נמצאו ביקורות",
+    "columns": {
+      "rating": "דירוג",
+      "reference": "מזהה",
+      "customerNote": "הערת לקוח"
+    }
+  }
+}

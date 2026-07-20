@@ -1,0 +1,227 @@
+{
+  "customFields": {
+    "title": "Vlastní pole",
+    "description": "Spravujte svá vlastní pole a konfigurace",
+    "noFields": "Zatím nejsou nakonfigurována žádná vlastní pole"
+  },
+  "actions": {
+    "continue": "Pokračovat",
+    "cancel": "Zrušit",
+    "delete": "Smazat"
+  },
+  "productReports": {
+    "domain": "Nahlášení produktů",
+    "subtitle": "Produkty označené zákazníky k prověření",
+    "filterAll": "Všechny stavy",
+    "columns": {
+      "product": "Produkt",
+      "reporter": "Nahlásil",
+      "reason": "Důvod",
+      "status": "Stav"
+    },
+    "status": {
+      "pending": "Čeká na vyřízení",
+      "resolved": "Vyřešeno",
+      "dismissed": "Zamítnuto"
+    },
+    "reasons": {
+      "inaccurate_product_details": "Nepřesné údaje o produktu",
+      "pricing_irregularities": "Nesrovnalosti v ceně",
+      "prohibited_item": "Zakázaná položka",
+      "counterfeit_trademark": "Padělek / porušení ochranné známky",
+      "incorrect_categorization": "Nesprávné zařazení do kategorie",
+      "inappropriate_media": "Nevhodný obsah médií",
+      "dmca_violation": "Porušení DMCA",
+      "seller_complaint": "Stížnost na prodejce",
+      "other": "Jiné"
+    },
+    "actions": {
+      "resolve": "Označit jako vyřešené",
+      "dismiss": "Zamítnout"
+    },
+    "resolvePrompt": {
+      "title": "Označit nahlášení jako vyřešené?",
+      "description": "Toto nahlášení bude označeno jako vyřešené a odebráno z fronty čekajících."
+    },
+    "dismissPrompt": {
+      "title": "Zamítnout toto nahlášení?",
+      "description": "Toto nahlášení bude označeno jako zamítnuté a odebráno z fronty čekajících."
+    },
+    "deletePrompt": {
+      "title": "Smazat toto nahlášení?",
+      "description": "Tímto se nahlášení trvale smaže. Tuto akci nelze vrátit zpět."
+    },
+    "updateSuccess": "Nahlášení aktualizováno",
+    "updateError": "Aktualizace nahlášení se nezdařila",
+    "deleteSuccess": "Nahlášení smazáno",
+    "deleteError": "Smazání nahlášení se nezdařilo"
+  },
+  "wishlistModeration": {
+    "domain": "Seznamy přání",
+    "subtitle": "Seznamy přání zákazníků pro účely moderování",
+    "noProducts": "Žádné produkty",
+    "columns": {
+      "customer": "Zákazník",
+      "products": "Produkty",
+      "created": "Vytvořeno"
+    },
+    "deletePrompt": {
+      "title": "Smazat tento seznam přání?",
+      "description": "Tímto se trvale smaže seznam přání zákazníka a všechny jeho položky. Tuto akci nelze vrátit zpět."
+    },
+    "deleteSuccess": "Seznam přání smazán",
+    "deleteError": "Smazání seznamu přání se nezdařilo"
+  },
+  "reportedImages": {
+    "domain": "Nahlášené obrázky",
+    "subtitle": "Zkontrolujte obrázky nahlášené zákazníky jako nevhodné",
+    "filterAll": "Všechny stavy",
+    "imageRemoved": "Obrázek odstraněn",
+    "columns": {
+      "image": "Obrázek",
+      "reporter": "Nahlásil",
+      "reason": "Důvod",
+      "status": "Stav"
+    },
+    "status": {
+      "pending": "Čeká na vyřízení",
+      "resolved": "Vyřešeno"
+    },
+    "actions": {
+      "remove": "Odstranit obrázek",
+      "dismiss": "Zamítnout nahlášení"
+    },
+    "removePrompt": {
+      "title": "Odstranit tento obrázek?",
+      "description": "Obrázek bude trvale odstraněn z recenze. Tuto akci nelze vrátit zpět."
+    },
+    "dismissPrompt": {
+      "title": "Zamítnout toto nahlášení?",
+      "description": "Obrázek zůstane publikován a nahlášení bude označeno jako vyřešené."
+    },
+    "resolveSuccess": "Nahlášení vyřešeno",
+    "resolveError": "Vyřešení nahlášení se nezdařilo"
+  },
+  "messenger": {
+    "searchConversations": "Hledat konverzace...",
+    "noConversations": "Zatím žádné konverzace",
+    "startConversation": "Zahájit konverzaci",
+    "selectConversation": "Vyberte konverzaci",
+    "startMessaging": "Vyberte konverzaci a začněte psát",
+    "typeMessage": "Napište zprávu...",
+    "seen": "Zobrazeno",
+    "sent": "Odesláno",
+    "notificationTitle": "{{senderName}} vám poslal(a) zprávu",
+    "notificationBody": "{{preview}}",
+    "image": "Obrázek",
+    "support": "Podpora",
+    "direct": "Přímá",
+    "unknown": "Neznámý",
+    "supportTeam": "Tým podpory",
+    "connected": "Připojeno",
+    "disconnected": "Odpojeno",
+    "conversationOptions": "Možnosti konverzace"
+  },
+  "messages": {
+    "domain": "Zprávy",
+    "product": "Produkt",
+    "store": "Obchod",
+    "delete": "Smazat",
+    "deleteForEveryone": "Smazat pro všechny",
+    "close": "Zavřít",
+    "connectionLost": "Spojení ztraceno. Obnovuje se připojení...",
+    "imageUploadFailed": "Nahrání obrázku se nezdařilo",
+    "deleteConfirmTitle": "Smazat zprávu",
+    "deleteConfirmDesc": "Opravdu chcete tuto zprávu smazat?",
+    "productQuestion": "Dotaz k produktu",
+    "storeQuestion": "Dotaz k obchodu",
+    "customerMessage": "Zpráva od zákazníka",
+    "sellerMessage": "Zpráva od prodejce",
+    "directMessage": "Přímá zpráva",
+    "storeContext": "Dotaz k obchodu",
+    "back": "Zpět",
+    "failedToGetUserInfo": "Nepodařilo se načíst informace o uživateli.",
+    "send": "Odeslat zprávu",
+    "attachImage": "Připojit obrázek",
+    "removeAttachment": "Odebrat připojený obrázek",
+    "viewImage": "Zobrazit obrázek v plné velikosti",
+    "pendingImageAlt": "Obrázek k odeslání",
+    "imageAlt": "Obrázek"
+  },
+  "requests": {
+    "domain": "Žádosti",
+    "status": {
+      "draft": "Koncept",
+      "pending": "Čeká na vyřízení",
+      "accepted": "Přijato",
+      "rejected": "Zamítnuto"
+    },
+    "filters": {
+      "status": "Stav"
+    },
+    "columns": {
+      "name": "Název"
+    },
+    "categories": {
+      "navLabel": "Kategorie",
+      "heading": "Žádosti o kategorie",
+      "noRecords": "Nebyly nalezeny žádné žádosti o kategorie"
+    },
+    "collections": {
+      "navLabel": "Kolekce",
+      "heading": "Žádosti o kolekce",
+      "noRecords": "Nebyly nalezeny žádné žádosti o kolekce"
+    },
+    "tags": {
+      "navLabel": "Štítky",
+      "heading": "Žádosti o štítky",
+      "noRecords": "Nebyly nalezeny žádné žádosti o štítky"
+    },
+    "types": {
+      "navLabel": "Typy",
+      "heading": "Žádosti o typy",
+      "noRecords": "Nebyly nalezeny žádné žádosti o typy"
+    },
+    "typeLabels": {
+      "product_category": "Kategorie",
+      "product_collection": "Kolekce",
+      "product_tag": "Štítek",
+      "product_type": "Typ"
+    },
+    "fields": {
+      "name": "Název",
+      "handle": "Handle",
+      "description": "Popis",
+      "active": "Aktivní",
+      "internal": "Interní",
+      "title": "Nadpis",
+      "value": "Hodnota"
+    },
+    "values": {
+      "yes": "Ano",
+      "no": "Ne"
+    },
+    "detail": {
+      "pendingReview": "Čeká na kontrolu",
+      "accept": "Přijmout",
+      "reject": "Odmítnout",
+      "acceptPromptTitle": "Přijmout žádost",
+      "acceptPromptDescription": "Opravdu chcete přijmout tuto žádost? Tato akce vytvoří danou entitu.",
+      "rejectPromptTitle": "Odmítnout žádost",
+      "rejectPromptDescription": "Opravdu chcete odmítnout tuto žádost? Tuto akci nelze vrátit zpět.",
+      "acceptSuccess": "Žádost přijata",
+      "rejectSuccess": "Žádost odmítnuta",
+      "submitter": "Odesílatel",
+      "reviewer": "Posuzovatel"
+    }
+  },
+  "reviews": {
+    "domain": "Recenze",
+    "noRecords": "Nebyly nalezeny žádné recenze",
+    "columns": {
+      "rating": "Hodnocení",
+      "reference": "Reference",
+      "customerNote": "Poznámka zákazníka"
+    }
+  }
+}

@@ -1,0 +1,227 @@
+{
+  "customFields": {
+    "title": "Egyéni mezők",
+    "description": "Kezelje egyéni mezőit és beállításait",
+    "noFields": "Még nincsenek beállított egyéni mezők"
+  },
+  "actions": {
+    "continue": "Folytatás",
+    "cancel": "Mégse",
+    "delete": "Törlés"
+  },
+  "productReports": {
+    "domain": "Termékbejelentések",
+    "subtitle": "Vásárlók által ellenőrzésre megjelölt termékek",
+    "filterAll": "Minden állapot",
+    "columns": {
+      "product": "Termék",
+      "reporter": "Bejelentette",
+      "reason": "Ok",
+      "status": "Állapot"
+    },
+    "status": {
+      "pending": "Függőben",
+      "resolved": "Megoldva",
+      "dismissed": "Elutasítva"
+    },
+    "reasons": {
+      "inaccurate_product_details": "Pontatlan termékadatok",
+      "pricing_irregularities": "Árazási szabálytalanságok",
+      "prohibited_item": "Tiltott termék",
+      "counterfeit_trademark": "Hamisítvány / védjegybitorlás",
+      "incorrect_categorization": "Helytelen kategorizálás",
+      "inappropriate_media": "Nem megfelelő médiatartalom",
+      "dmca_violation": "DMCA-jogsértés",
+      "seller_complaint": "Panasz az eladóra",
+      "other": "Egyéb"
+    },
+    "actions": {
+      "resolve": "Megoldottként jelölés",
+      "dismiss": "Elutasítás"
+    },
+    "resolvePrompt": {
+      "title": "Megoldottként jelöli a bejelentést?",
+      "description": "Ez a bejelentés megoldottként lesz megjelölve, és eltávolításra kerül a függő sorból."
+    },
+    "dismissPrompt": {
+      "title": "Elutasítja ezt a bejelentést?",
+      "description": "Ez a bejelentés elutasítottként lesz megjelölve, és eltávolításra kerül a függő sorból."
+    },
+    "deletePrompt": {
+      "title": "Törli ezt a bejelentést?",
+      "description": "Ez véglegesen törli a bejelentést. Ez a művelet nem vonható vissza."
+    },
+    "updateSuccess": "Bejelentés frissítve",
+    "updateError": "A bejelentés frissítése sikertelen",
+    "deleteSuccess": "Bejelentés törölve",
+    "deleteError": "A bejelentés törlése sikertelen"
+  },
+  "wishlistModeration": {
+    "domain": "Kívánságlisták",
+    "subtitle": "Vásárlói kívánságlisták, moderálási céllal",
+    "noProducts": "Nincsenek termékek",
+    "columns": {
+      "customer": "Vásárló",
+      "products": "Termékek",
+      "created": "Létrehozva"
+    },
+    "deletePrompt": {
+      "title": "Törli ezt a kívánságlistát?",
+      "description": "Ez véglegesen törli a vásárló kívánságlistáját és annak minden bejegyzését. Ez a művelet nem vonható vissza."
+    },
+    "deleteSuccess": "Kívánságlista törölve",
+    "deleteError": "A kívánságlista törlése sikertelen"
+  },
+  "reportedImages": {
+    "domain": "Bejelentett képek",
+    "subtitle": "Tekintse át a vásárlók által nem megfelelőnek jelölt képeket",
+    "filterAll": "Minden állapot",
+    "imageRemoved": "Kép eltávolítva",
+    "columns": {
+      "image": "Kép",
+      "reporter": "Bejelentette",
+      "reason": "Ok",
+      "status": "Állapot"
+    },
+    "status": {
+      "pending": "Függőben",
+      "resolved": "Megoldva"
+    },
+    "actions": {
+      "remove": "Kép eltávolítása",
+      "dismiss": "Bejelentés elutasítása"
+    },
+    "removePrompt": {
+      "title": "Eltávolítja ezt a képet?",
+      "description": "A kép véglegesen törlésre kerül az értékelésből. Ez a művelet nem vonható vissza."
+    },
+    "dismissPrompt": {
+      "title": "Elutasítja ezt a bejelentést?",
+      "description": "A kép közzétéve marad, a bejelentés pedig megoldottként lesz megjelölve."
+    },
+    "resolveSuccess": "Bejelentés megoldva",
+    "resolveError": "A bejelentés megoldása sikertelen"
+  },
+  "messenger": {
+    "searchConversations": "Beszélgetések keresése...",
+    "noConversations": "Még nincsenek beszélgetések",
+    "startConversation": "Beszélgetés indítása",
+    "selectConversation": "Válasszon beszélgetést",
+    "startMessaging": "Válasszon egy beszélgetést a csevegés megkezdéséhez",
+    "typeMessage": "Írjon egy üzenetet...",
+    "seen": "Megtekintve",
+    "sent": "Elküldve",
+    "notificationTitle": "{{senderName}} üzenetet küldött Önnek",
+    "notificationBody": "{{preview}}",
+    "image": "Kép",
+    "support": "Támogatás",
+    "direct": "Közvetlen",
+    "unknown": "Ismeretlen",
+    "supportTeam": "Ügyfélszolgálati csapat",
+    "connected": "Csatlakozva",
+    "disconnected": "Kapcsolat bontva",
+    "conversationOptions": "Beszélgetés beállításai"
+  },
+  "messages": {
+    "domain": "Üzenetek",
+    "product": "Termék",
+    "store": "Bolt",
+    "delete": "Törlés",
+    "deleteForEveryone": "Törlés mindenki számára",
+    "close": "Bezárás",
+    "connectionLost": "A kapcsolat megszakadt. Újracsatlakozás...",
+    "imageUploadFailed": "A kép feltöltése sikertelen",
+    "deleteConfirmTitle": "Üzenet törlése",
+    "deleteConfirmDesc": "Biztosan törli ezt az üzenetet?",
+    "productQuestion": "Termékkel kapcsolatos kérdés",
+    "storeQuestion": "Bolttal kapcsolatos kérdés",
+    "customerMessage": "Vásárlói üzenet",
+    "sellerMessage": "Eladói üzenet",
+    "directMessage": "Közvetlen üzenet",
+    "storeContext": "Bolttal kapcsolatos kérdés",
+    "back": "Vissza",
+    "failedToGetUserInfo": "Nem sikerült lekérni a felhasználói adatokat.",
+    "send": "Üzenet küldése",
+    "attachImage": "Kép csatolása",
+    "removeAttachment": "Csatolt kép eltávolítása",
+    "viewImage": "Kép megtekintése teljes méretben",
+    "pendingImageAlt": "Elküldendő kép",
+    "imageAlt": "Kép"
+  },
+  "requests": {
+    "domain": "Kérések",
+    "status": {
+      "draft": "Piszkozat",
+      "pending": "Függőben",
+      "accepted": "Elfogadva",
+      "rejected": "Elutasítva"
+    },
+    "filters": {
+      "status": "Állapot"
+    },
+    "columns": {
+      "name": "Név"
+    },
+    "categories": {
+      "navLabel": "Kategóriák",
+      "heading": "Kategóriakérések",
+      "noRecords": "Nem található kategóriakérés"
+    },
+    "collections": {
+      "navLabel": "Kollekciók",
+      "heading": "Kollekciókérések",
+      "noRecords": "Nem található kollekciókérés"
+    },
+    "tags": {
+      "navLabel": "Címkék",
+      "heading": "Címkekérések",
+      "noRecords": "Nem található címkekérés"
+    },
+    "types": {
+      "navLabel": "Típusok",
+      "heading": "Típuskérések",
+      "noRecords": "Nem található típuskérés"
+    },
+    "typeLabels": {
+      "product_category": "Kategória",
+      "product_collection": "Kollekció",
+      "product_tag": "Címke",
+      "product_type": "Típus"
+    },
+    "fields": {
+      "name": "Név",
+      "handle": "Handle",
+      "description": "Leírás",
+      "active": "Aktív",
+      "internal": "Belső",
+      "title": "Cím",
+      "value": "Érték"
+    },
+    "values": {
+      "yes": "Igen",
+      "no": "Nem"
+    },
+    "detail": {
+      "pendingReview": "Ellenőrzés alatt",
+      "accept": "Elfogadás",
+      "reject": "Elutasítás",
+      "acceptPromptTitle": "Kérés elfogadása",
+      "acceptPromptDescription": "Biztosan elfogadja ezt a kérést? Ez a művelet létrehozza az entitást.",
+      "rejectPromptTitle": "Kérés elutasítása",
+      "rejectPromptDescription": "Biztosan elutasítja ezt a kérést? Ez a művelet nem vonható vissza.",
+      "acceptSuccess": "Kérés elfogadva",
+      "rejectSuccess": "Kérés elutasítva",
+      "submitter": "Beküldő",
+      "reviewer": "Ellenőr"
+    }
+  },
+  "reviews": {
+    "domain": "Értékelések",
+    "noRecords": "Nem található értékelés",
+    "columns": {
+      "rating": "Értékelés",
+      "reference": "Hivatkozás",
+      "customerNote": "Vásárlói megjegyzés"
+    }
+  }
+}

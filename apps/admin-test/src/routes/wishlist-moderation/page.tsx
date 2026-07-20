@@ -8,7 +8,8 @@ import { ActionMenu, NoRecords } from "@mercurjs/dashboard-shared"
 import { client } from "../../lib/client"
 
 export const config = {
-  label: "Wishlists",
+  label: "domain",
+  translationNs: "wishlistModeration",
   icon: Heart,
   rank: 87,
 }

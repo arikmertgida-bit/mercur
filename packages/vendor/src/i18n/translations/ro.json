@@ -74,7 +74,8 @@
     "true": "Adevarat",
     "false": "Fals",
     "decrement": "Descrește",
-    "increment": "Crește"
+    "increment": "Crește",
+    "drawerAccessibleDescription": "Folosește acest panou pentru a vizualiza sau edita detaliile acestei resurse."
   },
   "json": {
     "header": "JSON",
@@ -173,7 +174,8 @@
     "saveAndClose": "Salvează și închide",
     "request": "Cerere",
     "editVariantImages": "Editează imaginile variantei",
-    "editImages": "Editează imaginile"
+    "editImages": "Editează imaginile",
+    "ok": "OK"
   },
   "operators": {
     "in": "În"
@@ -494,7 +496,12 @@
         "handleMustContainLetter": "Handle-ul trebuie să conțină cel puțin o literă",
         "requiredAttributeSelect": "Acest atribut este obligatoriu conform marketplace-ului. Vă rugăm selectați o valoare.",
         "requiredAttributeEnter": "Acest atribut este obligatoriu conform marketplace-ului. Vă rugăm introduceți o valoare.",
-        "requiredAttributeMultiSelect": "Acest atribut este obligatoriu conform marketplace-ului. Vă rugăm selectați cel puțin o valoare."
+        "requiredAttributeMultiSelect": "Acest atribut este obligatoriu conform marketplace-ului. Vă rugăm selectați cel puțin o valoare.",
+        "formIncomplete": "Lipsesc unele câmpuri obligatorii — verifică rândurile evidențiate înainte de publicare.",
+        "mediaRequired": "Adaugă cel puțin o imagine pentru această variantă.",
+        "priceRequired": "Introdu un preț pentru această variantă în cel puțin o monedă.",
+        "shippingProfileRequired": "Selectează un profil de livrare.",
+        "stockRequired": "Setează o cantitate de stoc pentru această variantă în cel puțin o locație."
       },
       "variants": {
         "header": "Variante",
@@ -518,7 +525,14 @@
           "label": "Opțiuni de produs",
           "hint": "Definiți opțiunile pentru produs, de ex. "
         },
-        "optionsHeader": "Opțiuni"
+        "optionsHeader": "Opțiuni",
+        "mediaPicker": {
+          "description": "Alege care fotografii ale produsului aparțin acestei variante.",
+          "empty": "Încarcă mai întâi fotografii în fila Detalii.",
+          "header": "Alocă imagini",
+          "image": "Imaginea {{index}}",
+          "partialFailureToast": "Produsul a fost creat, dar imaginile nu au putut fi alocate pentru: {{variants}}. Poți încerca din nou din pagina de editare a produsului."
+        }
       },
       "successToast": "Produs {{title}} a fost creat cu succes.",
       "attributes": {
@@ -653,7 +667,11 @@
       "removeSelected": "Elimină selecția",
       "selectImages": "Selectați imaginile",
       "selectImagesHint": "Apăsați pe imagini pentru a le adăuga la această variantă.",
-      "editLabel": "Edita"
+      "editLabel": "Edita",
+      "limitExceeded": {
+        "description": "Poți încărca până la {{max}} de imagini per produs. Primele {{max}} au fost adăugate — restul au fost omise.",
+        "title": "Limita de imagini a fost atinsă"
+      }
     },
     "discountableHint": "Dacă nu este bifată, reducerile nu vor fi aplicate acestui produs.",
     "noSalesChannels": "Nu este disponibil în niciun canal de vânzare",
@@ -794,27 +812,6 @@
       },
       "deleteWarning": "Sigur doriți să ștergeți această variantă?",
       "tableItemAvailable": "{{availableCount}} disponibil",
-      "inventory": {
-        "notManaged": "Nu este gestionat",
-        "navigateToItem": "Accesați obiectul de inventar",
-        "inventoryKit": "Kit de inventar",
-        "inventoryKitHint": "Această variantă constă din mai multe articole de inventar?",
-        "validation": {
-          "itemId": "Vă rugăm să selectați articolul de inventar.",
-          "quantity": "Cantitatea este necesară. "
-        },
-        "editItemDetails": "Editați detaliile articolului",
-        "manageInventoryLabel": "Gestionați inventarul",
-        "manageInventoryHint": "Când este activată, vom modifica cantitatea de inventar pentru dvs. când sunt create comenzi și retururi.",
-        "allowBackordersLabel": "Permite comenzi în așteptare",
-        "allowBackordersHint": "Când este activat, clienții pot achiziționa varianta chiar dacă nu există o cantitate disponibilă.",
-        "toast": {
-          "levelsBatch": "Nivelurile de inventar au fost actualizate.",
-          "update": "Articolul din inventar a fost actualizat cu succes.",
-          "updateLevel": "Nivelul inventarului a fost actualizat cu succes.",
-          "itemsManageSuccess": "Articolele din inventar au fost actualizate cu succes."
-        }
-      },
       "tableItem_one": "{{availableCount}} disponibil la {{locationCount}} locaţie",
       "tableItem_other": "{{availableCount}} disponibil la {{locationCount}} locații",
       "validation": {
@@ -933,6 +930,18 @@
       "description": "Editați mai multe produse simultan.",
       "noChanges": "Nu există modificări de salvat.",
       "success": "Produsele au fost actualizate cu succes."
+    },
+    "stock": {
+      "available": "Disponibil",
+      "edit": {
+        "description": "Actualizează cantitatea de stoc live pentru fiecare locație. Modificările sunt salvate direct în Stoc.",
+        "header": "Editează stocul",
+        "location": "Locație",
+        "quantity": "Cantitate",
+        "successToast": "Stocul a fost actualizat cu succes"
+      },
+      "header": "Urmărirea stocului",
+      "lowStock": "Stoc redus"
     }
   },
   "collections": {
@@ -1164,7 +1173,6 @@
         "emptyTitle": "Fără grupuri de clienți"
       },
       "add": {
-        "success": "Client adăugat la: {{groups}}.",
         "list": {
           "noRecordsMessage": "Creați mai întâi un grup de clienți."
         },
@@ -1172,7 +1180,6 @@
         "successMany": "Clientul a fost adăugat cu succes în {{groups}} grupuri."
       },
       "removed": {
-        "success": "Client eliminat din: {{groups}}.",
         "list": {
           "noRecordsMessage": "Creați mai întâi un grup de clienți."
         },
@@ -1328,7 +1335,6 @@
       "capture": "Capturați plata",
       "capture_short": "Capta",
       "refund": "Restituire",
-      "markAsPaid": "Marcați ca plătit",
       "statusLabel": "Starea plății",
       "statusTitle": "Starea plății",
       "status": {
@@ -1346,8 +1352,6 @@
       },
       "capturePayment": "Plata de {{amount}} va fi capturat.",
       "capturePaymentSuccess": "Plata de {{amount}} capturat cu succes",
-      "markAsPaidPayment": "Plata de {{amount}} va fi marcat ca plătit.",
-      "markAsPaidPaymentSuccess": "Plata de {{amount}} marcat cu succes ca plătit",
       "createRefund": "Creați rambursare",
       "refundPaymentSuccess": "Rambursarea sumei {{amount}} de succes",
       "createRefundWrongQuantity": "Cantitatea ar trebui să fie un număr între 1 și {{number}}",
@@ -1421,7 +1425,6 @@
       "sendNotificationHint": "Anunțați clientul despre retur.",
       "returnTotal": "Retur total",
       "inboundTotal": "Total de intrare",
-      "refundAmount": "Suma de rambursare",
       "outstandingAmount": "Suma restante",
       "reason": "Motiv",
       "reasonHint": "Alegeți de ce clientul dorește să returneze articole.",
@@ -2133,8 +2136,6 @@
       "header": "Creați regiune fiscală",
       "hint": "Creați o nouă regiune fiscală pentru a defini cotele de impozitare pentru o anumită țară.",
       "errors": {
-        "rateIsRequired": "Cota de impozitare este necesară la crearea unei cote implicite de impozitare.",
-        "nameIsRequired": "Numele este necesar la crearea unei rate de impozitare implicite.",
         "missingProvider": "Furnizorul este obligatoriu la crearea unei regiuni fiscale.",
         "missingCountry": "Țara este obligatorie la crearea unei regiuni fiscale."
       },
@@ -2439,7 +2440,6 @@
     "toasts": {
       "promotionCreateSuccess": "Promovare ({{code}}) a fost creat cu succes."
     },
-    "create": {},
     "edit": {
       "title": "Editați detaliile promoției",
       "rules": {
@@ -2812,7 +2812,7 @@
       "header": "Editați profilul",
       "languageHint": "Limba pe care doriți să o utilizați în tabloul de bord administrativ. ",
       "languagePlaceholder": "Selectați limba",
-      "usageInsightsHint": "Distribuiți informații despre utilizare și ajutați-ne să îmbunătățim Medusa.  <0>documentare</0>."
+      "usageInsightsHint": "Distribuiți informații despre utilizare și ajutați-ne să îmbunătățim Kayı.com.  <0>documentare</0>."
     },
     "toast": {
       "edit": "Modificările profilurilor au fost salvate"
@@ -2882,7 +2882,6 @@
     "disableTaxInclusivePricing": "Dezactivați prețul cu taxe incluse",
     "currencyAlreadyAdded": "Moneda a fost deja adăugată în magazinul dvs.",
     "edit": {
-      "header": "Editați magazinul",
       "websiteHint": "Trebuie să includă protocolul (ex. https://)",
       "mediaHeading": "Media",
       "mediaTipLabel": "Sfat:",
@@ -2890,7 +2889,9 @@
       "uploadLogoLabel": "Încarcă logo",
       "uploadLogoHint": "Trageți și plasați logo-ul aici sau apăsați pentru a încărca.",
       "uploadBannerLabel": "Încarcă banner",
-      "uploadBannerHint": "Trageți și plasați bannerul aici sau apăsați pentru a încărca."
+      "uploadBannerHint": "Trageți și plasați bannerul aici sau apăsați pentru a încărca.",
+      "bannerTooSmall": "Imaginea este mică ({{width}}×{{height}}px). Se recomandă cel puțin {{minWidth}}×{{minHeight}}px, altfel poate apărea neclară.",
+      "logoTooSmall": "Imaginea este mică ({{width}}×{{height}}px). Se recomandă cel puțin {{minWidth}}×{{minHeight}}px, altfel poate apărea neclară."
     },
     "toast": {
       "update": "Magazinul a fost actualizat cu succes",
@@ -3133,7 +3134,6 @@
       "createTaxRate": "Creați cota de impozitare",
       "createTaxRateHint": "Creați o nouă cotă de impozitare pentru regiune.",
       "deleteRateDescription": "Sunteți pe cale să ștergeți cota de impozitare {{name}}. ",
-      "editTaxRate": "Editați rata de impozitare",
       "editRateAction": "Editați rata",
       "editOverridesAction": "Modificați suprascrieri",
       "editOverridesTitle": "Editați anulări ale cotei de impozitare",
@@ -3235,7 +3235,7 @@
       "createPublishableHeader": "Creați cheia API publicabilă",
       "createPublishableHint": "Creați o nouă cheie API publicabilă pentru a limita sfera solicitărilor la anumite canale de vânzare.",
       "createSecretHeader": "Creați cheia API secretă",
-      "createSecretHint": "Creați o nouă cheie API secretă pentru a accesa API-ul Medusa ca utilizator administrator autentificat.",
+      "createSecretHint": "Creați o nouă cheie API secretă pentru a accesa API-ul Kayı.com ca utilizator administrator autentificat.",
       "secretKeyCreatedHeader": "Cheie secretă creată",
       "secretKeyCreatedHint": "Noua ta cheie secretă a fost generată. ",
       "copySecretTokenSuccess": "Cheia secretă a fost copiată în clipboard.",
@@ -3332,7 +3332,7 @@
   },
   "login": {
     "forgotPassword": "Aţi uitat parola?  <0>Resetați</0>",
-    "title": "Bun venit la Medusa",
+    "title": "Bun venit la Kayı.com",
     "hint": "Conectați-vă pentru a accesa zona de cont",
     "submit": "Autentificare",
     "sessionExpired": "Sesiune expirată",
@@ -3344,7 +3344,7 @@
     }
   },
   "invite": {
-    "title": "Bun venit la Medusa",
+    "title": "Bun venit la Kayı.com",
     "hint": "Creează-ți contul mai jos",
     "backToLogin": "Înapoi la autentificare",
     "createAccount": "Creează cont",
@@ -3352,8 +3352,7 @@
     "emailTooltip": "E-mailul dvs. nu poate fi schimbat. ",
     "invalidInvite": "Invitația este nevalidă sau a expirat.",
     "successTitle": "Contul dvs. a fost înregistrat",
-    "successHint": "Începeți imediat cu Medusa Admin.",
-    "successAction": "Porniți Medusa Admin",
+    "successHint": "Începeți imediat cu Kayı.com Admin.",
     "invalidTokenTitle": "Indicatorul dvs. de invitație este nevalid",
     "invalidTokenHint": "Încercați să solicitați un nou link de invitație.",
     "passwordMismatch": "Parolele nu se potrivesc",
@@ -3389,7 +3388,7 @@
   },
   "workflowExecutions": {
     "domain": "Fluxuri de lucru",
-    "subtitle": "Vizualizați și urmăriți execuțiile fluxului de lucru în aplicația dvs. Medusa.",
+    "subtitle": "Vizualizați și urmăriți execuțiile fluxului de lucru în aplicația dvs. Kayı.com.",
     "transactionIdLabel": "ID tranzacție",
     "workflowIdLabel": "ID flux de lucru",
     "progressLabel": "Progres",
@@ -3482,7 +3481,7 @@
       "description": "Nu aveți notificări momentan, dar odată ce o faceți vor locui aici."
     },
     "accessibility": {
-      "description": "notificările despre activitățile Medusa vor fi listate aici."
+      "description": "notificările despre activitățile Kayı.com vor fi listate aici."
     }
   },
   "errors": {
@@ -3670,7 +3669,6 @@
     "endDate": "Data de încheiere",
     "draft": "Proiect",
     "values": "Valori",
-    "brand": "Brand",
     "reference": "Referință",
     "reference_id": "ID referință",
     "images": "Media",
@@ -3703,7 +3701,9 @@
     "inventory_quantity": "Cantitatea de inventar",
     "requires_shipping": "Necesită transport",
     "variant_attributes": "Atribute variantă",
-    "product_attributes": "Atribute produs"
+    "product_attributes": "Atribute produs",
+    "handleAutoGeneratedHint": "Generat automat din nume. Doar litere mici, cifre și cratime — acest câmp nu poate fi editat direct.",
+    "handleInvalidFormat": "Handle-ul trebuie să conțină doar litere mici, cifre și cratime"
   },
   "dateTime": {
     "years_one": "An",
@@ -3891,7 +3891,7 @@
       "manageEntities": "Gestionați entitățile",
       "manageLocales": "Gestionați limbile"
     },
-    "subtitle": "Gestionați traducerile datelor dumneavoastră în Medusa",
+    "subtitle": "Gestionați traducerile datelor dumneavoastră în Kayı.com",
     "list": {
       "metrics": "{{translated}} din {{total}} traduceri"
     },
@@ -4085,7 +4085,7 @@
         "accountNameRequired": "Vă rugăm introduceți un nume de cont"
       },
       "preview": {
-        "title": "Bine ați venit la Mercur",
+        "title": "Bine ați venit la Kayı.com",
         "description": "Portalul dumneavoastră all-in-one pentru gestionarea magazinului, produselor, comenzilor și plăților.",
         "placeholder": "Previzualizare aplicație"
       }
@@ -4150,7 +4150,12 @@
   "auth": {
     "login": {
       "authenticationFailed": "Autentificare eșuată",
-      "cloud": "Autentificare cu Mercur"
+      "cloud": "Autentificare cu Kayı.com"
     }
+  },
+  "sellerSuspension": {
+    "description": "Magazinul tău a fost suspendat de administrație. Nu vei putea crea produse noi până la reactivare. Dacă ai întrebări, echipa noastră de asistență este aici să te ajute.",
+    "help": "Ajutor",
+    "title": "Magazin suspendat"
   }
 }

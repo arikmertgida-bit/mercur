@@ -1,16 +1,18 @@
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import i18n from "i18next";
 import { keepPreviousData } from "@tanstack/react-query";
 import { Button, Container, Heading } from "@medusajs/ui";
 import type { RouteConfig } from "@mercurjs/dashboard-sdk";
 
 export const config: RouteConfig = {
-  label: "Collections",
+  label: "collections.navLabel",
+  translationNs: "requests",
   nested: "/requests",
 };
 
 export const handle = {
-  breadcrumb: () => "Collections",
+  breadcrumb: () => i18n.t("requests.collections.navLabel"),
 };
 
 import { useProductCollectionRequests } from "../../../hooks/api/requests";
@@ -51,7 +53,7 @@ const VendorCollectionRequestsPage = () => {
     <SingleColumnPage>
       <Container className="divide-y p-0">
         <div className="flex items-center justify-between px-6 py-4">
-          <Heading>Collection Requests</Heading>
+          <Heading>{t("requests.collections.heading")}</Heading>
           <Button size="small" variant="secondary" asChild>
             <Link to="create">{t("actions.create")}</Link>
           </Button>
@@ -69,7 +71,7 @@ const VendorCollectionRequestsPage = () => {
             { key: "updated_at", label: t("fields.updatedAt") },
           ]}
           queryObject={raw}
-          noRecords={{ message: "No collection requests found" }}
+          noRecords={{ message: t("requests.collections.noRecords") }}
         />
       </Container>
     </SingleColumnPage>

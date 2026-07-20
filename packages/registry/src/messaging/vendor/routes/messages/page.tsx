@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import { Badge, Container, Heading, Text, clx } from "@medusajs/ui"
+import i18n from "i18next"
 import type { RouteConfig } from "@mercurjs/dashboard-sdk"
 
 import { useVendorConversations, ConversationDTO } from "../../hooks/api/messaging"
@@ -7,11 +8,12 @@ import { useMessagingSSE } from "../../hooks/api/use-messaging-sse"
 import { useMessagingLayout } from "../../hooks/use-messaging-layout"
 
 export const config: RouteConfig = {
-  label: "Messages",
+  label: "domain",
+  translationNs: "messages",
 }
 
 export const handle = {
-  breadcrumb: () => "Messages",
+  breadcrumb: () => i18n.t("messages.domain"),
 }
 
 const formatRelativeTime = (dateStr: string | null): string => {

@@ -74,7 +74,8 @@
     "true": "Doğru",
     "false": "Yanlış",
     "decrement": "Azalt",
-    "increment": "Artır"
+    "increment": "Artır",
+    "drawerAccessibleDescription": "Bu kaynağın ayrıntılarını görüntülemek veya düzenlemek için bu paneli kullanın."
   },
   "json": {
     "header": "JSON",
@@ -169,7 +170,12 @@
     "export": "Dışa Aktar",
     "import": "İçe Aktar",
     "cannotUndo": "Bu işlem geri alınamaz",
-    "ok": "Tamam"
+    "ok": "Tamam",
+    "editImages": "Görselleri düzenle",
+    "editVariantImages": "Varyant görsellerini düzenle",
+    "request": "Talep et",
+    "saveAndClose": "Kaydet ve kapat",
+    "saveChanges": "Değişiklikleri kaydet"
   },
   "operators": {
     "in": "İçinde"
@@ -492,7 +498,15 @@
         "priceRequired": "Lütfen bu varyant için en az bir para biriminde fiyat girin.",
         "stockRequired": "Lütfen bu varyant için en az bir lokasyonda stok miktarı girin.",
         "mediaRequired": "Lütfen bu varyant için en az bir görsel ekleyin.",
-        "formIncomplete": "Eksik alanlar var — yayınlamadan önce işaretli satırları kontrol edin."
+        "formIncomplete": "Eksik alanlar var — yayınlamadan önce işaretli satırları kontrol edin.",
+        "categoryRequired": "Lütfen bir kategori seçin",
+        "handleInvalidFormat": "Handle yalnızca küçük harf, rakam ve tire içerebilir",
+        "handleMustContainLetter": "Handle en az bir harf içermelidir",
+        "primaryCategoryRequired": "Birincil kategori zorunludur",
+        "requiredAttributeEnter": "Bu özellik pazar yeri tarafından zorunlu kılınmıştır. Lütfen bir değer girin.",
+        "requiredAttributeMultiSelect": "Bu özellik pazar yeri tarafından zorunlu kılınmıştır. Lütfen en az bir değer seçin.",
+        "requiredAttributeSelect": "Bu özellik pazar yeri tarafından zorunlu kılınmıştır. Lütfen bir değer seçin.",
+        "titleRequired": "Başlık zorunludur"
       },
       "variants": {
         "header": "Varyantlar",
@@ -652,7 +666,17 @@
       "limitExceeded": {
         "title": "Görsel yükleme sınırına ulaşıldı",
         "description": "Bir ürüne en fazla {{max}} görsel yükleyebilirsiniz. İlk {{max}} görsel eklendi, kalanlar atlandı."
-      }
+      },
+      "availableImages": "Görselleri seç",
+      "editLabel": "Düzenle",
+      "fileTooLarge": "Bir veya daha fazla dosya en fazla {{size}} dosya boyutunu aşıyor: {{name}}",
+      "manageImageVariants": "İlişkili varyantları yönet",
+      "removeSelected": "Seçilenleri kaldır",
+      "selectImages": "Görselleri seç",
+      "selectImagesHint": "Bu varyanta eklemek için görsellere tıklayın.",
+      "selectToAdd": "Ürün görsellerini varyanta ekleyin. Yeni görseller eklemek için önce onları ürüne ekleyin.",
+      "showAvailableImages": "Kullanılabilir görselleri göster",
+      "variantImages": "Varyant görselleri"
     },
     "discountableHint": "İşaretlenmediğinde, bu ürüne indirim uygulanmayacaktır.",
     "noSalesChannels": "Hiçbir satış kanalında mevcut değil",
@@ -797,27 +821,6 @@
       "tableItemAvailable": "{{availableCount}} mevcut",
       "tableItem_one": "{{availableCount}} öğesi {{locationCount}} konumda mevcut",
       "tableItem_other": "{{availableCount}} öğesi {{locationCount}} konumda mevcut",
-      "inventory": {
-        "notManaged": "Yönetilmiyor",
-        "navigateToItem": "Envanter öğesine git",
-        "inventoryKit": "Envanter Kiti",
-        "inventoryKitHint": "Bu varyant birkaç envanter öğesinden mi oluşuyor?",
-        "validation": {
-          "itemId": "Lütfen envanter öğesini seçin.",
-          "quantity": "Miktar zorunludur. Lütfen pozitif bir sayı girin."
-        },
-        "editItemDetails": "Öğe detaylarını düzenle",
-        "manageInventoryLabel": "Envanteri yönet",
-        "manageInventoryHint": "Etkinleştirildiğinde, siparişler ve iadeler oluşturulduğunda envanter miktarını sizin için değiştireceğiz.",
-        "allowBackordersLabel": "Geri siparişlere izin ver",
-        "allowBackordersHint": "Etkinleştirildiğinde, müşteriler mevcut miktar olmasa bile varyantı satın alabilir.",
-        "toast": {
-          "levelsBatch": "Envanter seviyeleri güncellendi.",
-          "update": "Envanter öğesi başarıyla güncellendi.",
-          "updateLevel": "Envanter seviyesi başarıyla güncellendi.",
-          "itemsManageSuccess": "Envanter öğeleri başarıyla güncellendi."
-        }
-      },
       "validation": {
         "titleRequired": "Lütfen bir başlık girin",
         "optionRequired": "Lütfen bir değer seçin"
@@ -1175,7 +1178,6 @@
         "emptyTitle": "Müşteri grubu bulunamadı"
       },
       "add": {
-        "success": "Müşteri eklendi: {{groups}}.",
         "list": {
           "noRecordsMessage": "Lütfen önce bir müşteri grubu oluşturun."
         },
@@ -1183,7 +1185,6 @@
         "successMany": "Müşteri {{groups}} gruba başarıyla eklendi."
       },
       "removed": {
-        "success": "Müşteri çıkarıldı: {{groups}}.",
         "list": {
           "noRecordsMessage": "Lütfen önce bir müşteri grubu oluşturun."
         },
@@ -1329,7 +1330,6 @@
       "capture": "Ödemeyi al",
       "capture_short": "Al",
       "refund": "İade",
-      "markAsPaid": "Ödendi olarak işaretle",
       "statusLabel": "Ödeme durumu",
       "statusTitle": "Ödeme Durumu",
       "status": {
@@ -1347,8 +1347,6 @@
       },
       "capturePayment": "{{amount}} tutarında ödeme alınacak.",
       "capturePaymentSuccess": "{{amount}} tutarındaki ödeme başarıyla alındı",
-      "markAsPaidPayment": "{{amount}} tutarındaki ödeme ödenmiş olarak işaretlenecek.",
-      "markAsPaidPaymentSuccess": "{{amount}} tutarındaki ödeme başarıyla ödenmiş olarak işaretlendi",
       "createRefund": "İade Oluştur",
       "refundPaymentSuccess": "{{amount}} tutarındaki iade başarılı",
       "createRefundWrongQuantity": "Miktar 1 ile {{number}} arasında bir sayı olmalıdır",
@@ -1408,7 +1406,6 @@
       "sendNotificationHint": "Müşteriyi iade hakkında bilgilendir.",
       "returnTotal": "İade toplamı",
       "inboundTotal": "Gelen toplam",
-      "refundAmount": "İade tutarı",
       "outstandingAmount": "Kalan tutar",
       "reason": "Sebep",
       "reasonHint": "Müşterinin neden ürünleri iade etmek istediğini seçin.",
@@ -1696,7 +1693,7 @@
       "title": "İade Oluştur",
       "sendNotificationHint": "Oluşturulan iade hakkında müşterilere bilgi verin.",
       "systemPayment": "Sistem ödemesi",
-      "systemPaymentDesc": "Ödemelerinizden biri bir sistem ödemesidir. Bu tür ödemeler için işlemler Medusa tarafından yönetilmez.",
+      "systemPaymentDesc": "Ödemelerinizden biri bir sistem ödemesidir. Bu tür ödemeler için işlemler Kayı.com tarafından yönetilmez.",
       "error": {
         "amountToLarge": "Orijinal sipariş tutarından daha fazlasını iade edemezsiniz.",
         "amountNegative": "İade tutarı pozitif bir sayı olmalıdır.",
@@ -2144,8 +2141,6 @@
       "header": "Vergi Bölgesi Oluştur",
       "hint": "Belirli bir ülke için vergi oranlarını tanımlamak üzere yeni bir vergi bölgesi oluşturun.",
       "errors": {
-        "rateIsRequired": "Varsayılan bir vergi oranı oluştururken vergi oranı gereklidir.",
-        "nameIsRequired": "Varsayılan bir vergi oranı oluştururken isim gereklidir.",
         "missingProvider": "Vergi bölgesi oluştururken sağlayıcı zorunludur.",
         "missingCountry": "Vergi bölgesi oluştururken ülke zorunludur."
       },
@@ -2450,7 +2445,6 @@
     "toasts": {
       "promotionCreateSuccess": "Promosyon ({{code}}) başarıyla oluşturuldu."
     },
-    "create": {},
     "edit": {
       "title": "Promosyon Detaylarını Düzenle",
       "rules": {
@@ -2823,7 +2817,7 @@
       "header": "Profili Düzenle",
       "languageHint": "Yönetim panelinde kullanmak istediğiniz dili seçin. Bu, mağazanızın dilini değiştirmez.",
       "languagePlaceholder": "Dili seçin",
-      "usageInsightsHint": "Kullanım istatistiklerini paylaşarak Medusa'nın iyileştirilmesine yardımcı olun. Topladığımız bilgiler ve nasıl kullandığımız hakkında daha fazla bilgiye <0>dokümantasyonda</0> ulaşabilirsiniz."
+      "usageInsightsHint": "Kullanım istatistiklerini paylaşarak Kayı.com'un iyileştirilmesine yardımcı olun. Topladığımız bilgiler ve nasıl kullandığımız hakkında daha fazla bilgiye <0>dokümantasyonda</0> ulaşabilirsiniz."
     },
     "toast": {
       "edit": "Profil değişiklikleri kaydedildi"
@@ -2895,7 +2889,6 @@
     "removeCurrencyWarning_other": "{{count}} para birimini mağazanızdan kaldırmak üzeresiniz. Devam etmeden önce bu para birimleriyle tüm fiyatları kaldırdığınızdan emin olun.",
     "currencyAlreadyAdded": "Para birimi mağazanıza zaten eklenmiş.",
     "edit": {
-      "header": "Mağazayı Düzenle",
       "websiteHint": "Protokol içermelidir (ör. https://)",
       "mediaHeading": "Medya",
       "mediaTipLabel": "İpucu:",
@@ -3146,7 +3139,6 @@
       "createTaxRate": "Vergi Oranı Oluştur",
       "createTaxRateHint": "Bölge için yeni bir vergi oranı oluşturun.",
       "deleteRateDescription": "{{name}} vergi oranını silmek üzeresiniz. Bu işlem geri alınamaz.",
-      "editTaxRate": "Vergi Oranını Düzenle",
       "editRateAction": "Oranı düzenle",
       "editOverridesAction": "Geçersiz kılmaları düzenle",
       "editOverridesTitle": "Vergi Oranı Geçersiz Kılmalarını Düzenle",
@@ -3248,7 +3240,7 @@
       "createPublishableHeader": "Yayınlanabilir API Anahtarı Oluştur",
       "createPublishableHint": "Belirli satış kanallarına yönelik taleplerin kapsamını sınırlamak için yeni bir yayınlanabilir API anahtarı oluşturun.",
       "createSecretHeader": "Gizli API Anahtarı Oluştur",
-      "createSecretHint": "Doğrulanmış bir yönetici kullanıcısı olarak Medusa API'ye erişmek için yeni bir gizli API anahtarı oluşturun.",
+      "createSecretHint": "Doğrulanmış bir yönetici kullanıcısı olarak Kayı.com API'ye erişmek için yeni bir gizli API anahtarı oluşturun.",
       "secretKeyCreatedHeader": "Gizli Anahtar Oluşturuldu",
       "secretKeyCreatedHint": "Yeni gizli anahtarınız oluşturuldu. Şimdi kopyalayın ve güvenli bir şekilde saklayın. Bu anahtar yalnızca bir kez görüntülenecektir.",
       "copySecretTokenSuccess": "Gizli anahtar panoya kopyalandı.",
@@ -3345,7 +3337,7 @@
   },
   "login": {
     "forgotPassword": "Şifrenizi mi unuttunuz? - <0>Sıfırla</0>",
-    "title": "Medusa'ya Hoş Geldiniz",
+    "title": "Kayı.com'a Hoş Geldiniz",
     "hint": "Hesap alanına erişmek için oturum açın",
     "submit": "Giriş yap",
     "sessionExpired": "Oturum süresi doldu",
@@ -3357,7 +3349,7 @@
     }
   },
   "invite": {
-    "title": "Medusa'ya Hoş Geldiniz",
+    "title": "Kayı.com'a Hoş Geldiniz",
     "hint": "Aşağıda hesabınızı oluşturun",
     "backToLogin": "Girişe geri dön",
     "createAccount": "Hesap oluştur",
@@ -3365,8 +3357,7 @@
     "emailTooltip": "E-postanız değiştirilemez. Başka bir e-posta kullanmak istiyorsanız, yeni bir davet gönderilmelidir.",
     "invalidInvite": "Davet geçersiz veya süresi dolmuş.",
     "successTitle": "Hesabınız kaydedildi",
-    "successHint": "Hemen Medusa Yönetici ile başlayın.",
-    "successAction": "Medusa Yöneticiye Başla",
+    "successHint": "Hemen Kayı.com Yönetici ile başlayın.",
     "invalidTokenTitle": "Davet tokeniniz geçersiz",
     "invalidTokenHint": "Yeni bir davet bağlantısı talep etmeyi deneyin.",
     "passwordMismatch": "Şifreler uyuşmuyor",
@@ -3402,7 +3393,7 @@
   },
   "workflowExecutions": {
     "domain": "İş Akışları",
-    "subtitle": "Medusa uygulamanızdaki iş akışı yürütmelerini görüntüleyin ve takip edin.",
+    "subtitle": "Kayı.com uygulamanızdaki iş akışı yürütmelerini görüntüleyin ve takip edin.",
     "transactionIdLabel": "İşlem Kimliği",
     "workflowIdLabel": "İş Akışı Kimliği",
     "progressLabel": "İlerleme",
@@ -3495,7 +3486,7 @@
       "description": "Şu anda herhangi bir bildiriminiz yok, ancak olduğunda burada görünecekler."
     },
     "accessibility": {
-      "description": "Medusa aktiviteleri hakkında bildirimler burada listelenecek."
+      "description": "Kayı.com aktiviteleri hakkında bildirimler burada listelenecek."
     }
   },
   "errors": {
@@ -3683,7 +3674,6 @@
     "draft": "Taslak",
     "values": "Değerler",
     "by": "Tarafından",
-    "brand": "Brand",
     "reference": "Referans",
     "reference_id": "Referans ID",
     "images": "Medya",
@@ -3716,7 +3706,9 @@
     "inventory_quantity": "Envanter miktarı",
     "requires_shipping": "Kargo Gerektirir",
     "variant_attributes": "Varyant özellikleri",
-    "product_attributes": "Ürün özellikleri"
+    "product_attributes": "Ürün özellikleri",
+    "handleAutoGeneratedHint": "Ad alanından otomatik olarak oluşturulur. Yalnızca küçük harfler, rakamlar ve tire kullanılabilir — bu alan doğrudan düzenlenemez.",
+    "handleInvalidFormat": "Handle yalnızca küçük harf, rakam ve tire içerebilir"
   },
   "dateTime": {
     "years_one": "Yıl",
@@ -3904,7 +3896,7 @@
       "manageEntities": "Varlıkları yönet",
       "manageLocales": "Dilleri yönet"
     },
-    "subtitle": "Medusa'daki verilerinizin çevirilerini yönetin",
+    "subtitle": "Kayı.com'daki verilerinizin çevirilerini yönetin",
     "list": {
       "metrics": "{{total}} çevirinin {{translated}} tanesi"
     },
@@ -3980,7 +3972,7 @@
     }
   },
   "register": {
-    "title": "{{name}}'e katılın!",
+    "title": "{{name}}'a katılın!",
     "hint": "Yönetici hesabınızı oluşturmak için detaylarınızı girin ve bir şifre oluşturun.",
     "companyName": "Şirket adı",
     "confirmPassword": "Şifreyi onayla",
@@ -4098,7 +4090,7 @@
         "accountNameRequired": "Lütfen bir hesap adı girin"
       },
       "preview": {
-        "title": "Mercur'a Hoş Geldiniz",
+        "title": "Kayı.com'a Hoş Geldiniz",
         "description": "Mağazanızı, ürünlerinizi, siparişlerinizi ve ödemelerinizi yönetmek için hepsi bir arada satıcı portalınız.",
         "placeholder": "Uygulama önizlemesi"
       }
@@ -4163,7 +4155,7 @@
   "auth": {
     "login": {
       "authenticationFailed": "Kimlik doğrulama başarısız oldu",
-      "cloud": "Mercur ile Giriş Yap"
+      "cloud": "Kayı.com ile Giriş Yap"
     }
   }
 }

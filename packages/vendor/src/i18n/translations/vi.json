@@ -74,7 +74,8 @@
     "true": "Đúng",
     "false": "Sai",
     "decrement": "Giảm",
-    "increment": "Tăng"
+    "increment": "Tăng",
+    "drawerAccessibleDescription": "Sử dụng bảng này để xem hoặc chỉnh sửa chi tiết của tài nguyên này."
   },
   "json": {
     "header": "JSON",
@@ -173,7 +174,8 @@
     "saveAndClose": "Lưu và đóng",
     "request": "Yêu cầu",
     "editVariantImages": "Chỉnh sửa hình ảnh biến thể",
-    "editImages": "Chỉnh sửa hình ảnh"
+    "editImages": "Chỉnh sửa hình ảnh",
+    "ok": "OK"
   },
   "operators": {
     "in": "Trong"
@@ -494,7 +496,12 @@
         "handleMustContainLetter": "Handle phải chứa ít nhất một chữ cái",
         "requiredAttributeSelect": "Sàn giao dịch yêu cầu thuộc tính này. Vui lòng chọn giá trị.",
         "requiredAttributeEnter": "Sàn giao dịch yêu cầu thuộc tính này. Vui lòng nhập giá trị.",
-        "requiredAttributeMultiSelect": "Sàn giao dịch yêu cầu thuộc tính này. Vui lòng chọn ít nhất một giá trị."
+        "requiredAttributeMultiSelect": "Sàn giao dịch yêu cầu thuộc tính này. Vui lòng chọn ít nhất một giá trị.",
+        "formIncomplete": "Thiếu một số trường bắt buộc — hãy kiểm tra các hàng được đánh dấu trước khi đăng.",
+        "mediaRequired": "Vui lòng thêm ít nhất một hình ảnh cho biến thể này.",
+        "priceRequired": "Vui lòng nhập giá cho biến thể này bằng ít nhất một loại tiền tệ.",
+        "shippingProfileRequired": "Vui lòng chọn hồ sơ vận chuyển.",
+        "stockRequired": "Vui lòng đặt số lượng tồn kho cho biến thể này tại ít nhất một địa điểm."
       },
       "variants": {
         "header": "Biến thể",
@@ -518,7 +525,14 @@
           "label": "Tùy chọn sản phẩm",
           "hint": "Xác định các tùy chọn cho sản phẩm, ví dụ: màu sắc, kích thước, v.v."
         },
-        "optionsHeader": "Tùy chọn"
+        "optionsHeader": "Tùy chọn",
+        "mediaPicker": {
+          "description": "Chọn những ảnh nào của sản phẩm thuộc về biến thể này.",
+          "empty": "Hãy tải ảnh lên ở tab Chi tiết trước.",
+          "header": "Gán hình ảnh",
+          "image": "Hình ảnh {{index}}",
+          "partialFailureToast": "Sản phẩm đã được tạo, nhưng không thể gán hình ảnh cho: {{variants}}. Bạn có thể thử lại từ trang chỉnh sửa sản phẩm."
+        }
       },
       "successToast": "Sản phẩm {{title}} đã được tạo thành công.",
       "attributes": {
@@ -653,7 +667,11 @@
       "removeSelected": "Xóa mục đã chọn",
       "selectImages": "Chọn hình ảnh",
       "selectImagesHint": "Nhấp vào hình ảnh để thêm vào biến thể này.",
-      "editLabel": "Chỉnh sửa"
+      "editLabel": "Chỉnh sửa",
+      "limitExceeded": {
+        "description": "Bạn có thể tải lên tối đa {{max}} hình ảnh cho mỗi sản phẩm. {{max}} hình đầu tiên đã được thêm — phần còn lại bị bỏ qua.",
+        "title": "Đã đạt giới hạn hình ảnh"
+      }
     },
     "discountableHint": "Khi bỏ chọn, các chương trình giảm giá sẽ không áp dụng cho sản phẩm này.",
     "noSalesChannels": "Không có sẵn trên bất kỳ kênh bán hàng nào",
@@ -798,27 +816,6 @@
       "tableItemAvailable": "{{availableCount}} có sẵn",
       "tableItem_one": "{{availableCount}} có sẵn tại {{locationCount}} vị trí",
       "tableItem_other": "{{availableCount}} có sẵn tại {{locationCount}} vị trí",
-      "inventory": {
-        "notManaged": "Không được quản lý",
-        "navigateToItem": "Đi đến mục kho hàng",
-        "inventoryKit": "Bộ thành phần trong kho",
-        "inventoryKitHint": "Biến thể này có bao gồm nhiều mục kho hàng không?",
-        "validation": {
-          "itemId": "Vui lòng chọn mục kho hàng.",
-          "quantity": "Số lượng là bắt buộc. Vui lòng nhập một số dương."
-        },
-        "editItemDetails": "Chỉnh sửa chi tiết mục",
-        "manageInventoryLabel": "Quản lý kho",
-        "manageInventoryHint": "Khi bật, chúng tôi sẽ tự động thay đổi số lượng kho cho bạn khi có đơn hàng hoặc trả hàng.",
-        "allowBackordersLabel": "Cho phép đặt trước",
-        "allowBackordersHint": "Khi bật, khách hàng có thể mua biến thể này ngay cả khi không còn số lượng có sẵn.",
-        "toast": {
-          "levelsBatch": "Mức tồn kho đã được cập nhật.",
-          "update": "Mục kho hàng đã được cập nhật thành công.",
-          "updateLevel": "Mức tồn kho đã được cập nhật thành công.",
-          "itemsManageSuccess": "Các mục kho hàng đã được cập nhật thành công."
-        }
-      },
       "validation": {
         "titleRequired": "Vui lòng nhập tiêu đề",
         "optionRequired": "Vui lòng chọn một giá trị"
@@ -933,6 +930,18 @@
       "description": "Chỉnh sửa nhiều sản phẩm cùng lúc.",
       "noChanges": "Không có thay đổi nào để lưu.",
       "success": "Đã cập nhật sản phẩm thành công."
+    },
+    "stock": {
+      "available": "Còn hàng",
+      "edit": {
+        "description": "Cập nhật số lượng tồn kho thực tế cho từng địa điểm. Các thay đổi được lưu trực tiếp vào Kho hàng.",
+        "header": "Chỉnh sửa tồn kho",
+        "location": "Địa điểm",
+        "quantity": "Số lượng",
+        "successToast": "Cập nhật tồn kho thành công"
+      },
+      "header": "Theo dõi tồn kho",
+      "lowStock": "Sắp hết hàng"
     }
   },
   "collections": {
@@ -1164,7 +1173,6 @@
         "emptyTitle": "Không có nhóm khách hàng"
       },
       "add": {
-        "success": "Khách hàng đã được thêm vào: {{groups}}.",
         "list": {
           "noRecordsMessage": "Vui lòng tạo một nhóm khách hàng trước."
         },
@@ -1172,7 +1180,6 @@
         "successMany": "Đã thêm khách hàng vào {{groups}} nhóm thành công."
       },
       "removed": {
-        "success": "Khách hàng đã được xóa khỏi: {{groups}}.",
         "list": {
           "noRecordsMessage": "Vui lòng tạo một nhóm khách hàng trước."
         },
@@ -1354,7 +1361,6 @@
       "capture": "Ghi nhận thanh toán",
       "capture_short": "Ghi nhận",
       "refund": "Hoàn tiền",
-      "markAsPaid": "Đánh dấu đã thanh toán",
       "statusLabel": "Trạng thái thanh toán",
       "statusTitle": "Trạng Thái Thanh Toán",
       "status": {
@@ -1372,8 +1378,6 @@
       },
       "capturePayment": "Thanh toán {{amount}} sẽ được ghi nhận.",
       "capturePaymentSuccess": "Thanh toán {{amount}} đã được ghi nhận thành công",
-      "markAsPaidPayment": "Thanh toán {{amount}} sẽ được đánh dấu là đã thanh toán.",
-      "markAsPaidPaymentSuccess": "Thanh toán {{amount}} đã được đánh dấu thành công là đã thanh toán",
       "createRefund": "Tạo hoàn tiền",
       "refundPaymentSuccess": "Hoàn tiền số tiền {{amount}} thành công",
       "createRefundWrongQuantity": "Số lượng phải là một số từ 1 đến {{number}}",
@@ -1733,7 +1737,7 @@
       "title": "Tạo hoàn tiền",
       "sendNotificationHint": "Thông báo cho khách hàng về hoàn tiền đã tạo.",
       "systemPayment": "Thanh toán hệ thống",
-      "systemPaymentDesc": "Một hoặc nhiều khoản thanh toán của bạn là thanh toán hệ thống. Lưu ý rằng việc ghi nhận và hoàn tiền không được Medusa xử lý cho các khoản thanh toán này.",
+      "systemPaymentDesc": "Một hoặc nhiều khoản thanh toán của bạn là thanh toán hệ thống. Lưu ý rằng việc ghi nhận và hoàn tiền không được Kayı.com xử lý cho các khoản thanh toán này.",
       "error": {
         "amountToLarge": "Không thể hoàn tiền nhiều hơn số tiền đơn hàng ban đầu.",
         "amountNegative": "Số tiền hoàn lại phải là một số dương.",
@@ -2436,7 +2440,6 @@
     "toasts": {
       "promotionCreateSuccess": "Khuyến mãi ({{code}}) đã được tạo thành công."
     },
-    "create": {},
     "edit": {
       "title": "Chỉnh sửa chi tiết khuyến mãi",
       "rules": {
@@ -2809,7 +2812,7 @@
       "header": "Chỉnh sửa hồ sơ",
       "languageHint": "Ngôn ngữ bạn muốn sử dụng trong bảng điều khiển quản trị. Điều này không thay đổi ngôn ngữ của cửa hàng.",
       "languagePlaceholder": "Chọn ngôn ngữ",
-      "usageInsightsHint": "Chia sẻ thông tin sử dụng để giúp chúng tôi cải thiện Medusa. Bạn có thể đọc thêm về những gì chúng tôi thu thập và cách sử dụng trong <0>tài liệu</0> của chúng tôi."
+      "usageInsightsHint": "Chia sẻ thông tin sử dụng để giúp chúng tôi cải thiện Kayı.com. Bạn có thể đọc thêm về những gì chúng tôi thu thập và cách sử dụng trong <0>tài liệu</0> của chúng tôi."
     },
     "toast": {
       "edit": "Thay đổi hồ sơ đã được lưu"
@@ -2883,7 +2886,6 @@
     "removeCurrencyWarning_other": "Bạn sắp xóa {{count}} tiền tệ khỏi cửa hàng. Hãy đảm bảo bạn đã xóa tất cả giá sử dụng các tiền tệ này trước khi tiếp tục.",
     "currencyAlreadyAdded": "Tiền tệ này đã được thêm vào cửa hàng của bạn.",
     "edit": {
-      "header": "Chỉnh sửa cửa hàng",
       "websiteHint": "Phải bao gồm giao thức (vd: https://)",
       "mediaHeading": "Phương tiện",
       "mediaTipLabel": "Mẹo:",
@@ -2891,7 +2893,9 @@
       "uploadLogoLabel": "Tải lên logo",
       "uploadLogoHint": "Kéo và thả logo vào đây hoặc nhấp để tải lên.",
       "uploadBannerLabel": "Tải lên ảnh bìa",
-      "uploadBannerHint": "Kéo và thả ảnh bìa vào đây hoặc nhấp để tải lên."
+      "uploadBannerHint": "Kéo và thả ảnh bìa vào đây hoặc nhấp để tải lên.",
+      "bannerTooSmall": "Hình ảnh nhỏ ({{width}}×{{height}}px). Nên dùng ít nhất {{minWidth}}×{{minHeight}}px, nếu không có thể bị mờ.",
+      "logoTooSmall": "Hình ảnh nhỏ ({{width}}×{{height}}px). Nên dùng ít nhất {{minWidth}}×{{minHeight}}px, nếu không có thể bị mờ."
     },
     "toast": {
       "update": "Cửa hàng đã được cập nhật thành công",
@@ -3231,7 +3235,7 @@
       "createPublishableHeader": "Tạo khóa API công khai",
       "createPublishableHint": "Tạo một khóa API công khai mới để giới hạn phạm vi yêu cầu cho các kênh bán hàng cụ thể.",
       "createSecretHeader": "Tạo khóa API bí mật",
-      "createSecretHint": "Tạo một khóa API bí mật mới để truy cập API Medusa với tư cách người dùng quản trị đã xác thực.",
+      "createSecretHint": "Tạo một khóa API bí mật mới để truy cập API Kayı.com với tư cách người dùng quản trị đã xác thực.",
       "secretKeyCreatedHeader": "Khóa bí mật đã được tạo",
       "secretKeyCreatedHint": "Khóa bí mật mới của bạn đã được tạo. Sao chép và lưu trữ an toàn ngay bây giờ. Đây là lần duy nhất nó sẽ được hiển thị.",
       "copySecretTokenSuccess": "Khóa bí mật đã được sao chép vào bộ nhớ tạm.",
@@ -3328,7 +3332,7 @@
   },
   "login": {
     "forgotPassword": "Quên mật khẩu? - <0>Đặt lại</0>",
-    "title": "Chào mừng đến với Medusa",
+    "title": "Chào mừng đến với Kayı.com",
     "hint": "Đăng nhập để truy cập khu vực tài khoản",
     "submit": "Đăng nhập",
     "sessionExpired": "Phiên đăng nhập đã hết hạn",
@@ -3340,7 +3344,7 @@
     }
   },
   "invite": {
-    "title": "Chào mừng đến với Medusa",
+    "title": "Chào mừng đến với Kayı.com",
     "hint": "Tạo tài khoản của bạn dưới đây",
     "backToLogin": "Quay lại đăng nhập",
     "createAccount": "Tạo tài khoản",
@@ -3348,8 +3352,7 @@
     "emailTooltip": "Email của bạn không thể thay đổi. Nếu muốn dùng email khác, cần gửi một lời mời mới.",
     "invalidInvite": "Lời mời không hợp lệ hoặc đã hết hạn.",
     "successTitle": "Tài khoản của bạn đã được đăng ký",
-    "successHint": "Bắt đầu ngay với Medusa Admin.",
-    "successAction": "Khởi động Medusa Admin",
+    "successHint": "Bắt đầu ngay với Kayı.com Admin.",
     "invalidTokenTitle": "Mã mời của bạn không hợp lệ",
     "invalidTokenHint": "Hãy thử yêu cầu một liên kết mời mới.",
     "passwordMismatch": "Mật khẩu không khớp",
@@ -3385,7 +3388,7 @@
   },
   "workflowExecutions": {
     "domain": "Luồng công việc",
-    "subtitle": "Xem và theo dõi các lần thực thi luồng công việc trong ứng dụng Medusa của bạn.",
+    "subtitle": "Xem và theo dõi các lần thực thi luồng công việc trong ứng dụng Kayı.com của bạn.",
     "transactionIdLabel": "ID giao dịch",
     "workflowIdLabel": "ID luồng công việc",
     "progressLabel": "Tiến độ",
@@ -3478,7 +3481,7 @@
       "description": "Hiện tại bạn không có thông báo nào, nhưng khi có, chúng sẽ xuất hiện ở đây."
     },
     "accessibility": {
-      "description": "Thông báo về các hoạt động của Medusa sẽ được liệt kê ở đây."
+      "description": "Thông báo về các hoạt động của Kayı.com sẽ được liệt kê ở đây."
     }
   },
   "errors": {
@@ -3669,7 +3672,6 @@
     "endDate": "Ngày kết thúc",
     "draft": "Nháp",
     "values": "Giá trị",
-    "brand": "Brand",
     "images": "Phương tiện",
     "type_id": "Loại",
     "collection_id": "Bộ sưu tập",
@@ -3699,7 +3701,9 @@
     "inventory_quantity": "Số lượng kho",
     "requires_shipping": "Yêu cầu vận chuyển",
     "variant_attributes": "Thuộc tính biến thể",
-    "product_attributes": "Thuộc tính sản phẩm"
+    "product_attributes": "Thuộc tính sản phẩm",
+    "handleAutoGeneratedHint": "Được tạo tự động từ tên. Chỉ gồm chữ thường, số và dấu gạch ngang — không thể chỉnh sửa trực tiếp trường này.",
+    "handleInvalidFormat": "Handle chỉ được chứa chữ thường, số và dấu gạch ngang"
   },
   "dateTime": {
     "years_one": "Năm",
@@ -3887,7 +3891,7 @@
       "manageEntities": "Quản lý đối tượng",
       "manageLocales": "Quản lý ngôn ngữ"
     },
-    "subtitle": "Quản lý bản dịch dữ liệu của bạn trong Medusa",
+    "subtitle": "Quản lý bản dịch dữ liệu của bạn trong Kayı.com",
     "list": {
       "metrics": "{{translated}} trên {{total}} bản dịch"
     },
@@ -4081,7 +4085,7 @@
         "accountNameRequired": "Vui lòng nhập tên tài khoản"
       },
       "preview": {
-        "title": "Chào mừng đến với Mercur",
+        "title": "Chào mừng đến với Kayı.com",
         "description": "Cổng thông tin nhà bán hàng toàn diện để quản lý cửa hàng, sản phẩm, đơn hàng và thanh toán của bạn.",
         "placeholder": "Xem trước ứng dụng"
       }
@@ -4146,7 +4150,12 @@
   "auth": {
     "login": {
       "authenticationFailed": "Xác thực thất bại",
-      "cloud": "Đăng nhập bằng Mercur"
+      "cloud": "Đăng nhập bằng Kayı.com"
     }
+  },
+  "sellerSuspension": {
+    "description": "Cửa hàng của bạn đã bị tạm ngưng bởi ban quản trị. Bạn sẽ không thể tạo sản phẩm mới cho đến khi được kích hoạt lại. Nếu có thắc mắc, đội ngũ hỗ trợ của chúng tôi luôn sẵn sàng giúp đỡ.",
+    "help": "Trợ giúp",
+    "title": "Cửa hàng bị tạm ngưng"
   }
 }
