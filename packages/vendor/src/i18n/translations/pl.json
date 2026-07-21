@@ -3158,8 +3158,10 @@
       "mediaTipBody": "Te multimedia będą widoczne w sklepie internetowym.",
       "uploadLogoLabel": "Prześlij logo",
       "uploadLogoHint": "Przeciągnij i upuść logo tutaj lub kliknij, aby przesłać.",
+      "logoRecommendedSize": "Zalecane 1024x1024px",
       "uploadBannerLabel": "Prześlij baner",
       "uploadBannerHint": "Przeciągnij i upuść baner tutaj lub kliknij, aby przesłać.",
+      "bannerRecommendedSize": "Zalecane 1920x400px",
       "bannerTooSmall": "Obraz jest mały ({{width}}×{{height}}px). Zalecane jest co najmniej {{minWidth}}×{{minHeight}}px, w przeciwnym razie może wyglądać rozmyto.",
       "logoTooSmall": "Obraz jest mały ({{width}}×{{height}}px). Zalecane jest co najmniej {{minWidth}}×{{minHeight}}px, w przeciwnym razie może wyglądać rozmyto."
     },

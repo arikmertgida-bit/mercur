@@ -3122,8 +3122,10 @@
       "mediaTipBody": "This media will be visible on the storefront.",
       "uploadLogoLabel": "Upload logo",
       "uploadLogoHint": "Drag and drop your logo here or click to upload.",
+      "logoRecommendedSize": "Recommended 1024x1024px",
       "uploadBannerLabel": "Upload banner",
       "uploadBannerHint": "Drag and drop your banner here or click to upload.",
+      "bannerRecommendedSize": "Recommended 1920x400px",
       "logoTooSmall": "Image is small ({{width}}×{{height}}px). At least {{minWidth}}×{{minHeight}}px is recommended, otherwise it may look blurry.",
       "bannerTooSmall": "Image is small ({{width}}×{{height}}px). At least {{minWidth}}×{{minHeight}}px is recommended, otherwise it may look blurry."
     },

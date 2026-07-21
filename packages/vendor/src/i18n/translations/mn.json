@@ -2890,8 +2890,10 @@
       "mediaTipBody": "Энэ медиа дэлгүүрийн нүүр хуудсанд харагдана.",
       "uploadLogoLabel": "Лого байршуулах",
       "uploadLogoHint": "Логоо энд чирж оруулах эсвэл байршуулахын тулд дарна уу.",
+      "logoRecommendedSize": "Санал болгосон 1024x1024px",
       "uploadBannerLabel": "Баннер байршуулах",
       "uploadBannerHint": "Баннераа энд чирж оруулах эсвэл байршуулахын тулд дарна уу.",
+      "bannerRecommendedSize": "Санал болгосон 1920x400px",
       "bannerTooSmall": "Зураг жижиг байна ({{width}}×{{height}}px). Хамгийн багадаа {{minWidth}}×{{minHeight}}px байхыг зөвлөж байна, эс тэгвээс бүдэг харагдаж болзошгүй.",
       "logoTooSmall": "Зураг жижиг байна ({{width}}×{{height}}px). Хамгийн багадаа {{minWidth}}×{{minHeight}}px байхыг зөвлөж байна, эс тэгвээс бүдэг харагдаж болзошгүй."
     },

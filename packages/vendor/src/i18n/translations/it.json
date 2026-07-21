@@ -2890,8 +2890,10 @@
       "mediaTipBody": "Questo media sarà visibile sullo storefront.",
       "uploadLogoLabel": "Carica logo",
       "uploadLogoHint": "Trascina qui il tuo logo o fai clic per caricarlo.",
+      "logoRecommendedSize": "Consigliato 1024x1024px",
       "uploadBannerLabel": "Carica banner",
       "uploadBannerHint": "Trascina qui il tuo banner o fai clic per caricarlo.",
+      "bannerRecommendedSize": "Consigliato 1920x400px",
       "bannerTooSmall": "L'immagine è piccola ({{width}}×{{height}}px). Si consiglia almeno {{minWidth}}×{{minHeight}}px, altrimenti potrebbe apparire sfocata.",
       "logoTooSmall": "L'immagine è piccola ({{width}}×{{height}}px). Si consiglia almeno {{minWidth}}×{{minHeight}}px, altrimenti potrebbe apparire sfocata."
     },

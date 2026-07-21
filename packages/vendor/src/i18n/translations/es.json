@@ -2958,8 +2958,10 @@
       "mediaTipBody": "Este contenido multimedia será visible en la tienda online.",
       "uploadLogoLabel": "Subir logotipo",
       "uploadLogoHint": "Arrastra y suelta tu logotipo aquí o haz clic para subirlo.",
+      "logoRecommendedSize": "Recomendado 1024x1024px",
       "uploadBannerLabel": "Subir banner",
       "uploadBannerHint": "Arrastra y suelta tu banner aquí o haz clic para subirlo.",
+      "bannerRecommendedSize": "Recomendado 1920x400px",
       "bannerTooSmall": "La imagen es pequeña ({{width}}×{{height}}px). Se recomienda al menos {{minWidth}}×{{minHeight}}px, de lo contrario puede verse borrosa.",
       "logoTooSmall": "La imagen es pequeña ({{width}}×{{height}}px). Se recomienda al menos {{minWidth}}×{{minHeight}}px, de lo contrario puede verse borrosa."
     },

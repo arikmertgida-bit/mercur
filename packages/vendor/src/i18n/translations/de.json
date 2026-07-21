@@ -2890,8 +2890,10 @@
       "mediaTipBody": "Diese Medien werden im Storefront sichtbar sein.",
       "uploadLogoLabel": "Logo hochladen",
       "uploadLogoHint": "Logo hierher ziehen oder zum Hochladen klicken.",
+      "logoRecommendedSize": "Empfohlen 1024x1024px",
       "uploadBannerLabel": "Banner hochladen",
       "uploadBannerHint": "Banner hierher ziehen oder zum Hochladen klicken.",
+      "bannerRecommendedSize": "Empfohlen 1920x400px",
       "bannerTooSmall": "Das Bild ist klein ({{width}}×{{height}}px). Mindestens {{minWidth}}×{{minHeight}}px werden empfohlen, andernfalls kann es unscharf wirken.",
       "logoTooSmall": "Das Bild ist klein ({{width}}×{{height}}px). Mindestens {{minWidth}}×{{minHeight}}px werden empfohlen, andernfalls kann es unscharf wirken."
     },

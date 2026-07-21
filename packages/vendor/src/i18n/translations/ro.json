@@ -2888,8 +2888,10 @@
       "mediaTipBody": "Această media va fi vizibilă pe magazinul online.",
       "uploadLogoLabel": "Încarcă logo",
       "uploadLogoHint": "Trageți și plasați logo-ul aici sau apăsați pentru a încărca.",
+      "logoRecommendedSize": "Recomandat 1024x1024px",
       "uploadBannerLabel": "Încarcă banner",
       "uploadBannerHint": "Trageți și plasați bannerul aici sau apăsați pentru a încărca.",
+      "bannerRecommendedSize": "Recomandat 1920x400px",
       "bannerTooSmall": "Imaginea este mică ({{width}}×{{height}}px). Se recomandă cel puțin {{minWidth}}×{{minHeight}}px, altfel poate apărea neclară.",
       "logoTooSmall": "Imaginea este mică ({{width}}×{{height}}px). Se recomandă cel puțin {{minWidth}}×{{minHeight}}px, altfel poate apărea neclară."
     },

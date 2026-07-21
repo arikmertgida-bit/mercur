@@ -2892,8 +2892,10 @@
       "mediaTipBody": "Ez a média látható lesz a webáruházban.",
       "uploadLogoLabel": "Logó feltöltése",
       "uploadLogoHint": "Húzza ide a logót, vagy kattintson a feltöltéshez.",
+      "logoRecommendedSize": "Ajánlott 1024x1024px",
       "uploadBannerLabel": "Banner feltöltése",
       "uploadBannerHint": "Húzza ide a bannert, vagy kattintson a feltöltéshez.",
+      "bannerRecommendedSize": "Ajánlott 1920x400px",
       "bannerTooSmall": "A kép kicsi ({{width}}×{{height}}px). Legalább {{minWidth}}×{{minHeight}}px javasolt, különben elmosódottnak tűnhet.",
       "logoTooSmall": "A kép kicsi ({{width}}×{{height}}px). Legalább {{minWidth}}×{{minHeight}}px javasolt, különben elmosódottnak tűnhet."
     },

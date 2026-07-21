@@ -2892,8 +2892,10 @@
       "mediaTipBody": "Toto médium bude viditelné na e-shopu.",
       "uploadLogoLabel": "Nahrát logo",
       "uploadLogoHint": "Přetáhněte sem své logo nebo klikněte pro nahrání.",
+      "logoRecommendedSize": "Doporučeno 1024x1024px",
       "uploadBannerLabel": "Nahrát banner",
       "uploadBannerHint": "Přetáhněte sem svůj banner nebo klikněte pro nahrání.",
+      "bannerRecommendedSize": "Doporučeno 1920x400px",
       "bannerTooSmall": "Obrázek je malý ({{width}}×{{height}}px). Doporučuje se alespoň {{minWidth}}×{{minHeight}}px, jinak může vypadat rozmazaně.",
       "logoTooSmall": "Obrázek je malý ({{width}}×{{height}}px). Doporučuje se alespoň {{minWidth}}×{{minHeight}}px, jinak může vypadat rozmazaně."
     },

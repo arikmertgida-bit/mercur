@@ -2890,8 +2890,10 @@
       "mediaTipBody": "ستكون هذه الوسائط مرئية على واجهة المتجر.",
       "uploadLogoLabel": "تحميل الشعار",
       "uploadLogoHint": "اسحب شعارك وأفلته هنا أو انقر للتحميل.",
+      "logoRecommendedSize": "موصى به 1024x1024px",
       "uploadBannerLabel": "تحميل اللافتة",
       "uploadBannerHint": "اسحب لافتتك وأفلتها هنا أو انقر للتحميل.",
+      "bannerRecommendedSize": "موصى به 1920x400px",
       "bannerTooSmall": "الصورة صغيرة ({{width}}×{{height}}px). يُوصى بحجم {{minWidth}}×{{minHeight}}px على الأقل، وإلا فقد تبدو ضبابية.",
       "logoTooSmall": "الصورة صغيرة ({{width}}×{{height}}px). يُوصى بحجم {{minWidth}}×{{minHeight}}px على الأقل، وإلا فقد تبدو ضبابية."
     },

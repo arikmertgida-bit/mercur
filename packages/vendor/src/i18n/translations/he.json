@@ -2892,8 +2892,10 @@
       "mediaTipBody": "מדיה זו תהיה גלויה בחזית החנות.",
       "uploadLogoLabel": "העלה לוגו",
       "uploadLogoHint": "גרור ושחרר את הלוגו שלך כאן או לחץ להעלאה.",
+      "logoRecommendedSize": "מומלץ 1024x1024px",
       "uploadBannerLabel": "העלה באנר",
       "uploadBannerHint": "גרור ושחרר את הבאנר שלך כאן או לחץ להעלאה.",
+      "bannerRecommendedSize": "מומלץ 1920x400px",
       "bannerTooSmall": "התמונה קטנה ({{width}}×{{height}}px). מומלץ לפחות {{minWidth}}×{{minHeight}}px, אחרת היא עלולה להיראות מטושטשת.",
       "logoTooSmall": "התמונה קטנה ({{width}}×{{height}}px). מומלץ לפחות {{minWidth}}×{{minHeight}}px, אחרת היא עלולה להיראות מטושטשת."
     },

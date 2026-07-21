@@ -2892,8 +2892,10 @@
       "mediaTipBody": "Ši medija bus matoma parduotuvės svetainėje.",
       "uploadLogoLabel": "Įkelti logotipą",
       "uploadLogoHint": "Nutempkite savo logotipą čia arba spustelėkite, kad įkeltumėte.",
+      "logoRecommendedSize": "Rekomenduojama 1024x1024px",
       "uploadBannerLabel": "Įkelti banerį",
       "uploadBannerHint": "Nutempkite savo banerį čia arba spustelėkite, kad įkeltumėte.",
+      "bannerRecommendedSize": "Rekomenduojama 1920x400px",
       "bannerTooSmall": "Vaizdas mažas ({{width}}×{{height}}px). Rekomenduojama bent {{minWidth}}×{{minHeight}}px, kitaip jis gali atrodyti neryškus.",
       "logoTooSmall": "Vaizdas mažas ({{width}}×{{height}}px). Rekomenduojama bent {{minWidth}}×{{minHeight}}px, kitaip jis gali atrodyti neryškus."
     },

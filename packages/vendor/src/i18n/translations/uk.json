@@ -2890,8 +2890,10 @@
       "mediaTipBody": "Це медіа буде видимим на вітрині.",
       "uploadLogoLabel": "Завантажити логотип",
       "uploadLogoHint": "Перетягніть логотип сюди або натисніть, щоб завантажити.",
+      "logoRecommendedSize": "Рекомендовано 1024x1024px",
       "uploadBannerLabel": "Завантажити банер",
       "uploadBannerHint": "Перетягніть банер сюди або натисніть, щоб завантажити.",
+      "bannerRecommendedSize": "Рекомендовано 1920x400px",
       "bannerTooSmall": "Зображення замале ({{width}}×{{height}}px). Рекомендовано щонайменше {{minWidth}}×{{minHeight}}px, інакше воно може виглядати розмитим.",
       "logoTooSmall": "Зображення замале ({{width}}×{{height}}px). Рекомендовано щонайменше {{minWidth}}×{{minHeight}}px, інакше воно може виглядати розмитим."
     },

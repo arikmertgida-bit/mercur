@@ -2892,8 +2892,10 @@
       "mediaTipBody": "Media ini akan terlihat di storefront.",
       "uploadLogoLabel": "Unggah logo",
       "uploadLogoHint": "Seret dan lepas logo Anda di sini atau klik untuk mengunggah.",
+      "logoRecommendedSize": "Disarankan 1024x1024px",
       "uploadBannerLabel": "Unggah banner",
       "uploadBannerHint": "Seret dan lepas banner Anda di sini atau klik untuk mengunggah.",
+      "bannerRecommendedSize": "Disarankan 1920x400px",
       "bannerTooSmall": "Gambar terlalu kecil ({{width}}×{{height}}px). Disarankan minimal {{minWidth}}×{{minHeight}}px, jika tidak gambar mungkin terlihat buram.",
       "logoTooSmall": "Gambar terlalu kecil ({{width}}×{{height}}px). Disarankan minimal {{minWidth}}×{{minHeight}}px, jika tidak gambar mungkin terlihat buram."
     },

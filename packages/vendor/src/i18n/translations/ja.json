@@ -2890,8 +2890,10 @@
       "mediaTipBody": "このメディアはストアフロントに表示されます。",
       "uploadLogoLabel": "ロゴをアップロード",
       "uploadLogoHint": "ここにロゴをドラッグ＆ドロップするか、クリックしてアップロードしてください。",
+      "logoRecommendedSize": "推奨 1024x1024px",
       "uploadBannerLabel": "バナーをアップロード",
       "uploadBannerHint": "ここにバナーをドラッグ＆ドロップするか、クリックしてアップロードしてください。",
+      "bannerRecommendedSize": "推奨 1920x400px",
       "bannerTooSmall": "画像が小さいです ({{width}}×{{height}}px)。少なくとも {{minWidth}}×{{minHeight}}px を推奨します。それより小さいとぼやけて見えることがあります。",
       "logoTooSmall": "画像が小さいです ({{width}}×{{height}}px)。少なくとも {{minWidth}}×{{minHeight}}px を推奨します。それより小さいとぼやけて見えることがあります。"
     },
