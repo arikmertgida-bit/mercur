@@ -34,6 +34,7 @@ type ProductSellerRow = {
   id: string
   handle?: string | null
   status?: string | null
+  is_premium?: boolean | null
 }
 
 export type InventoryLocationLevelRow = {
@@ -97,6 +98,7 @@ export const searchProductFields = [
   'sellers.id',
   'sellers.handle',
   'sellers.status',
+  'sellers.is_premium',
 ]
 
 const buildRegionTaxContext = (region: SearchRegion) => {
@@ -279,6 +281,10 @@ export const buildProductDocs = async (
       seller_id: seller?.id ?? undefined,
       seller_handle: seller?.handle ?? undefined,
       seller_status: seller?.status ?? undefined,
+      // Drives the `seller_is_premium` custom ranking rule — always a concrete
+      // boolean (never left `undefined`) so Meilisearch has a stable value to
+      // rank on for every document, including sellers that never opted in.
+      seller_is_premium: seller?.is_premium ?? false,
       collection_id: product.collection?.id ?? product.collection_id ?? undefined,
       collection: product.collection?.title ?? undefined,
       category_ids: (product.categories ?? []).map((c) => c.id),

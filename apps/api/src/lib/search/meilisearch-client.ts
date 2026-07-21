@@ -44,6 +44,25 @@ const FILTERABLE_ATTRIBUTES = [
 
 const SORTABLE_ATTRIBUTES = ['default_price_amount', 'created_at']
 
+// Meilisearch's own default ranking rules, with one custom rule spliced in:
+// operator-flagged "featured stores" (`seller_is_premium`, admin: Öne Çıkan
+// Mağaza) win ties. Placement matters — it sits after `sort` so an explicit
+// caller-requested sort (price/date, see `mapSort` below) always wins outright,
+// but before `exactness` so premium sellers still surface as a tiebreaker on
+// default/browsing listings where no explicit sort or search query narrows
+// the result set. This is a ranking nudge only — premium status is never a
+// hard filter, non-premium products are always fully discoverable.
+const PREMIUM_SELLER_RANKING_RULE = 'seller_is_premium:desc'
+const RANKING_RULES = [
+  'words',
+  'typo',
+  'proximity',
+  'attribute',
+  'sort',
+  PREMIUM_SELLER_RANKING_RULE,
+  'exactness',
+]
+
 // Meilisearch's default pagination.maxTotalHits is 1000 — offset+limit beyond
 // that is rejected/truncated, which silently breaks deep pagination on large
 // categories. Raised to support the project's stated multi-million product
@@ -101,6 +120,7 @@ class MeilisearchProductIndex {
         searchableAttributes: SEARCHABLE_ATTRIBUTES,
         filterableAttributes: FILTERABLE_ATTRIBUTES,
         sortableAttributes: SORTABLE_ATTRIBUTES,
+        rankingRules: RANKING_RULES,
         pagination: { maxTotalHits: MAX_TOTAL_HITS },
       })
       .waitTask()
