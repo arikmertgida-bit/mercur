@@ -42,6 +42,10 @@ const CatalogProductSellerSchema = z.object({
   handle: z.string(),
   name: z.string(),
   status: z.string(),
+  // Was missing here even though `sellers.*` already fetched the column —
+  // Zod silently strips unlisted keys, so `is_premium` never reached the
+  // storefront's catalog/seller-products responses despite being requested.
+  is_premium: z.boolean().default(false),
 })
 
 // Only the fields the response genuinely depends on are validated by shape;
