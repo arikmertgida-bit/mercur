@@ -2890,8 +2890,10 @@
       "mediaTipBody": "Esta mídia ficará visível na loja.",
       "uploadLogoLabel": "Enviar logotipo",
       "uploadLogoHint": "Arraste e solte seu logotipo aqui ou clique para enviar.",
+      "logoRecommendedSize": "Recomendado 1024x1024px",
       "uploadBannerLabel": "Enviar banner",
       "uploadBannerHint": "Arraste e solte seu banner aqui ou clique para enviar.",
+      "bannerRecommendedSize": "Recomendado 1920x400px",
       "bannerTooSmall": "A imagem é pequena ({{width}}×{{height}}px). Recomenda-se pelo menos {{minWidth}}×{{minHeight}}px, caso contrário pode ficar borrada.",
       "logoTooSmall": "A imagem é pequena ({{width}}×{{height}}px). Recomenda-se pelo menos {{minWidth}}×{{minHeight}}px, caso contrário pode ficar borrada."
     },

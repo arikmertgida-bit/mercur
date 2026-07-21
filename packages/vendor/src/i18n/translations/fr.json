@@ -2890,8 +2890,10 @@
       "mediaTipBody": "Ce média sera visible sur la boutique en ligne.",
       "uploadLogoLabel": "Télécharger le logo",
       "uploadLogoHint": "Glissez-déposez votre logo ici ou cliquez pour le télécharger.",
+      "logoRecommendedSize": "Recommandé 1024x1024px",
       "uploadBannerLabel": "Télécharger la bannière",
       "uploadBannerHint": "Glissez-déposez votre bannière ici ou cliquez pour la télécharger.",
+      "bannerRecommendedSize": "Recommandé 1920x400px",
       "bannerTooSmall": "L'image est petite ({{width}}×{{height}}px). Une taille d'au moins {{minWidth}}×{{minHeight}}px est recommandée, sinon elle risque d'apparaître floue.",
       "logoTooSmall": "L'image est petite ({{width}}×{{height}}px). Une taille d'au moins {{minWidth}}×{{minHeight}}px est recommandée, sinon elle risque d'apparaître floue."
     },

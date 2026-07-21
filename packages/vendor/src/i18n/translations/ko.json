@@ -2892,8 +2892,10 @@
       "mediaTipBody": "이 미디어는 스토어프론트에 표시됩니다.",
       "uploadLogoLabel": "로고 업로드",
       "uploadLogoHint": "로고를 여기로 드래그 앤 드롭하거나 클릭하여 업로드하세요.",
+      "logoRecommendedSize": "권장 1024x1024px",
       "uploadBannerLabel": "배너 업로드",
       "uploadBannerHint": "배너를 여기로 드래그 앤 드롭하거나 클릭하여 업로드하세요.",
+      "bannerRecommendedSize": "권장 1920x400px",
       "bannerTooSmall": "이미지가 작습니다 ({{width}}×{{height}}px). 최소 {{minWidth}}×{{minHeight}}px를 권장하며, 그렇지 않으면 흐릿하게 보일 수 있습니다.",
       "logoTooSmall": "이미지가 작습니다 ({{width}}×{{height}}px). 최소 {{minWidth}}×{{minHeight}}px를 권장하며, 그렇지 않으면 흐릿하게 보일 수 있습니다."
     },

@@ -2890,8 +2890,10 @@
       "mediaTipBody": "این رسانه در فروشگاه آنلاین قابل مشاهده خواهد بود.",
       "uploadLogoLabel": "بارگذاری لوگو",
       "uploadLogoHint": "لوگوی خود را اینجا بکشید و رها کنید یا برای بارگذاری کلیک کنید.",
+      "logoRecommendedSize": "توصیه‌شده 1024x1024px",
       "uploadBannerLabel": "بارگذاری بنر",
       "uploadBannerHint": "بنر خود را اینجا بکشید و رها کنید یا برای بارگذاری کلیک کنید.",
+      "bannerRecommendedSize": "توصیه‌شده 1920x400px",
       "bannerTooSmall": "تصویر کوچک است ({{width}}×{{height}}px). حداقل {{minWidth}}×{{minHeight}}px توصیه می‌شود، در غیر این صورت ممکن است تار به نظر برسد.",
       "logoTooSmall": "تصویر کوچک است ({{width}}×{{height}}px). حداقل {{minWidth}}×{{minHeight}}px توصیه می‌شود، در غیر این صورت ممکن است تار به نظر برسد."
     },

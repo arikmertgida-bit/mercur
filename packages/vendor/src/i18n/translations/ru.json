@@ -2890,8 +2890,10 @@
       "mediaTipBody": "Этот медиафайл будет виден в витрине.",
       "uploadLogoLabel": "Загрузить логотип",
       "uploadLogoHint": "Перетащите логотип сюда или нажмите, чтобы загрузить.",
+      "logoRecommendedSize": "Рекомендуется 1024x1024px",
       "uploadBannerLabel": "Загрузить баннер",
       "uploadBannerHint": "Перетащите баннер сюда или нажмите, чтобы загрузить.",
+      "bannerRecommendedSize": "Рекомендуется 1920x400px",
       "bannerTooSmall": "Изображение маленькое ({{width}}×{{height}}px). Рекомендуется как минимум {{minWidth}}×{{minHeight}}px, иначе оно может выглядеть размытым.",
       "logoTooSmall": "Изображение маленькое ({{width}}×{{height}}px). Рекомендуется как минимум {{minWidth}}×{{minHeight}}px, иначе оно может выглядеть размытым."
     },

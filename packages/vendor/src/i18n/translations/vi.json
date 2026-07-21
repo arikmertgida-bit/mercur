@@ -2892,8 +2892,10 @@
       "mediaTipBody": "Hình ảnh/video này sẽ hiển thị trên trang bán hàng.",
       "uploadLogoLabel": "Tải lên logo",
       "uploadLogoHint": "Kéo và thả logo vào đây hoặc nhấp để tải lên.",
+      "logoRecommendedSize": "Khuyến nghị 1024x1024px",
       "uploadBannerLabel": "Tải lên ảnh bìa",
       "uploadBannerHint": "Kéo và thả ảnh bìa vào đây hoặc nhấp để tải lên.",
+      "bannerRecommendedSize": "Khuyến nghị 1920x400px",
       "bannerTooSmall": "Hình ảnh nhỏ ({{width}}×{{height}}px). Nên dùng ít nhất {{minWidth}}×{{minHeight}}px, nếu không có thể bị mờ.",
       "logoTooSmall": "Hình ảnh nhỏ ({{width}}×{{height}}px). Nên dùng ít nhất {{minWidth}}×{{minHeight}}px, nếu không có thể bị mờ."
     },

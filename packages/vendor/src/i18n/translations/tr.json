@@ -2895,8 +2895,10 @@
       "mediaTipBody": "Bu medya mağaza vitrininde görünür olacaktır.",
       "uploadLogoLabel": "Logo yükle",
       "uploadLogoHint": "Logonuzu buraya sürükleyip bırakın veya yüklemek için tıklayın.",
+      "logoRecommendedSize": "Tavsiye edilen 1024x1024px",
       "uploadBannerLabel": "Banner yükle",
       "uploadBannerHint": "Banner'ınızı buraya sürükleyip bırakın veya yüklemek için tıklayın.",
+      "bannerRecommendedSize": "Tavsiye edilen 1920x400px",
       "logoTooSmall": "Görsel küçük ({{width}}×{{height}}px). En az {{minWidth}}×{{minHeight}}px önerilir, aksi hâlde bulanık görünebilir.",
       "bannerTooSmall": "Görsel küçük ({{width}}×{{height}}px). En az {{minWidth}}×{{minHeight}}px önerilir, aksi hâlde bulanık görünebilir."
     },

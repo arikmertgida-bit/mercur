@@ -2892,8 +2892,10 @@
       "mediaTipBody": "此媒体将在前台商城中可见。",
       "uploadLogoLabel": "上传标志",
       "uploadLogoHint": "将标志拖放到此处，或点击上传。",
+      "logoRecommendedSize": "建议 1024x1024px",
       "uploadBannerLabel": "上传横幅图",
       "uploadBannerHint": "将横幅图拖放到此处，或点击上传。",
+      "bannerRecommendedSize": "建议 1920x400px",
       "bannerTooSmall": "图片较小 ({{width}}×{{height}}px)。建议至少为 {{minWidth}}×{{minHeight}}px,否则可能显得模糊。",
       "logoTooSmall": "图片较小 ({{width}}×{{height}}px)。建议至少为 {{minWidth}}×{{minHeight}}px,否则可能显得模糊。"
     },

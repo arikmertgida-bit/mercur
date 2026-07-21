@@ -2892,8 +2892,10 @@
       "mediaTipBody": "Тази медия ще бъде видима във витрината.",
       "uploadLogoLabel": "Качване на лого",
       "uploadLogoHint": "Пуснете логото си тук или щракнете за качване.",
+      "logoRecommendedSize": "Препоръчително 1024x1024px",
       "uploadBannerLabel": "Качване на банер",
       "uploadBannerHint": "Пуснете банера си тук или щракнете за качване.",
+      "bannerRecommendedSize": "Препоръчително 1920x400px",
       "bannerTooSmall": "Изображението е малко ({{width}}×{{height}}px). Препоръчва се поне {{minWidth}}×{{minHeight}}px, в противен случай може да изглежда размазано.",
       "logoTooSmall": "Изображението е малко ({{width}}×{{height}}px). Препоръчва се поне {{minWidth}}×{{minHeight}}px, в противен случай може да изглежда размазано."
     },

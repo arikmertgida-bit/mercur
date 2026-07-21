@@ -2897,8 +2897,10 @@
       "mediaTipBody": "此媒體將顯示於商店前台。",
       "uploadLogoLabel": "上傳商標",
       "uploadLogoHint": "將商標拖放至此處，或點選上傳。",
+      "logoRecommendedSize": "建議 1024x1024px",
       "uploadBannerLabel": "上傳橫幅",
       "uploadBannerHint": "將橫幅拖放至此處，或點選上傳。",
+      "bannerRecommendedSize": "建議 1920x400px",
       "bannerTooSmall": "圖片較小 ({{width}}×{{height}}px)。建議至少為 {{minWidth}}×{{minHeight}}px,否則可能顯得模糊。",
       "logoTooSmall": "圖片較小 ({{width}}×{{height}}px)。建議至少為 {{minWidth}}×{{minHeight}}px,否則可能顯得模糊。"
     },

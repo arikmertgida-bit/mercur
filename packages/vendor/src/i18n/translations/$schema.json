@@ -13424,10 +13424,16 @@
             "uploadLogoHint": {
               "type": "string"
             },
+            "logoRecommendedSize": {
+              "type": "string"
+            },
             "uploadBannerLabel": {
               "type": "string"
             },
             "uploadBannerHint": {
+              "type": "string"
+            },
+            "bannerRecommendedSize": {
               "type": "string"
             },
             "logoTooSmall": {
@@ -13444,8 +13450,10 @@
             "mediaTipBody",
             "uploadLogoLabel",
             "uploadLogoHint",
+            "logoRecommendedSize",
             "uploadBannerLabel",
             "uploadBannerHint",
+            "bannerRecommendedSize",
             "logoTooSmall",
             "bannerTooSmall"
           ],

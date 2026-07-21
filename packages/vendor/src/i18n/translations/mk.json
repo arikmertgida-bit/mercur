@@ -2890,8 +2890,10 @@
       "mediaTipBody": "Овој медиум ќе биде видлив на продавницата.",
       "uploadLogoLabel": "Прикачи лого",
       "uploadLogoHint": "Повлечете и пуштете го логото тука или кликнете за прикачување.",
+      "logoRecommendedSize": "Препорачано 1024x1024px",
       "uploadBannerLabel": "Прикачи банер",
       "uploadBannerHint": "Повлечете и пуштете го банерот тука или кликнете за прикачување.",
+      "bannerRecommendedSize": "Препорачано 1920x400px",
       "bannerTooSmall": "Сликата е мала ({{width}}×{{height}}px). Се препорачува најмалку {{minWidth}}×{{minHeight}}px, инаку може да изгледа заматено.",
       "logoTooSmall": "Сликата е мала ({{width}}×{{height}}px). Се препорачува најмалку {{minWidth}}×{{minHeight}}px, инаку може да изгледа заматено."
     },

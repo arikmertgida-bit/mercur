@@ -2890,8 +2890,10 @@
       "mediaTipBody": "Αυτά τα πολυμέσα θα είναι ορατά στο κατάστημα.",
       "uploadLogoLabel": "Ανέβασμα λογότυπου",
       "uploadLogoHint": "Σύρετε και αφήστε το λογότυπό σας εδώ ή κάντε κλικ για ανέβασμα.",
+      "logoRecommendedSize": "Συνιστώμενο 1024x1024px",
       "uploadBannerLabel": "Ανέβασμα banner",
       "uploadBannerHint": "Σύρετε και αφήστε το banner σας εδώ ή κάντε κλικ για ανέβασμα.",
+      "bannerRecommendedSize": "Συνιστώμενο 1920x400px",
       "bannerTooSmall": "Η εικόνα είναι μικρή ({{width}}×{{height}}px). Συνιστάται τουλάχιστον {{minWidth}}×{{minHeight}}px, διαφορετικά μπορεί να φαίνεται θολή.",
       "logoTooSmall": "Η εικόνα είναι μικρή ({{width}}×{{height}}px). Συνιστάται τουλάχιστον {{minWidth}}×{{minHeight}}px, διαφορετικά μπορεί να φαίνεται θολή."
     },

@@ -5,6 +5,7 @@ import {
   Hint,
   Input,
   Select,
+  Text,
   Textarea,
   toast,
 } from "@medusajs/ui";
@@ -413,7 +414,16 @@ export const EditStoreForm = ({ seller }: EditStoreFormProps) => {
 
                 return (
                   <Form.Item>
-                    <Form.Label optional>{t("store.logo")}</Form.Label>
+                    <div className="flex items-center gap-x-1">
+                      <Form.Label>{t("store.logo")}</Form.Label>
+                      <Text
+                        size="small"
+                        leading="compact"
+                        className="text-ui-fg-muted"
+                      >
+                        {t("store.edit.logoRecommendedSize")}
+                      </Text>
+                    </div>
                     <Form.Control>
                       <FileUpload
                         uploadedImage={previewUrl}
@@ -445,7 +455,16 @@ export const EditStoreForm = ({ seller }: EditStoreFormProps) => {
 
                 return (
                   <Form.Item>
-                    <Form.Label optional>{t("store.banner")}</Form.Label>
+                    <div className="flex items-center gap-x-1">
+                      <Form.Label>{t("store.banner")}</Form.Label>
+                      <Text
+                        size="small"
+                        leading="compact"
+                        className="text-ui-fg-muted"
+                      >
+                        {t("store.edit.bannerRecommendedSize")}
+                      </Text>
+                    </div>
                     <Form.Control>
                       <FileUpload
                         uploadedImage={previewUrl}

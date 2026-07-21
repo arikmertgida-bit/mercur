@@ -2890,8 +2890,10 @@
       "mediaTipBody": "สื่อนี้จะปรากฏบนหน้าร้าน",
       "uploadLogoLabel": "อัปโหลดโลโก้",
       "uploadLogoHint": "ลากและวางโลโก้ของคุณที่นี่ หรือคลิกเพื่ออัปโหลด",
+      "logoRecommendedSize": "แนะนำ 1024x1024px",
       "uploadBannerLabel": "อัปโหลดแบนเนอร์",
       "uploadBannerHint": "ลากและวางแบนเนอร์ของคุณที่นี่ หรือคลิกเพื่ออัปโหลด",
+      "bannerRecommendedSize": "แนะนำ 1920x400px",
       "bannerTooSmall": "รูปภาพมีขนาดเล็ก ({{width}}×{{height}}px) แนะนำให้มีขนาดอย่างน้อย {{minWidth}}×{{minHeight}}px มิฉะนั้นอาจดูเบลอ",
       "logoTooSmall": "รูปภาพมีขนาดเล็ก ({{width}}×{{height}}px) แนะนำให้มีขนาดอย่างน้อย {{minWidth}}×{{minHeight}}px มิฉะนั้นอาจดูเบลอ"
     },

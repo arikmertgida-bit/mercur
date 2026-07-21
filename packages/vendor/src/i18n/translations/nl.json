@@ -2892,8 +2892,10 @@
       "mediaTipBody": "Deze media zijn zichtbaar op de winkelwebsite.",
       "uploadLogoLabel": "Logo uploaden",
       "uploadLogoHint": "Sleep je logo hierheen of klik om te uploaden.",
+      "logoRecommendedSize": "Aanbevolen 1024x1024px",
       "uploadBannerLabel": "Banner uploaden",
       "uploadBannerHint": "Sleep je banner hierheen of klik om te uploaden.",
+      "bannerRecommendedSize": "Aanbevolen 1920x400px",
       "bannerTooSmall": "Afbeelding is klein ({{width}}×{{height}}px). Minimaal {{minWidth}}×{{minHeight}}px wordt aanbevolen, anders kan deze wazig lijken.",
       "logoTooSmall": "Afbeelding is klein ({{width}}×{{height}}px). Minimaal {{minWidth}}×{{minHeight}}px wordt aanbevolen, anders kan deze wazig lijken."
     },
