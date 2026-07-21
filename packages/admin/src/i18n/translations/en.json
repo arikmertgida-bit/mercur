@@ -3838,13 +3838,16 @@
     "handleTooltip": "Automatically generated from the store name. Lowercase letters, numbers, and hyphens only — this field can't be edited directly.",
     "emptyStates": {
       "users": {
-        "title": "No users yet"
+        "title": "No users yet",
+        "message": "Invite the first user to manage this store."
       },
       "products": {
-        "title": "No products yet"
+        "title": "No products yet",
+        "message": "Products published by this store will appear here."
       },
       "orders": {
-        "title": "No orders yet"
+        "title": "No orders yet",
+        "message": "Orders placed at this store will appear here."
       }
     },
     "fields": {
