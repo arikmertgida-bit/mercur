@@ -30,6 +30,9 @@
     "lint": {
       "dependsOn": ["^lint"]
     },
+    "test": {
+      "outputs": []
+    },
     "check-types": {
       "dependsOn": ["^check-types"]
     },
