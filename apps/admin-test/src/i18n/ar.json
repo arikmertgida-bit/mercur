@@ -213,6 +213,37 @@
       "rejectSuccess": "تم رفض الطلب",
       "submitter": "مقدم الطلب",
       "reviewer": "المراجع"
+    },
+    "reviews": {
+      "navLabel": "التقييمات",
+      "heading": "بلاغات التقييمات",
+      "noRecords": "لم يتم العثور على بلاغات تقييمات",
+      "columns": {
+        "seller": "البائع",
+        "reason": "السبب",
+        "status": "الحالة",
+        "adminNote": "ملاحظة المسؤول"
+      },
+      "status": {
+        "pending": "قيد الانتظار",
+        "resolved_deleted": "تمت الإزالة",
+        "resolved_kept": "تمت المراجعة، لم تتم الإزالة"
+      },
+      "detail": {
+        "reportHeading": "بلاغ",
+        "reviewHeading": "تقييم",
+        "customerNote": "ملاحظة العميل",
+        "resolveHeading": "حل",
+        "rejectAction": "رفض",
+        "defaultRejectNote": "تمت المراجعة، لم تتم الإزالة. إذا كنت لا توافق على قرارنا، يمكنك تقديم بلاغ آخر.",
+        "defaultDeleteNote": "تمت مراجعة هذا التقييم وإزالته من قبل فريق الإدارة.",
+        "resolveSuccess": "تم حل البلاغ.",
+        "resolveError": "تعذر حل البلاغ.",
+        "deletePrompt": {
+          "title": "حذف التقييم",
+          "description": "هل أنت متأكد أنك تريد حذف هذا التقييم؟ لا يمكن التراجع عن هذا الإجراء."
+        }
+      }
     }
   },
   "reviews": {

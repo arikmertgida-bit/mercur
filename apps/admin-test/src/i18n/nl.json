@@ -213,6 +213,37 @@
       "rejectSuccess": "Aanvraag afgewezen",
       "submitter": "Indiener",
       "reviewer": "Beoordelaar"
+    },
+    "reviews": {
+      "navLabel": "Beoordelingen",
+      "heading": "Meldingen van beoordelingen",
+      "noRecords": "Geen meldingen van beoordelingen gevonden",
+      "columns": {
+        "seller": "Verkoper",
+        "reason": "Reden",
+        "status": "Status",
+        "adminNote": "Beheerdersnotitie"
+      },
+      "status": {
+        "pending": "In behandeling",
+        "resolved_deleted": "Verwijderd",
+        "resolved_kept": "Beoordeeld, niet verwijderd"
+      },
+      "detail": {
+        "reportHeading": "Melding",
+        "reviewHeading": "Beoordeling",
+        "customerNote": "Klantnotitie",
+        "resolveHeading": "Afhandelen",
+        "rejectAction": "Afwijzen",
+        "defaultRejectNote": "Beoordeeld, niet verwijderd. Als u het niet eens bent met onze beslissing, kunt u opnieuw een melding indienen.",
+        "defaultDeleteNote": "Deze beoordeling is beoordeeld en verwijderd door het beheerteam.",
+        "resolveSuccess": "Melding afgehandeld.",
+        "resolveError": "Melding kon niet worden afgehandeld.",
+        "deletePrompt": {
+          "title": "Beoordeling verwijderen",
+          "description": "Weet u zeker dat u deze beoordeling wilt verwijderen? Deze actie kan niet ongedaan worden gemaakt."
+        }
+      }
     }
   },
   "reviews": {

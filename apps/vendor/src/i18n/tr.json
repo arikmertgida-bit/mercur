@@ -117,6 +117,25 @@
       "navLabel": "Türler",
       "heading": "Tür Talepleri",
       "noRecords": "Tür talebi bulunamadı"
+    },
+    "reviews": {
+      "navLabel": "Değerlendirmeler",
+      "heading": "Değerlendirme Talepleri",
+      "subtitle": "Moderasyon için yöneticiye bildirdiğiniz değerlendirmeler.",
+      "columns": {
+        "reason": "Neden",
+        "status": "Durum",
+        "adminNote": "Yönetici Notu"
+      },
+      "status": {
+        "pending": "Bekliyor",
+        "resolved_deleted": "Kaldırıldı",
+        "resolved_kept": "İncelendi, Kaldırılmadı"
+      },
+      "reReport": "Tekrar Talep Oluştur",
+      "reReportSuccess": "Talep tekrar gönderildi.",
+      "reReportError": "Talep gönderilemedi.",
+      "noRecords": "Değerlendirme talebi bulunamadı"
     }
   },
   "reviews": {
@@ -125,7 +144,30 @@
     "columns": {
       "rating": "Puan",
       "reference": "Referans",
-      "customerNote": "Müşteri Notu"
+      "customerNote": "Müşteri Notu",
+      "replyStatus": "Yanıt Durumu"
+    },
+    "photos": "Fotoğraflar",
+    "noPhotos": "Bu değerlendirmeye fotoğraf eklenmemiş.",
+    "hiddenPhoto": "Gizli",
+    "status": {
+      "answered": "Cevaplandı",
+      "awaitingReply": "Cevap Bekliyor"
+    },
+    "reply": {
+      "title": "Yanıt",
+      "placeholder": "Müşterinin değerlendirmesine bir yanıt yazın...",
+      "submit": "Yanıtı Gönder",
+      "successToast": "Yanıt başarıyla gönderildi.",
+      "errorToast": "Yanıt gönderilemedi."
+    },
+    "report": {
+      "title": "Yöneticiye Bildir",
+      "description": "Bu değerlendirmeyi moderasyon için pazar yeri yöneticisine bildirin.",
+      "placeholder": "Bu değerlendirmeyi neden bildirdiğinizi açıklayın...",
+      "submit": "Bildirimi Gönder",
+      "successToast": "Bildirim yöneticiye gönderildi.",
+      "errorToast": "Bildirim gönderilemedi."
     }
   }
 }

@@ -101,6 +101,9 @@ module.exports = withMercur({
       resolve: './src/modules/review-social',
     },
     {
+      resolve: './src/modules/review-reports',
+    },
+    {
       resolve: './src/modules/wishlist',
     },
     {

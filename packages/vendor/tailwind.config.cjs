@@ -15,7 +15,15 @@ module.exports = {
   ],
   darkMode: "class",
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        // Kayı.com brand red — same value as the storefront's `brand` token
+        // (colors.css → rgba(var(--brand-red)), 227,10,23). Kept as a single
+        // named color here so review-related UI (unread badge, "Cevap
+        // Bekliyor" status) never hardcodes the hex inline.
+        brand: "#e30a17",
+      },
+    },
   },
   plugins: [],
 }

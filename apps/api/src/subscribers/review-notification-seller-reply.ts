@@ -8,6 +8,7 @@ import { getCatchMessage } from "../lib/errors"
 import { resolveKayiLogger } from "../lib/logger"
 import { notifyMessengerUser } from "../lib/messenger"
 import {
+  REVIEW_NOTIFICATION_TYPE,
   ReviewNotificationEvent,
   type ReviewSellerReplyEventPayload,
 } from "../lib/review-events"
@@ -52,7 +53,8 @@ export default async function reviewNotificationSellerReplySubscriber({
       sourceUserId: sellerId,
       sourceUserType: "SELLER",
       subject: "Yorum Yanıtı Bildirimi",
-      notificationType: "review_notification",
+      notificationType: REVIEW_NOTIFICATION_TYPE,
+      metadata: { notification_type: REVIEW_NOTIFICATION_TYPE },
     })
   } catch (err) {
     const message = getCatchMessage(

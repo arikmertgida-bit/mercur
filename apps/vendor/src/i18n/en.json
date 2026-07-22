@@ -117,6 +117,25 @@
       "navLabel": "Types",
       "heading": "Type Requests",
       "noRecords": "No type requests found"
+    },
+    "reviews": {
+      "navLabel": "Reviews",
+      "heading": "Review Reports",
+      "subtitle": "Reviews you have reported to the admin for moderation.",
+      "columns": {
+        "reason": "Reason",
+        "status": "Status",
+        "adminNote": "Admin Note"
+      },
+      "status": {
+        "pending": "Pending",
+        "resolved_deleted": "Removed",
+        "resolved_kept": "Reviewed, Not Removed"
+      },
+      "reReport": "Report Again",
+      "reReportSuccess": "Report sent again.",
+      "reReportError": "Report could not be sent.",
+      "noRecords": "No review reports found"
     }
   },
   "reviews": {
@@ -125,7 +144,30 @@
     "columns": {
       "rating": "Rating",
       "reference": "Reference",
-      "customerNote": "Customer Note"
+      "customerNote": "Customer Note",
+      "replyStatus": "Reply Status"
+    },
+    "photos": "Photos",
+    "noPhotos": "No photos were attached to this review.",
+    "hiddenPhoto": "Hidden",
+    "status": {
+      "answered": "Answered",
+      "awaitingReply": "Awaiting Reply"
+    },
+    "reply": {
+      "title": "Reply",
+      "placeholder": "Write a reply to the customer's review...",
+      "submit": "Send Reply",
+      "successToast": "Reply sent successfully.",
+      "errorToast": "Reply could not be sent."
+    },
+    "report": {
+      "title": "Report to Admin",
+      "description": "Report this review to a marketplace admin for moderation.",
+      "placeholder": "Explain why you are reporting this review...",
+      "submit": "Send Report",
+      "successToast": "Report sent to admin.",
+      "errorToast": "Report could not be sent."
     }
   }
 }

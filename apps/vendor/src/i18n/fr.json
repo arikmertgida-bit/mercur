@@ -117,6 +117,25 @@
       "navLabel": "Types",
       "heading": "Demandes de types",
       "noRecords": "Aucune demande de type trouvée"
+    },
+    "reviews": {
+      "navLabel": "Avis",
+      "heading": "Signalements d'avis",
+      "subtitle": "Avis que vous avez signalés à l'administrateur pour modération.",
+      "columns": {
+        "reason": "Motif",
+        "status": "Statut",
+        "adminNote": "Note de l'administrateur"
+      },
+      "status": {
+        "pending": "En attente",
+        "resolved_deleted": "Supprimé",
+        "resolved_kept": "Examiné, non supprimé"
+      },
+      "reReport": "Signaler à nouveau",
+      "reReportSuccess": "Signalement renvoyé.",
+      "reReportError": "Le signalement n'a pas pu être envoyé.",
+      "noRecords": "Aucun signalement d'avis trouvé"
     }
   },
   "reviews": {
@@ -125,7 +144,30 @@
     "columns": {
       "rating": "Note",
       "reference": "Référence",
-      "customerNote": "Note du client"
+      "customerNote": "Note du client",
+      "replyStatus": "Statut de la réponse"
+    },
+    "photos": "Photos",
+    "noPhotos": "Aucune photo n'a été jointe à cet avis.",
+    "hiddenPhoto": "Masqué",
+    "status": {
+      "answered": "Répondu",
+      "awaitingReply": "En attente de réponse"
+    },
+    "reply": {
+      "title": "Réponse",
+      "placeholder": "Rédigez une réponse à l'avis du client...",
+      "submit": "Envoyer la réponse",
+      "successToast": "Réponse envoyée avec succès.",
+      "errorToast": "La réponse n'a pas pu être envoyée."
+    },
+    "report": {
+      "title": "Signaler à l'administrateur",
+      "description": "Signalez cet avis à un administrateur de la place de marché pour modération.",
+      "placeholder": "Expliquez pourquoi vous signalez cet avis...",
+      "submit": "Envoyer le signalement",
+      "successToast": "Signalement envoyé à l'administrateur.",
+      "errorToast": "Le signalement n'a pas pu être envoyé."
     }
   }
 }

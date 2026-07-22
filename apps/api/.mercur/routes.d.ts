@@ -524,6 +524,11 @@ export type Routes = {
                 resolve: typeof import("../src/api/admin/review-image-reports/[id]/resolve/route");
             };
         };
+        reviewReports: typeof import("../src/api/admin/review-reports/route") & {
+            $id: typeof import("../src/api/admin/review-reports/[id]/route") & {
+                resolve: typeof import("../src/api/admin/review-reports/[id]/resolve/route");
+            };
+        };
         reviews: typeof import("../src/api/admin/reviews/route") & {
             $id: typeof import("../src/api/admin/reviews/[id]/route");
         };
@@ -989,8 +994,10 @@ export type Routes = {
             productTags: typeof import("../src/api/vendor/requests/product-tags/route");
             productTypes: typeof import("../src/api/vendor/requests/product-types/route");
         };
+        reviewReports: typeof import("../src/api/vendor/review-reports/route");
         reviews: typeof import("../src/api/vendor/reviews/route") & {
             $id: typeof import("../src/api/vendor/reviews/[id]/route");
+            stats: typeof import("../src/api/vendor/reviews/stats/route");
         };
         support: {
             adminContact: typeof import("../src/api/vendor/support/admin-contact/route");

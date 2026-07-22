@@ -117,6 +117,25 @@
       "navLabel": "Typen",
       "heading": "Typeaanvragen",
       "noRecords": "Geen typeaanvragen gevonden"
+    },
+    "reviews": {
+      "navLabel": "Beoordelingen",
+      "heading": "Meldingen van beoordelingen",
+      "subtitle": "Beoordelingen die u bij de beheerder heeft gemeld voor moderatie.",
+      "columns": {
+        "reason": "Reden",
+        "status": "Status",
+        "adminNote": "Beheerdersnotitie"
+      },
+      "status": {
+        "pending": "In behandeling",
+        "resolved_deleted": "Verwijderd",
+        "resolved_kept": "Beoordeeld, niet verwijderd"
+      },
+      "reReport": "Opnieuw melden",
+      "reReportSuccess": "Melding opnieuw verzonden.",
+      "reReportError": "Melding kon niet worden verzonden.",
+      "noRecords": "Geen meldingen van beoordelingen gevonden"
     }
   },
   "reviews": {
@@ -125,7 +144,30 @@
     "columns": {
       "rating": "Beoordeling",
       "reference": "Referentie",
-      "customerNote": "Klantnotitie"
+      "customerNote": "Klantnotitie",
+      "replyStatus": "Antwoordstatus"
+    },
+    "photos": "Foto's",
+    "noPhotos": "Er zijn geen foto's toegevoegd aan deze beoordeling.",
+    "hiddenPhoto": "Verborgen",
+    "status": {
+      "answered": "Beantwoord",
+      "awaitingReply": "Wacht op antwoord"
+    },
+    "reply": {
+      "title": "Antwoord",
+      "placeholder": "Schrijf een antwoord op de beoordeling van de klant...",
+      "submit": "Antwoord verzenden",
+      "successToast": "Antwoord succesvol verzonden.",
+      "errorToast": "Antwoord kon niet worden verzonden."
+    },
+    "report": {
+      "title": "Melden bij beheerder",
+      "description": "Meld deze beoordeling bij een marketplacebeheerder voor moderatie.",
+      "placeholder": "Leg uit waarom u deze beoordeling meldt...",
+      "submit": "Melding verzenden",
+      "successToast": "Melding verzonden naar beheerder.",
+      "errorToast": "Melding kon niet worden verzonden."
     }
   }
 }

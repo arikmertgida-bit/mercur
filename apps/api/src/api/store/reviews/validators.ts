@@ -10,7 +10,11 @@ export const StoreGetReviewsParams = createFindParams({
 
 export type StoreCreateReviewType = z.infer<typeof StoreCreateReview>
 export const StoreCreateReview = z.object({
-  order_id: z.string(),
+  // Nullable/optional: the env-configured review-bypass customer (see
+  // `lib/review-bypass.ts`) submits reviews with no order at all. Every
+  // other request is still required to resolve to an owned order in
+  // `validateReviewStep`.
+  order_id: z.string().min(1).nullable().optional(),
   reference: z.enum(['seller', 'product']),
   reference_id: z.string(),
   rating: z.number().int().min(1).max(5),

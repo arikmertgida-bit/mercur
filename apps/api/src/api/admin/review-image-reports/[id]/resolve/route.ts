@@ -6,6 +6,7 @@ import { MedusaError } from "@medusajs/framework/utils"
 
 import { resolveKayiLogger } from "../../../../../lib/logger"
 import { notifyMessengerUser } from "../../../../../lib/messenger"
+import { REVIEW_NOTIFICATION_TYPE } from "../../../../../lib/review-events"
 import { REVIEW_IMAGE_REPORT_MODULE } from "../../../../../modules/review-image-reports"
 import ReviewImageReportService from "../../../../../modules/review-image-reports/service"
 import { resolveReviewImageReportWorkflow } from "../../../../../workflows/review-image-report/workflows/resolve-review-image-report"
@@ -60,7 +61,8 @@ export const POST = async (
       sourceUserType: "ADMIN",
       subject: "Görsel İnceleme Sonucu",
       conversationType: "ADMIN_SUPPORT",
-      notificationType: "review_notification",
+      notificationType: REVIEW_NOTIFICATION_TYPE,
+      metadata: { notification_type: REVIEW_NOTIFICATION_TYPE },
     })
     if (!notified) {
       logger.warn(

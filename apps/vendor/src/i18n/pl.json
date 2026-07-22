@@ -117,6 +117,25 @@
       "navLabel": "Typy",
       "heading": "Wnioski o typy",
       "noRecords": "Nie znaleziono wniosków o typy"
+    },
+    "reviews": {
+      "navLabel": "Recenzje",
+      "heading": "Zgłoszenia recenzji",
+      "subtitle": "Recenzje zgłoszone przez Ciebie administratorowi do moderacji.",
+      "columns": {
+        "reason": "Powód",
+        "status": "Status",
+        "adminNote": "Notatka administratora"
+      },
+      "status": {
+        "pending": "Oczekujące",
+        "resolved_deleted": "Usunięta",
+        "resolved_kept": "Sprawdzona, nie usunięta"
+      },
+      "reReport": "Zgłoś ponownie",
+      "reReportSuccess": "Zgłoszenie wysłane ponownie.",
+      "reReportError": "Nie udało się wysłać zgłoszenia.",
+      "noRecords": "Nie znaleziono zgłoszeń recenzji"
     }
   },
   "reviews": {
@@ -125,7 +144,30 @@
     "columns": {
       "rating": "Ocena",
       "reference": "Numer referencyjny",
-      "customerNote": "Notatka klienta"
+      "customerNote": "Notatka klienta",
+      "replyStatus": "Status odpowiedzi"
+    },
+    "photos": "Zdjęcia",
+    "noPhotos": "Do tej recenzji nie dołączono zdjęć.",
+    "hiddenPhoto": "Ukryte",
+    "status": {
+      "answered": "Odpowiedziano",
+      "awaitingReply": "Oczekuje na odpowiedź"
+    },
+    "reply": {
+      "title": "Odpowiedź",
+      "placeholder": "Napisz odpowiedź na recenzję klienta...",
+      "submit": "Wyślij odpowiedź",
+      "successToast": "Odpowiedź wysłana pomyślnie.",
+      "errorToast": "Nie udało się wysłać odpowiedzi."
+    },
+    "report": {
+      "title": "Zgłoś do administratora",
+      "description": "Zgłoś tę recenzję administratorowi platformy do moderacji.",
+      "placeholder": "Wyjaśnij, dlaczego zgłaszasz tę recenzję...",
+      "submit": "Wyślij zgłoszenie",
+      "successToast": "Zgłoszenie wysłane do administratora.",
+      "errorToast": "Nie udało się wysłać zgłoszenia."
     }
   }
 }

@@ -38,3 +38,21 @@ export interface VendorReviewResponse {
 export type VendorReviewListResponse = PaginatedResponse<{
   reviews: ReviewDTO[]
 }>
+
+export interface ReviewImageDTO {
+  id: string
+  url: string
+  is_hidden: boolean
+}
+
+export interface VendorReviewWithImagesDTO extends ReviewDTO {
+  images: ReviewImageDTO[]
+}
+
+export interface VendorReviewDetailResponse {
+  review: VendorReviewWithImagesDTO
+}
+
+export type VendorReviewListWithImagesResponse = PaginatedResponse<{
+  reviews: VendorReviewWithImagesDTO[]
+}>

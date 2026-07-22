@@ -117,6 +117,25 @@
       "navLabel": "Tipuri",
       "heading": "Cereri de tipuri",
       "noRecords": "Nu s-au găsit cereri de tipuri"
+    },
+    "reviews": {
+      "navLabel": "Recenzii",
+      "heading": "Sesizări recenzii",
+      "subtitle": "Recenzii pe care le-ați sesizat administratorului pentru moderare.",
+      "columns": {
+        "reason": "Motiv",
+        "status": "Stare",
+        "adminNote": "Notă administrator"
+      },
+      "status": {
+        "pending": "În așteptare",
+        "resolved_deleted": "Eliminată",
+        "resolved_kept": "Analizată, nu a fost eliminată"
+      },
+      "reReport": "Sesizează din nou",
+      "reReportSuccess": "Sesizare retrimisă.",
+      "reReportError": "Sesizarea nu a putut fi trimisă.",
+      "noRecords": "Nu s-au găsit sesizări de recenzii"
     }
   },
   "reviews": {
@@ -125,7 +144,30 @@
     "columns": {
       "rating": "Evaluare",
       "reference": "Referință",
-      "customerNote": "Notă client"
+      "customerNote": "Notă client",
+      "replyStatus": "Stare răspuns"
+    },
+    "photos": "Fotografii",
+    "noPhotos": "Nu au fost atașate fotografii la această recenzie.",
+    "hiddenPhoto": "Ascunsă",
+    "status": {
+      "answered": "Răspuns trimis",
+      "awaitingReply": "În așteptarea răspunsului"
+    },
+    "reply": {
+      "title": "Răspuns",
+      "placeholder": "Scrieți un răspuns la recenzia clientului...",
+      "submit": "Trimite răspuns",
+      "successToast": "Răspuns trimis cu succes.",
+      "errorToast": "Răspunsul nu a putut fi trimis."
+    },
+    "report": {
+      "title": "Sesizează administratorul",
+      "description": "Sesizați această recenzie unui administrator al marketplace-ului pentru moderare.",
+      "placeholder": "Explicați de ce sesizați această recenzie...",
+      "submit": "Trimite sesizarea",
+      "successToast": "Sesizare trimisă administratorului.",
+      "errorToast": "Sesizarea nu a putut fi trimisă."
     }
   }
 }

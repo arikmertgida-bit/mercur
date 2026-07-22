@@ -117,6 +117,25 @@
       "navLabel": "Típusok",
       "heading": "Típuskérések",
       "noRecords": "Nem található típuskérés"
+    },
+    "reviews": {
+      "navLabel": "Értékelések",
+      "heading": "Értékelés-bejelentések",
+      "subtitle": "Az Ön által moderálásra bejelentett értékelések.",
+      "columns": {
+        "reason": "Indok",
+        "status": "Állapot",
+        "adminNote": "Adminisztrátori megjegyzés"
+      },
+      "status": {
+        "pending": "Függőben",
+        "resolved_deleted": "Eltávolítva",
+        "resolved_kept": "Felülvizsgálva, nem távolítottuk el"
+      },
+      "reReport": "Ismételt bejelentés",
+      "reReportSuccess": "A bejelentés újra elküldve.",
+      "reReportError": "A bejelentést nem sikerült elküldeni.",
+      "noRecords": "Nem található értékelés-bejelentés"
     }
   },
   "reviews": {
@@ -125,7 +144,30 @@
     "columns": {
       "rating": "Értékelés",
       "reference": "Hivatkozás",
-      "customerNote": "Vásárlói megjegyzés"
+      "customerNote": "Vásárlói megjegyzés",
+      "replyStatus": "Válasz állapota"
+    },
+    "photos": "Fotók",
+    "noPhotos": "Ehhez az értékeléshez nem csatoltak fényképet.",
+    "hiddenPhoto": "Elrejtve",
+    "status": {
+      "answered": "Megválaszolva",
+      "awaitingReply": "Válaszra vár"
+    },
+    "reply": {
+      "title": "Válasz",
+      "placeholder": "Írjon választ a vásárló értékelésére...",
+      "submit": "Válasz küldése",
+      "successToast": "A válasz sikeresen elküldve.",
+      "errorToast": "A választ nem sikerült elküldeni."
+    },
+    "report": {
+      "title": "Bejelentés az adminisztrátornak",
+      "description": "Jelentse be ezt az értékelést a piactér adminisztrátorának moderálásra.",
+      "placeholder": "Magyarázza el, miért jelenti be ezt az értékelést...",
+      "submit": "Bejelentés küldése",
+      "successToast": "Bejelentés elküldve az adminisztrátornak.",
+      "errorToast": "A bejelentést nem sikerült elküldeni."
     }
   }
 }

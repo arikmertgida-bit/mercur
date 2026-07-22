@@ -213,6 +213,37 @@
       "rejectSuccess": "Richiesta rifiutata",
       "submitter": "Richiedente",
       "reviewer": "Revisore"
+    },
+    "reviews": {
+      "navLabel": "Recensioni",
+      "heading": "Segnalazioni di recensioni",
+      "noRecords": "Nessuna segnalazione di recensione trovata",
+      "columns": {
+        "seller": "Venditore",
+        "reason": "Motivo",
+        "status": "Stato",
+        "adminNote": "Nota dell'amministratore"
+      },
+      "status": {
+        "pending": "In attesa",
+        "resolved_deleted": "Rimossa",
+        "resolved_kept": "Esaminata, non rimossa"
+      },
+      "detail": {
+        "reportHeading": "Segnalazione",
+        "reviewHeading": "Recensione",
+        "customerNote": "Nota del cliente",
+        "resolveHeading": "Risolvi",
+        "rejectAction": "Rifiuta",
+        "defaultRejectNote": "Esaminata, non rimossa. Se non sei d'accordo con la nostra decisione, puoi inviare un'altra segnalazione.",
+        "defaultDeleteNote": "Questa recensione è stata esaminata e rimossa dal team di amministrazione.",
+        "resolveSuccess": "Segnalazione risolta.",
+        "resolveError": "Impossibile risolvere la segnalazione.",
+        "deletePrompt": {
+          "title": "Elimina recensione",
+          "description": "Sei sicuro di voler eliminare questa recensione? Questa azione non può essere annullata."
+        }
+      }
     }
   },
   "reviews": {

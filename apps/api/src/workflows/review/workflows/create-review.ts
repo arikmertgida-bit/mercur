@@ -1,4 +1,5 @@
 import { Modules } from "@medusajs/framework/utils";
+import type { LinkDefinition } from "@medusajs/framework/types";
 import {
   WorkflowResponse,
   createWorkflow,
@@ -11,7 +12,7 @@ import {
 import { CreateReviewDTO, REVIEW_MODULE } from "../../../modules/reviews";
 const SELLER_MODULE = "seller";
 
-import { createReviewStep, validateReviewStep } from "../steps";
+import { createReviewStep, resolveReviewSellerIdsStep, validateReviewStep } from "../steps";
 
 export const createReviewWorkflow = createWorkflow(
   {
@@ -20,33 +21,38 @@ export const createReviewWorkflow = createWorkflow(
   function (input: CreateReviewDTO) {
     validateReviewStep(input);
     const review = createReviewStep(input);
+    const sellerIds = resolveReviewSellerIdsStep(input);
 
-    const link = transform({ input, review }, ({ input, review }) => {
-      return input.reference === "product"
-        ? [
-          {
-            [Modules.PRODUCT]: {
-              product_id: input.reference_id,
-            },
-            [REVIEW_MODULE]: {
-              review_id: review.id,
-            },
+    const link = transform({ input, review, sellerIds }, ({ input, review, sellerIds }) => {
+      const links: LinkDefinition[] = [];
+
+      if (input.reference === "product") {
+        links.push({
+          [Modules.PRODUCT]: {
+            product_id: input.reference_id,
           },
-        ]
-        : [
-          {
-            [SELLER_MODULE]: {
-              seller_id: input.reference_id,
-            },
-            [REVIEW_MODULE]: {
-              review_id: review.id,
-            },
+          [REVIEW_MODULE]: {
+            review_id: review.id,
           },
-        ];
+        });
+      }
+
+      for (const sellerId of sellerIds) {
+        links.push({
+          [SELLER_MODULE]: {
+            seller_id: sellerId,
+          },
+          [REVIEW_MODULE]: {
+            review_id: review.id,
+          },
+        });
+      }
+
+      return links;
     });
 
     createRemoteLinkStep(link);
 
-    return new WorkflowResponse(review);
+    return new WorkflowResponse({ review, sellerIds });
   }
 );

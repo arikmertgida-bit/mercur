@@ -213,6 +213,37 @@
       "rejectSuccess": "Запит відхилено",
       "submitter": "Відправник",
       "reviewer": "Перевіряючий"
+    },
+    "reviews": {
+      "navLabel": "Відгуки",
+      "heading": "Скарги на відгуки",
+      "noRecords": "Скарг на відгуки не знайдено",
+      "columns": {
+        "seller": "Продавець",
+        "reason": "Причина",
+        "status": "Статус",
+        "adminNote": "Примітка адміністратора"
+      },
+      "status": {
+        "pending": "Очікує",
+        "resolved_deleted": "Видалено",
+        "resolved_kept": "Розглянуто, не видалено"
+      },
+      "detail": {
+        "reportHeading": "Скарга",
+        "reviewHeading": "Відгук",
+        "customerNote": "Примітка покупця",
+        "resolveHeading": "Вирішити",
+        "rejectAction": "Відхилити",
+        "defaultRejectNote": "Розглянуто, не видалено. Якщо ви не згодні з нашим рішенням, можете подати скаргу повторно.",
+        "defaultDeleteNote": "Цей відгук було розглянуто та видалено командою адміністраторів.",
+        "resolveSuccess": "Скаргу вирішено.",
+        "resolveError": "Не вдалося вирішити скаргу.",
+        "deletePrompt": {
+          "title": "Видалити відгук",
+          "description": "Ви впевнені, що хочете видалити цей відгук? Цю дію не можна скасувати."
+        }
+      }
     }
   },
   "reviews": {

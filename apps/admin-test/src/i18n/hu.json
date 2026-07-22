@@ -213,6 +213,37 @@
       "rejectSuccess": "Kérés elutasítva",
       "submitter": "Beküldő",
       "reviewer": "Ellenőr"
+    },
+    "reviews": {
+      "navLabel": "Értékelések",
+      "heading": "Értékelés-bejelentések",
+      "noRecords": "Nem található értékelés-bejelentés",
+      "columns": {
+        "seller": "Eladó",
+        "reason": "Indok",
+        "status": "Állapot",
+        "adminNote": "Adminisztrátori megjegyzés"
+      },
+      "status": {
+        "pending": "Függőben",
+        "resolved_deleted": "Eltávolítva",
+        "resolved_kept": "Felülvizsgálva, nem távolítottuk el"
+      },
+      "detail": {
+        "reportHeading": "Bejelentés",
+        "reviewHeading": "Értékelés",
+        "customerNote": "Vásárlói megjegyzés",
+        "resolveHeading": "Lezárás",
+        "rejectAction": "Elutasítás",
+        "defaultRejectNote": "Felülvizsgálva, nem távolítottuk el. Ha nem ért egyet a döntésünkkel, ismét bejelentést tehet.",
+        "defaultDeleteNote": "Ezt az értékelést az adminisztrátori csapat felülvizsgálta és eltávolította.",
+        "resolveSuccess": "A bejelentés lezárva.",
+        "resolveError": "A bejelentést nem sikerült lezárni.",
+        "deletePrompt": {
+          "title": "Értékelés törlése",
+          "description": "Biztosan törli ezt az értékelést? Ez a művelet nem vonható vissza."
+        }
+      }
     }
   },
   "reviews": {

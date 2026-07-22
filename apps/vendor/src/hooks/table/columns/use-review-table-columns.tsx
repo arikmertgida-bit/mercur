@@ -41,7 +41,7 @@ export const useReviewTableColumns = () => {
           const reference = getValue();
           return (
             <Text size="small" leading="compact" className="text-ui-fg-subtle">
-              {reference.charAt(0).toUpperCase() + reference.slice(1)}
+              {reference ? reference.charAt(0).toUpperCase() + reference.slice(1) : "-"}
             </Text>
           );
         },
@@ -64,6 +64,26 @@ export const useReviewTableColumns = () => {
                 {note || "-"}
               </Text>
             </div>
+          );
+        },
+      }),
+      columnHelper.accessor("seller_note", {
+        id: "reply_status",
+        header: () => (
+          <div className="flex h-full w-full items-center">
+            <span className="truncate">{t("reviews.columns.replyStatus")}</span>
+          </div>
+        ),
+        cell: ({ getValue }) => {
+          const sellerNote = getValue();
+          const answered = Boolean(sellerNote && sellerNote.trim().length > 0);
+          if (answered) {
+            return <StatusBadge color="green">{t("reviews.status.answered")}</StatusBadge>;
+          }
+          return (
+            <span className="bg-brand inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium text-white">
+              {t("reviews.status.awaitingReply")}
+            </span>
           );
         },
       }),

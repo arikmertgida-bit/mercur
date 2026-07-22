@@ -10,6 +10,14 @@ export enum ReviewNotificationEvent {
   SELLER_REPLY = "review_notification.seller_reply",
 }
 
+/**
+ * Shared messenger `notificationType` / persisted `metadata.notification_type`
+ * tag for every review-related messenger notification — lets the vendor
+ * "Değerlendirmeler" unread badge query messages by category instead of
+ * relying on the per-conversation chat unread counter.
+ */
+export const REVIEW_NOTIFICATION_TYPE = "review_notification"
+
 export interface ReviewNewReviewEventPayload {
   sellerToNotify: string
   customerId: string

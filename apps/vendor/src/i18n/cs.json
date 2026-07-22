@@ -117,6 +117,25 @@
       "navLabel": "Typy",
       "heading": "Žádosti o typy",
       "noRecords": "Nebyly nalezeny žádné žádosti o typy"
+    },
+    "reviews": {
+      "navLabel": "Recenze",
+      "heading": "Nahlášení recenzí",
+      "subtitle": "Recenze, které jste nahlásili administrátorovi k moderaci.",
+      "columns": {
+        "reason": "Důvod",
+        "status": "Stav",
+        "adminNote": "Poznámka administrátora"
+      },
+      "status": {
+        "pending": "Čeká na vyřízení",
+        "resolved_deleted": "Odstraněno",
+        "resolved_kept": "Přezkoumáno, neodstraněno"
+      },
+      "reReport": "Nahlásit znovu",
+      "reReportSuccess": "Nahlášení bylo znovu odesláno.",
+      "reReportError": "Nahlášení se nepodařilo odeslat.",
+      "noRecords": "Nebyla nalezena žádná nahlášení recenzí"
     }
   },
   "reviews": {
@@ -125,7 +144,30 @@
     "columns": {
       "rating": "Hodnocení",
       "reference": "Reference",
-      "customerNote": "Poznámka zákazníka"
+      "customerNote": "Poznámka zákazníka",
+      "replyStatus": "Stav odpovědi"
+    },
+    "photos": "Fotografie",
+    "noPhotos": "K této recenzi nebyly přiloženy žádné fotografie.",
+    "hiddenPhoto": "Skryto",
+    "status": {
+      "answered": "Zodpovězeno",
+      "awaitingReply": "Čeká na odpověď"
+    },
+    "reply": {
+      "title": "Odpověď",
+      "placeholder": "Napište odpověď na recenzi zákazníka...",
+      "submit": "Odeslat odpověď",
+      "successToast": "Odpověď byla úspěšně odeslána.",
+      "errorToast": "Odpověď se nepodařilo odeslat."
+    },
+    "report": {
+      "title": "Nahlásit administrátorovi",
+      "description": "Nahlaste tuto recenzi administrátorovi tržiště k moderaci.",
+      "placeholder": "Vysvětlete, proč tuto recenzi nahlašujete...",
+      "submit": "Odeslat nahlášení",
+      "successToast": "Nahlášení odesláno administrátorovi.",
+      "errorToast": "Nahlášení se nepodařilo odeslat."
     }
   }
 }

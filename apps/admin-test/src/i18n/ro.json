@@ -213,6 +213,37 @@
       "rejectSuccess": "Cerere respinsă",
       "submitter": "Solicitant",
       "reviewer": "Evaluator"
+    },
+    "reviews": {
+      "navLabel": "Recenzii",
+      "heading": "Sesizări recenzii",
+      "noRecords": "Nu s-au găsit sesizări de recenzii",
+      "columns": {
+        "seller": "Vânzător",
+        "reason": "Motiv",
+        "status": "Stare",
+        "adminNote": "Notă administrator"
+      },
+      "status": {
+        "pending": "În așteptare",
+        "resolved_deleted": "Eliminată",
+        "resolved_kept": "Analizată, nu a fost eliminată"
+      },
+      "detail": {
+        "reportHeading": "Sesizare",
+        "reviewHeading": "Recenzie",
+        "customerNote": "Notă client",
+        "resolveHeading": "Rezolvă",
+        "rejectAction": "Respinge",
+        "defaultRejectNote": "Analizată, nu a fost eliminată. Dacă nu sunteți de acord cu decizia noastră, puteți trimite o nouă sesizare.",
+        "defaultDeleteNote": "Această recenzie a fost analizată și eliminată de echipa de administrare.",
+        "resolveSuccess": "Sesizare rezolvată.",
+        "resolveError": "Sesizarea nu a putut fi rezolvată.",
+        "deletePrompt": {
+          "title": "Șterge recenzia",
+          "description": "Sigur doriți să ștergeți această recenzie? Această acțiune nu poate fi anulată."
+        }
+      }
     }
   },
   "reviews": {

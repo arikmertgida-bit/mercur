@@ -117,6 +117,25 @@
       "navLabel": "الأنواع",
       "heading": "طلبات الأنواع",
       "noRecords": "لم يتم العثور على طلبات أنواع"
+    },
+    "reviews": {
+      "navLabel": "التقييمات",
+      "heading": "بلاغات التقييمات",
+      "subtitle": "التقييمات التي أبلغت عنها للمسؤول للمراجعة.",
+      "columns": {
+        "reason": "السبب",
+        "status": "الحالة",
+        "adminNote": "ملاحظة المسؤول"
+      },
+      "status": {
+        "pending": "قيد الانتظار",
+        "resolved_deleted": "تمت الإزالة",
+        "resolved_kept": "تمت المراجعة، لم تتم الإزالة"
+      },
+      "reReport": "إبلاغ مرة أخرى",
+      "reReportSuccess": "تم إرسال البلاغ مرة أخرى.",
+      "reReportError": "تعذر إرسال البلاغ.",
+      "noRecords": "لم يتم العثور على بلاغات تقييمات"
     }
   },
   "reviews": {
@@ -125,7 +144,30 @@
     "columns": {
       "rating": "التقييم",
       "reference": "المرجع",
-      "customerNote": "ملاحظة العميل"
+      "customerNote": "ملاحظة العميل",
+      "replyStatus": "حالة الرد"
+    },
+    "photos": "الصور",
+    "noPhotos": "لم يتم إرفاق صور بهذا التقييم.",
+    "hiddenPhoto": "مخفي",
+    "status": {
+      "answered": "تم الرد",
+      "awaitingReply": "بانتظار الرد"
+    },
+    "reply": {
+      "title": "الرد",
+      "placeholder": "اكتب ردًا على تقييم العميل...",
+      "submit": "إرسال الرد",
+      "successToast": "تم إرسال الرد بنجاح.",
+      "errorToast": "تعذر إرسال الرد."
+    },
+    "report": {
+      "title": "الإبلاغ عن المسؤول",
+      "description": "أبلغ عن هذا التقييم إلى مسؤول السوق للمراجعة.",
+      "placeholder": "اشرح سبب الإبلاغ عن هذا التقييم...",
+      "submit": "إرسال البلاغ",
+      "successToast": "تم إرسال البلاغ إلى المسؤول.",
+      "errorToast": "تعذر إرسال البلاغ."
     }
   }
 }

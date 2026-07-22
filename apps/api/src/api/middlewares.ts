@@ -9,6 +9,8 @@ import { storeReviewLikeMiddlewares } from "./store/reviews/[id]/like/middleware
 import { storeReviewRepliesMiddlewares } from "./store/review-replies/middlewares";
 import { storeProductReviewsMiddlewares } from "./store/product-reviews/middlewares";
 import { adminReviewImageReportsMiddlewares } from "./admin/review-image-reports/middlewares";
+import { vendorReviewReportsMiddlewares } from "./vendor/review-reports/middlewares";
+import { adminReviewReportsMiddlewares } from "./admin/review-reports/middlewares";
 import { storeReviewImagesMiddlewares } from "./store/review-images/middlewares";
 import { storeMessengerTokenMiddlewares } from "./store/auth/messenger-token/middlewares";
 import { productImportExportMiddlewares, vendorProductActiveSellerMiddlewares } from "./vendor/products/middlewares";
@@ -49,6 +51,8 @@ export default defineMiddlewares({
         ...storeReviewRepliesMiddlewares,
         ...storeProductReviewsMiddlewares,
         ...adminReviewImageReportsMiddlewares,
+        ...vendorReviewReportsMiddlewares,
+        ...adminReviewReportsMiddlewares,
         ...storeReviewImagesMiddlewares,
         ...storeMessengerTokenMiddlewares,
         ...productImportExportMiddlewares,

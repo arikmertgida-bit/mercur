@@ -1,6 +1,7 @@
 export const storeReviewFields = [
   'id',
   'reference',
+  'reference_id',
   'rating',
   'customer_note',
   'customer.first_name',

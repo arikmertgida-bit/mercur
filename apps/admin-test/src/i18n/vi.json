@@ -213,6 +213,37 @@
       "rejectSuccess": "Đã từ chối yêu cầu",
       "submitter": "Người gửi",
       "reviewer": "Người xét duyệt"
+    },
+    "reviews": {
+      "navLabel": "Đánh giá",
+      "heading": "Báo cáo đánh giá",
+      "noRecords": "Không tìm thấy báo cáo đánh giá nào",
+      "columns": {
+        "seller": "Người bán",
+        "reason": "Lý do",
+        "status": "Trạng thái",
+        "adminNote": "Ghi chú của quản trị viên"
+      },
+      "status": {
+        "pending": "Đang chờ",
+        "resolved_deleted": "Đã xóa",
+        "resolved_kept": "Đã xem xét, không xóa"
+      },
+      "detail": {
+        "reportHeading": "Báo cáo",
+        "reviewHeading": "Đánh giá",
+        "customerNote": "Ghi chú của khách hàng",
+        "resolveHeading": "Xử lý",
+        "rejectAction": "Từ chối",
+        "defaultRejectNote": "Đã xem xét, không xóa. Nếu bạn không đồng ý với quyết định của chúng tôi, bạn có thể gửi báo cáo khác.",
+        "defaultDeleteNote": "Đánh giá này đã được đội ngũ quản trị xem xét và xóa.",
+        "resolveSuccess": "Đã xử lý báo cáo.",
+        "resolveError": "Không thể xử lý báo cáo.",
+        "deletePrompt": {
+          "title": "Xóa đánh giá",
+          "description": "Bạn có chắc chắn muốn xóa đánh giá này không? Hành động này không thể hoàn tác."
+        }
+      }
     }
   },
   "reviews": {

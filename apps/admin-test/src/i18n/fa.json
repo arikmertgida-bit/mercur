@@ -213,6 +213,37 @@
       "rejectSuccess": "درخواست رد شد",
       "submitter": "ارسال‌کننده",
       "reviewer": "بررسی‌کننده"
+    },
+    "reviews": {
+      "navLabel": "نظرات",
+      "heading": "گزارش‌های نظرات",
+      "noRecords": "هیچ گزارش نظری یافت نشد",
+      "columns": {
+        "seller": "فروشنده",
+        "reason": "دلیل",
+        "status": "وضعیت",
+        "adminNote": "یادداشت مدیر"
+      },
+      "status": {
+        "pending": "در انتظار",
+        "resolved_deleted": "حذف شده",
+        "resolved_kept": "بررسی شد، حذف نشد"
+      },
+      "detail": {
+        "reportHeading": "گزارش",
+        "reviewHeading": "نظر",
+        "customerNote": "یادداشت مشتری",
+        "resolveHeading": "حل",
+        "rejectAction": "رد",
+        "defaultRejectNote": "بررسی شد، حذف نشد. اگر با تصمیم ما موافق نیستید، می‌توانید گزارش دیگری ارسال کنید.",
+        "defaultDeleteNote": "این نظر توسط تیم مدیریت بررسی و حذف شد.",
+        "resolveSuccess": "گزارش حل شد.",
+        "resolveError": "حل گزارش ممکن نشد.",
+        "deletePrompt": {
+          "title": "حذف نظر",
+          "description": "آیا مطمئن هستید که می‌خواهید این نظر را حذف کنید؟ این عملیات قابل بازگشت نیست."
+        }
+      }
     }
   },
   "reviews": {

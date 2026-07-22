@@ -117,6 +117,25 @@
       "navLabel": "انواع",
       "heading": "درخواست‌های نوع",
       "noRecords": "درخواست نوع یافت نشد"
+    },
+    "reviews": {
+      "navLabel": "نظرات",
+      "heading": "گزارش‌های نظرات",
+      "subtitle": "نظراتی که برای بررسی به مدیر گزارش داده‌اید.",
+      "columns": {
+        "reason": "دلیل",
+        "status": "وضعیت",
+        "adminNote": "یادداشت مدیر"
+      },
+      "status": {
+        "pending": "در انتظار",
+        "resolved_deleted": "حذف شده",
+        "resolved_kept": "بررسی شد، حذف نشد"
+      },
+      "reReport": "گزارش مجدد",
+      "reReportSuccess": "گزارش دوباره ارسال شد.",
+      "reReportError": "ارسال گزارش ممکن نشد.",
+      "noRecords": "هیچ گزارش نظری یافت نشد"
     }
   },
   "reviews": {
@@ -125,7 +144,30 @@
     "columns": {
       "rating": "امتیاز",
       "reference": "مرجع",
-      "customerNote": "یادداشت مشتری"
+      "customerNote": "یادداشت مشتری",
+      "replyStatus": "وضعیت پاسخ"
+    },
+    "photos": "عکس‌ها",
+    "noPhotos": "هیچ عکسی به این نظر پیوست نشده است.",
+    "hiddenPhoto": "پنهان",
+    "status": {
+      "answered": "پاسخ داده شد",
+      "awaitingReply": "در انتظار پاسخ"
+    },
+    "reply": {
+      "title": "پاسخ",
+      "placeholder": "پاسخی برای نظر مشتری بنویسید...",
+      "submit": "ارسال پاسخ",
+      "successToast": "پاسخ با موفقیت ارسال شد.",
+      "errorToast": "ارسال پاسخ ممکن نشد."
+    },
+    "report": {
+      "title": "گزارش به مدیر",
+      "description": "این نظر را برای بررسی به مدیر بازار گزارش دهید.",
+      "placeholder": "توضیح دهید چرا این نظر را گزارش می‌دهید...",
+      "submit": "ارسال گزارش",
+      "successToast": "گزارش به مدیر ارسال شد.",
+      "errorToast": "ارسال گزارش ممکن نشد."
     }
   }
 }

@@ -117,6 +117,25 @@
       "navLabel": "סוגים",
       "heading": "בקשות סוג",
       "noRecords": "לא נמצאו בקשות סוג"
+    },
+    "reviews": {
+      "navLabel": "ביקורות",
+      "heading": "דיווחים על ביקורות",
+      "subtitle": "ביקורות שדיווחת עליהן למנהל לצורך בקרה.",
+      "columns": {
+        "reason": "סיבה",
+        "status": "סטטוס",
+        "adminNote": "הערת מנהל"
+      },
+      "status": {
+        "pending": "ממתין",
+        "resolved_deleted": "הוסרה",
+        "resolved_kept": "נבדקה, לא הוסרה"
+      },
+      "reReport": "דווח שוב",
+      "reReportSuccess": "הדיווח נשלח שוב.",
+      "reReportError": "לא ניתן היה לשלוח את הדיווח.",
+      "noRecords": "לא נמצאו דיווחים על ביקורות"
     }
   },
   "reviews": {
@@ -125,7 +144,30 @@
     "columns": {
       "rating": "דירוג",
       "reference": "מזהה",
-      "customerNote": "הערת לקוח"
+      "customerNote": "הערת לקוח",
+      "replyStatus": "סטטוס תגובה"
+    },
+    "photos": "תמונות",
+    "noPhotos": "לא צורפו תמונות לביקורת זו.",
+    "hiddenPhoto": "מוסתר",
+    "status": {
+      "answered": "נענתה",
+      "awaitingReply": "ממתינה לתגובה"
+    },
+    "reply": {
+      "title": "תגובה",
+      "placeholder": "כתוב תגובה לביקורת הלקוח...",
+      "submit": "שלח תגובה",
+      "successToast": "התגובה נשלחה בהצלחה.",
+      "errorToast": "לא ניתן היה לשלוח את התגובה."
+    },
+    "report": {
+      "title": "דווח למנהל",
+      "description": "דווח על ביקורת זו למנהל השוק לצורך בקרה.",
+      "placeholder": "הסבר מדוע אתה מדווח על ביקורת זו...",
+      "submit": "שלח דיווח",
+      "successToast": "הדיווח נשלח למנהל.",
+      "errorToast": "לא ניתן היה לשלוח את הדיווח."
     }
   }
 }

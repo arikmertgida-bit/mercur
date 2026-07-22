@@ -1,4 +1,10 @@
-import { useQuery, UseQueryOptions } from "@tanstack/react-query";
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  UseQueryOptions,
+  UseMutationOptions,
+} from "@tanstack/react-query";
 import { queryKeysFactory } from "@mercurjs/dashboard-shared";
 import { client } from "../../lib/client";
 import {
@@ -60,4 +66,50 @@ export const useReview = (
   });
 
   return { ...data, ...rest };
+};
+
+export const useReviewStats = (
+  options?: Omit<
+    UseQueryOptions<
+      unknown,
+      ClientError,
+      InferClientOutput<typeof client.vendor.reviews.stats.query>
+    >,
+    "queryKey" | "queryFn"
+  >,
+) => {
+  const { data, ...rest } = useQuery({
+    queryKey: reviewsQueryKeys.detail("stats"),
+    queryFn: async () => client.vendor.reviews.stats.query(),
+    ...options,
+  });
+
+  return { ...data, ...rest };
+};
+
+type UpdateReviewPayload = Omit<
+  InferClientInput<typeof client.vendor.reviews.$id.mutate>,
+  "$id"
+>;
+
+export const useUpdateReview = (
+  id: string,
+  options?: UseMutationOptions<
+    InferClientOutput<typeof client.vendor.reviews.$id.mutate>,
+    ClientError,
+    UpdateReviewPayload
+  >,
+) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (payload: UpdateReviewPayload) =>
+      client.vendor.reviews.$id.mutate({ $id: id, ...payload }),
+    onSuccess: (data, variables, context) => {
+      queryClient.invalidateQueries({ queryKey: reviewsQueryKeys.lists() });
+      queryClient.invalidateQueries({ queryKey: reviewsQueryKeys.detail(id) });
+      options?.onSuccess?.(data, variables, context);
+    },
+    ...options,
+  });
 };

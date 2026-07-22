@@ -117,6 +117,25 @@
       "navLabel": "Tipai",
       "heading": "Tipų užklausos",
       "noRecords": "Tipų užklausų nerasta"
+    },
+    "reviews": {
+      "navLabel": "Atsiliepimai",
+      "heading": "Atsiliepimų skundai",
+      "subtitle": "Atsiliepimai, apie kuriuos pranešėte administratoriui dėl moderavimo.",
+      "columns": {
+        "reason": "Priežastis",
+        "status": "Būsena",
+        "adminNote": "Administratoriaus pastaba"
+      },
+      "status": {
+        "pending": "Laukiama",
+        "resolved_deleted": "Pašalinta",
+        "resolved_kept": "Peržiūrėta, nepašalinta"
+      },
+      "reReport": "Pranešti dar kartą",
+      "reReportSuccess": "Skundas pakartotinai išsiųstas.",
+      "reReportError": "Nepavyko išsiųsti skundo.",
+      "noRecords": "Atsiliepimų skundų nerasta"
     }
   },
   "reviews": {
@@ -125,7 +144,30 @@
     "columns": {
       "rating": "Įvertinimas",
       "reference": "Nuoroda",
-      "customerNote": "Kliento pastaba"
+      "customerNote": "Kliento pastaba",
+      "replyStatus": "Atsakymo būsena"
+    },
+    "photos": "Nuotraukos",
+    "noPhotos": "Prie šio atsiliepimo nuotraukų nepridėta.",
+    "hiddenPhoto": "Paslėpta",
+    "status": {
+      "answered": "Atsakyta",
+      "awaitingReply": "Laukiama atsakymo"
+    },
+    "reply": {
+      "title": "Atsakymas",
+      "placeholder": "Parašykite atsakymą į kliento atsiliepimą...",
+      "submit": "Siųsti atsakymą",
+      "successToast": "Atsakymas sėkmingai išsiųstas.",
+      "errorToast": "Nepavyko išsiųsti atsakymo."
+    },
+    "report": {
+      "title": "Pranešti administratoriui",
+      "description": "Praneškite apie šį atsiliepimą prekyvietės administratoriui dėl moderavimo.",
+      "placeholder": "Paaiškinkite, kodėl pranešate apie šį atsiliepimą...",
+      "submit": "Siųsti skundą",
+      "successToast": "Skundas išsiųstas administratoriui.",
+      "errorToast": "Nepavyko išsiųsti skundo."
     }
   }
 }

@@ -117,6 +117,25 @@
       "navLabel": "タイプ",
       "heading": "タイプリクエスト",
       "noRecords": "タイプリクエストが見つかりません"
+    },
+    "reviews": {
+      "navLabel": "レビュー",
+      "heading": "レビュー報告",
+      "subtitle": "モデレーションのために管理者に報告したレビューです。",
+      "columns": {
+        "reason": "理由",
+        "status": "ステータス",
+        "adminNote": "管理者メモ"
+      },
+      "status": {
+        "pending": "保留中",
+        "resolved_deleted": "削除済み",
+        "resolved_kept": "確認済み・未削除"
+      },
+      "reReport": "再報告",
+      "reReportSuccess": "報告を再送信しました。",
+      "reReportError": "報告を送信できませんでした。",
+      "noRecords": "レビュー報告が見つかりません"
     }
   },
   "reviews": {
@@ -125,7 +144,30 @@
     "columns": {
       "rating": "評価",
       "reference": "参照番号",
-      "customerNote": "顧客メモ"
+      "customerNote": "顧客メモ",
+      "replyStatus": "返信ステータス"
+    },
+    "photos": "写真",
+    "noPhotos": "このレビューに写真は添付されていません。",
+    "hiddenPhoto": "非表示",
+    "status": {
+      "answered": "返信済み",
+      "awaitingReply": "返信待ち"
+    },
+    "reply": {
+      "title": "返信",
+      "placeholder": "顧客のレビューへの返信を入力してください...",
+      "submit": "返信を送信",
+      "successToast": "返信を送信しました。",
+      "errorToast": "返信を送信できませんでした。"
+    },
+    "report": {
+      "title": "管理者に報告",
+      "description": "このレビューをモデレーションのためにマーケットプレイス管理者に報告します。",
+      "placeholder": "このレビューを報告する理由を説明してください...",
+      "submit": "報告を送信",
+      "successToast": "管理者に報告を送信しました。",
+      "errorToast": "報告を送信できませんでした。"
     }
   }
 }

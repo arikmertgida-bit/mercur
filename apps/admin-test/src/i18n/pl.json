@@ -213,6 +213,37 @@
       "rejectSuccess": "Wniosek odrzucony",
       "submitter": "Zgłaszający",
       "reviewer": "Weryfikujący"
+    },
+    "reviews": {
+      "navLabel": "Recenzje",
+      "heading": "Zgłoszenia recenzji",
+      "noRecords": "Nie znaleziono zgłoszeń recenzji",
+      "columns": {
+        "seller": "Sprzedawca",
+        "reason": "Powód",
+        "status": "Status",
+        "adminNote": "Notatka administratora"
+      },
+      "status": {
+        "pending": "Oczekujące",
+        "resolved_deleted": "Usunięta",
+        "resolved_kept": "Sprawdzona, nie usunięta"
+      },
+      "detail": {
+        "reportHeading": "Zgłoszenie",
+        "reviewHeading": "Recenzja",
+        "customerNote": "Notatka klienta",
+        "resolveHeading": "Rozstrzygnij",
+        "rejectAction": "Odrzuć",
+        "defaultRejectNote": "Sprawdzona, nie usunięta. Jeśli nie zgadzasz się z naszą decyzją, możesz złożyć kolejne zgłoszenie.",
+        "defaultDeleteNote": "Ta recenzja została sprawdzona i usunięta przez zespół administracyjny.",
+        "resolveSuccess": "Zgłoszenie rozstrzygnięte.",
+        "resolveError": "Nie udało się rozstrzygnąć zgłoszenia.",
+        "deletePrompt": {
+          "title": "Usuń recenzję",
+          "description": "Czy na pewno chcesz usunąć tę recenzję? Tej czynności nie można cofnąć."
+        }
+      }
     }
   },
   "reviews": {
