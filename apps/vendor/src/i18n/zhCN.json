@@ -117,6 +117,25 @@
       "navLabel": "类型",
       "heading": "类型请求",
       "noRecords": "未找到类型请求"
+    },
+    "reviews": {
+      "navLabel": "评价",
+      "heading": "评价举报",
+      "subtitle": "您已举报给管理员进行审核的评价。",
+      "columns": {
+        "reason": "原因",
+        "status": "状态",
+        "adminNote": "管理员备注"
+      },
+      "status": {
+        "pending": "待处理",
+        "resolved_deleted": "已删除",
+        "resolved_kept": "已审核，未删除"
+      },
+      "reReport": "再次举报",
+      "reReportSuccess": "举报已重新发送。",
+      "reReportError": "无法发送举报。",
+      "noRecords": "未找到评价举报"
     }
   },
   "reviews": {
@@ -125,7 +144,30 @@
     "columns": {
       "rating": "评分",
       "reference": "参考编号",
-      "customerNote": "客户备注"
+      "customerNote": "客户备注",
+      "replyStatus": "回复状态"
+    },
+    "photos": "照片",
+    "noPhotos": "此评价未附带照片。",
+    "hiddenPhoto": "已隐藏",
+    "status": {
+      "answered": "已回复",
+      "awaitingReply": "等待回复"
+    },
+    "reply": {
+      "title": "回复",
+      "placeholder": "写一条对该顾客评价的回复……",
+      "submit": "发送回复",
+      "successToast": "回复发送成功。",
+      "errorToast": "无法发送回复。"
+    },
+    "report": {
+      "title": "举报给管理员",
+      "description": "将此评价举报给市场管理员以进行审核。",
+      "placeholder": "请说明您举报此评价的原因……",
+      "submit": "发送举报",
+      "successToast": "举报已发送给管理员。",
+      "errorToast": "无法发送举报。"
     }
   }
 }

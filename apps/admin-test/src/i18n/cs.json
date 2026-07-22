@@ -213,6 +213,37 @@
       "rejectSuccess": "Žádost odmítnuta",
       "submitter": "Odesílatel",
       "reviewer": "Posuzovatel"
+    },
+    "reviews": {
+      "navLabel": "Recenze",
+      "heading": "Nahlášení recenzí",
+      "noRecords": "Nebyla nalezena žádná nahlášení recenzí",
+      "columns": {
+        "seller": "Prodejce",
+        "reason": "Důvod",
+        "status": "Stav",
+        "adminNote": "Poznámka administrátora"
+      },
+      "status": {
+        "pending": "Čeká na vyřízení",
+        "resolved_deleted": "Odstraněno",
+        "resolved_kept": "Přezkoumáno, neodstraněno"
+      },
+      "detail": {
+        "reportHeading": "Nahlášení",
+        "reviewHeading": "Recenze",
+        "customerNote": "Poznámka zákazníka",
+        "resolveHeading": "Vyřešit",
+        "rejectAction": "Zamítnout",
+        "defaultRejectNote": "Přezkoumáno, neodstraněno. Pokud s naším rozhodnutím nesouhlasíte, můžete podat další nahlášení.",
+        "defaultDeleteNote": "Tato recenze byla přezkoumána a odstraněna administrátorským týmem.",
+        "resolveSuccess": "Nahlášení vyřešeno.",
+        "resolveError": "Nahlášení se nepodařilo vyřešit.",
+        "deletePrompt": {
+          "title": "Odstranit recenzi",
+          "description": "Opravdu chcete tuto recenzi odstranit? Tuto akci nelze vrátit zpět."
+        }
+      }
     }
   },
   "reviews": {

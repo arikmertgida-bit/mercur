@@ -117,6 +117,25 @@
       "navLabel": "Tipi",
       "heading": "Richieste di tipi",
       "noRecords": "Nessuna richiesta di tipo trovata"
+    },
+    "reviews": {
+      "navLabel": "Recensioni",
+      "heading": "Segnalazioni di recensioni",
+      "subtitle": "Recensioni che hai segnalato all'amministratore per la moderazione.",
+      "columns": {
+        "reason": "Motivo",
+        "status": "Stato",
+        "adminNote": "Nota dell'amministratore"
+      },
+      "status": {
+        "pending": "In attesa",
+        "resolved_deleted": "Rimossa",
+        "resolved_kept": "Esaminata, non rimossa"
+      },
+      "reReport": "Segnala di nuovo",
+      "reReportSuccess": "Segnalazione inviata di nuovo.",
+      "reReportError": "Impossibile inviare la segnalazione.",
+      "noRecords": "Nessuna segnalazione di recensione trovata"
     }
   },
   "reviews": {
@@ -125,7 +144,30 @@
     "columns": {
       "rating": "Valutazione",
       "reference": "Riferimento",
-      "customerNote": "Nota del cliente"
+      "customerNote": "Nota del cliente",
+      "replyStatus": "Stato risposta"
+    },
+    "photos": "Foto",
+    "noPhotos": "Nessuna foto è stata allegata a questa recensione.",
+    "hiddenPhoto": "Nascosto",
+    "status": {
+      "answered": "Risposto",
+      "awaitingReply": "In attesa di risposta"
+    },
+    "reply": {
+      "title": "Risposta",
+      "placeholder": "Scrivi una risposta alla recensione del cliente...",
+      "submit": "Invia risposta",
+      "successToast": "Risposta inviata con successo.",
+      "errorToast": "Impossibile inviare la risposta."
+    },
+    "report": {
+      "title": "Segnala all'amministratore",
+      "description": "Segnala questa recensione a un amministratore del marketplace per la moderazione.",
+      "placeholder": "Spiega perché stai segnalando questa recensione...",
+      "submit": "Invia segnalazione",
+      "successToast": "Segnalazione inviata all'amministratore.",
+      "errorToast": "Impossibile inviare la segnalazione."
     }
   }
 }

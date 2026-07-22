@@ -117,6 +117,25 @@
       "navLabel": "유형",
       "heading": "유형 요청",
       "noRecords": "유형 요청이 없습니다"
+    },
+    "reviews": {
+      "navLabel": "리뷰",
+      "heading": "리뷰 신고",
+      "subtitle": "검토를 위해 관리자에게 신고한 리뷰입니다.",
+      "columns": {
+        "reason": "사유",
+        "status": "상태",
+        "adminNote": "관리자 메모"
+      },
+      "status": {
+        "pending": "대기 중",
+        "resolved_deleted": "삭제됨",
+        "resolved_kept": "검토됨, 삭제되지 않음"
+      },
+      "reReport": "다시 신고",
+      "reReportSuccess": "신고가 다시 전송되었습니다.",
+      "reReportError": "신고를 보낼 수 없습니다.",
+      "noRecords": "리뷰 신고를 찾을 수 없습니다"
     }
   },
   "reviews": {
@@ -125,7 +144,30 @@
     "columns": {
       "rating": "평점",
       "reference": "참조",
-      "customerNote": "고객 메모"
+      "customerNote": "고객 메모",
+      "replyStatus": "답변 상태"
+    },
+    "photos": "사진",
+    "noPhotos": "이 리뷰에 첨부된 사진이 없습니다.",
+    "hiddenPhoto": "숨김",
+    "status": {
+      "answered": "답변 완료",
+      "awaitingReply": "답변 대기 중"
+    },
+    "reply": {
+      "title": "답변",
+      "placeholder": "고객 리뷰에 대한 답변을 작성하세요...",
+      "submit": "답변 보내기",
+      "successToast": "답변이 성공적으로 전송되었습니다.",
+      "errorToast": "답변을 보낼 수 없습니다."
+    },
+    "report": {
+      "title": "관리자에게 신고",
+      "description": "이 리뷰를 검토를 위해 마켓플레이스 관리자에게 신고합니다.",
+      "placeholder": "이 리뷰를 신고하는 이유를 설명해 주세요...",
+      "submit": "신고 보내기",
+      "successToast": "관리자에게 신고가 전송되었습니다.",
+      "errorToast": "신고를 보낼 수 없습니다."
     }
   }
 }

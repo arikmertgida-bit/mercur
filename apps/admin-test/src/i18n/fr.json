@@ -213,6 +213,37 @@
       "rejectSuccess": "Demande rejetée",
       "submitter": "Auteur de la demande",
       "reviewer": "Examinateur"
+    },
+    "reviews": {
+      "navLabel": "Avis",
+      "heading": "Signalements d'avis",
+      "noRecords": "Aucun signalement d'avis trouvé",
+      "columns": {
+        "seller": "Vendeur",
+        "reason": "Motif",
+        "status": "Statut",
+        "adminNote": "Note de l'administrateur"
+      },
+      "status": {
+        "pending": "En attente",
+        "resolved_deleted": "Supprimé",
+        "resolved_kept": "Examiné, non supprimé"
+      },
+      "detail": {
+        "reportHeading": "Signalement",
+        "reviewHeading": "Avis",
+        "customerNote": "Note du client",
+        "resolveHeading": "Résoudre",
+        "rejectAction": "Rejeter",
+        "defaultRejectNote": "Examiné, non supprimé. Si vous n'êtes pas d'accord avec notre décision, vous pouvez soumettre un nouveau signalement.",
+        "defaultDeleteNote": "Cet avis a été examiné et supprimé par l'équipe d'administration.",
+        "resolveSuccess": "Signalement résolu.",
+        "resolveError": "Impossible de résoudre le signalement.",
+        "deletePrompt": {
+          "title": "Supprimer l'avis",
+          "description": "Êtes-vous sûr de vouloir supprimer cet avis ? Cette action est irréversible."
+        }
+      }
     }
   },
   "reviews": {

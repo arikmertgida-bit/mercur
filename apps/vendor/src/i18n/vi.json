@@ -117,6 +117,25 @@
       "navLabel": "Loại",
       "heading": "Yêu cầu loại",
       "noRecords": "Không tìm thấy yêu cầu loại nào"
+    },
+    "reviews": {
+      "navLabel": "Đánh giá",
+      "heading": "Báo cáo đánh giá",
+      "subtitle": "Các đánh giá bạn đã báo cáo cho quản trị viên để kiểm duyệt.",
+      "columns": {
+        "reason": "Lý do",
+        "status": "Trạng thái",
+        "adminNote": "Ghi chú của quản trị viên"
+      },
+      "status": {
+        "pending": "Đang chờ",
+        "resolved_deleted": "Đã xóa",
+        "resolved_kept": "Đã xem xét, không xóa"
+      },
+      "reReport": "Báo cáo lại",
+      "reReportSuccess": "Đã gửi lại báo cáo.",
+      "reReportError": "Không thể gửi báo cáo.",
+      "noRecords": "Không tìm thấy báo cáo đánh giá nào"
     }
   },
   "reviews": {
@@ -125,7 +144,30 @@
     "columns": {
       "rating": "Xếp hạng",
       "reference": "Mã tham chiếu",
-      "customerNote": "Ghi chú của khách hàng"
+      "customerNote": "Ghi chú của khách hàng",
+      "replyStatus": "Trạng thái phản hồi"
+    },
+    "photos": "Hình ảnh",
+    "noPhotos": "Không có hình ảnh nào được đính kèm vào đánh giá này.",
+    "hiddenPhoto": "Đã ẩn",
+    "status": {
+      "answered": "Đã phản hồi",
+      "awaitingReply": "Đang chờ phản hồi"
+    },
+    "reply": {
+      "title": "Phản hồi",
+      "placeholder": "Viết phản hồi cho đánh giá của khách hàng...",
+      "submit": "Gửi phản hồi",
+      "successToast": "Đã gửi phản hồi thành công.",
+      "errorToast": "Không thể gửi phản hồi."
+    },
+    "report": {
+      "title": "Báo cáo cho quản trị viên",
+      "description": "Báo cáo đánh giá này cho quản trị viên sàn thương mại để kiểm duyệt.",
+      "placeholder": "Giải thích lý do bạn báo cáo đánh giá này...",
+      "submit": "Gửi báo cáo",
+      "successToast": "Đã gửi báo cáo đến quản trị viên.",
+      "errorToast": "Không thể gửi báo cáo."
     }
   }
 }

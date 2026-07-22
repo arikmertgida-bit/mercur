@@ -213,6 +213,37 @@
       "rejectSuccess": "Permintaan ditolak",
       "submitter": "Pengaju",
       "reviewer": "Peninjau"
+    },
+    "reviews": {
+      "navLabel": "Ulasan",
+      "heading": "Laporan Ulasan",
+      "noRecords": "Tidak ada laporan ulasan ditemukan",
+      "columns": {
+        "seller": "Penjual",
+        "reason": "Alasan",
+        "status": "Status",
+        "adminNote": "Catatan Admin"
+      },
+      "status": {
+        "pending": "Menunggu",
+        "resolved_deleted": "Dihapus",
+        "resolved_kept": "Ditinjau, Tidak Dihapus"
+      },
+      "detail": {
+        "reportHeading": "Laporan",
+        "reviewHeading": "Ulasan",
+        "customerNote": "Catatan Pelanggan",
+        "resolveHeading": "Selesaikan",
+        "rejectAction": "Tolak",
+        "defaultRejectNote": "Ditinjau, tidak dihapus. Jika Anda tidak setuju dengan keputusan kami, Anda dapat mengirim laporan lagi.",
+        "defaultDeleteNote": "Ulasan ini telah ditinjau dan dihapus oleh tim admin.",
+        "resolveSuccess": "Laporan diselesaikan.",
+        "resolveError": "Laporan tidak dapat diselesaikan.",
+        "deletePrompt": {
+          "title": "Hapus Ulasan",
+          "description": "Apakah Anda yakin ingin menghapus ulasan ini? Tindakan ini tidak dapat dibatalkan."
+        }
+      }
     }
   },
   "reviews": {

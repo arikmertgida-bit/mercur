@@ -117,6 +117,25 @@
       "navLabel": "Tipovi",
       "heading": "Zahtjevi za tipove",
       "noRecords": "Nisu pronađeni zahtjevi za tipove"
+    },
+    "reviews": {
+      "navLabel": "Recenzije",
+      "heading": "Prijave recenzija",
+      "subtitle": "Recenzije koje ste prijavili administratoru radi moderacije.",
+      "columns": {
+        "reason": "Razlog",
+        "status": "Status",
+        "adminNote": "Napomena administratora"
+      },
+      "status": {
+        "pending": "Na čekanju",
+        "resolved_deleted": "Uklonjeno",
+        "resolved_kept": "Pregledano, nije uklonjeno"
+      },
+      "reReport": "Prijavi ponovo",
+      "reReportSuccess": "Prijava ponovo poslana.",
+      "reReportError": "Prijava nije mogla biti poslana.",
+      "noRecords": "Nisu pronađene prijave recenzija"
     }
   },
   "reviews": {
@@ -125,7 +144,30 @@
     "columns": {
       "rating": "Ocjena",
       "reference": "Referenca",
-      "customerNote": "Napomena kupca"
+      "customerNote": "Napomena kupca",
+      "replyStatus": "Status odgovora"
+    },
+    "photos": "Fotografije",
+    "noPhotos": "Uz ovu recenziju nisu priložene fotografije.",
+    "hiddenPhoto": "Skriveno",
+    "status": {
+      "answered": "Odgovoreno",
+      "awaitingReply": "Čeka odgovor"
+    },
+    "reply": {
+      "title": "Odgovor",
+      "placeholder": "Napišite odgovor na recenziju kupca...",
+      "submit": "Pošalji odgovor",
+      "successToast": "Odgovor uspješno poslan.",
+      "errorToast": "Odgovor nije mogao biti poslan."
+    },
+    "report": {
+      "title": "Prijavi administratoru",
+      "description": "Prijavite ovu recenziju administratoru tržišta radi moderacije.",
+      "placeholder": "Objasnite zašto prijavljujete ovu recenziju...",
+      "submit": "Pošalji prijavu",
+      "successToast": "Prijava poslana administratoru.",
+      "errorToast": "Prijava nije mogla biti poslana."
     }
   }
 }

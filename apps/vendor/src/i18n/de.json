@@ -117,6 +117,25 @@
       "navLabel": "Typen",
       "heading": "Typanfragen",
       "noRecords": "Keine Typanfragen gefunden"
+    },
+    "reviews": {
+      "navLabel": "Bewertungen",
+      "heading": "Bewertungsmeldungen",
+      "subtitle": "Bewertungen, die Sie zur Moderation an den Administrator gemeldet haben.",
+      "columns": {
+        "reason": "Grund",
+        "status": "Status",
+        "adminNote": "Admin-Notiz"
+      },
+      "status": {
+        "pending": "Ausstehend",
+        "resolved_deleted": "Entfernt",
+        "resolved_kept": "Geprüft, nicht entfernt"
+      },
+      "reReport": "Erneut melden",
+      "reReportSuccess": "Meldung erneut gesendet.",
+      "reReportError": "Meldung konnte nicht gesendet werden.",
+      "noRecords": "Keine Bewertungsmeldungen gefunden"
     }
   },
   "reviews": {
@@ -125,7 +144,30 @@
     "columns": {
       "rating": "Bewertung",
       "reference": "Referenz",
-      "customerNote": "Kundenhinweis"
+      "customerNote": "Kundenhinweis",
+      "replyStatus": "Antwortstatus"
+    },
+    "photos": "Fotos",
+    "noPhotos": "Zu dieser Bewertung wurden keine Fotos hinzugefügt.",
+    "hiddenPhoto": "Ausgeblendet",
+    "status": {
+      "answered": "Beantwortet",
+      "awaitingReply": "Antwort ausstehend"
+    },
+    "reply": {
+      "title": "Antwort",
+      "placeholder": "Schreiben Sie eine Antwort auf die Bewertung des Kunden...",
+      "submit": "Antwort senden",
+      "successToast": "Antwort erfolgreich gesendet.",
+      "errorToast": "Antwort konnte nicht gesendet werden."
+    },
+    "report": {
+      "title": "An Administrator melden",
+      "description": "Melden Sie diese Bewertung zur Moderation an einen Marktplatz-Administrator.",
+      "placeholder": "Erklären Sie, warum Sie diese Bewertung melden...",
+      "submit": "Meldung senden",
+      "successToast": "Meldung an Administrator gesendet.",
+      "errorToast": "Meldung konnte nicht gesendet werden."
     }
   }
 }

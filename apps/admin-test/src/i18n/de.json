@@ -213,6 +213,37 @@
       "rejectSuccess": "Anfrage abgelehnt",
       "submitter": "Einreicher",
       "reviewer": "Prüfer"
+    },
+    "reviews": {
+      "navLabel": "Bewertungen",
+      "heading": "Bewertungsmeldungen",
+      "noRecords": "Keine Bewertungsmeldungen gefunden",
+      "columns": {
+        "seller": "Verkäufer",
+        "reason": "Grund",
+        "status": "Status",
+        "adminNote": "Admin-Notiz"
+      },
+      "status": {
+        "pending": "Ausstehend",
+        "resolved_deleted": "Entfernt",
+        "resolved_kept": "Geprüft, nicht entfernt"
+      },
+      "detail": {
+        "reportHeading": "Meldung",
+        "reviewHeading": "Bewertung",
+        "customerNote": "Kundennotiz",
+        "resolveHeading": "Entscheiden",
+        "rejectAction": "Ablehnen",
+        "defaultRejectNote": "Geprüft, nicht entfernt. Wenn Sie mit unserer Entscheidung nicht einverstanden sind, können Sie erneut eine Meldung einreichen.",
+        "defaultDeleteNote": "Diese Bewertung wurde vom Administratorteam geprüft und entfernt.",
+        "resolveSuccess": "Meldung bearbeitet.",
+        "resolveError": "Meldung konnte nicht bearbeitet werden.",
+        "deletePrompt": {
+          "title": "Bewertung löschen",
+          "description": "Sind Sie sicher, dass Sie diese Bewertung löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden."
+        }
+      }
     }
   },
   "reviews": {

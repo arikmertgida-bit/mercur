@@ -8,7 +8,6 @@ import type { Query } from "@medusajs/framework";
 import customerReview from "../../../links/customer-review";
 import {
   CustomerSummarySchema,
-  ProductSellerIdsRowSchema,
   buildCustomerDisplayName,
   parseFirstRow,
 } from "../../../lib/graph-schemas";
@@ -16,19 +15,6 @@ import { emitReviewNewReviewEvent } from "../../../lib/review-events";
 import { StoreReviewListResponse, StoreReviewResponse } from "../../../modules/reviews/types";
 import { createReviewWorkflow } from "../../../workflows/review/workflows";
 import { StoreCreateReviewType, StoreGetReviewsParamsType } from "./validators";
-
-async function resolveProductSellerIds(
-  query: Query,
-  productId: string
-): Promise<string[]> {
-  const { data } = await query.graph({
-    entity: "product",
-    filters: { id: productId },
-    fields: ["id", "sellers.id"],
-  });
-  const row = parseFirstRow(ProductSellerIdsRowSchema, data);
-  return row?.sellers?.map((seller) => seller.id) ?? [];
-}
 
 export const POST = async (
   req: AuthenticatedMedusaRequest<StoreCreateReviewType>,
@@ -52,16 +38,11 @@ export const POST = async (
     entity: "review",
     fields: req.queryConfig.fields,
     filters: {
-      id: result.id,
+      id: result.review.id,
     },
   });
 
-  const sellerIds =
-    req.validatedBody.reference === "seller"
-      ? [req.validatedBody.reference_id]
-      : await resolveProductSellerIds(query, req.validatedBody.reference_id);
-
-  if (sellerIds.length > 0) {
+  if (result.sellerIds.length > 0) {
     const { data: customers } = await query.graph({
       entity: "customer",
       filters: { id: customerId },
@@ -71,7 +52,7 @@ export const POST = async (
     const customerName = customer ? buildCustomerDisplayName(customer) : "Müşteri";
 
     await Promise.all(
-      sellerIds.map((sellerId) =>
+      result.sellerIds.map((sellerId: string) =>
         emitReviewNewReviewEvent(req.scope, {
           sellerToNotify: sellerId,
           customerId,
@@ -100,7 +81,15 @@ export const GET = async (
   });
 
   res.json({
-    reviews: reviews.map((relation) => relation.review),
+    // A customer_review link row can outlive the review it points to (e.g.
+    // an admin-deleted review whose link rows predate the cascade cleanup
+    // in deleteReviewStep) — `relation.review` resolves to null in that
+    // case. Without filtering, a single stale link poisons the whole
+    // response's Zod parse on the storefront, hiding every review the
+    // customer ever wrote instead of just the missing one.
+    reviews: reviews
+      .map((relation) => relation.review)
+      .filter((review) => review != null),
     count: metadata?.count ?? 0,
     offset: metadata?.skip ?? 0,
     limit: metadata?.take ?? 0,

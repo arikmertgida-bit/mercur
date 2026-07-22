@@ -117,6 +117,25 @@
       "navLabel": "類型",
       "heading": "類型請求",
       "noRecords": "找不到類型請求"
+    },
+    "reviews": {
+      "navLabel": "評價",
+      "heading": "評價檢舉",
+      "subtitle": "您已檢舉給管理員以進行審核的評價。",
+      "columns": {
+        "reason": "原因",
+        "status": "狀態",
+        "adminNote": "管理員備註"
+      },
+      "status": {
+        "pending": "待處理",
+        "resolved_deleted": "已刪除",
+        "resolved_kept": "已審核，未刪除"
+      },
+      "reReport": "再次檢舉",
+      "reReportSuccess": "檢舉已重新送出。",
+      "reReportError": "無法送出檢舉。",
+      "noRecords": "找不到評價檢舉"
     }
   },
   "reviews": {
@@ -125,7 +144,30 @@
     "columns": {
       "rating": "評分",
       "reference": "參考編號",
-      "customerNote": "顧客備註"
+      "customerNote": "顧客備註",
+      "replyStatus": "回覆狀態"
+    },
+    "photos": "照片",
+    "noPhotos": "此評價未附帶照片。",
+    "hiddenPhoto": "已隱藏",
+    "status": {
+      "answered": "已回覆",
+      "awaitingReply": "等待回覆"
+    },
+    "reply": {
+      "title": "回覆",
+      "placeholder": "撰寫對此顧客評價的回覆……",
+      "submit": "傳送回覆",
+      "successToast": "回覆傳送成功。",
+      "errorToast": "無法傳送回覆。"
+    },
+    "report": {
+      "title": "檢舉給管理員",
+      "description": "將此評價檢舉給市集管理員以進行審核。",
+      "placeholder": "說明您檢舉此評價的原因……",
+      "submit": "傳送檢舉",
+      "successToast": "檢舉已傳送給管理員。",
+      "errorToast": "無法傳送檢舉。"
     }
   }
 }

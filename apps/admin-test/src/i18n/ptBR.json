@@ -213,6 +213,37 @@
       "rejectSuccess": "Solicitação rejeitada",
       "submitter": "Solicitante",
       "reviewer": "Revisor"
+    },
+    "reviews": {
+      "navLabel": "Avaliações",
+      "heading": "Denúncias de avaliações",
+      "noRecords": "Nenhuma denúncia de avaliação encontrada",
+      "columns": {
+        "seller": "Vendedor",
+        "reason": "Motivo",
+        "status": "Status",
+        "adminNote": "Nota do administrador"
+      },
+      "status": {
+        "pending": "Pendente",
+        "resolved_deleted": "Removida",
+        "resolved_kept": "Analisada, não removida"
+      },
+      "detail": {
+        "reportHeading": "Denúncia",
+        "reviewHeading": "Avaliação",
+        "customerNote": "Nota do cliente",
+        "resolveHeading": "Resolver",
+        "rejectAction": "Rejeitar",
+        "defaultRejectNote": "Analisada, não removida. Se você não concorda com nossa decisão, pode enviar outra denúncia.",
+        "defaultDeleteNote": "Esta avaliação foi analisada e removida pela equipe de administração.",
+        "resolveSuccess": "Denúncia resolvida.",
+        "resolveError": "Não foi possível resolver a denúncia.",
+        "deletePrompt": {
+          "title": "Excluir avaliação",
+          "description": "Tem certeza de que deseja excluir esta avaliação? Esta ação não pode ser desfeita."
+        }
+      }
     }
   },
   "reviews": {

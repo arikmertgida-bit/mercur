@@ -117,6 +117,25 @@
       "navLabel": "Jenis",
       "heading": "Permintaan Jenis",
       "noRecords": "Tidak ada permintaan jenis ditemukan"
+    },
+    "reviews": {
+      "navLabel": "Ulasan",
+      "heading": "Laporan Ulasan",
+      "subtitle": "Ulasan yang telah Anda laporkan kepada admin untuk moderasi.",
+      "columns": {
+        "reason": "Alasan",
+        "status": "Status",
+        "adminNote": "Catatan Admin"
+      },
+      "status": {
+        "pending": "Menunggu",
+        "resolved_deleted": "Dihapus",
+        "resolved_kept": "Ditinjau, Tidak Dihapus"
+      },
+      "reReport": "Laporkan Lagi",
+      "reReportSuccess": "Laporan dikirim ulang.",
+      "reReportError": "Laporan tidak dapat dikirim.",
+      "noRecords": "Tidak ada laporan ulasan ditemukan"
     }
   },
   "reviews": {
@@ -125,7 +144,30 @@
     "columns": {
       "rating": "Peringkat",
       "reference": "Referensi",
-      "customerNote": "Catatan pelanggan"
+      "customerNote": "Catatan pelanggan",
+      "replyStatus": "Status Balasan"
+    },
+    "photos": "Foto",
+    "noPhotos": "Tidak ada foto yang dilampirkan pada ulasan ini.",
+    "hiddenPhoto": "Disembunyikan",
+    "status": {
+      "answered": "Dibalas",
+      "awaitingReply": "Menunggu Balasan"
+    },
+    "reply": {
+      "title": "Balasan",
+      "placeholder": "Tulis balasan untuk ulasan pelanggan...",
+      "submit": "Kirim Balasan",
+      "successToast": "Balasan berhasil dikirim.",
+      "errorToast": "Balasan tidak dapat dikirim."
+    },
+    "report": {
+      "title": "Laporkan ke Admin",
+      "description": "Laporkan ulasan ini ke admin marketplace untuk moderasi.",
+      "placeholder": "Jelaskan mengapa Anda melaporkan ulasan ini...",
+      "submit": "Kirim Laporan",
+      "successToast": "Laporan dikirim ke admin.",
+      "errorToast": "Laporan tidak dapat dikirim."
     }
   }
 }

@@ -213,6 +213,37 @@
       "rejectSuccess": "Request rejected",
       "submitter": "Submitter",
       "reviewer": "Reviewer"
+    },
+    "reviews": {
+      "navLabel": "Reviews",
+      "heading": "Review Reports",
+      "noRecords": "No review reports found",
+      "columns": {
+        "seller": "Seller",
+        "reason": "Reason",
+        "status": "Status",
+        "adminNote": "Admin Note"
+      },
+      "status": {
+        "pending": "Pending",
+        "resolved_deleted": "Removed",
+        "resolved_kept": "Reviewed, Not Removed"
+      },
+      "detail": {
+        "reportHeading": "Report",
+        "reviewHeading": "Review",
+        "customerNote": "Customer Note",
+        "resolveHeading": "Resolve",
+        "rejectAction": "Reject",
+        "defaultRejectNote": "Reviewed, not removed. If you disagree with our decision, you may submit another report.",
+        "defaultDeleteNote": "This review was reviewed and removed by the admin team.",
+        "resolveSuccess": "Report resolved.",
+        "resolveError": "Could not resolve the report.",
+        "deletePrompt": {
+          "title": "Delete review",
+          "description": "Are you sure you want to delete this review? This action cannot be undone."
+        }
+      }
     }
   },
   "reviews": {

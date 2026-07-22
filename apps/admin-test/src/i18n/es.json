@@ -213,6 +213,37 @@
       "rejectSuccess": "Solicitud rechazada",
       "submitter": "Solicitante",
       "reviewer": "Revisor"
+    },
+    "reviews": {
+      "navLabel": "Reseñas",
+      "heading": "Informes de reseñas",
+      "noRecords": "No se encontraron informes de reseñas",
+      "columns": {
+        "seller": "Vendedor",
+        "reason": "Motivo",
+        "status": "Estado",
+        "adminNote": "Nota del administrador"
+      },
+      "status": {
+        "pending": "Pendiente",
+        "resolved_deleted": "Eliminada",
+        "resolved_kept": "Revisada, no eliminada"
+      },
+      "detail": {
+        "reportHeading": "Informe",
+        "reviewHeading": "Reseña",
+        "customerNote": "Nota del cliente",
+        "resolveHeading": "Resolver",
+        "rejectAction": "Rechazar",
+        "defaultRejectNote": "Revisada, no eliminada. Si no está de acuerdo con nuestra decisión, puede enviar otro informe.",
+        "defaultDeleteNote": "Esta reseña fue revisada y eliminada por el equipo de administración.",
+        "resolveSuccess": "Informe resuelto.",
+        "resolveError": "No se pudo resolver el informe.",
+        "deletePrompt": {
+          "title": "Eliminar reseña",
+          "description": "¿Está seguro de que desea eliminar esta reseña? Esta acción no se puede deshacer."
+        }
+      }
     }
   },
   "reviews": {

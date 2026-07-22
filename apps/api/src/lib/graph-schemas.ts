@@ -132,6 +132,26 @@ export const ReviewImageReportRowSchema = z.object({
   updated_at: z.union([z.string(), z.date()]),
 })
 
+export const ReviewSummaryRowSchema = z.object({
+  id: z.string(),
+  reference: z.string(),
+  rating: z.number(),
+  customer_note: z.string().nullable().optional(),
+  seller_note: z.string().nullable().optional(),
+  customer_id: z.string().nullable().optional(),
+})
+
+export const ReviewReportRowSchema = z.object({
+  id: z.string(),
+  review_id: z.string(),
+  seller_id: z.string(),
+  reason: z.string(),
+  status: z.enum(["pending", "resolved_deleted", "resolved_kept"]),
+  admin_note: z.string().nullable().optional(),
+  created_at: z.union([z.string(), z.date()]),
+  updated_at: z.union([z.string(), z.date()]),
+})
+
 export function buildCustomerDisplayName(
   customer: z.infer<typeof CustomerSummarySchema>
 ): string {

@@ -213,6 +213,37 @@
       "rejectSuccess": "요청이 거부되었습니다",
       "submitter": "제출자",
       "reviewer": "검토자"
+    },
+    "reviews": {
+      "navLabel": "리뷰",
+      "heading": "리뷰 신고",
+      "noRecords": "리뷰 신고를 찾을 수 없습니다",
+      "columns": {
+        "seller": "판매자",
+        "reason": "사유",
+        "status": "상태",
+        "adminNote": "관리자 메모"
+      },
+      "status": {
+        "pending": "대기 중",
+        "resolved_deleted": "삭제됨",
+        "resolved_kept": "검토됨, 삭제되지 않음"
+      },
+      "detail": {
+        "reportHeading": "신고",
+        "reviewHeading": "리뷰",
+        "customerNote": "고객 메모",
+        "resolveHeading": "처리",
+        "rejectAction": "거절",
+        "defaultRejectNote": "검토됨, 삭제되지 않음. 저희 결정에 동의하지 않으시면 다시 신고하실 수 있습니다.",
+        "defaultDeleteNote": "이 리뷰는 관리자 팀에서 검토 후 삭제되었습니다.",
+        "resolveSuccess": "신고가 처리되었습니다.",
+        "resolveError": "신고를 처리할 수 없습니다.",
+        "deletePrompt": {
+          "title": "리뷰 삭제",
+          "description": "이 리뷰를 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다."
+        }
+      }
     }
   },
   "reviews": {

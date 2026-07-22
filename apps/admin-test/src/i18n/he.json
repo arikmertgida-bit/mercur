@@ -213,6 +213,37 @@
       "rejectSuccess": "הבקשה נדחתה",
       "submitter": "המגיש",
       "reviewer": "הבודק"
+    },
+    "reviews": {
+      "navLabel": "ביקורות",
+      "heading": "דיווחים על ביקורות",
+      "noRecords": "לא נמצאו דיווחים על ביקורות",
+      "columns": {
+        "seller": "מוכר",
+        "reason": "סיבה",
+        "status": "סטטוס",
+        "adminNote": "הערת מנהל"
+      },
+      "status": {
+        "pending": "ממתין",
+        "resolved_deleted": "הוסרה",
+        "resolved_kept": "נבדקה, לא הוסרה"
+      },
+      "detail": {
+        "reportHeading": "דיווח",
+        "reviewHeading": "ביקורת",
+        "customerNote": "הערת לקוח",
+        "resolveHeading": "טפל",
+        "rejectAction": "דחה",
+        "defaultRejectNote": "נבדקה, לא הוסרה. אם אינך מסכים עם החלטתנו, תוכל להגיש דיווח נוסף.",
+        "defaultDeleteNote": "ביקורת זו נבדקה והוסרה על ידי צוות הניהול.",
+        "resolveSuccess": "הדיווח טופל.",
+        "resolveError": "לא ניתן היה לטפל בדיווח.",
+        "deletePrompt": {
+          "title": "מחק ביקורת",
+          "description": "האם אתה בטוח שברצונך למחוק ביקורת זו? לא ניתן לבטל פעולה זו."
+        }
+      }
     }
   },
   "reviews": {

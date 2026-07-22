@@ -213,6 +213,37 @@
       "rejectSuccess": "リクエストが却下されました",
       "submitter": "申請者",
       "reviewer": "審査者"
+    },
+    "reviews": {
+      "navLabel": "レビュー",
+      "heading": "レビュー報告",
+      "noRecords": "レビュー報告が見つかりません",
+      "columns": {
+        "seller": "販売者",
+        "reason": "理由",
+        "status": "ステータス",
+        "adminNote": "管理者メモ"
+      },
+      "status": {
+        "pending": "保留中",
+        "resolved_deleted": "削除済み",
+        "resolved_kept": "確認済み・未削除"
+      },
+      "detail": {
+        "reportHeading": "報告",
+        "reviewHeading": "レビュー",
+        "customerNote": "顧客メモ",
+        "resolveHeading": "対応する",
+        "rejectAction": "却下",
+        "defaultRejectNote": "確認済み・未削除です。この判断に同意いただけない場合は、再度報告することができます。",
+        "defaultDeleteNote": "このレビューは管理者チームによって確認され、削除されました。",
+        "resolveSuccess": "報告を対応しました。",
+        "resolveError": "報告を対応できませんでした。",
+        "deletePrompt": {
+          "title": "レビューを削除",
+          "description": "このレビューを削除してもよろしいですか?この操作は元に戻せません。"
+        }
+      }
     }
   },
   "reviews": {

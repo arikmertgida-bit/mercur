@@ -148,3 +148,16 @@ export async function deleteConversation(
 export async function markAllConversationsRead(): Promise<void> {
   await request("/api/conversations/read-all", { method: "PATCH" })
 }
+
+// ── Notifications (category-scoped, independent of the chat inbox) ─────────
+
+export async function getNotificationUnreadCount(type: string): Promise<{ count: number }> {
+  return request(`/api/notifications/unread-count?type=${encodeURIComponent(type)}`)
+}
+
+export async function markNotificationsRead(type: string): Promise<void> {
+  await request("/api/notifications/mark-read", {
+    method: "POST",
+    body: JSON.stringify({ type }),
+  })
+}

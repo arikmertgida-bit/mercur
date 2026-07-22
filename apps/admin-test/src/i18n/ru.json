@@ -213,6 +213,37 @@
       "rejectSuccess": "Запрос отклонён",
       "submitter": "Отправитель",
       "reviewer": "Проверяющий"
+    },
+    "reviews": {
+      "navLabel": "Отзывы",
+      "heading": "Жалобы на отзывы",
+      "noRecords": "Жалобы на отзывы не найдены",
+      "columns": {
+        "seller": "Продавец",
+        "reason": "Причина",
+        "status": "Статус",
+        "adminNote": "Заметка администратора"
+      },
+      "status": {
+        "pending": "На рассмотрении",
+        "resolved_deleted": "Удалён",
+        "resolved_kept": "Проверен, не удалён"
+      },
+      "detail": {
+        "reportHeading": "Жалоба",
+        "reviewHeading": "Отзыв",
+        "customerNote": "Заметка покупателя",
+        "resolveHeading": "Решить",
+        "rejectAction": "Отклонить",
+        "defaultRejectNote": "Проверен, не удалён. Если вы не согласны с нашим решением, вы можете подать жалобу повторно.",
+        "defaultDeleteNote": "Этот отзыв был проверен и удалён командой администраторов.",
+        "resolveSuccess": "Жалоба рассмотрена.",
+        "resolveError": "Не удалось рассмотреть жалобу.",
+        "deletePrompt": {
+          "title": "Удалить отзыв",
+          "description": "Вы уверены, что хотите удалить этот отзыв? Это действие нельзя отменить."
+        }
+      }
     }
   },
   "reviews": {

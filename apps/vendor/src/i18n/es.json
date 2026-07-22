@@ -117,6 +117,25 @@
       "navLabel": "Tipos",
       "heading": "Solicitudes de tipos",
       "noRecords": "No se encontraron solicitudes de tipos"
+    },
+    "reviews": {
+      "navLabel": "Reseñas",
+      "heading": "Informes de reseñas",
+      "subtitle": "Reseñas que ha reportado al administrador para moderación.",
+      "columns": {
+        "reason": "Motivo",
+        "status": "Estado",
+        "adminNote": "Nota del administrador"
+      },
+      "status": {
+        "pending": "Pendiente",
+        "resolved_deleted": "Eliminada",
+        "resolved_kept": "Revisada, no eliminada"
+      },
+      "reReport": "Reportar de nuevo",
+      "reReportSuccess": "Informe reenviado.",
+      "reReportError": "No se pudo enviar el informe.",
+      "noRecords": "No se encontraron informes de reseñas"
     }
   },
   "reviews": {
@@ -125,7 +144,30 @@
     "columns": {
       "rating": "Calificación",
       "reference": "Referencia",
-      "customerNote": "Nota del cliente"
+      "customerNote": "Nota del cliente",
+      "replyStatus": "Estado de respuesta"
+    },
+    "photos": "Fotos",
+    "noPhotos": "No se adjuntaron fotos a esta reseña.",
+    "hiddenPhoto": "Oculto",
+    "status": {
+      "answered": "Respondida",
+      "awaitingReply": "Esperando respuesta"
+    },
+    "reply": {
+      "title": "Respuesta",
+      "placeholder": "Escriba una respuesta a la reseña del cliente...",
+      "submit": "Enviar respuesta",
+      "successToast": "Respuesta enviada correctamente.",
+      "errorToast": "No se pudo enviar la respuesta."
+    },
+    "report": {
+      "title": "Reportar al administrador",
+      "description": "Reporte esta reseña a un administrador del marketplace para moderación.",
+      "placeholder": "Explique por qué está reportando esta reseña...",
+      "submit": "Enviar informe",
+      "successToast": "Informe enviado al administrador.",
+      "errorToast": "No se pudo enviar el informe."
     }
   }
 }

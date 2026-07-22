@@ -49,6 +49,13 @@ export interface NotificationPayload {
   preview: string
 }
 
+/**
+ * `NotificationPayload.type` value used for every review-related messenger
+ * notification (new review, seller reply, review-report resolution) — must
+ * match `REVIEW_NOTIFICATION_TYPE` in the backend's src/lib/review-events.ts.
+ */
+export const REVIEW_NOTIFICATION_TYPE = "review_notification"
+
 export interface ReadReceiptPayload {
   conversationId: string
   userId: string

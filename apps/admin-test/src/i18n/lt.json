@@ -213,6 +213,37 @@
       "rejectSuccess": "Užklausa atmesta",
       "submitter": "Pateikėjas",
       "reviewer": "Tikrintojas"
+    },
+    "reviews": {
+      "navLabel": "Atsiliepimai",
+      "heading": "Atsiliepimų skundai",
+      "noRecords": "Atsiliepimų skundų nerasta",
+      "columns": {
+        "seller": "Pardavėjas",
+        "reason": "Priežastis",
+        "status": "Būsena",
+        "adminNote": "Administratoriaus pastaba"
+      },
+      "status": {
+        "pending": "Laukiama",
+        "resolved_deleted": "Pašalinta",
+        "resolved_kept": "Peržiūrėta, nepašalinta"
+      },
+      "detail": {
+        "reportHeading": "Skundas",
+        "reviewHeading": "Atsiliepimas",
+        "customerNote": "Kliento pastaba",
+        "resolveHeading": "Išspręsti",
+        "rejectAction": "Atmesti",
+        "defaultRejectNote": "Peržiūrėta, nepašalinta. Jei nesutinkate su mūsų sprendimu, galite pateikti naują skundą.",
+        "defaultDeleteNote": "Šį atsiliepimą peržiūrėjo ir pašalino administratorių komanda.",
+        "resolveSuccess": "Skundas išspręstas.",
+        "resolveError": "Nepavyko išspręsti skundo.",
+        "deletePrompt": {
+          "title": "Ištrinti atsiliepimą",
+          "description": "Ar tikrai norite ištrinti šį atsiliepimą? Šio veiksmo anuliuoti negalima."
+        }
+      }
     }
   },
   "reviews": {

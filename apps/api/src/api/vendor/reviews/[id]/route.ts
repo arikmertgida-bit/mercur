@@ -5,7 +5,9 @@ import type {} from '@mercurjs/core/types/seller-context'
 
 import { SellerSummarySchema, parseFirstRow } from '../../../../lib/graph-schemas'
 import { emitReviewSellerReplyEvent } from '../../../../lib/review-events'
-import { VendorReviewResponse } from '../../../../modules/reviews/types'
+import { REVIEW_IMAGE_MODULE } from '../../../../modules/review-images'
+import ReviewImageService from '../../../../modules/review-images/service'
+import { VendorReviewDetailResponse, VendorReviewResponse } from '../../../../modules/reviews/types'
 import { REVIEW_SOCIAL_MODULE } from '../../../../modules/review-social'
 import ReviewSocialModuleService from '../../../../modules/review-social/service'
 import { updateReviewWorkflow } from '../../../../workflows/review/workflows'
@@ -14,7 +16,7 @@ import { VendorUpdateReviewType } from '../validators'
 
 export const GET = async (
   req: AuthenticatedMedusaRequest,
-  res: MedusaResponse<VendorReviewResponse>
+  res: MedusaResponse<VendorReviewDetailResponse>
 ) => {
   const { id } = req.params
   const sellerId = req.seller_context?.seller_id
@@ -40,8 +42,18 @@ export const GET = async (
     }
   })
 
+  const reviewImageService = req.scope.resolve<ReviewImageService>(REVIEW_IMAGE_MODULE)
+  const images = await reviewImageService.listReviewImages({ review_id: id })
+
   res.json({
-    review
+    review: {
+      ...review,
+      images: images.map((image) => ({
+        id: image.id,
+        url: image.url,
+        is_hidden: image.is_hidden,
+      })),
+    },
   })
 }
 

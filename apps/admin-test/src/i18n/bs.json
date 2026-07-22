@@ -213,6 +213,37 @@
       "rejectSuccess": "Zahtjev odbijen",
       "submitter": "Podnosilac",
       "reviewer": "Recenzent"
+    },
+    "reviews": {
+      "navLabel": "Recenzije",
+      "heading": "Prijave recenzija",
+      "noRecords": "Nisu pronađene prijave recenzija",
+      "columns": {
+        "seller": "Prodavac",
+        "reason": "Razlog",
+        "status": "Status",
+        "adminNote": "Napomena administratora"
+      },
+      "status": {
+        "pending": "Na čekanju",
+        "resolved_deleted": "Uklonjeno",
+        "resolved_kept": "Pregledano, nije uklonjeno"
+      },
+      "detail": {
+        "reportHeading": "Prijava",
+        "reviewHeading": "Recenzija",
+        "customerNote": "Napomena kupca",
+        "resolveHeading": "Riješi",
+        "rejectAction": "Odbij",
+        "defaultRejectNote": "Pregledano, nije uklonjeno. Ako se ne slažete sa našom odlukom, možete podnijeti novu prijavu.",
+        "defaultDeleteNote": "Ovu recenziju je pregledao i uklonio administratorski tim.",
+        "resolveSuccess": "Prijava riješena.",
+        "resolveError": "Prijava nije mogla biti riješena.",
+        "deletePrompt": {
+          "title": "Obriši recenziju",
+          "description": "Jeste li sigurni da želite obrisati ovu recenziju? Ova radnja se ne može poništiti."
+        }
+      }
     }
   },
   "reviews": {

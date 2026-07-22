@@ -213,6 +213,37 @@
       "rejectSuccess": "ปฏิเสธคำขอแล้ว",
       "submitter": "ผู้ส่งคำขอ",
       "reviewer": "ผู้ตรวจสอบ"
+    },
+    "reviews": {
+      "navLabel": "รีวิว",
+      "heading": "รายงานรีวิว",
+      "noRecords": "ไม่พบรายงานรีวิว",
+      "columns": {
+        "seller": "ผู้ขาย",
+        "reason": "เหตุผล",
+        "status": "สถานะ",
+        "adminNote": "บันทึกของผู้ดูแลระบบ"
+      },
+      "status": {
+        "pending": "รอดำเนินการ",
+        "resolved_deleted": "ถูกลบแล้ว",
+        "resolved_kept": "ตรวจสอบแล้ว ไม่ได้ลบ"
+      },
+      "detail": {
+        "reportHeading": "รายงาน",
+        "reviewHeading": "รีวิว",
+        "customerNote": "บันทึกของลูกค้า",
+        "resolveHeading": "ดำเนินการแก้ไข",
+        "rejectAction": "ปฏิเสธ",
+        "defaultRejectNote": "ตรวจสอบแล้ว ไม่ได้ลบ หากคุณไม่เห็นด้วยกับการตัดสินใจของเรา คุณสามารถส่งรายงานใหม่ได้",
+        "defaultDeleteNote": "รีวิวนี้ได้รับการตรวจสอบและลบโดยทีมผู้ดูแลระบบ",
+        "resolveSuccess": "แก้ไขรายงานแล้ว",
+        "resolveError": "ไม่สามารถแก้ไขรายงานได้",
+        "deletePrompt": {
+          "title": "ลบรีวิว",
+          "description": "คุณแน่ใจหรือไม่ว่าต้องการลบรีวิวนี้ การกระทำนี้ไม่สามารถย้อนกลับได้"
+        }
+      }
     }
   },
   "reviews": {

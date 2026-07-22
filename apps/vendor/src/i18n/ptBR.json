@@ -117,6 +117,25 @@
       "navLabel": "Tipos",
       "heading": "Solicitações de tipos",
       "noRecords": "Nenhuma solicitação de tipo encontrada"
+    },
+    "reviews": {
+      "navLabel": "Avaliações",
+      "heading": "Denúncias de avaliações",
+      "subtitle": "Avaliações que você denunciou ao administrador para moderação.",
+      "columns": {
+        "reason": "Motivo",
+        "status": "Status",
+        "adminNote": "Nota do administrador"
+      },
+      "status": {
+        "pending": "Pendente",
+        "resolved_deleted": "Removida",
+        "resolved_kept": "Analisada, não removida"
+      },
+      "reReport": "Denunciar novamente",
+      "reReportSuccess": "Denúncia reenviada.",
+      "reReportError": "Não foi possível enviar a denúncia.",
+      "noRecords": "Nenhuma denúncia de avaliação encontrada"
     }
   },
   "reviews": {
@@ -125,7 +144,30 @@
     "columns": {
       "rating": "Avaliação",
       "reference": "Referência",
-      "customerNote": "Observação do cliente"
+      "customerNote": "Observação do cliente",
+      "replyStatus": "Status da resposta"
+    },
+    "photos": "Fotos",
+    "noPhotos": "Nenhuma foto foi anexada a esta avaliação.",
+    "hiddenPhoto": "Oculta",
+    "status": {
+      "answered": "Respondida",
+      "awaitingReply": "Aguardando resposta"
+    },
+    "reply": {
+      "title": "Resposta",
+      "placeholder": "Escreva uma resposta à avaliação do cliente...",
+      "submit": "Enviar resposta",
+      "successToast": "Resposta enviada com sucesso.",
+      "errorToast": "Não foi possível enviar a resposta."
+    },
+    "report": {
+      "title": "Denunciar ao administrador",
+      "description": "Denuncie esta avaliação a um administrador do marketplace para moderação.",
+      "placeholder": "Explique por que você está denunciando esta avaliação...",
+      "submit": "Enviar denúncia",
+      "successToast": "Denúncia enviada ao administrador.",
+      "errorToast": "Não foi possível enviar a denúncia."
     }
   }
 }

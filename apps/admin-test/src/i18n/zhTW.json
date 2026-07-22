@@ -213,6 +213,37 @@
       "rejectSuccess": "請求已拒絕",
       "submitter": "提交人",
       "reviewer": "審核人"
+    },
+    "reviews": {
+      "navLabel": "評價",
+      "heading": "評價檢舉",
+      "noRecords": "找不到評價檢舉",
+      "columns": {
+        "seller": "賣家",
+        "reason": "原因",
+        "status": "狀態",
+        "adminNote": "管理員備註"
+      },
+      "status": {
+        "pending": "待處理",
+        "resolved_deleted": "已刪除",
+        "resolved_kept": "已審核，未刪除"
+      },
+      "detail": {
+        "reportHeading": "檢舉",
+        "reviewHeading": "評價",
+        "customerNote": "顧客備註",
+        "resolveHeading": "處理",
+        "rejectAction": "拒絕",
+        "defaultRejectNote": "已審核，未刪除。若您不同意我們的決定，可以再次提出檢舉。",
+        "defaultDeleteNote": "此評價已由管理團隊審核並刪除。",
+        "resolveSuccess": "檢舉已處理。",
+        "resolveError": "無法處理檢舉。",
+        "deletePrompt": {
+          "title": "刪除評價",
+          "description": "您確定要刪除此評價嗎？此操作無法復原。"
+        }
+      }
     }
   },
   "reviews": {

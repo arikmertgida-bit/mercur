@@ -213,6 +213,37 @@
       "rejectSuccess": "Talep reddedildi",
       "submitter": "Gönderen",
       "reviewer": "İnceleyen"
+    },
+    "reviews": {
+      "navLabel": "Değerlendirmeler",
+      "heading": "Değerlendirme Talepleri",
+      "noRecords": "Değerlendirme talebi bulunamadı",
+      "columns": {
+        "seller": "Satıcı",
+        "reason": "Neden",
+        "status": "Durum",
+        "adminNote": "Yönetici Notu"
+      },
+      "status": {
+        "pending": "Bekliyor",
+        "resolved_deleted": "Kaldırıldı",
+        "resolved_kept": "İncelendi, Kaldırılmadı"
+      },
+      "detail": {
+        "reportHeading": "Talep",
+        "reviewHeading": "Değerlendirme",
+        "customerNote": "Müşteri Notu",
+        "resolveHeading": "Sonuçlandır",
+        "rejectAction": "Reddet",
+        "defaultRejectNote": "İncelendi, Kaldırılmadı. Siz bizimle aynı düşüncede değilseniz tekrar talepte bulunabilirsiniz.",
+        "defaultDeleteNote": "Bu değerlendirme incelendi ve yönetici ekibi tarafından kaldırıldı.",
+        "resolveSuccess": "Talep sonuçlandırıldı.",
+        "resolveError": "Talep sonuçlandırılamadı.",
+        "deletePrompt": {
+          "title": "Değerlendirmeyi sil",
+          "description": "Bu değerlendirmeyi silmek istediğinizden emin misiniz? Bu işlem geri alınamaz."
+        }
+      }
     }
   },
   "reviews": {
