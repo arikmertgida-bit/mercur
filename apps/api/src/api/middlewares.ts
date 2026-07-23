@@ -28,6 +28,7 @@ import { storeCatalogProductsMiddlewares } from "./store/catalog/products/middle
 import { storeSellerProductsMiddlewares } from "./store/sellers/[handle]/products/middlewares";
 import { storeSearchSuggestMiddlewares } from "./store/search/suggest/middlewares";
 import { storeCampaignsMiddlewares } from "./store/campaigns/middlewares";
+import { vendorFollowersMiddlewares } from "./vendor/followers/middlewares";
 import { vendorAwareErrorHandler } from "../lib/vendor-error-i18n";
 
 export default defineMiddlewares({
@@ -38,6 +39,7 @@ export default defineMiddlewares({
         ...storeCustomerUploadMiddlewares,
         ...storeSellerFollowMiddlewares,
         ...storeSellersFollowingMiddlewares,
+        ...vendorFollowersMiddlewares,
         ...storeCatalogProductsMiddlewares,
         ...storeSellerProductsMiddlewares,
         ...storeSearchSuggestMiddlewares,

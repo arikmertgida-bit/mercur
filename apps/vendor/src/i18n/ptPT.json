@@ -169,5 +169,14 @@
       "successToast": "Denúncia enviada ao administrador.",
       "errorToast": "Não foi possível enviar a denúncia."
     }
+  },
+  "followers": {
+    "domain": "Seguidores",
+    "noRecords": "Ainda não há seguidores",
+    "columns": {
+      "followedAt": "Data de Seguimento",
+      "reviewsAverage": "Avaliação Média"
+    },
+    "count": "Seguidores: {{count}}"
   }
 }

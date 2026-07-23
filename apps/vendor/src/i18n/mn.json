@@ -169,5 +169,14 @@
       "successToast": "Мэдэгдлийг админд илгээлээ.",
       "errorToast": "Мэдэгдлийг илгээж чадсангүй."
     }
+  },
+  "followers": {
+    "domain": "Дагагчид",
+    "noRecords": "Одоогоор дагагч алга байна",
+    "columns": {
+      "followedAt": "Дагасан огноо",
+      "reviewsAverage": "Дундаж үнэлгээ"
+    },
+    "count": "Дагагчид: {{count}}"
   }
 }

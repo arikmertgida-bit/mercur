@@ -169,5 +169,14 @@
       "successToast": "Zgłoszenie wysłane do administratora.",
       "errorToast": "Nie udało się wysłać zgłoszenia."
     }
+  },
+  "followers": {
+    "domain": "Obserwujący",
+    "noRecords": "Brak obserwujących",
+    "columns": {
+      "followedAt": "Data Obserwowania",
+      "reviewsAverage": "Śr. Ocena"
+    },
+    "count": "Obserwujący: {{count}}"
   }
 }

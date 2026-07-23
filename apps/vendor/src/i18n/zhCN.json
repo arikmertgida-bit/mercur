@@ -169,5 +169,14 @@
       "successToast": "举报已发送给管理员。",
       "errorToast": "无法发送举报。"
     }
+  },
+  "followers": {
+    "domain": "关注者",
+    "noRecords": "暂无关注者",
+    "columns": {
+      "followedAt": "关注日期",
+      "reviewsAverage": "平均评分"
+    },
+    "count": "关注者：{{count}}"
   }
 }

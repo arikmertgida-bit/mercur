@@ -169,5 +169,14 @@
       "successToast": "Segnalazione inviata all'amministratore.",
       "errorToast": "Impossibile inviare la segnalazione."
     }
+  },
+  "followers": {
+    "domain": "Follower",
+    "noRecords": "Nessun follower ancora",
+    "columns": {
+      "followedAt": "Data di Follow",
+      "reviewsAverage": "Valutazione Media"
+    },
+    "count": "Follower: {{count}}"
   }
 }

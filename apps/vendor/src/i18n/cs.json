@@ -169,5 +169,14 @@
       "successToast": "Nahlášení odesláno administrátorovi.",
       "errorToast": "Nahlášení se nepodařilo odeslat."
     }
+  },
+  "followers": {
+    "domain": "Sledující",
+    "noRecords": "Zatím žádní sledující",
+    "columns": {
+      "followedAt": "Datum sledování",
+      "reviewsAverage": "Průměrné hodnocení"
+    },
+    "count": "Sledující: {{count}}"
   }
 }

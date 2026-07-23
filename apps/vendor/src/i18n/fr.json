@@ -169,5 +169,14 @@
       "successToast": "Signalement envoyé à l'administrateur.",
       "errorToast": "Le signalement n'a pas pu être envoyé."
     }
+  },
+  "followers": {
+    "domain": "Abonnés",
+    "noRecords": "Aucun abonné pour le moment",
+    "columns": {
+      "followedAt": "Date d'abonnement",
+      "reviewsAverage": "Note Moyenne"
+    },
+    "count": "Abonnés : {{count}}"
   }
 }

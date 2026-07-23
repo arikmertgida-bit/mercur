@@ -169,5 +169,14 @@
       "successToast": "تم إرسال البلاغ إلى المسؤول.",
       "errorToast": "تعذر إرسال البلاغ."
     }
+  },
+  "followers": {
+    "domain": "المتابعون",
+    "noRecords": "لا يوجد متابعون بعد",
+    "columns": {
+      "followedAt": "تاريخ المتابعة",
+      "reviewsAverage": "متوسط التقييم"
+    },
+    "count": "المتابعون: {{count}}"
   }
 }

@@ -169,5 +169,14 @@
       "successToast": "Bildirim yöneticiye gönderildi.",
       "errorToast": "Bildirim gönderilemedi."
     }
+  },
+  "followers": {
+    "domain": "Takipçiler",
+    "noRecords": "Henüz takipçi yok",
+    "columns": {
+      "followedAt": "Takip Tarihi",
+      "reviewsAverage": "Ort. Puan"
+    },
+    "count": "Takipçi: {{count}}"
   }
 }

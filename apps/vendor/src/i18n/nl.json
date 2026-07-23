@@ -169,5 +169,14 @@
       "successToast": "Melding verzonden naar beheerder.",
       "errorToast": "Melding kon niet worden verzonden."
     }
+  },
+  "followers": {
+    "domain": "Volgers",
+    "noRecords": "Nog geen volgers",
+    "columns": {
+      "followedAt": "Datum Gevolgd",
+      "reviewsAverage": "Gem. Beoordeling"
+    },
+    "count": "Volgers: {{count}}"
   }
 }

@@ -169,5 +169,14 @@
       "successToast": "הדיווח נשלח למנהל.",
       "errorToast": "לא ניתן היה לשלוח את הדיווח."
     }
+  },
+  "followers": {
+    "domain": "עוקבים",
+    "noRecords": "אין עדיין עוקבים",
+    "columns": {
+      "followedAt": "תאריך מעקב",
+      "reviewsAverage": "דירוג ממוצע"
+    },
+    "count": "עוקבים: {{count}}"
   }
 }
