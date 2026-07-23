@@ -169,5 +169,14 @@
       "successToast": "Sesizare trimisă administratorului.",
       "errorToast": "Sesizarea nu a putut fi trimisă."
     }
+  },
+  "followers": {
+    "domain": "Urmăritori",
+    "noRecords": "Încă nu există urmăritori",
+    "columns": {
+      "followedAt": "Data Urmăririi",
+      "reviewsAverage": "Evaluare Medie"
+    },
+    "count": "Urmăritori: {{count}}"
   }
 }

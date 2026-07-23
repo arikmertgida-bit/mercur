@@ -169,5 +169,14 @@
       "successToast": "Bejelentés elküldve az adminisztrátornak.",
       "errorToast": "A bejelentést nem sikerült elküldeni."
     }
+  },
+  "followers": {
+    "domain": "Követők",
+    "noRecords": "Még nincsenek követők",
+    "columns": {
+      "followedAt": "Követés Dátuma",
+      "reviewsAverage": "Átlagos Értékelés"
+    },
+    "count": "Követők: {{count}}"
   }
 }

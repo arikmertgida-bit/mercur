@@ -169,5 +169,14 @@
       "successToast": "Laporan dikirim ke admin.",
       "errorToast": "Laporan tidak dapat dikirim."
     }
+  },
+  "followers": {
+    "domain": "Pengikut",
+    "noRecords": "Belum ada pengikut",
+    "columns": {
+      "followedAt": "Tanggal Mengikuti",
+      "reviewsAverage": "Rating Rata-rata"
+    },
+    "count": "Pengikut: {{count}}"
   }
 }

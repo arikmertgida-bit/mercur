@@ -169,5 +169,14 @@
       "successToast": "Informe enviado al administrador.",
       "errorToast": "No se pudo enviar el informe."
     }
+  },
+  "followers": {
+    "domain": "Seguidores",
+    "noRecords": "Aún no hay seguidores",
+    "columns": {
+      "followedAt": "Fecha de Seguimiento",
+      "reviewsAverage": "Calificación Media"
+    },
+    "count": "Seguidores: {{count}}"
   }
 }

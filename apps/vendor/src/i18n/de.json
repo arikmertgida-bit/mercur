@@ -169,5 +169,14 @@
       "successToast": "Meldung an Administrator gesendet.",
       "errorToast": "Meldung konnte nicht gesendet werden."
     }
+  },
+  "followers": {
+    "domain": "Follower",
+    "noRecords": "Noch keine Follower",
+    "columns": {
+      "followedAt": "Gefolgt seit",
+      "reviewsAverage": "Ø Bewertung"
+    },
+    "count": "Follower: {{count}}"
   }
 }

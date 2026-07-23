@@ -169,5 +169,14 @@
       "successToast": "Đã gửi báo cáo đến quản trị viên.",
       "errorToast": "Không thể gửi báo cáo."
     }
+  },
+  "followers": {
+    "domain": "Người Theo Dõi",
+    "noRecords": "Chưa có người theo dõi",
+    "columns": {
+      "followedAt": "Ngày Theo Dõi",
+      "reviewsAverage": "Đánh Giá TB"
+    },
+    "count": "Người Theo Dõi: {{count}}"
   }
 }

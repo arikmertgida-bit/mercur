@@ -169,5 +169,14 @@
       "successToast": "관리자에게 신고가 전송되었습니다.",
       "errorToast": "신고를 보낼 수 없습니다."
     }
+  },
+  "followers": {
+    "domain": "팔로워",
+    "noRecords": "아직 팔로워가 없습니다",
+    "columns": {
+      "followedAt": "팔로우 날짜",
+      "reviewsAverage": "평균 평점"
+    },
+    "count": "팔로워: {{count}}"
   }
 }

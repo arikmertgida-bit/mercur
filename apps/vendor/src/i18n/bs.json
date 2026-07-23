@@ -169,5 +169,14 @@
       "successToast": "Prijava poslana administratoru.",
       "errorToast": "Prijava nije mogla biti poslana."
     }
+  },
+  "followers": {
+    "domain": "Pratioci",
+    "noRecords": "Još nema pratilaca",
+    "columns": {
+      "followedAt": "Datum praćenja",
+      "reviewsAverage": "Prosječna ocjena"
+    },
+    "count": "Pratioci: {{count}}"
   }
 }

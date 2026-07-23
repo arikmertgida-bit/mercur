@@ -160,6 +160,53 @@ export const ReviewReportRowSchema = z.object({
   updated_at: z.union([z.string(), z.date()]),
 })
 
+export const SellerFollowerLinkRowSchema = z.object({
+  seller_follower: z
+    .object({
+      id: z.string(),
+      created_at: z.union([z.string(), z.date()]),
+      customer: z
+        .object({
+          id: z.string(),
+          email: z.string().nullable(),
+          first_name: z.string().nullable(),
+          last_name: z.string().nullable(),
+          metadata: JsonRecordSchema.nullable().optional(),
+        })
+        .nullable()
+        .optional(),
+    })
+    .nullable()
+    .optional(),
+})
+
+export const OrderCustomerRowSchema = z.object({
+  id: z.string(),
+  customer_id: z.string().nullable(),
+})
+
+export const OrderSellerLinkRowSchema = z.object({
+  order_id: z.string(),
+})
+
+export const CustomerReviewLinkRowSchema = z.object({
+  customer_id: z.string(),
+  review: z
+    .object({
+      id: z.string(),
+      rating: z.number(),
+      reference: z.enum(["product", "seller"]),
+      product: z.object({ id: z.string() }).nullable().optional(),
+      seller: z.object({ id: z.string() }).nullable().optional(),
+    })
+    .nullable()
+    .optional(),
+})
+
+export const ProductSellerLinkRowSchema = z.object({
+  product_id: z.string(),
+})
+
 export function buildCustomerDisplayName(
   customer: z.infer<typeof CustomerSummarySchema>
 ): string {

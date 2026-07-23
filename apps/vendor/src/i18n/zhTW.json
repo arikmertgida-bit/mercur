@@ -169,5 +169,14 @@
       "successToast": "檢舉已傳送給管理員。",
       "errorToast": "無法傳送檢舉。"
     }
+  },
+  "followers": {
+    "domain": "關注者",
+    "noRecords": "尚無關注者",
+    "columns": {
+      "followedAt": "關注日期",
+      "reviewsAverage": "平均評分"
+    },
+    "count": "關注者：{{count}}"
   }
 }

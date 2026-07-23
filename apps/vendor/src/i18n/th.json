@@ -169,5 +169,14 @@
       "successToast": "ส่งรายงานถึงผู้ดูแลระบบแล้ว",
       "errorToast": "ไม่สามารถส่งรายงานได้"
     }
+  },
+  "followers": {
+    "domain": "ผู้ติดตาม",
+    "noRecords": "ยังไม่มีผู้ติดตาม",
+    "columns": {
+      "followedAt": "วันที่ติดตาม",
+      "reviewsAverage": "คะแนนเฉลี่ย"
+    },
+    "count": "ผู้ติดตาม: {{count}}"
   }
 }

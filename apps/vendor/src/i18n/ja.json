@@ -169,5 +169,14 @@
       "successToast": "管理者に報告を送信しました。",
       "errorToast": "報告を送信できませんでした。"
     }
+  },
+  "followers": {
+    "domain": "フォロワー",
+    "noRecords": "まだフォロワーがいません",
+    "columns": {
+      "followedAt": "フォロー日",
+      "reviewsAverage": "平均評価"
+    },
+    "count": "フォロワー: {{count}}"
   }
 }

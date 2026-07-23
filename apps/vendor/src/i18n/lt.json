@@ -169,5 +169,14 @@
       "successToast": "Skundas išsiųstas administratoriui.",
       "errorToast": "Nepavyko išsiųsti skundo."
     }
+  },
+  "followers": {
+    "domain": "Sekėjai",
+    "noRecords": "Kol kas nėra sekėjų",
+    "columns": {
+      "followedAt": "Sekimo data",
+      "reviewsAverage": "Vidutinis įvertinimas"
+    },
+    "count": "Sekėjai: {{count}}"
   }
 }

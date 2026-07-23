@@ -169,5 +169,14 @@
       "successToast": "Report sent to admin.",
       "errorToast": "Report could not be sent."
     }
+  },
+  "followers": {
+    "domain": "Followers",
+    "noRecords": "No followers yet",
+    "columns": {
+      "followedAt": "Followed On",
+      "reviewsAverage": "Avg. Rating"
+    },
+    "count": "Followers: {{count}}"
   }
 }
