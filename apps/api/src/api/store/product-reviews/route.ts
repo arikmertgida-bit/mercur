@@ -7,7 +7,7 @@ import { REVIEW_IMAGE_MODULE } from "../../../modules/review-images"
 import ReviewImageService from "../../../modules/review-images/service"
 import { REVIEW_SOCIAL_MODULE } from "../../../modules/review-social"
 import ReviewSocialModuleService from "../../../modules/review-social/service"
-import { ProductReviewRowSchema, parseRows } from "../../../lib/graph-schemas"
+import { ProductReviewRowSchema, extractAvatarUrl, parseRows } from "../../../lib/graph-schemas"
 import { StoreGetProductReviewsParamsType } from "./validators"
 
 export type StoreProductReviewRow = {
@@ -19,7 +19,7 @@ export type StoreProductReviewRow = {
   seller_note: string | null
   created_at: string | Date
   updated_at: string | Date
-  customer: { first_name: string; last_name: string } | null
+  customer: { first_name: string; last_name: string; avatar_url?: string } | null
   images: Array<{ id: string; url: string; is_hidden: boolean }>
   seller: { id: string; name: string; handle: string; logo: string | null } | null
   likes_count: number
@@ -119,6 +119,7 @@ export const GET = async (
         ? {
             first_name: review.customer.first_name ?? "",
             last_name: review.customer.last_name ?? "",
+            avatar_url: extractAvatarUrl(review.customer.metadata),
           }
         : null,
       images: imagesByReview[review.id] ?? [],

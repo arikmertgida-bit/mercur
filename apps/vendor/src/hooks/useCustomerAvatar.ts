@@ -6,7 +6,7 @@ interface CustomerAvatarInfo {
   avatarUrl: string | null
 }
 
-const CustomerMetadataSchema = z.object({
+const CustomerAvatarResponseSchema = z.object({
   avatar_url: z.string().nullable().optional(),
 })
 
@@ -26,10 +26,10 @@ function fetchCustomerAvatar(customerId: string): Promise<CustomerAvatarInfo> {
   const pending = inFlight.get(customerId)
   if (pending) return pending
 
-  const promise = client.vendor.customers.$id
+  const promise = client.vendor.customers.$id.avatar
     .query({ $id: customerId })
     .then((raw) => {
-      const parsed = CustomerMetadataSchema.safeParse(raw.customer?.metadata)
+      const parsed = CustomerAvatarResponseSchema.safeParse(raw)
       const result: CustomerAvatarInfo = {
         avatarUrl: parsed.success ? (parsed.data.avatar_url ?? null) : null,
       }

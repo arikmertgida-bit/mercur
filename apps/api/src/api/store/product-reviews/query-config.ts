@@ -8,6 +8,7 @@ export const storeProductReviewFields = [
   "review.updated_at",
   "review.customer.first_name",
   "review.customer.last_name",
+  "review.customer.metadata",
 ]
 
 export const storeProductReviewQueryConfig = {

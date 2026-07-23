@@ -2,7 +2,19 @@ import { Avatar, Copy, Text } from "@medusajs/ui";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { HttpTypes } from "@mercurjs/types";
+import { z } from "zod";
 import { getFormattedAddress, isSameAddress } from "../../../lib/addresses";
+
+const CustomerAvatarMetadataSchema = z.object({
+  avatar_url: z.string().nullable().optional(),
+});
+
+const getCustomerAvatarUrl = (
+  customer: HttpTypes.AdminOrder["customer"]
+): string | undefined => {
+  const parsed = CustomerAvatarMetadataSchema.safeParse(customer?.metadata);
+  return parsed.success ? (parsed.data.avatar_url ?? undefined) : undefined;
+};
 
 const ID = ({ data }: { data: HttpTypes.AdminOrder }) => {
   const { t } = useTranslation();
@@ -11,6 +23,7 @@ const ID = ({ data }: { data: HttpTypes.AdminOrder }) => {
   const name = getOrderCustomer(data);
   const email = data.email;
   const fallback = (name || email || "").charAt(0).toUpperCase();
+  const avatarUrl = getCustomerAvatarUrl(data.customer);
 
   return (
     <div className="text-ui-fg-subtle grid grid-cols-2 items-center px-6 py-4">
@@ -22,7 +35,7 @@ const ID = ({ data }: { data: HttpTypes.AdminOrder }) => {
         className="focus:shadow-borders-focus rounded-[4px] outline-none transition-shadow"
       >
         <div className="flex items-center gap-x-2 overflow-hidden">
-          <Avatar size="2xsmall" fallback={fallback} />
+          <Avatar size="2xsmall" src={avatarUrl} fallback={fallback} />
           <Text
             size="small"
             leading="compact"
