@@ -9,11 +9,16 @@ const CustomerAvatarMetadataSchema = z.object({
   avatar_url: z.string().nullable().optional(),
 })
 
+// Panel-local copy of the storefront's default avatar — same asset,
+// self-hosted so the fallback never depends on cross-origin availability.
+const DEFAULT_CUSTOMER_AVATAR = "/images/customer-default-avatar.jpeg"
+
 const getCustomerAvatarUrl = (
   customer: HttpTypes.AdminOrder["customer"]
-): string | undefined => {
+): string => {
   const parsed = CustomerAvatarMetadataSchema.safeParse(customer?.metadata)
-  return parsed.success ? (parsed.data.avatar_url ?? undefined) : undefined
+  const avatarUrl = parsed.success ? parsed.data.avatar_url : null
+  return avatarUrl || DEFAULT_CUSTOMER_AVATAR
 }
 
 const ID = ({ data }: { data: HttpTypes.AdminOrder }) => {
@@ -22,7 +27,6 @@ const ID = ({ data }: { data: HttpTypes.AdminOrder }) => {
   const id = data.customer_id
   const name = getOrderCustomer(data)
   const email = data.email
-  const fallback = (name || email || "").charAt(0).toUpperCase()
   const avatarUrl = getCustomerAvatarUrl(data.customer)
 
   return (
@@ -35,7 +39,7 @@ const ID = ({ data }: { data: HttpTypes.AdminOrder }) => {
         className="focus:shadow-borders-focus rounded-[4px] outline-none transition-shadow"
       >
         <div className="flex items-center gap-x-2 overflow-hidden">
-          <Avatar size="2xsmall" src={avatarUrl} fallback={fallback} />
+          <Avatar size="2xsmall" src={avatarUrl} fallback="" />
           <Text
             size="small"
             leading="compact"
