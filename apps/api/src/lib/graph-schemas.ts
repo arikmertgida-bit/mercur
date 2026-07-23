@@ -97,10 +97,18 @@ export const ProductReviewRowSchema = z.object({
     .object({
       first_name: z.string().nullable().optional(),
       last_name: z.string().nullable().optional(),
+      metadata: JsonRecordSchema.nullable().optional(),
     })
     .nullable()
     .optional(),
 })
+
+export function extractAvatarUrl(
+  metadata: JsonRecord | null | undefined
+): string | undefined {
+  const value = metadata?.avatar_url
+  return typeof value === "string" ? value : undefined
+}
 
 export const WishlistRowSchema = z.object({
   id: z.string(),

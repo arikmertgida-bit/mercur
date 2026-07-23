@@ -753,6 +753,7 @@ export type Routes = {
         customers: typeof import("@mercurjs/core/api/vendor/customers/route") & {
             $id: typeof import("@mercurjs/core/api/vendor/customers/[id]/route") & {
                 customerGroups: typeof import("@mercurjs/core/api/vendor/customers/[id]/customer-groups/route");
+                avatar: typeof import("../src/api/vendor/customers/[id]/avatar/route");
             };
         };
         exchanges: typeof import("@mercurjs/core/api/vendor/exchanges/route") & {

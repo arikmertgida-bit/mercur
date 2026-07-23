@@ -1,9 +1,18 @@
 import { MedusaContainer } from "@medusajs/framework"
 import { ContainerRegistrationKeys, MedusaError } from "@medusajs/framework/utils"
 import type { Query } from "@medusajs/framework"
+import { z } from "zod"
 
 import { REVIEW_SOCIAL_MODULE } from "../../../modules/review-social"
 import ReviewSocialModuleService from "../../../modules/review-social/service"
+import { extractAvatarUrl, JsonRecordSchema, parseRows } from "../../../lib/graph-schemas"
+
+const ReplyCustomerRowSchema = z.object({
+  id: z.string(),
+  first_name: z.string().nullable().optional(),
+  last_name: z.string().nullable().optional(),
+  metadata: JsonRecordSchema.nullable().optional(),
+})
 
 export type ReviewReplyRow = {
   id: string
@@ -19,7 +28,7 @@ export type ReviewReplyDTO = {
   id: string
   review_id: string
   customer_id: string | null
-  customer: { first_name: string; last_name: string } | null
+  customer: { first_name: string; last_name: string; avatar_url?: string } | null
   is_seller_reply: boolean
   seller_id: string | null
   seller_name: string | null
@@ -66,18 +75,15 @@ export const enrichReplies = async (
     new Set(replies.map((reply) => reply.seller_id).filter((id): id is string => !!id))
   )
 
-  const customerById = new Map<string, { first_name: string | null; last_name: string | null }>()
+  const customerById = new Map<string, z.infer<typeof ReplyCustomerRowSchema>>()
   if (customerIds.length > 0) {
     const { data: customers } = await query.graph({
       entity: "customer",
       filters: { id: customerIds },
-      fields: ["id", "first_name", "last_name"],
+      fields: ["id", "first_name", "last_name", "metadata"],
     })
-    for (const customer of customers) {
-      customerById.set(customer.id, {
-        first_name: customer.first_name ?? null,
-        last_name: customer.last_name ?? null,
-      })
+    for (const customer of parseRows(ReplyCustomerRowSchema, customers)) {
+      customerById.set(customer.id, customer)
     }
   }
 
@@ -106,7 +112,11 @@ export const enrichReplies = async (
       review_id: reply.review_id,
       customer_id: reply.customer_id,
       customer: customer
-        ? { first_name: customer.first_name ?? "", last_name: customer.last_name ?? "" }
+        ? {
+            first_name: customer.first_name ?? "",
+            last_name: customer.last_name ?? "",
+            avatar_url: extractAvatarUrl(customer.metadata),
+          }
         : null,
       is_seller_reply: reply.is_seller_reply,
       seller_id: reply.seller_id,
