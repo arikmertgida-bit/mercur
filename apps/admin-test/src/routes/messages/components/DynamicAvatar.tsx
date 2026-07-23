@@ -31,9 +31,9 @@ export function DynamicAvatar({
 
   const baseUrl = STOREFRONT_URL.replace(/\/$/, "")
 
-  let fallbackSrc = `${baseUrl}/images/customer-default-avatar.jpg`
+  let fallbackSrc = `${baseUrl}/images/customer-default-avatar.jpeg`
   if (type === "ADMIN" || type === "SUPPORT") {
-    fallbackSrc = fallbackFailed ? `${baseUrl}/images/customer-default-avatar.jpg` : `${baseUrl}/messenger-logo.png`
+    fallbackSrc = fallbackFailed ? `${baseUrl}/images/customer-default-avatar.jpeg` : `${baseUrl}/messenger-logo.png`
   } else if (type === "SELLER" || type === "VENDOR") {
     fallbackSrc = `${baseUrl}/images/vendor/default-seller-avatar.png`
   }

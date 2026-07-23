@@ -7,16 +7,15 @@ import { FollowerDTO } from "../../api/followers"
 
 const columnHelper = createColumnHelper<FollowerDTO>()
 
+// Panel-local copy of the storefront's default avatar — same asset,
+// self-hosted so the fallback never depends on cross-origin availability.
+const DEFAULT_CUSTOMER_AVATAR = "/images/customer-default-avatar.jpeg"
+
 function buildDisplayName(follower: FollowerDTO): string {
   const fullName = [follower.first_name, follower.last_name]
     .filter((part): part is string => Boolean(part && part.trim().length > 0))
     .join(" ")
   return fullName || follower.email || follower.customer_id
-}
-
-function buildAvatarFallback(follower: FollowerDTO): string {
-  const name = buildDisplayName(follower)
-  return name.charAt(0).toUpperCase()
 }
 
 function ratingColor(rating: number): "green" | "orange" | "red" {
@@ -42,8 +41,8 @@ export const useFollowerTableColumns = () => {
           return (
             <div className="flex items-center gap-x-3 overflow-hidden">
               <Avatar
-                src={follower.avatar_url ?? undefined}
-                fallback={buildAvatarFallback(follower)}
+                src={follower.avatar_url || DEFAULT_CUSTOMER_AVATAR}
+                fallback=""
                 size="small"
               />
               <Text size="small" leading="compact" className="truncate">
