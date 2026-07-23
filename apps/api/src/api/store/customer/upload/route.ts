@@ -6,6 +6,7 @@ import {
 import { MedusaError } from "@medusajs/framework/utils"
 
 import { StoreDeleteCustomerUploadType } from "./validators"
+import { fixMultipartFilenameEncoding } from "../../../../lib/fix-multipart-filename-encoding"
 
 export const POST = async (
   req: AuthenticatedMedusaRequest,
@@ -23,7 +24,7 @@ export const POST = async (
   const { result } = await uploadFilesWorkflow(req.scope).run({
     input: {
       files: files.map((file) => ({
-        filename: file.originalname,
+        filename: fixMultipartFilenameEncoding(file.originalname),
         mimeType: file.mimetype,
         content: file.buffer.toString("base64"),
         access: "public" as const,

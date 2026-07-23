@@ -468,7 +468,7 @@ export type Routes = {
             };
             statistics: typeof import("@medusajs/medusa/api/admin/translations/statistics/route");
         };
-        uploads: typeof import("@medusajs/medusa/api/admin/uploads/route") & {
+        uploads: typeof import("../src/api/admin/uploads/route") & {
             $id: typeof import("@medusajs/medusa/api/admin/uploads/[id]/route");
             presignedUrls: typeof import("@medusajs/medusa/api/admin/uploads/presigned-urls/route");
         };
