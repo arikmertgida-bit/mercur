@@ -7,7 +7,7 @@ import { MedusaRequest, MedusaResponse } from "@medusajs/framework/http"
 // base URL must come from the same `MINIO_FILE_URL` env var the file module
 // itself uses (medusa-config.ts) — hardcoding a second, independent guess
 // at the bucket name here previously let the two drift apart.
-const DEFAULT_MINIO_FILE_URL = "http://localhost:9002/medusa-media"
+const DEFAULT_MINIO_FILE_URL = "http://localhost:9002/kayi-media"
 const MINIO_FILE_URL = process.env.MINIO_FILE_URL ?? DEFAULT_MINIO_FILE_URL
 
 const DEFAULT_AVATAR_URL =
