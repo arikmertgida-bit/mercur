@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef, useCallback } from "react"
 import { useTranslation } from "react-i18next"
 import { Heading, Prompt, DropdownMenu, IconButton } from "@medusajs/ui"
-import { ChatBubbleLeftRight, PaperClip, PaperPlane, EllipsisHorizontal, XMark, XMarkMini } from "@medusajs/icons"
+import { ChatBubbleLeftRight, PaperClip, PaperPlane, EllipsisHorizontal, XMarkMini } from "@medusajs/icons"
+import { ImageLightbox } from "@mercurjs/dashboard-shared"
 import { useMessenger } from "../../../providers/messenger-provider/MessengerProvider"
 import { useCustomerAvatar } from "../../../hooks/useCustomerAvatar"
 import { client } from "../../../lib/client"
@@ -670,28 +671,13 @@ export function MessengerVendorInbox({ sellerId: _sellerId, sellerLogo }: Messen
         )}
       </div>
 
-      {/* Lightbox */}
-      {lightboxSrc && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-ui-bg-overlay"
-          onClick={() => setLightboxSrc(null)}
-        >
-          <IconButton
-            type="button"
-            className="absolute top-4 right-4 text-ui-fg-on-inverted"
-            onClick={() => setLightboxSrc(null)}
-            aria-label={t("messages.close")}
-          >
-            <XMark />
-          </IconButton>
-          <img
-            src={lightboxSrc}
-            alt={t("messages.imageAlt")}
-            className="max-w-[90vw] max-h-[90vh] rounded-xl object-contain"
-            onClick={(e) => e.stopPropagation()}
-          />
-        </div>
-      )}
+      <ImageLightbox
+        images={lightboxSrc ? [{ id: "current", url: lightboxSrc, alt: t("messages.imageAlt") }] : []}
+        index={lightboxSrc ? 0 : null}
+        onIndexChange={(nextIndex) => {
+          if (nextIndex === null) setLightboxSrc(null)
+        }}
+      />
 
       {/* Delete confirmation dialog */}
       <Prompt

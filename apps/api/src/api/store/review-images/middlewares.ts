@@ -1,9 +1,18 @@
 import { MiddlewareRoute } from "@medusajs/framework/http"
-import { validateAndTransformBody } from "@medusajs/framework"
+import { validateAndTransformBody, validateAndTransformQuery } from "@medusajs/framework"
 
-import { StoreCreateReviewImages, StoreReportReviewImage } from "./validators"
+import {
+  StoreCreateReviewImages,
+  StoreGetReviewImages,
+  StoreReportReviewImage,
+} from "./validators"
 
 export const storeReviewImagesMiddlewares: MiddlewareRoute[] = [
+  {
+    method: ["GET"],
+    matcher: "/store/review-images",
+    middlewares: [validateAndTransformQuery(StoreGetReviewImages, {})],
+  },
   {
     method: ["POST"],
     matcher: "/store/review-images",

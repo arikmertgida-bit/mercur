@@ -122,6 +122,42 @@ export const WishlistRowSchema = z.object({
     .optional(),
 })
 
+export const CustomerReviewSellerRowSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  handle: z.string(),
+  logo: z.string().nullable().optional(),
+  members: z
+    .array(
+      z.object({
+        id: z.string(),
+        first_name: z.string().nullable().optional(),
+        last_name: z.string().nullable().optional(),
+      })
+    )
+    .optional(),
+})
+
+export const CustomerReviewRowSchema = z.object({
+  id: z.string(),
+  reference: z.enum(["product", "seller"]),
+  reference_id: z.string().nullable().optional(),
+  rating: z.number(),
+  customer_note: z.string().nullable().optional(),
+  seller_note: z.string().nullable().optional(),
+  created_at: z.union([z.string(), z.date()]),
+  updated_at: z.union([z.string(), z.date()]),
+  customer: z
+    .object({
+      first_name: z.string().nullable().optional(),
+      last_name: z.string().nullable().optional(),
+      metadata: JsonRecordSchema.nullable().optional(),
+    })
+    .nullable()
+    .optional(),
+  seller: CustomerReviewSellerRowSchema.nullable().optional(),
+})
+
 export const ReviewImageRowSchema = z.object({
   id: z.string(),
   review_id: z.string(),

@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { Prompt, DropdownMenu, IconButton } from "@medusajs/ui"
 import { PaperClip, PaperPlane, EllipsisHorizontal, XMarkMini } from "@medusajs/icons"
+import { ImageLightbox } from "@mercurjs/dashboard-shared"
 import { useMessenger } from "../../../providers/messenger-provider/MessengerProvider"
 import { client } from "../../../lib/client"
 import type { Message } from "../../../lib/messenger/types"
@@ -52,6 +53,7 @@ export function MessengerChat({ currentUserId, otherName }: MessengerChatProps):
   const [selectedImage, setSelectedImage] = useState<File | null>(null)
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
   const [isSending, setIsSending] = useState(false)
+  const [lightboxSrc, setLightboxSrc] = useState<string | null>(null)
 
   useEffect((): (() => void) => {
     return (): void => {
@@ -300,7 +302,14 @@ export function MessengerChat({ currentUserId, otherName }: MessengerChatProps):
                         <p className="text-xs font-medium mb-1 opacity-70">{displayOtherName}</p>
                       )}
                       {msg.messageType === "IMAGE" && msg.imageUrl ? (
-                        <img src={msg.imageUrl} alt={t("messages.imageAlt")} className="max-w-full rounded-lg" />
+                        <button
+                          type="button"
+                          onClick={() => { if (msg.imageUrl) setLightboxSrc(msg.imageUrl) }}
+                          className="block border-0 p-0 cursor-zoom-in rounded-lg overflow-hidden"
+                          aria-label={t("messages.viewImage")}
+                        >
+                          <img src={msg.imageUrl} alt={t("messages.imageAlt")} className="max-w-full rounded-lg hover:opacity-90 transition-opacity" />
+                        </button>
                       ) : (
                         <p className="whitespace-pre-wrap break-words">
                           {msg.deletedForAll ? t("messages.deletedMessage") : msg.content}
@@ -450,6 +459,14 @@ export function MessengerChat({ currentUserId, otherName }: MessengerChatProps):
           </Prompt.Footer>
         </Prompt.Content>
       </Prompt>
+
+      <ImageLightbox
+        images={lightboxSrc ? [{ id: "current", url: lightboxSrc, alt: t("messages.imageAlt") }] : []}
+        index={lightboxSrc ? 0 : null}
+        onIndexChange={(nextIndex) => {
+          if (nextIndex === null) setLightboxSrc(null)
+        }}
+      />
     </div>
   )
 }
