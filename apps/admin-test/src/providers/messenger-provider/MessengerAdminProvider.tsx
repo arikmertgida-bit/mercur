@@ -38,7 +38,6 @@ import {
   deleteMessage as apiDeleteMessage,
   deleteConversation as apiDeleteConversation,
   findOrCreateConversation,
-  markAllConversationsRead,
 } from "../../lib/messenger/client"
 import { kayiEventManager } from "../../lib/messenger/KayiEventManager"
 import {
@@ -168,27 +167,6 @@ export function MessengerAdminProvider({
     kayiEventManager.emitUnreadCount(unreadCount)
   }, [unreadCount])
 
-  useEffect((): () => void => {
-    const unsubscribe = kayiEventManager.subscribeMessagesVisited((): void => {
-      setUnreadCount(0)
-      setConversations((prev: Conversation[]): Conversation[] =>
-        prev.map((c: Conversation): Conversation => ({
-          ...c,
-          participants: c.participants.map((p) =>
-            p.userType === "ADMIN" ? { ...p, unreadCount: 0 } : p
-          ),
-        }))
-      )
-      markAllConversationsRead().catch((err): void => {
-        const msg = err instanceof Error ? err.message : String(err)
-        logger.error(`[MessengerAdminProvider] markAllConversationsRead failed: ${msg}`)
-      })
-    })
-    return (): void => {
-      unsubscribe()
-    }
-  }, [])
-
   // Browser notification
   const showBrowserNotification = useCallback((payload: NotificationPayload): void => {
     if (typeof window === "undefined") return
@@ -238,11 +216,14 @@ export function MessengerAdminProvider({
         }
         const updated = prev.map((c) => {
           if (c.id !== msg.conversationId) return c
-          const updatedParticipants = isActiveConv
-            ? c.participants
-            : c.participants.map((p) =>
-                p.userType === "ADMIN" ? { ...p, unreadCount: (p.unreadCount ?? 0) + 1 } : p
-              )
+          // Never bump the admin's own per-conversation unread badge for a
+          // message the admin just sent — only an incoming message should.
+          const updatedParticipants =
+            isActiveConv || msg.senderId === adminId
+              ? c.participants
+              : c.participants.map((p) =>
+                  p.userType === "ADMIN" ? { ...p, unreadCount: (p.unreadCount ?? 0) + 1 } : p
+                )
           return {
             ...c,
             messages: [msg],

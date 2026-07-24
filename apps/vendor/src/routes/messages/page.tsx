@@ -1,10 +1,8 @@
-import { useEffect } from "react"
 import { useQuery } from "@tanstack/react-query"
 import { Heading } from "@medusajs/ui"
 import { useTranslation } from "react-i18next"
 import { client } from "../../lib/client"
 import { SellerMeSchema } from "../../lib/messenger/schemas"
-import { kayiEventManager } from "../../lib/messenger/KayiEventManager"
 import { MessengerProvider } from "../../providers/messenger-provider/MessengerProvider"
 import { MessengerVendorInbox } from "./components/MessengerVendorInbox"
 import { MessagesIcon } from "./components/MessagesIcon"
@@ -27,10 +25,6 @@ function MessagesContent() {
     staleTime: 60_000,
     retry: false,
   })
-
-  useEffect(() => {
-    kayiEventManager.emitMessagesVisited()
-  }, [])
 
   const sellerId = data?.seller?.id ?? null
   const sellerName = data?.seller?.name ?? undefined
