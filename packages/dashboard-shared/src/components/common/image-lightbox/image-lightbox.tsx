@@ -17,9 +17,10 @@ type ImageLightboxProps = {
 }
 
 /**
- * Full-screen in-app image viewer with previous/next navigation, a close
- * button, and click-outside-to-close — used wherever review photos need to
- * open inside the panel instead of a new browser tab.
+ * Full-screen in-app image viewer with previous/next navigation, a slide
+ * counter, a click-through thumbnail strip, and click-outside-to-close —
+ * used wherever review photos need to open inside the panel instead of a
+ * new browser tab.
  */
 export const ImageLightbox = ({
   images,
@@ -27,7 +28,8 @@ export const ImageLightbox = ({
   onIndexChange,
 }: ImageLightboxProps) => {
   const open = index !== null && images.length > 0
-  const current = open ? images[((index as number) + images.length) % images.length] : null
+  const activeIndex = open ? ((index as number) + images.length) % images.length : null
+  const current = activeIndex !== null ? images[activeIndex] : null
 
   const goTo = (delta: number): void => {
     if (index === null || images.length === 0) return
@@ -56,7 +58,7 @@ export const ImageLightbox = ({
       <RadixDialog.Portal>
         <RadixDialog.Overlay
           className={clx(
-            "fixed inset-0 z-[100] bg-black/80",
+            "fixed inset-0 z-[100] bg-ui-bg-overlay",
             "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
           )}
         />
@@ -73,18 +75,24 @@ export const ImageLightbox = ({
             <IconButton
               variant="transparent"
               size="large"
-              className="text-ui-fg-on-color hover:bg-white/10 fixed right-4 top-4 z-[101]"
+              className="text-ui-fg-on-color fixed right-4 top-4 z-[101]"
               onClick={(event): void => event.stopPropagation()}
             >
               <XMark />
             </IconButton>
           </RadixDialog.Close>
 
+          {images.length > 1 && activeIndex !== null && (
+            <span className="text-ui-fg-on-color fixed left-1/2 top-4 z-[101] -translate-x-1/2 text-sm font-medium">
+              {activeIndex + 1} / {images.length}
+            </span>
+          )}
+
           {images.length > 1 && (
             <IconButton
               variant="transparent"
               size="large"
-              className="text-ui-fg-on-color hover:bg-white/10 fixed left-4 top-1/2 z-[101] -translate-y-1/2"
+              className="text-ui-fg-on-color fixed left-4 top-1/2 z-[101] -translate-y-1/2"
               onClick={(event): void => {
                 event.stopPropagation()
                 goTo(-1)
@@ -99,7 +107,10 @@ export const ImageLightbox = ({
             <img
               src={current.url}
               alt={current.alt || ""}
-              className="max-h-[85vh] max-w-[85vw] rounded-md object-contain"
+              className={clx(
+                "max-w-[75vw] rounded-md object-contain",
+                images.length > 1 ? "max-h-[65vh]" : "max-h-[80vh]"
+              )}
               onClick={(event): void => event.stopPropagation()}
             />
           )}
@@ -108,7 +119,7 @@ export const ImageLightbox = ({
             <IconButton
               variant="transparent"
               size="large"
-              className="text-ui-fg-on-color hover:bg-white/10 fixed right-4 top-1/2 z-[101] -translate-y-1/2"
+              className="text-ui-fg-on-color fixed right-4 top-1/2 z-[101] -translate-y-1/2"
               onClick={(event): void => {
                 event.stopPropagation()
                 goTo(1)
@@ -116,6 +127,34 @@ export const ImageLightbox = ({
             >
               <ArrowRight />
             </IconButton>
+          )}
+
+          {images.length > 1 && (
+            <div
+              className="fixed bottom-4 left-1/2 z-[101] flex max-w-[75vw] -translate-x-1/2 gap-2 overflow-x-auto px-2"
+              onClick={(event): void => event.stopPropagation()}
+            >
+              {images.map((image, imageIndex) => (
+                <button
+                  key={image.id}
+                  type="button"
+                  onClick={(): void => onIndexChange(imageIndex)}
+                  className={clx(
+                    "size-14 shrink-0 overflow-hidden rounded-md border-2 transition-colors",
+                    imageIndex === activeIndex
+                      ? "border-ui-fg-on-color"
+                      : "border-transparent opacity-60 hover:opacity-100"
+                  )}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={image.url}
+                    alt={image.alt || ""}
+                    className="size-full object-cover"
+                  />
+                </button>
+              ))}
+            </div>
           )}
         </RadixDialog.Content>
       </RadixDialog.Portal>
