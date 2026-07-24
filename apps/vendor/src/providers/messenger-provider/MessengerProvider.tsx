@@ -29,7 +29,6 @@ import {
   uploadImage as apiUploadImage,
   deleteMessage as apiDeleteMessage,
   deleteConversation as apiDeleteConversation,
-  markAllConversationsRead,
 } from "../../lib/messenger/client"
 import { getMessengerAuthToken, setMessengerAuthToken } from "../../lib/messenger/auth-token"
 import i18next from "i18next"
@@ -197,27 +196,6 @@ export function MessengerProvider({
     kayiEventManager.emitUnreadCount(unreadCount)
   }, [unreadCount])
 
-  useEffect((): () => void => {
-    const unsubscribe = kayiEventManager.subscribeMessagesVisited((): void => {
-      setUnreadCount(0)
-      setConversations((prev: Conversation[]): Conversation[] =>
-        prev.map((c: Conversation): Conversation => ({
-          ...c,
-          participants: c.participants.map((p) =>
-            p.userType === "SELLER" ? { ...p, unreadCount: 0 } : p
-          ),
-        }))
-      )
-      markAllConversationsRead().catch((err): void => {
-        const msg = err instanceof Error ? err.message : String(err)
-        logger.error(`[MessengerProvider] markAllConversationsRead failed: ${msg}`)
-      })
-    })
-    return (): void => {
-      unsubscribe()
-    }
-  }, [])
-
   const showBrowserNotification = useCallback((payload: NotificationPayload) => {
     if (typeof window === "undefined") return
     if (document.visibilityState === "visible") return
@@ -274,11 +252,14 @@ export function MessengerProvider({
         }
         const updated = prev.map((c) => {
           if (c.id !== msg.conversationId) return c
-          const updatedParticipants = isActiveAnywhere
-            ? c.participants
-            : c.participants.map((p) =>
-                p.userType === "SELLER" ? { ...p, unreadCount: (p.unreadCount ?? 0) + 1 } : p
-              )
+          // Never bump the seller's own per-conversation unread badge for a
+          // message the seller just sent — only an incoming message should.
+          const updatedParticipants =
+            isActiveAnywhere || msg.senderId === sellerId
+              ? c.participants
+              : c.participants.map((p) =>
+                  p.userType === "SELLER" ? { ...p, unreadCount: (p.unreadCount ?? 0) + 1 } : p
+                )
           return {
             ...c,
             messages: [msg],

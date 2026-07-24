@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import type { UserType } from "../../../lib/messenger/types"
 
 declare const __STOREFRONT_URL__: string
@@ -29,13 +29,23 @@ export function DynamicAvatar({
   const [hasError, setHasError] = useState<boolean>(false)
   const [fallbackFailed, setFallbackFailed] = useState<boolean>(false)
 
+  // Reset error state whenever the resolved src changes (e.g. an avatar query
+  // that was still loading on first paint — and briefly fell back to the
+  // placeholder — later resolves to a real, working URL). Without this, a
+  // single failed load of the initial null/placeholder src permanently pins
+  // the component to the fallback image, even after a valid src arrives.
+  useEffect(() => {
+    setHasError(false)
+    setFallbackFailed(false)
+  }, [src])
+
   const baseUrl = STOREFRONT_URL.replace(/\/$/, "")
 
   let fallbackSrc = `${baseUrl}/images/customer-default-avatar.jpeg`
   if (type === "ADMIN" || type === "SUPPORT") {
     fallbackSrc = fallbackFailed ? `${baseUrl}/images/customer-default-avatar.jpeg` : `${baseUrl}/messenger-logo.png`
   } else if (type === "SELLER" || type === "VENDOR") {
-    fallbackSrc = `${baseUrl}/images/vendor/default-seller-avatar.png`
+    fallbackSrc = `${baseUrl}/images/vendor/default-seller-avatar.jpeg`
   }
 
   const isInvalidSrc = !src || src === "null" || src === "undefined" || hasError

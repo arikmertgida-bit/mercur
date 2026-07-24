@@ -85,7 +85,15 @@ export function MessengerChat({ currentUserId, otherName }: MessengerChatProps):
         const aid = "adminUserId" in data ? data.adminUserId : null
         if (!aid) throw new Error("No admin user found")
         setAdminUserId(aid)
-        const existing = conversations.find((c) => c.type === "ADMIN_SUPPORT")
+        // Match on the resolved admin id too, not just the conversation type —
+        // system notifications (e.g. review-report resolutions) also create an
+        // ADMIN_SUPPORT thread, but addressed to a fixed "admin-system" sender
+        // that no real admin account is ever a participant of. Reusing that
+        // thread here would silently send the seller's support messages into a
+        // conversation no admin can see.
+        const existing = conversations.find(
+          (c) => c.type === "ADMIN_SUPPORT" && c.participants.some((p) => p.userId === aid)
+        )
         if (existing) {
           setLocalConvId(existing.id)
           await openSidebarConversation(existing.id)

@@ -1,10 +1,8 @@
 type UnreadCountListener = (count: number) => void
-type MessagesVisitedListener = () => void
 type ReviewNotificationListener = () => void
 
 export class KayiEventManager {
   private unreadCountListeners = new Set<UnreadCountListener>()
-  private messagesVisitedListeners = new Set<MessagesVisitedListener>()
   private reviewNotificationListeners = new Set<ReviewNotificationListener>()
 
   public subscribeUnreadCount(listener: UnreadCountListener): () => void {
@@ -17,19 +15,6 @@ export class KayiEventManager {
   public emitUnreadCount(count: number): void {
     for (const listener of this.unreadCountListeners) {
       listener(count)
-    }
-  }
-
-  public subscribeMessagesVisited(listener: MessagesVisitedListener): () => void {
-    this.messagesVisitedListeners.add(listener)
-    return () => {
-      this.messagesVisitedListeners.delete(listener)
-    }
-  }
-
-  public emitMessagesVisited(): void {
-    for (const listener of this.messagesVisitedListeners) {
-      listener()
     }
   }
 
