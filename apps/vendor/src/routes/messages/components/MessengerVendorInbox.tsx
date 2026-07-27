@@ -5,7 +5,11 @@ import { ChatBubbleLeftRight, PaperClip, PaperPlane, EllipsisHorizontal, XMarkMi
 import { ImageLightbox } from "@mercurjs/dashboard-shared"
 import { useMessenger } from "../../../providers/messenger-provider/MessengerProvider"
 import { useCustomerAvatar } from "../../../hooks/useCustomerAvatar"
+import { useMessengerAutoScroll } from "../../../hooks/useMessengerAutoScroll"
+import { useAutoGrowTextarea } from "../../../hooks/useAutoGrowTextarea"
 import { client } from "../../../lib/client"
+import { isMessengerHttpError } from "../../../lib/messenger/client"
+import { getBlockedReasonKey } from "../../../lib/messenger/blocked-reason-message"
 import { resolveParticipantDisplayName } from "../../../lib/messenger/resolve-participant-display-name"
 import type { Message, MessageContext, ProductContextData, Participant } from "../../../lib/messenger/types"
 import { ThreadListItem } from "./ThreadListItem"
@@ -75,7 +79,6 @@ export function MessengerVendorInbox({ sellerId: _sellerId, sellerLogo }: Messen
     convId: string
     deleteForAll: boolean
   } | null>(null)
-  const bottomRef = useRef<HTMLDivElement>(null)
   const messagesContainerRef = useRef<HTMLDivElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
@@ -154,12 +157,10 @@ export function MessengerVendorInbox({ sellerId: _sellerId, sellerLogo }: Messen
     return () => window.removeEventListener("resize", handleResize)
   }, [])
 
-  useEffect(() => {
-    const frameId = requestAnimationFrame(() => {
-      bottomRef.current?.scrollIntoView({ block: "end" })
-    })
-    return () => cancelAnimationFrame(frameId)
-  }, [messages, typingUserIds])
+  // Otomatik en-alta-kaydırma — typingUserIds artık tetikleyici değil (bkz. useMessengerAutoScroll)
+  useMessengerAutoScroll(messagesContainerRef, messages, activeConversationId)
+
+  useAutoGrowTextarea(textareaRef, text)
 
   const handleSend = useCallback(async () => {
     if (!activeConversationId) return
@@ -187,12 +188,16 @@ export function MessengerVendorInbox({ sellerId: _sellerId, sellerLogo }: Messen
     const content = text.trim()
     if (!content || isSending) return
     setIsSending(true)
+    setSendError(null)
     setText("")
     stopTyping()
     try {
       await sendMessage(content)
     } catch (err) {
       logger.error(`[MessengerVendorInbox] send error: ${getCatchMessage(err instanceof Error ? err : undefined)}`)
+      setText(content)
+      const reason = err instanceof Error && isMessengerHttpError(err) ? err.reason : null
+      setSendError(reason ? t(getBlockedReasonKey(reason)) : t("messages.sendFailed"))
     } finally {
       setIsSending(false)
     }
@@ -237,11 +242,6 @@ export function MessengerVendorInbox({ sellerId: _sellerId, sellerLogo }: Messen
 
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setText(e.target.value)
-    const el = e.target
-    requestAnimationFrame(() => {
-      el.style.height = "auto"
-      el.style.height = `${Math.min(el.scrollHeight, 96)}px`
-    })
     if (!isTypingRef.current) {
       isTypingRef.current = true
       startTyping()
@@ -575,7 +575,6 @@ export function MessengerVendorInbox({ sellerId: _sellerId, sellerLogo }: Messen
                   </div>
                 </div>
               )}
-              <div ref={bottomRef} />
             </div>
 
             {/* Input */}
