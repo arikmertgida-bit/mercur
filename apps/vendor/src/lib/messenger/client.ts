@@ -9,14 +9,47 @@ const BASE_URL: string =
 
 const DEFAULT_ERROR_MESSAGE = "Beklenmeyen bir sunucu hatası oluştu."
 
-const ErrorBodySchema = z.object({ message: z.string().optional() }).passthrough()
+const BlockedReasonSchema = z.enum(["EMAIL", "PHONE", "URL", "GENERIC"])
+export type BlockedReason = z.infer<typeof BlockedReasonSchema>
 
-async function extractErrorMessageFromResponse(res: Response): Promise<string> {
-  const parsed = ErrorBodySchema.safeParse(await res.json().catch(() => ({})))
-  if (parsed.success && typeof parsed.data.message === "string" && parsed.data.message.length > 0) {
-    return parsed.data.message
+// Backend her zaman `{ error, reason? }` şeklinde döner — `message` alanı
+// hiçbir zaman gönderilmiyor (bkz. messenger/src/routes/messages.ts).
+const ErrorBodySchema = z.object({
+  error: z.union([z.string(), z.number(), z.boolean()]).optional(),
+  reason: BlockedReasonSchema.optional(),
+}).passthrough()
+
+export class MessengerHttpError extends Error {
+  readonly status: number
+  readonly reason: BlockedReason | null
+
+  constructor(status: number, message: string, reason: BlockedReason | null = null) {
+    super(message)
+    this.name = "MessengerHttpError"
+    this.status = status
+    this.reason = reason
   }
-  return DEFAULT_ERROR_MESSAGE
+}
+
+export function isMessengerHttpError(err: Error): err is MessengerHttpError {
+  return err instanceof MessengerHttpError
+}
+
+interface ParsedErrorBody {
+  message: string
+  reason: BlockedReason | null
+}
+
+async function extractErrorBody(res: Response): Promise<ParsedErrorBody> {
+  const parsed = ErrorBodySchema.safeParse(await res.json().catch(() => ({})))
+  if (!parsed.success) {
+    return { message: DEFAULT_ERROR_MESSAGE, reason: null }
+  }
+  const message =
+    typeof parsed.data.error === "string" && parsed.data.error.length > 0
+      ? parsed.data.error
+      : DEFAULT_ERROR_MESSAGE
+  return { message, reason: parsed.data.reason ?? null }
 }
 
 function getAuthHeader(): Record<string, string> {
@@ -42,7 +75,8 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
   })
 
   if (!res.ok) {
-    throw new Error(await extractErrorMessageFromResponse(res))
+    const { message, reason } = await extractErrorBody(res)
+    throw new MessengerHttpError(res.status, message, reason)
   }
 
   return res.json()
@@ -116,7 +150,8 @@ export async function uploadImage(
   })
 
   if (!res.ok) {
-    throw new Error(await extractErrorMessageFromResponse(res))
+    const { message, reason } = await extractErrorBody(res)
+    throw new MessengerHttpError(res.status, message, reason)
   }
 
   return res.json()

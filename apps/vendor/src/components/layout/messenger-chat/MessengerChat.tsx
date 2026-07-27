@@ -4,7 +4,10 @@ import { Prompt, DropdownMenu, IconButton } from "@medusajs/ui"
 import { PaperClip, PaperPlane, EllipsisHorizontal, XMarkMini } from "@medusajs/icons"
 import { ImageLightbox } from "@mercurjs/dashboard-shared"
 import { useMessenger } from "../../../providers/messenger-provider/MessengerProvider"
+import { useMessengerAutoScroll } from "../../../hooks/useMessengerAutoScroll"
 import { client } from "../../../lib/client"
+import { isMessengerHttpError } from "../../../lib/messenger/client"
+import { getBlockedReasonKey } from "../../../lib/messenger/blocked-reason-message"
 import type { Message } from "../../../lib/messenger/types"
 import { logger } from "../../../lib/logger"
 import { getCatchMessage } from "../../../lib/errors"
@@ -53,6 +56,7 @@ export function MessengerChat({ currentUserId, otherName }: MessengerChatProps):
   const [selectedImage, setSelectedImage] = useState<File | null>(null)
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
   const [isSending, setIsSending] = useState(false)
+  const [sendError, setSendError] = useState<string | null>(null)
   const [lightboxSrc, setLightboxSrc] = useState<string | null>(null)
 
   useEffect((): (() => void) => {
@@ -70,7 +74,7 @@ export function MessengerChat({ currentUserId, otherName }: MessengerChatProps):
     messageId: string
     deleteForAll: boolean
   } | null>(null)
-  const bottomRef = useRef<HTMLDivElement>(null)
+  const messagesContainerRef = useRef<HTMLDivElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const typingTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const initializedRef = useRef(false)
@@ -106,9 +110,8 @@ export function MessengerChat({ currentUserId, otherName }: MessengerChatProps):
       .finally(() => setIsInitializing(false))
   }, [currentUserId]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" })
-  }, [pinnedMessages, typingUserIds])
+  // Otomatik en-alta-kaydırma — typingUserIds artık tetikleyici değil (bkz. useMessengerAutoScroll)
+  useMessengerAutoScroll(messagesContainerRef, pinnedMessages, localConvId)
 
   const handleRemoveImage = (): void => {
     if (previewUrl) {
@@ -125,6 +128,7 @@ export function MessengerChat({ currentUserId, otherName }: MessengerChatProps):
     const content = text.trim()
     if ((!content && !selectedImage) || isSending) return
     setIsSending(true)
+    setSendError(null)
     setText("")
     stopTyping()
 
@@ -166,6 +170,9 @@ export function MessengerChat({ currentUserId, otherName }: MessengerChatProps):
       }
     } catch (err) {
       logger.error(`[MessengerChat] handleSend error: ${getCatchMessage(err instanceof Error ? err : undefined)}`)
+      if (content) setText(content)
+      const reason = err instanceof Error && isMessengerHttpError(err) ? err.reason : null
+      setSendError(reason ? t(getBlockedReasonKey(reason)) : t("messages.sendFailed"))
     } finally {
       setIsSending(false)
     }
@@ -242,7 +249,7 @@ export function MessengerChat({ currentUserId, otherName }: MessengerChatProps):
     <div className="relative h-full w-full">
       <div className="flex flex-col h-full">
         {/* Messages */}
-        <div className="flex-1 overflow-y-auto px-4 py-3 space-y-1 scroll-smooth">
+        <div ref={messagesContainerRef} className="flex-1 overflow-y-auto px-4 py-3 space-y-1 scroll-smooth">
           {isLoadingMessages ? (
             <div className="flex justify-center items-center h-full">
               <div className="w-6 h-6 border-2 border-ui-border-interactive border-t-transparent rounded-full animate-spin" />
@@ -376,11 +383,13 @@ export function MessengerChat({ currentUserId, otherName }: MessengerChatProps):
               </div>
             </div>
           )}
-          <div ref={bottomRef} />
         </div>
 
         {/* Input */}
         <div className="px-3 py-2.5 border-t border-ui-border-base bg-ui-bg-base">
+          {sendError && (
+            <p className="text-xs text-ui-tag-red-text px-1 pb-1">{sendError}</p>
+          )}
           {previewUrl && (
             <div className="relative w-20 h-20 mb-2 border border-ui-border-base rounded-lg overflow-hidden group">
               <img
