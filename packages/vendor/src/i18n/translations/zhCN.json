@@ -2640,6 +2640,8 @@
     "fields": {
       "name": "名称",
       "identifier": "标识符",
+      "identifierTooltip": "根据活动名称自动生成。仅包含小写字母、数字和连字符 — 此字段无法直接编辑。",
+      "identifierPlaceholder": "夏季促销",
       "start_date": "开始日期",
       "end_date": "结束日期",
       "total_spend": "预算花费",

@@ -2640,6 +2640,8 @@
     "fields": {
       "name": "Název",
       "identifier": "Identifikátor",
+      "identifierTooltip": "Automaticky generováno z názvu kampaně. Pouze malá písmena, číslice a spojovníky — toto pole nelze upravovat přímo.",
+      "identifierPlaceholder": "letni-vyprodej",
       "start_date": "Datum začátku",
       "end_date": "Datum konce",
       "total_spend": "Utracený rozpočet",

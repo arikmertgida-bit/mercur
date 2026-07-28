@@ -2645,6 +2645,8 @@
     "fields": {
       "name": "Ad",
       "identifier": "Tanımlayıcı",
+      "identifierTooltip": "Kampanya adından otomatik olarak oluşturulur. Yalnızca küçük harf, rakam ve tire içerir — bu alan doğrudan düzenlenemez.",
+      "identifierPlaceholder": "yaz-indirimi",
       "start_date": "Başlangıç tarihi",
       "end_date": "Bitiş tarihi",
       "total_spend": "Harcanan bütçe",

@@ -14,14 +14,29 @@ const IDLE_POLL_INTERVAL_MS = 60_000
 /**
  * Routes reachable with zero session cookie — polling `/vendor/sellers/me`
  * here can never succeed and only spams the console with 401s. `/onboarding`
- * and `/store-select` are deliberately excluded: both require a session
- * (post sign-up / post sign-in, pre store-selection), which is exactly the
- * "no store selected" case this hook is meant to poll through.
+ * is deliberately excluded: it requires a session (post sign-up, pre
+ * store-creation), which is exactly the "no store selected" case this hook
+ * is meant to poll through.
  */
 const UNAUTHENTICATED_ROUTES = ["/login", "/register", "/reset-password"]
 
+/**
+ * Being on `/store-select` already *means* "no seller resolved yet" — that's
+ * the page's entire purpose, shown right after login before a store is
+ * picked. Probing `/vendor/sellers/me` while here is guaranteed to 400 (no
+ * `seller_id` in session yet), so skip it outright instead of firing a
+ * doomed request every poll tick. `navigate("/", ...)` on successful
+ * selection moves off this route immediately, so the very next tick (or the
+ * initial call right after) resolves normally with no added latency.
+ */
+const NO_SELLER_YET_ROUTES = ["/store-select"]
+
 function isOnUnauthenticatedRoute(): boolean {
   return UNAUTHENTICATED_ROUTES.includes(window.location.pathname)
+}
+
+function isOnRouteWithoutSelectableSeller(): boolean {
+  return NO_SELLER_YET_ROUTES.includes(window.location.pathname)
 }
 
 /**
@@ -47,7 +62,7 @@ function useSellerSession(): { sellerId: string | null; sellerName: string | und
     }
 
     const resolveSeller = async (): Promise<void> => {
-      if (isOnUnauthenticatedRoute()) {
+      if (isOnUnauthenticatedRoute() || isOnRouteWithoutSelectableSeller()) {
         return
       }
       try {

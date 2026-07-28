@@ -2640,6 +2640,8 @@
     "fields": {
       "name": "Naam",
       "identifier": "Identificatie",
+      "identifierTooltip": "Automatisch gegenereerd op basis van de campagnenaam. Alleen kleine letters, cijfers en koppeltekens — dit veld kan niet rechtstreeks worden bewerkt.",
+      "identifierPlaceholder": "zomer-uitverkoop",
       "start_date": "Startdatum",
       "end_date": "Einddatum",
       "total_spend": "Budget uitgegeven",

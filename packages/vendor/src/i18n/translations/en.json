@@ -2882,7 +2882,8 @@
     "fields": {
       "name": "Name",
       "identifier": "Identifier",
-      "identifier_tooltip": "The identifier is your business-friendly campaign code that you use for integrations, reporting, and easily recognizing the campaign – it is not the technical ID from the database.",
+      "identifierTooltip": "Automatically generated from the campaign name. Lowercase letters, numbers, and hyphens only — this field can't be edited directly.",
+      "identifierPlaceholder": "summer-sale",
       "type": "Type",
       "start_date": "Start date",
       "end_date": "End date",

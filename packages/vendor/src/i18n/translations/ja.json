@@ -2640,6 +2640,8 @@
     "fields": {
       "name": "名前",
       "identifier": "識別子",
+      "identifierTooltip": "キャンペーン名から自動生成されます。小文字、数字、ハイフンのみ使用できます — このフィールドは直接編集できません。",
+      "identifierPlaceholder": "サマーセール",
       "start_date": "開始日",
       "end_date": "終了日",
       "total_spend": "予算支出",

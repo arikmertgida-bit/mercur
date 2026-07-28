@@ -2640,6 +2640,8 @@
     "fields": {
       "name": "Name",
       "identifier": "Kennung",
+      "identifierTooltip": "Wird automatisch aus dem Kampagnennamen generiert. Nur Kleinbuchstaben, Zahlen und Bindestriche — dieses Feld kann nicht direkt bearbeitet werden.",
+      "identifierPlaceholder": "sommer-angebot",
       "start_date": "Startdatum",
       "end_date": "Enddatum",
       "total_spend": "Budget ausgegeben",
