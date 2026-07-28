@@ -30,12 +30,12 @@ const Root = ({ children }: { children?: ReactNode }) => {
     },
   );
 
-  if (isLoading || !campaign) {
-    return <TwoColumnPageSkeleton mainSections={2} sidebarSections={2} />;
-  }
-
   if (isError) {
     throw error;
+  }
+
+  if (isLoading || !campaign) {
+    return <TwoColumnPageSkeleton mainSections={2} sidebarSections={3} />;
   }
 
   return (

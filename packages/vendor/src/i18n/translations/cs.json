@@ -2373,9 +2373,29 @@
   },
   "promotions": {
     "templates": {
+      "amountOffProducts": {
+        "title": "Sleva v hodnotě na produkty",
+        "description": "Sleva na konkrétní produkty nebo kolekci produktů"
+      },
+      "amountOffOrder": {
+        "title": "Sleva v hodnotě na objednávku",
+        "description": "Sleva z celkové částky objednávky"
+      },
       "percentageOffProduct": {
         "title": "Procentuální sleva na produkt",
         "description": "Procentuální sleva na vybrané produkty"
+      },
+      "percentageOffOrder": {
+        "title": "Procentuální sleva na objednávku",
+        "description": "Procentuální sleva z celkové částky objednávky"
+      },
+      "buyGet": {
+        "title": "Kup X Získej Y",
+        "description": "Kup X produkt(ů), získej Y produkt(ů)"
+      },
+      "freeShipping": {
+        "title": "Doprava zdarma",
+        "description": "Uplatní 100% slevu na poplatky za dopravu"
       }
     },
     "domain": "Propagace",

@@ -2584,13 +2584,25 @@
         "title": "Amount off items",
         "description": "Discount selected items"
       },
+      "amountOffOrder": {
+        "title": "Amount off order",
+        "description": "Discounts the total order amount"
+      },
       "percentageOffProduct": {
         "title": "Percentage off items",
         "description": "Discounts a percentage off selected items"
       },
+      "percentageOffOrder": {
+        "title": "Percentage off order",
+        "description": "Discounts a percentage of the total order amount"
+      },
       "buyGet": {
         "title": "Buy X Get Y",
         "description": "Buy X item(s), get Y item(s)"
+      },
+      "freeShipping": {
+        "title": "Free shipping",
+        "description": "Applies a 100% discount to shipping fees"
       }
     },
     "domain": "Promotions",

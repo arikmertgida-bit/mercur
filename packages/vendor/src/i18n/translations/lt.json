@@ -2373,9 +2373,29 @@
   },
   "promotions": {
     "templates": {
+      "amountOffProducts": {
+        "title": "Nuolaida produktams",
+        "description": "Nuolaida konkretiems produktams arba produktų grupei"
+      },
+      "amountOffOrder": {
+        "title": "Nuolaida užsakymui",
+        "description": "Nuolaida nuo bendros užsakymo sumos"
+      },
       "percentageOffProduct": {
         "title": "Procentinė nuolaida produktui",
         "description": "Procentinė nuolaida pasirinktiems produktams"
+      },
+      "percentageOffOrder": {
+        "title": "Procentinė nuolaida užsakymui",
+        "description": "Procentinė nuolaida nuo bendros užsakymo sumos"
+      },
+      "buyGet": {
+        "title": "Pirk X, gauk Y",
+        "description": "Pirk X produktą (-ų), gauk Y produktą (-ų)"
+      },
+      "freeShipping": {
+        "title": "Nemokamas pristatymas",
+        "description": "Pritaiko 100% nuolaidą pristatymo mokesčiams"
       }
     },
     "domain": "Akcijos",

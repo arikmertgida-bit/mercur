@@ -2373,9 +2373,29 @@
   },
   "promotions": {
     "templates": {
+      "amountOffProducts": {
+        "title": "Reducere valorică la produse",
+        "description": "Reduce prețul unor produse specifice sau al unei colecții de produse"
+      },
+      "amountOffOrder": {
+        "title": "Reducere valorică la comandă",
+        "description": "Reduce valoarea totală a comenzii"
+      },
       "percentageOffProduct": {
         "title": "Reducere procentuală la produs",
         "description": "Aplică o reducere procentuală la produsele selectate"
+      },
+      "percentageOffOrder": {
+        "title": "Reducere procentuală la comandă",
+        "description": "Aplică o reducere procentuală la valoarea totală a comenzii"
+      },
+      "buyGet": {
+        "title": "Cumperi X Primești Y",
+        "description": "Cumperi X produs(e), primești Y produs(e)"
+      },
+      "freeShipping": {
+        "title": "Livrare gratuită",
+        "description": "Aplică o reducere de 100% la taxele de livrare"
       }
     },
     "domain": "Promoții",

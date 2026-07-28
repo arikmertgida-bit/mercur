@@ -2378,9 +2378,29 @@
   },
   "promotions": {
     "templates": {
+      "amountOffProducts": {
+        "title": "Ürünlerde tutar indirimi",
+        "description": "Belirli ürünlerde veya ürün koleksiyonunda indirim uygular"
+      },
+      "amountOffOrder": {
+        "title": "Siparişte tutar indirimi",
+        "description": "Toplam sipariş tutarında indirim uygular"
+      },
       "percentageOffProduct": {
         "title": "Üründe yüzde indirimi",
         "description": "Seçili ürünlerde yüzde indirimi uygular"
+      },
+      "percentageOffOrder": {
+        "title": "Siparişte yüzde indirimi",
+        "description": "Toplam sipariş tutarında yüzde indirimi uygular"
+      },
+      "buyGet": {
+        "title": "X Al Y Kazan",
+        "description": "X ürün al, Y ürün kazan"
+      },
+      "freeShipping": {
+        "title": "Ücretsiz kargo",
+        "description": "Kargo ücretlerine %100 indirim uygular"
       }
     },
     "domain": "Promosyonlar",

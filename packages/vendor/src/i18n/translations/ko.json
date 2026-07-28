@@ -2373,9 +2373,29 @@
   },
   "promotions": {
     "templates": {
+      "amountOffProducts": {
+        "title": "상품 할인 금액",
+        "description": "특정 상품 또는 상품 컬렉션을 할인합니다"
+      },
+      "amountOffOrder": {
+        "title": "주문 할인 금액",
+        "description": "주문 총액을 할인합니다"
+      },
       "percentageOffProduct": {
         "title": "상품 할인율",
         "description": "선택한 상품을 비율로 할인합니다"
+      },
+      "percentageOffOrder": {
+        "title": "주문 할인율",
+        "description": "주문 총액을 비율로 할인합니다"
+      },
+      "buyGet": {
+        "title": "X개 구매 시 Y개 증정",
+        "description": "상품 X개를 구매하면 Y개를 증정합니다"
+      },
+      "freeShipping": {
+        "title": "무료 배송",
+        "description": "배송비에 100% 할인을 적용합니다"
       }
     },
     "domain": "프로모션",

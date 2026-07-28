@@ -18,6 +18,22 @@ export const templates = [
     },
   },
   {
+    id: "amount_off_order",
+    type: "standard",
+    titleKey: "promotions.templates.amountOffOrder.title",
+    descriptionKey: "promotions.templates.amountOffOrder.description",
+    hiddenFields: [...commonHiddenFields],
+    defaults: {
+      is_automatic: "false",
+      type: "standard",
+      application_method: {
+        allocation: "across",
+        target_type: "order",
+        type: "fixed",
+      },
+    },
+  },
+  {
     id: "percentage_off_product",
     type: "standard",
     titleKey: "promotions.templates.percentageOffProduct.title",
@@ -29,6 +45,22 @@ export const templates = [
       application_method: {
         allocation: "each",
         target_type: "items",
+        type: "percentage",
+      },
+    },
+  },
+  {
+    id: "percentage_off_order",
+    type: "standard",
+    titleKey: "promotions.templates.percentageOffOrder.title",
+    descriptionKey: "promotions.templates.percentageOffOrder.description",
+    hiddenFields: [...commonHiddenFields],
+    defaults: {
+      is_automatic: "false",
+      type: "standard",
+      application_method: {
+        allocation: "across",
+        target_type: "order",
         type: "percentage",
       },
     },
@@ -50,7 +82,25 @@ export const templates = [
       application_method: {
         type: "percentage",
         value: 100,
+        apply_to_quantity: 1,
         max_quantity: 1,
+      },
+    },
+  },
+  {
+    id: "shipping_discount",
+    type: "standard",
+    titleKey: "promotions.templates.freeShipping.title",
+    descriptionKey: "promotions.templates.freeShipping.description",
+    hiddenFields: [...commonHiddenFields, "application_method.value"],
+    defaults: {
+      is_automatic: "false",
+      type: "standard",
+      application_method: {
+        allocation: "across",
+        target_type: "shipping_methods",
+        type: "percentage",
+        value: 100,
       },
     },
   },

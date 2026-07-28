@@ -2373,9 +2373,29 @@
   },
   "promotions": {
     "templates": {
+      "amountOffProducts": {
+        "title": "Giảm số tiền cho sản phẩm",
+        "description": "Giảm giá cho sản phẩm cụ thể hoặc bộ sưu tập sản phẩm"
+      },
+      "amountOffOrder": {
+        "title": "Giảm số tiền cho đơn hàng",
+        "description": "Giảm giá tổng số tiền của đơn hàng"
+      },
       "percentageOffProduct": {
         "title": "Giảm phần trăm cho sản phẩm",
         "description": "Giảm giá theo phần trăm cho các sản phẩm đã chọn"
+      },
+      "percentageOffOrder": {
+        "title": "Giảm phần trăm cho đơn hàng",
+        "description": "Giảm giá theo phần trăm trên tổng số tiền của đơn hàng"
+      },
+      "buyGet": {
+        "title": "Mua X Tặng Y",
+        "description": "Mua X sản phẩm, tặng Y sản phẩm"
+      },
+      "freeShipping": {
+        "title": "Miễn phí vận chuyển",
+        "description": "Áp dụng giảm giá 100% cho phí vận chuyển"
       }
     },
     "domain": "Khuyến mãi",
