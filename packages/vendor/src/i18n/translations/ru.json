@@ -2373,9 +2373,29 @@
   },
   "promotions": {
     "templates": {
+      "amountOffProducts": {
+        "title": "Скидка на товары",
+        "description": "Скидка на определённые товары или группу товаров"
+      },
+      "amountOffOrder": {
+        "title": "Скидка на заказ",
+        "description": "Скидка на общую сумму заказа"
+      },
       "percentageOffProduct": {
         "title": "Процент скидки на товар",
         "description": "Процентная скидка на выбранные товары"
+      },
+      "percentageOffOrder": {
+        "title": "Процент скидки на заказ",
+        "description": "Процентная скидка на общую сумму заказа"
+      },
+      "buyGet": {
+        "title": "Купи X — получи Y",
+        "description": "Купи X товар(ов), получи Y товар(ов)"
+      },
+      "freeShipping": {
+        "title": "Бесплатная доставка",
+        "description": "Применяет 100% скидку на стоимость доставки"
       }
     },
     "domain": "Акции",

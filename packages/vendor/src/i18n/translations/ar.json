@@ -2373,9 +2373,29 @@
   },
   "promotions": {
     "templates": {
+      "amountOffProducts": {
+        "title": "خصم مبلغ على المنتجات",
+        "description": "خصم على منتجات محددة أو مجموعة من المنتجات"
+      },
+      "amountOffOrder": {
+        "title": "خصم مبلغ على الطلب",
+        "description": "خصم على إجمالي مبلغ الطلب"
+      },
       "percentageOffProduct": {
         "title": "خصم نسبة مئوية على المنتج",
         "description": "خصم نسبة مئوية على منتجات محددة"
+      },
+      "percentageOffOrder": {
+        "title": "خصم نسبة مئوية على الطلب",
+        "description": "خصم نسبة مئوية من إجمالي مبلغ الطلب"
+      },
+      "buyGet": {
+        "title": "اشترِ X واحصل على Y",
+        "description": "اشترِ X منتج (منتجات)، واحصل على Y منتج (منتجات)"
+      },
+      "freeShipping": {
+        "title": "شحن مجاني",
+        "description": "يطبّق خصمًا بنسبة 100% على رسوم الشحن"
       }
     },
     "domain": "العروض الترويجية",

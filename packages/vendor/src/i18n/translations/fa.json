@@ -2373,9 +2373,29 @@
   },
   "promotions": {
     "templates": {
+      "amountOffProducts": {
+        "title": "تخفیف مبلغی روی محصولات",
+        "description": "تخفیف روی محصولات مشخص یا مجموعه‌ای از محصولات"
+      },
+      "amountOffOrder": {
+        "title": "تخفیف مبلغی روی سفارش",
+        "description": "تخفیف روی مبلغ کل سفارش"
+      },
       "percentageOffProduct": {
         "title": "تخفیف درصدی روی محصول",
         "description": "تخفیف درصدی روی محصولات انتخاب‌شده"
+      },
+      "percentageOffOrder": {
+        "title": "تخفیف درصدی روی سفارش",
+        "description": "تخفیف درصدی از مبلغ کل سفارش"
+      },
+      "buyGet": {
+        "title": "X بخر Y بگیر",
+        "description": "X محصول بخرید، Y محصول بگیرید"
+      },
+      "freeShipping": {
+        "title": "ارسال رایگان",
+        "description": "تخفیف ۱۰۰٪ روی هزینه ارسال اعمال می‌کند"
       }
     },
     "domain": "تبلیغات",

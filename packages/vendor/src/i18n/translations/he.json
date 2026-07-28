@@ -2373,9 +2373,29 @@
   },
   "promotions": {
     "templates": {
+      "amountOffProducts": {
+        "title": "הנחת סכום על מוצרים",
+        "description": "הנחה על מוצרים מסוימים או אוסף מוצרים"
+      },
+      "amountOffOrder": {
+        "title": "הנחת סכום על הזמנה",
+        "description": "הנחה על סכום ההזמנה הכולל"
+      },
       "percentageOffProduct": {
         "title": "הנחת אחוזים על מוצר",
         "description": "הנחה באחוזים על מוצרים נבחרים"
+      },
+      "percentageOffOrder": {
+        "title": "הנחת אחוזים על הזמנה",
+        "description": "הנחה באחוזים מסכום ההזמנה הכולל"
+      },
+      "buyGet": {
+        "title": "קנה X קבל Y",
+        "description": "קנה X מוצר(ים), קבל Y מוצר(ים)"
+      },
+      "freeShipping": {
+        "title": "משלוח חינם",
+        "description": "מחיל הנחה של 100% על דמי המשלוח"
       }
     },
     "domain": "מבצעים",

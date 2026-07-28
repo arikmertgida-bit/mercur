@@ -143,8 +143,7 @@ export const CreatePromotionForm = () => {
           application_method: {
             ...applicationMethodData,
             ...applicationMethodRuleData,
-            target_rules: buildRulesData(targetRulesData),
-            type: 'percentage'
+            target_rules: buildRulesData(targetRulesData)
           },
           is_automatic: is_automatic === 'true'
         },

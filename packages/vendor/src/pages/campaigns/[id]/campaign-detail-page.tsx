@@ -5,7 +5,6 @@ import { TwoColumnPageSkeleton } from "@components/common/skeleton";
 import { TwoColumnPage } from "@components/layout/pages";
 import { WidgetZone, useLinkQuery } from "@mercurjs/dashboard-shared";
 import { useCampaign } from "@hooks/api/campaigns";
-import { usePromotionTableQuery } from "@hooks/table/query/use-promotion-table-query";
 
 import { CampaignBudget } from "./_components/campaign-budget";
 import { CampaignConfigurationSection } from "./_components/campaign-configuration-section";
@@ -19,22 +18,21 @@ import type { loader } from "./loader";
 const Root = ({ children }: { children?: ReactNode }) => {
   const initialData = useLoaderData() as Awaited<ReturnType<typeof loader>>;
   const { id } = useParams();
-  const { searchParams } = usePromotionTableQuery({});
   const linkQuery = useLinkQuery("campaign", CAMPAIGN_DETAIL_FIELDS);
   const { campaign, isLoading, isError, error } = useCampaign(
     id!,
-    { ...searchParams, ...linkQuery },
+    linkQuery,
     {
       placeholderData: initialData,
     },
   );
 
-  if (isLoading || !campaign) {
-    return <TwoColumnPageSkeleton mainSections={2} sidebarSections={3} />;
-  }
-
   if (isError) {
     throw error;
+  }
+
+  if (isLoading || !campaign) {
+    return <TwoColumnPageSkeleton mainSections={2} sidebarSections={3} />;
   }
 
   return (

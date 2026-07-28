@@ -87,8 +87,7 @@ The product has three audiences:
 ### Search & Discovery
 - **Meilisearch**-backed catalog search (BFF pattern, event-driven reindexing via
   subscribers + scheduled jobs — see root `mercur/CLAUDE.md` §3). No dedicated
-  admin UI exists for re-indexing today; only unused i18n string leftovers
-  reference it (`packages/admin/src/i18n/translations`).
+  admin UI exists for re-indexing today.
 
 ### Notifications & Communication
 - In-app vendor notification feed.

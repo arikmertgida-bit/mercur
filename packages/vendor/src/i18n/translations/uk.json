@@ -2373,9 +2373,29 @@
   },
   "promotions": {
     "templates": {
+      "amountOffProducts": {
+        "title": "Знижка на товари",
+        "description": "Знижка на певні товари або групу товарів"
+      },
+      "amountOffOrder": {
+        "title": "Знижка на замовлення",
+        "description": "Знижка на загальну суму замовлення"
+      },
       "percentageOffProduct": {
         "title": "Відсоток знижки на товар",
         "description": "Відсоткова знижка на вибрані товари"
+      },
+      "percentageOffOrder": {
+        "title": "Відсоток знижки на замовлення",
+        "description": "Відсоткова знижка на загальну суму замовлення"
+      },
+      "buyGet": {
+        "title": "Купи X — отримай Y",
+        "description": "Купи X товар(ів), отримай Y товар(ів)"
+      },
+      "freeShipping": {
+        "title": "Безкоштовна доставка",
+        "description": "Застосовує 100% знижку на вартість доставки"
       }
     },
     "domain": "Акції",

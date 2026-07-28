@@ -2373,9 +2373,29 @@
   },
   "promotions": {
     "templates": {
+      "amountOffProducts": {
+        "title": "Kedvezmény termékekre",
+        "description": "Kedvezmény adott termékekre vagy termékcsoportra"
+      },
+      "amountOffOrder": {
+        "title": "Kedvezmény a rendelésre",
+        "description": "Kedvezmény a rendelés teljes összegéből"
+      },
       "percentageOffProduct": {
         "title": "Százalékos kedvezmény termékre",
         "description": "Százalékos kedvezmény a kiválasztott termékekre"
+      },
+      "percentageOffOrder": {
+        "title": "Százalékos kedvezmény a rendelésre",
+        "description": "Százalékos kedvezmény a rendelés teljes összegéből"
+      },
+      "buyGet": {
+        "title": "Vegyél X-et, kapsz Y-t",
+        "description": "Vegyél X terméket, kapsz Y terméket"
+      },
+      "freeShipping": {
+        "title": "Ingyenes szállítás",
+        "description": "100%-os kedvezményt alkalmaz a szállítási díjra"
       }
     },
     "domain": "Promóciók",

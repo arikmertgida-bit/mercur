@@ -2373,9 +2373,29 @@
   },
   "promotions": {
     "templates": {
+      "amountOffProducts": {
+        "title": "Valor de desconto em produtos",
+        "description": "Aplica desconto a produtos específicos ou a uma coleção de produtos"
+      },
+      "amountOffOrder": {
+        "title": "Valor de desconto na encomenda",
+        "description": "Aplica desconto sobre o valor total da encomenda"
+      },
       "percentageOffProduct": {
         "title": "Percentagem de desconto no produto",
         "description": "Aplica um desconto percentual sobre os produtos selecionados"
+      },
+      "percentageOffOrder": {
+        "title": "Percentagem de desconto na encomenda",
+        "description": "Aplica um desconto percentual sobre o valor total da encomenda"
+      },
+      "buyGet": {
+        "title": "Compre X Ganhe Y",
+        "description": "Compre X produto(s), receba Y produto(s)"
+      },
+      "freeShipping": {
+        "title": "Portes grátis",
+        "description": "Aplica um desconto de 100% nas taxas de envio"
       }
     },
     "domain": "Promoções",

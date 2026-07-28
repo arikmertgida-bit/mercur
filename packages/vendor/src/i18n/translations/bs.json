@@ -2373,9 +2373,29 @@
   },
   "promotions": {
     "templates": {
+      "amountOffProducts": {
+        "title": "Popust na proizvode",
+        "description": "Popust na određene proizvode ili grupu proizvoda"
+      },
+      "amountOffOrder": {
+        "title": "Popust na narudžbu",
+        "description": "Popust na ukupan iznos narudžbe"
+      },
       "percentageOffProduct": {
         "title": "Procentualni popust na proizvod",
         "description": "Procentualni popust na odabrane proizvode"
+      },
+      "percentageOffOrder": {
+        "title": "Procentualni popust na narudžbu",
+        "description": "Procentualni popust na ukupan iznos narudžbe"
+      },
+      "buyGet": {
+        "title": "Kupi X, dobij Y",
+        "description": "Kupi X proizvod(a), dobij Y proizvod(a)"
+      },
+      "freeShipping": {
+        "title": "Besplatna dostava",
+        "description": "Primjenjuje 100% popust na troškove dostave"
       }
     },
     "domain": "Promocije",

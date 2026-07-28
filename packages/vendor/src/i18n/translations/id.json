@@ -2373,9 +2373,29 @@
   },
   "promotions": {
     "templates": {
+      "amountOffProducts": {
+        "title": "Potongan harga produk",
+        "description": "Diskon untuk produk tertentu atau koleksi produk"
+      },
+      "amountOffOrder": {
+        "title": "Potongan harga pesanan",
+        "description": "Diskon dari total jumlah pesanan"
+      },
       "percentageOffProduct": {
         "title": "Diskon persentase produk",
         "description": "Diskon persentase untuk produk yang dipilih"
+      },
+      "percentageOffOrder": {
+        "title": "Diskon persentase pesanan",
+        "description": "Diskon persentase dari total jumlah pesanan"
+      },
+      "buyGet": {
+        "title": "Beli X Dapat Y",
+        "description": "Beli X produk, dapat Y produk"
+      },
+      "freeShipping": {
+        "title": "Gratis ongkos kirim",
+        "description": "Menerapkan diskon 100% untuk biaya pengiriman"
       }
     },
     "domain": "Promosi",

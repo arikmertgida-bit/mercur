@@ -2373,9 +2373,29 @@
   },
   "promotions": {
     "templates": {
+      "amountOffProducts": {
+        "title": "商品減價",
+        "description": "對特定商品或商品系列進行折扣"
+      },
+      "amountOffOrder": {
+        "title": "訂單減價",
+        "description": "對訂單總金額進行折扣"
+      },
       "percentageOffProduct": {
         "title": "商品折扣",
         "description": "對所選商品按百分比折扣"
+      },
+      "percentageOffOrder": {
+        "title": "訂單折扣",
+        "description": "對訂單總金額按百分比折扣"
+      },
+      "buyGet": {
+        "title": "買 X 送 Y",
+        "description": "購買 X 件商品，贈送 Y 件商品"
+      },
+      "freeShipping": {
+        "title": "免運費",
+        "description": "對運費套用 100% 折扣"
       }
     },
     "domain": "促銷",
