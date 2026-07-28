@@ -3022,6 +3022,30 @@
         "accountNameRequired": "Inserisci il nome dell'intestatario"
       }
     },
+    "notificationSettings": {
+      "header": "Impostazioni notifiche",
+      "summaryTitle": "Categorie di notifiche",
+      "summary": "{{enabled}}/{{total}} notifiche attive",
+      "edit": {
+        "header": "Impostazioni notifiche",
+        "description": "Scegli quali categorie di notifiche desideri ricevere.",
+        "successToast": "Le impostazioni delle notifiche sono state aggiornate correttamente."
+      },
+      "categories": {
+        "order": "Ordini",
+        "orderDescription": "Nuovi ordini nel tuo negozio.",
+        "payout": "Pagamenti",
+        "payoutDescription": "Quando ti è stato inviato un pagamento.",
+        "request": "Richieste",
+        "requestDescription": "Approvazioni e rifiuti delle richieste che hai inviato.",
+        "review": "Recensioni",
+        "reviewDescription": "Nuove recensioni e risposte sui tuoi prodotti e negozio.",
+        "follower": "Follower",
+        "followerDescription": "Quando un cliente inizia a seguire il tuo negozio.",
+        "messenger": "Messaggi",
+        "messengerDescription": "Avvisi push/toast per nuovi messaggi. I messaggi stessi non vengono mai bloccati."
+      }
+    },
     "professionalDetails": {
       "header": "Dettagli azienda",
       "empty": {

@@ -3022,6 +3022,30 @@
         "accountNameRequired": "Unesite naziv računa"
       }
     },
+    "notificationSettings": {
+      "header": "Postavke obavještenja",
+      "summaryTitle": "Kategorije obavještenja",
+      "summary": "{{enabled}}/{{total}} obavještenja uključeno",
+      "edit": {
+        "header": "Postavke obavještenja",
+        "description": "Odaberite koje kategorije obavještenja stižu do vas.",
+        "successToast": "Postavke obavještenja su uspješno ažurirane."
+      },
+      "categories": {
+        "order": "Narudžbe",
+        "orderDescription": "Nove narudžbe u vašoj prodavnici.",
+        "payout": "Isplate",
+        "payoutDescription": "Kada vam je poslata isplata.",
+        "request": "Zahtjevi",
+        "requestDescription": "Odobrenja i odbijanja vaših poslanih zahtjeva.",
+        "review": "Recenzije",
+        "reviewDescription": "Nove recenzije i odgovori na vaše proizvode i prodavnicu.",
+        "follower": "Pratioci",
+        "followerDescription": "Kada kupac počne pratiti vašu prodavnicu.",
+        "messenger": "Poruke",
+        "messengerDescription": "Trenutna obavještenja za nove poruke. Same poruke se nikada ne blokiraju."
+      }
+    },
     "professionalDetails": {
       "header": "Detalji kompanije",
       "empty": {

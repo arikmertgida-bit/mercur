@@ -3200,6 +3200,30 @@
         "accountNameRequired": "Please enter an account name"
       }
     },
+    "notificationSettings": {
+      "header": "Notification Settings",
+      "summaryTitle": "Notification categories",
+      "summary": "{{enabled}}/{{total}} notifications enabled",
+      "edit": {
+        "header": "Notification Settings",
+        "description": "Choose which notification categories reach your inbox.",
+        "successToast": "Notification settings were successfully updated."
+      },
+      "categories": {
+        "order": "Orders",
+        "orderDescription": "New orders placed on your store.",
+        "payout": "Payouts",
+        "payoutDescription": "When a payout has been sent to you.",
+        "request": "Requests",
+        "requestDescription": "Approvals and rejections of your submitted requests.",
+        "review": "Reviews",
+        "reviewDescription": "New reviews and replies on your products and store.",
+        "follower": "Followers",
+        "followerDescription": "When a customer starts following your store.",
+        "messenger": "Messages",
+        "messengerDescription": "Push and toast alerts for new messages. Messages themselves are never blocked."
+      }
+    },
     "professionalDetails": {
       "header": "Company Details",
       "empty": {

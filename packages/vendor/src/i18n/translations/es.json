@@ -3083,6 +3083,30 @@
         "accountNameRequired": "Introduce un nombre de cuenta"
       }
     },
+    "notificationSettings": {
+      "header": "Configuración de notificaciones",
+      "summaryTitle": "Categorías de notificaciones",
+      "summary": "{{enabled}}/{{total}} notificaciones activadas",
+      "edit": {
+        "header": "Configuración de notificaciones",
+        "description": "Elige qué categorías de notificaciones llegan a tu bandeja.",
+        "successToast": "La configuración de notificaciones se actualizó correctamente."
+      },
+      "categories": {
+        "order": "Pedidos",
+        "orderDescription": "Nuevos pedidos en tu tienda.",
+        "payout": "Pagos",
+        "payoutDescription": "Cuando se te ha enviado un pago.",
+        "request": "Solicitudes",
+        "requestDescription": "Aprobaciones y rechazos de tus solicitudes enviadas.",
+        "review": "Reseñas",
+        "reviewDescription": "Nuevas reseñas y respuestas en tus productos y tienda.",
+        "follower": "Seguidores",
+        "followerDescription": "Cuando un cliente empieza a seguir tu tienda.",
+        "messenger": "Mensajes",
+        "messengerDescription": "Alertas push/toast para mensajes nuevos. Los mensajes en sí nunca se bloquean."
+      }
+    },
     "professionalDetails": {
       "header": "Datos de la empresa",
       "empty": {

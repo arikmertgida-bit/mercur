@@ -3022,6 +3022,30 @@
         "accountNameRequired": "Kérjük, adja meg a számlatulajdonos nevét"
       }
     },
+    "notificationSettings": {
+      "header": "Értesítési beállítások",
+      "summaryTitle": "Értesítési kategóriák",
+      "summary": "{{enabled}}/{{total}} értesítés engedélyezve",
+      "edit": {
+        "header": "Értesítési beállítások",
+        "description": "Válassza ki, mely értesítési kategóriák érjenek el Önhöz.",
+        "successToast": "Az értesítési beállítások sikeresen frissültek."
+      },
+      "categories": {
+        "order": "Rendelések",
+        "orderDescription": "Új rendelések az üzletében.",
+        "payout": "Kifizetések",
+        "payoutDescription": "Amikor kifizetést küldtek Önnek.",
+        "request": "Kérelmek",
+        "requestDescription": "A beküldött kérelmek jóváhagyása és elutasítása.",
+        "review": "Értékelések",
+        "reviewDescription": "Új értékelések és válaszok a termékeire és üzletére.",
+        "follower": "Követők",
+        "followerDescription": "Amikor egy vásárló követni kezdi az üzletét.",
+        "messenger": "Üzenetek",
+        "messengerDescription": "Push/toast riasztások új üzenetekhez. Maguk az üzenetek soha nincsenek blokkolva."
+      }
+    },
     "professionalDetails": {
       "header": "Cégadatok",
       "empty": {

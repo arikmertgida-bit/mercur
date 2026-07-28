@@ -3022,6 +3022,30 @@
         "accountNameRequired": "Дансны нэр оруулна уу"
       }
     },
+    "notificationSettings": {
+      "header": "Мэдэгдлийн тохиргоо",
+      "summaryTitle": "Мэдэгдлийн ангилал",
+      "summary": "{{enabled}}/{{total}} мэдэгдэл асаалттай",
+      "edit": {
+        "header": "Мэдэгдлийн тохиргоо",
+        "description": "Аль ангиллын мэдэгдэл танд ирэхийг сонгоно уу.",
+        "successToast": "Мэдэгдлийн тохиргоог амжилттай шинэчиллээ."
+      },
+      "categories": {
+        "order": "Захиалгууд",
+        "orderDescription": "Дэлгүүрт орсон шинэ захиалгууд.",
+        "payout": "Төлбөр шилжүүлэг",
+        "payoutDescription": "Танд төлбөр шилжүүлсэн үед.",
+        "request": "Хүсэлтүүд",
+        "requestDescription": "Таны илгээсэн хүсэлтийн зөвшөөрөл, татгалзал.",
+        "review": "Сэтгэгдэл",
+        "reviewDescription": "Таны бүтээгдэхүүн, дэлгүүрт өгсөн шинэ сэтгэгдэл, хариулт.",
+        "follower": "Дагагчид",
+        "followerDescription": "Харилцагч таны дэлгүүрийг дагаж эхлэх үед.",
+        "messenger": "Зурвасууд",
+        "messengerDescription": "Шинэ зурвасны push/toast сэрэмжлүүлэг. Зурвас өөрөө хэзээ ч хориглогдохгүй."
+      }
+    },
     "professionalDetails": {
       "header": "Компанийн дэлгэрэнгүй",
       "empty": {

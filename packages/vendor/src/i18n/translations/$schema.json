@@ -13294,6 +13294,104 @@
           ],
           "additionalProperties": false
         },
+        "notificationSettings": {
+          "type": "object",
+          "properties": {
+            "header": {
+              "type": "string"
+            },
+            "summaryTitle": {
+              "type": "string"
+            },
+            "summary": {
+              "type": "string"
+            },
+            "edit": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "successToast": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "header",
+                "description",
+                "successToast"
+              ],
+              "additionalProperties": false
+            },
+            "categories": {
+              "type": "object",
+              "properties": {
+                "order": {
+                  "type": "string"
+                },
+                "orderDescription": {
+                  "type": "string"
+                },
+                "payout": {
+                  "type": "string"
+                },
+                "payoutDescription": {
+                  "type": "string"
+                },
+                "request": {
+                  "type": "string"
+                },
+                "requestDescription": {
+                  "type": "string"
+                },
+                "review": {
+                  "type": "string"
+                },
+                "reviewDescription": {
+                  "type": "string"
+                },
+                "follower": {
+                  "type": "string"
+                },
+                "followerDescription": {
+                  "type": "string"
+                },
+                "messenger": {
+                  "type": "string"
+                },
+                "messengerDescription": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "order",
+                "orderDescription",
+                "payout",
+                "payoutDescription",
+                "request",
+                "requestDescription",
+                "review",
+                "reviewDescription",
+                "follower",
+                "followerDescription",
+                "messenger",
+                "messengerDescription"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "header",
+            "summaryTitle",
+            "summary",
+            "edit",
+            "categories"
+          ],
+          "additionalProperties": false
+        },
         "professionalDetails": {
           "type": "object",
           "properties": {
@@ -13581,6 +13679,7 @@
         "editCompany",
         "address",
         "paymentDetails",
+        "notificationSettings",
         "professionalDetails",
         "timeOff",
         "toast"

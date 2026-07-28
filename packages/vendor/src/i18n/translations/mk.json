@@ -3022,6 +3022,30 @@
         "accountNameRequired": "Внесете име на сметката"
       }
     },
+    "notificationSettings": {
+      "header": "Поставки за известувања",
+      "summaryTitle": "Категории на известувања",
+      "summary": "{{enabled}}/{{total}} известувања вклучени",
+      "edit": {
+        "header": "Поставки за известувања",
+        "description": "Изберете кои категории известувања ќе стигнат до вас.",
+        "successToast": "Поставките за известувања се успешно ажурирани."
+      },
+      "categories": {
+        "order": "Нарачки",
+        "orderDescription": "Нови нарачки во вашата продавница.",
+        "payout": "Исплати",
+        "payoutDescription": "Кога ви е испратена исплата.",
+        "request": "Барања",
+        "requestDescription": "Одобрувања и одбивања на вашите поднесени барања.",
+        "review": "Рецензии",
+        "reviewDescription": "Нови рецензии и одговори за вашите производи и продавница.",
+        "follower": "Следбеници",
+        "followerDescription": "Кога клиент ќе почне да ја следи вашата продавница.",
+        "messenger": "Пораки",
+        "messengerDescription": "Push/toast известувања за нови пораки. Самите пораки никогаш не се блокираат."
+      }
+    },
     "professionalDetails": {
       "header": "Детали за компанијата",
       "empty": {

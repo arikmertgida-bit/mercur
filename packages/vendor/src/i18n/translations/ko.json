@@ -3022,6 +3022,30 @@
         "accountNameRequired": "계좌 예금주명을 입력해 주세요"
       }
     },
+    "notificationSettings": {
+      "header": "알림 설정",
+      "summaryTitle": "알림 카테고리",
+      "summary": "{{enabled}}/{{total}}개 알림 사용 중",
+      "edit": {
+        "header": "알림 설정",
+        "description": "어떤 알림 카테고리를 받을지 선택하세요.",
+        "successToast": "알림 설정이 성공적으로 업데이트되었습니다."
+      },
+      "categories": {
+        "order": "주문",
+        "orderDescription": "스토어에 접수된 새 주문.",
+        "payout": "정산",
+        "payoutDescription": "정산금이 발송되었을 때.",
+        "request": "요청",
+        "requestDescription": "제출한 요청의 승인 및 반려.",
+        "review": "리뷰",
+        "reviewDescription": "제품 및 스토어에 대한 새 리뷰와 답글.",
+        "follower": "팔로워",
+        "followerDescription": "고객이 스토어를 팔로우하기 시작했을 때.",
+        "messenger": "메시지",
+        "messengerDescription": "새 메시지에 대한 푸시/토스트 알림. 메시지 자체는 절대 차단되지 않습니다."
+      }
+    },
     "professionalDetails": {
       "header": "회사 정보",
       "empty": {

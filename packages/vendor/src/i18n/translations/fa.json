@@ -3022,6 +3022,30 @@
         "accountNameRequired": "لطفاً نام حساب را وارد کنید"
       }
     },
+    "notificationSettings": {
+      "header": "تنظیمات اعلان‌ها",
+      "summaryTitle": "دسته‌بندی‌های اعلان",
+      "summary": "{{enabled}}/{{total}} اعلان فعال",
+      "edit": {
+        "header": "تنظیمات اعلان‌ها",
+        "description": "انتخاب کنید کدام دسته‌های اعلان به شما برسند.",
+        "successToast": "تنظیمات اعلان‌ها با موفقیت به‌روزرسانی شد."
+      },
+      "categories": {
+        "order": "سفارش‌ها",
+        "orderDescription": "سفارش‌های جدید در فروشگاه شما.",
+        "payout": "پرداخت‌ها",
+        "payoutDescription": "زمانی که پرداختی برای شما ارسال شده باشد.",
+        "request": "درخواست‌ها",
+        "requestDescription": "تأیید یا رد درخواست‌های ارسالی شما.",
+        "review": "نظرات",
+        "reviewDescription": "نظرات و پاسخ‌های جدید برای محصولات و فروشگاه شما.",
+        "follower": "دنبال‌کنندگان",
+        "followerDescription": "زمانی که مشتری‌ای فروشگاه شما را دنبال کند.",
+        "messenger": "پیام‌ها",
+        "messengerDescription": "هشدارهای فوری برای پیام‌های جدید. خود پیام‌ها هرگز مسدود نمی‌شوند."
+      }
+    },
     "professionalDetails": {
       "header": "جزئیات شرکت",
       "empty": {

@@ -23,6 +23,7 @@ export {
 } from "./lib/product-change-diff"
 export { supportChatBridge } from "./lib/support-chat-bridge"
 export { orderNotificationBridge } from "./lib/order-notification-bridge"
+export { notificationPreferencesBridge } from "./lib/notification-preferences-bridge"
 export { toHandle, isValidHandleFormat } from "./lib/handle"
 export * from "./components"
 export * from "./hooks"

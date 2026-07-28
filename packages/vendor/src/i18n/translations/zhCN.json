@@ -3022,6 +3022,30 @@
         "accountNameRequired": "请输入账户名称"
       }
     },
+    "notificationSettings": {
+      "header": "通知设置",
+      "summaryTitle": "通知类别",
+      "summary": "已启用 {{enabled}}/{{total}} 项通知",
+      "edit": {
+        "header": "通知设置",
+        "description": "选择哪些通知类别可以送达给您。",
+        "successToast": "通知设置已成功更新。"
+      },
+      "categories": {
+        "order": "订单",
+        "orderDescription": "您店铺的新订单。",
+        "payout": "打款",
+        "payoutDescription": "有一笔打款已发送给您时。",
+        "request": "申请",
+        "requestDescription": "您提交的申请被批准或拒绝。",
+        "review": "评价",
+        "reviewDescription": "您的商品和店铺收到的新评价与回复。",
+        "follower": "关注者",
+        "followerDescription": "有顾客开始关注您的店铺时。",
+        "messenger": "消息",
+        "messengerDescription": "新消息的推送/提示通知。消息本身永远不会被屏蔽。"
+      }
+    },
     "professionalDetails": {
       "header": "公司详情",
       "empty": {

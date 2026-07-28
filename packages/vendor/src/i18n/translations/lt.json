@@ -3022,6 +3022,30 @@
         "accountNameRequired": "Įveskite sąskaitos savininko vardą"
       }
     },
+    "notificationSettings": {
+      "header": "Pranešimų nustatymai",
+      "summaryTitle": "Pranešimų kategorijos",
+      "summary": "{{enabled}}/{{total}} pranešimų įjungta",
+      "edit": {
+        "header": "Pranešimų nustatymai",
+        "description": "Pasirinkite, kurios pranešimų kategorijos jus pasieks.",
+        "successToast": "Pranešimų nustatymai sėkmingai atnaujinti."
+      },
+      "categories": {
+        "order": "Užsakymai",
+        "orderDescription": "Nauji jūsų parduotuvės užsakymai.",
+        "payout": "Išmokos",
+        "payoutDescription": "Kai jums išsiųsta išmoka.",
+        "request": "Užklausos",
+        "requestDescription": "Jūsų pateiktų užklausų patvirtinimai ir atmetimai.",
+        "review": "Atsiliepimai",
+        "reviewDescription": "Nauji atsiliepimai ir atsakymai apie jūsų produktus ir parduotuvę.",
+        "follower": "Sekėjai",
+        "followerDescription": "Kai klientas pradeda sekti jūsų parduotuvę.",
+        "messenger": "Žinutės",
+        "messengerDescription": "Push / toast įspėjimai apie naujas žinutes. Pačios žinutės niekada neblokuojamos."
+      }
+    },
     "professionalDetails": {
       "header": "Įmonės informacija",
       "empty": {

@@ -3022,6 +3022,30 @@
         "accountNameRequired": "Zadejte prosím název účtu"
       }
     },
+    "notificationSettings": {
+      "header": "Nastavení oznámení",
+      "summaryTitle": "Kategorie oznámení",
+      "summary": "{{enabled}}/{{total}} oznámení zapnuto",
+      "edit": {
+        "header": "Nastavení oznámení",
+        "description": "Vyberte, které kategorie oznámení se k vám dostanou.",
+        "successToast": "Nastavení oznámení bylo úspěšně aktualizováno."
+      },
+      "categories": {
+        "order": "Objednávky",
+        "orderDescription": "Nové objednávky ve vašem obchodě.",
+        "payout": "Výplaty",
+        "payoutDescription": "Když vám byla odeslána výplata.",
+        "request": "Žádosti",
+        "requestDescription": "Schválení a zamítnutí vašich odeslaných žádostí.",
+        "review": "Recenze",
+        "reviewDescription": "Nové recenze a odpovědi k vašim produktům a obchodu.",
+        "follower": "Sledující",
+        "followerDescription": "Když vás zákazník začne sledovat.",
+        "messenger": "Zprávy",
+        "messengerDescription": "Okamžitá upozornění na nové zprávy. Samotné zprávy nejsou nikdy blokovány."
+      }
+    },
     "professionalDetails": {
       "header": "Firemní údaje",
       "empty": {

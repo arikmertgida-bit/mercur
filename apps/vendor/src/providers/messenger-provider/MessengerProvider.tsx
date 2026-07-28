@@ -23,6 +23,7 @@ import {
   getConversations,
   getMessages,
   getUnreadCount,
+  getNotificationPreferences,
   findOrCreateConversation,
   markConversationRead,
   sendMessage as apiSendMessage,
@@ -33,6 +34,7 @@ import {
 import { getMessengerAuthToken, setMessengerAuthToken } from "../../lib/messenger/auth-token"
 import i18next from "i18next"
 import { kayiEventManager } from "../../lib/messenger/KayiEventManager"
+import { notificationPreferencesBridge } from "@mercurjs/dashboard-shared"
 import {
   getMessengerVendorSnapshot,
   publishMessengerVendorState,
@@ -182,6 +184,7 @@ export function MessengerProvider({
   const [typingUserIds, setTypingUserIds] = useState<string[]>([])
   const [isConnected, setIsConnected] = useState(false)
   const [isLoadingMessages, setIsLoadingMessages] = useState(false)
+  const [notificationPreferences, setNotificationPreferences] = useState<Record<string, boolean>>({})
   const typingTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const activeConvRef = useRef<string | null>(null)
   const pinnedConvIdRef = useRef<string | null>(null)
@@ -204,6 +207,26 @@ export function MessengerProvider({
       icon: "/favicon.ico",
     })
   }, [])
+
+  const refreshNotificationPreferences = useCallback(async (): Promise<void> => {
+    try {
+      const entries = await getNotificationPreferences()
+      const map: Record<string, boolean> = {}
+      for (const entry of entries) {
+        map[entry.notificationType] = entry.enabled
+      }
+      setNotificationPreferences(map)
+    } catch (err) {
+      logger.error(
+        `[refreshNotificationPreferences] error ${getCatchMessage(err instanceof Error ? err : undefined)}`
+      )
+    }
+  }, [])
+
+  const isNotificationCategoryEnabled = useCallback(
+    (notificationType: string): boolean => notificationPreferences[notificationType] ?? true,
+    [notificationPreferences]
+  )
 
   useEffect(() => {
     if (!sellerId) return
@@ -394,6 +417,7 @@ export function MessengerProvider({
       Promise.all([
         getConversations().then((r) => setConversations(r.conversations)),
         getUnreadCount().then((r) => setUnreadCount(r.count)),
+        refreshNotificationPreferences(),
       ]).catch((err) => {
         logger.error(`[MessengerProvider init] error ${getCatchMessage(err instanceof Error ? err : undefined)}`)
       })
@@ -407,8 +431,20 @@ export function MessengerProvider({
       logger.error(`[MessengerProvider init] error ${getCatchMessage(err instanceof Error ? err : undefined)}`)
     })
 
+    // `packages/vendor`'s "Bildirim Ayarları" drawer saves through a separate
+    // apps/api proxy — refetch here so this in-memory copy (used to gate the
+    // "Mesajlar" push/toast) doesn't go stale until the next page load.
+    const unsubscribePreferencesChanged = notificationPreferencesBridge.subscribeChanged(() => {
+      refreshNotificationPreferences().catch((err): void => {
+        logger.error(
+          `[MessengerProvider preferences-changed] error ${getCatchMessage(err instanceof Error ? err : undefined)}`
+        )
+      })
+    })
+
     return () => {
       cancelled = true
+      unsubscribePreferencesChanged()
       if (socketInstance) {
         socketInstance.off("connect", onConnect)
         socketInstance.off("disconnect", onDisconnect)
@@ -715,6 +751,7 @@ export function MessengerProvider({
       typingUserIds,
       isConnected,
       isLoadingMessages,
+      isNotificationCategoryEnabled,
       openConversation,
       openSidebarConversation,
       sendSidebarMessage,
@@ -736,6 +773,7 @@ export function MessengerProvider({
       activeConversationId,
       messages,
       pinnedMessages,
+      isNotificationCategoryEnabled,
       unreadCount,
       typingUserIds,
       isConnected,

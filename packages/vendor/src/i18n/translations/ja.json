@@ -3022,6 +3022,30 @@
         "accountNameRequired": "口座名義を入力してください"
       }
     },
+    "notificationSettings": {
+      "header": "通知設定",
+      "summaryTitle": "通知カテゴリ",
+      "summary": "{{enabled}}/{{total}} 件の通知が有効",
+      "edit": {
+        "header": "通知設定",
+        "description": "どの通知カテゴリを受け取るか選択してください。",
+        "successToast": "通知設定を更新しました。"
+      },
+      "categories": {
+        "order": "注文",
+        "orderDescription": "ストアへの新規注文。",
+        "payout": "支払い",
+        "payoutDescription": "支払いが送金されたとき。",
+        "request": "リクエスト",
+        "requestDescription": "送信したリクエストの承認・却下。",
+        "review": "レビュー",
+        "reviewDescription": "商品やストアへの新しいレビューや返信。",
+        "follower": "フォロワー",
+        "followerDescription": "顧客がストアのフォローを開始したとき。",
+        "messenger": "メッセージ",
+        "messengerDescription": "新着メッセージのプッシュ/トースト通知。メッセージ自体がブロックされることはありません。"
+      }
+    },
     "professionalDetails": {
       "header": "会社情報",
       "empty": {

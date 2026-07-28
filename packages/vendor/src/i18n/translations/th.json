@@ -3022,6 +3022,30 @@
         "accountNameRequired": "กรุณากรอกชื่อบัญชี"
       }
     },
+    "notificationSettings": {
+      "header": "การตั้งค่าการแจ้งเตือน",
+      "summaryTitle": "หมวดหมู่การแจ้งเตือน",
+      "summary": "เปิดใช้งาน {{enabled}}/{{total}} การแจ้งเตือน",
+      "edit": {
+        "header": "การตั้งค่าการแจ้งเตือน",
+        "description": "เลือกหมวดหมู่การแจ้งเตือนที่จะส่งถึงคุณ",
+        "successToast": "อัปเดตการตั้งค่าการแจ้งเตือนเรียบร้อยแล้ว"
+      },
+      "categories": {
+        "order": "คำสั่งซื้อ",
+        "orderDescription": "คำสั่งซื้อใหม่ในร้านค้าของคุณ",
+        "payout": "การจ่ายเงิน",
+        "payoutDescription": "เมื่อมีการโอนเงินให้คุณ",
+        "request": "คำขอ",
+        "requestDescription": "การอนุมัติและการปฏิเสธคำขอที่คุณส่ง",
+        "review": "รีวิว",
+        "reviewDescription": "รีวิวและการตอบกลับใหม่สำหรับสินค้าและร้านค้าของคุณ",
+        "follower": "ผู้ติดตาม",
+        "followerDescription": "เมื่อลูกค้าเริ่มติดตามร้านค้าของคุณ",
+        "messenger": "ข้อความ",
+        "messengerDescription": "การแจ้งเตือนแบบ push/toast สำหรับข้อความใหม่ ตัวข้อความเองจะไม่ถูกบล็อกเลย"
+      }
+    },
     "professionalDetails": {
       "header": "รายละเอียดบริษัท",
       "empty": {

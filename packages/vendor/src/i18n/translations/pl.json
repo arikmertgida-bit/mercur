@@ -3233,6 +3233,30 @@
         "accountNameRequired": "Wprowadź nazwę właściciela konta"
       }
     },
+    "notificationSettings": {
+      "header": "Ustawienia powiadomień",
+      "summaryTitle": "Kategorie powiadomień",
+      "summary": "{{enabled}}/{{total}} powiadomień włączonych",
+      "edit": {
+        "header": "Ustawienia powiadomień",
+        "description": "Wybierz, które kategorie powiadomień mają do Ciebie docierać.",
+        "successToast": "Ustawienia powiadomień zostały pomyślnie zaktualizowane."
+      },
+      "categories": {
+        "order": "Zamówienia",
+        "orderDescription": "Nowe zamówienia w Twoim sklepie.",
+        "payout": "Wypłaty",
+        "payoutDescription": "Gdy wysłano do Ciebie wypłatę.",
+        "request": "Wnioski",
+        "requestDescription": "Zatwierdzenia i odrzucenia Twoich zgłoszonych wniosków.",
+        "review": "Recenzje",
+        "reviewDescription": "Nowe recenzje i odpowiedzi dotyczące Twoich produktów i sklepu.",
+        "follower": "Obserwujący",
+        "followerDescription": "Gdy klient zacznie obserwować Twój sklep.",
+        "messenger": "Wiadomości",
+        "messengerDescription": "Powiadomienia push/toast o nowych wiadomościach. Same wiadomości nigdy nie są blokowane."
+      }
+    },
     "professionalDetails": {
       "header": "Dane firmy",
       "empty": {

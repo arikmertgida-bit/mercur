@@ -1028,6 +1028,11 @@ export function getRouteMap({
                           import("./pages/settings/store/payment-details"),
                       },
                       {
+                        path: "notification-settings",
+                        lazy: () =>
+                          import("./pages/settings/store/notification-settings"),
+                      },
+                      {
                         path: "professional-details",
                         lazy: () =>
                           import("./pages/settings/store/professional-details"),

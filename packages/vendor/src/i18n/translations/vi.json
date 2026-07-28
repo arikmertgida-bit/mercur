@@ -3022,6 +3022,30 @@
         "accountNameRequired": "Vui lòng nhập tên tài khoản"
       }
     },
+    "notificationSettings": {
+      "header": "Cài đặt thông báo",
+      "summaryTitle": "Danh mục thông báo",
+      "summary": "Đã bật {{enabled}}/{{total}} thông báo",
+      "edit": {
+        "header": "Cài đặt thông báo",
+        "description": "Chọn danh mục thông báo nào sẽ gửi đến bạn.",
+        "successToast": "Đã cập nhật cài đặt thông báo thành công."
+      },
+      "categories": {
+        "order": "Đơn hàng",
+        "orderDescription": "Đơn hàng mới tại cửa hàng của bạn.",
+        "payout": "Thanh toán",
+        "payoutDescription": "Khi một khoản thanh toán đã được gửi cho bạn.",
+        "request": "Yêu cầu",
+        "requestDescription": "Phê duyệt và từ chối các yêu cầu bạn đã gửi.",
+        "review": "Đánh giá",
+        "reviewDescription": "Đánh giá và phản hồi mới cho sản phẩm và cửa hàng của bạn.",
+        "follower": "Người theo dõi",
+        "followerDescription": "Khi một khách hàng bắt đầu theo dõi cửa hàng của bạn.",
+        "messenger": "Tin nhắn",
+        "messengerDescription": "Cảnh báo push/toast cho tin nhắn mới. Bản thân tin nhắn không bao giờ bị chặn."
+      }
+    },
     "professionalDetails": {
       "header": "Thông tin công ty",
       "empty": {

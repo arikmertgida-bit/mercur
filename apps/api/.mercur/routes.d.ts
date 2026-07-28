@@ -990,6 +990,7 @@ export type Routes = {
             messengerToken: typeof import("../src/api/vendor/auth/messenger-token/route");
         };
         followers: typeof import("../src/api/vendor/followers/route");
+        notificationPreferences: typeof import("../src/api/vendor/notification-preferences/route");
         requests: {
             productCategories: typeof import("../src/api/vendor/requests/product-categories/route");
             productCollections: typeof import("../src/api/vendor/requests/product-collections/route");
