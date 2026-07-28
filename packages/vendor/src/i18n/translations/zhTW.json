@@ -3022,6 +3022,30 @@
         "accountNameRequired": "請輸入帳戶名稱"
       }
     },
+    "notificationSettings": {
+      "header": "通知設定",
+      "summaryTitle": "通知類別",
+      "summary": "已啟用 {{enabled}}/{{total}} 項通知",
+      "edit": {
+        "header": "通知設定",
+        "description": "選擇哪些通知類別會送達給您。",
+        "successToast": "通知設定已成功更新。"
+      },
+      "categories": {
+        "order": "訂單",
+        "orderDescription": "您店鋪的新訂單。",
+        "payout": "撥款",
+        "payoutDescription": "有一筆撥款已寄送給您時。",
+        "request": "申請",
+        "requestDescription": "您提交的申請被核准或拒絕。",
+        "review": "評價",
+        "reviewDescription": "您的商品與店鋪收到的新評價與回覆。",
+        "follower": "追蹤者",
+        "followerDescription": "有顧客開始追蹤您的店鋪時。",
+        "messenger": "訊息",
+        "messengerDescription": "新訊息的推播/提示通知。訊息本身永遠不會被封鎖。"
+      }
+    },
     "professionalDetails": {
       "header": "公司詳細資料",
       "empty": {

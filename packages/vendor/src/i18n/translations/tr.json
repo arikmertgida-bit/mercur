@@ -3027,6 +3027,30 @@
         "accountNameRequired": "Lütfen bir hesap adı girin"
       }
     },
+    "notificationSettings": {
+      "header": "Bildirim Ayarları",
+      "summaryTitle": "Bildirim kategorileri",
+      "summary": "{{enabled}}/{{total}} bildirim açık",
+      "edit": {
+        "header": "Bildirim Ayarları",
+        "description": "Hangi bildirim kategorilerinin size ulaşacağını seçin.",
+        "successToast": "Bildirim ayarları başarıyla güncellendi."
+      },
+      "categories": {
+        "order": "Siparişler",
+        "orderDescription": "Mağazanıza verilen yeni siparişler.",
+        "payout": "Ödemeler",
+        "payoutDescription": "Size bir ödeme gönderildiğinde.",
+        "request": "Talepler",
+        "requestDescription": "Gönderdiğiniz taleplerin onay ve red bildirimleri.",
+        "review": "Değerlendirmeler",
+        "reviewDescription": "Ürünleriniz ve mağazanız için yeni değerlendirme ve yanıtlar.",
+        "follower": "Takipçiler",
+        "followerDescription": "Bir müşteri mağazanızı takip etmeye başladığında.",
+        "messenger": "Mesajlar",
+        "messengerDescription": "Yeni mesajlar için anlık bildirim/toast uyarıları. Mesajların kendisi asla engellenmez."
+      }
+    },
     "professionalDetails": {
       "header": "Şirket Detayları",
       "empty": {

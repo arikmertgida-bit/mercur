@@ -3022,6 +3022,30 @@
         "accountNameRequired": "Bitte geben Sie einen Kontoinhaber ein"
       }
     },
+    "notificationSettings": {
+      "header": "Benachrichtigungseinstellungen",
+      "summaryTitle": "Benachrichtigungskategorien",
+      "summary": "{{enabled}}/{{total}} Benachrichtigungen aktiviert",
+      "edit": {
+        "header": "Benachrichtigungseinstellungen",
+        "description": "Wählen Sie, welche Benachrichtigungskategorien Sie erreichen.",
+        "successToast": "Benachrichtigungseinstellungen wurden erfolgreich aktualisiert."
+      },
+      "categories": {
+        "order": "Bestellungen",
+        "orderDescription": "Neue Bestellungen in Ihrem Shop.",
+        "payout": "Auszahlungen",
+        "payoutDescription": "Wenn eine Auszahlung an Sie gesendet wurde.",
+        "request": "Anfragen",
+        "requestDescription": "Genehmigungen und Ablehnungen Ihrer eingereichten Anfragen.",
+        "review": "Bewertungen",
+        "reviewDescription": "Neue Bewertungen und Antworten zu Ihren Produkten und Ihrem Shop.",
+        "follower": "Follower",
+        "followerDescription": "Wenn ein Kunde beginnt, Ihrem Shop zu folgen.",
+        "messenger": "Nachrichten",
+        "messengerDescription": "Push-/Toast-Benachrichtigungen für neue Nachrichten. Nachrichten selbst werden nie blockiert."
+      }
+    },
     "professionalDetails": {
       "header": "Unternehmensdetails",
       "empty": {

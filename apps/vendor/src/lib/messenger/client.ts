@@ -1,5 +1,5 @@
 import { z } from "zod"
-import type { Conversation, Message } from "./types"
+import type { Conversation, Message, NotificationPreferenceEntry } from "./types"
 import { getMessengerAuthToken } from "./auth-token"
 
 declare const __MESSENGER_URL__: string
@@ -195,4 +195,26 @@ export async function markNotificationsRead(type: string): Promise<void> {
     method: "POST",
     body: JSON.stringify({ type }),
   })
+}
+
+const NotificationPreferencesResponseSchema = z.object({
+  preferences: z.array(
+    z.object({
+      notificationType: z.string(),
+      enabled: z.boolean(),
+    })
+  ),
+})
+
+/**
+ * Read directly (bypassing the `apps/api` vendor proxy `packages/vendor`'s
+ * Settings drawer uses) since this app already holds a valid messenger JWT —
+ * used only to gate the client-side "Mesajlar" push/toast, never to persist.
+ */
+export async function getNotificationPreferences(): Promise<NotificationPreferenceEntry[]> {
+  const raw = await request<z.infer<typeof NotificationPreferencesResponseSchema>>(
+    "/api/notifications/preferences"
+  )
+  const parsed = NotificationPreferencesResponseSchema.safeParse(raw)
+  return parsed.success ? parsed.data.preferences : []
 }

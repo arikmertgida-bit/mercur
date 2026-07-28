@@ -5,6 +5,7 @@ import { SellerMeSchema } from "./schemas"
 import { MessengerProvider, useMessenger } from "../../providers/messenger-provider/MessengerProvider"
 import { AdminChat } from "../../components/layout/admin-chat/AdminChat"
 import { OrdersBadgeBridge } from "./OrdersBadgeBridge"
+import { MESSENGER_NOTIFICATION_TYPE } from "./types"
 
 /** While logged out / no store selected, poll fast so a fresh login is picked up in seconds. */
 const FAST_POLL_INTERVAL_MS = 2_000
@@ -113,7 +114,7 @@ function useSellerSession(): { sellerId: string | null; sellerName: string | und
  * covers "tab visible, different page".
  */
 function MessengerGlobalNotifier(): null {
-  const { unreadCount, conversations } = useMessenger()
+  const { unreadCount, conversations, isNotificationCategoryEnabled } = useMessenger()
   const prevCountRef = useRef<number | null>(null)
 
   useEffect(() => {
@@ -124,6 +125,10 @@ function MessengerGlobalNotifier(): null {
     const increased = unreadCount > prevCountRef.current
     prevCountRef.current = unreadCount
     if (!increased) return
+
+    // "Mesajlar" bildirimi kapatılmışsa yalnızca bu toast bastırılır — sayaç
+    // (unreadCount) gerçek mesaj akışından geldiği için burada dokunulmaz.
+    if (!isNotificationCategoryEnabled(MESSENGER_NOTIFICATION_TYPE)) return
 
     const isMessagesRoute = window.location.pathname.endsWith("/messages")
     if (isMessagesRoute) return
@@ -136,7 +141,7 @@ function MessengerGlobalNotifier(): null {
         : (latestMessage?.content ?? "Yeni bir mesajınız var")
 
     toast.info("Yeni mesaj", { description: preview })
-  }, [unreadCount, conversations])
+  }, [unreadCount, conversations, isNotificationCategoryEnabled])
 
   return null
 }

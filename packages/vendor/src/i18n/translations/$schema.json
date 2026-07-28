@@ -9587,6 +9587,75 @@
             }
           }
         },
+        "notificationSettings": {
+          "type": "object",
+          "properties": {
+            "header": {
+              "type": "string"
+            },
+            "summaryTitle": {
+              "type": "string"
+            },
+            "summary": {
+              "type": "string"
+            },
+            "edit": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "successToast": {
+                  "type": "string"
+                }
+              }
+            },
+            "categories": {
+              "type": "object",
+              "properties": {
+                "order": {
+                  "type": "string"
+                },
+                "orderDescription": {
+                  "type": "string"
+                },
+                "payout": {
+                  "type": "string"
+                },
+                "payoutDescription": {
+                  "type": "string"
+                },
+                "request": {
+                  "type": "string"
+                },
+                "requestDescription": {
+                  "type": "string"
+                },
+                "review": {
+                  "type": "string"
+                },
+                "reviewDescription": {
+                  "type": "string"
+                },
+                "follower": {
+                  "type": "string"
+                },
+                "followerDescription": {
+                  "type": "string"
+                },
+                "messenger": {
+                  "type": "string"
+                },
+                "messengerDescription": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
         "professionalDetails": {
           "type": "object",
           "properties": {

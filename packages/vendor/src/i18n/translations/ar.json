@@ -3022,6 +3022,30 @@
         "accountNameRequired": "يرجى إدخال اسم الحساب"
       }
     },
+    "notificationSettings": {
+      "header": "إعدادات الإشعارات",
+      "summaryTitle": "فئات الإشعارات",
+      "summary": "{{enabled}}/{{total}} إشعارات مفعّلة",
+      "edit": {
+        "header": "إعدادات الإشعارات",
+        "description": "اختر فئات الإشعارات التي تصل إلى صندوق الوارد الخاص بك.",
+        "successToast": "تم تحديث إعدادات الإشعارات بنجاح."
+      },
+      "categories": {
+        "order": "الطلبات",
+        "orderDescription": "الطلبات الجديدة في متجرك.",
+        "payout": "المدفوعات",
+        "payoutDescription": "عند إرسال دفعة مالية إليك.",
+        "request": "الطلبات (الموافقات)",
+        "requestDescription": "الموافقة أو الرفض لطلباتك المُرسلة.",
+        "review": "التقييمات",
+        "reviewDescription": "التقييمات والردود الجديدة على منتجاتك ومتجرك.",
+        "follower": "المتابعون",
+        "followerDescription": "عندما يبدأ عميل بمتابعة متجرك.",
+        "messenger": "الرسائل",
+        "messengerDescription": "تنبيهات فورية للرسائل الجديدة. لا يتم حظر الرسائل نفسها أبدًا."
+      }
+    },
     "professionalDetails": {
       "header": "تفاصيل الشركة",
       "empty": {

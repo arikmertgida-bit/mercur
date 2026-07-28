@@ -3022,6 +3022,30 @@
         "accountNameRequired": "יש להזין שם חשבון"
       }
     },
+    "notificationSettings": {
+      "header": "הגדרות התראות",
+      "summaryTitle": "קטגוריות התראות",
+      "summary": "{{enabled}}/{{total}} התראות מופעלות",
+      "edit": {
+        "header": "הגדרות התראות",
+        "description": "בחר אילו קטגוריות התראות יגיעו אליך.",
+        "successToast": "הגדרות ההתראות עודכנו בהצלחה."
+      },
+      "categories": {
+        "order": "הזמנות",
+        "orderDescription": "הזמנות חדשות בחנות שלך.",
+        "payout": "תשלומים",
+        "payoutDescription": "כאשר נשלח אליך תשלום.",
+        "request": "בקשות",
+        "requestDescription": "אישורים ודחיות של הבקשות שהגשת.",
+        "review": "ביקורות",
+        "reviewDescription": "ביקורות ותגובות חדשות על המוצרים והחנות שלך.",
+        "follower": "עוקבים",
+        "followerDescription": "כאשר לקוח מתחיל לעקוב אחרי החנות שלך.",
+        "messenger": "הודעות",
+        "messengerDescription": "התראות push/toast להודעות חדשות. ההודעות עצמן לעולם לא נחסמות."
+      }
+    },
     "professionalDetails": {
       "header": "פרטי חברה",
       "empty": {

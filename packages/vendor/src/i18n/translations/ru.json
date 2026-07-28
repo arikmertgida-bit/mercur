@@ -3022,6 +3022,30 @@
         "accountNameRequired": "Пожалуйста, введите имя владельца счёта"
       }
     },
+    "notificationSettings": {
+      "header": "Настройки уведомлений",
+      "summaryTitle": "Категории уведомлений",
+      "summary": "{{enabled}}/{{total}} уведомлений включено",
+      "edit": {
+        "header": "Настройки уведомлений",
+        "description": "Выберите, какие категории уведомлений будут приходить вам.",
+        "successToast": "Настройки уведомлений успешно обновлены."
+      },
+      "categories": {
+        "order": "Заказы",
+        "orderDescription": "Новые заказы в вашем магазине.",
+        "payout": "Выплаты",
+        "payoutDescription": "Когда вам отправлена выплата.",
+        "request": "Запросы",
+        "requestDescription": "Одобрение и отклонение отправленных вами запросов.",
+        "review": "Отзывы",
+        "reviewDescription": "Новые отзывы и ответы на ваши товары и магазин.",
+        "follower": "Подписчики",
+        "followerDescription": "Когда клиент начинает подписываться на ваш магазин.",
+        "messenger": "Сообщения",
+        "messengerDescription": "Push/toast-уведомления о новых сообщениях. Сами сообщения никогда не блокируются."
+      }
+    },
     "professionalDetails": {
       "header": "Реквизиты компании",
       "empty": {

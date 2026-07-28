@@ -71,6 +71,24 @@ export const REQUEST_NOTIFICATION_TYPE = "request_notification"
  */
 export const FOLLOWER_NOTIFICATION_TYPE = "follower_notification"
 
+/**
+ * Must match `PAYOUT_NOTIFICATION_TYPE` in the backend's src/lib/payout-events.ts.
+ */
+export const PAYOUT_NOTIFICATION_TYPE = "payout_notification"
+
+/**
+ * Preference-only category key (no persisted `metadata.notification_type` —
+ * real chat messages aren't tagged). Must match `NotificationCategory.MESSENGER`
+ * in the messenger service's src/constants/notification-types.ts. Gates only
+ * the push/toast signal for new messages — see `MessengerGlobalNotifier`.
+ */
+export const MESSENGER_NOTIFICATION_TYPE = "messenger"
+
+export interface NotificationPreferenceEntry {
+  notificationType: string
+  enabled: boolean
+}
+
 export interface ReadReceiptPayload {
   conversationId: string
   userId: string
@@ -144,6 +162,8 @@ export interface MessengerContextValue {
   typingUserIds: string[]
   isConnected: boolean
   isLoadingMessages: boolean
+  /** `false` only once explicitly disabled by the seller — missing entries default enabled. */
+  isNotificationCategoryEnabled: (notificationType: string) => boolean
   openConversation: (conversationId: string) => void
   openSidebarConversation: (conversationId: string) => Promise<void>
   sendSidebarMessage: (content: string) => Promise<void>

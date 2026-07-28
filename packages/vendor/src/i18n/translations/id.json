@@ -3022,6 +3022,30 @@
         "accountNameRequired": "Silakan masukkan nama akun"
       }
     },
+    "notificationSettings": {
+      "header": "Pengaturan Notifikasi",
+      "summaryTitle": "Kategori notifikasi",
+      "summary": "{{enabled}}/{{total}} notifikasi aktif",
+      "edit": {
+        "header": "Pengaturan Notifikasi",
+        "description": "Pilih kategori notifikasi mana yang akan sampai kepada Anda.",
+        "successToast": "Pengaturan notifikasi berhasil diperbarui."
+      },
+      "categories": {
+        "order": "Pesanan",
+        "orderDescription": "Pesanan baru di toko Anda.",
+        "payout": "Pencairan Dana",
+        "payoutDescription": "Saat pencairan dana telah dikirim kepada Anda.",
+        "request": "Permintaan",
+        "requestDescription": "Persetujuan dan penolakan atas permintaan yang Anda ajukan.",
+        "review": "Ulasan",
+        "reviewDescription": "Ulasan dan balasan baru untuk produk dan toko Anda.",
+        "follower": "Pengikut",
+        "followerDescription": "Saat pelanggan mulai mengikuti toko Anda.",
+        "messenger": "Pesan",
+        "messengerDescription": "Peringatan push/toast untuk pesan baru. Pesan itu sendiri tidak pernah diblokir."
+      }
+    },
     "professionalDetails": {
       "header": "Detail Perusahaan",
       "empty": {

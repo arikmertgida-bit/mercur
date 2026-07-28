@@ -3022,6 +3022,30 @@
         "accountNameRequired": "Vă rugăm introduceți un nume de cont"
       }
     },
+    "notificationSettings": {
+      "header": "Setări de notificare",
+      "summaryTitle": "Categorii de notificări",
+      "summary": "{{enabled}}/{{total}} notificări activate",
+      "edit": {
+        "header": "Setări de notificare",
+        "description": "Alegeți ce categorii de notificări ajung la dvs.",
+        "successToast": "Setările de notificare au fost actualizate cu succes."
+      },
+      "categories": {
+        "order": "Comenzi",
+        "orderDescription": "Comenzi noi în magazinul dvs.",
+        "payout": "Plăți",
+        "payoutDescription": "Când vi s-a trimis o plată.",
+        "request": "Cereri",
+        "requestDescription": "Aprobări și respingeri ale cererilor trimise de dvs.",
+        "review": "Recenzii",
+        "reviewDescription": "Recenzii și răspunsuri noi la produsele și magazinul dvs.",
+        "follower": "Urmăritori",
+        "followerDescription": "Când un client începe să urmărească magazinul dvs.",
+        "messenger": "Mesaje",
+        "messengerDescription": "Alerte push/toast pentru mesaje noi. Mesajele în sine nu sunt niciodată blocate."
+      }
+    },
     "professionalDetails": {
       "header": "Detalii companie",
       "empty": {

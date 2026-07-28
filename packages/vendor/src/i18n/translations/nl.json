@@ -3022,6 +3022,30 @@
         "accountNameRequired": "Voer een naam voor de rekeninghouder in"
       }
     },
+    "notificationSettings": {
+      "header": "Meldingsinstellingen",
+      "summaryTitle": "Meldingscategorieën",
+      "summary": "{{enabled}}/{{total}} meldingen ingeschakeld",
+      "edit": {
+        "header": "Meldingsinstellingen",
+        "description": "Kies welke meldingscategorieën u bereiken.",
+        "successToast": "Meldingsinstellingen zijn succesvol bijgewerkt."
+      },
+      "categories": {
+        "order": "Bestellingen",
+        "orderDescription": "Nieuwe bestellingen in uw winkel.",
+        "payout": "Uitbetalingen",
+        "payoutDescription": "Wanneer er een uitbetaling naar u is verstuurd.",
+        "request": "Aanvragen",
+        "requestDescription": "Goedkeuringen en afwijzingen van uw ingediende aanvragen.",
+        "review": "Recensies",
+        "reviewDescription": "Nieuwe recensies en reacties op uw producten en winkel.",
+        "follower": "Volgers",
+        "followerDescription": "Wanneer een klant uw winkel begint te volgen.",
+        "messenger": "Berichten",
+        "messengerDescription": "Push-/toastmeldingen voor nieuwe berichten. Berichten zelf worden nooit geblokkeerd."
+      }
+    },
     "professionalDetails": {
       "header": "Bedrijfsgegevens",
       "empty": {

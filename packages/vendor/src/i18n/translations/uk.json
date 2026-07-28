@@ -3022,6 +3022,30 @@
         "accountNameRequired": "Введіть назву рахунку"
       }
     },
+    "notificationSettings": {
+      "header": "Налаштування сповіщень",
+      "summaryTitle": "Категорії сповіщень",
+      "summary": "{{enabled}}/{{total}} сповіщень увімкнено",
+      "edit": {
+        "header": "Налаштування сповіщень",
+        "description": "Виберіть, які категорії сповіщень надходитимуть до вас.",
+        "successToast": "Налаштування сповіщень успішно оновлено."
+      },
+      "categories": {
+        "order": "Замовлення",
+        "orderDescription": "Нові замовлення у вашому магазині.",
+        "payout": "Виплати",
+        "payoutDescription": "Коли вам надіслано виплату.",
+        "request": "Запити",
+        "requestDescription": "Схвалення та відхилення поданих вами запитів.",
+        "review": "Відгуки",
+        "reviewDescription": "Нові відгуки та відповіді на ваші товари й магазин.",
+        "follower": "Підписники",
+        "followerDescription": "Коли клієнт починає стежити за вашим магазином.",
+        "messenger": "Повідомлення",
+        "messengerDescription": "Push/toast-сповіщення про нові повідомлення. Самі повідомлення ніколи не блокуються."
+      }
+    },
     "professionalDetails": {
       "header": "Дані компанії",
       "empty": {
