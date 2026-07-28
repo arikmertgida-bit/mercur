@@ -1,13 +1,13 @@
 import * as React from "react"
 import { useLocation } from "react-router-dom"
-import { Star } from "@medusajs/icons"
+import { UserGroup } from "@medusajs/icons"
 import {
   getNotificationUnreadCount,
   markNotificationsRead,
 } from "../../../lib/messenger/client"
 import { getMessengerAuthToken, isTokenExpired } from "../../../lib/messenger/auth-token"
 import { kayiEventManager } from "../../../lib/messenger/KayiEventManager"
-import { REVIEW_NOTIFICATION_TYPE } from "../../../lib/messenger/types"
+import { FOLLOWER_NOTIFICATION_TYPE } from "../../../lib/messenger/types"
 import { logger } from "../../../lib/logger"
 import { getCatchMessage } from "../../../lib/errors"
 
@@ -21,25 +21,25 @@ function formatSidebarUnreadCount(count: number): string {
   return String(count)
 }
 
-export function ReviewsIcon(props: { className?: string }): React.JSX.Element {
+export function FollowersIcon(props: { className?: string }): React.JSX.Element {
   const { className } = props
   const [unreadCount, setUnreadCount] = React.useState<number>(0)
   const location = useLocation()
 
   React.useEffect((): (() => void) => {
-    const unsubscribe = kayiEventManager.subscribeNotification(REVIEW_NOTIFICATION_TYPE, (): void => {
+    const unsubscribe = kayiEventManager.subscribeNotification(FOLLOWER_NOTIFICATION_TYPE, (): void => {
       setUnreadCount((prev) => prev + 1)
     })
 
     const token = getMessengerAuthToken()
     if (token && !isTokenExpired(token)) {
-      getNotificationUnreadCount(REVIEW_NOTIFICATION_TYPE)
+      getNotificationUnreadCount(FOLLOWER_NOTIFICATION_TYPE)
         .then((r: { count: number }): void => {
           setUnreadCount(r.count ?? 0)
         })
         .catch((err): void => {
           logger.error(
-            `Failed to fetch initial review notification count: ${getCatchMessage(err instanceof Error ? err : undefined)}`,
+            `Failed to fetch initial follower notification count: ${getCatchMessage(err instanceof Error ? err : undefined)}`,
           )
         })
     }
@@ -50,15 +50,15 @@ export function ReviewsIcon(props: { className?: string }): React.JSX.Element {
   }, [])
 
   React.useEffect((): void => {
-    const isReviewsRoute =
-      location.pathname === "/reviews" || location.pathname.endsWith("/reviews")
-    if (!isReviewsRoute) {
+    const isFollowersRoute =
+      location.pathname === "/followers" || location.pathname.endsWith("/followers")
+    if (!isFollowersRoute) {
       return
     }
     setUnreadCount(0)
-    markNotificationsRead(REVIEW_NOTIFICATION_TYPE).catch((err): void => {
+    markNotificationsRead(FOLLOWER_NOTIFICATION_TYPE).catch((err): void => {
       logger.error(
-        `Failed to mark review notifications read: ${getCatchMessage(err instanceof Error ? err : undefined)}`,
+        `Failed to mark follower notifications read: ${getCatchMessage(err instanceof Error ? err : undefined)}`,
       )
     })
   }, [location.pathname])
@@ -68,7 +68,7 @@ export function ReviewsIcon(props: { className?: string }): React.JSX.Element {
 
   return (
     <span className="relative inline-flex">
-      <Star className={className} />
+      <UserGroup className={className} />
       {safeUnreadCount > 0 && (
         <span className={BADGE_CLASSES} aria-hidden="true">
           {badgeLabel}

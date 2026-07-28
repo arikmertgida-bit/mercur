@@ -5,7 +5,7 @@ import {
 import { MedusaError } from "@medusajs/framework/utils"
 
 import { resolveKayiLogger } from "../../../../../lib/logger"
-import { notifyMessengerUser } from "../../../../../lib/messenger"
+import { ADMIN_SYSTEM_ID, notifyMessengerUser } from "../../../../../lib/messenger"
 import { REVIEW_NOTIFICATION_TYPE } from "../../../../../lib/review-events"
 import { REVIEW_IMAGE_REPORT_MODULE } from "../../../../../modules/review-image-reports"
 import ReviewImageReportService from "../../../../../modules/review-image-reports/service"
@@ -16,8 +16,6 @@ export type AdminResolveReviewImageReportResponse = {
   success: boolean
   action: "hide" | "publish"
 }
-
-const ADMIN_SYSTEM_ID = "admin-system"
 
 export const POST = async (
   req: AuthenticatedMedusaRequest<AdminResolveReviewImageReportType>,

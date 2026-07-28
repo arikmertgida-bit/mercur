@@ -22,6 +22,16 @@ if (!process.env.MESSENGER_INTERNAL_SECRET) {
 const INTERNAL_SECRET =
   process.env.MESSENGER_INTERNAL_SECRET ?? "kayi-internal-secret"
 
+/**
+ * Canonical `sourceUserId` for system-initiated messenger notifications
+ * (admin resolving a report, admin processing a request, a guest order with
+ * no real customer id, ...). Using one fixed identity — rather than the
+ * specific admin actor's id — keeps every such notification in a single
+ * "Destek" (ADMIN_SUPPORT) thread per seller instead of fragmenting into one
+ * thread per acting admin.
+ */
+export const ADMIN_SYSTEM_ID = "admin-system"
+
 interface NotifyParams {
   /** User id to deliver the notification to */
   targetUserId: string

@@ -29,6 +29,7 @@ import { useDocumentDirection } from "../../../hooks/use-document-direction";
 import menuItemsModule from "virtual:mercur/menu-items";
 import {
   applyNavOverrides,
+  orderNotificationBridge,
   supportChatBridge,
   useExtension,
   type CoreNavItem,
@@ -277,12 +278,59 @@ export const Header = () => {
   );
 };
 
+const ORDERS_BADGE_CLASSES =
+  "pointer-events-none absolute -right-1.5 -top-1.5 flex h-3.5 min-w-3.5 items-center justify-center rounded-full bg-brand px-0.5 text-[9px] font-semibold tabular-nums text-white shadow-sm";
+
+function formatOrdersUnreadCount(count: number): string {
+  if (count > 9) {
+    return "9+";
+  }
+  return String(count);
+}
+
+/**
+ * Orders lives in `packages/vendor`'s composable core routes, not a custom
+ * `apps/vendor` page — the badge count/mark-read logic lives in the app's
+ * messenger client instead, bridged in via `orderNotificationBridge`
+ * (this package cannot import app-level code directly).
+ */
+const OrdersIcon = () => {
+  const [unreadCount, setUnreadCount] = useState(0);
+  const location = useLocation();
+
+  useEffect(() => {
+    return orderNotificationBridge.subscribeUnreadCount(setUnreadCount);
+  }, []);
+
+  useEffect(() => {
+    const isOrdersRoute =
+      location.pathname === "/orders" || location.pathname.startsWith("/orders/");
+    if (isOrdersRoute) {
+      orderNotificationBridge.requestMarkRead();
+    }
+  }, [location.pathname]);
+
+  const safeUnreadCount = unreadCount ?? 0;
+  const badgeLabel = formatOrdersUnreadCount(safeUnreadCount);
+
+  return (
+    <span className="relative inline-flex">
+      <ShoppingCart />
+      {safeUnreadCount > 0 && (
+        <span className={ORDERS_BADGE_CLASSES} aria-hidden="true">
+          {badgeLabel}
+        </span>
+      )}
+    </span>
+  );
+};
+
 export const useCoreRoutes = (): Omit<INavItem, "pathname">[] => {
   const { t } = useTranslation();
 
   return [
     {
-      icon: <ShoppingCart />,
+      icon: <OrdersIcon />,
       label: t("orders.domain"),
       to: "/orders",
       items: [

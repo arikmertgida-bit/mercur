@@ -4,6 +4,7 @@ import { client } from "../client"
 import { SellerMeSchema } from "./schemas"
 import { MessengerProvider, useMessenger } from "../../providers/messenger-provider/MessengerProvider"
 import { AdminChat } from "../../components/layout/admin-chat/AdminChat"
+import { OrdersBadgeBridge } from "./OrdersBadgeBridge"
 
 /** While logged out / no store selected, poll fast so a fresh login is picked up in seconds. */
 const FAST_POLL_INTERVAL_MS = 2_000
@@ -157,6 +158,7 @@ export function MessengerVendorBootstrap({ children }: MessengerVendorBootstrapP
   return (
     <MessengerProvider sellerId={sellerId} sellerName={sellerName} persistSession>
       <MessengerGlobalNotifier />
+      <OrdersBadgeBridge />
       {sellerId && <AdminChat currentUserId={sellerId} />}
       {children}
     </MessengerProvider>
