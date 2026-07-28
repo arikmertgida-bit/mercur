@@ -27,7 +27,7 @@ export function ReviewsIcon(props: { className?: string }): React.JSX.Element {
   const location = useLocation()
 
   React.useEffect((): (() => void) => {
-    const unsubscribe = kayiEventManager.subscribeReviewNotification((): void => {
+    const unsubscribe = kayiEventManager.subscribeNotification(REVIEW_NOTIFICATION_TYPE, (): void => {
       setUnreadCount((prev) => prev + 1)
     })
 

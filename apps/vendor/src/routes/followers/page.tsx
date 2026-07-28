@@ -1,13 +1,13 @@
 import { useTranslation } from "react-i18next"
 import { keepPreviousData } from "@tanstack/react-query"
 import { Container, Heading, Text } from "@medusajs/ui"
-import { UserGroup } from "@medusajs/icons"
 import type { RouteConfig } from "@mercurjs/dashboard-sdk"
 
 import { _DataTable, SingleColumnPage, useDataTable } from "@mercurjs/dashboard-shared"
 import { useFollowers } from "../../hooks/api/followers"
 import { useFollowerTableColumns } from "../../hooks/table/columns/use-follower-table-columns"
 import { useFollowerTableQuery } from "../../hooks/table/query/use-follower-table-query"
+import { FollowersIcon } from "./components/FollowersIcon"
 
 const PAGE_SIZE = 20
 // Follow/unfollow happens from the storefront, a separate session — the vendor
@@ -73,6 +73,6 @@ export default FollowersListPage
 export const config: RouteConfig = {
   label: "domain",
   translationNs: "followers",
-  icon: UserGroup,
+  icon: FollowersIcon,
   rank: 91,
 }

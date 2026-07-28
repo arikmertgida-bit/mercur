@@ -4,7 +4,7 @@ import {
 } from "@medusajs/framework/http";
 
 import { resolveKayiLogger } from "../../../../../lib/logger";
-import { notifyMessengerUser } from "../../../../../lib/messenger";
+import { ADMIN_SYSTEM_ID, notifyMessengerUser } from "../../../../../lib/messenger";
 import { REVIEW_NOTIFICATION_TYPE } from "../../../../../lib/review-events";
 import { REVIEW_REPORT_MODULE } from "../../../../../modules/review-reports";
 import ReviewReportService from "../../../../../modules/review-reports/service";
@@ -15,8 +15,6 @@ export type AdminResolveReviewReportResponse = {
   success: boolean;
   action: "delete" | "reject";
 };
-
-const ADMIN_SYSTEM_ID = "admin-system";
 
 export const POST = async (
   req: AuthenticatedMedusaRequest<AdminResolveReviewReportType>,

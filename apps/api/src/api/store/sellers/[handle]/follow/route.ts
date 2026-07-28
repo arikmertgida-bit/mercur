@@ -6,6 +6,12 @@ import { ContainerRegistrationKeys, MedusaError } from "@medusajs/framework/util
 import type { Query } from "@medusajs/framework"
 
 import {
+  CustomerSummarySchema,
+  buildCustomerDisplayName,
+  parseFirstRow,
+} from "../../../../../lib/graph-schemas"
+import { emitFollowerNewFollowerEvent } from "../../../../../lib/follower-events"
+import {
   countSellerFollowers,
   findSellerFollow,
 } from "../../../../../modules/seller-follow/utils"
@@ -59,10 +65,26 @@ export const POST = async (
   const sellerId = await resolveSellerIdByHandle(query, req.params.handle)
   const customerId = req.auth_context.actor_id
 
-  await followSellerWorkflow.run({
+  const { result } = await followSellerWorkflow.run({
     container: req.scope,
     input: { customer_id: customerId, seller_id: sellerId },
   })
+
+  if (result.created) {
+    const { data: customers } = await query.graph({
+      entity: "customer",
+      filters: { id: customerId },
+      fields: ["id", "first_name", "last_name", "email"],
+    })
+    const customer = parseFirstRow(CustomerSummarySchema, customers)
+    const customerName = customer ? buildCustomerDisplayName(customer) : "Bir müşteri"
+
+    await emitFollowerNewFollowerEvent(req.scope, {
+      sellerToNotify: sellerId,
+      customerId,
+      customerName,
+    })
+  }
 
   const followersCount = await countSellerFollowers(req.scope, sellerId)
 

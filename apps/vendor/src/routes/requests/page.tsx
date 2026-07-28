@@ -1,12 +1,12 @@
 import { Navigate } from "react-router-dom";
 import i18n from "i18next";
 import type { RouteConfig } from "@mercurjs/dashboard-sdk";
-import { InboxSolid } from "@medusajs/icons";
+import { RequestsIcon } from "./components/RequestsIcon";
 
 export const config: RouteConfig = {
   label: "domain",
   translationNs: "requests",
-  icon: InboxSolid,
+  icon: RequestsIcon,
 };
 
 export const handle = {

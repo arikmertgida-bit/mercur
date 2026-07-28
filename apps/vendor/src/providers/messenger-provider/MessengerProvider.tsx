@@ -50,7 +50,6 @@ import type {
   ReadReceiptPayload,
   TypingUpdatePayload,
 } from "../../lib/messenger/types"
-import { REVIEW_NOTIFICATION_TYPE } from "../../lib/messenger/types"
 import { logger } from "../../lib/logger"
 import { getCatchMessage } from "../../lib/errors"
 
@@ -352,9 +351,7 @@ export function MessengerProvider({
 
     const onNotification = (payload: NotificationPayload) => {
       showBrowserNotification(payload)
-      if (payload.type === REVIEW_NOTIFICATION_TYPE) {
-        kayiEventManager.emitReviewNotification()
-      }
+      kayiEventManager.emitNotification(payload.type)
       getConversations()
         .then((r) => {
           setConversations(r.conversations)

@@ -56,6 +56,21 @@ export interface NotificationPayload {
  */
 export const REVIEW_NOTIFICATION_TYPE = "review_notification"
 
+/**
+ * Must match `ORDER_NOTIFICATION_TYPE` in the backend's src/lib/order-events.ts.
+ */
+export const ORDER_NOTIFICATION_TYPE = "order_notification"
+
+/**
+ * Must match `REQUEST_NOTIFICATION_TYPE` in the backend's src/lib/request-events.ts.
+ */
+export const REQUEST_NOTIFICATION_TYPE = "request_notification"
+
+/**
+ * Must match `FOLLOWER_NOTIFICATION_TYPE` in the backend's src/lib/follower-events.ts.
+ */
+export const FOLLOWER_NOTIFICATION_TYPE = "follower_notification"
+
 export interface ReadReceiptPayload {
   conversationId: string
   userId: string
