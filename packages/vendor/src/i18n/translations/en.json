@@ -2775,6 +2775,8 @@
     "fields": {
       "name": "Name",
       "identifier": "Identifier",
+      "identifierTooltip": "Automatically generated from the campaign name. Lowercase letters, numbers, and hyphens only — this field can't be edited directly.",
+      "identifierPlaceholder": "summer-sale",
       "start_date": "Start date",
       "end_date": "End date",
       "total_spend": "Budget spent",

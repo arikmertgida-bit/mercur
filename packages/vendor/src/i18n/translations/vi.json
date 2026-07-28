@@ -2640,6 +2640,8 @@
     "fields": {
       "name": "Tên",
       "identifier": "Định danh",
+      "identifierTooltip": "Được tạo tự động từ tên chiến dịch. Chỉ gồm chữ thường, số và dấu gạch ngang — trường này không thể chỉnh sửa trực tiếp.",
+      "identifierPlaceholder": "khuyến-mãi-hè",
       "start_date": "Ngày bắt đầu",
       "end_date": "Ngày kết thúc",
       "total_spend": "Ngân sách đã chi",

@@ -2860,6 +2860,8 @@
     "fields": {
       "name": "Nazwa",
       "identifier": "Identyfikator",
+      "identifierTooltip": "Generowane automatycznie na podstawie nazwy kampanii. Tylko małe litery, cyfry i myślniki — tego pola nie można edytować bezpośrednio.",
+      "identifierPlaceholder": "letnia-wyprzedaż",
       "start_date": "Data rozpoczęcia",
       "end_date": "Data końcowa",
       "total_spend": "Budżet wydany",

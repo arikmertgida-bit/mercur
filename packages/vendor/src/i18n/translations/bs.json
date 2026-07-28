@@ -2640,6 +2640,8 @@
     "fields": {
       "name": "Naziv",
       "identifier": "Identifikator",
+      "identifierTooltip": "Automatski se generiše iz naziva kampanje. Samo mala slova, brojevi i crtice — ovo polje se ne može direktno uređivati.",
+      "identifierPlaceholder": "ljetna-rasprodaja",
       "start_date": "Datum početka",
       "end_date": "Datum završetka",
       "total_spend": "Potrošeni budžet",

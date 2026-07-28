@@ -1,18 +1,58 @@
 import { ExclamationCircle } from "@medusajs/icons"
 import { Text } from "@medusajs/ui"
+import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { Navigate, useLocation, useRouteError } from "react-router-dom"
 
 import { isClientError } from "../../../lib/is-fetch-error"
 
+// Vite content-hashes every chunk on each build. A tab left open across a
+// redeploy still holds the old entry bundle, which then tries to dynamic
+// import() a chunk filename that no longer exists on disk -> the import
+// rejects and lands here. That's a stale-tab artifact, not a real app
+// error, so it gets one silent reload instead of a dead error screen.
+const CHUNK_LOAD_ERROR_PATTERN =
+  /Failed to fetch dynamically imported module|error loading dynamically imported module|Importing a module script failed/i
+
+const getChunkReloadStorageKey = (chunkError: Error): string => {
+  const chunkUrl = chunkError.message.match(/https?:\/\/\S+\.js/)?.[0]
+  return `mercur:vendor:chunk-reload:${chunkUrl ?? "unknown-chunk"}`
+}
+
 export const ErrorBoundary = () => {
   const error = useRouteError()
   const location = useLocation()
   const { t } = useTranslation()
+  const [isRecoveringChunk, setIsRecoveringChunk] = useState(false)
+
+  const chunkLoadError =
+    error instanceof Error && CHUNK_LOAD_ERROR_PATTERN.test(error.message)
+      ? error
+      : null
+
+  useEffect(() => {
+    if (!chunkLoadError) {
+      return
+    }
+
+    const storageKey = getChunkReloadStorageKey(chunkLoadError)
+
+    if (window.sessionStorage.getItem(storageKey)) {
+      return
+    }
+
+    window.sessionStorage.setItem(storageKey, String(Date.now()))
+    setIsRecoveringChunk(true)
+    window.location.reload()
+  }, [chunkLoadError])
+
+  if (isRecoveringChunk) {
+    return null
+  }
 
   let code: number | null = null
 
-  if (isClientError(error)) {
+  if (error instanceof Error && isClientError(error)) {
     if (error.status === 401) {
       return <Navigate to="/login" state={{ from: location }} replace />
     }

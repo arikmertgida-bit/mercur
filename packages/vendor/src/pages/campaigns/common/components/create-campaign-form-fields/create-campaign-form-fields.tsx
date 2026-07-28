@@ -12,7 +12,10 @@ import { useEffect } from "react"
 import { Path, PathValue, UseFormReturn, useWatch } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
+import { toHandle } from "@mercurjs/dashboard-shared"
+
 import { Form } from "@components/common/form"
+import { HandleInput } from "@components/inputs/handle-input"
 import { useCurrentSeller } from "@hooks/api/sellers"
 import {
   currencies,
@@ -33,6 +36,25 @@ export const CreateCampaignFormFields = <T extends CampaignFormFields | WithNest
   
   const { t } = useTranslation()
   const { currency_code: sellerCurrencyCode } = useCurrentSeller()
+
+  const namePath = `${fieldScope}name` as Path<T>
+  const identifierPath = `${fieldScope}campaign_identifier` as Path<T>
+
+  const watchNameValue = useWatch({
+    control: form.control,
+    name: namePath,
+  })
+
+  useEffect(() => {
+    const handleValue = toHandle(
+      (watchNameValue as string | undefined) ?? ""
+    ) as PathValue<T, typeof identifierPath>
+
+    form.setValue(identifierPath, handleValue, {
+      shouldValidate: true,
+      shouldDirty: false,
+    })
+  }, [watchNameValue, identifierPath, form])
 
   const watchValueType = useWatch({
     control: form.control,
@@ -96,7 +118,7 @@ export const CreateCampaignFormFields = <T extends CampaignFormFields | WithNest
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <Form.Field
             control={form.control}
-            name={`${fieldScope}name` as Path<T>}
+            name={namePath}
             render={({ field }) => {
               return (
                 <Form.Item>
@@ -114,14 +136,21 @@ export const CreateCampaignFormFields = <T extends CampaignFormFields | WithNest
 
           <Form.Field
             control={form.control}
-            name={`${fieldScope}campaign_identifier` as Path<T>}
+            name={identifierPath}
             render={({ field }) => {
               return (
                 <Form.Item>
-                  <Form.Label>{t("campaigns.fields.identifier")}</Form.Label>
+                  <Form.Label tooltip={t("campaigns.fields.identifierTooltip")}>
+                    {t("campaigns.fields.identifier")}
+                  </Form.Label>
 
                   <Form.Control>
-                    <Input {...field} value={(field.value as string) ?? ""} />
+                    <HandleInput
+                      {...field}
+                      value={(field.value as string) ?? ""}
+                      disabled
+                      placeholder={t("campaigns.fields.identifierPlaceholder")}
+                    />
                   </Form.Control>
 
                   <Form.ErrorMessage />

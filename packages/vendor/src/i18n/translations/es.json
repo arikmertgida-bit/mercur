@@ -2662,6 +2662,8 @@
     "fields": {
       "name": "Nombre",
       "identifier": "Identificador",
+      "identifierTooltip": "Generado automáticamente a partir del nombre de la campaña. Solo letras minúsculas, números y guiones — este campo no se puede editar directamente.",
+      "identifierPlaceholder": "rebajas-verano",
       "start_date": "Fecha de inicio",
       "end_date": "Fecha de finalización",
       "total_spend": "Presupuesto gastado",

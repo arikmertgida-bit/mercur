@@ -2640,6 +2640,8 @@
     "fields": {
       "name": "שם",
       "identifier": "מזהה",
+      "identifierTooltip": "נוצר אוטומטית משם הקמפיין. אותיות קטנות, ספרות ומקפים בלבד — לא ניתן לערוך שדה זה ישירות.",
+      "identifierPlaceholder": "מבצע-קיץ",
       "start_date": "תאריך התחלה",
       "end_date": "תאריך סיום",
       "total_spend": "תקציב שהוצא",

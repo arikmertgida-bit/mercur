@@ -2640,6 +2640,8 @@
     "fields": {
       "name": "Nama",
       "identifier": "Identifier",
+      "identifierTooltip": "Dibuat otomatis dari nama kampanye. Hanya huruf kecil, angka, dan tanda hubung — bidang ini tidak dapat diedit langsung.",
+      "identifierPlaceholder": "diskon-musim-panas",
       "start_date": "Tanggal mulai",
       "end_date": "Tanggal akhir",
       "total_spend": "Anggaran terpakai",

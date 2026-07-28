@@ -2640,6 +2640,8 @@
     "fields": {
       "name": "Név",
       "identifier": "Azonosító",
+      "identifierTooltip": "Automatikusan létrejön a kampány neve alapján. Csak kisbetűk, számok és kötőjelek — ez a mező közvetlenül nem szerkeszthető.",
+      "identifierPlaceholder": "nyari-akcio",
       "start_date": "Kezdési dátum",
       "end_date": "Befejezési dátum",
       "total_spend": "Költségvetés elköltve",

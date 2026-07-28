@@ -2640,6 +2640,8 @@
     "fields": {
       "name": "Nome",
       "identifier": "Identificatore",
+      "identifierTooltip": "Generato automaticamente dal nome della campagna. Solo lettere minuscole, numeri e trattini — questo campo non può essere modificato direttamente.",
+      "identifierPlaceholder": "saldi-estate",
       "start_date": "Data di inizio",
       "end_date": "Data di fine",
       "total_spend": "Budget speso",

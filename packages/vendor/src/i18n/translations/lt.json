@@ -2640,6 +2640,8 @@
     "fields": {
       "name": "Pavadinimas",
       "identifier": "Identifikatorius",
+      "identifierTooltip": "Sugeneruojama automatiškai iš kampanijos pavadinimo. Tik mažosios raidės, skaičiai ir brūkšneliai — šio lauko negalima redaguoti tiesiogiai.",
+      "identifierPlaceholder": "vasaros-isspardavimas",
       "start_date": "Pradžios data",
       "end_date": "Pabaigos data",
       "total_spend": "Išleistas biudžetas",

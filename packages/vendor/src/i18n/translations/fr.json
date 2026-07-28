@@ -2640,6 +2640,8 @@
     "fields": {
       "name": "Nom",
       "identifier": "Identifiant",
+      "identifierTooltip": "Généré automatiquement à partir du nom de la campagne. Uniquement des lettres minuscules, des chiffres et des tirets — ce champ ne peut pas être modifié directement.",
+      "identifierPlaceholder": "soldes-ete",
       "start_date": "Date de début",
       "end_date": "Date de fin",
       "total_spend": "Budget dépensé",

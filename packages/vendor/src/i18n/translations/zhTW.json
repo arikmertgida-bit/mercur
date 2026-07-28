@@ -2640,6 +2640,8 @@
     "fields": {
       "name": "名稱",
       "identifier": "識別碼",
+      "identifierTooltip": "根據活動名稱自動產生。僅包含小寫字母、數字和連字號 — 此欄位無法直接編輯。",
+      "identifierPlaceholder": "夏季促銷",
       "start_date": "開始日期",
       "end_date": "結束日期",
       "total_spend": "已支出預算",

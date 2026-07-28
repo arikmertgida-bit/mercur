@@ -2640,6 +2640,8 @@
     "fields": {
       "name": "Nome",
       "identifier": "Identificador",
+      "identifierTooltip": "Gerado automaticamente a partir do nome da campanha. Apenas letras minúsculas, números e hífens — este campo não pode ser editado diretamente.",
+      "identifierPlaceholder": "saldos-verão",
       "start_date": "Data de início",
       "end_date": "Data de fim",
       "total_spend": "Orçamento gasto",

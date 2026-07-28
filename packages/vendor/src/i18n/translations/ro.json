@@ -2640,6 +2640,8 @@
     "fields": {
       "name": "Nume",
       "identifier": "Identificator",
+      "identifierTooltip": "Generat automat din numele campaniei. Doar litere mici, cifre și cratime — acest câmp nu poate fi editat direct.",
+      "identifierPlaceholder": "reduceri-vară",
       "start_date": "Data de începere",
       "end_date": "Data de încheiere",
       "total_spend": "Buget cheltuit",

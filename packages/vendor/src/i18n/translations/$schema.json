@@ -10405,22 +10405,116 @@
     "promotions": {
       "type": "object",
       "properties": {
-          "templates": {
-            "type": "object",
-            "properties": {
-              "percentageOffProduct": {
-                "type": "object",
-                "properties": {
-                  "title": {
-                    "type": "string"
-                  },
-                  "description": {
-                    "type": "string"
-                  }
+        "templates": {
+          "type": "object",
+          "properties": {
+            "amountOffProducts": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
                 }
-              }
+              },
+              "required": [
+                "title",
+                "description"
+              ],
+              "additionalProperties": false
+            },
+            "amountOffOrder": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "title",
+                "description"
+              ],
+              "additionalProperties": false
+            },
+            "percentageOffProduct": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "title",
+                "description"
+              ],
+              "additionalProperties": false
+            },
+            "percentageOffOrder": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "title",
+                "description"
+              ],
+              "additionalProperties": false
+            },
+            "buyGet": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "title",
+                "description"
+              ],
+              "additionalProperties": false
+            },
+            "freeShipping": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "title",
+                "description"
+              ],
+              "additionalProperties": false
             }
           },
+          "required": [
+            "amountOffProducts",
+            "amountOffOrder",
+            "percentageOffProduct",
+            "percentageOffOrder",
+            "buyGet",
+            "freeShipping"
+          ],
+          "additionalProperties": false
+        },
         "domain": {
           "type": "string"
         },
@@ -11286,6 +11380,7 @@
         }
       },
       "required": [
+        "templates",
         "domain",
         "sections",
         "tabs",
@@ -11445,6 +11540,12 @@
             "identifier": {
               "type": "string"
             },
+            "identifierTooltip": {
+              "type": "string"
+            },
+            "identifierPlaceholder": {
+              "type": "string"
+            },
             "start_date": {
               "type": "string"
             },
@@ -11479,6 +11580,8 @@
           "required": [
             "name",
             "identifier",
+            "identifierTooltip",
+            "identifierPlaceholder",
             "start_date",
             "end_date",
             "total_spend",
