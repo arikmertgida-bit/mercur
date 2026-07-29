@@ -326,40 +326,23 @@ export function MessengerProvider({
       messageId: string
       conversationId: string
       deleteForAll: boolean
-      content?: string
     }): void => {
-      const mapper = (m: Message): Message =>
-        m.id === payload.messageId
-          ? { ...m, content: payload.content ?? "[Bu mesaj silindi]", deletedForAll: true, imageUrl: null }
-          : m
-
-      if (payload.deleteForAll) {
-        setMessages((prev: Message[]): Message[] => prev.map(mapper))
-        setPinnedMessages((prev: Message[]): Message[] => prev.map(mapper))
-        setConversations((prev: Conversation[]): Conversation[] =>
-          prev.map((c: Conversation): Conversation =>
-            c.id === payload.conversationId
-              ? {
-                  ...c,
-                  messages: (c.messages ?? []).map(mapper),
-                }
-              : c
-          )
+      // deleteForAll=true hard-deletes the row server-side (MessageService.deleteMessage) —
+      // nothing survives to tombstone, so every live view (main messages list and the
+      // Destek sidebar's pinnedMessages alike) drops the message outright instead of a
+      // "deleted" placeholder a refresh would then contradict.
+      setMessages((prev: Message[]): Message[] => prev.filter((m: Message) => m.id !== payload.messageId))
+      setPinnedMessages((prev: Message[]): Message[] => prev.filter((m: Message) => m.id !== payload.messageId))
+      setConversations((prev: Conversation[]): Conversation[] =>
+        prev.map((c: Conversation): Conversation =>
+          c.id === payload.conversationId
+            ? {
+                ...c,
+                messages: (c.messages ?? []).filter((m: Message) => m.id !== payload.messageId),
+              }
+            : c
         )
-      } else {
-        setMessages((prev: Message[]): Message[] => prev.filter((m: Message) => m.id !== payload.messageId))
-        setPinnedMessages((prev: Message[]): Message[] => prev.filter((m: Message) => m.id !== payload.messageId))
-        setConversations((prev: Conversation[]): Conversation[] =>
-          prev.map((c: Conversation): Conversation =>
-            c.id === payload.conversationId
-              ? {
-                  ...c,
-                  messages: (c.messages ?? []).filter((m: Message) => m.id !== payload.messageId),
-                }
-              : c
-          )
-        )
-      }
+      )
       const isActiveAnywhere =
         payload.conversationId === activeConvRef.current ||
         payload.conversationId === pinnedConvIdRef.current
@@ -647,17 +630,10 @@ export function MessengerProvider({
   const deleteMessage = useCallback(async (messageId: string, deleteForAll: boolean) => {
     if (!activeConvRef.current) return
     const convId = activeConvRef.current
-    if (deleteForAll) {
-      const mapper = (m: Message): Message =>
-        m.id === messageId
-          ? { ...m, content: "[Bu mesaj silindi]", deletedForAll: true, imageUrl: null }
-          : m
-      setMessages((prev: Message[]): Message[] => prev.map(mapper))
-      setPinnedMessages((prev: Message[]): Message[] => prev.map(mapper))
-    } else {
-      setMessages((prev: Message[]): Message[] => prev.filter((m: Message) => m.id !== messageId))
-      setPinnedMessages((prev: Message[]): Message[] => prev.filter((m: Message) => m.id !== messageId))
-    }
+    // deleteForAll hard-deletes the row server-side — nothing to tombstone,
+    // so drop it from every live view (main list + Destek sidebar) immediately.
+    setMessages((prev: Message[]): Message[] => prev.filter((m: Message) => m.id !== messageId))
+    setPinnedMessages((prev: Message[]): Message[] => prev.filter((m: Message) => m.id !== messageId))
     await apiDeleteMessage(convId, messageId, deleteForAll).catch((err) => {
       logger.error(`[deleteMessage] error ${getCatchMessage(err instanceof Error ? err : undefined)}`)
     })
@@ -666,17 +642,8 @@ export function MessengerProvider({
   const deleteSidebarMessage = useCallback(async (messageId: string, deleteForAll: boolean) => {
     if (!pinnedConvIdRef.current) return
     const convId = pinnedConvIdRef.current
-    if (deleteForAll) {
-      const mapper = (m: Message): Message =>
-        m.id === messageId
-          ? { ...m, content: "[Bu mesaj silindi]", deletedForAll: true, imageUrl: null }
-          : m
-      setMessages((prev: Message[]): Message[] => prev.map(mapper))
-      setPinnedMessages((prev: Message[]): Message[] => prev.map(mapper))
-    } else {
-      setMessages((prev: Message[]): Message[] => prev.filter((m: Message) => m.id !== messageId))
-      setPinnedMessages((prev: Message[]): Message[] => prev.filter((m: Message) => m.id !== messageId))
-    }
+    setMessages((prev: Message[]): Message[] => prev.filter((m: Message) => m.id !== messageId))
+    setPinnedMessages((prev: Message[]): Message[] => prev.filter((m: Message) => m.id !== messageId))
     await apiDeleteMessage(convId, messageId, deleteForAll).catch((err) => {
       logger.error(`[deleteSidebarMessage] error ${getCatchMessage(err instanceof Error ? err : undefined)}`)
     })
