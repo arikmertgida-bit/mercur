@@ -77,38 +77,47 @@ export function MessengerChat({ currentUserId, otherName }: MessengerChatProps):
   const messagesContainerRef = useRef<HTMLDivElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const typingTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
-  const initializedRef = useRef(false)
+  const adminIdFetchedRef = useRef(false)
 
   useEffect(() => {
-    if (initializedRef.current || !currentUserId) return
-    initializedRef.current = true
+    if (adminIdFetchedRef.current || !currentUserId) return
+    adminIdFetchedRef.current = true
 
     client.vendor.support.adminContact
       .query()
-      .then(async (data) => {
+      .then((data) => {
         const aid = "adminUserId" in data ? data.adminUserId : null
         if (!aid) throw new Error("No admin user found")
         setAdminUserId(aid)
-        // Match on the resolved admin id too, not just the conversation type —
-        // system notifications (e.g. review-report resolutions) also create an
-        // ADMIN_SUPPORT thread, but addressed to a fixed "admin-system" sender
-        // that no real admin account is ever a participant of. Reusing that
-        // thread here would silently send the seller's support messages into a
-        // conversation no admin can see.
-        const existing = conversations.find(
-          (c) => c.type === "ADMIN_SUPPORT" && c.participants.some((p) => p.userId === aid)
-        )
-        if (existing) {
-          setLocalConvId(existing.id)
-          await openSidebarConversation(existing.id)
-        }
       })
       .catch((err) => {
         logger.error(getCatchMessage(err instanceof Error ? err : undefined))
-        initializedRef.current = false
+        adminIdFetchedRef.current = false
       })
       .finally(() => setIsInitializing(false))
-  }, [currentUserId]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [currentUserId])
+
+  // Reactive on purpose — `conversations` loads via its own async REST call on
+  // provider mount, which can still be in flight when adminUserId resolves.
+  // Re-running this whenever `conversations` changes (until localConvId locks
+  // it in) catches the pre-existing ADMIN_SUPPORT thread even if that fetch
+  // hadn't landed yet on the first pass, instead of missing it permanently.
+  useEffect(() => {
+    if (!adminUserId || localConvId) return
+    // Match on the resolved admin id too, not just the conversation type —
+    // system notifications (e.g. review-report resolutions) also create an
+    // ADMIN_SUPPORT thread, but addressed to a fixed "admin-system" sender
+    // that no real admin account is ever a participant of. Reusing that
+    // thread here would silently send the seller's support messages into a
+    // conversation no admin can see.
+    const existing = conversations.find(
+      (c) => c.type === "ADMIN_SUPPORT" && c.participants.some((p) => p.userId === adminUserId)
+    )
+    if (existing) {
+      setLocalConvId(existing.id)
+      openSidebarConversation(existing.id)
+    }
+  }, [adminUserId, conversations, localConvId, openSidebarConversation])
 
   // Otomatik en-alta-kaydırma — typingUserIds artık tetikleyici değil (bkz. useMessengerAutoScroll)
   useMessengerAutoScroll(messagesContainerRef, pinnedMessages, localConvId)
@@ -311,7 +320,7 @@ export function MessengerChat({ currentUserId, otherName }: MessengerChatProps):
                         isMine
                           ? "bg-ui-button-inverted text-ui-fg-on-inverted"
                           : "bg-ui-bg-base text-ui-fg-base border border-ui-border-base"
-                      }${msg.deletedForAll ? " italic opacity-70" : ""}`}
+                      }`}
                     >
                       {!isMine && (
                         <p className="text-xs font-medium mb-1 opacity-70">{displayOtherName}</p>
@@ -327,7 +336,7 @@ export function MessengerChat({ currentUserId, otherName }: MessengerChatProps):
                         </button>
                       ) : (
                         <p className="whitespace-pre-wrap break-words">
-                          {msg.deletedForAll ? t("messages.deletedMessage") : msg.content}
+                          {msg.content}
                         </p>
                       )}
                       <p
@@ -341,35 +350,33 @@ export function MessengerChat({ currentUserId, otherName }: MessengerChatProps):
                         )}
                       </p>
                     </div>
-                    {!msg.deletedForAll && (
-                      <DropdownMenu>
-                        <DropdownMenu.Trigger asChild>
-                          <IconButton
-                            type="button"
-                            size="small"
-                            className="shadow"
-                            aria-label={t("messages.chatOptions")}
-                          >
-                            <EllipsisHorizontal />
-                          </IconButton>
-                        </DropdownMenu.Trigger>
-                        <DropdownMenu.Content className="w-44 bg-ui-bg-base border border-ui-border-base rounded-xl shadow-lg p-1">
-                          <DropdownMenu.Item
-                            onClick={() => handleRequestDelete(msg.id, false)}
-                            className="w-full text-left px-3 py-1.5 hover:bg-ui-bg-base-hover text-ui-fg-base transition-colors rounded-lg cursor-pointer text-sm font-medium"
-                          >
-                            {t("messages.deleteOnlyForMe")}
-                          </DropdownMenu.Item>
-                          <DropdownMenu.Item
-                            disabled={pinnedMessages.find((m) => m.id === msg.id)?.senderType !== "SELLER"}
-                            onClick={() => handleRequestDelete(msg.id, true)}
-                            className="w-full text-left px-3 py-1.5 hover:bg-ui-tag-red-bg text-ui-tag-red-text disabled:opacity-40 disabled:cursor-not-allowed transition-colors rounded-lg cursor-pointer text-sm font-medium"
-                          >
-                            {t("messages.deleteForEveryone")}
-                          </DropdownMenu.Item>
-                        </DropdownMenu.Content>
-                      </DropdownMenu>
-                    )}
+                    <DropdownMenu>
+                      <DropdownMenu.Trigger asChild>
+                        <IconButton
+                          type="button"
+                          size="small"
+                          className="shadow"
+                          aria-label={t("messages.chatOptions")}
+                        >
+                          <EllipsisHorizontal />
+                        </IconButton>
+                      </DropdownMenu.Trigger>
+                      <DropdownMenu.Content className="w-44 bg-ui-bg-base border border-ui-border-base rounded-xl shadow-lg p-1">
+                        <DropdownMenu.Item
+                          onClick={() => handleRequestDelete(msg.id, false)}
+                          className="w-full text-left px-3 py-1.5 hover:bg-ui-bg-base-hover text-ui-fg-base transition-colors rounded-lg cursor-pointer text-sm font-medium"
+                        >
+                          {t("messages.deleteOnlyForMe")}
+                        </DropdownMenu.Item>
+                        <DropdownMenu.Item
+                          disabled={pinnedMessages.find((m) => m.id === msg.id)?.senderType !== "SELLER"}
+                          onClick={() => handleRequestDelete(msg.id, true)}
+                          className="w-full text-left px-3 py-1.5 hover:bg-ui-tag-red-bg text-ui-tag-red-text disabled:opacity-40 disabled:cursor-not-allowed transition-colors rounded-lg cursor-pointer text-sm font-medium"
+                        >
+                          {t("messages.deleteForEveryone")}
+                        </DropdownMenu.Item>
+                      </DropdownMenu.Content>
+                    </DropdownMenu>
                   </div>
                 </div>
               )

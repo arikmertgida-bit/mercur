@@ -488,7 +488,7 @@ export function MessengerVendorInbox({ sellerId: _sellerId, sellerLogo }: Messen
                             isMe
                               ? "bg-ui-button-inverted text-ui-fg-on-inverted"
                               : "bg-ui-bg-base text-ui-fg-base border border-ui-border-base"
-                          }${msg.deletedForAll ? " italic opacity-70" : ""}`}
+                          }`}
                         >
                           {!isMe && isFirstInGroup && (
                             <p className="text-xs font-medium mb-1 opacity-70">
@@ -512,7 +512,7 @@ export function MessengerVendorInbox({ sellerId: _sellerId, sellerLogo }: Messen
                             </button>
                           ) : (
                             <p className="whitespace-pre-wrap break-words">
-                              {msg.deletedForAll ? t("messages.deletedMessage") : msg.content}
+                              {msg.content}
                             </p>
                           )}
                           <p
@@ -530,35 +530,33 @@ export function MessengerVendorInbox({ sellerId: _sellerId, sellerLogo }: Messen
                           </p>
                         </div>
 
-                        {!msg.deletedForAll && (
-                          <DropdownMenu>
-                            <DropdownMenu.Trigger asChild>
-                              <IconButton
-                                type="button"
-                                size="small"
-                                className="shadow"
-                                aria-label={t("messages.chatOptions")}
-                              >
-                                <EllipsisHorizontal />
-                              </IconButton>
-                            </DropdownMenu.Trigger>
-                            <DropdownMenu.Content className="w-44 bg-ui-bg-base border border-ui-border-base rounded-xl shadow-lg p-1">
-                              <DropdownMenu.Item
-                                onClick={() => handleRequestDelete(msg.id, false)}
-                                className="w-full text-left px-3 py-1.5 hover:bg-ui-bg-base-hover text-ui-fg-base transition-colors rounded-lg cursor-pointer text-sm font-medium"
-                              >
-                                {t("messages.deleteOnlyForMe")}
-                              </DropdownMenu.Item>
-                              <DropdownMenu.Item
-                                disabled={msg.senderType !== "SELLER"}
-                                onClick={() => handleRequestDelete(msg.id, true)}
-                                className="w-full text-left px-3 py-1.5 hover:bg-ui-tag-red-bg text-ui-tag-red-text disabled:opacity-40 disabled:cursor-not-allowed transition-colors rounded-lg cursor-pointer text-sm font-medium"
-                              >
-                                {t("messages.deleteForEveryone")}
-                              </DropdownMenu.Item>
-                            </DropdownMenu.Content>
-                          </DropdownMenu>
-                        )}
+                        <DropdownMenu>
+                          <DropdownMenu.Trigger asChild>
+                            <IconButton
+                              type="button"
+                              size="small"
+                              className="shadow"
+                              aria-label={t("messages.chatOptions")}
+                            >
+                              <EllipsisHorizontal />
+                            </IconButton>
+                          </DropdownMenu.Trigger>
+                          <DropdownMenu.Content className="w-44 bg-ui-bg-base border border-ui-border-base rounded-xl shadow-lg p-1">
+                            <DropdownMenu.Item
+                              onClick={() => handleRequestDelete(msg.id, false)}
+                              className="w-full text-left px-3 py-1.5 hover:bg-ui-bg-base-hover text-ui-fg-base transition-colors rounded-lg cursor-pointer text-sm font-medium"
+                            >
+                              {t("messages.deleteOnlyForMe")}
+                            </DropdownMenu.Item>
+                            <DropdownMenu.Item
+                              disabled={msg.senderType !== "SELLER"}
+                              onClick={() => handleRequestDelete(msg.id, true)}
+                              className="w-full text-left px-3 py-1.5 hover:bg-ui-tag-red-bg text-ui-tag-red-text disabled:opacity-40 disabled:cursor-not-allowed transition-colors rounded-lg cursor-pointer text-sm font-medium"
+                            >
+                              {t("messages.deleteForEveryone")}
+                            </DropdownMenu.Item>
+                          </DropdownMenu.Content>
+                        </DropdownMenu>
                       </div>
                     </div>
                   )
