@@ -110,22 +110,42 @@
     "categories": {
       "navLabel": "Categorie",
       "heading": "Richieste di categorie",
-      "noRecords": "Nessuna richiesta di categoria trovata"
+      "noRecords": "Nessuna richiesta di categoria trovata",
+      "create": {
+        "heading": "Richiedi categoria",
+        "description": "Invia una richiesta per creare una nuova categoria di prodotto.",
+        "successToast": "Richiesta di categoria creata con successo"
+      }
     },
     "collections": {
       "navLabel": "Collezioni",
       "heading": "Richieste di collezioni",
-      "noRecords": "Nessuna richiesta di collezione trovata"
+      "noRecords": "Nessuna richiesta di collezione trovata",
+      "create": {
+        "heading": "Richiedi collezione",
+        "description": "Invia una richiesta per creare una nuova collezione di prodotti.",
+        "successToast": "Richiesta di collezione creata con successo"
+      }
     },
     "tags": {
       "navLabel": "Tag",
       "heading": "Richieste di tag",
-      "noRecords": "Nessuna richiesta di tag trovata"
+      "noRecords": "Nessuna richiesta di tag trovata",
+      "create": {
+        "heading": "Richiedi tag",
+        "description": "Invia una richiesta per creare un nuovo tag di prodotto.",
+        "successToast": "Richiesta di tag creata con successo"
+      }
     },
     "types": {
       "navLabel": "Tipi",
       "heading": "Richieste di tipi",
-      "noRecords": "Nessuna richiesta di tipo trovata"
+      "noRecords": "Nessuna richiesta di tipo trovata",
+      "create": {
+        "heading": "Richiedi tipo",
+        "description": "Invia una richiesta per creare un nuovo tipo di prodotto.",
+        "successToast": "Richiesta di tipo creata con successo"
+      }
     },
     "reviews": {
       "navLabel": "Recensioni",
@@ -145,7 +165,8 @@
       "reReportSuccess": "Segnalazione inviata di nuovo.",
       "reReportError": "Impossibile inviare la segnalazione.",
       "noRecords": "Nessuna segnalazione di recensione trovata"
-    }
+    },
+    "createErrorFallback": "Impossibile creare la richiesta."
   },
   "reviews": {
     "domain": "Recensioni",

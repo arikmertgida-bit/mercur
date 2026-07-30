@@ -110,22 +110,42 @@
     "categories": {
       "navLabel": "카테고리",
       "heading": "카테고리 요청",
-      "noRecords": "카테고리 요청이 없습니다"
+      "noRecords": "카테고리 요청이 없습니다",
+      "create": {
+        "heading": "카테고리 요청",
+        "description": "새 제품 카테고리 생성을 요청합니다.",
+        "successToast": "카테고리 요청이 성공적으로 생성되었습니다"
+      }
     },
     "collections": {
       "navLabel": "컬렉션",
       "heading": "컬렉션 요청",
-      "noRecords": "컬렉션 요청이 없습니다"
+      "noRecords": "컬렉션 요청이 없습니다",
+      "create": {
+        "heading": "컬렉션 요청",
+        "description": "새 제품 컬렉션 생성을 요청합니다.",
+        "successToast": "컬렉션 요청이 성공적으로 생성되었습니다"
+      }
     },
     "tags": {
       "navLabel": "태그",
       "heading": "태그 요청",
-      "noRecords": "태그 요청이 없습니다"
+      "noRecords": "태그 요청이 없습니다",
+      "create": {
+        "heading": "태그 요청",
+        "description": "새 제품 태그 생성을 요청합니다.",
+        "successToast": "태그 요청이 성공적으로 생성되었습니다"
+      }
     },
     "types": {
       "navLabel": "유형",
       "heading": "유형 요청",
-      "noRecords": "유형 요청이 없습니다"
+      "noRecords": "유형 요청이 없습니다",
+      "create": {
+        "heading": "유형 요청",
+        "description": "새 제품 유형 생성을 요청합니다.",
+        "successToast": "유형 요청이 성공적으로 생성되었습니다"
+      }
     },
     "reviews": {
       "navLabel": "리뷰",
@@ -145,7 +165,8 @@
       "reReportSuccess": "신고가 다시 전송되었습니다.",
       "reReportError": "신고를 보낼 수 없습니다.",
       "noRecords": "리뷰 신고를 찾을 수 없습니다"
-    }
+    },
+    "createErrorFallback": "요청을 생성하지 못했습니다."
   },
   "reviews": {
     "domain": "리뷰",

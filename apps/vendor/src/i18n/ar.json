@@ -110,22 +110,42 @@
     "categories": {
       "navLabel": "الفئات",
       "heading": "طلبات الفئات",
-      "noRecords": "لم يتم العثور على طلبات فئات"
+      "noRecords": "لم يتم العثور على طلبات فئات",
+      "create": {
+        "heading": "طلب فئة",
+        "description": "أرسل طلبًا لإنشاء فئة منتج جديدة.",
+        "successToast": "تم إنشاء طلب الفئة بنجاح"
+      }
     },
     "collections": {
       "navLabel": "المجموعات",
       "heading": "طلبات المجموعات",
-      "noRecords": "لم يتم العثور على طلبات مجموعات"
+      "noRecords": "لم يتم العثور على طلبات مجموعات",
+      "create": {
+        "heading": "طلب مجموعة",
+        "description": "أرسل طلبًا لإنشاء مجموعة منتجات جديدة.",
+        "successToast": "تم إنشاء طلب المجموعة بنجاح"
+      }
     },
     "tags": {
       "navLabel": "الوسوم",
       "heading": "طلبات الوسوم",
-      "noRecords": "لم يتم العثور على طلبات وسوم"
+      "noRecords": "لم يتم العثور على طلبات وسوم",
+      "create": {
+        "heading": "طلب وسم",
+        "description": "أرسل طلبًا لإنشاء وسم منتج جديد.",
+        "successToast": "تم إنشاء طلب الوسم بنجاح"
+      }
     },
     "types": {
       "navLabel": "الأنواع",
       "heading": "طلبات الأنواع",
-      "noRecords": "لم يتم العثور على طلبات أنواع"
+      "noRecords": "لم يتم العثور على طلبات أنواع",
+      "create": {
+        "heading": "طلب نوع",
+        "description": "أرسل طلبًا لإنشاء نوع منتج جديد.",
+        "successToast": "تم إنشاء طلب النوع بنجاح"
+      }
     },
     "reviews": {
       "navLabel": "التقييمات",
@@ -145,7 +165,8 @@
       "reReportSuccess": "تم إرسال البلاغ مرة أخرى.",
       "reReportError": "تعذر إرسال البلاغ.",
       "noRecords": "لم يتم العثور على بلاغات تقييمات"
-    }
+    },
+    "createErrorFallback": "تعذر إنشاء الطلب."
   },
   "reviews": {
     "domain": "التقييمات",

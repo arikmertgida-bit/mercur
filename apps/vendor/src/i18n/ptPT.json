@@ -110,22 +110,42 @@
     "categories": {
       "navLabel": "Categorias",
       "heading": "Pedidos de categorias",
-      "noRecords": "Não foram encontrados pedidos de categorias"
+      "noRecords": "Não foram encontrados pedidos de categorias",
+      "create": {
+        "heading": "Pedir categoria",
+        "description": "Envie um pedido para criar uma nova categoria de produto.",
+        "successToast": "Pedido de categoria criado com sucesso"
+      }
     },
     "collections": {
       "navLabel": "Coleções",
       "heading": "Pedidos de coleções",
-      "noRecords": "Não foram encontrados pedidos de coleções"
+      "noRecords": "Não foram encontrados pedidos de coleções",
+      "create": {
+        "heading": "Pedir coleção",
+        "description": "Envie um pedido para criar uma nova coleção de produtos.",
+        "successToast": "Pedido de coleção criado com sucesso"
+      }
     },
     "tags": {
       "navLabel": "Etiquetas",
       "heading": "Pedidos de etiquetas",
-      "noRecords": "Não foram encontrados pedidos de etiquetas"
+      "noRecords": "Não foram encontrados pedidos de etiquetas",
+      "create": {
+        "heading": "Pedir tag",
+        "description": "Envie um pedido para criar uma nova tag de produto.",
+        "successToast": "Pedido de tag criado com sucesso"
+      }
     },
     "types": {
       "navLabel": "Tipos",
       "heading": "Pedidos de tipos",
-      "noRecords": "Não foram encontrados pedidos de tipos"
+      "noRecords": "Não foram encontrados pedidos de tipos",
+      "create": {
+        "heading": "Pedir tipo",
+        "description": "Envie um pedido para criar um novo tipo de produto.",
+        "successToast": "Pedido de tipo criado com sucesso"
+      }
     },
     "reviews": {
       "navLabel": "Avaliações",
@@ -145,7 +165,8 @@
       "reReportSuccess": "Denúncia reenviada.",
       "reReportError": "Não foi possível enviar a denúncia.",
       "noRecords": "Nenhuma denúncia de avaliação encontrada"
-    }
+    },
+    "createErrorFallback": "Não foi possível criar o pedido."
   },
   "reviews": {
     "domain": "Avaliações",

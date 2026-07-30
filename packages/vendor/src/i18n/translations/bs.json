@@ -274,8 +274,8 @@
       "store": {
         "label": "Trgovina",
         "storeSettings": "Postavke trgovine",
-        "editStore": "Edit Store",
-        "switchStore": "Switch store"
+        "editStore": "Uredi trgovinu",
+        "switchStore": "Promijeni trgovinu"
       },
       "actions": {
         "logout": "Odjavi se"

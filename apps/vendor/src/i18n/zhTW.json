@@ -110,22 +110,42 @@
     "categories": {
       "navLabel": "分類",
       "heading": "分類請求",
-      "noRecords": "找不到分類請求"
+      "noRecords": "找不到分類請求",
+      "create": {
+        "heading": "申請分類",
+        "description": "提交申請以建立新的商品分類。",
+        "successToast": "分類申請建立成功"
+      }
     },
     "collections": {
       "navLabel": "系列",
       "heading": "系列請求",
-      "noRecords": "找不到系列請求"
+      "noRecords": "找不到系列請求",
+      "create": {
+        "heading": "申請系列",
+        "description": "提交申請以建立新的商品系列。",
+        "successToast": "系列申請建立成功"
+      }
     },
     "tags": {
       "navLabel": "標籤",
       "heading": "標籤請求",
-      "noRecords": "找不到標籤請求"
+      "noRecords": "找不到標籤請求",
+      "create": {
+        "heading": "申請標籤",
+        "description": "提交申請以建立新的商品標籤。",
+        "successToast": "標籤申請建立成功"
+      }
     },
     "types": {
       "navLabel": "類型",
       "heading": "類型請求",
-      "noRecords": "找不到類型請求"
+      "noRecords": "找不到類型請求",
+      "create": {
+        "heading": "申請類型",
+        "description": "提交申請以建立新的商品類型。",
+        "successToast": "類型申請建立成功"
+      }
     },
     "reviews": {
       "navLabel": "評價",
@@ -145,7 +165,8 @@
       "reReportSuccess": "檢舉已重新送出。",
       "reReportError": "無法送出檢舉。",
       "noRecords": "找不到評價檢舉"
-    }
+    },
+    "createErrorFallback": "無法建立請求。"
   },
   "reviews": {
     "domain": "評論",

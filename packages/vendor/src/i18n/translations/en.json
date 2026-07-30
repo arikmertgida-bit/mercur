@@ -274,7 +274,7 @@
       "store": {
         "label": "Store",
         "storeSettings": "Store settings",
-        "editStore": "Edit Store",
+        "editStore": "Edit store",
         "switchStore": "Switch store"
       },
       "actions": {

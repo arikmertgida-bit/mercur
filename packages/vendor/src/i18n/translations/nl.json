@@ -274,8 +274,8 @@
       "store": {
         "label": "Winkel",
         "storeSettings": "Winkelinstellingen",
-        "editStore": "Edit Store",
-        "switchStore": "Switch store"
+        "editStore": "Winkel bewerken",
+        "switchStore": "Winkel wisselen"
       },
       "actions": {
         "logout": "Uitloggen"

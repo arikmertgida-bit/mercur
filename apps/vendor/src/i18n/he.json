@@ -110,22 +110,42 @@
     "categories": {
       "navLabel": "קטגוריות",
       "heading": "בקשות קטגוריה",
-      "noRecords": "לא נמצאו בקשות קטגוריה"
+      "noRecords": "לא נמצאו בקשות קטגוריה",
+      "create": {
+        "heading": "בקשת קטגוריה",
+        "description": "שלח בקשה ליצירת קטגוריית מוצר חדשה.",
+        "successToast": "בקשת הקטגוריה נוצרה בהצלחה"
+      }
     },
     "collections": {
       "navLabel": "אוספים",
       "heading": "בקשות אוסף",
-      "noRecords": "לא נמצאו בקשות אוסף"
+      "noRecords": "לא נמצאו בקשות אוסף",
+      "create": {
+        "heading": "בקשת אוסף",
+        "description": "שלח בקשה ליצירת אוסף מוצרים חדש.",
+        "successToast": "בקשת האוסף נוצרה בהצלחה"
+      }
     },
     "tags": {
       "navLabel": "תגיות",
       "heading": "בקשות תגית",
-      "noRecords": "לא נמצאו בקשות תגית"
+      "noRecords": "לא נמצאו בקשות תגית",
+      "create": {
+        "heading": "בקשת תגית",
+        "description": "שלח בקשה ליצירת תגית מוצר חדשה.",
+        "successToast": "בקשת התגית נוצרה בהצלחה"
+      }
     },
     "types": {
       "navLabel": "סוגים",
       "heading": "בקשות סוג",
-      "noRecords": "לא נמצאו בקשות סוג"
+      "noRecords": "לא נמצאו בקשות סוג",
+      "create": {
+        "heading": "בקשת סוג",
+        "description": "שלח בקשה ליצירת סוג מוצר חדש.",
+        "successToast": "בקשת הסוג נוצרה בהצלחה"
+      }
     },
     "reviews": {
       "navLabel": "ביקורות",
@@ -145,7 +165,8 @@
       "reReportSuccess": "הדיווח נשלח שוב.",
       "reReportError": "לא ניתן היה לשלוח את הדיווח.",
       "noRecords": "לא נמצאו דיווחים על ביקורות"
-    }
+    },
+    "createErrorFallback": "לא ניתן היה ליצור את הבקשה."
   },
   "reviews": {
     "domain": "ביקורות",

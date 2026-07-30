@@ -274,8 +274,8 @@
       "store": {
         "label": "Parduotuvė",
         "storeSettings": "Parduotuvės nustatymai",
-        "editStore": "Edit Store",
-        "switchStore": "Switch store"
+        "editStore": "Keisti parduotuvę",
+        "switchStore": "Perjungti parduotuvę"
       },
       "actions": {
         "logout": "Atsijungti"

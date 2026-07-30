@@ -110,22 +110,42 @@
     "categories": {
       "navLabel": "Categories",
       "heading": "Category Requests",
-      "noRecords": "No category requests found"
+      "noRecords": "No category requests found",
+      "create": {
+        "heading": "Request Category",
+        "description": "Submit a request to create a new product category.",
+        "successToast": "Category request created successfully"
+      }
     },
     "collections": {
       "navLabel": "Collections",
       "heading": "Collection Requests",
-      "noRecords": "No collection requests found"
+      "noRecords": "No collection requests found",
+      "create": {
+        "heading": "Request Collection",
+        "description": "Submit a request to create a new product collection.",
+        "successToast": "Collection request created successfully"
+      }
     },
     "tags": {
       "navLabel": "Tags",
       "heading": "Tag Requests",
-      "noRecords": "No tag requests found"
+      "noRecords": "No tag requests found",
+      "create": {
+        "heading": "Request Tag",
+        "description": "Submit a request to create a new product tag.",
+        "successToast": "Tag request created successfully"
+      }
     },
     "types": {
       "navLabel": "Types",
       "heading": "Type Requests",
-      "noRecords": "No type requests found"
+      "noRecords": "No type requests found",
+      "create": {
+        "heading": "Request Type",
+        "description": "Submit a request to create a new product type.",
+        "successToast": "Type request created successfully"
+      }
     },
     "reviews": {
       "navLabel": "Reviews",
@@ -145,7 +165,8 @@
       "reReportSuccess": "Report sent again.",
       "reReportError": "Report could not be sent.",
       "noRecords": "No review reports found"
-    }
+    },
+    "createErrorFallback": "The request could not be created."
   },
   "reviews": {
     "domain": "Reviews",

@@ -274,8 +274,8 @@
       "store": {
         "label": "Loja",
         "storeSettings": "Configurações da loja",
-        "editStore": "Edit Store",
-        "switchStore": "Switch store"
+        "editStore": "Editar loja",
+        "switchStore": "Trocar loja"
       },
       "actions": {
         "logout": "Sair"

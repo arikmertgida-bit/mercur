@@ -274,8 +274,8 @@
       "store": {
         "label": "Κατάστημα",
         "storeSettings": "Ρυθμίσεις καταστήματος",
-        "editStore": "Edit Store",
-        "switchStore": "Switch store"
+        "editStore": "Επεξεργασία καταστήματος",
+        "switchStore": "Αλλαγή καταστήματος"
       },
       "actions": {
         "logout": "Αποσύνδεση"

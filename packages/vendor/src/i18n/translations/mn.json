@@ -274,8 +274,8 @@
       "store": {
         "label": "Дэлгүүр",
         "storeSettings": "Дэлгүүрийн тохиргоо",
-        "editStore": "Edit Store",
-        "switchStore": "Switch store"
+        "editStore": "Дэлгүүрийг засах",
+        "switchStore": "Дэлгүүр солих"
       },
       "actions": {
         "logout": "Гарах"

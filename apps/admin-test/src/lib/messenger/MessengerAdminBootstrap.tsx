@@ -12,6 +12,17 @@ const FAST_POLL_MAX_ATTEMPTS = 30
 const IDLE_POLL_INTERVAL_MS = 60_000
 
 /**
+ * Routes reachable with zero session cookie — polling `/admin/users/me` here
+ * can never succeed and only spams the console with 401s. Mirrors vendor's
+ * identical `UNAUTHENTICATED_ROUTES` guard in `MessengerVendorBootstrap.tsx`.
+ */
+const UNAUTHENTICATED_ROUTES = ["/login", "/reset-password", "/invite"]
+
+function isOnUnauthenticatedRoute(): boolean {
+  return UNAUTHENTICATED_ROUTES.includes(window.location.pathname)
+}
+
+/**
  * Resolves the current admin session's user id via cookie-based auth
  * (see lib/client.ts — this app uses session cookies, not a bearer token).
  * Re-checks on window focus, fast (every 2s, capped) while unresolved so a
@@ -34,6 +45,9 @@ function useAdminSessionId(): string | null {
     }
 
     const resolveAdminId = async (): Promise<void> => {
+      if (isOnUnauthenticatedRoute()) {
+        return
+      }
       try {
         const raw = await client.admin.users.me.query({})
         const parsed = AdminUserMeSchema.safeParse(raw)

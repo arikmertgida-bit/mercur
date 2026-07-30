@@ -110,22 +110,42 @@
     "categories": {
       "navLabel": "Kategori",
       "heading": "Permintaan Kategori",
-      "noRecords": "Tidak ada permintaan kategori ditemukan"
+      "noRecords": "Tidak ada permintaan kategori ditemukan",
+      "create": {
+        "heading": "Minta Kategori",
+        "description": "Kirim permintaan untuk membuat kategori produk baru.",
+        "successToast": "Permintaan kategori berhasil dibuat"
+      }
     },
     "collections": {
       "navLabel": "Koleksi",
       "heading": "Permintaan Koleksi",
-      "noRecords": "Tidak ada permintaan koleksi ditemukan"
+      "noRecords": "Tidak ada permintaan koleksi ditemukan",
+      "create": {
+        "heading": "Minta Koleksi",
+        "description": "Kirim permintaan untuk membuat koleksi produk baru.",
+        "successToast": "Permintaan koleksi berhasil dibuat"
+      }
     },
     "tags": {
       "navLabel": "Tag",
       "heading": "Permintaan Tag",
-      "noRecords": "Tidak ada permintaan tag ditemukan"
+      "noRecords": "Tidak ada permintaan tag ditemukan",
+      "create": {
+        "heading": "Minta Tag",
+        "description": "Kirim permintaan untuk membuat tag produk baru.",
+        "successToast": "Permintaan tag berhasil dibuat"
+      }
     },
     "types": {
       "navLabel": "Jenis",
       "heading": "Permintaan Jenis",
-      "noRecords": "Tidak ada permintaan jenis ditemukan"
+      "noRecords": "Tidak ada permintaan jenis ditemukan",
+      "create": {
+        "heading": "Minta Tipe",
+        "description": "Kirim permintaan untuk membuat tipe produk baru.",
+        "successToast": "Permintaan tipe berhasil dibuat"
+      }
     },
     "reviews": {
       "navLabel": "Ulasan",
@@ -145,7 +165,8 @@
       "reReportSuccess": "Laporan dikirim ulang.",
       "reReportError": "Laporan tidak dapat dikirim.",
       "noRecords": "Tidak ada laporan ulasan ditemukan"
-    }
+    },
+    "createErrorFallback": "Permintaan tidak dapat dibuat."
   },
   "reviews": {
     "domain": "Ulasan",

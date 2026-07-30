@@ -274,8 +274,8 @@
       "store": {
         "label": "חנות",
         "storeSettings": "הגדרות חנות",
-        "editStore": "Edit Store",
-        "switchStore": "Switch store"
+        "editStore": "ערוך חנות",
+        "switchStore": "החלף חנות"
       },
       "actions": {
         "logout": "התנתק"

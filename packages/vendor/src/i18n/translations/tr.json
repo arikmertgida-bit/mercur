@@ -274,8 +274,8 @@
       "store": {
         "label": "Mağaza",
         "storeSettings": "Mağaza Ayarları",
-        "editStore": "Edit Store",
-        "switchStore": "Switch store"
+        "editStore": "Mağazayı Düzenle",
+        "switchStore": "Mağaza Değiştir"
       },
       "actions": {
         "logout": "Çıkış Yap"

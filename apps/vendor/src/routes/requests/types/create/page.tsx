@@ -31,11 +31,11 @@ const TypeRequestCreateForm = () => {
   const handleSubmit = form.handleSubmit(async (data) => {
     await mutateAsync(data, {
       onSuccess: () => {
-        toast.success("Type request created successfully");
+        toast.success(t("requests.types.create.successToast"));
         handleSuccess(`/requests/types`);
       },
       onError: (error) => {
-        toast.error(error.message);
+        toast.error(error.message || t("requests.createErrorFallback"));
       },
     });
   });
@@ -50,9 +50,9 @@ const TypeRequestCreateForm = () => {
         <RouteFocusModal.Body className="flex size-full flex-col items-center p-16">
           <div className="flex w-full max-w-[720px] flex-col gap-y-8">
             <div>
-              <Heading>Request Type</Heading>
+              <Heading>{t("requests.types.create.heading")}</Heading>
               <Text size="small" className="text-ui-fg-subtle">
-                Submit a request to create a new product type.
+                {t("requests.types.create.description")}
               </Text>
             </div>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -95,14 +95,16 @@ const TypeRequestCreateForm = () => {
 };
 
 const TypeRequestCreatePage = () => {
+  const { t } = useTranslation();
+
   return (
     <RouteFocusModal>
       <RouteFocusModal.Title asChild>
-        <span className="sr-only">Request Type</span>
+        <span className="sr-only">{t("requests.types.create.heading")}</span>
       </RouteFocusModal.Title>
       <RouteFocusModal.Description asChild>
         <span className="sr-only">
-          Submit a request to create a new product type.
+          {t("requests.types.create.description")}
         </span>
       </RouteFocusModal.Description>
       <TypeRequestCreateForm />

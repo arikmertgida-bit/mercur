@@ -60,11 +60,11 @@ const CategoryRequestCreateForm = () => {
     const payload = handle ? { ...data, handle } : data;
     await mutateAsync(payload, {
       onSuccess: () => {
-        toast.success("Category request created successfully");
+        toast.success(t("requests.categories.create.successToast"));
         handleSuccess(`/requests/categories`);
       },
       onError: (error) => {
-        toast.error(error.message);
+        toast.error(error.message || t("requests.createErrorFallback"));
       },
     });
   });
@@ -79,9 +79,9 @@ const CategoryRequestCreateForm = () => {
         <RouteFocusModal.Body className="flex size-full flex-col items-center overflow-auto p-16">
           <div className="flex w-full max-w-[720px] flex-col gap-y-8">
             <div>
-              <Heading>Request Category</Heading>
+              <Heading>{t("requests.categories.create.heading")}</Heading>
               <Text size="small" className="text-ui-fg-subtle">
-                Submit a request to create a new product category.
+                {t("requests.categories.create.description")}
               </Text>
             </div>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -156,7 +156,7 @@ const CategoryRequestCreateForm = () => {
                 name="is_internal"
                 render={({ field }) => (
                   <Form.Item>
-                    <Form.Label>Visibility</Form.Label>
+                    <Form.Label>{t("categories.fields.visibility.label")}</Form.Label>
                     <Form.Control>
                       <Select
                         value={field.value ? "internal" : "public"}
@@ -202,14 +202,18 @@ const CategoryRequestCreateForm = () => {
 };
 
 const CategoryRequestCreatePage = () => {
+  const { t } = useTranslation();
+
   return (
     <RouteFocusModal>
       <RouteFocusModal.Title asChild>
-        <span className="sr-only">Request Category</span>
+        <span className="sr-only">
+          {t("requests.categories.create.heading")}
+        </span>
       </RouteFocusModal.Title>
       <RouteFocusModal.Description asChild>
         <span className="sr-only">
-          Submit a request to create a new product category.
+          {t("requests.categories.create.description")}
         </span>
       </RouteFocusModal.Description>
       <CategoryRequestCreateForm />

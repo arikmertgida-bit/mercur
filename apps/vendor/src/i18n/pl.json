@@ -110,22 +110,42 @@
     "categories": {
       "navLabel": "Kategorie",
       "heading": "Wnioski o kategorie",
-      "noRecords": "Nie znaleziono wniosków o kategorie"
+      "noRecords": "Nie znaleziono wniosków o kategorie",
+      "create": {
+        "heading": "Zgłoś kategorię",
+        "description": "Wyślij zgłoszenie o utworzenie nowej kategorii produktu.",
+        "successToast": "Zgłoszenie kategorii zostało utworzone pomyślnie"
+      }
     },
     "collections": {
       "navLabel": "Kolekcje",
       "heading": "Wnioski o kolekcje",
-      "noRecords": "Nie znaleziono wniosków o kolekcje"
+      "noRecords": "Nie znaleziono wniosków o kolekcje",
+      "create": {
+        "heading": "Zgłoś kolekcję",
+        "description": "Wyślij zgłoszenie o utworzenie nowej kolekcji produktów.",
+        "successToast": "Zgłoszenie kolekcji zostało utworzone pomyślnie"
+      }
     },
     "tags": {
       "navLabel": "Tagi",
       "heading": "Wnioski o tagi",
-      "noRecords": "Nie znaleziono wniosków o tagi"
+      "noRecords": "Nie znaleziono wniosków o tagi",
+      "create": {
+        "heading": "Zgłoś tag",
+        "description": "Wyślij zgłoszenie o utworzenie nowego tagu produktu.",
+        "successToast": "Zgłoszenie tagu zostało utworzone pomyślnie"
+      }
     },
     "types": {
       "navLabel": "Typy",
       "heading": "Wnioski o typy",
-      "noRecords": "Nie znaleziono wniosków o typy"
+      "noRecords": "Nie znaleziono wniosków o typy",
+      "create": {
+        "heading": "Zgłoś typ",
+        "description": "Wyślij zgłoszenie o utworzenie nowego typu produktu.",
+        "successToast": "Zgłoszenie typu zostało utworzone pomyślnie"
+      }
     },
     "reviews": {
       "navLabel": "Recenzje",
@@ -145,7 +165,8 @@
       "reReportSuccess": "Zgłoszenie wysłane ponownie.",
       "reReportError": "Nie udało się wysłać zgłoszenia.",
       "noRecords": "Nie znaleziono zgłoszeń recenzji"
-    }
+    },
+    "createErrorFallback": "Nie udało się utworzyć zgłoszenia."
   },
   "reviews": {
     "domain": "Recenzje",

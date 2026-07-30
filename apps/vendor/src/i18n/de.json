@@ -110,22 +110,42 @@
     "categories": {
       "navLabel": "Kategorien",
       "heading": "Kategorieanfragen",
-      "noRecords": "Keine Kategorieanfragen gefunden"
+      "noRecords": "Keine Kategorieanfragen gefunden",
+      "create": {
+        "heading": "Kategorie anfragen",
+        "description": "Senden Sie eine Anfrage zur Erstellung einer neuen Produktkategorie.",
+        "successToast": "Kategorieanfrage erfolgreich erstellt"
+      }
     },
     "collections": {
       "navLabel": "Kollektionen",
       "heading": "Kollektionsanfragen",
-      "noRecords": "Keine Kollektionsanfragen gefunden"
+      "noRecords": "Keine Kollektionsanfragen gefunden",
+      "create": {
+        "heading": "Kollektion anfragen",
+        "description": "Senden Sie eine Anfrage zur Erstellung einer neuen Produktkollektion.",
+        "successToast": "Kollektionsanfrage erfolgreich erstellt"
+      }
     },
     "tags": {
       "navLabel": "Tags",
       "heading": "Tag-Anfragen",
-      "noRecords": "Keine Tag-Anfragen gefunden"
+      "noRecords": "Keine Tag-Anfragen gefunden",
+      "create": {
+        "heading": "Tag anfragen",
+        "description": "Senden Sie eine Anfrage zur Erstellung eines neuen Produkt-Tags.",
+        "successToast": "Tag-Anfrage erfolgreich erstellt"
+      }
     },
     "types": {
       "navLabel": "Typen",
       "heading": "Typanfragen",
-      "noRecords": "Keine Typanfragen gefunden"
+      "noRecords": "Keine Typanfragen gefunden",
+      "create": {
+        "heading": "Typ anfragen",
+        "description": "Senden Sie eine Anfrage zur Erstellung eines neuen Produkttyps.",
+        "successToast": "Typanfrage erfolgreich erstellt"
+      }
     },
     "reviews": {
       "navLabel": "Bewertungen",
@@ -145,7 +165,8 @@
       "reReportSuccess": "Meldung erneut gesendet.",
       "reReportError": "Meldung konnte nicht gesendet werden.",
       "noRecords": "Keine Bewertungsmeldungen gefunden"
-    }
+    },
+    "createErrorFallback": "Die Anfrage konnte nicht erstellt werden."
   },
   "reviews": {
     "domain": "Bewertungen",

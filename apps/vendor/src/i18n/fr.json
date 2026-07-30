@@ -110,22 +110,42 @@
     "categories": {
       "navLabel": "Catégories",
       "heading": "Demandes de catégories",
-      "noRecords": "Aucune demande de catégorie trouvée"
+      "noRecords": "Aucune demande de catégorie trouvée",
+      "create": {
+        "heading": "Demander une catégorie",
+        "description": "Envoyez une demande de création d'une nouvelle catégorie de produit.",
+        "successToast": "Demande de catégorie créée avec succès"
+      }
     },
     "collections": {
       "navLabel": "Collections",
       "heading": "Demandes de collections",
-      "noRecords": "Aucune demande de collection trouvée"
+      "noRecords": "Aucune demande de collection trouvée",
+      "create": {
+        "heading": "Demander une collection",
+        "description": "Envoyez une demande de création d'une nouvelle collection de produits.",
+        "successToast": "Demande de collection créée avec succès"
+      }
     },
     "tags": {
       "navLabel": "Étiquettes",
       "heading": "Demandes d'étiquettes",
-      "noRecords": "Aucune demande d'étiquette trouvée"
+      "noRecords": "Aucune demande d'étiquette trouvée",
+      "create": {
+        "heading": "Demander une étiquette",
+        "description": "Envoyez une demande de création d'une nouvelle étiquette de produit.",
+        "successToast": "Demande d'étiquette créée avec succès"
+      }
     },
     "types": {
       "navLabel": "Types",
       "heading": "Demandes de types",
-      "noRecords": "Aucune demande de type trouvée"
+      "noRecords": "Aucune demande de type trouvée",
+      "create": {
+        "heading": "Demander un type",
+        "description": "Envoyez une demande de création d'un nouveau type de produit.",
+        "successToast": "Demande de type créée avec succès"
+      }
     },
     "reviews": {
       "navLabel": "Avis",
@@ -145,7 +165,8 @@
       "reReportSuccess": "Signalement renvoyé.",
       "reReportError": "Le signalement n'a pas pu être envoyé.",
       "noRecords": "Aucun signalement d'avis trouvé"
-    }
+    },
+    "createErrorFallback": "La demande n'a pas pu être créée."
   },
   "reviews": {
     "domain": "Avis",

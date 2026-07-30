@@ -110,22 +110,42 @@
     "categories": {
       "navLabel": "Kategóriák",
       "heading": "Kategóriakérések",
-      "noRecords": "Nem található kategóriakérés"
+      "noRecords": "Nem található kategóriakérés",
+      "create": {
+        "heading": "Kategória igénylése",
+        "description": "Küldjön kérést új termékkategória létrehozásához.",
+        "successToast": "A kategória igénylése sikeresen létrejött"
+      }
     },
     "collections": {
       "navLabel": "Kollekciók",
       "heading": "Kollekciókérések",
-      "noRecords": "Nem található kollekciókérés"
+      "noRecords": "Nem található kollekciókérés",
+      "create": {
+        "heading": "Kollekció igénylése",
+        "description": "Küldjön kérést új termékkollekció létrehozásához.",
+        "successToast": "A kollekció igénylése sikeresen létrejött"
+      }
     },
     "tags": {
       "navLabel": "Címkék",
       "heading": "Címkekérések",
-      "noRecords": "Nem található címkekérés"
+      "noRecords": "Nem található címkekérés",
+      "create": {
+        "heading": "Címke igénylése",
+        "description": "Küldjön kérést új termékcímke létrehozásához.",
+        "successToast": "A címke igénylése sikeresen létrejött"
+      }
     },
     "types": {
       "navLabel": "Típusok",
       "heading": "Típuskérések",
-      "noRecords": "Nem található típuskérés"
+      "noRecords": "Nem található típuskérés",
+      "create": {
+        "heading": "Típus igénylése",
+        "description": "Küldjön kérést új terméktípus létrehozásához.",
+        "successToast": "A típus igénylése sikeresen létrejött"
+      }
     },
     "reviews": {
       "navLabel": "Értékelések",
@@ -145,7 +165,8 @@
       "reReportSuccess": "A bejelentés újra elküldve.",
       "reReportError": "A bejelentést nem sikerült elküldeni.",
       "noRecords": "Nem található értékelés-bejelentés"
-    }
+    },
+    "createErrorFallback": "A kérést nem sikerült létrehozni."
   },
   "reviews": {
     "domain": "Értékelések",
