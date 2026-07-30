@@ -16,7 +16,8 @@
     "exportHeader": "Экспорт товаров",
     "exportDescription": "Экспортируйте свои товары в виде CSV-файла.",
     "exportBody": "Это действие экспортирует все ваши товары в CSV-файл. Загрузка начнётся автоматически, как только экспорт будет готов.",
-    "exportSuccessToast": "Товары успешно экспортированы."
+    "exportSuccessToast": "Товары успешно экспортированы.",
+    "importErrorFallback": "Произошла ошибка при импорте товаров."
   },
   "customFields": {
     "title": "Пользовательские поля",
@@ -45,7 +46,10 @@
     "selectConversation": "Выберите диалог",
     "startMessaging": "Выберите диалог, чтобы начать переписку",
     "connected": "Подключено",
-    "disconnected": "Отключено"
+    "disconnected": "Отключено",
+    "newMessageToastTitle": "Новое сообщение",
+    "imageSentPreview": "Отправил(а) изображение",
+    "newMessageGenericPreview": "У вас новое сообщение"
   },
   "messages": {
     "domain": "Сообщения",

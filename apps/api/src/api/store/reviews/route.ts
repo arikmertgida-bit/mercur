@@ -87,7 +87,7 @@ export const POST = async (
       fields: ["id", "first_name", "last_name", "email"],
     });
     const customer = parseFirstRow(CustomerSummarySchema, customers);
-    const customerName = customer ? buildCustomerDisplayName(customer) : "Müşteri";
+    const customerName = customer ? buildCustomerDisplayName(customer) : null;
 
     await Promise.all(
       result.sellerIds.map((sellerId: string) =>

@@ -103,6 +103,13 @@
     "resolveError": "Гомдлыг шийдэж чадсангүй"
   },
   "messenger": {
+    "today": "Өнөөдөр",
+    "yesterday": "Өчигдөр",
+    "newMessage": "Шинэ мессеж",
+    "sentImage": "Зураг илгээсэн",
+    "newMessageBody": "Танд шинэ мессеж ирлээ",
+    "customer": "Хэрэглэгч",
+    "seller": "Худалдагч",
     "searchConversations": "Харилцан яриа хайх...",
     "noConversations": "Одоогоор харилцан яриа алга",
     "startConversation": "Харилцан ярианы эхлүүлэх",

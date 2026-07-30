@@ -103,6 +103,13 @@
     "resolveError": "Không thể giải quyết báo cáo"
   },
   "messenger": {
+    "today": "Hôm nay",
+    "yesterday": "Hôm qua",
+    "newMessage": "Tin nhắn mới",
+    "sentImage": "Đã gửi một hình ảnh",
+    "newMessageBody": "Bạn có tin nhắn mới",
+    "customer": "Khách hàng",
+    "seller": "Người bán",
     "searchConversations": "Tìm kiếm cuộc trò chuyện...",
     "noConversations": "Chưa có cuộc trò chuyện nào",
     "startConversation": "Bắt đầu một cuộc trò chuyện",

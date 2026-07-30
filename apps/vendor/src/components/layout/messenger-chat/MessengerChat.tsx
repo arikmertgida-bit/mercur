@@ -119,7 +119,7 @@ export function MessengerChat({ currentUserId, otherName }: MessengerChatProps):
     }
   }, [adminUserId, conversations, localConvId, openSidebarConversation])
 
-  // Otomatik en-alta-kaydırma — typingUserIds artık tetikleyici değil (bkz. useMessengerAutoScroll)
+  // Auto-scroll-to-bottom — typingUserIds is no longer a trigger (see useMessengerAutoScroll)
   useMessengerAutoScroll(messagesContainerRef, pinnedMessages, localConvId)
 
   const handleRemoveImage = (): void => {

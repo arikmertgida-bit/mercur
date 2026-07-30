@@ -103,6 +103,13 @@
     "resolveError": "Αποτυχία επίλυσης της αναφοράς"
   },
   "messenger": {
+    "today": "Σήμερα",
+    "yesterday": "Χθες",
+    "newMessage": "Νέο μήνυμα",
+    "sentImage": "Απεστάλη εικόνα",
+    "newMessageBody": "Έχετε νέο μήνυμα",
+    "customer": "Πελάτης",
+    "seller": "Πωλητής",
     "searchConversations": "Αναζήτηση συνομιλιών...",
     "noConversations": "Δεν υπάρχουν ακόμη συνομιλίες",
     "startConversation": "Ξεκινήστε μια συνομιλία",

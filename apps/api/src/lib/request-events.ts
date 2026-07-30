@@ -1,8 +1,8 @@
 /**
  * Shared messenger `notificationType` / persisted `metadata.notification_type`
  * tag for every request-related messenger notification — lets the vendor
- * "Talepler" unread badge query messages by category instead of relying on
- * the per-conversation chat unread counter.
+ * unread badge query messages by category instead of relying on the
+ * per-conversation chat unread counter.
  *
  * Requests are always accepted/rejected synchronously by an admin inside
  * `apps/admin` — unlike reviews/followers/orders there is no async event to
@@ -10,10 +10,3 @@
  * directly instead of going through the event bus.
  */
 export const REQUEST_NOTIFICATION_TYPE = "request_notification"
-
-export const REQUEST_TYPE_LABELS: Record<string, string> = {
-  product_category: "Kategori",
-  product_collection: "Koleksiyon",
-  product_tag: "Etiket",
-  product_type: "Ürün Tipi",
-}

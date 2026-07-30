@@ -103,6 +103,13 @@
     "resolveError": "Решавањето на пријавата не успеа"
   },
   "messenger": {
+    "today": "Денес",
+    "yesterday": "Вчера",
+    "newMessage": "Нова порака",
+    "sentImage": "Испратена слика",
+    "newMessageBody": "Имате нова порака",
+    "customer": "Клиент",
+    "seller": "Продавач",
     "searchConversations": "Пребарај разговори...",
     "noConversations": "Сè уште нема разговори",
     "startConversation": "Започнете разговор",

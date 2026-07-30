@@ -2919,7 +2919,10 @@
       "uploadBannerHint": "Seret dan lepas banner Anda di sini atau klik untuk mengunggah.",
       "bannerRecommendedSize": "Disarankan 1920x400px",
       "bannerTooSmall": "Gambar terlalu kecil ({{width}}×{{height}}px). Disarankan minimal {{minWidth}}×{{minHeight}}px, jika tidak gambar mungkin terlihat buram.",
-      "logoTooSmall": "Gambar terlalu kecil ({{width}}×{{height}}px). Disarankan minimal {{minWidth}}×{{minHeight}}px, jika tidak gambar mungkin terlihat buram."
+      "logoTooSmall": "Gambar terlalu kecil ({{width}}×{{height}}px). Disarankan minimal {{minWidth}}×{{minHeight}}px, jika tidak gambar mungkin terlihat buram.",
+      "notificationLanguageLabel": "Bahasa Notifikasi",
+      "notificationLanguageHint": "Bahasa yang digunakan untuk notifikasi pesanan, ulasan, dan pembayaran yang dikirim ke toko Anda.",
+      "notificationLanguagePlaceholder": "Pilih bahasa"
     },
     "toast": {
       "update": "Toko berhasil diperbarui",

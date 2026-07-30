@@ -2919,7 +2919,10 @@
       "uploadBannerHint": "גרור ושחרר את הבאנר שלך כאן או לחץ להעלאה.",
       "bannerRecommendedSize": "מומלץ 1920x400px",
       "bannerTooSmall": "התמונה קטנה ({{width}}×{{height}}px). מומלץ לפחות {{minWidth}}×{{minHeight}}px, אחרת היא עלולה להיראות מטושטשת.",
-      "logoTooSmall": "התמונה קטנה ({{width}}×{{height}}px). מומלץ לפחות {{minWidth}}×{{minHeight}}px, אחרת היא עלולה להיראות מטושטשת."
+      "logoTooSmall": "התמונה קטנה ({{width}}×{{height}}px). מומלץ לפחות {{minWidth}}×{{minHeight}}px, אחרת היא עלולה להיראות מטושטשת.",
+      "notificationLanguageLabel": "שפת ההתראות",
+      "notificationLanguageHint": "השפה המשמשת עבור התראות הזמנות, ביקורות ותשלומים הנשלחות לחנות שלך.",
+      "notificationLanguagePlaceholder": "בחר שפה"
     },
     "toast": {
       "update": "החנות עודכנה בהצלחה",

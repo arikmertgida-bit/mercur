@@ -16,7 +16,8 @@
     "exportHeader": "상품 내보내기",
     "exportDescription": "상품을 CSV 파일로 내보냅니다.",
     "exportBody": "모든 상품을 CSV 파일로 내보냅니다. 내보내기가 준비되면 다운로드가 자동으로 시작됩니다.",
-    "exportSuccessToast": "상품을 성공적으로 내보냈습니다."
+    "exportSuccessToast": "상품을 성공적으로 내보냈습니다.",
+    "importErrorFallback": "제품을 가져오는 중 오류가 발생했습니다."
   },
   "customFields": {
     "title": "사용자 지정 필드",
@@ -45,7 +46,10 @@
     "selectConversation": "대화를 선택하세요",
     "startMessaging": "메시지를 시작하려면 대화를 선택하세요",
     "connected": "연결됨",
-    "disconnected": "연결 끊김"
+    "disconnected": "연결 끊김",
+    "newMessageToastTitle": "새 메시지",
+    "imageSentPreview": "이미지를 보냈습니다",
+    "newMessageGenericPreview": "새 메시지가 있습니다"
   },
   "messages": {
     "domain": "메시지",

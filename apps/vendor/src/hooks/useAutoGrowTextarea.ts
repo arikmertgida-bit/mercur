@@ -3,11 +3,11 @@ import { useEffect, type RefObject } from "react"
 const DEFAULT_MAX_HEIGHT_PX = 96
 
 /**
- * Textarea'yı içeriğe göre otomatik büyütür. Tek bir `useEffect([text])`
- * içinde çalışır — önceki desende her `onChange`'de ayrı bir
- * `requestAnimationFrame` planlanıyordu; bu, aynı frame'de tetiklenen
- * scroll efektleriyle yarışıp jank'a katkıda bulunuyordu. React'in kendi
- * render/effect sıralamasına güvenmek yeterli.
+ * Auto-grows a textarea to fit its content. Runs inside a single
+ * `useEffect([text])` — the previous pattern scheduled a separate
+ * `requestAnimationFrame` on every `onChange`, which raced with scroll
+ * effects firing in the same frame and contributed to jank. Relying on
+ * React's own render/effect ordering is sufficient.
  */
 export function useAutoGrowTextarea(
   textareaRef: RefObject<HTMLTextAreaElement | null>,

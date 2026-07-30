@@ -9447,6 +9447,15 @@
             },
             "bannerTooSmall": {
               "type": "string"
+            },
+            "notificationLanguageLabel": {
+              "type": "string"
+            },
+            "notificationLanguageHint": {
+              "type": "string"
+            },
+            "notificationLanguagePlaceholder": {
+              "type": "string"
             }
           }
         },

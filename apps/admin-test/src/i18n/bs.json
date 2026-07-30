@@ -103,6 +103,13 @@
     "resolveError": "Rješavanje prijave nije uspjelo"
   },
   "messenger": {
+    "today": "Danas",
+    "yesterday": "Jučer",
+    "newMessage": "Nova poruka",
+    "sentImage": "Poslao/la je sliku",
+    "newMessageBody": "Imate novu poruku",
+    "customer": "Kupac",
+    "seller": "Prodavač",
     "searchConversations": "Pretraži razgovore...",
     "noConversations": "Još uvijek nema razgovora",
     "startConversation": "Započnite razgovor",

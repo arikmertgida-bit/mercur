@@ -16,7 +16,8 @@
     "exportHeader": "Exporter des produits",
     "exportDescription": "Exportez vos produits sous forme de fichier CSV.",
     "exportBody": "Cette opération exportera tous vos produits vers un fichier CSV. Le téléchargement démarrera automatiquement lorsque l'export sera prêt.",
-    "exportSuccessToast": "Produits exportés avec succès."
+    "exportSuccessToast": "Produits exportés avec succès.",
+    "importErrorFallback": "Une erreur s'est produite lors de l'importation des produits."
   },
   "customFields": {
     "title": "Champs personnalisés",
@@ -45,7 +46,10 @@
     "selectConversation": "Sélectionnez une conversation",
     "startMessaging": "Sélectionnez une conversation pour commencer à discuter",
     "connected": "Connecté",
-    "disconnected": "Déconnecté"
+    "disconnected": "Déconnecté",
+    "newMessageToastTitle": "Nouveau message",
+    "imageSentPreview": "A envoyé une image",
+    "newMessageGenericPreview": "Vous avez un nouveau message"
   },
   "messages": {
     "domain": "Messages",

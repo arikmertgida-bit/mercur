@@ -16,7 +16,8 @@
     "exportHeader": "Бүтээгдэхүүн экспортлох",
     "exportDescription": "Бүтээгдэхүүнүүдээ CSV файл болгон экспортлоно уу.",
     "exportBody": "Энэ үйлдэл нь таны бүх бүтээгдэхүүнийг CSV файл руу экспортлох болно. Экспортлолт бэлэн болмогц татаж авалт автоматаар эхэлнэ.",
-    "exportSuccessToast": "Бүтээгдэхүүнийг амжилттай экспортлолоо."
+    "exportSuccessToast": "Бүтээгдэхүүнийг амжилттай экспортлолоо.",
+    "importErrorFallback": "Бүтээгдэхүүн импортлох явцад алдаа гарлаа."
   },
   "customFields": {
     "title": "Захиалгат талбарууд",
@@ -45,7 +46,10 @@
     "selectConversation": "Харилцан яриаг сонгоно уу",
     "startMessaging": "Мессеж бичиж эхлэхийн тулд харилцан яриаг сонгоно уу",
     "connected": "Холбогдсон",
-    "disconnected": "Тасарсан"
+    "disconnected": "Тасарсан",
+    "newMessageToastTitle": "Шинэ мессеж",
+    "imageSentPreview": "Зураг илгээлээ",
+    "newMessageGenericPreview": "Танд шинэ мессеж ирлээ"
   },
   "messages": {
     "domain": "Мессежүүд",

@@ -2919,7 +2919,10 @@
       "uploadBannerHint": "Přetáhněte sem svůj banner nebo klikněte pro nahrání.",
       "bannerRecommendedSize": "Doporučeno 1920x400px",
       "bannerTooSmall": "Obrázek je malý ({{width}}×{{height}}px). Doporučuje se alespoň {{minWidth}}×{{minHeight}}px, jinak může vypadat rozmazaně.",
-      "logoTooSmall": "Obrázek je malý ({{width}}×{{height}}px). Doporučuje se alespoň {{minWidth}}×{{minHeight}}px, jinak může vypadat rozmazaně."
+      "logoTooSmall": "Obrázek je malý ({{width}}×{{height}}px). Doporučuje se alespoň {{minWidth}}×{{minHeight}}px, jinak může vypadat rozmazaně.",
+      "notificationLanguageLabel": "Jazyk oznámení",
+      "notificationLanguageHint": "Jazyk používaný pro oznámení o objednávkách, recenzích a výplatách zasílaná vašemu obchodu.",
+      "notificationLanguagePlaceholder": "Vyberte jazyk"
     },
     "toast": {
       "update": "Obchod byl úspěšně aktualizován",

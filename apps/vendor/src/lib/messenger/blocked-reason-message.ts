@@ -8,8 +8,8 @@ const BLOCKED_REASON_I18N_KEYS: Record<BlockedReason, string> = {
 }
 
 /**
- * MessengerHttpError.reason'ı i18n çeviri anahtarına çevirir.
- * Çağıran taraf `t(getBlockedReasonKey(reason))` çağırır.
+ * Maps MessengerHttpError.reason to an i18n translation key.
+ * The caller invokes `t(getBlockedReasonKey(reason))`.
  */
 export function getBlockedReasonKey(reason: BlockedReason | null): string {
   if (reason === null) return BLOCKED_REASON_I18N_KEYS.GENERIC

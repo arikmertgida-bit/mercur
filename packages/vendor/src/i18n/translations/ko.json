@@ -2919,7 +2919,10 @@
       "uploadBannerHint": "배너를 여기로 드래그 앤 드롭하거나 클릭하여 업로드하세요.",
       "bannerRecommendedSize": "권장 1920x400px",
       "bannerTooSmall": "이미지가 작습니다 ({{width}}×{{height}}px). 최소 {{minWidth}}×{{minHeight}}px를 권장하며, 그렇지 않으면 흐릿하게 보일 수 있습니다.",
-      "logoTooSmall": "이미지가 작습니다 ({{width}}×{{height}}px). 최소 {{minWidth}}×{{minHeight}}px를 권장하며, 그렇지 않으면 흐릿하게 보일 수 있습니다."
+      "logoTooSmall": "이미지가 작습니다 ({{width}}×{{height}}px). 최소 {{minWidth}}×{{minHeight}}px를 권장하며, 그렇지 않으면 흐릿하게 보일 수 있습니다.",
+      "notificationLanguageLabel": "알림 언어",
+      "notificationLanguageHint": "매장으로 전송되는 주문, 리뷰, 정산 알림에 사용되는 언어입니다.",
+      "notificationLanguagePlaceholder": "언어를 선택하세요"
     },
     "toast": {
       "update": "스토어가 성공적으로 업데이트되었습니다",

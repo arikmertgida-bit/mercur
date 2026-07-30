@@ -16,7 +16,8 @@
     "exportHeader": "Eksportuj produkty",
     "exportDescription": "Eksportuj swoje produkty jako plik CSV.",
     "exportBody": "Spowoduje to wyeksportowanie wszystkich produktów do pliku CSV. Pobieranie rozpocznie się automatycznie, gdy eksport będzie gotowy.",
-    "exportSuccessToast": "Produkty zostały pomyślnie wyeksportowane."
+    "exportSuccessToast": "Produkty zostały pomyślnie wyeksportowane.",
+    "importErrorFallback": "Wystąpił błąd podczas importowania produktów."
   },
   "customFields": {
     "title": "Pola niestandardowe",
@@ -45,7 +46,10 @@
     "selectConversation": "Wybierz rozmowę",
     "startMessaging": "Wybierz rozmowę, aby rozpocząć czat",
     "connected": "Połączono",
-    "disconnected": "Rozłączono"
+    "disconnected": "Rozłączono",
+    "newMessageToastTitle": "Nowa wiadomość",
+    "imageSentPreview": "Wysłał(a) obraz",
+    "newMessageGenericPreview": "Masz nową wiadomość"
   },
   "messages": {
     "domain": "Wiadomości",

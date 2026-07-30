@@ -103,6 +103,13 @@
     "resolveError": "Şikayet çözülemedi"
   },
   "messenger": {
+    "today": "Bugün",
+    "yesterday": "Dün",
+    "newMessage": "Yeni mesaj",
+    "sentImage": "Görsel gönderdi",
+    "newMessageBody": "Yeni bir mesajınız var",
+    "customer": "Müşteri",
+    "seller": "Satıcı",
     "searchConversations": "Konuşmalarda ara...",
     "noConversations": "Henüz konuşma yok",
     "startConversation": "Bir konuşma başlat",

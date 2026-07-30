@@ -103,6 +103,13 @@
     "resolveError": "Rezolvarea sesizării a eșuat"
   },
   "messenger": {
+    "today": "Astăzi",
+    "yesterday": "Ieri",
+    "newMessage": "Mesaj nou",
+    "sentImage": "Imagine trimisă",
+    "newMessageBody": "Aveți un mesaj nou",
+    "customer": "Client",
+    "seller": "Vânzător",
     "searchConversations": "Caută conversații...",
     "noConversations": "Nicio conversație încă",
     "startConversation": "Începe o conversație",

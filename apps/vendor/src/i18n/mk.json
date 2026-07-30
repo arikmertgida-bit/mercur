@@ -16,7 +16,8 @@
     "exportHeader": "Извоз на производи",
     "exportDescription": "Извезете ги вашите производи како CSV датотека.",
     "exportBody": "Ова ќе ги извезе сите ваши производи во CSV датотека. Преземањето ќе започне автоматски штом извозот е подготвен.",
-    "exportSuccessToast": "Производите се успешно извезени."
+    "exportSuccessToast": "Производите се успешно извезени.",
+    "importErrorFallback": "Се појави грешка при увозот на производите."
   },
   "customFields": {
     "title": "Прилагодени полиња",
@@ -45,7 +46,10 @@
     "selectConversation": "Изберете разговор",
     "startMessaging": "Изберете разговор за да започнете со разговор",
     "connected": "Поврзано",
-    "disconnected": "Исклучено"
+    "disconnected": "Исклучено",
+    "newMessageToastTitle": "Нова порака",
+    "imageSentPreview": "Испрати слика",
+    "newMessageGenericPreview": "Имате нова порака"
   },
   "messages": {
     "domain": "Пораки",

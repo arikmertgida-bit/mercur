@@ -113,8 +113,9 @@ interface MessengerProviderProps {
 const MessengerTokenResponseSchema = z.object({ token: z.string().optional() })
 
 /**
- * JWT payload'ı decode ederek içindeki `actor_id` ve `exp` claim'lerini döner.
- * İmzayı doğrulamaz (client-side'da secret yok); yalnızca format ve süre kontrolü.
+ * Decodes a JWT payload and returns its `actor_id` and `exp` claims.
+ * Does not verify the signature (no secret client-side) — format and
+ * expiry checks only.
  */
 const JwtPayloadSchema = z.object({
   sub: z.string().optional(),
@@ -141,7 +142,7 @@ function decodeJwtPayload(
 }
 
 /**
- * Mevcut localStorage token'ının yeniden kullanılabilir olup olmadığını kontrol eder.
+ * Checks whether the current localStorage token is still reusable.
  */
 function isStoredTokenValid(): boolean {
   const token = getMessengerAuthToken()
@@ -156,8 +157,8 @@ function isStoredTokenValid(): boolean {
 }
 
 /**
- * Vendor session'ı (HttpOnly cookie) doğrulanmış satıcıya messenger servisi
- * için kısa süreli bir JWT token döner.
+ * Returns a short-lived JWT token for the messenger service to a seller
+ * already authenticated via the vendor session (HttpOnly cookie).
  */
 async function fetchMessengerToken(): Promise<string | null> {
   try {
@@ -329,7 +330,7 @@ export function MessengerProvider({
     }): void => {
       // deleteForAll=true hard-deletes the row server-side (MessageService.deleteMessage) —
       // nothing survives to tombstone, so every live view (main messages list and the
-      // Destek sidebar's pinnedMessages alike) drops the message outright instead of a
+      // admin-support sidebar's pinnedMessages alike) drops the message outright instead of a
       // "deleted" placeholder a refresh would then contradict.
       setMessages((prev: Message[]): Message[] => prev.filter((m: Message) => m.id !== payload.messageId))
       setPinnedMessages((prev: Message[]): Message[] => prev.filter((m: Message) => m.id !== payload.messageId))
@@ -414,9 +415,9 @@ export function MessengerProvider({
       logger.error(`[MessengerProvider init] error ${getCatchMessage(err instanceof Error ? err : undefined)}`)
     })
 
-    // `packages/vendor`'s "Bildirim Ayarları" drawer saves through a separate
-    // apps/api proxy — refetch here so this in-memory copy (used to gate the
-    // "Mesajlar" push/toast) doesn't go stale until the next page load.
+    // `packages/vendor`'s Notification Preferences drawer saves through a
+    // separate apps/api proxy — refetch here so this in-memory copy (used to
+    // gate the Messages push/toast) doesn't go stale until the next page load.
     const unsubscribePreferencesChanged = notificationPreferencesBridge.subscribeChanged(() => {
       refreshNotificationPreferences().catch((err): void => {
         logger.error(
@@ -631,7 +632,7 @@ export function MessengerProvider({
     if (!activeConvRef.current) return
     const convId = activeConvRef.current
     // deleteForAll hard-deletes the row server-side — nothing to tombstone,
-    // so drop it from every live view (main list + Destek sidebar) immediately.
+    // so drop it from every live view (main list + admin-support sidebar) immediately.
     setMessages((prev: Message[]): Message[] => prev.filter((m: Message) => m.id !== messageId))
     setPinnedMessages((prev: Message[]): Message[] => prev.filter((m: Message) => m.id !== messageId))
     await apiDeleteMessage(convId, messageId, deleteForAll).catch((err) => {

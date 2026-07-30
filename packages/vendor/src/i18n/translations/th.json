@@ -2917,7 +2917,10 @@
       "uploadBannerHint": "ลากและวางแบนเนอร์ของคุณที่นี่ หรือคลิกเพื่ออัปโหลด",
       "bannerRecommendedSize": "แนะนำ 1920x400px",
       "bannerTooSmall": "รูปภาพมีขนาดเล็ก ({{width}}×{{height}}px) แนะนำให้มีขนาดอย่างน้อย {{minWidth}}×{{minHeight}}px มิฉะนั้นอาจดูเบลอ",
-      "logoTooSmall": "รูปภาพมีขนาดเล็ก ({{width}}×{{height}}px) แนะนำให้มีขนาดอย่างน้อย {{minWidth}}×{{minHeight}}px มิฉะนั้นอาจดูเบลอ"
+      "logoTooSmall": "รูปภาพมีขนาดเล็ก ({{width}}×{{height}}px) แนะนำให้มีขนาดอย่างน้อย {{minWidth}}×{{minHeight}}px มิฉะนั้นอาจดูเบลอ",
+      "notificationLanguageLabel": "ภาษาการแจ้งเตือน",
+      "notificationLanguageHint": "ภาษาที่ใช้สำหรับการแจ้งเตือนคำสั่งซื้อ รีวิว และการจ่ายเงินที่ส่งไปยังร้านค้าของคุณ",
+      "notificationLanguagePlaceholder": "เลือกภาษา"
     },
     "toast": {
       "update": "ร้านค้าอัปเดตเรียบร้อยแล้ว",

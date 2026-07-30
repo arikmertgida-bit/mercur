@@ -2917,7 +2917,10 @@
       "uploadBannerHint": "Trascina qui il tuo banner o fai clic per caricarlo.",
       "bannerRecommendedSize": "Consigliato 1920x400px",
       "bannerTooSmall": "L'immagine è piccola ({{width}}×{{height}}px). Si consiglia almeno {{minWidth}}×{{minHeight}}px, altrimenti potrebbe apparire sfocata.",
-      "logoTooSmall": "L'immagine è piccola ({{width}}×{{height}}px). Si consiglia almeno {{minWidth}}×{{minHeight}}px, altrimenti potrebbe apparire sfocata."
+      "logoTooSmall": "L'immagine è piccola ({{width}}×{{height}}px). Si consiglia almeno {{minWidth}}×{{minHeight}}px, altrimenti potrebbe apparire sfocata.",
+      "notificationLanguageLabel": "Lingua delle notifiche",
+      "notificationLanguageHint": "La lingua utilizzata per le notifiche di ordini, recensioni e pagamenti inviate al tuo negozio.",
+      "notificationLanguagePlaceholder": "Seleziona una lingua"
     },
     "toast": {
       "update": "Negozio aggiornato con successo",

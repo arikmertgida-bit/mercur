@@ -6,8 +6,8 @@ import { queryClient } from "../../lib/query-client"
 import { queryKeysFactory } from "../../lib/query-key-factory"
 
 /**
- * Category keys for the vendor "Bildirim Ayarları" toggle. Values must stay
- * in sync with `messenger/src/constants/notification-types.ts` and
+ * Category keys for the vendor Notification Preferences toggle. Values must
+ * stay in sync with `messenger/src/constants/notification-types.ts` and
  * `apps/vendor/src/lib/messenger/types.ts`.
  */
 export const NotificationCategory = {

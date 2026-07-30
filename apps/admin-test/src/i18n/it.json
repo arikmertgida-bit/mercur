@@ -103,6 +103,13 @@
     "resolveError": "Impossibile risolvere la segnalazione"
   },
   "messenger": {
+    "today": "Oggi",
+    "yesterday": "Ieri",
+    "newMessage": "Nuovo messaggio",
+    "sentImage": "Immagine inviata",
+    "newMessageBody": "Hai un nuovo messaggio",
+    "customer": "Cliente",
+    "seller": "Venditore",
     "searchConversations": "Cerca conversazioni...",
     "noConversations": "Nessuna conversazione ancora",
     "startConversation": "Avvia una conversazione",

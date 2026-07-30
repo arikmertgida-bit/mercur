@@ -9,7 +9,7 @@ export interface SearchDoc {
   seller_id?: string
   seller_handle?: string
   seller_status?: string
-  // Operator-only "featured store" flag (admin: Öne Çıkan Mağaza). Drives the
+  // Operator-only "featured store" flag (admin: Featured Store). Drives the
   // `seller_is_premium` custom Meilisearch ranking rule — see
   // meilisearch-client.ts. Never used as a filter, only a soft ranking boost.
   seller_is_premium?: boolean

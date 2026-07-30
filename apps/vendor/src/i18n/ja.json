@@ -16,7 +16,8 @@
     "exportHeader": "商品をエクスポート",
     "exportDescription": "商品をCSVファイルとしてエクスポートします。",
     "exportBody": "すべての商品がCSVファイルにエクスポートされます。エクスポートの準備ができ次第、自動的にダウンロードが開始されます。",
-    "exportSuccessToast": "商品を正常にエクスポートしました。"
+    "exportSuccessToast": "商品を正常にエクスポートしました。",
+    "importErrorFallback": "商品のインポート中にエラーが発生しました。"
   },
   "customFields": {
     "title": "カスタムフィールド",
@@ -45,7 +46,10 @@
     "selectConversation": "会話を選択してください",
     "startMessaging": "会話を選択してメッセージを開始してください",
     "connected": "接続済み",
-    "disconnected": "切断されました"
+    "disconnected": "切断されました",
+    "newMessageToastTitle": "新着メッセージ",
+    "imageSentPreview": "画像を送信しました",
+    "newMessageGenericPreview": "新しいメッセージがあります"
   },
   "messages": {
     "domain": "メッセージ",

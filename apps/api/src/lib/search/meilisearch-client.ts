@@ -45,8 +45,8 @@ const FILTERABLE_ATTRIBUTES = [
 const SORTABLE_ATTRIBUTES = ['default_price_amount', 'created_at']
 
 // Meilisearch's own default ranking rules, with one custom rule spliced in:
-// operator-flagged "featured stores" (`seller_is_premium`, admin: Öne Çıkan
-// Mağaza) win ties. Placement matters — it sits after `sort` so an explicit
+// operator-flagged "featured stores" (`seller_is_premium`, admin: Featured
+// Store) win ties. Placement matters — it sits after `sort` so an explicit
 // caller-requested sort (price/date, see `mapSort` below) always wins outright,
 // but before `exactness` so premium sellers still surface as a tiebreaker on
 // default/browsing listings where no explicit sort or search query narrows

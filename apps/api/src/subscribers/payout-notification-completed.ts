@@ -9,6 +9,11 @@ import { getCatchMessage } from "../lib/errors"
 import { resolveKayiLogger } from "../lib/logger"
 import { ADMIN_SYSTEM_ID, notifyMessengerUser } from "../lib/messenger"
 import { PAYOUT_NOTIFICATION_TYPE } from "../lib/payout-events"
+import {
+  NOTIFICATION_MESSAGES,
+  interpolateNotification,
+  resolveSellerNotificationLanguage,
+} from "../lib/messenger-notification-i18n"
 
 const PayoutSummaryRowSchema = z.object({
   id: z.string(),
@@ -25,7 +30,7 @@ const PayoutSummaryRowSchema = z.object({
  * the seller once the payout has actually reached `paid`. There is no real
  * "customer" counterpart for a payout, so — like review-report/resolve and
  * request accept/reject — the notification lands in the seller's shared
- * "Destek" (ADMIN_SUPPORT) thread via `ADMIN_SYSTEM_ID`.
+ * admin-support thread via `ADMIN_SYSTEM_ID`.
  */
 export default async function payoutNotificationCompletedSubscriber({
   event: { data },
@@ -54,7 +59,14 @@ export default async function payoutNotificationCompletedSubscriber({
       return
     }
 
-    const preview = `#${payout.display_id} numaralı ödemeniz gönderildi: ${payout.amount} ${payout.currency_code.toUpperCase()}`
+    const language = await resolveSellerNotificationLanguage(container, payout.seller.id)
+    const messages = NOTIFICATION_MESSAGES[language]
+
+    const preview = interpolateNotification(messages.payout.preview, {
+      displayId: String(payout.display_id),
+      amount: String(payout.amount),
+      currency: payout.currency_code.toUpperCase(),
+    })
 
     const notified = await notifyMessengerUser({
       targetUserId: payout.seller.id,
@@ -63,7 +75,7 @@ export default async function payoutNotificationCompletedSubscriber({
       preview,
       sourceUserId: ADMIN_SYSTEM_ID,
       sourceUserType: "ADMIN",
-      subject: "Ödeme Gönderildi",
+      subject: messages.payout.subject,
       conversationType: "ADMIN_SUPPORT",
       notificationType: PAYOUT_NOTIFICATION_TYPE,
       metadata: { notification_type: PAYOUT_NOTIFICATION_TYPE },

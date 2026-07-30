@@ -16,7 +16,8 @@
     "exportHeader": "Експортиране на продукти",
     "exportDescription": "Експортирайте продуктите си като CSV файл.",
     "exportBody": "Това ще експортира всички ваши продукти в CSV файл. Изтеглянето ще започне автоматично, щом експортът е готов.",
-    "exportSuccessToast": "Продуктите бяха успешно експортирани."
+    "exportSuccessToast": "Продуктите бяха успешно експортирани.",
+    "importErrorFallback": "Възникна грешка при импортирането на продуктите."
   },
   "customFields": {
     "title": "Персонализирани полета",
@@ -45,7 +46,10 @@
     "selectConversation": "Изберете разговор",
     "startMessaging": "Изберете разговор, за да започнете да пишете",
     "connected": "Свързан",
-    "disconnected": "Изключен"
+    "disconnected": "Изключен",
+    "newMessageToastTitle": "Ново съобщение",
+    "imageSentPreview": "Изпрати изображение",
+    "newMessageGenericPreview": "Имате ново съобщение"
   },
   "messages": {
     "domain": "Съобщения",

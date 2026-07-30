@@ -2917,7 +2917,10 @@
       "uploadBannerHint": "Повлечете и пуштете го банерот тука или кликнете за прикачување.",
       "bannerRecommendedSize": "Препорачано 1920x400px",
       "bannerTooSmall": "Сликата е мала ({{width}}×{{height}}px). Се препорачува најмалку {{minWidth}}×{{minHeight}}px, инаку може да изгледа заматено.",
-      "logoTooSmall": "Сликата е мала ({{width}}×{{height}}px). Се препорачува најмалку {{minWidth}}×{{minHeight}}px, инаку може да изгледа заматено."
+      "logoTooSmall": "Сликата е мала ({{width}}×{{height}}px). Се препорачува најмалку {{minWidth}}×{{minHeight}}px, инаку може да изгледа заматено.",
+      "notificationLanguageLabel": "Јазик на известувања",
+      "notificationLanguageHint": "Јазикот што се користи за известувања за нарачки, рецензии и исплати испратени до вашата продавница.",
+      "notificationLanguagePlaceholder": "Изберете јазик"
     },
     "toast": {
       "update": "Продавницата е успешно ажурирана",

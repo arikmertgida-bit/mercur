@@ -2919,7 +2919,10 @@
       "uploadBannerHint": "Sleep je banner hierheen of klik om te uploaden.",
       "bannerRecommendedSize": "Aanbevolen 1920x400px",
       "bannerTooSmall": "Afbeelding is klein ({{width}}×{{height}}px). Minimaal {{minWidth}}×{{minHeight}}px wordt aanbevolen, anders kan deze wazig lijken.",
-      "logoTooSmall": "Afbeelding is klein ({{width}}×{{height}}px). Minimaal {{minWidth}}×{{minHeight}}px wordt aanbevolen, anders kan deze wazig lijken."
+      "logoTooSmall": "Afbeelding is klein ({{width}}×{{height}}px). Minimaal {{minWidth}}×{{minHeight}}px wordt aanbevolen, anders kan deze wazig lijken.",
+      "notificationLanguageLabel": "Notificatietaal",
+      "notificationLanguageHint": "De taal die wordt gebruikt voor bestel-, beoordelings- en uitbetalingsmeldingen naar uw winkel.",
+      "notificationLanguagePlaceholder": "Selecteer een taal"
     },
     "toast": {
       "update": "Winkel succesvol bijgewerkt",

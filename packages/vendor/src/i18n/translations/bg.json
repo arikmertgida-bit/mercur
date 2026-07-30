@@ -2919,7 +2919,10 @@
       "uploadBannerHint": "Пуснете банера си тук или щракнете за качване.",
       "bannerRecommendedSize": "Препоръчително 1920x400px",
       "bannerTooSmall": "Изображението е малко ({{width}}×{{height}}px). Препоръчва се поне {{minWidth}}×{{minHeight}}px, в противен случай може да изглежда размазано.",
-      "logoTooSmall": "Изображението е малко ({{width}}×{{height}}px). Препоръчва се поне {{minWidth}}×{{minHeight}}px, в противен случай може да изглежда размазано."
+      "logoTooSmall": "Изображението е малко ({{width}}×{{height}}px). Препоръчва се поне {{minWidth}}×{{minHeight}}px, в противен случай може да изглежда размазано.",
+      "notificationLanguageLabel": "Език на известията",
+      "notificationLanguageHint": "Езикът, използван за известията за поръчки, отзиви и изплащания, изпращани до вашия магазин.",
+      "notificationLanguagePlaceholder": "Изберете език"
     },
     "toast": {
       "update": "Магазинът беше успешно актуализиран",

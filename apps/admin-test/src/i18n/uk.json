@@ -103,6 +103,13 @@
     "resolveError": "Не вдалося вирішити скаргу"
   },
   "messenger": {
+    "today": "Сьогодні",
+    "yesterday": "Вчора",
+    "newMessage": "Нове повідомлення",
+    "sentImage": "Надіслано зображення",
+    "newMessageBody": "У вас нове повідомлення",
+    "customer": "Клієнт",
+    "seller": "Продавець",
     "searchConversations": "Пошук розмов...",
     "noConversations": "Розмов ще немає",
     "startConversation": "Почати розмову",

@@ -32,12 +32,18 @@ function ContextThumbnail({
   isSeller,
   avatarUrl,
   sellerAvatarUrl,
+  productAlt,
+  sellerAlt,
+  customerAlt,
 }: {
   conv: Conversation
   isProduct: boolean
   isSeller: boolean
   avatarUrl: string | null
   sellerAvatarUrl: string | null
+  productAlt: string
+  sellerAlt: string
+  customerAlt: string
 }): React.JSX.Element {
   const meta = conv.metadata
 
@@ -47,7 +53,7 @@ function ContextThumbnail({
       return (
         <img
           src={productImage}
-          alt={meta?.type === "product" ? meta.product_name : "Ürün"}
+          alt={meta?.type === "product" ? meta.product_name : productAlt}
           className="w-10 h-10 rounded-xl object-cover aspect-square flex-shrink-0"
         />
       )
@@ -62,13 +68,13 @@ function ContextThumbnail({
     // vendor-based from seller
     const storeImage = sellerAvatarUrl ?? (meta?.type === "store" ? meta.store_image : null)
     return (
-      <DynamicAvatar src={storeImage} alt="Seller" className="w-10 h-10" type="SELLER" />
+      <DynamicAvatar src={storeImage} alt={sellerAlt} className="w-10 h-10" type="SELLER" />
     )
   }
 
   // Customer conversation
   return (
-    <DynamicAvatar src={avatarUrl} alt="Customer" className="w-10 h-10" type="CUSTOMER" />
+    <DynamicAvatar src={avatarUrl} alt={customerAlt} className="w-10 h-10" type="CUSTOMER" />
   )
 }
 
@@ -135,6 +141,9 @@ export function ThreadListItem({ conv, isActive, onOpen, onDelete }: ThreadListI
                 isSeller={isFromSeller}
                 avatarUrl={isFromCustomer ? resolvedAvatarUrl : null}
                 sellerAvatarUrl={sellerAvatarUrl}
+                productAlt={t("messages.product")}
+                sellerAlt={t("messenger.seller")}
+                customerAlt={t("messenger.customer")}
               />
               {unread > 0 && (
                 <span className="absolute -top-1 -right-1 min-w-[16px] h-4 bg-ui-tag-green-bg text-ui-tag-green-text text-[10px] rounded-full flex items-center justify-center px-1 font-medium">

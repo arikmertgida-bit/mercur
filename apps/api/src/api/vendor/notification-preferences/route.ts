@@ -91,7 +91,7 @@ export const GET = async (
     moduleKayiLogger.warn(`[notification-preferences] GET failed: ${message}`)
     throw new MedusaError(
       MedusaError.Types.UNEXPECTED_STATE,
-      "Bildirim tercihleri alınamadı"
+      "Failed to retrieve notification preferences"
     )
   }
 }
@@ -111,7 +111,7 @@ export const POST = async (
   if (!parsedBody.success) {
     throw new MedusaError(
       MedusaError.Types.INVALID_DATA,
-      parsedBody.error.errors[0]?.message ?? "Geçersiz istek"
+      parsedBody.error.errors[0]?.message ?? "Invalid request"
     )
   }
 
@@ -151,7 +151,7 @@ export const POST = async (
     moduleKayiLogger.warn(`[notification-preferences] PUT failed: ${message}`)
     throw new MedusaError(
       MedusaError.Types.UNEXPECTED_STATE,
-      "Bildirim tercihleri kaydedilemedi"
+      "Failed to save notification preferences"
     )
   }
 }

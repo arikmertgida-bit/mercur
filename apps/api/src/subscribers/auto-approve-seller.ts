@@ -10,11 +10,11 @@ interface SellerCreatedEventPayload {
 }
 
 /**
- * Kayı.com bu pazar yerinde manuel admin onayı istemiyor: yeni satıcı
- * kaydı (`seller.created`) oluşur oluşmaz `approveSellerWorkflow`
- * tetiklenerek mağaza doğrudan `open` durumuna geçer. Onay hiçbir zaman
- * kayıt akışını engellemez — hata durumunda yalnızca loglanır, satıcı
- * `pending_approval` olarak kalır ve admin panelden elle onaylanabilir.
+ * Kayı.com does not require manual admin approval in this marketplace: as
+ * soon as a new seller record (`seller.created`) is created, `approveSellerWorkflow`
+ * fires and the store transitions directly to `open`. Approval never blocks
+ * the registration flow — on error it is only logged, the seller stays
+ * `pending_approval` and can be approved manually from the admin panel.
  */
 export default async function autoApproveSellerSubscriber({
   event: { data },
@@ -31,7 +31,7 @@ export default async function autoApproveSellerSubscriber({
       err instanceof Error ? err : typeof err === "string" ? err : null
     )
     logger.error(
-      `[auto-approve-seller] seller ${data.id} otomatik onaylanamadı: ${message}`
+      `[auto-approve-seller] seller ${data.id} could not be auto-approved: ${message}`
     )
   }
 }

@@ -103,6 +103,13 @@
     "resolveError": "Nepavyko išspręsti skundo"
   },
   "messenger": {
+    "today": "Šiandien",
+    "yesterday": "Vakar",
+    "newMessage": "Nauja žinutė",
+    "sentImage": "Išsiuntė vaizdą",
+    "newMessageBody": "Turite naują žinutę",
+    "customer": "Klientas",
+    "seller": "Pardavėjas",
     "searchConversations": "Ieškoti pokalbių...",
     "noConversations": "Kol kas nėra pokalbių",
     "startConversation": "Pradėti pokalbį",

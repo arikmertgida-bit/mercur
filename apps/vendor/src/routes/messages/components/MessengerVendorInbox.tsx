@@ -157,7 +157,7 @@ export function MessengerVendorInbox({ sellerId: _sellerId, sellerLogo }: Messen
     return () => window.removeEventListener("resize", handleResize)
   }, [])
 
-  // Otomatik en-alta-kaydırma — typingUserIds artık tetikleyici değil (bkz. useMessengerAutoScroll)
+  // Auto-scroll-to-bottom — typingUserIds is no longer a trigger (see useMessengerAutoScroll)
   useMessengerAutoScroll(messagesContainerRef, messages, activeConversationId)
 
   useAutoGrowTextarea(textareaRef, text)

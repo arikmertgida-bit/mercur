@@ -103,6 +103,13 @@
     "resolveError": "Failed to resolve report"
   },
   "messenger": {
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "newMessage": "New message",
+    "sentImage": "Sent an image",
+    "newMessageBody": "You have a new message",
+    "customer": "Customer",
+    "seller": "Seller",
     "searchConversations": "Search conversations...",
     "noConversations": "No conversations yet",
     "startConversation": "Start a conversation",

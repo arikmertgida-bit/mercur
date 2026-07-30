@@ -2917,7 +2917,10 @@
       "uploadBannerHint": "Перетягніть банер сюди або натисніть, щоб завантажити.",
       "bannerRecommendedSize": "Рекомендовано 1920x400px",
       "bannerTooSmall": "Зображення замале ({{width}}×{{height}}px). Рекомендовано щонайменше {{minWidth}}×{{minHeight}}px, інакше воно може виглядати розмитим.",
-      "logoTooSmall": "Зображення замале ({{width}}×{{height}}px). Рекомендовано щонайменше {{minWidth}}×{{minHeight}}px, інакше воно може виглядати розмитим."
+      "logoTooSmall": "Зображення замале ({{width}}×{{height}}px). Рекомендовано щонайменше {{minWidth}}×{{minHeight}}px, інакше воно може виглядати розмитим.",
+      "notificationLanguageLabel": "Мова сповіщень",
+      "notificationLanguageHint": "Мова, яка використовується для сповіщень про замовлення, відгуки та виплати, що надсилаються до вашого магазину.",
+      "notificationLanguagePlaceholder": "Виберіть мову"
     },
     "toast": {
       "update": "Магазин успішно оновлено",

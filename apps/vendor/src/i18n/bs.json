@@ -16,7 +16,8 @@
     "exportHeader": "Izvoz proizvoda",
     "exportDescription": "Izvezite svoje proizvode kao CSV datoteku.",
     "exportBody": "Ovo će izvesti sve vaše proizvode u CSV datoteku. Preuzimanje će početi automatski čim izvoz bude spreman.",
-    "exportSuccessToast": "Proizvodi su uspješno izvezeni."
+    "exportSuccessToast": "Proizvodi su uspješno izvezeni.",
+    "importErrorFallback": "Došlo je do greške prilikom uvoza proizvoda."
   },
   "customFields": {
     "title": "Prilagođena polja",
@@ -45,7 +46,10 @@
     "selectConversation": "Odaberite razgovor",
     "startMessaging": "Odaberite razgovor da biste započeli razgovor",
     "connected": "Povezano",
-    "disconnected": "Nije povezano"
+    "disconnected": "Nije povezano",
+    "newMessageToastTitle": "Nova poruka",
+    "imageSentPreview": "Poslao/la je sliku",
+    "newMessageGenericPreview": "Imate novu poruku"
   },
   "messages": {
     "domain": "Poruke",

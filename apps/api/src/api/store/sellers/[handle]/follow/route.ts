@@ -77,7 +77,7 @@ export const POST = async (
       fields: ["id", "first_name", "last_name", "email"],
     })
     const customer = parseFirstRow(CustomerSummarySchema, customers)
-    const customerName = customer ? buildCustomerDisplayName(customer) : "Bir müşteri"
+    const customerName = customer ? buildCustomerDisplayName(customer) : null
 
     await emitFollowerNewFollowerEvent(req.scope, {
       sellerToNotify: sellerId,

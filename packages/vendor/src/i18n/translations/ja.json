@@ -2917,7 +2917,10 @@
       "uploadBannerHint": "ここにバナーをドラッグ＆ドロップするか、クリックしてアップロードしてください。",
       "bannerRecommendedSize": "推奨 1920x400px",
       "bannerTooSmall": "画像が小さいです ({{width}}×{{height}}px)。少なくとも {{minWidth}}×{{minHeight}}px を推奨します。それより小さいとぼやけて見えることがあります。",
-      "logoTooSmall": "画像が小さいです ({{width}}×{{height}}px)。少なくとも {{minWidth}}×{{minHeight}}px を推奨します。それより小さいとぼやけて見えることがあります。"
+      "logoTooSmall": "画像が小さいです ({{width}}×{{height}}px)。少なくとも {{minWidth}}×{{minHeight}}px を推奨します。それより小さいとぼやけて見えることがあります。",
+      "notificationLanguageLabel": "通知言語",
+      "notificationLanguageHint": "ストアに送信される注文、レビュー、支払いの通知に使用される言語です。",
+      "notificationLanguagePlaceholder": "言語を選択してください"
     },
     "toast": {
       "update": "ストアが正常に更新されました。",

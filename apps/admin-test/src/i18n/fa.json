@@ -103,6 +103,13 @@
     "resolveError": "حل گزارش ناموفق بود"
   },
   "messenger": {
+    "today": "امروز",
+    "yesterday": "دیروز",
+    "newMessage": "پیام جدید",
+    "sentImage": "تصویر ارسال شد",
+    "newMessageBody": "شما یک پیام جدید دارید",
+    "customer": "مشتری",
+    "seller": "فروشنده",
     "searchConversations": "جستجوی گفتگوها...",
     "noConversations": "هنوز گفتگویی وجود ندارد",
     "startConversation": "شروع یک گفتگو",

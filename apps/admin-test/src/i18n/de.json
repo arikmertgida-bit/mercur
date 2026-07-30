@@ -103,6 +103,13 @@
     "resolveError": "Meldung konnte nicht gelöst werden"
   },
   "messenger": {
+    "today": "Heute",
+    "yesterday": "Gestern",
+    "newMessage": "Neue Nachricht",
+    "sentImage": "Bild gesendet",
+    "newMessageBody": "Sie haben eine neue Nachricht",
+    "customer": "Kunde",
+    "seller": "Verkäufer",
     "searchConversations": "Gespräche durchsuchen...",
     "noConversations": "Noch keine Gespräche",
     "startConversation": "Gespräch starten",

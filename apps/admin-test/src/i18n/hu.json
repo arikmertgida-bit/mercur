@@ -103,6 +103,13 @@
     "resolveError": "A bejelentés megoldása sikertelen"
   },
   "messenger": {
+    "today": "Ma",
+    "yesterday": "Tegnap",
+    "newMessage": "Új üzenet",
+    "sentImage": "Kép küldve",
+    "newMessageBody": "Új üzenete érkezett",
+    "customer": "Vásárló",
+    "seller": "Eladó",
     "searchConversations": "Beszélgetések keresése...",
     "noConversations": "Még nincsenek beszélgetések",
     "startConversation": "Beszélgetés indítása",

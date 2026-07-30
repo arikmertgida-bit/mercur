@@ -103,6 +103,13 @@
     "resolveError": "تعذّر حل البلاغ"
   },
   "messenger": {
+    "today": "اليوم",
+    "yesterday": "أمس",
+    "newMessage": "رسالة جديدة",
+    "sentImage": "أرسل صورة",
+    "newMessageBody": "لديك رسالة جديدة",
+    "customer": "العميل",
+    "seller": "البائع",
     "searchConversations": "البحث في المحادثات...",
     "noConversations": "لا توجد محادثات بعد",
     "startConversation": "ابدأ محادثة",

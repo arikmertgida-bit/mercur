@@ -169,8 +169,8 @@ const Root = () => {
     defaultValue: [],
   })
 
-  // Görsel column selections reference the product's own `media` entries by
-  // `id`. If a photo is removed from the Detaylar tab after being assigned
+  // Image column selections reference the product's own `media` entries by
+  // `id`. If a photo is removed from the Details tab after being assigned
   // to a variant, drop the same id from every variant's selection so a
   // stale reference never survives to submit.
   useEffect(() => {
@@ -399,8 +399,8 @@ const useColumns = ({
         ),
       }),
       // Only shown once the product actually has variant axes — a
-      // single-variant (basit) product's grid stays pixel-identical to
-      // today's, no Görsel column at all.
+      // single-variant (simple) product's grid stays pixel-identical to
+      // today's, no Image column at all.
       ...(showMediaColumn
         ? [
             columnHelper.column({

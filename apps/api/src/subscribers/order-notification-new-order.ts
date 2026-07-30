@@ -13,6 +13,11 @@ import { getCatchMessage } from "../lib/errors"
 import { resolveKayiLogger } from "../lib/logger"
 import { ADMIN_SYSTEM_ID, notifyMessengerUser } from "../lib/messenger"
 import { ORDER_NOTIFICATION_TYPE } from "../lib/order-events"
+import {
+  NOTIFICATION_MESSAGES,
+  interpolateNotification,
+  resolveSellerNotificationLanguage,
+} from "../lib/messenger-notification-i18n"
 
 const OrderSellerLinkRowSchema = z.object({
   order_id: z.string(),
@@ -61,7 +66,10 @@ export default async function orderNotificationNewOrderSubscriber({
       return
     }
 
-    let customerName = order.email ?? "Bir müşteri"
+    const language = await resolveSellerNotificationLanguage(container, sellerLink.seller_id)
+    const messages = NOTIFICATION_MESSAGES[language]
+
+    let customerName = order.email ?? messages.genericCustomerName
     if (order.customer_id) {
       const { data: customerRows } = await query.graph({
         entity: "customer",
@@ -74,7 +82,10 @@ export default async function orderNotificationNewOrderSubscriber({
       }
     }
 
-    const preview = `${customerName} size yeni bir sipariş verdi. Sipariş No: #${order.display_id}`
+    const preview = interpolateNotification(messages.order.preview, {
+      customerName,
+      displayId: String(order.display_id),
+    })
 
     const notified = order.customer_id
       ? await notifyMessengerUser({
@@ -84,20 +95,20 @@ export default async function orderNotificationNewOrderSubscriber({
           preview,
           sourceUserId: order.customer_id,
           sourceUserType: "CUSTOMER",
-          subject: "Yeni Sipariş",
+          subject: messages.order.subject,
           notificationType: ORDER_NOTIFICATION_TYPE,
           metadata: { notification_type: ORDER_NOTIFICATION_TYPE },
         })
       : await notifyMessengerUser({
           // Guest checkout has no real customer id to converse with — falls
-          // back to the seller's shared "Destek" (ADMIN_SUPPORT) thread.
+          // back to the seller's shared admin-support thread.
           targetUserId: sellerLink.seller_id,
           targetUserType: "SELLER",
           senderName: "Kayı.com",
           preview,
           sourceUserId: ADMIN_SYSTEM_ID,
           sourceUserType: "ADMIN",
-          subject: "Yeni Sipariş",
+          subject: messages.order.subject,
           conversationType: "ADMIN_SUPPORT",
           notificationType: ORDER_NOTIFICATION_TYPE,
           metadata: { notification_type: ORDER_NOTIFICATION_TYPE },

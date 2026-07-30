@@ -16,7 +16,8 @@
     "exportHeader": "Ekspor Produk",
     "exportDescription": "Ekspor produk Anda sebagai file CSV.",
     "exportBody": "Tindakan ini akan mengekspor semua produk Anda ke file CSV. Unduhan akan dimulai secara otomatis setelah ekspor siap.",
-    "exportSuccessToast": "Produk berhasil diekspor."
+    "exportSuccessToast": "Produk berhasil diekspor.",
+    "importErrorFallback": "Terjadi kesalahan saat mengimpor produk."
   },
   "customFields": {
     "title": "Kolom Kustom",
@@ -45,7 +46,10 @@
     "selectConversation": "Pilih percakapan",
     "startMessaging": "Pilih percakapan untuk mulai mengirim pesan",
     "connected": "Terhubung",
-    "disconnected": "Terputus"
+    "disconnected": "Terputus",
+    "newMessageToastTitle": "Pesan baru",
+    "imageSentPreview": "Mengirim gambar",
+    "newMessageGenericPreview": "Anda memiliki pesan baru"
   },
   "messages": {
     "domain": "Pesan",

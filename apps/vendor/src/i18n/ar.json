@@ -16,7 +16,8 @@
     "exportHeader": "تصدير المنتجات",
     "exportDescription": "قم بتصدير منتجاتك كملف CSV.",
     "exportBody": "سيؤدي هذا إلى تصدير جميع منتجاتك إلى ملف CSV. سيبدأ التنزيل تلقائيًا عند اكتمال التصدير.",
-    "exportSuccessToast": "تم تصدير المنتجات بنجاح."
+    "exportSuccessToast": "تم تصدير المنتجات بنجاح.",
+    "importErrorFallback": "حدث خطأ أثناء استيراد المنتجات."
   },
   "customFields": {
     "title": "الحقول المخصصة",
@@ -45,7 +46,10 @@
     "selectConversation": "اختر محادثة",
     "startMessaging": "اختر محادثة لبدء المراسلة",
     "connected": "متصل",
-    "disconnected": "غير متصل"
+    "disconnected": "غير متصل",
+    "newMessageToastTitle": "رسالة جديدة",
+    "imageSentPreview": "أرسل صورة",
+    "newMessageGenericPreview": "لديك رسالة جديدة"
   },
   "messages": {
     "domain": "الرسائل",

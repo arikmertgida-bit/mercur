@@ -7,6 +7,10 @@ import { MedusaError } from "@medusajs/framework/utils"
 import { resolveKayiLogger } from "../../../../../lib/logger"
 import { ADMIN_SYSTEM_ID, notifyMessengerUser } from "../../../../../lib/messenger"
 import { REVIEW_NOTIFICATION_TYPE } from "../../../../../lib/review-events"
+import {
+  NOTIFICATION_MESSAGES,
+  resolveCustomerNotificationLanguage,
+} from "../../../../../lib/messenger-notification-i18n"
 import { REVIEW_IMAGE_REPORT_MODULE } from "../../../../../modules/review-image-reports"
 import ReviewImageReportService from "../../../../../modules/review-image-reports/service"
 import { resolveReviewImageReportWorkflow } from "../../../../../workflows/review-image-report/workflows/resolve-review-image-report"
@@ -45,10 +49,12 @@ export const POST = async (
   })
 
   if (report.customer_id && report.customer_id !== "anonymous") {
+    const language = await resolveCustomerNotificationLanguage(req.scope, report.customer_id)
+    const messages = NOTIFICATION_MESSAGES[language]
     const message =
       action === "hide"
-        ? "Duyarlılığınız ve ilginizden dolayı Kayı.com ailesi olarak teşekkür ederiz. Görsel tamamen sistemlerimizden kaldırılmıştır."
-        : "Nezaketiniz ve ilginizden dolayı teşekkür ederiz. Bu görsel politikamızı ihlal etmediğini düşünüyoruz; siz aynı fikirde değilseniz lütfen tekrar inceleyip bize ihbar edebilirsiniz."
+        ? messages.review.imageHiddenPreview
+        : messages.review.imagePublishedPreview
 
     const notified = await notifyMessengerUser({
       targetUserId: report.customer_id,
@@ -57,7 +63,7 @@ export const POST = async (
       preview: message,
       sourceUserId: ADMIN_SYSTEM_ID,
       sourceUserType: "ADMIN",
-      subject: "Görsel İnceleme Sonucu",
+      subject: messages.review.imageReportResolvedSubject,
       conversationType: "ADMIN_SUPPORT",
       notificationType: REVIEW_NOTIFICATION_TYPE,
       metadata: { notification_type: REVIEW_NOTIFICATION_TYPE },

@@ -103,6 +103,13 @@
     "resolveError": "Gagal menyelesaikan laporan"
   },
   "messenger": {
+    "today": "Hari ini",
+    "yesterday": "Kemarin",
+    "newMessage": "Pesan baru",
+    "sentImage": "Mengirim gambar",
+    "newMessageBody": "Anda memiliki pesan baru",
+    "customer": "Pelanggan",
+    "seller": "Penjual",
     "searchConversations": "Cari percakapan...",
     "noConversations": "Belum ada percakapan",
     "startConversation": "Mulai percakapan",

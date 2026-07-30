@@ -12,7 +12,7 @@ export enum FollowerNotificationEvent {
 /**
  * Shared messenger `notificationType` / persisted `metadata.notification_type`
  * tag for every follower-related messenger notification — lets the vendor
- * "Takipçiler" unread badge query messages by category instead of relying on
+ * Followers unread badge query messages by category instead of relying on
  * the per-conversation chat unread counter.
  */
 export const FOLLOWER_NOTIFICATION_TYPE = "follower_notification"
@@ -20,7 +20,10 @@ export const FOLLOWER_NOTIFICATION_TYPE = "follower_notification"
 export interface FollowerNewFollowerEventPayload {
   sellerToNotify: string
   customerId: string
-  customerName: string
+  /** Null when the customer's display name could not be resolved — the
+   *  subscriber substitutes a locale-appropriate generic fallback for the
+   *  seller's own resolved notification language. */
+  customerName: string | null
 }
 
 export async function emitFollowerNewFollowerEvent(

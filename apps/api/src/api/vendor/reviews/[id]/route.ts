@@ -100,7 +100,7 @@ export const POST = async (
   await emitReviewSellerReplyEvent(req.scope, {
     reviewId: id!,
     sellerId,
-    sellerName: seller?.name ?? 'Satıcı'
+    sellerName: seller?.name ?? null
   })
 
   const reviewSocialService = req.scope.resolve<ReviewSocialModuleService>(

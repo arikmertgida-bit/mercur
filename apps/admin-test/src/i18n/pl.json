@@ -103,6 +103,13 @@
     "resolveError": "Nie udało się rozwiązać zgłoszenia"
   },
   "messenger": {
+    "today": "Dziś",
+    "yesterday": "Wczoraj",
+    "newMessage": "Nowa wiadomość",
+    "sentImage": "Wysłano obraz",
+    "newMessageBody": "Masz nową wiadomość",
+    "customer": "Klient",
+    "seller": "Sprzedawca",
     "searchConversations": "Szukaj rozmów...",
     "noConversations": "Brak rozmów",
     "startConversation": "Rozpocznij rozmowę",

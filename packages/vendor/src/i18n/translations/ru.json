@@ -2917,7 +2917,10 @@
       "uploadBannerHint": "Перетащите баннер сюда или нажмите, чтобы загрузить.",
       "bannerRecommendedSize": "Рекомендуется 1920x400px",
       "bannerTooSmall": "Изображение маленькое ({{width}}×{{height}}px). Рекомендуется как минимум {{minWidth}}×{{minHeight}}px, иначе оно может выглядеть размытым.",
-      "logoTooSmall": "Изображение маленькое ({{width}}×{{height}}px). Рекомендуется как минимум {{minWidth}}×{{minHeight}}px, иначе оно может выглядеть размытым."
+      "logoTooSmall": "Изображение маленькое ({{width}}×{{height}}px). Рекомендуется как минимум {{minWidth}}×{{minHeight}}px, иначе оно может выглядеть размытым.",
+      "notificationLanguageLabel": "Язык уведомлений",
+      "notificationLanguageHint": "Язык, используемый для уведомлений о заказах, отзывах и выплатах, отправляемых в ваш магазин.",
+      "notificationLanguagePlaceholder": "Выберите язык"
     },
     "toast": {
       "update": "Магазин успешно обновлен",

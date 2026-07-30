@@ -2,24 +2,25 @@ import { useEffect, useRef, type RefObject } from "react"
 import type { Message } from "../lib/messenger/types"
 
 /**
- * "Yakında en alta" kabul edilen mesafe (px). Kullanıcı bunun içindeyse
- * yeni mesaj gelince otomatik en alta kaydırılır; geçmişi okumak için yukarı
- * kaydırmışsa otomatik kaydırma onu rahatsız etmez.
+ * Distance (px) considered "near the bottom". While the user is within this
+ * range, an incoming message auto-scrolls to the bottom; if they've scrolled
+ * up to read history, auto-scroll won't disturb them.
  */
 const NEAR_BOTTOM_THRESHOLD_PX = 80
 
 /**
- * Mesaj listesini en alta kaydırır — yalnızca (a) farklı bir konuşma açıldığında
- * (`conversationKey` değiştiğinde, her zaman en alta) veya (b) aynı konuşmada
- * yeni mesaj geldiğinde VE kullanıcı zaten alta yakınken. Kasıtlı olarak
- * `typingUserIds`'a bağlı DEĞİLDİR: karşı tarafın yazmaya başlaması/durması her
- * seferinde yeni bir array referansı üretiyordu ve bu, kullanıcı geçmişi
- * okurken bile zorla en alta kaydırmaya yol açıyordu.
+ * Scrolls the message list to the bottom — only (a) when a different
+ * conversation is opened (`conversationKey` changes, always scrolls to
+ * bottom), or (b) when a new message arrives in the same conversation AND the
+ * user is already near the bottom. Deliberately NOT dependent on
+ * `typingUserIds`: the other side starting/stopping typing produced a new
+ * array reference on every change, which forced a scroll to bottom even while
+ * the user was reading history.
  *
- * `container.scrollTop` doğrudan atanır — `Element.scrollIntoView()` tercih
- * edilmedi çünkü tanımı gereği en yakın scroll edilebilir atayı (CSS
- * containment bozuksa sayfanın kendisini) hedef alabilir; doğrudan atama bu
- * riski tamamen ortadan kaldırır.
+ * `container.scrollTop` is assigned directly — `Element.scrollIntoView()` was
+ * not used because, by definition, it can target the nearest scrollable
+ * ancestor (the page itself if CSS containment is broken); direct assignment
+ * eliminates that risk entirely.
  */
 export function useMessengerAutoScroll(
   containerRef: RefObject<HTMLElement | null>,

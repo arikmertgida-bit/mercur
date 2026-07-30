@@ -11,23 +11,24 @@ const JWT_SECRET: string = rawJwtSecret
 /**
  * GET /vendor/auth/messenger-token
  *
- * Vendor session'ı doğrulanmış kullanıcıya messenger servisi için
- * kısa süreli bir JWT token döner. Bu token, messenger backend'in
- * kullandığı aynı JWT_SECRET ile imzalanır.
+ * Returns a short-lived JWT for the authenticated vendor session to use
+ * with the messenger service. Signed with the same JWT_SECRET the
+ * messenger backend uses.
  *
- * Kimlik çözümü:
- * - req.auth_context.actor_id vendor route'larında MEMBER kimliğidir
- *   ("mem_xxx"), seller kimliği değil — bkz. ensure-seller-middleware.ts
- *   (`const memberId = req.auth_context.actor_id`). Gerçek seller kimliği
- *   `req.seller_context.seller_id` alanındadır (ensureSellerMiddleware
- *   tarafından `x-seller-id` header + seller_member link doğrulamasıyla
- *   çözülür). Bu route önceden yanlışlıkla actor_id'yi seller kimliği
- *   sanıyordu; canlı testte satıcı kendi konuşmasında 403 alıyordu.
+ * Identity resolution:
+ * - req.auth_context.actor_id is the MEMBER identity on vendor routes
+ *   ("mem_xxx"), not the seller identity — see ensure-seller-middleware.ts
+ *   (`const memberId = req.auth_context.actor_id`). The real seller identity
+ *   lives in `req.seller_context.seller_id` (resolved by
+ *   ensureSellerMiddleware via the `x-seller-id` header + seller_member
+ *   link validation). This route previously mistook actor_id for the
+ *   seller identity — in live testing the seller got a 403 in their own
+ *   conversation.
  *
- * Güvenlik:
- * - Medusa'nın vendor session middleware'i tarafından auth korumalıdır
- * - Token 8 saatte sona erer
- * - Payload yalnızca messenger'ın ihtiyacı olan alanları içerir
+ * Security:
+ * - Protected by Medusa's vendor session middleware
+ * - Token expires in 8 hours
+ * - Payload only carries the fields messenger needs
  */
 type MessengerTokenResponse = { token: string } | { error: string }
 

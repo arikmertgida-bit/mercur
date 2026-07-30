@@ -103,6 +103,13 @@
     "resolveError": "檢舉解決失敗"
   },
   "messenger": {
+    "today": "今天",
+    "yesterday": "昨天",
+    "newMessage": "新訊息",
+    "sentImage": "已傳送圖片",
+    "newMessageBody": "您有一則新訊息",
+    "customer": "客戶",
+    "seller": "賣家",
     "searchConversations": "搜尋對話...",
     "noConversations": "尚無對話",
     "startConversation": "開始一個對話",

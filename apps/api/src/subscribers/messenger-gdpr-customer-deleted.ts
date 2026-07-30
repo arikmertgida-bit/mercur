@@ -10,9 +10,9 @@ interface CustomerDeletedEventPayload {
 
 /**
  * Handles the "customer.deleted" event.
- * GDPR/KVKK "unutulma hakkı" — bir müşteri hesabı silindiğinde kayi-messenger'daki
- * tüm mesaj içeriğini anonimleştirir. Müşteri silme akışını asla engellemez;
- * hata durumunda yalnızca loglanır.
+ * GDPR/KVKK "right to be forgotten" — anonymizes all of the customer's
+ * message content in kayi-messenger when their account is deleted. Never
+ * blocks the customer-deletion flow; errors are only logged.
  */
 export default async function messengerGdprCustomerDeletedSubscriber({
   event: { data },

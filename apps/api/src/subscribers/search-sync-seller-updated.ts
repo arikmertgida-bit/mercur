@@ -4,7 +4,7 @@ import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
 import { getProductIdsForSeller, reindexProductsById } from "../lib/search/sync"
 
 // Generic seller edits (name, logo, and — critically — the operator-only
-// `is_premium` "Öne Çıkan Mağaza" flag) go through `updateSellersWorkflow`
+// `is_premium` "Featured Store" flag) go through `updateSellersWorkflow`
 // and only emit `seller.updated`, unlike the dedicated `seller.suspended` /
 // `seller.unsuspended` events handled by
 // `search-sync-seller-status-changed.ts`. Re-indexing (not deleting) is
