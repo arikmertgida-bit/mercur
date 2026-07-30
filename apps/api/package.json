@@ -19,7 +19,7 @@
     "medusa"
   ],
   "scripts": {
-    "build": "bunx @mercurjs/cli codegen && medusa build",
+    "build": "bun ../../packages/cli/dist/index.js codegen && medusa build",
     "check-types": "tsc --noEmit",
     "seed": "medusa exec ./src/scripts/seed.ts",
     "start": "medusa start",
