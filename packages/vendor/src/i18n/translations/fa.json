@@ -274,8 +274,8 @@
       "store": {
         "label": "فروشگاه",
         "storeSettings": "تنظیمات فروشگاه",
-        "editStore": "Edit Store",
-        "switchStore": "Switch store"
+        "editStore": "ویرایش فروشگاه",
+        "switchStore": "تغییر فروشگاه"
       },
       "actions": {
         "logout": "خروج"

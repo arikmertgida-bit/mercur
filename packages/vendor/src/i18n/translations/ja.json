@@ -274,8 +274,8 @@
       "store": {
         "label": "ストア",
         "storeSettings": "ストア設定",
-        "editStore": "Edit Store",
-        "switchStore": "Switch store"
+        "editStore": "ストアを編集",
+        "switchStore": "ストアを切り替え"
       },
       "actions": {
         "logout": "ログアウト"

@@ -274,8 +274,8 @@
       "store": {
         "label": "المتجر",
         "storeSettings": "إعدادات المتجر",
-        "editStore": "Edit Store",
-        "switchStore": "Switch store"
+        "editStore": "تحرير المتجر",
+        "switchStore": "تبديل المتجر"
       },
       "actions": {
         "logout": "تسجيل الخروج"

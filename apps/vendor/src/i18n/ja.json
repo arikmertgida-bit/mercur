@@ -110,22 +110,42 @@
     "categories": {
       "navLabel": "カテゴリ",
       "heading": "カテゴリリクエスト",
-      "noRecords": "カテゴリリクエストが見つかりません"
+      "noRecords": "カテゴリリクエストが見つかりません",
+      "create": {
+        "heading": "カテゴリーをリクエスト",
+        "description": "新しい商品カテゴリーの作成をリクエストします。",
+        "successToast": "カテゴリーのリクエストが作成されました"
+      }
     },
     "collections": {
       "navLabel": "コレクション",
       "heading": "コレクションリクエスト",
-      "noRecords": "コレクションリクエストが見つかりません"
+      "noRecords": "コレクションリクエストが見つかりません",
+      "create": {
+        "heading": "コレクションをリクエスト",
+        "description": "新しい商品コレクションの作成をリクエストします。",
+        "successToast": "コレクションのリクエストが作成されました"
+      }
     },
     "tags": {
       "navLabel": "タグ",
       "heading": "タグリクエスト",
-      "noRecords": "タグリクエストが見つかりません"
+      "noRecords": "タグリクエストが見つかりません",
+      "create": {
+        "heading": "タグをリクエスト",
+        "description": "新しい商品タグの作成をリクエストします。",
+        "successToast": "タグのリクエストが作成されました"
+      }
     },
     "types": {
       "navLabel": "タイプ",
       "heading": "タイプリクエスト",
-      "noRecords": "タイプリクエストが見つかりません"
+      "noRecords": "タイプリクエストが見つかりません",
+      "create": {
+        "heading": "タイプをリクエスト",
+        "description": "新しい商品タイプの作成をリクエストします。",
+        "successToast": "タイプのリクエストが作成されました"
+      }
     },
     "reviews": {
       "navLabel": "レビュー",
@@ -145,7 +165,8 @@
       "reReportSuccess": "報告を再送信しました。",
       "reReportError": "報告を送信できませんでした。",
       "noRecords": "レビュー報告が見つかりません"
-    }
+    },
+    "createErrorFallback": "リクエストを作成できませんでした。"
   },
   "reviews": {
     "domain": "レビュー",

@@ -110,22 +110,42 @@
     "categories": {
       "navLabel": "Kategoriler",
       "heading": "Kategori Talepleri",
-      "noRecords": "Kategori talebi bulunamadı"
+      "noRecords": "Kategori talebi bulunamadı",
+      "create": {
+        "heading": "Kategori Talebi",
+        "description": "Yeni bir ürün kategorisi oluşturmak için talep gönderin.",
+        "successToast": "Kategori talebi başarıyla oluşturuldu"
+      }
     },
     "collections": {
       "navLabel": "Koleksiyonlar",
       "heading": "Koleksiyon Talepleri",
-      "noRecords": "Koleksiyon talebi bulunamadı"
+      "noRecords": "Koleksiyon talebi bulunamadı",
+      "create": {
+        "heading": "Koleksiyon Talebi",
+        "description": "Yeni bir ürün koleksiyonu oluşturmak için talep gönderin.",
+        "successToast": "Koleksiyon talebi başarıyla oluşturuldu"
+      }
     },
     "tags": {
       "navLabel": "Etiketler",
       "heading": "Etiket Talepleri",
-      "noRecords": "Etiket talebi bulunamadı"
+      "noRecords": "Etiket talebi bulunamadı",
+      "create": {
+        "heading": "Etiket Talebi",
+        "description": "Yeni bir ürün etiketi oluşturmak için talep gönderin.",
+        "successToast": "Etiket talebi başarıyla oluşturuldu"
+      }
     },
     "types": {
       "navLabel": "Türler",
       "heading": "Tür Talepleri",
-      "noRecords": "Tür talebi bulunamadı"
+      "noRecords": "Tür talebi bulunamadı",
+      "create": {
+        "heading": "Tür Talebi",
+        "description": "Yeni bir ürün türü oluşturmak için talep gönderin.",
+        "successToast": "Tür talebi başarıyla oluşturuldu"
+      }
     },
     "reviews": {
       "navLabel": "Değerlendirmeler",
@@ -145,7 +165,8 @@
       "reReportSuccess": "Talep tekrar gönderildi.",
       "reReportError": "Talep gönderilemedi.",
       "noRecords": "Değerlendirme talebi bulunamadı"
-    }
+    },
+    "createErrorFallback": "Talep oluşturulamadı."
   },
   "reviews": {
     "domain": "Değerlendirmeler",

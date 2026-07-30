@@ -110,22 +110,42 @@
     "categories": {
       "navLabel": "Kategorie",
       "heading": "Žádosti o kategorie",
-      "noRecords": "Nebyly nalezeny žádné žádosti o kategorie"
+      "noRecords": "Nebyly nalezeny žádné žádosti o kategorie",
+      "create": {
+        "heading": "Žádost o kategorii",
+        "description": "Odešlete žádost o vytvoření nové kategorie produktů.",
+        "successToast": "Žádost o kategorii byla úspěšně vytvořena"
+      }
     },
     "collections": {
       "navLabel": "Kolekce",
       "heading": "Žádosti o kolekce",
-      "noRecords": "Nebyly nalezeny žádné žádosti o kolekce"
+      "noRecords": "Nebyly nalezeny žádné žádosti o kolekce",
+      "create": {
+        "heading": "Žádost o kolekci",
+        "description": "Odešlete žádost o vytvoření nové kolekce produktů.",
+        "successToast": "Žádost o kolekci byla úspěšně vytvořena"
+      }
     },
     "tags": {
       "navLabel": "Štítky",
       "heading": "Žádosti o štítky",
-      "noRecords": "Nebyly nalezeny žádné žádosti o štítky"
+      "noRecords": "Nebyly nalezeny žádné žádosti o štítky",
+      "create": {
+        "heading": "Žádost o štítek",
+        "description": "Odešlete žádost o vytvoření nového štítku produktu.",
+        "successToast": "Žádost o štítek byla úspěšně vytvořena"
+      }
     },
     "types": {
       "navLabel": "Typy",
       "heading": "Žádosti o typy",
-      "noRecords": "Nebyly nalezeny žádné žádosti o typy"
+      "noRecords": "Nebyly nalezeny žádné žádosti o typy",
+      "create": {
+        "heading": "Žádost o typ",
+        "description": "Odešlete žádost o vytvoření nového typu produktu.",
+        "successToast": "Žádost o typ byla úspěšně vytvořena"
+      }
     },
     "reviews": {
       "navLabel": "Recenze",
@@ -145,7 +165,8 @@
       "reReportSuccess": "Nahlášení bylo znovu odesláno.",
       "reReportError": "Nahlášení se nepodařilo odeslat.",
       "noRecords": "Nebyla nalezena žádná nahlášení recenzí"
-    }
+    },
+    "createErrorFallback": "Žádost se nepodařilo vytvořit."
   },
   "reviews": {
     "domain": "Recenze",

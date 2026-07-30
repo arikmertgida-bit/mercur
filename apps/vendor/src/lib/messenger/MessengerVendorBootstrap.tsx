@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react"
 import { toast } from "@medusajs/ui"
 import { useTranslation } from "react-i18next"
+import i18next from "i18next"
 import { client } from "../client"
 import { SellerMeSchema } from "./schemas"
 import { MessengerProvider, useMessenger } from "../../providers/messenger-provider/MessengerProvider"
@@ -109,6 +110,33 @@ function useSellerSession(): { sellerId: string | null; sellerName: string | und
 }
 
 /**
+ * `MessengerVendorBootstrap` is mounted in main.tsx *above* `<App/>`, which is
+ * where `@mercurjs/vendor`'s `<I18n/>` component actually calls
+ * `i18n.use(initReactI18next).init(...)`. Because siblings render in tree
+ * order, any child here that calls `useTranslation()` would otherwise render
+ * before that init ever runs, throwing `NO_I18NEXT_INSTANCE`. This gates
+ * those children until the shared i18next singleton (same instance imported
+ * everywhere via `import i18next from "i18next"`) reports itself ready.
+ */
+function useI18nReady(): boolean {
+  const [ready, setReady] = useState(i18next.isInitialized)
+
+  useEffect(() => {
+    if (i18next.isInitialized) {
+      setReady(true)
+      return
+    }
+    const handleInitialized = (): void => setReady(true)
+    i18next.on("initialized", handleInitialized)
+    return (): void => {
+      i18next.off("initialized", handleInitialized)
+    }
+  }, [])
+
+  return ready
+}
+
+/**
  * Shows an in-app toast for new messages while the seller is anywhere other
  * than the Messages page — native Notification API (used inside
  * MessengerProvider) already covers the "tab not visible" case, this
@@ -162,12 +190,13 @@ interface MessengerVendorBootstrapProps {
  */
 export function MessengerVendorBootstrap({ children }: MessengerVendorBootstrapProps): React.JSX.Element {
   const { sellerId, sellerName } = useSellerSession()
+  const i18nReady = useI18nReady()
 
   return (
     <MessengerProvider sellerId={sellerId} sellerName={sellerName} persistSession>
-      <MessengerGlobalNotifier />
+      {i18nReady && <MessengerGlobalNotifier />}
       <OrdersBadgeBridge />
-      {sellerId && <AdminChat currentUserId={sellerId} />}
+      {i18nReady && sellerId && <AdminChat currentUserId={sellerId} />}
       {children}
     </MessengerProvider>
   )

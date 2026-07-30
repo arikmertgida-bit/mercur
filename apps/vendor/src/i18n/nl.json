@@ -110,22 +110,42 @@
     "categories": {
       "navLabel": "Categorieën",
       "heading": "Categorieaanvragen",
-      "noRecords": "Geen categorieaanvragen gevonden"
+      "noRecords": "Geen categorieaanvragen gevonden",
+      "create": {
+        "heading": "Categorie aanvragen",
+        "description": "Dien een verzoek in om een nieuwe productcategorie aan te maken.",
+        "successToast": "Categorieverzoek succesvol aangemaakt"
+      }
     },
     "collections": {
       "navLabel": "Collecties",
       "heading": "Collectieaanvragen",
-      "noRecords": "Geen collectieaanvragen gevonden"
+      "noRecords": "Geen collectieaanvragen gevonden",
+      "create": {
+        "heading": "Collectie aanvragen",
+        "description": "Dien een verzoek in om een nieuwe productcollectie aan te maken.",
+        "successToast": "Collectieverzoek succesvol aangemaakt"
+      }
     },
     "tags": {
       "navLabel": "Tags",
       "heading": "Tagaanvragen",
-      "noRecords": "Geen tagaanvragen gevonden"
+      "noRecords": "Geen tagaanvragen gevonden",
+      "create": {
+        "heading": "Tag aanvragen",
+        "description": "Dien een verzoek in om een nieuwe producttag aan te maken.",
+        "successToast": "Tagverzoek succesvol aangemaakt"
+      }
     },
     "types": {
       "navLabel": "Typen",
       "heading": "Typeaanvragen",
-      "noRecords": "Geen typeaanvragen gevonden"
+      "noRecords": "Geen typeaanvragen gevonden",
+      "create": {
+        "heading": "Type aanvragen",
+        "description": "Dien een verzoek in om een nieuw producttype aan te maken.",
+        "successToast": "Typeverzoek succesvol aangemaakt"
+      }
     },
     "reviews": {
       "navLabel": "Beoordelingen",
@@ -145,7 +165,8 @@
       "reReportSuccess": "Melding opnieuw verzonden.",
       "reReportError": "Melding kon niet worden verzonden.",
       "noRecords": "Geen meldingen van beoordelingen gevonden"
-    }
+    },
+    "createErrorFallback": "Het verzoek kon niet worden aangemaakt."
   },
   "reviews": {
     "domain": "Beoordelingen",

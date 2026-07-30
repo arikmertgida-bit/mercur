@@ -110,22 +110,42 @@
     "categories": {
       "navLabel": "Kategorije",
       "heading": "Zahtjevi za kategorije",
-      "noRecords": "Nisu pronađeni zahtjevi za kategorije"
+      "noRecords": "Nisu pronađeni zahtjevi za kategorije",
+      "create": {
+        "heading": "Zahtjev za kategoriju",
+        "description": "Pošaljite zahtjev za kreiranje nove kategorije proizvoda.",
+        "successToast": "Zahtjev za kategoriju je uspješno kreiran"
+      }
     },
     "collections": {
       "navLabel": "Kolekcije",
       "heading": "Zahtjevi za kolekcije",
-      "noRecords": "Nisu pronađeni zahtjevi za kolekcije"
+      "noRecords": "Nisu pronađeni zahtjevi za kolekcije",
+      "create": {
+        "heading": "Zahtjev za kolekciju",
+        "description": "Pošaljite zahtjev za kreiranje nove kolekcije proizvoda.",
+        "successToast": "Zahtjev za kolekciju je uspješno kreiran"
+      }
     },
     "tags": {
       "navLabel": "Oznake",
       "heading": "Zahtjevi za oznake",
-      "noRecords": "Nisu pronađeni zahtjevi za oznake"
+      "noRecords": "Nisu pronađeni zahtjevi za oznake",
+      "create": {
+        "heading": "Zahtjev za oznaku",
+        "description": "Pošaljite zahtjev za kreiranje nove oznake proizvoda.",
+        "successToast": "Zahtjev za oznaku je uspješno kreiran"
+      }
     },
     "types": {
       "navLabel": "Tipovi",
       "heading": "Zahtjevi za tipove",
-      "noRecords": "Nisu pronađeni zahtjevi za tipove"
+      "noRecords": "Nisu pronađeni zahtjevi za tipove",
+      "create": {
+        "heading": "Zahtjev za tip",
+        "description": "Pošaljite zahtjev za kreiranje novog tipa proizvoda.",
+        "successToast": "Zahtjev za tip je uspješno kreiran"
+      }
     },
     "reviews": {
       "navLabel": "Recenzije",
@@ -145,7 +165,8 @@
       "reReportSuccess": "Prijava ponovo poslana.",
       "reReportError": "Prijava nije mogla biti poslana.",
       "noRecords": "Nisu pronađene prijave recenzija"
-    }
+    },
+    "createErrorFallback": "Zahtjev nije mogao biti kreiran."
   },
   "reviews": {
     "domain": "Recenzije",

@@ -45,11 +45,11 @@ const CollectionRequestCreateForm = () => {
   const handleSubmit = form.handleSubmit(async (data) => {
     await mutateAsync(data, {
       onSuccess: () => {
-        toast.success("Collection request created successfully");
+        toast.success(t("requests.collections.create.successToast"));
         handleSuccess(`/requests/collections`);
       },
       onError: (error) => {
-        toast.error(error.message);
+        toast.error(error.message || t("requests.createErrorFallback"));
       },
     });
   });
@@ -64,9 +64,9 @@ const CollectionRequestCreateForm = () => {
         <RouteFocusModal.Body className="flex size-full flex-col items-center p-16">
           <div className="flex w-full max-w-[720px] flex-col gap-y-8">
             <div>
-              <Heading>Request Collection</Heading>
+              <Heading>{t("requests.collections.create.heading")}</Heading>
               <Text size="small" className="text-ui-fg-subtle">
-                Submit a request to create a new product collection.
+                {t("requests.collections.create.description")}
               </Text>
             </div>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -120,14 +120,18 @@ const CollectionRequestCreateForm = () => {
 };
 
 const CollectionRequestCreatePage = () => {
+  const { t } = useTranslation();
+
   return (
     <RouteFocusModal>
       <RouteFocusModal.Title asChild>
-        <span className="sr-only">Request Collection</span>
+        <span className="sr-only">
+          {t("requests.collections.create.heading")}
+        </span>
       </RouteFocusModal.Title>
       <RouteFocusModal.Description asChild>
         <span className="sr-only">
-          Submit a request to create a new product collection.
+          {t("requests.collections.create.description")}
         </span>
       </RouteFocusModal.Description>
       <CollectionRequestCreateForm />

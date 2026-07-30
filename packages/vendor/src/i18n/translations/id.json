@@ -274,8 +274,8 @@
       "store": {
         "label": "Toko",
         "storeSettings": "Pengaturan toko",
-        "editStore": "Edit Store",
-        "switchStore": "Switch store"
+        "editStore": "Edit toko",
+        "switchStore": "Ganti toko"
       },
       "actions": {
         "logout": "Keluar"

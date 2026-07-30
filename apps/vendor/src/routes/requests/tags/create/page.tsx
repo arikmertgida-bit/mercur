@@ -31,11 +31,11 @@ const TagRequestCreateForm = () => {
   const handleSubmit = form.handleSubmit(async (data) => {
     await mutateAsync(data, {
       onSuccess: () => {
-        toast.success("Tag request created successfully");
+        toast.success(t("requests.tags.create.successToast"));
         handleSuccess(`/requests/tags`);
       },
       onError: (error) => {
-        toast.error(error.message);
+        toast.error(error.message || t("requests.createErrorFallback"));
       },
     });
   });
@@ -50,9 +50,9 @@ const TagRequestCreateForm = () => {
         <RouteFocusModal.Body className="flex size-full flex-col items-center p-16">
           <div className="flex w-full max-w-[720px] flex-col gap-y-8">
             <div>
-              <Heading>Request Tag</Heading>
+              <Heading>{t("requests.tags.create.heading")}</Heading>
               <Text size="small" className="text-ui-fg-subtle">
-                Submit a request to create a new product tag.
+                {t("requests.tags.create.description")}
               </Text>
             </div>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -95,14 +95,16 @@ const TagRequestCreateForm = () => {
 };
 
 const TagRequestCreatePage = () => {
+  const { t } = useTranslation();
+
   return (
     <RouteFocusModal>
       <RouteFocusModal.Title asChild>
-        <span className="sr-only">Request Tag</span>
+        <span className="sr-only">{t("requests.tags.create.heading")}</span>
       </RouteFocusModal.Title>
       <RouteFocusModal.Description asChild>
         <span className="sr-only">
-          Submit a request to create a new product tag.
+          {t("requests.tags.create.description")}
         </span>
       </RouteFocusModal.Description>
       <TagRequestCreateForm />

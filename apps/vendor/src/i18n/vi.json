@@ -110,22 +110,42 @@
     "categories": {
       "navLabel": "Danh mục",
       "heading": "Yêu cầu danh mục",
-      "noRecords": "Không tìm thấy yêu cầu danh mục nào"
+      "noRecords": "Không tìm thấy yêu cầu danh mục nào",
+      "create": {
+        "heading": "Yêu cầu danh mục",
+        "description": "Gửi yêu cầu tạo danh mục sản phẩm mới.",
+        "successToast": "Đã tạo yêu cầu danh mục thành công"
+      }
     },
     "collections": {
       "navLabel": "Bộ sưu tập",
       "heading": "Yêu cầu bộ sưu tập",
-      "noRecords": "Không tìm thấy yêu cầu bộ sưu tập nào"
+      "noRecords": "Không tìm thấy yêu cầu bộ sưu tập nào",
+      "create": {
+        "heading": "Yêu cầu bộ sưu tập",
+        "description": "Gửi yêu cầu tạo bộ sưu tập sản phẩm mới.",
+        "successToast": "Đã tạo yêu cầu bộ sưu tập thành công"
+      }
     },
     "tags": {
       "navLabel": "Thẻ",
       "heading": "Yêu cầu thẻ",
-      "noRecords": "Không tìm thấy yêu cầu thẻ nào"
+      "noRecords": "Không tìm thấy yêu cầu thẻ nào",
+      "create": {
+        "heading": "Yêu cầu thẻ",
+        "description": "Gửi yêu cầu tạo thẻ sản phẩm mới.",
+        "successToast": "Đã tạo yêu cầu thẻ thành công"
+      }
     },
     "types": {
       "navLabel": "Loại",
       "heading": "Yêu cầu loại",
-      "noRecords": "Không tìm thấy yêu cầu loại nào"
+      "noRecords": "Không tìm thấy yêu cầu loại nào",
+      "create": {
+        "heading": "Yêu cầu loại",
+        "description": "Gửi yêu cầu tạo loại sản phẩm mới.",
+        "successToast": "Đã tạo yêu cầu loại thành công"
+      }
     },
     "reviews": {
       "navLabel": "Đánh giá",
@@ -145,7 +165,8 @@
       "reReportSuccess": "Đã gửi lại báo cáo.",
       "reReportError": "Không thể gửi báo cáo.",
       "noRecords": "Không tìm thấy báo cáo đánh giá nào"
-    }
+    },
+    "createErrorFallback": "Không thể tạo yêu cầu."
   },
   "reviews": {
     "domain": "Đánh giá",

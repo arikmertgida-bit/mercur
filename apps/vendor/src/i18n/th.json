@@ -110,22 +110,42 @@
     "categories": {
       "navLabel": "หมวดหมู่",
       "heading": "คำขอหมวดหมู่",
-      "noRecords": "ไม่พบคำขอหมวดหมู่"
+      "noRecords": "ไม่พบคำขอหมวดหมู่",
+      "create": {
+        "heading": "ขอสร้างหมวดหมู่",
+        "description": "ส่งคำขอเพื่อสร้างหมวดหมู่สินค้าใหม่",
+        "successToast": "สร้างคำขอหมวดหมู่สำเร็จแล้ว"
+      }
     },
     "collections": {
       "navLabel": "คอลเลกชัน",
       "heading": "คำขอคอลเลกชัน",
-      "noRecords": "ไม่พบคำขอคอลเลกชัน"
+      "noRecords": "ไม่พบคำขอคอลเลกชัน",
+      "create": {
+        "heading": "ขอสร้างคอลเลกชัน",
+        "description": "ส่งคำขอเพื่อสร้างคอลเลกชันสินค้าใหม่",
+        "successToast": "สร้างคำขอคอลเลกชันสำเร็จแล้ว"
+      }
     },
     "tags": {
       "navLabel": "แท็ก",
       "heading": "คำขอแท็ก",
-      "noRecords": "ไม่พบคำขอแท็ก"
+      "noRecords": "ไม่พบคำขอแท็ก",
+      "create": {
+        "heading": "ขอสร้างแท็ก",
+        "description": "ส่งคำขอเพื่อสร้างแท็กสินค้าใหม่",
+        "successToast": "สร้างคำขอแท็กสำเร็จแล้ว"
+      }
     },
     "types": {
       "navLabel": "ประเภท",
       "heading": "คำขอประเภท",
-      "noRecords": "ไม่พบคำขอประเภท"
+      "noRecords": "ไม่พบคำขอประเภท",
+      "create": {
+        "heading": "ขอสร้างประเภท",
+        "description": "ส่งคำขอเพื่อสร้างประเภทสินค้าใหม่",
+        "successToast": "สร้างคำขอประเภทสำเร็จแล้ว"
+      }
     },
     "reviews": {
       "navLabel": "รีวิว",
@@ -145,7 +165,8 @@
       "reReportSuccess": "ส่งรายงานอีกครั้งแล้ว",
       "reReportError": "ไม่สามารถส่งรายงานได้",
       "noRecords": "ไม่พบรายงานรีวิว"
-    }
+    },
+    "createErrorFallback": "ไม่สามารถสร้างคำขอได้"
   },
   "reviews": {
     "domain": "รีวิว",

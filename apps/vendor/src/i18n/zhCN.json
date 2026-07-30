@@ -110,22 +110,42 @@
     "categories": {
       "navLabel": "分类",
       "heading": "分类请求",
-      "noRecords": "未找到分类请求"
+      "noRecords": "未找到分类请求",
+      "create": {
+        "heading": "申请分类",
+        "description": "提交申请以创建新的商品分类。",
+        "successToast": "分类申请创建成功"
+      }
     },
     "collections": {
       "navLabel": "系列",
       "heading": "系列请求",
-      "noRecords": "未找到系列请求"
+      "noRecords": "未找到系列请求",
+      "create": {
+        "heading": "申请系列",
+        "description": "提交申请以创建新的商品系列。",
+        "successToast": "系列申请创建成功"
+      }
     },
     "tags": {
       "navLabel": "标签",
       "heading": "标签请求",
-      "noRecords": "未找到标签请求"
+      "noRecords": "未找到标签请求",
+      "create": {
+        "heading": "申请标签",
+        "description": "提交申请以创建新的商品标签。",
+        "successToast": "标签申请创建成功"
+      }
     },
     "types": {
       "navLabel": "类型",
       "heading": "类型请求",
-      "noRecords": "未找到类型请求"
+      "noRecords": "未找到类型请求",
+      "create": {
+        "heading": "申请类型",
+        "description": "提交申请以创建新的商品类型。",
+        "successToast": "类型申请创建成功"
+      }
     },
     "reviews": {
       "navLabel": "评价",
@@ -145,7 +165,8 @@
       "reReportSuccess": "举报已重新发送。",
       "reReportError": "无法发送举报。",
       "noRecords": "未找到评价举报"
-    }
+    },
+    "createErrorFallback": "无法创建请求。"
   },
   "reviews": {
     "domain": "评价",

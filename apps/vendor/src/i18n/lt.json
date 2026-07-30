@@ -110,22 +110,42 @@
     "categories": {
       "navLabel": "Kategorijos",
       "heading": "Kategorijų užklausos",
-      "noRecords": "Kategorijų užklausų nerasta"
+      "noRecords": "Kategorijų užklausų nerasta",
+      "create": {
+        "heading": "Kategorijos užklausa",
+        "description": "Pateikite užklausą naujai produkto kategorijai sukurti.",
+        "successToast": "Kategorijos užklausa sėkmingai sukurta"
+      }
     },
     "collections": {
       "navLabel": "Kolekcijos",
       "heading": "Kolekcijų užklausos",
-      "noRecords": "Kolekcijų užklausų nerasta"
+      "noRecords": "Kolekcijų užklausų nerasta",
+      "create": {
+        "heading": "Kolekcijos užklausa",
+        "description": "Pateikite užklausą naujai produktų kolekcijai sukurti.",
+        "successToast": "Kolekcijos užklausa sėkmingai sukurta"
+      }
     },
     "tags": {
       "navLabel": "Žymos",
       "heading": "Žymų užklausos",
-      "noRecords": "Žymų užklausų nerasta"
+      "noRecords": "Žymų užklausų nerasta",
+      "create": {
+        "heading": "Žymos užklausa",
+        "description": "Pateikite užklausą naujai produkto žymai sukurti.",
+        "successToast": "Žymos užklausa sėkmingai sukurta"
+      }
     },
     "types": {
       "navLabel": "Tipai",
       "heading": "Tipų užklausos",
-      "noRecords": "Tipų užklausų nerasta"
+      "noRecords": "Tipų užklausų nerasta",
+      "create": {
+        "heading": "Tipo užklausa",
+        "description": "Pateikite užklausą naujam produkto tipui sukurti.",
+        "successToast": "Tipo užklausa sėkmingai sukurta"
+      }
     },
     "reviews": {
       "navLabel": "Atsiliepimai",
@@ -145,7 +165,8 @@
       "reReportSuccess": "Skundas pakartotinai išsiųstas.",
       "reReportError": "Nepavyko išsiųsti skundo.",
       "noRecords": "Atsiliepimų skundų nerasta"
-    }
+    },
+    "createErrorFallback": "Nepavyko sukurti užklausos."
   },
   "reviews": {
     "domain": "Atsiliepimai",

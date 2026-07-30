@@ -110,22 +110,42 @@
     "categories": {
       "navLabel": "Categorii",
       "heading": "Cereri de categorii",
-      "noRecords": "Nu s-au găsit cereri de categorii"
+      "noRecords": "Nu s-au găsit cereri de categorii",
+      "create": {
+        "heading": "Solicitare categorie",
+        "description": "Trimiteți o cerere pentru a crea o categorie de produs nouă.",
+        "successToast": "Cererea de categorie a fost creată cu succes"
+      }
     },
     "collections": {
       "navLabel": "Colecții",
       "heading": "Cereri de colecții",
-      "noRecords": "Nu s-au găsit cereri de colecții"
+      "noRecords": "Nu s-au găsit cereri de colecții",
+      "create": {
+        "heading": "Solicitare colecție",
+        "description": "Trimiteți o cerere pentru a crea o colecție de produse nouă.",
+        "successToast": "Cererea de colecție a fost creată cu succes"
+      }
     },
     "tags": {
       "navLabel": "Etichete",
       "heading": "Cereri de etichete",
-      "noRecords": "Nu s-au găsit cereri de etichete"
+      "noRecords": "Nu s-au găsit cereri de etichete",
+      "create": {
+        "heading": "Solicitare etichetă",
+        "description": "Trimiteți o cerere pentru a crea o etichetă de produs nouă.",
+        "successToast": "Cererea de etichetă a fost creată cu succes"
+      }
     },
     "types": {
       "navLabel": "Tipuri",
       "heading": "Cereri de tipuri",
-      "noRecords": "Nu s-au găsit cereri de tipuri"
+      "noRecords": "Nu s-au găsit cereri de tipuri",
+      "create": {
+        "heading": "Solicitare tip",
+        "description": "Trimiteți o cerere pentru a crea un tip de produs nou.",
+        "successToast": "Cererea de tip a fost creată cu succes"
+      }
     },
     "reviews": {
       "navLabel": "Recenzii",
@@ -145,7 +165,8 @@
       "reReportSuccess": "Sesizare retrimisă.",
       "reReportError": "Sesizarea nu a putut fi trimisă.",
       "noRecords": "Nu s-au găsit sesizări de recenzii"
-    }
+    },
+    "createErrorFallback": "Cererea nu a putut fi creată."
   },
   "reviews": {
     "domain": "Recenzii",

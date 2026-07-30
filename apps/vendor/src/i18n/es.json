@@ -110,22 +110,42 @@
     "categories": {
       "navLabel": "Categorías",
       "heading": "Solicitudes de categorías",
-      "noRecords": "No se encontraron solicitudes de categorías"
+      "noRecords": "No se encontraron solicitudes de categorías",
+      "create": {
+        "heading": "Solicitar categoría",
+        "description": "Envíe una solicitud para crear una nueva categoría de producto.",
+        "successToast": "Solicitud de categoría creada correctamente"
+      }
     },
     "collections": {
       "navLabel": "Colecciones",
       "heading": "Solicitudes de colecciones",
-      "noRecords": "No se encontraron solicitudes de colecciones"
+      "noRecords": "No se encontraron solicitudes de colecciones",
+      "create": {
+        "heading": "Solicitar colección",
+        "description": "Envíe una solicitud para crear una nueva colección de productos.",
+        "successToast": "Solicitud de colección creada correctamente"
+      }
     },
     "tags": {
       "navLabel": "Etiquetas",
       "heading": "Solicitudes de etiquetas",
-      "noRecords": "No se encontraron solicitudes de etiquetas"
+      "noRecords": "No se encontraron solicitudes de etiquetas",
+      "create": {
+        "heading": "Solicitar etiqueta",
+        "description": "Envíe una solicitud para crear una nueva etiqueta de producto.",
+        "successToast": "Solicitud de etiqueta creada correctamente"
+      }
     },
     "types": {
       "navLabel": "Tipos",
       "heading": "Solicitudes de tipos",
-      "noRecords": "No se encontraron solicitudes de tipos"
+      "noRecords": "No se encontraron solicitudes de tipos",
+      "create": {
+        "heading": "Solicitar tipo",
+        "description": "Envíe una solicitud para crear un nuevo tipo de producto.",
+        "successToast": "Solicitud de tipo creada correctamente"
+      }
     },
     "reviews": {
       "navLabel": "Reseñas",
@@ -145,7 +165,8 @@
       "reReportSuccess": "Informe reenviado.",
       "reReportError": "No se pudo enviar el informe.",
       "noRecords": "No se encontraron informes de reseñas"
-    }
+    },
+    "createErrorFallback": "No se pudo crear la solicitud."
   },
   "reviews": {
     "domain": "Reseñas",

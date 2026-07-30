@@ -274,8 +274,8 @@
       "store": {
         "label": "Áruház",
         "storeSettings": "Áruházbeállítások",
-        "editStore": "Edit Store",
-        "switchStore": "Switch store"
+        "editStore": "Áruház szerkesztése",
+        "switchStore": "Áruház váltása"
       },
       "actions": {
         "logout": "Kijelentkezés"

@@ -274,8 +274,8 @@
       "store": {
         "label": "Cửa hàng",
         "storeSettings": "Cài đặt cửa hàng",
-        "editStore": "Edit Store",
-        "switchStore": "Switch store"
+        "editStore": "Chỉnh sửa cửa hàng",
+        "switchStore": "Chuyển cửa hàng"
       },
       "actions": {
         "logout": "Đăng xuất"

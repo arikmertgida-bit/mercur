@@ -31,6 +31,10 @@ export function OrdersBadgeBridge(): null {
 
     const unsubscribeMarkRead = orderNotificationBridge.subscribeMarkReadRequest((): void => {
       applyCount(0)
+      const markReadToken = getMessengerAuthToken()
+      if (!markReadToken || isTokenExpired(markReadToken)) {
+        return
+      }
       markNotificationsRead(ORDER_NOTIFICATION_TYPE).catch((err): void => {
         logger.error(
           `Failed to mark order notifications read: ${getCatchMessage(err instanceof Error ? err : undefined)}`,

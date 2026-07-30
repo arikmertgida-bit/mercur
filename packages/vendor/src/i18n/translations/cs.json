@@ -274,8 +274,8 @@
       "store": {
         "label": "Obchod",
         "storeSettings": "Nastavení obchodu",
-        "editStore": "Edit Store",
-        "switchStore": "Switch store"
+        "editStore": "Upravit obchod",
+        "switchStore": "Přepnout obchod"
       },
       "actions": {
         "logout": "Odhlásit se"

@@ -110,22 +110,42 @@
     "categories": {
       "navLabel": "Categorias",
       "heading": "Solicitações de categorias",
-      "noRecords": "Nenhuma solicitação de categoria encontrada"
+      "noRecords": "Nenhuma solicitação de categoria encontrada",
+      "create": {
+        "heading": "Solicitar categoria",
+        "description": "Envie uma solicitação para criar uma nova categoria de produto.",
+        "successToast": "Solicitação de categoria criada com sucesso"
+      }
     },
     "collections": {
       "navLabel": "Coleções",
       "heading": "Solicitações de coleções",
-      "noRecords": "Nenhuma solicitação de coleção encontrada"
+      "noRecords": "Nenhuma solicitação de coleção encontrada",
+      "create": {
+        "heading": "Solicitar coleção",
+        "description": "Envie uma solicitação para criar uma nova coleção de produtos.",
+        "successToast": "Solicitação de coleção criada com sucesso"
+      }
     },
     "tags": {
       "navLabel": "Tags",
       "heading": "Solicitações de tags",
-      "noRecords": "Nenhuma solicitação de tag encontrada"
+      "noRecords": "Nenhuma solicitação de tag encontrada",
+      "create": {
+        "heading": "Solicitar tag",
+        "description": "Envie uma solicitação para criar uma nova tag de produto.",
+        "successToast": "Solicitação de tag criada com sucesso"
+      }
     },
     "types": {
       "navLabel": "Tipos",
       "heading": "Solicitações de tipos",
-      "noRecords": "Nenhuma solicitação de tipo encontrada"
+      "noRecords": "Nenhuma solicitação de tipo encontrada",
+      "create": {
+        "heading": "Solicitar tipo",
+        "description": "Envie uma solicitação para criar um novo tipo de produto.",
+        "successToast": "Solicitação de tipo criada com sucesso"
+      }
     },
     "reviews": {
       "navLabel": "Avaliações",
@@ -145,7 +165,8 @@
       "reReportSuccess": "Denúncia reenviada.",
       "reReportError": "Não foi possível enviar a denúncia.",
       "noRecords": "Nenhuma denúncia de avaliação encontrada"
-    }
+    },
+    "createErrorFallback": "Não foi possível criar a solicitação."
   },
   "reviews": {
     "domain": "Avaliações",

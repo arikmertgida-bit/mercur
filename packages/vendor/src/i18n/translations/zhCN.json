@@ -274,8 +274,8 @@
       "store": {
         "label": "商店",
         "storeSettings": "商店设置",
-        "editStore": "Edit Store",
-        "switchStore": "Switch store"
+        "editStore": "编辑商店",
+        "switchStore": "切换商店"
       },
       "actions": {
         "logout": "退出登录"

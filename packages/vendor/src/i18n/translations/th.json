@@ -274,8 +274,8 @@
       "store": {
         "label": "ร้านค้า",
         "storeSettings": "การตั้งค่าร้านค้า",
-        "editStore": "Edit Store",
-        "switchStore": "Switch store"
+        "editStore": "แก้ไขร้านค้า",
+        "switchStore": "สลับร้านค้า"
       },
       "actions": {
         "logout": "ออกจากระบบ"
