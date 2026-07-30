@@ -11,12 +11,12 @@ interface SellerMemberDeletedEventPayload {
 
 /**
  * Handles the "seller_member.deleted" event.
- * GDPR/KVKK "unutulma hakkı" — bir satıcı ekip üyesi (member) mağazadan
- * kaldırıldığında kayi-messenger'daki mesaj içeriğini anonimleştirir.
- * Vendor JWT'sinde actor_type "seller" için actor_id = seller_member_id
- * (bkz. messenger/src/middleware/auth.ts resolveIdentity), bu yüzden
- * messenger'daki gerçek gönderici kimliği budur — seller_id değil.
- * Üye kaldırma akışını asla engellemez; hata durumunda yalnızca loglanır.
+ * GDPR/KVKK "right to be forgotten" — anonymizes the message content in
+ * kayi-messenger when a seller team member is removed from a store. In the
+ * vendor JWT, for actor_type "seller", actor_id = seller_member_id (see
+ * messenger/src/middleware/auth.ts resolveIdentity), so that is the real
+ * sender identity in messenger — not seller_id.
+ * Never blocks the member-removal flow; errors are only logged.
  */
 export default async function messengerGdprSellerMemberDeletedSubscriber({
   event: { data },

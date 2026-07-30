@@ -13,7 +13,7 @@ export enum ReviewNotificationEvent {
 /**
  * Shared messenger `notificationType` / persisted `metadata.notification_type`
  * tag for every review-related messenger notification — lets the vendor
- * "Değerlendirmeler" unread badge query messages by category instead of
+ * Reviews unread badge query messages by category instead of
  * relying on the per-conversation chat unread counter.
  */
 export const REVIEW_NOTIFICATION_TYPE = "review_notification"
@@ -21,13 +21,19 @@ export const REVIEW_NOTIFICATION_TYPE = "review_notification"
 export interface ReviewNewReviewEventPayload {
   sellerToNotify: string
   customerId: string
-  customerName: string
+  /** Null when the customer's display name could not be resolved — the
+   *  subscriber substitutes a locale-appropriate generic fallback for the
+   *  seller's own resolved notification language. */
+  customerName: string | null
 }
 
 export interface ReviewSellerReplyEventPayload {
   reviewId: string
   sellerId: string
-  sellerName: string
+  /** Null when the seller's display name could not be resolved — the
+   *  subscriber substitutes a locale-appropriate generic fallback for the
+   *  customer's own resolved notification language. */
+  sellerName: string | null
 }
 
 type ReviewEventPayload =

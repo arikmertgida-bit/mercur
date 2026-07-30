@@ -48,8 +48,13 @@ export const I18n = () => {
     .use(initReactI18next)
     .init({
       ...defaultI18nOptions,
+      // A `defaultLanguage` config is the panel's fallback for sessions
+      // where nothing was detected (no cookie/localStorage/header match) —
+      // NOT a forced `lng`. Setting `lng` directly would make i18next skip
+      // the LanguageDetector entirely, permanently overriding every user's
+      // own saved language choice with this default.
       ...(config.i18n?.defaultLanguage && {
-        lng: config.i18n.defaultLanguage,
+        fallbackLng: config.i18n.defaultLanguage,
       }),
       resources: mergedTranslations,
     });

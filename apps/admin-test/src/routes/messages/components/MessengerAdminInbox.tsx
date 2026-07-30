@@ -19,21 +19,21 @@ import { resolveParticipantDisplayName } from "../../../lib/messenger/resolve-pa
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
-function formatTime(iso: string): string {
-  return new Date(iso).toLocaleTimeString("tr-TR", {
+function formatTime(iso: string, locale: string): string {
+  return new Date(iso).toLocaleTimeString(locale, {
     hour: "2-digit",
     minute: "2-digit",
   })
 }
 
-function formatDate(iso: string): string {
+function formatDate(iso: string, locale: string, todayLabel: string, yesterdayLabel: string): string {
   const d = new Date(iso)
   const today = new Date()
   const yesterday = new Date()
   yesterday.setDate(today.getDate() - 1)
-  if (d.toDateString() === today.toDateString()) return "Bugün"
-  if (d.toDateString() === yesterday.toDateString()) return "Dün"
-  return d.toLocaleDateString("tr-TR", { day: "numeric", month: "long", year: "numeric" })
+  if (d.toDateString() === today.toDateString()) return todayLabel
+  if (d.toDateString() === yesterday.toDateString()) return yesterdayLabel
+  return d.toLocaleDateString(locale, { day: "numeric", month: "long", year: "numeric" })
 }
 
 function getOtherParticipant(participants: Participant[]): Participant | null {
@@ -75,7 +75,7 @@ export function MessengerAdminInbox({ adminId }: MessengerAdminInboxProps): Reac
     stopTyping,
   } = useMessengerAdmin()
 
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
 
   const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768)
   const [mobileView, setMobileView] = useState<"list" | "chat">("list")
@@ -393,7 +393,7 @@ export function MessengerAdminInbox({ adminId }: MessengerAdminInboxProps): Reac
                   const items: React.ReactNode[] = []
                   let lastDate = ""
                   messages.forEach((msg: Message, idx: number) => {
-                    const msgDate = formatDate(msg.createdAt)
+                    const msgDate = formatDate(msg.createdAt, i18n.language, t("messenger.today"), t("messenger.yesterday"))
                     if (msgDate !== lastDate) {
                       lastDate = msgDate
                       items.push(
@@ -479,7 +479,7 @@ export function MessengerAdminInbox({ adminId }: MessengerAdminInboxProps): Reac
                                 isMe ? "text-ui-fg-on-inverted" : "text-ui-fg-muted"
                               }`}
                             >
-                              {formatTime(msg.createdAt)}
+                              {formatTime(msg.createdAt, i18n.language)}
                               {isMe && isLastMine && msg.readAt && (
                                 <span className="ml-1">{" · "}{t("messenger.seen")}</span>
                               )}

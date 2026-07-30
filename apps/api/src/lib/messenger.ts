@@ -92,9 +92,10 @@ export async function notifyMessengerUser(params: NotifyParams): Promise<boolean
 }
 
 /**
- * GDPR/KVKK "unutulma hakkı" — bir müşteri veya satıcı üyesi silindiğinde
- * kayi-messenger'a bildirir. Messenger, o kullanıcıya ait tüm mesaj içeriğini
- * anonimleştirir (konuşma yapısı korunur, satır silinmez).
+ * GDPR/KVKK "right to be forgotten" — notifies kayi-messenger when a
+ * customer or seller member is deleted. Messenger anonymizes all of that
+ * user's message content (the conversation structure is kept, no rows are
+ * deleted).
  * Returns true when the messenger accepted the request.
  */
 export async function anonymizeMessengerUser(userId: string): Promise<boolean> {

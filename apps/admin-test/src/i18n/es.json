@@ -103,6 +103,13 @@
     "resolveError": "No se pudo resolver el reporte"
   },
   "messenger": {
+    "today": "Hoy",
+    "yesterday": "Ayer",
+    "newMessage": "Nuevo mensaje",
+    "sentImage": "Imagen enviada",
+    "newMessageBody": "Tienes un nuevo mensaje",
+    "customer": "Cliente",
+    "seller": "Vendedor",
     "searchConversations": "Buscar conversaciones...",
     "noConversations": "Aún no hay conversaciones",
     "startConversation": "Iniciar una conversación",

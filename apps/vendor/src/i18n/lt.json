@@ -16,7 +16,8 @@
     "exportHeader": "Eksportuoti produktus",
     "exportDescription": "Eksportuokite savo produktus kaip CSV failą.",
     "exportBody": "Tai eksportuos visus jūsų produktus į CSV failą. Atsisiuntimas prasidės automatiškai, kai tik eksportas bus paruoštas.",
-    "exportSuccessToast": "Produktai sėkmingai eksportuoti."
+    "exportSuccessToast": "Produktai sėkmingai eksportuoti.",
+    "importErrorFallback": "Importuojant produktus įvyko klaida."
   },
   "customFields": {
     "title": "Pasirinktiniai laukai",
@@ -45,7 +46,10 @@
     "selectConversation": "Pasirinkite pokalbį",
     "startMessaging": "Pasirinkite pokalbį, kad pradėtumėte rašyti",
     "connected": "Prisijungta",
-    "disconnected": "Atsijungta"
+    "disconnected": "Atsijungta",
+    "newMessageToastTitle": "Nauja žinutė",
+    "imageSentPreview": "Išsiuntė paveikslėlį",
+    "newMessageGenericPreview": "Turite naują žinutę"
   },
   "messages": {
     "domain": "Žinutės",

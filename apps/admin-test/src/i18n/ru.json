@@ -103,6 +103,13 @@
     "resolveError": "Не удалось решить жалобу"
   },
   "messenger": {
+    "today": "Сегодня",
+    "yesterday": "Вчера",
+    "newMessage": "Новое сообщение",
+    "sentImage": "Отправлено изображение",
+    "newMessageBody": "У вас новое сообщение",
+    "customer": "Клиент",
+    "seller": "Продавец",
     "searchConversations": "Поиск по диалогам...",
     "noConversations": "Пока нет диалогов",
     "startConversation": "Начать разговор",

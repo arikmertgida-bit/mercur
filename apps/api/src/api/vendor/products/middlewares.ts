@@ -20,11 +20,11 @@ export const productImportExportMiddlewares: MiddlewareRoute[] = [
 ]
 
 /**
- * Askıya alınmış (`suspended`), onay bekleyen (`pending_approval`) veya
- * feshedilmiş (`terminated`) bir mağaza ürün oluşturamaz, düzenleyemez
- * veya silemez — yalnızca `open` durumundaki satıcılar bu uçlardan
- * geçebilir. Kısıtlama, admin mağazayı tekrar `open` yapana kadar
- * geçerliliğini korur.
+ * A store that is suspended (`suspended`), awaiting approval
+ * (`pending_approval`), or terminated (`terminated`) cannot create, edit,
+ * or delete products — only sellers in the `open` state may pass through
+ * these endpoints. The restriction holds until an admin sets the store back
+ * to `open`.
  */
 const requireActiveSellerMiddleware = (
   req: AuthenticatedMedusaRequest,
@@ -37,7 +37,7 @@ const requireActiveSellerMiddleware = (
     next(
       new MedusaError(
         MedusaError.Types.NOT_ALLOWED,
-        "Mağazanız yönetim tarafından askıya alınmıştır, bu işlemi gerçekleştiremezsiniz."
+        "Your store has been suspended by the operator; you cannot perform this action."
       )
     )
     return

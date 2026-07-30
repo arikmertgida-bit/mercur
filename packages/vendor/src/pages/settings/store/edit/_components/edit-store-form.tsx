@@ -25,11 +25,13 @@ import { Form } from "@components/common/form";
 import { HandleInput } from "@components/inputs/handle-input";
 import { RouteDrawer, useRouteModal } from "@components/modals";
 import { KeyboundForm } from "@components/utilities/keybound-form";
+import { useDocumentDirection } from "@hooks/use-document-direction";
 import { sdk } from "@lib/client";
 import { currencies } from "@lib/data/currencies";
 import { MediaSchema } from "@pages/products/create/constants";
 import { HttpTypes } from "@mercurjs/types";
 import { useUpdateSeller } from "@hooks/api";
+import { languages } from "../../../../../i18n/languages";
 
 type EditStoreFormProps = HttpTypes.StoreSellerResponse;
 
@@ -51,6 +53,7 @@ const EditStoreSchema = zod.object({
   phone: zod.string().optional().or(zod.literal("")),
   description: zod.string().optional().or(zod.literal("")),
   website_url: zod.string().optional().or(zod.literal("")),
+  notificationLocale: zod.string().min(1),
   media: zod.array(MediaSchema).optional(),
   bannerMedia: zod.array(MediaSchema).optional(),
 });
@@ -73,9 +76,9 @@ const SUPPORTED_FORMATS_FILE_EXTENSIONS = [
   ".svg",
 ];
 
-// Storefront tarafında (`/sellers/[handle]`) uygulanan aynı minimum boyut
-// kuralıyla eşleşir — logo dairesel alanda ~96px'e kadar gösterilir (retina
-// için pay bırakılmıştır), banner tam genişlikte fill+cover ile render edilir.
+// Matches the same minimum-size rule enforced on the storefront side
+// (`/sellers/[handle]`) — the logo renders up to ~96px in a circular area
+// (with headroom for retina), the banner renders full-width with fill+cover.
 const LOGO_MIN_DIMENSIONS = { width: 300, height: 300 };
 const BANNER_MIN_DIMENSIONS = { width: 1200, height: 300 };
 
@@ -120,8 +123,18 @@ const ensureWebsiteProtocol = (url: string): string | null => {
   return `https://${trimmed}`;
 };
 
+const getStoredLocale = (
+  metadata: EditStoreFormProps["seller"]["metadata"],
+): string | undefined =>
+  typeof metadata?.locale === "string" ? metadata.locale : undefined;
+
+const sortedLanguages = [...languages].sort((a, b) =>
+  a.display_name.localeCompare(b.display_name),
+);
+
 export const EditStoreForm = ({ seller }: EditStoreFormProps) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const direction = useDocumentDirection();
   const { handleSuccess } = useRouteModal();
 
   const form = useExtendableForm({
@@ -136,6 +149,7 @@ export const EditStoreForm = ({ seller }: EditStoreFormProps) => {
       phone: seller.phone ?? "",
       description: seller.description ?? "",
       website_url: stripWebsiteProtocol(seller.website_url),
+      notificationLocale: getStoredLocale(seller.metadata) ?? i18n.language,
       media: seller.logo
         ? [
             {
@@ -215,6 +229,7 @@ export const EditStoreForm = ({ seller }: EditStoreFormProps) => {
         website_url: ensureWebsiteProtocol(values.website_url),
         logo: logoUrl,
         banner: bannerUrl,
+        metadata: { ...(seller.metadata ?? {}), locale: values.notificationLocale },
         additional_data: values.additional_data,
       },
       {
@@ -271,7 +286,7 @@ export const EditStoreForm = ({ seller }: EditStoreFormProps) => {
           );
         }
       } catch {
-        // Boyut okunamadıysa uyarı gösterilmeden yüklemeye devam edilir
+        // If the dimensions can't be read, continue the upload without a warning
       }
     },
     [t],
@@ -383,6 +398,47 @@ export const EditStoreForm = ({ seller }: EditStoreFormProps) => {
                   <Form.Label optional>{t("fields.website")}</Form.Label>
                   <Form.Control>
                     <HandleInput prefix="https://" {...field} />
+                  </Form.Control>
+                  <Form.ErrorMessage />
+                </Form.Item>
+              )}
+            />
+            <Form.Field
+              control={form.control}
+              name="notificationLocale"
+              render={({ field: { ref, ...field } }) => (
+                <Form.Item>
+                  <Form.Label tooltip={t("store.edit.notificationLanguageHint")}>
+                    {t("store.edit.notificationLanguageLabel")}
+                  </Form.Label>
+                  <Form.Control>
+                    <Select dir={direction} {...field} onValueChange={field.onChange}>
+                      <Select.Trigger
+                        ref={ref}
+                        data-testid="store-edit-notification-locale-select"
+                      >
+                        <Select.Value
+                          placeholder={t("store.edit.notificationLanguagePlaceholder")}
+                        >
+                          {
+                            sortedLanguages.find(
+                              (language) => language.code === field.value,
+                            )?.display_name
+                          }
+                        </Select.Value>
+                      </Select.Trigger>
+                      <Select.Content>
+                        {sortedLanguages.map((language) => (
+                          <Select.Item
+                            key={language.code}
+                            value={language.code}
+                            data-testid={`store-edit-notification-locale-option-${language.code}`}
+                          >
+                            {language.display_name}
+                          </Select.Item>
+                        ))}
+                      </Select.Content>
+                    </Select>
                   </Form.Control>
                   <Form.ErrorMessage />
                 </Form.Item>

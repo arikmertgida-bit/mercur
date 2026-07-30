@@ -23,7 +23,7 @@ export type NormalizedCreateProduct = Omit<
 /**
  * True when at least one variant-axis attribute is set up — the same
  * condition `product-create-variants-form.tsx` uses to decide whether the
- * per-variant Görsel column is shown at all. Shared here so the required-
+ * per-variant Image column is shown at all. Shared here so the required-
  * media validation in `ProductCreateSchema` never drifts out of sync with
  * what the seller can actually see in the grid.
  */

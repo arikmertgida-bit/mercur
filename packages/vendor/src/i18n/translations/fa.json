@@ -2917,7 +2917,10 @@
       "uploadBannerHint": "بنر خود را اینجا بکشید و رها کنید یا برای بارگذاری کلیک کنید.",
       "bannerRecommendedSize": "توصیه‌شده 1920x400px",
       "bannerTooSmall": "تصویر کوچک است ({{width}}×{{height}}px). حداقل {{minWidth}}×{{minHeight}}px توصیه می‌شود، در غیر این صورت ممکن است تار به نظر برسد.",
-      "logoTooSmall": "تصویر کوچک است ({{width}}×{{height}}px). حداقل {{minWidth}}×{{minHeight}}px توصیه می‌شود، در غیر این صورت ممکن است تار به نظر برسد."
+      "logoTooSmall": "تصویر کوچک است ({{width}}×{{height}}px). حداقل {{minWidth}}×{{minHeight}}px توصیه می‌شود، در غیر این صورت ممکن است تار به نظر برسد.",
+      "notificationLanguageLabel": "زبان اعلان‌ها",
+      "notificationLanguageHint": "زبانی که برای اعلان‌های سفارش، نظرات و پرداخت‌های ارسالی به فروشگاه شما استفاده می‌شود.",
+      "notificationLanguagePlaceholder": "یک زبان انتخاب کنید"
     },
     "toast": {
       "update": "فروشگاه با موفقیت به‌روزرسانی شد",

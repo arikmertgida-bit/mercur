@@ -14,7 +14,7 @@ type ProductCreateMediaLimitModalProps = {
 
 /**
  * Non-blocking info dialog — auto-dismisses after AUTO_CLOSE_MS, or the
- * seller can close it immediately with the "Tamam"/"OK" button. Mirrors
+ * seller can close it immediately with the OK button. Mirrors
  * DataGridKeyboardShortcutModal's raw-RadixDialog shell (no route to open
  * this from, so RouteFocusModal/StackedFocusModal don't apply).
  */

@@ -103,6 +103,13 @@
     "resolveError": "신고를 해결하지 못했습니다"
   },
   "messenger": {
+    "today": "오늘",
+    "yesterday": "어제",
+    "newMessage": "새 메시지",
+    "sentImage": "이미지를 보냈습니다",
+    "newMessageBody": "새 메시지가 있습니다",
+    "customer": "고객",
+    "seller": "판매자",
     "searchConversations": "대화 검색...",
     "noConversations": "아직 대화가 없습니다",
     "startConversation": "대화 시작하기",

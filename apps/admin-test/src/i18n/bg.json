@@ -103,6 +103,13 @@
     "resolveError": "Неуспешно разрешаване на сигнала"
   },
   "messenger": {
+    "today": "Днес",
+    "yesterday": "Вчера",
+    "newMessage": "Ново съобщение",
+    "sentImage": "Изпратено изображение",
+    "newMessageBody": "Имате ново съобщение",
+    "customer": "Клиент",
+    "seller": "Продавач",
     "searchConversations": "Търсене на разговори...",
     "noConversations": "Все още няма разговори",
     "startConversation": "Започнете разговор",

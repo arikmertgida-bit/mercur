@@ -16,7 +16,8 @@
     "exportHeader": "Xuất sản phẩm",
     "exportDescription": "Xuất sản phẩm của bạn dưới dạng tệp CSV.",
     "exportBody": "Thao tác này sẽ xuất tất cả sản phẩm của bạn ra tệp CSV. Quá trình tải xuống sẽ tự động bắt đầu khi việc xuất hoàn tất.",
-    "exportSuccessToast": "Đã xuất sản phẩm thành công."
+    "exportSuccessToast": "Đã xuất sản phẩm thành công.",
+    "importErrorFallback": "Đã xảy ra lỗi khi nhập sản phẩm."
   },
   "customFields": {
     "title": "Trường tùy chỉnh",
@@ -45,7 +46,10 @@
     "selectConversation": "Chọn một cuộc trò chuyện",
     "startMessaging": "Chọn một cuộc trò chuyện để bắt đầu nhắn tin",
     "connected": "Đã kết nối",
-    "disconnected": "Đã ngắt kết nối"
+    "disconnected": "Đã ngắt kết nối",
+    "newMessageToastTitle": "Tin nhắn mới",
+    "imageSentPreview": "Đã gửi một hình ảnh",
+    "newMessageGenericPreview": "Bạn có tin nhắn mới"
   },
   "messages": {
     "domain": "Tin nhắn",

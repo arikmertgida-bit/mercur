@@ -3,7 +3,12 @@ import { ContainerRegistrationKeys, MedusaError } from "@medusajs/framework/util
 
 import { resolveKayiLogger } from "../../../../../../lib/logger"
 import { ADMIN_SYSTEM_ID, notifyMessengerUser } from "../../../../../../lib/messenger"
-import { REQUEST_NOTIFICATION_TYPE, REQUEST_TYPE_LABELS } from "../../../../../../lib/request-events"
+import { REQUEST_NOTIFICATION_TYPE } from "../../../../../../lib/request-events"
+import {
+  NOTIFICATION_MESSAGES,
+  interpolateNotification,
+  resolveSellerNotificationLanguage,
+} from "../../../../../../lib/messenger-notification-i18n"
 import { AdminRequestResponse, parseRequestEntity, parseRequestEntityType } from "../../../../../../types/requests"
 import { acceptRequestWorkflow } from "../../../../../../workflows/requests/workflows"
 import { AdminReviewNoteType } from "../../../validators"
@@ -46,15 +51,18 @@ export async function POST(
   const submitterId = parsed.custom_fields.submitter_id
 
   if (submitterId) {
-    const label = REQUEST_TYPE_LABELS[alias] ?? "Talep"
+    const language = await resolveSellerNotificationLanguage(req.scope, submitterId)
+    const messages = NOTIFICATION_MESSAGES[language]
+    const label = messages.request.typeLabels[alias] ?? messages.request.fallbackTypeLabel
+
     const notified = await notifyMessengerUser({
       targetUserId: submitterId,
       targetUserType: "SELLER",
       senderName: "Kayı.com",
-      preview: `${label} talebiniz onaylandı.`,
+      preview: interpolateNotification(messages.request.acceptedPreview, { label }),
       sourceUserId: ADMIN_SYSTEM_ID,
       sourceUserType: "ADMIN",
-      subject: "Talep Durumu",
+      subject: messages.request.statusSubject,
       conversationType: "ADMIN_SUPPORT",
       notificationType: REQUEST_NOTIFICATION_TYPE,
       metadata: { notification_type: REQUEST_NOTIFICATION_TYPE },

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode } from "react"
 import { toast } from "@medusajs/ui"
+import { useTranslation } from "react-i18next"
 import { client } from "../client"
 import { SellerMeSchema } from "./schemas"
 import { MessengerProvider, useMessenger } from "../../providers/messenger-provider/MessengerProvider"
@@ -115,6 +116,7 @@ function useSellerSession(): { sellerId: string | null; sellerName: string | und
  */
 function MessengerGlobalNotifier(): null {
   const { unreadCount, conversations, isNotificationCategoryEnabled } = useMessenger()
+  const { t } = useTranslation()
   const prevCountRef = useRef<number | null>(null)
 
   useEffect(() => {
@@ -126,8 +128,9 @@ function MessengerGlobalNotifier(): null {
     prevCountRef.current = unreadCount
     if (!increased) return
 
-    // "Mesajlar" bildirimi kapatılmışsa yalnızca bu toast bastırılır — sayaç
-    // (unreadCount) gerçek mesaj akışından geldiği için burada dokunulmaz.
+    // Only this toast is suppressed when the Messages notification category is
+    // disabled — the badge count (unreadCount) still reflects the real message
+    // stream and is left untouched here.
     if (!isNotificationCategoryEnabled(MESSENGER_NOTIFICATION_TYPE)) return
 
     const isMessagesRoute = window.location.pathname.endsWith("/messages")
@@ -137,11 +140,11 @@ function MessengerGlobalNotifier(): null {
     const latestMessage = latestConversation?.messages?.[0]
     const preview =
       latestMessage?.messageType === "IMAGE"
-        ? "Görsel gönderdi"
-        : (latestMessage?.content ?? "Yeni bir mesajınız var")
+        ? t("messenger.imageSentPreview")
+        : (latestMessage?.content ?? t("messenger.newMessageGenericPreview"))
 
-    toast.info("Yeni mesaj", { description: preview })
-  }, [unreadCount, conversations, isNotificationCategoryEnabled])
+    toast.info(t("messenger.newMessageToastTitle"), { description: preview })
+  }, [unreadCount, conversations, isNotificationCategoryEnabled, t])
 
   return null
 }

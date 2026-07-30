@@ -7,5 +7,5 @@ export function getCatchMessage(
   if (typeof err === "string") {
     return err
   }
-  return "Beklenmeyen hata oluştu."
+  return "Unexpected error occurred."
 }

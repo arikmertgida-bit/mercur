@@ -103,6 +103,13 @@
     "resolveError": "Échec de la résolution du signalement"
   },
   "messenger": {
+    "today": "Aujourd'hui",
+    "yesterday": "Hier",
+    "newMessage": "Nouveau message",
+    "sentImage": "Image envoyée",
+    "newMessageBody": "Vous avez un nouveau message",
+    "customer": "Client",
+    "seller": "Vendeur",
     "searchConversations": "Rechercher des conversations...",
     "noConversations": "Aucune conversation pour le moment",
     "startConversation": "Démarrer une conversation",

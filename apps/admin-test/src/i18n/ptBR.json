@@ -103,6 +103,13 @@
     "resolveError": "Falha ao resolver a denúncia"
   },
   "messenger": {
+    "today": "Hoje",
+    "yesterday": "Ontem",
+    "newMessage": "Nova mensagem",
+    "sentImage": "Enviou uma imagem",
+    "newMessageBody": "Você tem uma nova mensagem",
+    "customer": "Cliente",
+    "seller": "Vendedor",
     "searchConversations": "Buscar conversas...",
     "noConversations": "Ainda não há conversas",
     "startConversation": "Iniciar uma conversa",

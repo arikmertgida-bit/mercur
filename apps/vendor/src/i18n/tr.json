@@ -16,7 +16,8 @@
     "exportHeader": "Ürünleri Dışa Aktar",
     "exportDescription": "Ürünlerinizi bir CSV dosyası olarak dışa aktarın.",
     "exportBody": "Bu işlem tüm ürünlerinizi bir CSV dosyasına aktaracaktır. Dosya hazır olduğunda indirme otomatik olarak başlayacaktır.",
-    "exportSuccessToast": "Ürünler başarıyla dışa aktarıldı."
+    "exportSuccessToast": "Ürünler başarıyla dışa aktarıldı.",
+    "importErrorFallback": "Ürünler içe aktarılırken bir hata oluştu."
   },
   "customFields": {
     "title": "Özel Alanlar",
@@ -45,7 +46,10 @@
     "selectConversation": "Bir konuşma seçin",
     "startMessaging": "Mesajlaşmaya başlamak için bir konuşma seçin",
     "connected": "Bağlandı",
-    "disconnected": "Bağlantı kesildi"
+    "disconnected": "Bağlantı kesildi",
+    "newMessageToastTitle": "Yeni mesaj",
+    "imageSentPreview": "Görsel gönderdi",
+    "newMessageGenericPreview": "Yeni bir mesajınız var"
   },
   "messages": {
     "domain": "Mesajlar",

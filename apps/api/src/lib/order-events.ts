@@ -1,7 +1,7 @@
 /**
  * Shared messenger `notificationType` / persisted `metadata.notification_type`
  * tag for every order-related messenger notification — lets the vendor
- * "Siparişler" unread badge query messages by category instead of relying on
+ * Orders unread badge query messages by category instead of relying on
  * the per-conversation chat unread counter.
  *
  * Unlike reviews/followers, order placement already emits a native Medusa

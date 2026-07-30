@@ -16,7 +16,8 @@
     "exportHeader": "برون‌ریزی محصولات",
     "exportDescription": "محصولات خود را به‌صورت فایل CSV برون‌ریزی کنید.",
     "exportBody": "با این کار تمام محصولات شما به یک فایل CSV برون‌ریزی می‌شود. با آماده شدن فایل، دانلود به‌طور خودکار آغاز خواهد شد.",
-    "exportSuccessToast": "محصولات با موفقیت برون‌ریزی شدند."
+    "exportSuccessToast": "محصولات با موفقیت برون‌ریزی شدند.",
+    "importErrorFallback": "هنگام وارد کردن محصولات خطایی رخ داد."
   },
   "customFields": {
     "title": "فیلدهای سفارشی",
@@ -45,7 +46,10 @@
     "selectConversation": "یک گفتگو را انتخاب کنید",
     "startMessaging": "برای شروع پیام‌رسانی، یک گفتگو انتخاب کنید",
     "connected": "متصل",
-    "disconnected": "قطع شد"
+    "disconnected": "قطع شد",
+    "newMessageToastTitle": "پیام جدید",
+    "imageSentPreview": "یک تصویر ارسال کرد",
+    "newMessageGenericPreview": "شما یک پیام جدید دارید"
   },
   "messages": {
     "domain": "پیام‌ها",

@@ -16,7 +16,8 @@
     "exportHeader": "ייצוא מוצרים",
     "exportDescription": "ייצא את המוצרים שלך כקובץ CSV.",
     "exportBody": "פעולה זו תייצא את כל המוצרים שלך לקובץ CSV. ההורדה תתחיל אוטומטית ברגע שהייצוא יהיה מוכן.",
-    "exportSuccessToast": "המוצרים יוצאו בהצלחה."
+    "exportSuccessToast": "המוצרים יוצאו בהצלחה.",
+    "importErrorFallback": "אירעה שגיאה בעת ייבוא המוצרים."
   },
   "customFields": {
     "title": "שדות מותאמים אישית",
@@ -45,7 +46,10 @@
     "selectConversation": "בחר שיחה",
     "startMessaging": "בחר שיחה כדי להתחיל להתכתב",
     "connected": "מחובר",
-    "disconnected": "מנותק"
+    "disconnected": "מנותק",
+    "newMessageToastTitle": "הודעה חדשה",
+    "imageSentPreview": "שלח/ה תמונה",
+    "newMessageGenericPreview": "יש לך הודעה חדשה"
   },
   "messages": {
     "domain": "הודעות",

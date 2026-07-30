@@ -13073,6 +13073,15 @@
             },
             "bannerTooSmall": {
               "type": "string"
+            },
+            "notificationLanguageLabel": {
+              "type": "string"
+            },
+            "notificationLanguageHint": {
+              "type": "string"
+            },
+            "notificationLanguagePlaceholder": {
+              "type": "string"
             }
           },
           "required": [
@@ -13087,7 +13096,10 @@
             "uploadBannerHint",
             "bannerRecommendedSize",
             "logoTooSmall",
-            "bannerTooSmall"
+            "bannerTooSmall",
+            "notificationLanguageLabel",
+            "notificationLanguageHint",
+            "notificationLanguagePlaceholder"
           ],
           "additionalProperties": false
         },

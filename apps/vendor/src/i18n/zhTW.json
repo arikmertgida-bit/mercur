@@ -16,7 +16,8 @@
     "exportHeader": "匯出產品",
     "exportDescription": "將您的產品匯出為CSV檔案。",
     "exportBody": "此操作會將您的所有產品匯出為CSV檔案。匯出準備完成後將自動開始下載。",
-    "exportSuccessToast": "產品匯出成功。"
+    "exportSuccessToast": "產品匯出成功。",
+    "importErrorFallback": "匯入產品時發生錯誤。"
   },
   "customFields": {
     "title": "自訂欄位",
@@ -45,7 +46,10 @@
     "selectConversation": "選擇一個對話",
     "startMessaging": "選擇一個對話以開始聊天",
     "connected": "已連線",
-    "disconnected": "已中斷連線"
+    "disconnected": "已中斷連線",
+    "newMessageToastTitle": "新訊息",
+    "imageSentPreview": "傳送了一張圖片",
+    "newMessageGenericPreview": "您有一則新訊息"
   },
   "messages": {
     "domain": "訊息",

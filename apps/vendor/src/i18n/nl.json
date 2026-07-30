@@ -16,7 +16,8 @@
     "exportHeader": "Producten exporteren",
     "exportDescription": "Exporteer uw producten als een CSV-bestand.",
     "exportBody": "Hiermee worden al uw producten geëxporteerd naar een CSV-bestand. De download start automatisch zodra de export gereed is.",
-    "exportSuccessToast": "Producten succesvol geëxporteerd."
+    "exportSuccessToast": "Producten succesvol geëxporteerd.",
+    "importErrorFallback": "Er is een fout opgetreden bij het importeren van producten."
   },
   "customFields": {
     "title": "Aangepaste velden",
@@ -45,7 +46,10 @@
     "selectConversation": "Selecteer een gesprek",
     "startMessaging": "Selecteer een gesprek om te beginnen met chatten",
     "connected": "Verbonden",
-    "disconnected": "Verbinding verbroken"
+    "disconnected": "Verbinding verbroken",
+    "newMessageToastTitle": "Nieuw bericht",
+    "imageSentPreview": "Heeft een afbeelding verstuurd",
+    "newMessageGenericPreview": "U heeft een nieuw bericht"
   },
   "messages": {
     "domain": "Berichten",

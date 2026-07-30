@@ -2919,7 +2919,10 @@
       "uploadBannerHint": "Kéo và thả ảnh bìa vào đây hoặc nhấp để tải lên.",
       "bannerRecommendedSize": "Khuyến nghị 1920x400px",
       "bannerTooSmall": "Hình ảnh nhỏ ({{width}}×{{height}}px). Nên dùng ít nhất {{minWidth}}×{{minHeight}}px, nếu không có thể bị mờ.",
-      "logoTooSmall": "Hình ảnh nhỏ ({{width}}×{{height}}px). Nên dùng ít nhất {{minWidth}}×{{minHeight}}px, nếu không có thể bị mờ."
+      "logoTooSmall": "Hình ảnh nhỏ ({{width}}×{{height}}px). Nên dùng ít nhất {{minWidth}}×{{minHeight}}px, nếu không có thể bị mờ.",
+      "notificationLanguageLabel": "Ngôn ngữ thông báo",
+      "notificationLanguageHint": "Ngôn ngữ được sử dụng cho các thông báo đơn hàng, đánh giá và thanh toán gửi đến cửa hàng của bạn.",
+      "notificationLanguagePlaceholder": "Chọn ngôn ngữ"
     },
     "toast": {
       "update": "Cửa hàng đã được cập nhật thành công",

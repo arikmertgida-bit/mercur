@@ -8,6 +8,11 @@ import {
   FollowerNotificationEvent,
   type FollowerNewFollowerEventPayload,
 } from "../lib/follower-events"
+import {
+  NOTIFICATION_MESSAGES,
+  interpolateNotification,
+  resolveSellerNotificationLanguage,
+} from "../lib/messenger-notification-i18n"
 
 /**
  * Handles "follower_notification.new_follower".
@@ -21,14 +26,20 @@ export default async function followerNotificationNewFollowerSubscriber({
   const logger = resolveKayiLogger(container)
 
   try {
+    const language = await resolveSellerNotificationLanguage(container, sellerToNotify)
+    const messages = NOTIFICATION_MESSAGES[language]
+    const resolvedCustomerName = customerName ?? messages.genericCustomerName
+
     await notifyMessengerUser({
       targetUserId: sellerToNotify,
       targetUserType: "SELLER",
-      senderName: customerName,
-      preview: `${customerName} sizi takip etmeye başladı.`,
+      senderName: resolvedCustomerName,
+      preview: interpolateNotification(messages.follower.preview, {
+        customerName: resolvedCustomerName,
+      }),
       sourceUserId: customerId,
       sourceUserType: "CUSTOMER",
-      subject: "Yeni Takipçi",
+      subject: messages.follower.subject,
       notificationType: FOLLOWER_NOTIFICATION_TYPE,
       metadata: { notification_type: FOLLOWER_NOTIFICATION_TYPE },
     })

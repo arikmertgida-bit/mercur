@@ -2919,7 +2919,10 @@
       "uploadBannerHint": "Húzza ide a bannert, vagy kattintson a feltöltéshez.",
       "bannerRecommendedSize": "Ajánlott 1920x400px",
       "bannerTooSmall": "A kép kicsi ({{width}}×{{height}}px). Legalább {{minWidth}}×{{minHeight}}px javasolt, különben elmosódottnak tűnhet.",
-      "logoTooSmall": "A kép kicsi ({{width}}×{{height}}px). Legalább {{minWidth}}×{{minHeight}}px javasolt, különben elmosódottnak tűnhet."
+      "logoTooSmall": "A kép kicsi ({{width}}×{{height}}px). Legalább {{minWidth}}×{{minHeight}}px javasolt, különben elmosódottnak tűnhet.",
+      "notificationLanguageLabel": "Értesítési nyelv",
+      "notificationLanguageHint": "A boltjának küldött rendelési, értékelési és kifizetési értesítésekhez használt nyelv.",
+      "notificationLanguagePlaceholder": "Válasszon nyelvet"
     },
     "toast": {
       "update": "Áruház sikeresen frissítve",

@@ -2919,7 +2919,10 @@
       "uploadBannerHint": "Prevucite i ispustite baner ovdje ili kliknite za otpremanje.",
       "bannerRecommendedSize": "Preporučeno 1920x400px",
       "bannerTooSmall": "Slika je mala ({{width}}×{{height}}px). Preporučuje se najmanje {{minWidth}}×{{minHeight}}px, u suprotnom može izgledati mutno.",
-      "logoTooSmall": "Slika je mala ({{width}}×{{height}}px). Preporučuje se najmanje {{minWidth}}×{{minHeight}}px, u suprotnom može izgledati mutno."
+      "logoTooSmall": "Slika je mala ({{width}}×{{height}}px). Preporučuje se najmanje {{minWidth}}×{{minHeight}}px, u suprotnom može izgledati mutno.",
+      "notificationLanguageLabel": "Jezik obavještenja",
+      "notificationLanguageHint": "Jezik koji se koristi za obavještenja o narudžbama, recenzijama i isplatama poslata vašoj prodavnici.",
+      "notificationLanguagePlaceholder": "Odaberite jezik"
     },
     "toast": {
       "update": "Trgovina uspješno ažurirana",

@@ -2919,7 +2919,10 @@
       "uploadBannerHint": "将横幅图拖放到此处，或点击上传。",
       "bannerRecommendedSize": "建议 1920x400px",
       "bannerTooSmall": "图片较小 ({{width}}×{{height}}px)。建议至少为 {{minWidth}}×{{minHeight}}px,否则可能显得模糊。",
-      "logoTooSmall": "图片较小 ({{width}}×{{height}}px)。建议至少为 {{minWidth}}×{{minHeight}}px,否则可能显得模糊。"
+      "logoTooSmall": "图片较小 ({{width}}×{{height}}px)。建议至少为 {{minWidth}}×{{minHeight}}px,否则可能显得模糊。",
+      "notificationLanguageLabel": "通知语言",
+      "notificationLanguageHint": "用于向您的店铺发送订单、评价和付款通知的语言。",
+      "notificationLanguagePlaceholder": "选择语言"
     },
     "toast": {
       "update": "商店更新成功",

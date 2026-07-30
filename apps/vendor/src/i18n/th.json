@@ -16,7 +16,8 @@
     "exportHeader": "ส่งออกสินค้า",
     "exportDescription": "ส่งออกสินค้าของคุณเป็นไฟล์ CSV",
     "exportBody": "การดำเนินการนี้จะส่งออกสินค้าทั้งหมดของคุณไปยังไฟล์ CSV การดาวน์โหลดจะเริ่มโดยอัตโนมัติเมื่อการส่งออกพร้อมใช้งาน",
-    "exportSuccessToast": "ส่งออกสินค้าสำเร็จแล้ว"
+    "exportSuccessToast": "ส่งออกสินค้าสำเร็จแล้ว",
+    "importErrorFallback": "เกิดข้อผิดพลาดขณะนำเข้าสินค้า"
   },
   "customFields": {
     "title": "ฟิลด์ที่กำหนดเอง",
@@ -45,7 +46,10 @@
     "selectConversation": "เลือกการสนทนา",
     "startMessaging": "เลือกการสนทนาเพื่อเริ่มส่งข้อความ",
     "connected": "เชื่อมต่อแล้ว",
-    "disconnected": "ตัดการเชื่อมต่อแล้ว"
+    "disconnected": "ตัดการเชื่อมต่อแล้ว",
+    "newMessageToastTitle": "ข้อความใหม่",
+    "imageSentPreview": "ส่งรูปภาพ",
+    "newMessageGenericPreview": "คุณมีข้อความใหม่"
   },
   "messages": {
     "domain": "ข้อความ",

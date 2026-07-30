@@ -8,6 +8,11 @@ import {
   ReviewNotificationEvent,
   type ReviewNewReviewEventPayload,
 } from "../lib/review-events"
+import {
+  NOTIFICATION_MESSAGES,
+  interpolateNotification,
+  resolveSellerNotificationLanguage,
+} from "../lib/messenger-notification-i18n"
 
 /**
  * Handles the "review_notification.new_review" event.
@@ -21,14 +26,20 @@ export default async function reviewNotificationNewReviewSubscriber({
   const logger = resolveKayiLogger(container)
 
   try {
+    const language = await resolveSellerNotificationLanguage(container, sellerToNotify)
+    const messages = NOTIFICATION_MESSAGES[language]
+    const resolvedCustomerName = customerName ?? messages.genericCustomerName
+
     await notifyMessengerUser({
       targetUserId: sellerToNotify,
       targetUserType: "SELLER",
-      senderName: customerName,
-      preview: `${customerName} ürününüze yeni bir yorum bıraktı.`,
+      senderName: resolvedCustomerName,
+      preview: interpolateNotification(messages.review.newPreview, {
+        customerName: resolvedCustomerName,
+      }),
       sourceUserId: customerId,
       sourceUserType: "CUSTOMER",
-      subject: "Yeni Değerlendirme",
+      subject: messages.review.newSubject,
       notificationType: REVIEW_NOTIFICATION_TYPE,
       metadata: { notification_type: REVIEW_NOTIFICATION_TYPE },
     })

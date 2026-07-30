@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import type { UseMutationOptions } from "@tanstack/react-query"
 import { z } from "zod"
+import i18next from "i18next"
 import { queryKeysFactory } from "@mercurjs/dashboard-shared"
 import { InferClientOutput } from "@mercurjs/client"
 import { client } from "../../lib/client"
@@ -33,7 +34,7 @@ const uploadProductImportCsv = async (
   })
 
   if (!response.ok) {
-    let message = "Ürünler içe aktarılırken bir hata oluştu."
+    let message = i18next.t("productImportExport.importErrorFallback")
     try {
       const parsed = ImportErrorBodySchema.safeParse(await response.json())
       if (parsed.success) {

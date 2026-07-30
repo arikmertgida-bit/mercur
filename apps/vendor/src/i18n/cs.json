@@ -16,7 +16,8 @@
     "exportHeader": "Exportovat produkty",
     "exportDescription": "Exportujte své produkty jako soubor CSV.",
     "exportBody": "Tímto exportujete všechny své produkty do souboru CSV. Stahování se spustí automaticky, jakmile bude export připraven.",
-    "exportSuccessToast": "Produkty byly úspěšně exportovány."
+    "exportSuccessToast": "Produkty byly úspěšně exportovány.",
+    "importErrorFallback": "Při importu produktů došlo k chybě."
   },
   "customFields": {
     "title": "Vlastní pole",
@@ -45,7 +46,10 @@
     "selectConversation": "Vyberte konverzaci",
     "startMessaging": "Vyberte konverzaci a začněte psát",
     "connected": "Připojeno",
-    "disconnected": "Odpojeno"
+    "disconnected": "Odpojeno",
+    "newMessageToastTitle": "Nová zpráva",
+    "imageSentPreview": "Odeslal(a) obrázek",
+    "newMessageGenericPreview": "Máte novou zprávu"
   },
   "messages": {
     "domain": "Zprávy",

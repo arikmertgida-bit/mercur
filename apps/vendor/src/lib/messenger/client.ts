@@ -7,13 +7,13 @@ declare const __MESSENGER_URL__: string
 const BASE_URL: string =
   typeof __MESSENGER_URL__ !== 'undefined' ? __MESSENGER_URL__ : "http://localhost:4000"
 
-const DEFAULT_ERROR_MESSAGE = "Beklenmeyen bir sunucu hatası oluştu."
+const DEFAULT_ERROR_MESSAGE = "An unexpected server error occurred."
 
 const BlockedReasonSchema = z.enum(["EMAIL", "PHONE", "URL", "GENERIC"])
 export type BlockedReason = z.infer<typeof BlockedReasonSchema>
 
-// Backend her zaman `{ error, reason? }` şeklinde döner — `message` alanı
-// hiçbir zaman gönderilmiyor (bkz. messenger/src/routes/messages.ts).
+// Backend always returns `{ error, reason? }` — the `message` field is
+// never sent (see messenger/src/routes/messages.ts).
 const ErrorBodySchema = z.object({
   error: z.union([z.string(), z.number(), z.boolean()]).optional(),
   reason: BlockedReasonSchema.optional(),
@@ -209,7 +209,7 @@ const NotificationPreferencesResponseSchema = z.object({
 /**
  * Read directly (bypassing the `apps/api` vendor proxy `packages/vendor`'s
  * Settings drawer uses) since this app already holds a valid messenger JWT —
- * used only to gate the client-side "Mesajlar" push/toast, never to persist.
+ * used only to gate the client-side Messages push/toast, never to persist.
  */
 export async function getNotificationPreferences(): Promise<NotificationPreferenceEntry[]> {
   const raw = await request<z.infer<typeof NotificationPreferencesResponseSchema>>(

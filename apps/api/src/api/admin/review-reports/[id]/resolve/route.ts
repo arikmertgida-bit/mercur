@@ -6,6 +6,10 @@ import {
 import { resolveKayiLogger } from "../../../../../lib/logger";
 import { ADMIN_SYSTEM_ID, notifyMessengerUser } from "../../../../../lib/messenger";
 import { REVIEW_NOTIFICATION_TYPE } from "../../../../../lib/review-events";
+import {
+  NOTIFICATION_MESSAGES,
+  resolveSellerNotificationLanguage,
+} from "../../../../../lib/messenger-notification-i18n";
 import { REVIEW_REPORT_MODULE } from "../../../../../modules/review-reports";
 import ReviewReportService from "../../../../../modules/review-reports/service";
 import { resolveReviewReportWorkflow } from "../../../../../workflows/review-report/workflows/resolve-review-report";
@@ -33,10 +37,12 @@ export const POST = async (
     input: { report_id: req.params.id, action, admin_note },
   });
 
+  const language = await resolveSellerNotificationLanguage(req.scope, report.seller_id);
+  const messages = NOTIFICATION_MESSAGES[language];
   const preview =
     action === "delete"
-      ? "Bildirdiğiniz değerlendirme incelendi ve kaldırıldı."
-      : "İncelendi, Kaldırılmadı. Siz bizimle aynı düşüncede değilseniz tekrar talepte bulunabilirsiniz.";
+      ? messages.review.reportDeletedPreview
+      : messages.review.reportRejectedPreview;
 
   const notified = await notifyMessengerUser({
     targetUserId: report.seller_id,
@@ -45,7 +51,7 @@ export const POST = async (
     preview,
     sourceUserId: ADMIN_SYSTEM_ID,
     sourceUserType: "ADMIN",
-    subject: "Değerlendirme Talebi Sonucu",
+    subject: messages.review.reportResolvedSubject,
     conversationType: "ADMIN_SUPPORT",
     notificationType: REVIEW_NOTIFICATION_TYPE,
     metadata: { notification_type: REVIEW_NOTIFICATION_TYPE },

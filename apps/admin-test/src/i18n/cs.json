@@ -103,6 +103,13 @@
     "resolveError": "Vyřešení nahlášení se nezdařilo"
   },
   "messenger": {
+    "today": "Dnes",
+    "yesterday": "Včera",
+    "newMessage": "Nová zpráva",
+    "sentImage": "Odeslal obrázek",
+    "newMessageBody": "Máte novou zprávu",
+    "customer": "Zákazník",
+    "seller": "Prodejce",
     "searchConversations": "Hledat konverzace...",
     "noConversations": "Zatím žádné konverzace",
     "startConversation": "Zahájit konverzaci",

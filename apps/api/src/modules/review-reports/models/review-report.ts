@@ -2,7 +2,7 @@ import { model } from "@medusajs/framework/utils"
 
 /**
  * A seller's escalation of a customer review to an admin moderator
- * (vendor panel "Yöneticiye Bildir"). `resolved_deleted` means the admin
+ * (vendor panel "Report to Admin"). `resolved_deleted` means the admin
  * removed the underlying review; `resolved_kept` means the admin reviewed
  * it and declined to remove it — the review stays live on the storefront.
  */

@@ -16,7 +16,8 @@
     "exportHeader": "Exportar produtos",
     "exportDescription": "Exporte seus produtos como um arquivo CSV.",
     "exportBody": "Isso exportará todos os seus produtos para um arquivo CSV. O download começará automaticamente assim que a exportação estiver pronta.",
-    "exportSuccessToast": "Produtos exportados com sucesso."
+    "exportSuccessToast": "Produtos exportados com sucesso.",
+    "importErrorFallback": "Ocorreu um erro ao importar os produtos."
   },
   "customFields": {
     "title": "Campos personalizados",
@@ -45,7 +46,10 @@
     "selectConversation": "Selecione uma conversa",
     "startMessaging": "Selecione uma conversa para começar a conversar",
     "connected": "Conectado",
-    "disconnected": "Desconectado"
+    "disconnected": "Desconectado",
+    "newMessageToastTitle": "Nova mensagem",
+    "imageSentPreview": "Enviou uma imagem",
+    "newMessageGenericPreview": "Você tem uma nova mensagem"
   },
   "messages": {
     "domain": "Mensagens",

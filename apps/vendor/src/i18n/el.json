@@ -16,7 +16,8 @@
     "exportHeader": "Εξαγωγή προϊόντων",
     "exportDescription": "Εξαγάγετε τα προϊόντα σας ως αρχείο CSV.",
     "exportBody": "Αυτό θα εξαγάγει όλα τα προϊόντα σας σε ένα αρχείο CSV. Η λήψη θα ξεκινήσει αυτόματα μόλις η εξαγωγή είναι έτοιμη.",
-    "exportSuccessToast": "Τα προϊόντα εξήχθησαν με επιτυχία."
+    "exportSuccessToast": "Τα προϊόντα εξήχθησαν με επιτυχία.",
+    "importErrorFallback": "Παρουσιάστηκε σφάλμα κατά την εισαγωγή προϊόντων."
   },
   "customFields": {
     "title": "Προσαρμοσμένα πεδία",
@@ -45,7 +46,10 @@
     "selectConversation": "Επιλέξτε μια συνομιλία",
     "startMessaging": "Επιλέξτε μια συνομιλία για να ξεκινήσετε",
     "connected": "Συνδεδεμένος",
-    "disconnected": "Αποσυνδεδεμένος"
+    "disconnected": "Αποσυνδεδεμένος",
+    "newMessageToastTitle": "Νέο μήνυμα",
+    "imageSentPreview": "Έστειλε μια εικόνα",
+    "newMessageGenericPreview": "Έχετε ένα νέο μήνυμα"
   },
   "messages": {
     "domain": "Μηνύματα",

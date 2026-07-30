@@ -44,7 +44,7 @@ type UploadedMediaEntry = UploadedFile & {
   isThumbnail: boolean
   // The local, pre-upload `media[].id` this file came from — carried
   // through so the post-create variant-image follow-up (see
-  // `applyVariantMediaUpdates` below) can resolve a seller's Görsel
+  // `applyVariantMediaUpdates` below) can resolve a seller's Image
   // selections (still keyed by that local id) to the just-uploaded URL.
   clientMediaId?: string
 }
@@ -222,10 +222,11 @@ export const ProductCreateForm = ({
 
           handleSuccess(`../${data.product.id}`)
 
-          // Görsel seçimleri, product-image ilişkisini yalnızca ürün
-          // gerçekten oluştuktan sonra kurabilen ayrı bir uçla (bkz. plan)
-          // uygulanır — başarısız olsa bile ürün zaten oluşturuldu, bu
-          // yüzden navigasyonu/toast'ı bloklamadan arka planda çalışır.
+          // Image selections are applied through a separate endpoint that can
+          // only establish the product-image relation once the product
+          // actually exists (see plan) — even if this fails, the product was
+          // already created, so it runs in the background without blocking
+          // the navigation/toast.
           try {
             const clientMediaIdToUrl = new Map(
               uploadedMedia

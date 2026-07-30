@@ -2917,7 +2917,10 @@
       "uploadBannerHint": "Σύρετε και αφήστε το banner σας εδώ ή κάντε κλικ για ανέβασμα.",
       "bannerRecommendedSize": "Συνιστώμενο 1920x400px",
       "bannerTooSmall": "Η εικόνα είναι μικρή ({{width}}×{{height}}px). Συνιστάται τουλάχιστον {{minWidth}}×{{minHeight}}px, διαφορετικά μπορεί να φαίνεται θολή.",
-      "logoTooSmall": "Η εικόνα είναι μικρή ({{width}}×{{height}}px). Συνιστάται τουλάχιστον {{minWidth}}×{{minHeight}}px, διαφορετικά μπορεί να φαίνεται θολή."
+      "logoTooSmall": "Η εικόνα είναι μικρή ({{width}}×{{height}}px). Συνιστάται τουλάχιστον {{minWidth}}×{{minHeight}}px, διαφορετικά μπορεί να φαίνεται θολή.",
+      "notificationLanguageLabel": "Γλώσσα ειδοποιήσεων",
+      "notificationLanguageHint": "Η γλώσσα που χρησιμοποιείται για τις ειδοποιήσεις παραγγελιών, αξιολογήσεων και πληρωμών προς το κατάστημά σας.",
+      "notificationLanguagePlaceholder": "Επιλέξτε γλώσσα"
     },
     "toast": {
       "update": "Το κατάστημα ενημερώθηκε με επιτυχία",

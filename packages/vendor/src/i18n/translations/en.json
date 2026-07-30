@@ -3149,7 +3149,10 @@
       "uploadBannerHint": "Drag and drop your banner here or click to upload.",
       "bannerRecommendedSize": "Recommended 1920x400px",
       "logoTooSmall": "Image is small ({{width}}×{{height}}px). At least {{minWidth}}×{{minHeight}}px is recommended, otherwise it may look blurry.",
-      "bannerTooSmall": "Image is small ({{width}}×{{height}}px). At least {{minWidth}}×{{minHeight}}px is recommended, otherwise it may look blurry."
+      "bannerTooSmall": "Image is small ({{width}}×{{height}}px). At least {{minWidth}}×{{minHeight}}px is recommended, otherwise it may look blurry.",
+      "notificationLanguageLabel": "Notification Language",
+      "notificationLanguageHint": "The language used for order, review, and payout notifications sent to your store.",
+      "notificationLanguagePlaceholder": "Select a language"
     },
     "editCompany": {
       "header": "Edit Company"

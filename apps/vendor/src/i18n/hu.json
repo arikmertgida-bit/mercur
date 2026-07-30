@@ -16,7 +16,8 @@
     "exportHeader": "Termékek exportálása",
     "exportDescription": "Exportálja termékeit CSV-fájlként.",
     "exportBody": "Ez az összes terméket exportálja egy CSV-fájlba. A letöltés automatikusan elindul, amint az exportálás elkészült.",
-    "exportSuccessToast": "A termékek sikeresen exportálva lettek."
+    "exportSuccessToast": "A termékek sikeresen exportálva lettek.",
+    "importErrorFallback": "Hiba történt a termékek importálása közben."
   },
   "customFields": {
     "title": "Egyéni mezők",
@@ -45,7 +46,10 @@
     "selectConversation": "Válasszon beszélgetést",
     "startMessaging": "Válasszon egy beszélgetést a csevegés megkezdéséhez",
     "connected": "Csatlakozva",
-    "disconnected": "Kapcsolat bontva"
+    "disconnected": "Kapcsolat bontva",
+    "newMessageToastTitle": "Új üzenet",
+    "imageSentPreview": "Képet küldött",
+    "newMessageGenericPreview": "Új üzenete érkezett"
   },
   "messages": {
     "domain": "Üzenetek",

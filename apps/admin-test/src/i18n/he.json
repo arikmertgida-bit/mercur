@@ -103,6 +103,13 @@
     "resolveError": "טיפול בדיווח נכשל"
   },
   "messenger": {
+    "today": "היום",
+    "yesterday": "אתמול",
+    "newMessage": "הודעה חדשה",
+    "sentImage": "נשלחה תמונה",
+    "newMessageBody": "יש לך הודעה חדשה",
+    "customer": "לקוח",
+    "seller": "מוכר",
     "searchConversations": "חיפוש שיחות...",
     "noConversations": "אין עדיין שיחות",
     "startConversation": "התחל שיחה",

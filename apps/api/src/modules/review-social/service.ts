@@ -108,8 +108,9 @@ class ReviewSocialModuleService extends MedusaService({
   }
 
   /**
-   * Satıcının vendor panelden yazdığı seller_note ile senkron tutulur —
-   * seller_note tek bir review_reply satırına (is_seller_reply=true) yansıtılır.
+   * Kept in sync with the seller_note the seller writes from the vendor
+   * panel — seller_note is mirrored onto a single review_reply row
+   * (is_seller_reply=true).
    */
   async syncSellerReply(
     reviewId: string,

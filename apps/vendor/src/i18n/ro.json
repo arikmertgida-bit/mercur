@@ -16,7 +16,8 @@
     "exportHeader": "Exportă produse",
     "exportDescription": "Exportă produsele tale ca fișier CSV.",
     "exportBody": "Această acțiune va exporta toate produsele tale într-un fișier CSV. Descărcarea va începe automat când exportul este pregătit.",
-    "exportSuccessToast": "Produsele au fost exportate cu succes."
+    "exportSuccessToast": "Produsele au fost exportate cu succes.",
+    "importErrorFallback": "A apărut o eroare la importul produselor."
   },
   "customFields": {
     "title": "Câmpuri personalizate",
@@ -45,7 +46,10 @@
     "selectConversation": "Selectează o conversație",
     "startMessaging": "Selectează o conversație pentru a începe să discuți",
     "connected": "Conectat",
-    "disconnected": "Deconectat"
+    "disconnected": "Deconectat",
+    "newMessageToastTitle": "Mesaj nou",
+    "imageSentPreview": "A trimis o imagine",
+    "newMessageGenericPreview": "Aveți un mesaj nou"
   },
   "messages": {
     "domain": "Mesaje",

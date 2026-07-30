@@ -10,14 +10,14 @@ const JWT_SECRET: string = rawJwtSecret
 /**
  * GET /admin/custom/messenger-token
  *
- * Admin session'ı doğrulanmış kullanıcıya messenger servisi için
- * kısa süreli bir JWT token döner. Bu token, messenger backend'in
- * kullandığı aynı JWT_SECRET ile imzalanır.
+ * Returns a short-lived JWT for the authenticated admin session to use
+ * with the messenger service. Signed with the same JWT_SECRET the
+ * messenger backend uses.
  *
- * Güvenlik:
- * - Medusa'nın admin session middleware'i tarafından auth korumalıdır
- * - Token 8 saatte sona erer
- * - Payload yalnızca messenger'ın ihtiyacı olan alanları içerir
+ * Security:
+ * - Protected by Medusa's admin session middleware
+ * - Token expires in 8 hours
+ * - Payload only carries the fields messenger needs
  */
 type MessengerTokenResponse = { token: string } | { error: string }
 

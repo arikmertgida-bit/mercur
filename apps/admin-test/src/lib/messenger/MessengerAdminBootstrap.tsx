@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode } from "react"
 import { toast } from "@medusajs/ui"
+import i18next from "i18next"
 import { client } from "../client"
 import { AdminUserMeSchema } from "./schemas"
 import { MessengerAdminProvider, useMessengerAdmin } from "../../providers/messenger-provider/MessengerAdminProvider"
@@ -94,10 +95,10 @@ function MessengerGlobalNotifier(): null {
     const latestMessage = latestConversation?.messages?.[0]
     const preview =
       latestMessage?.messageType === "IMAGE"
-        ? "Görsel gönderdi"
-        : (latestMessage?.content ?? "Yeni bir mesajınız var")
+        ? i18next.t("messenger.sentImage")
+        : (latestMessage?.content ?? i18next.t("messenger.newMessageBody"))
 
-    toast.info("Yeni mesaj", { description: preview })
+    toast.info(i18next.t("messenger.newMessage"), { description: preview })
   }, [unreadCount, conversations])
 
   return null

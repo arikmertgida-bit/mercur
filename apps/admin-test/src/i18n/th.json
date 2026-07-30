@@ -103,6 +103,13 @@
     "resolveError": "ไม่สามารถแก้ไขรายงานได้"
   },
   "messenger": {
+    "today": "วันนี้",
+    "yesterday": "เมื่อวาน",
+    "newMessage": "ข้อความใหม่",
+    "sentImage": "ส่งรูปภาพ",
+    "newMessageBody": "คุณมีข้อความใหม่",
+    "customer": "ลูกค้า",
+    "seller": "ผู้ขาย",
     "searchConversations": "ค้นหาการสนทนา...",
     "noConversations": "ยังไม่มีการสนทนา",
     "startConversation": "เริ่มการสนทนา",

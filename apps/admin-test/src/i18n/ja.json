@@ -103,6 +103,13 @@
     "resolveError": "通報の解決に失敗しました"
   },
   "messenger": {
+    "today": "今日",
+    "yesterday": "昨日",
+    "newMessage": "新しいメッセージ",
+    "sentImage": "画像を送信しました",
+    "newMessageBody": "新しいメッセージがあります",
+    "customer": "顧客",
+    "seller": "販売者",
     "searchConversations": "会話を検索...",
     "noConversations": "まだ会話はありません",
     "startConversation": "会話を開始する",

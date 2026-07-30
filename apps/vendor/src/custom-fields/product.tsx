@@ -1,10 +1,10 @@
 import { defineCustomFieldsConfig } from "@mercurjs/dashboard-sdk";
 import { Text } from "@medusajs/ui";
 
-// ERP entegrasyonu askıya alındı (bkz. proje notları) — dış firma kendi
-// entegrasyon kodunu getirene kadar aşağıdaki ERP ID alanı tamamen devre
-// dışı. Silinmedi, sadece yorum satırına alındı; geri açmak için bu
-// dosyadaki yorumları kaldırmak yeterli.
+// ERP integration is on hold (see project notes) — the ERP ID field below is
+// fully disabled until the external vendor delivers its own integration code.
+// Not deleted, only commented out; uncommenting these lines is enough to
+// re-enable it.
 // import { createFormHelper } from "@mercurjs/dashboard-shared";
 // type ProductWithMeta = { metadata?: Record<string, unknown> };
 // const form = createFormHelper<ProductWithMeta>();
@@ -15,7 +15,7 @@ export default defineCustomFieldsConfig({
   model: "product",
   link: "brand",
   forms: [
-    // ERP ID — ürün düzenleme formundaki alan (devre dışı)
+    // ERP ID — field in the product edit form (disabled)
     // {
     //   zone: "edit",
     //   fields: {
@@ -34,7 +34,7 @@ export default defineCustomFieldsConfig({
     {
       zone: "general",
       fields: [
-        // ERP ID — ürün detay sayfasının Genel bölümündeki satır (devre dışı)
+        // ERP ID — row in the product detail page's General section (disabled)
         // {
         //   id: "erp_id",
         //   component: ({ data }) => (
@@ -58,13 +58,13 @@ export default defineCustomFieldsConfig({
     },
   ],
   list: {
-    // ERP ID — ürün listesi tablosundaki "ERP" sütunu (devre dışı)
+    // ERP ID — "ERP" column in the product list table (disabled)
     columns: [
       // { id: "erp_id", header: "ERP", component: ({ row }) => erpId(row as ProductWithMeta) },
     ],
     viewDefaults: {
       columnVisibility: { collection: false }, // HIDE the built-in collection column
-      // columnOrder: ["product", "erp_id", "status"], // ERP sütunu devre dışı bırakıldığı için sıralama da askıya alındı
+      // columnOrder: ["product", "erp_id", "status"], // column order is on hold too since the ERP column is disabled
     },
   },
 });

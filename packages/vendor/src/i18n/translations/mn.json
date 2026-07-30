@@ -2917,7 +2917,10 @@
       "uploadBannerHint": "Баннераа энд чирж оруулах эсвэл байршуулахын тулд дарна уу.",
       "bannerRecommendedSize": "Санал болгосон 1920x400px",
       "bannerTooSmall": "Зураг жижиг байна ({{width}}×{{height}}px). Хамгийн багадаа {{minWidth}}×{{minHeight}}px байхыг зөвлөж байна, эс тэгвээс бүдэг харагдаж болзошгүй.",
-      "logoTooSmall": "Зураг жижиг байна ({{width}}×{{height}}px). Хамгийн багадаа {{minWidth}}×{{minHeight}}px байхыг зөвлөж байна, эс тэгвээс бүдэг харагдаж болзошгүй."
+      "logoTooSmall": "Зураг жижиг байна ({{width}}×{{height}}px). Хамгийн багадаа {{minWidth}}×{{minHeight}}px байхыг зөвлөж байна, эс тэгвээс бүдэг харагдаж болзошгүй.",
+      "notificationLanguageLabel": "Мэдэгдлийн хэл",
+      "notificationLanguageHint": "Таны дэлгүүрт илгээгдэх захиалга, сэтгэгдэл, төлбөрийн мэдэгдэлд ашиглах хэл.",
+      "notificationLanguagePlaceholder": "Хэл сонгоно уу"
     },
     "toast": {
       "update": "Дэлгүүр амжилттай шинэчлэгдлээ",

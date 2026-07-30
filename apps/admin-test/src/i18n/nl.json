@@ -103,6 +103,13 @@
     "resolveError": "Melding kon niet worden opgelost"
   },
   "messenger": {
+    "today": "Vandaag",
+    "yesterday": "Gisteren",
+    "newMessage": "Nieuw bericht",
+    "sentImage": "Afbeelding verzonden",
+    "newMessageBody": "Je hebt een nieuw bericht",
+    "customer": "Klant",
+    "seller": "Verkoper",
     "searchConversations": "Gesprekken zoeken...",
     "noConversations": "Nog geen gesprekken",
     "startConversation": "Start een gesprek",

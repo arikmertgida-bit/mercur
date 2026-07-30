@@ -12,6 +12,11 @@ import {
   ReviewNotificationEvent,
   type ReviewSellerReplyEventPayload,
 } from "../lib/review-events"
+import {
+  NOTIFICATION_MESSAGES,
+  interpolateNotification,
+  resolveCustomerNotificationLanguage,
+} from "../lib/messenger-notification-i18n"
 
 const CustomerReviewLinkSchema = z.object({
   customer_id: z.string(),
@@ -45,14 +50,23 @@ export default async function reviewNotificationSellerReplySubscriber({
       return
     }
 
+    const language = await resolveCustomerNotificationLanguage(
+      container,
+      parsedLink.data.customer_id
+    )
+    const messages = NOTIFICATION_MESSAGES[language]
+    const resolvedSellerName = sellerName ?? messages.genericSellerName
+
     await notifyMessengerUser({
       targetUserId: parsedLink.data.customer_id,
       targetUserType: "CUSTOMER",
-      senderName: sellerName,
-      preview: `${sellerName} yorumunuza yanıt verdi.`,
+      senderName: resolvedSellerName,
+      preview: interpolateNotification(messages.review.replyPreview, {
+        sellerName: resolvedSellerName,
+      }),
       sourceUserId: sellerId,
       sourceUserType: "SELLER",
-      subject: "Yorum Yanıtı Bildirimi",
+      subject: messages.review.replySubject,
       notificationType: REVIEW_NOTIFICATION_TYPE,
       metadata: { notification_type: REVIEW_NOTIFICATION_TYPE },
     })

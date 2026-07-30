@@ -2919,7 +2919,10 @@
       "uploadBannerHint": "Nutempkite savo banerį čia arba spustelėkite, kad įkeltumėte.",
       "bannerRecommendedSize": "Rekomenduojama 1920x400px",
       "bannerTooSmall": "Vaizdas mažas ({{width}}×{{height}}px). Rekomenduojama bent {{minWidth}}×{{minHeight}}px, kitaip jis gali atrodyti neryškus.",
-      "logoTooSmall": "Vaizdas mažas ({{width}}×{{height}}px). Rekomenduojama bent {{minWidth}}×{{minHeight}}px, kitaip jis gali atrodyti neryškus."
+      "logoTooSmall": "Vaizdas mažas ({{width}}×{{height}}px). Rekomenduojama bent {{minWidth}}×{{minHeight}}px, kitaip jis gali atrodyti neryškus.",
+      "notificationLanguageLabel": "Pranešimų kalba",
+      "notificationLanguageHint": "Kalba, naudojama užsakymų, atsiliepimų ir išmokų pranešimams, siunčiamiems jūsų parduotuvei.",
+      "notificationLanguagePlaceholder": "Pasirinkite kalbą"
     },
     "toast": {
       "update": "Parduotuvė sėkmingai pakeista",

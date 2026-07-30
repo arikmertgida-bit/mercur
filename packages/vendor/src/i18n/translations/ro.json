@@ -2915,7 +2915,10 @@
       "uploadBannerHint": "Trageți și plasați bannerul aici sau apăsați pentru a încărca.",
       "bannerRecommendedSize": "Recomandat 1920x400px",
       "bannerTooSmall": "Imaginea este mică ({{width}}×{{height}}px). Se recomandă cel puțin {{minWidth}}×{{minHeight}}px, altfel poate apărea neclară.",
-      "logoTooSmall": "Imaginea este mică ({{width}}×{{height}}px). Se recomandă cel puțin {{minWidth}}×{{minHeight}}px, altfel poate apărea neclară."
+      "logoTooSmall": "Imaginea este mică ({{width}}×{{height}}px). Se recomandă cel puțin {{minWidth}}×{{minHeight}}px, altfel poate apărea neclară.",
+      "notificationLanguageLabel": "Limba notificărilor",
+      "notificationLanguageHint": "Limba utilizată pentru notificările de comenzi, recenzii și plăți trimise magazinului dumneavoastră.",
+      "notificationLanguagePlaceholder": "Selectați o limbă"
     },
     "toast": {
       "update": "Magazinul a fost actualizat cu succes",

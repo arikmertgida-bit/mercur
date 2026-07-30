@@ -10,12 +10,12 @@ import sellerReview from "../../../links/seller-review"
 import { ProductSellerIdsRowSchema, parseFirstRow } from "../../../lib/graph-schemas"
 
 /**
- * Bir değerlendirmenin bu satıcıya ait olduğunu doğrular. Review modelinin
- * kendisinde reference_id kolonu YOK — ilişki her zaman link modülleri
- * üzerinden kurulur: "seller" referanslı değerlendirmeler seller-review
- * linkinden, "product" referanslı değerlendirmeler product-review linkinden
- * (ürünün sellers ilişkisi üzerinden dolaylı) doğrulanır — aksi halde vendor
- * paneli hiçbir zaman ürün değerlendirmesine yanıt veremezdi.
+ * Verifies that a review belongs to this seller. The review model itself
+ * has NO reference_id column — the relationship is always established
+ * through link modules: "seller"-referenced reviews are verified via the
+ * seller-review link, "product"-referenced reviews via the product-review
+ * link (indirectly, through the product's sellers relation) — otherwise the
+ * vendor panel could never reply to a product review.
  */
 export const validateSellerReview = async (
   scope: MedusaContainer,

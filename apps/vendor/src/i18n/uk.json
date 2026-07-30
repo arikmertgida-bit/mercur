@@ -16,7 +16,8 @@
     "exportHeader": "Експорт товарів",
     "exportDescription": "Експортуйте свої товари у вигляді файлу CSV.",
     "exportBody": "Це експортує всі ваші товари у файл CSV. Завантаження почнеться автоматично, щойно експорт буде готовий.",
-    "exportSuccessToast": "Товари успішно експортовано."
+    "exportSuccessToast": "Товари успішно експортовано.",
+    "importErrorFallback": "Під час імпортування товарів сталася помилка."
   },
   "customFields": {
     "title": "Користувацькі поля",
@@ -45,7 +46,10 @@
     "selectConversation": "Виберіть розмову",
     "startMessaging": "Виберіть розмову, щоб почати листування",
     "connected": "Підключено",
-    "disconnected": "Відключено"
+    "disconnected": "Відключено",
+    "newMessageToastTitle": "Нове повідомлення",
+    "imageSentPreview": "Надіслав(ла) зображення",
+    "newMessageGenericPreview": "У вас нове повідомлення"
   },
   "messages": {
     "domain": "Повідомлення",

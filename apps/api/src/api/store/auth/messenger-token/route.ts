@@ -10,12 +10,12 @@ const JWT_SECRET: string = rawJwtSecret
 /**
  * GET /store/auth/messenger-token
  *
- * Kimliği doğrulanmış müşteriye kayi-messenger servisi için
- * kısa süreli bir JWT token döner. Vendor ve admin panel yaklaşımıyla aynıdır.
+ * Returns a short-lived JWT for the authenticated customer to use with
+ * kayi-messenger. Same approach as the vendor and admin panel routes.
  *
- * Güvenlik:
- * - authenticate("customer", ["session", "bearer"]) middleware'i tarafından korunur
- * - Token 8 saatte sona erer
+ * Security:
+ * - Protected by the authenticate("customer", ["session", "bearer"]) middleware
+ * - Token expires in 8 hours
  */
 export async function GET(
   req: AuthenticatedMedusaRequest,

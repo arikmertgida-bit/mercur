@@ -15,7 +15,7 @@ export class HttpFetchError extends Error {
   }
 }
 
-const DEFAULT_ERROR_MESSAGE = "Beklenmeyen bir sunucu hatası oluştu."
+const DEFAULT_ERROR_MESSAGE = "An unexpected server error occurred."
 
 export const fetchQuery = async <T>(
   url: string,
