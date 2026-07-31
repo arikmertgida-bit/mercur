@@ -1441,14 +1441,6 @@ export function getRouteMap({
                             await import("./pages/settings/product-tags/[id]");
                           return { Component: ProductTagDetailPage };
                         },
-                        children: [
-                          {
-                            path: "edit",
-                            handle: { permissions: "product_tags:edit" },
-                            lazy: () =>
-                              import("./pages/settings/product-tags/[id]/edit"),
-                          },
-                        ],
                       },
                     ],
                   },
@@ -1533,14 +1525,6 @@ export function getRouteMap({
                             await import("./pages/settings/product-types/[id]");
                           return { Component: ProductTypeDetailPage };
                         },
-                        children: [
-                          {
-                            path: "edit",
-                            handle: { permissions: "product_types:edit" },
-                            lazy: () =>
-                              import("./pages/settings/product-types/[id]/edit"),
-                          },
-                        ],
                       },
                     ],
                   },

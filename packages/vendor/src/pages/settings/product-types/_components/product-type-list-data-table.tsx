@@ -1,5 +1,4 @@
 import { keepPreviousData } from "@tanstack/react-query"
-import { useMemo } from "react"
 import { useTranslation } from "react-i18next"
 
 import { _DataTable } from "@components/table/data-table"
@@ -25,7 +24,7 @@ export const ProductTypeListDataTable = () => {
   )
 
   const filters = useProductTypeTableFilters()
-  const columns = useColumns()
+  const columns = useProductTypeTableColumns()
 
   const { table } = useDataTable({
     columns,
@@ -63,14 +62,5 @@ export const ProductTypeListDataTable = () => {
       pagination
       search
     />
-  )
-}
-
-const useColumns = () => {
-  const base = useProductTypeTableColumns()
-
-  return useMemo(
-    () => [...base],
-    [base]
   )
 }
