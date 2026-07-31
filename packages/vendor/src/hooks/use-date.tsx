@@ -44,5 +44,6 @@ export const useDate = () => {
   return {
     getFullDate,
     getRelativeDate,
+    locale,
   }
 }

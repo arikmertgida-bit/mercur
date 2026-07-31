@@ -25,6 +25,7 @@ import { KeyboundForm } from "@components/utilities/keybound-form/keybound-form"
 import { useMe, useCreateInvite, useInvites } from "@hooks/api";
 import { useUserInviteTableQuery } from "@hooks/table/query";
 import { useDataTable } from "@hooks/use-data-table";
+import { useDate } from "@hooks/use-date";
 import { isFetchError } from "@lib/is-fetch-error";
 import { MemberInviteDTO, SellerRole } from "@mercurjs/types";
 
@@ -244,6 +245,7 @@ const columnHelper = createColumnHelper<MemberInviteDTO>();
 
 const useColumns = () => {
   const { t } = useTranslation();
+  const { locale } = useDate();
 
   return useMemo(
     () => [
@@ -272,6 +274,7 @@ const useColumns = () => {
                   date: format(
                     new Date(row.original.updated_at),
                     "dd MMM, yyyy",
+                    { locale },
                   ),
                 })}
               >
@@ -289,6 +292,7 @@ const useColumns = () => {
                   date: format(
                     new Date(row.original.expires_at),
                     "dd MMM, yyyy",
+                    { locale },
                   ),
                 })}
               >
@@ -312,10 +316,12 @@ const useColumns = () => {
                     from: format(
                       new Date(row.original.created_at),
                       "dd MMM, yyyy",
+                      { locale },
                     ),
                     until: format(
                       new Date(row.original.expires_at),
                       "dd MMM, yyyy",
+                      { locale },
                     ),
                   }}
                 />
@@ -329,6 +335,6 @@ const useColumns = () => {
         },
       }),
     ],
-    [t],
+    [t, locale],
   );
 };

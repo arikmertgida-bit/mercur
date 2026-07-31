@@ -3,6 +3,7 @@ import { PayoutDTO } from "@mercurjs/types";
 import { DisplayExtensionZone, DisplayField } from "@mercurjs/dashboard-shared";
 import { useTranslation } from "react-i18next";
 import { getStylizedAmount } from "@lib/money-amount-helpers";
+import { useDate } from "@hooks/use-date";
 
 const GENERAL_FIELD_IDS = [
   "display_id",
@@ -30,6 +31,7 @@ const payoutStatusColor = (status: string) => {
 
 export const PayoutGeneralSection = ({ payout }: { payout: PayoutDTO }) => {
   const { t } = useTranslation();
+  const { getFullDate } = useDate();
 
   const statusText = t(`payouts.status.${payout.status}`, {
     defaultValue:
@@ -66,13 +68,7 @@ export const PayoutGeneralSection = ({ payout }: { payout: PayoutDTO }) => {
             {t("fields.createdAt")}
           </Text>
           <Text size="small" leading="compact">
-            {new Date(payout.created_at).toLocaleDateString(undefined, {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-              hour: "2-digit",
-              minute: "2-digit",
-            })}
+            {getFullDate({ date: payout.created_at, includeTime: true })}
           </Text>
         </div>
       </DisplayField>
@@ -82,13 +78,7 @@ export const PayoutGeneralSection = ({ payout }: { payout: PayoutDTO }) => {
             {t("fields.updatedAt")}
           </Text>
           <Text size="small" leading="compact">
-            {new Date(payout.updated_at).toLocaleDateString(undefined, {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-              hour: "2-digit",
-              minute: "2-digit",
-            })}
+            {getFullDate({ date: payout.updated_at, includeTime: true })}
           </Text>
         </div>
       </DisplayField>
