@@ -179,7 +179,7 @@
     "modified": "Modificato",
     "added": "Aggiunto",
     "removed": "Rimosso",
-    "admin": "Admin",
+    "admin": "Amministratore",
     "store": "Negozio",
     "details": "Dettagli",
     "items_one": "{{count}} elemento",
@@ -1298,7 +1298,7 @@
     }
   },
   "giftCards": {
-    "domain": "Gift Cards",
+    "domain": "Carte Regalo",
     "editGiftCard": "Modifica Gift Card",
     "createGiftCard": "Crea Gift Card",
     "createGiftCardHint": "Crea manualmente una gift card che può essere utilizzata come metodo di pagamento nel tuo negozio.",
@@ -1755,7 +1755,7 @@
       "itemsToFulfill": "Articoli da adempiere",
       "create": "Crea Adempimento",
       "available": "Disponibile",
-      "inStock": "In stock",
+      "inStock": "In magazzino",
       "markAsShipped": "Segna come spedito",
       "markAsDelivered": "Segna come consegnato",
       "itemsToFulfillDesc": "Scegli articoli e quantità da adempiere",

@@ -3313,7 +3313,7 @@
       "revokedByLabel": "Được thu hồi bởi",
       "revokedAtLabel": "Thời gian thu hồi",
       "createdByLabel": "Được tạo bởi",
-      "tokenLabel": "Token"
+      "tokenLabel": "Khóa"
     }
   },
   "returnReasons": {
