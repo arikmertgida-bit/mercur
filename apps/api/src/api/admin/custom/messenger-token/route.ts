@@ -1,4 +1,5 @@
 import { AuthenticatedMedusaRequest, MedusaResponse } from "@medusajs/framework/http"
+import { MedusaError } from "@medusajs/framework/utils"
 import jwt from "jsonwebtoken"
 
 const rawJwtSecret = process.env.JWT_SECRET
@@ -14,12 +15,17 @@ const JWT_SECRET: string = rawJwtSecret
  * with the messenger service. Signed with the same JWT_SECRET the
  * messenger backend uses.
  *
+ * Throws instead of hand-rolling `res.json({ error })` so the response goes
+ * through `adminAwareErrorHandler` (apps/api/src/lib/admin-error-i18n) and
+ * comes back in the admin's selected panel language instead of always
+ * English.
+ *
  * Security:
  * - Protected by Medusa's admin session middleware
  * - Token expires in 8 hours
  * - Payload only carries the fields messenger needs
  */
-type MessengerTokenResponse = { token: string } | { error: string }
+type MessengerTokenResponse = { token: string }
 
 export async function GET(
   req: AuthenticatedMedusaRequest,
@@ -29,8 +35,10 @@ export async function GET(
   const actorType = req.auth_context?.actor_type ?? "user"
 
   if (!actorId) {
-    res.status(401).json({ error: "Authenticated actor not found" })
-    return
+    throw new MedusaError(
+      MedusaError.Types.UNAUTHORIZED,
+      "Authenticated actor not found"
+    )
   }
 
   const payload = {

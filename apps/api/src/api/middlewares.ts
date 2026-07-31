@@ -1,4 +1,6 @@
 import { defineMiddlewares } from "@medusajs/medusa";
+import { errorHandler as defaultErrorHandler } from "@medusajs/framework/http";
+import type { MedusaErrorHandlerFunction } from "@medusajs/framework/http";
 
 import { adminProductReportsMiddlewares } from "./admin/product-reports/middlewares";
 import { storeProductReportsMiddlewares } from "./store/product-reports/middlewares";
@@ -30,9 +32,31 @@ import { storeSearchSuggestMiddlewares } from "./store/search/suggest/middleware
 import { storeCampaignsMiddlewares } from "./store/campaigns/middlewares";
 import { vendorFollowersMiddlewares } from "./vendor/followers/middlewares";
 import { vendorAwareErrorHandler } from "../lib/vendor-error-i18n";
+import { adminAwareErrorHandler } from "../lib/admin-error-i18n";
+
+const fallbackErrorHandler = defaultErrorHandler();
+
+/**
+ * Dispatches to the vendor- or admin-aware translator by path prefix, since
+ * `defineMiddlewares` only accepts a single `errorHandler`. Each translator
+ * already falls back to `defaultErrorHandler` internally for its own "en"
+ * case; anything outside both prefixes (store routes, etc.) goes straight
+ * to the default handler here.
+ */
+const scopedErrorHandler: MedusaErrorHandlerFunction = (error, req, res, next) => {
+    if (req.path.startsWith("/vendor")) {
+        vendorAwareErrorHandler(error, req, res, next);
+        return;
+    }
+    if (req.path.startsWith("/admin")) {
+        adminAwareErrorHandler(error, req, res, next);
+        return;
+    }
+    fallbackErrorHandler(error, req, res, next);
+};
 
 export default defineMiddlewares({
-    errorHandler: vendorAwareErrorHandler,
+    errorHandler: scopedErrorHandler,
     routes: [
         ...storeWishlistMiddlewares,
         ...adminWishlistMiddlewares,

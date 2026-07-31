@@ -420,9 +420,9 @@
     "errors": {
       "fixError": "Napraw błąd",
       "count_one": "{{count}} błąd",
-      "count_other": "{{count}} błędów",
-      "numberOfKeys_few": "{{count}} błędy",
-      "numberOfKeys_many": "{{count}} błędów"
+      "count_few": "{{count}} błędy",
+      "count_many": "{{count}} błędów",
+      "count_other": "{{count}} błędów"
     }
   },
   "filters": {
