@@ -488,7 +488,7 @@
         "variants": "Моля, изберете поне един вариант.",
         "options": "Моля, създайте поне една опция.",
         "uniqueSku": "SKU трябва да е уникален.",
-        "requiredAttribute": "This attribute is required.",
+        "requiredAttribute": "Този атрибут е задължителен.",
         "primaryCategoryRequired": "Изисква се основна категория",
         "categoryRequired": "Моля, изберете категория",
         "titleRequired": "Заглавието е задължително",

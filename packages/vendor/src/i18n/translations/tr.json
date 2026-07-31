@@ -493,7 +493,7 @@
         "variants": "Lütfen en az bir varyant seçin.",
         "options": "Lütfen en az bir seçenek oluşturun.",
         "uniqueSku": "SKU benzersiz olmalıdır.",
-        "requiredAttribute": "This attribute is required.",
+        "requiredAttribute": "Bu özellik zorunludur.",
         "shippingProfileRequired": "Lütfen bir kargo profili seçin.",
         "priceRequired": "Lütfen bu varyant için en az bir para biriminde fiyat girin.",
         "stockRequired": "Lütfen bu varyant için en az bir lokasyonda stok miktarı girin.",

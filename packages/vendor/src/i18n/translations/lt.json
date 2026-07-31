@@ -488,7 +488,7 @@
         "variants": "Pasirinkite bent vieną variantą.",
         "options": "Sukurkite bent vieną pasirinkimą.",
         "uniqueSku": "SKU turi būti unikalus.",
-        "requiredAttribute": "This attribute is required.",
+        "requiredAttribute": "Šis atributas yra privalomas.",
         "primaryCategoryRequired": "Būtina pagrindinė kategorija",
         "categoryRequired": "Pasirinkite kategoriją",
         "titleRequired": "Būtinas pavadinimas",
@@ -740,7 +740,7 @@
         "label": "Plotis"
       },
       "length": {
-        "label": "Length"
+        "label": "Ilgis"
       },
       "height": {
         "label": "Aukštis"

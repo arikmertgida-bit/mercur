@@ -488,7 +488,7 @@
         "variants": "Pilih setidaknya satu varian.",
         "options": "Buat setidaknya satu opsi.",
         "uniqueSku": "SKU harus unik.",
-        "requiredAttribute": "This attribute is required.",
+        "requiredAttribute": "Atribut ini wajib diisi.",
         "primaryCategoryRequired": "Kategori utama wajib diisi",
         "categoryRequired": "Silakan pilih kategori",
         "titleRequired": "Judul wajib diisi",

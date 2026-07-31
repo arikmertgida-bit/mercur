@@ -488,7 +488,7 @@
         "variants": "請至少選擇一個變體。",
         "options": "請至少建立一個選項。",
         "uniqueSku": "SKU 必須是唯一的。",
-        "requiredAttribute": "This attribute is required.",
+        "requiredAttribute": "此屬性為必填項目。",
         "primaryCategoryRequired": "必須選擇主要分類",
         "categoryRequired": "請選擇分類",
         "titleRequired": "必須填寫標題",

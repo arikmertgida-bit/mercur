@@ -488,7 +488,7 @@
         "variants": "Seleciona pelo menos uma variante.",
         "options": "Cria pelo menos uma opção.",
         "uniqueSku": "O SKU deve ser único.",
-        "requiredAttribute": "This attribute is required.",
+        "requiredAttribute": "Este atributo é obrigatório.",
         "primaryCategoryRequired": "A categoria principal é obrigatória",
         "categoryRequired": "Selecione uma categoria",
         "titleRequired": "O título é obrigatório",
@@ -2547,7 +2547,7 @@
           "description": "Uma promoção padrão"
         },
         "buyget": {
-          "title": "Buy Get",
+          "title": "Compre e Ganhe",
           "description": "Promoção compra X e recebe Y"
         }
       },

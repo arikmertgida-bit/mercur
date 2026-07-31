@@ -488,7 +488,7 @@
         "variants": "Vui lòng chọn ít nhất một biến thể.",
         "options": "Vui lòng tạo ít nhất một tùy chọn.",
         "uniqueSku": "SKU phải là duy nhất.",
-        "requiredAttribute": "This attribute is required.",
+        "requiredAttribute": "Thuộc tính này là bắt buộc.",
         "primaryCategoryRequired": "Danh mục chính là bắt buộc",
         "categoryRequired": "Vui lòng chọn danh mục",
         "titleRequired": "Tiêu đề là bắt buộc",

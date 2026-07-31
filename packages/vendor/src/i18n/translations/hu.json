@@ -13,12 +13,12 @@
     "apply": "Alkalmaz",
     "range": "Tartomány",
     "search": "Keresés",
-    "of": "of",
+    "of": "/",
     "results": "eredmények",
     "pages": "oldalak",
     "next": "Következő",
     "prev": "Előző",
-    "is": "is",
+    "is": "van",
     "timeline": "Idővonal",
     "success": "Sikeres",
     "warning": "Figyelmeztetés",
@@ -228,7 +228,7 @@
       "pageShortcut": "Ugrás",
       "settingShortcut": "Beállítások",
       "commandShortcut": "Parancsok",
-      "then": "then",
+      "then": "majd",
       "navigation": {
         "goToOrders": "Rendelések",
         "goToProducts": "Termékek",
@@ -488,7 +488,7 @@
         "variants": "Kérjük, válasszon legalább egy variánst.",
         "options": "Kérjük, adjon hozzá legalább egy termékopciót.",
         "uniqueSku": "A SKU értéknek egyedinek kell lennie.",
-        "requiredAttribute": "This attribute is required.",
+        "requiredAttribute": "Ez az attribútum kötelező.",
         "primaryCategoryRequired": "Az elsődleges kategória kötelező",
         "categoryRequired": "Kérjük, válasszon kategóriát",
         "titleRequired": "A cím kötelező",
@@ -2286,7 +2286,7 @@
         },
         "operators": {
           "in": "in",
-          "on": "on",
+          "on": "Ekkor",
           "and": "és"
         },
         "placeholders": {

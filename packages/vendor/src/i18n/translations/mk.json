@@ -488,7 +488,7 @@
         "variants": "Изберете барем една варијанта.",
         "options": "Ве молиме креирајте барем една опција.",
         "uniqueSku": "SKU мора да биде единствен.",
-        "requiredAttribute": "This attribute is required.",
+        "requiredAttribute": "Овој атрибут е задолжителен.",
         "primaryCategoryRequired": "Примарната категорија е задолжителна",
         "categoryRequired": "Изберете категорија",
         "titleRequired": "Насловот е задолжителен",
