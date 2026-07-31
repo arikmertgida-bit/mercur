@@ -488,7 +488,7 @@
         "variants": "Por favor, selecione pelo menos uma variante.",
         "options": "Por favor, crie pelo menos uma opção.",
         "uniqueSku": "SKU deve ser único.",
-        "requiredAttribute": "This attribute is required.",
+        "requiredAttribute": "Este atributo é obrigatório.",
         "primaryCategoryRequired": "A categoria principal é obrigatória",
         "categoryRequired": "Selecione uma categoria",
         "titleRequired": "O título é obrigatório",

@@ -488,7 +488,7 @@
         "variants": "Prosím vyberte alespoň jednu variantu.",
         "options": "Prosím vytvořte alespoň jednu možnost.",
         "uniqueSku": "SKU musí být jedinečné.",
-        "requiredAttribute": "This attribute is required.",
+        "requiredAttribute": "Tento atribut je povinný.",
         "primaryCategoryRequired": "Primární kategorie je povinná",
         "categoryRequired": "Vyberte prosím kategorii",
         "titleRequired": "Název je povinný",

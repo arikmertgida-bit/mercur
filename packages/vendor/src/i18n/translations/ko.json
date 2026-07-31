@@ -488,7 +488,7 @@
         "variants": "최소 하나의 변형을 선택해주세요.",
         "options": "최소 하나의 옵션을 생성해주세요.",
         "uniqueSku": "SKU는 고유해야 합니다.",
-        "requiredAttribute": "This attribute is required.",
+        "requiredAttribute": "이 속성은 필수입니다.",
         "primaryCategoryRequired": "기본 카테고리는 필수입니다",
         "categoryRequired": "카테고리를 선택해 주세요",
         "titleRequired": "제목은 필수입니다",

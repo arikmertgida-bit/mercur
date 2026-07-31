@@ -488,7 +488,7 @@
         "variants": "Επιλέξτε τουλάχιστον μία παραλλαγή.",
         "options": "Δημιουργήστε τουλάχιστον μία επιλογή.",
         "uniqueSku": "Το SKU πρέπει να είναι μοναδικό.",
-        "requiredAttribute": "This attribute is required.",
+        "requiredAttribute": "Αυτό το χαρακτηριστικό είναι υποχρεωτικό.",
         "primaryCategoryRequired": "Η κύρια κατηγορία είναι υποχρεωτική",
         "categoryRequired": "Παρακαλούμε επιλέξτε κατηγορία",
         "titleRequired": "Ο τίτλος είναι υποχρεωτικός",
@@ -1239,8 +1239,8 @@
         "description": "There are no customer groups to display."
       },
       "filtered": {
-        "heading": "No results",
-        "description": "No customer groups match the current filter criteria."
+        "heading": "Δεν βρέθηκαν αποτελέσματα",
+        "description": "Καμία ομάδα πελατών δεν πληροί τα τρέχοντα κριτήρια φιλτραρίσματος."
       }
     },
     "create": {

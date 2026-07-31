@@ -488,7 +488,7 @@
         "variants": "โปรดเลือกตัวเลือกอย่างน้อยหนึ่งตัวเลือก",
         "options": "โปรดสร้างตัวเลือกอย่างน้อยหนึ่งตัวเลือก",
         "uniqueSku": "รหัส SKU ต้องไม่ซ้ำกัน",
-        "requiredAttribute": "This attribute is required.",
+        "requiredAttribute": "จำเป็นต้องระบุคุณลักษณะนี้",
         "primaryCategoryRequired": "จำเป็นต้องเลือกหมวดหมู่หลัก",
         "categoryRequired": "กรุณาเลือกหมวดหมู่",
         "titleRequired": "จำเป็นต้องกรอกชื่อ",

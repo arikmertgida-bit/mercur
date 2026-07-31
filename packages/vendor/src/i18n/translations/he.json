@@ -488,7 +488,7 @@
         "variants": "אנא בחר לפחות וריאנט אחד.",
         "options": "אנא צור לפחות אפשרות אחת.",
         "uniqueSku": "מק״ט חייב להיות ייחודי.",
-        "requiredAttribute": "This attribute is required.",
+        "requiredAttribute": "מאפיין זה הוא שדה חובה.",
         "primaryCategoryRequired": "נדרשת קטגוריה ראשית",
         "categoryRequired": "יש לבחור קטגוריה",
         "titleRequired": "נדרשת כותרת",

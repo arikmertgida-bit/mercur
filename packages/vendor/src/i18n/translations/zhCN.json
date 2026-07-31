@@ -367,16 +367,16 @@
       "andLabel": "和"
     },
     "sorting": {
-      "alphabeticallyAsc": "A to Z",
-      "alphabeticallyDesc": "Z to A",
+      "alphabeticallyAsc": "A 到 Z",
+      "alphabeticallyDesc": "Z 到 A",
       "dateAsc": "按最新的",
       "dateDesc": "按最旧的"
     },
     "radio": {
-      "yes": "Yes",
-      "no": "No",
-      "true": "True",
-      "false": "False"
+      "yes": "是",
+      "no": "否",
+      "true": "真",
+      "false": "假"
     },
     "addFilter": "添加筛选",
     "collapse": {
@@ -488,7 +488,7 @@
         "variants": "请至少选择一个变体。",
         "options": "请至少创建一个选项。",
         "uniqueSku": "SKU 必须唯一。",
-        "requiredAttribute": "This attribute is required.",
+        "requiredAttribute": "此属性为必填项。",
         "primaryCategoryRequired": "主分类为必填项",
         "categoryRequired": "请选择一个分类",
         "titleRequired": "标题为必填项",

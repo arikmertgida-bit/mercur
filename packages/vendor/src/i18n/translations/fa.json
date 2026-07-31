@@ -488,7 +488,7 @@
         "variants": "لطفاً حداقل یک متغیر را انتخاب کنید.",
         "options": "لطفاً حداقل یک گزینه ایجاد کنید.",
         "uniqueSku": "SKU باید منحصر به فرد باشد.",
-        "requiredAttribute": "This attribute is required.",
+        "requiredAttribute": "این ویژگی الزامی است.",
         "primaryCategoryRequired": "دسته‌بندی اصلی الزامی است",
         "categoryRequired": "لطفاً یک دسته‌بندی انتخاب کنید",
         "titleRequired": "عنوان الزامی است",

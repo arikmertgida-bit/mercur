@@ -488,7 +488,7 @@
         "variants": "Дор хаяж нэг хувилбарыг сонгоно уу.",
         "options": "Дор хаяж нэг сонголт үүсгэ.",
         "uniqueSku": "SKU нь давтагдашгүй байх ёстой.",
-        "requiredAttribute": "This attribute is required.",
+        "requiredAttribute": "Энэ шинж чанарыг заавал бөглөх шаардлагатай.",
         "primaryCategoryRequired": "Үндсэн ангилал заавал шаардлагатай",
         "categoryRequired": "Ангилал сонгоно уу",
         "titleRequired": "Гарчиг заавал шаардлагатай",
