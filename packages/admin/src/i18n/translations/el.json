@@ -748,7 +748,7 @@
         "placeholder": "Ζεστό και άνετο"
       },
       "handle": {
-        "label": "Handle",
+        "label": "Αναγνωριστικό",
         "tooltip": "Το handle χρησιμοποιείται για αναφορά στο προϊόν στο κατάστημά σας. Εάν δεν έχει καθοριστεί, το handle θα δημιουργηθεί από τον τίτλο του προϊόντος.",
         "placeholder": "χειμωνιάτικο-μπουφάν"
       },
@@ -1019,7 +1019,7 @@
       "status": "Κατάσταση",
       "thumbnail": "Μικρογραφία",
       "title": "Τίτλος",
-      "handle": "Handle",
+      "handle": "Αναγνωριστικό",
       "created_at": "Δημιουργήθηκε",
       "updated_at": "Ενημερώθηκε"
     }
@@ -1332,7 +1332,7 @@
       "alreadyAddedTooltip": "Ο πελάτης είναι ήδη σε αυτήν την ομάδα πελατών.",
       "list": {
         "noRecordsMessage": "Αυτός ο πελάτης δεν ανήκει σε καμία ομάδα.",
-        "emptyTitle": "No customer groups"
+        "emptyTitle": "Δεν υπάρχουν ακόμη ομάδες πελατών"
       },
       "add": {
         "list": {
@@ -1410,12 +1410,12 @@
     "subtitle": "Οργανώστε τους πελάτες σε ομάδες. Οι ομάδες μπορούν να έχουν διαφορετικές προσφορές και τιμές.",
     "list": {
       "empty": {
-        "heading": "No customer groups",
-        "description": "There are no customer groups to display."
+        "heading": "Δεν υπάρχουν ομάδες πελατών",
+        "description": "Δεν υπάρχουν ομάδες πελατών προς εμφάνιση."
       },
       "filtered": {
-        "heading": "No results",
-        "description": "No customer groups match the current filter criteria."
+        "heading": "Δεν βρέθηκαν αποτελέσματα",
+        "description": "Καμία ομάδα πελατών δεν ταιριάζει με τα τρέχοντα κριτήρια φίλτρου."
       }
     },
     "create": {
@@ -3316,7 +3316,7 @@
       "revokedByLabel": "Ανακλήθηκε από",
       "revokedAtLabel": "Ανακλήθηκε στις",
       "createdByLabel": "Δημιουργήθηκε από",
-      "tokenLabel": "Token"
+      "tokenLabel": "Διακριτικό"
     }
   },
   "returnReasons": {
@@ -3554,7 +3554,7 @@
     "category": "Κατηγορία",
     "collection": "Συλλογή",
     "discountable": "Με δυνατότητα έκπτωσης",
-    "handle": "Handle",
+    "handle": "Αναγνωριστικό",
     "subtitle": "Υπότιτλος",
     "by": "Από",
     "item": "Αντικείμενο",
@@ -3657,7 +3657,7 @@
     "ean": "EAN",
     "upc": "UPC",
     "inventoryQuantity": "Ποσότητα αποθέματος",
-    "barcode": "Barcode",
+    "barcode": "Γραμμωτός κώδικας",
     "countryOfOrigin": "Χώρα προέλευσης",
     "material": "Υλικό",
     "thumbnail": "Μικρογραφία",
@@ -3823,7 +3823,7 @@
     },
     "fields": {
       "name": "Όνομα",
-      "handle": "Handle",
+      "handle": "Αναγνωριστικό",
       "description": "Περιγραφή",
       "type": "Τύπος",
       "filterable": "Δυνατότητα φιλτραρίσματος",
@@ -3953,7 +3953,7 @@
     },
     "fields": {
       "name": "Όνομα",
-      "handle": "Handle",
+      "handle": "Αναγνωριστικό",
       "email": "Email",
       "phone": "Τηλέφωνο",
       "logo": "Λογότυπο",

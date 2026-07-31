@@ -791,7 +791,7 @@
         "label": "Plotis"
       },
       "length": {
-        "label": "Length"
+        "label": "Ilgis"
       },
       "height": {
         "label": "Aukštis"
@@ -2417,7 +2417,7 @@
           "region": "Regionas",
           "stateOrTerritory": "Valstija/Teritorija",
           "department": "Skyrius",
-          "county": "County",
+          "county": "Grafystė",
           "territory": "Teritorija",
           "prefecture": "Prefektūra",
           "district": "Rajonas",

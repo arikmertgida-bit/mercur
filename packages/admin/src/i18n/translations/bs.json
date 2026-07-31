@@ -163,10 +163,10 @@
     "next": "Sljedeće",
     "prev": "Prethodno",
     "is": "je",
-    "timeline": "Timeline",
+    "timeline": "Vremenska linija",
     "success": "Uspiješno",
     "warning": "Upozorenje",
-    "tip": "Tip",
+    "tip": "Savjet",
     "error": "Greška",
     "select": "Odabir",
     "selected": "Odabrano",
@@ -179,7 +179,7 @@
     "modified": "Modifikovano",
     "added": "Dodano",
     "removed": "Uklonjeno",
-    "admin": "Admin",
+    "admin": "Administrator",
     "store": "Trgovina",
     "details": "Detalji",
     "items_one": "{{count}} stavka",
@@ -748,7 +748,7 @@
         "placeholder": "Topla i udobna"
       },
       "handle": {
-        "label": "Handle",
+        "label": "Identifikator",
         "tooltip": "Handle se koristi za referenciranje proizvoda u vašoj prodavnici. Ako nije specificiran, handle će biti generisan iz naziva proizvoda.",
         "placeholder": "zimska-jakna"
       },
@@ -2201,7 +2201,7 @@
     }
   },
   "shippingProfile": {
-    "domain": "Shipping Profiles",
+    "domain": "Shipping Profili",
     "subtitle": "Grupirajte proizvode sa sličnim zahtjevima za dostavu u profile.",
     "create": {
       "header": "Kreiraj Shipping Profil",
@@ -3574,7 +3574,7 @@
     "product_collections": "Kolekcije proizvoda",
     "status": "Status",
     "code": "Kod",
-    "value": "Value",
+    "value": "Vrijednost",
     "disabled": "Onemogućeno",
     "dynamic": "Dinamičko",
     "normal": "Normalno",
@@ -3670,8 +3670,8 @@
     "variant": "Varijanta",
     "id": "ID",
     "parent": "Roditelj",
-    "minSubtotal": "Min. Subtotal",
-    "maxSubtotal": "Max. Subtotal",
+    "minSubtotal": "Min. Međuzbroj",
+    "maxSubtotal": "Maks. Međuzbroj",
     "shippingProfile": "Profil dostave",
     "summary": "Sažetak",
     "details": "Detalji",

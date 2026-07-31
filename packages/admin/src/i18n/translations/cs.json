@@ -748,7 +748,7 @@
         "placeholder": "Teplé a útulné"
       },
       "handle": {
-        "label": "Handle",
+        "label": "Identifikátor",
         "tooltip": "Handle se používá k odkazování na produkt ve vašem obchodě. Pokud není specifikováno, handle bude vygenerováno z názvu produktu.",
         "placeholder": "zimní-bunda"
       },
@@ -3556,7 +3556,7 @@
     "category": "Kategorie",
     "collection": "Kolekce",
     "discountable": "Slevový",
-    "handle": "Handle",
+    "handle": "Identifikátor",
     "subtitle": "Podtitul",
     "by": "Od",
     "item": "Položka",

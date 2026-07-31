@@ -2577,7 +2577,7 @@
     },
     "form": {
       "required": "必填",
-      "and": "AND",
+      "and": "且",
       "selectAttribute": "選擇屬性",
       "campaign": {
         "existing": {

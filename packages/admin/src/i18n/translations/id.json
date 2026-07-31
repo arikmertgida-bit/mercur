@@ -1162,7 +1162,7 @@
         "inactive": "Tidak aktif"
       },
       "path": {
-        "label": "Path",
+        "label": "Jalur",
         "tooltip": "Tampilkan path lengkap kategori."
       },
       "children": {
@@ -2426,7 +2426,7 @@
           "region": "Wilayah",
           "stateOrTerritory": "Negara Bagian/Teritori",
           "department": "Departemen",
-          "county": "County",
+          "county": "Kabupaten",
           "territory": "Teritori",
           "prefecture": "Prefektur",
           "district": "Distrik",
@@ -2726,7 +2726,7 @@
     },
     "fields": {
       "name": "Nama",
-      "identifier": "Identifier",
+      "identifier": "Pengenal",
       "start_date": "Tanggal mulai",
       "end_date": "Tanggal akhir",
       "total_spend": "Anggaran terpakai",

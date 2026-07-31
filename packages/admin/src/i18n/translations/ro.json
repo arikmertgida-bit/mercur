@@ -161,7 +161,7 @@
     "results": "rezultate",
     "pages": "pagini",
     "next": "Următorul",
-    "prev": "Prev",
+    "prev": "Anteriorul",
     "is": "este",
     "timeline": "Cronologie",
     "success": "Succes",
@@ -484,8 +484,8 @@
       "andLabel": "şi"
     },
     "sorting": {
-      "alphabeticallyAsc": "A to Z",
-      "alphabeticallyDesc": "Z to A",
+      "alphabeticallyAsc": "A la Z",
+      "alphabeticallyDesc": "Z la A",
       "dateAsc": "Cel mai nou primul",
       "dateDesc": "Cel mai vechi primul"
     },
@@ -1590,7 +1590,7 @@
       "create": "Creați returnare",
       "confirm": "Confirmați retur",
       "confirmText": "Sunteți pe cale să confirmați o retur. ",
-      "inbound": "Inbound",
+      "inbound": "Intrare",
       "outbound": "Ieșire",
       "sendNotification": "Trimite o notificare",
       "sendNotificationHint": "Anunțați clientul despre retur.",
@@ -2599,9 +2599,9 @@
         }
       },
       "status": {
-        "label": "Status",
+        "label": "Stare",
         "draft": {
-          "title": "Draft",
+          "title": "Proiect",
           "description": "Clienții nu vor putea folosi încă codul"
         },
         "active": {
@@ -3507,7 +3507,7 @@
     "expired": "Expirat",
     "active": "Activ",
     "inactive": "Inactiv",
-    "draft": "Draft",
+    "draft": "Proiect",
     "enabled": "Activat",
     "disabled": "Dezactivat"
   },

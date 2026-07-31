@@ -374,7 +374,7 @@
         "goToLocations": "Localizações",
         "goToPublishableApiKeys": "Chaves de API Publicáveis",
         "goToSecretApiKeys": "Chaves de API Secretas",
-        "goToWorkflows": "Workflows",
+        "goToWorkflows": "Fluxos de trabalho",
         "goToProfile": "Perfil",
         "goToReturnReasons": "Motivos de devolução"
       }
@@ -748,7 +748,7 @@
         "placeholder": "Quente e confortável"
       },
       "handle": {
-        "label": "Handle",
+        "label": "Identificador",
         "tooltip": "O identificador é usado para referenciar o produto na loja. Se não for especificado, será gerado a partir do título do produto.",
         "placeholder": "casaco-inverno"
       },
@@ -996,7 +996,7 @@
       "status": "Estado",
       "thumbnail": "Miniatura",
       "title": "Título",
-      "handle": "Handle",
+      "handle": "Identificador",
       "created_at": "Criado",
       "updated_at": "Atualizado"
     },
@@ -2634,7 +2634,7 @@
           "description": "Uma promoção padrão"
         },
         "buyget": {
-          "title": "Buy Get",
+          "title": "Compre e Ganhe",
           "description": "Promoção compra X e recebe Y"
         }
       },
@@ -3403,7 +3403,7 @@
     "invalidLinkHint": "Tenta repor a palavra-passe novamente."
   },
   "workflowExecutions": {
-    "domain": "Workflows",
+    "domain": "Fluxos de trabalho",
     "subtitle": "Vê e acompanha execuções de workflows na tua aplicação Kayı.com.",
     "transactionIdLabel": "ID da transação",
     "workflowIdLabel": "ID do workflow",
@@ -3554,7 +3554,7 @@
     "category": "Categoria",
     "collection": "Coleção",
     "discountable": "Elegível para desconto",
-    "handle": "Handle",
+    "handle": "Identificador",
     "subtitle": "Subtítulo",
     "item": "Item",
     "qty": "qtd.",
@@ -3695,7 +3695,7 @@
     "promotionCode": "Código de promoção",
     "by": "Por",
     "serviceZone": "Zona de serviço",
-    "website": "Website",
+    "website": "Site",
     "premium": "Loja em destaque",
     "professional": "Profissional",
     "creditTotal": "Total de linhas de crédito",
@@ -3823,7 +3823,7 @@
     },
     "fields": {
       "name": "Nome próprio",
-      "handle": "Handle",
+      "handle": "Identificador",
       "description": "Descrição",
       "type": "Tipo",
       "filterable": "Filtrável",
@@ -3953,7 +3953,7 @@
     },
     "fields": {
       "name": "Nome próprio",
-      "handle": "Handle",
+      "handle": "Identificador",
       "email": "Email",
       "phone": "Telefone",
       "logo": "Logótipo",

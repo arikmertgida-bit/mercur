@@ -484,16 +484,16 @@
       "andLabel": "和"
     },
     "sorting": {
-      "alphabeticallyAsc": "A to Z",
-      "alphabeticallyDesc": "Z to A",
+      "alphabeticallyAsc": "A 到 Z",
+      "alphabeticallyDesc": "Z 到 A",
       "dateAsc": "按最新的",
       "dateDesc": "按最旧的"
     },
     "radio": {
-      "yes": "Yes",
-      "no": "No",
-      "true": "True",
-      "false": "False"
+      "yes": "是",
+      "no": "否",
+      "true": "是",
+      "false": "否"
     },
     "addFilter": "添加筛选"
   },
