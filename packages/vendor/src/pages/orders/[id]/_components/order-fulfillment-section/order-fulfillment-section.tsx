@@ -28,6 +28,7 @@ import {
   useMarkOrderFulfillmentAsDelivered,
 } from "@hooks/api/orders"
 import { useStockLocation } from "@hooks/api/stock-locations"
+import { useDate } from "@hooks/use-date"
 import { formatProvider } from "@lib/format-provider"
 import { getLocaleAmount } from "@lib/money-amount-helpers"
 import { FulfillmentSetType } from "@pages/settings/locations/_common/constants"
@@ -227,6 +228,7 @@ const Fulfillment = ({
   index: number
 }) => {
   const { t } = useTranslation()
+  const { locale } = useDate()
   const prompt = usePrompt()
   const navigate = useNavigate()
 
@@ -358,7 +360,8 @@ const Fulfillment = ({
           <Tooltip
             content={format(
               new Date(statusTimestamp),
-              "dd MMM, yyyy, HH:mm:ss"
+              "dd MMM, yyyy, HH:mm:ss",
+              { locale }
             )}
           >
             <StatusBadge color={statusColor} className="text-nowrap">
