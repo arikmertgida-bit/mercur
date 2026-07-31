@@ -1,33 +1,28 @@
 import { AuthenticatedMedusaRequest, MedusaResponse } from "@medusajs/framework/http"
+import { MedusaError } from "@medusajs/framework/utils"
 
-import { getCatchMessage } from "../../../../lib/errors"
 import { resolveAdminSupportUserId } from "../../../../lib/admin-support-contact"
-import { resolveKayiLogger } from "../../../../lib/logger"
+
+type VendorSupportConversationsResponse = { adminUserId: string }
 
 /**
  * GET /admin/custom/vendor-support-conversations
  *
  * Returns the admin user id for vendor support conversation listing.
+ *
+ * Throws instead of hand-rolling `res.json({ error })` so the response goes
+ * through `adminAwareErrorHandler` (apps/api/src/lib/admin-error-i18n) and
+ * comes back in the admin's selected panel language instead of always
+ * English.
  */
 export async function GET(
   req: AuthenticatedMedusaRequest,
-  res: MedusaResponse
+  res: MedusaResponse<VendorSupportConversationsResponse>
 ): Promise<void> {
-  const logger = resolveKayiLogger(req.scope)
-
-  try {
-    const adminUserId = await resolveAdminSupportUserId(req.scope)
-    if (!adminUserId) {
-      res.status(404).json({ error: "No admin user found" })
-      return
-    }
-
-    res.json({ adminUserId })
-  } catch (err) {
-    const message = getCatchMessage(
-      err instanceof Error ? err : typeof err === "string" ? err : null
-    )
-    logger.error(`[vendor-support-conversations] error: ${message}`)
-    res.status(500).json({ error: "Internal server error" })
+  const adminUserId = await resolveAdminSupportUserId(req.scope)
+  if (!adminUserId) {
+    throw new MedusaError(MedusaError.Types.NOT_FOUND, "Admin user not found")
   }
+
+  res.json({ adminUserId })
 }

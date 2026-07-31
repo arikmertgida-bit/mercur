@@ -3,6 +3,7 @@ import { Routes } from '@mercurjs/core/_generated'
 import config from 'virtual:mercur/config'
 
 import { assetUrl } from '../../utils/asset-url'
+import { i18n } from '../../components/utilities/i18n'
 import { clearAuthToken, getAuthHeaders } from './auth-token'
 
 export const backendUrl = config.backendUrl ?? 'http://localhost:9000'
@@ -11,6 +12,12 @@ export const sdk: InferClient<Routes> = createClient<Routes>({
   baseUrl: backendUrl,
   fetchOptions: {
     credentials: 'omit',
+    // A thunk (not a plain object) so every request picks up whatever
+    // language is active in the panel right now — the admin can switch
+    // languages mid-session without a page reload, and the backend's
+    // error translation (see apps/api/src/lib/admin-error-i18n) keys off
+    // this header on every call.
+    headers: () => ({ 'Accept-Language': i18n.language }),
   },
   headers: getAuthHeaders,
 })
@@ -60,6 +67,7 @@ export const fetchQuery = async (
       credentials: 'omit',
       headers: {
         'Content-Type': 'application/json',
+        'Accept-Language': i18n.language,
         ...getAuthHeaders(),
         ...headers,
       },

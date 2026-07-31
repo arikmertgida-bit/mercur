@@ -1,4 +1,5 @@
 import { AuthenticatedMedusaRequest, MedusaResponse } from "@medusajs/framework/http"
+import { MedusaError } from "@medusajs/framework/utils"
 import jwt from "jsonwebtoken"
 import type {} from "@mercurjs/core/types/seller-context"
 
@@ -30,7 +31,7 @@ const JWT_SECRET: string = rawJwtSecret
  * - Token expires in 8 hours
  * - Payload only carries the fields messenger needs
  */
-type MessengerTokenResponse = { token: string } | { error: string }
+type MessengerTokenResponse = { token: string }
 
 export async function GET(
   req: AuthenticatedMedusaRequest,
@@ -39,8 +40,10 @@ export async function GET(
   const sellerId = req.seller_context?.seller_id
 
   if (!sellerId) {
-    res.status(401).json({ error: "Authenticated seller not found" })
-    return
+    throw new MedusaError(
+      MedusaError.Types.UNAUTHORIZED,
+      "Authenticated seller not found"
+    )
   }
 
   const payload = {

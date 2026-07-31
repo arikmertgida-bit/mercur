@@ -8,6 +8,7 @@ import {
   it,
   ja,
   pl,
+  pt,
   ptBR,
   th,
   tr,
@@ -28,6 +29,7 @@ import {
   hu,
   bs,
   id,
+  zhTW,
 } from "date-fns/locale"
 import { Language } from "./types"
 
@@ -109,6 +111,12 @@ export const languages: Language[] = [
     display_name: "Português (Brasil)",
     ltr: true,
     date_locale: ptBR,
+  },
+  {
+    code: "ptPT",
+    display_name: "Português (Portugal)",
+    ltr: true,
+    date_locale: pt,
   },
   {
     code: "tr",
@@ -205,5 +213,11 @@ export const languages: Language[] = [
     display_name: "Nederlands",
     ltr: true,
     date_locale: nl,
+  },
+  {
+    code: "zhTW",
+    display_name: "繁體中文(臺灣)",
+    ltr: true,
+    date_locale: zhTW,
   },
 ]
