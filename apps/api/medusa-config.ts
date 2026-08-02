@@ -161,7 +161,7 @@ module.exports = withMercur({
       options: {
         providers: [
           {
-            resolve: '@medusajs/file-s3',
+            resolve: './src/modules/minio-file-provider',
             id: 'minio',
             options: {
               file_url: requireEnv('MINIO_FILE_URL'),
@@ -170,6 +170,10 @@ module.exports = withMercur({
               region: requireEnv('MINIO_REGION'),
               bucket: requireEnv('MINIO_BUCKET'),
               endpoint: requireEnv('MINIO_ENDPOINT'),
+              // Presigned URLs (getPresignedDownloadUrl/UploadUrl) are signed
+              // against this host instead of `endpoint` above, so links handed
+              // to browsers never contain the internal Docker service name.
+              public_endpoint: requireEnv('MINIO_PUBLIC_URL'),
               // MinIO requires path-style addressing; the AWS SDK v3 default
               // (virtual-hosted-style) only works against real AWS S3.
               additional_client_config: { forcePathStyle: true },

@@ -41,6 +41,7 @@ ENV AUTH_CORS=http://admin:7000,http://vendor:7001,http://localhost:7000,http://
 # defaults per standard Docker precedence.
 ENV MINIO_ENDPOINT=http://minio:9000
 ENV MINIO_FILE_URL=http://localhost:9002/build-placeholder
+ENV MINIO_PUBLIC_URL=http://localhost:9002
 ENV MINIO_ACCESS_KEY_ID=build-placeholder
 ENV MINIO_SECRET_ACCESS_KEY=build-placeholder
 ENV MINIO_BUCKET=build-placeholder
