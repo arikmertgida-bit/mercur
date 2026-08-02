@@ -42,3 +42,12 @@ export const listPriceListQueryConfig = {
   ...retrievePriceListQueryConfig,
   isList: true,
 }
+
+// The products listing is a JS-side aggregation (see fetchPriceListProductGroups)
+// rather than a direct query.graph projection, so it has no field-selection
+// defaults of its own — this queryConfig exists only to satisfy
+// validateAndTransformQuery's offset/limit/order parsing.
+export const listPriceListProductsQueryConfig = {
+  defaults: [],
+  isList: true,
+}

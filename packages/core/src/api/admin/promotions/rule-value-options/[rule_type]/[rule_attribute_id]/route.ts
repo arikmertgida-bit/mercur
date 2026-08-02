@@ -22,7 +22,9 @@ export const GET = async (
   const { rule_type: ruleType, rule_attribute_id: ruleAttributeId } = req.params
   const queryConfig = ruleQueryConfigurations[ruleAttributeId]
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
-  const filterableFields: Record<string, any> = { ...req.filterableFields }
+  const filterableFields: Record<string, string | string[] | undefined> = {
+    ...(req.filterableFields as Record<string, string | string[] | undefined>),
+  }
 
   if (filterableFields.value) {
     filterableFields[queryConfig.valueAttr] = filterableFields.value
@@ -45,10 +47,18 @@ export const GET = async (
     delete filterableFields.application_method_target_type
   }
 
-  // Offers are seller-owned; scope them to a store when the admin picks one
-  // (offer carries `seller_id` as a read-only column).
-  if (queryConfig.entryPoint === "offer" && req.query.seller_id) {
-    filterableFields.seller_id = req.query.seller_id
+  // A buyget promotion is scoped to one seller (see the "Store" field on
+  // the create form); once that seller is chosen, restrict the product
+  // picker to products actually belonging to them via the product_seller
+  // link — products carry no `seller_id` column of their own.
+  if (queryConfig.entryPoint === "product" && req.query.seller_id) {
+    const { data: sellerProducts } = await query.graph({
+      entity: "product_seller",
+      fields: ["product_id"],
+      filters: { seller_id: req.query.seller_id as string },
+    })
+
+    filterableFields.id = sellerProducts.map((r) => r.product_id)
   }
 
   const { data: rows, metadata } = await query.graph({
@@ -58,7 +68,7 @@ export const GET = async (
     pagination: req.queryConfig.pagination,
   })
 
-  const values = rows.map((r: any) => ({
+  const values = (rows as Array<Record<string, string>>).map((r) => ({
     label: r[queryConfig.labelAttr],
     value: r[queryConfig.valueAttr],
   }))

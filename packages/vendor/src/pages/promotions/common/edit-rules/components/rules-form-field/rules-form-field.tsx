@@ -57,6 +57,7 @@ export const RulesFormField = ({
     ruleType,
     formData.type,
     formData.application_method?.target_type,
+    formData.application_method?.type,
   );
 
   const filteredAttributes = attributes || [];
@@ -235,6 +236,12 @@ export const RulesFormField = ({
                       const fieldRuleOverrides = {
                         ...fieldRule,
                         disguised: currentAttributeOption?.disguised || false,
+                        // Without this, a freshly added disguised numeric
+                        // condition (Buy X Get Y's quantity fields) submits
+                        // its value as the raw string the number <Input>
+                        // produces instead of a number — the backend's Zod
+                        // schema rejects that outright.
+                        field_type: currentAttributeOption?.field_type,
                       };
 
                       if (currentAttributeOption?.operators?.length === 1) {

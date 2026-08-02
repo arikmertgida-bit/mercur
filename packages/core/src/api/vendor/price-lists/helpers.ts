@@ -5,6 +5,7 @@ import {
   ContainerRegistrationKeys,
   MedusaError,
 } from "@medusajs/framework/utils"
+import { PriceListProductGroupDTO } from "@mercurjs/types"
 
 export const validateSellerPriceList = async (
   scope: MedusaContainer,
@@ -82,6 +83,75 @@ export const transformPriceList = <T extends PriceListWithGraphRules>(
   }
 
   return priceList
+}
+
+type VariantWithProduct = {
+  product_id: string
+  product: PriceListProductGroupDTO["product"]
+}
+
+/**
+ * A price-list price has no `variant_id`/`offer_id` column of its own — it's
+ * reached only through the variant's `price_set`, the same indirection
+ * `fetchPriceListPriceIdsForProduct` resolves in the other direction. Used
+ * by the vendor price-list detail page to list (and paginate) the products
+ * that have at least one price in this list, with a per-product variant
+ * count.
+ */
+export const fetchPriceListProductGroups = async (
+  priceListId: string,
+  scope: MedusaContainer
+): Promise<PriceListProductGroupDTO[]> => {
+  const query = scope.resolve(ContainerRegistrationKeys.QUERY)
+
+  const { data: prices } = await query.graph({
+    entity: "price",
+    filters: { price_list_id: priceListId },
+    fields: ["price_set_id"],
+  })
+
+  const priceSetIds = Array.from(
+    new Set(
+      (prices as Array<{ price_set_id: string }>).map((p) => p.price_set_id)
+    )
+  )
+
+  if (!priceSetIds.length) {
+    return []
+  }
+
+  const { data: variants } = await query.graph({
+    entity: "product_variant",
+    filters: { price_set: { id: priceSetIds } },
+    fields: [
+      "product_id",
+      "product.title",
+      "product.thumbnail",
+      "product.status",
+      "product.created_at",
+      "product.updated_at",
+      "product.categories.id",
+      "product.categories.name",
+      "product.collection.id",
+      "product.collection.title",
+    ],
+  })
+
+  const groups = new Map<string, PriceListProductGroupDTO>()
+  for (const variant of variants as VariantWithProduct[]) {
+    const existing = groups.get(variant.product_id)
+    if (existing) {
+      existing.variant_count += 1
+    } else {
+      groups.set(variant.product_id, {
+        product_id: variant.product_id,
+        variant_count: 1,
+        product: variant.product,
+      })
+    }
+  }
+
+  return Array.from(groups.values())
 }
 
 export const fetchPriceListPriceIdsForProduct = async (

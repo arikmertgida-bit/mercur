@@ -20,7 +20,7 @@ import {
   createColumnHelper,
   type RowSelectionState,
 } from "@tanstack/react-table"
-import { useMemo, useRef, useState } from "react"
+import { useMemo, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { Link, useNavigate } from "react-router-dom"
 
@@ -29,9 +29,8 @@ import {
   PermissionAction,
   SectionNoAccess,
   isForbidden,
-  useCan,
 } from "@mercurjs/dashboard-shared"
-import { OfferDTO, ProductStatus } from "@mercurjs/types"
+import type { PriceListProductGroupDTO } from "@mercurjs/types"
 
 import { ActionMenu } from "@components/common/action-menu"
 import { PlaceholderCell } from "@components/table/table-cells/common/placeholder-cell"
@@ -48,8 +47,10 @@ import {
   ProductStatusHeader,
 } from "@components/table/table-cells/product/product-status-cell"
 import { _DataTable, type Filter } from "@components/table/data-table"
-import { usePriceList, usePriceListLinkProducts } from "@hooks/api/price-lists"
-import { useOffers } from "@hooks/api/offers"
+import {
+  usePriceListLinkProducts,
+  usePriceListProducts,
+} from "@hooks/api/price-lists"
 import { useDataTable } from "@hooks/use-data-table"
 import { useQueryParams } from "@hooks/use-query-params"
 
@@ -60,22 +61,6 @@ type PriceListProductSectionProps = {
 const PAGE_SIZE = 10
 const PREFIX = "plo"
 
-const OFFER_FIELDS =
-  "id,variant_id,product_id,product.title,product.thumbnail,product.status,product.categories.id,product.categories.name,product.collection.id,product.collection.title"
-
-const getPriceOfferId = (price: unknown): string | undefined => {
-  const p = price as {
-    rules?: Record<string, string>
-    price_rules?: { attribute?: string; value?: string }[]
-  }
-
-  if (p.rules?.offer_id) {
-    return p.rules.offer_id
-  }
-
-  return p.price_rules?.find((rule) => rule.attribute === "offer_id")?.value
-}
-
 export const PriceListProductSection = ({
   priceList,
 }: PriceListProductSectionProps) => {
@@ -85,103 +70,41 @@ export const PriceListProductSection = ({
 
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({})
 
-  // The detail route doesn't populate prices by default (and a price has no
-  // variant_id), so fetch the price rules explicitly to get the offer ids that
-  // this price list targets.
-  const { price_list: pricedList } = usePriceList(priceList.id, {
-    fields: "id,+prices.price_rules.attribute,+prices.price_rules.value",
-  })
+  const raw = useQueryParams(["q", "order", "offset"], PREFIX)
 
-  const offerIds = useMemo(() => {
-    const ids = new Set<string>()
-    for (const price of pricedList?.prices ?? []) {
-      const offerId = getPriceOfferId(price)
-      if (offerId) {
-        ids.add(offerId)
-      }
-    }
-    return Array.from(ids)
-  }, [pricedList])
-
-  // Search + date filters resolve server-side on /vendor/offers (which is
-  // strict — it accepts q + created_at/updated_at, not product attributes).
-  const raw = useQueryParams(
-    ["q", "order", "offset", "created_at", "updated_at"],
-    PREFIX
-  )
-
-  const canViewOffers = useCan("offers")
-
-  const { offers, isLoading, isError, error } = useOffers(
+  const { products, count, isLoading, isError, error } = usePriceListProducts(
+    priceList.id,
     {
-      id: offerIds,
-      limit: offerIds.length || 1,
-      fields: OFFER_FIELDS,
-      order: raw.order,
       ...(raw.q ? { q: raw.q } : {}),
-      ...(raw.created_at ? { created_at: JSON.parse(raw.created_at) } : {}),
-      ...(raw.updated_at ? { updated_at: JSON.parse(raw.updated_at) } : {}),
+      ...(raw.order ? { order: raw.order } : {}),
+      offset: raw.offset ? Number(raw.offset) : 0,
+      limit: PAGE_SIZE,
     },
-    {
-      placeholderData: keepPreviousData,
-      enabled: offerIds.length > 0 && canViewOffers,
-    }
+    { placeholderData: keepPreviousData }
   )
 
-  // One row per product (single seller); the Variants column shows how many of
-  // that product's offers are in this price list.
-  const groupedOffers = useMemo(() => {
-    const groups = new Map<string, OfferDTO>()
-    for (const offer of (offers ?? []) as OfferDTO[]) {
-      const key = offer.product_id
-      const existing = groups.get(key)
-      if (existing) {
-        existing.variant_count = (existing.variant_count ?? 0) + 1
-        ;(existing.offer_ids ??= []).push(offer.id)
-      } else {
-        groups.set(key, {
-          ...offer,
-          id: key,
-          variant_count: 1,
-          offer_ids: [offer.id],
-        })
-      }
-    }
-    return Array.from(groups.values())
-  }, [offers])
-
-  const groupToProduct = useRef<Record<string, string>>({})
-  for (const group of groupedOffers) {
-    groupToProduct.current[group.id] = group.product_id
-  }
-
-  const selectedProductIds = () =>
-    Array.from(
-      new Set(
-        Object.keys(rowSelection)
-          .map((groupId) => groupToProduct.current[groupId])
-          .filter(Boolean)
-      )
-    )
+  const groupedProducts = products ?? []
 
   const columns = useColumns(priceList)
-  const filters = useOfferSectionFilters()
+  const filters = useProductSectionFilters()
   const { mutateAsync } = usePriceListLinkProducts(priceList.id)
 
   const { table } = useDataTable({
-    data: groupedOffers,
-    count: groupedOffers.length,
+    data: groupedProducts,
+    count: count ?? 0,
     columns,
     enablePagination: true,
     enableRowSelection: true,
     pageSize: PAGE_SIZE,
-    getRowId: (row) => row.id,
+    getRowId: (row) => row.product_id,
     rowSelection: {
       state: rowSelection,
       updater: setRowSelection,
     },
     prefix: PREFIX,
   })
+
+  const selectedProductIds = () => Object.keys(rowSelection)
 
   const handleDelete = async () => {
     const productIds = selectedProductIds()
@@ -236,7 +159,7 @@ export const PriceListProductSection = ({
                     label: t("priceLists.products.actions.editPrices"),
                     to: "products/edit",
                     icon: <PencilSquare />,
-                    disabled: groupedOffers.length === 0,
+                    disabled: groupedProducts.length === 0,
                     disabledTooltip: t(
                       "priceLists.products.actions.editPricesDisabled"
                     ),
@@ -266,7 +189,7 @@ export const PriceListProductSection = ({
           </PermissionAction>
         </div>
       </div>
-      {(offerIds.length > 0 && !canViewOffers) || isForbidden(error) ? (
+      {isForbidden(error) ? (
         <SectionNoAccess />
       ) : isError ? (
         <div className="flex items-center gap-x-2 px-6 py-4" data-testid="price-list-product-section-error">
@@ -280,10 +203,10 @@ export const PriceListProductSection = ({
           table={table}
           columns={columns}
           filters={filters}
-          count={groupedOffers.length}
+          count={count ?? 0}
           pageSize={PAGE_SIZE}
           isLoading={isLoading}
-          navigateTo={(row) => `/offers/${row.original.product_id}`}
+          navigateTo={(row) => `/products/${row.original.product_id}`}
           orderBy={[
             { key: "created_at", label: t("fields.createdAt") },
             { key: "updated_at", label: t("fields.updatedAt") },
@@ -313,7 +236,7 @@ export const PriceListProductSection = ({
   )
 }
 
-const useOfferSectionFilters = (): Filter[] => {
+const useProductSectionFilters = (): Filter[] => {
   const { t } = useTranslation()
   return [
     { label: t("fields.createdAt"), key: "created_at", type: "date" },
@@ -321,11 +244,11 @@ const useOfferSectionFilters = (): Filter[] => {
   ]
 }
 
-const OfferRowAction = ({
-  offer,
+const ProductRowAction = ({
+  group,
   priceList,
 }: {
-  offer: OfferDTO
+  group: PriceListProductGroupDTO
   priceList: HttpTypes.AdminPriceList
 }) => {
   const { t } = useTranslation()
@@ -345,7 +268,7 @@ const OfferRowAction = ({
     }
 
     mutateAsync(
-      { remove: [offer.product_id] },
+      { remove: [group.product_id] },
       {
         onSuccess: () => {
           toast.success(
@@ -366,7 +289,7 @@ const OfferRowAction = ({
               icon: <PencilSquare />,
               permission: "price_lists:edit",
               label: t("priceLists.products.actions.editPrices"),
-              to: `products/edit?ids[]=${offer.product_id}`,
+              to: `products/edit?ids[]=${group.product_id}`,
             },
           ],
         },
@@ -385,12 +308,12 @@ const OfferRowAction = ({
   )
 }
 
-const columnHelper = createColumnHelper<OfferDTO>()
+const columnHelper = createColumnHelper<PriceListProductGroupDTO>()
 
 const useColumns = (priceList: HttpTypes.AdminPriceList) => {
   const { t } = useTranslation()
 
-  return useMemo<ColumnDef<OfferDTO>[]>(
+  return useMemo<ColumnDef<PriceListProductGroupDTO>[]>(
     () => [
       columnHelper.display({
         id: "select",
@@ -415,13 +338,13 @@ const useColumns = (priceList: HttpTypes.AdminPriceList) => {
         ),
       }),
       columnHelper.display({
-        id: "offer",
+        id: "product",
         header: () => <ProductHeader />,
         cell: ({ row }) => (
           <ProductCell
             product={{
-              title: row.original.product?.title ?? "",
-              thumbnail: row.original.product?.thumbnail ?? null,
+              title: row.original.product.title,
+              thumbnail: row.original.product.thumbnail ?? null,
             }}
           />
         ),
@@ -431,7 +354,7 @@ const useColumns = (priceList: HttpTypes.AdminPriceList) => {
         header: () => <CategoryHeader />,
         cell: ({ row }) => (
           <CategoryCell
-            categories={(row.original.product?.categories ?? undefined) as never}
+            categories={(row.original.product.categories ?? undefined) as never}
           />
         ),
       }),
@@ -449,7 +372,7 @@ const useColumns = (priceList: HttpTypes.AdminPriceList) => {
           }
           return (
             <Text size="small" leading="compact" className="truncate">
-              {t("offers.fields.variantsCount", { count })}
+              {t("priceLists.fields.variantsCount", { count })}
             </Text>
           )
         },
@@ -458,17 +381,21 @@ const useColumns = (priceList: HttpTypes.AdminPriceList) => {
         id: "status",
         header: () => <ProductStatusHeader />,
         cell: ({ row }) => {
-          const status = row.original.product?.status
+          const status = row.original.product.status
           if (!status) {
             return <PlaceholderCell />
           }
-          return <ProductStatusCell status={status as ProductStatus} />
+          return (
+            <ProductStatusCell
+              status={status as HttpTypes.AdminProductStatus}
+            />
+          )
         },
       }),
       columnHelper.display({
         id: "actions",
         cell: ({ row }) => (
-          <OfferRowAction offer={row.original} priceList={priceList} />
+          <ProductRowAction group={row.original} priceList={priceList} />
         ),
       }),
     ],

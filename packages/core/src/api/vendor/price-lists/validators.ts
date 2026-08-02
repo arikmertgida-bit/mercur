@@ -63,6 +63,19 @@ export const VendorGetPriceListPricesParams = createFindParams({
   limit: 50,
 })
 
+export type VendorGetPriceListProductsParamsType = z.infer<
+  typeof VendorGetPriceListProductsParams
+>
+export const VendorGetPriceListProductsParams = createFindParams({
+  offset: 0,
+  limit: 10,
+}).merge(
+  z.object({
+    q: z.string().optional(),
+    order: z.string().optional(),
+  })
+)
+
 export type VendorCreatePriceListType = z.infer<typeof VendorCreatePriceList>
 export const VendorCreatePriceList = z.object({
   title: z.string(),

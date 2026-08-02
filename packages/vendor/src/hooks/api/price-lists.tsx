@@ -4,7 +4,6 @@ import {
   InferClientOutput,
 } from "@mercurjs/client";
 import {
-  QueryKey,
   UseMutationOptions,
   UseQueryOptions,
   useMutation,
@@ -214,15 +213,20 @@ export const usePriceListLinkProducts = (
 
 export const usePriceListProducts = (
   id: string,
-  query?: Record<string, string | number>,
+  query?: InferClientInput<typeof sdk.vendor.priceLists.$id.products.query>,
   options?: Omit<
-    UseQueryOptions<any, Error, any, QueryKey>,
+    UseQueryOptions<
+      unknown,
+      ClientError,
+      InferClientOutput<typeof sdk.vendor.priceLists.$id.products.query>
+    >,
     "queryKey" | "queryFn"
   >
 ) => {
   const { data, ...rest } = useQuery({
-    queryFn: () => sdk.vendor.products.query({ price_list_id: [id], ...query }),
-    queryKey: [PRICE_LISTS_QUERY_KEY, id, "products"],
+    queryFn: () =>
+      sdk.vendor.priceLists.$id.products.query({ $id: id, ...query }),
+    queryKey: [PRICE_LISTS_QUERY_KEY, id, "products", query],
     ...options,
   });
 

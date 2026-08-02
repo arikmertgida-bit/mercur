@@ -18,6 +18,7 @@ import {
   VendorCreatePriceListPrice,
   VendorGetPriceListParams,
   VendorGetPriceListPricesParams,
+  VendorGetPriceListProductsParams,
   VendorGetPriceListsParams,
   VendorUpdatePriceList,
   VendorUpdatePriceListPrice,
@@ -101,6 +102,17 @@ export const vendorPriceListsMiddlewares: MiddlewareRoute[] = [
       validateAndTransformQuery(
         VendorGetPriceListParams,
         QueryConfig.retrievePriceListQueryConfig
+      ),
+    ],
+  },
+  {
+    method: ["GET"],
+    matcher: "/vendor/price-lists/:id/products",
+    middlewares: [
+      requirePermission("price_lists", "view"),
+      validateAndTransformQuery(
+        VendorGetPriceListProductsParams,
+        QueryConfig.listPriceListProductsQueryConfig
       ),
     ],
   },

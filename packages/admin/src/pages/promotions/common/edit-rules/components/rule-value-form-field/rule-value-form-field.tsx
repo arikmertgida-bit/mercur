@@ -77,7 +77,11 @@ export const RuleValueFormField = ({
     name: name,
   });
 
-  const isOfferAttribute = attribute?.id === "offer";
+  // A buyget promotion is scoped to one seller (see the "Store" field on
+  // the create form). When that's the case and the attribute being picked
+  // is a product, narrow the picker to that seller's own products (see the
+  // rule-value-options route) — for every other promotion type `seller_id`
+  // stays unset and the product picker is global, same as before.
   const sellerId = useWatch({
     control: form.control,
     name: "seller_id",
@@ -90,15 +94,14 @@ export const RuleValueFormField = ({
         $ruleAttributeId: attribute?.id,
         ...params,
         ...buildFilters(attribute?.id, store!),
-        ...(isOfferAttribute && sellerId ? { seller_id: sellerId } : {}),
+        ...(attribute?.id === "product" && sellerId ? { seller_id: sellerId } : {}),
         application_method_target_type: applicationMethodTargetType,
       });
     },
     enabled:
       !!attribute?.id &&
       ["select", "multiselect"].includes(attribute.field_type) &&
-      !isStoreLoading &&
-      (!isOfferAttribute || !!sellerId),
+      !isStoreLoading,
     getOptions: (data) => data.values,
     queryKey: ["rule-value-options", ruleType, attribute?.id, sellerId],
     defaultValue: watchValue,

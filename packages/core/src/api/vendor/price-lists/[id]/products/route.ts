@@ -10,8 +10,49 @@ import { HttpTypes as VendorHttpTypes } from "@mercurjs/types"
 import {
   fetchPriceList,
   fetchPriceListPriceIdsForProduct,
+  fetchPriceListProductGroups,
   validateSellerPriceList,
 } from "../../helpers"
+import { VendorGetPriceListProductsParamsType } from "../../validators"
+
+export const GET = async (
+  req: AuthenticatedMedusaRequest<VendorGetPriceListProductsParamsType>,
+  res: MedusaResponse<VendorHttpTypes.VendorPriceListProductsListResponse>
+) => {
+  const id = req.params.id
+  const sellerId = req.seller_context!.seller_id
+  const { q, order, offset = 0, limit = 10 } = req.validatedQuery
+
+  await validateSellerPriceList(req.scope, sellerId, id)
+
+  const allGroups = await fetchPriceListProductGroups(id, req.scope)
+
+  const filtered = q
+    ? allGroups.filter((group) =>
+        group.product.title.toLowerCase().includes(q.toLowerCase())
+      )
+    : allGroups
+
+  const sortKey = order?.replace(/^-/, "") as "created_at" | "updated_at" | undefined
+  if (sortKey === "created_at" || sortKey === "updated_at") {
+    const direction = order?.startsWith("-") ? -1 : 1
+    filtered.sort(
+      (a, b) =>
+        direction *
+        (new Date(a.product[sortKey]).getTime() -
+          new Date(b.product[sortKey]).getTime())
+    )
+  }
+
+  const paginated = filtered.slice(offset, offset + limit)
+
+  res.json({
+    products: paginated,
+    count: filtered.length,
+    offset,
+    limit,
+  })
+}
 
 export const POST = async (
   req: AuthenticatedMedusaRequest<HttpTypes.AdminLinkPriceListProducts>,

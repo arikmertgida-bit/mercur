@@ -47,31 +47,23 @@ export const GET = async (
     delete filterableFields.application_method_target_type
   }
 
-  const sellerScopedFilters = { seller_id: req.seller_context!.seller_id }
-
-  let idFilter: Record<string, unknown> = {}
   if (queryConfig.sellerScoped) {
-    if (queryConfig.entryPoint === "offer") {
-      idFilter = sellerScopedFilters
-    } else {
-      const { data: sellerResources } = await query.graph({
-        entity: `${queryConfig.entryPoint}_seller`,
-        fields: [`${queryConfig.entryPoint}_id`],
-        filters: sellerScopedFilters,
-      })
+    const { data: sellerResources } = await query.graph({
+      entity: `${queryConfig.entryPoint}_seller`,
+      fields: [`${queryConfig.entryPoint}_id`],
+      filters: {
+        seller_id: req.seller_context!.seller_id,
+      },
+    })
 
-      idFilter = {
-        id: sellerResources.map(r => r[`${queryConfig.entryPoint}_id`]),
-      }
-    }
+    filterableFields.id = sellerResources.map(
+      (r) => r[`${queryConfig.entryPoint}_id`]
+    )
   }
 
   const { data: rows, metadata } = await query.graph({
     entity: queryConfig.entryPoint,
-    filters: {
-      ...filterableFields,
-      ...idFilter,
-    },
+    filters: filterableFields,
     fields: [queryConfig.labelAttr, queryConfig.valueAttr],
     pagination: req.queryConfig.pagination,
   })

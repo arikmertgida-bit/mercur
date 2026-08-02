@@ -1,7 +1,7 @@
 export const requiredProductRule = {
-  id: "offer",
-  attribute: "items.metadata.offer_id",
-  attribute_label: "Offer",
+  id: "product",
+  attribute: "items.product.id",
+  attribute_label: "Product",
   operator: "eq",
   operator_label: "Equal",
   values: [],

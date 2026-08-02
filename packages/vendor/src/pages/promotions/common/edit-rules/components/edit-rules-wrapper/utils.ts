@@ -1,8 +1,11 @@
 import { PromotionRuleResponse } from "@medusajs/types"
 
-export const getRuleValue = (rule: PromotionRuleResponse) => {
+export const getRuleValue = (
+  rule: PromotionRuleResponse
+): string | number | string[] => {
   if (rule.field_type === "number") {
-    return parseInt(rule.values as string)
+    const rawValue = Array.isArray(rule.values) ? rule.values[0] : rule.values
+    return Number(rawValue)
   }
 
   return rule.values

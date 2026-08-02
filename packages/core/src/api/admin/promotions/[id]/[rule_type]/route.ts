@@ -32,10 +32,8 @@ export const GET = async (
   } = await query.graph({
     entity: "promotion",
     filters: { id },
-    fields: [...req.queryConfig.fields, "seller.id"],
+    fields: req.queryConfig.fields,
   })
-
-  const ownerSellerId = promotion?.seller?.id
 
   const ruleAttributes = getRuleAttributesMap({
     promotionType: promotion?.type || (req.query.promotion_type as any),
@@ -110,10 +108,6 @@ export const GET = async (
 
     const filters: Record<string, any> = {
       [queryConfig.valueAttr]: promotionRule.values?.map((v: any) => v.value),
-    }
-
-    if (queryConfig.entryPoint === "offer" && ownerSellerId) {
-      filters.seller_id = ownerSellerId
     }
 
     const { data: rows } = await query.graph({
