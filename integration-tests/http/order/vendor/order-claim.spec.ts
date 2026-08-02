@@ -394,6 +394,29 @@ medusaIntegrationTestRunner({
                     expect(response.status).toEqual(404)
                 })
 
+                it("rejects claim-items referencing a line item from another seller's order", async () => {
+                    const ownOrder = await completeCartCheckout(seller1Seed.variant.id)
+                    const otherOrder = await completeCartCheckout(seller2Seed.variant.id)
+
+                    const claimId = (
+                        await api.post(
+                            `/vendor/claims`,
+                            { type: "refund", order_id: ownOrder.id },
+                            seller1Seed.headers
+                        )
+                    ).data.claim.id
+
+                    const response = await api
+                        .post(
+                            `/vendor/claims/${claimId}/claim-items`,
+                            { items: [{ id: otherOrder.items[0].id, quantity: 1 }] },
+                            seller1Seed.headers
+                        )
+                        .catch((e) => e.response)
+
+                    expect(response.status).toEqual(400)
+                })
+
                 it("rejects inbound items from non-owning seller", async () => {
                     const order = await completeCartCheckout(seller1Seed.variant.id)
                     const claimId = (
