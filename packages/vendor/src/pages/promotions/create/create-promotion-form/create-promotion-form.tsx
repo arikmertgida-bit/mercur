@@ -111,11 +111,16 @@ export const CreatePromotionForm = () => {
         ...rules.filter(r => !!r.disguised)
       ];
 
-      const applicationMethodRuleData: Record<any, any> = {};
+      const applicationMethodRuleData: Record<
+        string,
+        string | number | string[]
+      > = {};
 
       for (const rule of disguisedRules) {
+        const rawValue = Array.isArray(rule.values) ? rule.values[0] : rule.values;
+
         applicationMethodRuleData[rule.attribute] =
-          rule.field_type === 'number' ? parseInt(rule.values as string) : rule.values;
+          rule.field_type === 'number' ? Number(rawValue) : rule.values;
       }
 
       const buildRulesData = (
@@ -143,7 +148,8 @@ export const CreatePromotionForm = () => {
           application_method: {
             ...applicationMethodData,
             ...applicationMethodRuleData,
-            target_rules: buildRulesData(targetRulesData)
+            target_rules: buildRulesData(targetRulesData),
+            buy_rules: buildRulesData(buyRulesData)
           },
           is_automatic: is_automatic === 'true'
         },
@@ -169,6 +175,13 @@ export const CreatePromotionForm = () => {
 
       if (errorInPromotionTab) {
         toast.error(t('promotions.errors.promotionTabError'));
+
+        setTabState({
+          [Tab.TYPE]: 'completed',
+          [Tab.PROMOTION]: 'in-progress',
+          [Tab.CAMPAIGN]: 'not-started'
+        });
+        setTab(Tab.PROMOTION);
       }
     }
   );
@@ -367,7 +380,7 @@ export const CreatePromotionForm = () => {
     const ruleValue = watchCurrencyRule.values;
 
     if (!Array.isArray(ruleValue) && currencyCode !== ruleValue) {
-      form.setValue('application_method.currency_code', ruleValue as string);
+      form.setValue('application_method.currency_code', String(ruleValue));
     }
   }
 

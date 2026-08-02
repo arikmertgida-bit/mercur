@@ -141,6 +141,17 @@ const buyGetTargetRules = [
   },
 ]
 
+export type RuleAttributeDefinition = {
+  id: string
+  value: string
+  label: string
+  required: boolean
+  field_type: string
+  operators: { id: RuleOperator; value: RuleOperator; label: string }[]
+  disguised?: boolean
+  hydrate?: boolean
+}
+
 export const getRuleAttributesMap = ({
   promotionType,
   applicationMethodType,
@@ -149,8 +160,8 @@ export const getRuleAttributesMap = ({
   promotionType?: PromotionTypeValues
   applicationMethodType?: ApplicationMethodTypeValues
   applicationMethodTargetType?: ApplicationMethodTargetTypeValues
-}) => {
-  const map: Record<string, any[]> = {
+}): Record<string, RuleAttributeDefinition[]> => {
+  const map: Record<string, RuleAttributeDefinition[]> = {
     rules: [...ruleAttributes],
     "target-rules":
       applicationMethodTargetType ===

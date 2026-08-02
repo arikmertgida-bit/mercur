@@ -45,7 +45,10 @@ export const EditRulesWrapper = ({
     rulesToRemove?: { id: string; disguised: boolean; attribute: string }[],
   ) => {
     return async function (data: { rules: PromotionRuleResponse[] }) {
-      const applicationMethodData: Record<any, any> = {};
+      const applicationMethodData: Record<
+        string,
+        string | number | string[] | null
+      > = {};
       const { rules: allRules = [] } = data;
       const disguisedRules = allRules.filter((rule) => rule.disguised);
       const disguisedRulesToRemove =

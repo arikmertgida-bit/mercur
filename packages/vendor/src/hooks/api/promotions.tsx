@@ -15,8 +15,10 @@ import { queryKeysFactory } from "../../lib/query-key-factory";
 import { campaignsQueryKeys } from "./campaigns";
 import {
   ApplicationMethodTargetTypeValues,
+  ApplicationMethodTypeValues,
   PromotionTypeValues,
 } from "@medusajs/types";
+import { HttpTypes } from "@mercurjs/types";
 
 const PROMOTIONS_QUERY_KEY = "promotions" as const;
 export const promotionsQueryKeys = {
@@ -30,11 +32,13 @@ export const promotionsQueryKeys = {
     ruleType: string,
     promotionType?: string,
     applicationMethodTargetType?: string,
+    applicationMethodType?: string,
   ) => [
     PROMOTIONS_QUERY_KEY,
     ruleType,
     promotionType,
     applicationMethodTargetType,
+    applicationMethodType,
   ],
   listRuleValues: (
     ruleType: string,
@@ -112,6 +116,7 @@ export const usePromotionRuleAttributes = (
   ruleType: string,
   promotionType?: string,
   applicationMethodTargetType?: string,
+  applicationMethodType?: string,
   options?: UseQueryOptions<
     unknown,
     ClientError,
@@ -125,6 +130,7 @@ export const usePromotionRuleAttributes = (
       ruleType,
       promotionType,
       applicationMethodTargetType,
+      applicationMethodType,
     ),
     queryFn: async () =>
       sdk.vendor.promotions.ruleAttributeOptions.$ruleType.query({
@@ -132,6 +138,8 @@ export const usePromotionRuleAttributes = (
         promotion_type: promotionType as PromotionTypeValues,
         application_method_target_type:
           applicationMethodTargetType as ApplicationMethodTargetTypeValues,
+        application_method_type:
+          applicationMethodType as ApplicationMethodTypeValues,
       }),
     ...options,
   });
@@ -354,7 +362,11 @@ export const usePromotionUpdateRules = (
 
 export const useRemovePromotionFromCampaign = (
   promotionId: string,
-  options?: UseMutationOptions<any, Error, void>,
+  options?: UseMutationOptions<
+    HttpTypes.VendorPromotionResponse,
+    Error,
+    void
+  >,
 ) => {
   return useMutation({
     mutationFn: () =>

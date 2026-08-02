@@ -62,5 +62,41 @@ export const CreatePromotionSchema = z
       message: i18n.t("validation.requiredField"),
     }
   )
+  .refine(
+    (data) => {
+      if (data.application_method.type !== "fixed") {
+        return true
+      }
+
+      return !!data.application_method.currency_code
+    },
+    {
+      path: ["root"],
+      message: i18n.t("promotions.errors.promotionTabError"),
+    }
+  )
+  .refine(
+    (data) => {
+      if (data.type !== "buyget") {
+        return true
+      }
+
+      const hasBuyCondition = data.application_method.buy_rules.some(
+        (rule) => !rule.disguised
+      )
+      const hasMinQuantity = data.application_method.buy_rules.some(
+        (rule) => rule.disguised && rule.attribute === "buy_rules_min_quantity" && !!rule.values
+      )
+      const hasApplyToQuantity = data.application_method.target_rules.some(
+        (rule) => rule.disguised && rule.attribute === "apply_to_quantity" && !!rule.values
+      )
+
+      return hasBuyCondition && hasMinQuantity && hasApplyToQuantity
+    },
+    {
+      path: ["root"],
+      message: i18n.t("promotions.errors.promotionTabError"),
+    }
+  )
 
 export type CreatePromotionSchemaType = z.infer<typeof CreatePromotionSchema>

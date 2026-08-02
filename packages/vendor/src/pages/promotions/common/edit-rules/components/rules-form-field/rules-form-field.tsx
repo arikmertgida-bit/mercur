@@ -48,10 +48,14 @@ export const RulesFormField = ({
 }: RulesFormFieldType) => {
   const { t } = useTranslation();
   const formData = form.getValues();
-  const { attributes } = usePromotionRuleAttributes(ruleType, formData.type);
+  const { attributes } = usePromotionRuleAttributes(
+    ruleType,
+    formData.type,
+    formData.application_method?.target_type,
+    formData.application_method?.type,
+  );
 
-  const filteredAttributes =
-    attributes?.filter(({ id }) => id === "country" || id === "product") || [];
+  const filteredAttributes = attributes || [];
 
   const { fields, append, remove, update, replace } = useFieldArray({
     control: form.control,
@@ -176,11 +180,25 @@ export const RulesFormField = ({
                       const currentAttributeOption = attributeOptions.find(
                         (ao) => ao.id === e,
                       );
+                      const operators = currentAttributeOption?.operators || [];
 
                       update(index, {
                         ...fieldRule,
                         values: [],
+                        // Single-operator attributes (e.g. Currency Code, the
+                        // Buy X Get Y quantity fields) render their operator as
+                        // a read-only label instead of a Select — nothing else
+                        // ever sets `operator`, so without this the value
+                        // picker stays permanently disabled (it's gated on
+                        // `operator` being set).
+                        operator: operators.length === 1 ? operators[0].value : '',
                         disguised: currentAttributeOption?.disguised || false,
+                        // Without this, a freshly added disguised numeric
+                        // condition (Buy X Get Y's quantity fields) submits
+                        // its value as the raw string the number <Input>
+                        // produces instead of a number — the backend's Zod
+                        // schema rejects that outright.
+                        field_type: currentAttributeOption?.field_type,
                       });
                       onChange(e);
                     };
