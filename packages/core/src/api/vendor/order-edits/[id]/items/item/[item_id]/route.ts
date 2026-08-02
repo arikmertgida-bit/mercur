@@ -4,6 +4,10 @@ import {
   AuthenticatedMedusaRequest,
   MedusaResponse,
 } from "@medusajs/framework/http"
+import {
+  ContainerRegistrationKeys,
+  MedusaError,
+} from "@medusajs/framework/utils"
 
 import { VendorPostOrderEditsUpdateItemQuantityReqType } from "../../../../validators"
 
@@ -12,6 +16,23 @@ export const POST = async (
   res: MedusaResponse<HttpTypes.AdminOrderEditPreviewResponse>
 ) => {
   const { id, item_id } = req.params
+
+  const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
+  const {
+    data: [order],
+  } = await query.graph({
+    entity: "order",
+    fields: ["id", "items.id"],
+    filters: { id },
+  })
+
+  const itemBelongsToOrder = order?.items?.some((item) => item.id === item_id)
+  if (!itemBelongsToOrder) {
+    throw new MedusaError(
+      MedusaError.Types.NOT_FOUND,
+      `Item with id: ${item_id} was not found in order: ${id}`
+    )
+  }
 
   const { result } = await orderEditUpdateItemQuantityWorkflow(req.scope).run({
     input: {
