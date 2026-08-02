@@ -118,8 +118,14 @@ export default class PayoutModuleService extends MedusaService({
                     ...input.context
                 },
                 data: {
-                    ...payoutAccount.data,
-                    ...input.data
+                    // `input.data` is caller-supplied (vendor API request body) and
+                    // may only add fields the provider doesn't already know (e.g.
+                    // refresh_url/return_url) — persisted `payoutAccount.data` (which
+                    // carries the provider's own account identity, e.g. Stripe's
+                    // `id`) must win on conflicts so a seller can never redirect the
+                    // onboarding call at another seller's connected account.
+                    ...input.data,
+                    ...payoutAccount.data
                 }
             }
         )
