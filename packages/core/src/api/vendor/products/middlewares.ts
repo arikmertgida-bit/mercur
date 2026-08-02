@@ -9,7 +9,11 @@ import {
   validateAndTransformQuery,
 } from "@medusajs/framework"
 
-import { ensureSellerOwnsProduct, getSellerVisibleProductIds } from "./helpers"
+import {
+  ensureSellerOwnsProduct,
+  ensureSellerOwnsVariant,
+  getSellerVisibleProductIds,
+} from "./helpers"
 import {
   vendorProductQueryConfig,
   vendorProductVariantQueryConfig,
@@ -57,6 +61,30 @@ const ensureSellerOwnsProductMiddleware = async (
   const sellerId = req.seller_context!.seller_id
 
   await ensureSellerOwnsProduct(req.scope, sellerId, [req.params.id])
+
+  return next()
+}
+
+/**
+ * `ensureSellerOwnsProductMiddleware` only proves the seller owns
+ * `:id` — it says nothing about `:variant_id`, a second URL param on the
+ * same route. Without this, a seller could reference another seller's
+ * variant id while the `:id` segment still points at a product they
+ * legitimately own, and mutate or delete it.
+ */
+const ensureSellerOwnsVariantMiddleware = async (
+  req: AuthenticatedMedusaRequest,
+  _res: MedusaResponse,
+  next: MedusaNextFunction
+) => {
+  const sellerId = req.seller_context!.seller_id
+
+  await ensureSellerOwnsVariant(
+    req.scope,
+    sellerId,
+    req.params.id,
+    req.params.variant_id
+  )
 
   return next()
 }
@@ -162,7 +190,7 @@ export const vendorProductsMiddlewares: MiddlewareRoute[] = [
     method: ["POST"],
     matcher: "/vendor/products/:id/variants/:variant_id",
     middlewares: [
-      ensureSellerOwnsProductMiddleware,
+      ensureSellerOwnsVariantMiddleware,
       validateAndTransformBody(VendorUpdateProductVariant),
       validateAndTransformQuery(
         VendorGetProductParams,
@@ -173,7 +201,7 @@ export const vendorProductsMiddlewares: MiddlewareRoute[] = [
   {
     method: ["DELETE"],
     matcher: "/vendor/products/:id/variants/:variant_id",
-    middlewares: [ensureSellerOwnsProductMiddleware],
+    middlewares: [ensureSellerOwnsVariantMiddleware],
   },
 
   {

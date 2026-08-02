@@ -76,3 +76,35 @@ export const ensureSellerOwnsProduct = async (
     )
   }
 }
+
+/**
+ * Guards the `/vendor/products/:id/variants/:variant_id` sub-resource: a
+ * seller owning `productId` does not imply they own an arbitrary
+ * `variantId` supplied in the same URL — the variant must also resolve
+ * under that exact product, or a seller could target another seller's
+ * variant by id substitution while the product-id segment still points at
+ * a product they legitimately own.
+ */
+export const ensureSellerOwnsVariant = async (
+  scope: MedusaContainer,
+  sellerId: string,
+  productId: string,
+  variantId: string
+): Promise<void> => {
+  await ensureSellerOwnsProduct(scope, sellerId, [productId])
+
+  const query = scope.resolve(ContainerRegistrationKeys.QUERY)
+
+  const { data: variants } = await query.graph({
+    entity: "variant",
+    fields: ["id"],
+    filters: { id: variantId, product_id: productId },
+  })
+
+  if (!variants.length) {
+    throw new MedusaError(
+      MedusaError.Types.NOT_FOUND,
+      `Variant with id ${variantId} was not found`
+    )
+  }
+}

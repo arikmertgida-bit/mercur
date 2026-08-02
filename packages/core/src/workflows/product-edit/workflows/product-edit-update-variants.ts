@@ -13,7 +13,10 @@ import {
   JsonValue,
 } from "@mercurjs/types"
 
-import { validateNoPendingProductChangeStep } from "../steps"
+import {
+  validateNoPendingProductChangeStep,
+  validateVariantsBelongToProductStep,
+} from "../steps"
 import { stageProductChangeWorkflow } from "./stage-product-change"
 
 export type ProductEditVariantAddOperation = {
@@ -79,6 +82,34 @@ export const productEditUpdateVariantsWorkflow: ReturnWorkflow<
       ),
     )
 
+    const variantIdsToValidate = transform({ input }, ({ input }) =>
+      Array.from(
+        new Set(
+          (input.operations ?? [])
+            .filter(
+              (
+                op,
+              ): op is
+                | {
+                    type: "update"
+                    variant_id: string
+                    fields: Record<string, unknown>
+                  }
+                | { type: "remove"; variant_id: string } =>
+                op.type === "update" || op.type === "remove",
+            )
+            .map((op) => op.variant_id),
+        ),
+      ),
+    )
+
+    validateVariantsBelongToProductStep(
+      transform({ input, variantIdsToValidate }, ({ input, variantIdsToValidate }) => ({
+        product_id: input.product_id,
+        variant_ids: variantIdsToValidate,
+      })),
+    )
+
     const { data: currentVariants } = useQueryGraphStep({
       entity: "variant",
       fields: [
@@ -104,7 +135,7 @@ export const productEditUpdateVariantsWorkflow: ReturnWorkflow<
         "options.value",
         "options.option.title",
       ],
-      filters: { id: variantIdsToLoad },
+      filters: { id: variantIdsToLoad, product_id: input.product_id },
     }).config({ name: "pc-load-variants-for-diff" })
 
     const actions = transform(
