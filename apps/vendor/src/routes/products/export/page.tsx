@@ -14,6 +14,11 @@ function ExportProductsContent() {
         const a = document.createElement("a")
         a.href = data.url
         a.download = `products-export-${Date.now()}.csv`
+        // The file URL is cross-origin from the panel (MinIO's own host), so
+        // `download` alone won't stop the browser from navigating the panel
+        // tab away — open it separately instead.
+        a.target = "_blank"
+        a.rel = "noopener"
         a.click()
       }
       toast.success(t("productImportExport.exportSuccessToast"))

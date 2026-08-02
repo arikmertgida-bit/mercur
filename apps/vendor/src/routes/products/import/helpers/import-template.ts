@@ -42,8 +42,7 @@ const IMPORT_TEMPLATE_HEADER = [
   "Option 1 Value",
   "Option 2 Name",
   "Option 2 Value",
-  "Price USD",
-  "Price EUR",
+  "Price TRY",
 ]
 
 export const getImportTemplateContent = (): string => {
