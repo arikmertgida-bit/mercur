@@ -66,6 +66,10 @@ export async function updateFiles(
       );
     }
 
+    if (file.content === undefined) {
+      throw new Error(`File ${file.path} has no content to write.`);
+    }
+
     const content = await transformImports({
       filename: file.path,
       raw: file.content,

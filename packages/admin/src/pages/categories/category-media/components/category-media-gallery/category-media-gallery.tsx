@@ -1,5 +1,6 @@
 import {
   ArrowDownTray,
+  Photo,
   ThumbnailBadge,
   Trash,
   TriangleLeftMini,
@@ -157,6 +158,7 @@ const Canvas = ({
   curr: number
 }) => {
   const { t } = useTranslation()
+  const [erroredUrl, setErroredUrl] = useState<string | null>(null)
 
   if (media.length === 0) {
     return (
@@ -197,11 +199,18 @@ const Canvas = ({
               </Tooltip>
             )}
           </div>
-          <img
-            src={media[curr].url}
-            alt=""
-            className="object-fit shadow-elevation-card-rest max-h-[calc(100vh-200px)] w-auto rounded-xl object-contain"
-          />
+          {media[curr].url === erroredUrl ? (
+            <div className="flex h-[240px] w-[240px] items-center justify-center rounded-xl">
+              <Photo className="text-ui-fg-muted" />
+            </div>
+          ) : (
+            <img
+              src={media[curr].url}
+              alt=""
+              onError={() => setErroredUrl(media[curr].url)}
+              className="object-fit shadow-elevation-card-rest max-h-[calc(100vh-200px)] w-auto rounded-xl object-contain"
+            />
+          )}
         </div>
       </div>
     </div>
@@ -271,7 +280,7 @@ const Preview = ({
               )}
               key={item.id}
             >
-              <img src={item.url} alt="" className="size-full object-cover" />
+              <PreviewThumbnail url={item.url} />
             </button>
           )
         })}
@@ -286,5 +295,26 @@ const Preview = ({
         <TriangleRightMini className="rtl:rotate-180" />
       </IconButton>
     </div>
+  )
+}
+
+const PreviewThumbnail = ({ url }: { url: string }) => {
+  const [hasError, setHasError] = useState<boolean>(false)
+
+  if (hasError) {
+    return (
+      <div className="bg-ui-bg-component flex size-full items-center justify-center">
+        <Photo className="text-ui-fg-muted" />
+      </div>
+    )
+  }
+
+  return (
+    <img
+      src={url}
+      alt=""
+      onError={() => setHasError(true)}
+      className="size-full object-cover"
+    />
   )
 }
