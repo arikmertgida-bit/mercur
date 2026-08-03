@@ -17,10 +17,7 @@ const IDLE_POLL_INTERVAL_MS = 60_000
 
 /**
  * Routes reachable with zero session cookie — polling `/vendor/sellers/me`
- * here can never succeed and only spams the console with 401s. `/onboarding`
- * is deliberately excluded: it requires a session (post sign-up, pre
- * store-creation), which is exactly the "no store selected" case this hook
- * is meant to poll through.
+ * here can never succeed and only spams the console with 401s.
  */
 const UNAUTHENTICATED_ROUTES = ["/login", "/register", "/reset-password"]
 
@@ -32,8 +29,15 @@ const UNAUTHENTICATED_ROUTES = ["/login", "/register", "/reset-password"]
  * doomed request every poll tick. `navigate("/", ...)` on successful
  * selection moves off this route immediately, so the very next tick (or the
  * initial call right after) resolves normally with no added latency.
+ *
+ * `/onboarding` belongs here too: the wizard (`useOnboarding`) only creates
+ * the seller on its last step, and on success it immediately
+ * `navigate("/login", { replace: true })`s away — it never reads `sellerId`
+ * from this hook to react to that transition. Until that last step, no
+ * seller can possibly resolve, so every poll tick here was a guaranteed 401
+ * for as long as the member spends filling in the wizard.
  */
-const NO_SELLER_YET_ROUTES = ["/store-select"]
+const NO_SELLER_YET_ROUTES = ["/store-select", "/onboarding"]
 
 function isOnUnauthenticatedRoute(): boolean {
   return UNAUTHENTICATED_ROUTES.includes(window.location.pathname)

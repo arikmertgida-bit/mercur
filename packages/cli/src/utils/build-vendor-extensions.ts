@@ -85,7 +85,6 @@ export async function buildVendorExtensions(
           },
           output: {
             preserveModules: false,
-            interop: "auto",
             chunkFileNames: () => `_chunks/[name]-[hash]`,
           },
         },

@@ -261,7 +261,7 @@ export function isLocalFile(path: string) {
  */
 export function isUniversalRegistryItem(
   registryItem:
-    | Pick<z.infer<typeof registryItemSchema>, "files" | "type">
+    | Pick<z.infer<typeof registryItemSchema>, "files">
     | null
     | undefined
 ): boolean {

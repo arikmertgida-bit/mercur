@@ -169,8 +169,17 @@ export function createClient<TRoutes>(options: ClientOptions): InferClient<TRout
                 );
             }
 
-            const isJsonRequest = headers.get("accept")?.includes("application/json");
-            return isJsonRequest ? await response.json() : response;
+            // Some framework-level endpoints (e.g. Medusa's core auth
+            // reset-password route) reply `text/plain` ("Created") even
+            // though every request here asks for `application/json` via
+            // the `Accept` header above — the request header is a wish,
+            // not a guarantee. Trust the response's own `Content-Type`
+            // instead of our own request header, or `.json()` throws a
+            // `SyntaxError` on the plain-text body.
+            const isJsonResponse = response.headers
+                .get("content-type")
+                ?.includes("application/json");
+            return isJsonResponse ? await response.json() : response;
         });
     })
 
