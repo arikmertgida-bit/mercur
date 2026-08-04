@@ -175,7 +175,9 @@
       "rating": "Peringkat",
       "reference": "Referensi",
       "customerNote": "Catatan pelanggan",
-      "replyStatus": "Status Balasan"
+      "replyStatus": "Status Balasan",
+      "createdAt": "Dibuat pada",
+      "updatedAt": "Diperbarui pada"
     },
     "photos": "Foto",
     "noPhotos": "Tidak ada foto yang dilampirkan pada ulasan ini.",

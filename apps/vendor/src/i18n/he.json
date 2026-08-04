@@ -175,7 +175,9 @@
       "rating": "דירוג",
       "reference": "מזהה",
       "customerNote": "הערת לקוח",
-      "replyStatus": "סטטוס תגובה"
+      "replyStatus": "סטטוס תגובה",
+      "createdAt": "נוצר בתאריך",
+      "updatedAt": "עודכן בתאריך"
     },
     "photos": "תמונות",
     "noPhotos": "לא צורפו תמונות לביקורת זו.",

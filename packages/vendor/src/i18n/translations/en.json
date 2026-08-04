@@ -178,7 +178,9 @@
     "ok": "OK"
   },
   "operators": {
-    "in": "In"
+    "in": "In",
+    "eq": "Equals",
+    "notIn": "Not In"
   },
   "app": {
     "search": {
@@ -2737,6 +2739,17 @@
       "list": {
         "noRecordsMessage": "Add a condition to restrict what items the promotion applies to."
       }
+    },
+    "ruleAttributes": {
+      "productCategory": "Product Category",
+      "productCollection": "Product Collection",
+      "productType": "Product Type",
+      "productTag": "Product Tag",
+      "customerGroup": "Customer Group",
+      "shippingOptionType": "Shipping Option Type",
+      "currencyCode": "Currency Code",
+      "minQuantity": "Minimum Quantity",
+      "applyToQuantity": "Quantity to Apply To"
     }
   },
   "campaigns": {

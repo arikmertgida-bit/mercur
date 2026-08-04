@@ -175,7 +175,9 @@
       "rating": "Ocjena",
       "reference": "Referenca",
       "customerNote": "Napomena kupca",
-      "replyStatus": "Status odgovora"
+      "replyStatus": "Status odgovora",
+      "createdAt": "Kreirano",
+      "updatedAt": "Ažurirano"
     },
     "photos": "Fotografije",
     "noPhotos": "Uz ovu recenziju nisu priložene fotografije.",

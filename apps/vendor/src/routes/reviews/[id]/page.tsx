@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import {
   Button,
@@ -13,6 +13,7 @@ import {
 
 import {
   ImageLightbox,
+  Thumbnail,
   TwoColumnPageSkeleton,
   TwoColumnPage,
 } from "@mercurjs/dashboard-shared";
@@ -29,6 +30,8 @@ const ratingColor = (rating: number) => {
 };
 
 const ReviewGeneralSection = ({ review }: { review: ReviewDTO }) => {
+  const { t, i18n } = useTranslation();
+
   return (
     <Container className="divide-y p-0">
       <div className="flex items-center justify-between px-6 py-4">
@@ -41,17 +44,25 @@ const ReviewGeneralSection = ({ review }: { review: ReviewDTO }) => {
       </div>
       <div className="text-ui-fg-subtle grid grid-cols-2 items-center px-6 py-4">
         <Text size="small" leading="compact" weight="plus">
-          Reference
+          {t("reviews.columns.reference")}
         </Text>
-        <Text size="small" leading="compact">
-          {review.reference
-            ? review.reference.charAt(0).toUpperCase() + review.reference.slice(1)
-            : "-"}
-        </Text>
+        {review.reference === "product" && review.product ? (
+          <Link
+            to={`/products/${review.product.id}`}
+            className="flex items-center gap-x-2 overflow-hidden"
+          >
+            <Thumbnail src={review.product.thumbnail} alt={review.product.title} size="small" />
+            <span className="truncate text-sm">{review.product.title}</span>
+          </Link>
+        ) : (
+          <Text size="small" leading="compact">
+            {review.reference === "seller" ? t("store.domain") : "-"}
+          </Text>
+        )}
       </div>
       <div className="text-ui-fg-subtle grid grid-cols-2 items-start px-6 py-4">
         <Text size="small" leading="compact" weight="plus">
-          Customer Note
+          {t("reviews.columns.customerNote")}
         </Text>
         <Text size="small" leading="compact">
           {review.customer_note || "-"}
@@ -59,10 +70,10 @@ const ReviewGeneralSection = ({ review }: { review: ReviewDTO }) => {
       </div>
       <div className="text-ui-fg-subtle grid grid-cols-2 items-center px-6 py-4">
         <Text size="small" leading="compact" weight="plus">
-          Created At
+          {t("reviews.columns.createdAt")}
         </Text>
         <Text size="small" leading="compact">
-          {new Date(review.created_at).toLocaleDateString(undefined, {
+          {new Date(review.created_at).toLocaleDateString(i18n.language, {
             year: "numeric",
             month: "long",
             day: "numeric",
@@ -73,10 +84,10 @@ const ReviewGeneralSection = ({ review }: { review: ReviewDTO }) => {
       </div>
       <div className="text-ui-fg-subtle grid grid-cols-2 items-center px-6 py-4">
         <Text size="small" leading="compact" weight="plus">
-          Updated At
+          {t("reviews.columns.updatedAt")}
         </Text>
         <Text size="small" leading="compact">
-          {new Date(review.updated_at).toLocaleDateString(undefined, {
+          {new Date(review.updated_at).toLocaleDateString(i18n.language, {
             year: "numeric",
             month: "long",
             day: "numeric",

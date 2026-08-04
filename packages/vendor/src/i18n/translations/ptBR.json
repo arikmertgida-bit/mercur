@@ -178,7 +178,9 @@
     "ok": "OK"
   },
   "operators": {
-    "in": "Em"
+    "in": "Em",
+    "eq": "Igual a",
+    "notIn": "Não em"
   },
   "app": {
     "search": {
@@ -2602,6 +2604,17 @@
       "noRecordsTitle": "Não faz parte de uma campanha",
       "noRecordsMessage": "Adicione esta promoção a uma campanha existente",
       "addToCampaign": "Adicionar à campanha"
+    },
+    "ruleAttributes": {
+      "productCategory": "Categoria do produto",
+      "productCollection": "Coleção do produto",
+      "productType": "Tipo do produto",
+      "productTag": "Tag do produto",
+      "customerGroup": "Grupo de Clientes",
+      "shippingOptionType": "Tipo de opção de envio",
+      "currencyCode": "Código da moeda",
+      "minQuantity": "Quantidade Mínima",
+      "applyToQuantity": "Quantidade a aplicar"
     }
   },
   "campaigns": {

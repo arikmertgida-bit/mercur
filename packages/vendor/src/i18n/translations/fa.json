@@ -178,7 +178,9 @@
     "ok": "تأیید"
   },
   "operators": {
-    "in": "در"
+    "in": "در",
+    "eq": "برابر است با",
+    "notIn": "خارج از"
   },
   "app": {
     "search": {
@@ -492,8 +494,8 @@
         "primaryCategoryRequired": "دسته‌بندی اصلی الزامی است",
         "categoryRequired": "لطفاً یک دسته‌بندی انتخاب کنید",
         "titleRequired": "عنوان الزامی است",
-        "handleInvalidFormat": "هندل باید فقط شامل حروف کوچک، اعداد و خط تیره باشد",
-        "handleMustContainLetter": "هندل باید حداقل شامل یک حرف باشد",
+        "handleInvalidFormat": "شناسه باید فقط شامل حروف کوچک، اعداد و خط تیره باشد",
+        "handleMustContainLetter": "شناسه باید حداقل شامل یک حرف باشد",
         "requiredAttributeSelect": "این ویژگی توسط بازار الزامی شده است. لطفاً یک مقدار انتخاب کنید.",
         "requiredAttributeEnter": "این ویژگی توسط بازار الزامی شده است. لطفاً یک مقدار وارد کنید.",
         "requiredAttributeMultiSelect": "این ویژگی توسط بازار الزامی شده است. لطفاً حداقل یک مقدار انتخاب کنید.",
@@ -2602,6 +2604,17 @@
       "noRecordsTitle": "بخشی از کمپین نیست",
       "noRecordsMessage": "این تخفیف را به یک کمپین موجود اضافه کنید",
       "addToCampaign": "افزودن به کمپین"
+    },
+    "ruleAttributes": {
+      "productCategory": "دسته‌بندی محصول",
+      "productCollection": "مجموعه محصول",
+      "productType": "نوع محصول",
+      "productTag": "برچسب محصول",
+      "customerGroup": "گروه مشتریان",
+      "shippingOptionType": "نوع گزینه ارسال",
+      "currencyCode": "کد ارز",
+      "minQuantity": "حداقل تعداد",
+      "applyToQuantity": "تعداد قابل اعمال"
     }
   },
   "campaigns": {
@@ -2930,7 +2943,7 @@
       "localesUpdated": "زبان‌ها با موفقیت به‌روزرسانی شدند",
       "localesRemoved": "زبان‌ها با موفقیت از فروشگاه حذف شدند"
     },
-    "handleTooltip": "هندل به اسلاگ URL فروشگاه شما تبدیل می‌شود. برای تولید خودکار از روی نام، آن را خالی بگذارید.",
+    "handleTooltip": "شناسه به اسلاگ URL فروشگاه شما تبدیل می‌شود. برای تولید خودکار از روی نام، آن را خالی بگذارید.",
     "validation": {
       "nameRequired": "لطفاً یک نام وارد کنید",
       "emailRequired": "لطفاً یک ایمیل وارد کنید",
@@ -3591,7 +3604,7 @@
     "category": "دسته‌بندی",
     "collection": "مجموعه",
     "discountable": "قابل تخفیف",
-    "handle": "مدیریت",
+    "handle": "شناسه",
     "subtitle": "زیرعنوان",
     "by": "توسط",
     "item": "آیتم",
@@ -3775,7 +3788,7 @@
   "attributes": {
     "fields": {
       "name": "نام",
-      "handle": "مدیریت",
+      "handle": "شناسه",
       "required": "الزامی",
       "type": "نوع",
       "values": "مقادیر",
@@ -4094,7 +4107,7 @@
         "name": "نام",
         "email": "ایمیل",
         "handle": "شناسه",
-        "handleTooltip": "هندل به اسلاگ URL فروشگاه شما تبدیل می‌شود. برای تولید خودکار از روی نام، آن را خالی بگذارید.",
+        "handleTooltip": "شناسه به اسلاگ URL فروشگاه شما تبدیل می‌شود. برای تولید خودکار از روی نام، آن را خالی بگذارید.",
         "handlePlaceholder": "my-store",
         "currency": "ارز",
         "selectCurrency": "انتخاب",

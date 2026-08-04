@@ -175,7 +175,9 @@
       "rating": "评分",
       "reference": "参考编号",
       "customerNote": "客户备注",
-      "replyStatus": "回复状态"
+      "replyStatus": "回复状态",
+      "createdAt": "创建时间",
+      "updatedAt": "更新时间"
     },
     "photos": "照片",
     "noPhotos": "此评价未附带照片。",

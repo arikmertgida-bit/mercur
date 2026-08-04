@@ -4,6 +4,7 @@ import { initReactI18next } from "react-i18next";
 
 import { defaultI18nOptions } from "../../../i18n/config";
 import translations from "../../../i18n/translations";
+import { installKayiZodErrorMap } from "../../../lib/zod-error-map";
 import customI18nResources from "virtual:mercur/i18n";
 import config from "virtual:mercur/config";
 
@@ -58,6 +59,8 @@ export const I18n = () => {
       }),
       resources: mergedTranslations,
     });
+
+  installKayiZodErrorMap();
 
   return null;
 };

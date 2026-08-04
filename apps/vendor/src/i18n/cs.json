@@ -175,7 +175,9 @@
       "rating": "Hodnocení",
       "reference": "Reference",
       "customerNote": "Poznámka zákazníka",
-      "replyStatus": "Stav odpovědi"
+      "replyStatus": "Stav odpovědi",
+      "createdAt": "Vytvořeno",
+      "updatedAt": "Aktualizováno"
     },
     "photos": "Fotografie",
     "noPhotos": "K této recenzi nebyly přiloženy žádné fotografie.",

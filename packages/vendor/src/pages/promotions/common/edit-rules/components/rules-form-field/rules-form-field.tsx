@@ -15,7 +15,11 @@ import {
   usePromotionRules,
 } from "../../../../../../hooks/api";
 import { CreatePromotionSchemaType } from "../../../../promotion-create/components/create-promotion-form/form-schema";
-import { generateRuleAttributes } from "../edit-rules-form/utils";
+import {
+  generateRuleAttributes,
+  translateRuleAttributeLabel,
+  translateRuleOperatorLabel,
+} from "../edit-rules-form/utils";
 import { RuleValueFormField } from "../rule-value-form-field";
 import { requiredProductRule } from "./constants";
 
@@ -238,7 +242,7 @@ export const RulesFormField = ({
                                     value={c.value}
                                   >
                                     <span className="text-ui-fg-subtle">
-                                      {c.label}
+                                      {translateRuleAttributeLabel(t, c.id, c.label)}
                                     </span>
                                   </Select.Item>
                                 ))}
@@ -246,11 +250,15 @@ export const RulesFormField = ({
                             </Select>
                           ) : (
                             <DisabledField
-                              label={
+                              label={translateRuleAttributeLabel(
+                                t,
                                 attributeOptions?.find(
                                   (ao) => ao.value === fieldRule.attribute,
-                                )?.label || ""
-                              }
+                                )?.id,
+                                attributeOptions?.find(
+                                  (ao) => ao.value === fieldRule.attribute,
+                                )?.label || "",
+                              )}
                               field={field}
                             />
                           )}
@@ -273,7 +281,7 @@ export const RulesFormField = ({
 
                       const options =
                         currentAttributeOption?.operators?.map((o, idx) => ({
-                          label: o.label,
+                          label: translateRuleOperatorLabel(t, o.value, o.label),
                           value: o.value,
                           key: `${identifier}-operator-option-${idx}`,
                         })) || [];

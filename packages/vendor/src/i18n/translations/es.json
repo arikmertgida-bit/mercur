@@ -200,7 +200,9 @@
     "ok": "Aceptar"
   },
   "operators": {
-    "in": "En"
+    "in": "En",
+    "eq": "Igual a",
+    "notIn": "No en"
   },
   "app": {
     "search": {
@@ -514,8 +516,8 @@
         "primaryCategoryRequired": "La categoría principal es obligatoria",
         "categoryRequired": "Selecciona una categoría",
         "titleRequired": "El título es obligatorio",
-        "handleInvalidFormat": "El handle solo puede contener letras minúsculas, números y guiones",
-        "handleMustContainLetter": "El handle debe contener al menos una letra",
+        "handleInvalidFormat": "El identificador solo puede contener letras minúsculas, números y guiones",
+        "handleMustContainLetter": "El identificador debe contener al menos una letra",
         "requiredAttributeSelect": "El marketplace exige este atributo. Selecciona un valor.",
         "requiredAttributeEnter": "El marketplace exige este atributo. Introduce un valor.",
         "requiredAttributeMultiSelect": "El marketplace exige este atributo. Selecciona al menos un valor.",
@@ -719,8 +721,8 @@
         "placeholder": "Cálido y acogedor"
       },
       "handle": {
-        "label": "Manejador",
-        "tooltip": "El manejador se usa para hacer referencia al producto en tu tienda. Si no se especifica, el manejador será generado a partir del título del producto.",
+        "label": "Identificador",
+        "tooltip": "El identificador se usa para hacer referencia al producto en tu tienda. Si no se especifica, el identificador será generado a partir del título del producto.",
         "placeholder": "chaqueta-de-invierno"
       },
       "description": {
@@ -943,7 +945,7 @@
       "status": "Estado",
       "thumbnail": "Miniatura",
       "title": "Título",
-      "handle": "Manejador",
+      "handle": "Identificador",
       "created_at": "Creado",
       "updated_at": "Actualizado en"
     },
@@ -2624,6 +2626,17 @@
       "noRecordsTitle": "No forma parte de una campaña",
       "noRecordsMessage": "Añade esta promoción a una campaña existente",
       "addToCampaign": "Añadir a campaña"
+    },
+    "ruleAttributes": {
+      "productCategory": "Categoría de producto",
+      "productCollection": "Colección de producto",
+      "productType": "Tipo de producto",
+      "productTag": "Etiqueta de producto",
+      "customerGroup": "Grupo de clientes",
+      "shippingOptionType": "Tipo de opción de envío",
+      "currencyCode": "Código de moneda",
+      "minQuantity": "Cantidad mínima",
+      "applyToQuantity": "Cantidad a aplicar"
     }
   },
   "campaigns": {
@@ -2998,7 +3011,7 @@
       "localesRemoved": "Idiomas eliminados de la tienda exitosamente",
       "updatedTaxInclusivitySuccessfully": "Precios con impuestos incluidos actualizados exitosamente"
     },
-    "handleTooltip": "El handle se convierte en el slug de URL de tu tienda. Déjalo vacío para generarlo automáticamente a partir del nombre.",
+    "handleTooltip": "El identificador se convierte en el slug de URL de tu tienda. Déjalo vacío para generarlo automáticamente a partir del nombre.",
     "validation": {
       "nameRequired": "Introduce un nombre",
       "emailRequired": "Introduce un correo electrónico",
@@ -3659,7 +3672,7 @@
     "category": "Categoría",
     "collection": "Colección",
     "discountable": "Descontable",
-    "handle": "Manejo",
+    "handle": "Identificador",
     "subtitle": "Subtítulo",
     "item": "Artículo",
     "qty": "Cant.",
@@ -3836,7 +3849,7 @@
   "attributes": {
     "fields": {
       "name": "Nombre",
-      "handle": "Manejo",
+      "handle": "Identificador",
       "required": "Obligatorio",
       "type": "Tipo",
       "values": "Valores",
@@ -4115,8 +4128,8 @@
         "title": "Introduce los detalles de tu tienda",
         "name": "Nombre",
         "email": "Correo electrónico",
-        "handle": "Manejador",
-        "handleTooltip": "El handle se convierte en el slug de URL de tu tienda. Déjalo vacío para generarlo automáticamente a partir del nombre.",
+        "handle": "Identificador",
+        "handleTooltip": "El identificador se convierte en el slug de URL de tu tienda. Déjalo vacío para generarlo automáticamente a partir del nombre.",
         "handlePlaceholder": "mi-tienda",
         "currency": "Moneda",
         "selectCurrency": "Seleccionar",

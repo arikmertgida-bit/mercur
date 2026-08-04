@@ -713,10 +713,18 @@
       "properties": {
         "in": {
           "type": "string"
+        },
+        "eq": {
+          "type": "string"
+        },
+        "notIn": {
+          "type": "string"
         }
       },
       "required": [
-        "in"
+        "in",
+        "eq",
+        "notIn"
       ],
       "additionalProperties": false
     },
@@ -11377,6 +11385,50 @@
             "noRecordsTitle"
           ],
           "additionalProperties": false
+        },
+        "ruleAttributes": {
+          "type": "object",
+          "properties": {
+            "productCategory": {
+              "type": "string"
+            },
+            "productCollection": {
+              "type": "string"
+            },
+            "productType": {
+              "type": "string"
+            },
+            "productTag": {
+              "type": "string"
+            },
+            "customerGroup": {
+              "type": "string"
+            },
+            "shippingOptionType": {
+              "type": "string"
+            },
+            "currencyCode": {
+              "type": "string"
+            },
+            "minQuantity": {
+              "type": "string"
+            },
+            "applyToQuantity": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "productCategory",
+            "productCollection",
+            "productType",
+            "productTag",
+            "customerGroup",
+            "shippingOptionType",
+            "currencyCode",
+            "minQuantity",
+            "applyToQuantity"
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
@@ -11397,7 +11449,8 @@
         "createPromotionTitle",
         "type",
         "conditions",
-        "campaignSection"
+        "campaignSection",
+        "ruleAttributes"
       ],
       "additionalProperties": false
     },

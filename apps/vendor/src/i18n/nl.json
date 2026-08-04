@@ -175,7 +175,9 @@
       "rating": "Beoordeling",
       "reference": "Referentie",
       "customerNote": "Klantnotitie",
-      "replyStatus": "Antwoordstatus"
+      "replyStatus": "Antwoordstatus",
+      "createdAt": "Aangemaakt",
+      "updatedAt": "Bijgewerkt"
     },
     "photos": "Foto's",
     "noPhotos": "Er zijn geen foto's toegevoegd aan deze beoordeling.",

@@ -178,7 +178,9 @@
     "ok": "Gerai"
   },
   "operators": {
-    "in": "Iš"
+    "in": "Iš",
+    "eq": "Lygu",
+    "notIn": "Ne iš"
   },
   "app": {
     "search": {
@@ -492,8 +494,8 @@
         "primaryCategoryRequired": "Būtina pagrindinė kategorija",
         "categoryRequired": "Pasirinkite kategoriją",
         "titleRequired": "Būtinas pavadinimas",
-        "handleInvalidFormat": "Trumpinys turi būti sudarytas tik iš mažųjų raidžių, skaičių ir brūkšnelių",
-        "handleMustContainLetter": "Trumpinyje turi būti bent viena raidė",
+        "handleInvalidFormat": "Nuoroda turi būti sudaryta tik iš mažųjų raidžių, skaičių ir brūkšnelių",
+        "handleMustContainLetter": "Nuorodoje turi būti bent viena raidė",
         "requiredAttributeSelect": "Šį atributą reikalauja prekyvietė. Pasirinkite reikšmę.",
         "requiredAttributeEnter": "Šį atributą reikalauja prekyvietė. Įveskite reikšmę.",
         "requiredAttributeMultiSelect": "Šį atributą reikalauja prekyvietė. Pasirinkite bent vieną reikšmę.",
@@ -2602,6 +2604,17 @@
       "noRecordsTitle": "Nepriklauso jokiai kampanijai",
       "noRecordsMessage": "Pridėti šią akciją prie esamos kampanijos",
       "addToCampaign": "Pridėti prie kampanijos"
+    },
+    "ruleAttributes": {
+      "productCategory": "Prekės kategorija",
+      "productCollection": "Prekės kolekcija",
+      "productType": "Prekės tipas",
+      "productTag": "Prekės žyma",
+      "customerGroup": "Klientų grupė",
+      "shippingOptionType": "Pristatymo pasirinkimo tipas",
+      "currencyCode": "Valiutos kodas",
+      "minQuantity": "Mažiausias kiekis",
+      "applyToQuantity": "Taikomas kiekis"
     }
   },
   "campaigns": {
@@ -2932,7 +2945,7 @@
       "localesUpdated": "Lokalės sėkmingai atnaujintos",
       "localesRemoved": "Lokalės sėkmingai pašalintos iš parduotuvės"
     },
-    "handleTooltip": "Trumpinys taps jūsų parduotuvės URL. Palikite tuščią, kad būtų sugeneruotas automatiškai iš pavadinimo.",
+    "handleTooltip": "Nuoroda taps jūsų parduotuvės URL. Palikite tuščią, kad būtų sugeneruota automatiškai iš pavadinimo.",
     "validation": {
       "nameRequired": "Įveskite pavadinimą",
       "emailRequired": "Įveskite el. paštą",
@@ -4094,7 +4107,7 @@
         "name": "Pavadinimas",
         "email": "El. paštas",
         "handle": "Nuoroda",
-        "handleTooltip": "Trumpinys taps jūsų parduotuvės URL. Palikite tuščią, kad būtų sugeneruotas automatiškai iš pavadinimo.",
+        "handleTooltip": "Nuoroda taps jūsų parduotuvės URL. Palikite tuščią, kad būtų sugeneruota automatiškai iš pavadinimo.",
         "handlePlaceholder": "mano-parduotuve",
         "currency": "valiuta",
         "selectCurrency": "Pasirinkite",

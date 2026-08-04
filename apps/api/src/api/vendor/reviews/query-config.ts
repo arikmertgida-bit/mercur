@@ -7,6 +7,9 @@ export const vendorReviewFields = [
   "seller_note",
   "created_at",
   "updated_at",
+  "product.id",
+  "product.title",
+  "product.thumbnail",
 ];
 
 export const vendorReviewQueryConfig = {

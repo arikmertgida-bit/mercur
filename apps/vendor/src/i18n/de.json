@@ -175,7 +175,9 @@
       "rating": "Bewertung",
       "reference": "Referenz",
       "customerNote": "Kundenhinweis",
-      "replyStatus": "Antwortstatus"
+      "replyStatus": "Antwortstatus",
+      "createdAt": "Erstellt",
+      "updatedAt": "Aktualisiert"
     },
     "photos": "Fotos",
     "noPhotos": "Zu dieser Bewertung wurden keine Fotos hinzugefügt.",

@@ -178,7 +178,9 @@
     "ok": "OK"
   },
   "operators": {
-    "in": "含む"
+    "in": "含む",
+    "eq": "と等しい",
+    "notIn": "含まない"
   },
   "app": {
     "search": {
@@ -2602,6 +2604,17 @@
       "noRecordsTitle": "キャンペーンに含まれていません",
       "noRecordsMessage": "このプロモーションを既存のキャンペーンに追加します",
       "addToCampaign": "キャンペーンに追加"
+    },
+    "ruleAttributes": {
+      "productCategory": "商品カテゴリー",
+      "productCollection": "商品コレクション",
+      "productType": "商品タイプ",
+      "productTag": "商品タグ",
+      "customerGroup": "顧客グループ",
+      "shippingOptionType": "配送オプションタイプ",
+      "currencyCode": "通貨コード",
+      "minQuantity": "最小数量",
+      "applyToQuantity": "適用数量"
     }
   },
   "campaigns": {

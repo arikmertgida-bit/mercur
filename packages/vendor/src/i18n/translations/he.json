@@ -178,7 +178,9 @@
     "ok": "אישור"
   },
   "operators": {
-    "in": "ב"
+    "in": "ב",
+    "eq": "שווה ל",
+    "notIn": "לא ב"
   },
   "app": {
     "search": {
@@ -492,8 +494,8 @@
         "primaryCategoryRequired": "נדרשת קטגוריה ראשית",
         "categoryRequired": "יש לבחור קטגוריה",
         "titleRequired": "נדרשת כותרת",
-        "handleInvalidFormat": "הכינוי חייב להכיל רק אותיות קטנות, מספרים ומקפים",
-        "handleMustContainLetter": "הכינוי חייב להכיל לפחות אות אחת",
+        "handleInvalidFormat": "המזהה חייב להכיל רק אותיות קטנות, מספרים ומקפים",
+        "handleMustContainLetter": "המזהה חייב להכיל לפחות אות אחת",
         "requiredAttributeSelect": "מאפיין זה נדרש על ידי השוק. יש לבחור ערך.",
         "requiredAttributeEnter": "מאפיין זה נדרש על ידי השוק. יש להזין ערך.",
         "requiredAttributeMultiSelect": "מאפיין זה נדרש על ידי השוק. יש לבחור לפחות ערך אחד.",
@@ -2602,6 +2604,17 @@
       "noRecordsTitle": "לא חלק מקמפיין",
       "noRecordsMessage": "הוסף מבצע זה לקמפיין קיים",
       "addToCampaign": "הוסף לקמפיין"
+    },
+    "ruleAttributes": {
+      "productCategory": "קטגוריית מוצר",
+      "productCollection": "אוסף מוצרים",
+      "productType": "סוג מוצר",
+      "productTag": "תגית מוצר",
+      "customerGroup": "קבוצת לקוחות",
+      "shippingOptionType": "סוג אפשרות משלוח",
+      "currencyCode": "קוד מטבע",
+      "minQuantity": "כמות מינימלית",
+      "applyToQuantity": "כמות להחלה"
     }
   },
   "campaigns": {
@@ -2932,7 +2945,7 @@
       "localesUpdated": "האזורים עודכנו בהצלחה",
       "localesRemoved": "האזורים הוסרו מהחנות בהצלחה"
     },
-    "handleTooltip": "הכינוי הופך לתבנית ה-URL של החנות שלך. השאר ריק ליצירה אוטומטית מהשם.",
+    "handleTooltip": "המזהה הופך לתבנית ה-URL של החנות שלך. השאר ריק ליצירה אוטומטית מהשם.",
     "validation": {
       "nameRequired": "יש להזין שם",
       "emailRequired": "יש להזין כתובת דוא\"ל",
@@ -4094,7 +4107,7 @@
         "name": "שם",
         "email": "אימייל",
         "handle": "מזהה",
-        "handleTooltip": "הכינוי הופך לתבנית ה-URL של החנות שלך. השאר ריק ליצירה אוטומטית מהשם.",
+        "handleTooltip": "המזהה הופך לתבנית ה-URL של החנות שלך. השאר ריק ליצירה אוטומטית מהשם.",
         "handlePlaceholder": "my-store",
         "currency": "מטבע",
         "selectCurrency": "בחר",

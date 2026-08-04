@@ -175,7 +175,9 @@
       "rating": "Értékelés",
       "reference": "Hivatkozás",
       "customerNote": "Vásárlói megjegyzés",
-      "replyStatus": "Válasz állapota"
+      "replyStatus": "Válasz állapota",
+      "createdAt": "Létrehozva",
+      "updatedAt": "Frissítve"
     },
     "photos": "Fotók",
     "noPhotos": "Ehhez az értékeléshez nem csatoltak fényképet.",
