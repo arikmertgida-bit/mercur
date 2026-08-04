@@ -16,6 +16,7 @@ module.exports = {
   content: [
     "./src/**/*.{js,ts,jsx,tsx}",
     "../../apps/vendor/src/**/*.{js,ts,jsx,tsx}",
+    "../dashboard-shared/src/**/*.{js,ts,jsx,tsx}",
     medusaUI,
     dashboardShared,
   ],
