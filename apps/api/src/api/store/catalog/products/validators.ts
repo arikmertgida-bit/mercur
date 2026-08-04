@@ -15,6 +15,8 @@ export const StoreGetCatalogProductsParams = z.object({
   size: csvOrArray.optional(),
   color: csvOrArray.optional(),
   condition: csvOrArray.optional(),
+  promotion_type: csvOrArray.optional(),
+  campaign_id: z.string().optional(),
 })
 
 export type StoreGetCatalogProductsParamsType = z.infer<typeof StoreGetCatalogProductsParams>

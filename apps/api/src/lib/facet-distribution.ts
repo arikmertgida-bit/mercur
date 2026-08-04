@@ -26,6 +26,11 @@ export function toFacetDistribution(
       facets.conditions.map((facet) => [facet.label, facet.count])
     )
   }
+  if (facets.promotions?.length) {
+    distribution['promotion_type'] = Object.fromEntries(
+      facets.promotions.map((facet) => [facet.label, facet.count])
+    )
+  }
 
   return distribution
 }

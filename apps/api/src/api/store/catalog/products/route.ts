@@ -29,6 +29,8 @@ export const GET = async (
     size,
     color,
     condition,
+    promotion_type,
+    campaign_id,
   } = req.validatedQuery
 
   const region = await resolveRegionByCountryCode(query, country_code)
@@ -39,6 +41,8 @@ export const GET = async (
     size_values: toStringArray(size),
     color_values: toStringArray(color),
     condition_values: toStringArray(condition),
+    promotion_types: toStringArray(promotion_type),
+    campaign_id,
     price_min: min_price,
     price_max: max_price,
     sort,
