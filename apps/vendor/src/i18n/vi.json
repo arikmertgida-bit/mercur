@@ -175,7 +175,9 @@
       "rating": "Xếp hạng",
       "reference": "Mã tham chiếu",
       "customerNote": "Ghi chú của khách hàng",
-      "replyStatus": "Trạng thái phản hồi"
+      "replyStatus": "Trạng thái phản hồi",
+      "createdAt": "Đã tạo",
+      "updatedAt": "Đã cập nhật"
     },
     "photos": "Hình ảnh",
     "noPhotos": "Không có hình ảnh nào được đính kèm vào đánh giá này.",

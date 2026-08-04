@@ -1,8 +1,9 @@
 import { createColumnHelper } from "@tanstack/react-table";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 import { StatusBadge, Text } from "@medusajs/ui";
-import { DateCell, DateHeader } from "@mercurjs/dashboard-shared";
+import { DateCell, DateHeader, Thumbnail } from "@mercurjs/dashboard-shared";
 import { ReviewDTO } from "../../api/reviews";
 
 const columnHelper = createColumnHelper<ReviewDTO>();
@@ -12,6 +13,13 @@ const ratingColor = (rating: number) => {
   if (rating >= 3) return "orange" as const;
   return "red" as const;
 };
+
+const CUSTOMER_NOTE_PREVIEW_LENGTH = 50;
+
+const truncateCustomerNote = (note: string): string =>
+  note.length > CUSTOMER_NOTE_PREVIEW_LENGTH
+    ? `${note.slice(0, CUSTOMER_NOTE_PREVIEW_LENGTH)}...`
+    : note;
 
 export const useReviewTableColumns = () => {
   const { t } = useTranslation();
@@ -37,11 +45,27 @@ export const useReviewTableColumns = () => {
             <span className="truncate">{t("reviews.columns.reference")}</span>
           </div>
         ),
-        cell: ({ getValue }) => {
-          const reference = getValue();
+        cell: ({ row }) => {
+          const { reference, product } = row.original;
+
+          if (reference === "product" && product) {
+            return (
+              <Link
+                to={`/products/${product.id}`}
+                onClick={(event) => event.stopPropagation()}
+                className="flex items-center gap-x-2 overflow-hidden"
+              >
+                <Thumbnail src={product.thumbnail} alt={product.title} size="small" />
+                <span className="text-ui-fg-subtle truncate text-sm">
+                  {product.title}
+                </span>
+              </Link>
+            );
+          }
+
           return (
             <Text size="small" leading="compact" className="text-ui-fg-subtle">
-              {reference ? reference.charAt(0).toUpperCase() + reference.slice(1) : "-"}
+              {reference === "seller" ? t("store.domain") : "-"}
             </Text>
           );
         },
@@ -61,7 +85,7 @@ export const useReviewTableColumns = () => {
                 leading="compact"
                 className="text-ui-fg-subtle truncate"
               >
-                {note || "-"}
+                {note ? truncateCustomerNote(note) : "-"}
               </Text>
             </div>
           );

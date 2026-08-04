@@ -175,7 +175,9 @@
       "rating": "Rating",
       "reference": "Reference",
       "customerNote": "Customer Note",
-      "replyStatus": "Reply Status"
+      "replyStatus": "Reply Status",
+      "createdAt": "Created",
+      "updatedAt": "Updated"
     },
     "photos": "Photos",
     "noPhotos": "No photos were attached to this review.",

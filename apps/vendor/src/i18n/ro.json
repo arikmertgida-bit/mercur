@@ -175,7 +175,9 @@
       "rating": "Evaluare",
       "reference": "Referință",
       "customerNote": "Notă client",
-      "replyStatus": "Stare răspuns"
+      "replyStatus": "Stare răspuns",
+      "createdAt": "Creat",
+      "updatedAt": "Actualizat"
     },
     "photos": "Fotografii",
     "noPhotos": "Nu au fost atașate fotografii la această recenzie.",

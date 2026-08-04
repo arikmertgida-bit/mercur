@@ -175,7 +175,9 @@
       "rating": "평점",
       "reference": "참조",
       "customerNote": "고객 메모",
-      "replyStatus": "답변 상태"
+      "replyStatus": "답변 상태",
+      "createdAt": "생성일",
+      "updatedAt": "업데이트일"
     },
     "photos": "사진",
     "noPhotos": "이 리뷰에 첨부된 사진이 없습니다.",

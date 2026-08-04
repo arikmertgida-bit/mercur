@@ -175,7 +175,9 @@
       "rating": "Puan",
       "reference": "Referans",
       "customerNote": "Müşteri Notu",
-      "replyStatus": "Yanıt Durumu"
+      "replyStatus": "Yanıt Durumu",
+      "createdAt": "Oluşturulma",
+      "updatedAt": "Güncellenme"
     },
     "photos": "Fotoğraflar",
     "noPhotos": "Bu değerlendirmeye fotoğraf eklenmemiş.",

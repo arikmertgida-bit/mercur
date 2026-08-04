@@ -178,7 +178,9 @@
     "ok": "OK"
   },
   "operators": {
-    "in": "inclus"
+    "in": "inclus",
+    "eq": "Égal à",
+    "notIn": "non inclus"
   },
   "app": {
     "search": {
@@ -697,8 +699,8 @@
         "placeholder": "Chaud et confortable"
       },
       "handle": {
-        "label": "Handle",
-        "tooltip": "Le handle est utilisé pour faire référence au produit dans votre boutique. Si non spécifié, le handle sera généré à partir du titre du produit.",
+        "label": "Identifiant",
+        "tooltip": "L'identifiant est utilisé pour faire référence au produit dans votre boutique. Si non spécifié, l'identifiant sera généré à partir du titre du produit.",
         "placeholder": "veste-dhiver"
       },
       "description": {
@@ -951,7 +953,7 @@
     "createCollectionHint": "Créer une nouvelle collection pour organiser vos produits.",
     "createSuccess": "Collection créée avec succès.",
     "editCollection": "Modifier la collection",
-    "handleTooltip": "Le handle est utilisé pour faire référence à la collection dans votre boutique. Si non spécifié, le handle sera généré à partir du titre de la collection.",
+    "handleTooltip": "L'identifiant est utilisé pour faire référence à la collection dans votre boutique. Si non spécifié, l'identifiant sera généré à partir du titre de la collection.",
     "deleteWarning": "Vous êtes sur le point de  supprimer la collection {{title}}. Cette action ne peut être annulée.",
     "removeSingleProductWarning": "Vous êtes sur le point de supprimer le produit {{title}} de la collection. Cette action ne peut être annulée.",
     "removeProductsWarning_one": "Vous êtes sur le point de supprimer {{count}} produit de la collection. Cette action ne peut être annulée.",
@@ -2602,6 +2604,17 @@
       "noRecordsTitle": "Ne fait pas partie d'une campagne",
       "noRecordsMessage": "Ajoutez cette promotion à une campagne existante",
       "addToCampaign": "Ajouter à la campagne"
+    },
+    "ruleAttributes": {
+      "productCategory": "Catégorie de produit",
+      "productCollection": "Collection de produit",
+      "productType": "Type de produit",
+      "productTag": "Tag de produit",
+      "customerGroup": "Groupe de clients",
+      "shippingOptionType": "Type d'option de livraison",
+      "currencyCode": "Code de devise",
+      "minQuantity": "Quantité minimum",
+      "applyToQuantity": "Quantité à appliquer"
     }
   },
   "campaigns": {

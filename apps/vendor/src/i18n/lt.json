@@ -175,7 +175,9 @@
       "rating": "Įvertinimas",
       "reference": "Nuoroda",
       "customerNote": "Kliento pastaba",
-      "replyStatus": "Atsakymo būsena"
+      "replyStatus": "Atsakymo būsena",
+      "createdAt": "Sukurta",
+      "updatedAt": "Atnaujinta"
     },
     "photos": "Nuotraukos",
     "noPhotos": "Prie šio atsiliepimo nuotraukų nepridėta.",

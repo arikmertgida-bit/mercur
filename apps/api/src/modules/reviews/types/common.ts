@@ -45,8 +45,15 @@ export interface ReviewImageDTO {
   is_hidden: boolean
 }
 
+export interface ReviewProductSummaryDTO {
+  id: string
+  title: string
+  thumbnail: string | null
+}
+
 export interface VendorReviewWithImagesDTO extends ReviewDTO {
   images: ReviewImageDTO[]
+  product?: ReviewProductSummaryDTO | null
 }
 
 export interface VendorReviewDetailResponse {

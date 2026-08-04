@@ -178,7 +178,9 @@
     "ok": "확인"
   },
   "operators": {
-    "in": "포함"
+    "in": "포함",
+    "eq": "같음",
+    "notIn": "포함 안 함"
   },
   "app": {
     "search": {
@@ -2602,6 +2604,17 @@
       "noRecordsTitle": "캠페인에 포함되지 않음",
       "noRecordsMessage": "이 프로모션을 기존 캠페인에 추가하세요",
       "addToCampaign": "캠페인에 추가"
+    },
+    "ruleAttributes": {
+      "productCategory": "제품 카테고리",
+      "productCollection": "제품 컬렉션",
+      "productType": "제품 유형",
+      "productTag": "제품 태그",
+      "customerGroup": "고객 그룹",
+      "shippingOptionType": "배송 옵션 유형",
+      "currencyCode": "통화 코드",
+      "minQuantity": "최소 수량",
+      "applyToQuantity": "적용 수량"
     }
   },
   "campaigns": {

@@ -178,7 +178,9 @@
     "ok": "ОК"
   },
   "operators": {
-    "in": "В"
+    "in": "В",
+    "eq": "Равно на",
+    "notIn": "Не е в"
   },
   "app": {
     "search": {
@@ -2602,6 +2604,17 @@
       "noRecordsTitle": "Не е част от кампания",
       "noRecordsMessage": "Добавете тази промоция към съществуваща кампания",
       "addToCampaign": "Добавяне към кампания"
+    },
+    "ruleAttributes": {
+      "productCategory": "Категория на продукта",
+      "productCollection": "Колекция на продукта",
+      "productType": "Тип на продукта",
+      "productTag": "Етикет на продукта",
+      "customerGroup": "Група клиенти",
+      "shippingOptionType": "Тип на опцията за доставка",
+      "currencyCode": "Код на валутата",
+      "minQuantity": "Минимално количество",
+      "applyToQuantity": "Количество за прилагане"
     }
   },
   "campaigns": {

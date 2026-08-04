@@ -175,7 +175,9 @@
       "rating": "Calificación",
       "reference": "Referencia",
       "customerNote": "Nota del cliente",
-      "replyStatus": "Estado de respuesta"
+      "replyStatus": "Estado de respuesta",
+      "createdAt": "Creado en",
+      "updatedAt": "Actualizado en"
     },
     "photos": "Fotos",
     "noPhotos": "No se adjuntaron fotos a esta reseña.",

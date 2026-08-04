@@ -175,7 +175,9 @@
       "rating": "التقييم",
       "reference": "المرجع",
       "customerNote": "ملاحظة العميل",
-      "replyStatus": "حالة الرد"
+      "replyStatus": "حالة الرد",
+      "createdAt": "تم الإنشاء في",
+      "updatedAt": "تم التحديث في"
     },
     "photos": "الصور",
     "noPhotos": "لم يتم إرفاق صور بهذا التقييم.",

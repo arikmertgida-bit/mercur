@@ -8,11 +8,17 @@ import { ActionMenu } from "@components/common/action-menu"
 import { BadgeListSummary } from "@components/common/badge-list-summary"
 import { NoRecords } from "@components/common/empty-table-content"
 import { ExtendedPromotionRuleWithValues, FormattedPromotionRuleTypes } from "@custom-types/promotion"
+import {
+  translateRuleAttributeLabel,
+  translateRuleOperatorLabel,
+} from "../../../common/edit-rules/components/edit-rules-form/utils"
 
 type RuleProps = {
   rule: ExtendedPromotionRuleWithValues
 }
 function RuleBlock({ rule }: RuleProps) {
+  const { t } = useTranslation()
+
   const getValuesList = (): string[] => {
     if (rule.field_type === "number") {
       return Array.isArray(rule.values) 
@@ -30,11 +36,11 @@ function RuleBlock({ rule }: RuleProps) {
           key="rule-attribute"
           className="txt-compact-xsmall-plus tag-neutral-text mx-1 inline-block truncate"
         >
-          {rule.attribute_label}
+          {translateRuleAttributeLabel(t, rule.attribute, rule.attribute_label || "")}
         </Badge>
 
         <span className="txt-compact-2xsmall mx-1 inline-block">
-          {rule.operator_label}
+          {translateRuleOperatorLabel(t, rule.operator, rule.operator_label || "")}
         </span>
 
         <BadgeListSummary

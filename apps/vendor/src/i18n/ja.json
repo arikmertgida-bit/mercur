@@ -175,7 +175,9 @@
       "rating": "評価",
       "reference": "参照番号",
       "customerNote": "顧客メモ",
-      "replyStatus": "返信ステータス"
+      "replyStatus": "返信ステータス",
+      "createdAt": "作成日時",
+      "updatedAt": "更新日時"
     },
     "photos": "写真",
     "noPhotos": "このレビューに写真は添付されていません。",
