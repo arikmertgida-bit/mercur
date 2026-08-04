@@ -11,6 +11,7 @@ module.exports = {
   content: [
     "./src/**/*.{js,ts,jsx,tsx}",
     "../../apps/admin-test/src/**/*.{js,ts,jsx,tsx}",
+    "../dashboard-shared/src/**/*.{js,ts,jsx,tsx}",
     medusaUI,
   ],
   darkMode: "class",
