@@ -30,6 +30,8 @@ const FILTERABLE_ATTRIBUTES = [
   'in_stock',
   'seller_handle',
   'seller_status',
+  'seller_closed_from_ts',
+  'seller_closed_to_ts',
   'collection_id',
   'collection_facet',
   'category_ids',
@@ -190,8 +192,18 @@ class MeilisearchProductIndex {
     // seller_status is always constrained to "open" and in_stock to "true"
     // server-side — suspended sellers' products and out-of-stock products
     // must never be discoverable, regardless of what filters the caller
-    // sends.
-    const filterParts: string[] = ['seller_status = "open"', 'in_stock = true']
+    // sends. The closure-window clause re-derives "now" on every request (see
+    // `NEVER_CLOSED_TS` in build-docs.ts) so a seller's scheduled izin
+    // starting or ending takes effect immediately, with no reindex — a
+    // product stays hidden only while `seller_closed_from_ts` has already
+    // passed and `seller_closed_to_ts` hasn't (or never will, for an
+    // open-ended closure).
+    const now = Date.now()
+    const filterParts: string[] = [
+      'seller_status = "open"',
+      'in_stock = true',
+      `(seller_closed_from_ts > ${now} OR seller_closed_to_ts < ${now})`,
+    ]
 
     if (filters.type) {
       filterParts.push(`type = "${escapeMeiliFilterValue(filters.type)}"`)

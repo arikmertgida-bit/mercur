@@ -9,6 +9,12 @@ export interface SearchDoc {
   seller_id?: string
   seller_handle?: string
   seller_status?: string
+  // Epoch-ms closure-window bounds — see `NEVER_CLOSED_TS` in build-docs.ts
+  // for why a null closed_from/closed_to is encoded as a sentinel rather
+  // than left `undefined`. Always evaluated against the query-time clock in
+  // meilisearch-client.ts, never at index time.
+  seller_closed_from_ts?: number
+  seller_closed_to_ts?: number
   // Operator-only "featured store" flag (admin: Featured Store). Drives the
   // `seller_is_premium` custom Meilisearch ranking rule — see
   // meilisearch-client.ts. Never used as a filter, only a soft ranking boost.
