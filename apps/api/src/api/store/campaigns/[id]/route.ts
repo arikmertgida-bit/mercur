@@ -1,6 +1,7 @@
 import { MedusaRequest, MedusaResponse } from "@medusajs/framework/http"
 import type { Query } from "@medusajs/framework"
 import { ContainerRegistrationKeys, MedusaError } from "@medusajs/framework/utils"
+import { isSellerVisible } from "@mercurjs/core/api/utils/sellers"
 
 import { computeCampaignStatus } from "../../../../lib/campaign-status"
 import { StoreGetCampaignParamsType } from "../validators"
@@ -16,6 +17,8 @@ type CampaignBudgetRow = {
 type CampaignSellerRow = {
   id: string
   status: string
+  closed_from: string | null
+  closed_to: string | null
   name: string
   handle: string
   logo: string | null
@@ -49,7 +52,7 @@ export const GET = async (
 
   const row = campaign as CampaignRow | undefined
 
-  if (!row || (row.seller && row.seller.status !== "open")) {
+  if (!row || (row.seller && !isSellerVisible(row.seller, new Date()))) {
     throw new MedusaError(MedusaError.Types.NOT_FOUND, "Campaign not found")
   }
 

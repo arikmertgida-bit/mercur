@@ -1,6 +1,7 @@
 import { MedusaRequest, MedusaResponse } from "@medusajs/framework/http"
 import type { Query } from "@medusajs/framework"
 import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
+import { isSellerVisible } from "@mercurjs/core/api/utils/sellers"
 
 import { computeCampaignStatus, CampaignComputedStatus } from "../../../lib/campaign-status"
 import { StoreGetCampaignsParamsType } from "./validators"
@@ -16,6 +17,8 @@ type CampaignBudgetRow = {
 type CampaignSellerRow = {
   id: string
   status: string
+  closed_from: string | null
+  closed_to: string | null
 }
 
 type CampaignRow = {
@@ -48,15 +51,18 @@ export const GET = async (
       "budget.*",
       "seller.id",
       "seller.status",
+      "seller.closed_from",
+      "seller.closed_to",
     ],
   })
 
   const wantedStatus: CampaignComputedStatus = status === "upcoming" ? "scheduled" : "active"
+  const now = new Date()
 
   const rows = campaigns as CampaignRow[]
 
   const visible = rows.filter((campaign) => {
-    if (campaign.seller && campaign.seller.status !== "open") {
+    if (campaign.seller && !isSellerVisible(campaign.seller, now)) {
       return false
     }
     return computeCampaignStatus(campaign) === wantedStatus

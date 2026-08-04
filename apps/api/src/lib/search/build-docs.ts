@@ -40,6 +40,8 @@ type ProductSellerRow = {
   handle?: string | null
   status?: string | null
   is_premium?: boolean | null
+  closed_from?: string | Date | null
+  closed_to?: string | Date | null
 }
 
 export type InventoryLocationLevelRow = {
@@ -108,7 +110,26 @@ export const searchProductFields = [
   'sellers.handle',
   'sellers.status',
   'sellers.is_premium',
+  'sellers.closed_from',
+  'sellers.closed_to',
 ]
+
+// Meilisearch has no notion of "now" — a closure window's start/end can't
+// trigger a reindex (no action/event fires when time simply passes), so the
+// window is encoded as two static epoch-ms timestamps and re-evaluated
+// against the *query-time* clock in meilisearch-client.ts on every request
+// instead. `NEVER_CLOSED_TS` stands in for a null closed_from/closed_to so
+// the encoding stays purely numeric (Meilisearch range filters, no `IS
+// NULL`): a null `closed_from` must always compare as "in the future" (never
+// started) and a null `closed_to` must always compare as "not yet ended"
+// (an open-ended closure stays closed indefinitely) — both are satisfied by
+// the same distant-future sentinel. This must stay the exact numeric twin of
+// `buildSellerOutsideClosureWindowFilter` in
+// `packages/core/src/api/utils/sellers.ts`.
+export const NEVER_CLOSED_TS = Number(new Date('9999-01-01T00:00:00.000Z'))
+
+const closureTimestamp = (value: string | Date | null | undefined): number =>
+  value ? new Date(value).getTime() : NEVER_CLOSED_TS
 
 const buildRegionTaxContext = (region: SearchRegion) => {
   if (!region.automatic_taxes) {
@@ -303,6 +324,8 @@ export const buildProductDocs = async (
       seller_id: seller?.id ?? undefined,
       seller_handle: seller?.handle ?? undefined,
       seller_status: seller?.status ?? undefined,
+      seller_closed_from_ts: closureTimestamp(seller?.closed_from),
+      seller_closed_to_ts: closureTimestamp(seller?.closed_to),
       // Drives the `seller_is_premium` custom ranking rule — always a concrete
       // boolean (never left `undefined`) so Meilisearch has a stable value to
       // rank on for every document, including sellers that never opted in.

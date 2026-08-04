@@ -8,6 +8,8 @@ export const storeCampaignFields = [
   "budget.*",
   "seller.id",
   "seller.status",
+  "seller.closed_from",
+  "seller.closed_to",
   "seller.name",
   "seller.handle",
   "seller.logo",
