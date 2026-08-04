@@ -127,6 +127,95 @@ medusaIntegrationTestRunner({
           expect(response.data.sellers[0].handle).toEqual("alpha-store")
         })
 
+        it("should still surface a suspended seller when looked up by its own handle", async () => {
+          const { seller: suspendedSeller } = await createSellerUser(
+            appContainer,
+            {
+              email: "suspended-handle@test.com",
+              name: "Suspended Handle Store",
+            }
+          )
+
+          await api
+            .post(
+              `/admin/sellers/${suspendedSeller.id}/approve`,
+              {},
+              adminHeaders
+            )
+            .catch((e) => {
+              if (e.response?.status !== 400) {
+                throw e
+              }
+            })
+          await api.post(
+            `/admin/sellers/${suspendedSeller.id}/suspend`,
+            {},
+            adminHeaders
+          )
+
+          const response = await api.get(
+            `/store/sellers?handle=${suspendedSeller.handle}&fields=id,handle,status`,
+            storeHeaders
+          )
+
+          expect(response.status).toEqual(200)
+          expect(response.data.sellers).toHaveLength(1)
+          expect(response.data.sellers[0].status).toEqual("suspended")
+        })
+
+        it("should still surface a pending seller when looked up by its own handle", async () => {
+          const { seller: pendingSeller } = await createSellerUser(
+            appContainer,
+            {
+              email: "pending-handle@test.com",
+              name: "Pending Handle Store",
+            }
+          )
+          await ensureSellerPendingApproval(appContainer, pendingSeller.id)
+
+          const response = await api.get(
+            `/store/sellers?handle=${pendingSeller.handle}&fields=id,handle,status`,
+            storeHeaders
+          )
+
+          expect(response.status).toEqual(200)
+          expect(response.data.sellers).toHaveLength(1)
+          expect(response.data.sellers[0].status).toEqual("pending_approval")
+        })
+
+        it("should still surface a closed seller with its closure fields when looked up by its own handle", async () => {
+          const now = new Date()
+          const pastDate = new Date(
+            now.getTime() - 24 * 60 * 60 * 1000
+          ).toISOString()
+          const futureDate = new Date(
+            now.getTime() + 24 * 60 * 60 * 1000
+          ).toISOString()
+
+          await api.post(
+            `/admin/sellers/${sellerC.id}`,
+            {
+              closed_from: pastDate,
+              closed_to: futureDate,
+              closure_note: "Annual inventory count",
+            },
+            adminHeaders
+          )
+
+          const response = await api.get(
+            `/store/sellers?handle=${sellerC.handle}&fields=id,handle,closed_from,closed_to,closure_note`,
+            storeHeaders
+          )
+
+          expect(response.status).toEqual(200)
+          expect(response.data.sellers).toHaveLength(1)
+          expect(response.data.sellers[0].closed_from).toBeDefined()
+          expect(response.data.sellers[0].closed_to).toBeDefined()
+          expect(response.data.sellers[0].closure_note).toEqual(
+            "Annual inventory count"
+          )
+        })
+
         it("should filter sellers by name", async () => {
           const response = await api.get(
             `/store/sellers?name=Alpha Store`,
@@ -305,6 +394,54 @@ medusaIntegrationTestRunner({
 
           const ids = response.data.sellers.map((s: any) => s.id)
           expect(ids).not.toContain(sellerC.id)
+        })
+
+        it("should include a seller whose closure window has already ended", async () => {
+          const now = new Date()
+          const twoDaysAgo = new Date(
+            now.getTime() - 2 * 24 * 60 * 60 * 1000
+          ).toISOString()
+          const oneDayAgo = new Date(
+            now.getTime() - 24 * 60 * 60 * 1000
+          ).toISOString()
+
+          await api.post(
+            `/admin/sellers/${sellerC.id}`,
+            {
+              closed_from: twoDaysAgo,
+              closed_to: oneDayAgo,
+            },
+            adminHeaders
+          )
+
+          const response = await api.get(`/store/sellers`, storeHeaders)
+
+          const ids = response.data.sellers.map((s: any) => s.id)
+          expect(ids).toContain(sellerC.id)
+        })
+
+        it("should include a seller with a closure scheduled to start in the future", async () => {
+          const now = new Date()
+          const inOneDay = new Date(
+            now.getTime() + 24 * 60 * 60 * 1000
+          ).toISOString()
+          const inTwoDays = new Date(
+            now.getTime() + 2 * 24 * 60 * 60 * 1000
+          ).toISOString()
+
+          await api.post(
+            `/admin/sellers/${sellerC.id}`,
+            {
+              closed_from: inOneDay,
+              closed_to: inTwoDays,
+            },
+            adminHeaders
+          )
+
+          const response = await api.get(`/store/sellers`, storeHeaders)
+
+          const ids = response.data.sellers.map((s: any) => s.id)
+          expect(ids).toContain(sellerC.id)
         })
 
         it("should not expose sensitive fields", async () => {
