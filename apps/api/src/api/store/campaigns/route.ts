@@ -2,6 +2,7 @@ import { MedusaRequest, MedusaResponse } from "@medusajs/framework/http"
 import type { Query } from "@medusajs/framework"
 import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
 
+import { computeCampaignStatus, CampaignComputedStatus } from "../../../lib/campaign-status"
 import { StoreGetCampaignsParamsType } from "./validators"
 
 type CampaignBudgetRow = {
@@ -26,24 +27,6 @@ type CampaignRow = {
   ends_at: string | null
   budget: CampaignBudgetRow | null
   seller: CampaignSellerRow | null
-}
-
-type CampaignComputedStatus = "expired" | "scheduled" | "active"
-
-// Mirrors packages/admin/src/pages/campaigns/common/utils/campaign-status.ts —
-// the reference status computation MercurJS uses for the same campaign entity.
-function computeCampaignStatus(campaign: CampaignRow): CampaignComputedStatus {
-  const now = new Date()
-
-  if (campaign.ends_at && new Date(campaign.ends_at) < now) {
-    return "expired"
-  }
-
-  if (campaign.starts_at && new Date(campaign.starts_at) > now) {
-    return "scheduled"
-  }
-
-  return "active"
 }
 
 export const GET = async (

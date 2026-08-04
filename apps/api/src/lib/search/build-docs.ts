@@ -4,6 +4,11 @@ import {
   wrapProductVariantsWithCalculatedPrice,
 } from '@mercurjs/core/api/utils/product-pricing'
 
+import {
+  ActiveProductPromotion,
+  matchProductPromotions,
+  PromotionMatchableProduct,
+} from './promotion-index'
 import { SearchDoc, SearchDocAttribute, SearchDocPrice } from './types'
 
 export type SearchRegion = {
@@ -63,6 +68,8 @@ export type SearchProductRow = {
   collection_id?: string | null
   collection?: { id?: string; title?: string | null } | null
   categories?: { id: string; name?: string | null }[] | null
+  type_id?: string | null
+  tags?: { id: string }[] | null
   variants?: ProductVariantInventoryRow[] | null
   product_attribute_values?: ProductAttributeValueRow[] | null
   sellers?: ProductSellerRow[] | null
@@ -83,6 +90,8 @@ export const searchProductFields = [
   'collection.title',
   'categories.id',
   'categories.name',
+  'type_id',
+  'tags.id',
   'variants.id',
   'variants.manage_inventory',
   'variants.inventory_items.inventory.location_levels.stocked_quantity',
@@ -233,7 +242,8 @@ export const buildProductDocs = async (
   container: MedusaContainer,
   products: SearchProductRow[],
   regions: SearchRegion[],
-  defaultSalesChannelId: string | null
+  defaultSalesChannelId: string | null,
+  activePromotions: ActiveProductPromotion[] = []
 ): Promise<{
   docs: SearchDoc[]
   attributesByProduct: Map<
@@ -268,6 +278,18 @@ export const buildProductDocs = async (
     attributesByProduct.set(product.id, attrs)
     const seller = (product.sellers ?? [])[0]
 
+    const matchableProduct: PromotionMatchableProduct = {
+      id: product.id,
+      category_ids: (product.categories ?? []).map((c) => c.id),
+      collection_id: product.collection?.id ?? product.collection_id ?? null,
+      type_id: product.type_id ?? null,
+      tag_ids: (product.tags ?? []).map((t) => t.id),
+    }
+    const { promotion_types, campaign_ids } = matchProductPromotions(
+      matchableProduct,
+      activePromotions
+    )
+
     return {
       id: product.id,
       type: 'product',
@@ -294,6 +316,8 @@ export const buildProductDocs = async (
       attributes: attrs.attributes,
       prices: pricesByProduct.get(product.id) ?? {},
       in_stock: resolveInStock(product, defaultSalesChannelId),
+      promotion_types,
+      campaign_ids,
     }
   })
 

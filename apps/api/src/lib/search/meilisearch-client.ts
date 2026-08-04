@@ -40,6 +40,8 @@ const FILTERABLE_ATTRIBUTES = [
   'size_values',
   'color_values',
   'condition_values',
+  'promotion_types',
+  'campaign_ids',
 ]
 
 const SORTABLE_ATTRIBUTES = ['default_price_amount', 'created_at']
@@ -226,6 +228,12 @@ class MeilisearchProductIndex {
     if (filters.condition_values?.length) {
       filterParts.push(`condition_values IN [${meiliValueList(filters.condition_values)}]`)
     }
+    if (filters.promotion_types?.length) {
+      filterParts.push(`promotion_types IN [${meiliValueList(filters.promotion_types)}]`)
+    }
+    if (filters.campaign_id) {
+      filterParts.push(`campaign_ids IN [${meiliValueList([filters.campaign_id])}]`)
+    }
 
     const result = await this.productIndex_.search(query.q ?? '', {
       filter: filterParts.join(' AND '),
@@ -239,6 +247,7 @@ class MeilisearchProductIndex {
         'size_values',
         'color_values',
         'condition_values',
+        'promotion_types',
       ],
     })
 
@@ -276,6 +285,7 @@ class MeilisearchProductIndex {
     const sizeDist = facetDistribution?.size_values ?? {}
     const colorDist = facetDistribution?.color_values ?? {}
     const conditionDist = facetDistribution?.condition_values ?? {}
+    const promotionDist = facetDistribution?.promotion_types ?? {}
 
     const toFacetValue = (token: string, count: number): SearchFacetValue => {
       const [id, label] = decodeFacetToken(token)
@@ -303,6 +313,9 @@ class MeilisearchProductIndex {
     const conditions = Object.entries(conditionDist).map(([label, count]) =>
       toPlainFacetValue(label, count)
     )
+    const promotions = Object.entries(promotionDist).map(([label, count]) =>
+      toPlainFacetValue(label, count)
+    )
 
     const byHandle = new Map<string, { label: string; values: SearchFacetValue[] }>()
     for (const [token, count] of Object.entries(attributeDist)) {
@@ -318,7 +331,7 @@ class MeilisearchProductIndex {
       ([handle, group]) => ({ handle, label: group.label, values: group.values })
     )
 
-    return { collections, categories, attributes, sizes, colors, conditions }
+    return { collections, categories, attributes, sizes, colors, conditions, promotions }
   }
 }
 

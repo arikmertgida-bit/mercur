@@ -30,6 +30,11 @@ export interface SearchDoc {
   // Whether at least one variant is currently purchasable — computed at
   // index time from live inventory, always filtered on server-side.
   in_stock: boolean
+  // Vendor promotion kinds (see promotion-index.ts) currently covering this
+  // product, and the campaign(s) they belong to. Empty when the product has
+  // no active, product-targeting promotion.
+  promotion_types?: string[]
+  campaign_ids?: string[]
 }
 
 export interface SearchDocAttribute {
@@ -75,6 +80,9 @@ export interface SearchFacets {
   sizes?: SearchFacetValue[]
   colors?: SearchFacetValue[]
   conditions?: SearchFacetValue[]
+  // Product-targeting promotion kinds currently covering the result set —
+  // see promotion-index.ts for the resolvable kinds.
+  promotions?: SearchFacetValue[]
 }
 
 export interface SearchResults {

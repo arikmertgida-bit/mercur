@@ -7,3 +7,9 @@ export const StoreGetCampaignsParams = z.object({
 })
 
 export type StoreGetCampaignsParamsType = z.infer<typeof StoreGetCampaignsParams>
+
+// GET /store/campaigns/:id takes no query parameters — the id itself comes
+// from the path.
+export const StoreGetCampaignParams = z.object({})
+
+export type StoreGetCampaignParamsType = z.infer<typeof StoreGetCampaignParams>
