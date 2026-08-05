@@ -10915,6 +10915,9 @@
             },
             "confirmPasswordRequired": {
               "type": "string"
+            },
+            "agreementRequired": {
+              "type": "string"
             }
           }
         },
@@ -10935,6 +10938,229 @@
         },
         "backToLogin": {
           "type": "string"
+        },
+        "agreement": {
+          "type": "object",
+          "properties": {
+            "label": {
+              "type": "string"
+            },
+            "drawerDescription": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "sellerAgreement": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "lastUpdated": {
+          "type": "string"
+        },
+        "tabs": {
+          "type": "object",
+          "properties": {
+            "platformStatus": {
+              "type": "string"
+            },
+            "storeDocuments": {
+              "type": "string"
+            },
+            "productStandards": {
+              "type": "string"
+            },
+            "stockOperations": {
+              "type": "string"
+            },
+            "paymentSystem": {
+              "type": "string"
+            },
+            "returnDispute": {
+              "type": "string"
+            },
+            "privacyKVKK": {
+              "type": "string"
+            },
+            "systemSecurity": {
+              "type": "string"
+            },
+            "platformReputation": {
+              "type": "string"
+            },
+            "approvalEnactment": {
+              "type": "string"
+            },
+            "commissionTable": {
+              "type": "string"
+            }
+          }
+        },
+        "sections": {
+          "type": "object",
+          "properties": {
+            "platformStatus": {
+              "type": "object",
+              "properties": {
+                "content": {
+                  "type": "string"
+                }
+              }
+            },
+            "storeDocuments": {
+              "type": "object",
+              "properties": {
+                "content": {
+                  "type": "string"
+                }
+              }
+            },
+            "productStandards": {
+              "type": "object",
+              "properties": {
+                "content": {
+                  "type": "string"
+                }
+              }
+            },
+            "stockOperations": {
+              "type": "object",
+              "properties": {
+                "subhead1": {
+                  "type": "string"
+                },
+                "content1": {
+                  "type": "string"
+                },
+                "subhead2": {
+                  "type": "string"
+                },
+                "content2": {
+                  "type": "string"
+                }
+              }
+            },
+            "paymentSystem": {
+              "type": "object",
+              "properties": {
+                "content": {
+                  "type": "string"
+                }
+              }
+            },
+            "returnDispute": {
+              "type": "object",
+              "properties": {
+                "content": {
+                  "type": "string"
+                }
+              }
+            },
+            "privacyKVKK": {
+              "type": "object",
+              "properties": {
+                "content": {
+                  "type": "string"
+                }
+              }
+            },
+            "systemSecurity": {
+              "type": "object",
+              "properties": {
+                "content": {
+                  "type": "string"
+                }
+              }
+            },
+            "platformReputation": {
+              "type": "object",
+              "properties": {
+                "content": {
+                  "type": "string"
+                }
+              }
+            },
+            "approvalEnactment": {
+              "type": "object",
+              "properties": {
+                "content": {
+                  "type": "string"
+                }
+              }
+            },
+            "commissionTable": {
+              "type": "object",
+              "properties": {
+                "description": {
+                  "type": "string"
+                },
+                "col": {
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "type": "string"
+                    },
+                    "netCommission": {
+                      "type": "string"
+                    },
+                    "vat": {
+                      "type": "string"
+                    },
+                    "totalInclVat": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "categories": {
+                  "type": "object",
+                  "properties": {
+                    "womenFashion": {
+                      "type": "string"
+                    },
+                    "menFashion": {
+                      "type": "string"
+                    },
+                    "electronics": {
+                      "type": "string"
+                    },
+                    "motherChild": {
+                      "type": "string"
+                    },
+                    "homeLife": {
+                      "type": "string"
+                    },
+                    "supermarket": {
+                      "type": "string"
+                    },
+                    "cosmetics": {
+                      "type": "string"
+                    },
+                    "shoesBags": {
+                      "type": "string"
+                    },
+                    "sportsOutdoor": {
+                      "type": "string"
+                    },
+                    "booksHobbies": {
+                      "type": "string"
+                    },
+                    "autoMoto": {
+                      "type": "string"
+                    },
+                    "privateLife": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "footnote": {
+                  "type": "string"
+                }
+              }
+            }
+          }
         }
       }
     },
