@@ -3685,14 +3685,95 @@
       "emailInvalid": "Wprowadź prawidłowy adres e-mail",
       "passwordMinLength": "Hasło musi mieć co najmniej 8 znaków",
       "passwordComplexity": "Hasło musi zawierać jedną małą literę, jedną wielką literę oraz jedną cyfrę lub symbol",
-      "confirmPasswordRequired": "Potwierdź swoje hasło"
+      "confirmPasswordRequired": "Potwierdź swoje hasło",
+      "agreementRequired": "Aby kontynuować, musisz zaakceptować Warunki Partnerstwa i Korzystania dla Sprzedawców"
     },
     "firstName": "Imię",
     "lastName": "Nazwisko",
     "passwordHint": "Twoje hasło musi zawierać co najmniej 8 znaków, jedną małą literę, jedną wielką literę oraz jedną cyfrę lub symbol",
     "successTitle": "Dziękujemy za rejestrację!",
     "successHint": "Może być konieczne oczekiwanie na autoryzację administratora przed zalogowaniem. Wkrótce otrzymasz e-mail z potwierdzeniem.",
-    "backToLogin": "Powrót do logowania"
+    "backToLogin": "Powrót do logowania",
+    "agreement": {
+      "label": "Przeczytałem/-am i akceptuję <0>Warunki Partnerstwa i Korzystania dla Sprzedawców</0>.",
+      "drawerDescription": "Zapoznaj się z poniższymi warunkami przed kontynuowaniem."
+    }
+  },
+  "sellerAgreement": {
+    "title": "Warunki Partnerstwa i Korzystania dla Sprzedawców Kayı.com",
+    "lastUpdated": "Ostatnia aktualizacja: 1 maja 2026",
+    "tabs": {
+      "platformStatus": "Status platformy",
+      "storeDocuments": "Sklep i dokumenty",
+      "productStandards": "Standardy produktów",
+      "stockOperations": "Zapasy i operacje",
+      "paymentSystem": "System płatności",
+      "returnDispute": "Zwroty i spory",
+      "privacyKVKK": "KVKK i prywatność",
+      "systemSecurity": "Bezpieczeństwo systemu",
+      "platformReputation": "Reputacja platformy",
+      "approvalEnactment": "Zatwierdzenie i wejście w życie",
+      "commissionTable": "Tabela prowizji"
+    },
+    "sections": {
+      "platformStatus": {
+        "content": "Kayı.com posiada status Dostawcy Usług Pośrednictwa na mocy Ustawy nr 6563 o regulacji handlu elektronicznego. Platforma pełni funkcję bezpiecznego pomostu między sprzedawcami a kupującymi. Własność wystawionych produktów należy do sprzedawcy; cała odpowiedzialność prawna, techniczna i handlowa spoczywa bezpośrednio na danym sprzedawcy."
+      },
+      "storeDocuments": {
+        "content": "Sprzedawcy oświadczają, że są prawidłowymi podatnikami zgodnie z przepisami Republiki Turcji i posiadają uprawnienia do prowadzenia działalności gospodarczej. Kayı.com zastrzega sobie prawo do żądania od sprzedawców zaświadczeń o działalności, okólników z podpisami, zaświadczeń podatkowych oraz niezbędnych dokumentów autoryzacyjnych."
+      },
+      "productStandards": {
+        "content": "Sprzedaż podrobionych, imitowanych, przemycanych lub niezgodnych z przepisami produktów jest surowo zabroniona. W przypadku wykrycia produktów naruszających prawa własności intelektualnej i przemysłowej Kayı.com zastrzega sobie prawo do jednostronnego rozwiązania umowy ze sklepem, zablokowania środków i podjęcia kroków prawnych."
+      },
+      "stockOperations": {
+        "subhead1": "Zarządzanie zapasami:",
+        "content1": "Sprzedawca jest zobowiązany do bieżącej aktualizacji informacji o stanie magazynowym na platformie. Zamówienia anulowane z powodu nieprawidłowych deklaracji stanu magazynowego wpływają na wynik oceny wydajności sprzedawcy.",
+        "subhead2": "Procesy logistyczne:",
+        "content2": "Zamówienia muszą być wysyłane w terminach ustawowych zadeklarowanych w panelu sklepu. Szkody wynikające z opóźnionych wysyłek i nieprawidłowego pakowania obciążają sprzedawcę."
+      },
+      "paymentSystem": {
+        "content": "Płatności są gromadzone na Bezpiecznym Koncie Powierniczym prowadzonym przez licencjonowane instytucje płatnicze współpracujące z Kayı.com. Po potwierdzeniu dostawy i upływie ustawowych terminów reklamacji ustalona prowizja i opłaty za usługi są potrącane, a środki przekazywane na rachunek IBAN wskazany przez sprzedawcę."
+      },
+      "returnDispute": {
+        "content": "Sprzedawca z góry akceptuje 14-dniowe prawo odstąpienia przysługujące kupującemu oraz wszystkie pozostałe prawa ustawowe zgodnie z Ustawą nr 6502 o ochronie konsumentów. Procesy zwrotów są prowadzone zgodnie z zasadami operacyjnymi ustalonymi przez platformę."
+      },
+      "privacyKVKK": {
+        "content": "Sprzedawca może wykorzystywać dane kupującego wyłącznie w celu dostarczenia zamówienia. Wykorzystanie tych danych w działalności handlowej poza platformą lub udostępnienie ich osobom trzecim stanowi poważne naruszenie w rozumieniu KVKK i skutkuje natychmiastowym rozwiązaniem umowy."
+      },
+      "systemSecurity": {
+        "content": "Sprzedawca jest zobowiązany do zapewnienia bezpieczeństwa hasła. Odpowiedzialność za dostęp do danych spoczywa na sprzedawcy zgodnie z KVKK i Ustawą nr 6563."
+      },
+      "platformReputation": {
+        "content": "Sprzedawca musi działać zgodnie z ogólnymi zasadami moralnymi i standardami etyki biznesowej Kayı.com we wszystkich swoich komunikatach i działaniach handlowych na platformie. W przypadku działań szkodzących reputacji handlowej platformy Kayı.com zastrzega sobie prawo do jednostronnego rozwiązania umowy."
+      },
+      "approvalEnactment": {
+        "content": "Każdy sprzedawca, który rozpoczyna rejestrację sklepu na Kayı.com i zaznacza pole \"Akceptuję Warunki Partnerstwa i Korzystania dla Sprzedawców\", uznaje się za osobę, która przeczytała, zrozumiała i zaakceptowała wszystkie warunki bez żadnych ograniczeń. Zatwierdzenie to ma skutek podpisu cyfrowego między stronami i wchodzi w życie od momentu rejestracji."
+      },
+      "commissionTable": {
+        "description": "Poniższa tabela przedstawia stawki prowizji netto stosowane dla każdej kategorii produktów oraz stawki łączne z VAT. Kwoty prowizji są obliczane od ceny sprzedaży.",
+        "col": {
+          "category": "Kategoria",
+          "netCommission": "Prowizja netto (%)",
+          "vat": "VAT (%)",
+          "totalInclVat": "Razem z VAT (%)"
+        },
+        "categories": {
+          "womenFashion": "Moda damska",
+          "menFashion": "Moda męska",
+          "electronics": "Elektronika",
+          "motherChild": "Mama i dziecko",
+          "homeLife": "Dom i życie",
+          "supermarket": "Supermarket",
+          "cosmetics": "Kosmetyki",
+          "shoesBags": "Buty i torby",
+          "sportsOutdoor": "Sport i outdoor",
+          "booksHobbies": "Książki i hobby",
+          "autoMoto": "Auto i moto",
+          "privateLife": "Życie prywatne"
+        },
+        "footnote": "* Stawki prowizji są obliczane od ceny sprzedaży netto bez VAT. Kayı.com zastrzega sobie prawo do zmiany stawek z 30-dniowym wyprzedzeniem. Ostatnia aktualizacja: 1 maja 2026."
+      }
+    }
   },
   "onboarding": {
     "step": "Krok {{current}} / {{total}}",

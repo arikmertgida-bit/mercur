@@ -2,7 +2,7 @@ import { Children, ReactNode, useState } from "react"
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Spinner } from "@medusajs/icons"
-import { Button, Heading, Hint, Input, Text } from "@medusajs/ui"
+import { Button, Heading, Hint, Input, Switch, Text } from "@medusajs/ui"
 import { MercurFeatureFlags } from "@mercurjs/types"
 import { useForm } from "react-hook-form"
 import { Trans, useTranslation } from "react-i18next"
@@ -15,6 +15,7 @@ import AvatarBox from "@components/common/logo-box/avatar-box"
 import { AuthLayout } from "@components/layout/auth-layout"
 import { useFeatureFlags, useSignUpWithEmailPass } from "@hooks/api"
 
+import { SellerAgreementDrawer } from "./_components/seller-agreement-drawer"
 import { RegisterSchema } from "./register-schema"
 
 const REGISTER_DRAFT_KEY = "mercur_register_draft"
@@ -40,6 +41,7 @@ const RegisterForm = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const [serverError, setServerError] = useState<string | null>(null)
+  const [agreementDrawerOpen, setAgreementDrawerOpen] = useState(false)
 
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
@@ -50,8 +52,11 @@ const RegisterForm = () => {
       last_name: "",
       email: "",
       password: "",
+      agreement_accepted: false,
     },
   })
+
+  const agreementAccepted = form.watch("agreement_accepted")
 
   const { mutateAsync: signUp, isPending } = useSignUpWithEmailPass()
 
@@ -139,10 +144,56 @@ const RegisterForm = () => {
             </Hint>
           )}
         </div>
-        <Button className="w-full" type="submit" isLoading={isPending}>
+        <Form.Field
+          control={form.control}
+          name="agreement_accepted"
+          render={({ field: { value, onChange, ...field } }) => (
+            <Form.Item>
+              <div className="flex items-start gap-x-3">
+                <Form.Control>
+                  <Switch
+                    {...field}
+                    className="rtl:rotate-180"
+                    dir="ltr"
+                    checked={value}
+                    onCheckedChange={onChange}
+                    data-testid="register-agreement-switch"
+                  />
+                </Form.Control>
+                <Form.Label className="text-ui-fg-subtle font-normal">
+                  <Trans
+                    t={t}
+                    i18nKey="register.agreement.label"
+                    components={[
+                      <button
+                        key="agreement-link"
+                        type="button"
+                        aria-label={t("sellerAgreement.title")}
+                        onClick={() => setAgreementDrawerOpen(true)}
+                        className="text-ui-fg-interactive transition-fg hover:text-ui-fg-interactive-hover font-medium underline outline-none"
+                      />,
+                    ]}
+                  />
+                </Form.Label>
+              </div>
+              <Form.ErrorMessage />
+            </Form.Item>
+          )}
+        />
+        <Button
+          className="w-full"
+          type="submit"
+          isLoading={isPending}
+          disabled={!agreementAccepted}
+          data-testid="register-continue-button"
+        >
           {t("actions.continue")}
         </Button>
       </form>
+      <SellerAgreementDrawer
+        open={agreementDrawerOpen}
+        onOpenChange={setAgreementDrawerOpen}
+      />
     </Form>
   )
 }

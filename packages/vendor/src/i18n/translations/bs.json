@@ -4046,14 +4046,95 @@
       "emailInvalid": "Unesite ispravnu email adresu",
       "passwordMinLength": "Lozinka mora imati najmanje 8 karaktera",
       "passwordComplexity": "Lozinka mora sadržavati jedno malo slovo, jedno veliko slovo i jedan broj ili simbol",
-      "confirmPasswordRequired": "Potvrdite svoju lozinku"
+      "confirmPasswordRequired": "Potvrdite svoju lozinku",
+      "agreementRequired": "Morate prihvatiti Uslove partnerstva i korištenja za prodavače da biste nastavili"
     },
     "firstName": "Ime",
     "lastName": "Prezime",
     "passwordHint": "Vaša lozinka mora sadržavati najmanje 8 karaktera, jedno malo slovo, jedno veliko slovo, jedan broj ili simbol",
     "successTitle": "Hvala vam na registraciji!",
     "successHint": "Možda ćete morati sačekati odobrenje administratora prije prijave. Email potvrde biće vam poslan uskoro.",
-    "backToLogin": "Povratak na prijavu"
+    "backToLogin": "Povratak na prijavu",
+    "agreement": {
+      "label": "Pročitao/la sam i prihvatam <0>Uslove partnerstva i korištenja za prodavače</0>.",
+      "drawerDescription": "Pregledajte uslove ispod prije nego što nastavite."
+    }
+  },
+  "sellerAgreement": {
+    "title": "Uslovi partnerstva i korištenja za prodavače Kayı.com",
+    "lastUpdated": "Posljednje ažuriranje: 1. maj 2026.",
+    "tabs": {
+      "platformStatus": "Status platforme",
+      "storeDocuments": "Prodavnica i dokumenti",
+      "productStandards": "Standardi proizvoda",
+      "stockOperations": "Zalihe i operacije",
+      "paymentSystem": "Sistem plaćanja",
+      "returnDispute": "Povrat i spor",
+      "privacyKVKK": "KVKK i privatnost",
+      "systemSecurity": "Sigurnost sistema",
+      "platformReputation": "Reputacija platforme",
+      "approvalEnactment": "Odobrenje i stupanje na snagu",
+      "commissionTable": "Tabela provizija"
+    },
+    "sections": {
+      "platformStatus": {
+        "content": "Kayı.com ima status Posredničkog pružaoca usluga u skladu sa Zakonom br. 6563 o regulisanju elektronske trgovine. Platforma djeluje kao siguran most između prodavača i kupaca. Vlasništvo nad navedenim proizvodima pripada prodavaču; sva pravna, tehnička i komercijalna odgovornost pripada direktno dotičnom prodavaču."
+      },
+      "storeDocuments": {
+        "content": "Prodavači izjavljuju da su zakoniti poreski obveznici u skladu sa zakonodavstvom Republike Turske i da imaju ovlaštenje za obavljanje komercijalne djelatnosti. Kayı.com zadržava pravo da od prodavača zatraži potvrde o djelatnosti, potpisne cirkulare, poreske potvrde i potrebne dokumente o ovlaštenju."
+      },
+      "productStandards": {
+        "content": "Prodaja krivotvorenih, imitiranih, krijumčarenih ili neusklađenih proizvoda strogo je zabranjena. Po otkrivanju proizvoda koji krše prava intelektualnog i industrijskog vlasništva, Kayı.com zadržava pravo jednostranog raskida prodavnice, blokiranja zarade i pokretanja pravnih postupaka."
+      },
+      "stockOperations": {
+        "subhead1": "Upravljanje zalihama:",
+        "content1": "Prodavač je dužan održavati ažurne informacije o zalihama na platformi. Narudžbe otkazane zbog nevažećih izjava o zalihama utiču na ocjenu učinka prodavača.",
+        "subhead2": "Logistički procesi:",
+        "content2": "Narudžbe se moraju otpremiti u zakonskim rokovima preuzetim na panelu prodavnice. Štete nastale zbog zakašnjelih pošiljki i nepravilnog pakovanja odgovornost su prodavača."
+      },
+      "paymentSystem": {
+        "content": "Plaćanja se prikupljaju na Sigurnom povjereničkom računu kod licenciranih platnih institucija ugovorenih s Kayı.com. Nakon potvrde isporuke i isteka zakonskih rokova za prigovor, utvrđena provizija i naknade za usluge se odbijaju i prenose na IBAN račun koji je prijavio prodavač."
+      },
+      "returnDispute": {
+        "content": "Prodavač unaprijed prihvata pravo kupca na odustanak u roku od 14 dana, kao i sva ostala zakonska prava u skladu sa Zakonom br. 6502 o zaštiti potrošača. Procesi povrata se provode u okviru operativnih pravila koja je odredila platforma."
+      },
+      "privacyKVKK": {
+        "content": "Prodavač smije koristiti podatke kupca koji su mu proslijeđeni isključivo u svrhu isporuke narudžbe. Korištenje ovih podataka u komercijalnim aktivnostima izvan platforme ili njihovo dijeljenje s trećim stranama smatra se ozbiljnim kršenjem prema KVKK i dovodi do trenutnog raskida ugovora."
+      },
+      "systemSecurity": {
+        "content": "Prodavač je dužan osigurati sigurnost svoje lozinke. Odgovornost za pristup podacima snosi prodavač u skladu sa KVKK i Zakonom br. 6563."
+      },
+      "platformReputation": {
+        "content": "Prodavač mora djelovati u skladu s općim moralnim pravilima i standardima poslovne etike Kayı.com u svim komunikacijama i komercijalnim aktivnostima unutar platforme. U slučaju radnji koje štete komercijalnoj reputaciji platforme, Kayı.com zadržava pravo jednostranog raskida ugovora."
+      },
+      "approvalEnactment": {
+        "content": "Svaki prodavač koji pokrene registraciju prodavnice na Kayı.com i označi polje \"Prihvatam Uslove partnerstva i korištenja za prodavače\" smatra se da je pročitao, razumio i prihvatio sve uslove bez ikakvog ograničenja. Ovo odobrenje ima učinak digitalnog potpisa između strana i stupa na snagu od trenutka registracije."
+      },
+      "commissionTable": {
+        "description": "Tabela ispod prikazuje neto stope provizije koje se primjenjuju za svaku kategoriju proizvoda i ukupne stope uključujući PDV. Iznosi provizije obračunavaju se na prodajnu cijenu.",
+        "col": {
+          "category": "Kategorija",
+          "netCommission": "Neto provizija (%)",
+          "vat": "PDV (%)",
+          "totalInclVat": "Ukupno sa PDV-om (%)"
+        },
+        "categories": {
+          "womenFashion": "Ženska moda",
+          "menFashion": "Muška moda",
+          "electronics": "Elektronika",
+          "motherChild": "Majka i dijete",
+          "homeLife": "Dom i život",
+          "supermarket": "Supermarket",
+          "cosmetics": "Kozmetika",
+          "shoesBags": "Obuća i torbe",
+          "sportsOutdoor": "Sport i outdoor",
+          "booksHobbies": "Knjige i hobiji",
+          "autoMoto": "Auto i moto",
+          "privateLife": "Lične potrepštine"
+        },
+        "footnote": "* Stope provizije obračunavaju se na neto prodajnu cijenu bez PDV-a. Kayı.com zadržava pravo izmjene stopa uz prethodnu najavu od 30 dana. Posljednje ažuriranje: 1. maj 2026."
+      }
+    }
   },
   "onboarding": {
     "step": "Korak {{current}} / {{total}}",

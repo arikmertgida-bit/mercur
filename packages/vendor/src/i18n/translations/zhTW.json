@@ -4102,14 +4102,95 @@
       "emailInvalid": "請輸入有效的電子郵件地址",
       "passwordMinLength": "密碼至少須包含 8 個字元",
       "passwordComplexity": "密碼須包含至少一個小寫字母、一個大寫字母，以及一個數字或符號",
-      "confirmPasswordRequired": "請確認您的密碼"
+      "confirmPasswordRequired": "請確認您的密碼",
+      "agreementRequired": "您必須接受《賣家合作與使用條款》才能繼續"
     },
     "firstName": "名字",
     "lastName": "姓氏",
     "passwordHint": "您的密碼須包含至少 8 個字元、一個小寫字母、一個大寫字母，以及一個數字或符號",
     "successTitle": "感謝您的註冊！",
     "successHint": "您可能需要等待管理員授權後才能登入。確認郵件將盡快寄送給您。",
-    "backToLogin": "返回登入"
+    "backToLogin": "返回登入",
+    "agreement": {
+      "label": "我已閱讀並接受<0>《賣家合作與使用條款》</0>。",
+      "drawerDescription": "請在繼續之前查看以下條款。"
+    }
+  },
+  "sellerAgreement": {
+    "title": "Kayı.com 賣家合作與使用條款",
+    "lastUpdated": "最後更新：2026年5月1日",
+    "tabs": {
+      "platformStatus": "平台地位",
+      "storeDocuments": "店鋪與證件",
+      "productStandards": "商品標準",
+      "stockOperations": "庫存與營運",
+      "paymentSystem": "付款系統",
+      "returnDispute": "退貨與爭議",
+      "privacyKVKK": "KVKK 與隱私",
+      "systemSecurity": "系統安全",
+      "platformReputation": "平台信譽",
+      "approvalEnactment": "核准與生效",
+      "commissionTable": "佣金表"
+    },
+    "sections": {
+      "platformStatus": {
+        "content": "根據關於規範電子商務的第6563號法律，Kayı.com具有中介服務提供者的地位。該平台是賣家與買家之間的安全橋樑。所列商品的所有權歸賣家所有；所有法律、技術與商業責任均直接由相關賣家承擔。"
+      },
+      "storeDocuments": {
+        "content": "賣家聲明其依土耳其共和國法律為合法納稅人，並具有從事商業活動的授權。Kayı.com保留要求賣家提供營業證明、簽名授權書、稅務證明及必要授權文件的權利。"
+      },
+      "productStandards": {
+        "content": "嚴禁銷售仿冒、仿製、走私或不符合規定的商品。一經發現侵害智慧財產權與工業財產權的商品，Kayı.com保留單方面終止店鋪、凍結收益並採取法律行動的權利。"
+      },
+      "stockOperations": {
+        "subhead1": "庫存管理：",
+        "content1": "賣家有義務隨時更新平台上的庫存資訊。因庫存申報錯誤而遭取消的訂單將影響賣家的績效評分。",
+        "subhead2": "物流流程：",
+        "content2": "訂單必須於店鋪後台所承諾的法定期限內出貨。因延遲出貨與包裝不當所造成的損害由賣家負責。"
+      },
+      "paymentSystem": {
+        "content": "款項匯集於與Kayı.com簽約之持牌支付機構所設的安全託管帳戶中。於送達確認並完成法定爭議期限後，將扣除既定佣金與服務費，餘額轉入賣家申報之IBAN帳戶。"
+      },
+      "returnDispute": {
+        "content": "賣家事先接受買家依消費者保護第6502號法律所享有之14天解除權，以及其他一切法定權利。退貨流程依平台所訂之營運規則辦理。"
+      },
+      "privacyKVKK": {
+        "content": "賣家僅得將所取得之買家資料用於訂單配送之目的。將該等資料用於平台外之商業活動或提供予第三方，將被視為嚴重違反KVKK之規定，並導致合約立即終止。"
+      },
+      "systemSecurity": {
+        "content": "賣家有義務確保其密碼之安全。依KVKK及第6563號法律，資料存取責任由賣家承擔。"
+      },
+      "platformReputation": {
+        "content": "賣家於平台內之一切溝通與商業活動中，須遵守一般道德規範及Kayı.com之商業道德標準。若發生損害平台商業信譽之行為，Kayı.com保留單方面終止合約之權利。"
+      },
+      "approvalEnactment": {
+        "content": "任何於Kayı.com開始店鋪註冊並勾選「我接受賣家合作與使用條款」核取方塊之賣家，均視為已無任何保留地閱讀、理解並接受全部條款。此項同意具有雙方之間電子簽名之效力，自註冊時起生效。"
+      },
+      "commissionTable": {
+        "description": "下表顯示適用於各商品類別之淨佣金率以及含加值稅之總費率。佣金金額依銷售價格計算。",
+        "col": {
+          "category": "類別",
+          "netCommission": "淨佣金 (%)",
+          "vat": "加值稅 (%)",
+          "totalInclVat": "含稅總計 (%)"
+        },
+        "categories": {
+          "womenFashion": "女裝",
+          "menFashion": "男裝",
+          "electronics": "電子產品",
+          "motherChild": "母嬰",
+          "homeLife": "居家生活",
+          "supermarket": "超市",
+          "cosmetics": "美妝",
+          "shoesBags": "鞋包",
+          "sportsOutdoor": "運動戶外",
+          "booksHobbies": "圖書與嗜好",
+          "autoMoto": "汽車機車",
+          "privateLife": "個人護理"
+        },
+        "footnote": "* 佣金率按不含加值稅之淨銷售價格計算。Kayı.com保留提前30天通知後調整費率之權利。最後更新：2026年5月1日。"
+      }
+    }
   },
   "onboarding": {
     "step": "步驟 {{current}} / {{total}}",

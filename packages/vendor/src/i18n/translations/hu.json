@@ -4046,14 +4046,95 @@
       "emailInvalid": "Adjon meg érvényes e-mail címet",
       "passwordMinLength": "A jelszónak legalább 8 karakterből kell állnia",
       "passwordComplexity": "A jelszónak tartalmaznia kell egy kisbetűt, egy nagybetűt, valamint egy számot vagy szimbólumot",
-      "confirmPasswordRequired": "Erősítse meg a jelszavát"
+      "confirmPasswordRequired": "Erősítse meg a jelszavát",
+      "agreementRequired": "A folytatáshoz el kell fogadnia az Eladói Partnerségi és Felhasználási Feltételeket"
     },
     "firstName": "Keresztnév",
     "lastName": "Vezetéknév",
     "passwordHint": "A jelszónak legalább 8 karakterből, egy kisbetűből, egy nagybetűből, valamint egy számból vagy szimbólumból kell állnia",
     "successTitle": "Köszönjük a regisztrációt!",
     "successHint": "Előfordulhat, hogy be kell várnia az admin jóváhagyását a bejelentkezés előtt. Rövidesen visszaigazoló e-mailt küldünk.",
-    "backToLogin": "Vissza a bejelentkezéshez"
+    "backToLogin": "Vissza a bejelentkezéshez",
+    "agreement": {
+      "label": "Elolvastam és elfogadom az <0>Eladói Partnerségi és Felhasználási Feltételeket</0>.",
+      "drawerDescription": "Folytatás előtt tekintse át az alábbi feltételeket."
+    }
+  },
+  "sellerAgreement": {
+    "title": "Kayı.com Eladói Partnerségi és Felhasználási Feltételek",
+    "lastUpdated": "Utolsó frissítés: 2026. május 1.",
+    "tabs": {
+      "platformStatus": "Platform státusza",
+      "storeDocuments": "Bolt és dokumentumok",
+      "productStandards": "Termékszabványok",
+      "stockOperations": "Készlet és működés",
+      "paymentSystem": "Fizetési rendszer",
+      "returnDispute": "Visszaküldés és vita",
+      "privacyKVKK": "KVKK és adatvédelem",
+      "systemSecurity": "Rendszerbiztonság",
+      "platformReputation": "A platform hírneve",
+      "approvalEnactment": "Jóváhagyás és hatálybalépés",
+      "commissionTable": "Jutaléktáblázat"
+    },
+    "sections": {
+      "platformStatus": {
+        "content": "A Kayı.com az elektronikus kereskedelem szabályozásáról szóló 6563. számú törvény szerint Közvetítő Szolgáltató státusszal rendelkezik. A platform biztonságos hídként működik az eladók és vásárlók között. A felsorolt termékek tulajdonjoga az eladót illeti; minden jogi, technikai és kereskedelmi felelősség közvetlenül az adott eladót terheli."
+      },
+      "storeDocuments": {
+        "content": "Az eladók kijelentik, hogy a Török Köztársaság jogszabályai szerint jogszerű adóalanyok, és jogosultak kereskedelmi tevékenység folytatására. A Kayı.com fenntartja a jogot, hogy az eladóktól tevékenységi igazolásokat, aláírási címpéldányt, adóigazolásokat és szükséges felhatalmazó dokumentumokat kérjen."
+      },
+      "productStandards": {
+        "content": "Hamisított, utánzott, csempészett vagy jogszabálynak nem megfelelő termékek értékesítése szigorúan tilos. Szellemi és iparjogvédelmi jogokat sértő termékek észlelése esetén a Kayı.com fenntartja a jogot a bolt egyoldalú megszüntetésére, a bevételek zárolására és jogi lépések megtételére."
+      },
+      "stockOperations": {
+        "subhead1": "Készletgazdálkodás:",
+        "content1": "Az eladó köteles a platformon lévő készletinformációkat naprakészen tartani. Az érvénytelen készletnyilatkozat miatt lemondott rendelések befolyásolják az eladó teljesítménypontszámát.",
+        "subhead2": "Logisztikai folyamatok:",
+        "content2": "A rendeléseket a bolt panelen vállalt törvényes határidőn belül fel kell adni. A késedelmes szállításból és a hibás csomagolásból eredő károkért az eladó felel."
+      },
+      "paymentSystem": {
+        "content": "A kifizetések a Kayı.com-mal szerződött engedélyezett fizetési intézményeknél vezetett Biztonságos Letéti Számlán gyűlnek össze. A szállítás megerősítése és a jogi vitarendezési határidők lejárta után a megállapított jutalék és szolgáltatási díjak levonásra kerülnek, majd átutalásra kerülnek az eladó által megadott IBAN-számlára."
+      },
+      "returnDispute": {
+        "content": "Az eladó előre elfogadja a vásárlót megillető 14 napos elállási jogot, valamint a fogyasztóvédelemről szóló 6502. számú törvény szerinti összes egyéb törvényes jogot. A visszaküldési folyamatok a platform által meghatározott működési szabályok keretében zajlanak."
+      },
+      "privacyKVKK": {
+        "content": "Az eladó a vásárló adatait kizárólag a rendelés kézbesítése céljából használhatja fel. Ezen adatok platformon kívüli kereskedelmi tevékenységben történő felhasználása vagy harmadik felekkel való megosztása a KVKK szerint súlyos jogsértésnek minősül, és a szerződés azonnali felmondásához vezet."
+      },
+      "systemSecurity": {
+        "content": "Az eladó köteles gondoskodni jelszava biztonságáról. Az adathozzáférésért való felelősség a KVKK és a 6563. számú törvény szerint az eladót terheli."
+      },
+      "platformReputation": {
+        "content": "Az eladónak a platformon belüli minden kommunikációjában és kereskedelmi tevékenységében az általános erkölcsi szabályoknak és a Kayı.com üzleti etikai normáinak megfelelően kell eljárnia. A platform kereskedelmi hírnevét sértő cselekmények esetén a Kayı.com fenntartja a jogot a szerződés egyoldalú felmondására."
+      },
+      "approvalEnactment": {
+        "content": "Minden eladó, aki elindítja a bolt regisztrációját a Kayı.com-on, és bejelöli az \"Elfogadom az Eladói Partnerségi és Felhasználási Feltételeket\" jelölőnégyzetet, úgy tekintendő, hogy korlátozás nélkül elolvasta, megértette és elfogadta az összes feltételt. Ez a jóváhagyás digitális aláírás hatályával bír a felek között, és a regisztráció pillanatától lép hatályba."
+      },
+      "commissionTable": {
+        "description": "Az alábbi táblázat az egyes termékkategóriákra alkalmazott nettó jutalékkulcsokat és az áfát is tartalmazó teljes kulcsokat mutatja. A jutalék összegét az eladási ár alapján számítják ki.",
+        "col": {
+          "category": "Kategória",
+          "netCommission": "Nettó jutalék (%)",
+          "vat": "Áfa (%)",
+          "totalInclVat": "Összesen áfával (%)"
+        },
+        "categories": {
+          "womenFashion": "Női divat",
+          "menFashion": "Férfi divat",
+          "electronics": "Elektronika",
+          "motherChild": "Anya & Gyermek",
+          "homeLife": "Otthon & Élet",
+          "supermarket": "Szupermarket",
+          "cosmetics": "Kozmetikum",
+          "shoesBags": "Cipő & Táska",
+          "sportsOutdoor": "Sport & Outdoor",
+          "booksHobbies": "Könyv & Hobbi",
+          "autoMoto": "Autó & Motor",
+          "privateLife": "Magánélet"
+        },
+        "footnote": "* A jutalékkulcsokat az áfa nélküli nettó eladási ár alapján számítják ki. A Kayı.com fenntartja a jogot a kulcsok 30 napos előzetes értesítéssel történő módosítására. Utolsó frissítés: 2026. május 1."
+      }
+    }
   },
   "onboarding": {
     "step": "{{current}}. lépés / {{total}}",

@@ -3656,14 +3656,95 @@
       "emailInvalid": "Please enter a valid email address",
       "passwordMinLength": "Password must be at least 8 characters",
       "passwordComplexity": "Password must include one lowercase letter, one uppercase letter, and one number or symbol",
-      "confirmPasswordRequired": "Please confirm your password"
+      "confirmPasswordRequired": "Please confirm your password",
+      "agreementRequired": "You must accept the Seller Partnership and Usage Terms to continue"
     },
     "firstName": "First name",
     "lastName": "Last name",
     "passwordHint": "Your password must include at least 8 characters, one lowercase letter, one uppercase letter, one number or symbol",
     "successTitle": "Thank you for registering!",
     "successHint": "You may need to wait for admin authorization before logging in. A confirmation email will be sent to you shortly.",
-    "backToLogin": "Back to login"
+    "backToLogin": "Back to login",
+    "agreement": {
+      "label": "I have read and accept the <0>Seller Partnership and Usage Terms</0>.",
+      "drawerDescription": "Review the terms below before continuing."
+    }
+  },
+  "sellerAgreement": {
+    "title": "Kayı.com Seller Partnership and Usage Terms",
+    "lastUpdated": "Last Updated: May 1, 2026",
+    "tabs": {
+      "platformStatus": "Platform Status",
+      "storeDocuments": "Store & Documents",
+      "productStandards": "Product Standards",
+      "stockOperations": "Stock & Operations",
+      "paymentSystem": "Payment System",
+      "returnDispute": "Return & Dispute",
+      "privacyKVKK": "KVKK & Privacy",
+      "systemSecurity": "System Security",
+      "platformReputation": "Platform Reputation",
+      "approvalEnactment": "Approval & Enactment",
+      "commissionTable": "Commission Table"
+    },
+    "sections": {
+      "platformStatus": {
+        "content": "Kayı.com holds the status of Intermediary Service Provider under Law No. 6563 on the Regulation of Electronic Commerce. The platform acts as a secure bridge between sellers and buyers. The ownership of listed products belongs to the seller; all legal, technical and commercial responsibility belongs directly to the relevant seller."
+      },
+      "storeDocuments": {
+        "content": "Sellers declare that they are legal taxpayers in accordance with the legislation of the Republic of Turkey and have the authority to conduct commercial activities. Kayı.com reserves the right to request activity certificates, signature circulars, tax certificates and necessary authorization documents from sellers."
+      },
+      "productStandards": {
+        "content": "The sale of counterfeit, imitation, smuggled or non-compliant products is strictly prohibited. Upon detection of products that infringe intellectual and industrial property rights, Kayı.com reserves the right to unilaterally terminate the store, block earnings and pursue legal remedies."
+      },
+      "stockOperations": {
+        "subhead1": "Stock Management:",
+        "content1": "The seller is obliged to keep the stock information on the platform up to date. Orders canceled due to invalid stock declarations affect the seller's performance score.",
+        "subhead2": "Logistics Processes:",
+        "content2": "Orders must be shipped within the legal deadlines committed in the store panel. Damages arising from delayed shipments and incorrect packaging are the seller's responsibility."
+      },
+      "paymentSystem": {
+        "content": "Payments are collected in the Secure Pool Account held with licensed payment institutions contracted by Kayı.com. After delivery is confirmed and legal dispute periods are completed, the determined commission and service fees are deducted and transferred to the IBAN account declared by the seller."
+      },
+      "returnDispute": {
+        "content": "The seller accepts in advance the 14-day right of withdrawal and all other legal rights held by the buyer pursuant to Law No. 6502 on Consumer Protection and the Regulation on Distance Contracts. Return processes are carried out within the operational rules set by the platform."
+      },
+      "privacyKVKK": {
+        "content": "The seller may only use buyer data (Name, Surname, Address, Phone and Email) for order delivery purposes. Using this data in commercial activities outside the platform or sharing it with third parties is considered a serious violation under KVKK and leads to immediate termination of the agreement."
+      },
+      "systemSecurity": {
+        "content": "The seller is obliged to maintain password security. Data access responsibility belongs to the seller pursuant to KVKK and Law No. 6563."
+      },
+      "platformReputation": {
+        "content": "The seller must act in accordance with general moral rules and Kayı.com business ethics standards in all communications within the platform. In the event of actions that damage the platform's commercial reputation, Kayı.com reserves the right to unilaterally terminate the agreement."
+      },
+      "approvalEnactment": {
+        "content": "Every seller who initiates store registration on Kayı.com and checks the 'I Accept the Seller Partnership and Usage Terms' checkbox is deemed to have read, understood and accepted all the terms without any restriction. This approval has the effect of a digital signature between the parties and comes into force from the moment of registration."
+      },
+      "commissionTable": {
+        "description": "The table below shows the net commission rates applied for each product category and the total rates including VAT. Commission amounts are calculated on the sales price.",
+        "col": {
+          "category": "Category",
+          "netCommission": "Net Commission (%)",
+          "vat": "VAT (%)",
+          "totalInclVat": "Total Incl. VAT (%)"
+        },
+        "categories": {
+          "womenFashion": "Women's Fashion",
+          "menFashion": "Men's Fashion",
+          "electronics": "Electronics",
+          "motherChild": "Mother & Child",
+          "homeLife": "Home & Living",
+          "supermarket": "Supermarket",
+          "cosmetics": "Cosmetics",
+          "shoesBags": "Shoes & Bags",
+          "sportsOutdoor": "Sports & Outdoor",
+          "booksHobbies": "Books & Hobbies",
+          "autoMoto": "Auto & Motorcycle",
+          "privateLife": "Private Life"
+        },
+        "footnote": "* Commission rates are calculated on the net sales price excluding VAT. Kayı.com reserves the right to change rates with 30 days prior notice. Last updated: May 1, 2026."
+      }
+    }
   },
   "onboarding": {
     "step": "Step {{current}} / {{total}}",

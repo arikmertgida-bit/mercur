@@ -4046,14 +4046,95 @@
       "emailInvalid": "Įveskite galiojantį el. pašto adresą",
       "passwordMinLength": "Slaptažodis turi būti bent 8 simbolių",
       "passwordComplexity": "Slaptažodyje turi būti viena mažoji raidė, viena didžioji raidė ir vienas skaičius ar simbolis",
-      "confirmPasswordRequired": "Patvirtinkite savo slaptažodį"
+      "confirmPasswordRequired": "Patvirtinkite savo slaptažodį",
+      "agreementRequired": "Norėdami tęsti, turite sutikti su Pardavėjų partnerystės ir naudojimo sąlygomis"
     },
     "firstName": "Vardas",
     "lastName": "Pavardė",
     "passwordHint": "Jūsų slaptažodyje turi būti bent 8 simboliai, viena mažoji raidė, viena didžioji raidė, vienas skaičius ar simbolis",
     "successTitle": "Dėkojame, kad užsiregistravote!",
     "successHint": "Prieš prisijungdami galbūt turėsite palaukti administratoriaus patvirtinimo. Netrukus jums bus išsiųstas patvirtinimo el. laiškas.",
-    "backToLogin": "Atgal į prisijungimą"
+    "backToLogin": "Atgal į prisijungimą",
+    "agreement": {
+      "label": "Perskaičiau ir sutinku su <0>Pardavėjų partnerystės ir naudojimo sąlygomis</0>.",
+      "drawerDescription": "Prieš tęsdami peržiūrėkite toliau pateiktas sąlygas."
+    }
+  },
+  "sellerAgreement": {
+    "title": "Kayı.com pardavėjų partnerystės ir naudojimo sąlygos",
+    "lastUpdated": "Paskutinį kartą atnaujinta: 2026 m. gegužės 1 d.",
+    "tabs": {
+      "platformStatus": "Platformos statusas",
+      "storeDocuments": "Parduotuvė ir dokumentai",
+      "productStandards": "Produktų standartai",
+      "stockOperations": "Atsargos ir operacijos",
+      "paymentSystem": "Mokėjimų sistema",
+      "returnDispute": "Grąžinimas ir ginčai",
+      "privacyKVKK": "KVKK ir privatumas",
+      "systemSecurity": "Sistemos saugumas",
+      "platformReputation": "Platformos reputacija",
+      "approvalEnactment": "Patvirtinimas ir įsigaliojimas",
+      "commissionTable": "Komisinių lentelė"
+    },
+    "sections": {
+      "platformStatus": {
+        "content": "Kayı.com turi Tarpininkavimo paslaugų teikėjo statusą pagal Įstatymą Nr. 6563 dėl elektroninės prekybos reguliavimo. Platforma veikia kaip saugus tiltas tarp pardavėjų ir pirkėjų. Nuosavybės teisė į išvardytus produktus priklauso pardavėjui; visa teisinė, techninė ir komercinė atsakomybė tenka tiesiogiai atitinkamam pardavėjui."
+      },
+      "storeDocuments": {
+        "content": "Pardavėjai patvirtina, kad yra teisėti mokesčių mokėtojai pagal Turkijos Respublikos teisės aktus ir turi teisę vykdyti komercinę veiklą. Kayı.com pasilieka teisę reikalauti iš pardavėjų veiklos pažymėjimų, parašų kortelių, mokesčių pažymėjimų ir reikiamų įgaliojimo dokumentų."
+      },
+      "productStandards": {
+        "content": "Griežtai draudžiama parduoti suklastotus, imituotus, kontrabandinius arba reikalavimų neatitinkančius produktus. Nustačius produktus, pažeidžiančius intelektinės ir pramoninės nuosavybės teises, Kayı.com pasilieka teisę vienašališkai nutraukti parduotuvę, blokuoti pajamas ir imtis teisinių veiksmų."
+      },
+      "stockOperations": {
+        "subhead1": "Atsargų valdymas:",
+        "content1": "Pardavėjas privalo nuolat atnaujinti atsargų informaciją platformoje. Užsakymai, atšaukti dėl neteisingų atsargų deklaracijų, veikia pardavėjo veiklos rezultatų įvertinimą.",
+        "subhead2": "Logistikos procesai:",
+        "content2": "Užsakymai turi būti išsiųsti per teisės aktais nustatytus terminus, įsipareigotus parduotuvės skydelyje. Už žalą dėl pavėluoto siuntimo ir netinkamo pakavimo atsako pardavėjas."
+      },
+      "paymentSystem": {
+        "content": "Mokėjimai kaupiami Saugioje patikos sąskaitoje, laikomoje licencijuotose mokėjimo įstaigose, su kuriomis Kayı.com yra sudariusi sutartis. Patvirtinus pristatymą ir pasibaigus teisiniams ginčų terminams, nustatyti komisiniai ir paslaugų mokesčiai išskaičiuojami, o likutis pervedamas į pardavėjo nurodytą IBAN sąskaitą."
+      },
+      "returnDispute": {
+        "content": "Pardavėjas iš anksto sutinka su pirkėjo 14 dienų atsisakymo teise ir visomis kitomis teisinėmis teisėmis pagal Įstatymą Nr. 6502 dėl vartotojų apsaugos. Grąžinimo procesai vykdomi pagal platformos nustatytas veiklos taisykles."
+      },
+      "privacyKVKK": {
+        "content": "Pardavėjas gali naudoti jam perduotus pirkėjo duomenis tik užsakymo pristatymo tikslais. Šių duomenų naudojimas komercinei veiklai už platformos ribų arba jų perdavimas trečiosioms šalims laikomas sunkiu KVKK pažeidimu ir lemia nedelsiamą sutarties nutraukimą."
+      },
+      "systemSecurity": {
+        "content": "Pardavėjas privalo užtikrinti savo slaptažodžio saugumą. Atsakomybė už prieigą prie duomenų tenka pardavėjui pagal KVKK ir Įstatymą Nr. 6563."
+      },
+      "platformReputation": {
+        "content": "Pardavėjas visoje komunikacijoje ir komercinėje veikloje platformoje privalo elgtis pagal bendrąsias moralės normas ir Kayı.com verslo etikos standartus. Jei atliekami veiksmai, kenkiantys platformos komercinei reputacijai, Kayı.com pasilieka teisę vienašališkai nutraukti sutartį."
+      },
+      "approvalEnactment": {
+        "content": "Kiekvienas pardavėjas, pradedantis parduotuvės registraciją Kayı.com ir pažymintis langelį „Sutinku su Pardavėjų partnerystės ir naudojimo sąlygomis“, laikomas perskaičiusiu, supratusiu ir be jokių apribojimų priėmusiu visas sąlygas. Šis patvirtinimas turi skaitmeninio parašo tarp šalių galią ir įsigalioja nuo registracijos momento."
+      },
+      "commissionTable": {
+        "description": "Toliau pateiktoje lentelėje nurodyti grynieji komisinių tarifai, taikomi kiekvienai produktų kategorijai, ir bendri tarifai su PVM. Komisinių sumos apskaičiuojamos nuo pardavimo kainos.",
+        "col": {
+          "category": "Kategorija",
+          "netCommission": "Grynieji komisiniai (%)",
+          "vat": "PVM (%)",
+          "totalInclVat": "Iš viso su PVM (%)"
+        },
+        "categories": {
+          "womenFashion": "Moterų mada",
+          "menFashion": "Vyrų mada",
+          "electronics": "Elektronika",
+          "motherChild": "Mama ir vaikas",
+          "homeLife": "Namai ir gyvenimas",
+          "supermarket": "Prekybos centras",
+          "cosmetics": "Kosmetika",
+          "shoesBags": "Batai ir krepšiai",
+          "sportsOutdoor": "Sportas ir laisvalaikis gamtoje",
+          "booksHobbies": "Knygos ir pomėgiai",
+          "autoMoto": "Automobiliai ir motociklai",
+          "privateLife": "Asmeniniai reikmenys"
+        },
+        "footnote": "* Komisinių tarifai apskaičiuojami nuo grynosios pardavimo kainos be PVM. Kayı.com pasilieka teisę keisti tarifus prieš 30 dienų iš anksto pranešusi. Paskutinį kartą atnaujinta: 2026 m. gegužės 1 d."
+      }
+    }
   },
   "onboarding": {
     "step": "{{current}} / {{total}} žingsnis",

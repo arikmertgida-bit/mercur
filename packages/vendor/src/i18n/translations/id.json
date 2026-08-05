@@ -4046,14 +4046,95 @@
       "emailInvalid": "Silakan masukkan alamat email yang valid",
       "passwordMinLength": "Kata sandi harus terdiri dari setidaknya 8 karakter",
       "passwordComplexity": "Kata sandi harus menyertakan satu huruf kecil, satu huruf besar, dan satu angka atau simbol",
-      "confirmPasswordRequired": "Silakan konfirmasi kata sandi Anda"
+      "confirmPasswordRequired": "Silakan konfirmasi kata sandi Anda",
+      "agreementRequired": "Anda harus menyetujui Syarat Kemitraan dan Penggunaan Penjual untuk melanjutkan"
     },
     "firstName": "Nama depan",
     "lastName": "Nama belakang",
     "passwordHint": "Kata sandi Anda harus menyertakan setidaknya 8 karakter, satu huruf kecil, satu huruf besar, satu angka atau simbol",
     "successTitle": "Terima kasih telah mendaftar!",
     "successHint": "Anda mungkin perlu menunggu otorisasi admin sebelum masuk. Email konfirmasi akan segera dikirim kepada Anda.",
-    "backToLogin": "Kembali ke login"
+    "backToLogin": "Kembali ke login",
+    "agreement": {
+      "label": "Saya telah membaca dan menyetujui <0>Syarat Kemitraan dan Penggunaan Penjual</0>.",
+      "drawerDescription": "Tinjau syarat di bawah ini sebelum melanjutkan."
+    }
+  },
+  "sellerAgreement": {
+    "title": "Syarat Kemitraan dan Penggunaan Penjual Kayı.com",
+    "lastUpdated": "Terakhir diperbarui: 1 Mei 2026",
+    "tabs": {
+      "platformStatus": "Status Platform",
+      "storeDocuments": "Toko & Dokumen",
+      "productStandards": "Standar Produk",
+      "stockOperations": "Stok & Operasi",
+      "paymentSystem": "Sistem Pembayaran",
+      "returnDispute": "Pengembalian & Sengketa",
+      "privacyKVKK": "KVKK & Privasi",
+      "systemSecurity": "Keamanan Sistem",
+      "platformReputation": "Reputasi Platform",
+      "approvalEnactment": "Persetujuan & Pemberlakuan",
+      "commissionTable": "Tabel Komisi"
+    },
+    "sections": {
+      "platformStatus": {
+        "content": "Kayı.com memiliki status sebagai Penyedia Layanan Perantara berdasarkan Undang-Undang No. 6563 tentang Regulasi Perdagangan Elektronik. Platform ini berfungsi sebagai jembatan yang aman antara penjual dan pembeli. Kepemilikan produk yang terdaftar adalah milik penjual; seluruh tanggung jawab hukum, teknis, dan komersial berada langsung pada penjual terkait."
+      },
+      "storeDocuments": {
+        "content": "Penjual menyatakan bahwa mereka adalah wajib pajak yang sah sesuai dengan peraturan perundang-undangan Republik Turki dan memiliki wewenang untuk menjalankan kegiatan usaha. Kayı.com berhak meminta sertifikat kegiatan usaha, surat kuasa tanda tangan, sertifikat pajak, dan dokumen otorisasi yang diperlukan dari penjual."
+      },
+      "productStandards": {
+        "content": "Penjualan produk palsu, tiruan, selundupan, atau yang tidak sesuai ketentuan sangat dilarang. Jika ditemukan produk yang melanggar hak kekayaan intelektual dan industri, Kayı.com berhak mengakhiri toko secara sepihak, memblokir pendapatan, dan menempuh jalur hukum."
+      },
+      "stockOperations": {
+        "subhead1": "Manajemen Stok:",
+        "content1": "Penjual wajib menjaga informasi stok di platform tetap terkini. Pesanan yang dibatalkan karena deklarasi stok yang tidak valid akan memengaruhi skor kinerja penjual.",
+        "subhead2": "Proses Logistik:",
+        "content2": "Pesanan harus dikirim dalam batas waktu hukum yang dijanjikan pada panel toko. Kerusakan akibat pengiriman yang terlambat dan pengemasan yang salah menjadi tanggung jawab penjual."
+      },
+      "paymentSystem": {
+        "content": "Pembayaran dikumpulkan dalam Rekening Penampungan Aman yang dikelola oleh lembaga pembayaran berlisensi yang bermitra dengan Kayı.com. Setelah pengiriman dikonfirmasi dan batas waktu sengketa hukum berakhir, komisi dan biaya layanan yang ditetapkan akan dipotong dan ditransfer ke rekening IBAN yang dinyatakan oleh penjual."
+      },
+      "returnDispute": {
+        "content": "Penjual menyetujui di muka hak pembatalan 14 hari yang dimiliki pembeli serta semua hak hukum lainnya berdasarkan Undang-Undang No. 6502 tentang Perlindungan Konsumen. Proses pengembalian dilakukan sesuai aturan operasional yang ditetapkan oleh platform."
+      },
+      "privacyKVKK": {
+        "content": "Penjual hanya boleh menggunakan data pembeli yang diberikan kepadanya untuk tujuan pengiriman pesanan. Penggunaan data ini dalam kegiatan komersial di luar platform atau membagikannya kepada pihak ketiga dianggap pelanggaran berat menurut KVKK dan mengakibatkan penghentian perjanjian segera."
+      },
+      "systemSecurity": {
+        "content": "Penjual wajib menjaga keamanan kata sandinya. Tanggung jawab atas akses data berada pada penjual sesuai KVKK dan Undang-Undang No. 6563."
+      },
+      "platformReputation": {
+        "content": "Penjual harus bertindak sesuai dengan aturan moral umum dan standar etika bisnis Kayı.com dalam semua komunikasi dan kegiatan komersial di dalam platform. Jika terjadi tindakan yang merugikan reputasi komersial platform, Kayı.com berhak mengakhiri perjanjian secara sepihak."
+      },
+      "approvalEnactment": {
+        "content": "Setiap penjual yang memulai pendaftaran toko di Kayı.com dan mencentang kotak \"Saya Menyetujui Syarat Kemitraan dan Penggunaan Penjual\" dianggap telah membaca, memahami, dan menyetujui seluruh syarat tanpa batasan apa pun. Persetujuan ini memiliki kekuatan tanda tangan digital antara para pihak dan berlaku sejak saat pendaftaran."
+      },
+      "commissionTable": {
+        "description": "Tabel di bawah ini menunjukkan tarif komisi bersih yang berlaku untuk setiap kategori produk serta tarif total termasuk PPN. Jumlah komisi dihitung berdasarkan harga jual.",
+        "col": {
+          "category": "Kategori",
+          "netCommission": "Komisi Bersih (%)",
+          "vat": "PPN (%)",
+          "totalInclVat": "Total Termasuk PPN (%)"
+        },
+        "categories": {
+          "womenFashion": "Fashion Wanita",
+          "menFashion": "Fashion Pria",
+          "electronics": "Elektronik",
+          "motherChild": "Ibu & Anak",
+          "homeLife": "Rumah & Kehidupan",
+          "supermarket": "Supermarket",
+          "cosmetics": "Kosmetik",
+          "shoesBags": "Sepatu & Tas",
+          "sportsOutdoor": "Olahraga & Outdoor",
+          "booksHobbies": "Buku & Hobi",
+          "autoMoto": "Otomotif & Motor",
+          "privateLife": "Kebutuhan Pribadi"
+        },
+        "footnote": "* Tarif komisi dihitung berdasarkan harga jual bersih tanpa PPN. Kayı.com berhak mengubah tarif dengan pemberitahuan 30 hari sebelumnya. Terakhir diperbarui: 1 Mei 2026."
+      }
+    }
   },
   "onboarding": {
     "step": "Langkah {{current}} / {{total}}",

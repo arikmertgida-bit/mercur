@@ -14,4 +14,7 @@ export const RegisterSchema = z.object({
     .refine((val) => /[a-z]/.test(val) && /[A-Z]/.test(val) && /[\d\W]/.test(val), {
       message: i18n.t("register.validation.passwordComplexity"),
     }),
+  agreement_accepted: z.boolean().refine((val) => val === true, {
+    message: i18n.t("register.validation.agreementRequired"),
+  }),
 })

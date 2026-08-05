@@ -4046,14 +4046,95 @@
       "emailInvalid": "Vă rugăm introduceți o adresă de email validă",
       "passwordMinLength": "Parola trebuie să aibă cel puțin 8 caractere",
       "passwordComplexity": "Parola trebuie să includă o literă mică, o literă mare și o cifră sau un simbol",
-      "confirmPasswordRequired": "Vă rugăm confirmați parola"
+      "confirmPasswordRequired": "Vă rugăm confirmați parola",
+      "agreementRequired": "Trebuie să acceptați Termenii de Parteneriat și Utilizare pentru Vânzători pentru a continua"
     },
     "firstName": "Prenume",
     "lastName": "Nume",
     "passwordHint": "Parola dumneavoastră trebuie să includă cel puțin 8 caractere, o literă mică, o literă mare, o cifră sau un simbol",
     "successTitle": "Vă mulțumim pentru înregistrare!",
     "successHint": "Este posibil să fie nevoie să așteptați autorizarea administratorului înainte de autentificare. Un email de confirmare vă va fi trimis în curând.",
-    "backToLogin": "Înapoi la autentificare"
+    "backToLogin": "Înapoi la autentificare",
+    "agreement": {
+      "label": "Am citit și accept <0>Termenii de Parteneriat și Utilizare pentru Vânzători</0>.",
+      "drawerDescription": "Analizați termenii de mai jos înainte de a continua."
+    }
+  },
+  "sellerAgreement": {
+    "title": "Termenii de Parteneriat și Utilizare pentru Vânzători Kayı.com",
+    "lastUpdated": "Ultima actualizare: 1 mai 2026",
+    "tabs": {
+      "platformStatus": "Statutul platformei",
+      "storeDocuments": "Magazin și documente",
+      "productStandards": "Standarde de produs",
+      "stockOperations": "Stoc și operațiuni",
+      "paymentSystem": "Sistem de plată",
+      "returnDispute": "Returnare și litigiu",
+      "privacyKVKK": "KVKK și confidențialitate",
+      "systemSecurity": "Securitatea sistemului",
+      "platformReputation": "Reputația platformei",
+      "approvalEnactment": "Aprobare și intrare în vigoare",
+      "commissionTable": "Tabel comisioane"
+    },
+    "sections": {
+      "platformStatus": {
+        "content": "Kayı.com deține statutul de Furnizor de Servicii Intermediar în temeiul Legii nr. 6563 privind reglementarea comerțului electronic. Platforma acționează ca o punte sigură între vânzători și cumpărători. Proprietatea produselor listate aparține vânzătorului; întreaga responsabilitate juridică, tehnică și comercială revine direct vânzătorului respectiv."
+      },
+      "storeDocuments": {
+        "content": "Vânzătorii declară că sunt contribuabili legali în conformitate cu legislația Republicii Turcia și că dețin autoritatea de a desfășura activități comerciale. Kayı.com își rezervă dreptul de a solicita vânzătorilor certificate de activitate, circulare de semnătură, certificate fiscale și documentele de autorizare necesare."
+      },
+      "productStandards": {
+        "content": "Vânzarea de produse contrafăcute, imitații, de contrabandă sau neconforme este strict interzisă. La detectarea produselor care încalcă drepturile de proprietate intelectuală și industrială, Kayı.com își rezervă dreptul de a rezilia unilateral magazinul, de a bloca câștigurile și de a recurge la căi legale."
+      },
+      "stockOperations": {
+        "subhead1": "Gestionarea stocurilor:",
+        "content1": "Vânzătorul este obligat să mențină actualizate informațiile despre stoc pe platformă. Comenzile anulate din cauza declarațiilor de stoc invalide afectează scorul de performanță al vânzătorului.",
+        "subhead2": "Procese logistice:",
+        "content2": "Comenzile trebuie expediate în termenele legale asumate în panoul magazinului. Daunele rezultate din expedieri întârziate și ambalare incorectă revin în responsabilitatea vânzătorului."
+      },
+      "paymentSystem": {
+        "content": "Plățile sunt colectate în Contul de Custodie Securizat, deținut la instituții de plată licențiate contractate de Kayı.com. După confirmarea livrării și finalizarea termenelor legale de contestare, comisionul și taxele de serviciu stabilite sunt deduse și transferate în contul IBAN declarat de vânzător."
+      },
+      "returnDispute": {
+        "content": "Vânzătorul acceptă în avans dreptul de retragere de 14 zile al cumpărătorului, precum și toate celelalte drepturi legale conform Legii nr. 6502 privind protecția consumatorilor. Procesele de returnare se desfășoară în cadrul regulilor operaționale stabilite de platformă."
+      },
+      "privacyKVKK": {
+        "content": "Vânzătorul poate utiliza datele cumpărătorului doar în scopul livrării comenzii. Utilizarea acestor date în activități comerciale în afara platformei sau distribuirea lor către terți este considerată o încălcare gravă conform KVKK și duce la rezilierea imediată a contractului."
+      },
+      "systemSecurity": {
+        "content": "Vânzătorul este obligat să asigure securitatea parolei sale. Responsabilitatea pentru accesul la date revine vânzătorului, conform KVKK și Legii nr. 6563."
+      },
+      "platformReputation": {
+        "content": "Vânzătorul trebuie să acționeze în conformitate cu regulile morale generale și standardele de etică comercială Kayı.com în toate comunicările și activitățile comerciale de pe platformă. În cazul unor acțiuni care afectează reputația comercială a platformei, Kayı.com își rezervă dreptul de a rezilia unilateral contractul."
+      },
+      "approvalEnactment": {
+        "content": "Orice vânzător care inițiază înregistrarea unui magazin pe Kayı.com și bifează caseta \"Accept Termenii de Parteneriat și Utilizare pentru Vânzători\" este considerat că a citit, a înțeles și a acceptat toți termenii fără nicio restricție. Această aprobare are efectul unei semnături digitale între părți și intră în vigoare din momentul înregistrării."
+      },
+      "commissionTable": {
+        "description": "Tabelul de mai jos prezintă ratele de comision net aplicate fiecărei categorii de produse și ratele totale, TVA inclus. Sumele comisionului se calculează la prețul de vânzare.",
+        "col": {
+          "category": "Categorie",
+          "netCommission": "Comision net (%)",
+          "vat": "TVA (%)",
+          "totalInclVat": "Total cu TVA (%)"
+        },
+        "categories": {
+          "womenFashion": "Modă femei",
+          "menFashion": "Modă bărbați",
+          "electronics": "Electronice",
+          "motherChild": "Mamă & Copil",
+          "homeLife": "Casă & Viață",
+          "supermarket": "Supermarket",
+          "cosmetics": "Cosmetice",
+          "shoesBags": "Încălțăminte & Genți",
+          "sportsOutdoor": "Sport & Outdoor",
+          "booksHobbies": "Cărți & Hobby",
+          "autoMoto": "Auto & Moto",
+          "privateLife": "Viață privată"
+        },
+        "footnote": "* Ratele de comision se calculează la prețul de vânzare net, fără TVA. Kayı.com își rezervă dreptul de a modifica ratele cu un preaviz de 30 de zile. Ultima actualizare: 1 mai 2026."
+      }
+    }
   },
   "onboarding": {
     "step": "Pasul {{current}} / {{total}}",

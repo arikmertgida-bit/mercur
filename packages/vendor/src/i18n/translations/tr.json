@@ -4051,14 +4051,95 @@
       "emailInvalid": "Lütfen geçerli bir e-posta adresi girin",
       "passwordMinLength": "Şifre en az 8 karakter olmalıdır",
       "passwordComplexity": "Şifre bir küçük harf, bir büyük harf ve bir rakam veya sembol içermelidir",
-      "confirmPasswordRequired": "Lütfen şifrenizi onaylayın"
+      "confirmPasswordRequired": "Lütfen şifrenizi onaylayın",
+      "agreementRequired": "Devam etmek için Satıcı İş Ortaklığı ve Kullanım Esaslarını kabul etmelisiniz"
     },
     "firstName": "Ad",
     "lastName": "Soyad",
     "passwordHint": "Şifreniz en az 8 karakter, bir küçük harf, bir büyük harf, bir rakam veya sembol içermelidir",
     "successTitle": "Kaydolduğunuz için teşekkür ederiz!",
     "successHint": "Giriş yapmadan önce yönetici onayını beklemeniz gerekebilir. Kısa süre içinde size bir onay e-postası gönderilecektir.",
-    "backToLogin": "Girişe geri dön"
+    "backToLogin": "Girişe geri dön",
+    "agreement": {
+      "label": "<0>Satıcı İş Ortaklığı ve Kullanım Esasları</0>'nı okudum ve kabul ediyorum.",
+      "drawerDescription": "Devam etmeden önce aşağıdaki şartları inceleyin."
+    }
+  },
+  "sellerAgreement": {
+    "title": "Kayı.com Satıcı İş Ortaklığı ve Kullanım Esasları",
+    "lastUpdated": "Son Güncelleme: 01 Mayıs 2026",
+    "tabs": {
+      "platformStatus": "Platform Statüsü",
+      "storeDocuments": "Mağaza & Belge",
+      "productStandards": "Ürün Standartları",
+      "stockOperations": "Stok ve Operasyon",
+      "paymentSystem": "Ödeme Sistemi",
+      "returnDispute": "İade & Uyuşmazlık",
+      "privacyKVKK": "KVKK & Gizlilik",
+      "systemSecurity": "Sistem Güvenliği",
+      "platformReputation": "Platform İtibarı",
+      "approvalEnactment": "Onay ve Yürürlük",
+      "commissionTable": "Komisyon Tablosu"
+    },
+    "sections": {
+      "platformStatus": {
+        "content": "Kayı.com, 6563 sayılı Elektronik Ticaretin Düzenlenmesi Hakkında Kanun kapsamında Aracı Hizmet Sağlayıcı statüsündedir. Platform, satıcılar ile alıcılar arasında güvenli bir köprü kurar. Listelenen ürünlerin mülkiyeti satıcıya ait olup; ürünlere ilişkin tüm hukuki, teknik ve ticari sorumluluk doğrudan ilgili satıcıya aittir."
+      },
+      "storeDocuments": {
+        "content": "Satıcılar, Türkiye Cumhuriyeti mevzuatına uygun şekilde yasal vergi mükellefi olduklarını ve ticari faaliyet yürütme yetkisine sahip olduklarını beyan ederler. Kayı.com, üyelik aşamasında veya sonrasında satıcılardan faaliyet belgeleri, imza sirküleri, vergi levhası ve gerekli yetki belgelerini talep etme hakkını saklı tutar."
+      },
+      "productStandards": {
+        "content": "Sahte, taklit, kaçak veya mevzuata aykırı ürün satışı kesinlikle yasaktır. Fikri ve sınai mülkiyet haklarını ihlal eden ürünlerin tespiti halinde Kayı.com; mağazayı tek taraflı feshetme, hakedişleri bloke etme ve yasal yollara başvurma hakkına sahiptir."
+      },
+      "stockOperations": {
+        "subhead1": "Stok Yönetimi:",
+        "content1": "Satıcı, platformdaki stok bilgilerini güncel tutmakla yükümlüdür. Geçersiz stok beyanı nedeniyle iptal edilen siparişler satıcı performans puanını etkiler.",
+        "subhead2": "Lojistik Süreçleri:",
+        "content2": "Siparişler, mağaza panelinde taahhüt edilen yasal süreler içinde kargoya verilmelidir. Gecikmeli gönderimler ve hatalı paketleme kaynaklı zararlar satıcının sorumluluğundadır."
+      },
+      "paymentSystem": {
+        "content": "Ödemeler, Kayı.com'un anlaşmalı olduğu lisanslı ödeme kuruluşları nezdindeki Güvenli Havuz Hesabı'nda toplanır. Teslimatın onaylanması ve yasal itiraz sürelerinin tamamlanmasının ardından, belirlenen komisyon ve hizmet bedelleri düşülerek satıcının beyan ettiği IBAN hesabına aktarılır."
+      },
+      "returnDispute": {
+        "content": "Satıcı, 6502 sayılı Tüketicinin Korunması Hakkında Kanun uyarınca alıcının sahip olduğu 14 günlük cayma hakkını ve diğer tüm yasal haklarını peşinen kabul eder. İade süreçleri, platformun belirlediği operasyonel kurallar çerçevesinde yürütülür."
+      },
+      "privacyKVKK": {
+        "content": "Satıcı, kendisine iletilen alıcı verilerini yalnızca sipariş teslimat amacıyla kullanabilir. Bu verilerin platform dışı ticari faaliyetlerde kullanılması veya üçüncü şahıslarla paylaşılması KVKK kapsamında ağır ihlal sayılır ve sözleşmenin derhal feshine yol açar."
+      },
+      "systemSecurity": {
+        "content": "Satıcı, şifre güvenliğini sağlamakla yükümlüdür. KVKK ve 6563 sayılı Kanun gereği veri erişim sorumluluğu satıcıya aittir."
+      },
+      "platformReputation": {
+        "content": "Satıcı, platform içi tüm iletişiminde ve ticari faaliyetlerinde genel ahlak kurallarına ve Kayı.com iş etiği standartlarına uygun hareket etmelidir. Platformun ticari itibarına zarar verecek eylemlerde bulunulması durumunda Kayı.com, sözleşmeyi tek taraflı olarak feshetme hakkını saklı tutar."
+      },
+      "approvalEnactment": {
+        "content": "Kayı.com üzerinde mağaza kaydını başlatan ve onay kutucuğunu işaretleyen her satıcı, yukarıda belirtilen tüm şartları, kuralları ve ek protokolleri hiçbir kısıtlama olmaksızın okumuş, anlamış ve kabul etmiş sayılır. Bu onay, taraflar arasında dijital imza hükmünde olup kayıt anından itibaren yürürlüğe girer."
+      },
+      "commissionTable": {
+        "description": "Aşağıdaki tablo, her ürün kategorisi için uygulanan net komisyon oranlarını ve KDV dahil toplam oranları göstermektedir. Komisyon tutarları satış bedeli üzerinden hesaplanır.",
+        "col": {
+          "category": "Kategori",
+          "netCommission": "Net Komisyon (%)",
+          "vat": "KDV (%)",
+          "totalInclVat": "Toplam KDV Dahil (%)"
+        },
+        "categories": {
+          "womenFashion": "Kadın Moda",
+          "menFashion": "Erkek Moda",
+          "electronics": "Elektronik",
+          "motherChild": "Anne & Çocuk",
+          "homeLife": "Ev & Yaşam",
+          "supermarket": "Süpermarket",
+          "cosmetics": "Kozmetik",
+          "shoesBags": "Ayakkabı & Çanta",
+          "sportsOutdoor": "Spor & Outdoor",
+          "booksHobbies": "Kitap & Hobi",
+          "autoMoto": "Oto & Motosiklet",
+          "privateLife": "Özel Yaşam"
+        },
+        "footnote": "* Komisyon oranları KDV hariç net satış bedeli üzerinden hesaplanır. Kayı.com, oranları 30 gün önceden bildirmek kaydıyla değiştirme hakkını saklı tutar. Son güncelleme: 01 Mayıs 2026."
+      }
+    }
   },
   "onboarding": {
     "step": "Adım {{current}} / {{total}}",

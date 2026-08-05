@@ -4046,14 +4046,95 @@
       "emailInvalid": "Zadejte prosím platnou e-mailovou adresu",
       "passwordMinLength": "Heslo musí mít alespoň 8 znaků",
       "passwordComplexity": "Heslo musí obsahovat jedno malé písmeno, jedno velké písmeno a jedno číslo nebo symbol",
-      "confirmPasswordRequired": "Potvrďte prosím své heslo"
+      "confirmPasswordRequired": "Potvrďte prosím své heslo",
+      "agreementRequired": "Pro pokračování musíte přijmout Podmínky partnerství a používání pro prodejce"
     },
     "firstName": "Jméno",
     "lastName": "Příjmení",
     "passwordHint": "Vaše heslo musí obsahovat alespoň 8 znaků, jedno malé písmeno, jedno velké písmeno a jedno číslo nebo symbol",
     "successTitle": "Děkujeme za registraci!",
     "successHint": "Před přihlášením možná budete muset počkat na autorizaci administrátorem. Potvrzovací e-mail vám bude brzy odeslán.",
-    "backToLogin": "Zpět na přihlášení"
+    "backToLogin": "Zpět na přihlášení",
+    "agreement": {
+      "label": "Přečetl(a) jsem si a přijímám <0>Podmínky partnerství a používání pro prodejce</0>.",
+      "drawerDescription": "Před pokračováním si přečtěte níže uvedené podmínky."
+    }
+  },
+  "sellerAgreement": {
+    "title": "Podmínky partnerství a používání pro prodejce Kayı.com",
+    "lastUpdated": "Poslední aktualizace: 1. května 2026",
+    "tabs": {
+      "platformStatus": "Status platformy",
+      "storeDocuments": "Obchod a dokumenty",
+      "productStandards": "Standardy produktů",
+      "stockOperations": "Zásoby a provoz",
+      "paymentSystem": "Platební systém",
+      "returnDispute": "Vrácení a spory",
+      "privacyKVKK": "KVKK a soukromí",
+      "systemSecurity": "Bezpečnost systému",
+      "platformReputation": "Reputace platformy",
+      "approvalEnactment": "Schválení a účinnost",
+      "commissionTable": "Tabulka provizí"
+    },
+    "sections": {
+      "platformStatus": {
+        "content": "Kayı.com má status Poskytovatele zprostředkovatelských služeb podle zákona č. 6563 o regulaci elektronického obchodu. Platforma funguje jako bezpečný most mezi prodejci a kupujícími. Vlastnictví uvedených produktů náleží prodejci; veškerá právní, technická a obchodní odpovědnost náleží přímo příslušnému prodejci."
+      },
+      "storeDocuments": {
+        "content": "Prodejci prohlašují, že jsou zákonnými daňovými poplatníky v souladu s právními předpisy Turecké republiky a mají oprávnění vykonávat obchodní činnost. Kayı.com si vyhrazuje právo vyžádat si od prodejců osvědčení o činnosti, podpisové vzory, daňová osvědčení a potřebné dokumenty o oprávnění."
+      },
+      "productStandards": {
+        "content": "Prodej padělaných, imitovaných, pašovaných nebo nevyhovujících produktů je přísně zakázán. Při zjištění produktů porušujících práva duševního a průmyslového vlastnictví si Kayı.com vyhrazuje právo jednostranně ukončit obchod, zablokovat výdělky a podniknout právní kroky."
+      },
+      "stockOperations": {
+        "subhead1": "Správa zásob:",
+        "content1": "Prodejce je povinen udržovat informace o zásobách na platformě aktuální. Objednávky zrušené kvůli neplatným deklaracím zásob ovlivňují hodnocení výkonu prodejce.",
+        "subhead2": "Logistické procesy:",
+        "content2": "Objednávky musí být odeslány v zákonných lhůtách slíbených v panelu obchodu. Škody způsobené zpožděnými zásilkami a nesprávným balením jsou odpovědností prodejce."
+      },
+      "paymentSystem": {
+        "content": "Platby jsou shromažďovány na Bezpečném svěřeneckém účtu u licencovaných platebních institucí smluvně spolupracujících s Kayı.com. Po potvrzení doručení a uplynutí zákonných lhůt pro reklamace se odečtou stanovené provize a servisní poplatky a zbytek se převede na IBAN účet uvedený prodejcem."
+      },
+      "returnDispute": {
+        "content": "Prodejce předem přijímá 14denní právo na odstoupení od smlouvy, které náleží kupujícímu, a všechna ostatní zákonná práva podle zákona č. 6502 o ochraně spotřebitele. Procesy vracení zboží probíhají v rámci provozních pravidel stanovených platformou."
+      },
+      "privacyKVKK": {
+        "content": "Prodejce smí údaje kupujícího použít výhradně pro účely doručení objednávky. Použití těchto údajů pro obchodní činnosti mimo platformu nebo jejich sdílení s třetími stranami se považuje za závažné porušení podle KVKK a vede k okamžitému ukončení smlouvy."
+      },
+      "systemSecurity": {
+        "content": "Prodejce je povinen zajistit bezpečnost svého hesla. Odpovědnost za přístup k datům nese prodejce v souladu s KVKK a zákonem č. 6563."
+      },
+      "platformReputation": {
+        "content": "Prodejce musí ve veškeré komunikaci a obchodní činnosti v rámci platformy jednat v souladu s obecnými morálními zásadami a standardy obchodní etiky Kayı.com. V případě jednání poškozujícího obchodní pověst platformy si Kayı.com vyhrazuje právo jednostranně ukončit smlouvu."
+      },
+      "approvalEnactment": {
+        "content": "Každý prodejce, který zahájí registraci obchodu na Kayı.com a zaškrtne políčko \"Přijímám Podmínky partnerství a používání pro prodejce\", se považuje za osobu, která si přečetla, porozuměla a bez omezení přijala všechny podmínky. Toto schválení má účinek digitálního podpisu mezi stranami a vstupuje v platnost okamžikem registrace."
+      },
+      "commissionTable": {
+        "description": "Následující tabulka zobrazuje čisté sazby provizí uplatňované pro jednotlivé kategorie produktů a celkové sazby včetně DPH. Částky provizí se počítají z prodejní ceny.",
+        "col": {
+          "category": "Kategorie",
+          "netCommission": "Čistá provize (%)",
+          "vat": "DPH (%)",
+          "totalInclVat": "Celkem vč. DPH (%)"
+        },
+        "categories": {
+          "womenFashion": "Dámská móda",
+          "menFashion": "Pánská móda",
+          "electronics": "Elektronika",
+          "motherChild": "Matka a dítě",
+          "homeLife": "Domov a život",
+          "supermarket": "Supermarket",
+          "cosmetics": "Kosmetika",
+          "shoesBags": "Boty a tašky",
+          "sportsOutdoor": "Sport a outdoor",
+          "booksHobbies": "Knihy a hobby",
+          "autoMoto": "Auto a moto",
+          "privateLife": "Osobní potřeby"
+        },
+        "footnote": "* Sazby provizí se počítají z čisté prodejní ceny bez DPH. Kayı.com si vyhrazuje právo změnit sazby s 30denním předstihem. Poslední aktualizace: 1. května 2026."
+      }
+    }
   },
   "onboarding": {
     "step": "Krok {{current}} / {{total}}",

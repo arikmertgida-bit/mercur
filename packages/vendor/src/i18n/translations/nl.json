@@ -4046,14 +4046,95 @@
       "emailInvalid": "Voer een geldig e-mailadres in",
       "passwordMinLength": "Wachtwoord moet ten minste 8 tekens bevatten",
       "passwordComplexity": "Wachtwoord moet één kleine letter, één hoofdletter en één cijfer of symbool bevatten",
-      "confirmPasswordRequired": "Bevestig je wachtwoord"
+      "confirmPasswordRequired": "Bevestig je wachtwoord",
+      "agreementRequired": "U moet de Verkopers­partnerschap- en Gebruiksvoorwaarden accepteren om door te gaan"
     },
     "firstName": "Voornaam",
     "lastName": "Achternaam",
     "passwordHint": "Je wachtwoord moet ten minste 8 tekens bevatten, één kleine letter, één hoofdletter, één cijfer of symbool",
     "successTitle": "Bedankt voor je registratie!",
     "successHint": "Mogelijk moet je wachten op autorisatie door de beheerder voordat je kunt inloggen. Er wordt binnenkort een bevestigingsmail naar je verzonden.",
-    "backToLogin": "Terug naar inloggen"
+    "backToLogin": "Terug naar inloggen",
+    "agreement": {
+      "label": "Ik heb de <0>Verkopers­partnerschap- en Gebruiksvoorwaarden</0> gelezen en geaccepteerd.",
+      "drawerDescription": "Bekijk onderstaande voorwaarden voordat u doorgaat."
+    }
+  },
+  "sellerAgreement": {
+    "title": "Kayı.com Verkopers­partnerschap- en Gebruiksvoorwaarden",
+    "lastUpdated": "Laatst bijgewerkt: 1 mei 2026",
+    "tabs": {
+      "platformStatus": "Platformstatus",
+      "storeDocuments": "Winkel & documenten",
+      "productStandards": "Productnormen",
+      "stockOperations": "Voorraad & operaties",
+      "paymentSystem": "Betalingssysteem",
+      "returnDispute": "Retour & geschil",
+      "privacyKVKK": "KVKK & privacy",
+      "systemSecurity": "Systeembeveiliging",
+      "platformReputation": "Reputatie van het platform",
+      "approvalEnactment": "Goedkeuring & inwerkingtreding",
+      "commissionTable": "Commissietabel"
+    },
+    "sections": {
+      "platformStatus": {
+        "content": "Kayı.com heeft de status van Tussenpersoon-dienstverlener onder Wet nr. 6563 inzake de regulering van elektronische handel. Het platform fungeert als een veilige brug tussen verkopers en kopers. Het eigendom van de vermelde producten berust bij de verkoper; alle juridische, technische en commerciële verantwoordelijkheid ligt rechtstreeks bij de betreffende verkoper."
+      },
+      "storeDocuments": {
+        "content": "Verkopers verklaren wettige belastingplichtigen te zijn conform de wetgeving van de Republiek Turkije en bevoegd te zijn om commerciële activiteiten uit te oefenen. Kayı.com behoudt zich het recht voor om van verkopers activiteitscertificaten, handtekeningcirculaires, belastingcertificaten en de benodigde machtigingsdocumenten op te vragen."
+      },
+      "productStandards": {
+        "content": "De verkoop van namaak-, imitatie-, smokkel- of niet-conforme producten is ten strengste verboden. Bij vaststelling van producten die intellectuele en industriële eigendomsrechten schenden, behoudt Kayı.com zich het recht voor de winkel eenzijdig te beëindigen, tegoeden te blokkeren en juridische stappen te ondernemen."
+      },
+      "stockOperations": {
+        "subhead1": "Voorraadbeheer:",
+        "content1": "De verkoper is verplicht de voorraadinformatie op het platform actueel te houden. Bestellingen die worden geannuleerd wegens ongeldige voorraadopgaven, hebben invloed op de prestatiescore van de verkoper.",
+        "subhead2": "Logistieke processen:",
+        "content2": "Bestellingen moeten worden verzonden binnen de wettelijke termijnen die in het winkelpaneel zijn toegezegd. Schade door vertraagde verzendingen en onjuiste verpakking is de verantwoordelijkheid van de verkoper."
+      },
+      "paymentSystem": {
+        "content": "Betalingen worden verzameld op de Beveiligde Depotrekening bij de door Kayı.com gecontracteerde erkende betaalinstellingen. Na bevestiging van de levering en het verstrijken van de wettelijke geschiltermijnen worden de vastgestelde commissie- en servicekosten afgetrokken en overgemaakt naar de door de verkoper opgegeven IBAN-rekening."
+      },
+      "returnDispute": {
+        "content": "De verkoper aanvaardt bij voorbaat het 14-daagse herroepingsrecht van de koper en alle overige wettelijke rechten conform Wet nr. 6502 inzake consumentenbescherming. Retourprocessen worden uitgevoerd binnen de door het platform vastgestelde operationele regels."
+      },
+      "privacyKVKK": {
+        "content": "De verkoper mag de aan hem verstrekte kopersgegevens uitsluitend gebruiken voor het bezorgen van bestellingen. Het gebruik van deze gegevens voor commerciële activiteiten buiten het platform of het delen ervan met derden wordt beschouwd als een ernstige schending onder de KVKK en leidt tot onmiddellijke beëindiging van de overeenkomst."
+      },
+      "systemSecurity": {
+        "content": "De verkoper is verplicht de wachtwoordbeveiliging te waarborgen. De verantwoordelijkheid voor gegevenstoegang berust bij de verkoper conform de KVKK en Wet nr. 6563."
+      },
+      "platformReputation": {
+        "content": "De verkoper dient in alle communicatie en commerciële activiteiten binnen het platform te handelen in overeenstemming met algemene morele regels en de zakelijke ethische normen van Kayı.com. Bij handelingen die de commerciële reputatie van het platform schaden, behoudt Kayı.com zich het recht voor de overeenkomst eenzijdig te beëindigen."
+      },
+      "approvalEnactment": {
+        "content": "Elke verkoper die de winkelregistratie op Kayı.com start en het selectievakje \"Ik accepteer de Verkopers­partnerschap- en Gebruiksvoorwaarden\" aanvinkt, wordt geacht alle voorwaarden zonder enige beperking te hebben gelezen, begrepen en geaccepteerd. Deze goedkeuring heeft de werking van een digitale handtekening tussen partijen en treedt in werking vanaf het moment van registratie."
+      },
+      "commissionTable": {
+        "description": "Onderstaande tabel toont de netto commissietarieven die per productcategorie worden toegepast, evenals de totale tarieven inclusief btw. Commissiebedragen worden berekend over de verkoopprijs.",
+        "col": {
+          "category": "Categorie",
+          "netCommission": "Netto commissie (%)",
+          "vat": "Btw (%)",
+          "totalInclVat": "Totaal incl. btw (%)"
+        },
+        "categories": {
+          "womenFashion": "Damesmode",
+          "menFashion": "Herenmode",
+          "electronics": "Elektronica",
+          "motherChild": "Moeder & Kind",
+          "homeLife": "Huis & Leven",
+          "supermarket": "Supermarkt",
+          "cosmetics": "Cosmetica",
+          "shoesBags": "Schoenen & Tassen",
+          "sportsOutdoor": "Sport & Outdoor",
+          "booksHobbies": "Boeken & Hobby's",
+          "autoMoto": "Auto & Moto",
+          "privateLife": "Privéleven"
+        },
+        "footnote": "* Commissietarieven worden berekend over de netto verkoopprijs exclusief btw. Kayı.com behoudt zich het recht voor tarieven te wijzigen met 30 dagen voorafgaande kennisgeving. Laatst bijgewerkt: 1 mei 2026."
+      }
+    }
   },
   "onboarding": {
     "step": "Stap {{current}} / {{total}}",

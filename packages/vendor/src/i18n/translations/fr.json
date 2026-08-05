@@ -4046,14 +4046,95 @@
       "emailInvalid": "Veuillez saisir une adresse e-mail valide",
       "passwordMinLength": "Le mot de passe doit contenir au moins 8 caractères",
       "passwordComplexity": "Le mot de passe doit inclure une lettre minuscule, une lettre majuscule et un chiffre ou un symbole",
-      "confirmPasswordRequired": "Veuillez confirmer votre mot de passe"
+      "confirmPasswordRequired": "Veuillez confirmer votre mot de passe",
+      "agreementRequired": "Vous devez accepter les Conditions de partenariat et d'utilisation vendeur pour continuer"
     },
     "firstName": "Prénom",
     "lastName": "Nom",
     "passwordHint": "Votre mot de passe doit inclure au moins 8 caractères, une lettre minuscule, une lettre majuscule, un chiffre ou un symbole",
     "successTitle": "Merci de votre inscription !",
     "successHint": "Vous devrez peut-être attendre l'autorisation de l'administrateur avant de vous connecter. Un e-mail de confirmation vous sera envoyé sous peu.",
-    "backToLogin": "Retour à la connexion"
+    "backToLogin": "Retour à la connexion",
+    "agreement": {
+      "label": "J'ai lu et j'accepte les <0>Conditions de partenariat et d'utilisation vendeur</0>.",
+      "drawerDescription": "Consultez les conditions ci-dessous avant de continuer."
+    }
+  },
+  "sellerAgreement": {
+    "title": "Conditions de partenariat et d'utilisation vendeur Kayı.com",
+    "lastUpdated": "Dernière mise à jour : 1er mai 2026",
+    "tabs": {
+      "platformStatus": "Statut de la plateforme",
+      "storeDocuments": "Boutique & Documents",
+      "productStandards": "Normes produit",
+      "stockOperations": "Stock & Opérations",
+      "paymentSystem": "Système de paiement",
+      "returnDispute": "Retour & Litige",
+      "privacyKVKK": "KVKK & Confidentialité",
+      "systemSecurity": "Sécurité du système",
+      "platformReputation": "Réputation de la plateforme",
+      "approvalEnactment": "Approbation & Entrée en vigueur",
+      "commissionTable": "Tableau des commissions"
+    },
+    "sections": {
+      "platformStatus": {
+        "content": "Kayı.com détient le statut de Prestataire de Services Intermédiaire en vertu de la loi n° 6563 relative à la réglementation du commerce électronique. La plateforme agit comme un pont sécurisé entre vendeurs et acheteurs. La propriété des produits listés appartient au vendeur ; toute responsabilité juridique, technique et commerciale incombe directement au vendeur concerné."
+      },
+      "storeDocuments": {
+        "content": "Les vendeurs déclarent être des contribuables légaux conformément à la législation de la République de Turquie et disposer de l'autorité nécessaire pour exercer une activité commerciale. Kayı.com se réserve le droit de demander aux vendeurs des certificats d'activité, des circulaires de signature, des certificats fiscaux et les documents d'autorisation nécessaires."
+      },
+      "productStandards": {
+        "content": "La vente de produits contrefaits, imités, de contrebande ou non conformes est strictement interdite. En cas de détection de produits portant atteinte aux droits de propriété intellectuelle et industrielle, Kayı.com se réserve le droit de résilier unilatéralement la boutique, de bloquer les gains et d'engager des poursuites judiciaires."
+      },
+      "stockOperations": {
+        "subhead1": "Gestion des stocks :",
+        "content1": "Le vendeur est tenu de maintenir à jour les informations de stock sur la plateforme. Les commandes annulées en raison de déclarations de stock invalides affectent le score de performance du vendeur.",
+        "subhead2": "Processus logistiques :",
+        "content2": "Les commandes doivent être expédiées dans les délais légaux engagés dans le panneau de la boutique. Les dommages résultant d'envois retardés et d'un emballage incorrect relèvent de la responsabilité du vendeur."
+      },
+      "paymentSystem": {
+        "content": "Les paiements sont collectés sur le compte séquestre sécurisé auprès des établissements de paiement agréés partenaires de Kayı.com. Une fois la livraison confirmée et les délais légaux de contestation écoulés, la commission et les frais de service déterminés sont déduits et transférés sur le compte IBAN déclaré par le vendeur."
+      },
+      "returnDispute": {
+        "content": "Le vendeur accepte par avance le droit de rétractation de 14 jours dont bénéficie l'acheteur ainsi que tous les autres droits légaux prévus par la loi n° 6502 relative à la protection des consommateurs. Les processus de retour sont menés dans le cadre des règles opérationnelles fixées par la plateforme."
+      },
+      "privacyKVKK": {
+        "content": "Le vendeur ne peut utiliser les données de l'acheteur qu'à des fins de livraison de commande. L'utilisation de ces données pour des activités commerciales en dehors de la plateforme ou leur partage avec des tiers constitue une violation grave au sens de la KVKK et entraîne la résiliation immédiate du contrat."
+      },
+      "systemSecurity": {
+        "content": "Le vendeur est tenu de garantir la sécurité de son mot de passe. La responsabilité de l'accès aux données incombe au vendeur conformément à la KVKK et à la loi n° 6563."
+      },
+      "platformReputation": {
+        "content": "Le vendeur doit agir conformément aux règles morales générales et aux normes d'éthique commerciale de Kayı.com dans toutes ses communications et activités commerciales au sein de la plateforme. En cas d'actions portant atteinte à la réputation commerciale de la plateforme, Kayı.com se réserve le droit de résilier unilatéralement le contrat."
+      },
+      "approvalEnactment": {
+        "content": "Tout vendeur qui initie l'inscription d'une boutique sur Kayı.com et coche la case « J'accepte les Conditions de partenariat et d'utilisation vendeur » est réputé avoir lu, compris et accepté sans restriction l'ensemble des conditions. Cette approbation a valeur de signature électronique entre les parties et prend effet dès l'inscription."
+      },
+      "commissionTable": {
+        "description": "Le tableau ci-dessous indique les taux de commission nets appliqués à chaque catégorie de produits ainsi que les taux totaux TVA incluse. Les montants de commission sont calculés sur le prix de vente.",
+        "col": {
+          "category": "Catégorie",
+          "netCommission": "Commission nette (%)",
+          "vat": "TVA (%)",
+          "totalInclVat": "Total TVA incluse (%)"
+        },
+        "categories": {
+          "womenFashion": "Mode femme",
+          "menFashion": "Mode homme",
+          "electronics": "Électronique",
+          "motherChild": "Maman & Enfant",
+          "homeLife": "Maison & Vie",
+          "supermarket": "Supermarché",
+          "cosmetics": "Cosmétiques",
+          "shoesBags": "Chaussures & Sacs",
+          "sportsOutdoor": "Sport & Plein air",
+          "booksHobbies": "Livres & Loisirs",
+          "autoMoto": "Auto & Moto",
+          "privateLife": "Vie privée"
+        },
+        "footnote": "* Les taux de commission sont calculés sur le prix de vente net hors TVA. Kayı.com se réserve le droit de modifier les taux moyennant un préavis de 30 jours. Dernière mise à jour : 1er mai 2026."
+      }
+    }
   },
   "onboarding": {
     "step": "Étape {{current}} / {{total}}",

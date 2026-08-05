@@ -4046,14 +4046,95 @@
       "emailInvalid": "请输入有效的邮箱地址",
       "passwordMinLength": "密码至少需要 8 个字符",
       "passwordComplexity": "密码必须包含一个小写字母、一个大写字母和一个数字或符号",
-      "confirmPasswordRequired": "请确认您的密码"
+      "confirmPasswordRequired": "请确认您的密码",
+      "agreementRequired": "您必须接受《卖家合作与使用条款》才能继续"
     },
     "firstName": "名",
     "lastName": "姓",
     "passwordHint": "您的密码必须包含至少 8 个字符、一个小写字母、一个大写字母、一个数字或符号",
     "successTitle": "感谢您的注册！",
     "successHint": "登录前您可能需要等待管理员审核授权，确认邮件将很快发送给您。",
-    "backToLogin": "返回登录"
+    "backToLogin": "返回登录",
+    "agreement": {
+      "label": "我已阅读并接受<0>《卖家合作与使用条款》</0>。",
+      "drawerDescription": "请在继续之前查看以下条款。"
+    }
+  },
+  "sellerAgreement": {
+    "title": "Kayı.com 卖家合作与使用条款",
+    "lastUpdated": "最后更新：2026年5月1日",
+    "tabs": {
+      "platformStatus": "平台地位",
+      "storeDocuments": "店铺与证件",
+      "productStandards": "商品标准",
+      "stockOperations": "库存与运营",
+      "paymentSystem": "支付系统",
+      "returnDispute": "退货与争议",
+      "privacyKVKK": "KVKK 与隐私",
+      "systemSecurity": "系统安全",
+      "platformReputation": "平台信誉",
+      "approvalEnactment": "批准与生效",
+      "commissionTable": "佣金表"
+    },
+    "sections": {
+      "platformStatus": {
+        "content": "根据关于规范电子商务的第6563号法律，Kayı.com具有中介服务提供者的地位。该平台是卖家与买家之间的安全桥梁。所列商品的所有权归卖家所有；所有法律、技术和商业责任均直接由相关卖家承担。"
+      },
+      "storeDocuments": {
+        "content": "卖家声明其根据土耳其共和国法律为合法纳税人，并有权开展商业活动。Kayı.com保留要求卖家提供营业证明、签字授权书、税务证明及必要授权文件的权利。"
+      },
+      "productStandards": {
+        "content": "严禁销售假冒、仿制、走私或不合规的商品。一经发现侵犯知识产权和工业产权的商品，Kayı.com保留单方面终止店铺、冻结收益并采取法律行动的权利。"
+      },
+      "stockOperations": {
+        "subhead1": "库存管理：",
+        "content1": "卖家有义务保持平台上库存信息的及时更新。因库存申报无效而取消的订单将影响卖家的绩效评分。",
+        "subhead2": "物流流程：",
+        "content2": "订单必须在店铺后台承诺的法定期限内发货。因延迟发货和包装不当造成的损失由卖家负责。"
+      },
+      "paymentSystem": {
+        "content": "款项汇集于与Kayı.com签约的持牌支付机构处开设的安全托管账户中。在确认送达并完成法定争议期后，扣除确定的佣金和服务费后，余款转入卖家申报的IBAN账户。"
+      },
+      "returnDispute": {
+        "content": "卖家预先接受买家依据消费者保护第6502号法律享有的14天撤销权及其他一切法定权利。退货流程按照平台制定的运营规则执行。"
+      },
+      "privacyKVKK": {
+        "content": "卖家仅可将获得的买家数据用于订单配送目的。将该数据用于平台外的商业活动或与第三方共享，将被视为严重违反KVKK规定，并导致合同立即终止。"
+      },
+      "systemSecurity": {
+        "content": "卖家有义务确保其密码安全。根据KVKK及第6563号法律，数据访问责任由卖家承担。"
+      },
+      "platformReputation": {
+        "content": "卖家在平台内的一切沟通和商业活动中，必须遵守一般道德准则和Kayı.com的商业道德标准。若发生损害平台商业信誉的行为，Kayı.com保留单方面终止合同的权利。"
+      },
+      "approvalEnactment": {
+        "content": "任何在Kayı.com开始店铺注册并勾选“我接受《卖家合作与使用条款》”复选框的卖家，均视为已无任何保留地阅读、理解并接受全部条款。该同意具有双方之间电子签名的效力，自注册之时起生效。"
+      },
+      "commissionTable": {
+        "description": "下表显示了适用于每个商品类别的净佣金率以及含增值税的总费率。佣金金额根据销售价格计算。",
+        "col": {
+          "category": "类别",
+          "netCommission": "净佣金 (%)",
+          "vat": "增值税 (%)",
+          "totalInclVat": "含税总计 (%)"
+        },
+        "categories": {
+          "womenFashion": "女装",
+          "menFashion": "男装",
+          "electronics": "电子产品",
+          "motherChild": "母婴",
+          "homeLife": "家居生活",
+          "supermarket": "超市",
+          "cosmetics": "美妆",
+          "shoesBags": "鞋包",
+          "sportsOutdoor": "运动户外",
+          "booksHobbies": "图书与爱好",
+          "autoMoto": "汽车摩托",
+          "privateLife": "个人护理"
+        },
+        "footnote": "* 佣金率按不含增值税的净销售价格计算。Kayı.com保留提前30天通知后调整费率的权利。最后更新：2026年5月1日。"
+      }
+    }
   },
   "onboarding": {
     "step": "第 {{current}} / {{total}} 步",

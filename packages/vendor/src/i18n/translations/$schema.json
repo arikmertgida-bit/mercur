@@ -15210,6 +15210,9 @@
             },
             "confirmPasswordRequired": {
               "type": "string"
+            },
+            "agreementRequired": {
+              "type": "string"
             }
           },
           "required": [
@@ -15219,7 +15222,8 @@
             "emailInvalid",
             "passwordMinLength",
             "passwordComplexity",
-            "confirmPasswordRequired"
+            "confirmPasswordRequired",
+            "agreementRequired"
           ],
           "additionalProperties": false
         },
@@ -15240,6 +15244,22 @@
         },
         "backToLogin": {
           "type": "string"
+        },
+        "agreement": {
+          "type": "object",
+          "properties": {
+            "label": {
+              "type": "string"
+            },
+            "drawerDescription": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "label",
+            "drawerDescription"
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
@@ -15257,8 +15277,206 @@
         "passwordHint",
         "successTitle",
         "successHint",
-        "backToLogin"
+        "backToLogin",
+        "agreement"
       ],
+      "additionalProperties": false
+    },
+    "sellerAgreement": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "lastUpdated": {
+          "type": "string"
+        },
+        "tabs": {
+          "type": "object",
+          "properties": {
+            "platformStatus": { "type": "string" },
+            "storeDocuments": { "type": "string" },
+            "productStandards": { "type": "string" },
+            "stockOperations": { "type": "string" },
+            "paymentSystem": { "type": "string" },
+            "returnDispute": { "type": "string" },
+            "privacyKVKK": { "type": "string" },
+            "systemSecurity": { "type": "string" },
+            "platformReputation": { "type": "string" },
+            "approvalEnactment": { "type": "string" },
+            "commissionTable": { "type": "string" }
+          },
+          "required": [
+            "platformStatus",
+            "storeDocuments",
+            "productStandards",
+            "stockOperations",
+            "paymentSystem",
+            "returnDispute",
+            "privacyKVKK",
+            "systemSecurity",
+            "platformReputation",
+            "approvalEnactment",
+            "commissionTable"
+          ],
+          "additionalProperties": false
+        },
+        "sections": {
+          "type": "object",
+          "properties": {
+            "platformStatus": {
+              "type": "object",
+              "properties": {
+                "content": { "type": "string" }
+              },
+              "required": ["content"],
+              "additionalProperties": false
+            },
+            "storeDocuments": {
+              "type": "object",
+              "properties": {
+                "content": { "type": "string" }
+              },
+              "required": ["content"],
+              "additionalProperties": false
+            },
+            "productStandards": {
+              "type": "object",
+              "properties": {
+                "content": { "type": "string" }
+              },
+              "required": ["content"],
+              "additionalProperties": false
+            },
+            "stockOperations": {
+              "type": "object",
+              "properties": {
+                "subhead1": { "type": "string" },
+                "content1": { "type": "string" },
+                "subhead2": { "type": "string" },
+                "content2": { "type": "string" }
+              },
+              "required": ["subhead1", "content1", "subhead2", "content2"],
+              "additionalProperties": false
+            },
+            "paymentSystem": {
+              "type": "object",
+              "properties": {
+                "content": { "type": "string" }
+              },
+              "required": ["content"],
+              "additionalProperties": false
+            },
+            "returnDispute": {
+              "type": "object",
+              "properties": {
+                "content": { "type": "string" }
+              },
+              "required": ["content"],
+              "additionalProperties": false
+            },
+            "privacyKVKK": {
+              "type": "object",
+              "properties": {
+                "content": { "type": "string" }
+              },
+              "required": ["content"],
+              "additionalProperties": false
+            },
+            "systemSecurity": {
+              "type": "object",
+              "properties": {
+                "content": { "type": "string" }
+              },
+              "required": ["content"],
+              "additionalProperties": false
+            },
+            "platformReputation": {
+              "type": "object",
+              "properties": {
+                "content": { "type": "string" }
+              },
+              "required": ["content"],
+              "additionalProperties": false
+            },
+            "approvalEnactment": {
+              "type": "object",
+              "properties": {
+                "content": { "type": "string" }
+              },
+              "required": ["content"],
+              "additionalProperties": false
+            },
+            "commissionTable": {
+              "type": "object",
+              "properties": {
+                "description": { "type": "string" },
+                "col": {
+                  "type": "object",
+                  "properties": {
+                    "category": { "type": "string" },
+                    "netCommission": { "type": "string" },
+                    "vat": { "type": "string" },
+                    "totalInclVat": { "type": "string" }
+                  },
+                  "required": ["category", "netCommission", "vat", "totalInclVat"],
+                  "additionalProperties": false
+                },
+                "categories": {
+                  "type": "object",
+                  "properties": {
+                    "womenFashion": { "type": "string" },
+                    "menFashion": { "type": "string" },
+                    "electronics": { "type": "string" },
+                    "motherChild": { "type": "string" },
+                    "homeLife": { "type": "string" },
+                    "supermarket": { "type": "string" },
+                    "cosmetics": { "type": "string" },
+                    "shoesBags": { "type": "string" },
+                    "sportsOutdoor": { "type": "string" },
+                    "booksHobbies": { "type": "string" },
+                    "autoMoto": { "type": "string" },
+                    "privateLife": { "type": "string" }
+                  },
+                  "required": [
+                    "womenFashion",
+                    "menFashion",
+                    "electronics",
+                    "motherChild",
+                    "homeLife",
+                    "supermarket",
+                    "cosmetics",
+                    "shoesBags",
+                    "sportsOutdoor",
+                    "booksHobbies",
+                    "autoMoto",
+                    "privateLife"
+                  ],
+                  "additionalProperties": false
+                },
+                "footnote": { "type": "string" }
+              },
+              "required": ["description", "col", "categories", "footnote"],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "platformStatus",
+            "storeDocuments",
+            "productStandards",
+            "stockOperations",
+            "paymentSystem",
+            "returnDispute",
+            "privacyKVKK",
+            "systemSecurity",
+            "platformReputation",
+            "approvalEnactment",
+            "commissionTable"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": ["title", "lastUpdated", "tabs", "sections"],
       "additionalProperties": false
     },
     "onboarding": {
@@ -17591,6 +17809,7 @@
     "storeSelect",
     "login",
     "register",
+    "sellerAgreement",
     "onboarding",
     "invite",
     "resetPassword",

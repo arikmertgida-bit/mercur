@@ -4046,14 +4046,95 @@
       "emailInvalid": "Vui lòng nhập địa chỉ email hợp lệ",
       "passwordMinLength": "Mật khẩu phải có ít nhất 8 ký tự",
       "passwordComplexity": "Mật khẩu phải bao gồm một chữ thường, một chữ hoa và một số hoặc ký hiệu",
-      "confirmPasswordRequired": "Vui lòng xác nhận mật khẩu của bạn"
+      "confirmPasswordRequired": "Vui lòng xác nhận mật khẩu của bạn",
+      "agreementRequired": "Bạn phải chấp nhận Điều khoản Hợp tác và Sử dụng dành cho Người bán để tiếp tục"
     },
     "firstName": "Tên",
     "lastName": "Họ",
     "passwordHint": "Mật khẩu của bạn phải có ít nhất 8 ký tự, một chữ thường, một chữ hoa, một số hoặc ký hiệu",
     "successTitle": "Cảm ơn bạn đã đăng ký!",
     "successHint": "Bạn có thể cần chờ quản trị viên phê duyệt trước khi đăng nhập. Email xác nhận sẽ được gửi đến bạn trong thời gian sớm nhất.",
-    "backToLogin": "Quay lại đăng nhập"
+    "backToLogin": "Quay lại đăng nhập",
+    "agreement": {
+      "label": "Tôi đã đọc và chấp nhận <0>Điều khoản Hợp tác và Sử dụng dành cho Người bán</0>.",
+      "drawerDescription": "Xem lại các điều khoản bên dưới trước khi tiếp tục."
+    }
+  },
+  "sellerAgreement": {
+    "title": "Điều khoản Hợp tác và Sử dụng dành cho Người bán của Kayı.com",
+    "lastUpdated": "Cập nhật lần cuối: 1 tháng 5 năm 2026",
+    "tabs": {
+      "platformStatus": "Trạng thái nền tảng",
+      "storeDocuments": "Cửa hàng & Giấy tờ",
+      "productStandards": "Tiêu chuẩn sản phẩm",
+      "stockOperations": "Tồn kho & Vận hành",
+      "paymentSystem": "Hệ thống thanh toán",
+      "returnDispute": "Trả hàng & Tranh chấp",
+      "privacyKVKK": "KVKK & Quyền riêng tư",
+      "systemSecurity": "Bảo mật hệ thống",
+      "platformReputation": "Uy tín nền tảng",
+      "approvalEnactment": "Phê duyệt & Hiệu lực",
+      "commissionTable": "Bảng hoa hồng"
+    },
+    "sections": {
+      "platformStatus": {
+        "content": "Kayı.com giữ tư cách Nhà cung cấp Dịch vụ Trung gian theo Luật số 6563 về quản lý thương mại điện tử. Nền tảng đóng vai trò là cầu nối an toàn giữa người bán và người mua. Quyền sở hữu các sản phẩm được đăng thuộc về người bán; toàn bộ trách nhiệm pháp lý, kỹ thuật và thương mại thuộc trực tiếp về người bán liên quan."
+      },
+      "storeDocuments": {
+        "content": "Người bán cam kết là đối tượng nộp thuế hợp pháp theo quy định pháp luật của Cộng hòa Thổ Nhĩ Kỳ và có thẩm quyền thực hiện hoạt động thương mại. Kayı.com bảo lưu quyền yêu cầu người bán cung cấp giấy chứng nhận hoạt động, mẫu chữ ký, giấy chứng nhận thuế và các giấy tờ ủy quyền cần thiết."
+      },
+      "productStandards": {
+        "content": "Nghiêm cấm việc bán các sản phẩm giả mạo, nhái, buôn lậu hoặc không tuân thủ quy định. Khi phát hiện sản phẩm vi phạm quyền sở hữu trí tuệ và công nghiệp, Kayı.com bảo lưu quyền đơn phương chấm dứt cửa hàng, phong tỏa thu nhập và tiến hành các biện pháp pháp lý."
+      },
+      "stockOperations": {
+        "subhead1": "Quản lý tồn kho:",
+        "content1": "Người bán có nghĩa vụ cập nhật thông tin tồn kho trên nền tảng. Các đơn hàng bị hủy do khai báo tồn kho không chính xác sẽ ảnh hưởng đến điểm hiệu suất của người bán.",
+        "subhead2": "Quy trình hậu cần:",
+        "content2": "Đơn hàng phải được gửi trong thời hạn pháp lý đã cam kết trên bảng điều khiển cửa hàng. Thiệt hại do giao hàng chậm trễ và đóng gói sai thuộc trách nhiệm của người bán."
+      },
+      "paymentSystem": {
+        "content": "Các khoản thanh toán được thu vào Tài khoản Ký quỹ An toàn tại các tổ chức thanh toán được cấp phép hợp tác với Kayı.com. Sau khi xác nhận giao hàng và hết thời hạn khiếu nại theo luật định, khoản hoa hồng và phí dịch vụ đã xác định sẽ được khấu trừ và chuyển vào tài khoản IBAN do người bán khai báo."
+      },
+      "returnDispute": {
+        "content": "Người bán chấp nhận trước quyền rút lại giao dịch trong 14 ngày của người mua cũng như mọi quyền hợp pháp khác theo Luật số 6502 về bảo vệ người tiêu dùng. Quy trình trả hàng được thực hiện theo các quy tắc vận hành do nền tảng quy định."
+      },
+      "privacyKVKK": {
+        "content": "Người bán chỉ được sử dụng dữ liệu người mua được cung cấp cho mình nhằm mục đích giao hàng. Việc sử dụng dữ liệu này cho hoạt động thương mại ngoài nền tảng hoặc chia sẻ với bên thứ ba bị coi là vi phạm nghiêm trọng theo KVKK và dẫn đến chấm dứt hợp đồng ngay lập tức."
+      },
+      "systemSecurity": {
+        "content": "Người bán có nghĩa vụ đảm bảo an toàn mật khẩu của mình. Trách nhiệm truy cập dữ liệu thuộc về người bán theo KVKK và Luật số 6563."
+      },
+      "platformReputation": {
+        "content": "Người bán phải hành động phù hợp với các quy tắc đạo đức chung và tiêu chuẩn đạo đức kinh doanh của Kayı.com trong mọi giao tiếp và hoạt động thương mại trên nền tảng. Trong trường hợp có hành vi gây tổn hại đến uy tín thương mại của nền tảng, Kayı.com bảo lưu quyền đơn phương chấm dứt hợp đồng."
+      },
+      "approvalEnactment": {
+        "content": "Mọi người bán bắt đầu đăng ký cửa hàng trên Kayı.com và đánh dấu vào ô \"Tôi chấp nhận Điều khoản Hợp tác và Sử dụng dành cho Người bán\" được coi là đã đọc, hiểu và chấp nhận toàn bộ điều khoản mà không có bất kỳ hạn chế nào. Sự chấp thuận này có giá trị như chữ ký điện tử giữa các bên và có hiệu lực kể từ thời điểm đăng ký."
+      },
+      "commissionTable": {
+        "description": "Bảng dưới đây thể hiện tỷ lệ hoa hồng ròng áp dụng cho từng danh mục sản phẩm và tỷ lệ tổng bao gồm thuế GTGT. Số tiền hoa hồng được tính trên giá bán.",
+        "col": {
+          "category": "Danh mục",
+          "netCommission": "Hoa hồng ròng (%)",
+          "vat": "Thuế GTGT (%)",
+          "totalInclVat": "Tổng gồm thuế GTGT (%)"
+        },
+        "categories": {
+          "womenFashion": "Thời trang nữ",
+          "menFashion": "Thời trang nam",
+          "electronics": "Điện tử",
+          "motherChild": "Mẹ & Bé",
+          "homeLife": "Nhà cửa & Đời sống",
+          "supermarket": "Siêu thị",
+          "cosmetics": "Mỹ phẩm",
+          "shoesBags": "Giày & Túi xách",
+          "sportsOutdoor": "Thể thao & Ngoài trời",
+          "booksHobbies": "Sách & Sở thích",
+          "autoMoto": "Ô tô & Xe máy",
+          "privateLife": "Đồ dùng cá nhân"
+        },
+        "footnote": "* Tỷ lệ hoa hồng được tính trên giá bán ròng chưa bao gồm thuế GTGT. Kayı.com bảo lưu quyền thay đổi tỷ lệ với thông báo trước 30 ngày. Cập nhật lần cuối: 1 tháng 5 năm 2026."
+      }
+    }
   },
   "onboarding": {
     "step": "Bước {{current}} / {{total}}",

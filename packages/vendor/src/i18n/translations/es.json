@@ -4068,14 +4068,95 @@
       "emailInvalid": "Introduce una dirección de correo electrónico válida",
       "passwordMinLength": "La contraseña debe tener al menos 8 caracteres",
       "passwordComplexity": "La contraseña debe incluir una letra minúscula, una letra mayúscula y un número o símbolo",
-      "confirmPasswordRequired": "Confirma tu contraseña"
+      "confirmPasswordRequired": "Confirma tu contraseña",
+      "agreementRequired": "Debe aceptar los Términos de Colaboración y Uso para Vendedores para continuar"
     },
     "firstName": "Nombre",
     "lastName": "Apellidos",
     "passwordHint": "Tu contraseña debe incluir al menos 8 caracteres, una letra minúscula, una letra mayúscula y un número o símbolo",
     "successTitle": "¡Gracias por registrarte!",
     "successHint": "Es posible que debas esperar la autorización del administrador antes de iniciar sesión. En breve recibirás un correo electrónico de confirmación.",
-    "backToLogin": "Volver al login"
+    "backToLogin": "Volver al login",
+    "agreement": {
+      "label": "He leído y acepto los <0>Términos de Colaboración y Uso para Vendedores</0>.",
+      "drawerDescription": "Revise los términos a continuación antes de continuar."
+    }
+  },
+  "sellerAgreement": {
+    "title": "Términos de Colaboración y Uso para Vendedores de Kayı.com",
+    "lastUpdated": "Última actualización: 1 de mayo de 2026",
+    "tabs": {
+      "platformStatus": "Estado de la plataforma",
+      "storeDocuments": "Tienda y documentos",
+      "productStandards": "Estándares de producto",
+      "stockOperations": "Stock y operaciones",
+      "paymentSystem": "Sistema de pago",
+      "returnDispute": "Devolución y disputa",
+      "privacyKVKK": "KVKK y privacidad",
+      "systemSecurity": "Seguridad del sistema",
+      "platformReputation": "Reputación de la plataforma",
+      "approvalEnactment": "Aprobación y vigencia",
+      "commissionTable": "Tabla de comisiones"
+    },
+    "sections": {
+      "platformStatus": {
+        "content": "Kayı.com posee el estatus de Proveedor de Servicios Intermediario conforme a la Ley N.º 6563 sobre la Regulación del Comercio Electrónico. La plataforma actúa como un puente seguro entre vendedores y compradores. La propiedad de los productos listados pertenece al vendedor; toda la responsabilidad legal, técnica y comercial recae directamente sobre el vendedor correspondiente."
+      },
+      "storeDocuments": {
+        "content": "Los vendedores declaran ser contribuyentes legales conforme a la legislación de la República de Turquía y tener la autoridad para realizar actividades comerciales. Kayı.com se reserva el derecho de solicitar a los vendedores certificados de actividad, circulares de firma, certificados fiscales y los documentos de autorización necesarios."
+      },
+      "productStandards": {
+        "content": "Está estrictamente prohibida la venta de productos falsificados, imitaciones, de contrabando o que no cumplan la normativa. Al detectar productos que infrinjan derechos de propiedad intelectual e industrial, Kayı.com se reserva el derecho de rescindir unilateralmente la tienda, bloquear las ganancias y emprender acciones legales."
+      },
+      "stockOperations": {
+        "subhead1": "Gestión de stock:",
+        "content1": "El vendedor está obligado a mantener actualizada la información de stock en la plataforma. Los pedidos cancelados por declaraciones de stock inválidas afectan la puntuación de desempeño del vendedor.",
+        "subhead2": "Procesos logísticos:",
+        "content2": "Los pedidos deben enviarse dentro de los plazos legales comprometidos en el panel de la tienda. Los daños derivados de envíos retrasados y embalajes incorrectos son responsabilidad del vendedor."
+      },
+      "paymentSystem": {
+        "content": "Los pagos se recaudan en la Cuenta de Depósito Seguro mantenida junto a instituciones de pago autorizadas contratadas por Kayı.com. Tras confirmarse la entrega y completarse los plazos legales de disputa, se deducen la comisión y las tarifas de servicio determinadas y se transfieren a la cuenta IBAN declarada por el vendedor."
+      },
+      "returnDispute": {
+        "content": "El vendedor acepta de antemano el derecho de desistimiento de 14 días del comprador y todos los demás derechos legales conforme a la Ley N.º 6502 de Protección al Consumidor. Los procesos de devolución se llevan a cabo conforme a las reglas operativas establecidas por la plataforma."
+      },
+      "privacyKVKK": {
+        "content": "El vendedor solo puede utilizar los datos del comprador con fines de entrega del pedido. El uso de estos datos en actividades comerciales fuera de la plataforma o su distribución a terceros se considera una infracción grave conforme a la KVKK y conlleva la rescisión inmediata del contrato."
+      },
+      "systemSecurity": {
+        "content": "El vendedor está obligado a mantener la seguridad de su contraseña. La responsabilidad del acceso a los datos recae en el vendedor conforme a la KVKK y a la Ley N.º 6563."
+      },
+      "platformReputation": {
+        "content": "El vendedor debe actuar conforme a las normas morales generales y a los estándares de ética empresarial de Kayı.com en todas sus comunicaciones y actividades comerciales dentro de la plataforma. En caso de acciones que dañen la reputación comercial de la plataforma, Kayı.com se reserva el derecho de rescindir unilateralmente el contrato."
+      },
+      "approvalEnactment": {
+        "content": "Todo vendedor que inicie el registro de una tienda en Kayı.com y marque la casilla «Acepto los Términos de Colaboración y Uso para Vendedores» se considera que ha leído, comprendido y aceptado todos los términos sin restricción alguna. Esta aprobación tiene el efecto de una firma digital entre las partes y entra en vigor desde el momento del registro."
+      },
+      "commissionTable": {
+        "description": "La siguiente tabla muestra las tasas de comisión netas aplicadas a cada categoría de producto y las tasas totales con IVA incluido. Los importes de comisión se calculan sobre el precio de venta.",
+        "col": {
+          "category": "Categoría",
+          "netCommission": "Comisión neta (%)",
+          "vat": "IVA (%)",
+          "totalInclVat": "Total con IVA (%)"
+        },
+        "categories": {
+          "womenFashion": "Moda mujer",
+          "menFashion": "Moda hombre",
+          "electronics": "Electrónica",
+          "motherChild": "Madre e hijo",
+          "homeLife": "Hogar y vida",
+          "supermarket": "Supermercado",
+          "cosmetics": "Cosmética",
+          "shoesBags": "Zapatos y bolsos",
+          "sportsOutdoor": "Deporte y aire libre",
+          "booksHobbies": "Libros y hobbies",
+          "autoMoto": "Auto y moto",
+          "privateLife": "Vida privada"
+        },
+        "footnote": "* Las tasas de comisión se calculan sobre el precio de venta neto sin IVA. Kayı.com se reserva el derecho de modificar las tasas con un preaviso de 30 días. Última actualización: 1 de mayo de 2026."
+      }
+    }
   },
   "onboarding": {
     "step": "Paso {{current}} / {{total}}",
