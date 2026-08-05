@@ -44,10 +44,21 @@ export function generateEntity(
         enum: "enum",
     }
 
+    // `date` alone maps to Postgres `date` (no time-of-day, no timezone) —
+    // fine for the `date` field type, but a `datetime` field needs the same
+    // `timestamptz` column type as created_at/updated_at below, or the time
+    // component is silently dropped on every write.
+    const columnTypeOverrides: Record<string, string> = {
+        datetime: "timestamptz",
+    }
+
     const properties = fields.reduce((acc, field) => {
         const prop: Record<string, any> = {
             type: typeMap[field.type] ?? field.type,
             nullable: field.nullable ?? true,
+            ...(columnTypeOverrides[field.type]
+                ? { columnType: columnTypeOverrides[field.type] }
+                : {}),
             ...(field.defaultValue !== undefined
                 ? {
                     defaultRaw: typeof field.defaultValue === 'string'

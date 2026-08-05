@@ -371,6 +371,19 @@ export function getRouteMap({
                 ],
               },
 
+              // RETURNS
+              {
+                path: "/returns",
+                errorElement: <ErrorBoundary />,
+                handle: { breadcrumb: () => t("returns.domain") },
+                children: [
+                  {
+                    path: "",
+                    lazy: () => import("./pages/returns"),
+                  },
+                ],
+              },
+
               // CATEGORIES
               {
                 path: "/categories",
@@ -1450,18 +1463,6 @@ export function getRouteMap({
                   {
                     path: "",
                     lazy: () => import("./pages/settings/return-reasons"),
-                    children: [
-                      {
-                        path: "create",
-                        lazy: () =>
-                          import("./pages/settings/return-reasons/create"),
-                      },
-                      {
-                        path: ":id/edit",
-                        lazy: () =>
-                          import("./pages/settings/return-reasons/[id]/edit"),
-                      },
-                    ],
                   },
                 ],
               },

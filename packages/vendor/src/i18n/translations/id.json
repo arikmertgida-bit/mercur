@@ -3058,6 +3058,8 @@
         "reviewDescription": "Ulasan dan balasan baru untuk produk dan toko Anda.",
         "follower": "Pengikut",
         "followerDescription": "Saat pelanggan mulai mengikuti toko Anda.",
+        "return": "Retur",
+        "returnDescription": "Saat pelanggan meminta retur.",
         "messenger": "Pesan",
         "messengerDescription": "Peringatan push/toast untuk pesan baru. Pesan itu sendiri tidak pernah diblokir."
       }
@@ -3360,6 +3362,7 @@
   },
   "returnReasons": {
     "domain": "Alasan Pengembalian",
+    "requestAction": "Ajukan",
     "subtitle": "Kelola alasan untuk item yang dikembalikan.",
     "calloutHint": "Kelola alasan untuk mengkategorikan pengembalian.",
     "editReason": "Edit Alasan Pengembalian",
@@ -3930,6 +3933,17 @@
       "selectAtLeastOneVariant": "Pilih setidaknya satu varian untuk melanjutkan.",
       "noPublishableRows": "Tambahkan SKU, aktifkan lokasi stok, atau atur harga untuk mempublikasikan.",
       "duplicateBatchEntry": "Item inventaris hanya dapat muncul dalam satu kategori (buat, perbarui, atau hapus)."
+    }
+  },
+  "returns": {
+    "domain": "Retur",
+    "noRecords": "Tidak ada retur ditemukan",
+    "status": {
+      "open": "Terbuka",
+      "requested": "Diminta",
+      "received": "Diterima",
+      "partially_received": "Diterima Sebagian",
+      "canceled": "Dibatalkan"
     }
   },
   "payouts": {

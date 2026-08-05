@@ -3058,6 +3058,8 @@
         "reviewDescription": "Nieuwe recensies en reacties op uw producten en winkel.",
         "follower": "Volgers",
         "followerDescription": "Wanneer een klant uw winkel begint te volgen.",
+        "return": "Retouren",
+        "returnDescription": "Wanneer een klant een retour aanvraagt.",
         "messenger": "Berichten",
         "messengerDescription": "Push-/toastmeldingen voor nieuwe berichten. Berichten zelf worden nooit geblokkeerd."
       }
@@ -3360,6 +3362,7 @@
   },
   "returnReasons": {
     "domain": "Retourredenen",
+    "requestAction": "Aanvragen",
     "subtitle": "Beheer redenen voor geretourneerde items.",
     "calloutHint": "Beheer de redenen om retouren te categoriseren.",
     "editReason": "Retourreden bewerken",
@@ -3930,6 +3933,17 @@
       "selectAtLeastOneVariant": "Selecteer ten minste één variant om door te gaan.",
       "noPublishableRows": "Voeg een SKU toe, schakel een voorraadlocatie in of stel een prijs in om te publiceren.",
       "duplicateBatchEntry": "Een voorraadartikel kan slechts in één groep voorkomen (aanmaken, bijwerken of verwijderen)."
+    }
+  },
+  "returns": {
+    "domain": "Retouren",
+    "noRecords": "Geen retouren gevonden",
+    "status": {
+      "open": "Open",
+      "requested": "Aangevraagd",
+      "received": "Ontvangen",
+      "partially_received": "Gedeeltelijk ontvangen",
+      "canceled": "Geannuleerd"
     }
   },
   "payouts": {

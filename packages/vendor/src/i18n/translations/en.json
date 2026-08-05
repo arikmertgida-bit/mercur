@@ -2969,6 +2969,17 @@
       }
     }
   },
+  "returns": {
+    "domain": "Returns",
+    "noRecords": "No returns found",
+    "status": {
+      "open": "Open",
+      "requested": "Requested",
+      "received": "Received",
+      "partially_received": "Partially Received",
+      "canceled": "Canceled"
+    }
+  },
   "payouts": {
     "domain": "Payouts",
     "payout": "Payout",
@@ -3236,6 +3247,8 @@
         "reviewDescription": "New reviews and replies on your products and store.",
         "follower": "Followers",
         "followerDescription": "When a customer starts following your store.",
+        "return": "Returns",
+        "returnDescription": "When a customer requests a return.",
         "messenger": "Messages",
         "messengerDescription": "Push and toast alerts for new messages. Messages themselves are never blocked."
       }
@@ -3546,6 +3559,7 @@
   },
   "returnReasons": {
     "domain": "Return Reasons",
+    "requestAction": "Request",
     "subtitle": "Manage reasons for returned items.",
     "calloutHint": "Manage the reasons to categorize returns.",
     "editReason": "Edit Return Reason",

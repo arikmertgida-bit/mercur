@@ -3058,6 +3058,8 @@
         "reviewDescription": "Nuove recensioni e risposte sui tuoi prodotti e negozio.",
         "follower": "Follower",
         "followerDescription": "Quando un cliente inizia a seguire il tuo negozio.",
+        "return": "Resi",
+        "returnDescription": "Quando un cliente richiede un reso.",
         "messenger": "Messaggi",
         "messengerDescription": "Avvisi push/toast per nuovi messaggi. I messaggi stessi non vengono mai bloccati."
       }
@@ -3360,6 +3362,7 @@
   },
   "returnReasons": {
     "domain": "Motivi di Restituzione",
+    "requestAction": "Richiedi",
     "subtitle": "Gestisci i motivi per gli articoli restituiti.",
     "calloutHint": "Gestisci i motivi per categorizzare i resi.",
     "editReason": "Modifica Motivo di Restituzione",
@@ -3930,6 +3933,17 @@
       "selectAtLeastOneVariant": "Seleziona almeno una variante per continuare.",
       "noPublishableRows": "Aggiungi uno SKU, abilita una sede di stock o imposta un prezzo per pubblicare.",
       "duplicateBatchEntry": "Un articolo di inventario può comparire solo in un gruppo (creazione, aggiornamento o eliminazione)."
+    }
+  },
+  "returns": {
+    "domain": "Resi",
+    "noRecords": "Nessun reso trovato",
+    "status": {
+      "open": "Aperto",
+      "requested": "Richiesto",
+      "received": "Ricevuto",
+      "partially_received": "Parzialmente ricevuto",
+      "canceled": "Annullato"
     }
   },
   "payouts": {

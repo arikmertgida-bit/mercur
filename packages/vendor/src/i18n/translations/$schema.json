@@ -12369,6 +12369,51 @@
       ],
       "additionalProperties": false
     },
+    "returns": {
+      "type": "object",
+      "properties": {
+        "domain": {
+          "type": "string"
+        },
+        "noRecords": {
+          "type": "string"
+        },
+        "status": {
+          "type": "object",
+          "properties": {
+            "open": {
+              "type": "string"
+            },
+            "requested": {
+              "type": "string"
+            },
+            "received": {
+              "type": "string"
+            },
+            "partially_received": {
+              "type": "string"
+            },
+            "canceled": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "open",
+            "requested",
+            "received",
+            "partially_received",
+            "canceled"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "domain",
+        "noRecords",
+        "status"
+      ],
+      "additionalProperties": false
+    },
     "payouts": {
       "type": "object",
       "properties": {
@@ -13424,6 +13469,12 @@
                 "followerDescription": {
                   "type": "string"
                 },
+                "return": {
+                  "type": "string"
+                },
+                "returnDescription": {
+                  "type": "string"
+                },
                 "messenger": {
                   "type": "string"
                 },
@@ -13442,6 +13493,8 @@
                 "reviewDescription",
                 "follower",
                 "followerDescription",
+                "return",
+                "returnDescription",
                 "messenger",
                 "messengerDescription"
               ],
@@ -14764,6 +14817,9 @@
       "type": "object",
       "properties": {
         "domain": {
+          "type": "string"
+        },
+        "requestAction": {
           "type": "string"
         },
         "subtitle": {
@@ -17794,6 +17850,7 @@
     "campaigns",
     "priceLists",
     "payouts",
+    "returns",
     "profile",
     "users",
     "translations",

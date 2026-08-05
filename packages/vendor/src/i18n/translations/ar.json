@@ -3058,6 +3058,8 @@
         "reviewDescription": "التقييمات والردود الجديدة على منتجاتك ومتجرك.",
         "follower": "المتابعون",
         "followerDescription": "عندما يبدأ عميل بمتابعة متجرك.",
+        "return": "المرتجعات",
+        "returnDescription": "عندما يطلب العميل إرجاعًا.",
         "messenger": "الرسائل",
         "messengerDescription": "تنبيهات فورية للرسائل الجديدة. لا يتم حظر الرسائل نفسها أبدًا."
       }
@@ -3360,6 +3362,7 @@
   },
   "returnReasons": {
     "domain": "أسباب الإرجاع",
+    "requestAction": "طلب",
     "subtitle": "إدارة أسباب إرجاع العناصر.",
     "calloutHint": "إدارة الأسباب لتصنيف الإرجاعات.",
     "editReason": "تحرير سبب الإرجاع",
@@ -3930,6 +3933,17 @@
       "selectAtLeastOneVariant": "اختر متغيرًا واحدًا على الأقل للمتابعة.",
       "noPublishableRows": "أضف رمز SKU، أو فعّل موقع مخزون، أو حدد سعرًا للنشر.",
       "duplicateBatchEntry": "لا يمكن أن يظهر عنصر المخزون إلا في فئة واحدة (إنشاء أو تحديث أو حذف)."
+    }
+  },
+  "returns": {
+    "domain": "المرتجعات",
+    "noRecords": "لم يتم العثور على مرتجعات",
+    "status": {
+      "open": "مفتوح",
+      "requested": "مطلوب",
+      "received": "تم الاستلام",
+      "partially_received": "تم الاستلام جزئيًا",
+      "canceled": "ملغى"
     }
   },
   "payouts": {

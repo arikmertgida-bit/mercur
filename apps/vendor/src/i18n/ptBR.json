@@ -147,6 +147,11 @@
         "successToast": "Solicitação de tipo criada com sucesso"
       }
     },
+    "returnReasons": {
+      "navLabel": "Motivos de devolução",
+      "heading": "Solicitações de motivo de devolução",
+      "noRecords": "Nenhuma solicitação de motivo de devolução encontrada"
+    },
     "reviews": {
       "navLabel": "Avaliações",
       "heading": "Denúncias de avaliações",

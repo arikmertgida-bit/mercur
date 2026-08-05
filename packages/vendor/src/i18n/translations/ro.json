@@ -3058,6 +3058,8 @@
         "reviewDescription": "Recenzii și răspunsuri noi la produsele și magazinul dvs.",
         "follower": "Urmăritori",
         "followerDescription": "Când un client începe să urmărească magazinul dvs.",
+        "return": "Retururi",
+        "returnDescription": "Când un client solicită un retur.",
         "messenger": "Mesaje",
         "messengerDescription": "Alerte push/toast pentru mesaje noi. Mesajele în sine nu sunt niciodată blocate."
       }
@@ -3360,6 +3362,7 @@
   },
   "returnReasons": {
     "domain": "Motive de întoarcere",
+    "requestAction": "Solicită",
     "subtitle": "Gestionați motivele pentru articolele returnate.",
     "calloutHint": "Gestionați motivele pentru clasificarea returnărilor.",
     "editReason": "Editați motivul returnării",
@@ -3930,6 +3933,17 @@
       "selectAtLeastOneVariant": "Selectați cel puțin o variantă pentru a continua.",
       "noPublishableRows": "Adăugați un SKU, activați o locație de stoc sau setați un preț pentru a publica.",
       "duplicateBatchEntry": "Un articol de inventar poate apărea doar într-o singură categorie (creare, actualizare sau ștergere)."
+    }
+  },
+  "returns": {
+    "domain": "Retururi",
+    "noRecords": "Nu s-au găsit retururi",
+    "status": {
+      "open": "Deschis",
+      "requested": "Solicitat",
+      "received": "Primit",
+      "partially_received": "Primit parțial",
+      "canceled": "Anulat"
     }
   },
   "payouts": {

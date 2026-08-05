@@ -147,6 +147,11 @@
         "successToast": "Cererea de tip a fost creată cu succes"
       }
     },
+    "returnReasons": {
+      "navLabel": "Motive de retur",
+      "heading": "Cereri de motiv de retur",
+      "noRecords": "Nu s-au găsit cereri de motiv de retur"
+    },
     "reviews": {
       "navLabel": "Recenzii",
       "heading": "Sesizări recenzii",

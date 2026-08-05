@@ -3058,6 +3058,8 @@
         "reviewDescription": "ביקורות ותגובות חדשות על המוצרים והחנות שלך.",
         "follower": "עוקבים",
         "followerDescription": "כאשר לקוח מתחיל לעקוב אחרי החנות שלך.",
+        "return": "החזרות",
+        "returnDescription": "כאשר לקוח מבקש החזרה.",
         "messenger": "הודעות",
         "messengerDescription": "התראות push/toast להודעות חדשות. ההודעות עצמן לעולם לא נחסמות."
       }
@@ -3360,6 +3362,7 @@
   },
   "returnReasons": {
     "domain": "סיבות החזרה",
+    "requestAction": "בקש",
     "subtitle": "נהל סיבות לפריטים שהוחזרו.",
     "calloutHint": "נהל את הסיבות לקטלוג החזרות.",
     "editReason": "ערוך סיבת החזרה",
@@ -3930,6 +3933,17 @@
       "selectAtLeastOneVariant": "בחר לפחות וריאנט אחד כדי להמשיך.",
       "noPublishableRows": "הוסף SKU, הפעל מיקום מלאי, או הגדר מחיר כדי לפרסם.",
       "duplicateBatchEntry": "פריט מלאי יכול להופיע רק בקבוצה אחת (יצירה, עדכון או מחיקה)."
+    }
+  },
+  "returns": {
+    "domain": "החזרות",
+    "noRecords": "לא נמצאו החזרות",
+    "status": {
+      "open": "פתוח",
+      "requested": "התבקש",
+      "received": "התקבל",
+      "partially_received": "התקבל חלקית",
+      "canceled": "בוטל"
     }
   },
   "payouts": {

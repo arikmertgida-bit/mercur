@@ -147,6 +147,11 @@
         "successToast": "Typanfrage erfolgreich erstellt"
       }
     },
+    "returnReasons": {
+      "navLabel": "Rückgabegründe",
+      "heading": "Rückgabegrund-Anfragen",
+      "noRecords": "Keine Rückgabegrund-Anfragen gefunden"
+    },
     "reviews": {
       "navLabel": "Bewertungen",
       "heading": "Bewertungsmeldungen",

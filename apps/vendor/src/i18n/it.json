@@ -147,6 +147,11 @@
         "successToast": "Richiesta di tipo creata con successo"
       }
     },
+    "returnReasons": {
+      "navLabel": "Motivi di reso",
+      "heading": "Richieste di motivo di reso",
+      "noRecords": "Nessuna richiesta di motivo di reso trovata"
+    },
     "reviews": {
       "navLabel": "Recensioni",
       "heading": "Segnalazioni di recensioni",

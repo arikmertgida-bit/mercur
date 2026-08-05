@@ -147,6 +147,11 @@
         "successToast": "Zgłoszenie typu zostało utworzone pomyślnie"
       }
     },
+    "returnReasons": {
+      "navLabel": "Powody zwrotu",
+      "heading": "Wnioski o powód zwrotu",
+      "noRecords": "Nie znaleziono wniosków o powód zwrotu"
+    },
     "reviews": {
       "navLabel": "Recenzje",
       "heading": "Zgłoszenia recenzji",

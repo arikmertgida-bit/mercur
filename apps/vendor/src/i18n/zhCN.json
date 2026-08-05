@@ -147,6 +147,11 @@
         "successToast": "类型申请创建成功"
       }
     },
+    "returnReasons": {
+      "navLabel": "退货原因",
+      "heading": "退货原因申请",
+      "noRecords": "未找到退货原因申请"
+    },
     "reviews": {
       "navLabel": "评价",
       "heading": "评价举报",

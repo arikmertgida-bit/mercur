@@ -4,6 +4,7 @@ export const adminRequestFields = [
   "title",
   "handle",
   "value",
+  "label",
   "description",
   "is_active",
   "is_internal",

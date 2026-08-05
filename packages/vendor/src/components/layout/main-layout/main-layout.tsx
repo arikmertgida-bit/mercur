@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import {
+  ArrowUturnLeft,
   Buildings,
   ChatBubble,
   CogSixTooth,
@@ -22,6 +23,7 @@ import { Shell } from "../../layout/shell";
 
 import { useLocation, useNavigate } from "react-router-dom";
 import { useMe, useSelectSeller, useSellers } from "../../../hooks/api";
+import { useUnseenReturnsCount } from "../../../hooks/api/returns";
 import { useSearch } from "../../../providers/search-provider";
 import { useSidebar } from "../../../providers/sidebar-provider";
 import { UserMenu } from "../user-menu";
@@ -325,6 +327,28 @@ const OrdersIcon = () => {
   );
 };
 
+/**
+ * Polled via `useUnseenReturnsCount` (not the messenger unread cursor Orders
+ * uses) because it must decrement by exactly one per return opened — see
+ * `useMarkReturnSeen`, fired from the returns list/detail page — instead of
+ * bulk-clearing on page visit.
+ */
+const ReturnsIcon = () => {
+  const { data: unseenCount } = useUnseenReturnsCount();
+  const safeUnseenCount = unseenCount ?? 0;
+
+  return (
+    <span className="relative inline-flex">
+      <ArrowUturnLeft />
+      {safeUnseenCount > 0 && (
+        <span className={ORDERS_BADGE_CLASSES} aria-hidden="true">
+          {formatOrdersUnreadCount(safeUnseenCount)}
+        </span>
+      )}
+    </span>
+  );
+};
+
 export const useCoreRoutes = (): Omit<INavItem, "pathname">[] => {
   const { t } = useTranslation();
 
@@ -340,6 +364,11 @@ export const useCoreRoutes = (): Omit<INavItem, "pathname">[] => {
         //   to: "/draft-orders",
         // },
       ],
+    },
+    {
+      icon: <ReturnsIcon />,
+      label: t("returns.domain"),
+      to: "/returns",
     },
     {
       icon: <Tag />,

@@ -3063,6 +3063,8 @@
         "reviewDescription": "Ürünleriniz ve mağazanız için yeni değerlendirme ve yanıtlar.",
         "follower": "Takipçiler",
         "followerDescription": "Bir müşteri mağazanızı takip etmeye başladığında.",
+        "return": "İadeler",
+        "returnDescription": "Bir müşteri iade talebinde bulunduğunda.",
         "messenger": "Mesajlar",
         "messengerDescription": "Yeni mesajlar için anlık bildirim/toast uyarıları. Mesajların kendisi asla engellenmez."
       }
@@ -3365,6 +3367,7 @@
   },
   "returnReasons": {
     "domain": "İade Nedenleri",
+    "requestAction": "Talep Et",
     "subtitle": "İade edilen ürünler için nedenleri yönetin.",
     "calloutHint": "İadeleri kategorize etmek için nedenleri yönetin.",
     "editReason": "İade Nedenini Düzenle",
@@ -3935,6 +3938,17 @@
       "selectAtLeastOneVariant": "Devam etmek için en az bir varyant seçin.",
       "noPublishableRows": "Yayınlamak için bir SKU ekleyin, bir stok lokasyonu etkinleştirin veya bir fiyat belirleyin.",
       "duplicateBatchEntry": "Bir envanter kalemi yalnızca bir grupta yer alabilir (oluştur, güncelle veya sil)."
+    }
+  },
+  "returns": {
+    "domain": "İadeler",
+    "noRecords": "İade bulunamadı",
+    "status": {
+      "open": "Açık",
+      "requested": "Talep Edildi",
+      "received": "Alındı",
+      "partially_received": "Kısmen Alındı",
+      "canceled": "İptal Edildi"
     }
   },
   "payouts": {

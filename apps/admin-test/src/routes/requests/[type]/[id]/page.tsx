@@ -29,6 +29,7 @@ const useTypeLabels = (): Record<string, string> => {
     product_collection: t("requests.typeLabels.product_collection"),
     product_tag: t("requests.typeLabels.product_tag"),
     product_type: t("requests.typeLabels.product_type"),
+    return_reason: t("requests.typeLabels.return_reason"),
   };
 };
 
@@ -48,6 +49,11 @@ const useEntityFields = (): Record<string, { key: string; label: string }[]> => 
     ],
     product_tag: [{ key: "value", label: t("requests.fields.value") }],
     product_type: [{ key: "value", label: t("requests.fields.value") }],
+    return_reason: [
+      { key: "value", label: t("requests.fields.value") },
+      { key: "label", label: t("requests.fields.label") },
+      { key: "description", label: t("requests.fields.description") },
+    ],
   };
 };
 
@@ -56,6 +62,7 @@ const ENTITY_NAME_KEY: Record<string, string> = {
   product_collection: "title",
   product_tag: "value",
   product_type: "value",
+  return_reason: "label",
 };
 
 // `request`'s non-schema fields come through the backend's

@@ -3058,6 +3058,8 @@
         "reviewDescription": "Nové recenze a odpovědi k vašim produktům a obchodu.",
         "follower": "Sledující",
         "followerDescription": "Když vás zákazník začne sledovat.",
+        "return": "Vrácení zboží",
+        "returnDescription": "Když zákazník požádá o vrácení.",
         "messenger": "Zprávy",
         "messengerDescription": "Okamžitá upozornění na nové zprávy. Samotné zprávy nejsou nikdy blokovány."
       }
@@ -3360,6 +3362,7 @@
   },
   "returnReasons": {
     "domain": "Důvody vrácení",
+    "requestAction": "Požádat",
     "subtitle": "Spravujte důvody pro vrácené položky.",
     "calloutHint": "Spravujte důvody pro kategorizaci vrácení.",
     "editReason": "Upravit důvod vrácení",
@@ -3930,6 +3933,17 @@
       "selectAtLeastOneVariant": "Pro pokračování vyberte alespoň jednu variantu.",
       "noPublishableRows": "Pro publikování přidejte SKU, povolte skladovou lokaci nebo nastavte cenu.",
       "duplicateBatchEntry": "Skladová položka se může objevit pouze v jedné skupině (vytvořit, aktualizovat nebo smazat)."
+    }
+  },
+  "returns": {
+    "domain": "Vrácení zboží",
+    "noRecords": "Nebyla nalezena žádná vrácení",
+    "status": {
+      "open": "Otevřeno",
+      "requested": "Vyžádáno",
+      "received": "Přijato",
+      "partially_received": "Částečně přijato",
+      "canceled": "Zrušeno"
     }
   },
   "payouts": {

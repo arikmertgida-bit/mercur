@@ -4,13 +4,14 @@ import { useTranslation } from "react-i18next";
 import { StatusBadge, Text } from "@medusajs/ui";
 import { DateCell, DateHeader } from "@mercurjs/dashboard-shared";
 
-export type VendorRequestNameKey = "name" | "value" | "title";
+export type VendorRequestNameKey = "name" | "value" | "title" | "label";
 
 export type VendorRequestRow = {
   id: string;
   name?: string;
   value?: string;
   title?: string;
+  label?: string;
   created_at?: string;
   updated_at?: string;
   custom_fields: {

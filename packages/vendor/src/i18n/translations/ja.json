@@ -3058,6 +3058,8 @@
         "reviewDescription": "商品やストアへの新しいレビューや返信。",
         "follower": "フォロワー",
         "followerDescription": "顧客がストアのフォローを開始したとき。",
+        "return": "返品",
+        "returnDescription": "顧客が返品をリクエストしたとき。",
         "messenger": "メッセージ",
         "messengerDescription": "新着メッセージのプッシュ/トースト通知。メッセージ自体がブロックされることはありません。"
       }
@@ -3360,6 +3362,7 @@
   },
   "returnReasons": {
     "domain": "返品理由",
+    "requestAction": "リクエストする",
     "subtitle": "返品された商品の理由を管理します。",
     "calloutHint": "返品を分類するための理由を管理します。",
     "editReason": "返品理由を編集",
@@ -3930,6 +3933,17 @@
       "selectAtLeastOneVariant": "続けるには少なくとも1つのバリアントを選択してください。",
       "noPublishableRows": "公開するにはSKUを追加するか、在庫ロケーションを有効にするか、価格を設定してください。",
       "duplicateBatchEntry": "在庫アイテムは1つの区分（作成、更新、削除）にのみ含めることができます。"
+    }
+  },
+  "returns": {
+    "domain": "返品",
+    "noRecords": "返品が見つかりません",
+    "status": {
+      "open": "未処理",
+      "requested": "リクエスト済み",
+      "received": "受領済み",
+      "partially_received": "一部受領",
+      "canceled": "キャンセル済み"
     }
   },
   "payouts": {

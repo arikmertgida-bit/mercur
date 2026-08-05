@@ -147,6 +147,11 @@
         "successToast": "유형 요청이 성공적으로 생성되었습니다"
       }
     },
+    "returnReasons": {
+      "navLabel": "반품 사유",
+      "heading": "반품 사유 요청",
+      "noRecords": "반품 사유 요청이 없습니다"
+    },
     "reviews": {
       "navLabel": "리뷰",
       "heading": "리뷰 신고",

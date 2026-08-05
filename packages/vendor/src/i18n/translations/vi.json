@@ -3058,6 +3058,8 @@
         "reviewDescription": "Đánh giá và phản hồi mới cho sản phẩm và cửa hàng của bạn.",
         "follower": "Người theo dõi",
         "followerDescription": "Khi một khách hàng bắt đầu theo dõi cửa hàng của bạn.",
+        "return": "Trả hàng",
+        "returnDescription": "Khi khách hàng yêu cầu trả hàng.",
         "messenger": "Tin nhắn",
         "messengerDescription": "Cảnh báo push/toast cho tin nhắn mới. Bản thân tin nhắn không bao giờ bị chặn."
       }
@@ -3360,6 +3362,7 @@
   },
   "returnReasons": {
     "domain": "Lý do trả hàng",
+    "requestAction": "Yêu cầu",
     "subtitle": "Quản lý lý do cho các mục hàng trả lại.",
     "calloutHint": "Quản lý các lý do để phân loại trả hàng.",
     "editReason": "Chỉnh sửa lý do trả hàng",
@@ -3930,6 +3933,17 @@
       "selectAtLeastOneVariant": "Chọn ít nhất một biến thể để tiếp tục.",
       "noPublishableRows": "Thêm SKU, bật vị trí tồn kho hoặc thiết lập giá để đăng.",
       "duplicateBatchEntry": "Một mặt hàng tồn kho chỉ có thể xuất hiện trong một nhóm (tạo, cập nhật hoặc xóa)."
+    }
+  },
+  "returns": {
+    "domain": "Trả hàng",
+    "noRecords": "Không tìm thấy yêu cầu trả hàng",
+    "status": {
+      "open": "Đang mở",
+      "requested": "Đã yêu cầu",
+      "received": "Đã nhận",
+      "partially_received": "Nhận một phần",
+      "canceled": "Đã hủy"
     }
   },
   "payouts": {

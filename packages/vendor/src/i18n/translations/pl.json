@@ -3058,6 +3058,17 @@
       }
     }
   },
+  "returns": {
+    "domain": "Zwroty",
+    "noRecords": "Nie znaleziono zwrotów",
+    "status": {
+      "open": "Otwarty",
+      "requested": "Zażądano",
+      "received": "Otrzymano",
+      "partially_received": "Częściowo otrzymano",
+      "canceled": "Anulowano"
+    }
+  },
   "payouts": {
     "domain": "Wypłaty",
     "payout": "Wypłata",
@@ -3269,6 +3280,8 @@
         "reviewDescription": "Nowe recenzje i odpowiedzi dotyczące Twoich produktów i sklepu.",
         "follower": "Obserwujący",
         "followerDescription": "Gdy klient zacznie obserwować Twój sklep.",
+        "return": "Zwroty",
+        "returnDescription": "Gdy klient poprosi o zwrot.",
         "messenger": "Wiadomości",
         "messengerDescription": "Powiadomienia push/toast o nowych wiadomościach. Same wiadomości nigdy nie są blokowane."
       }
@@ -3610,6 +3623,7 @@
   },
   "returnReasons": {
     "domain": "Powody zwrotu",
+    "requestAction": "Poproś",
     "subtitle": "Zarządzaj przyczynami zwróconych produktów.",
     "calloutHint": "Zarządzaj powodami kategoryzowania zwrotów.",
     "editReason": "Edytuj powód zwrotu",

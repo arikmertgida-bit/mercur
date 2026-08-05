@@ -16,6 +16,7 @@ export const vendorReturnFields = [
   "canceled_at",
   "requested_at",
   "received_at",
+  "custom_fields.*",
 ]
 
 export const vendorReturnDetailsFields = [

@@ -3058,6 +3058,8 @@
         "reviewDescription": "您的商品和店铺收到的新评价与回复。",
         "follower": "关注者",
         "followerDescription": "有顾客开始关注您的店铺时。",
+        "return": "退货",
+        "returnDescription": "当顾客申请退货时。",
         "messenger": "消息",
         "messengerDescription": "新消息的推送/提示通知。消息本身永远不会被屏蔽。"
       }
@@ -3360,6 +3362,7 @@
   },
   "returnReasons": {
     "domain": "退货原因",
+    "requestAction": "申请",
     "subtitle": "管理退货的原因。",
     "calloutHint": "管理分类退货的原因。",
     "editReason": "编辑退货原因",
@@ -3930,6 +3933,17 @@
       "selectAtLeastOneVariant": "请至少选择一个变体以继续。",
       "noPublishableRows": "请添加 SKU、启用库存位置或设置价格以进行发布。",
       "duplicateBatchEntry": "一个库存项只能出现在一个操作类别中（创建、更新或删除）。"
+    }
+  },
+  "returns": {
+    "domain": "退货",
+    "noRecords": "未找到退货",
+    "status": {
+      "open": "未处理",
+      "requested": "已申请",
+      "received": "已收到",
+      "partially_received": "部分收到",
+      "canceled": "已取消"
     }
   },
   "payouts": {

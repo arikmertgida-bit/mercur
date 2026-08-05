@@ -998,6 +998,7 @@ export type Routes = {
             productCollections: typeof import("../src/api/vendor/requests/product-collections/route");
             productTags: typeof import("../src/api/vendor/requests/product-tags/route");
             productTypes: typeof import("../src/api/vendor/requests/product-types/route");
+            returnReasons: typeof import("../src/api/vendor/requests/return-reasons/route");
         };
         reviewReports: typeof import("../src/api/vendor/review-reports/route");
         reviews: typeof import("../src/api/vendor/reviews/route") & {

@@ -3058,6 +3058,8 @@
         "reviewDescription": "Neue Bewertungen und Antworten zu Ihren Produkten und Ihrem Shop.",
         "follower": "Follower",
         "followerDescription": "Wenn ein Kunde beginnt, Ihrem Shop zu folgen.",
+        "return": "Rücksendungen",
+        "returnDescription": "Wenn ein Kunde eine Rückgabe anfordert.",
         "messenger": "Nachrichten",
         "messengerDescription": "Push-/Toast-Benachrichtigungen für neue Nachrichten. Nachrichten selbst werden nie blockiert."
       }
@@ -3360,6 +3362,7 @@
   },
   "returnReasons": {
     "domain": "Rückgabegründe",
+    "requestAction": "Anfragen",
     "subtitle": "Verwalten Sie die Gründe für zurückgegebene Artikel.",
     "calloutHint": "Verwalten Sie die Gründe für die Kategorisierung von Retouren.",
     "editReason": "Retourengrund bearbeiten",
@@ -3930,6 +3933,17 @@
       "selectAtLeastOneVariant": "Wählen Sie mindestens eine Variante aus, um fortzufahren.",
       "noPublishableRows": "Fügen Sie eine SKU hinzu, aktivieren Sie einen Lagerstandort oder legen Sie einen Preis fest, um zu veröffentlichen.",
       "duplicateBatchEntry": "Ein Lagerartikel kann nur in einer Gruppe erscheinen (erstellen, aktualisieren oder löschen)."
+    }
+  },
+  "returns": {
+    "domain": "Rücksendungen",
+    "noRecords": "Keine Rücksendungen gefunden",
+    "status": {
+      "open": "Offen",
+      "requested": "Angefordert",
+      "received": "Erhalten",
+      "partially_received": "Teilweise erhalten",
+      "canceled": "Storniert"
     }
   },
   "payouts": {

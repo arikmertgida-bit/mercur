@@ -3058,6 +3058,8 @@
         "reviewDescription": "Nauji atsiliepimai ir atsakymai apie jūsų produktus ir parduotuvę.",
         "follower": "Sekėjai",
         "followerDescription": "Kai klientas pradeda sekti jūsų parduotuvę.",
+        "return": "Grąžinimai",
+        "returnDescription": "Kai klientas paprašo grąžinimo.",
         "messenger": "Žinutės",
         "messengerDescription": "Push / toast įspėjimai apie naujas žinutes. Pačios žinutės niekada neblokuojamos."
       }
@@ -3360,6 +3362,7 @@
   },
   "returnReasons": {
     "domain": "Grąžinimo priežastys",
+    "requestAction": "Prašyti",
     "subtitle": "Tvarkykite prekių grąžinimo priežastis.",
     "calloutHint": "Tvarkykite prekių grąžinimo priežastis, kad suskirtyti grąžinimus į kategorijas.",
     "editReason": "Keisti grąžinimo priežastį",
@@ -3930,6 +3933,17 @@
       "selectAtLeastOneVariant": "Norėdami tęsti, pasirinkite bent vieną variantą.",
       "noPublishableRows": "Norėdami publikuoti, pridėkite SKU, įjunkite atsargų vietą arba nustatykite kainą.",
       "duplicateBatchEntry": "Atsargų prekė gali būti tik vienoje grupėje (kurti, atnaujinti arba ištrinti)."
+    }
+  },
+  "returns": {
+    "domain": "Grąžinimai",
+    "noRecords": "Grąžinimų nerasta",
+    "status": {
+      "open": "Atviras",
+      "requested": "Užklausta",
+      "received": "Gauta",
+      "partially_received": "Iš dalies gauta",
+      "canceled": "Atšaukta"
     }
   },
   "payouts": {

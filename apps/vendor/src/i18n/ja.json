@@ -147,6 +147,11 @@
         "successToast": "タイプのリクエストが作成されました"
       }
     },
+    "returnReasons": {
+      "navLabel": "返品理由",
+      "heading": "返品理由リクエスト",
+      "noRecords": "返品理由リクエストが見つかりません"
+    },
     "reviews": {
       "navLabel": "レビュー",
       "heading": "レビュー報告",

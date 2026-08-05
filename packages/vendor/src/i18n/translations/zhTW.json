@@ -3058,6 +3058,8 @@
         "reviewDescription": "您的商品與店鋪收到的新評價與回覆。",
         "follower": "追蹤者",
         "followerDescription": "有顧客開始追蹤您的店鋪時。",
+        "return": "退貨",
+        "returnDescription": "當顧客申請退貨時。",
         "messenger": "訊息",
         "messengerDescription": "新訊息的推播/提示通知。訊息本身永遠不會被封鎖。"
       }
@@ -3360,6 +3362,7 @@
   },
   "returnReasons": {
     "domain": "退貨原因",
+    "requestAction": "申請",
     "subtitle": "管理退貨項目的原因。",
     "calloutHint": "管理用於分類退貨的原因。",
     "editReason": "編輯退貨原因",
@@ -4021,6 +4024,17 @@
       "selectAtLeastOneVariant": "請至少選擇一個款式以繼續。",
       "noPublishableRows": "請新增 SKU、啟用庫存地點或設定價格以發布。",
       "duplicateBatchEntry": "每個庫存項目僅能出現在一個操作分類中（建立、更新或刪除）。"
+    }
+  },
+  "returns": {
+    "domain": "退貨",
+    "noRecords": "未找到退貨",
+    "status": {
+      "open": "未處理",
+      "requested": "已申請",
+      "received": "已收到",
+      "partially_received": "部分收到",
+      "canceled": "已取消"
     }
   },
   "payouts": {

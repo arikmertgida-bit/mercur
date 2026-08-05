@@ -24,6 +24,9 @@ export type ProductTypeRequestDTO = InferClientOutput<
 export type ProductTagRequestDTO = InferClientOutput<
   typeof client.vendor.requests.productTags.query
 >["requests"][number];
+export type ReturnReasonRequestDTO = InferClientOutput<
+  typeof client.vendor.requests.returnReasons.query
+>["requests"][number];
 
 export const useProductCollectionRequests = (
   query?: InferClientInput<typeof client.vendor.requests.productCollections.query>,
@@ -137,6 +140,46 @@ export const useCreateProductTypeRequest = (
   return useMutation({
     mutationFn: (payload: InferClientInput<typeof client.vendor.requests.productTypes.mutate>) =>
       client.vendor.requests.productTypes.mutate(payload),
+    onSuccess: (data, variables, context) => {
+      queryClient.invalidateQueries({ queryKey: requestsQueryKeys.lists() });
+      options?.onSuccess?.(data, variables, context);
+    },
+    ...options,
+  });
+};
+
+export const useReturnReasonRequests = (
+  query?: InferClientInput<typeof client.vendor.requests.returnReasons.query>,
+  options?: Omit<
+    UseQueryOptions<
+      unknown,
+      ClientError,
+      InferClientOutput<typeof client.vendor.requests.returnReasons.query>
+    >,
+    "queryKey" | "queryFn"
+  >,
+) => {
+  const { data, ...rest } = useQuery({
+    queryKey: requestsQueryKeys.list({ type: "return_reason", ...query }),
+    queryFn: async () => client.vendor.requests.returnReasons.query({ ...query }),
+    ...options,
+  });
+
+  return { ...data, ...rest };
+};
+
+export const useCreateReturnReasonRequest = (
+  options?: UseMutationOptions<
+    InferClientOutput<typeof client.vendor.requests.returnReasons.mutate>,
+    ClientError,
+    InferClientInput<typeof client.vendor.requests.returnReasons.mutate>
+  >,
+) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (payload: InferClientInput<typeof client.vendor.requests.returnReasons.mutate>) =>
+      client.vendor.requests.returnReasons.mutate(payload),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: requestsQueryKeys.lists() });
       options?.onSuccess?.(data, variables, context);

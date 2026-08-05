@@ -147,6 +147,11 @@
         "successToast": "Đã tạo yêu cầu loại thành công"
       }
     },
+    "returnReasons": {
+      "navLabel": "Lý do trả hàng",
+      "heading": "Yêu cầu lý do trả hàng",
+      "noRecords": "Không tìm thấy yêu cầu lý do trả hàng"
+    },
     "reviews": {
       "navLabel": "Đánh giá",
       "heading": "Báo cáo đánh giá",

@@ -3058,6 +3058,8 @@
         "reviewDescription": "제품 및 스토어에 대한 새 리뷰와 답글.",
         "follower": "팔로워",
         "followerDescription": "고객이 스토어를 팔로우하기 시작했을 때.",
+        "return": "반품",
+        "returnDescription": "고객이 반품을 요청했을 때.",
         "messenger": "메시지",
         "messengerDescription": "새 메시지에 대한 푸시/토스트 알림. 메시지 자체는 절대 차단되지 않습니다."
       }
@@ -3360,6 +3362,7 @@
   },
   "returnReasons": {
     "domain": "반품 사유",
+    "requestAction": "요청",
     "subtitle": "반품된 항목에 대한 사유를 관리합니다.",
     "calloutHint": "반품을 분류하기 위한 사유를 관리합니다.",
     "editReason": "반품 사유 편집",
@@ -3930,6 +3933,17 @@
       "selectAtLeastOneVariant": "계속하려면 하나 이상의 옵션을 선택하세요.",
       "noPublishableRows": "게시하려면 SKU를 추가하거나, 재고 위치를 활성화하거나, 가격을 설정하세요.",
       "duplicateBatchEntry": "재고 품목은 하나의 항목(생성, 업데이트 또는 삭제)에만 포함될 수 있습니다."
+    }
+  },
+  "returns": {
+    "domain": "반품",
+    "noRecords": "반품을 찾을 수 없습니다",
+    "status": {
+      "open": "열림",
+      "requested": "요청됨",
+      "received": "수령됨",
+      "partially_received": "부분 수령",
+      "canceled": "취소됨"
     }
   },
   "payouts": {

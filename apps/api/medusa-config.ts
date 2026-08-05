@@ -85,6 +85,19 @@ module.exports = withMercur({
             reviewer_id: { type: 'string', nullable: true },
             reviewer_note: { type: 'text', nullable: true },
           },
+          ReturnReason: {
+            request_status: {
+              type: 'enum',
+              enum: ['draft', 'pending', 'accepted', 'rejected'],
+              defaultValue: 'draft',
+            },
+            submitter_id: { type: 'string', nullable: true },
+            reviewer_id: { type: 'string', nullable: true },
+            reviewer_note: { type: 'text', nullable: true },
+          },
+          Return: {
+            vendor_seen_at: { type: 'datetime', nullable: true },
+          },
         },
       },
     },

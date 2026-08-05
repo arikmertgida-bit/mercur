@@ -147,6 +147,11 @@
         "successToast": "Tipo užklausa sėkmingai sukurta"
       }
     },
+    "returnReasons": {
+      "navLabel": "Grąžinimo priežastys",
+      "heading": "Grąžinimo priežasties užklausos",
+      "noRecords": "Grąžinimo priežasties užklausų nerasta"
+    },
     "reviews": {
       "navLabel": "Atsiliepimai",
       "heading": "Atsiliepimų skundai",

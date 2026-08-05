@@ -3058,6 +3058,8 @@
         "reviewDescription": "Nouveaux avis et réponses sur vos produits et votre boutique.",
         "follower": "Abonnés",
         "followerDescription": "Lorsqu'un client commence à suivre votre boutique.",
+        "return": "Retours",
+        "returnDescription": "Lorsqu'un client demande un retour.",
         "messenger": "Messages",
         "messengerDescription": "Alertes push/toast pour les nouveaux messages. Les messages eux-mêmes ne sont jamais bloqués."
       }
@@ -3360,6 +3362,7 @@
   },
   "returnReasons": {
     "domain": "Raison de retour",
+    "requestAction": "Demander",
     "subtitle": "Gérer les raisons des retours.",
     "calloutHint": "Gérer les raisons pour classer les retours.",
     "editReason": "Modifier la raison de retour",
@@ -3930,6 +3933,17 @@
       "selectAtLeastOneVariant": "Sélectionnez au moins une variante pour continuer.",
       "noPublishableRows": "Ajoutez un SKU, activez un emplacement de stock ou définissez un prix pour publier.",
       "duplicateBatchEntry": "Un article d'inventaire ne peut apparaître que dans un seul groupe (création, mise à jour ou suppression)."
+    }
+  },
+  "returns": {
+    "domain": "Retours",
+    "noRecords": "Aucun retour trouvé",
+    "status": {
+      "open": "Ouvert",
+      "requested": "Demandé",
+      "received": "Reçu",
+      "partially_received": "Partiellement reçu",
+      "canceled": "Annulé"
     }
   },
   "payouts": {

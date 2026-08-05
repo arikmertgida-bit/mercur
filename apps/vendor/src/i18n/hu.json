@@ -147,6 +147,11 @@
         "successToast": "A típus igénylése sikeresen létrejött"
       }
     },
+    "returnReasons": {
+      "navLabel": "Visszaküldési okok",
+      "heading": "Visszaküldési ok kérések",
+      "noRecords": "Nem található visszaküldési ok kérés"
+    },
     "reviews": {
       "navLabel": "Értékelések",
       "heading": "Értékelés-bejelentések",

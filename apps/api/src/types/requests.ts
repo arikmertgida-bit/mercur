@@ -12,6 +12,7 @@ export const REQUEST_ENTITY_TYPES = [
   "product_collection",
   "product_tag",
   "product_type",
+  "return_reason",
 ] as const
 export type RequestEntityType = (typeof REQUEST_ENTITY_TYPES)[number]
 export const RequestEntityTypeSchema = z.enum(REQUEST_ENTITY_TYPES)

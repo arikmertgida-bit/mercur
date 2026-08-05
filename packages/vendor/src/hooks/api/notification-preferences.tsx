@@ -16,6 +16,7 @@ export const NotificationCategory = {
   REQUEST: "request_notification",
   REVIEW: "review_notification",
   FOLLOWER: "follower_notification",
+  RETURN: "return_notification",
   MESSENGER: "messenger",
 } as const
 

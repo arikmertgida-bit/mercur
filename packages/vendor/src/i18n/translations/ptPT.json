@@ -3058,6 +3058,8 @@
         "reviewDescription": "Novas avaliações e respostas aos seus produtos e loja.",
         "follower": "Seguidores",
         "followerDescription": "Quando um cliente começa a seguir a sua loja.",
+        "return": "Devoluções",
+        "returnDescription": "Quando um cliente pede uma devolução.",
         "messenger": "Mensagens",
         "messengerDescription": "Alertas push/toast para novas mensagens. As mensagens em si nunca são bloqueadas."
       }
@@ -3360,6 +3362,7 @@
   },
   "returnReasons": {
     "domain": "Motivos de Devolução",
+    "requestAction": "Solicitar",
     "subtitle": "Gere os motivos para itens devolvidos.",
     "calloutHint": "Gere os motivos para categorizar devoluções.",
     "editReason": "Editar motivo de devolução",
@@ -4021,6 +4024,17 @@
       "selectAtLeastOneVariant": "Selecione pelo menos uma variante para continuar.",
       "noPublishableRows": "Adicione um SKU, ative uma localização de stock ou defina um preço para publicar.",
       "duplicateBatchEntry": "Um item de inventário só pode aparecer num grupo (criar, atualizar ou eliminar)."
+    }
+  },
+  "returns": {
+    "domain": "Devoluções",
+    "noRecords": "Nenhuma devolução encontrada",
+    "status": {
+      "open": "Aberto",
+      "requested": "Pedido",
+      "received": "Recebido",
+      "partially_received": "Recebido parcialmente",
+      "canceled": "Cancelado"
     }
   },
   "payouts": {
