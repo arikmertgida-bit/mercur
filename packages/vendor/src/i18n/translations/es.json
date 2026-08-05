@@ -3116,6 +3116,8 @@
         "reviewDescription": "Nuevas reseñas y respuestas en tus productos y tienda.",
         "follower": "Seguidores",
         "followerDescription": "Cuando un cliente empieza a seguir tu tienda.",
+        "return": "Devoluciones",
+        "returnDescription": "Cuando un cliente solicita una devolución.",
         "messenger": "Mensajes",
         "messengerDescription": "Alertas push/toast para mensajes nuevos. Los mensajes en sí nunca se bloquean."
       }
@@ -3417,6 +3419,7 @@
   },
   "returnReasons": {
     "domain": "Razones de Devolución",
+    "requestAction": "Solicitar",
     "subtitle": "Gestiona las razones para los artículos devueltos.",
     "calloutHint": "Gestiona las razones para categorizar las devoluciones.",
     "editReason": "Editar Razón de Devolución",
@@ -3984,6 +3987,17 @@
       "priceRequired": "Enter a price to publish this row, or clear its stock and shipping profile to skip it.",
       "noPricedRows": "Enter a price for at least one variant. Variants without a price are skipped.",
       "duplicateBatchEntry": "Un artículo de inventario solo puede aparecer en un grupo (crear, actualizar o eliminar)."
+    }
+  },
+  "returns": {
+    "domain": "Devoluciones",
+    "noRecords": "No se encontraron devoluciones",
+    "status": {
+      "open": "Abierto",
+      "requested": "Solicitado",
+      "received": "Recibido",
+      "partially_received": "Recibido parcialmente",
+      "canceled": "Cancelado"
     }
   },
   "payouts": {

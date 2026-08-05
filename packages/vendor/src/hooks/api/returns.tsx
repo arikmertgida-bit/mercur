@@ -9,13 +9,70 @@ import {
   useQuery,
   UseQueryOptions,
 } from "@tanstack/react-query";
-import { sdk } from "../../lib/client";
+import { z } from "zod";
+import { fetchQuery, sdk } from "../../lib/client";
 import { queryClient } from "../../lib/query-client";
 import { queryKeysFactory } from "../../lib/query-key-factory";
 import { ordersQueryKeys } from "./orders";
 
 const RETURNS_QUERY_KEY = "returns" as const;
 export const returnsQueryKeys = queryKeysFactory(RETURNS_QUERY_KEY);
+
+const ReturnsUnseenCountResponseSchema = z.object({ count: z.number() });
+
+/**
+ * Powers the "İadeler" sidebar badge — polled rather than pushed over
+ * messenger, since the count needs to decrement by exactly one per return
+ * (see `useMarkReturnSeen`), not bulk-clear the way Orders/Requests do.
+ */
+export const useUnseenReturnsCount = (
+  options?: Omit<
+    UseQueryOptions<number, ClientError>,
+    "queryKey" | "queryFn"
+  >
+) => {
+  return useQuery({
+    queryKey: returnsQueryKeys.detail("unseen-count"),
+    queryFn: async () => {
+      const raw = await fetchQuery("/vendor/returns/unseen-count", {
+        method: "GET",
+      });
+      return ReturnsUnseenCountResponseSchema.parse(raw).count;
+    },
+    refetchInterval: 30_000,
+    refetchOnWindowFocus: true,
+    ...options,
+  });
+};
+
+const MarkReturnSeenResponseSchema = z.object({
+  id: z.string(),
+  vendor_seen_at: z.string(),
+});
+
+export const useMarkReturnSeen = (
+  options?: UseMutationOptions<
+    z.infer<typeof MarkReturnSeenResponseSchema>,
+    ClientError,
+    string
+  >
+) => {
+  return useMutation({
+    mutationFn: async (id: string) => {
+      const raw = await fetchQuery(`/vendor/returns/${id}/mark-seen`, {
+        method: "POST",
+      });
+      return MarkReturnSeenResponseSchema.parse(raw);
+    },
+    onSuccess: (data, variables, context) => {
+      queryClient.invalidateQueries({
+        queryKey: returnsQueryKeys.detail("unseen-count"),
+      });
+      options?.onSuccess?.(data, variables, context);
+    },
+    ...options,
+  });
+};
 
 export const useReturn = (
   id: string,

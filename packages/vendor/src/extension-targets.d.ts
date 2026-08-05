@@ -106,6 +106,8 @@ declare module "@mercurjs/dashboard-sdk" {
     "reservations.list.before": true
     "return-reasons.list.after": true
     "return-reasons.list.before": true
+    "returns.list.after": true
+    "returns.list.before": true
     "seller.setup.after": true
     "seller.setup.before": true
     "shipping-profiles.detail.main.after": true
@@ -137,6 +139,7 @@ declare module "@mercurjs/dashboard-sdk" {
     "products": true
     "promotions": true
     "reservations": true
+    "returns": true
     "reviews": true
     "settings/locations": true
     "settings/product-tags": true
@@ -154,6 +157,7 @@ declare module "@mercurjs/dashboard-sdk" {
     "price-lists": true
     "products": true
     "promotions": true
+    "returns": true
     "reviews": true
   }
 

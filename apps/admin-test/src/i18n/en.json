@@ -189,11 +189,17 @@
       "heading": "Type Requests",
       "noRecords": "No type requests found"
     },
+    "returnReasons": {
+      "navLabel": "Return Reasons",
+      "heading": "Return Reason Requests",
+      "noRecords": "No return reason requests found"
+    },
     "typeLabels": {
       "product_category": "Category",
       "product_collection": "Collection",
       "product_tag": "Tag",
-      "product_type": "Type"
+      "product_type": "Type",
+      "return_reason": "Return Reason"
     },
     "fields": {
       "name": "Name",
@@ -202,7 +208,8 @@
       "active": "Active",
       "internal": "Internal",
       "title": "Title",
-      "value": "Value"
+      "value": "Value",
+      "label": "Label"
     },
     "values": {
       "yes": "Yes",

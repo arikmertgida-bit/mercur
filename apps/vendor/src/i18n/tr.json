@@ -147,6 +147,11 @@
         "successToast": "Tür talebi başarıyla oluşturuldu"
       }
     },
+    "returnReasons": {
+      "navLabel": "İade Nedenleri",
+      "heading": "İade Nedeni Talepleri",
+      "noRecords": "İade nedeni talebi bulunamadı"
+    },
     "reviews": {
       "navLabel": "Değerlendirmeler",
       "heading": "Değerlendirme Talepleri",

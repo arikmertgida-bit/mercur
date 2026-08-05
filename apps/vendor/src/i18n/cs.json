@@ -147,6 +147,11 @@
         "successToast": "Žádost o typ byla úspěšně vytvořena"
       }
     },
+    "returnReasons": {
+      "navLabel": "Důvody vrácení",
+      "heading": "Žádosti o důvod vrácení",
+      "noRecords": "Nebyly nalezeny žádné žádosti o důvod vrácení"
+    },
     "reviews": {
       "navLabel": "Recenze",
       "heading": "Nahlášení recenzí",

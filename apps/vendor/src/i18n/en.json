@@ -147,6 +147,11 @@
         "successToast": "Type request created successfully"
       }
     },
+    "returnReasons": {
+      "navLabel": "Return Reasons",
+      "heading": "Return Reason Requests",
+      "noRecords": "No return reason requests found"
+    },
     "reviews": {
       "navLabel": "Reviews",
       "heading": "Review Reports",

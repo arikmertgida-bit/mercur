@@ -147,6 +147,11 @@
         "successToast": "Typeverzoek succesvol aangemaakt"
       }
     },
+    "returnReasons": {
+      "navLabel": "Retourredenen",
+      "heading": "Retourreden-aanvragen",
+      "noRecords": "Geen retourreden-aanvragen gevonden"
+    },
     "reviews": {
       "navLabel": "Beoordelingen",
       "heading": "Meldingen van beoordelingen",

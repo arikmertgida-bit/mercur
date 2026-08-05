@@ -4,3 +4,4 @@ export { createProductCollectionRequestWorkflow } from "./create-product-collect
 export { createProductCategoryRequestWorkflow } from "./create-product-category-request"
 export { createProductTypeRequestWorkflow } from "./create-product-type-request"
 export { createProductTagRequestWorkflow } from "./create-product-tag-request"
+export { createReturnReasonRequestWorkflow } from "./create-return-reason-request"

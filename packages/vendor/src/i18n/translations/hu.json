@@ -3057,6 +3057,8 @@
         "reviewDescription": "Új értékelések és válaszok a termékeire és üzletére.",
         "follower": "Követők",
         "followerDescription": "Amikor egy vásárló követni kezdi az üzletét.",
+        "return": "Visszaküldések",
+        "returnDescription": "Amikor egy vásárló visszaküldést kér.",
         "messenger": "Üzenetek",
         "messengerDescription": "Push/toast riasztások új üzenetekhez. Maguk az üzenetek soha nincsenek blokkolva."
       }
@@ -3358,6 +3360,7 @@
   },
   "returnReasons": {
     "domain": "Visszaküldési Okok",
+    "requestAction": "Kérelmezés",
     "subtitle": "Kezelje a visszaküldött tételek okait.",
     "calloutHint": "Kezelje az okokat, hogy kategorizálja a visszaküldéseket.",
     "editReason": "Visszaküldési Ok Szerkesztése",
@@ -3927,6 +3930,17 @@
       "priceRequired": "Enter a price to publish this row, or clear its stock and shipping profile to skip it.",
       "noPricedRows": "Enter a price for at least one variant. Variants without a price are skipped.",
       "duplicateBatchEntry": "Egy készlettétel csak egy kategóriában szerepelhet (létrehozás, frissítés vagy törlés)."
+    }
+  },
+  "returns": {
+    "domain": "Visszaküldések",
+    "noRecords": "Nem található visszaküldés",
+    "status": {
+      "open": "Nyitott",
+      "requested": "Kérve",
+      "received": "Beérkezett",
+      "partially_received": "Részben beérkezett",
+      "canceled": "Törölve"
     }
   },
   "payouts": {

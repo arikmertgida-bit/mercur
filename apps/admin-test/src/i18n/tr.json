@@ -189,11 +189,17 @@
       "heading": "Tür Talepleri",
       "noRecords": "Tür talebi bulunamadı"
     },
+    "returnReasons": {
+      "navLabel": "İade Nedenleri",
+      "heading": "İade Nedeni Talepleri",
+      "noRecords": "İade nedeni talebi bulunamadı"
+    },
     "typeLabels": {
       "product_category": "Kategori",
       "product_collection": "Koleksiyon",
       "product_tag": "Etiket",
-      "product_type": "Tür"
+      "product_type": "Tür",
+      "return_reason": "İade Nedeni"
     },
     "fields": {
       "name": "Ad",
@@ -202,7 +208,8 @@
       "active": "Aktif",
       "internal": "Dahili",
       "title": "Başlık",
-      "value": "Değer"
+      "value": "Değer",
+      "label": "Etiket"
     },
     "values": {
       "yes": "Evet",

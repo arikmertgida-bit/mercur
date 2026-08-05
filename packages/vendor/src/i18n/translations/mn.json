@@ -3058,6 +3058,8 @@
         "reviewDescription": "Таны бүтээгдэхүүн, дэлгүүрт өгсөн шинэ сэтгэгдэл, хариулт.",
         "follower": "Дагагчид",
         "followerDescription": "Харилцагч таны дэлгүүрийг дагаж эхлэх үед.",
+        "return": "Буцаалтууд",
+        "returnDescription": "Харилцагч буцаалт хүсэх үед.",
         "messenger": "Зурвасууд",
         "messengerDescription": "Шинэ зурвасны push/toast сэрэмжлүүлэг. Зурвас өөрөө хэзээ ч хориглогдохгүй."
       }
@@ -3360,6 +3362,7 @@
   },
   "returnReasons": {
     "domain": "Буцаалтын Шалтгаанууд",
+    "requestAction": "Хүсэлт гаргах",
     "subtitle": "Буцаагдсан зүйлсийн шалтгааныг удирдах.",
     "calloutHint": "Буцаалтын шалтгаануудыг удирдаж, ангилаарай.",
     "editReason": "Буцаалтын шалтгааныг засах",
@@ -3932,6 +3935,17 @@
       "priceRequired": "Enter a price to publish this row, or clear its stock and shipping profile to skip it.",
       "noPricedRows": "Enter a price for at least one variant. Variants without a price are skipped.",
       "duplicateBatchEntry": "Нөөцийн зүйл зөвхөн нэг бүлэгт л харагдана (үүсгэх, шинэчлэх, устгах)."
+    }
+  },
+  "returns": {
+    "domain": "Буцаалтууд",
+    "noRecords": "Буцаалт олдсонгүй",
+    "status": {
+      "open": "Нээлттэй",
+      "requested": "Хүссэн",
+      "received": "Хүлээн авсан",
+      "partially_received": "Хэсэгчлэн хүлээн авсан",
+      "canceled": "Цуцлагдсан"
     }
   },
   "payouts": {

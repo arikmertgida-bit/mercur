@@ -147,6 +147,11 @@
         "successToast": "Permintaan tipe berhasil dibuat"
       }
     },
+    "returnReasons": {
+      "navLabel": "Alasan Pengembalian",
+      "heading": "Permintaan Alasan Pengembalian",
+      "noRecords": "Tidak ada permintaan alasan pengembalian ditemukan"
+    },
     "reviews": {
       "navLabel": "Ulasan",
       "heading": "Laporan Ulasan",

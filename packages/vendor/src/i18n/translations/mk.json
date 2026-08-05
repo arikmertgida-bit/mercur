@@ -3058,6 +3058,8 @@
         "reviewDescription": "Нови рецензии и одговори за вашите производи и продавница.",
         "follower": "Следбеници",
         "followerDescription": "Кога клиент ќе почне да ја следи вашата продавница.",
+        "return": "Враќања",
+        "returnDescription": "Кога клиент побара враќање.",
         "messenger": "Пораки",
         "messengerDescription": "Push/toast известувања за нови пораки. Самите пораки никогаш не се блокираат."
       }
@@ -3360,6 +3362,7 @@
   },
   "returnReasons": {
     "domain": "Причини за враќање",
+    "requestAction": "Побарај",
     "subtitle": "Управувајте со причините за вратените ставки.",
     "calloutHint": "Управувајте со причините за категоризација на приносите.",
     "editReason": "Уредете ја причината за враќање",
@@ -3932,6 +3935,17 @@
       "priceRequired": "Enter a price to publish this row, or clear its stock and shipping profile to skip it.",
       "noPricedRows": "Enter a price for at least one variant. Variants without a price are skipped.",
       "duplicateBatchEntry": "Артиклот од залиха може да се појави само во една група (креирање, ажурирање или бришење)."
+    }
+  },
+  "returns": {
+    "domain": "Враќања",
+    "noRecords": "Не се пронајдени враќања",
+    "status": {
+      "open": "Отворено",
+      "requested": "Побарано",
+      "received": "Примено",
+      "partially_received": "Делумно примено",
+      "canceled": "Откажано"
     }
   },
   "payouts": {

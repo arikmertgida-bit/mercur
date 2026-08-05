@@ -5,6 +5,7 @@ export interface NotificationRequestTypeLabels {
   product_collection: string
   product_tag: string
   product_type: string
+  return_reason: string
 }
 
 export interface NotificationMessages {
@@ -39,6 +40,11 @@ export interface NotificationMessages {
   payout: {
     subject: string
     /** Placeholders: {displayId}, {amount}, {currency} */
+    preview: string
+  }
+  return: {
+    subject: string
+    /** Placeholders: {customerName}, {displayId} */
     preview: string
   }
   request: {
@@ -80,6 +86,10 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
       subject: "Payout Sent",
       preview: "Your payout #{displayId} has been sent: {amount} {currency}",
     },
+    return: {
+      subject: "New Return Request",
+      preview: "{customerName} requested a return for order #{displayId}.",
+    },
     request: {
       statusSubject: "Request Status",
       acceptedPreview: "Your {label} request has been approved.",
@@ -90,6 +100,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
         product_collection: "Collection",
         product_tag: "Tag",
         product_type: "Product Type",
+        return_reason: "Return Reason",
       },
     },
   },
@@ -120,6 +131,10 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
       subject: "Ödeme Gönderildi",
       preview: "#{displayId} numaralı ödemeniz gönderildi: {amount} {currency}",
     },
+    return: {
+      subject: "Yeni İade Talebi",
+      preview: "{customerName} #{displayId} numaralı sipariş için iade talebinde bulundu.",
+    },
     request: {
       statusSubject: "Talep Durumu",
       acceptedPreview: "{label} talebiniz onaylandı.",
@@ -130,6 +145,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
         product_collection: "Koleksiyon",
         product_tag: "Etiket",
         product_type: "Ürün Tipi",
+        return_reason: "İade Nedeni",
       },
     },
   },
@@ -160,6 +176,10 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
       subject: "Auszahlung gesendet",
       preview: "Ihre Auszahlung #{displayId} wurde gesendet: {amount} {currency}",
     },
+    return: {
+      subject: "Neue Rückgabeanfrage",
+      preview: "{customerName} hat für Bestellung #{displayId} eine Rückgabe angefordert.",
+    },
     request: {
       statusSubject: "Anfragestatus",
       acceptedPreview: "Ihre Anfrage „{label}“ wurde genehmigt.",
@@ -170,6 +190,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
         product_collection: "Kollektion",
         product_tag: "Tag",
         product_type: "Produkttyp",
+        return_reason: "Rückgabegrund",
       },
     },
   },
@@ -200,6 +221,10 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
       subject: "Versement envoyé",
       preview: "Votre versement #{displayId} a été envoyé : {amount} {currency}",
     },
+    return: {
+      subject: "Nouvelle demande de retour",
+      preview: "{customerName} a demandé un retour pour la commande #{displayId}.",
+    },
     request: {
       statusSubject: "Statut de la demande",
       acceptedPreview: "Votre demande « {label} » a été approuvée.",
@@ -210,6 +235,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
         product_collection: "Collection",
         product_tag: "Étiquette",
         product_type: "Type de produit",
+        return_reason: "Motif de retour",
       },
     },
   },
@@ -240,6 +266,10 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
       subject: "Pago enviado",
       preview: "Tu pago #{displayId} ha sido enviado: {amount} {currency}",
     },
+    return: {
+      subject: "Nueva solicitud de devolución",
+      preview: "{customerName} solicitó una devolución del pedido #{displayId}.",
+    },
     request: {
       statusSubject: "Estado de la solicitud",
       acceptedPreview: "Tu solicitud de {label} ha sido aprobada.",
@@ -250,6 +280,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
         product_collection: "Colección",
         product_tag: "Etiqueta",
         product_type: "Tipo de producto",
+        return_reason: "Motivo de devolución",
       },
     },
   },
@@ -280,6 +311,10 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
       subject: "Pagamento inviato",
       preview: "Il tuo pagamento #{displayId} è stato inviato: {amount} {currency}",
     },
+    return: {
+      subject: "Nuova richiesta di reso",
+      preview: "{customerName} ha richiesto un reso per l'ordine #{displayId}.",
+    },
     request: {
       statusSubject: "Stato della richiesta",
       acceptedPreview: "La tua richiesta di {label} è stata approvata.",
@@ -290,6 +325,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
         product_collection: "Collezione",
         product_tag: "Tag",
         product_type: "Tipo di prodotto",
+        return_reason: "Motivo di reso",
       },
     },
   },
@@ -320,6 +356,10 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
       subject: "Pagamento enviado",
       preview: "Seu pagamento #{displayId} foi enviado: {amount} {currency}",
     },
+    return: {
+      subject: "Nova solicitação de devolução",
+      preview: "{customerName} solicitou a devolução do pedido #{displayId}.",
+    },
     request: {
       statusSubject: "Status da solicitação",
       acceptedPreview: "Sua solicitação de {label} foi aprovada.",
@@ -330,6 +370,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
         product_collection: "Coleção",
         product_tag: "Tag",
         product_type: "Tipo de produto",
+        return_reason: "Motivo de devolução",
       },
     },
   },
@@ -360,6 +401,10 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
       subject: "Pagamento enviado",
       preview: "O seu pagamento #{displayId} foi enviado: {amount} {currency}",
     },
+    return: {
+      subject: "Novo pedido de devolução",
+      preview: "{customerName} pediu a devolução da encomenda #{displayId}.",
+    },
     request: {
       statusSubject: "Estado do pedido",
       acceptedPreview: "O seu pedido de {label} foi aprovado.",
@@ -370,6 +415,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
         product_collection: "Coleção",
         product_tag: "Etiqueta",
         product_type: "Tipo de produto",
+        return_reason: "Motivo de devolução",
       },
     },
   },
@@ -400,6 +446,10 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
       subject: "Выплата отправлена",
       preview: "Ваша выплата #{displayId} отправлена: {amount} {currency}",
     },
+    return: {
+      subject: "Новый запрос на возврат",
+      preview: "{customerName} запросил(а) возврат по заказу #{displayId}.",
+    },
     request: {
       statusSubject: "Статус заявки",
       acceptedPreview: "Ваша заявка «{label}» одобрена.",
@@ -410,6 +460,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
         product_collection: "Коллекция",
         product_tag: "Тег",
         product_type: "Тип товара",
+        return_reason: "Причина возврата",
       },
     },
   },
@@ -440,6 +491,10 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
       subject: "Виплату надіслано",
       preview: "Вашу виплату #{displayId} надіслано: {amount} {currency}",
     },
+    return: {
+      subject: "Новий запит на повернення",
+      preview: "{customerName} подав(-ла) запит на повернення замовлення #{displayId}.",
+    },
     request: {
       statusSubject: "Статус заявки",
       acceptedPreview: "Вашу заявку «{label}» схвалено.",
@@ -450,6 +505,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
         product_collection: "Колекція",
         product_tag: "Тег",
         product_type: "Тип товару",
+        return_reason: "Причина повернення",
       },
     },
   },
@@ -480,6 +536,10 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
       subject: "Wypłata wysłana",
       preview: "Twoja wypłata #{displayId} została wysłana: {amount} {currency}",
     },
+    return: {
+      subject: "Nowa prośba o zwrot",
+      preview: "{customerName} poprosił(a) o zwrot zamówienia #{displayId}.",
+    },
     request: {
       statusSubject: "Status wniosku",
       acceptedPreview: "Twój wniosek „{label}” został zatwierdzony.",
@@ -490,6 +550,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
         product_collection: "Kolekcja",
         product_tag: "Tag",
         product_type: "Typ produktu",
+        return_reason: "Powód zwrotu",
       },
     },
   },
@@ -520,6 +581,10 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
       subject: "Výplata odeslána",
       preview: "Vaše výplata #{displayId} byla odeslána: {amount} {currency}",
     },
+    return: {
+      subject: "Nová žádost o vrácení",
+      preview: "{customerName} požádal(a) o vrácení objednávky #{displayId}.",
+    },
     request: {
       statusSubject: "Stav žádosti",
       acceptedPreview: "Vaše žádost „{label}“ byla schválena.",
@@ -530,6 +595,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
         product_collection: "Kolekce",
         product_tag: "Štítek",
         product_type: "Typ produktu",
+        return_reason: "Důvod vrácení",
       },
     },
   },
@@ -560,6 +626,10 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
       subject: "Плащането е изпратено",
       preview: "Плащането ви #{displayId} беше изпратено: {amount} {currency}",
     },
+    return: {
+      subject: "Нова заявка за връщане",
+      preview: "{customerName} поиска връщане на поръчка #{displayId}.",
+    },
     request: {
       statusSubject: "Статус на заявката",
       acceptedPreview: "Заявката ви „{label}“ беше одобрена.",
@@ -570,6 +640,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
         product_collection: "Колекция",
         product_tag: "Таг",
         product_type: "Тип продукт",
+        return_reason: "Причина за връщане",
       },
     },
   },
@@ -600,6 +671,10 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
       subject: "Isplata poslana",
       preview: "Vaša isplata #{displayId} je poslana: {amount} {currency}",
     },
+    return: {
+      subject: "Novi zahtjev za povrat",
+      preview: "{customerName} je zatražio(la) povrat za narudžbu #{displayId}.",
+    },
     request: {
       statusSubject: "Status zahtjeva",
       acceptedPreview: "Vaš zahtjev „{label}” je odobren.",
@@ -610,6 +685,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
         product_collection: "Kolekcija",
         product_tag: "Oznaka",
         product_type: "Tip proizvoda",
+        return_reason: "Razlog povrata",
       },
     },
   },
@@ -640,6 +716,10 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
       subject: "Η πληρωμή στάλθηκε",
       preview: "Η πληρωμή σας #{displayId} στάλθηκε: {amount} {currency}",
     },
+    return: {
+      subject: "Νέο αίτημα επιστροφής",
+      preview: "Ο/Η {customerName} ζήτησε επιστροφή για την παραγγελία #{displayId}.",
+    },
     request: {
       statusSubject: "Κατάσταση αιτήματος",
       acceptedPreview: "Το αίτημά σας «{label}» εγκρίθηκε.",
@@ -650,6 +730,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
         product_collection: "Συλλογή",
         product_tag: "Ετικέτα",
         product_type: "Τύπος προϊόντος",
+        return_reason: "Αιτία επιστροφής",
       },
     },
   },
@@ -680,6 +761,10 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
       subject: "پرداخت ارسال شد",
       preview: "پرداخت شما با شماره #{displayId} ارسال شد: {amount} {currency}",
     },
+    return: {
+      subject: "درخواست مرجوعی جدید",
+      preview: "{customerName} برای سفارش #{displayId} درخواست مرجوعی ثبت کرد.",
+    },
     request: {
       statusSubject: "وضعیت درخواست",
       acceptedPreview: "درخواست {label} شما تأیید شد.",
@@ -690,6 +775,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
         product_collection: "مجموعه",
         product_tag: "برچسب",
         product_type: "نوع محصول",
+        return_reason: "دلیل مرجوعی",
       },
     },
   },
@@ -720,6 +806,10 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
       subject: "התשלום נשלח",
       preview: "התשלום שלך #{displayId} נשלח: {amount} {currency}",
     },
+    return: {
+      subject: "בקשת החזרה חדשה",
+      preview: "{customerName} ביקש/ה החזרה עבור הזמנה #{displayId}.",
+    },
     request: {
       statusSubject: "סטטוס הבקשה",
       acceptedPreview: "בקשת „{label}” שלך אושרה.",
@@ -730,6 +820,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
         product_collection: "אוסף",
         product_tag: "תגית",
         product_type: "סוג מוצר",
+        return_reason: "סיבת החזרה",
       },
     },
   },
@@ -760,6 +851,10 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
       subject: "Kifizetés elküldve",
       preview: "A(z) #{displayId} kifizetése elküldve: {amount} {currency}",
     },
+    return: {
+      subject: "Új visszaküldési kérelem",
+      preview: "{customerName} visszaküldést kért a(z) #{displayId} rendeléshez.",
+    },
     request: {
       statusSubject: "Kérelem állapota",
       acceptedPreview: "„{label}” kérelmét jóváhagytuk.",
@@ -770,6 +865,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
         product_collection: "Kollekció",
         product_tag: "Címke",
         product_type: "Terméktípus",
+        return_reason: "Visszaküldés oka",
       },
     },
   },
@@ -800,6 +896,10 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
       subject: "Pembayaran Terkirim",
       preview: "Pembayaran Anda #{displayId} telah dikirim: {amount} {currency}",
     },
+    return: {
+      subject: "Permintaan Retur Baru",
+      preview: "{customerName} meminta retur untuk pesanan #{displayId}.",
+    },
     request: {
       statusSubject: "Status Permintaan",
       acceptedPreview: "Permintaan {label} Anda telah disetujui.",
@@ -810,6 +910,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
         product_collection: "Koleksi",
         product_tag: "Tag",
         product_type: "Jenis Produk",
+        return_reason: "Alasan Retur",
       },
     },
   },
@@ -840,6 +941,10 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
       subject: "出金が送信されました",
       preview: "出金 #{displayId} を送信しました: {amount} {currency}",
     },
+    return: {
+      subject: "新しい返品リクエスト",
+      preview: "{customerName}様が注文 #{displayId} の返品をリクエストしました。",
+    },
     request: {
       statusSubject: "リクエストの状況",
       acceptedPreview: "「{label}」のリクエストが承認されました。",
@@ -850,6 +955,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
         product_collection: "コレクション",
         product_tag: "タグ",
         product_type: "商品タイプ",
+        return_reason: "返品理由",
       },
     },
   },
@@ -880,6 +986,10 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
       subject: "정산금 발송됨",
       preview: "정산금 #{displayId}이(가) 발송되었습니다: {amount} {currency}",
     },
+    return: {
+      subject: "새 반품 요청",
+      preview: "{customerName}님이 주문 #{displayId}에 대해 반품을 요청했습니다.",
+    },
     request: {
       statusSubject: "요청 상태",
       acceptedPreview: "'{label}' 요청이 승인되었습니다.",
@@ -890,6 +1000,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
         product_collection: "컬렉션",
         product_tag: "태그",
         product_type: "상품 유형",
+        return_reason: "반품 사유",
       },
     },
   },
@@ -920,6 +1031,10 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
       subject: "Išmoka išsiųsta",
       preview: "Jūsų išmoka #{displayId} buvo išsiųsta: {amount} {currency}",
     },
+    return: {
+      subject: "Naujas grąžinimo prašymas",
+      preview: "{customerName} paprašė grąžinti užsakymą #{displayId}.",
+    },
     request: {
       statusSubject: "Užklausos būsena",
       acceptedPreview: "Jūsų užklausa „{label}“ buvo patvirtinta.",
@@ -930,6 +1045,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
         product_collection: "Kolekcija",
         product_tag: "Žyma",
         product_type: "Produkto tipas",
+        return_reason: "Grąžinimo priežastis",
       },
     },
   },
@@ -960,6 +1076,10 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
       subject: "Исплатата е испратена",
       preview: "Вашата исплата #{displayId} е испратена: {amount} {currency}",
     },
+    return: {
+      subject: "Ново барање за враќање",
+      preview: "{customerName} побара враќање за нарачката #{displayId}.",
+    },
     request: {
       statusSubject: "Статус на барањето",
       acceptedPreview: "Вашето барање „{label}“ е одобрено.",
@@ -970,6 +1090,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
         product_collection: "Колекција",
         product_tag: "Ознака",
         product_type: "Тип на производ",
+        return_reason: "Причина за враќање",
       },
     },
   },
@@ -1000,6 +1121,10 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
       subject: "Төлбөр илгээгдлээ",
       preview: "Таны #{displayId} дугаартай төлбөр илгээгдлээ: {amount} {currency}",
     },
+    return: {
+      subject: "Шинэ буцаалтын хүсэлт",
+      preview: "{customerName} #{displayId} захиалгын буцаалтыг хүслээ.",
+    },
     request: {
       statusSubject: "Хүсэлтийн төлөв",
       acceptedPreview: "Таны «{label}» хүсэлт зөвшөөрөгдлөө.",
@@ -1010,6 +1135,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
         product_collection: "Цуглуулга",
         product_tag: "Шошго",
         product_type: "Бүтээгдэхүүний төрөл",
+        return_reason: "Буцаалтын шалтгаан",
       },
     },
   },
@@ -1040,6 +1166,10 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
       subject: "Uitbetaling verzonden",
       preview: "Uw uitbetaling #{displayId} is verzonden: {amount} {currency}",
     },
+    return: {
+      subject: "Nieuw retourverzoek",
+      preview: "{customerName} heeft een retour aangevraagd voor bestelling #{displayId}.",
+    },
     request: {
       statusSubject: "Status van aanvraag",
       acceptedPreview: "Uw aanvraag '{label}' is goedgekeurd.",
@@ -1050,6 +1180,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
         product_collection: "Collectie",
         product_tag: "Tag",
         product_type: "Producttype",
+        return_reason: "Retourreden",
       },
     },
   },
@@ -1080,6 +1211,10 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
       subject: "Plată trimisă",
       preview: "Plata dvs. #{displayId} a fost trimisă: {amount} {currency}",
     },
+    return: {
+      subject: "Cerere nouă de retur",
+      preview: "{customerName} a solicitat returnarea comenzii #{displayId}.",
+    },
     request: {
       statusSubject: "Starea cererii",
       acceptedPreview: "Cererea dvs. „{label}” a fost aprobată.",
@@ -1090,6 +1225,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
         product_collection: "Colecție",
         product_tag: "Etichetă",
         product_type: "Tip de produs",
+        return_reason: "Motiv de retur",
       },
     },
   },
@@ -1120,6 +1256,10 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
       subject: "ส่งการจ่ายเงินแล้ว",
       preview: "การจ่ายเงินของคุณหมายเลข #{displayId} ถูกส่งแล้ว: {amount} {currency}",
     },
+    return: {
+      subject: "คำขอคืนสินค้าใหม่",
+      preview: "{customerName} ขอคืนสินค้าสำหรับคำสั่งซื้อ #{displayId}",
+    },
     request: {
       statusSubject: "สถานะคำขอ",
       acceptedPreview: "คำขอ「{label}」ของคุณได้รับการอนุมัติแล้ว",
@@ -1130,6 +1270,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
         product_collection: "คอลเลกชัน",
         product_tag: "แท็ก",
         product_type: "ประเภทสินค้า",
+        return_reason: "เหตุผลการคืนสินค้า",
       },
     },
   },
@@ -1160,6 +1301,10 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
       subject: "Đã gửi khoản thanh toán",
       preview: "Khoản thanh toán #{displayId} của bạn đã được gửi: {amount} {currency}",
     },
+    return: {
+      subject: "Yêu cầu trả hàng mới",
+      preview: "{customerName} đã yêu cầu trả hàng cho đơn hàng #{displayId}.",
+    },
     request: {
       statusSubject: "Trạng thái yêu cầu",
       acceptedPreview: "Yêu cầu \"{label}\" của bạn đã được chấp thuận.",
@@ -1170,6 +1315,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
         product_collection: "Bộ sưu tập",
         product_tag: "Thẻ",
         product_type: "Loại sản phẩm",
+        return_reason: "Lý do trả hàng",
       },
     },
   },
@@ -1200,6 +1346,10 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
       subject: "打款已发送",
       preview: "您的打款 #{displayId} 已发送:{amount} {currency}",
     },
+    return: {
+      subject: "新退货申请",
+      preview: "{customerName} 为订单 #{displayId} 申请了退货。",
+    },
     request: {
       statusSubject: "申请状态",
       acceptedPreview: "您的「{label}」申请已获批准。",
@@ -1210,6 +1360,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
         product_collection: "系列",
         product_tag: "标签",
         product_type: "商品类型",
+        return_reason: "退货原因",
       },
     },
   },
@@ -1240,6 +1391,10 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
       subject: "款項已發送",
       preview: "您的款項 #{displayId} 已發送:{amount} {currency}",
     },
+    return: {
+      subject: "新退貨申請",
+      preview: "{customerName} 為訂單 #{displayId} 申請了退貨。",
+    },
     request: {
       statusSubject: "申請狀態",
       acceptedPreview: "您的「{label}」申請已核准。",
@@ -1250,6 +1405,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
         product_collection: "系列",
         product_tag: "標籤",
         product_type: "商品類型",
+        return_reason: "退貨原因",
       },
     },
   },
@@ -1280,6 +1436,10 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
       subject: "تم إرسال الدفعة",
       preview: "تم إرسال دفعتك رقم #{displayId}: {amount} {currency}",
     },
+    return: {
+      subject: "طلب إرجاع جديد",
+      preview: "طلب {customerName} إرجاع الطلب رقم #{displayId}.",
+    },
     request: {
       statusSubject: "حالة الطلب",
       acceptedPreview: "تمت الموافقة على طلب «{label}» الخاص بك.",
@@ -1290,6 +1450,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
         product_collection: "المجموعة",
         product_tag: "الوسم",
         product_type: "نوع المنتج",
+        return_reason: "سبب الإرجاع",
       },
     },
   },

@@ -3058,6 +3058,8 @@
         "reviewDescription": "Нові відгуки та відповіді на ваші товари й магазин.",
         "follower": "Підписники",
         "followerDescription": "Коли клієнт починає стежити за вашим магазином.",
+        "return": "Повернення",
+        "returnDescription": "Коли клієнт подає запит на повернення.",
         "messenger": "Повідомлення",
         "messengerDescription": "Push/toast-сповіщення про нові повідомлення. Самі повідомлення ніколи не блокуються."
       }
@@ -3360,6 +3362,7 @@
   },
   "returnReasons": {
     "domain": "Причини повернення",
+    "requestAction": "Запитати",
     "subtitle": "Керуйте причинами повернення товарів.",
     "calloutHint": "Керуйте причинами для категоризації повернень.",
     "editReason": "Редагувати причину повернення",
@@ -3932,6 +3935,17 @@
       "priceRequired": "Enter a price to publish this row, or clear its stock and shipping profile to skip it.",
       "noPricedRows": "Enter a price for at least one variant. Variants without a price are skipped.",
       "duplicateBatchEntry": "Складський запис може з'являтися лише в одній групі (створення, оновлення або видалення)."
+    }
+  },
+  "returns": {
+    "domain": "Повернення",
+    "noRecords": "Повернень не знайдено",
+    "status": {
+      "open": "Відкрито",
+      "requested": "Запитано",
+      "received": "Отримано",
+      "partially_received": "Частково отримано",
+      "canceled": "Скасовано"
     }
   },
   "payouts": {

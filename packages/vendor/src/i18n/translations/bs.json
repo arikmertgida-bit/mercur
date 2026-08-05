@@ -3057,6 +3057,8 @@
         "reviewDescription": "Nove recenzije i odgovori na vaše proizvode i prodavnicu.",
         "follower": "Pratioci",
         "followerDescription": "Kada kupac počne pratiti vašu prodavnicu.",
+        "return": "Povrati",
+        "returnDescription": "Kada kupac zatraži povrat.",
         "messenger": "Poruke",
         "messengerDescription": "Trenutna obavještenja za nove poruke. Same poruke se nikada ne blokiraju."
       }
@@ -3358,6 +3360,7 @@
   },
   "returnReasons": {
     "domain": "Razlozi za povrat",
+    "requestAction": "Zatraži",
     "subtitle": "Upravljajte razlozima za vraćene artikle.",
     "calloutHint": "Upravljajte razlozima za kategorizaciju povrata.",
     "editReason": "Uredi razlog povrata",
@@ -3925,6 +3928,17 @@
       "priceRequired": "Enter a price to publish this row, or clear its stock and shipping profile to skip it.",
       "noPricedRows": "Enter a price for at least one variant. Variants without a price are skipped.",
       "duplicateBatchEntry": "Artikal zalihe se može pojaviti samo u jednoj grupi (kreiranje, ažuriranje ili brisanje)."
+    }
+  },
+  "returns": {
+    "domain": "Povrati",
+    "noRecords": "Nema pronađenih povrata",
+    "status": {
+      "open": "Otvoreno",
+      "requested": "Zatraženo",
+      "received": "Primljeno",
+      "partially_received": "Djelimično primljeno",
+      "canceled": "Otkazano"
     }
   },
   "payouts": {

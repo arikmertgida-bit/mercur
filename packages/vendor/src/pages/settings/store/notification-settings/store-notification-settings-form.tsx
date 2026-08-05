@@ -26,6 +26,7 @@ const NotificationSettingsSchema = z.object({
   [NotificationCategory.REQUEST]: z.boolean(),
   [NotificationCategory.REVIEW]: z.boolean(),
   [NotificationCategory.FOLLOWER]: z.boolean(),
+  [NotificationCategory.RETURN]: z.boolean(),
   [NotificationCategory.MESSENGER]: z.boolean(),
 });
 
@@ -37,6 +38,7 @@ const CATEGORY_LABEL_KEYS: Record<NotificationCategoryType, string> = {
   [NotificationCategory.REQUEST]: "store.notificationSettings.categories.request",
   [NotificationCategory.REVIEW]: "store.notificationSettings.categories.review",
   [NotificationCategory.FOLLOWER]: "store.notificationSettings.categories.follower",
+  [NotificationCategory.RETURN]: "store.notificationSettings.categories.return",
   [NotificationCategory.MESSENGER]: "store.notificationSettings.categories.messenger",
 };
 
@@ -46,6 +48,7 @@ const CATEGORY_DESCRIPTION_KEYS: Record<NotificationCategoryType, string> = {
   [NotificationCategory.REQUEST]: "store.notificationSettings.categories.requestDescription",
   [NotificationCategory.REVIEW]: "store.notificationSettings.categories.reviewDescription",
   [NotificationCategory.FOLLOWER]: "store.notificationSettings.categories.followerDescription",
+  [NotificationCategory.RETURN]: "store.notificationSettings.categories.returnDescription",
   [NotificationCategory.MESSENGER]: "store.notificationSettings.categories.messengerDescription",
 };
 
@@ -66,6 +69,7 @@ export const StoreNotificationSettingsForm = ({
       [NotificationCategory.REQUEST]: byType.get(NotificationCategory.REQUEST) ?? true,
       [NotificationCategory.REVIEW]: byType.get(NotificationCategory.REVIEW) ?? true,
       [NotificationCategory.FOLLOWER]: byType.get(NotificationCategory.FOLLOWER) ?? true,
+      [NotificationCategory.RETURN]: byType.get(NotificationCategory.RETURN) ?? true,
       [NotificationCategory.MESSENGER]: byType.get(NotificationCategory.MESSENGER) ?? true,
     },
     resolver: zodResolver(NotificationSettingsSchema),

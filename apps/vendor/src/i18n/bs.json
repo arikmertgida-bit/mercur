@@ -147,6 +147,11 @@
         "successToast": "Zahtjev za tip je uspješno kreiran"
       }
     },
+    "returnReasons": {
+      "navLabel": "Razlozi za povrat",
+      "heading": "Zahtjevi za razlog povrata",
+      "noRecords": "Nisu pronađeni zahtjevi za razlog povrata"
+    },
     "reviews": {
       "navLabel": "Recenzije",
       "heading": "Prijave recenzija",

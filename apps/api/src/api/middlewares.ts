@@ -21,6 +21,7 @@ import { vendorProductCollectionRequestsMiddlewares } from "./vendor/requests/pr
 import { vendorProductCategoryRequestsMiddlewares } from "./vendor/requests/product-categories/middlewares";
 import { vendorProductTypeRequestsMiddlewares } from "./vendor/requests/product-types/middlewares";
 import { vendorProductTagRequestsMiddlewares } from "./vendor/requests/product-tags/middlewares";
+import { vendorReturnReasonRequestsMiddlewares } from "./vendor/requests/return-reasons/middlewares";
 import { storeWishlistMiddlewares } from "./store/wishlist/middlewares";
 import { adminWishlistMiddlewares } from "./admin/wishlist/middlewares";
 import { storeCustomerUploadMiddlewares } from "./store/customer/upload/middlewares";
@@ -88,5 +89,6 @@ export default defineMiddlewares({
         ...vendorProductCategoryRequestsMiddlewares,
         ...vendorProductTypeRequestsMiddlewares,
         ...vendorProductTagRequestsMiddlewares,
+        ...vendorReturnReasonRequestsMiddlewares,
     ],
 });

@@ -147,6 +147,11 @@
         "successToast": "בקשת הסוג נוצרה בהצלחה"
       }
     },
+    "returnReasons": {
+      "navLabel": "סיבות החזרה",
+      "heading": "בקשות לסיבת החזרה",
+      "noRecords": "לא נמצאו בקשות לסיבת החזרה"
+    },
     "reviews": {
       "navLabel": "ביקורות",
       "heading": "דיווחים על ביקורות",

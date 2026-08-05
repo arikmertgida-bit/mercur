@@ -8808,6 +8808,37 @@
         }
       }
     },
+    "returns": {
+      "type": "object",
+      "properties": {
+        "domain": {
+          "type": "string"
+        },
+        "noRecords": {
+          "type": "string"
+        },
+        "status": {
+          "type": "object",
+          "properties": {
+            "open": {
+              "type": "string"
+            },
+            "requested": {
+              "type": "string"
+            },
+            "received": {
+              "type": "string"
+            },
+            "partially_received": {
+              "type": "string"
+            },
+            "canceled": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
     "payouts": {
       "type": "object",
       "properties": {
@@ -9691,6 +9722,12 @@
                   "type": "string"
                 },
                 "followerDescription": {
+                  "type": "string"
+                },
+                "return": {
+                  "type": "string"
+                },
+                "returnDescription": {
                   "type": "string"
                 },
                 "messenger": {
@@ -10601,6 +10638,9 @@
       "type": "object",
       "properties": {
         "domain": {
+          "type": "string"
+        },
+        "requestAction": {
           "type": "string"
         },
         "subtitle": {

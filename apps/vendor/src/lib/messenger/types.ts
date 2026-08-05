@@ -77,6 +77,11 @@ export const FOLLOWER_NOTIFICATION_TYPE = "follower_notification"
 export const PAYOUT_NOTIFICATION_TYPE = "payout_notification"
 
 /**
+ * Must match `RETURN_NOTIFICATION_TYPE` in the backend's src/lib/return-events.ts.
+ */
+export const RETURN_NOTIFICATION_TYPE = "return_notification"
+
+/**
  * Preference-only category key (no persisted `metadata.notification_type` —
  * real chat messages aren't tagged). Must match `NotificationCategory.MESSENGER`
  * in the messenger service's src/constants/notification-types.ts. Gates only
