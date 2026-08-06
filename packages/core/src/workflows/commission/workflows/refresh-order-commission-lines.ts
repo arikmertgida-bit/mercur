@@ -41,7 +41,6 @@ const orderFields = [
   "items.product.tags.id",
   "items.product.type_id",
   "items.product.attribute_values.id",
-  "items.product.sellers.id",
   "items.adjustments.*",
   "shipping_methods.*",
   "shipping_methods.total",
@@ -55,18 +54,18 @@ const orderFields = [
 type OrderForCommissionRefresh = {
   id: string
   currency_code: string
-  seller?: { id: string }
+  seller?: { id: string } | null
   items?: Array<{
     id: string
     subtotal: BigNumberInput
     tax_total?: BigNumberInput
+    total?: BigNumberInput
     product?: {
       id: string
       collection_id?: string
       categories?: { id: string }[]
       tags?: { id: string }[]
       type_id?: string
-      sellers?: { id: string }[]
       attribute_values?: { id: string }[]
     }
   }>
@@ -123,36 +122,47 @@ export const refreshOrderCommissionLinesWorkflow: ReturnWorkflow<
     }).config({ name: "fetch-orders" })
 
     const commissionContexts = transform({ orders }, ({ orders }) => {
-      return (orders as OrderForCommissionRefresh[]).map((order): CommissionCalculationContext => ({
-        currency_code: order.currency_code,
-        order_id: order.id,
-        seller_id: order.seller?.id,
-        items: (order.items ?? []).map((item) => ({
-          id: item.id,
-          subtotal: item.subtotal,
-          tax_total: item.tax_total,
-          total: item.total,
-          product: item.product
-            ? {
-              id: item.product.id,
-              collection_id: item.product.collection_id,
-              categories: item.product.categories,
-              tags: item.product.tags,
-              type_id: item.product.type_id,
-              seller: item.product.sellers?.[0]
-                ? { id: item.product.sellers[0].id }
-                : undefined,
-              attribute_value_ids: (item.product.attribute_values ?? [])
-                .map((value: { id: string }) => value.id),
-            }
-            : undefined,
-        })),
-        shipping_methods: (order.shipping_methods ?? []).map((method) => ({
-          id: method.id,
-          subtotal: method.subtotal,
-          tax_total: method.tax_total,
-        })),
-      }))
+      return (orders as OrderForCommissionRefresh[]).map((order): CommissionCalculationContext => {
+        // The order's own seller link (order-seller-link.ts) is 1:1 by
+        // design — Order Splitting guarantees a single order never spans
+        // more than one seller. `product.sellers` on the other hand is the
+        // master-product allowlist (product-seller-link.ts, many-to-many):
+        // a shared product can be linked to several sellers, so picking
+        // `product.sellers[0]` there would resolve an arbitrary allowlisted
+        // seller instead of the seller this order actually belongs to,
+        // silently matching seller-scoped commission rules to the wrong
+        // seller for any product shared across multiple sellers.
+        const orderSellerId = order.seller?.id ?? undefined
+
+        return {
+          currency_code: order.currency_code,
+          order_id: order.id,
+          seller_id: orderSellerId,
+          items: (order.items ?? []).map((item) => ({
+            id: item.id,
+            subtotal: item.subtotal,
+            tax_total: item.tax_total,
+            total: item.total,
+            product: item.product
+              ? {
+                id: item.product.id,
+                collection_id: item.product.collection_id,
+                categories: item.product.categories,
+                tags: item.product.tags,
+                type_id: item.product.type_id,
+                seller: orderSellerId ? { id: orderSellerId } : undefined,
+                attribute_value_ids: (item.product.attribute_values ?? [])
+                  .map((value: { id: string }) => value.id),
+              }
+              : undefined,
+          })),
+          shipping_methods: (order.shipping_methods ?? []).map((method) => ({
+            id: method.id,
+            subtotal: method.subtotal,
+            tax_total: method.tax_total,
+          })),
+        }
+      })
     })
 
     const setCommissionContext = createHook("setCommissionContext", {

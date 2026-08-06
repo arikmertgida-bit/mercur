@@ -6,6 +6,8 @@ import {
 } from "@medusajs/framework/utils"
 import { MercurModules } from "@mercurjs/types"
 import { adminHeaders, createAdminUser } from "../../../helpers/create-admin-user"
+import { assignProductsToSeller } from "../../../helpers/create-product"
+import { createSellerUser } from "../../../helpers/create-seller-user"
 
 import { refreshOrderCommissionLinesWorkflow } from "@mercurjs/core/workflows"
 
@@ -364,6 +366,84 @@ medusaIntegrationTestRunner({
           expect(
             response.data.commission_lines.filter((l: any) => l.shipping_method_id)
           ).toHaveLength(1)
+        })
+
+        it("resolves the item's commission seller from the order's own seller link, not the product's seller allowlist", async () => {
+          const productModule = appContainer.resolve(Modules.PRODUCT)
+          const link = appContainer.resolve(ContainerRegistrationKeys.LINK)
+
+          const { seller: sellerA } = await createSellerUser(appContainer, {
+            email: "seller-a-commission@test.com",
+            name: "Seller A",
+            autoApprove: true,
+          })
+          const { seller: sellerB } = await createSellerUser(appContainer, {
+            email: "seller-b-commission@test.com",
+            name: "Seller B",
+            autoApprove: true,
+          })
+
+          const [product] = await productModule.createProducts([
+            { title: "Shared Product", status: "published" },
+          ])
+
+          // Master-product allowlist: the same product is sellable by both
+          // sellers (product_seller link, many-to-many) — seller A is
+          // linked first, so a naive "first allowlisted seller" read would
+          // resolve to seller A even though the order below belongs to B.
+          await assignProductsToSeller(appContainer, sellerA.id, [product.id])
+          await assignProductsToSeller(appContainer, sellerB.id, [product.id])
+
+          // A commission rule scoped to seller A only — must never apply
+          // to seller B's order just because A is also in the allowlist.
+          await commissionService.createCommissionRates([
+            {
+              name: "Seller A Only Rate",
+              type: "percentage",
+              value: 40,
+              rules: [{ reference: "seller", reference_id: sellerA.id }],
+            },
+          ])
+
+          const order = await orderService.createOrders({
+            currency_code: "usd",
+            email: "buyer@test.com",
+            items: [
+              {
+                title: "Shared Product",
+                quantity: 1,
+                unit_price: 100,
+                product_id: product.id,
+              },
+            ],
+            shipping_address: {
+              first_name: "Test",
+              last_name: "Test",
+              address_1: "Test",
+              city: "Test",
+              country_code: "us",
+              postal_code: "12345",
+            },
+          })
+
+          // The order actually belongs to seller B.
+          await link.create({
+            [Modules.ORDER]: { order_id: order.id },
+            [MercurModules.SELLER]: { seller_id: sellerB.id },
+          })
+
+          await refreshOrderCommissionLinesWorkflow(appContainer).run({
+            input: { order_ids: [order.id] },
+          })
+
+          const [itemLine] = await commissionService.listCommissionLines({
+            item_id: order.items![0].id,
+          })
+
+          // Falls back to the default (5%, from beforeEach) rate for seller
+          // B, never seller A's 40% scoped rate.
+          expect(itemLine.amount).toEqual(5)
+          expect(itemLine.rate).toEqual(5)
         })
       })
     })

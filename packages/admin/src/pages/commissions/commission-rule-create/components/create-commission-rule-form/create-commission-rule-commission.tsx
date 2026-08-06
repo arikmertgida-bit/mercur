@@ -62,12 +62,6 @@ export const CreateCommissionRuleCommission = () => {
             label={t("commissions.fields.taxIncluded")}
             description={t("commissions.fields.taxIncludedHint")}
           />
-          <SwitchBox
-            control={form.control}
-            name="include_shipping"
-            label={t("commissions.fields.shippingIncluded")}
-            description={t("commissions.fields.shippingIncludedHint")}
-          />
         </div>
       </div>
     </div>
