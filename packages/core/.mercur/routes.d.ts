@@ -617,7 +617,7 @@ export type Routes = {
         regions: typeof import("@medusajs/medusa/api/store/regions/route") & {
             $id: typeof import("@medusajs/medusa/api/store/regions/[id]/route");
         };
-        returnReasons: typeof import("@medusajs/medusa/api/store/return-reasons/route") & {
+        returnReasons: typeof import("../src/api/store/return-reasons/route") & {
             $id: typeof import("@medusajs/medusa/api/store/return-reasons/[id]/route");
         };
         returns: typeof import("@medusajs/medusa/api/store/returns/route");
@@ -864,7 +864,9 @@ export type Routes = {
                 shippingMethod: typeof import("../src/api/vendor/returns/[id]/shipping-method/route") & {
                     $actionId: typeof import("../src/api/vendor/returns/[id]/shipping-method/[action_id]/route");
                 };
+                markSeen: typeof import("../src/api/vendor/returns/[id]/mark-seen/route");
             };
+            unseenCount: typeof import("../src/api/vendor/returns/unseen-count/route");
         };
         salesChannels: typeof import("../src/api/vendor/sales-channels/route") & {
             $id: typeof import("../src/api/vendor/sales-channels/[id]/route") & {

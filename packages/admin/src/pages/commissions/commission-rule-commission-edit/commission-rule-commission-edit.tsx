@@ -26,7 +26,6 @@ const EditCommissionSchema = zod.object({
   value: optionalAmount,
   fixed_values: zod.record(zod.string(), optionalAmount).optional(),
   include_tax: zod.boolean(),
-  include_shipping: zod.boolean(),
 });
 
 type EditCommissionSchemaType = zod.infer<typeof EditCommissionSchema>;
@@ -62,7 +61,6 @@ const EditCommissionForm = ({ rule }: { rule: CommissionRate }) => {
       value: rule.value,
       fixed_values: fixedValuesFromRate(rule),
       include_tax: rule.include_tax,
-      include_shipping: rule.include_shipping,
     },
     resolver,
   });
@@ -80,7 +78,6 @@ const EditCommissionForm = ({ rule }: { rule: CommissionRate }) => {
           ? { values: buildValuesPayload(currencies, values.fixed_values) }
           : {}),
         include_tax: values.include_tax,
-        include_shipping: values.include_shipping,
       },
       {
         onSuccess: () => {
@@ -131,12 +128,6 @@ const EditCommissionForm = ({ rule }: { rule: CommissionRate }) => {
               name="include_tax"
               label={t("commissions.fields.taxIncluded")}
               description={t("commissions.fields.taxIncludedHint")}
-            />
-            <SwitchBox
-              control={form.control}
-              name="include_shipping"
-              label={t("commissions.fields.shippingIncluded")}
-              description={t("commissions.fields.shippingIncludedHint")}
             />
           </div>
         </RouteDrawer.Body>

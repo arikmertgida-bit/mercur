@@ -25,7 +25,6 @@ const baseCommissionRuleSchema = zod.object({
   value: optionalAmount,
   fixed_values: zod.record(zod.string(), optionalAmount).optional(),
   include_tax: zod.boolean(),
-  include_shipping: zod.boolean(),
 });
 
 export const createCommissionRuleSchema = (currencies: string[] = []) =>

@@ -140,14 +140,6 @@ const CommissionSection = ({ rule }: { rule: CommissionRate }) => {
             : t("commissions.global.notIncluded")
         }
       />
-      <SectionRow
-        title={t("commissions.global.shipping")}
-        value={
-          rule.include_shipping
-            ? t("commissions.global.included")
-            : t("commissions.global.notIncluded")
-        }
-      />
     </Container>
   );
 };

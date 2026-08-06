@@ -38,7 +38,6 @@ export const CreateCommissionRuleForm = () => {
       value: undefined,
       fixed_values: {},
       include_tax: false,
-      include_shipping: false,
     },
     resolver,
   });
@@ -64,7 +63,6 @@ export const CreateCommissionRuleForm = () => {
           ? { values: buildValuesPayload(currencies, values.fixed_values) }
           : {}),
         include_tax: values.include_tax,
-        include_shipping: values.include_shipping,
         is_enabled: true,
         ...(rules.length > 0 ? { rules } : {}),
       },
