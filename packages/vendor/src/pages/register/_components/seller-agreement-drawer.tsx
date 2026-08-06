@@ -83,8 +83,8 @@ export const SellerAgreementDrawer = ({
           </Text>
         </Drawer.Header>
         <Drawer.Body className="overflow-y-auto">
-          <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <Tabs.List dir={dir} className="flex-nowrap overflow-x-auto">
+          <Tabs value={activeTab} onValueChange={setActiveTab} dir={dir}>
+            <Tabs.List className="flex-nowrap overflow-x-auto">
               {SELLER_AGREEMENT_TAB_IDS.map((tabId) => (
                 <Tabs.Trigger
                   key={tabId}
