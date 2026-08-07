@@ -946,6 +946,19 @@
       "lowStock": "在庫少"
     }
   },
+  "productDetailInfoWidget": {
+    "title": "拡張機能",
+    "description": "{{title}}（{{id}}）用のウィジェット。",
+    "fallbackTitle": "この商品"
+  },
+  "providers": {
+    "tokens": {
+      "system": "システム",
+      "default": "デフォルト",
+      "manual": "手動",
+      "test": "テスト"
+    }
+  },
   "collections": {
     "domain": "コレクション",
     "subtitle": "商品をコレクションに整理します。",

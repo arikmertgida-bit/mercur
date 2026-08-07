@@ -946,6 +946,19 @@
       "lowStock": "Alacsony készlet"
     }
   },
+  "productDetailInfoWidget": {
+    "title": "Bővítmény",
+    "description": "Widget ehhez: {{title}} ({{id}}).",
+    "fallbackTitle": "ez a termék"
+  },
+  "providers": {
+    "tokens": {
+      "system": "Rendszer",
+      "default": "Alapértelmezett",
+      "manual": "Manuális",
+      "test": "Teszt"
+    }
+  },
   "collections": {
     "domain": "Gyűjtemények",
     "subtitle": "Rendezze gyűjteményekbe a termékeket.",

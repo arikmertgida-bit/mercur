@@ -2729,6 +2729,42 @@
         }
       }
     },
+    "productDetailInfoWidget": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "fallbackTitle": {
+          "type": "string"
+        }
+      }
+    },
+    "providers": {
+      "type": "object",
+      "properties": {
+        "tokens": {
+          "type": "object",
+          "properties": {
+            "system": {
+              "type": "string"
+            },
+            "default": {
+              "type": "string"
+            },
+            "manual": {
+              "type": "string"
+            },
+            "test": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
     "collections": {
       "type": "object",
       "properties": {

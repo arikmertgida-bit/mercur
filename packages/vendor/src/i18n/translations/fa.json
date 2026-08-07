@@ -946,6 +946,19 @@
       "lowStock": "موجودی کم"
     }
   },
+  "productDetailInfoWidget": {
+    "title": "افزونه",
+    "description": "ابزارک برای {{title}} ({{id}}).",
+    "fallbackTitle": "این محصول"
+  },
+  "providers": {
+    "tokens": {
+      "system": "سیستم",
+      "default": "پیش‌فرض",
+      "manual": "دستی",
+      "test": "آزمایشی"
+    }
+  },
   "collections": {
     "domain": "مجموعه‌ها",
     "subtitle": "محصولات را در مجموعه‌ها سازماندهی کنید.",

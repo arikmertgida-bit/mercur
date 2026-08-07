@@ -149,7 +149,7 @@ function ShippingOption({
       <div className="flex-1">
         <Text size="small" weight="plus">
           {option.name} - {getShippingProfileName(option.shipping_profile?.name ?? "")}{" "}
-          ({formatProvider(option.provider_id)})
+          ({formatProvider(option.provider_id, t)})
         </Text>
       </div>
       <ActionMenu

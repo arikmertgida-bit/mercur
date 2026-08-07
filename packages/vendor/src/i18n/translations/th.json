@@ -946,6 +946,19 @@
       "lowStock": "สต๊อกต่ำ"
     }
   },
+  "productDetailInfoWidget": {
+    "title": "ส่วนขยาย",
+    "description": "วิดเจ็ตสำหรับ {{title}} ({{id}})",
+    "fallbackTitle": "สินค้านี้"
+  },
+  "providers": {
+    "tokens": {
+      "system": "ระบบ",
+      "default": "ค่าเริ่มต้น",
+      "manual": "ด้วยตนเอง",
+      "test": "ทดสอบ"
+    }
+  },
   "collections": {
     "domain": "คอลเลกชัน",
     "subtitle": "จัดระเบียบสินค้าเป็นคอลเลกชัน",

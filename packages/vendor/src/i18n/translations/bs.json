@@ -946,6 +946,19 @@
       "lowStock": "Niska zaliha"
     }
   },
+  "productDetailInfoWidget": {
+    "title": "Ekstenzija",
+    "description": "Vidžet za {{title}} ({{id}}).",
+    "fallbackTitle": "ovaj proizvod"
+  },
+  "providers": {
+    "tokens": {
+      "system": "Sistem",
+      "default": "Zadano",
+      "manual": "Ručno",
+      "test": "Test"
+    }
+  },
   "collections": {
     "domain": "Kolekcije",
     "subtitle": "Organizujte proizvode u kolekcije.",

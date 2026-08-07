@@ -946,6 +946,19 @@
       "lowStock": "Stok menipis"
     }
   },
+  "productDetailInfoWidget": {
+    "title": "Ekstensi",
+    "description": "Widget untuk {{title}} ({{id}}).",
+    "fallbackTitle": "produk ini"
+  },
+  "providers": {
+    "tokens": {
+      "system": "Sistem",
+      "default": "Default",
+      "manual": "Manual",
+      "test": "Uji"
+    }
+  },
   "collections": {
     "domain": "Koleksi",
     "subtitle": "Atur produk ke dalam koleksi.",

@@ -946,6 +946,19 @@
       "lowStock": "Mažos atsargos"
     }
   },
+  "productDetailInfoWidget": {
+    "title": "Plėtinys",
+    "description": "„{{title}}“ ({{id}}) valdiklis.",
+    "fallbackTitle": "šį produktą"
+  },
+  "providers": {
+    "tokens": {
+      "system": "Sistema",
+      "default": "Numatytasis",
+      "manual": "Rankinis",
+      "test": "Testas"
+    }
+  },
   "collections": {
     "domain": "Kolekcijos",
     "subtitle": "Suskirstykite prekes į kolekcijas.",

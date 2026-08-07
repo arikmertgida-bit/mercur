@@ -968,6 +968,19 @@
       "lowStock": "Stock bajo"
     }
   },
+  "productDetailInfoWidget": {
+    "title": "Extensión",
+    "description": "Widget para {{title}} ({{id}}).",
+    "fallbackTitle": "este producto"
+  },
+  "providers": {
+    "tokens": {
+      "system": "Sistema",
+      "default": "Predeterminado",
+      "manual": "Manual",
+      "test": "Prueba"
+    }
+  },
   "collections": {
     "domain": "Colecciones",
     "subtitle": "Organiza los productos en colecciones.",

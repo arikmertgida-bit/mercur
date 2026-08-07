@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { Container, Text, clx } from "@medusajs/ui";
 import {
   CheckCircleSolid,
@@ -12,7 +13,7 @@ import { SellerDTO } from "@mercurjs/types";
 
 type ProfileStep = {
   key: string;
-  label: string;
+  labelKey: string;
   completed: boolean;
   path: string;
 };
@@ -40,25 +41,25 @@ function getProfileSteps(seller: SellerDTO): ProfileStep[] {
   return [
     {
       key: "store_details",
-      label: "Add store details",
+      labelKey: "store.profileCompletion.steps.storeDetails",
       completed: hasStoreDetails,
       path: "/settings/store/edit",
     },
     {
       key: "address",
-      label: "Add address",
+      labelKey: "store.profileCompletion.steps.address",
       completed: hasAddress,
       path: "/settings/store/address",
     },
     {
       key: "company_details",
-      label: "Add company details",
+      labelKey: "store.profileCompletion.steps.companyDetails",
       completed: hasCompanyDetails,
       path: "/settings/store/professional-details",
     },
     {
       key: "payment_details",
-      label: "Add payment details",
+      labelKey: "store.profileCompletion.steps.paymentDetails",
       completed: hasPaymentDetails,
       path: "/settings/store/payment-details",
     },
@@ -67,6 +68,7 @@ function getProfileSteps(seller: SellerDTO): ProfileStep[] {
 
 const StoreSetup = ({ seller }: { seller: SellerDTO }) => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [open, setOpen] = useState(true);
 
   const steps = useMemo(() => getProfileSteps(seller), [seller]);
@@ -90,7 +92,7 @@ const StoreSetup = ({ seller }: { seller: SellerDTO }) => {
           <RadixCollapsible.Trigger asChild>
             <button className="flex w-full items-center justify-between">
               <Text size="large" weight="plus" leading="compact">
-                Complete store profile
+                {t("store.profileCompletion.title")}
               </Text>
               <TriangleDownMini
                 className={clx(
@@ -126,7 +128,7 @@ const StoreSetup = ({ seller }: { seller: SellerDTO }) => {
                       step.completed ? "text-ui-fg-base" : "text-ui-fg-base",
                     )}
                   >
-                    {step.label}
+                    {t(step.labelKey)}
                   </Text>
                 </button>
               ))}

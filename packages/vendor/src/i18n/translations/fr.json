@@ -946,6 +946,19 @@
       "lowStock": "Stock faible"
     }
   },
+  "productDetailInfoWidget": {
+    "title": "Extension",
+    "description": "Widget pour {{title}} ({{id}}).",
+    "fallbackTitle": "ce produit"
+  },
+  "providers": {
+    "tokens": {
+      "system": "Système",
+      "default": "Défaut",
+      "manual": "Manuel",
+      "test": "Test"
+    }
+  },
   "collections": {
     "domain": "Collections",
     "subtitle": "Organisez vos produits en collections.",

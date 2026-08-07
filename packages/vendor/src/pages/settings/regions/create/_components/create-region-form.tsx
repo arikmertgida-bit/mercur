@@ -426,7 +426,7 @@ export const CreateRegionForm = ({
                               <Form.Control>
                                 <Combobox
                                   options={paymentProviders.map((pp) => ({
-                                    label: formatProvider(pp.id),
+                                    label: formatProvider(pp.id, t),
                                     value: pp.id,
                                   }))}
                                   {...field}

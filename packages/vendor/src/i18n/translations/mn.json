@@ -946,6 +946,19 @@
       "lowStock": "Бага нөөц"
     }
   },
+  "productDetailInfoWidget": {
+    "title": "Өргөтгөл",
+    "description": "{{title}} ({{id}})-н виджет.",
+    "fallbackTitle": "энэ бүтээгдэхүүн"
+  },
+  "providers": {
+    "tokens": {
+      "system": "Систем",
+      "default": "Өгөгдмөл",
+      "manual": "Гар аргаар",
+      "test": "Тест"
+    }
+  },
   "collections": {
     "domain": "Цуглуулгууд",
     "subtitle": "Бүтээгдэхүүнийг цуглуулгад ангилах.",

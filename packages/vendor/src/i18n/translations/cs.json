@@ -946,6 +946,19 @@
       "lowStock": "Nízký sklad"
     }
   },
+  "productDetailInfoWidget": {
+    "title": "Rozšíření",
+    "description": "Widget pro {{title}} ({{id}}).",
+    "fallbackTitle": "tento produkt"
+  },
+  "providers": {
+    "tokens": {
+      "system": "Systém",
+      "default": "Výchozí",
+      "manual": "Ruční",
+      "test": "Test"
+    }
+  },
   "collections": {
     "domain": "Kolekce",
     "subtitle": "Organizujte produkty do kolekcí.",

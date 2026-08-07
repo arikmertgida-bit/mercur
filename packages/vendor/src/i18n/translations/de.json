@@ -946,6 +946,19 @@
       "lowStock": "Niedriger Lagerbestand"
     }
   },
+  "productDetailInfoWidget": {
+    "title": "Erweiterung",
+    "description": "Widget für {{title}} ({{id}}).",
+    "fallbackTitle": "dieses Produkt"
+  },
+  "providers": {
+    "tokens": {
+      "system": "System",
+      "default": "Standard",
+      "manual": "Manuell",
+      "test": "Test"
+    }
+  },
   "collections": {
     "domain": "Sammlungen",
     "subtitle": "Organisieren Sie Produkte in Sammlungen.",

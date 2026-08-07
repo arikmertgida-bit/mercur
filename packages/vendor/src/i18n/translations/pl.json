@@ -962,6 +962,19 @@
       "lowStock": "Niski stan magazynowy"
     }
   },
+  "productDetailInfoWidget": {
+    "title": "Rozszerzenie",
+    "description": "Widget dla {{title}} ({{id}}).",
+    "fallbackTitle": "tego produktu"
+  },
+  "providers": {
+    "tokens": {
+      "system": "System",
+      "default": "Domyślny",
+      "manual": "Ręczny",
+      "test": "Test"
+    }
+  },
   "collections": {
     "domain": "Kolekcje",
     "subtitle": "Organizuj produkty w kolekcje.",

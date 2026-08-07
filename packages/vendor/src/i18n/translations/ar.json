@@ -946,6 +946,19 @@
       "lowStock": "مخزون منخفض"
     }
   },
+  "productDetailInfoWidget": {
+    "title": "الإضافة",
+    "description": "أداة لـ {{title}} ({{id}}).",
+    "fallbackTitle": "هذا المنتج"
+  },
+  "providers": {
+    "tokens": {
+      "system": "النظام",
+      "default": "افتراضي",
+      "manual": "يدوي",
+      "test": "اختبار"
+    }
+  },
   "collections": {
     "domain": "المجموعات",
     "subtitle": "تنظيم المنتجات في مجموعات.",

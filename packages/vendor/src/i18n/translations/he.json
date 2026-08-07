@@ -946,6 +946,19 @@
       "lowStock": "מלאי נמוך"
     }
   },
+  "productDetailInfoWidget": {
+    "title": "הרחבה",
+    "description": "ווידג'ט עבור {{title}} ({{id}}).",
+    "fallbackTitle": "מוצר זה"
+  },
+  "providers": {
+    "tokens": {
+      "system": "מערכת",
+      "default": "ברירת מחדל",
+      "manual": "ידני",
+      "test": "בדיקה"
+    }
+  },
   "collections": {
     "domain": "קולקציות",
     "subtitle": "ארגן מוצרים לקולקציות.",

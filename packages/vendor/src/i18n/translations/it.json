@@ -946,6 +946,19 @@
       "lowStock": "Scorte basse"
     }
   },
+  "productDetailInfoWidget": {
+    "title": "Estensione",
+    "description": "Widget per {{title}} ({{id}}).",
+    "fallbackTitle": "questo prodotto"
+  },
+  "providers": {
+    "tokens": {
+      "system": "Sistema",
+      "default": "Predefinito",
+      "manual": "Manuale",
+      "test": "Test"
+    }
+  },
   "collections": {
     "domain": "Collezioni",
     "subtitle": "Organizza i prodotti in collezioni.",
