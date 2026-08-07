@@ -3948,6 +3948,48 @@
       ],
       "additionalProperties": false
     },
+    "productDetailInfoWidget": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "fallbackTitle": {
+          "type": "string"
+        }
+      },
+      "required": ["title", "description", "fallbackTitle"],
+      "additionalProperties": false
+    },
+    "providers": {
+      "type": "object",
+      "properties": {
+        "tokens": {
+          "type": "object",
+          "properties": {
+            "system": {
+              "type": "string"
+            },
+            "default": {
+              "type": "string"
+            },
+            "manual": {
+              "type": "string"
+            },
+            "test": {
+              "type": "string"
+            }
+          },
+          "required": ["system", "default", "manual", "test"],
+          "additionalProperties": false
+        }
+      },
+      "required": ["tokens"],
+      "additionalProperties": false
+    },
     "collections": {
       "type": "object",
       "properties": {
@@ -17834,6 +17876,8 @@
     "sales_channels",
     "seller",
     "products",
+    "productDetailInfoWidget",
+    "providers",
     "collections",
     "categories",
     "inventory",

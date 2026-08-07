@@ -955,6 +955,19 @@
       "success": "Products updated successfully."
     }
   },
+  "productDetailInfoWidget": {
+    "title": "Extension",
+    "description": "Widget for {{title}} ({{id}}).",
+    "fallbackTitle": "this product"
+  },
+  "providers": {
+    "tokens": {
+      "system": "System",
+      "default": "Default",
+      "manual": "Manual",
+      "test": "Test"
+    }
+  },
   "collections": {
     "domain": "Collections",
     "subtitle": "Organize products into collections.",

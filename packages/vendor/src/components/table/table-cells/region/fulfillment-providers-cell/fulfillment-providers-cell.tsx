@@ -18,7 +18,7 @@ export const FulfillmentProvidersCell = ({
 
   const displayValue = fulfillmentProviders
     .slice(0, 2)
-    .map((p) => formatProvider(p.id))
+    .map((p) => formatProvider(p.id, t))
     .join(", ")
 
   const additionalProviders = fulfillmentProviders.slice(2).length

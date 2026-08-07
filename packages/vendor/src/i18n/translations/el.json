@@ -946,6 +946,19 @@
       "lowStock": "Χαμηλό απόθεμα"
     }
   },
+  "productDetailInfoWidget": {
+    "title": "Επέκταση",
+    "description": "Γραφικό στοιχείο για {{title}} ({{id}}).",
+    "fallbackTitle": "αυτό το προϊόν"
+  },
+  "providers": {
+    "tokens": {
+      "system": "Σύστημα",
+      "default": "Προεπιλογή",
+      "manual": "Μη αυτόματο",
+      "test": "Δοκιμή"
+    }
+  },
   "collections": {
     "domain": "Συλλογές",
     "subtitle": "Οργανώστε τα προϊόντα σε συλλογές.",

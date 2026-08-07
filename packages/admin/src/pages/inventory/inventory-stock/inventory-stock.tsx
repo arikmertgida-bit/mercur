@@ -11,9 +11,14 @@ export const InventoryStock = () => {
   const inventoryItemIds =
     searchParams.get(INVENTORY_ITEM_IDS_KEY)?.split(",") || undefined
 
-  const { inventory_items, isPending, isError, error } = useInventoryItems({
-    id: inventoryItemIds,
-  })
+  const { inventory_items, isPending, isError, error } = useInventoryItems(
+    { id: inventoryItemIds },
+    // Stock is mutated by processes entirely outside this panel (checkout
+    // reservations, vendor fulfillments, return restocks) that have no way
+    // to invalidate this query — the shared QueryClient's 90s staleTime
+    // would otherwise open this editor with a pre-mutation count.
+    { staleTime: 0 }
+  )
 
   const {
     stock_locations,

@@ -309,7 +309,7 @@ type UseMultipleInventoryItemLevelsReturn = {
 
 export const useMultipleInventoryItemLevels = (
   inventoryItemIds: string[],
-  query?: Record<string, any>
+  query?: Record<string, string | number>
 ): UseMultipleInventoryItemLevelsReturn => {
   const queries = useQueries({
     queries: inventoryItemIds.map((id) => ({
@@ -317,11 +317,14 @@ export const useMultipleInventoryItemLevels = (
       queryFn: () =>
         fetchQuery(`/vendor/inventory-items/${id}/location-levels`, {
           method: "GET",
-          query: { fields: "*stock_locations", ...query } as {
-            [key: string]: string | number
-          },
+          query: { fields: "*stock_locations", ...query },
         }),
       enabled: Boolean(id),
+      // Stock is mutated by processes entirely outside this panel (checkout
+      // reservations, vendor fulfillments, return restocks) that have no way
+      // to invalidate this query — the shared QueryClient's 90s staleTime
+      // would otherwise serve a pre-mutation count on every mount.
+      staleTime: 0,
     })),
   })
 

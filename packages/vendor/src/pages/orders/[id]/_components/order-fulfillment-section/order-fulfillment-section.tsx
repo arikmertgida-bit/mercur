@@ -412,7 +412,7 @@ const Fulfillment = ({
         </Text>
 
         <Text size="small" leading="compact">
-          {formatProvider(fulfillment.provider_id)}
+          {formatProvider(fulfillment.provider_id, t)}
         </Text>
       </div>
       <div className="text-ui-fg-subtle grid grid-cols-2 items-start px-6 py-4">

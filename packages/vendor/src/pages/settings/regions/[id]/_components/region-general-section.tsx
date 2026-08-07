@@ -66,7 +66,7 @@ export const RegionGeneralSection = ({
           <div className="inline-flex">
             {region.payment_providers?.length ? (
               <ListSummary
-                list={region.payment_providers.map((p) => formatProvider(p.id))}
+                list={region.payment_providers.map((p) => formatProvider(p.id, t))}
               />
             ) : (
               "-"

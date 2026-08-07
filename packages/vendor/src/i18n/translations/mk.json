@@ -946,6 +946,19 @@
       "lowStock": "Ниска залиха"
     }
   },
+  "productDetailInfoWidget": {
+    "title": "Проширување",
+    "description": "Виџет за {{title}} ({{id}}).",
+    "fallbackTitle": "овој производ"
+  },
+  "providers": {
+    "tokens": {
+      "system": "Систем",
+      "default": "Стандардно",
+      "manual": "Рачно",
+      "test": "Тест"
+    }
+  },
   "collections": {
     "domain": "Колекции",
     "subtitle": "Организирајте ги производите во колекции.",

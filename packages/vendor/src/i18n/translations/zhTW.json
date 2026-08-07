@@ -946,6 +946,19 @@
       "lowStock": "庫存不足"
     }
   },
+  "productDetailInfoWidget": {
+    "title": "擴充功能",
+    "description": "{{title}}（{{id}}）的小工具。",
+    "fallbackTitle": "此商品"
+  },
+  "providers": {
+    "tokens": {
+      "system": "系統",
+      "default": "預設",
+      "manual": "手動",
+      "test": "測試"
+    }
+  },
   "collections": {
     "domain": "商品系列",
     "subtitle": "將商品整理成系列。",

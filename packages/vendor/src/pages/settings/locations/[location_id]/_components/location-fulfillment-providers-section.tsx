@@ -49,7 +49,7 @@ function LocationsFulfillmentProvidersSection({
                   </IconAvatar>
 
                   <div className="txt-compact-small">
-                    {formatProvider(fulfillmentProvider.id)}
+                    {formatProvider(fulfillmentProvider.id, t)}
                   </div>
                 </Fragment>
               )

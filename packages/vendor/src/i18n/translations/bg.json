@@ -946,6 +946,19 @@
       "lowStock": "Ниска наличност"
     }
   },
+  "productDetailInfoWidget": {
+    "title": "Разширение",
+    "description": "Джаджа за {{title}} ({{id}}).",
+    "fallbackTitle": "този продукт"
+  },
+  "providers": {
+    "tokens": {
+      "system": "Система",
+      "default": "По подразбиране",
+      "manual": "Ръчно",
+      "test": "Тест"
+    }
+  },
   "collections": {
     "domain": "Колекции",
     "subtitle": "Организирайте продуктите в колекции.",

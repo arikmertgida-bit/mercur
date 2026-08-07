@@ -946,6 +946,19 @@
       "lowStock": "Stoc redus"
     }
   },
+  "productDetailInfoWidget": {
+    "title": "Extensie",
+    "description": "Widget pentru {{title}} ({{id}}).",
+    "fallbackTitle": "acest produs"
+  },
+  "providers": {
+    "tokens": {
+      "system": "Sistem",
+      "default": "Implicit",
+      "manual": "Manual",
+      "test": "Test"
+    }
+  },
   "collections": {
     "domain": "Colecții",
     "subtitle": "Organizați produsele în colecții.",

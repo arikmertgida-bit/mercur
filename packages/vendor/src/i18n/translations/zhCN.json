@@ -946,6 +946,19 @@
       "lowStock": "库存不足"
     }
   },
+  "productDetailInfoWidget": {
+    "title": "扩展",
+    "description": "{{title}}（{{id}}）的小组件。",
+    "fallbackTitle": "此商品"
+  },
+  "providers": {
+    "tokens": {
+      "system": "系统",
+      "default": "默认",
+      "manual": "手动",
+      "test": "测试"
+    }
+  },
   "collections": {
     "domain": "系列",
     "subtitle": "将产品组织到系列中。",

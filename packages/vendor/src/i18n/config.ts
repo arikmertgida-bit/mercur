@@ -3,18 +3,18 @@ import { InitOptions } from "i18next"
 export const defaultI18nOptions: InitOptions = {
   debug: process.env.NODE_ENV === "development",
   detection: {
-    // "header" is not a real i18next-browser-languagedetector detector name
-    // (the library's registered detectors are: cookie, querystring,
-    // localStorage, sessionStorage, navigator, htmlTag, path, subdomain —
-    // verified against node_modules/i18next-browser-languagedetector source).
-    // It silently no-ops, so a first-time visitor with no cookie/localStorage
-    // never got their browser language detected and always fell back to
-    // `fallbackLng`. "navigator" is the real detector for `navigator.language`
-    // / `navigator.languages`; only "cookie"/"localStorage" are cacheable.
+    // Manual language selection is the only source of truth — the panel must
+    // never auto-switch based on the browser's Accept-Language / navigator
+    // .language. "navigator" is deliberately excluded from `order` so a
+    // first-time visitor with no prior selection always lands on
+    // `fallbackLng` (below) instead of an implicit browser guess. A vendor's
+    // explicit choice (login/register language selector, profile settings)
+    // is written to `cookie`/`localStorage` via `i18n.changeLanguage()` and
+    // is the only thing `order` is allowed to read back.
     caches: ["cookie", "localStorage"],
     lookupCookie: "lng",
     lookupLocalStorage: "lng",
-    order: ["cookie", "localStorage", "navigator"],
+    order: ["cookie", "localStorage"],
   },
   fallbackLng: "en",
   fallbackNS: "translation",

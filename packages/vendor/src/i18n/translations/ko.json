@@ -946,6 +946,19 @@
       "lowStock": "재고 부족"
     }
   },
+  "productDetailInfoWidget": {
+    "title": "확장 기능",
+    "description": "{{title}}({{id}})의 위젯입니다.",
+    "fallbackTitle": "이 상품"
+  },
+  "providers": {
+    "tokens": {
+      "system": "시스템",
+      "default": "기본값",
+      "manual": "수동",
+      "test": "테스트"
+    }
+  },
   "collections": {
     "domain": "컬렉션",
     "subtitle": "제품을 컬렉션으로 구성합니다.",

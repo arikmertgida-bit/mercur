@@ -946,6 +946,19 @@
       "lowStock": "Sắp hết hàng"
     }
   },
+  "productDetailInfoWidget": {
+    "title": "Tiện ích mở rộng",
+    "description": "Tiện ích cho {{title}} ({{id}}).",
+    "fallbackTitle": "sản phẩm này"
+  },
+  "providers": {
+    "tokens": {
+      "system": "Hệ thống",
+      "default": "Mặc định",
+      "manual": "Thủ công",
+      "test": "Thử nghiệm"
+    }
+  },
   "collections": {
     "domain": "Bộ sưu tập",
     "subtitle": "Sắp xếp sản phẩm vào các bộ sưu tập.",

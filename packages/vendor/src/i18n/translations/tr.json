@@ -951,6 +951,19 @@
       "success": "Ürünler başarıyla güncellendi."
     }
   },
+  "productDetailInfoWidget": {
+    "title": "Uzantı",
+    "description": "{{title}} ({{id}}) için widget.",
+    "fallbackTitle": "bu ürün"
+  },
+  "providers": {
+    "tokens": {
+      "system": "Sistem",
+      "default": "Varsayılan",
+      "manual": "Manuel",
+      "test": "Test"
+    }
+  },
   "collections": {
     "domain": "Koleksiyonlar",
     "subtitle": "Ürünleri koleksiyonlar halinde organize edin.",

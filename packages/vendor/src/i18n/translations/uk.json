@@ -946,6 +946,19 @@
       "lowStock": "Низький запас"
     }
   },
+  "productDetailInfoWidget": {
+    "title": "Розширення",
+    "description": "Віджет для {{title}} ({{id}}).",
+    "fallbackTitle": "цього товару"
+  },
+  "providers": {
+    "tokens": {
+      "system": "Система",
+      "default": "За замовчуванням",
+      "manual": "Вручну",
+      "test": "Тест"
+    }
+  },
   "collections": {
     "domain": "Колекції",
     "subtitle": "Організуйте продукти у колекції.",

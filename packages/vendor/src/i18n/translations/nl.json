@@ -946,6 +946,19 @@
       "lowStock": "Lage voorraad"
     }
   },
+  "productDetailInfoWidget": {
+    "title": "Extensie",
+    "description": "Widget voor {{title}} ({{id}}).",
+    "fallbackTitle": "dit product"
+  },
+  "providers": {
+    "tokens": {
+      "system": "Systeem",
+      "default": "Standaard",
+      "manual": "Handmatig",
+      "test": "Test"
+    }
+  },
   "collections": {
     "domain": "Collecties",
     "subtitle": "Organiseer producten in collecties.",

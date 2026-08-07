@@ -14,6 +14,7 @@ import { useTranslation } from "react-i18next"
 import { DisplayExtensionZone } from "@mercurjs/dashboard-shared"
 import { ActionMenu } from "@components/common/action-menu"
 import DisplayId from "@components/common/display-id/display-id"
+import { formatProvider } from "@lib/format-provider"
 import { getLocaleAmount, getStylizedAmount } from "@lib/money-amount-helpers"
 import { getOrderPaymentStatus } from "@lib/order-helpers"
 import { getTotalCaptured, getTotalPending } from "@lib/payment"
@@ -159,8 +160,8 @@ const PaymentRow = ({
         </div>
 
         <div className="hidden items-center justify-end sm:flex">
-          <Text size="small" leading="compact" className="capitalize">
-            {payment.provider_id}
+          <Text size="small" leading="compact">
+            {formatProvider(payment.provider_id, t)}
           </Text>
         </div>
 
