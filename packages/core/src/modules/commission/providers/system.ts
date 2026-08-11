@@ -2,7 +2,7 @@ import {
   InferEntityType,
   ModulesSdkTypes,
 } from "@medusajs/framework/types"
-import { MathBN } from "@medusajs/framework/utils"
+import { defaultCurrencies, MathBN } from "@medusajs/framework/utils"
 import {
   CommissionCalculationContext,
   CommissionCalculationItemLine,
@@ -16,6 +16,10 @@ import { CommissionRate, CommissionRule } from "../models"
 
 type CommissionRateEntity = InferEntityType<typeof CommissionRate>
 type CommissionRuleEntity = InferEntityType<typeof CommissionRule>
+
+/** Currency minor-unit precision (e.g. 2 for TRY, 0 for JPY), defaulting to 2 for unknown codes. */
+const getCurrencyDecimalDigits = (currencyCode: string): number =>
+  defaultCurrencies[currencyCode.toUpperCase()]?.decimal_digits ?? 2
 
 type InjectedDependencies = {
   commissionRateService: ModulesSdkTypes.IMedusaInternalService<CommissionRateEntity>
@@ -114,11 +118,13 @@ export class SystemCommissionProvider implements ICommissionProvider {
     baseAmount: CommissionCalculationItemLine["subtotal"],
     currencyCode: string
   ): { rate: number; amount: number } {
+    const decimalDigits = getCurrencyDecimalDigits(currencyCode)
+
     if (rate.type === CommissionRateType.PERCENTAGE) {
       const amount = MathBN.div(MathBN.mult(baseAmount, rate.value), 100)
       return {
         rate: MathBN.convert(rate.value).toNumber(),
-        amount: MathBN.convert(amount).toNumber(),
+        amount: MathBN.convert(amount).dp(decimalDigits).toNumber(),
       }
     }
 
@@ -129,7 +135,7 @@ export class SystemCommissionProvider implements ICommissionProvider {
 
     return {
       rate: MathBN.convert(fixed).toNumber(),
-      amount: MathBN.convert(fixed).toNumber(),
+      amount: MathBN.convert(fixed).dp(decimalDigits).toNumber(),
     }
   }
 
