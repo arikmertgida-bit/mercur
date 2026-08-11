@@ -1,5 +1,6 @@
 export * from "./get-commission-lines"
 export * from "./upsert-commission-lines"
+export * from "./delete-order-commission-lines"
 export * from "./create-commission-rates"
 export * from "./update-commission-rates"
 export * from "./create-commission-rules"
