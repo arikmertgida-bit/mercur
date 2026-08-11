@@ -268,10 +268,18 @@ export const listSellerShippingOptionsForCartWorkflow = createWorkflow(
 
                     const locationId =
                         shippingOption.service_zone.fulfillment_set.location.id
+                    const optionSellerId = (
+                        shippingOption as ShippingOptionDTO & { seller?: SellerDTO }
+                    ).seller?.id
 
                     const itemsAtLocationWithoutAvailableQuantity = (
                         cart.items as CartItemWithInventory[]
                     ).filter((item) => {
+                            const itemSellerId = item.variant?.product?.sellers?.[0]?.id
+                            if (itemSellerId !== optionSellerId) {
+                                return false
+                            }
+
                             const links = item.variant?.inventory_items ?? []
                             if (!links.length) {
                                 return false

@@ -6,6 +6,7 @@ import {
   ModulesSdkTypes,
 } from "@medusajs/framework/types"
 import {
+  defaultCurrencies,
   EmitEvents,
   InjectManager,
   MathBN,
@@ -34,6 +35,10 @@ import {
 
 type CommissionRateEntity = InferEntityType<typeof CommissionRate>
 type CommissionRuleEntity = InferEntityType<typeof CommissionRule>
+
+/** Currency minor-unit precision (e.g. 2 for TRY, 0 for JPY), defaulting to 2 for unknown codes. */
+const getCurrencyDecimalDigits = (currencyCode: string): number =>
+  defaultCurrencies[currencyCode.toUpperCase()]?.decimal_digits ?? 2
 
 /** Build a unique, URL-safe code from a rate name. */
 const generateCommissionCode = (name: string): string => {
@@ -142,11 +147,13 @@ class CommissionModuleService extends MedusaService({
     baseAmount: CommissionCalculationItemLine["subtotal"],
     currencyCode: string
   ): { rate: number; amount: number } {
+    const decimalDigits = getCurrencyDecimalDigits(currencyCode)
+
     if (rate.type === CommissionRateType.PERCENTAGE) {
       const amount = MathBN.div(MathBN.mult(baseAmount, rate.value), 100)
       return {
         rate: MathBN.convert(rate.value).toNumber(),
-        amount: MathBN.convert(amount).toNumber(),
+        amount: MathBN.convert(amount).dp(decimalDigits).toNumber(),
       }
     }
 
@@ -157,7 +164,7 @@ class CommissionModuleService extends MedusaService({
 
     return {
       rate: MathBN.convert(fixed).toNumber(),
-      amount: MathBN.convert(fixed).toNumber(),
+      amount: MathBN.convert(fixed).dp(decimalDigits).toNumber(),
     }
   }
 
