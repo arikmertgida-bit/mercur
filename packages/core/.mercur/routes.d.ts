@@ -585,6 +585,7 @@ export type Routes = {
                     decline: typeof import("@medusajs/medusa/api/store/orders/[id]/transfer/decline/route");
                     request: typeof import("@medusajs/medusa/api/store/orders/[id]/transfer/request/route");
                 };
+                cancel: typeof import("../src/api/store/orders/[id]/cancel/route");
             };
         };
         paymentCollections: typeof import("@medusajs/medusa/api/store/payment-collections/route") & {
