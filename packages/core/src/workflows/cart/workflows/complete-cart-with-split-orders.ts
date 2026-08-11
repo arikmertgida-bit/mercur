@@ -412,18 +412,30 @@ export const completeCartWithSplitOrdersWorkflow = createWorkflow(
             )
 
             const linksToCreate = transform(
-                { cart: cartData.data, createdOrders, createdOrderGroup, sellerOrdersMap, existingSellerCustomerLinks },
-                ({ cart, createdOrders, createdOrderGroup, sellerOrdersMap, existingSellerCustomerLinks }) => {
+                { cart: cartData.data, createdOrders, createdOrderGroup, sellerOrdersMap, existingSellerCustomerLinks, ordersToCreate },
+                ({ cart, createdOrders, createdOrderGroup, sellerOrdersMap, existingSellerCustomerLinks, ordersToCreate }) => {
                     const links: LinkDefinition[] = createdOrders.map((order) => ({
                         [Modules.ORDER]: { order_id: order.id },
                         [Modules.CART]: { cart_id: cart.id },
                     }))
 
+                    // A promotion may be seller-scoped (its code only ever
+                    // lands on that seller's own child order) or cart-wide
+                    // (target_type "order"/"shipping", no seller at all —
+                    // its code lands on every child order it discounted).
+                    // Deriving the link from each order's own promo_codes
+                    // (already computed per seller above from that seller's
+                    // item/shipping adjustments) covers both without
+                    // assuming every promotion carries a `.seller`.
                     if (cart.promotions?.length) {
-                        cart.promotions.forEach((promotion: PromotionDTO & { seller: SellerDTO }) => {
-                            links.push({
-                                [Modules.ORDER]: { order_id: sellerOrdersMap[promotion.seller.id] },
-                                [Modules.PROMOTION]: { promotion_id: promotion.id },
+                        cart.promotions.forEach((promotion: PromotionDTO) => {
+                            ordersToCreate.forEach((order) => {
+                                if (order.promo_codes?.includes(promotion.code!)) {
+                                    links.push({
+                                        [Modules.ORDER]: { order_id: order.id },
+                                        [Modules.PROMOTION]: { promotion_id: promotion.id },
+                                    })
+                                }
                             })
                         })
                     }
