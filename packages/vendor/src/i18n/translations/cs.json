@@ -1862,7 +1862,8 @@
         "title": "Filtry",
         "description": "Na export budou použity následující filtry."
       }
-    }
+    },
+    "orderCompleted": "Objednávka byla úspěšně dokončena"
   },
   "draftOrders": {
     "domain": "Koncepty objednávek",

@@ -1862,7 +1862,8 @@
         "title": "Filtrai",
         "description": "Eksportuojant bus taikomi šie filtrai."
       }
-    }
+    },
+    "orderCompleted": "Užsakymas sėkmingai užbaigtas"
   },
   "draftOrders": {
     "domain": "Užsakymų juodraščiai",

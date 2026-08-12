@@ -1862,7 +1862,8 @@
         "title": "Filter",
         "description": "Filter berikut akan diterapkan pada ekspor."
       }
-    }
+    },
+    "orderCompleted": "Pesanan berhasil diselesaikan"
   },
   "draftOrders": {
     "domain": "Draf Pesanan",

@@ -1862,7 +1862,8 @@
         "title": "Rechnungsadresse bearbeiten",
         "requestSuccess": "Rechnungsadresse der Bestellung aktualisiert."
       }
-    }
+    },
+    "orderCompleted": "Bestellung erfolgreich abgeschlossen"
   },
   "draftOrders": {
     "domain": "Befehlsentwürfe",

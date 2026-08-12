@@ -5,15 +5,15 @@
     "general": {
       "type": "object",
       "properties": {
-          "unknownError": {
-            "type": "string"
-          },
-          "notAvailable": {
-            "type": "string"
-          },
-          "drawerAccessibleDescription": {
-            "type": "string"
-          },
+        "unknownError": {
+          "type": "string"
+        },
+        "notAvailable": {
+          "type": "string"
+        },
+        "drawerAccessibleDescription": {
+          "type": "string"
+        },
         "fullList": {
           "type": "string"
         },
@@ -451,21 +451,21 @@
     "validation": {
       "type": "object",
       "properties": {
-          "requiredField": {
-            "type": "string"
-          },
-          "valueRequired": {
-            "type": "string"
-          },
-          "atLeastOnePrice": {
-            "type": "string"
-          },
-          "currencyCodeNotFound": {
-            "type": "string"
-          },
-          "shippingOptionIdMissing": {
-            "type": "string"
-          },
+        "requiredField": {
+          "type": "string"
+        },
+        "valueRequired": {
+          "type": "string"
+        },
+        "atLeastOnePrice": {
+          "type": "string"
+        },
+        "currencyCodeNotFound": {
+          "type": "string"
+        },
+        "shippingOptionIdMissing": {
+          "type": "string"
+        },
         "rules": {
           "type": "object",
           "properties": {
@@ -3961,7 +3961,11 @@
           "type": "string"
         }
       },
-      "required": ["title", "description", "fallbackTitle"],
+      "required": [
+        "title",
+        "description",
+        "fallbackTitle"
+      ],
       "additionalProperties": false
     },
     "providers": {
@@ -3983,11 +3987,18 @@
               "type": "string"
             }
           },
-          "required": ["system", "default", "manual", "test"],
+          "required": [
+            "system",
+            "default",
+            "manual",
+            "test"
+          ],
           "additionalProperties": false
         }
       },
-      "required": ["tokens"],
+      "required": [
+        "tokens"
+      ],
       "additionalProperties": false
     },
     "collections": {
@@ -8220,6 +8231,9 @@
             "returnableQuantity"
           ],
           "additionalProperties": false
+        },
+        "orderCompleted": {
+          "type": "string"
         }
       },
       "required": [
@@ -8233,6 +8247,7 @@
         "actions",
         "cancelWarning",
         "orderCanceled",
+        "orderCompleted",
         "onDateFromSalesChannel",
         "list",
         "export",
@@ -15392,17 +15407,39 @@
         "tabs": {
           "type": "object",
           "properties": {
-            "platformStatus": { "type": "string" },
-            "storeDocuments": { "type": "string" },
-            "productStandards": { "type": "string" },
-            "stockOperations": { "type": "string" },
-            "paymentSystem": { "type": "string" },
-            "returnDispute": { "type": "string" },
-            "privacyKVKK": { "type": "string" },
-            "systemSecurity": { "type": "string" },
-            "platformReputation": { "type": "string" },
-            "approvalEnactment": { "type": "string" },
-            "commissionTable": { "type": "string" }
+            "platformStatus": {
+              "type": "string"
+            },
+            "storeDocuments": {
+              "type": "string"
+            },
+            "productStandards": {
+              "type": "string"
+            },
+            "stockOperations": {
+              "type": "string"
+            },
+            "paymentSystem": {
+              "type": "string"
+            },
+            "returnDispute": {
+              "type": "string"
+            },
+            "privacyKVKK": {
+              "type": "string"
+            },
+            "systemSecurity": {
+              "type": "string"
+            },
+            "platformReputation": {
+              "type": "string"
+            },
+            "approvalEnactment": {
+              "type": "string"
+            },
+            "commissionTable": {
+              "type": "string"
+            }
           },
           "required": [
             "platformStatus",
@@ -15425,116 +15462,204 @@
             "platformStatus": {
               "type": "object",
               "properties": {
-                "content": { "type": "string" }
+                "content": {
+                  "type": "string"
+                }
               },
-              "required": ["content"],
+              "required": [
+                "content"
+              ],
               "additionalProperties": false
             },
             "storeDocuments": {
               "type": "object",
               "properties": {
-                "content": { "type": "string" }
+                "content": {
+                  "type": "string"
+                }
               },
-              "required": ["content"],
+              "required": [
+                "content"
+              ],
               "additionalProperties": false
             },
             "productStandards": {
               "type": "object",
               "properties": {
-                "content": { "type": "string" }
+                "content": {
+                  "type": "string"
+                }
               },
-              "required": ["content"],
+              "required": [
+                "content"
+              ],
               "additionalProperties": false
             },
             "stockOperations": {
               "type": "object",
               "properties": {
-                "subhead1": { "type": "string" },
-                "content1": { "type": "string" },
-                "subhead2": { "type": "string" },
-                "content2": { "type": "string" }
+                "subhead1": {
+                  "type": "string"
+                },
+                "content1": {
+                  "type": "string"
+                },
+                "subhead2": {
+                  "type": "string"
+                },
+                "content2": {
+                  "type": "string"
+                }
               },
-              "required": ["subhead1", "content1", "subhead2", "content2"],
+              "required": [
+                "subhead1",
+                "content1",
+                "subhead2",
+                "content2"
+              ],
               "additionalProperties": false
             },
             "paymentSystem": {
               "type": "object",
               "properties": {
-                "content": { "type": "string" }
+                "content": {
+                  "type": "string"
+                }
               },
-              "required": ["content"],
+              "required": [
+                "content"
+              ],
               "additionalProperties": false
             },
             "returnDispute": {
               "type": "object",
               "properties": {
-                "content": { "type": "string" }
+                "content": {
+                  "type": "string"
+                }
               },
-              "required": ["content"],
+              "required": [
+                "content"
+              ],
               "additionalProperties": false
             },
             "privacyKVKK": {
               "type": "object",
               "properties": {
-                "content": { "type": "string" }
+                "content": {
+                  "type": "string"
+                }
               },
-              "required": ["content"],
+              "required": [
+                "content"
+              ],
               "additionalProperties": false
             },
             "systemSecurity": {
               "type": "object",
               "properties": {
-                "content": { "type": "string" }
+                "content": {
+                  "type": "string"
+                }
               },
-              "required": ["content"],
+              "required": [
+                "content"
+              ],
               "additionalProperties": false
             },
             "platformReputation": {
               "type": "object",
               "properties": {
-                "content": { "type": "string" }
+                "content": {
+                  "type": "string"
+                }
               },
-              "required": ["content"],
+              "required": [
+                "content"
+              ],
               "additionalProperties": false
             },
             "approvalEnactment": {
               "type": "object",
               "properties": {
-                "content": { "type": "string" }
+                "content": {
+                  "type": "string"
+                }
               },
-              "required": ["content"],
+              "required": [
+                "content"
+              ],
               "additionalProperties": false
             },
             "commissionTable": {
               "type": "object",
               "properties": {
-                "description": { "type": "string" },
+                "description": {
+                  "type": "string"
+                },
                 "col": {
                   "type": "object",
                   "properties": {
-                    "category": { "type": "string" },
-                    "netCommission": { "type": "string" },
-                    "vat": { "type": "string" },
-                    "totalInclVat": { "type": "string" }
+                    "category": {
+                      "type": "string"
+                    },
+                    "netCommission": {
+                      "type": "string"
+                    },
+                    "vat": {
+                      "type": "string"
+                    },
+                    "totalInclVat": {
+                      "type": "string"
+                    }
                   },
-                  "required": ["category", "netCommission", "vat", "totalInclVat"],
+                  "required": [
+                    "category",
+                    "netCommission",
+                    "vat",
+                    "totalInclVat"
+                  ],
                   "additionalProperties": false
                 },
                 "categories": {
                   "type": "object",
                   "properties": {
-                    "womenFashion": { "type": "string" },
-                    "menFashion": { "type": "string" },
-                    "electronics": { "type": "string" },
-                    "motherChild": { "type": "string" },
-                    "homeLife": { "type": "string" },
-                    "supermarket": { "type": "string" },
-                    "cosmetics": { "type": "string" },
-                    "shoesBags": { "type": "string" },
-                    "sportsOutdoor": { "type": "string" },
-                    "booksHobbies": { "type": "string" },
-                    "autoMoto": { "type": "string" },
-                    "privateLife": { "type": "string" }
+                    "womenFashion": {
+                      "type": "string"
+                    },
+                    "menFashion": {
+                      "type": "string"
+                    },
+                    "electronics": {
+                      "type": "string"
+                    },
+                    "motherChild": {
+                      "type": "string"
+                    },
+                    "homeLife": {
+                      "type": "string"
+                    },
+                    "supermarket": {
+                      "type": "string"
+                    },
+                    "cosmetics": {
+                      "type": "string"
+                    },
+                    "shoesBags": {
+                      "type": "string"
+                    },
+                    "sportsOutdoor": {
+                      "type": "string"
+                    },
+                    "booksHobbies": {
+                      "type": "string"
+                    },
+                    "autoMoto": {
+                      "type": "string"
+                    },
+                    "privateLife": {
+                      "type": "string"
+                    }
                   },
                   "required": [
                     "womenFashion",
@@ -15552,9 +15677,16 @@
                   ],
                   "additionalProperties": false
                 },
-                "footnote": { "type": "string" }
+                "footnote": {
+                  "type": "string"
+                }
               },
-              "required": ["description", "col", "categories", "footnote"],
+              "required": [
+                "description",
+                "col",
+                "categories",
+                "footnote"
+              ],
               "additionalProperties": false
             }
           },
@@ -15574,7 +15706,12 @@
           "additionalProperties": false
         }
       },
-      "required": ["title", "lastUpdated", "tabs", "sections"],
+      "required": [
+        "title",
+        "lastUpdated",
+        "tabs",
+        "sections"
+      ],
       "additionalProperties": false
     },
     "onboarding": {

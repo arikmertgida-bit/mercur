@@ -1862,7 +1862,8 @@
         "title": "Filtre",
         "description": "Următoarele filtre vor fi aplicate exportului."
       }
-    }
+    },
+    "orderCompleted": "Comanda a fost finalizată cu succes"
   },
   "draftOrders": {
     "domain": "Proiecte de ordine",

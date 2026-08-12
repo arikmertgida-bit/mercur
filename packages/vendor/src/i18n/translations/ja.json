@@ -1862,7 +1862,8 @@
       "archived": "アーカイブ済み",
       "canceled": "キャンセル済み",
       "requires_action": "対応が必要"
-    }
+    },
+    "orderCompleted": "注文が正常に完了しました"
   },
   "draftOrders": {
     "domain": "下書き注文",

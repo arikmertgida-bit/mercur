@@ -1862,7 +1862,8 @@
         "title": "Szűrők",
         "description": "A következő szűrők kerülnek alkalmazásra az exportáláskor."
       }
-    }
+    },
+    "orderCompleted": "A rendelés sikeresen lezárult"
   },
   "draftOrders": {
     "domain": "Piszkozat Rendelések",

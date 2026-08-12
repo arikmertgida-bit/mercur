@@ -1862,7 +1862,8 @@
         "title": "Editar endereço de cobrança",
         "requestSuccess": "Endereço de cobrança do pedido atualizado."
       }
-    }
+    },
+    "orderCompleted": "Pedido concluído com sucesso"
   },
   "draftOrders": {
     "domain": "Pedidos em Rascunho",

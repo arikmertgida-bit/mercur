@@ -1862,7 +1862,8 @@
         "title": "筛选",
         "description": "以下筛选条件将应用于此次导出。"
       }
-    }
+    },
+    "orderCompleted": "订单已成功完成"
   },
   "draftOrders": {
     "domain": "草稿订单",

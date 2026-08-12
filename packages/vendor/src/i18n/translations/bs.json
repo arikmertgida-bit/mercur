@@ -1862,7 +1862,8 @@
         "title": "Filteri",
         "description": "Sljedeći filteri će biti primijenjeni na izvoz."
       }
-    }
+    },
+    "orderCompleted": "Narudžba je uspješno završena"
   },
   "draftOrders": {
     "domain": "Nacrt narudžbi",

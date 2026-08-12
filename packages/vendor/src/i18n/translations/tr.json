@@ -1310,6 +1310,7 @@
     "exchange": "Değişim",
     "return": "İade",
     "cancelWarning": "{{id}} numaralı siparişi iptal etmek üzeresiniz. Bu işlem geri alınamaz.",
+    "orderCompleted": "Sipariş başarıyla tamamlandı",
     "onDateFromSalesChannel": "{{date}} tarihinde {{salesChannel}} üzerinden",
     "list": {
       "noRecordsMessage": "Siparişleriniz burada görünecektir."

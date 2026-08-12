@@ -1884,7 +1884,8 @@
         "title": "Filtros",
         "description": "Se aplicarán los siguientes filtros a la exportación."
       }
-    }
+    },
+    "orderCompleted": "Pedido completado correctamente"
   },
   "draftOrders": {
     "domain": "Pedidos Borradores",

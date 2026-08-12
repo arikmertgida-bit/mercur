@@ -1862,7 +1862,8 @@
         "title": "필터",
         "description": "다음 필터가 내보내기에 적용됩니다."
       }
-    }
+    },
+    "orderCompleted": "주문이 성공적으로 완료되었습니다"
   },
   "draftOrders": {
     "domain": "주문 초안",

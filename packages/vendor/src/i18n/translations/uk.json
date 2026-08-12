@@ -1862,7 +1862,8 @@
       "archived": "Заархівовано",
       "canceled": "Скасовано",
       "requires_action": "Потрібна дія"
-    }
+    },
+    "orderCompleted": "Замовлення успішно завершено"
   },
   "draftOrders": {
     "domain": "Чернетки замовлень",

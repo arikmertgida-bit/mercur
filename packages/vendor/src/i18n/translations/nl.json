@@ -1862,7 +1862,8 @@
         "title": "Filters",
         "description": "De volgende filters worden toegepast op de export."
       }
-    }
+    },
+    "orderCompleted": "Bestelling succesvol voltooid"
   },
   "draftOrders": {
     "domain": "Conceptbestellingen",

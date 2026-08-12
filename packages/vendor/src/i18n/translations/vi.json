@@ -1862,7 +1862,8 @@
         "title": "Bộ lọc",
         "description": "Các bộ lọc sau sẽ được áp dụng cho việc xuất dữ liệu."
       }
-    }
+    },
+    "orderCompleted": "Đơn hàng đã được hoàn tất thành công"
   },
   "draftOrders": {
     "domain": "Đơn hàng nháp",
