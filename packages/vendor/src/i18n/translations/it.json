@@ -1862,7 +1862,8 @@
         "title": "Modifica indirizzo di fatturazione",
         "requestSuccess": "Indirizzo di fatturazione dell'ordine aggiornato."
       }
-    }
+    },
+    "orderCompleted": "Ordine completato con successo"
   },
   "draftOrders": {
     "domain": "Ordini Bozza",

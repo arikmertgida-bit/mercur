@@ -1862,7 +1862,8 @@
         "title": "Modifier l'adresse de facturation",
         "requestSuccess": "Adresse de facturation de la commande mise à jour."
       }
-    }
+    },
+    "orderCompleted": "Commande terminée avec succès"
   },
   "draftOrders": {
     "domain": "Commandes à rédiger",

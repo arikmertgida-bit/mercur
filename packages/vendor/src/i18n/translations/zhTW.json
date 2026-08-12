@@ -1862,7 +1862,8 @@
     },
     "actions": {
       "cancelDisabledFulfilled": "無法取消已有出貨項目的訂單。"
-    }
+    },
+    "orderCompleted": "訂單已成功完成"
   },
   "draftOrders": {
     "domain": "訂單草稿",

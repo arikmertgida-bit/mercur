@@ -2072,7 +2072,8 @@
     },
     "actions": {
       "cancelDisabledFulfilled": "Nie można anulować zamówienia, które ma zrealizowane pozycje."
-    }
+    },
+    "orderCompleted": "Zamówienie zostało pomyślnie zakończone"
   },
   "draftOrders": {
     "domain": "Wstępne zamówienia",

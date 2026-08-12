@@ -4382,6 +4382,9 @@
         "orderCanceled": {
           "type": "string"
         },
+        "orderCompleted": {
+          "type": "string"
+        },
         "onDateFromSalesChannel": {
           "type": "string"
         },

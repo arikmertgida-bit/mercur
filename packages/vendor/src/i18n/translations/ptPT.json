@@ -1862,7 +1862,8 @@
         "title": "Filtros",
         "description": "Os seguintes filtros serão aplicados à exportação."
       }
-    }
+    },
+    "orderCompleted": "Encomenda concluída com sucesso"
   },
   "draftOrders": {
     "domain": "Encomendas em Rascunho",

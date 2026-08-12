@@ -1,3 +1,7 @@
+// `orders.total`/`orders.item_total` are computed fields that only resolve
+// correctly when requested alongside their sibling summary fields —
+// `orders.original_total` included (empirically confirmed; without it the
+// totals collapse to a partial computation).
 export const storeOrderGroupFields = [
   "id",
   "display_id",
@@ -13,6 +17,7 @@ export const storeOrderGroupFields = [
   "orders.payment_status",
   "orders.currency_code",
   "orders.total",
+  "orders.original_total",
   "orders.subtotal",
   "orders.item_total",
   "orders.shipping_total",
@@ -42,7 +47,14 @@ export const storeOrderGroupFields = [
 // asked for the whole relation. `orders.seller` is deliberately absent: the
 // curated seller fields above are the public ones, and a wildcard would also
 // resolve the seller's payment and professional details.
-const storeOrderGroupExpandableRelations = ["orders", "orders.items"]
+const storeOrderGroupExpandableRelations = [
+  "orders",
+  "orders.items",
+  "orders.items.variant",
+  "orders.items.product",
+  "orders.fulfillments",
+  "orders.fulfillments.labels",
+]
 
 const storeOrderGroupAllowedFields = [
   ...storeOrderGroupFields,
