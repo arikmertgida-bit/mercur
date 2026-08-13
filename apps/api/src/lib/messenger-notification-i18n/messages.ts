@@ -64,13 +64,13 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     genericSellerName: "Seller",
     order: {
       subject: "New Order",
-      preview: "{customerName} placed a new order with you. Order No: #{displayId}",
+      preview: "{customerName} placed a new order. Order No: #{displayId}",
     },
     review: {
       newSubject: "New Review",
-      newPreview: "{customerName} left a new review on your product.",
+      newPreview: "{customerName} left a new review on the product.",
       replySubject: "Review Reply Notification",
-      replyPreview: "{sellerName} replied to your review.",
+      replyPreview: "{sellerName} replied to the review.",
       reportResolvedSubject: "Review Report Result",
       reportDeletedPreview: "The review you reported has been reviewed and removed.",
       reportRejectedPreview: "Reviewed, not removed. If you disagree, you may submit another report.",
@@ -80,7 +80,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     },
     follower: {
       subject: "New Follower",
-      preview: "{customerName} started following you.",
+      preview: "{customerName} started following the store.",
     },
     payout: {
       subject: "Payout Sent",
@@ -109,13 +109,13 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     genericSellerName: "Satıcı",
     order: {
       subject: "Yeni Sipariş",
-      preview: "{customerName} size yeni bir sipariş verdi. Sipariş No: #{displayId}",
+      preview: "{customerName} yeni bir sipariş oluşturdu. Sipariş No: #{displayId}",
     },
     review: {
       newSubject: "Yeni Değerlendirme",
-      newPreview: "{customerName} ürününüze yeni bir yorum bıraktı.",
+      newPreview: "{customerName} ürüne yeni bir yorum bıraktı.",
       replySubject: "Yorum Yanıtı Bildirimi",
-      replyPreview: "{sellerName} yorumunuza yanıt verdi.",
+      replyPreview: "{sellerName} değerlendirmeye yanıt verdi.",
       reportResolvedSubject: "Değerlendirme Talebi Sonucu",
       reportDeletedPreview: "Bildirdiğiniz değerlendirme incelendi ve kaldırıldı.",
       reportRejectedPreview: "İncelendi, Kaldırılmadı. Siz bizimle aynı düşüncede değilseniz tekrar talepte bulunabilirsiniz.",
@@ -125,7 +125,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     },
     follower: {
       subject: "Yeni Takipçi",
-      preview: "{customerName} sizi takip etmeye başladı.",
+      preview: "{customerName} mağazayı takip etmeye başladı.",
     },
     payout: {
       subject: "Ödeme Gönderildi",
@@ -154,13 +154,13 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     genericSellerName: "Verkäufer",
     order: {
       subject: "Neue Bestellung",
-      preview: "{customerName} hat eine neue Bestellung bei Ihnen aufgegeben. Bestellnr.: #{displayId}",
+      preview: "{customerName} hat eine neue Bestellung aufgegeben. Bestellnr.: #{displayId}",
     },
     review: {
       newSubject: "Neue Bewertung",
-      newPreview: "{customerName} hat eine neue Bewertung zu Ihrem Produkt hinterlassen.",
+      newPreview: "{customerName} hat eine neue Bewertung zum Produkt hinterlassen.",
       replySubject: "Antwort auf Bewertung",
-      replyPreview: "{sellerName} hat auf Ihre Bewertung geantwortet.",
+      replyPreview: "{sellerName} hat auf die Bewertung geantwortet.",
       reportResolvedSubject: "Ergebnis der Bewertungsmeldung",
       reportDeletedPreview: "Die von Ihnen gemeldete Bewertung wurde geprüft und entfernt.",
       reportRejectedPreview: "Geprüft, nicht entfernt. Wenn Sie nicht einverstanden sind, können Sie erneut eine Meldung einreichen.",
@@ -170,7 +170,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     },
     follower: {
       subject: "Neuer Follower",
-      preview: "{customerName} folgt Ihnen jetzt.",
+      preview: "{customerName} folgt jetzt dem Shop.",
     },
     payout: {
       subject: "Auszahlung gesendet",
@@ -199,13 +199,13 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     genericSellerName: "Vendeur",
     order: {
       subject: "Nouvelle commande",
-      preview: "{customerName} vous a passé une nouvelle commande. N° de commande : #{displayId}",
+      preview: "{customerName} a passé une nouvelle commande. N° de commande : #{displayId}",
     },
     review: {
       newSubject: "Nouvel avis",
-      newPreview: "{customerName} a laissé un nouvel avis sur votre produit.",
+      newPreview: "{customerName} a laissé un nouvel avis sur le produit.",
       replySubject: "Notification de réponse à l'avis",
-      replyPreview: "{sellerName} a répondu à votre avis.",
+      replyPreview: "{sellerName} a répondu à l'avis.",
       reportResolvedSubject: "Résultat du signalement d'avis",
       reportDeletedPreview: "L'avis que vous avez signalé a été examiné et supprimé.",
       reportRejectedPreview: "Examiné, non supprimé. Si vous n'êtes pas d'accord, vous pouvez soumettre un nouveau signalement.",
@@ -215,7 +215,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     },
     follower: {
       subject: "Nouvel abonné",
-      preview: "{customerName} a commencé à vous suivre.",
+      preview: "{customerName} a commencé à suivre la boutique.",
     },
     payout: {
       subject: "Versement envoyé",
@@ -244,13 +244,13 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     genericSellerName: "Vendedor",
     order: {
       subject: "Nuevo pedido",
-      preview: "{customerName} te ha hecho un nuevo pedido. N.º de pedido: #{displayId}",
+      preview: "{customerName} ha realizado un nuevo pedido. N.º de pedido: #{displayId}",
     },
     review: {
       newSubject: "Nueva reseña",
-      newPreview: "{customerName} dejó una nueva reseña en tu producto.",
+      newPreview: "{customerName} dejó una nueva reseña en el producto.",
       replySubject: "Notificación de respuesta a la reseña",
-      replyPreview: "{sellerName} respondió a tu reseña.",
+      replyPreview: "{sellerName} respondió a la reseña.",
       reportResolvedSubject: "Resultado del reporte de reseña",
       reportDeletedPreview: "La reseña que reportaste fue revisada y eliminada.",
       reportRejectedPreview: "Revisada, no eliminada. Si no estás de acuerdo, puedes enviar otro reporte.",
@@ -260,7 +260,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     },
     follower: {
       subject: "Nuevo seguidor",
-      preview: "{customerName} ha comenzado a seguirte.",
+      preview: "{customerName} ha comenzado a seguir la tienda.",
     },
     payout: {
       subject: "Pago enviado",
@@ -289,13 +289,13 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     genericSellerName: "Venditore",
     order: {
       subject: "Nuovo ordine",
-      preview: "{customerName} ti ha inviato un nuovo ordine. N. ordine: #{displayId}",
+      preview: "{customerName} ha effettuato un nuovo ordine. N. ordine: #{displayId}",
     },
     review: {
       newSubject: "Nuova recensione",
-      newPreview: "{customerName} ha lasciato una nuova recensione sul tuo prodotto.",
+      newPreview: "{customerName} ha lasciato una nuova recensione sul prodotto.",
       replySubject: "Notifica di risposta alla recensione",
-      replyPreview: "{sellerName} ha risposto alla tua recensione.",
+      replyPreview: "{sellerName} ha risposto alla recensione.",
       reportResolvedSubject: "Esito della segnalazione della recensione",
       reportDeletedPreview: "La recensione che hai segnalato è stata esaminata e rimossa.",
       reportRejectedPreview: "Esaminata, non rimossa. Se non sei d'accordo, puoi inviare una nuova segnalazione.",
@@ -305,7 +305,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     },
     follower: {
       subject: "Nuovo follower",
-      preview: "{customerName} ha iniziato a seguirti.",
+      preview: "{customerName} ha iniziato a seguire il negozio.",
     },
     payout: {
       subject: "Pagamento inviato",
@@ -334,13 +334,13 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     genericSellerName: "Vendedor",
     order: {
       subject: "Novo pedido",
-      preview: "{customerName} fez um novo pedido com você. Nº do pedido: #{displayId}",
+      preview: "{customerName} fez um novo pedido. Nº do pedido: #{displayId}",
     },
     review: {
       newSubject: "Nova avaliação",
-      newPreview: "{customerName} deixou uma nova avaliação no seu produto.",
+      newPreview: "{customerName} deixou uma nova avaliação no produto.",
       replySubject: "Notificação de resposta à avaliação",
-      replyPreview: "{sellerName} respondeu à sua avaliação.",
+      replyPreview: "{sellerName} respondeu à avaliação.",
       reportResolvedSubject: "Resultado da denúncia de avaliação",
       reportDeletedPreview: "A avaliação que você denunciou foi analisada e removida.",
       reportRejectedPreview: "Analisada, não removida. Se você discordar, pode enviar uma nova denúncia.",
@@ -350,7 +350,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     },
     follower: {
       subject: "Novo seguidor",
-      preview: "{customerName} começou a seguir você.",
+      preview: "{customerName} começou a seguir a loja.",
     },
     payout: {
       subject: "Pagamento enviado",
@@ -379,13 +379,13 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     genericSellerName: "Vendedor",
     order: {
       subject: "Nova encomenda",
-      preview: "{customerName} fez uma nova encomenda consigo. N.º de encomenda: #{displayId}",
+      preview: "{customerName} fez uma nova encomenda. N.º de encomenda: #{displayId}",
     },
     review: {
       newSubject: "Nova avaliação",
-      newPreview: "{customerName} deixou uma nova avaliação no seu produto.",
+      newPreview: "{customerName} deixou uma nova avaliação no produto.",
       replySubject: "Notificação de resposta à avaliação",
-      replyPreview: "{sellerName} respondeu à sua avaliação.",
+      replyPreview: "{sellerName} respondeu à avaliação.",
       reportResolvedSubject: "Resultado da denúncia de avaliação",
       reportDeletedPreview: "A avaliação que denunciou foi analisada e removida.",
       reportRejectedPreview: "Analisada, não removida. Se não concordar, pode submeter uma nova denúncia.",
@@ -395,7 +395,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     },
     follower: {
       subject: "Novo seguidor",
-      preview: "{customerName} começou a segui-lo.",
+      preview: "{customerName} começou a seguir a loja.",
     },
     payout: {
       subject: "Pagamento enviado",
@@ -424,13 +424,13 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     genericSellerName: "Продавец",
     order: {
       subject: "Новый заказ",
-      preview: "{customerName} оформил у вас новый заказ. Номер заказа: #{displayId}",
+      preview: "{customerName} оформил новый заказ. Номер заказа: #{displayId}",
     },
     review: {
       newSubject: "Новый отзыв",
-      newPreview: "{customerName} оставил новый отзыв о вашем товаре.",
+      newPreview: "{customerName} оставил новый отзыв о товаре.",
       replySubject: "Уведомление об ответе на отзыв",
-      replyPreview: "{sellerName} ответил на ваш отзыв.",
+      replyPreview: "{sellerName} ответил на отзыв.",
       reportResolvedSubject: "Результат рассмотрения жалобы на отзыв",
       reportDeletedPreview: "Отзыв, на который вы пожаловались, был рассмотрен и удалён.",
       reportRejectedPreview: "Рассмотрено, не удалено. Если вы не согласны, вы можете подать повторную жалобу.",
@@ -440,7 +440,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     },
     follower: {
       subject: "Новый подписчик",
-      preview: "{customerName} начал(а) подписываться на вас.",
+      preview: "{customerName} начал(а) подписываться на магазин.",
     },
     payout: {
       subject: "Выплата отправлена",
@@ -469,13 +469,13 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     genericSellerName: "Продавець",
     order: {
       subject: "Нове замовлення",
-      preview: "{customerName} оформив(-ла) у вас нове замовлення. Номер замовлення: #{displayId}",
+      preview: "{customerName} оформив(-ла) нове замовлення. Номер замовлення: #{displayId}",
     },
     review: {
       newSubject: "Новий відгук",
-      newPreview: "{customerName} залишив(-ла) новий відгук про ваш товар.",
+      newPreview: "{customerName} залишив(-ла) новий відгук про товар.",
       replySubject: "Сповіщення про відповідь на відгук",
-      replyPreview: "{sellerName} відповів(-ла) на ваш відгук.",
+      replyPreview: "{sellerName} відповів(-ла) на відгук.",
       reportResolvedSubject: "Результат розгляду скарги на відгук",
       reportDeletedPreview: "Відгук, на який ви поскаржилися, розглянуто та видалено.",
       reportRejectedPreview: "Розглянуто, не видалено. Якщо ви не згодні, можете подати повторну скаргу.",
@@ -485,7 +485,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     },
     follower: {
       subject: "Новий підписник",
-      preview: "{customerName} почав(-ла) стежити за вами.",
+      preview: "{customerName} почав(-ла) стежити за магазином.",
     },
     payout: {
       subject: "Виплату надіслано",
@@ -514,13 +514,13 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     genericSellerName: "Sprzedawca",
     order: {
       subject: "Nowe zamówienie",
-      preview: "{customerName} złożył(a) u Ciebie nowe zamówienie. Nr zamówienia: #{displayId}",
+      preview: "{customerName} złożył(a) nowe zamówienie. Nr zamówienia: #{displayId}",
     },
     review: {
       newSubject: "Nowa recenzja",
-      newPreview: "{customerName} dodał(a) nową recenzję Twojego produktu.",
+      newPreview: "{customerName} dodał(a) nową recenzję produktu.",
       replySubject: "Powiadomienie o odpowiedzi na recenzję",
-      replyPreview: "{sellerName} odpowiedział(a) na Twoją recenzję.",
+      replyPreview: "{sellerName} odpowiedział(a) na recenzję.",
       reportResolvedSubject: "Wynik zgłoszenia recenzji",
       reportDeletedPreview: "Zgłoszona przez Ciebie recenzja została sprawdzona i usunięta.",
       reportRejectedPreview: "Sprawdzono, nie usunięto. Jeśli się nie zgadzasz, możesz złożyć kolejne zgłoszenie.",
@@ -530,7 +530,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     },
     follower: {
       subject: "Nowy obserwujący",
-      preview: "{customerName} zaczął(-ęła) Cię obserwować.",
+      preview: "{customerName} zaczął(-ęła) obserwować sklep.",
     },
     payout: {
       subject: "Wypłata wysłana",
@@ -559,13 +559,13 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     genericSellerName: "Prodejce",
     order: {
       subject: "Nová objednávka",
-      preview: "{customerName} u vás vytvořil(a) novou objednávku. Číslo objednávky: #{displayId}",
+      preview: "{customerName} vytvořil(a) novou objednávku. Číslo objednávky: #{displayId}",
     },
     review: {
       newSubject: "Nová recenze",
-      newPreview: "{customerName} přidal(a) novou recenzi vašeho produktu.",
+      newPreview: "{customerName} přidal(a) novou recenzi produktu.",
       replySubject: "Oznámení o odpovědi na recenzi",
-      replyPreview: "{sellerName} odpověděl(a) na vaši recenzi.",
+      replyPreview: "{sellerName} odpověděl(a) na recenzi.",
       reportResolvedSubject: "Výsledek nahlášení recenze",
       reportDeletedPreview: "Recenze, kterou jste nahlásili, byla přezkoumána a odstraněna.",
       reportRejectedPreview: "Přezkoumáno, neodstraněno. Pokud nesouhlasíte, můžete podat další nahlášení.",
@@ -575,7 +575,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     },
     follower: {
       subject: "Nový sledující",
-      preview: "{customerName} vás začal(a) sledovat.",
+      preview: "{customerName} začal(a) sledovat obchod.",
     },
     payout: {
       subject: "Výplata odeslána",
@@ -604,13 +604,13 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     genericSellerName: "Продавач",
     order: {
       subject: "Нова поръчка",
-      preview: "{customerName} направи нова поръчка при вас. Номер на поръчка: #{displayId}",
+      preview: "{customerName} направи нова поръчка. Номер на поръчка: #{displayId}",
     },
     review: {
       newSubject: "Нова рецензия",
-      newPreview: "{customerName} остави нова рецензия за вашия продукт.",
+      newPreview: "{customerName} остави нова рецензия за продукта.",
       replySubject: "Известие за отговор на рецензия",
-      replyPreview: "{sellerName} отговори на вашата рецензия.",
+      replyPreview: "{sellerName} отговори на рецензията.",
       reportResolvedSubject: "Резултат от сигнала за рецензия",
       reportDeletedPreview: "Рецензията, за която сигнализирахте, беше прегледана и премахната.",
       reportRejectedPreview: "Прегледано, не е премахнато. Ако не сте съгласни, можете да подадете нов сигнал.",
@@ -620,7 +620,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     },
     follower: {
       subject: "Нов последовател",
-      preview: "{customerName} започна да ви следва.",
+      preview: "{customerName} започна да следва магазина.",
     },
     payout: {
       subject: "Плащането е изпратено",
@@ -649,13 +649,13 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     genericSellerName: "Prodavac",
     order: {
       subject: "Nova narudžba",
-      preview: "{customerName} vam je poslao(la) novu narudžbu. Broj narudžbe: #{displayId}",
+      preview: "{customerName} je napravio(la) novu narudžbu. Broj narudžbe: #{displayId}",
     },
     review: {
       newSubject: "Nova recenzija",
-      newPreview: "{customerName} je ostavio(la) novu recenziju vašeg proizvoda.",
+      newPreview: "{customerName} je ostavio(la) novu recenziju proizvoda.",
       replySubject: "Obavijest o odgovoru na recenziju",
-      replyPreview: "{sellerName} je odgovorio(la) na vašu recenziju.",
+      replyPreview: "{sellerName} je odgovorio(la) na recenziju.",
       reportResolvedSubject: "Rezultat prijave recenzije",
       reportDeletedPreview: "Recenzija koju ste prijavili je pregledana i uklonjena.",
       reportRejectedPreview: "Pregledano, nije uklonjeno. Ako se ne slažete, možete podnijeti novu prijavu.",
@@ -665,7 +665,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     },
     follower: {
       subject: "Novi pratilac",
-      preview: "{customerName} je počeo(la) da vas prati.",
+      preview: "{customerName} je počeo(la) da prati prodavnicu.",
     },
     payout: {
       subject: "Isplata poslana",
@@ -694,13 +694,13 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     genericSellerName: "Πωλητής",
     order: {
       subject: "Νέα παραγγελία",
-      preview: "Ο/Η {customerName} έκανε μια νέα παραγγελία σε εσάς. Αρ. παραγγελίας: #{displayId}",
+      preview: "Ο/Η {customerName} έκανε μια νέα παραγγελία. Αρ. παραγγελίας: #{displayId}",
     },
     review: {
       newSubject: "Νέα αξιολόγηση",
-      newPreview: "Ο/Η {customerName} άφησε μια νέα αξιολόγηση στο προϊόν σας.",
+      newPreview: "Ο/Η {customerName} άφησε μια νέα αξιολόγηση στο προϊόν.",
       replySubject: "Ειδοποίηση απάντησης αξιολόγησης",
-      replyPreview: "Ο/Η {sellerName} απάντησε στην αξιολόγησή σας.",
+      replyPreview: "Ο/Η {sellerName} απάντησε στην αξιολόγηση.",
       reportResolvedSubject: "Αποτέλεσμα αναφοράς αξιολόγησης",
       reportDeletedPreview: "Η αξιολόγηση που αναφέρατε ελέγχθηκε και αφαιρέθηκε.",
       reportRejectedPreview: "Ελέγχθηκε, δεν αφαιρέθηκε. Αν διαφωνείτε, μπορείτε να υποβάλετε νέα αναφορά.",
@@ -710,7 +710,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     },
     follower: {
       subject: "Νέος ακόλουθος",
-      preview: "Ο/Η {customerName} ξεκίνησε να σας ακολουθεί.",
+      preview: "Ο/Η {customerName} ξεκίνησε να ακολουθεί το κατάστημα.",
     },
     payout: {
       subject: "Η πληρωμή στάλθηκε",
@@ -739,13 +739,13 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     genericSellerName: "فروشنده",
     order: {
       subject: "سفارش جدید",
-      preview: "{customerName} یک سفارش جدید برای شما ثبت کرد. شماره سفارش: #{displayId}",
+      preview: "{customerName} یک سفارش جدید ثبت کرد. شماره سفارش: #{displayId}",
     },
     review: {
       newSubject: "نظر جدید",
-      newPreview: "{customerName} نظر جدیدی برای محصول شما ثبت کرد.",
+      newPreview: "{customerName} نظر جدیدی برای محصول ثبت کرد.",
       replySubject: "اعلان پاسخ به نظر",
-      replyPreview: "{sellerName} به نظر شما پاسخ داد.",
+      replyPreview: "{sellerName} به نظر پاسخ داد.",
       reportResolvedSubject: "نتیجه گزارش نظر",
       reportDeletedPreview: "نظری که گزارش کردید بررسی و حذف شد.",
       reportRejectedPreview: "بررسی شد، حذف نشد. اگر موافق نیستید، می‌توانید دوباره گزارش دهید.",
@@ -755,7 +755,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     },
     follower: {
       subject: "دنبال‌کننده جدید",
-      preview: "{customerName} شما را دنبال کرد.",
+      preview: "{customerName} فروشگاه را دنبال کرد.",
     },
     payout: {
       subject: "پرداخت ارسال شد",
@@ -784,13 +784,13 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     genericSellerName: "מוכר",
     order: {
       subject: "הזמנה חדשה",
-      preview: "{customerName} ביצע הזמנה חדשה אצלך. מספר הזמנה: #{displayId}",
+      preview: "{customerName} ביצע הזמנה חדשה. מספר הזמנה: #{displayId}",
     },
     review: {
       newSubject: "ביקורת חדשה",
-      newPreview: "{customerName} השאיר ביקורת חדשה על המוצר שלך.",
+      newPreview: "{customerName} השאיר ביקורת חדשה על המוצר.",
       replySubject: "התראה על תגובה לביקורת",
-      replyPreview: "{sellerName} הגיב לביקורת שלך.",
+      replyPreview: "{sellerName} הגיב לביקורת.",
       reportResolvedSubject: "תוצאת דיווח על ביקורת",
       reportDeletedPreview: "הביקורת שדיווחת עליה נבדקה והוסרה.",
       reportRejectedPreview: "נבדקה, לא הוסרה. אם אינך מסכים, תוכל להגיש דיווח נוסף.",
@@ -800,7 +800,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     },
     follower: {
       subject: "עוקב חדש",
-      preview: "{customerName} התחיל לעקוב אחריך.",
+      preview: "{customerName} התחיל לעקוב אחרי החנות.",
     },
     payout: {
       subject: "התשלום נשלח",
@@ -829,13 +829,13 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     genericSellerName: "Eladó",
     order: {
       subject: "Új rendelés",
-      preview: "{customerName} új rendelést adott le Önnél. Rendelésszám: #{displayId}",
+      preview: "{customerName} új rendelést adott le. Rendelésszám: #{displayId}",
     },
     review: {
       newSubject: "Új értékelés",
-      newPreview: "{customerName} új értékelést hagyott a termékéről.",
+      newPreview: "{customerName} új értékelést hagyott a termékről.",
       replySubject: "Értesítés az értékelésre adott válaszról",
-      replyPreview: "{sellerName} válaszolt az értékelésére.",
+      replyPreview: "{sellerName} válaszolt az értékelésre.",
       reportResolvedSubject: "Az értékelés bejelentésének eredménye",
       reportDeletedPreview: "Az Ön által bejelentett értékelést megvizsgáltuk és eltávolítottuk.",
       reportRejectedPreview: "Megvizsgálva, nem távolítottuk el. Ha nem ért egyet, újra bejelentheti.",
@@ -845,7 +845,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     },
     follower: {
       subject: "Új követő",
-      preview: "{customerName} követni kezdte Önt.",
+      preview: "{customerName} követni kezdte a boltot.",
     },
     payout: {
       subject: "Kifizetés elküldve",
@@ -874,13 +874,13 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     genericSellerName: "Penjual",
     order: {
       subject: "Pesanan Baru",
-      preview: "{customerName} membuat pesanan baru kepada Anda. No. Pesanan: #{displayId}",
+      preview: "{customerName} membuat pesanan baru. No. Pesanan: #{displayId}",
     },
     review: {
       newSubject: "Ulasan Baru",
-      newPreview: "{customerName} memberikan ulasan baru pada produk Anda.",
+      newPreview: "{customerName} memberikan ulasan baru pada produk.",
       replySubject: "Notifikasi Balasan Ulasan",
-      replyPreview: "{sellerName} membalas ulasan Anda.",
+      replyPreview: "{sellerName} membalas ulasan tersebut.",
       reportResolvedSubject: "Hasil Laporan Ulasan",
       reportDeletedPreview: "Ulasan yang Anda laporkan telah ditinjau dan dihapus.",
       reportRejectedPreview: "Ditinjau, tidak dihapus. Jika Anda tidak setuju, Anda dapat mengirim laporan lagi.",
@@ -890,7 +890,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     },
     follower: {
       subject: "Pengikut Baru",
-      preview: "{customerName} mulai mengikuti Anda.",
+      preview: "{customerName} mulai mengikuti toko.",
     },
     payout: {
       subject: "Pembayaran Terkirim",
@@ -925,7 +925,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
       newSubject: "新しいレビュー",
       newPreview: "{customerName}様が商品に新しいレビューを投稿しました。",
       replySubject: "レビュー返信通知",
-      replyPreview: "{sellerName}があなたのレビューに返信しました。",
+      replyPreview: "{sellerName}がレビューに返信しました。",
       reportResolvedSubject: "レビュー通報の結果",
       reportDeletedPreview: "通報されたレビューを確認し、削除しました。",
       reportRejectedPreview: "確認しましたが、削除しませんでした。ご納得いただけない場合は、再度通報できます。",
@@ -935,7 +935,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     },
     follower: {
       subject: "新しいフォロワー",
-      preview: "{customerName}様があなたをフォローしました。",
+      preview: "{customerName}様がフォローを開始しました。",
     },
     payout: {
       subject: "出金が送信されました",
@@ -970,7 +970,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
       newSubject: "새 리뷰",
       newPreview: "{customerName}님이 상품에 새 리뷰를 남겼습니다.",
       replySubject: "리뷰 답변 알림",
-      replyPreview: "{sellerName}님이 회원님의 리뷰에 답변했습니다.",
+      replyPreview: "{sellerName}님이 리뷰에 답변했습니다.",
       reportResolvedSubject: "리뷰 신고 처리 결과",
       reportDeletedPreview: "신고하신 리뷰가 검토되어 삭제되었습니다.",
       reportRejectedPreview: "검토했으나 삭제되지 않았습니다. 동의하지 않으시면 다시 신고하실 수 있습니다.",
@@ -980,7 +980,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     },
     follower: {
       subject: "새 팔로워",
-      preview: "{customerName}님이 회원님을 팔로우하기 시작했습니다.",
+      preview: "{customerName}님이 팔로우를 시작했습니다.",
     },
     payout: {
       subject: "정산금 발송됨",
@@ -1009,13 +1009,13 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     genericSellerName: "Pardavėjas",
     order: {
       subject: "Naujas užsakymas",
-      preview: "{customerName} pateikė jums naują užsakymą. Užsakymo Nr.: #{displayId}",
+      preview: "{customerName} pateikė naują užsakymą. Užsakymo Nr.: #{displayId}",
     },
     review: {
       newSubject: "Naujas atsiliepimas",
-      newPreview: "{customerName} paliko naują atsiliepimą apie jūsų produktą.",
+      newPreview: "{customerName} paliko naują atsiliepimą apie produktą.",
       replySubject: "Pranešimas apie atsakymą į atsiliepimą",
-      replyPreview: "{sellerName} atsakė į jūsų atsiliepimą.",
+      replyPreview: "{sellerName} atsakė į atsiliepimą.",
       reportResolvedSubject: "Atsiliepimo skundo rezultatas",
       reportDeletedPreview: "Jūsų apskųstas atsiliepimas buvo peržiūrėtas ir pašalintas.",
       reportRejectedPreview: "Peržiūrėta, nepašalinta. Jei nesutinkate, galite pateikti naują skundą.",
@@ -1025,7 +1025,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     },
     follower: {
       subject: "Naujas sekėjas",
-      preview: "{customerName} pradėjo jus sekti.",
+      preview: "{customerName} pradėjo sekti parduotuvę.",
     },
     payout: {
       subject: "Išmoka išsiųsta",
@@ -1054,13 +1054,13 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     genericSellerName: "Продавач",
     order: {
       subject: "Нова нарачка",
-      preview: "{customerName} направи нова нарачка кај вас. Бр. на нарачка: #{displayId}",
+      preview: "{customerName} направи нова нарачка. Бр. на нарачка: #{displayId}",
     },
     review: {
       newSubject: "Нова рецензија",
-      newPreview: "{customerName} остави нова рецензија за вашиот производ.",
+      newPreview: "{customerName} остави нова рецензија за производот.",
       replySubject: "Известување за одговор на рецензија",
-      replyPreview: "{sellerName} одговори на вашата рецензија.",
+      replyPreview: "{sellerName} одговори на рецензијата.",
       reportResolvedSubject: "Резултат од пријавата за рецензија",
       reportDeletedPreview: "Рецензијата што ја пријавивте беше прегледана и отстранета.",
       reportRejectedPreview: "Прегледано, не е отстрането. Ако не се согласувате, можете повторно да пријавите.",
@@ -1070,7 +1070,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     },
     follower: {
       subject: "Нов следач",
-      preview: "{customerName} почна да ве следи.",
+      preview: "{customerName} почна да ја следи продавницата.",
     },
     payout: {
       subject: "Исплатата е испратена",
@@ -1099,13 +1099,13 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     genericSellerName: "Худалдагч",
     order: {
       subject: "Шинэ захиалга",
-      preview: "{customerName} танд шинэ захиалга өглөө. Захиалгын дугаар: #{displayId}",
+      preview: "{customerName} шинэ захиалга өглөө. Захиалгын дугаар: #{displayId}",
     },
     review: {
       newSubject: "Шинэ сэтгэгдэл",
-      newPreview: "{customerName} таны бүтээгдэхүүнд шинэ сэтгэгдэл үлдээлээ.",
+      newPreview: "{customerName} бүтээгдэхүүнд шинэ сэтгэгдэл үлдээлээ.",
       replySubject: "Сэтгэгдэлд хариулсан тухай мэдэгдэл",
-      replyPreview: "{sellerName} таны сэтгэгдэлд хариулсан байна.",
+      replyPreview: "{sellerName} сэтгэгдэлд хариулсан байна.",
       reportResolvedSubject: "Сэтгэгдлийн мэдээллийн үр дүн",
       reportDeletedPreview: "Таны мэдээлсэн сэтгэгдлийг шалгаж, устгалаа.",
       reportRejectedPreview: "Шалгасан ч устгаагүй. Хэрэв санал нийлэхгүй байвал дахин мэдээлж болно.",
@@ -1115,7 +1115,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     },
     follower: {
       subject: "Шинэ дагагч",
-      preview: "{customerName} таныг дагаж эхэллээ.",
+      preview: "{customerName} дэлгүүрийг дагаж эхэллээ.",
     },
     payout: {
       subject: "Төлбөр илгээгдлээ",
@@ -1144,13 +1144,13 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     genericSellerName: "Verkoper",
     order: {
       subject: "Nieuwe bestelling",
-      preview: "{customerName} heeft een nieuwe bestelling bij u geplaatst. Bestelnr.: #{displayId}",
+      preview: "{customerName} heeft een nieuwe bestelling geplaatst. Bestelnr.: #{displayId}",
     },
     review: {
       newSubject: "Nieuwe review",
-      newPreview: "{customerName} heeft een nieuwe review op uw product achtergelaten.",
+      newPreview: "{customerName} heeft een nieuwe review op het product achtergelaten.",
       replySubject: "Melding van reactie op review",
-      replyPreview: "{sellerName} heeft gereageerd op uw review.",
+      replyPreview: "{sellerName} heeft gereageerd op de review.",
       reportResolvedSubject: "Resultaat van reviewmelding",
       reportDeletedPreview: "De review die u heeft gemeld, is beoordeeld en verwijderd.",
       reportRejectedPreview: "Beoordeeld, niet verwijderd. Als u het er niet mee eens bent, kunt u opnieuw een melding indienen.",
@@ -1160,7 +1160,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     },
     follower: {
       subject: "Nieuwe volger",
-      preview: "{customerName} is u gaan volgen.",
+      preview: "{customerName} is de winkel gaan volgen.",
     },
     payout: {
       subject: "Uitbetaling verzonden",
@@ -1189,13 +1189,13 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     genericSellerName: "Vânzător",
     order: {
       subject: "Comandă nouă",
-      preview: "{customerName} a plasat o comandă nouă la dvs. Nr. comandă: #{displayId}",
+      preview: "{customerName} a plasat o comandă nouă. Nr. comandă: #{displayId}",
     },
     review: {
       newSubject: "Recenzie nouă",
-      newPreview: "{customerName} a lăsat o recenzie nouă la produsul dvs.",
+      newPreview: "{customerName} a lăsat o recenzie nouă la produs.",
       replySubject: "Notificare răspuns la recenzie",
-      replyPreview: "{sellerName} a răspuns la recenzia dvs.",
+      replyPreview: "{sellerName} a răspuns la recenzie.",
       reportResolvedSubject: "Rezultatul raportării recenziei",
       reportDeletedPreview: "Recenzia pe care ați raportat-o a fost examinată și eliminată.",
       reportRejectedPreview: "Examinată, neeliminată. Dacă nu sunteți de acord, puteți trimite un nou raport.",
@@ -1205,7 +1205,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     },
     follower: {
       subject: "Urmăritor nou",
-      preview: "{customerName} a început să vă urmărească.",
+      preview: "{customerName} a început să urmărească magazinul.",
     },
     payout: {
       subject: "Plată trimisă",
@@ -1234,13 +1234,13 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     genericSellerName: "ผู้ขาย",
     order: {
       subject: "คำสั่งซื้อใหม่",
-      preview: "{customerName} สั่งซื้อสินค้าใหม่กับคุณ หมายเลขคำสั่งซื้อ: #{displayId}",
+      preview: "{customerName} สั่งซื้อสินค้าใหม่ หมายเลขคำสั่งซื้อ: #{displayId}",
     },
     review: {
       newSubject: "รีวิวใหม่",
-      newPreview: "{customerName} แสดงความคิดเห็นใหม่เกี่ยวกับสินค้าของคุณ",
+      newPreview: "{customerName} แสดงความคิดเห็นใหม่เกี่ยวกับสินค้า",
       replySubject: "การแจ้งเตือนการตอบกลับรีวิว",
-      replyPreview: "{sellerName} ได้ตอบกลับรีวิวของคุณ",
+      replyPreview: "{sellerName} ได้ตอบกลับรีวิว",
       reportResolvedSubject: "ผลการรายงานรีวิว",
       reportDeletedPreview: "รีวิวที่คุณรายงานได้รับการตรวจสอบและลบออกแล้ว",
       reportRejectedPreview: "ตรวจสอบแล้ว ไม่ได้ลบออก หากคุณไม่เห็นด้วย คุณสามารถส่งรายงานใหม่ได้",
@@ -1250,7 +1250,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     },
     follower: {
       subject: "ผู้ติดตามใหม่",
-      preview: "{customerName} เริ่มติดตามคุณแล้ว",
+      preview: "{customerName} เริ่มติดตามร้านค้าแล้ว",
     },
     payout: {
       subject: "ส่งการจ่ายเงินแล้ว",
@@ -1279,13 +1279,13 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     genericSellerName: "Người bán",
     order: {
       subject: "Đơn hàng mới",
-      preview: "{customerName} đã đặt một đơn hàng mới với bạn. Mã đơn hàng: #{displayId}",
+      preview: "{customerName} đã đặt một đơn hàng mới. Mã đơn hàng: #{displayId}",
     },
     review: {
       newSubject: "Đánh giá mới",
-      newPreview: "{customerName} đã để lại đánh giá mới cho sản phẩm của bạn.",
+      newPreview: "{customerName} đã để lại đánh giá mới cho sản phẩm.",
       replySubject: "Thông báo phản hồi đánh giá",
-      replyPreview: "{sellerName} đã phản hồi đánh giá của bạn.",
+      replyPreview: "{sellerName} đã phản hồi đánh giá.",
       reportResolvedSubject: "Kết quả báo cáo đánh giá",
       reportDeletedPreview: "Đánh giá bạn đã báo cáo đã được xem xét và gỡ bỏ.",
       reportRejectedPreview: "Đã xem xét, không gỡ bỏ. Nếu bạn không đồng ý, bạn có thể gửi báo cáo khác.",
@@ -1295,7 +1295,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     },
     follower: {
       subject: "Người theo dõi mới",
-      preview: "{customerName} đã bắt đầu theo dõi bạn.",
+      preview: "{customerName} đã bắt đầu theo dõi cửa hàng.",
     },
     payout: {
       subject: "Đã gửi khoản thanh toán",
@@ -1324,13 +1324,13 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     genericSellerName: "卖家",
     order: {
       subject: "新订单",
-      preview: "{customerName} 向您下了一个新订单。订单号:#{displayId}",
+      preview: "{customerName} 提交了一个新订单。订单号:#{displayId}",
     },
     review: {
       newSubject: "新评价",
-      newPreview: "{customerName} 对您的商品发表了新评价。",
+      newPreview: "{customerName} 对该商品发表了新评价。",
       replySubject: "评价回复通知",
-      replyPreview: "{sellerName} 回复了您的评价。",
+      replyPreview: "{sellerName} 回复了该评价。",
       reportResolvedSubject: "评价举报结果",
       reportDeletedPreview: "您举报的评价已审核并已删除。",
       reportRejectedPreview: "已审核,未删除。如果您不同意,可以再次举报。",
@@ -1340,7 +1340,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     },
     follower: {
       subject: "新关注者",
-      preview: "{customerName} 开始关注您了。",
+      preview: "{customerName} 开始关注该店铺了。",
     },
     payout: {
       subject: "打款已发送",
@@ -1369,13 +1369,13 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     genericSellerName: "賣家",
     order: {
       subject: "新訂單",
-      preview: "{customerName} 向您下了一筆新訂單。訂單編號:#{displayId}",
+      preview: "{customerName} 送出了一筆新訂單。訂單編號:#{displayId}",
     },
     review: {
       newSubject: "新評價",
-      newPreview: "{customerName} 對您的商品發表了新評價。",
+      newPreview: "{customerName} 對該商品發表了新評價。",
       replySubject: "評價回覆通知",
-      replyPreview: "{sellerName} 回覆了您的評價。",
+      replyPreview: "{sellerName} 回覆了該評價。",
       reportResolvedSubject: "評價檢舉結果",
       reportDeletedPreview: "您檢舉的評價已審核並移除。",
       reportRejectedPreview: "已審核,未移除。若您不同意,可再次檢舉。",
@@ -1385,7 +1385,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     },
     follower: {
       subject: "新追蹤者",
-      preview: "{customerName} 開始追蹤您了。",
+      preview: "{customerName} 開始關注該店鋪了。",
     },
     payout: {
       subject: "款項已發送",
@@ -1414,13 +1414,13 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     genericSellerName: "البائع",
     order: {
       subject: "طلب جديد",
-      preview: "قام {customerName} بتقديم طلب جديد لديك. رقم الطلب: #{displayId}",
+      preview: "قام {customerName} بتقديم طلب جديد. رقم الطلب: #{displayId}",
     },
     review: {
       newSubject: "تقييم جديد",
-      newPreview: "ترك {customerName} تقييمًا جديدًا على منتجك.",
+      newPreview: "ترك {customerName} تقييمًا جديدًا على المنتج.",
       replySubject: "إشعار الرد على التقييم",
-      replyPreview: "رد {sellerName} على تقييمك.",
+      replyPreview: "رد {sellerName} على التقييم.",
       reportResolvedSubject: "نتيجة الإبلاغ عن التقييم",
       reportDeletedPreview: "تمت مراجعة التقييم الذي أبلغت عنه وإزالته.",
       reportRejectedPreview: "تمت المراجعة، ولم تتم الإزالة. إذا كنت لا توافق، يمكنك تقديم بلاغ آخر.",
@@ -1430,7 +1430,7 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     },
     follower: {
       subject: "متابع جديد",
-      preview: "بدأ {customerName} بمتابعتك.",
+      preview: "بدأ {customerName} بمتابعة المتجر.",
     },
     payout: {
       subject: "تم إرسال الدفعة",
