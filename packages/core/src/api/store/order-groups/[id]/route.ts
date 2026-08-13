@@ -7,6 +7,7 @@ import {
   MedusaError,
 } from "@medusajs/framework/utils"
 import { HttpTypes } from "@mercurjs/types"
+import { hydrateComputedOrderFields } from "../hydrate-computed-order-fields"
 
 export const GET = async (
   req: AuthenticatedMedusaRequest,
@@ -33,6 +34,10 @@ export const GET = async (
       `Order group with id ${req.params.id} was not found`
     )
   }
+
+  await hydrateComputedOrderFields(req.scope, req.queryConfig.fields, [
+    order_group,
+  ])
 
   res.json({ order_group })
 }
