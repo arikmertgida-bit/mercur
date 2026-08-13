@@ -4,6 +4,7 @@ import {
 } from "@medusajs/framework/http"
 import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
 import { HttpTypes } from "@mercurjs/types"
+import { hydrateComputedOrderFields } from "./hydrate-computed-order-fields"
 
 export const GET = async (
   req: AuthenticatedMedusaRequest,
@@ -22,6 +23,8 @@ export const GET = async (
     fields: req.queryConfig.fields,
     pagination: req.queryConfig.pagination,
   })
+
+  await hydrateComputedOrderFields(req.scope, req.queryConfig.fields, order_groups)
 
   res.json({
     order_groups,

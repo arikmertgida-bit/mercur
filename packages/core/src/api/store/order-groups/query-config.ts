@@ -37,6 +37,21 @@ export const storeOrderGroupFields = [
   "orders.items.variant.product.seller",
   "orders.items.variant.product.seller.id",
   "orders.items.variant.product.seller.name",
+  // `status` is a raw column but `fulfillment_status`/`payment_status` are
+  // computed properties — both must be explicitly allow-listed or Medusa's
+  // remote-query silently drops them even when a caller names them by hand.
+  "orders.status",
+  "orders.fulfillment_status",
+  "orders.payment_status",
+  "orders.seller.logo",
+  "orders.seller.handle",
+  "orders.fulfillments",
+  "orders.fulfillments.shipped_at",
+  "orders.fulfillments.delivered_at",
+  "orders.fulfillments.canceled_at",
+  "orders.fulfillments.labels",
+  "orders.fulfillments.labels.tracking_number",
+  "orders.fulfillments.labels.tracking_url",
 ]
 
 export const storeOrderGroupQueryConfig = {
