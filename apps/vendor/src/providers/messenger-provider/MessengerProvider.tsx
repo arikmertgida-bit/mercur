@@ -142,9 +142,16 @@ function decodeJwtPayload(
 }
 
 /**
- * Checks whether the current localStorage token is still reusable.
+ * Checks whether the current localStorage token is still reusable for the
+ * given seller. `kayi_messenger_auth_token` is a single global localStorage
+ * key, not scoped per seller — without the `activeSellerId` comparison, a
+ * token cached while a *different* seller was logged in (previous session
+ * on the same browser, or a store-switch via `/vendor/sellers/select`)
+ * would pass every check here (unexpired, `sel_`-prefixed) and get reused,
+ * silently pointing the socket + every messenger REST call at the wrong
+ * seller's inbox while the rest of the vendor UI correctly shows the new one.
  */
-function isStoredTokenValid(): boolean {
+function isStoredTokenValid(activeSellerId: string): boolean {
   const token = getMessengerAuthToken()
   if (!token) return false
   const payload = decodeJwtPayload(token)
@@ -153,7 +160,7 @@ function isStoredTokenValid(): boolean {
   if (payload.exp !== undefined && payload.exp - nowSeconds < 300) return false
   const actorId = payload.actor_id ?? payload.sub
   if (!actorId || !actorId.startsWith("sel_")) return false
-  return true
+  return actorId === activeSellerId
 }
 
 /**
@@ -369,7 +376,7 @@ export function MessengerProvider({
     }
 
     const init = async () => {
-      if (!isStoredTokenValid()) {
+      if (!isStoredTokenValid(sellerId)) {
         const token = await fetchMessengerToken()
         if (cancelled) return
         if (token) {
