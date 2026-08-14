@@ -3,7 +3,7 @@ import type { Query } from '@medusajs/framework'
 import { ContainerRegistrationKeys } from '@medusajs/framework/utils'
 
 import { hydrateOrderedProducts } from '../../../../lib/catalog-hydration'
-import { getPopularCategoryNames } from '../../../../lib/popular-categories'
+import { getPopularCategories } from '../../../../lib/popular-categories'
 import { searchProducts } from '../../../../lib/search/meilisearch-client'
 import { StoreGetSearchSuggestParamsType } from './validators'
 
@@ -17,7 +17,7 @@ export const GET = async (
   const trimmedQuery = q?.trim() ?? ''
 
   if (trimmedQuery.length < 3) {
-    const popularCategories = await getPopularCategoryNames(query, limit)
+    const popularCategories = await getPopularCategories(query, limit)
     return res.json({ products: [], popular_categories: popularCategories })
   }
 

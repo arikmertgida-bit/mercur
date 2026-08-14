@@ -1,4 +1,8 @@
-import type { Meilisearch as MeilisearchClient } from 'meilisearch' with { 'resolution-mode': 'import' }
+import type {
+  FacetHit,
+  Meilisearch as MeilisearchClient,
+  SearchForFacetValuesResponse,
+} from 'meilisearch' with { 'resolution-mode': 'import' }
 
 import {
   COLOR_ATTRIBUTE_HANDLES,
@@ -47,6 +51,19 @@ const FILTERABLE_ATTRIBUTES = [
 ]
 
 const SORTABLE_ATTRIBUTES = ['default_price_amount', 'created_at']
+
+// The four sidebar facet groups that support independent multi-select
+// toggling. Each one is computed disjunctively (see `buildFilterParts`
+// below) so selecting a value in one group never removes options from
+// another group's list — only their live counts change.
+const DISJUNCTIVE_FACET_KEYS = [
+  'size_values',
+  'color_values',
+  'condition_values',
+  'promotion_types',
+] as const
+
+type DisjunctiveFacetKey = (typeof DISJUNCTIVE_FACET_KEYS)[number]
 
 // Meilisearch's own default ranking rules, with one custom rule spliced in:
 // operator-flagged "featured stores" (`seller_is_premium`, admin: Featured
@@ -183,21 +200,25 @@ class MeilisearchProductIndex {
     await this.productIndex_.deleteDocuments(ids)
   }
 
-  async search(query: SearchQueryBase): Promise<SearchResults> {
-    await this.ensureSettings()
-
-    const filters = (query.filters ?? {}) as MeilisearchProviderFilters
-    const context = (query.context ?? {}) as { region_id?: string }
-
-    // seller_status is always constrained to "open" and in_stock to "true"
-    // server-side — suspended sellers' products and out-of-stock products
-    // must never be discoverable, regardless of what filters the caller
-    // sends. The closure-window clause re-derives "now" on every request (see
-    // `NEVER_CLOSED_TS` in build-docs.ts) so a seller's scheduled izin
-    // starting or ending takes effect immediately, with no reindex — a
-    // product stays hidden only while `seller_closed_from_ts` has already
-    // passed and `seller_closed_to_ts` hasn't (or never will, for an
-    // open-ended closure).
+  // seller_status is always constrained to "open" and in_stock to "true"
+  // server-side — suspended sellers' products and out-of-stock products
+  // must never be discoverable, regardless of what filters the caller
+  // sends. The closure-window clause re-derives "now" on every request (see
+  // `NEVER_CLOSED_TS` in build-docs.ts) so a seller's scheduled izin
+  // starting or ending takes effect immediately, with no reindex — a
+  // product stays hidden only while `seller_closed_from_ts` has already
+  // passed and `seller_closed_to_ts` hasn't (or never will, for an
+  // open-ended closure).
+  //
+  // `exclude`, when set, omits that one disjunctive facet's own filter
+  // clause — this is what makes faceting disjunctive: a facet-value query
+  // for "color" is scored against every active filter (size, price,
+  // category, ...) EXCEPT its own color selection, so picking "Red" never
+  // makes "Blue" disappear from the list, it only updates its live count.
+  private buildFilterParts(
+    filters: MeilisearchProviderFilters,
+    exclude?: DisjunctiveFacetKey
+  ): string[] {
     const now = Date.now()
     const filterParts: string[] = [
       'seller_status = "open"',
@@ -231,37 +252,56 @@ class MeilisearchProductIndex {
     if (filters.price_max !== undefined) {
       filterParts.push(`default_price_amount <= ${filters.price_max}`)
     }
-    if (filters.size_values?.length) {
+    if (exclude !== 'size_values' && filters.size_values?.length) {
       filterParts.push(`size_values IN [${meiliValueList(filters.size_values)}]`)
     }
-    if (filters.color_values?.length) {
+    if (exclude !== 'color_values' && filters.color_values?.length) {
       filterParts.push(`color_values IN [${meiliValueList(filters.color_values)}]`)
     }
-    if (filters.condition_values?.length) {
+    if (exclude !== 'condition_values' && filters.condition_values?.length) {
       filterParts.push(`condition_values IN [${meiliValueList(filters.condition_values)}]`)
     }
-    if (filters.promotion_types?.length) {
+    if (exclude !== 'promotion_types' && filters.promotion_types?.length) {
       filterParts.push(`promotion_types IN [${meiliValueList(filters.promotion_types)}]`)
     }
     if (filters.campaign_id) {
       filterParts.push(`campaign_ids IN [${meiliValueList([filters.campaign_id])}]`)
     }
 
-    const result = await this.productIndex_.search(query.q ?? '', {
-      filter: filterParts.join(' AND '),
-      limit: query.limit ?? 12,
-      offset: query.offset ?? 0,
-      sort: mapSort(filters.sort),
-      facets: [
-        'collection_facet',
-        'category_facets',
-        'attribute_facets',
-        'size_values',
-        'color_values',
-        'condition_values',
-        'promotion_types',
-      ],
-    })
+    return filterParts
+  }
+
+  async search(query: SearchQueryBase): Promise<SearchResults> {
+    await this.ensureSettings()
+
+    const filters = (query.filters ?? {}) as MeilisearchProviderFilters
+    const context = (query.context ?? {}) as { region_id?: string }
+    const q = query.q ?? ''
+
+    const [result, ...disjunctiveFacetResults] = await Promise.all([
+      this.productIndex_.search(q, {
+        filter: this.buildFilterParts(filters).join(' AND '),
+        limit: query.limit ?? 12,
+        offset: query.offset ?? 0,
+        sort: mapSort(filters.sort),
+        facets: ['collection_facet', 'category_facets', 'attribute_facets'],
+      }),
+      ...DISJUNCTIVE_FACET_KEYS.map((facetName) =>
+        this.productIndex_.searchForFacetValues({
+          facetName,
+          q,
+          filter: this.buildFilterParts(filters, facetName).join(' AND '),
+        })
+      ),
+    ])
+
+    const [sizeFacet, colorFacet, conditionFacet, promotionFacet] =
+      disjunctiveFacetResults as [
+        SearchForFacetValuesResponse,
+        SearchForFacetValuesResponse,
+        SearchForFacetValuesResponse,
+        SearchForFacetValuesResponse,
+      ]
 
     const regionId = context.region_id
     const hits: SearchDoc[] = (result.hits as MeilisearchIndexedDoc[]).map((doc) => {
@@ -284,30 +324,37 @@ class MeilisearchProductIndex {
     return {
       hits,
       count: resultWithEstimate.estimatedTotalHits ?? hits.length,
-      facets: this.buildFacets(result.facetDistribution),
+      facets: this.buildFacets(result.facetDistribution, {
+        sizes: sizeFacet.facetHits,
+        colors: colorFacet.facetHits,
+        conditions: conditionFacet.facetHits,
+        promotions: promotionFacet.facetHits,
+      }),
     }
   }
 
   private buildFacets(
-    facetDistribution: Record<string, Record<string, number>> | undefined
+    facetDistribution: Record<string, Record<string, number>> | undefined,
+    disjunctiveFacets: {
+      sizes: FacetHit[]
+      colors: FacetHit[]
+      conditions: FacetHit[]
+      promotions: FacetHit[]
+    }
   ): SearchFacets {
     const collectionDist = facetDistribution?.collection_facet ?? {}
     const categoryDist = facetDistribution?.category_facets ?? {}
     const attributeDist = facetDistribution?.attribute_facets ?? {}
-    const sizeDist = facetDistribution?.size_values ?? {}
-    const colorDist = facetDistribution?.color_values ?? {}
-    const conditionDist = facetDistribution?.condition_values ?? {}
-    const promotionDist = facetDistribution?.promotion_types ?? {}
 
     const toFacetValue = (token: string, count: number): SearchFacetValue => {
       const [id, label] = decodeFacetToken(token)
       return { id: id ?? token, label: label ?? id ?? token, count }
     }
 
-    const toPlainFacetValue = (label: string, count: number): SearchFacetValue => ({
-      id: label,
-      label,
-      count,
+    const toPlainFacetValue = (hit: FacetHit): SearchFacetValue => ({
+      id: hit.value,
+      label: hit.value,
+      count: hit.count,
     })
 
     const collections = Object.entries(collectionDist).map(([token, count]) =>
@@ -316,18 +363,10 @@ class MeilisearchProductIndex {
     const categories = Object.entries(categoryDist).map(([token, count]) =>
       toFacetValue(token, count)
     )
-    const sizes = Object.entries(sizeDist).map(([label, count]) =>
-      toPlainFacetValue(label, count)
-    )
-    const colors = Object.entries(colorDist).map(([label, count]) =>
-      toPlainFacetValue(label, count)
-    )
-    const conditions = Object.entries(conditionDist).map(([label, count]) =>
-      toPlainFacetValue(label, count)
-    )
-    const promotions = Object.entries(promotionDist).map(([label, count]) =>
-      toPlainFacetValue(label, count)
-    )
+    const sizes = disjunctiveFacets.sizes.map(toPlainFacetValue)
+    const colors = disjunctiveFacets.colors.map(toPlainFacetValue)
+    const conditions = disjunctiveFacets.conditions.map(toPlainFacetValue)
+    const promotions = disjunctiveFacets.promotions.map(toPlainFacetValue)
 
     const byHandle = new Map<string, { label: string; values: SearchFacetValue[] }>()
     for (const [token, count] of Object.entries(attributeDist)) {
@@ -344,6 +383,15 @@ class MeilisearchProductIndex {
     )
 
     return { collections, categories, attributes, sizes, colors, conditions, promotions }
+  }
+
+  async campaignIdsForCategory(categoryId: string): Promise<string[]> {
+    await this.ensureSettings()
+    const result = await this.productIndex_.searchForFacetValues({
+      facetName: 'campaign_ids',
+      filter: `seller_status = "open" AND in_stock = true AND category_ids IN [${meiliValueList([categoryId])}]`,
+    })
+    return result.facetHits.map((hit) => hit.value)
   }
 }
 
@@ -374,4 +422,14 @@ export async function removeDocs(ids: string[]): Promise<void> {
 
 export async function searchProducts(query: SearchQueryBase): Promise<SearchResults> {
   return (await getProductIndex()).search(query)
+}
+
+// Distinct campaign IDs among currently discoverable (in_stock, open-seller)
+// products in the given category. Used to filter the active-campaigns list
+// by category without duplicating category/campaign resolution logic —
+// campaign coverage is already fully resolved at product-index time (see
+// promotion-index.ts), regardless of which of Medusa's promotion rule types
+// (product/category/collection/type/tag) produced it.
+export async function getCampaignIdsForCategory(categoryId: string): Promise<string[]> {
+  return (await getProductIndex()).campaignIdsForCategory(categoryId)
 }
