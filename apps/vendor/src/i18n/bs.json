@@ -196,7 +196,8 @@
       "placeholder": "Napišite odgovor na recenziju kupca...",
       "submit": "Pošalji odgovor",
       "successToast": "Odgovor uspješno poslan.",
-      "errorToast": "Odgovor nije mogao biti poslan."
+      "errorToast": "Odgovor nije mogao biti poslan.",
+      "attachImage": "Priloži sliku"
     },
     "report": {
       "title": "Prijavi administratoru",

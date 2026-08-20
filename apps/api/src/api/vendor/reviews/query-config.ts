@@ -10,6 +10,9 @@ export const vendorReviewFields = [
   "product.id",
   "product.title",
   "product.thumbnail",
+  "customer.id",
+  "customer.first_name",
+  "customer.last_name",
 ];
 
 export const vendorReviewQueryConfig = {

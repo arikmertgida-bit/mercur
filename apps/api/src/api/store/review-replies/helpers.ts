@@ -1,42 +1,9 @@
 import { MedusaContainer } from "@medusajs/framework"
 import { ContainerRegistrationKeys, MedusaError } from "@medusajs/framework/utils"
 import type { Query } from "@medusajs/framework"
-import { z } from "zod"
 
-import { REVIEW_SOCIAL_MODULE } from "../../../modules/review-social"
-import ReviewSocialModuleService from "../../../modules/review-social/service"
-import { extractAvatarUrl, JsonRecordSchema, parseRows } from "../../../lib/graph-schemas"
-
-const ReplyCustomerRowSchema = z.object({
-  id: z.string(),
-  first_name: z.string().nullable().optional(),
-  last_name: z.string().nullable().optional(),
-  metadata: JsonRecordSchema.nullable().optional(),
-})
-
-export type ReviewReplyRow = {
-  id: string
-  review_id: string
-  content: string
-  is_seller_reply: boolean
-  customer_id: string | null
-  seller_id: string | null
-  created_at: string | Date
-}
-
-export type ReviewReplyDTO = {
-  id: string
-  review_id: string
-  customer_id: string | null
-  customer: { first_name: string; last_name: string; avatar_url?: string } | null
-  is_seller_reply: boolean
-  seller_id: string | null
-  seller_name: string | null
-  content: string
-  created_at: string | Date
-  likes_count: number
-  is_liked_by_me: boolean
-}
+export { enrichReplies } from "../../../lib/review-reply-helpers"
+export type { ReviewReplyDTO, ReviewReplyRow } from "../../../lib/review-reply-helpers"
 
 export const validateOwnCustomerReply = async (
   scope: MedusaContainer,
@@ -59,72 +26,4 @@ export const validateOwnCustomerReply = async (
       `Review reply with id: ${replyId} was not found`
     )
   }
-}
-
-export const enrichReplies = async (
-  scope: MedusaContainer,
-  replies: ReviewReplyRow[],
-  currentCustomerId?: string
-): Promise<ReviewReplyDTO[]> => {
-  const query = scope.resolve<Query>(ContainerRegistrationKeys.QUERY)
-
-  const customerIds = Array.from(
-    new Set(replies.map((reply) => reply.customer_id).filter((id): id is string => !!id))
-  )
-  const sellerIds = Array.from(
-    new Set(replies.map((reply) => reply.seller_id).filter((id): id is string => !!id))
-  )
-
-  const customerById = new Map<string, z.infer<typeof ReplyCustomerRowSchema>>()
-  if (customerIds.length > 0) {
-    const { data: customers } = await query.graph({
-      entity: "customer",
-      filters: { id: customerIds },
-      fields: ["id", "first_name", "last_name", "metadata"],
-    })
-    for (const customer of parseRows(ReplyCustomerRowSchema, customers)) {
-      customerById.set(customer.id, customer)
-    }
-  }
-
-  const sellerNameById = new Map<string, string>()
-  if (sellerIds.length > 0) {
-    const { data: sellers } = await query.graph({
-      entity: "seller",
-      filters: { id: sellerIds },
-      fields: ["id", "name"],
-    })
-    for (const seller of sellers) {
-      sellerNameById.set(seller.id, seller.name)
-    }
-  }
-
-  const reviewSocialService = scope.resolve<ReviewSocialModuleService>(REVIEW_SOCIAL_MODULE)
-  const { likesCountByReply, likedByMe } = await reviewSocialService.getReplyLikesInfo(
-    replies.map((reply) => reply.id),
-    currentCustomerId
-  )
-
-  return replies.map((reply) => {
-    const customer = reply.customer_id ? customerById.get(reply.customer_id) : undefined
-    return {
-      id: reply.id,
-      review_id: reply.review_id,
-      customer_id: reply.customer_id,
-      customer: customer
-        ? {
-            first_name: customer.first_name ?? "",
-            last_name: customer.last_name ?? "",
-            avatar_url: extractAvatarUrl(customer.metadata),
-          }
-        : null,
-      is_seller_reply: reply.is_seller_reply,
-      seller_id: reply.seller_id,
-      seller_name: reply.seller_id ? sellerNameById.get(reply.seller_id) ?? null : null,
-      content: reply.content,
-      created_at: reply.created_at,
-      likes_count: likesCountByReply[reply.id] ?? 0,
-      is_liked_by_me: likedByMe.has(reply.id),
-    }
-  })
 }

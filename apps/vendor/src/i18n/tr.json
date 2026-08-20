@@ -196,7 +196,8 @@
       "placeholder": "Müşterinin değerlendirmesine bir yanıt yazın...",
       "submit": "Yanıtı Gönder",
       "successToast": "Yanıt başarıyla gönderildi.",
-      "errorToast": "Yanıt gönderilemedi."
+      "errorToast": "Yanıt gönderilemedi.",
+      "attachImage": "Görsel ekle"
     },
     "report": {
       "title": "Yöneticiye Bildir",

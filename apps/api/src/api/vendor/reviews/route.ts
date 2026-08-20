@@ -1,9 +1,11 @@
 import { AuthenticatedMedusaRequest, MedusaResponse } from '@medusajs/framework'
 import { ContainerRegistrationKeys } from '@medusajs/framework/utils'
 
+import { computeAwaitingReplyMap, fetchReviewReplyActivity } from '../../../lib/review-reply-helpers'
 import { REVIEW_IMAGE_MODULE } from '../../../modules/review-images'
 import ReviewImageService from '../../../modules/review-images/service'
 import { ReviewImageDTO, VendorReviewListWithImagesResponse } from '../../../modules/reviews/types'
+import { mapReviewCustomer } from './helpers'
 
 export const GET = async (
   req: AuthenticatedMedusaRequest,
@@ -37,10 +39,15 @@ export const GET = async (
     }
   }
 
+  const replies = await fetchReviewReplyActivity(req.scope, reviewIds)
+  const awaitingReplyByReview = computeAwaitingReplyMap(reviewRows, replies)
+
   res.json({
     reviews: reviewRows.map((review) => ({
       ...review,
+      customer: mapReviewCustomer(review.customer),
       images: imagesByReview[review.id] ?? [],
+      is_awaiting_reply: awaitingReplyByReview.get(review.id) ?? false,
     })),
     count: metadata?.count ?? 0,
     offset: metadata?.skip ?? 0,

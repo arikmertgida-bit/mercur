@@ -3,13 +3,13 @@ import {
   AuthenticatedMedusaRequest,
   MedusaResponse,
 } from "@medusajs/framework/http"
-import { HttpTypes } from "@medusajs/framework/types"
+import { FileDTO, HttpTypes } from "@medusajs/framework/types"
 import { MedusaError } from "@medusajs/framework/utils"
 import { fixMultipartFilenameEncoding } from "../../../utils/fix-multipart-filename-encoding"
 
 export const POST = async (
   req: AuthenticatedMedusaRequest<HttpTypes.AdminUploadFile>,
-  res: MedusaResponse
+  res: MedusaResponse<{ files: FileDTO[] }>
 ) => {
   const input = req.files as Express.Multer.File[]
 

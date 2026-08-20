@@ -196,7 +196,8 @@
       "placeholder": "Viết phản hồi cho đánh giá của khách hàng...",
       "submit": "Gửi phản hồi",
       "successToast": "Đã gửi phản hồi thành công.",
-      "errorToast": "Không thể gửi phản hồi."
+      "errorToast": "Không thể gửi phản hồi.",
+      "attachImage": "Đính kèm hình ảnh"
     },
     "report": {
       "title": "Báo cáo cho quản trị viên",

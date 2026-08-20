@@ -51,9 +51,17 @@ export interface ReviewProductSummaryDTO {
   thumbnail: string | null
 }
 
+export interface ReviewCustomerSummaryDTO {
+  id: string
+  first_name: string | null
+  last_name: string | null
+}
+
 export interface VendorReviewWithImagesDTO extends ReviewDTO {
   images: ReviewImageDTO[]
   product?: ReviewProductSummaryDTO | null
+  customer?: ReviewCustomerSummaryDTO | null
+  is_awaiting_reply: boolean
 }
 
 export interface VendorReviewDetailResponse {

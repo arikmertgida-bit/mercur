@@ -4,10 +4,43 @@ import {
   MedusaError,
 } from "@medusajs/framework/utils"
 import type { Query } from "@medusajs/framework"
+import { z } from "zod"
 
 import productReview from "../../../links/product-review"
 import sellerReview from "../../../links/seller-review"
 import { ProductSellerIdsRowSchema, parseFirstRow } from "../../../lib/graph-schemas"
+import { ReviewCustomerSummaryDTO } from "../../../modules/reviews/types"
+
+const VendorReviewCustomerRowSchema = z
+  .object({
+    id: z.string(),
+    first_name: z.string().nullable().optional(),
+    last_name: z.string().nullable().optional(),
+  })
+  .nullable()
+  .optional()
+
+type RawVendorReviewCustomer =
+  | { id: string; first_name?: string | null; last_name?: string | null }
+  | null
+  | undefined
+
+/**
+ * Reshapes the raw `customer.*` graph fields into `ReviewCustomerSummaryDTO`
+ * via Zod so an unexpected/missing join never leaks an unvalidated shape
+ * into the vendor response (mirrors the store review-replies helpers).
+ */
+export function mapReviewCustomer(raw: RawVendorReviewCustomer): ReviewCustomerSummaryDTO | null {
+  const parsed = VendorReviewCustomerRowSchema.safeParse(raw)
+  if (!parsed.success || !parsed.data) {
+    return null
+  }
+  return {
+    id: parsed.data.id,
+    first_name: parsed.data.first_name ?? null,
+    last_name: parsed.data.last_name ?? null,
+  }
+}
 
 /**
  * Verifies that a review belongs to this seller. The review model itself

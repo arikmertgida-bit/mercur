@@ -1002,7 +1002,9 @@ export type Routes = {
         };
         reviewReports: typeof import("../src/api/vendor/review-reports/route");
         reviews: typeof import("../src/api/vendor/reviews/route") & {
-            $id: typeof import("../src/api/vendor/reviews/[id]/route");
+            $id: typeof import("../src/api/vendor/reviews/[id]/route") & {
+                replies: typeof import("../src/api/vendor/reviews/[id]/replies/route");
+            };
             stats: typeof import("../src/api/vendor/reviews/stats/route");
         };
         support: {

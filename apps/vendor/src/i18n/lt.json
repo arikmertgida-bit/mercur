@@ -196,7 +196,8 @@
       "placeholder": "Parašykite atsakymą į kliento atsiliepimą...",
       "submit": "Siųsti atsakymą",
       "successToast": "Atsakymas sėkmingai išsiųstas.",
-      "errorToast": "Nepavyko išsiųsti atsakymo."
+      "errorToast": "Nepavyko išsiųsti atsakymo.",
+      "attachImage": "Pridėti nuotrauką"
     },
     "report": {
       "title": "Pranešti administratoriui",

@@ -108,42 +108,25 @@ class ReviewSocialModuleService extends MedusaService({
   }
 
   /**
-   * Kept in sync with the seller_note the seller writes from the vendor
-   * panel — seller_note is mirrored onto a single review_reply row
-   * (is_seller_reply=true).
+   * Appends one new seller message to the review's reply thread — every
+   * call creates a fresh `review_reply` row, mirroring how the customer
+   * side (`/store/review-replies` POST) already behaves. Never updates an
+   * existing row: a seller answering the same review twice must produce
+   * two separate thread messages, not one message overwritten in place.
    */
-  async syncSellerReply(
+  async createSellerReply(
     reviewId: string,
     sellerId: string,
-    content: string | null
-  ): Promise<void> {
-    const existing = await this.listReviewReplies({
+    content: string
+  ): Promise<string> {
+    const created = await this.createReviewReplies({
       review_id: reviewId,
+      content,
       is_seller_reply: true,
+      seller_id: sellerId,
+      customer_id: null,
     })
-
-    if (!content || content.trim().length === 0) {
-      if (existing.length > 0) {
-        await this.deleteReviewReplies(existing.map((reply) => reply.id))
-      }
-      return
-    }
-
-    if (existing.length > 0) {
-      await this.updateReviewReplies({
-        id: existing[0]!.id,
-        content,
-        seller_id: sellerId,
-      })
-    } else {
-      await this.createReviewReplies({
-        review_id: reviewId,
-        content,
-        is_seller_reply: true,
-        seller_id: sellerId,
-        customer_id: null,
-      })
-    }
+    return created.id
   }
 }
 

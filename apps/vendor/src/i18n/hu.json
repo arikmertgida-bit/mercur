@@ -196,7 +196,8 @@
       "placeholder": "Írjon választ a vásárló értékelésére...",
       "submit": "Válasz küldése",
       "successToast": "A válasz sikeresen elküldve.",
-      "errorToast": "A választ nem sikerült elküldeni."
+      "errorToast": "A választ nem sikerült elküldeni.",
+      "attachImage": "Kép csatolása"
     },
     "report": {
       "title": "Bejelentés az adminisztrátornak",

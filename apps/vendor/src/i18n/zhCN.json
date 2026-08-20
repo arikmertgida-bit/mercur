@@ -196,7 +196,8 @@
       "placeholder": "写一条对该顾客评价的回复……",
       "submit": "发送回复",
       "successToast": "回复发送成功。",
-      "errorToast": "无法发送回复。"
+      "errorToast": "无法发送回复。",
+      "attachImage": "添加图片"
     },
     "report": {
       "title": "举报给管理员",

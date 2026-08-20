@@ -196,7 +196,8 @@
       "placeholder": "Write a reply to the customer's review...",
       "submit": "Send Reply",
       "successToast": "Reply sent successfully.",
-      "errorToast": "Reply could not be sent."
+      "errorToast": "Reply could not be sent.",
+      "attachImage": "Attach image"
     },
     "report": {
       "title": "Report to Admin",

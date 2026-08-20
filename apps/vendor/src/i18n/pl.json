@@ -196,7 +196,8 @@
       "placeholder": "Napisz odpowiedź na recenzję klienta...",
       "submit": "Wyślij odpowiedź",
       "successToast": "Odpowiedź wysłana pomyślnie.",
-      "errorToast": "Nie udało się wysłać odpowiedzi."
+      "errorToast": "Nie udało się wysłać odpowiedzi.",
+      "attachImage": "Dołącz obraz"
     },
     "report": {
       "title": "Zgłoś do administratora",
