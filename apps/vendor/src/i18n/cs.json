@@ -196,7 +196,8 @@
       "placeholder": "Napište odpověď na recenzi zákazníka...",
       "submit": "Odeslat odpověď",
       "successToast": "Odpověď byla úspěšně odeslána.",
-      "errorToast": "Odpověď se nepodařilo odeslat."
+      "errorToast": "Odpověď se nepodařilo odeslat.",
+      "attachImage": "Přiložit obrázek"
     },
     "report": {
       "title": "Nahlásit administrátorovi",

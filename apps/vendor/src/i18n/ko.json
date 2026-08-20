@@ -196,7 +196,8 @@
       "placeholder": "고객 리뷰에 대한 답변을 작성하세요...",
       "submit": "답변 보내기",
       "successToast": "답변이 성공적으로 전송되었습니다.",
-      "errorToast": "답변을 보낼 수 없습니다."
+      "errorToast": "답변을 보낼 수 없습니다.",
+      "attachImage": "이미지 첨부"
     },
     "report": {
       "title": "관리자에게 신고",

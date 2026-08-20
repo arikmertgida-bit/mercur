@@ -2,11 +2,17 @@ import { createColumnHelper } from "@tanstack/react-table";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { StatusBadge, Text } from "@medusajs/ui";
+import { Avatar, StatusBadge, Text } from "@medusajs/ui";
 import { DateCell, DateHeader, Thumbnail } from "@mercurjs/dashboard-shared";
 import { ReviewDTO } from "../../api/reviews";
+import { useCustomerAvatar } from "../../useCustomerAvatar";
+import { ReplyStatusBadge } from "../../../routes/reviews/components/ReplyStatusBadge";
 
 const columnHelper = createColumnHelper<ReviewDTO>();
+
+// Panel-local copy of the storefront's default avatar — same asset,
+// self-hosted so the fallback never depends on cross-origin availability.
+const DEFAULT_CUSTOMER_AVATAR = "/images/customer-default-avatar.jpeg";
 
 const ratingColor = (rating: number) => {
   if (rating >= 4) return "green" as const;
@@ -21,11 +27,39 @@ const truncateCustomerNote = (note: string): string =>
     ? `${note.slice(0, CUSTOMER_NOTE_PREVIEW_LENGTH)}...`
     : note;
 
+const ReviewCustomerCell = ({ review }: { review: ReviewDTO }) => {
+  const { t } = useTranslation();
+  const { avatarUrl } = useCustomerAvatar(review.customer?.id ?? undefined);
+
+  const fullName = [review.customer?.first_name, review.customer?.last_name]
+    .filter((part): part is string => Boolean(part && part.trim().length > 0))
+    .join(" ");
+  const displayName = fullName || t("messenger.unknown");
+
+  return (
+    <div className="flex items-center gap-x-3 overflow-hidden">
+      <Avatar src={avatarUrl || DEFAULT_CUSTOMER_AVATAR} fallback="" size="small" />
+      <Text size="small" leading="compact" className="truncate">
+        {displayName}
+      </Text>
+    </div>
+  );
+};
+
 export const useReviewTableColumns = () => {
   const { t } = useTranslation();
 
   return useMemo(
     () => [
+      columnHelper.display({
+        id: "customer",
+        header: () => (
+          <div className="flex h-full w-full items-center">
+            <span className="truncate">{t("fields.customer")}</span>
+          </div>
+        ),
+        cell: ({ row }) => <ReviewCustomerCell review={row.original} />,
+      }),
       columnHelper.accessor("rating", {
         header: () => (
           <div className="flex h-full w-full items-center">
@@ -91,25 +125,14 @@ export const useReviewTableColumns = () => {
           );
         },
       }),
-      columnHelper.accessor("seller_note", {
+      columnHelper.accessor("is_awaiting_reply", {
         id: "reply_status",
         header: () => (
           <div className="flex h-full w-full items-center">
             <span className="truncate">{t("reviews.columns.replyStatus")}</span>
           </div>
         ),
-        cell: ({ getValue }) => {
-          const sellerNote = getValue();
-          const answered = Boolean(sellerNote && sellerNote.trim().length > 0);
-          if (answered) {
-            return <StatusBadge color="green">{t("reviews.status.answered")}</StatusBadge>;
-          }
-          return (
-            <span className="bg-brand inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium text-white">
-              {t("reviews.status.awaitingReply")}
-            </span>
-          );
-        },
+        cell: ({ getValue }) => <ReplyStatusBadge answered={!getValue()} />,
       }),
       columnHelper.accessor("created_at", {
         header: () => <DateHeader />,

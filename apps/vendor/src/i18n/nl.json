@@ -196,7 +196,8 @@
       "placeholder": "Schrijf een antwoord op de beoordeling van de klant...",
       "submit": "Antwoord verzenden",
       "successToast": "Antwoord succesvol verzonden.",
-      "errorToast": "Antwoord kon niet worden verzonden."
+      "errorToast": "Antwoord kon niet worden verzonden.",
+      "attachImage": "Afbeelding bijvoegen"
     },
     "report": {
       "title": "Melden bij beheerder",

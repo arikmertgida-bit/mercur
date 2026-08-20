@@ -2,7 +2,7 @@ import { SubscriberArgs, type SubscriberConfig } from "@medusajs/framework"
 
 import { getCatchMessage } from "../lib/errors"
 import { resolveKayiLogger } from "../lib/logger"
-import { notifyMessengerUser } from "../lib/messenger"
+import { ADMIN_SYSTEM_ID, notifyMessengerUser } from "../lib/messenger"
 import {
   REVIEW_NOTIFICATION_TYPE,
   ReviewNotificationEvent,
@@ -22,7 +22,7 @@ export default async function reviewNotificationNewReviewSubscriber({
   event: { data },
   container,
 }: SubscriberArgs<ReviewNewReviewEventPayload>): Promise<void> {
-  const { sellerToNotify, customerId, customerName } = data
+  const { sellerToNotify, customerName } = data
   const logger = resolveKayiLogger(container)
 
   try {
@@ -30,6 +30,9 @@ export default async function reviewNotificationNewReviewSubscriber({
     const messages = NOTIFICATION_MESSAGES[language]
     const resolvedCustomerName = customerName ?? messages.genericCustomerName
 
+    // Routed through the seller's one-way admin-support thread rather than
+    // a DIRECT conversation with the customer — the customer has no reason
+    // to see "you left a new review" reflected back at them.
     await notifyMessengerUser({
       targetUserId: sellerToNotify,
       targetUserType: "SELLER",
@@ -37,9 +40,10 @@ export default async function reviewNotificationNewReviewSubscriber({
       preview: interpolateNotification(messages.review.newPreview, {
         customerName: resolvedCustomerName,
       }),
-      sourceUserId: customerId,
-      sourceUserType: "CUSTOMER",
+      sourceUserId: ADMIN_SYSTEM_ID,
+      sourceUserType: "ADMIN",
       subject: messages.review.newSubject,
+      conversationType: "ADMIN_SUPPORT",
       notificationType: REVIEW_NOTIFICATION_TYPE,
       metadata: { notification_type: REVIEW_NOTIFICATION_TYPE },
     })

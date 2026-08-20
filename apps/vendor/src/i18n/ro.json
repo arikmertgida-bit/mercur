@@ -196,7 +196,8 @@
       "placeholder": "Scrieți un răspuns la recenzia clientului...",
       "submit": "Trimite răspuns",
       "successToast": "Răspuns trimis cu succes.",
-      "errorToast": "Răspunsul nu a putut fi trimis."
+      "errorToast": "Răspunsul nu a putut fi trimis.",
+      "attachImage": "Atașați o imagine"
     },
     "report": {
       "title": "Sesizează administratorul",

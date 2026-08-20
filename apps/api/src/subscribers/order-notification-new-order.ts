@@ -87,32 +87,23 @@ export default async function orderNotificationNewOrderSubscriber({
       displayId: String(order.display_id),
     })
 
-    const notified = order.customer_id
-      ? await notifyMessengerUser({
-          targetUserId: sellerLink.seller_id,
-          targetUserType: "SELLER",
-          senderName: customerName,
-          preview,
-          sourceUserId: order.customer_id,
-          sourceUserType: "CUSTOMER",
-          subject: messages.order.subject,
-          notificationType: ORDER_NOTIFICATION_TYPE,
-          metadata: { notification_type: ORDER_NOTIFICATION_TYPE },
-        })
-      : await notifyMessengerUser({
-          // Guest checkout has no real customer id to converse with — falls
-          // back to the seller's shared admin-support thread.
-          targetUserId: sellerLink.seller_id,
-          targetUserType: "SELLER",
-          senderName: "Kayı.com",
-          preview,
-          sourceUserId: ADMIN_SYSTEM_ID,
-          sourceUserType: "ADMIN",
-          subject: messages.order.subject,
-          conversationType: "ADMIN_SUPPORT",
-          notificationType: ORDER_NOTIFICATION_TYPE,
-          metadata: { notification_type: ORDER_NOTIFICATION_TYPE },
-        })
+    // Always routed through the seller's one-way admin-support thread —
+    // the customer who placed the order has no reason to see it reflected
+    // back at them, so they're never made a conversation participant here
+    // (regardless of whether they have a real account or checked out as a
+    // guest).
+    const notified = await notifyMessengerUser({
+      targetUserId: sellerLink.seller_id,
+      targetUserType: "SELLER",
+      senderName: customerName,
+      preview,
+      sourceUserId: ADMIN_SYSTEM_ID,
+      sourceUserType: "ADMIN",
+      subject: messages.order.subject,
+      conversationType: "ADMIN_SUPPORT",
+      notificationType: ORDER_NOTIFICATION_TYPE,
+      metadata: { notification_type: ORDER_NOTIFICATION_TYPE },
+    })
 
     if (!notified) {
       logger.warn(

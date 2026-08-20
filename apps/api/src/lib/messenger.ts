@@ -57,6 +57,15 @@ interface NotifyParams {
   messageType?: "TEXT" | "IMAGE" | "NOTIFICATION" | "PROMOTION"
   /** Structured payload attached to the persisted message (e.g. promotion card data). */
   metadata?: JsonRecord
+  /** Sets the auto-created Conversation's `productId` column (also flips contextType to PRODUCT_BASED unless contextType is set explicitly). */
+  productId?: string
+  /**
+   * Sets the auto-created Conversation's `metadata` — the storefront's
+   * `ProductContextCard` reads this (`{ type: "product", product_id, ... }`)
+   * to render a product/store card at the top of the thread without an
+   * extra API call. Distinct from `metadata` above, which is per-message.
+   */
+  conversationMetadata?: JsonRecord
 }
 
 /**

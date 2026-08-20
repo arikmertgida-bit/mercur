@@ -5,8 +5,14 @@ import { z } from "zod"
 
 import customerReview from "../links/customer-review"
 import { getCatchMessage } from "../lib/errors"
+import {
+  CustomerReviewSellerRowSchema,
+  JsonRecord,
+  ProductDetailRowSchema,
+  parseFirstRow,
+} from "../lib/graph-schemas"
 import { resolveKayiLogger } from "../lib/logger"
-import { notifyMessengerUser } from "../lib/messenger"
+import { ADMIN_SYSTEM_ID, notifyMessengerUser } from "../lib/messenger"
 import {
   REVIEW_NOTIFICATION_TYPE,
   ReviewNotificationEvent,
@@ -22,9 +28,22 @@ const CustomerReviewLinkSchema = z.object({
   customer_id: z.string(),
 })
 
+const ReviewReferenceRowSchema = z.object({
+  id: z.string(),
+  reference: z.enum(["product", "seller"]),
+  reference_id: z.string().nullable().optional(),
+})
+
 /**
- * Handles the "review_notification.seller_reply" event.
- * Notifies the customer when a seller replies to their review (seller_note).
+ * Handles the "review_notification.seller_reply" event. Notifies only the
+ * customer (the recipient of the reply) — the seller, who just performed
+ * this action themselves, has no need to see it reflected back at them.
+ * Routed through the customer's one-way admin-support thread (not a DIRECT
+ * conversation with the seller) so the seller never becomes a participant
+ * of this notification and can't see it in their own inbox. Enriched with
+ * a product-context card when the review is about a product — reuses the
+ * storefront's existing `ProductContextCard` mechanism via
+ * `Conversation.productId`/`metadata`, no storefront render changes needed.
  */
 export default async function reviewNotificationSellerReplySubscriber({
   event: { data },
@@ -49,26 +68,72 @@ export default async function reviewNotificationSellerReplySubscriber({
     if (!parsedLink.success) {
       return
     }
+    const customerId = parsedLink.data.customer_id
 
-    const language = await resolveCustomerNotificationLanguage(
-      container,
-      parsedLink.data.customer_id
-    )
-    const messages = NOTIFICATION_MESSAGES[language]
-    const resolvedSellerName = sellerName ?? messages.genericSellerName
+    const { data: reviewRows } = await query.graph({
+      entity: "review",
+      fields: ["id", "reference", "reference_id"],
+      filters: { id: reviewId },
+    })
+    const review = parseFirstRow(ReviewReferenceRowSchema, reviewRows)
+
+    let conversationProductId: string | undefined
+    let conversationMetadata: JsonRecord | undefined
+
+    if (review?.reference === "product" && review.reference_id) {
+      const { data: productRows } = await query.graph({
+        entity: "product",
+        fields: ["id", "title", "handle", "thumbnail", "status"],
+        filters: { id: review.reference_id },
+      })
+      const product = parseFirstRow(ProductDetailRowSchema, productRows)
+
+      if (product) {
+        const { data: sellerRows } = await query.graph({
+          entity: "seller",
+          fields: ["id", "name", "handle", "logo"],
+          filters: { id: sellerId },
+        })
+        const sellerRow = parseFirstRow(CustomerReviewSellerRowSchema, sellerRows)
+
+        conversationProductId = product.id
+        conversationMetadata = {
+          type: "product",
+          product_id: product.id,
+          product_name: product.title,
+          product_image: product.thumbnail,
+          product_handle: product.handle,
+          ...(sellerRow
+            ? {
+                store_id: sellerRow.id,
+                store_name: sellerRow.name,
+                store_image: sellerRow.logo ?? null,
+                store_handle: sellerRow.handle,
+              }
+            : {}),
+        }
+      }
+    }
+
+    const customerLanguage = await resolveCustomerNotificationLanguage(container, customerId)
+    const customerMessages = NOTIFICATION_MESSAGES[customerLanguage]
+    const resolvedSellerName = sellerName ?? customerMessages.genericSellerName
 
     await notifyMessengerUser({
-      targetUserId: parsedLink.data.customer_id,
+      targetUserId: customerId,
       targetUserType: "CUSTOMER",
       senderName: resolvedSellerName,
-      preview: interpolateNotification(messages.review.replyPreview, {
+      preview: interpolateNotification(customerMessages.review.replyPreview, {
         sellerName: resolvedSellerName,
       }),
-      sourceUserId: sellerId,
-      sourceUserType: "SELLER",
-      subject: messages.review.replySubject,
+      sourceUserId: ADMIN_SYSTEM_ID,
+      sourceUserType: "ADMIN",
+      subject: customerMessages.review.replySubject,
+      conversationType: "ADMIN_SUPPORT",
       notificationType: REVIEW_NOTIFICATION_TYPE,
       metadata: { notification_type: REVIEW_NOTIFICATION_TYPE },
+      productId: conversationProductId,
+      conversationMetadata,
     })
   } catch (err) {
     const message = getCatchMessage(

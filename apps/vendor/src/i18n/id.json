@@ -196,7 +196,8 @@
       "placeholder": "Tulis balasan untuk ulasan pelanggan...",
       "submit": "Kirim Balasan",
       "successToast": "Balasan berhasil dikirim.",
-      "errorToast": "Balasan tidak dapat dikirim."
+      "errorToast": "Balasan tidak dapat dikirim.",
+      "attachImage": "Lampirkan gambar"
     },
     "report": {
       "title": "Laporkan ke Admin",

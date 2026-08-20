@@ -196,7 +196,8 @@
       "placeholder": "撰寫對此顧客評價的回覆……",
       "submit": "傳送回覆",
       "successToast": "回覆傳送成功。",
-      "errorToast": "無法傳送回覆。"
+      "errorToast": "無法傳送回覆。",
+      "attachImage": "新增圖片"
     },
     "report": {
       "title": "檢舉給管理員",

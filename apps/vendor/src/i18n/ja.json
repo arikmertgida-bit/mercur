@@ -196,7 +196,8 @@
       "placeholder": "顧客のレビューへの返信を入力してください...",
       "submit": "返信を送信",
       "successToast": "返信を送信しました。",
-      "errorToast": "返信を送信できませんでした。"
+      "errorToast": "返信を送信できませんでした。",
+      "attachImage": "画像を添付"
     },
     "report": {
       "title": "管理者に報告",

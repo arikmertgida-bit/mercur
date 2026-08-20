@@ -114,6 +114,9 @@ module.exports = withMercur({
       resolve: './src/modules/review-social',
     },
     {
+      resolve: './src/modules/review-reply-images',
+    },
+    {
       resolve: './src/modules/review-reports',
     },
     {

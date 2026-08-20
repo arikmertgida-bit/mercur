@@ -1,15 +1,9 @@
 import * as React from "react"
-import { useLocation } from "react-router-dom"
+import { useQueryClient } from "@tanstack/react-query"
 import { Star } from "@medusajs/icons"
-import {
-  getNotificationUnreadCount,
-  markNotificationsRead,
-} from "../../../lib/messenger/client"
-import { getMessengerAuthToken, isTokenExpired } from "../../../lib/messenger/auth-token"
+import { reviewsQueryKeys, useReviewStats } from "../../../hooks/api/reviews"
 import { kayiEventManager } from "../../../lib/messenger/KayiEventManager"
 import { REVIEW_NOTIFICATION_TYPE } from "../../../lib/messenger/types"
-import { logger } from "../../../lib/logger"
-import { getCatchMessage } from "../../../lib/errors"
 
 const BADGE_CLASSES =
   "pointer-events-none absolute -right-1.5 -top-1.5 flex h-3.5 min-w-3.5 items-center justify-center rounded-full bg-brand px-0.5 text-[9px] font-semibold tabular-nums text-white shadow-sm"
@@ -21,55 +15,33 @@ function formatSidebarUnreadCount(count: number): string {
   return String(count)
 }
 
+/**
+ * Badge shows how many reviews are still awaiting a seller reply — computed
+ * from real review rows (`useReviewStats`, polled + refetched on window
+ * focus), not an ephemeral notification-pulse count. It stays correct with
+ * no page refresh: a new customer review pushes an instant refetch via the
+ * messenger "new review" socket event, and `useUpdateReview` invalidates the
+ * same query the moment a seller reply is saved, so the count decrements by
+ * exactly one without waiting for the next poll.
+ */
 export function ReviewsIcon(props: { className?: string }): React.JSX.Element {
   const { className } = props
-  const [unreadCount, setUnreadCount] = React.useState<number>(0)
-  const location = useLocation()
+  const queryClient = useQueryClient()
+  const { awaiting_reply_count } = useReviewStats()
 
   React.useEffect((): (() => void) => {
-    const unsubscribe = kayiEventManager.subscribeNotification(REVIEW_NOTIFICATION_TYPE, (): void => {
-      setUnreadCount((prev) => prev + 1)
+    return kayiEventManager.subscribeNotification(REVIEW_NOTIFICATION_TYPE, (): void => {
+      queryClient.invalidateQueries({ queryKey: reviewsQueryKeys.detail("stats") })
     })
+  }, [queryClient])
 
-    const token = getMessengerAuthToken()
-    if (token && !isTokenExpired(token)) {
-      getNotificationUnreadCount(REVIEW_NOTIFICATION_TYPE)
-        .then((r: { count: number }): void => {
-          setUnreadCount(r.count ?? 0)
-        })
-        .catch((err): void => {
-          logger.error(
-            `Failed to fetch initial review notification count: ${getCatchMessage(err instanceof Error ? err : undefined)}`,
-          )
-        })
-    }
-
-    return (): void => {
-      unsubscribe()
-    }
-  }, [])
-
-  React.useEffect((): void => {
-    const isReviewsRoute =
-      location.pathname === "/reviews" || location.pathname.endsWith("/reviews")
-    if (!isReviewsRoute) {
-      return
-    }
-    setUnreadCount(0)
-    markNotificationsRead(REVIEW_NOTIFICATION_TYPE).catch((err): void => {
-      logger.error(
-        `Failed to mark review notifications read: ${getCatchMessage(err instanceof Error ? err : undefined)}`,
-      )
-    })
-  }, [location.pathname])
-
-  const safeUnreadCount = unreadCount ?? 0
-  const badgeLabel = formatSidebarUnreadCount(safeUnreadCount)
+  const safeCount = awaiting_reply_count ?? 0
+  const badgeLabel = formatSidebarUnreadCount(safeCount)
 
   return (
     <span className="relative inline-flex">
       <Star className={className} />
-      {safeUnreadCount > 0 && (
+      {safeCount > 0 && (
         <span className={BADGE_CLASSES} aria-hidden="true">
           {badgeLabel}
         </span>

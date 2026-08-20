@@ -196,7 +196,8 @@
       "placeholder": "Rédigez une réponse à l'avis du client...",
       "submit": "Envoyer la réponse",
       "successToast": "Réponse envoyée avec succès.",
-      "errorToast": "La réponse n'a pas pu être envoyée."
+      "errorToast": "La réponse n'a pas pu être envoyée.",
+      "attachImage": "Joindre une image"
     },
     "report": {
       "title": "Signaler à l'administrateur",

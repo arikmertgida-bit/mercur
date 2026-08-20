@@ -196,7 +196,8 @@
       "placeholder": "Schreiben Sie eine Antwort auf die Bewertung des Kunden...",
       "submit": "Antwort senden",
       "successToast": "Antwort erfolgreich gesendet.",
-      "errorToast": "Antwort konnte nicht gesendet werden."
+      "errorToast": "Antwort konnte nicht gesendet werden.",
+      "attachImage": "Bild anhängen"
     },
     "report": {
       "title": "An Administrator melden",
