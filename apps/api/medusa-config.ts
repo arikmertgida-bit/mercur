@@ -120,6 +120,9 @@ module.exports = withMercur({
       resolve: './src/modules/review-reports',
     },
     {
+      resolve: './src/modules/variant-price-history',
+    },
+    {
       resolve: './src/modules/wishlist',
     },
     {

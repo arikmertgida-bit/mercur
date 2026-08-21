@@ -60,6 +60,10 @@ const CatalogProductRowSchema = z.object({
   handle: z.string().nullable(),
   status: z.string(),
   thumbnail: z.string().nullable(),
+  // Not used for display — only to match products against a promotion's
+  // `type_id` target rule (see lib/catalog-promotions.ts). '*' already
+  // requests every scalar column, this just keeps Zod from stripping it.
+  type_id: z.string().nullable().optional(),
   created_at: z.union([z.string(), z.date()]),
   updated_at: z.union([z.string(), z.date()]),
   images: z

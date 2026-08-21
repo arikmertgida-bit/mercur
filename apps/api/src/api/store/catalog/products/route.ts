@@ -3,6 +3,7 @@ import type { Query } from '@medusajs/framework'
 import { ContainerRegistrationKeys, QueryContext } from '@medusajs/framework/utils'
 
 import { hydrateOrderedProducts } from '../../../../lib/catalog-hydration'
+import { loadCatalogPromotionPricing } from '../../../../lib/catalog-promotions'
 import { toFacetDistribution } from '../../../../lib/facet-distribution'
 import { toStringArray } from '../../../../lib/query-params'
 import { resolveRegionByCountryCode } from '../../../../lib/resolve-region'
@@ -64,11 +65,20 @@ export const GET = async (
 
   const products = await hydrateOrderedProducts(query, orderedIds, pricingContext)
 
+  const { promotionsByProductId, referencePrices } = await loadCatalogPromotionPricing(
+    req.scope,
+    query,
+    products,
+    region
+  )
+
   res.json({
     products,
     count: searchResult.count,
     offset,
     limit,
     facetDistribution: toFacetDistribution(searchResult.facets),
+    promotions: promotionsByProductId,
+    reference_prices: referencePrices,
   })
 }
