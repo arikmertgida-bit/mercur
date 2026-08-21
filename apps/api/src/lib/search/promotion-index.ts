@@ -239,6 +239,19 @@ function ruleMatches(rule: ProductTargetRule, product: PromotionMatchableProduct
   }
 }
 
+// Same rule-matching as matchProductPromotions but returns the matched
+// promotions' own ids instead of aggregated kinds — for callers (the
+// per-product promotions route) that need each promotion's own display
+// fields (discount value, code, campaign name), not just facet counts.
+export function matchProductPromotionIds(
+  product: PromotionMatchableProduct,
+  activePromotions: ActiveProductPromotion[]
+): string[] {
+  return activePromotions
+    .filter((promotion) => promotion.rules.every((rule) => ruleMatches(rule, product)))
+    .map((promotion) => promotion.promotionId)
+}
+
 export function matchProductPromotions(
   product: PromotionMatchableProduct,
   activePromotions: ActiveProductPromotion[]

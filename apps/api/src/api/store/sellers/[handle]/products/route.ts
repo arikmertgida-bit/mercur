@@ -3,6 +3,7 @@ import type { Query } from '@medusajs/framework'
 import { ContainerRegistrationKeys, MedusaError, QueryContext } from '@medusajs/framework/utils'
 
 import { hydrateOrderedProducts } from '../../../../../lib/catalog-hydration'
+import { loadCatalogPromotionPricing } from '../../../../../lib/catalog-promotions'
 import { toFacetDistribution } from '../../../../../lib/facet-distribution'
 import { toStringArray } from '../../../../../lib/query-params'
 import { resolveRegionByCountryCode } from '../../../../../lib/resolve-region'
@@ -88,6 +89,13 @@ export const GET = async (
     include_categories ? getSellerCategories(query, sellerId) : Promise.resolve(undefined),
   ])
 
+  const { promotionsByProductId, referencePrices } = await loadCatalogPromotionPricing(
+    req.scope,
+    query,
+    products,
+    region
+  )
+
   res.json({
     products,
     count: searchResult.count,
@@ -95,5 +103,7 @@ export const GET = async (
     limit,
     ...(categories ? { categories } : {}),
     facetDistribution: toFacetDistribution(searchResult.facets),
+    promotions: promotionsByProductId,
+    reference_prices: referencePrices,
   })
 }
