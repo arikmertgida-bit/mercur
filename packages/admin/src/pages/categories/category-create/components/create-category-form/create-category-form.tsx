@@ -39,6 +39,7 @@ export const CreateCategoryForm = ({
       handle: "",
       status: "active",
       visibility: "public",
+      is_adult: false,
       rank: parentCategoryId ? 0 : null,
       parent_category_id: parentCategoryId,
       ...extraDefaults,
@@ -52,6 +53,7 @@ export const CreateCategoryForm = ({
     const {
       visibility,
       status,
+      is_adult,
       parent_category_id,
       rank,
       name,
@@ -74,6 +76,7 @@ export const CreateCategoryForm = ({
         rank: rank ?? undefined,
         is_active: status === "active",
         is_internal: visibility === "internal",
+        metadata: is_adult ? { is_adult: true } : undefined,
         ...images,
       },
       {

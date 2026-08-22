@@ -1156,6 +1156,10 @@
         "internal": "Dahili",
         "public": "Genel"
       },
+      "isAdult": {
+        "label": "Bu kategori +18 kategorisi",
+        "hint": "Etkinleştirildiğinde, bu kategorideki ürünler müşteri yaşını doğrulayana kadar mağaza tarafında bulanık gösterilir."
+      },
       "status": {
         "label": "Durum",
         "active": "Aktif",

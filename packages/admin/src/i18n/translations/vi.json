@@ -1156,6 +1156,10 @@
         "internal": "Nội bộ",
         "public": "Công khai"
       },
+      "isAdult": {
+        "label": "Danh mục này bị giới hạn độ tuổi (+18)",
+        "hint": "Khi bật, sản phẩm trong danh mục này sẽ vẫn bị làm mờ trên cửa hàng cho đến khi khách hàng xác nhận đã trên 18 tuổi."
+      },
       "status": {
         "label": "Trạng thái",
         "active": "Hoạt động",

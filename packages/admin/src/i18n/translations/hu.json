@@ -1156,6 +1156,10 @@
         "internal": "Belső",
         "public": "Nyilvános"
       },
+      "isAdult": {
+        "label": "Ez a kategória korhatáros (+18)",
+        "hint": "Bekapcsolva az ebbe a kategóriába tartozó termékek elmosódva jelennek meg a boltban, amíg a vásárló meg nem erősíti, hogy elmúlt 18 éves."
+      },
       "status": {
         "label": "Státusz",
         "active": "Aktív",

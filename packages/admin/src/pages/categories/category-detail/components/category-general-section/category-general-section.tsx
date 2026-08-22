@@ -18,6 +18,7 @@ export const CategoryGeneralSection = ({
 
   const activeProps = getIsActiveProps(category.is_active, t)
   const internalProps = getIsInternalProps(category.is_internal, t)
+  const isAdult = Boolean(category.metadata?.is_adult)
 
   const handleDelete = useDeleteProductCategoryAction(category)
 
@@ -49,6 +50,7 @@ export const CategoryGeneralSection = ({
                 {internalProps.label}
               </StatusBadge>
             </DisplayField>
+            {isAdult && <StatusBadge color="red">+18</StatusBadge>}
           </div>
           <ActionMenu
             groups={[

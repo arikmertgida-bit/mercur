@@ -82,7 +82,19 @@ const CatalogProductRowSchema = z.object({
     .default([]),
   variants: z.array(CatalogProductVariantSchema).nullable().default([]),
   categories: z
-    .array(z.object({ id: z.string(), name: z.string(), handle: z.string() }))
+    .array(
+      z.object({
+        id: z.string(),
+        name: z.string(),
+        handle: z.string(),
+        // Was missing here even though `categories.*` already fetched the
+        // column — Zod silently strips unlisted keys, so `is_adult` (the
+        // +18 flag) never reached the storefront's Meilisearch-backed
+        // catalog/seller-products responses despite being requested. Same
+        // bug class as the `sellers.is_premium` fix above.
+        metadata: z.record(z.unknown()).nullable().optional(),
+      })
+    )
     .nullable()
     .default([]),
   tags: z.array(z.object({ id: z.string(), value: z.string() })).nullable().default([]),

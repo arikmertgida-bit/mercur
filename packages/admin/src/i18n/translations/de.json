@@ -1156,6 +1156,10 @@
         "internal": "Intern",
         "public": "Öffentlich"
       },
+      "isAdult": {
+        "label": "Diese Kategorie ist altersbeschränkt (+18)",
+        "hint": "Wenn aktiviert, bleiben Produkte dieser Kategorie im Shop unscharf dargestellt, bis der Kunde bestätigt, über 18 Jahre alt zu sein."
+      },
       "status": {
         "label": "Status",
         "active": "Aktiv",

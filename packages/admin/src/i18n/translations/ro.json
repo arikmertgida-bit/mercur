@@ -1156,6 +1156,10 @@
         "internal": "Intern",
         "public": "Public"
       },
+      "isAdult": {
+        "label": "Această categorie are restricție de vârstă (+18)",
+        "hint": "Când este activat, produsele din această categorie rămân neclare în magazin până când clientul confirmă că are peste 18 ani."
+      },
       "status": {
         "label": "Stare",
         "active": "Activ",

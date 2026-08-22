@@ -24,6 +24,7 @@ export const CreateCategoryDetailsSchema = z.object({
     .refine(isValidHandleFormat, { message: i18n.t("fields.handleInvalidFormat") }),
   status: z.enum(["active", "inactive"]),
   visibility: z.enum(["public", "internal"]),
+  is_adult: z.boolean(),
   media: z.array(CategoryMediaSchema).optional(),
   icon: CategoryIconSchema.nullable().optional(),
 })
