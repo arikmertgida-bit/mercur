@@ -1156,6 +1156,10 @@
         "internal": "Interní",
         "public": "Veřejné"
       },
+      "isAdult": {
+        "label": "Tato kategorie je věkově omezená (+18)",
+        "hint": "Po zapnutí zůstávají produkty v této kategorii v obchodě rozmazané, dokud zákazník nepotvrdí, že je starší 18 let."
+      },
       "status": {
         "label": "Stav",
         "active": "Aktivní",

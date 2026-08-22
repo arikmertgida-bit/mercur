@@ -1156,6 +1156,10 @@
         "internal": "Vidinis",
         "public": "Viešas"
       },
+      "isAdult": {
+        "label": "Ši kategorija skirta suaugusiems (+18)",
+        "hint": "Įjungus šią parinktį, šios kategorijos prekės parduotuvėje liks suliejamos, kol pirkėjas nepatvirtins, kad jam sukako 18 metų."
+      },
       "status": {
         "label": "Būsena",
         "active": "Įjungta",

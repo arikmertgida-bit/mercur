@@ -3027,6 +3027,17 @@
                 }
               }
             },
+            "isAdult": {
+              "type": "object",
+              "properties": {
+                "label": {
+                  "type": "string"
+                },
+                "hint": {
+                  "type": "string"
+                }
+              }
+            },
             "status": {
               "type": "object",
               "properties": {

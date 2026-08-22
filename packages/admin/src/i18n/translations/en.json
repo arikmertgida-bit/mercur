@@ -1067,6 +1067,10 @@
         "internal": "Internal",
         "public": "Public"
       },
+      "isAdult": {
+        "label": "This category is age-restricted (+18)",
+        "hint": "When enabled, products in this category stay blurred in the storefront until the shopper confirms they are over 18."
+      },
       "status": {
         "label": "Status",
         "active": "Active",

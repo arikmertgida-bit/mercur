@@ -7,6 +7,7 @@ import { toHandle } from "@mercurjs/dashboard-shared"
 
 import { Form } from "../../../../../components/common/form"
 import { HandleInput } from "../../../../../components/inputs/handle-input"
+import { SwitchBox } from "../../../../../components/common/switch-box"
 import { useTabbedForm } from "../../../../../components/tabbed-form/tabbed-form"
 import { defineTabMeta } from "../../../../../components/tabbed-form/types"
 import { useDocumentDirection } from "../../../../../hooks/use-document-direction"
@@ -157,6 +158,13 @@ const Root = () => {
             }}
           />
         </div>
+        <SwitchBox
+          control={form.control}
+          name="is_adult"
+          label={t("categories.fields.isAdult.label")}
+          description={t("categories.fields.isAdult.hint")}
+          data-testid="category-create-form-is-adult-switch"
+        />
         <Form.Field
           control={form.control}
           name="media"

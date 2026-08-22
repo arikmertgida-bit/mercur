@@ -643,7 +643,9 @@ export type Routes = {
             $id: typeof import("@medusajs/medusa/api/store/product-variants/[id]/route");
         };
         products: typeof import("@mercurjs/core/api/store/products/route") & {
-            $id: typeof import("@mercurjs/core/api/store/products/[id]/route");
+            $id: typeof import("@mercurjs/core/api/store/products/[id]/route") & {
+                promotions: typeof import("../src/api/store/products/[id]/promotions/route");
+            };
         };
         regions: typeof import("@medusajs/medusa/api/store/regions/route") & {
             $id: typeof import("@medusajs/medusa/api/store/regions/[id]/route");

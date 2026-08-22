@@ -1143,6 +1143,10 @@
         "internal": "Wewnętrzna",
         "public": "Publiczna"
       },
+      "isAdult": {
+        "label": "Ta kategoria jest ograniczona wiekowo (+18)",
+        "hint": "Po włączeniu produkty z tej kategorii pozostają rozmazane w sklepie, dopóki klient nie potwierdzi, że ma ukończone 18 lat."
+      },
       "status": {
         "label": "Status",
         "active": "Aktywna",

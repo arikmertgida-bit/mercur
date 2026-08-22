@@ -11,6 +11,7 @@ import {
 } from "@mercurjs/dashboard-shared"
 import { Form } from "../../../../../components/common/form"
 import { HandleInput } from "../../../../../components/inputs/handle-input"
+import { SwitchBox } from "../../../../../components/common/switch-box"
 import { RouteDrawer, useRouteModal } from "../../../../../components/modals"
 import { KeyboundForm } from "../../../../../components/utilities/keybound-form"
 import { useUpdateProductCategory } from "../../../../../hooks/api/categories"
@@ -25,6 +26,7 @@ const EditCategorySchema = z.object({
   description: z.string().optional(),
   status: z.enum(["active", "inactive"]),
   visibility: z.enum(["public", "internal"]),
+  is_adult: z.boolean(),
 })
 
 type EditCategoryFormProps = {
@@ -46,6 +48,7 @@ export const EditCategoryForm = ({ category }: EditCategoryFormProps) => {
       description: category.description || "",
       status: category.is_active ? "active" : "inactive",
       visibility: category.is_internal ? "internal" : "public",
+      is_adult: Boolean(category.metadata?.is_adult),
     },
   })
 
@@ -58,6 +61,7 @@ export const EditCategoryForm = ({ category }: EditCategoryFormProps) => {
         handle: data.handle,
         is_active: data.status === "active",
         is_internal: data.visibility === "internal",
+        metadata: { ...(category.metadata ?? {}), is_adult: data.is_adult },
       },
       {
         onSuccess: () => {
@@ -193,6 +197,12 @@ export const EditCategoryForm = ({ category }: EditCategoryFormProps) => {
                 }}
               />
             </div>
+            <SwitchBox
+              control={form.control}
+              name="is_adult"
+              label={t("categories.fields.isAdult.label")}
+              description={t("categories.fields.isAdult.hint")}
+            />
             <FormExtensionZone
               model="category"
               zone="edit"

@@ -1156,6 +1156,10 @@
         "internal": "Interno",
         "public": "Público"
       },
+      "isAdult": {
+        "label": "Esta categoria é restrita a maiores de idade (+18)",
+        "hint": "Quando ativado, os produtos desta categoria permanecem borrados na loja até o cliente confirmar que tem mais de 18 anos."
+      },
       "status": {
         "label": "Status",
         "active": "Ativo",

@@ -1156,6 +1156,10 @@
         "internal": "Internal",
         "public": "Publik"
       },
+      "isAdult": {
+        "label": "Kategori ini dibatasi usia (+18)",
+        "hint": "Jika diaktifkan, produk dalam kategori ini akan tetap buram di etalase toko sampai pembeli mengonfirmasi bahwa mereka berusia di atas 18 tahun."
+      },
       "status": {
         "label": "Status",
         "active": "Aktif",

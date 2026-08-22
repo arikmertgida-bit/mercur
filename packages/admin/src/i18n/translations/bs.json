@@ -1156,6 +1156,10 @@
         "internal": "Interno",
         "public": "Javno"
       },
+      "isAdult": {
+        "label": "Ova kategorija je starosno ograničena (+18)",
+        "hint": "Kada je uključeno, proizvodi u ovoj kategoriji ostaju zamućeni u prodavnici dok kupac ne potvrdi da ima više od 18 godina."
+      },
       "status": {
         "label": "Status",
         "active": "Aktivno",

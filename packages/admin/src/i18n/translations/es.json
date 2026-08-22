@@ -1178,6 +1178,10 @@
         "internal": "Interna",
         "public": "Pública"
       },
+      "isAdult": {
+        "label": "Esta categoría tiene restricción de edad (+18)",
+        "hint": "Cuando está activado, los productos de esta categoría permanecen difuminados en la tienda hasta que el cliente confirme que es mayor de 18 años."
+      },
       "status": {
         "label": "Estado",
         "active": "Activa",

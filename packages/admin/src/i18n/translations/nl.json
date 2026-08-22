@@ -1156,6 +1156,10 @@
         "internal": "Intern",
         "public": "Publiek"
       },
+      "isAdult": {
+        "label": "Deze categorie is leeftijdsgebonden (+18)",
+        "hint": "Indien ingeschakeld, blijven producten in deze categorie vervaagd weergegeven in de winkel totdat de klant bevestigt ouder dan 18 te zijn."
+      },
       "status": {
         "label": "Status",
         "active": "Actief",
