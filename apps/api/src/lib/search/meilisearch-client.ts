@@ -267,6 +267,9 @@ class MeilisearchProductIndex {
     if (filters.campaign_id) {
       filterParts.push(`campaign_ids IN [${meiliValueList([filters.campaign_id])}]`)
     }
+    if (filters.has_active_campaign) {
+      filterParts.push('campaign_ids IS NOT EMPTY')
+    }
 
     return filterParts
   }
