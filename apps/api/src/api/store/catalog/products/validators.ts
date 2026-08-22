@@ -17,6 +17,7 @@ export const StoreGetCatalogProductsParams = z.object({
   condition: csvOrArray.optional(),
   promotion_type: csvOrArray.optional(),
   campaign_id: z.string().optional(),
+  has_active_campaign: z.coerce.boolean().optional(),
 })
 
 export type StoreGetCatalogProductsParamsType = z.infer<typeof StoreGetCatalogProductsParams>
