@@ -547,7 +547,7 @@
         "addExisting": "Mevcut olanı ekle",
         "createNew": "Yeni oluştur",
         "requiredAttributes": "Zorunlu özellikler",
-        "requiredAttributesHint": "These attributes are required by the Marketplace. Select them before proceeding.",
+        "requiredAttributesHint": "Bu özellikler pazar yeri tarafından zorunlu tutulmaktadır. Devam etmeden önce bunları seçin.",
         "selectValues": "Değerleri seç",
         "tip": "İpucu",
         "useForVariants": "Use for Variations",
