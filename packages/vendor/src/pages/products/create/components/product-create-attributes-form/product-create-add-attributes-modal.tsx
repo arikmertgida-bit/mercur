@@ -7,6 +7,7 @@ import {
   RowSelectionState,
 } from "@tanstack/react-table"
 import { useEffect, useMemo, useState } from "react"
+import { UseFieldArrayReplace } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
 import { StackedFocusModal, useStackedModal } from "@components/modals"
@@ -36,14 +37,35 @@ type SelectedAttribute = {
   name: string
   values: string[]
   is_variant_axis: boolean
+  // Sourced once, right where each entry is known to be required or not
+  // (the existing form value, or the row being (de)selected) — never
+  // re-derived later from this modal's own paginated/filtered attribute
+  // query, which may not have the required attributes loaded on its
+  // current page and would silently mislabel them as optional.
+  is_required: boolean
   type: string
   available_values: { id: string; name: string }[]
 }
 
-export const ProductCreateAddAttributesModal = () => {
+type ProductCreateAddAttributesModalProps = {
+  // Deliberately the parent tab's own `useFieldArray` mutator, not a second
+  // `useFieldArray({ name: "attributes" })` call from this component.
+  // react-hook-form only re-renders a field array's own `fields` (and, in
+  // turn, any `useWatch`/`form.watch` subscriber) via the effect that runs
+  // in the SAME hook instance that called `replace` — a second, independent
+  // instance here would queue that notification for the next render, and
+  // this modal unmounts (on save) before that render happens, so the newly
+  // added attribute silently never appeared. Sharing the one instance that
+  // stays mounted for the whole tab's lifetime removes the race entirely.
+  replace: UseFieldArrayReplace<ProductCreateSchemaType, "attributes">
+}
+
+export const ProductCreateAddAttributesModal = ({
+  replace,
+}: ProductCreateAddAttributesModalProps) => {
   const form = useTabbedForm<ProductCreateSchemaType>()
   const { t } = useTranslation()
-  const { getValues, setValue } = form
+  const { getValues } = form
   const { setIsOpen, getIsOpen } = useStackedModal()
 
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({})
@@ -92,6 +114,7 @@ export const ProductCreateAddAttributesModal = () => {
               ? [a.values]
               : [],
           is_variant_axis: a.use_for_variants,
+          is_required: a.is_required,
           type: a.type ?? apiAttr?.type ?? "",
           available_values:
             a.available_values ??
@@ -113,6 +136,7 @@ export const ProductCreateAddAttributesModal = () => {
             name: attr.name,
             values: [],
             is_variant_axis: attr.is_variant_axis,
+            is_required: true,
             type: attr.type,
             available_values:
               attr.values?.map((v) => ({ id: v.id, name: v.name })) ?? [],
@@ -150,6 +174,7 @@ export const ProductCreateAddAttributesModal = () => {
               name: attr.name,
               values: [],
               is_variant_axis: attr.is_variant_axis,
+              is_required: attr.is_required,
               type: attr.type,
               available_values:
                 attr.values?.map((v) => ({ id: v.id, name: v.name })) ?? [],
@@ -167,27 +192,18 @@ export const ProductCreateAddAttributesModal = () => {
     const currentAttributes = getValues("attributes") ?? []
     const customAttributes = currentAttributes.filter((a) => a.is_custom)
 
-    const requiredIds = new Set(
-      product_attributes
-        ?.filter((a: ProductAttributeDTO) => a.is_required)
-        .map((a: ProductAttributeDTO) => a.id) ?? []
-    )
-
     const selectedAttributes = selected.map((a) => ({
       attribute_id: a.id,
       title: a.name,
       values: a.values,
       is_custom: false,
-      is_required: requiredIds.has(a.id),
+      is_required: a.is_required,
       use_for_variants: a.is_variant_axis,
       type: a.type,
       available_values: a.available_values,
     }))
 
-    setValue("attributes", [...selectedAttributes, ...customAttributes], {
-      shouldDirty: true,
-      shouldTouch: true,
-    })
+    replace([...selectedAttributes, ...customAttributes])
     setIsOpen(ADD_ATTRIBUTES_MODAL_ID, false)
   }
 

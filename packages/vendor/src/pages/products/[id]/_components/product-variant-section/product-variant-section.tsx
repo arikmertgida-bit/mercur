@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from "react";
 
 import { PencilSquare, Trash } from "@medusajs/icons";
-import { HttpTypes } from "@medusajs/types";
+import { HttpTypes, PriceDTO } from "@medusajs/types";
 import { ProductDTO, ProductVariantDTO } from "@mercurjs/types";
 import {
   Badge,
@@ -28,6 +28,8 @@ import {
 } from "../../../../../hooks/api/products";
 import { useDataTable } from "../../../../../hooks/use-data-table";
 import { useQueryParams } from "../../../../../hooks/use-query-params";
+import { castNumber } from "../../../../../lib/cast-number";
+import { getLocaleAmount } from "../../../../../lib/money-amount-helpers";
 
 const PAGE_SIZE = 10;
 const PREFIX = "pv";
@@ -53,7 +55,8 @@ export const ProductVariantSection = ({
       limit: PAGE_SIZE,
       created_at: created_at ? JSON.parse(created_at) : undefined,
       updated_at: updated_at ? JSON.parse(updated_at) : undefined,
-      fields: "title,sku,created_at,updated_at,*options,*options.option",
+      fields:
+        "title,sku,created_at,updated_at,*options,*options.option,*prices",
     },
     {
       placeholderData: keepPreviousData,
@@ -115,6 +118,19 @@ export const ProductVariantSection = ({
 };
 
 const columnHelper = createColumnHelper<ProductVariantDTO>();
+
+/**
+ * `PriceDTO.amount` is typed as `BigNumberValue` (`number | string |
+ * BigNumber`) since the module DTO also covers computed/raw amounts
+ * elsewhere in the app — a raw `*prices` list read always returns plain
+ * numbers, but we narrow explicitly rather than assume, so a malformed row
+ * is skipped instead of rendering "NaN".
+ */
+const isDisplayablePrice = (
+  price: PriceDTO,
+): price is PriceDTO & { amount: number | string; currency_code: string } =>
+  (typeof price.amount === "number" || typeof price.amount === "string") &&
+  !!price.currency_code;
 
 const useColumns = (product: HttpTypes.AdminProduct) => {
   const { t } = useTranslation();
@@ -237,6 +253,36 @@ const useColumns = (product: HttpTypes.AdminProduct) => {
         cell: ({ getValue }) => {
           const value = getValue();
           return value ? value : <span className="text-ui-fg-muted">-</span>;
+        },
+      }),
+      columnHelper.display({
+        id: "price",
+        header: t("fields.price"),
+        // Always the variant's current `prices` — refetched (see
+        // `useUpdateProductVariant`'s list-cache invalidation) after every
+        // price edit, so this never shows a value the seller no longer has
+        // set.
+        cell: ({ row }) => {
+          const prices = (row.original.prices ?? []).filter(
+            isDisplayablePrice,
+          );
+
+          if (!prices.length) {
+            return <span className="text-ui-fg-muted">-</span>;
+          }
+
+          return (
+            <div
+              className="flex flex-wrap items-center gap-1"
+              data-testid={`product-variant-price-${row.original.id}`}
+            >
+              {prices.map((price) => (
+                <Badge key={price.id} size="2xsmall" color="grey">
+                  {getLocaleAmount(castNumber(price.amount), price.currency_code)}
+                </Badge>
+              ))}
+            </div>
+          );
         },
       }),
       ...attributeColumns,

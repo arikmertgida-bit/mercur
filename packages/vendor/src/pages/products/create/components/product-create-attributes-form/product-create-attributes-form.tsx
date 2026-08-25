@@ -17,6 +17,7 @@ import {
   Controller,
   FieldArrayWithId,
   UseFieldArrayRemove,
+  UseFieldArrayReplace,
   useFieldArray,
 } from "react-hook-form"
 import { useTranslation } from "react-i18next"
@@ -39,7 +40,7 @@ const Root = () => {
   const form = useTabbedForm<ProductCreateSchemaType>()
   const { setIsOpen } = useStackedModal()
 
-  const { fields, remove } = useFieldArray({
+  const { fields, remove, replace } = useFieldArray({
     control: form.control,
     name: "attributes",
   })
@@ -54,7 +55,7 @@ const Root = () => {
       data-testid="product-create-attributes-form"
     >
       <StackedFocusModal id={ADD_ATTRIBUTES_MODAL_ID}>
-        <ProductCreateAddAttributesModal />
+        <ProductCreateAddAttributesModal replace={replace} />
       </StackedFocusModal>
 
       <div className="flex w-full max-w-[720px] flex-col gap-y-8">
@@ -86,7 +87,7 @@ const Root = () => {
           <SelectedAttributes fields={fields} remove={remove} />
         )}
 
-        <RequiredAttributes />
+        <RequiredAttributes replace={replace} />
       </div>
     </div>
   )
@@ -290,7 +291,11 @@ const SelectedAttributes = ({
   )
 }
 
-const RequiredAttributes = () => {
+const RequiredAttributes = ({
+  replace,
+}: {
+  replace: UseFieldArrayReplace<ProductCreateSchemaType, "attributes">
+}) => {
   const { t } = useTranslation()
   const form = useTabbedForm<ProductCreateSchemaType>()
   const categoryId = form.watch("category_id")
@@ -344,8 +349,29 @@ const RequiredAttributes = () => {
       }
     })
 
-    form.setValue("attributes", [...otherAttributes, ...requiredAttributes])
-  }, [product_attributes, form])
+    const nextAttributes = [...otherAttributes, ...requiredAttributes]
+
+    // Skip the write entirely once the merge is already a no-op — `replace`
+    // always remounts every field-array row (fresh RHF `id` keys), so
+    // calling it unconditionally on every render would blow away in-progress
+    // edits (e.g. a Combobox that's mid-selection) for no reason.
+    const isUnchanged =
+      currentAttributes.length === nextAttributes.length &&
+      currentAttributes.every((a, i) => a === nextAttributes[i])
+
+    if (isUnchanged) return
+
+    // `replace` (not `form.setValue`) is required here: this field array is
+    // also driven by `useFieldArray` in the parent (for the free-form
+    // attribute list) and by the "add existing" modal. Writing the array via
+    // `setValue` bypasses `useFieldArray`'s internal id-tracking, so its
+    // `fields` snapshot drifts from the real form values — the required
+    // attributes (Ürün Durumu, Marka, Menşei) then render a second, stale
+    // copy alongside the correct one. `replace` is the field array's own
+    // whole-array mutator and keeps every subscriber of this field name in
+    // sync.
+    replace(nextAttributes)
+  }, [product_attributes, form, replace])
 
   if (!categoryId || !product_attributes?.length) return null
 

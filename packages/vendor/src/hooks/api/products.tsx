@@ -381,6 +381,13 @@ export const useUpdateProductVariant = (
       queryClient.invalidateQueries({
         queryKey: variantsQueryKeys.detail(variantId),
       });
+      // The variant list on the product detail page (`ProductVariantSection`)
+      // reads this same key — without invalidating it too, an edited price
+      // (or any other listed field) stays stale there until something else
+      // happens to refetch it.
+      queryClient.invalidateQueries({
+        queryKey: variantsQueryKeys.lists(),
+      });
 
       options?.onSuccess?.(data, variables, context);
     },

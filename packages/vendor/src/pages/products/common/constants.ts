@@ -6,6 +6,8 @@ export const PRODUCT_DETAIL_FIELDS = [
   "+images.url",
   "+images.rank",
   "*categories",
+  "*tags",
+  "*type",
   "+additional_data",
   "*scoped_attributes",
   "+scoped_attributes.values.*",

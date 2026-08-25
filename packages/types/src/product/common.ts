@@ -3,6 +3,7 @@ import type {
   ProductVariantDTO as UpstreamProductVariantDTO,
   ProductCategoryDTO as UpstreamProductCategoryDTO,
   ProductImageDTO,
+  PriceDTO,
 } from "@medusajs/types"
 import { SellerDTO } from "../seller/common"
 
@@ -201,12 +202,16 @@ export type ProductCategoryDTO = UpstreamProductCategoryDTO & {
 }
 
 /**
- * Mercur extends `ProductVariantDTO` with `attribute_values` and Mercur's
- * own `images` link. Upstream fields kept intact.
+ * Mercur extends `ProductVariantDTO` with `attribute_values`, Mercur's own
+ * `images` link, and `prices` — the upstream module DTO doesn't declare
+ * `prices` even though the pricing-module link resolves it whenever a query
+ * actually requests it (e.g. `fields: "*prices"`). Upstream fields kept
+ * intact.
  */
 export type ProductVariantDTO = UpstreamProductVariantDTO & {
   attribute_values?: ProductAttributeValueDTO[]
   images?: ProductImageDTO[]
+  prices?: PriceDTO[]
 }
 
 /**
