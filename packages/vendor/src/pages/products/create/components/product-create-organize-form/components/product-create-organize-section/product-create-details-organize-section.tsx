@@ -111,6 +111,7 @@ export const ProductCreateOrganizationSection = () => {
                         searchValue={collections.searchValue}
                         onSearchValueChange={collections.onSearchValueChange}
                         fetchNextPage={collections.fetchNextPage}
+                        isSearching={collections.isSearching}
                       />
                     </Form.Control>
                   </div>
@@ -144,6 +145,7 @@ export const ProductCreateOrganizationSection = () => {
                         searchValue={types.searchValue}
                         onSearchValueChange={types.onSearchValueChange}
                         fetchNextPage={types.fetchNextPage}
+                        isSearching={types.isSearching}
                       />
                     </Form.Control>
                   </div>
@@ -175,6 +177,7 @@ export const ProductCreateOrganizationSection = () => {
                         searchValue={tags.searchValue}
                         onSearchValueChange={tags.onSearchValueChange}
                         fetchNextPage={tags.fetchNextPage}
+                        isSearching={tags.isSearching}
                       />
                     </Form.Control>
                   </div>

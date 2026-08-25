@@ -96,6 +96,26 @@ export const useComboboxData = <
   const disabled =
     (!rest.isPending && !options.length && !searchValue) || !enabled
 
+  /**
+   * `options` can lag behind what the user is currently typing in three ways:
+   * the debounce timer hasn't fired the new `query` yet, it has fired but
+   * `placeholderData: keepPreviousData` is still showing the previous
+   * search term's results while the new request is in flight, or this is
+   * the very first fetch and there is no data at all yet. In every case
+   * `options` does not reflect the current search term, so callers should
+   * render a loading state instead of the (possibly unrelated) list.
+   *
+   * `rest.isLoading` (rather than `rest.isPending`) is used for the
+   * first-fetch case because it is false while the query is disabled
+   * (e.g. `enabled: false` until a dependent field is picked) — `isPending`
+   * alone would stay true forever for a disabled query and permanently
+   * show a loading state instead of the combobox's normal empty state.
+   */
+  const isSearching =
+    searchValue !== (query ?? "") ||
+    rest.isLoading ||
+    (rest.isFetching && rest.isPlaceholderData)
+
   // make sure that the default value is included in the options
   if (defaultValue && defaultOptions.length && !searchValue) {
     defaultOptions.forEach((option) => {
@@ -119,5 +139,6 @@ export const useComboboxData = <
     onSearchValueChange,
     disabled,
     ...rest,
+    isSearching,
   }
 }
