@@ -55,6 +55,14 @@ interface ComboboxProps<T extends Value = Value>
   options: ComboboxOption[]
   fetchNextPage?: () => void
   isFetchingNextPage?: boolean
+  /**
+   * True while the currently rendered `options` do not yet reflect the
+   * in-progress search term (debounce pending, or a server refetch for the
+   * new term still in flight). While true, a loading placeholder is shown
+   * instead of `options`, so a stale/unrelated result set is never
+   * displayed as if it matched what the user just typed.
+   */
+  isSearching?: boolean
   onCreateOption?: (value: string) => void
   hideCreateOption?: boolean
   noResultsPlaceholder?: ReactNode
@@ -73,6 +81,7 @@ const ComboboxImpl = <T extends Value = string>(
     placeholder,
     fetchNextPage,
     isFetchingNextPage,
+    isSearching,
     onCreateOption,
     hideCreateOption,
     noResultsPlaceholder,
@@ -365,65 +374,79 @@ const ComboboxImpl = <T extends Value = string>(
         style={{
           pointerEvents: open ? "auto" : "none",
         }}
-        aria-busy={isPending}
+        aria-busy={isPending || isSearching}
       >
-        {results.map(({ value, label, disabled }) => (
-          <PrimitiveComboboxItem
-            key={value}
-            value={value}
-            focusOnHover
-            setValueOnClick={false}
-            disabled={disabled}
-            className={clx(
-              "transition-fg bg-ui-bg-base data-[active-item=true]:bg-ui-bg-base-hover group flex cursor-pointer items-center gap-x-2 rounded-[4px] px-2 py-1",
-              {
-                "text-ui-fg-disabled": disabled,
-                "bg-ui-bg-component": disabled,
-              }
-            )}
-          >
-            <PrimitiveComboboxItemCheck className="flex !size-5 shrink-0 items-center justify-center">
-              {isArrayValue ? <CheckMini /> : <EllipseMiniSolid />}
-            </PrimitiveComboboxItemCheck>
-            <PrimitiveComboboxItemValue className="txt-compact-small truncate">
-              {label}
-            </PrimitiveComboboxItemValue>
-          </PrimitiveComboboxItem>
-        ))}
-        {!!fetchNextPage && <div ref={lastOptionRef} className="w-px" />}
-        {isFetchingNextPage && (
-          <div className="transition-fg bg-ui-bg-base flex items-center rounded-[4px] px-2 py-1.5">
-            <div className="bg-ui-bg-component size-full h-5 w-full animate-pulse rounded-[4px]" />
-          </div>
-        )}
-        {!results.length &&
-          (noResultsPlaceholder && !searchValue?.length ? (
-            noResultsPlaceholder
-          ) : (
-            <div className="flex items-center gap-x-2 rounded-[4px] px-2 py-1.5">
-              <Text
-                size="small"
-                leading="compact"
-                className="text-ui-fg-subtle"
-              >
-                {t("general.noResultsTitle")}
-              </Text>
-            </div>
-          ))}
-        {!results.length && onCreateOption && !hideCreateOption && (
-          <Fragment>
-            <PrimitiveSeparator className="bg-ui-border-base -mx-1" />
-            <PrimitiveComboboxItem
-              value={uncontrolledSearchValue}
-              focusOnHover
-              setValueOnClick={false}
-              className="transition-fg bg-ui-bg-base data-[active-item=true]:bg-ui-bg-base-hover group mt-1 flex cursor-pointer items-center gap-x-2 rounded-[4px] px-2 py-1.5"
+        {isSearching ? (
+          Array.from({ length: 3 }).map((_, index) => (
+            <div
+              // oxlint-disable-next-line react/no-array-index-key -- fixed-length skeleton placeholder, no persistent/reorderable state
+              key={index}
+              className="transition-fg bg-ui-bg-base flex items-center rounded-[4px] px-2 py-1.5"
             >
-              <PlusMini className="text-ui-fg-subtle" />
-              <Text size="small" leading="compact">
-                {t("actions.create")} &quot;{searchValue}&quot;
-              </Text>
-            </PrimitiveComboboxItem>
+              <div className="bg-ui-bg-component size-full h-5 w-full animate-pulse rounded-[4px]" />
+            </div>
+          ))
+        ) : (
+          <Fragment>
+            {results.map(({ value, label, disabled }) => (
+              <PrimitiveComboboxItem
+                key={value}
+                value={value}
+                focusOnHover
+                setValueOnClick={false}
+                disabled={disabled}
+                className={clx(
+                  "transition-fg bg-ui-bg-base data-[active-item=true]:bg-ui-bg-base-hover group flex cursor-pointer items-center gap-x-2 rounded-[4px] px-2 py-1",
+                  {
+                    "text-ui-fg-disabled": disabled,
+                    "bg-ui-bg-component": disabled,
+                  }
+                )}
+              >
+                <PrimitiveComboboxItemCheck className="flex !size-5 shrink-0 items-center justify-center">
+                  {isArrayValue ? <CheckMini /> : <EllipseMiniSolid />}
+                </PrimitiveComboboxItemCheck>
+                <PrimitiveComboboxItemValue className="txt-compact-small truncate">
+                  {label}
+                </PrimitiveComboboxItemValue>
+              </PrimitiveComboboxItem>
+            ))}
+            {!!fetchNextPage && <div ref={lastOptionRef} className="w-px" />}
+            {isFetchingNextPage && (
+              <div className="transition-fg bg-ui-bg-base flex items-center rounded-[4px] px-2 py-1.5">
+                <div className="bg-ui-bg-component size-full h-5 w-full animate-pulse rounded-[4px]" />
+              </div>
+            )}
+            {!results.length &&
+              (noResultsPlaceholder && !searchValue?.length ? (
+                noResultsPlaceholder
+              ) : (
+                <div className="flex items-center gap-x-2 rounded-[4px] px-2 py-1.5">
+                  <Text
+                    size="small"
+                    leading="compact"
+                    className="text-ui-fg-subtle"
+                  >
+                    {t("general.noResultsTitle")}
+                  </Text>
+                </div>
+              ))}
+            {!results.length && onCreateOption && !hideCreateOption && (
+              <Fragment>
+                <PrimitiveSeparator className="bg-ui-border-base -mx-1" />
+                <PrimitiveComboboxItem
+                  value={uncontrolledSearchValue}
+                  focusOnHover
+                  setValueOnClick={false}
+                  className="transition-fg bg-ui-bg-base data-[active-item=true]:bg-ui-bg-base-hover group mt-1 flex cursor-pointer items-center gap-x-2 rounded-[4px] px-2 py-1.5"
+                >
+                  <PlusMini className="text-ui-fg-subtle" />
+                  <Text size="small" leading="compact">
+                    {t("actions.create")} &quot;{searchValue}&quot;
+                  </Text>
+                </PrimitiveComboboxItem>
+              </Fragment>
+            )}
           </Fragment>
         )}
       </PrimitiveComboboxPopover>
