@@ -161,6 +161,7 @@
     "download": "İndir",
     "clear": "Temizle",
     "clearAll": "Tümünü Temizle",
+    "clearSearch": "Aramayı temizle",
     "apply": "Uygula",
     "add": "Ekle",
     "select": "Seç",
@@ -183,6 +184,7 @@
     "notIn": "İçinde Değil"
   },
   "app": {
+    "documentTitle": "Kayı.com Satıcı Merkezi",
     "search": {
       "label": "Arama",
       "title": "Arama",
@@ -340,7 +342,8 @@
     },
     "toggle": {
       "enabled": "Etkin",
-      "notEnabled": "Etkin değil"
+      "notEnabled": "Etkin değil",
+      "ariaLabel": "Aç/Kapat"
     }
   },
   "filters": {

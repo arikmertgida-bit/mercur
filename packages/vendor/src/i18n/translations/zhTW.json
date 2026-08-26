@@ -163,6 +163,7 @@
     "download": "下載",
     "clear": "清除",
     "clearAll": "清除全部",
+    "clearSearch": "清除搜尋",
     "apply": "套用",
     "add": "新增",
     "select": "選擇",
@@ -183,6 +184,7 @@
     "notIn": "不包含於"
   },
   "app": {
+    "documentTitle": "Kayı.com 賣家中心",
     "search": {
       "label": "搜尋",
       "title": "搜尋",
@@ -340,7 +342,8 @@
     },
     "toggle": {
       "enabled": "已啟用",
-      "notEnabled": "未啟用"
+      "notEnabled": "未啟用",
+      "ariaLabel": "切換"
     }
   },
   "filters": {

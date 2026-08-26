@@ -161,6 +161,7 @@
     "download": "Parsisiųsti",
     "clear": "Išvalyti",
     "clearAll": "Išvalyti visus",
+    "clearSearch": "Išvalyti paiešką",
     "apply": "Pritaikyti",
     "add": "Pridėti",
     "select": "Pasirinkti",
@@ -183,6 +184,7 @@
     "notIn": "Ne iš"
   },
   "app": {
+    "documentTitle": "Kayı.com Pardavėjų centras",
     "search": {
       "label": "Ieškoti",
       "title": "Paieška",
@@ -340,7 +342,8 @@
     },
     "toggle": {
       "enabled": "Įjungtas",
-      "notEnabled": "Išjungta"
+      "notEnabled": "Išjungta",
+      "ariaLabel": "Perjungti"
     }
   },
   "filters": {
@@ -2339,7 +2342,7 @@
           "region": "Regionas",
           "stateOrTerritory": "Valstija/Teritorija",
           "department": "Skyrius",
-          "county": "County",
+          "county": "Grafystė",
           "territory": "Teritorija",
           "prefecture": "Prefektūra",
           "district": "Rajonas",

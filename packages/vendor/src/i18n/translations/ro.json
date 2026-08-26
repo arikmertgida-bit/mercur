@@ -161,6 +161,7 @@
     "download": "Descărcați",
     "clear": "Clar",
     "clearAll": "Ștergeți totul",
+    "clearSearch": "Șterge căutarea",
     "apply": "Aplicați",
     "add": "Adăuga",
     "select": "Selecta",
@@ -183,6 +184,7 @@
     "notIn": "Nu în"
   },
   "app": {
+    "documentTitle": "Kayı.com Centrul Vânzătorilor",
     "search": {
       "label": "Căutare",
       "title": "Căutare",
@@ -340,7 +342,8 @@
     },
     "toggle": {
       "enabled": "Activat",
-      "notEnabled": "Nu este activat"
+      "notEnabled": "Nu este activat",
+      "ariaLabel": "Comutator"
     }
   },
   "filters": {
@@ -2339,7 +2342,7 @@
           "region": "Regiune",
           "stateOrTerritory": "Stat/Teritoriu",
           "department": "Departament",
-          "county": "jud",
+          "county": "Județ",
           "territory": "Teritoriu",
           "prefecture": "Prefectura",
           "district": "District",

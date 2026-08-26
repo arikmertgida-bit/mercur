@@ -161,6 +161,7 @@
     "download": "Unduh",
     "clear": "Bersihkan",
     "clearAll": "Bersihkan semua",
+    "clearSearch": "Hapus pencarian",
     "apply": "Terapkan",
     "add": "Tambah",
     "select": "Pilih",
@@ -183,6 +184,7 @@
     "notIn": "Tidak dalam"
   },
   "app": {
+    "documentTitle": "Kayı.com Pusat Vendor",
     "search": {
       "label": "Cari",
       "title": "Cari",
@@ -340,7 +342,8 @@
     },
     "toggle": {
       "enabled": "Diaktifkan",
-      "notEnabled": "Tidak diaktifkan"
+      "notEnabled": "Tidak diaktifkan",
+      "ariaLabel": "Alihkan"
     }
   },
   "filters": {
@@ -2348,7 +2351,7 @@
           "region": "Wilayah",
           "stateOrTerritory": "Negara Bagian/Teritori",
           "department": "Departemen",
-          "county": "County",
+          "county": "Kabupaten",
           "territory": "Teritori",
           "prefecture": "Prefektur",
           "district": "Distrik",

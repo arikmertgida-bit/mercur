@@ -161,6 +161,7 @@
     "download": "Изтегли",
     "clear": "Изчисти",
     "clearAll": "Изчисти всичко",
+    "clearSearch": "Изчисти търсенето",
     "apply": "Приложи",
     "add": "Добави",
     "select": "Избери",
@@ -183,6 +184,7 @@
     "notIn": "Не е в"
   },
   "app": {
+    "documentTitle": "Kayı.com Център за продавачи",
     "search": {
       "label": "Търсене",
       "title": "Търсене",
@@ -340,7 +342,8 @@
     },
     "toggle": {
       "enabled": "Активирано",
-      "notEnabled": "Не е активирано"
+      "notEnabled": "Не е активирано",
+      "ariaLabel": "Превключване"
     }
   },
   "filters": {

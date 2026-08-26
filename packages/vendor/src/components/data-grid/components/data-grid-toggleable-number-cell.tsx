@@ -187,7 +187,7 @@ const Inner = ({
     return (
       <div className="flex size-full items-center gap-x-2 pl-8">
         <input
-          aria-label="Toggle"
+          aria-label={t("dataGrid.toggle.ariaLabel")}
           ref={combinedRefs}
           className="sr-only"
           onFocus={onFocus}

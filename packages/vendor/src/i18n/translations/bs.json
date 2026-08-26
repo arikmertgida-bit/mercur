@@ -161,6 +161,7 @@
     "download": "Preuzmi",
     "clear": "Očisti",
     "clearAll": "Očisti sve",
+    "clearSearch": "Očisti pretragu",
     "apply": "Primijeni",
     "add": "Dodaj",
     "select": "Odaberi",
@@ -183,6 +184,7 @@
     "notIn": "Nije u"
   },
   "app": {
+    "documentTitle": "Kayı.com Centar za prodavače",
     "search": {
       "label": "Pretraga",
       "title": "Pretraga",
@@ -340,7 +342,8 @@
     },
     "toggle": {
       "enabled": "Omogućeno",
-      "notEnabled": "Nije omogućeno"
+      "notEnabled": "Nije omogućeno",
+      "ariaLabel": "Preklopnik"
     }
   },
   "filters": {

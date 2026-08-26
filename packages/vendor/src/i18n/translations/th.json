@@ -161,6 +161,7 @@
     "download": "ดาวน์โหลด",
     "clear": "ล้างข้อมูล",
     "clearAll": "ล้างทั้งหมด",
+    "clearSearch": "ล้างการค้นหา",
     "apply": "ใช้",
     "add": "เพิ่ม",
     "select": "เลือก",
@@ -183,6 +184,7 @@
     "notIn": "ไม่ใน"
   },
   "app": {
+    "documentTitle": "Kayı.com ศูนย์ผู้ขาย",
     "search": {
       "label": "ค้นหา",
       "title": "ค้นหา",
@@ -340,7 +342,8 @@
     },
     "toggle": {
       "enabled": "เปิดใช้งาน",
-      "notEnabled": "ยังไม่เปิดใช้งาน"
+      "notEnabled": "ยังไม่เปิดใช้งาน",
+      "ariaLabel": "สลับ"
     }
   },
   "filters": {

@@ -161,6 +161,7 @@
     "download": "Скачать",
     "clear": "Очистить",
     "clearAll": "Очистить все",
+    "clearSearch": "Очистить поиск",
     "apply": "Применить",
     "add": "Добавить",
     "select": "Выбрать",
@@ -183,6 +184,7 @@
     "notIn": "Не в"
   },
   "app": {
+    "documentTitle": "Kayı.com Центр продавца",
     "search": {
       "label": "Поиск",
       "title": "Поиск",
@@ -340,7 +342,8 @@
     },
     "toggle": {
       "enabled": "Включено",
-      "notEnabled": "Не включено"
+      "notEnabled": "Не включено",
+      "ariaLabel": "Переключить"
     }
   },
   "filters": {

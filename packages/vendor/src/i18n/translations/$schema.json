@@ -654,6 +654,9 @@
         },
         "ok": {
           "type": "string"
+        },
+        "clearSearch": {
+          "type": "string"
         }
       },
       "required": [
@@ -694,6 +697,7 @@
         "download",
         "clear",
         "clearAll",
+        "clearSearch",
         "apply",
         "add",
         "select",
@@ -1217,9 +1221,13 @@
             "settings"
           ],
           "additionalProperties": false
+        },
+        "documentTitle": {
+          "type": "string"
         }
       },
       "required": [
+        "documentTitle",
         "search",
         "keyboardShortcuts",
         "menus",
@@ -1238,11 +1246,15 @@
             },
             "notEnabled": {
               "type": "string"
+            },
+            "ariaLabel": {
+              "type": "string"
             }
           },
           "required": [
             "enabled",
-            "notEnabled"
+            "notEnabled",
+            "ariaLabel"
           ],
           "additionalProperties": false
         },

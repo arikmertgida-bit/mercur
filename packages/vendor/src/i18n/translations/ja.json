@@ -161,6 +161,7 @@
     "download": "ダウンロード",
     "clear": "クリア",
     "clearAll": "すべてクリア",
+    "clearSearch": "検索をクリア",
     "apply": "適用",
     "add": "追加",
     "select": "選択",
@@ -183,6 +184,7 @@
     "notIn": "含まない"
   },
   "app": {
+    "documentTitle": "Kayı.com セラーセンター",
     "search": {
       "label": "検索",
       "title": "検索",
@@ -340,7 +342,8 @@
     },
     "toggle": {
       "enabled": "有効",
-      "notEnabled": "無効"
+      "notEnabled": "無効",
+      "ariaLabel": "切り替え"
     }
   },
   "filters": {

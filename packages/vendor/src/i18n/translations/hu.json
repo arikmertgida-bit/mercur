@@ -161,6 +161,7 @@
     "download": "Letöltés",
     "clear": "Törlés",
     "clearAll": "Összes törlése",
+    "clearSearch": "Keresés törlése",
     "apply": "Alkalmaz",
     "add": "Hozzáadás",
     "select": "Válasszon",
@@ -183,6 +184,7 @@
     "notIn": "Nincs benne"
   },
   "app": {
+    "documentTitle": "Kayı.com Eladóközpont",
     "search": {
       "label": "Keresés",
       "title": "Keresés",
@@ -340,7 +342,8 @@
     },
     "toggle": {
       "enabled": "Engedélyezve",
-      "notEnabled": "Nem engedélyezett"
+      "notEnabled": "Nem engedélyezett",
+      "ariaLabel": "Kapcsoló"
     }
   },
   "filters": {

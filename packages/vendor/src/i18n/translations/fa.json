@@ -161,6 +161,7 @@
     "download": "دانلود",
     "clear": "پاک کردن",
     "clearAll": "پاک کردن همه",
+    "clearSearch": "پاک کردن جستجو",
     "apply": "اعمال",
     "add": "اضافه کردن",
     "select": "انتخاب",
@@ -183,6 +184,7 @@
     "notIn": "خارج از"
   },
   "app": {
+    "documentTitle": "Kayı.com مرکز فروشندگان",
     "search": {
       "label": "جستجو",
       "title": "جستجو",
@@ -340,7 +342,8 @@
     },
     "toggle": {
       "enabled": "فعال",
-      "notEnabled": "غیرفعال شده"
+      "notEnabled": "غیرفعال شده",
+      "ariaLabel": "تغییر وضعیت"
     }
   },
   "filters": {

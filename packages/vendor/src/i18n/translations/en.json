@@ -166,6 +166,7 @@
     "download": "Download",
     "clear": "Clear",
     "clearAll": "Clear all",
+    "clearSearch": "Clear search",
     "apply": "Apply",
     "add": "Add",
     "select": "Select",
@@ -183,6 +184,7 @@
     "notIn": "Not In"
   },
   "app": {
+    "documentTitle": "Kayı.com Vendor Hub",
     "search": {
       "label": "Search",
       "title": "Search",
@@ -306,7 +308,8 @@
   "dataGrid": {
     "toggle": {
       "enabled": "Enabled",
-      "notEnabled": "Not enabled"
+      "notEnabled": "Not enabled",
+      "ariaLabel": "Toggle"
     },
     "columns": {
       "view": "View",

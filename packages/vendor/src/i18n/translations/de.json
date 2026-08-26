@@ -161,6 +161,7 @@
     "download": "Herunterladen",
     "clear": "Klar",
     "clearAll": "Alles löschen",
+    "clearSearch": "Suche löschen",
     "apply": "Anwenden",
     "add": "Hinzufügen",
     "select": "Wählen",
@@ -183,6 +184,7 @@
     "notIn": "Nicht in"
   },
   "app": {
+    "documentTitle": "Kayı.com Verkäuferzentrum",
     "search": {
       "label": "Suchen",
       "title": "Suchen",
@@ -340,7 +342,8 @@
     },
     "toggle": {
       "enabled": "Aktiviert",
-      "notEnabled": "Nicht aktiviert"
+      "notEnabled": "Nicht aktiviert",
+      "ariaLabel": "Umschalten"
     }
   },
   "filters": {
@@ -2335,11 +2338,11 @@
       "sublevels": {
         "labels": {
           "province": "Provinz",
-          "state": "Zustand",
+          "state": "Staat",
           "region": "Region",
           "stateOrTerritory": "Staat/Territorium",
           "department": "Abteilung",
-          "county": "County",
+          "county": "Landkreis",
           "territory": "Gebiet",
           "prefecture": "Präfektur",
           "district": "Bezirk",

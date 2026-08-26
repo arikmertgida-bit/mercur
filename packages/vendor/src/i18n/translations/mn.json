@@ -161,6 +161,7 @@
     "download": "Татаж авах",
     "clear": "Цэвэрлэх",
     "clearAll": "Бүгдийг цэвэрлэх",
+    "clearSearch": "Хайлтыг арилгах",
     "apply": "Хэрэглэх",
     "add": "Нэмэх",
     "select": "Сонгох",
@@ -183,6 +184,7 @@
     "notIn": "дотор биш"
   },
   "app": {
+    "documentTitle": "Kayı.com Худалдагчийн төв",
     "search": {
       "label": "Хайх",
       "title": "Хайх",
@@ -340,7 +342,8 @@
     },
     "toggle": {
       "enabled": "Идэвхтэй",
-      "notEnabled": "Идэвхгүй"
+      "notEnabled": "Идэвхгүй",
+      "ariaLabel": "Сэлгэх"
     }
   },
   "filters": {
