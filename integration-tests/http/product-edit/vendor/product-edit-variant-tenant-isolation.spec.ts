@@ -11,6 +11,7 @@ type VariantRow = {
   id: string
   title: string
   sku: string | null
+  weight: number | null
 }
 
 /**
@@ -80,7 +81,7 @@ medusaIntegrationTestRunner({
           data: [variant],
         } = await query.graph({
           entity: "variant",
-          fields: ["id", "title", "sku"],
+          fields: ["id", "title", "sku", "weight"],
           filters: { id: variantId },
         })
         return (variant as VariantRow | undefined) ?? null
@@ -116,14 +117,14 @@ medusaIntegrationTestRunner({
         )
         const victimVariant = await addVariant(
           victimProductId,
-          { title: "Victim Variant", sku: "VICTIM-SKU" },
+          { title: "Victim Variant", sku: "VICTIM-SKU", weight: 100 },
           otherSellerHeaders,
         )
 
         const res = await api
           .post(
             `/vendor/products/${myProductId}/variants/${victimVariant.id}`,
-            { title: "HACKED", sku: "HACKED-SKU" },
+            { title: "HACKED", weight: 999 },
             sellerHeaders,
           )
           .catch((e) => e.response)
@@ -134,6 +135,7 @@ medusaIntegrationTestRunner({
         expect(stillThere).not.toBeNull()
         expect(stillThere?.title).toBe("Victim Variant")
         expect(stillThere?.sku).toBe("VICTIM-SKU")
+        expect(stillThere?.weight).toBe(100)
 
         const staged = await stagedVariantActionsFor(victimVariant.id)
         expect(staged).toHaveLength(0)
@@ -172,19 +174,19 @@ medusaIntegrationTestRunner({
         const myProductId = await createVendorProduct("My Own Product", sellerHeaders)
         const myVariant = await addVariant(
           myProductId,
-          { title: "My Variant", sku: "MY-SKU" },
+          { title: "My Variant", sku: "MY-SKU", weight: 50 },
           sellerHeaders,
         )
 
         const res = await api.post(
           `/vendor/products/${myProductId}/variants/${myVariant.id}`,
-          { title: "My Variant", sku: "MY-SKU-UPDATED" },
+          { title: "My Variant", weight: 75 },
           sellerHeaders,
         )
 
         expect(res.status).toBe(202)
         const updated = await loadVariant(myVariant.id)
-        expect(updated?.sku).toBe("MY-SKU-UPDATED")
+        expect(updated?.weight).toBe(75)
       })
     })
   },

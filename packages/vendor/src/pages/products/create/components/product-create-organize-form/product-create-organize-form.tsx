@@ -21,11 +21,7 @@ const Root = () => {
 Root._tabMeta = defineTabMeta<ProductCreateSchemaType>({
   id: "organize",
   labelKey: "products.create.tabs.organize",
-  validationFields: [
-    "type_id", "collection_id", "category_id", "tags",
-    "origin_country", "material",
-    "width", "length", "height", "weight", "mid_code", "hs_code",
-  ],
+  validationFields: ["type_id", "collection_id", "category_id", "tags"],
 })
 
 export const ProductCreateOrganizeForm = Root

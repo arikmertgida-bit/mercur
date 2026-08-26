@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { z } from "zod"
 
+import { useEffect, useMemo } from "react"
 import { HttpTypes } from "@medusajs/types"
 import { ProductDTO, AttributeType, MercurFeatureFlags } from "@mercurjs/types"
 
@@ -14,7 +15,7 @@ import { AttributeValueInput } from "@components/inputs/attribute-value-input"
 import { CountrySelect } from "@components/inputs/country-select"
 import { RouteDrawer, useRouteModal } from "@components/modals"
 import { KeyboundForm } from "@components/utilities/keybound-form"
-import { useFeatureFlags } from "@hooks/api"
+import { useFeatureFlags, useRegions } from "@hooks/api"
 import { useUpdateProductVariant } from "@hooks/api/products"
 import {
   transformNullableFormData,
@@ -29,6 +30,8 @@ type ProductEditVariantFormProps = {
 
 const ProductEditVariantSchema = z.object({
   title: z.string().min(1, i18next.t("products.variant.validation.titleRequired")),
+  // Read-only in this form (see the SKU-block inputs below) — kept in the
+  // schema only so `defaultValues` stays typed against the real variant.
   sku: z.string().optional(),
   ean: z.string().optional(),
   upc: z.string().optional(),
@@ -39,7 +42,10 @@ const ProductEditVariantSchema = z.object({
   length: optionalInt,
   mid_code: z.string().optional(),
   hs_code: z.string().optional(),
-  origin_country: z.string().optional(),
+  origin_country: z.string().min(1, i18next.t("validation.requiredField")),
+  prices: z
+    .record(z.string(), z.union([z.literal(""), z.coerce.number().min(0)]))
+    .optional(),
   options: z
     .record(z.string().min(1, i18next.t("products.variant.validation.optionRequired")))
     .optional(),
@@ -55,6 +61,26 @@ export const ProductEditVariantForm = ({
   const { feature_flags } = useFeatureFlags()
   const isProductRequestEnabled =
     !!feature_flags?.[MercurFeatureFlags.PRODUCT_REQUEST]
+
+  // Every region's currency, matching the create wizard's own variant grid —
+  // a variant's price applies across the whole marketplace, not just the
+  // seller's onboarding currency.
+  const { regions } = useRegions({ limit: 9999 })
+  const currencies = useMemo(
+    () => Array.from(new Set((regions ?? []).map((region) => region.currency_code))),
+    [regions],
+  )
+
+  const variantPrices = variant.prices ?? []
+  const defaultPrices = useMemo(
+    () =>
+      currencies.reduce<Record<string, string>>((acc, currency) => {
+        const existing = variantPrices.find((p) => p.currency_code === currency)
+        acc[currency] = existing ? String(existing.amount) : ""
+        return acc
+      }, {}),
+    [currencies, variantPrices],
+  )
 
   const variantAttributes =
     (product as HttpTypes.AdminProduct & Pick<ProductDTO, "attributes">)
@@ -91,10 +117,20 @@ export const ProductEditVariantForm = ({
       mid_code: variant.mid_code || "",
       hs_code: variant.hs_code || "",
       origin_country: variant.origin_country || "",
+      prices: defaultPrices,
       options: defaultOptions,
     },
     resolver: zodResolver(ProductEditVariantSchema),
   })
+
+  // `regions` (and therefore `currencies`/`defaultPrices`) can still be
+  // loading when `useForm` captures its initial `defaultValues` — RHF only
+  // reads that snapshot once, so once the currency list actually arrives the
+  // price inputs are seeded explicitly instead of staying blank.
+  useEffect(() => {
+    if (!Object.keys(defaultPrices).length) return
+    form.setValue("prices", defaultPrices, { shouldDirty: false })
+  }, [defaultPrices, form])
 
   const { mutateAsync, isPending } = useUpdateProductVariant(
     variant.product_id!,
@@ -109,10 +145,20 @@ export const ProductEditVariantForm = ({
       width,
       length,
       options,
-      ...optional
+      prices,
+      mid_code,
+      hs_code,
+      origin_country,
     } = data
 
-    const nullableData = transformNullableFormData(optional)
+    // SKU/EAN/UPC/Barcode are read-only in this form (see the disabled
+    // inputs below) and are intentionally never sent — the backend no
+    // longer even accepts them on this route once set at creation.
+    const nullableData = transformNullableFormData({
+      mid_code,
+      hs_code,
+      origin_country,
+    })
 
     // Backend keys options by option title (= attribute name). Form
     // keys by handle/id; remap and drop empties.
@@ -126,6 +172,24 @@ export const ProductEditVariantForm = ({
       {},
     )
 
+    // Only currencies the seller actually filled in are sent — an existing
+    // price's `id` is carried along so the backend updates that record in
+    // place instead of creating a duplicate.
+    const priceEntries = currencies.reduce<
+      { id?: string; amount: number; currency_code: string }[]
+    >((acc, currency) => {
+      const value = prices?.[currency]
+      if (value === undefined || value === "") return acc
+
+      const existing = variantPrices.find((p) => p.currency_code === currency)
+      acc.push({
+        currency_code: currency,
+        amount: Number(value),
+        ...(existing?.id ? { id: existing.id } : {}),
+      })
+      return acc
+    }, [])
+
     await mutateAsync(
       {
         weight: transformNullableFormNumber(weight),
@@ -136,6 +200,7 @@ export const ProductEditVariantForm = ({
         options: Object.keys(cleanedOptions).length
           ? cleanedOptions
           : undefined,
+        prices: priceEntries.length ? priceEntries : undefined,
         ...nullableData,
       },
       {
@@ -209,6 +274,28 @@ export const ProductEditVariantForm = ({
               )
             })}
           </div>
+          <div className="flex flex-col gap-y-4">
+            {currencies.map((currency) => (
+              <Form.Field
+                key={currency}
+                control={form.control}
+                name={`prices.${currency}`}
+                render={({ field }) => {
+                  return (
+                    <Form.Item>
+                      <Form.Label optional>
+                        {t("fields.price")} ({currency.toUpperCase()})
+                      </Form.Label>
+                      <Form.Control>
+                        <Input type="number" {...field} />
+                      </Form.Control>
+                      <Form.ErrorMessage />
+                    </Form.Item>
+                  )
+                }}
+              />
+            ))}
+          </div>
           <Divider />
           <div className="flex flex-col gap-y-8">
             <div className="flex flex-col gap-y-4">
@@ -220,7 +307,7 @@ export const ProductEditVariantForm = ({
                     <Form.Item>
                       <Form.Label optional>{t("fields.sku")}</Form.Label>
                       <Form.Control>
-                        <Input {...field} />
+                        <Input {...field} disabled />
                       </Form.Control>
                       <Form.ErrorMessage />
                     </Form.Item>
@@ -235,7 +322,7 @@ export const ProductEditVariantForm = ({
                     <Form.Item>
                       <Form.Label optional>{t("fields.ean")}</Form.Label>
                       <Form.Control>
-                        <Input {...field} />
+                        <Input {...field} disabled />
                       </Form.Control>
                       <Form.ErrorMessage />
                     </Form.Item>
@@ -250,7 +337,7 @@ export const ProductEditVariantForm = ({
                     <Form.Item>
                       <Form.Label optional>{t("fields.upc")}</Form.Label>
                       <Form.Control>
-                        <Input {...field} />
+                        <Input {...field} disabled />
                       </Form.Control>
                       <Form.ErrorMessage />
                     </Form.Item>
@@ -265,7 +352,7 @@ export const ProductEditVariantForm = ({
                     <Form.Item>
                       <Form.Label optional>{t("fields.barcode")}</Form.Label>
                       <Form.Control>
-                        <Input {...field} />
+                        <Input {...field} disabled />
                       </Form.Control>
                       <Form.ErrorMessage />
                     </Form.Item>
@@ -378,7 +465,7 @@ export const ProductEditVariantForm = ({
               render={({ field }) => {
                 return (
                   <Form.Item>
-                    <Form.Label optional>
+                    <Form.Label>
                       {t("fields.countryOfOrigin")}
                     </Form.Label>
                     <Form.Control>

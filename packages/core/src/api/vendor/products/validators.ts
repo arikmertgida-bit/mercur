@@ -299,16 +299,16 @@ export const VendorAddProductVariant = z
 export type VendorUpdateProductVariantType = z.infer<
   typeof VendorUpdateProductVariant
 >
+// `sku`/`ean`/`upc`/`barcode` are deliberately absent here (unlike
+// `CreateProductVariant`/`VendorAddProductVariant`): these identifiers are
+// permanently read-only once a variant exists — the vendor UI never sends
+// them, and `.strict()` below rejects any request that still tries to.
 export const VendorUpdateProductVariant = z
   .object({
     title: z.string().optional(),
-    sku: z.string().nullish(),
-    ean: z.string().nullish(),
-    upc: z.string().nullish(),
     isbn: z.string().nullish(),
     asin: z.string().nullish(),
     gtin: z.string().nullish(),
-    barcode: z.string().nullish(),
     hs_code: z.string().nullish(),
     mid_code: z.string().nullish(),
     thumbnail: z.string().nullish(),
@@ -323,6 +323,15 @@ export const VendorUpdateProductVariant = z
     manage_inventory: z.boolean().optional(),
     metadata: z.record(z.string(), z.unknown()).nullish(),
     options: z.record(z.string(), z.string()).optional(),
+    prices: z
+      .array(
+        z.object({
+          id: z.string().optional(),
+          amount: z.number(),
+          currency_code: z.string(),
+        })
+      )
+      .optional(),
     images: z
       .object({
         add: z.array(z.string()).optional(),
