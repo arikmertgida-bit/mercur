@@ -83,7 +83,9 @@ export const ProductCreateSchema = z
       message: i18n.t("products.create.errors.categoryRequired"),
     }),
     tags: z.array(z.string()).optional(),
-    origin_country: z.string().optional(),
+    origin_country: z.string().min(1, {
+      message: i18n.t("validation.requiredField"),
+    }),
     material: z.string().optional(),
     width: z.string().optional(),
     length: z.string().optional(),

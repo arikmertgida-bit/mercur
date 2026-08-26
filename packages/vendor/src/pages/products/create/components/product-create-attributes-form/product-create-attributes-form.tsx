@@ -1,6 +1,7 @@
 import { XMarkMini } from "@medusajs/icons"
 import {
   Button,
+  Divider,
   Heading,
   IconButton,
   InlineTip,
@@ -24,6 +25,7 @@ import { useTranslation } from "react-i18next"
 
 import { Form } from "@components/common/form"
 import { Combobox } from "@components/inputs/combobox"
+import { CountrySelect } from "@components/inputs/country-select"
 import { StackedFocusModal, useStackedModal } from "@components/modals"
 import { useTabbedForm } from "@components/tabbed-form/tabbed-form"
 import { defineTabMeta } from "@components/tabbed-form/types"
@@ -88,6 +90,119 @@ const Root = () => {
         )}
 
         <RequiredAttributes replace={replace} />
+
+        <Divider />
+
+        <PhysicalAttributesSection />
+      </div>
+    </div>
+  )
+}
+
+const PhysicalAttributesSection = () => {
+  const { t } = useTranslation()
+  const form = useTabbedForm<ProductCreateSchemaType>()
+
+  return (
+    <div
+      className="flex flex-col gap-y-6"
+      data-testid="product-create-physical-attributes"
+    >
+      <div>
+        <Heading level="h2">{t("products.attributes")}</Heading>
+      </div>
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <Form.Field
+          control={form.control}
+          name="weight"
+          render={({ field }) => (
+            <Form.Item>
+              <Form.Label optional>{t("fields.weight")}</Form.Label>
+              <Form.Control>
+                <Input type="number" {...field} />
+              </Form.Control>
+              <Form.ErrorMessage />
+            </Form.Item>
+          )}
+        />
+        <Form.Field
+          control={form.control}
+          name="width"
+          render={({ field }) => (
+            <Form.Item>
+              <Form.Label optional>{t("fields.width")}</Form.Label>
+              <Form.Control>
+                <Input type="number" {...field} />
+              </Form.Control>
+              <Form.ErrorMessage />
+            </Form.Item>
+          )}
+        />
+        <Form.Field
+          control={form.control}
+          name="length"
+          render={({ field }) => (
+            <Form.Item>
+              <Form.Label optional>{t("fields.length")}</Form.Label>
+              <Form.Control>
+                <Input type="number" {...field} />
+              </Form.Control>
+              <Form.ErrorMessage />
+            </Form.Item>
+          )}
+        />
+        <Form.Field
+          control={form.control}
+          name="height"
+          render={({ field }) => (
+            <Form.Item>
+              <Form.Label optional>{t("fields.height")}</Form.Label>
+              <Form.Control>
+                <Input type="number" {...field} />
+              </Form.Control>
+              <Form.ErrorMessage />
+            </Form.Item>
+          )}
+        />
+        <Form.Field
+          control={form.control}
+          name="mid_code"
+          render={({ field }) => (
+            <Form.Item>
+              <Form.Label optional>{t("fields.midCode")}</Form.Label>
+              <Form.Control>
+                <Input {...field} />
+              </Form.Control>
+              <Form.ErrorMessage />
+            </Form.Item>
+          )}
+        />
+        <Form.Field
+          control={form.control}
+          name="hs_code"
+          render={({ field }) => (
+            <Form.Item>
+              <Form.Label optional>{t("fields.hsCode")}</Form.Label>
+              <Form.Control>
+                <Input {...field} />
+              </Form.Control>
+              <Form.ErrorMessage />
+            </Form.Item>
+          )}
+        />
+        <Form.Field
+          control={form.control}
+          name="origin_country"
+          render={({ field }) => (
+            <Form.Item>
+              <Form.Label>{t("fields.countryOfOrigin")}</Form.Label>
+              <Form.Control>
+                <CountrySelect {...field} />
+              </Form.Control>
+              <Form.ErrorMessage />
+            </Form.Item>
+          )}
+        />
       </div>
     </div>
   )
@@ -527,7 +642,7 @@ const VariantAxisTip = ({ className }: { className?: string }) => {
 Root._tabMeta = defineTabMeta<ProductCreateSchemaType>({
   id: "attributes",
   labelKey: "products.create.tabs.attributes",
-  validationFields: ["attributes"],
+  validationFields: ["attributes", "origin_country"],
 })
 
 export const ProductCreateAttributesForm = Root

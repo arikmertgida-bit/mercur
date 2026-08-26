@@ -349,13 +349,13 @@ medusaIntegrationTestRunner({
           const productId = await createVendorProduct("Variant Update Product")
           const variantId = await addVariant(productId, {
             title: "Variant A",
-            sku: "OLD-SKU",
+            weight: 100,
           })
 
           const res = await api.post(
             `/vendor/products/${productId}/variants/${variantId}`,
-            // title unchanged, sku changed
-            { title: "Variant A", sku: "NEW-SKU" },
+            // title unchanged, weight changed
+            { title: "Variant A", weight: 200 },
             sellerHeaders,
           )
 
@@ -366,22 +366,22 @@ medusaIntegrationTestRunner({
           expect(update).toBeDefined()
           expect(update.details.variant_id).toBe(variantId)
           // Only the field that actually changed is staged.
-          expect(Object.keys(update.details.fields)).toEqual(["sku"])
-          expect(update.details.fields.sku).toBe("NEW-SKU")
-          expect(update.details.previous_fields.sku).toBe("OLD-SKU")
+          expect(Object.keys(update.details.fields)).toEqual(["weight"])
+          expect(update.details.fields.weight).toBe(200)
+          expect(update.details.previous_fields.weight).toBe(100)
         })
 
         it("never stages manage_inventory — it is not vendor-editable (MER-168)", async () => {
           const productId = await createVendorProduct("Manage Inventory Product")
           const variantId = await addVariant(productId, {
             title: "Variant B",
-            sku: "SKU-B",
+            weight: 100,
           })
 
           const res = await api.post(
             `/vendor/products/${productId}/variants/${variantId}`,
             // Client tries to flip manage_inventory alongside a real edit.
-            { sku: "SKU-B2", manage_inventory: true },
+            { weight: 150, manage_inventory: true },
             sellerHeaders,
           )
 
@@ -390,7 +390,7 @@ medusaIntegrationTestRunner({
             (a) => a.action === ProductChangeActionType.VARIANT_UPDATE,
           )
           expect(update).toBeDefined()
-          expect(Object.keys(update.details.fields)).toEqual(["sku"])
+          expect(Object.keys(update.details.fields)).toEqual(["weight"])
           expect(update.details.fields).not.toHaveProperty("manage_inventory")
         })
 
@@ -398,13 +398,13 @@ medusaIntegrationTestRunner({
           const productId = await createVendorProduct("No Change Product")
           const variantId = await addVariant(productId, {
             title: "Variant C",
-            sku: "SKU-C",
+            weight: 100,
           })
 
           const res = await api.post(
             `/vendor/products/${productId}/variants/${variantId}`,
-            // Same title + sku, plus a non-editable field.
-            { title: "Variant C", sku: "SKU-C", manage_inventory: true },
+            // Same title + weight, plus a non-editable field.
+            { title: "Variant C", weight: 100, manage_inventory: true },
             sellerHeaders,
           )
 
@@ -444,6 +444,7 @@ medusaIntegrationTestRunner({
                   {
                     title: "Red Variant",
                     sku: `OPT-${tag}`,
+                    weight: 50,
                     options: { [`Color${tag}`]: "Red" },
                   },
                 ],
@@ -486,8 +487,8 @@ medusaIntegrationTestRunner({
 
           const res = await api.post(
             `/vendor/products/${productId}/variants/${variantId}`,
-            // The edit form always re-submits `options`; only the sku changed.
-            { title: "Red Variant", sku: "OPT-CHANGED", options: currentOptions },
+            // The edit form always re-submits `options`; only the weight changed.
+            { title: "Red Variant", weight: 75, options: currentOptions },
             sellerHeaders,
           )
 
@@ -496,7 +497,7 @@ medusaIntegrationTestRunner({
             (a) => a.action === ProductChangeActionType.VARIANT_UPDATE,
           )
           expect(update).toBeDefined()
-          expect(Object.keys(update.details.fields)).toEqual(["sku"])
+          expect(Object.keys(update.details.fields)).toEqual(["weight"])
           expect(update.details.fields).not.toHaveProperty("options")
         })
 

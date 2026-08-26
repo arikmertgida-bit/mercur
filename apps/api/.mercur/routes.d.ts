@@ -610,6 +610,7 @@ export type Routes = {
         };
         orders: typeof import("@medusajs/medusa/api/store/orders/route") & {
             $id: typeof import("@medusajs/medusa/api/store/orders/[id]/route") & {
+                cancel: typeof import("@mercurjs/core/api/store/orders/[id]/cancel/route");
                 transfer: {
                     accept: typeof import("@medusajs/medusa/api/store/orders/[id]/transfer/accept/route");
                     cancel: typeof import("@medusajs/medusa/api/store/orders/[id]/transfer/cancel/route");
@@ -650,7 +651,7 @@ export type Routes = {
         regions: typeof import("@medusajs/medusa/api/store/regions/route") & {
             $id: typeof import("@medusajs/medusa/api/store/regions/[id]/route");
         };
-        returnReasons: typeof import("@medusajs/medusa/api/store/return-reasons/route") & {
+        returnReasons: typeof import("@mercurjs/core/api/store/return-reasons/route") & {
             $id: typeof import("@medusajs/medusa/api/store/return-reasons/[id]/route");
         };
         returns: typeof import("@medusajs/medusa/api/store/returns/route");
@@ -934,6 +935,7 @@ export type Routes = {
                 dismissItems: typeof import("@mercurjs/core/api/vendor/returns/[id]/dismiss-items/route") & {
                     $actionId: typeof import("@mercurjs/core/api/vendor/returns/[id]/dismiss-items/[action_id]/route");
                 };
+                markSeen: typeof import("@mercurjs/core/api/vendor/returns/[id]/mark-seen/route");
                 receive: typeof import("@mercurjs/core/api/vendor/returns/[id]/receive/route") & {
                     confirm: typeof import("@mercurjs/core/api/vendor/returns/[id]/receive/confirm/route");
                 };
@@ -948,6 +950,7 @@ export type Routes = {
                     $actionId: typeof import("@mercurjs/core/api/vendor/returns/[id]/shipping-method/[action_id]/route");
                 };
             };
+            unseenCount: typeof import("@mercurjs/core/api/vendor/returns/unseen-count/route");
         };
         salesChannels: typeof import("@mercurjs/core/api/vendor/sales-channels/route") & {
             $id: typeof import("@mercurjs/core/api/vendor/sales-channels/[id]/route") & {

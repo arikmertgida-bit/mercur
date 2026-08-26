@@ -4,7 +4,7 @@ import { variantsQueryKeys } from "@hooks/api/products"
 import { sdk } from "@lib/client"
 import { queryClient } from "@lib/query-client"
 
-const VARIANT_EDIT_FIELDS = "*options,*options.option"
+const VARIANT_EDIT_FIELDS = "*options,*options.option,*prices"
 
 const queryFn = async (id: string, variantId: string) => {
   return await sdk.vendor.products.$id.variants.$variantId.query({

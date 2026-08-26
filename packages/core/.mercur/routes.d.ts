@@ -579,13 +579,13 @@ export type Routes = {
         };
         orders: typeof import("@medusajs/medusa/api/store/orders/route") & {
             $id: typeof import("@medusajs/medusa/api/store/orders/[id]/route") & {
+                cancel: typeof import("../src/api/store/orders/[id]/cancel/route");
                 transfer: {
                     accept: typeof import("@medusajs/medusa/api/store/orders/[id]/transfer/accept/route");
                     cancel: typeof import("@medusajs/medusa/api/store/orders/[id]/transfer/cancel/route");
                     decline: typeof import("@medusajs/medusa/api/store/orders/[id]/transfer/decline/route");
                     request: typeof import("@medusajs/medusa/api/store/orders/[id]/transfer/request/route");
                 };
-                cancel: typeof import("../src/api/store/orders/[id]/cancel/route");
             };
         };
         paymentCollections: typeof import("@medusajs/medusa/api/store/payment-collections/route") & {
@@ -852,6 +852,7 @@ export type Routes = {
                 dismissItems: typeof import("../src/api/vendor/returns/[id]/dismiss-items/route") & {
                     $actionId: typeof import("../src/api/vendor/returns/[id]/dismiss-items/[action_id]/route");
                 };
+                markSeen: typeof import("../src/api/vendor/returns/[id]/mark-seen/route");
                 receive: typeof import("../src/api/vendor/returns/[id]/receive/route") & {
                     confirm: typeof import("../src/api/vendor/returns/[id]/receive/confirm/route");
                 };
@@ -865,7 +866,6 @@ export type Routes = {
                 shippingMethod: typeof import("../src/api/vendor/returns/[id]/shipping-method/route") & {
                     $actionId: typeof import("../src/api/vendor/returns/[id]/shipping-method/[action_id]/route");
                 };
-                markSeen: typeof import("../src/api/vendor/returns/[id]/mark-seen/route");
             };
             unseenCount: typeof import("../src/api/vendor/returns/unseen-count/route");
         };

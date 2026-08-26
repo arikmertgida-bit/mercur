@@ -23,7 +23,7 @@ export const ProductVariantEdit = () => {
     variant_id || searchVariantId!,
     {
       fields:
-        "+options.id,+options.value,+options.option.id,+options.option.title",
+        "+options.id,+options.value,+options.option.id,+options.option.title,+prices.id,+prices.amount,+prices.currency_code",
     },
     {
       initialData,

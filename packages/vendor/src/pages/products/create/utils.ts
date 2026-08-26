@@ -1,5 +1,6 @@
 import { HttpTypes } from "@medusajs/types"
 import { AttributeType, ProductAttributeBatchAdd } from "@mercurjs/types"
+import { i18n } from "../../../components/utilities/i18n/i18n"
 import { ProductCreateSchemaType } from "./types"
 
 export type NormalizedCreateProductVariant =
@@ -55,9 +56,9 @@ export const normalizeProductFormValues = (
 
   if (!hasAxis) {
     attributes.push({
-      title: "Default Option",
+      title: i18n.t("products.create.defaults.optionTitle"),
       type: AttributeType.MULTI_SELECT,
-      values: ["Default"],
+      values: [i18n.t("products.create.defaults.optionValue")],
       is_variant_axis: true,
     })
   }
@@ -132,9 +133,24 @@ export const normalizeVariants = (
       }))
 
     return {
-      title: variant.title || (hasOpts ? Object.values(opts).join(" / ") : "Default variant"),
-      options: hasOpts ? opts : hasAxis ? undefined : { "Default Option": "Default" },
+      title:
+        variant.title ||
+        (hasOpts
+          ? Object.values(opts).join(" / ")
+          : i18n.t("products.create.defaults.variantTitle")),
+      options: hasOpts
+        ? opts
+        : hasAxis
+          ? undefined
+          : {
+              [i18n.t("products.create.defaults.optionTitle")]: i18n.t(
+                "products.create.defaults.optionValue"
+              ),
+            },
       sku: variant.sku || undefined,
+      ean: variant.ean || undefined,
+      upc: variant.upc || undefined,
+      barcode: variant.barcode || undefined,
       variant_rank: variant.variant_rank,
       // `manage_inventory` isn't part of the create-product variant schema —
       // `createProductsWorkflow` (packages/core) derives it itself from the
@@ -344,7 +360,7 @@ export const generateVariantsFromAttributes = (
     }
     return decorateVariantsWithDefaultValues([
       {
-        title: "Default variant",
+        title: i18n.t("products.create.defaults.variantTitle"),
         should_create: true,
         variant_rank: 0,
         options: {},
