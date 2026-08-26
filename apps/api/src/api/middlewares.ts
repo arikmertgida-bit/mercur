@@ -34,14 +34,15 @@ import { storeCampaignsMiddlewares } from "./store/campaigns/middlewares";
 import { vendorFollowersMiddlewares } from "./vendor/followers/middlewares";
 import { vendorAwareErrorHandler } from "../lib/vendor-error-i18n";
 import { adminAwareErrorHandler } from "../lib/admin-error-i18n";
+import { storeAwareErrorHandler } from "../lib/store-error-i18n";
 
 const fallbackErrorHandler = defaultErrorHandler();
 
 /**
- * Dispatches to the vendor- or admin-aware translator by path prefix, since
- * `defineMiddlewares` only accepts a single `errorHandler`. Each translator
- * already falls back to `defaultErrorHandler` internally for its own "en"
- * case; anything outside both prefixes (store routes, etc.) goes straight
+ * Dispatches to the vendor-, admin-, or store-aware translator by path
+ * prefix, since `defineMiddlewares` only accepts a single `errorHandler`.
+ * Each translator already falls back to `defaultErrorHandler` internally
+ * for its own "en" case; anything outside all three prefixes goes straight
  * to the default handler here.
  */
 const scopedErrorHandler: MedusaErrorHandlerFunction = (error, req, res, next) => {
@@ -51,6 +52,10 @@ const scopedErrorHandler: MedusaErrorHandlerFunction = (error, req, res, next) =
     }
     if (req.path.startsWith("/admin")) {
         adminAwareErrorHandler(error, req, res, next);
+        return;
+    }
+    if (req.path.startsWith("/store")) {
+        storeAwareErrorHandler(error, req, res, next);
         return;
     }
     fallbackErrorHandler(error, req, res, next);
