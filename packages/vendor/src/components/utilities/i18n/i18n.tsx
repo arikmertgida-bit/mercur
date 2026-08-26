@@ -60,6 +60,18 @@ export const I18n = () => {
       resources: mergedTranslations,
     });
 
+  // `index.html`'deki statik `lang="en"` niteliği gerçek aktif dille
+  // (varsayılan `tr`, ya da kullanıcının seçtiği herhangi bir dil) hiçbir
+  // zaman senkron değildi — Chrome bunu içerikle (fiilen Türkçe render
+  // edilen sayfa) karşılaştırıp "İngilizce sayfalar çevrilsin mi?" widget'ı
+  // gösteriyordu. `document.documentElement.lang`'i i18next'in aktif
+  // diliyle her zaman eşitle: ilk yüklemede ve her `changeLanguage()`
+  // çağrısında.
+  document.documentElement.lang = i18n.language;
+  i18n.on("languageChanged", (lng) => {
+    document.documentElement.lang = lng;
+  });
+
   installKayiZodErrorMap();
 
   return null;
