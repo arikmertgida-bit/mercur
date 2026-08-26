@@ -25,7 +25,6 @@ type EditProductFormProps = {
 
 const EditProductSchema = zod.object({
   title: zod.string().min(1),
-  subtitle: zod.string().optional(),
   handle: zod
     .string()
     .min(1)
@@ -50,7 +49,6 @@ export const EditProductForm = ({ product }: EditProductFormProps) => {
     data: product,
     defaultValues: {
       title: product.title,
-      subtitle: product.subtitle || "",
       handle: product.handle || "",
       description: product.description || "",
       discountable: product.discountable,
@@ -65,14 +63,13 @@ export const EditProductForm = ({ product }: EditProductFormProps) => {
       return;
     }
 
-    const { description, discountable, handle, subtitle, title } = data;
+    const { description, discountable, handle, title } = data;
     const additional_data = data.additional_data;
 
     const payload = {
       description,
       discountable,
       handle,
-      subtitle: subtitle || null,
       title,
       ...(additional_data && Object.keys(additional_data).length
         ? { additional_data }
@@ -152,23 +149,6 @@ export const EditProductForm = ({ product }: EditProductFormProps) => {
                   return (
                     <Form.Item>
                       <Form.Label>{t("fields.title")}</Form.Label>
-                      <Form.Control>
-                        <Input {...field} />
-                      </Form.Control>
-                      <Form.ErrorMessage />
-                    </Form.Item>
-                  );
-                }}
-              />
-              <Form.Field
-                control={form.control}
-                name="subtitle"
-                render={({ field }) => {
-                  return (
-                    <Form.Item>
-                      <Form.Label optional>
-                        {t("fields.subtitle")}
-                      </Form.Label>
                       <Form.Control>
                         <Input {...field} />
                       </Form.Control>
