@@ -1,7 +1,4 @@
-import CurrencyInput, {
-  CurrencyInputProps,
-  formatValue,
-} from "react-currency-input-field"
+import CurrencyInput, { CurrencyInputProps } from "react-currency-input-field"
 import { Controller, ControllerRenderProps } from "react-hook-form"
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
@@ -36,12 +33,7 @@ export const DataGridCurrencyCell = <TData, TValue = any>({
       render={({ field }) => {
         return (
           <DataGridCellContainer {...container} {...errorProps}>
-            <Inner
-              field={field}
-              inputProps={input}
-              currencyInfo={currency}
-              currencyCode={code.toUpperCase()}
-            />
+            <Inner field={field} inputProps={input} currencyInfo={currency} />
           </DataGridCellContainer>
         )
       }}
@@ -53,12 +45,10 @@ const Inner = ({
   field,
   inputProps,
   currencyInfo,
-  currencyCode,
 }: {
   field: ControllerRenderProps<any, string>
   inputProps: InputProps
   currencyInfo: CurrencyInfo
-  currencyCode: string
 }) => {
   const { value, onChange: _, onBlur, ref, ...rest } = field
   const {
@@ -70,12 +60,22 @@ const Inner = ({
   } = inputProps
 
   // Number formatting (thousands/decimal separators) must follow the
-  // seller's own convention + the field's own currency — e.g. a Turkish
-  // seller types "1.050,00" (dot-grouped, comma-decimal); parsing that
-  // against a hardcoded en-US convention silently truncates it into "1.05"
-  // at the first unrecognised separator. `intlConfig` drives both display
-  // formatting and input parsing from the same Intl-derived rules, so the
-  // two can never disagree.
+  // seller's own convention — e.g. a Turkish seller types "1.050,00"
+  // (dot-grouped, comma-decimal); parsing that against a hardcoded en-US
+  // convention silently truncates it into "1.05" at the first unrecognised
+  // separator. `intlConfig` drives both display formatting and input
+  // parsing from the same Intl-derived rules, so the two can never disagree.
+  //
+  // Deliberately omits `currency`: passing it makes `react-currency-input-field`
+  // derive its own currency-style prefix from `Intl.NumberFormat` (e.g. "₺"
+  // or "TRY ") and splice it directly into the editable value on every
+  // keystroke — on top of the currency symbol already rendered by the
+  // `<span>` below, and on a separate code path (prefix stripping in the
+  // library's `cleanValue`) that this cell never needs. Omitting `currency`
+  // still yields locale-correct group/decimal separators (verified against
+  // `Intl.NumberFormat(locale).formatToParts` — currency style changes
+  // nothing about those) while keeping the input's own value pure digits,
+  // exactly like the equivalent `@mercurjs/admin` cell.
   //
   // Deliberately `navigator.language`, not the dashboard's own `i18n.language`:
   // this package's language codes are its own internal identifiers, not all
@@ -85,23 +85,33 @@ const Inner = ({
   // other Intl-based amount formatter in this package already resolves the
   // browser's own locale instead (see `getLocaleAmount` in
   // `lib/money-amount-helpers.ts`); this follows the same proven pattern.
-  const intlConfig = useMemo(
-    () => ({ locale: navigator.language, currency: currencyCode }),
-    [currencyCode]
-  )
+  const intlConfig = useMemo(() => ({ locale: navigator.language }), [])
 
+  // Pads/rounds to a canonical "." decimal string (e.g. "2500.00") without
+  // any locale grouping. `CurrencyInput`'s own renderer (`getRenderValue`,
+  // invoked because this cell always passes a defined `value` prop) re-runs
+  // `formatValue` on whatever this returns to apply the active locale's
+  // group and decimal separators. Grouping here too — e.g. via `formatValue`,
+  // which also inserts the group separator — would hand that second pass an
+  // already-grouped string; its decimal-separator swap then collides with
+  // the existing group separator (Turkish's "2.500,00" becomes the
+  // doubly-dotted, unparseable "2.500.00"), which renders as a literal
+  // "NaN" for any amount that needs grouping (>= 1000 in most locales).
   const formatter = useCallback(
-    (value?: string | number) => {
-      const ensuredValue =
-        typeof value === "number" ? value.toString() : value || ""
+    (value?: string | number): string => {
+      if (value === undefined || value === null || value === "") {
+        return ""
+      }
 
-      return formatValue({
-        value: ensuredValue,
-        decimalScale: currencyInfo.decimal_digits,
-        intlConfig,
-      })
+      const numeric = typeof value === "number" ? value : Number(value)
+
+      if (!Number.isFinite(numeric)) {
+        return ""
+      }
+
+      return numeric.toFixed(currencyInfo.decimal_digits)
     },
-    [currencyInfo, intlConfig]
+    [currencyInfo]
   )
 
   const [localValue, setLocalValue] = useState<string | number>(value || "")
@@ -129,26 +139,27 @@ const Inner = ({
     }
 
     setLocalValue(value)
+    // `values.float` is `null` for an empty/cleared input, but can also be
+    // the actual number `NaN` for an unparseable one — guard both the same
+    // way so a bad keystroke sequence can never poison the committed
+    // (canonical) value with the literal string "NaN".
+    const float = values?.float
     canonicalValueRef.current =
-      values?.float === null || values?.float === undefined
-        ? ""
-        : String(values.float)
+      typeof float === "number" && Number.isFinite(float) ? String(float) : ""
   }
 
   useEffect(() => {
-    let update = value
-
     // The component we use is a bit fidly when the value is updated externally
     // so we need to ensure a format that will result in the cell being formatted correctly
     // according to the users locale on the next render.
-    if (!isNaN(Number(value))) {
-      update = formatter(update)
-      // `value` here is already the canonical "." decimal form (it comes
-      // straight from react-hook-form), so the ref can just mirror it.
-      canonicalValueRef.current = String(value)
-    }
+    const formatted = formatter(value)
 
-    setLocalValue(update)
+    // `value` here is already the canonical "." decimal form (it comes
+    // straight from react-hook-form); mirror it only when `formatter`
+    // actually accepted it as a real number, so a bad external value (or
+    // stale "NaN") never becomes the new canonical value either.
+    canonicalValueRef.current = formatted === "" ? "" : String(value)
+    setLocalValue(formatted)
   }, [value, formatter])
 
   const combinedRed = useCombinedRefs(inputRef, ref)
