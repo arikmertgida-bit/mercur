@@ -45,34 +45,45 @@ export const Login = () => {
   const { mutateAsync, isPending } = useSignInWithEmailPass();
 
   const handleSubmit = form.handleSubmit(async ({ email, password }) => {
-    await mutateAsync(
-      {
-        email,
-        password,
-      },
-      {
-        onError: (error) => {
-          if (isFetchError(error)) {
-            if (error.status === 401) {
-              form.setError("email", {
-                type: "manual",
-                message: error.message,
-              });
+    // `mutateAsync`'in döndürdüğü promise, `onError` verilse bile HER ZAMAN
+    // reject olur (TanStack Query'nin belgelenmiş, kasıtlı davranışı — bu
+    // `mutate()`'ten farklıdır). Kullanıcıya gösterilecek hata zaten
+    // `onError` içinde `form.setError` ile ele alınıyor; bu try/catch
+    // yalnızca o reject'in yakalanmamış bir promise reddi olarak sızmasını
+    // önler — her başarısız giriş denemesinde (örn. yanlış şifre) tarayıcı
+    // konsoluna gerçek bir "Uncaught (in promise)" hatası düşmesin diye.
+    try {
+      await mutateAsync(
+        {
+          email,
+          password,
+        },
+        {
+          onError: (error) => {
+            if (isFetchError(error)) {
+              if (error.status === 401) {
+                form.setError("email", {
+                  type: "manual",
+                  message: error.message,
+                });
 
-              return;
+                return;
+              }
             }
-          }
 
-          form.setError("root.serverError", {
-            type: "manual",
-            message: error.message,
-          });
+            form.setError("root.serverError", {
+              type: "manual",
+              message: error.message,
+            });
+          },
+          onSuccess: () => {
+            navigate(from, { replace: true });
+          },
         },
-        onSuccess: () => {
-          navigate(from, { replace: true });
-        },
-      },
-    );
+      );
+    } catch {
+      // Already surfaced to the user via `onError` above.
+    }
   });
 
   const serverError =
