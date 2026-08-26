@@ -812,6 +812,9 @@
               }
             }
           }
+        },
+        "documentTitle": {
+          "type": "string"
         }
       }
     },

@@ -277,7 +277,8 @@
         "developer": "Developer",
         "myAccount": "My Account"
       }
-    }
+    },
+    "documentTitle": "Kayı.com Admin Panel"
   },
   "dataGrid": {
     "columns": {

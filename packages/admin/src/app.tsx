@@ -9,6 +9,7 @@ import { FeatureFlagProvider, ThemeProvider } from "./providers";
 import { I18nProvider, Toaster, TooltipProvider } from "@medusajs/ui";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { I18n } from "./components/utilities/i18n";
+import { DocumentTitle } from "./components/utilities/document-title";
 import { getRouteMap } from "./get-route-map";
 import { createRouteMap, getRoutesByType } from "./utils/routes";
 import { useMemo } from "react";
@@ -35,6 +36,7 @@ export default function App() {
                 customFields={customFields}
               >
                 <I18n />
+                <DocumentTitle />
                 <I18nProvider>
                   <RouterProvider
                     router={createBrowserRouter(getRouteMap(routes), {

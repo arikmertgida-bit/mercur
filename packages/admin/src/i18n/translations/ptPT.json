@@ -420,7 +420,8 @@
         "developer": "Programador",
         "myAccount": "A Minha Conta"
       }
-    }
+    },
+    "documentTitle": "Kayı.com Painel de Administração"
   },
   "dataGrid": {
     "columns": {
@@ -749,7 +750,7 @@
       },
       "handle": {
         "label": "Identificador",
-        "tooltip": "O identificador é usado para referenciar o produto na loja. Se não for especificado, será gerado a partir do título do produto.",
+        "tooltip": "Gerado automaticamente a partir do título do produto. Apenas letras minúsculas, números e hífens — este campo não pode ser editado diretamente.",
         "placeholder": "casaco-inverno"
       },
       "description": {
@@ -1031,7 +1032,7 @@
     "createCollectionHint": "Cria uma nova coleção para organizar os teus produtos.",
     "createSuccess": "Coleção criada com sucesso.",
     "editCollection": "Editar Coleção",
-    "handleTooltip": "O identificador é usado para referenciar a coleção na loja. Se não for especificado, será gerado a partir do título da coleção.",
+    "handleTooltip": "Gerado automaticamente a partir do título da coleção. Apenas letras minúsculas, números e hífens — este campo não pode ser editado diretamente.",
     "deleteWarning": "Estás prestes a eliminar a coleção {{title}}. Esta ação não pode ser anulada.",
     "removeSingleProductWarning": "Estás prestes a remover o produto {{title}} da coleção. Esta ação não pode ser anulada.",
     "removeProductsWarning_one": "Estás prestes a remover {{count}} produto da coleção. Esta ação não pode ser anulada.",
@@ -1176,7 +1177,7 @@
         "label": "Nova"
       }
     },
-    "handleTooltip": "O identificador (handle) é usado para referenciar a categoria na loja. Se não for especificado, será gerado a partir do título da categoria.",
+    "handleTooltip": "Gerado automaticamente a partir do título da categoria. Apenas letras minúsculas, números e hífens — este campo não pode ser editado diretamente.",
     "validation": {
       "titleRequired": "Introduza um título"
     },
@@ -3940,7 +3941,7 @@
   },
   "stores": {
     "domain": "Lojas",
-    "handleTooltip": "O identificador (handle) é usado como o slug de URL da loja. Deixe em branco para gerar automaticamente a partir do nome.",
+    "handleTooltip": "Gerado automaticamente a partir do nome da loja. Apenas letras minúsculas, números e hífens — este campo não pode ser editado diretamente.",
     "emptyStates": {
       "users": {
         "title": "Nenhum utilizador ainda",
