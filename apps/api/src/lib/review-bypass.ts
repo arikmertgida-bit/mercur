@@ -12,7 +12,24 @@ export function resolveReviewBypassEmail(): string | null {
   return trimmed.length > 0 ? trimmed : null
 }
 
+/**
+ * Defense in depth: `DEV_REVIEW_BYPASS_EMAIL` alone must never be enough to
+ * let a live production deployment mint unpurchased reviews — a `.env`
+ * carried over from staging/dev (a copy-paste an ops engineer could easily
+ * make) would otherwise silently leave this open. Mirrors the same
+ * `NODE_ENV === "production"` convention `lib/messenger.ts` already uses for
+ * this codebase's other prod-vs-dev branch, and mirrors the storefront's own
+ * environment gate in `lib/reviews/constants.ts::isReviewDevelopmentEnvironment`.
+ */
+function isReviewBypassEnvironment(): boolean {
+  return process.env.NODE_ENV !== "production"
+}
+
 export function isReviewBypassEmail(email: string | null | undefined): boolean {
+  if (!isReviewBypassEnvironment()) {
+    return false
+  }
+
   const bypassEmail = resolveReviewBypassEmail()
   if (!bypassEmail) {
     return false
