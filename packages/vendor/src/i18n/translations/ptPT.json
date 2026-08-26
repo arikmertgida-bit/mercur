@@ -163,6 +163,7 @@
     "download": "Transferir",
     "clear": "Limpar",
     "clearAll": "Limpar tudo",
+    "clearSearch": "Limpar pesquisa",
     "apply": "Aplicar",
     "add": "Adicionar",
     "select": "Selecionar",
@@ -183,6 +184,7 @@
     "notIn": "Não em"
   },
   "app": {
+    "documentTitle": "Kayı.com Centro do Vendedor",
     "search": {
       "label": "Pesquisar",
       "title": "Pesquisar",
@@ -340,7 +342,8 @@
     },
     "toggle": {
       "enabled": "Ativado",
-      "notEnabled": "Não ativado"
+      "notEnabled": "Não ativado",
+      "ariaLabel": "Alternar"
     }
   },
   "filters": {

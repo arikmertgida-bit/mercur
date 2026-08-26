@@ -161,6 +161,7 @@
     "download": "تنزيل",
     "clear": "مسح",
     "clearAll": "مسح الكل",
+    "clearSearch": "مسح البحث",
     "apply": "تطبيق",
     "add": "إضافة",
     "select": "اختر",
@@ -183,6 +184,7 @@
     "notIn": "ليس في"
   },
   "app": {
+    "documentTitle": "Kayı.com مركز البائعين",
     "search": {
       "label": "بحث",
       "title": "بحث",
@@ -340,7 +342,8 @@
     },
     "toggle": {
       "enabled": "ممكّن",
-      "notEnabled": "اختر عنصر المخزون"
+      "notEnabled": "اختر عنصر المخزون",
+      "ariaLabel": "تبديل"
     }
   },
   "filters": {

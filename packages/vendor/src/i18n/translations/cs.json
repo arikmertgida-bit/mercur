@@ -161,6 +161,7 @@
     "download": "Stáhnout",
     "clear": "Vymazat",
     "clearAll": "Vymazat vše",
+    "clearSearch": "Vymazat hledání",
     "apply": "Použít",
     "add": "Přidat",
     "select": "Vybrat",
@@ -183,6 +184,7 @@
     "notIn": "Není v"
   },
   "app": {
+    "documentTitle": "Kayı.com Centrum prodejců",
     "search": {
       "label": "Hledat",
       "title": "Hledat",
@@ -340,7 +342,8 @@
     },
     "toggle": {
       "enabled": "Povoleno",
-      "notEnabled": "Není povoleno"
+      "notEnabled": "Není povoleno",
+      "ariaLabel": "Přepnout"
     }
   },
   "filters": {

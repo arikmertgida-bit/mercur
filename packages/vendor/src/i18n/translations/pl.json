@@ -169,6 +169,7 @@
     "download": "Pobierz",
     "clear": "Wyczyść",
     "clearAll": "Wyczyść wszystko",
+    "clearSearch": "Wyczyść wyszukiwanie",
     "apply": "Zastosuj",
     "add": "Dodaj",
     "select": "Wybierz",
@@ -191,6 +192,7 @@
     "notIn": "Nie w"
   },
   "app": {
+    "documentTitle": "Kayı.com Centrum Sprzedawcy",
     "search": {
       "label": "Szukaj",
       "title": "Szukaj",
@@ -314,7 +316,8 @@
   "dataGrid": {
     "toggle": {
       "enabled": "Włączone",
-      "notEnabled": "Nieaktywne"
+      "notEnabled": "Nieaktywne",
+      "ariaLabel": "Przełącz"
     },
     "columns": {
       "view": "Widok",

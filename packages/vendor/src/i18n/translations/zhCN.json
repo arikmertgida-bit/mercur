@@ -161,6 +161,7 @@
     "download": "下载",
     "clear": "清除",
     "clearAll": "清除全部",
+    "clearSearch": "清除搜索",
     "apply": "应用",
     "add": "添加",
     "select": "选择",
@@ -183,6 +184,7 @@
     "notIn": "不包含"
   },
   "app": {
+    "documentTitle": "Kayı.com 卖家中心",
     "search": {
       "label": "搜索",
       "title": "搜索",
@@ -340,7 +342,8 @@
     },
     "toggle": {
       "enabled": "已启用",
-      "notEnabled": "未启用"
+      "notEnabled": "未启用",
+      "ariaLabel": "切换"
     }
   },
   "filters": {

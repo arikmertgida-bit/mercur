@@ -161,6 +161,7 @@
     "download": "הורד",
     "clear": "נקה",
     "clearAll": "נקה הכל",
+    "clearSearch": "נקה חיפוש",
     "apply": "החל",
     "add": "הוסף",
     "select": "בחר",
@@ -183,6 +184,7 @@
     "notIn": "לא ב"
   },
   "app": {
+    "documentTitle": "Kayı.com מרכז מוכרים",
     "search": {
       "label": "חיפוש",
       "title": "חיפוש",
@@ -340,7 +342,8 @@
     },
     "toggle": {
       "enabled": "מופעל",
-      "notEnabled": "לא מופעל"
+      "notEnabled": "לא מופעל",
+      "ariaLabel": "החלף"
     }
   },
   "filters": {

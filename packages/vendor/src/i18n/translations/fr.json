@@ -161,6 +161,7 @@
     "download": "Télécharger",
     "clear": "Effacer",
     "clearAll": "Tout effacer",
+    "clearSearch": "Effacer la recherche",
     "apply": "Appliquer",
     "add": "Ajouter",
     "select": "Sélectionner",
@@ -183,6 +184,7 @@
     "notIn": "non inclus"
   },
   "app": {
+    "documentTitle": "Kayı.com Espace Vendeur",
     "search": {
       "label": "Rechercher",
       "title": "Recherche",
@@ -340,7 +342,8 @@
     },
     "toggle": {
       "enabled": "Activé",
-      "notEnabled": "Non activé"
+      "notEnabled": "Non activé",
+      "ariaLabel": "Basculer"
     }
   },
   "filters": {

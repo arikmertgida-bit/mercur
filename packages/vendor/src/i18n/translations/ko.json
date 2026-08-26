@@ -161,6 +161,7 @@
     "download": "다운로드",
     "clear": "지우기",
     "clearAll": "모두 지우기",
+    "clearSearch": "검색 지우기",
     "apply": "적용",
     "add": "추가",
     "select": "선택",
@@ -183,6 +184,7 @@
     "notIn": "포함 안 함"
   },
   "app": {
+    "documentTitle": "Kayı.com 셀러 센터",
     "search": {
       "label": "검색",
       "title": "검색",
@@ -340,7 +342,8 @@
     },
     "toggle": {
       "enabled": "활성화됨",
-      "notEnabled": "활성화되지 않음"
+      "notEnabled": "활성화되지 않음",
+      "ariaLabel": "전환"
     }
   },
   "filters": {

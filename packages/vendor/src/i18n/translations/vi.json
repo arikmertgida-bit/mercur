@@ -161,6 +161,7 @@
     "download": "Tải xuống",
     "clear": "Xóa sạch",
     "clearAll": "Xóa tất cả",
+    "clearSearch": "Xóa tìm kiếm",
     "apply": "Áp dụng",
     "add": "Thêm",
     "select": "Chọn",
@@ -183,6 +184,7 @@
     "notIn": "Không trong"
   },
   "app": {
+    "documentTitle": "Kayı.com Trung tâm Người bán",
     "search": {
       "label": "Tìm kiếm",
       "title": "Tìm kiếm",
@@ -340,7 +342,8 @@
     },
     "toggle": {
       "enabled": "Đã bật",
-      "notEnabled": "Chưa bật"
+      "notEnabled": "Chưa bật",
+      "ariaLabel": "Chuyển đổi"
     }
   },
   "filters": {

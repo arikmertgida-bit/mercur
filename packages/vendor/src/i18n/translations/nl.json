@@ -161,6 +161,7 @@
     "download": "Downloaden",
     "clear": "Wissen",
     "clearAll": "Alles wissen",
+    "clearSearch": "Zoekopdracht wissen",
     "apply": "Toepassen",
     "add": "Toevoegen",
     "select": "Selecteer",
@@ -183,6 +184,7 @@
     "notIn": "Niet in"
   },
   "app": {
+    "documentTitle": "Kayı.com Verkopercentrum",
     "search": {
       "label": "Zoeken",
       "title": "Zoeken",
@@ -340,7 +342,8 @@
     },
     "toggle": {
       "enabled": "Ingeschakeld",
-      "notEnabled": "Niet ingeschakeld"
+      "notEnabled": "Niet ingeschakeld",
+      "ariaLabel": "Omschakelen"
     }
   },
   "filters": {

@@ -496,6 +496,9 @@
         "clearAll": {
           "type": "string"
         },
+        "clearSearch": {
+          "type": "string"
+        },
         "apply": {
           "type": "string"
         },
@@ -545,6 +548,9 @@
     "app": {
       "type": "object",
       "properties": {
+        "documentTitle": {
+          "type": "string"
+        },
         "search": {
           "type": "object",
           "properties": {
@@ -899,6 +905,9 @@
               "type": "string"
             },
             "notEnabled": {
+              "type": "string"
+            },
+            "ariaLabel": {
               "type": "string"
             }
           }
