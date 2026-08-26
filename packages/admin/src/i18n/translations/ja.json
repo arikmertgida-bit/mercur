@@ -420,7 +420,8 @@
         "developer": "開発者",
         "myAccount": "マイアカウント"
       }
-    }
+    },
+    "documentTitle": "Kayı.com 管理パネル"
   },
   "dataGrid": {
     "columns": {
@@ -633,7 +634,7 @@
         "enterValuePlaceholder": "値を入力",
         "selectValuePlaceholder": "値を選択",
         "requiredAttributes": "必須属性",
-        "requiredAttributesHint": "These attributes are required by the Marketplace. Select them before proceeding.",
+        "requiredAttributesHint": "これらの属性はマーケットプレイスで必須です。続ける前に選択してください。",
         "useForVariants": "バリエーションに使用",
         "useForVariantsDescription": "チェックすると、この属性を使ってバリエーションを作成できます。チェックしない場合、この属性は情報提供のみに使用されます。",
         "tip": "ヒント",
@@ -734,7 +735,7 @@
       "published": "公開済み",
       "proposed": "提案済み",
       "rejected": "却下",
-      "requires_action": "Changes required",
+      "requires_action": "対応が必要",
       "accepted": "承認済み"
     },
     "fields": {
@@ -749,7 +750,7 @@
       },
       "handle": {
         "label": "ハンドル",
-        "tooltip": "ハンドルはストアフロントで商品を参照するために使用されます。指定しない場合、商品タイトルからハンドルが生成されます。",
+        "tooltip": "商品タイトルから自動生成されます。小文字・数字・ハイフンのみ使用可能です。このフィールドは直接編集できません。",
         "placeholder": "ウインタージャケット"
       },
       "description": {
@@ -1031,7 +1032,7 @@
     "createCollectionHint": "商品を整理するための新しいコレクションを作成します。",
     "createSuccess": "コレクションが正常に作成されました。",
     "editCollection": "コレクションを編集",
-    "handleTooltip": "ハンドルはストアフロントでコレクションを参照するために使用されます。指定しない場合、コレクションのタイトルからハンドルが生成されます。",
+    "handleTooltip": "コレクションタイトルから自動生成されます。小文字・数字・ハイフンのみ使用可能です。このフィールドは直接編集できません。",
     "deleteWarning": "コレクション「{{title}}」を削除しようとしています。この操作は元に戻せません。",
     "removeSingleProductWarning": "商品「{{title}}」をコレクションから削除しようとしています。この操作は元に戻せません。",
     "removeProductsWarning_one": "{{count}}個の商品をコレクションから削除しようとしています。この操作は元に戻せません。",
@@ -1176,7 +1177,7 @@
         "label": "新規"
       }
     },
-    "handleTooltip": "ハンドルはストアフロントでカテゴリーを参照するために使用されます。指定しない場合、カテゴリー名から自動生成されます。",
+    "handleTooltip": "カテゴリータイトルから自動生成されます。小文字・数字・ハイフンのみ使用可能です。このフィールドは直接編集できません。",
     "validation": {
       "titleRequired": "タイトルを入力してください"
     },
@@ -3940,7 +3941,7 @@
   },
   "stores": {
     "domain": "ストア",
-    "handleTooltip": "ハンドルはストアのURLスラッグとして使用されます。空欄の場合、名前から自動生成されます。",
+    "handleTooltip": "ストア名から自動生成されます。小文字・数字・ハイフンのみ使用可能です。このフィールドは直接編集できません。",
     "emptyStates": {
       "users": {
         "title": "ユーザーがまだいません",

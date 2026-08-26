@@ -420,7 +420,8 @@
         "developer": "Kūrėjo",
         "myAccount": "Mano Paskyra"
       }
-    }
+    },
+    "documentTitle": "Kayı.com Administravimo skydelis"
   },
   "dataGrid": {
     "columns": {
@@ -633,7 +634,7 @@
         "enterValuePlaceholder": "Įveskite reikšmę",
         "selectValuePlaceholder": "Pasirinkite reikšmę",
         "requiredAttributes": "Privalomi atributai",
-        "requiredAttributesHint": "These attributes are required by the Marketplace. Select them before proceeding.",
+        "requiredAttributesHint": "Šiuos atributus reikalauja prekyvietė. Pasirinkite juos prieš tęsdami.",
         "useForVariants": "Naudoti variantams",
         "useForVariantsDescription": "Pažymėjus galėsite kurti variantus naudodami šį atributą. Jei nepažymėta, atributas bus naudojamas tik informaciniais tikslais.",
         "tip": "Patarimas",
@@ -734,7 +735,7 @@
       "published": "Publikuojama",
       "proposed": "Pasiūlyta",
       "rejected": "Atmesta",
-      "requires_action": "Changes required",
+      "requires_action": "Reikia veiksmų",
       "accepted": "Priimtas"
     },
     "fields": {
@@ -749,7 +750,7 @@
       },
       "handle": {
         "label": "Nuoroda",
-        "tooltip": "Nuoroda naudojama norint nurodyti prekės adresą jūsų parduotuvėje. Jei nenurodyta, nuoroda bus sugeneruota iš prekės pavadinimo.",
+        "tooltip": "Sugeneruojama automatiškai iš prekės pavadinimo. Tik mažosios raidės, skaičiai ir brūkšneliai — šio lauko tiesiogiai redaguoti negalima.",
         "placeholder": "žieminė-striukė"
       },
       "description": {
@@ -1031,7 +1032,7 @@
     "createCollectionHint": "Sukurkite naują kolekciją prekių skirstymui.",
     "createSuccess": "Kolekcija sėkmingai sukurta.",
     "editCollection": "Keisti kolekciją",
-    "handleTooltip": "Nuordoda naudojama norint nurodyti kolekcijos adresą parduotuvėje. Jei nenurodyta, nuoroda bus sugenruota iš kolekcijos pavadinimo.",
+    "handleTooltip": "Sugeneruojama automatiškai iš kolekcijos pavadinimo. Tik mažosios raidės, skaičiai ir brūkšneliai — šio lauko tiesiogiai redaguoti negalima.",
     "deleteWarning": "Ketinate pašalinti kolekciją {{title}}. Šis veiksmas neatstatomas.",
     "removeSingleProductWarning": "Ketinate pašalinti prekę {{title}} iš kolekcijos. Šis veiksmas neatstatomas.",
     "removeProductsWarning_one": "Ketinate pašalinti {{count}} prekę iš kolekcijos. Šis veiksmas neatstatomas.",
@@ -1176,7 +1177,7 @@
         "label": "Nauja"
       }
     },
-    "handleTooltip": "Trumpinys naudojamas kategorijai nurodyti parduotuvės svetainėje. Jei nenurodytas, trumpinys bus sugeneruotas iš kategorijos pavadinimo.",
+    "handleTooltip": "Sugeneruojama automatiškai iš kategorijos pavadinimo. Tik mažosios raidės, skaičiai ir brūkšneliai — šio lauko tiesiogiai redaguoti negalima.",
     "validation": {
       "titleRequired": "Įveskite pavadinimą"
     },
@@ -2037,7 +2038,7 @@
         "header": "Siuntimas"
       },
       "disable": {
-        "confirmation": "Are you sure that you want to disable {{name}}? This will delete all associated service zones and shipping options, and cannot be undone.",
+        "confirmation": "Ar tikrai norite išjungti „{{name}}“? Tai ištrins visas susijusias aptarnavimo zonas ir pristatymo parinktis. Šis veiksmas neatstatomas.",
         "pickup": "Atsiėmimas sėkmingai išjungtas.",
         "shipping": "Siuntimas sėkmingai išjungtas."
       },
@@ -3940,7 +3941,7 @@
   },
   "stores": {
     "domain": "Parduotuvės",
-    "handleTooltip": "Trumpinys naudojamas kaip parduotuvės URL. Palikite tuščią, kad būtų sugeneruotas automatiškai iš pavadinimo.",
+    "handleTooltip": "Sugeneruojama automatiškai iš parduotuvės pavadinimo. Tik mažosios raidės, skaičiai ir brūkšneliai — šio lauko tiesiogiai redaguoti negalima.",
     "emptyStates": {
       "users": {
         "title": "Kol kas nėra naudotojų",

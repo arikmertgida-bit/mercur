@@ -420,7 +420,8 @@
         "developer": "Nhà phát triển",
         "myAccount": "Tài khoản của tôi"
       }
-    }
+    },
+    "documentTitle": "Kayı.com Bảng Quản Trị"
   },
   "dataGrid": {
     "columns": {
@@ -633,7 +634,7 @@
         "enterValuePlaceholder": "Nhập giá trị",
         "selectValuePlaceholder": "Chọn giá trị",
         "requiredAttributes": "Thuộc tính bắt buộc",
-        "requiredAttributesHint": "These attributes are required by the Marketplace. Select them before proceeding.",
+        "requiredAttributesHint": "Sàn giao dịch yêu cầu các thuộc tính này. Hãy chọn chúng trước khi tiếp tục.",
         "useForVariants": "Dùng cho biến thể",
         "useForVariantsDescription": "Nếu chọn, bạn sẽ có thể tạo biến thể bằng thuộc tính này. Nếu không, thuộc tính chỉ được dùng cho mục đích thông tin.",
         "tip": "Mẹo",
@@ -734,7 +735,7 @@
       "published": "Đã xuất bản",
       "proposed": "Đã đề xuất",
       "rejected": "Đã từ chối",
-      "requires_action": "Changes required",
+      "requires_action": "Yêu cầu hành động",
       "accepted": "Đã chấp nhận"
     },
     "fields": {
@@ -749,7 +750,7 @@
       },
       "handle": {
         "label": "Định danh",
-        "tooltip": "Định danh được sử dụng để tham chiếu sản phẩm trên giao diện cửa hàng của bạn. Nếu không chỉ định, định danh sẽ được tạo từ tiêu đề sản phẩm.",
+        "tooltip": "Được tạo tự động từ tiêu đề sản phẩm. Chỉ gồm chữ thường, số và dấu gạch ngang — không thể chỉnh sửa trực tiếp trường này.",
         "placeholder": "ao-khoac-mua-dong"
       },
       "description": {
@@ -1031,7 +1032,7 @@
     "createCollectionHint": "Tạo một bộ sưu tập mới để sắp xếp sản phẩm của bạn.",
     "createSuccess": "Bộ sưu tập đã được tạo thành công.",
     "editCollection": "Chỉnh sửa bộ sưu tập",
-    "handleTooltip": "Định danh được sử dụng để tham chiếu bộ sưu tập trên giao diện cửa hàng của bạn. Nếu không chỉ định, định danh sẽ được tạo từ tiêu đề bộ sưu tập.",
+    "handleTooltip": "Được tạo tự động từ tiêu đề bộ sưu tập. Chỉ gồm chữ thường, số và dấu gạch ngang — không thể chỉnh sửa trực tiếp trường này.",
     "deleteWarning": "Bạn sắp xóa bộ sưu tập {{title}}. Hành động này không thể hoàn tác.",
     "removeSingleProductWarning": "Bạn sắp xóa sản phẩm {{title}} khỏi bộ sưu tập. Hành động này không thể hoàn tác.",
     "removeProductsWarning_one": "Bạn sắp xóa {{count}} sản phẩm khỏi bộ sưu tập. Hành động này không thể hoàn tác.",
@@ -1176,7 +1177,7 @@
         "label": "Mới"
       }
     },
-    "handleTooltip": "Handle dùng để tham chiếu danh mục trên trang bán hàng. Nếu không chỉ định, handle sẽ được tạo tự động từ tên danh mục.",
+    "handleTooltip": "Được tạo tự động từ tiêu đề danh mục. Chỉ gồm chữ thường, số và dấu gạch ngang — không thể chỉnh sửa trực tiếp trường này.",
     "validation": {
       "titleRequired": "Vui lòng nhập tiêu đề"
     },
@@ -3940,7 +3941,7 @@
   },
   "stores": {
     "domain": "Cửa hàng",
-    "handleTooltip": "Handle được dùng làm slug URL cho cửa hàng. Để trống để tự động tạo từ tên.",
+    "handleTooltip": "Được tạo tự động từ tên cửa hàng. Chỉ gồm chữ thường, số và dấu gạch ngang — không thể chỉnh sửa trực tiếp trường này.",
     "emptyStates": {
       "users": {
         "title": "Chưa có người dùng nào",

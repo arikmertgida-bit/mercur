@@ -385,7 +385,8 @@
         "developer": "Deweloper",
         "myAccount": "Moje Konto"
       }
-    }
+    },
+    "documentTitle": "Kayı.com Panel Administracyjny"
   },
   "dataGrid": {
     "columns": {
@@ -815,7 +816,7 @@
       },
       "handle": {
         "label": "Uchwyt",
-        "tooltip": "Uchwyt jest używany do odniesienia do produktu w Twoim sklepie. Jeśli nie zostanie określony, uchwyt zostanie wygenerowany z tytułu produktu.",
+        "tooltip": "Generowane automatycznie na podstawie tytułu produktu. Tylko małe litery, cyfry i myślniki — tego pola nie można edytować bezpośrednio.",
         "placeholder": "kurtka-zimowa"
       },
       "description": {
@@ -1006,7 +1007,7 @@
     "createCollectionHint": "Utwórz nową kolekcję, aby uporządkować swoje produkty.",
     "createSuccess": "Kolekcja została pomyślnie utworzona.",
     "editCollection": "Edytuj kolekcję",
-    "handleTooltip": "Uchwyt jest używany do odniesienia się do kolekcji w Twoim sklepie. Jeśli nie zostanie określony, zostanie wygenerowany z tytułu kolekcji.",
+    "handleTooltip": "Generowane automatycznie na podstawie tytułu kolekcji. Tylko małe litery, cyfry i myślniki — tego pola nie można edytować bezpośrednio.",
     "deleteWarning": "Zamierzasz usunąć kolekcję {{title}}. Tej akcji nie można cofnąć.",
     "removeSingleProductWarning": "Zamierzasz usunąć produkt {{title}} z kolekcji. Tej akcji nie można cofnąć.",
     "removeProductsWarning_one": "Zamierzasz usunąć {{count}} produkt z kolekcji. Tej akcji nie można cofnąć.",
@@ -1163,7 +1164,7 @@
         "label": "Nowa"
       }
     },
-    "handleTooltip": "Uchwyt służy do odwoływania się do kategorii w sklepie. Jeśli nie zostanie podany, zostanie wygenerowany na podstawie nazwy kategorii.",
+    "handleTooltip": "Generowane automatycznie na podstawie tytułu kategorii. Tylko małe litery, cyfry i myślniki — tego pola nie można edytować bezpośrednio.",
     "validation": {
       "titleRequired": "Wprowadź tytuł"
     },
@@ -4030,7 +4031,7 @@
   },
   "stores": {
     "domain": "Sklepy",
-    "handleTooltip": "Uchwyt jest używany jako fragment URL sklepu. Pozostaw puste, aby wygenerować automatycznie z nazwy.",
+    "handleTooltip": "Generowane automatycznie na podstawie nazwy sklepu. Tylko małe litery, cyfry i myślniki — tego pola nie można edytować bezpośrednio.",
     "fields": {
       "name": "Nazwa",
       "handle": "Uchwyt",

@@ -420,7 +420,8 @@
         "developer": "開發人員",
         "myAccount": "我的帳戶"
       }
-    }
+    },
+    "documentTitle": "Kayı.com 管理後台"
   },
   "dataGrid": {
     "columns": {
@@ -749,7 +750,7 @@
       },
       "handle": {
         "label": "識別碼",
-        "tooltip": "識別碼用於在店面中引用商品。如果未指定,將從商品標題生成識別碼。",
+        "tooltip": "根據商品標題自動產生。僅限小寫字母、數字和連字號——此欄位無法直接編輯。",
         "placeholder": "winter-jacket"
       },
       "description": {
@@ -1031,7 +1032,7 @@
     "createCollectionHint": "建立新的商品系列來整理您的商品。",
     "createSuccess": "商品系列建立成功。",
     "editCollection": "編輯商品系列",
-    "handleTooltip": "識別碼用於在您的店面中參考該商品系列。如未指定，識別碼將根據商品系列標題生成。",
+    "handleTooltip": "根據商品系列標題自動產生。僅限小寫字母、數字和連字號——此欄位無法直接編輯。",
     "deleteWarning": "您即將刪除商品系列 {{title}}。此操作無法復原。",
     "removeSingleProductWarning": "您即將從商品系列中移除商品 {{title}}。此操作無法復原。",
     "removeProductsWarning_one": "您即將從商品系列中移除 {{count}} 個商品。此操作無法復原。",
@@ -1176,7 +1177,7 @@
         "label": "新增"
       }
     },
-    "handleTooltip": "URL 別名用於在前台商城中識別該分類。若未指定，將根據分類標題自動產生。",
+    "handleTooltip": "根據分類標題自動產生。僅限小寫字母、數字和連字號——此欄位無法直接編輯。",
     "validation": {
       "titleRequired": "請輸入標題"
     },
@@ -3940,7 +3941,7 @@
   },
   "stores": {
     "domain": "商店",
-    "handleTooltip": "URL 別名根據商店名稱自動產生。僅限小寫字母、數字和連字號——此欄位無法直接編輯。",
+    "handleTooltip": "根據商店名稱自動產生。僅限小寫字母、數字和連字號——此欄位無法直接編輯。",
     "emptyStates": {
       "users": {
         "title": "找不到使用者",

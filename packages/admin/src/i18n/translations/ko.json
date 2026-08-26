@@ -420,7 +420,8 @@
         "developer": "개발자",
         "myAccount": "내 계정"
       }
-    }
+    },
+    "documentTitle": "Kayı.com 관리자 패널"
   },
   "dataGrid": {
     "columns": {
@@ -633,7 +634,7 @@
         "enterValuePlaceholder": "값 입력",
         "selectValuePlaceholder": "값 선택",
         "requiredAttributes": "필수 속성",
-        "requiredAttributesHint": "These attributes are required by the Marketplace. Select them before proceeding.",
+        "requiredAttributesHint": "이 속성들은 마켓플레이스에서 필수로 지정되었습니다. 계속하기 전에 선택하세요.",
         "useForVariants": "옵션으로 사용",
         "useForVariantsDescription": "선택하면 이 속성을 사용하여 옵션을 만들 수 있습니다. 선택하지 않으면 이 속성은 정보 제공 목적으로만 사용됩니다.",
         "tip": "팁",
@@ -734,7 +735,7 @@
       "published": "게시됨",
       "proposed": "제안됨",
       "rejected": "거부됨",
-      "requires_action": "Changes required",
+      "requires_action": "조치 필요",
       "accepted": "수락됨"
     },
     "fields": {
@@ -750,7 +751,7 @@
       "handle": {
         "label": "핸들",
         "placeholder": "겨울-자켓",
-        "tooltip": "핸들은 스토어프론트에서 제품을 참조하는 데 사용됩니다. 지정하지 않으면 제품 제목에서 핸들이 생성됩니다."
+        "tooltip": "제품 제목에서 자동으로 생성됩니다. 소문자, 숫자, 하이픈만 사용할 수 있으며 이 필드는 직접 수정할 수 없습니다."
       },
       "description": {
         "label": "설명",
@@ -1031,7 +1032,7 @@
     "createCollectionHint": "제품을 구성하기 위해 새 컬렉션을 생성합니다.",
     "createSuccess": "컬렉션이 성공적으로 생성되었습니다.",
     "editCollection": "컬렉션 편집",
-    "handleTooltip": "핸들은 스토어프론트에서 컬렉션을 참조하는 데 사용됩니다. 지정하지 않으면 컬렉션 제목에서 핸들이 생성됩니다.",
+    "handleTooltip": "컬렉션 제목에서 자동으로 생성됩니다. 소문자, 숫자, 하이픈만 사용할 수 있으며 이 필드는 직접 수정할 수 없습니다.",
     "deleteWarning": "컬렉션 {{title}}을(를) 삭제하려고 합니다. 이 작업은 취소할 수 없습니다.",
     "removeSingleProductWarning": "컬렉션에서 제품 {{title}}을(를) 제거하려고 합니다. 이 작업은 취소할 수 없습니다.",
     "removeProductsWarning_one": "컬렉션에서 {{count}}개의 제품을 제거하려고 합니다. 이 작업은 취소할 수 없습니다.",
@@ -1176,7 +1177,7 @@
         "label": "신규"
       }
     },
-    "handleTooltip": "핸들은 스토어프론트에서 카테고리를 참조하는 데 사용됩니다. 지정하지 않으면 카테고리 제목에서 자동으로 생성됩니다.",
+    "handleTooltip": "카테고리 제목에서 자동으로 생성됩니다. 소문자, 숫자, 하이픈만 사용할 수 있으며 이 필드는 직접 수정할 수 없습니다.",
     "validation": {
       "titleRequired": "제목을 입력해 주세요"
     },
@@ -3940,7 +3941,7 @@
   },
   "stores": {
     "domain": "스토어",
-    "handleTooltip": "핸들은 스토어의 URL 슬러그로 사용됩니다. 비워두면 이름에서 자동으로 생성됩니다.",
+    "handleTooltip": "스토어 이름에서 자동으로 생성됩니다. 소문자, 숫자, 하이픈만 사용할 수 있으며 이 필드는 직접 수정할 수 없습니다.",
     "emptyStates": {
       "users": {
         "title": "아직 사용자가 없습니다",

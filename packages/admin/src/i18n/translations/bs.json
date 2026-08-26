@@ -420,7 +420,8 @@
         "developer": "Razvoj",
         "myAccount": "Moj račun"
       }
-    }
+    },
+    "documentTitle": "Kayı.com Administratorski panel"
   },
   "dataGrid": {
     "columns": {
@@ -633,7 +634,7 @@
         "enterValuePlaceholder": "Unesite vrijednost",
         "selectValuePlaceholder": "Odaberite vrijednost",
         "requiredAttributes": "Obavezni atributi",
-        "requiredAttributesHint": "These attributes are required by the Marketplace. Select them before proceeding.",
+        "requiredAttributesHint": "Ovi atributi su obavezni prema pravilima tržišta. Odaberite ih prije nego što nastavite.",
         "useForVariants": "Koristi za varijacije",
         "useForVariantsDescription": "Ako je označeno, moći ćete kreirati varijante koristeći ovaj atribut. Ako nije, atribut će se koristiti samo u informativne svrhe.",
         "tip": "Savjet",
@@ -734,7 +735,7 @@
       "published": "Objavljeno",
       "proposed": "Predloženo",
       "rejected": "Odbijeno",
-      "requires_action": "Changes required",
+      "requires_action": "Zahtijeva akciju",
       "accepted": "Prihvaćeno"
     },
     "fields": {
@@ -749,7 +750,7 @@
       },
       "handle": {
         "label": "Identifikator",
-        "tooltip": "Handle se koristi za referenciranje proizvoda u vašoj prodavnici. Ako nije specificiran, handle će biti generisan iz naziva proizvoda.",
+        "tooltip": "Automatski se generira iz naziva proizvoda. Samo mala slova, brojevi i crtice — ovo polje se ne može direktno uređivati.",
         "placeholder": "zimska-jakna"
       },
       "description": {
@@ -1031,7 +1032,7 @@
     "createCollectionHint": "Kreirajte novu kolekciju kako biste organizovali svoje proizvode.",
     "createSuccess": "Kolekcija je uspješno kreirana.",
     "editCollection": "Uredi kolekciju",
-    "handleTooltip": "Handle se koristi za upućivanje na kolekciju na vašoj prodavnici. Ako nije specificirano, handle će biti generisan iz naziva kolekcije.",
+    "handleTooltip": "Automatski se generira iz naziva kolekcije. Samo mala slova, brojevi i crtice — ovo polje se ne može direktno uređivati.",
     "deleteWarning": "Upravo ćete obrisati kolekciju {{title}}. Ova akcija se ne može poništiti.",
     "removeSingleProductWarning": "Upravo ćete ukloniti proizvod {{title}} iz kolekcije. Ova akcija se ne može poništiti.",
     "removeProductsWarning_one": "Upravo ćete ukloniti {{count}} proizvod iz kolekcije. Ova akcija se ne može poništiti.",
@@ -1176,7 +1177,7 @@
         "label": "Novo"
       }
     },
-    "handleTooltip": "Identifikator (handle) se koristi za referenciranje kategorije na prodajnom mjestu. Ako nije naveden, biće generisan iz naziva kategorije.",
+    "handleTooltip": "Automatski se generira iz naziva kategorije. Samo mala slova, brojevi i crtice — ovo polje se ne može direktno uređivati.",
     "validation": {
       "titleRequired": "Unesite naslov"
     },
@@ -3940,7 +3941,7 @@
   },
   "stores": {
     "domain": "Prodavnice",
-    "handleTooltip": "Identifikator (handle) se koristi kao URL slug za prodavnicu. Ostavite prazno da se automatski generiše iz naziva.",
+    "handleTooltip": "Automatski se generira iz naziva prodavnice. Samo mala slova, brojevi i crtice — ovo polje se ne može direktno uređivati.",
     "emptyStates": {
       "users": {
         "title": "Još nema korisnika",

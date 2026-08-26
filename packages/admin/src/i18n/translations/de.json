@@ -420,7 +420,8 @@
         "developer": "Entwickler",
         "myAccount": "Mein Konto"
       }
-    }
+    },
+    "documentTitle": "Kayı.com Admin-Panel"
   },
   "dataGrid": {
     "columns": {
@@ -633,7 +634,7 @@
         "enterValuePlaceholder": "Wert eingeben",
         "selectValuePlaceholder": "Wert auswählen",
         "requiredAttributes": "Erforderliche Attribute",
-        "requiredAttributesHint": "These attributes are required by the Marketplace. Select them before proceeding.",
+        "requiredAttributesHint": "Diese Attribute werden vom Marktplatz benötigt. Wählen Sie sie aus, bevor Sie fortfahren.",
         "useForVariants": "Für Varianten verwenden",
         "useForVariantsDescription": "Wenn aktiviert, können Sie mit diesem Attribut Varianten erstellen. Andernfalls dient das Attribut nur zu Informationszwecken.",
         "tip": "Tipp",
@@ -734,7 +735,7 @@
       "published": "Veröffentlicht",
       "proposed": "Vorgeschlagen",
       "rejected": "Abgelehnt",
-      "requires_action": "Changes required",
+      "requires_action": "Erfordert Maßnahmen",
       "accepted": "Akzeptiert"
     },
     "fields": {
@@ -749,7 +750,7 @@
       },
       "handle": {
         "label": "Handle",
-        "tooltip": "Der Handle wird verwendet, um auf das Produkt in Ihrer Storefront zu verweisen. Wenn nicht angegeben, wird das Handle aus dem Produkttitel generiert.",
+        "tooltip": "Wird automatisch aus dem Produkttitel generiert. Nur Kleinbuchstaben, Zahlen und Bindestriche — dieses Feld kann nicht direkt bearbeitet werden.",
         "placeholder": "winterjacke"
       },
       "description": {
@@ -1031,7 +1032,7 @@
     "createCollectionHint": "Erstellen Sie eine neue Sammlung, um Ihre Produkte zu organisieren.",
     "createSuccess": "Sammlung erfolgreich erstellt.",
     "editCollection": "Sammlung bearbeiten",
-    "handleTooltip": "Das Handle wird verwendet, um auf die Sammlung in Ihrer Storefront zu verweisen. Wenn nicht angegeben, wird das Handle aus dem Sammlungstitel generiert.",
+    "handleTooltip": "Wird automatisch aus dem Sammlungstitel generiert. Nur Kleinbuchstaben, Zahlen und Bindestriche — dieses Feld kann nicht direkt bearbeitet werden.",
     "deleteWarning": "Sie sind dabei, die Sammlung {{title}} zu löschen. Diese Aktion kann nicht rückgängig gemacht werden.",
     "removeSingleProductWarning": "Sie sind dabei, das Produkt {{title}} aus der Sammlung zu entfernen. Diese Aktion kann nicht rückgängig gemacht werden.",
     "removeProductsWarning_one": "Sie sind dabei, {{count}} Produkt aus der Sammlung zu entfernen. Diese Aktion kann nicht rückgängig gemacht werden.",
@@ -1176,7 +1177,7 @@
         "label": "Neu"
       }
     },
-    "handleTooltip": "Der Handle wird verwendet, um die Kategorie im Storefront zu referenzieren. Falls nicht angegeben, wird der Handle aus dem Kategorietitel generiert.",
+    "handleTooltip": "Wird automatisch aus dem Kategorietitel generiert. Nur Kleinbuchstaben, Zahlen und Bindestriche — dieses Feld kann nicht direkt bearbeitet werden.",
     "validation": {
       "titleRequired": "Bitte geben Sie einen Titel ein"
     },
@@ -3940,7 +3941,7 @@
   },
   "stores": {
     "domain": "Shops",
-    "handleTooltip": "Der Handle wird als URL-Slug für den Shop verwendet. Leer lassen, um ihn automatisch aus dem Namen zu generieren.",
+    "handleTooltip": "Wird automatisch aus dem Shopnamen generiert. Nur Kleinbuchstaben, Zahlen und Bindestriche — dieses Feld kann nicht direkt bearbeitet werden.",
     "emptyStates": {
       "users": {
         "title": "Noch keine Benutzer",

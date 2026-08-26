@@ -420,7 +420,8 @@
         "developer": "Fejlesztő",
         "myAccount": "Saját fiók"
       }
-    }
+    },
+    "documentTitle": "Kayı.com Adminisztrációs Panel"
   },
   "dataGrid": {
     "columns": {
@@ -633,7 +634,7 @@
         "enterValuePlaceholder": "Érték megadása",
         "selectValuePlaceholder": "Érték kiválasztása",
         "requiredAttributes": "Kötelező jellemzők",
-        "requiredAttributesHint": "These attributes are required by the Marketplace. Select them before proceeding.",
+        "requiredAttributesHint": "Ezek a jellemzők kötelezőek a piactér számára. Válassza ki őket, mielőtt folytatná.",
         "useForVariants": "Használat variációkhoz",
         "useForVariantsDescription": "Ha bejelöli, ezzel a jellemzővel variánsokat hozhat létre. Ha nem, a jellemző csak tájékoztató jellegű lesz.",
         "tip": "Tipp",
@@ -734,7 +735,7 @@
       "published": "Közzétéve",
       "proposed": "Javasolt",
       "rejected": "Elutasítva",
-      "requires_action": "Changes required",
+      "requires_action": "Intézkedést igényel",
       "accepted": "Elfogadva"
     },
     "fields": {
@@ -749,7 +750,7 @@
       },
       "handle": {
         "label": "Fogantyú",
-        "tooltip": "A fogantyú a termékre való hivatkozásra szolgál a kirakatban. Ha nincs megadva, a fogantyú a termék címéből generálódik.",
+        "tooltip": "Automatikusan generálódik a termék címéből. Csak kisbetűk, számok és kötőjelek — ez a mező közvetlenül nem szerkeszthető.",
         "placeholder": "teli-kabat"
       },
       "description": {
@@ -1031,7 +1032,7 @@
     "createCollectionHint": "Hozzon létre egy új gyűjteményt a termékek rendezéséhez.",
     "createSuccess": "Gyűjtemény sikeresen létrehozva.",
     "editCollection": "Gyűjtemény szerkesztése",
-    "handleTooltip": "A fogantyú a gyűjteményre való hivatkozásra szolgál a webáruházban. Ha nincs megadva, a fogantyú a gyűjtemény címéből generálódik.",
+    "handleTooltip": "Automatikusan generálódik a gyűjtemény címéből. Csak kisbetűk, számok és kötőjelek — ez a mező közvetlenül nem szerkeszthető.",
     "deleteWarning": "A(z) {{title}} gyűjtemény törlésére készül. Ez a művelet nem vonható vissza.",
     "removeSingleProductWarning": "A(z) {{title}} termék gyűjteményből való eltávolítására készül. Ez a művelet nem vonható vissza.",
     "removeProductsWarning_one": "{{count}} termék gyűjteményből való eltávolítására készül. Ez a művelet nem vonható vissza.",
@@ -1176,7 +1177,7 @@
         "label": "Új"
       }
     },
-    "handleTooltip": "A kategóriajelölő azonosítja a kategóriát a webáruházban. Ha nincs megadva, a jelölő a kategória címéből lesz generálva.",
+    "handleTooltip": "Automatikusan generálódik a kategória címéből. Csak kisbetűk, számok és kötőjelek — ez a mező közvetlenül nem szerkeszthető.",
     "validation": {
       "titleRequired": "Kérjük, adjon meg egy címet"
     },
@@ -3940,7 +3941,7 @@
   },
   "stores": {
     "domain": "Áruházak",
-    "handleTooltip": "A jelölő az áruház URL-azonosítójaként szolgál. Hagyja üresen, hogy automatikusan generálódjon a névből.",
+    "handleTooltip": "Automatikusan generálódik az áruház nevéből. Csak kisbetűk, számok és kötőjelek — ez a mező közvetlenül nem szerkeszthető.",
     "emptyStates": {
       "users": {
         "title": "Még nincsenek felhasználók",

@@ -809,6 +809,9 @@
               }
             }
           }
+        },
+        "documentTitle": {
+          "type": "string"
         }
       }
     },

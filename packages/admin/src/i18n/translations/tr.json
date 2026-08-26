@@ -420,7 +420,8 @@
         "developer": "Geliştirici",
         "myAccount": "Hesabım"
       }
-    }
+    },
+    "documentTitle": "Kayı.com Yönetici Paneli"
   },
   "dataGrid": {
     "columns": {
@@ -633,7 +634,7 @@
         "enterValuePlaceholder": "Değer girin",
         "selectValuePlaceholder": "Değer seçin",
         "requiredAttributes": "Zorunlu özellikler",
-        "requiredAttributesHint": "These attributes are required by the Marketplace. Select them before proceeding.",
+        "requiredAttributesHint": "Bu özellikler pazar yeri tarafından zorunlu kılınmıştır. Devam etmeden önce bunları seçin.",
         "useForVariants": "Varyasyonlar için kullan",
         "useForVariantsDescription": "İşaretlenirse, bu özelliği kullanarak varyant oluşturabilirsiniz. İşaretlenmezse özellik yalnızca bilgi amaçlı kullanılır.",
         "tip": "İpucu",
@@ -734,7 +735,7 @@
       "published": "Yayınlandı",
       "proposed": "Önerildi",
       "rejected": "Reddedildi",
-      "requires_action": "Changes required",
+      "requires_action": "İşlem gerekiyor",
       "accepted": "Kabul edildi"
     },
     "fields": {
@@ -749,7 +750,7 @@
       },
       "handle": {
         "label": "Tutamak",
-        "tooltip": "Tutamak, ürünü mağazanızda referans almak için kullanılır. Belirtilmediğinde, ürün başlığından oluşturulacaktır.",
+        "tooltip": "Ürün başlığından otomatik olarak oluşturulur. Yalnızca küçük harfler, rakamlar ve tire kullanılabilir — bu alan doğrudan düzenlenemez.",
         "placeholder": "kışlık-ceket"
       },
       "description": {
@@ -1031,7 +1032,7 @@
     "createCollectionHint": "Ürünlerinizi organize etmek için yeni bir koleksiyon oluşturun.",
     "createSuccess": "Koleksiyon başarıyla oluşturuldu.",
     "editCollection": "Koleksiyonu Düzenle",
-    "handleTooltip": "Tutamak, koleksiyonu mağazanızda referans almak için kullanılır. Belirtilmezse, koleksiyon başlığından oluşturulacaktır.",
+    "handleTooltip": "Koleksiyon başlığından otomatik olarak oluşturulur. Yalnızca küçük harfler, rakamlar ve tire kullanılabilir — bu alan doğrudan düzenlenemez.",
     "deleteWarning": "Koleksiyon {{title}}'i silmek üzeresiniz. Bu işlem geri alınamaz.",
     "removeSingleProductWarning": "Ürünü koleksiyondan kaldırmak üzeresiniz: {{title}}. Bu işlem geri alınamaz.",
     "removeProductsWarning_one": "{{count}} ürünü koleksiyondan kaldırmak üzeresiniz. Bu işlem geri alınamaz.",
@@ -1176,7 +1177,7 @@
         "label": "Yeni"
       }
     },
-    "handleTooltip": "Handle, mağaza vitrininde kategoriye referans vermek için kullanılır. Belirtilmezse, handle kategori başlığından oluşturulur.",
+    "handleTooltip": "Kategori başlığından otomatik olarak oluşturulur. Yalnızca küçük harfler, rakamlar ve tire kullanılabilir — bu alan doğrudan düzenlenemez.",
     "validation": {
       "titleRequired": "Lütfen bir başlık girin"
     },
@@ -3940,7 +3941,7 @@
   },
   "stores": {
     "domain": "Mağazalar",
-    "handleTooltip": "Handle, mağaza için URL slug'ı olarak kullanılır. Addan otomatik oluşturmak için boş bırakın.",
+    "handleTooltip": "Mağaza adından otomatik olarak oluşturulur. Yalnızca küçük harfler, rakamlar ve tire kullanılabilir — bu alan doğrudan düzenlenemez.",
     "emptyStates": {
       "users": {
         "title": "Henüz kullanıcı yok",

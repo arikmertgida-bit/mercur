@@ -420,7 +420,8 @@
         "developer": "מפתח",
         "myAccount": "החשבון שלי"
       }
-    }
+    },
+    "documentTitle": "Kayı.com לוח ניהול"
   },
   "dataGrid": {
     "columns": {
@@ -633,7 +634,7 @@
         "enterValuePlaceholder": "הזן ערך",
         "selectValuePlaceholder": "בחר ערך",
         "requiredAttributes": "מאפיינים נדרשים",
-        "requiredAttributesHint": "These attributes are required by the Marketplace. Select them before proceeding.",
+        "requiredAttributesHint": "מאפיינים אלה נדרשים על ידי השוק. בחר אותם לפני שתמשיך.",
         "useForVariants": "השתמש לוריאציות",
         "useForVariantsDescription": "אם מסומן, תוכל ליצור וריאנטים באמצעות מאפיין זה. אם לא, המאפיין ישמש למטרות מידע בלבד.",
         "tip": "טיפ",
@@ -734,7 +735,7 @@
       "published": "פורסם",
       "proposed": "מוצע",
       "rejected": "נדחה",
-      "requires_action": "Changes required",
+      "requires_action": "דורש פעולה",
       "accepted": "התקבל"
     },
     "fields": {
@@ -749,7 +750,7 @@
       },
       "handle": {
         "label": "מזהה",
-        "tooltip": "המזהה משמש להפניה למוצר בחנות שלך. אם לא צוין, המזהה ייווצר מכותרת המוצר.",
+        "tooltip": "נוצר אוטומטית מכותרת המוצר. אותיות קטנות, ספרות ומקפים בלבד — לא ניתן לערוך שדה זה ישירות.",
         "placeholder": "מעיל-חורף"
       },
       "description": {
@@ -1031,7 +1032,7 @@
     "createCollectionHint": "צור קולקציה חדשה כדי לארגן את המוצרים שלך.",
     "createSuccess": "הקולקציה נוצרה בהצלחה.",
     "editCollection": "ערוך קולקציה",
-    "handleTooltip": "המזהה משמש להפניה לקולקציה בחנות שלך. אם לא צוין, המזהה ייווצר מכותרת הקולקציה.",
+    "handleTooltip": "נוצר אוטומטית מכותרת הקולקציה. אותיות קטנות, ספרות ומקפים בלבד — לא ניתן לערוך שדה זה ישירות.",
     "deleteWarning": "אתה עומד למחוק את הקולקציה {{title}}. פעולה זו אינה ניתנת לביטול.",
     "removeSingleProductWarning": "אתה עומד להסיר את המוצר {{title}} מהקולקציה. פעולה זו אינה ניתנת לביטול.",
     "removeProductsWarning_one": "אתה עומד להסיר {{count}} מוצר מהקולקציה. פעולה זו אינה ניתנת לביטול.",
@@ -1176,7 +1177,7 @@
         "label": "חדש"
       }
     },
-    "handleTooltip": "הכינוי משמש להתייחסות לקטגוריה בחזית החנות. אם לא צוין, הכינוי ייווצר מכותרת הקטגוריה.",
+    "handleTooltip": "נוצר אוטומטית מכותרת הקטגוריה. אותיות קטנות, ספרות ומקפים בלבד — לא ניתן לערוך שדה זה ישירות.",
     "validation": {
       "titleRequired": "יש להזין כותרת"
     },
@@ -3940,7 +3941,7 @@
   },
   "stores": {
     "domain": "חנויות",
-    "handleTooltip": "הכינוי משמש כתבנית ה-URL עבור החנות. השאר ריק ליצירה אוטומטית מהשם.",
+    "handleTooltip": "נוצר אוטומטית משם החנות. אותיות קטנות, ספרות ומקפים בלבד — לא ניתן לערוך שדה זה ישירות.",
     "emptyStates": {
       "users": {
         "title": "אין משתמשים עדיין",

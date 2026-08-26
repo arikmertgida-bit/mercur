@@ -420,7 +420,8 @@
         "developer": "Desenvolvedor",
         "myAccount": "Minha Conta"
       }
-    }
+    },
+    "documentTitle": "Kayı.com Painel de Administração"
   },
   "dataGrid": {
     "columns": {
@@ -633,7 +634,7 @@
         "enterValuePlaceholder": "Informar valor",
         "selectValuePlaceholder": "Selecionar valor",
         "requiredAttributes": "Atributos obrigatórios",
-        "requiredAttributesHint": "These attributes are required by the Marketplace. Select them before proceeding.",
+        "requiredAttributesHint": "Estes atributos são exigidos pelo marketplace. Selecione-os antes de continuar.",
         "useForVariants": "Usar para variações",
         "useForVariantsDescription": "Se marcado, você poderá criar variações usando este atributo. Caso contrário, o atributo será usado apenas para fins informativos.",
         "tip": "Dica",
@@ -734,7 +735,7 @@
       "published": "Publicado",
       "proposed": "Proposto",
       "rejected": "Rejeitado",
-      "requires_action": "Changes required",
+      "requires_action": "Requer ação",
       "accepted": "Aceito"
     },
     "fields": {
@@ -749,7 +750,7 @@
       },
       "handle": {
         "label": "Identificador",
-        "tooltip": "O identificador é usado para referenciar o produto na sua vitrine. Se não especificado, o identificador será gerado a partir do título do produto.",
+        "tooltip": "Gerado automaticamente a partir do título do produto. Apenas letras minúsculas, números e hifens — este campo não pode ser editado diretamente.",
         "placeholder": "jaqueta-de-inverno"
       },
       "description": {
@@ -1031,7 +1032,7 @@
     "createCollectionHint": "Crie uma nova coleção para organizar seus produtos.",
     "createSuccess": "Coleção criada com sucesso.",
     "editCollection": "Editar Coleção",
-    "handleTooltip": "O identificador é usado para referenciar a coleção na sua vitrine. Se não especificado, o identificador será gerado a partir do título da coleção.",
+    "handleTooltip": "Gerado automaticamente a partir do título da coleção. Apenas letras minúsculas, números e hifens — este campo não pode ser editado diretamente.",
     "deleteWarning": "Você está prestes a excluir a coleção {{title}}. Esta ação não pode ser desfeita.",
     "removeSingleProductWarning": "Você está prestes a remover o produto {{title}} da coleção. Esta ação não pode ser desfeita.",
     "removeProductsWarning_one": "Você está prestes a remover {{count}} produto da coleção. Esta ação não pode ser desfeita.",
@@ -1176,7 +1177,7 @@
         "label": "Novo"
       }
     },
-    "handleTooltip": "O identificador (handle) é usado para referenciar a categoria na loja. Se não for especificado, será gerado a partir do título da categoria.",
+    "handleTooltip": "Gerado automaticamente a partir do título da categoria. Apenas letras minúsculas, números e hifens — este campo não pode ser editado diretamente.",
     "validation": {
       "titleRequired": "Informe um título"
     },
@@ -3940,7 +3941,7 @@
   },
   "stores": {
     "domain": "Lojas",
-    "handleTooltip": "O identificador (handle) é usado como o slug de URL da loja. Deixe em branco para gerar automaticamente a partir do nome.",
+    "handleTooltip": "Gerado automaticamente a partir do nome da loja. Apenas letras minúsculas, números e hifens — este campo não pode ser editado diretamente.",
     "emptyStates": {
       "users": {
         "title": "Nenhum usuário ainda",

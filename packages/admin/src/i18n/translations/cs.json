@@ -420,7 +420,8 @@
         "developer": "Vývojář",
         "myAccount": "Můj účet"
       }
-    }
+    },
+    "documentTitle": "Kayı.com Administrační panel"
   },
   "dataGrid": {
     "columns": {
@@ -633,7 +634,7 @@
         "enterValuePlaceholder": "Zadejte hodnotu",
         "selectValuePlaceholder": "Vyberte hodnotu",
         "requiredAttributes": "Povinné atributy",
-        "requiredAttributesHint": "These attributes are required by the Marketplace. Select them before proceeding.",
+        "requiredAttributesHint": "Tyto atributy jsou vyžadovány tržištěm. Vyberte je před pokračováním.",
         "useForVariants": "Použít pro varianty",
         "useForVariantsDescription": "Pokud zaškrtnete, budete moci pomocí tohoto atributu vytvářet varianty. Pokud ne, atribut bude sloužit pouze pro informativní účely.",
         "tip": "Tip",
@@ -734,7 +735,7 @@
       "published": "Publikováno",
       "proposed": "Navrženo",
       "rejected": "Odmítnuto",
-      "requires_action": "Changes required",
+      "requires_action": "Vyžaduje akci",
       "accepted": "Přijato"
     },
     "fields": {
@@ -749,7 +750,7 @@
       },
       "handle": {
         "label": "Identifikátor",
-        "tooltip": "Handle se používá k odkazování na produkt ve vašem obchodě. Pokud není specifikováno, handle bude vygenerováno z názvu produktu.",
+        "tooltip": "Automaticky generováno z názvu produktu. Pouze malá písmena, čísla a spojovníky — toto pole nelze upravovat přímo.",
         "placeholder": "zimní-bunda"
       },
       "description": {
@@ -1031,7 +1032,7 @@
     "createCollectionHint": "Vytvořte novou kolekci pro organizaci vašich produktů.",
     "createSuccess": "Kolekce byla úspěšně vytvořena.",
     "editCollection": "Upravit kolekci",
-    "handleTooltip": "Handle se používá k odkazování na kolekci ve vašem obchodě. Pokud není specifikováno, handle bude vygenerováno z názvu kolekce.",
+    "handleTooltip": "Automaticky generováno z názvu kolekce. Pouze malá písmena, čísla a spojovníky — toto pole nelze upravovat přímo.",
     "deleteWarning": "Chystáte se smazat kolekci {{title}}. Tuto akci nelze vrátit zpět.",
     "removeSingleProductWarning": "Chystáte se odstranit produkt {{title}} z kolekce. Tuto akci nelze vrátit zpět.",
     "removeProductsWarning_one": "Chystáte se odstranit {{count}} produkt z kolekce. Tuto akci nelze vrátit zpět.",
@@ -1176,7 +1177,7 @@
         "label": "Nový"
       }
     },
-    "handleTooltip": "Identifikátor se používá k odkazování na kategorii na e-shopu. Pokud není zadán, vygeneruje se z názvu kategorie.",
+    "handleTooltip": "Automaticky generováno z názvu kategorie. Pouze malá písmena, čísla a spojovníky — toto pole nelze upravovat přímo.",
     "validation": {
       "titleRequired": "Zadejte prosím název"
     },
@@ -3940,7 +3941,7 @@
   },
   "stores": {
     "domain": "Obchody",
-    "handleTooltip": "Identifikátor se používá jako URL slug obchodu. Ponechte prázdné pro automatické vygenerování z názvu.",
+    "handleTooltip": "Automaticky generováno z názvu obchodu. Pouze malá písmena, čísla a spojovníky — toto pole nelze upravovat přímo.",
     "emptyStates": {
       "users": {
         "title": "Zatím žádní uživatelé",

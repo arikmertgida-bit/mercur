@@ -420,7 +420,8 @@
         "developer": "开发者",
         "myAccount": "我的账户"
       }
-    }
+    },
+    "documentTitle": "Kayı.com 管理后台"
   },
   "dataGrid": {
     "columns": {
@@ -633,7 +634,7 @@
         "enterValuePlaceholder": "输入值",
         "selectValuePlaceholder": "选择值",
         "requiredAttributes": "必填属性",
-        "requiredAttributesHint": "These attributes are required by the Marketplace. Select them before proceeding.",
+        "requiredAttributesHint": "这些属性为市场要求的必填项。请在继续之前选择它们。",
         "useForVariants": "用于生成变体",
         "useForVariantsDescription": "勾选后，可使用此属性创建变体；否则该属性仅用于信息展示。",
         "tip": "提示",
@@ -734,7 +735,7 @@
       "published": "已发布",
       "proposed": "已提议",
       "rejected": "已拒绝",
-      "requires_action": "Changes required",
+      "requires_action": "需要处理",
       "accepted": "已接受"
     },
     "fields": {
@@ -749,7 +750,7 @@
       },
       "handle": {
         "label": "标识",
-        "tooltip": "标识用于在您的店面引用产品。如果未指定,将根据产品标题生成标识。",
+        "tooltip": "根据商品标题自动生成。仅限小写字母、数字和连字符——此字段无法直接编辑。",
         "placeholder": "冬衣"
       },
       "description": {
@@ -1031,7 +1032,7 @@
     "createCollectionHint": "创建新系列以组织您的产品。",
     "createSuccess": "系列创建成功。",
     "editCollection": "编辑系列",
-    "handleTooltip": "标识用于在您的店面引用系列。如果未指定,将根据系列标题生成标识。",
+    "handleTooltip": "根据系列标题自动生成。仅限小写字母、数字和连字符——此字段无法直接编辑。",
     "deleteWarning": "您即将删除系列 {{title}}。此操作无法撤销。",
     "removeSingleProductWarning": "您即将从系列中移除产品 {{title}}。此操作无法撤销。",
     "removeProductsWarning_one": "您即将从系列中移除 {{count}} 个产品。此操作无法撤销。",
@@ -1176,7 +1177,7 @@
         "label": "新建"
       }
     },
-    "handleTooltip": "URL 别名用于在前台商城中引用该分类。若未指定，将根据分类标题自动生成。",
+    "handleTooltip": "根据分类标题自动生成。仅限小写字母、数字和连字符——此字段无法直接编辑。",
     "validation": {
       "titleRequired": "请输入标题"
     },
@@ -3940,7 +3941,7 @@
   },
   "stores": {
     "domain": "店铺",
-    "handleTooltip": "URL 别名用作店铺的 URL 别名。留空将根据名称自动生成。",
+    "handleTooltip": "根据店铺名称自动生成。仅限小写字母、数字和连字符——此字段无法直接编辑。",
     "emptyStates": {
       "users": {
         "title": "暂无用户",

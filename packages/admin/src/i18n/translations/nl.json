@@ -420,7 +420,8 @@
         "developer": "Ontwikkelaar",
         "myAccount": "Mijn account"
       }
-    }
+    },
+    "documentTitle": "Kayı.com Beheerpaneel"
   },
   "dataGrid": {
     "columns": {
@@ -633,7 +634,7 @@
         "enterValuePlaceholder": "Waarde invoeren",
         "selectValuePlaceholder": "Waarde selecteren",
         "requiredAttributes": "Verplichte attributen",
-        "requiredAttributesHint": "These attributes are required by the Marketplace. Select them before proceeding.",
+        "requiredAttributesHint": "Deze attributen zijn verplicht gesteld door de marketplace. Selecteer ze voordat u doorgaat.",
         "useForVariants": "Gebruiken voor variaties",
         "useForVariantsDescription": "Indien aangevinkt, kun je varianten aanmaken met dit attribuut. Zo niet, dan wordt het attribuut alleen ter informatie gebruikt.",
         "tip": "Tip",
@@ -734,7 +735,7 @@
       "published": "Gepubliceerd",
       "proposed": "Voorgesteld",
       "rejected": "Afgewezen",
-      "requires_action": "Changes required",
+      "requires_action": "Actie vereist",
       "accepted": "Geaccepteerd"
     },
     "fields": {
@@ -749,7 +750,7 @@
       },
       "handle": {
         "label": "Handle",
-        "tooltip": "De handle wordt gebruikt om naar het product te verwijzen in uw winkel. Als niet opgegeven, wordt de handle gegenereerd op basis van de producttitel.",
+        "tooltip": "Wordt automatisch gegenereerd op basis van de producttitel. Alleen kleine letters, cijfers en koppeltekens — dit veld kan niet rechtstreeks worden bewerkt.",
         "placeholder": "winterjas"
       },
       "description": {
@@ -1031,7 +1032,7 @@
     "createCollectionHint": "Maak een nieuwe collectie aan om uw producten te organiseren.",
     "createSuccess": "Collectie succesvol aangemaakt.",
     "editCollection": "Collectie bewerken",
-    "handleTooltip": "De handle wordt gebruikt om naar de collectie te verwijzen in uw winkel. Als niet opgegeven, wordt de handle gegenereerd op basis van de collectietitel.",
+    "handleTooltip": "Wordt automatisch gegenereerd op basis van de collectietitel. Alleen kleine letters, cijfers en koppeltekens — dit veld kan niet rechtstreeks worden bewerkt.",
     "deleteWarning": "U staat op het punt de collectie {{title}} te verwijderen. Deze actie kan niet ongedaan worden gemaakt.",
     "removeSingleProductWarning": "U staat op het punt het product {{title}} uit de collectie te verwijderen. Deze actie kan niet ongedaan worden gemaakt.",
     "removeProductsWarning_one": "U staat op het punt {{count}} product uit de collectie te verwijderen. Deze actie kan niet ongedaan worden gemaakt.",
@@ -1176,7 +1177,7 @@
         "label": "Nieuw"
       }
     },
-    "handleTooltip": "De handle wordt gebruikt om naar de categorie op de winkelwebsite te verwijzen. Indien niet opgegeven, wordt de handle gegenereerd op basis van de categorietitel.",
+    "handleTooltip": "Wordt automatisch gegenereerd op basis van de categorietitel. Alleen kleine letters, cijfers en koppeltekens — dit veld kan niet rechtstreeks worden bewerkt.",
     "validation": {
       "titleRequired": "Voer een titel in"
     },
@@ -3940,7 +3941,7 @@
   },
   "stores": {
     "domain": "Winkels",
-    "handleTooltip": "De handle wordt gebruikt als URL-slug voor de winkel. Laat leeg om automatisch te genereren op basis van de naam.",
+    "handleTooltip": "Wordt automatisch gegenereerd op basis van de winkelnaam. Alleen kleine letters, cijfers en koppeltekens — dit veld kan niet rechtstreeks worden bewerkt.",
     "emptyStates": {
       "users": {
         "title": "Nog geen gebruikers",

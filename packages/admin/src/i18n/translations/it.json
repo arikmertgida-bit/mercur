@@ -420,7 +420,8 @@
         "developer": "Sviluppatore",
         "myAccount": "Il mio account"
       }
-    }
+    },
+    "documentTitle": "Kayı.com Pannello di Amministrazione"
   },
   "dataGrid": {
     "columns": {
@@ -633,7 +634,7 @@
         "enterValuePlaceholder": "Inserisci valore",
         "selectValuePlaceholder": "Seleziona valore",
         "requiredAttributes": "Attributi obbligatori",
-        "requiredAttributesHint": "These attributes are required by the Marketplace. Select them before proceeding.",
+        "requiredAttributesHint": "Questi attributi sono richiesti dal marketplace. Selezionali prima di procedere.",
         "useForVariants": "Usa per le varianti",
         "useForVariantsDescription": "Se selezionato, potrai creare varianti utilizzando questo attributo. In caso contrario, l'attributo verrà usato solo a scopo informativo.",
         "tip": "Suggerimento",
@@ -734,7 +735,7 @@
       "published": "Pubblicato",
       "proposed": "Proposto",
       "rejected": "Rifiutato",
-      "requires_action": "Changes required",
+      "requires_action": "Richiede azione",
       "accepted": "Accettato"
     },
     "fields": {
@@ -749,7 +750,7 @@
       },
       "handle": {
         "label": "Handle",
-        "tooltip": "L'handle è usato per fare riferimento al prodotto nel tuo negozio. Se non specificato, l'handle sarà generato dal titolo del prodotto.",
+        "tooltip": "Generato automaticamente dal titolo del prodotto. Solo lettere minuscole, numeri e trattini — questo campo non può essere modificato direttamente.",
         "placeholder": "giacca-invernale"
       },
       "description": {
@@ -1031,7 +1032,7 @@
     "createCollectionHint": "Crea una nuova collezione per organizzare i tuoi prodotti.",
     "createSuccess": "Collezione creata con successo.",
     "editCollection": "Modifica Collezione",
-    "handleTooltip": "L'handle è usato per fare riferimento alla collezione nel tuo negozio. Se non specificato, l'handle sarà generato dal titolo della collezione.",
+    "handleTooltip": "Generato automaticamente dal titolo della collezione. Solo lettere minuscole, numeri e trattini — questo campo non può essere modificato direttamente.",
     "deleteWarning": "Stai per eliminare la collezione {{title}}. Questa azione non può essere annullata.",
     "removeSingleProductWarning": "Stai per rimuovere il prodotto {{title}} dalla collezione. Questa azione non può essere annullata.",
     "removeProductsWarning_one": "Stai per rimuovere {{count}} prodotto dalla collezione. Questa azione non può essere annullata.",
@@ -1176,7 +1177,7 @@
         "label": "Nuovo"
       }
     },
-    "handleTooltip": "L'handle viene usato per fare riferimento alla categoria sullo storefront. Se non specificato, verrà generato dal titolo della categoria.",
+    "handleTooltip": "Generato automaticamente dal titolo della categoria. Solo lettere minuscole, numeri e trattini — questo campo non può essere modificato direttamente.",
     "validation": {
       "titleRequired": "Inserisci un titolo"
     },
@@ -1260,7 +1261,7 @@
       "orderID": "ID ordine",
       "description": "Descrizione",
       "location": "Posizione",
-      "inStockAtLocation": "In stock in questa posizione",
+      "inStockAtLocation": "Disponibile in questa posizione",
       "availableAtLocation": "Disponibile in questa posizione",
       "reservedAtLocation": "Riservato in questa posizione",
       "reservedAmount": "Quantità riservata",
@@ -3940,7 +3941,7 @@
   },
   "stores": {
     "domain": "Negozi",
-    "handleTooltip": "L'handle viene usato come slug URL per il negozio. Lascia vuoto per generarlo automaticamente dal nome.",
+    "handleTooltip": "Generato automaticamente dal nome del negozio. Solo lettere minuscole, numeri e trattini — questo campo non può essere modificato direttamente.",
     "emptyStates": {
       "users": {
         "title": "Nessun utente ancora",

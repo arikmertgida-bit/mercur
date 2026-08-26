@@ -420,7 +420,8 @@
         "developer": "Pengembang",
         "myAccount": "Akun Saya"
       }
-    }
+    },
+    "documentTitle": "Kayı.com Panel Admin"
   },
   "dataGrid": {
     "columns": {
@@ -633,7 +634,7 @@
         "enterValuePlaceholder": "Masukkan nilai",
         "selectValuePlaceholder": "Pilih nilai",
         "requiredAttributes": "Atribut wajib",
-        "requiredAttributesHint": "These attributes are required by the Marketplace. Select them before proceeding.",
+        "requiredAttributesHint": "Atribut-atribut ini diwajibkan oleh marketplace. Pilih atribut tersebut sebelum melanjutkan.",
         "useForVariants": "Gunakan untuk Variasi",
         "useForVariantsDescription": "Jika dicentang, Anda dapat membuat varian menggunakan atribut ini. Jika tidak, atribut hanya akan digunakan untuk keperluan informasi.",
         "tip": "Tips",
@@ -734,7 +735,7 @@
       "published": "Dipublikasikan",
       "proposed": "Diusulkan",
       "rejected": "Ditolak",
-      "requires_action": "Changes required",
+      "requires_action": "Membutuhkan tindakan",
       "accepted": "Diterima"
     },
     "fields": {
@@ -749,7 +750,7 @@
       },
       "handle": {
         "label": "Handle",
-        "tooltip": "Handle digunakan untuk mereferensikan produk di etalase Anda. Jika tidak ditentukan, handle akan dibuat dari judul produk.",
+        "tooltip": "Dibuat otomatis dari judul produk. Hanya huruf kecil, angka, dan tanda hubung — kolom ini tidak dapat diedit langsung.",
         "placeholder": "jaket-musim-dingin"
       },
       "description": {
@@ -1031,7 +1032,7 @@
     "createCollectionHint": "Buat koleksi baru untuk mengatur produk Anda.",
     "createSuccess": "Koleksi berhasil dibuat.",
     "editCollection": "Edit Koleksi",
-    "handleTooltip": "Handle digunakan untuk mereferensikan koleksi di etalase Anda. Jika tidak ditentukan, handle akan dibuat dari judul koleksi.",
+    "handleTooltip": "Dibuat otomatis dari judul koleksi. Hanya huruf kecil, angka, dan tanda hubung — kolom ini tidak dapat diedit langsung.",
     "deleteWarning": "Anda akan menghapus koleksi {{title}}. Tindakan ini tidak dapat dibatalkan.",
     "removeSingleProductWarning": "Anda akan menghapus produk {{title}} dari koleksi. Tindakan ini tidak dapat dibatalkan.",
     "removeProductsWarning_one": "Anda akan menghapus {{count}} produk dari koleksi. Tindakan ini tidak dapat dibatalkan.",
@@ -1176,7 +1177,7 @@
         "label": "Baru"
       }
     },
-    "handleTooltip": "Handle digunakan untuk merujuk kategori pada storefront. Jika tidak ditentukan, handle akan dibuat otomatis dari judul kategori.",
+    "handleTooltip": "Dibuat otomatis dari judul kategori. Hanya huruf kecil, angka, dan tanda hubung — kolom ini tidak dapat diedit langsung.",
     "validation": {
       "titleRequired": "Silakan masukkan judul"
     },
@@ -3940,7 +3941,7 @@
   },
   "stores": {
     "domain": "Toko",
-    "handleTooltip": "Handle digunakan sebagai slug URL untuk toko. Kosongkan untuk membuat otomatis dari nama.",
+    "handleTooltip": "Dibuat otomatis dari nama toko. Hanya huruf kecil, angka, dan tanda hubung — kolom ini tidak dapat diedit langsung.",
     "emptyStates": {
       "users": {
         "title": "Belum ada pengguna",

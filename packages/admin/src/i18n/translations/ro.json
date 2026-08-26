@@ -420,7 +420,8 @@
         "developer": "Dezvoltator",
         "myAccount": "Contul meu"
       }
-    }
+    },
+    "documentTitle": "Kayı.com Panou de Administrare"
   },
   "dataGrid": {
     "columns": {
@@ -611,7 +612,7 @@
           "label": "Variante de produs",
           "hint": "Acest clasament va afecta ordinea variantelor din vitrina dvs.",
           "alert": "Adăugați opțiuni pentru a crea variante.",
-          "tip": "Variantele rămase nebifate nu vor fi create. ",
+          "tip": "Variantele rămase nebifate nu vor fi create. Puteți oricând să creați și să editați variante ulterior, dar această listă se potrivește cu variațiile din atributele produsului dvs.",
           "noAxes": "Marcați atributele ca \"Utilizează pentru variații\" în pasul Atribute pentru a genera variante."
         },
         "productOptions": {
@@ -633,7 +634,7 @@
         "enterValuePlaceholder": "Introduceți valoare",
         "selectValuePlaceholder": "Selectați valoare",
         "requiredAttributes": "Atribute obligatorii",
-        "requiredAttributesHint": "These attributes are required by the Marketplace. Select them before proceeding.",
+        "requiredAttributesHint": "Aceste atribute sunt obligatorii conform marketplace-ului. Selectați-le înainte de a continua.",
         "useForVariants": "Utilizează pentru variații",
         "useForVariantsDescription": "Dacă este bifat, veți putea crea variante folosind acest atribut. Dacă nu, atributul va fi folosit doar informativ.",
         "tip": "Sfat",
@@ -674,7 +675,7 @@
       },
       "upload": {
         "title": "Încărcați un fișier CSV",
-        "description": "Prin importuri puteți adăuga sau actualiza produse. ",
+        "description": "Prin importuri puteți adăuga sau actualiza produse. Pentru a actualiza produsele existente trebuie să folosiți mânerul și ID-ul existente, iar pentru a actualiza variantele existente trebuie să folosiți ID-ul existent. Vi se va cere confirmarea înainte de a importa produsele.",
         "preprocessing": "Preprocesare...",
         "productsToCreate": "Produsele vor fi create",
         "productsToUpdate": "Produsele vor fi actualizate"
@@ -732,7 +733,7 @@
       "published": "Publicat",
       "proposed": "Propus",
       "rejected": "Respins",
-      "requires_action": "Changes required",
+      "requires_action": "Necesită acțiune",
       "accepted": "Acceptat"
     },
     "fields": {
@@ -747,7 +748,7 @@
       },
       "handle": {
         "label": "Mâner",
-        "tooltip": "Mânerul este folosit pentru a face referire la produsul din vitrina dvs. ",
+        "tooltip": "Generat automat din titlul produsului. Doar litere mici, cifre și cratime — acest câmp nu poate fi editat direct.",
         "placeholder": "jachetă-de-iarnă"
       },
       "description": {
@@ -838,7 +839,7 @@
       "inventory": {
         "notManaged": "Nu este gestionat",
         "manageItems": "Gestionați articolele de inventar",
-        "notManagedDesc": "Inventarul nu este gestionat pentru această variantă. ",
+        "notManagedDesc": "Inventarul nu este gestionat pentru această variantă. Activați „Gestionează inventarul” pentru a urmări inventarul variantei.",
         "manageKit": "Gestionați setul de inventar",
         "navigateToItem": "Accesați obiectul de inventar",
         "actions": {
@@ -1031,7 +1032,7 @@
     "createCollectionHint": "Creați o nouă colecție pentru a vă organiza produsele.",
     "createSuccess": "Colecție creată cu succes.",
     "editCollection": "Editați colecția",
-    "handleTooltip": "Mânerul este folosit pentru a face referire la colecția din vitrina dvs. ",
+    "handleTooltip": "Generat automat din titlul colecției. Doar litere mici, cifre și cratime — acest câmp nu poate fi editat direct.",
     "deleteWarning": "Sunteți pe cale să ștergeți colecția {{title}}. ",
     "removeSingleProductWarning": "Sunteți pe cale să eliminați produsul {{title}} din colectie. ",
     "products": {
@@ -1176,7 +1177,7 @@
         "label": "Nou"
       }
     },
-    "handleTooltip": "Handle-ul este folosit pentru a referi categoria pe magazinul online. Dacă nu este specificat, va fi generat din titlul categoriei.",
+    "handleTooltip": "Generat automat din titlul categoriei. Doar litere mici, cifre și cratime — acest câmp nu poate fi editat direct.",
     "validation": {
       "titleRequired": "Vă rugăm introduceți un titlu"
     },
@@ -1411,7 +1412,7 @@
   },
   "customerGroups": {
     "domain": "Grupuri de clienți",
-    "subtitle": "Organizați clienții în grupuri. ",
+    "subtitle": "Organizați clienții în grupuri. Grupurile pot avea promoții și prețuri diferite.",
     "list": {
       "empty": {
         "heading": "Fără grupuri de clienți",
@@ -1554,7 +1555,7 @@
       "noteHint": "Adăugați o notă internă pentru editare",
       "cancelSuccessToast": "Modificarea comenzii a fost anulată",
       "createSuccessToast": "Solicitarea de modificare a comenzii a fost creată",
-      "activeChangeError": "Există deja o modificare activă a comenzii (retur, revendicare, schimb etc.). ",
+      "activeChangeError": "Există deja o modificare activă a comenzii (retur, revendicare, schimb etc.). Finalizați sau anulați modificarea înainte de a edita comanda.",
       "panel": {
         "title": "A fost solicitată modificarea comenzii",
         "titlePending": "Modificarea comenzii este în așteptare"
@@ -1605,7 +1606,7 @@
       "reasonHint": "Alegeți de ce clientul dorește să returneze articole.",
       "note": "Nota",
       "noInventoryLevel": "Fără nivel de inventar",
-      "noInventoryLevelDesc": "Locația selectată nu are un nivel de inventar pentru articolele selectate. ",
+      "noInventoryLevelDesc": "Locația selectată nu are un nivel de inventar pentru articolele selectate. Returul poate fi solicitat, dar nu poate fi primit până când nu este creat un nivel de inventar pentru locația selectată.",
       "noteHint": "Puteți scrie liber dacă doriți să specificați ceva.",
       "location": "Locaţie",
       "locationHint": "Alegeți locația în care doriți să returnați articolele.",
@@ -1818,7 +1819,7 @@
       "title": "Creați rambursare",
       "sendNotificationHint": "Notificați clienții despre rambursarea creată.",
       "systemPayment": "Sistem de plată",
-      "systemPaymentDesc": "Una sau mai multe dintre plățile dvs. sunt o plată de sistem. ",
+      "systemPaymentDesc": "Una sau mai multe dintre plățile dvs. sunt o plată de sistem. Rețineți că încasările și rambursările pentru astfel de plăți nu sunt gestionate de Kayı.com.",
       "error": {
         "amountToLarge": "Nu se poate rambursa mai mult decât suma inițială a comenzii.",
         "amountNegative": "Suma rambursării trebuie să fie un număr pozitiv.",
@@ -1963,7 +1964,7 @@
     "markAsPaid": {
       "label": "Marcați ca plătit",
       "warningTitle": "Marcați ca plătit",
-      "warningDescription": "Sunteți pe cale să marcați comanda nefinalizată ca plătită. "
+      "warningDescription": "Sunteți pe cale să marcați comanda nefinalizată ca plătită. Această acțiune nu poate fi anulată, iar încasarea plății nu va mai fi posibilă ulterior."
     },
     "status": {
       "open": "Deschide",
@@ -2037,7 +2038,7 @@
         "header": "Transport"
       },
       "disable": {
-        "confirmation": "Sunteți sigur că doriți să dezactivați {{name}}? ",
+        "confirmation": "Sunteți sigur că doriți să dezactivați „{{name}}”? Aceasta va șterge toate zonele de servicii și opțiunile de livrare asociate și nu poate fi anulată.",
         "pickup": "Ridicarea a fost dezactivată cu succes.",
         "shipping": "Livrarea a fost dezactivată cu succes."
       },
@@ -2195,7 +2196,7 @@
       },
       "fields": {
         "noRecords": "Nu există zone de servicii pentru a adăuga opțiuni de expediere.",
-        "tip": "O zonă de serviciu este o colecție de zone sau zone geografice. "
+        "tip": "O zonă de serviciu este o colecție de zone sau zone geografice. Este folosită pentru a restricționa opțiunile de livrare disponibile la un set definit de locații."
       }
     },
     "pickupOptions": {
@@ -2366,7 +2367,7 @@
       },
       "defaultTaxRate": {
         "label": "Cota de impozitare implicită",
-        "tooltip": "Rata de impozitare implicită pentru această regiune. ",
+        "tooltip": "Rata de impozitare implicită pentru această regiune. Un exemplu este rata standard de TVA pentru o țară sau regiune.",
         "action": "Creați o rată de impozitare implicită"
       },
       "taxRate": "Cota de impozitare",
@@ -2446,17 +2447,17 @@
         },
         "tooltips": {
           "sublevel": "Introduceți codul ISO 3166-2 pentru regiunea fiscală de subnivel.",
-          "notPartOfCountry": "{{province}} nu pare să facă parte din {{country}}. "
+          "notPartOfCountry": "{{province}} nu pare să facă parte din {{country}}. Verificați dacă acest lucru este corect."
         },
         "alert": {
           "header": "Regiunile de subnivel sunt dezactivate pentru această regiune fiscală",
-          "description": "Regiunile de subnivel sunt dezactivate pentru această regiune în mod implicit. ",
+          "description": "Regiunile de subnivel sunt dezactivate pentru această regiune în mod implicit. Le puteți activa pentru a crea regiuni de subnivel precum provincii, state sau teritorii.",
           "action": "Activați regiunile de subnivel"
         }
       },
       "noDefaultRate": {
         "label": "Fără rată implicită",
-        "tooltip": "Această regiune fiscală nu are o rată de impozitare implicită. "
+        "tooltip": "Această regiune fiscală nu are o rată de impozitare implicită. Dacă există o rată standard, cum ar fi TVA-ul unei țări, adăugați-o la această regiune."
       },
       "taxProvider": "Furnizor de taxe"
     },
@@ -2520,7 +2521,7 @@
       "conditions": {
         "rules": {
           "title": "Cine poate folosi acest cod?",
-          "description": "Care client are permisiunea de a folosi codul promoțional? "
+          "description": "Care client are permisiunea de a folosi codul promoțional? Codul promoțional poate fi folosit de toți clienții dacă este lăsat neschimbat."
         },
         "target-rules": {
           "order": {
@@ -2577,7 +2578,7 @@
       }
     },
     "campaign_currency": {
-      "tooltip": "Aceasta este moneda promoției. "
+      "tooltip": "Aceasta este moneda promoției. Schimbați-o din fila Detalii."
     },
     "form": {
       "required": "Necesar",
@@ -3001,8 +3002,8 @@
       "currenciesRemoved": "S-au eliminat cu succes monedele din magazin",
       "updatedTaxInclusivitySuccessfully": "Prețul cu taxe incluse a fost actualizat cu succes"
     },
-    "removeCurrencyWarning_one": "Sunteți pe cale să eliminați {{count}} moneda din magazinul dvs. ",
-    "removeCurrencyWarning_other": "Sunteți pe cale să eliminați {{count}} monede din magazinul dvs. ",
+    "removeCurrencyWarning_one": "Sunteți pe cale să eliminați {{count}} monedă din magazinul dvs. Asigurați-vă că ați eliminat toate prețurile care folosesc această monedă înainte de a continua.",
+    "removeCurrencyWarning_other": "Sunteți pe cale să eliminați {{count}} monede din magazinul dvs. Asigurați-vă că ați eliminat toate prețurile care folosesc aceste monede înainte de a continua.",
     "defaultSalesChannel": "Canal de vânzare implicit",
     "defaultLocation": "Locație implicită",
     "logo": "Logo",
@@ -3148,9 +3149,9 @@
       "taxProviderLabel": "Furnizor de taxe",
       "systemTaxProviderLabel": "Furnizor de taxe de sistem",
       "calculateTaxesAutomaticallyLabel": "Calculați automat taxele",
-      "calculateTaxesAutomaticallyHint": "Când este activată, cotele de impozitare vor fi calculate automat și aplicate cărucioarelor. ",
+      "calculateTaxesAutomaticallyHint": "Când este activată, cotele de impozitare vor fi calculate automat și aplicate cărucioarelor. Când este dezactivată, taxele trebuie calculate manual la finalizarea comenzii. Calcularea manuală a taxelor este recomandată pentru utilizarea cu furnizori terți de taxe.",
       "applyTaxesOnGiftCardsLabel": "Aplicați taxe pe cardurile cadou",
-      "applyTaxesOnGiftCardsHint": "Când este activată, taxele vor fi aplicate cardurilor cadou la finalizare. ",
+      "applyTaxesOnGiftCardsHint": "Când este activată, taxele vor fi aplicate cardurilor cadou la finalizare. În unele țări, reglementările fiscale impun aplicarea taxelor pe cardurile cadou la achiziție.",
       "defaultTaxRateLabel": "Cota de impozitare implicită",
       "defaultTaxCodeLabel": "Cod fiscal implicit"
     },
@@ -3265,7 +3266,7 @@
       "createSecretHeader": "Creați cheia API secretă",
       "createSecretHint": "Creați o nouă cheie API secretă pentru a accesa API-ul Kayı.com ca utilizator administrator autentificat.",
       "secretKeyCreatedHeader": "Cheie secretă creată",
-      "secretKeyCreatedHint": "Noua ta cheie secretă a fost generată. ",
+      "secretKeyCreatedHint": "Noua ta cheie secretă a fost generată. Copiază-o și stochează-o în siguranță acum. Aceasta este singura dată când va fi afișată.",
       "copySecretTokenSuccess": "Cheia secretă a fost copiată în clipboard.",
       "copySecretTokenFailure": "Nu s-a putut copia cheia secretă în clipboard.",
       "successToast": "Cheia API a fost creată cu succes."
@@ -3371,7 +3372,7 @@
     "backToLogin": "Înapoi la autentificare",
     "createAccount": "Creează cont",
     "alreadyHaveAccount": "Aveți deja un cont?  <0>Log in</0>",
-    "emailTooltip": "E-mailul dvs. nu poate fi schimbat. ",
+    "emailTooltip": "E-mailul dvs. nu poate fi schimbat. Dacă doriți să folosiți o altă adresă de e-mail, trebuie trimisă o invitație nouă.",
     "invalidInvite": "Invitația este nevalidă sau a expirat.",
     "successTitle": "Contul dvs. a fost înregistrat",
     "successHint": "Începeți imediat cu Kayı.com Admin.",
@@ -3399,7 +3400,7 @@
     "repeatNewPassword": "Repetați parola nouă",
     "tokenExpiresIn": "Tokenul expiră în <0>{{time}}</0> minute",
     "successfulRequestTitle": "V-a trimis cu succes un e-mail",
-    "successfulRequest": "V-am trimis un e-mail pe care îl puteți folosi pentru a vă reseta parola. ",
+    "successfulRequest": "V-am trimis un e-mail pe care îl puteți folosi pentru a vă reseta parola. Verificați folderul de spam dacă nu l-ați primit după câteva minute.",
     "successfulResetTitle": "Resetarea parolei cu succes",
     "successfulReset": "Vă rugăm să vă conectați pe pagina de conectare.",
     "passwordMismatch": "Parolele nu se potrivesc",
@@ -3940,7 +3941,7 @@
   },
   "stores": {
     "domain": "Magazine",
-    "handleTooltip": "Handle-ul este folosit ca slug URL pentru magazin. Lăsați gol pentru a-l genera automat din nume.",
+    "handleTooltip": "Generat automat din numele magazinului. Doar litere mici, cifre și cratime — acest câmp nu poate fi editat direct.",
     "emptyStates": {
       "users": {
         "title": "Niciun utilizator încă",

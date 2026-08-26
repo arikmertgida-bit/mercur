@@ -420,7 +420,8 @@
         "developer": "Développeur",
         "myAccount": "Mon compte"
       }
-    }
+    },
+    "documentTitle": "Kayı.com Panneau d'Administration"
   },
   "dataGrid": {
     "columns": {
@@ -633,7 +634,7 @@
         "enterValuePlaceholder": "Saisir une valeur",
         "selectValuePlaceholder": "Sélectionner une valeur",
         "requiredAttributes": "Attributs requis",
-        "requiredAttributesHint": "These attributes are required by the Marketplace. Select them before proceeding.",
+        "requiredAttributesHint": "Ces attributs sont requis par le marketplace. Sélectionnez-les avant de continuer.",
         "useForVariants": "Utiliser pour les variations",
         "useForVariantsDescription": "Si coché, vous pourrez créer des variantes à l'aide de cet attribut. Sinon, l'attribut sera utilisé à titre informatif uniquement.",
         "tip": "Astuce",
@@ -734,7 +735,7 @@
       "published": "Publié",
       "proposed": "Proposé",
       "rejected": "Rejeté",
-      "requires_action": "Changes required",
+      "requires_action": "Requiert une action",
       "accepted": "Accepté"
     },
     "fields": {
@@ -749,7 +750,7 @@
       },
       "handle": {
         "label": "Identifiant",
-        "tooltip": "Le handle est utilisé pour faire référence au produit dans votre boutique. Si non spécifié, le handle sera généré à partir du titre du produit.",
+        "tooltip": "Généré automatiquement à partir du titre du produit. Uniquement des lettres minuscules, des chiffres et des tirets — ce champ ne peut pas être modifié directement.",
         "placeholder": "veste-dhiver"
       },
       "description": {
@@ -1031,7 +1032,7 @@
     "createCollectionHint": "Créer une nouvelle collection pour organiser vos produits.",
     "createSuccess": "Collection créée avec succès.",
     "editCollection": "Modifier la collection",
-    "handleTooltip": "Le handle est utilisé pour faire référence à la collection dans votre boutique. Si non spécifié, le handle sera généré à partir du titre de la collection.",
+    "handleTooltip": "Généré automatiquement à partir du titre de la collection. Uniquement des lettres minuscules, des chiffres et des tirets — ce champ ne peut pas être modifié directement.",
     "deleteWarning": "Vous êtes sur le point de  supprimer la collection {{title}}. Cette action ne peut être annulée.",
     "removeSingleProductWarning": "Vous êtes sur le point de supprimer le produit {{title}} de la collection. Cette action ne peut être annulée.",
     "removeProductsWarning_one": "Vous êtes sur le point de supprimer {{count}} produit de la collection. Cette action ne peut être annulée.",
@@ -1176,7 +1177,7 @@
         "label": "Nouveau"
       }
     },
-    "handleTooltip": "L'identifiant est utilisé pour référencer la catégorie sur la boutique en ligne. S'il n'est pas spécifié, il sera généré à partir du titre de la catégorie.",
+    "handleTooltip": "Généré automatiquement à partir du titre de la catégorie. Uniquement des lettres minuscules, des chiffres et des tirets — ce champ ne peut pas être modifié directement.",
     "validation": {
       "titleRequired": "Veuillez saisir un titre"
     },
@@ -3940,7 +3941,7 @@
   },
   "stores": {
     "domain": "Boutiques",
-    "handleTooltip": "L'identifiant est utilisé comme slug d'URL pour la boutique. Laissez vide pour le générer automatiquement à partir du nom.",
+    "handleTooltip": "Généré automatiquement à partir du nom de la boutique. Uniquement des lettres minuscules, des chiffres et des tirets — ce champ ne peut pas être modifié directement.",
     "emptyStates": {
       "users": {
         "title": "Aucun utilisateur pour le moment",

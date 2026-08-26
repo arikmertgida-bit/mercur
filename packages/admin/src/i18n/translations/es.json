@@ -442,7 +442,8 @@
         "developer": "Desarrollador",
         "myAccount": "Mi cuenta"
       }
-    }
+    },
+    "documentTitle": "Kayı.com Panel de Administración"
   },
   "dataGrid": {
     "columns": {
@@ -655,7 +656,7 @@
         "enterValuePlaceholder": "Introducir valor",
         "selectValuePlaceholder": "Seleccionar valor",
         "requiredAttributes": "Atributos obligatorios",
-        "requiredAttributesHint": "These attributes are required by the Marketplace. Select them before proceeding.",
+        "requiredAttributesHint": "El marketplace exige estos atributos. Selecciónalos antes de continuar.",
         "useForVariants": "Usar para variaciones",
         "useForVariantsDescription": "Si está marcado, podrás crear variantes usando este atributo. Si no, el atributo se usará solo con fines informativos.",
         "tip": "Consejo",
@@ -756,7 +757,7 @@
       "published": "Publicado",
       "proposed": "Propuesto",
       "rejected": "Rechazado",
-      "requires_action": "Changes required",
+      "requires_action": "Requiere acción",
       "accepted": "Aceptado"
     },
     "fields": {
@@ -771,7 +772,7 @@
       },
       "handle": {
         "label": "Manejador",
-        "tooltip": "El manejador se usa para hacer referencia al producto en tu tienda. Si no se especifica, el manejador será generado a partir del título del producto.",
+        "tooltip": "Se genera automáticamente a partir del título del producto. Solo letras minúsculas, números y guiones — este campo no se puede editar directamente.",
         "placeholder": "chaqueta-de-invierno"
       },
       "description": {
@@ -1053,7 +1054,7 @@
     "createCollectionHint": "Crea una nueva colección para organizar tus productos.",
     "createSuccess": "Colección creada exitosamente.",
     "editCollection": "Editar Colección",
-    "handleTooltip": "El identificador se usa para referenciar la colección en tu tienda online. Si no se especifica, el identificador se generará a partir del título de la colección.",
+    "handleTooltip": "Se genera automáticamente a partir del título de la colección. Solo letras minúsculas, números y guiones — este campo no se puede editar directamente.",
     "deleteWarning": "Estás a punto de eliminar la colección {{title}}. Esta acción no puede deshacerse.",
     "removeSingleProductWarning": "Estás a punto de eliminar el producto {{title}} de la colección. Esta acción no puede deshacerse.",
     "removeProductsWarning_one": "Estás a punto de eliminar {{count}} producto de la colección. Esta acción no puede deshacerse.",
@@ -1198,7 +1199,7 @@
         "label": "Nueva"
       }
     },
-    "handleTooltip": "El handle se usa para hacer referencia a la categoría en la tienda online. Si no se especifica, se generará a partir del título de la categoría.",
+    "handleTooltip": "Se genera automáticamente a partir del título de la categoría. Solo letras minúsculas, números y guiones — este campo no se puede editar directamente.",
     "validation": {
       "titleRequired": "Introduce un título"
     },
@@ -3940,7 +3941,7 @@
   },
   "stores": {
     "domain": "Tiendas",
-    "handleTooltip": "El handle se usa como slug de URL de la tienda. Déjalo vacío para generarlo automáticamente a partir del nombre.",
+    "handleTooltip": "Se genera automáticamente a partir del nombre de la tienda. Solo letras minúsculas, números y guiones — este campo no se puede editar directamente.",
     "emptyStates": {
       "users": {
         "title": "Aún no hay usuarios",
