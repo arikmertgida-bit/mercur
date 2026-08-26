@@ -59,6 +59,17 @@ export const I18n = () => {
       resources: mergedTranslations,
     });
 
+  // `index.html`'deki statik `lang="en"` niteliği gerçek aktif dille hiçbir
+  // zaman senkron değildi — tarayıcı bunu fiilen render edilen içerikle
+  // karşılaştırıp "çevrilsin mi?" widget'ı gösterebiliyordu. Aynı düzeltme
+  // vendor panelde de var (packages/vendor/.../i18n.tsx) — bkz. oradaki
+  // yorum. `document.documentElement.lang`'i i18next'in aktif diliyle her
+  // zaman eşitle: ilk yüklemede ve her `changeLanguage()` çağrısında.
+  document.documentElement.lang = i18n.language;
+  i18n.on("languageChanged", (lng) => {
+    document.documentElement.lang = lng;
+  });
+
   return null;
 };
 
