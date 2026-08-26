@@ -3590,7 +3590,7 @@
     "totalRedemptions": "Toplam Kullanım",
     "countries": "Ülkeler",
     "paymentProviders": "Ödeme Sağlayıcıları",
-    "refundReason": "İade Sebebi",
+    "refundReason": "Geri Ödeme Nedeni",
     "fulfillmentProviders": "Tamamlama Sağlayıcıları",
     "fulfillmentProvider": "Tamamlama Sağlayıcısı",
     "providers": "Sağlayıcılar",
@@ -3871,24 +3871,24 @@
     "handleTooltip": "Özellik adından otomatik olarak oluşturulur. Yalnızca küçük harfler, rakamlar ve tire kullanılabilir — bu alan doğrudan düzenlenemez."
   },
   "refundReasons": {
-    "domain": "İade Nedenleri",
-    "subtitle": "İade verme nedenlerini yönetin.",
-    "calloutHint": "İadeleri kategorize etmek için nedenleri yönetin.",
-    "editReason": "İade Nedenini Düzenle",
+    "domain": "Geri Ödeme Nedenleri",
+    "subtitle": "Geri ödeme verme nedenlerini yönetin.",
+    "calloutHint": "Geri ödemeleri kategorize etmek için nedenleri yönetin.",
+    "editReason": "Geri Ödeme Nedenini Düzenle",
     "create": {
-      "header": "İade Nedeni Ekle",
-      "subtitle": "İadeler için en yaygın nedenleri belirtin.",
-      "hint": "İadeleri kategorize etmek için yeni bir iade nedeni oluşturun.",
-      "successToast": "{{label}} iade nedeni başarıyla oluşturuldu."
+      "header": "Geri Ödeme Nedeni Ekle",
+      "subtitle": "Geri ödemeler için en yaygın nedenleri belirtin.",
+      "hint": "Geri ödemeleri kategorize etmek için yeni bir geri ödeme nedeni oluşturun.",
+      "successToast": "{{label}} geri ödeme nedeni başarıyla oluşturuldu."
     },
     "edit": {
-      "header": "İade Nedenini Düzenle",
-      "subtitle": "İade nedeninin değerini düzenleyin.",
-      "successToast": "{{label}} iade nedeni başarıyla güncellendi."
+      "header": "Geri Ödeme Nedenini Düzenle",
+      "subtitle": "Geri ödeme nedeninin değerini düzenleyin.",
+      "successToast": "{{label}} geri ödeme nedeni başarıyla güncellendi."
     },
     "delete": {
-      "confirmation": "\"{{label}}\" iade nedenini silmek üzeresiniz. Bu işlem geri alınamaz.",
-      "successToast": "İade nedeni başarıyla silindi."
+      "confirmation": "\"{{label}}\" geri ödeme nedenini silmek üzeresiniz. Bu işlem geri alınamaz.",
+      "successToast": "Geri ödeme nedeni başarıyla silindi."
     },
     "fields": {
       "label": {
