@@ -10,6 +10,7 @@ const BASE_URL: string =
 let socketInstance: Socket | null = null
 // Reference count: socket is only truly disconnected when all providers release it
 let refCount = 0
+let disconnectTimeout: ReturnType<typeof setTimeout> | null = null
 
 function getToken(): string | null {
   return getMessengerAuthToken()
@@ -21,6 +22,10 @@ export function getSocket(): Socket | null {
 
 export function connectSocket(displayName?: string | null): Socket {
   refCount++
+  if (disconnectTimeout) {
+    clearTimeout(disconnectTimeout)
+    disconnectTimeout = null
+  }
   if (socketInstance) return socketInstance
 
   const token = getToken()
@@ -52,8 +57,25 @@ export function connectSocket(displayName?: string | null): Socket {
 export function disconnectSocket(): void {
   refCount = Math.max(0, refCount - 1)
   if (refCount > 0) return
-  socketInstance?.disconnect()
-  socketInstance = null
+
+  // Debounced, not immediate: a provider's effect can unmount and remount
+  // back-to-back (StrictMode's dev double-invoke, or a quick re-render that
+  // toggles the effect's own deps) with refCount briefly hitting 0 in
+  // between. Disconnecting synchronously there tears down and immediately
+  // re-opens the socket — a visible connect/disconnect flicker, and a
+  // window where the vendor is invisible to the backend's presence
+  // tracking. The pending disconnect is cancelled in connectSocket() above
+  // if a new ref arrives inside this window, so it only ever fires for a
+  // genuine "nobody needs this socket anymore" moment. Mirrors
+  // apps/admin-test/src/lib/messenger/socket.ts's identical guard.
+  if (disconnectTimeout) {
+    clearTimeout(disconnectTimeout)
+  }
+  disconnectTimeout = setTimeout(() => {
+    socketInstance?.disconnect()
+    socketInstance = null
+    disconnectTimeout = null
+  }, 2000)
 }
 
 export function joinConversation(conversationId: string): void {
