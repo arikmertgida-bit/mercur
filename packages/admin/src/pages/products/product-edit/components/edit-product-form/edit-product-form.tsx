@@ -5,7 +5,7 @@ import i18n from "i18next";
 import { useTranslation } from "react-i18next";
 import * as zod from "zod";
 
-import { isValidHandleFormat } from "@mercurjs/dashboard-shared";
+import { isValidHandleFormat, toHandle } from "@mercurjs/dashboard-shared";
 
 import { Form } from "../../../../../components/common/form";
 import { HandleInput } from "../../../../../components/inputs/handle-input";
@@ -15,7 +15,8 @@ import { KeyboundForm } from "../../../../../components/utilities/keybound-form"
 import { useUpdateProduct } from "../../../../../hooks/api/products";
 import { useDocumentDirection } from "../../../../../hooks/use-document-direction";
 import { transformNullableFormData } from "../../../../../lib/form-helpers";
-import { useForm } from "react-hook-form";
+import { useEffect, useRef } from "react";
+import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 type EditProductFormProps = {
@@ -57,6 +58,21 @@ export const EditProductForm = ({ product }: EditProductFormProps) => {
     },
     resolver: zodResolver(EditProductSchema),
   });
+
+  const titleValue = useWatch({ control: form.control, name: "title" });
+  const isInitialTitleRender = useRef(true);
+
+  useEffect(() => {
+    if (isInitialTitleRender.current) {
+      isInitialTitleRender.current = false;
+      return;
+    }
+
+    form.setValue("handle", toHandle(titleValue ?? ""), {
+      shouldValidate: true,
+      shouldDirty: false,
+    });
+  }, [titleValue, form]);
 
   const { mutateAsync, isPending } = useUpdateProduct(product.id);
 

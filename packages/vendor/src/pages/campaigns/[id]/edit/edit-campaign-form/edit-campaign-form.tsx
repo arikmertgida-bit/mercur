@@ -1,12 +1,18 @@
 import { AdminCampaign } from "@medusajs/types"
 import { Button, DatePicker, Input, toast } from "@medusajs/ui"
+import i18n from "i18next"
+import { useEffect, useRef } from "react"
+import { useWatch } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import * as zod from "zod"
 import {
   FormExtensionZone,
+  isValidHandleFormat,
+  toHandle,
   useExtendableForm,
 } from "@mercurjs/dashboard-shared"
 import { Form } from "@components/common/form"
+import { HandleInput } from "@components/inputs/handle-input"
 import { RouteDrawer, useRouteModal } from "@components/modals"
 import { KeyboundForm } from "@components/utilities/keybound-form"
 import { useUpdateCampaign } from "@hooks/api/campaigns"
@@ -18,7 +24,13 @@ type EditCampaignFormProps = {
 const EditCampaignSchema = zod.object({
   name: zod.string(),
   description: zod.string().optional(),
-  campaign_identifier: zod.string().optional(),
+  campaign_identifier: zod
+    .string()
+    .optional()
+    .or(zod.literal(""))
+    .refine((value) => !value || isValidHandleFormat(value), {
+      message: i18n.t("fields.handleInvalidFormat"),
+    }),
   starts_at: zod.date().optional(),
   ends_at: zod.date().optional(),
 })
@@ -40,6 +52,21 @@ export const EditCampaignForm = ({ campaign }: EditCampaignFormProps) => {
       ends_at: campaign.ends_at ? new Date(campaign.ends_at) : undefined,
     },
   })
+
+  const nameValue = useWatch({ control: form.control, name: "name" })
+  const isInitialNameRender = useRef(true)
+
+  useEffect(() => {
+    if (isInitialNameRender.current) {
+      isInitialNameRender.current = false
+      return
+    }
+
+    form.setValue("campaign_identifier", toHandle(nameValue ?? ""), {
+      shouldValidate: true,
+      shouldDirty: false,
+    })
+  }, [nameValue, form])
 
   const { mutateAsync, isPending } = useUpdateCampaign(campaign.id)
 
@@ -116,10 +143,17 @@ export const EditCampaignForm = ({ campaign }: EditCampaignFormProps) => {
               render={({ field }) => {
                 return (
                   <Form.Item>
-                    <Form.Label>{t("campaigns.fields.identifier")}</Form.Label>
+                    <Form.Label tooltip={t("campaigns.fields.identifierTooltip")}>
+                      {t("campaigns.fields.identifier")}
+                    </Form.Label>
 
                     <Form.Control>
-                      <Input {...field} />
+                      <HandleInput
+                        {...field}
+                        value={field.value ?? ""}
+                        disabled
+                        placeholder={t("campaigns.fields.identifierPlaceholder")}
+                      />
                     </Form.Control>
 
                     <Form.ErrorMessage />

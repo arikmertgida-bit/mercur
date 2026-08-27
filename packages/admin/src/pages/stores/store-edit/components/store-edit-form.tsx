@@ -9,10 +9,10 @@ import {
   Textarea,
   toast,
 } from "@medusajs/ui";
-import { useFieldArray } from "react-hook-form";
+import { useFieldArray, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import * as zod from "zod";
-import { useCallback } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 import { FileType, FileUpload } from "@components/common/file-upload";
 import { Form } from "@components/common/form";
@@ -23,6 +23,7 @@ import { KeyboundForm } from "@components/utilities/keybound-form";
 import {
   FormExtensionZone,
   isValidHandleFormat,
+  toHandle,
   useExtendableForm,
 } from "@mercurjs/dashboard-shared";
 import { MediaSchema } from "@pages/products/product-create/constants";
@@ -144,6 +145,21 @@ export const StoreEditForm = ({ seller }: StoreEditFormProps) => {
         : [],
     },
   });
+
+  const nameValue = useWatch({ control: form.control, name: "name" });
+  const isInitialNameRender = useRef(true);
+
+  useEffect(() => {
+    if (isInitialNameRender.current) {
+      isInitialNameRender.current = false;
+      return;
+    }
+
+    form.setValue("handle", toHandle(nameValue ?? ""), {
+      shouldValidate: true,
+      shouldDirty: false,
+    });
+  }, [nameValue, form]);
 
   const { fields: logoFields } = useFieldArray({
     name: "media",

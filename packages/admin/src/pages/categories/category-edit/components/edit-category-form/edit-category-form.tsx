@@ -1,5 +1,7 @@
 import { Button, Input, Select, Textarea, toast } from "@medusajs/ui"
 import i18n from "i18next"
+import { useEffect, useRef } from "react"
+import { useWatch } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { z } from "zod"
 
@@ -7,6 +9,7 @@ import { HttpTypes } from "@medusajs/types"
 import {
   FormExtensionZone,
   isValidHandleFormat,
+  toHandle,
   useExtendableForm,
 } from "@mercurjs/dashboard-shared"
 import { Form } from "../../../../../components/common/form"
@@ -51,6 +54,21 @@ export const EditCategoryForm = ({ category }: EditCategoryFormProps) => {
       is_adult: Boolean(category.metadata?.is_adult),
     },
   })
+
+  const nameValue = useWatch({ control: form.control, name: "name" })
+  const isInitialNameRender = useRef(true)
+
+  useEffect(() => {
+    if (isInitialNameRender.current) {
+      isInitialNameRender.current = false
+      return
+    }
+
+    form.setValue("handle", toHandle(nameValue ?? ""), {
+      shouldValidate: true,
+      shouldDirty: false,
+    })
+  }, [nameValue, form])
 
   const { mutateAsync, isPending } = useUpdateProductCategory(category.id)
   const handleSubmit = form.handleSubmit(async (data) => {

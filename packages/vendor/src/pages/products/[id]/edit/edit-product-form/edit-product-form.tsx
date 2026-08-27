@@ -1,6 +1,8 @@
 import { Button, Input, Textarea, toast } from "@medusajs/ui";
 import { MercurFeatureFlags } from "@mercurjs/types";
 import i18n from "i18next";
+import { useEffect, useRef } from "react";
+import { useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import * as zod from "zod";
 
@@ -16,6 +18,7 @@ import { KeyboundForm } from "@components/utilities/keybound-form";
 import {
   FormExtensionZone,
   isValidHandleFormat,
+  toHandle,
   useExtendableForm,
 } from "@mercurjs/dashboard-shared";
 
@@ -54,6 +57,21 @@ export const EditProductForm = ({ product }: EditProductFormProps) => {
       discountable: product.discountable,
     },
   });
+
+  const titleValue = useWatch({ control: form.control, name: "title" });
+  const isInitialTitleRender = useRef(true);
+
+  useEffect(() => {
+    if (isInitialTitleRender.current) {
+      isInitialTitleRender.current = false;
+      return;
+    }
+
+    form.setValue("handle", toHandle(titleValue ?? ""), {
+      shouldValidate: true,
+      shouldDirty: false,
+    });
+  }, [titleValue, form]);
 
   const { mutateAsync, isPending } = useUpdateProduct(product.id);
 
