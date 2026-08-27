@@ -32,7 +32,16 @@ module.exports = withMercur({
       authCors: requireEnv('AUTH_CORS'),
       jwtSecret: process.env.JWT_SECRET || "supersecret",
       cookieSecret: process.env.COOKIE_SECRET || "supersecret",
-    }
+    },
+    // Admin/vendor `connect.sid` session cookie. Framework default is a
+    // fixed 10h window (rolling: false) with no idle expiry — anyone with
+    // the cookie stays authenticated for up to 10h regardless of activity.
+    // Shortened + made rolling so an idle operator/seller session actually
+    // expires, while active use keeps renewing it.
+    sessionOptions: {
+      ttl: 60 * 60 * 1000,
+      rolling: true,
+    },
   },
   featureFlags: {
     seller_registration: true
