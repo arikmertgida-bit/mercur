@@ -511,20 +511,22 @@ const RequiredAttributes = ({
           </Text>
         </div>
 
-        {requiredEntries.map(({ attr, index }) => {
-          const apiAttr = product_attributes.find(
-            (a: ProductAttributeDTO) => a.id === attr.attribute_id
-          )
-          if (!apiAttr) return null
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          {requiredEntries.map(({ attr, index }) => {
+            const apiAttr = product_attributes.find(
+              (a: ProductAttributeDTO) => a.id === attr.attribute_id
+            )
+            if (!apiAttr) return null
 
-          return (
-            <RequiredAttributeField
-              key={apiAttr.id}
-              attribute={apiAttr}
-              index={index}
-            />
-          )
-        })}
+            return (
+              <RequiredAttributeField
+                key={apiAttr.id}
+                attribute={apiAttr}
+                index={index}
+              />
+            )
+          })}
+        </div>
       </div>
     </>
   )
