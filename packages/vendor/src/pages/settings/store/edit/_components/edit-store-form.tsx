@@ -9,14 +9,15 @@ import {
   Textarea,
   toast,
 } from "@medusajs/ui";
-import { useFieldArray } from "react-hook-form";
+import { useFieldArray, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import * as zod from "zod";
-import { useCallback } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 import {
   FormExtensionZone,
   isValidHandleFormat,
+  toHandle,
   useExtendableForm,
 } from "@mercurjs/dashboard-shared";
 
@@ -172,6 +173,21 @@ export const EditStoreForm = ({ seller }: EditStoreFormProps) => {
         : [],
     },
   });
+
+  const nameValue = useWatch({ control: form.control, name: "name" });
+  const isInitialNameRender = useRef(true);
+
+  useEffect(() => {
+    if (isInitialNameRender.current) {
+      isInitialNameRender.current = false;
+      return;
+    }
+
+    form.setValue("handle", toHandle(nameValue ?? ""), {
+      shouldValidate: true,
+      shouldDirty: false,
+    });
+  }, [nameValue, form]);
 
   const { fields: logoFields } = useFieldArray({
     name: "media",

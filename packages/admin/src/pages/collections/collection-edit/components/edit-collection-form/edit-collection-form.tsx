@@ -1,11 +1,14 @@
 import { Button, Input, toast } from "@medusajs/ui"
 import i18n from "i18next"
+import { useEffect, useRef } from "react"
+import { useWatch } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import * as zod from "zod"
 
 import {
   FormExtensionZone,
   isValidHandleFormat,
+  toHandle,
   useExtendableForm,
 } from "@mercurjs/dashboard-shared"
 import { HttpTypes } from "@medusajs/types"
@@ -43,6 +46,21 @@ export const EditCollectionForm = ({ collection }: EditCollectionFormProps) => {
       handle: collection.handle,
     },
   })
+
+  const titleValue = useWatch({ control: form.control, name: "title" })
+  const isInitialTitleRender = useRef(true)
+
+  useEffect(() => {
+    if (isInitialTitleRender.current) {
+      isInitialTitleRender.current = false
+      return
+    }
+
+    form.setValue("handle", toHandle(titleValue ?? ""), {
+      shouldValidate: true,
+      shouldDirty: false,
+    })
+  }, [titleValue, form])
 
   const { mutateAsync, isPending } = useUpdateCollection(collection.id)
 

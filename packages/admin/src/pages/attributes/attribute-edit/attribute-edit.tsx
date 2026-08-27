@@ -1,11 +1,13 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Input, Textarea, toast } from "@medusajs/ui";
 import { Heading } from "@medusajs/ui";
-import { useForm } from "react-hook-form";
+import { useEffect, useRef } from "react";
+import { useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 
 import { ProductAttributeDTO } from "@mercurjs/types";
+import { toHandle } from "@mercurjs/dashboard-shared";
 import { Form } from "../../../components/common/form";
 import { SwitchBox } from "../../../components/common/switch-box";
 import { HandleInput } from "../../../components/inputs/handle-input";
@@ -36,6 +38,21 @@ const AttributeEditForm = ({ attribute }: AttributeEditFormProps) => {
       is_required: attribute.is_required ?? false,
     },
   });
+
+  const nameValue = useWatch({ control: form.control, name: "name" });
+  const isInitialNameRender = useRef(true);
+
+  useEffect(() => {
+    if (isInitialNameRender.current) {
+      isInitialNameRender.current = false;
+      return;
+    }
+
+    form.setValue("handle", toHandle(nameValue ?? ""), {
+      shouldValidate: true,
+      shouldDirty: false,
+    });
+  }, [nameValue, form]);
 
   const { mutateAsync, isPending: isMutating } = useUpdateProductAttribute(
     attribute.id,
