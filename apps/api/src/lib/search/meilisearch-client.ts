@@ -40,6 +40,8 @@ const FILTERABLE_ATTRIBUTES = [
   'collection_facet',
   'category_ids',
   'category_facets',
+  'type_id',
+  'tag_ids',
   'attribute_tokens',
   'attribute_facets',
   'default_price_amount',
@@ -237,6 +239,12 @@ class MeilisearchProductIndex {
     }
     if (filters.category_ids?.length) {
       filterParts.push(`category_ids IN [${meiliValueList(filters.category_ids)}]`)
+    }
+    if (filters.type_ids?.length) {
+      filterParts.push(`type_id IN [${meiliValueList(filters.type_ids)}]`)
+    }
+    if (filters.tag_ids?.length) {
+      filterParts.push(`tag_ids IN [${meiliValueList(filters.tag_ids)}]`)
     }
     if (filters.attributes) {
       const tokens = Object.entries(filters.attributes).flatMap(([handle, valueIds]) =>

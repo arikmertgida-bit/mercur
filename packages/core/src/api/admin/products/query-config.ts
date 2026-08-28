@@ -23,15 +23,21 @@ export const adminProductFields = [
   "updated_at",
   "deleted_at",
   "metadata",
-  // 2.16's remote joiner rejects bare `*relation` wildcards and the
-  // `type`/`tags`/`images` relations (`Cannot resolve alias path ""`), so they
-  // are spelled out / excluded.
+  // 2.16's remote joiner rejects bare `*relation` wildcards on `type`/`tags`/
+  // `images` (`Cannot resolve alias path ""`) — spelling out the exact
+  // sub-fields (the same fix already applied to `collection`) avoids the
+  // wildcard entirely, so `type`/`tags` are spelled out too instead of
+  // excluded.
   "collection.id",
   "collection.title",
   "collection.handle",
   "categories.id",
   "categories.name",
   "categories.handle",
+  "type.id",
+  "type.value",
+  "tags.id",
+  "tags.value",
   // NOTE: native `options(.values)` and `variants.options` are intentionally
   // omitted — `product.options` populate crashes MikroORM `expandDotPaths` on
   // the 2.16 options-preview build. Axis options must be read from the

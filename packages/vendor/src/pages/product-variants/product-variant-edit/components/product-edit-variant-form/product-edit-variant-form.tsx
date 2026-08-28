@@ -21,7 +21,7 @@ import {
   transformNullableFormData,
   transformNullableFormNumber,
 } from "@lib/form-helpers"
-import { optionalInt } from "@lib/validation"
+import { optionalFloat } from "@lib/validation"
 
 type ProductEditVariantFormProps = {
   product: HttpTypes.AdminProduct
@@ -36,10 +36,10 @@ const ProductEditVariantSchema = z.object({
   ean: z.string().optional(),
   upc: z.string().optional(),
   barcode: z.string().optional(),
-  weight: optionalInt,
-  height: optionalInt,
-  width: optionalInt,
-  length: optionalInt,
+  weight: optionalFloat,
+  height: optionalFloat,
+  width: optionalFloat,
+  length: optionalFloat,
   mid_code: z.string().optional(),
   hs_code: z.string().optional(),
   origin_country: z.string().min(1, i18next.t("validation.requiredField")),
@@ -375,9 +375,9 @@ export const ProductEditVariantForm = ({
               render={({ field }) => {
                 return (
                   <Form.Item>
-                    <Form.Label optional>{t("fields.weight")}</Form.Label>
+                    <Form.Label optional>{t("fields.weight")} (kg)</Form.Label>
                     <Form.Control>
-                      <Input type="number" {...field} />
+                      <Input type="number" step="any" min="0" {...field} />
                     </Form.Control>
                     <Form.ErrorMessage />
                   </Form.Item>
@@ -390,9 +390,9 @@ export const ProductEditVariantForm = ({
               render={({ field }) => {
                 return (
                   <Form.Item>
-                    <Form.Label optional>{t("fields.width")}</Form.Label>
+                    <Form.Label optional>{t("fields.width")} (m)</Form.Label>
                     <Form.Control>
-                      <Input type="number" {...field} />
+                      <Input type="number" step="any" min="0" {...field} />
                     </Form.Control>
                     <Form.ErrorMessage />
                   </Form.Item>
@@ -405,9 +405,9 @@ export const ProductEditVariantForm = ({
               render={({ field }) => {
                 return (
                   <Form.Item>
-                    <Form.Label optional>{t("fields.length")}</Form.Label>
+                    <Form.Label optional>{t("fields.length")} (m)</Form.Label>
                     <Form.Control>
-                      <Input type="number" {...field} />
+                      <Input type="number" step="any" min="0" {...field} />
                     </Form.Control>
                     <Form.ErrorMessage />
                   </Form.Item>
@@ -420,9 +420,9 @@ export const ProductEditVariantForm = ({
               render={({ field }) => {
                 return (
                   <Form.Item>
-                    <Form.Label optional>{t("fields.height")}</Form.Label>
+                    <Form.Label optional>{t("fields.height")} (m)</Form.Label>
                     <Form.Control>
-                      <Input type="number" {...field} />
+                      <Input type="number" step="any" min="0" {...field} />
                     </Form.Control>
                     <Form.ErrorMessage />
                   </Form.Item>

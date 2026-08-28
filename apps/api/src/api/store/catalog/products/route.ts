@@ -27,6 +27,8 @@ export const GET = async (
     max_price,
     sort,
     category_id,
+    type_id,
+    tag_id,
     size,
     color,
     condition,
@@ -40,6 +42,8 @@ export const GET = async (
   const filters: MeilisearchProviderFilters = {
     collection_ids: collection_id ? [collection_id] : undefined,
     category_ids: toStringArray(category_id),
+    type_ids: toStringArray(type_id),
+    tag_ids: toStringArray(tag_id),
     size_values: toStringArray(size),
     color_values: toStringArray(color),
     condition_values: toStringArray(condition),

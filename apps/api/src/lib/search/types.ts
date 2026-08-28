@@ -23,6 +23,8 @@ export interface SearchDoc {
   collection?: string
   category_ids?: string[]
   categories?: string[]
+  type_id?: string
+  tag_ids?: string[]
   product_id?: string
   variant_id?: string
   sku?: string
