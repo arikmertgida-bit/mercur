@@ -15,8 +15,13 @@
  * options-preview build the product → options populate crashes the remote
  * joiner ("Cannot resolve alias path \"variants\"" / `expandDotPaths`). Axis
  * options + `is_exclusive` must be read from the `product_option` side.
+ *
+ * `type`/`tags` are spelled out (`+type.id,+type.value,+tags.id,+tags.value`),
+ * not requested as bare `*type`/`*tags` — the same 2.16 remote-joiner crash
+ * that `collection` works around by spelling out its sub-fields (see
+ * `adminProductFields` in `packages/core/src/api/admin/products/query-config.ts`).
  */
 export const PRODUCT_DETAIL_FIELDS =
-  "*images,*categories,*sellers,-variants,*scoped_attributes,*scoped_attributes.values,*product_attribute_values,*product_attribute_values.attribute,*product_attribute_values.attribute.values"
+  "*images,*categories,*sellers,-variants,*scoped_attributes,*scoped_attributes.values,*product_attribute_values,*product_attribute_values.attribute,*product_attribute_values.attribute.values,+type.id,+type.value,+tags.id,+tags.value"
 
 export const PRODUCT_DETAIL_QUERY = { fields: PRODUCT_DETAIL_FIELDS } as const

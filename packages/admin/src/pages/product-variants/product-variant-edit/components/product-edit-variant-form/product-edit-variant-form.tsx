@@ -16,7 +16,7 @@ import {
   transformNullableFormData,
   transformNullableFormNumber,
 } from "../../../../../lib/form-helpers";
-import { optionalInt } from "../../../../../lib/validation";
+import { optionalFloat } from "../../../../../lib/validation";
 
 type ProductEditVariantFormProps = {
   product: HttpTypes.AdminProduct;
@@ -30,10 +30,10 @@ const ProductEditVariantSchema = z.object({
   ean: z.string().optional(),
   upc: z.string().optional(),
   barcode: z.string().optional(),
-  weight: optionalInt,
-  height: optionalInt,
-  width: optionalInt,
-  length: optionalInt,
+  weight: optionalFloat,
+  height: optionalFloat,
+  width: optionalFloat,
+  length: optionalFloat,
   mid_code: z.string().optional(),
   hs_code: z.string().optional(),
   origin_country: z.string().optional(),
@@ -385,12 +385,14 @@ export const ProductEditVariantForm = ({
                       optional
                       data-testid="product-variant-edit-form-weight-label"
                     >
-                      {t("fields.weight")}
+                      {t("fields.weight")} (kg)
                     </Form.Label>
                     <Form.Control data-testid="product-variant-edit-form-weight-control">
                       <div data-testid="product-variant-edit-form-weight-input-wrapper">
                         <Input
                           type="number"
+                          step="any"
+                          min="0"
                           {...field}
                           data-testid="product-variant-edit-form-weight-input"
                         />
@@ -411,12 +413,14 @@ export const ProductEditVariantForm = ({
                       optional
                       data-testid="product-variant-edit-form-width-label"
                     >
-                      {t("fields.width")}
+                      {t("fields.width")} (m)
                     </Form.Label>
                     <Form.Control data-testid="product-variant-edit-form-width-control">
                       <div data-testid="product-variant-edit-form-width-input-wrapper">
                         <Input
                           type="number"
+                          step="any"
+                          min="0"
                           {...field}
                           data-testid="product-variant-edit-form-width-input"
                         />
@@ -437,12 +441,14 @@ export const ProductEditVariantForm = ({
                       optional
                       data-testid="product-variant-edit-form-length-label"
                     >
-                      {t("fields.length")}
+                      {t("fields.length")} (m)
                     </Form.Label>
                     <Form.Control data-testid="product-variant-edit-form-length-control">
                       <div data-testid="product-variant-edit-form-length-input-wrapper">
                         <Input
                           type="number"
+                          step="any"
+                          min="0"
                           {...field}
                           data-testid="product-variant-edit-form-length-input"
                         />
@@ -463,12 +469,14 @@ export const ProductEditVariantForm = ({
                       optional
                       data-testid="product-variant-edit-form-height-label"
                     >
-                      {t("fields.height")}
+                      {t("fields.height")} (m)
                     </Form.Label>
                     <Form.Control data-testid="product-variant-edit-form-height-control">
                       <div data-testid="product-variant-edit-form-height-input-wrapper">
                         <Input
                           type="number"
+                          step="any"
+                          min="0"
                           {...field}
                           data-testid="product-variant-edit-form-height-input"
                         />

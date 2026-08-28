@@ -1,7 +1,7 @@
 import { z } from "zod"
 import { isValidHandleFormat } from "@mercurjs/dashboard-shared"
 import { i18n } from "../../../components/utilities/i18n/i18n"
-import { optionalInt } from "../../../lib/validation"
+import { optionalFloat, optionalInt } from "../../../lib/validation"
 import { decorateVariantsWithDefaultValues, hasVariantMediaColumn } from "./utils"
 
 export const MediaSchema = z.object({
@@ -87,10 +87,10 @@ export const ProductCreateSchema = z
       message: i18n.t("validation.requiredField"),
     }),
     material: z.string().optional(),
-    width: z.string().optional(),
-    length: z.string().optional(),
-    height: z.string().optional(),
-    weight: z.string().optional(),
+    width: optionalFloat,
+    length: optionalFloat,
+    height: optionalFloat,
+    weight: optionalFloat,
     mid_code: z.string().optional(),
     hs_code: z.string().optional(),
     attributes: z.array(z.object({

@@ -1,6 +1,7 @@
 import { HttpTypes } from "@medusajs/types"
 import { AttributeType, ProductAttributeBatchAdd } from "@mercurjs/types"
 import { i18n } from "../../../components/utilities/i18n/i18n"
+import { castNumber } from "../../../lib/cast-number"
 import { ProductCreateSchemaType } from "./types"
 
 export type NormalizedCreateProductVariant =
@@ -84,15 +85,24 @@ export const normalizeProductFormValues = (
     subtitle: values.subtitle?.trim(),
     description: values.description?.trim(),
     discountable: values.discountable,
-    width: values.width ? parseFloat(values.width) : undefined,
-    length: values.length ? parseFloat(values.length) : undefined,
-    height: values.height ? parseFloat(values.height) : undefined,
-    weight: values.weight ? parseFloat(values.weight) : undefined,
+    width: values.width ? castNumber(values.width) : undefined,
+    length: values.length ? castNumber(values.length) : undefined,
+    height: values.height ? castNumber(values.height) : undefined,
+    weight: values.weight ? castNumber(values.weight) : undefined,
     attributes: attributes.length ? attributes : undefined,
     variants: normalizeVariants(
       values.variants.filter((variant) => variant.should_create),
       hasAxis,
       currencies,
+      {
+        width: values.width ? castNumber(values.width) : undefined,
+        length: values.length ? castNumber(values.length) : undefined,
+        height: values.height ? castNumber(values.height) : undefined,
+        weight: values.weight ? castNumber(values.weight) : undefined,
+        mid_code: values.mid_code || undefined,
+        hs_code: values.hs_code || undefined,
+        origin_country: values.origin_country || undefined,
+      },
     ),
   }
 }
@@ -102,10 +112,26 @@ const numericOrZero = (value: number | "" | undefined | null): number => {
   return Number(value) || 0
 }
 
+type VariantPhysicalDefaults = {
+  width?: number
+  length?: number
+  height?: number
+  weight?: number
+  mid_code?: string
+  hs_code?: string
+  origin_country?: string
+}
+
+// Sellers only ever fill physical/customs attributes once, at the product
+// level (the Öznitelikler tab) — the per-variant grid has no columns for
+// them. Medusa's own shipping/fulfillment rate calculation reads these off
+// the *variant*, not the product, so without this every variant would keep
+// them null even though the seller entered real values.
 export const normalizeVariants = (
   variants: ProductCreateSchemaType["variants"],
   hasAxis: boolean,
   currencies: string[],
+  physicalDefaults: VariantPhysicalDefaults = {},
 ): NormalizedCreateProductVariant[] => {
   return variants.map((variant) => {
     const opts = variant.options
@@ -152,6 +178,13 @@ export const normalizeVariants = (
       upc: variant.upc || undefined,
       barcode: variant.barcode || undefined,
       variant_rank: variant.variant_rank,
+      width: physicalDefaults.width,
+      length: physicalDefaults.length,
+      height: physicalDefaults.height,
+      weight: physicalDefaults.weight,
+      mid_code: physicalDefaults.mid_code,
+      hs_code: physicalDefaults.hs_code,
+      origin_country: physicalDefaults.origin_country,
       // `manage_inventory` isn't part of the create-product variant schema —
       // `createProductsWorkflow` (packages/core) derives it itself from the
       // presence of `inventory` entries. Sending it trips the endpoint's

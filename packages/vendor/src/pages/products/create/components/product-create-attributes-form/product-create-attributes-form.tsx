@@ -117,9 +117,9 @@ const PhysicalAttributesSection = () => {
           name="weight"
           render={({ field }) => (
             <Form.Item>
-              <Form.Label optional>{t("fields.weight")}</Form.Label>
+              <Form.Label optional>{t("fields.weight")} (kg)</Form.Label>
               <Form.Control>
-                <Input type="number" {...field} />
+                <Input type="number" step="any" min="0" {...field} />
               </Form.Control>
               <Form.ErrorMessage />
             </Form.Item>
@@ -130,9 +130,9 @@ const PhysicalAttributesSection = () => {
           name="width"
           render={({ field }) => (
             <Form.Item>
-              <Form.Label optional>{t("fields.width")}</Form.Label>
+              <Form.Label optional>{t("fields.width")} (m)</Form.Label>
               <Form.Control>
-                <Input type="number" {...field} />
+                <Input type="number" step="any" min="0" {...field} />
               </Form.Control>
               <Form.ErrorMessage />
             </Form.Item>
@@ -143,9 +143,9 @@ const PhysicalAttributesSection = () => {
           name="length"
           render={({ field }) => (
             <Form.Item>
-              <Form.Label optional>{t("fields.length")}</Form.Label>
+              <Form.Label optional>{t("fields.length")} (m)</Form.Label>
               <Form.Control>
-                <Input type="number" {...field} />
+                <Input type="number" step="any" min="0" {...field} />
               </Form.Control>
               <Form.ErrorMessage />
             </Form.Item>
@@ -156,9 +156,9 @@ const PhysicalAttributesSection = () => {
           name="height"
           render={({ field }) => (
             <Form.Item>
-              <Form.Label optional>{t("fields.height")}</Form.Label>
+              <Form.Label optional>{t("fields.height")} (m)</Form.Label>
               <Form.Control>
-                <Input type="number" {...field} />
+                <Input type="number" step="any" min="0" {...field} />
               </Form.Control>
               <Form.ErrorMessage />
             </Form.Item>

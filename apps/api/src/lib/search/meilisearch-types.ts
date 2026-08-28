@@ -13,6 +13,8 @@ export type MeilisearchProviderFilters = {
   seller_handle?: string
   collection_ids?: string[]
   category_ids?: string[]
+  type_ids?: string[]
+  tag_ids?: string[]
   attributes?: Record<string, string[]>
   size_values?: string[]
   color_values?: string[]

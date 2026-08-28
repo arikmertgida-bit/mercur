@@ -335,6 +335,8 @@ export const buildProductDocs = async (
       category_ids: (product.categories ?? []).map((c) => c.id),
       // Kept index-aligned with `category_ids` so the route can join id → label.
       categories: (product.categories ?? []).map((c) => c.name ?? c.id),
+      type_id: product.type_id ?? undefined,
+      tag_ids: (product.tags ?? []).map((t) => t.id),
       attribute_tokens: attrs.tokens,
       attributes: attrs.attributes,
       prices: pricesByProduct.get(product.id) ?? {},
