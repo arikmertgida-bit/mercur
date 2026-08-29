@@ -24,6 +24,7 @@ export interface SearchDoc {
   category_ids?: string[]
   categories?: string[]
   type_id?: string
+  type_title?: string
   tag_ids?: string[]
   product_id?: string
   variant_id?: string
@@ -83,11 +84,12 @@ export interface SearchFacets {
   collections: SearchFacetValue[]
   categories: SearchFacetValue[]
   attributes: SearchFacetAttribute[]
-  // Optional: populated only for the three well-known storefront filter axes
-  // (size/color/condition) — see meilisearch-client.ts.
+  // Optional: populated only for the well-known storefront filter axes
+  // (size/color/condition/type) — see meilisearch-client.ts.
   sizes?: SearchFacetValue[]
   colors?: SearchFacetValue[]
   conditions?: SearchFacetValue[]
+  types?: SearchFacetValue[]
   // Product-targeting promotion kinds currently covering the result set —
   // see promotion-index.ts for the resolvable kinds.
   promotions?: SearchFacetValue[]

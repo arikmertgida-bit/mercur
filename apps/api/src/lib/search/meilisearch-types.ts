@@ -42,6 +42,7 @@ export const CONDITION_ATTRIBUTE_HANDLES = new Set(['condition', 'durum'])
 export type MeilisearchIndexedDoc = SearchDoc & {
   default_price_amount: number | null
   collection_facet?: string
+  type_facet?: string
   category_facets: string[]
   attribute_facets: string[]
   size_values: string[]
@@ -50,13 +51,43 @@ export type MeilisearchIndexedDoc = SearchDoc & {
 }
 
 const FACET_TOKEN_SEP = '|'
+const FACET_TOKEN_ESCAPE = '\\'
+
+// Only the separator/escape characters themselves are escaped — unlike a
+// blanket `encodeURIComponent`, this keeps a label's real spaces and
+// punctuation intact. That matters because these encoded tokens are also
+// searched via Meilisearch's own facet-search (`facetQuery`, see
+// `searchFacetValues` in meilisearch-client.ts): a percent-encoded label
+// (spaces turned into literal "%20") reads as one indivisible token to
+// Meilisearch's tokenizer, so a query for one word inside a multi-word
+// label would never match. Plain text tokenizes the normal way.
+function escapeFacetTokenPart(part: string): string {
+  return part
+    .replace(new RegExp(`\\${FACET_TOKEN_ESCAPE}`, 'g'), FACET_TOKEN_ESCAPE + FACET_TOKEN_ESCAPE)
+    .replace(new RegExp(`\\${FACET_TOKEN_SEP}`, 'g'), FACET_TOKEN_ESCAPE + FACET_TOKEN_SEP)
+}
 
 export function encodeFacetToken(...parts: string[]): string {
-  return parts.map((part) => encodeURIComponent(part)).join(FACET_TOKEN_SEP)
+  return parts.map(escapeFacetTokenPart).join(FACET_TOKEN_SEP)
 }
 
 export function decodeFacetToken(token: string): string[] {
-  return token.split(FACET_TOKEN_SEP).map((part) => decodeURIComponent(part))
+  const parts: string[] = []
+  let current = ''
+  for (let i = 0; i < token.length; i++) {
+    const char = token[i]
+    if (char === FACET_TOKEN_ESCAPE && i + 1 < token.length) {
+      current += token[i + 1]
+      i++
+    } else if (char === FACET_TOKEN_SEP) {
+      parts.push(current)
+      current = ''
+    } else {
+      current += char
+    }
+  }
+  parts.push(current)
+  return parts
 }
 
 export function escapeMeiliFilterValue(value: string): string {

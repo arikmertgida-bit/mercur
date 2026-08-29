@@ -28,6 +28,7 @@ import { storeCustomerUploadMiddlewares } from "./store/customer/upload/middlewa
 import { storeSellerFollowMiddlewares } from "./store/sellers/[handle]/follow/middlewares";
 import { storeSellersFollowingMiddlewares } from "./store/sellers-following/middlewares";
 import { storeCatalogProductsMiddlewares } from "./store/catalog/products/middlewares";
+import { storeCatalogFacetsMiddlewares } from "./store/catalog/facets/middlewares";
 import { storeSellerProductsMiddlewares } from "./store/sellers/[handle]/products/middlewares";
 import { storeSearchSuggestMiddlewares } from "./store/search/suggest/middlewares";
 import { storeCampaignsMiddlewares } from "./store/campaigns/middlewares";
@@ -72,6 +73,7 @@ export default defineMiddlewares({
         ...storeSellersFollowingMiddlewares,
         ...vendorFollowersMiddlewares,
         ...storeCatalogProductsMiddlewares,
+        ...storeCatalogFacetsMiddlewares,
         ...storeSellerProductsMiddlewares,
         ...storeSearchSuggestMiddlewares,
         ...storeCampaignsMiddlewares,

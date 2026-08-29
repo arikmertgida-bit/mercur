@@ -40,7 +40,7 @@ export const GET = async (
   const region = await resolveRegionByCountryCode(query, country_code)
 
   const filters: MeilisearchProviderFilters = {
-    collection_ids: collection_id ? [collection_id] : undefined,
+    collection_ids: toStringArray(collection_id),
     category_ids: toStringArray(category_id),
     type_ids: toStringArray(type_id),
     tag_ids: toStringArray(tag_id),
@@ -84,6 +84,13 @@ export const GET = async (
     offset,
     limit,
     facetDistribution: toFacetDistribution(searchResult.facets),
+    // Collection/Type facet values, unlike size/color, need an id distinct
+    // from their display label (filtering happens by collection_id/type_id,
+    // not by title) — so they're carried as their own {id,label,count}[]
+    // fields instead of being folded into the flat, label-keyed
+    // `facetDistribution` map.
+    collectionFacets: searchResult.facets?.collections ?? [],
+    typeFacets: searchResult.facets?.types ?? [],
     promotions: promotionsByProductId,
     reference_prices: referencePrices,
   })

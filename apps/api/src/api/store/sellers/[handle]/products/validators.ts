@@ -15,6 +15,8 @@ export const StoreGetSellerProductsParams = z.object({
   max_price: z.coerce.number().min(0).optional(),
   sort: z.enum(['price_asc', 'price_desc', 'created_at', 'created_at_asc']).optional(),
   category_id: csvOrArray.optional(),
+  collection_id: csvOrArray.optional(),
+  type_id: csvOrArray.optional(),
   size: csvOrArray.optional(),
   color: csvOrArray.optional(),
   condition: csvOrArray.optional(),

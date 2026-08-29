@@ -32,6 +32,11 @@ export const ProductCreateOrganizationSection = () => {
         value: collection.id,
       })),
     enabled: collectionsGate.allowed,
+    // Ensures the selected collection's real title renders even when it
+    // isn't inside the combobox's first fetched page (e.g. picked via
+    // search, then the search text was cleared) — without this, Combobox's
+    // own fallback shows the raw id instead of a label it can't find.
+    selectedValue: form.watch("collection_id"),
   })
 
   const types = useComboboxData({
@@ -44,6 +49,7 @@ export const ProductCreateOrganizationSection = () => {
         value: type.id,
       })),
     enabled: typesGate.allowed,
+    selectedValue: form.watch("type_id"),
   })
 
   const tags = useComboboxData({
