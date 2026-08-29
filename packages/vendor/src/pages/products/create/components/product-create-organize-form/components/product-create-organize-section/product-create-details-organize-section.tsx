@@ -25,6 +25,11 @@ export const ProductCreateOrganizationSection = () => {
         label: collection.title,
         value: collection.id,
       })),
+    // Ensures the selected collection's real title renders even when it
+    // isn't inside the combobox's first fetched page (e.g. picked via
+    // search, then the search text was cleared) — without this, Combobox's
+    // own fallback shows the raw id instead of a label it can't find.
+    selectedValue: form.watch("collection_id"),
   })
 
   const types = useComboboxData({
@@ -36,6 +41,7 @@ export const ProductCreateOrganizationSection = () => {
         label: type.value,
         value: type.id,
       })),
+    selectedValue: form.watch("type_id"),
   })
 
   const tags = useComboboxData({

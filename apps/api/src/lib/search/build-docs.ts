@@ -71,6 +71,7 @@ export type SearchProductRow = {
   collection?: { id?: string; title?: string | null } | null
   categories?: { id: string; name?: string | null }[] | null
   type_id?: string | null
+  type?: { id?: string; value?: string | null } | null
   tags?: { id: string }[] | null
   variants?: ProductVariantInventoryRow[] | null
   product_attribute_values?: ProductAttributeValueRow[] | null
@@ -93,6 +94,8 @@ export const searchProductFields = [
   'categories.id',
   'categories.name',
   'type_id',
+  'type.id',
+  'type.value',
   'tags.id',
   'variants.id',
   'variants.manage_inventory',
@@ -336,6 +339,7 @@ export const buildProductDocs = async (
       // Kept index-aligned with `category_ids` so the route can join id → label.
       categories: (product.categories ?? []).map((c) => c.name ?? c.id),
       type_id: product.type_id ?? undefined,
+      type_title: product.type?.value ?? undefined,
       tag_ids: (product.tags ?? []).map((t) => t.id),
       attribute_tokens: attrs.tokens,
       attributes: attrs.attributes,

@@ -674,6 +674,7 @@ export type Routes = {
             $id: typeof import("../src/api/store/campaigns/[id]/route");
         };
         catalog: {
+            facets: typeof import("../src/api/store/catalog/facets/route");
             products: typeof import("../src/api/store/catalog/products/route");
         };
         customer: {

@@ -41,6 +41,7 @@ const FILTERABLE_ATTRIBUTES = [
   'category_ids',
   'category_facets',
   'type_id',
+  'type_facet',
   'tag_ids',
   'attribute_tokens',
   'attribute_facets',
@@ -54,15 +55,17 @@ const FILTERABLE_ATTRIBUTES = [
 
 const SORTABLE_ATTRIBUTES = ['default_price_amount', 'created_at']
 
-// The four sidebar facet groups that support independent multi-select
-// toggling. Each one is computed disjunctively (see `buildFilterParts`
-// below) so selecting a value in one group never removes options from
-// another group's list — only their live counts change.
+// The sidebar facet groups that support independent multi-select toggling.
+// Each one is computed disjunctively (see `buildFilterParts` below) so
+// selecting a value in one group never removes options from another group's
+// list — only their live counts change.
 const DISJUNCTIVE_FACET_KEYS = [
   'size_values',
   'color_values',
   'condition_values',
   'promotion_types',
+  'collection_facet',
+  'type_facet',
 ] as const
 
 type DisjunctiveFacetKey = (typeof DISJUNCTIVE_FACET_KEYS)[number]
@@ -145,6 +148,16 @@ class MeilisearchProductIndex {
         sortableAttributes: SORTABLE_ATTRIBUTES,
         rankingRules: RANKING_RULES,
         pagination: { maxTotalHits: MAX_TOTAL_HITS },
+        // Bounds disjunctive-facet computation cost on a catalog with many
+        // distinct collections/types (10k+ vendor scale) and surfaces the
+        // most-stocked ones first — the standard "most popular filter value
+        // first" convention, and a hard cap Meilisearch enforces regardless
+        // (default 100) so this is an explicit, deliberate value rather than
+        // an implicit one.
+        faceting: {
+          maxValuesPerFacet: 200,
+          sortFacetValuesBy: { '*': 'count' },
+        },
       })
       .waitTask()
     this.settingsApplied_ = true
@@ -169,8 +182,20 @@ class MeilisearchProductIndex {
     return {
       ...doc,
       default_price_amount: defaultPrice?.calculated_amount ?? null,
+      // Label first, id second — Meilisearch's facet-search (`facetQuery`,
+      // used by searchFacetValues for the sidebar's Collection/Type search
+      // box) matches on a PREFIX of the whole facet value, not a substring
+      // anywhere within it. An id-first token would put an opaque, unrelated
+      // prefix ("pcol_01…") in front of every label, so a query for the
+      // label's own text would never match. category_facets/attribute_facets
+      // keep the id-first convention (`decodeFacetToken` still destructures
+      // them as [id, ...]) since nothing does a facetQuery search on those
+      // today — this order only applies to the two fields that do.
       collection_facet: doc.collection_id
-        ? encodeFacetToken(doc.collection_id, doc.collection ?? doc.collection_id)
+        ? encodeFacetToken(doc.collection ?? doc.collection_id, doc.collection_id)
+        : undefined,
+      type_facet: doc.type_id
+        ? encodeFacetToken(doc.type_title ?? doc.type_id, doc.type_id)
         : undefined,
       category_facets: categoryIds.map((id, index) =>
         encodeFacetToken(id, categoryLabels[index] ?? id)
@@ -234,13 +259,13 @@ class MeilisearchProductIndex {
     if (filters.seller_handle) {
       filterParts.push(`seller_handle = "${escapeMeiliFilterValue(filters.seller_handle)}"`)
     }
-    if (filters.collection_ids?.length) {
+    if (exclude !== 'collection_facet' && filters.collection_ids?.length) {
       filterParts.push(`collection_id IN [${meiliValueList(filters.collection_ids)}]`)
     }
     if (filters.category_ids?.length) {
       filterParts.push(`category_ids IN [${meiliValueList(filters.category_ids)}]`)
     }
-    if (filters.type_ids?.length) {
+    if (exclude !== 'type_facet' && filters.type_ids?.length) {
       filterParts.push(`type_id IN [${meiliValueList(filters.type_ids)}]`)
     }
     if (filters.tag_ids?.length) {
@@ -295,7 +320,7 @@ class MeilisearchProductIndex {
         limit: query.limit ?? 12,
         offset: query.offset ?? 0,
         sort: mapSort(filters.sort),
-        facets: ['collection_facet', 'category_facets', 'attribute_facets'],
+        facets: ['category_facets', 'attribute_facets'],
       }),
       ...DISJUNCTIVE_FACET_KEYS.map((facetName) =>
         this.productIndex_.searchForFacetValues({
@@ -306,8 +331,10 @@ class MeilisearchProductIndex {
       ),
     ])
 
-    const [sizeFacet, colorFacet, conditionFacet, promotionFacet] =
+    const [sizeFacet, colorFacet, conditionFacet, promotionFacet, collectionFacet, typeFacet] =
       disjunctiveFacetResults as [
+        SearchForFacetValuesResponse,
+        SearchForFacetValuesResponse,
         SearchForFacetValuesResponse,
         SearchForFacetValuesResponse,
         SearchForFacetValuesResponse,
@@ -319,6 +346,7 @@ class MeilisearchProductIndex {
       const {
         default_price_amount: _defaultPriceAmount,
         collection_facet: _collectionFacet,
+        type_facet: _typeFacet,
         category_facets: _categoryFacets,
         attribute_facets: _attributeFacets,
         size_values: _sizeValues,
@@ -340,6 +368,8 @@ class MeilisearchProductIndex {
         colors: colorFacet.facetHits,
         conditions: conditionFacet.facetHits,
         promotions: promotionFacet.facetHits,
+        collections: collectionFacet.facetHits,
+        types: typeFacet.facetHits,
       }),
     }
   }
@@ -351,9 +381,10 @@ class MeilisearchProductIndex {
       colors: FacetHit[]
       conditions: FacetHit[]
       promotions: FacetHit[]
+      collections: FacetHit[]
+      types: FacetHit[]
     }
   ): SearchFacets {
-    const collectionDist = facetDistribution?.collection_facet ?? {}
     const categoryDist = facetDistribution?.category_facets ?? {}
     const attributeDist = facetDistribution?.attribute_facets ?? {}
 
@@ -368,9 +399,15 @@ class MeilisearchProductIndex {
       count: hit.count,
     })
 
-    const collections = Object.entries(collectionDist).map(([token, count]) =>
-      toFacetValue(token, count)
-    )
+    // collection_facet/type_facet hits carry an encoded `label|id` token
+    // (label first — see the comment in enrichDoc) rather than a
+    // human-readable value on their own, unlike size/color/condition/
+    // promotion, which ARE their own label.
+    const toDecodedFacetValue = (hit: FacetHit): SearchFacetValue => {
+      const [label, id] = decodeFacetToken(hit.value)
+      return { id: id ?? hit.value, label: label ?? id ?? hit.value, count: hit.count }
+    }
+
     const categories = Object.entries(categoryDist).map(([token, count]) =>
       toFacetValue(token, count)
     )
@@ -378,6 +415,8 @@ class MeilisearchProductIndex {
     const colors = disjunctiveFacets.colors.map(toPlainFacetValue)
     const conditions = disjunctiveFacets.conditions.map(toPlainFacetValue)
     const promotions = disjunctiveFacets.promotions.map(toPlainFacetValue)
+    const collections = disjunctiveFacets.collections.map(toDecodedFacetValue)
+    const types = disjunctiveFacets.types.map(toDecodedFacetValue)
 
     const byHandle = new Map<string, { label: string; values: SearchFacetValue[] }>()
     for (const [token, count] of Object.entries(attributeDist)) {
@@ -393,7 +432,7 @@ class MeilisearchProductIndex {
       ([handle, group]) => ({ handle, label: group.label, values: group.values })
     )
 
-    return { collections, categories, attributes, sizes, colors, conditions, promotions }
+    return { collections, categories, attributes, sizes, colors, conditions, promotions, types }
   }
 
   async campaignIdsForCategory(categoryId: string): Promise<string[]> {
@@ -403,6 +442,30 @@ class MeilisearchProductIndex {
       filter: `seller_status = "open" AND in_stock = true AND category_ids IN [${meiliValueList([categoryId])}]`,
     })
     return result.facetHits.map((hit) => hit.value)
+  }
+
+  // Live, debounced sidebar search-box support for the Collection/Type
+  // facet lists: searches only the requested facet's own value text
+  // (`facetQuery`) against the currently active context filters, without
+  // re-running the full product search + hydration pipeline that
+  // `search()` above does. Stays fast regardless of total product count —
+  // Meilisearch resolves this the same way it resolves every other facet
+  // query, purely off the index.
+  async searchFacetValues(
+    facetKey: Extract<DisjunctiveFacetKey, 'collection_facet' | 'type_facet'>,
+    filters: MeilisearchProviderFilters,
+    facetQuery?: string
+  ): Promise<SearchFacetValue[]> {
+    await this.ensureSettings()
+    const result = await this.productIndex_.searchForFacetValues({
+      facetName: facetKey,
+      facetQuery: facetQuery || undefined,
+      filter: this.buildFilterParts(filters, facetKey).join(' AND '),
+    })
+    return result.facetHits.map((hit) => {
+      const [label, id] = decodeFacetToken(hit.value)
+      return { id: id ?? hit.value, label: label ?? id ?? hit.value, count: hit.count }
+    })
   }
 }
 
@@ -443,4 +506,15 @@ export async function searchProducts(query: SearchQueryBase): Promise<SearchResu
 // (product/category/collection/type/tag) produced it.
 export async function getCampaignIdsForCategory(categoryId: string): Promise<string[]> {
   return (await getProductIndex()).campaignIdsForCategory(categoryId)
+}
+
+// Powers the sidebar Collection/Type search box: a lightweight, context-aware
+// facet-value search that never re-runs the full product query.
+export async function searchCatalogFacetValues(
+  facet: 'collection' | 'type',
+  filters: MeilisearchProviderFilters,
+  facetQuery?: string
+): Promise<SearchFacetValue[]> {
+  const facetKey = facet === 'collection' ? 'collection_facet' : 'type_facet'
+  return (await getProductIndex()).searchFacetValues(facetKey, filters, facetQuery)
 }
