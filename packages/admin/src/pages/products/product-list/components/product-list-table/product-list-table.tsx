@@ -16,7 +16,7 @@ import {
 import { useExtendableTable, mergeListFilters } from "@mercurjs/dashboard-shared";
 import { ReactNode, useMemo, useState, Children } from "react";
 import { useTranslation } from "react-i18next";
-import { Link, Outlet, useLoaderData, useNavigate } from "react-router-dom";
+import { Link, useLoaderData, useNavigate } from "react-router-dom";
 
 import { ActionMenu } from "../../../../../components/common/action-menu";
 import { _DataTable } from "../../../../../components/table/data-table";
@@ -243,7 +243,6 @@ export const ProductListTable = ({ children }: { children?: ReactNode }) => {
           <ProductListDataTable />
         </>
       )}
-      <Outlet />
     </Container>
   );
 };

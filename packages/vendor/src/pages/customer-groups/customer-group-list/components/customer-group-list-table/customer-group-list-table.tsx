@@ -6,7 +6,7 @@ import { createColumnHelper } from "@tanstack/react-table";
 import { useExtendableTable, useLinkQuery, mergeListFilters } from "@mercurjs/dashboard-shared";
 import { Children, ReactNode, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { Link, Outlet } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { ActionMenu } from "@components/common/action-menu";
 import { _DataTable } from "@components/table/data-table";
@@ -175,7 +175,6 @@ export const CustomerGroupListTable = ({
           <CustomerGroupListDataTable />
         </>
       )}
-      <Outlet />
     </Container>
   );
 };
