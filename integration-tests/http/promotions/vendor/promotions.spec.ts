@@ -38,7 +38,6 @@ medusaIntegrationTestRunner({
                     const response = await api.post(
                         `/vendor/promotions`,
                         {
-                            code: "PROMO10",
                             type: "standard",
                             application_method: {
                                 type: "percentage",
@@ -51,7 +50,8 @@ medusaIntegrationTestRunner({
 
                     expect(response.status).toEqual(200)
                     expect(response.data.promotion).toBeDefined()
-                    expect(response.data.promotion.code).toEqual("PROMO10")
+                    expect(response.data.promotion.code).toEqual(expect.any(String))
+                    expect(response.data.promotion.code.length).toBeGreaterThan(0)
                     expect(response.data.promotion.type).toEqual("standard")
                     expect(response.data.promotion.application_method.type).toEqual("percentage")
                     expect(response.data.promotion.application_method.value).toEqual(10)
@@ -61,7 +61,6 @@ medusaIntegrationTestRunner({
                     const response = await api.post(
                         `/vendor/promotions`,
                         {
-                            code: "FIXED20",
                             type: "standard",
                             application_method: {
                                 type: "fixed",
@@ -74,7 +73,7 @@ medusaIntegrationTestRunner({
                     )
 
                     expect(response.status).toEqual(200)
-                    expect(response.data.promotion.code).toEqual("FIXED20")
+                    expect(response.data.promotion.code).toEqual(expect.any(String))
                     expect(response.data.promotion.application_method.type).toEqual("fixed")
                     expect(response.data.promotion.application_method.value).toEqual(2000)
                     expect(response.data.promotion.application_method.currency_code).toEqual("usd")
@@ -84,7 +83,6 @@ medusaIntegrationTestRunner({
                     const response = await api.post(
                         `/vendor/promotions`,
                         {
-                            code: "DRAFT_PROMO",
                             type: "standard",
                             application_method: {
                                 type: "percentage",
@@ -103,7 +101,6 @@ medusaIntegrationTestRunner({
                     const response = await api.post(
                         `/vendor/promotions`,
                         {
-                            code: "ACTIVE_PROMO",
                             type: "standard",
                             status: "active",
                             application_method: {
@@ -123,7 +120,6 @@ medusaIntegrationTestRunner({
                     const response = await api.post(
                         `/vendor/promotions`,
                         {
-                            code: "AUTO_PROMO",
                             type: "standard",
                             is_automatic: true,
                             application_method: {
@@ -143,7 +139,6 @@ medusaIntegrationTestRunner({
                     const response = await api.post(
                         `/vendor/promotions`,
                         {
-                            code: "MAX_QTY_PROMO",
                             type: "standard",
                             application_method: {
                                 type: "percentage",
@@ -163,7 +158,6 @@ medusaIntegrationTestRunner({
                     const response = await api.post(
                         `/vendor/promotions`,
                         {
-                            code: "TAX_INCLUSIVE_PROMO",
                             type: "standard",
                             is_tax_inclusive: true,
                             application_method: {
@@ -179,11 +173,96 @@ medusaIntegrationTestRunner({
                     expect(response.data.promotion.is_tax_inclusive).toEqual(true)
                 })
 
-                it("should fail to create promotion without code", async () => {
+                it("should fail to create promotion without application_method", async () => {
                     const response = await api
                         .post(
                             `/vendor/promotions`,
                             {
+                                type: "standard",
+                            },
+                            seller1Headers
+                        )
+                        .catch((e) => e.response)
+
+                    expect(response.status).toEqual(400)
+                })
+
+                it("should generate a promotion code automatically, without the seller providing one", async () => {
+                    const response = await api.post(
+                        `/vendor/promotions`,
+                        {
+                            type: "standard",
+                            application_method: {
+                                type: "percentage",
+                                target_type: "order",
+                                value: 10,
+                            },
+                        },
+                        seller1Headers
+                    )
+
+                    expect(response.status).toEqual(200)
+                    expect(response.data.promotion.code).toEqual(expect.any(String))
+                    expect(response.data.promotion.code.length).toBeGreaterThan(0)
+                    // ASCII, uppercase, keyboard-safe — never raw Unicode from the
+                    // seller's own name (see buildPromotionCodePrefix).
+                    expect(response.data.promotion.code).toMatch(/^[A-Z0-9]+-[A-F0-9]+$/)
+                })
+
+                it("should derive the generated code from the seller's own name, not a generic prefix", async () => {
+                    const response = await api.post(
+                        `/vendor/promotions`,
+                        {
+                            type: "standard",
+                            application_method: {
+                                type: "percentage",
+                                target_type: "order",
+                                value: 10,
+                            },
+                        },
+                        seller1Headers
+                    )
+
+                    expect(response.status).toEqual(200)
+                    expect(response.data.promotion.code.startsWith("SELLERONE-")).toBe(true)
+                })
+
+                it("should generate different codes for two promotions from the same seller", async () => {
+                    const first = await api.post(
+                        `/vendor/promotions`,
+                        {
+                            type: "standard",
+                            application_method: {
+                                type: "percentage",
+                                target_type: "order",
+                                value: 10,
+                            },
+                        },
+                        seller1Headers
+                    )
+
+                    const second = await api.post(
+                        `/vendor/promotions`,
+                        {
+                            type: "standard",
+                            application_method: {
+                                type: "percentage",
+                                target_type: "order",
+                                value: 10,
+                            },
+                        },
+                        seller1Headers
+                    )
+
+                    expect(first.data.promotion.code).not.toEqual(second.data.promotion.code)
+                })
+
+                it("should reject a promotion code supplied by the seller (system-generated only)", async () => {
+                    const response = await api
+                        .post(
+                            `/vendor/promotions`,
+                            {
+                                code: "SELLER_PICKED_CODE",
                                 type: "standard",
                                 application_method: {
                                     type: "percentage",
@@ -196,21 +275,119 @@ medusaIntegrationTestRunner({
                         .catch((e) => e.response)
 
                     expect(response.status).toEqual(400)
+
+                    const listResponse = await api.get(
+                        `/vendor/promotions?code=SELLER_PICKED_CODE`,
+                        seller1Headers
+                    )
+
+                    expect(listResponse.data.promotions.length).toEqual(0)
+                })
+            })
+
+            describe("GET /vendor/promotions/generate-code", () => {
+                it("should return a freshly generated, unique code without creating a promotion", async () => {
+                    const response = await api.get(
+                        `/vendor/promotions/generate-code`,
+                        seller1Headers
+                    )
+
+                    expect(response.status).toEqual(200)
+                    expect(response.data.code).toEqual(expect.any(String))
+                    expect(response.data.code).toMatch(/^[A-Z0-9]+-[A-F0-9]+$/)
+                    expect(response.data.code_reservation_token).toEqual(expect.any(String))
+
+                    const listResponse = await api.get(
+                        `/vendor/promotions?code=${response.data.code}`,
+                        seller1Headers
+                    )
+
+                    expect(listResponse.data.promotions.length).toEqual(0)
                 })
 
-                it("should fail to create promotion without application_method", async () => {
-                    const response = await api
-                        .post(
-                            `/vendor/promotions`,
-                            {
-                                code: "NO_METHOD",
-                                type: "standard",
-                            },
-                            seller1Headers
-                        )
-                        .catch((e) => e.response)
+                it("should return a different code on every call", async () => {
+                    const first = await api.get(
+                        `/vendor/promotions/generate-code`,
+                        seller1Headers
+                    )
 
-                    expect(response.status).toEqual(400)
+                    const second = await api.get(
+                        `/vendor/promotions/generate-code`,
+                        seller1Headers
+                    )
+
+                    expect(first.data.code).not.toEqual(second.data.code)
+                })
+            })
+
+            describe("POST /vendor/promotions with a code reservation token", () => {
+                it("should use the previewed code as the promotion's final code", async () => {
+                    const preview = await api.get(
+                        `/vendor/promotions/generate-code`,
+                        seller1Headers
+                    )
+
+                    const response = await api.post(
+                        `/vendor/promotions`,
+                        {
+                            type: "standard",
+                            application_method: {
+                                type: "percentage",
+                                target_type: "order",
+                                value: 10,
+                            },
+                            code_reservation_token: preview.data.code_reservation_token,
+                        },
+                        seller1Headers
+                    )
+
+                    expect(response.status).toEqual(200)
+                    expect(response.data.promotion.code).toEqual(preview.data.code)
+                })
+
+                it("should still create a promotion if the reservation token is invalid", async () => {
+                    const response = await api.post(
+                        `/vendor/promotions`,
+                        {
+                            type: "standard",
+                            application_method: {
+                                type: "percentage",
+                                target_type: "order",
+                                value: 10,
+                            },
+                            code_reservation_token: "not-a-real-token",
+                        },
+                        seller1Headers
+                    )
+
+                    expect(response.status).toEqual(200)
+                    expect(response.data.promotion.code).toEqual(expect.any(String))
+                    expect(response.data.promotion.code.length).toBeGreaterThan(0)
+                })
+
+                it("should not honor another seller's reservation token", async () => {
+                    const seller2Preview = await api.get(
+                        `/vendor/promotions/generate-code`,
+                        seller2Headers
+                    )
+
+                    const response = await api.post(
+                        `/vendor/promotions`,
+                        {
+                            type: "standard",
+                            application_method: {
+                                type: "percentage",
+                                target_type: "order",
+                                value: 10,
+                            },
+                            code_reservation_token: seller2Preview.data.code_reservation_token,
+                        },
+                        seller1Headers
+                    )
+
+                    expect(response.status).toEqual(200)
+                    expect(response.data.promotion.code).not.toEqual(seller2Preview.data.code)
+                    expect(response.data.promotion.code.startsWith("SELLERONE-")).toBe(true)
                 })
             })
 
@@ -219,7 +396,6 @@ medusaIntegrationTestRunner({
                     await api.post(
                         `/vendor/promotions`,
                         {
-                            code: "LIST_PROMO_1",
                             type: "standard",
                             application_method: {
                                 type: "percentage",
@@ -233,7 +409,6 @@ medusaIntegrationTestRunner({
                     await api.post(
                         `/vendor/promotions`,
                         {
-                            code: "LIST_PROMO_2",
                             type: "standard",
                             application_method: {
                                 type: "percentage",
@@ -254,11 +429,10 @@ medusaIntegrationTestRunner({
                     expect(response.data.promotions.length).toBeGreaterThanOrEqual(2)
                 })
 
-                it("should filter promotions by code", async () => {
-                    await api.post(
+                it("should filter promotions by their generated code", async () => {
+                    const createResponse = await api.post(
                         `/vendor/promotions`,
                         {
-                            code: "UNIQUE_CODE_123",
                             type: "standard",
                             application_method: {
                                 type: "percentage",
@@ -269,23 +443,24 @@ medusaIntegrationTestRunner({
                         seller1Headers
                     )
 
+                    const generatedCode = createResponse.data.promotion.code
+
                     const response = await api.get(
-                        `/vendor/promotions?code=UNIQUE_CODE_123`,
+                        `/vendor/promotions?code=${generatedCode}`,
                         seller1Headers
                     )
 
                     expect(response.status).toEqual(200)
                     expect(response.data.promotions.length).toBeGreaterThanOrEqual(1)
                     expect(
-                        response.data.promotions.some((p: any) => p.code === "UNIQUE_CODE_123")
+                        response.data.promotions.some((p: any) => p.code === generatedCode)
                     ).toBe(true)
                 })
 
                 it("should search promotions with q parameter", async () => {
-                    await api.post(
+                    const createResponse = await api.post(
                         `/vendor/promotions`,
                         {
-                            code: "SEARCHABLE_PROMO",
                             type: "standard",
                             application_method: {
                                 type: "percentage",
@@ -296,17 +471,17 @@ medusaIntegrationTestRunner({
                         seller1Headers
                     )
 
+                    const generatedCode = createResponse.data.promotion.code
+
                     const response = await api.get(
-                        `/vendor/promotions?q=searchable`,
+                        `/vendor/promotions?q=${generatedCode}`,
                         seller1Headers
                     )
 
                     expect(response.status).toEqual(200)
                     expect(response.data.promotions.length).toBeGreaterThanOrEqual(1)
                     expect(
-                        response.data.promotions.some((p: any) =>
-                            p.code.toLowerCase().includes("searchable")
-                        )
+                        response.data.promotions.some((p: any) => p.code === generatedCode)
                     ).toBe(true)
                 })
 
@@ -314,7 +489,6 @@ medusaIntegrationTestRunner({
                     await api.post(
                         `/vendor/promotions`,
                         {
-                            code: "PAGE_PROMO_A",
                             type: "standard",
                             application_method: {
                                 type: "percentage",
@@ -328,7 +502,6 @@ medusaIntegrationTestRunner({
                     await api.post(
                         `/vendor/promotions`,
                         {
-                            code: "PAGE_PROMO_B",
                             type: "standard",
                             application_method: {
                                 type: "percentage",
@@ -342,7 +515,6 @@ medusaIntegrationTestRunner({
                     await api.post(
                         `/vendor/promotions`,
                         {
-                            code: "PAGE_PROMO_C",
                             type: "standard",
                             application_method: {
                                 type: "percentage",
@@ -452,10 +624,9 @@ medusaIntegrationTestRunner({
                 })
 
                 it("should not list another seller's promotions", async () => {
-                    await api.post(
+                    const createResponse = await api.post(
                         `/vendor/promotions`,
                         {
-                            code: "SELLER1_ONLY_PROMO",
                             type: "standard",
                             application_method: {
                                 type: "percentage",
@@ -466,6 +637,8 @@ medusaIntegrationTestRunner({
                         seller1Headers
                     )
 
+                    const generatedCode = createResponse.data.promotion.code
+
                     const response = await api.get(
                         `/vendor/promotions`,
                         seller2Headers
@@ -473,7 +646,7 @@ medusaIntegrationTestRunner({
 
                     expect(response.status).toEqual(200)
                     expect(
-                        response.data.promotions.every((p: any) => p.code !== "SELLER1_ONLY_PROMO")
+                        response.data.promotions.every((p: any) => p.code !== generatedCode)
                     ).toBe(true)
                 })
             })
@@ -483,7 +656,6 @@ medusaIntegrationTestRunner({
                     const createResponse = await api.post(
                         `/vendor/promotions`,
                         {
-                            code: "GET_BY_ID_PROMO",
                             type: "standard",
                             application_method: {
                                 type: "percentage",
@@ -495,6 +667,7 @@ medusaIntegrationTestRunner({
                     )
 
                     const promotionId = createResponse.data.promotion.id
+                    const generatedCode = createResponse.data.promotion.code
 
                     const response = await api.get(
                         `/vendor/promotions/${promotionId}`,
@@ -504,14 +677,13 @@ medusaIntegrationTestRunner({
                     expect(response.status).toEqual(200)
                     expect(response.data.promotion).toBeDefined()
                     expect(response.data.promotion.id).toEqual(promotionId)
-                    expect(response.data.promotion.code).toEqual("GET_BY_ID_PROMO")
+                    expect(response.data.promotion.code).toEqual(generatedCode)
                 })
 
                 it("should not allow seller to get another seller's promotion", async () => {
                     const createResponse = await api.post(
                         `/vendor/promotions`,
                         {
-                            code: "SELLER1_PROMO",
                             type: "standard",
                             application_method: {
                                 type: "percentage",
@@ -543,7 +715,6 @@ medusaIntegrationTestRunner({
                     const createResponse = await api.post(
                         `/vendor/promotions`,
                         {
-                            code: "FULL_FIELDS_PROMO",
                             type: "standard",
                             is_automatic: true,
                             status: "active",
@@ -557,6 +728,7 @@ medusaIntegrationTestRunner({
                     )
 
                     const promotionId = createResponse.data.promotion.id
+                    const generatedCode = createResponse.data.promotion.code
 
                     const response = await api.get(
                         `/vendor/promotions/${promotionId}`,
@@ -565,7 +737,7 @@ medusaIntegrationTestRunner({
 
                     expect(response.status).toEqual(200)
                     expect(response.data.promotion.id).toBeDefined()
-                    expect(response.data.promotion.code).toEqual("FULL_FIELDS_PROMO")
+                    expect(response.data.promotion.code).toEqual(generatedCode)
                     expect(response.data.promotion.type).toEqual("standard")
                     expect(response.data.promotion.is_automatic).toEqual(true)
                     expect(response.data.promotion.status).toEqual("active")
@@ -576,11 +748,10 @@ medusaIntegrationTestRunner({
             })
 
             describe("POST /vendor/promotions/:id", () => {
-                it("should update promotion code", async () => {
+                it("should reject an attempt to change the promotion code", async () => {
                     const createResponse = await api.post(
                         `/vendor/promotions`,
                         {
-                            code: "ORIGINAL_CODE",
                             type: "standard",
                             application_method: {
                                 type: "percentage",
@@ -592,17 +763,26 @@ medusaIntegrationTestRunner({
                     )
 
                     const promotionId = createResponse.data.promotion.id
+                    const originalCode = createResponse.data.promotion.code
 
-                    const response = await api.post(
+                    const response = await api
+                        .post(
+                            `/vendor/promotions/${promotionId}`,
+                            {
+                                code: "SELLER_PICKED_UPDATE",
+                            },
+                            seller1Headers
+                        )
+                        .catch((e) => e.response)
+
+                    expect(response.status).toEqual(400)
+
+                    const getResponse = await api.get(
                         `/vendor/promotions/${promotionId}`,
-                        {
-                            code: "UPDATED_CODE",
-                        },
                         seller1Headers
                     )
 
-                    expect(response.status).toEqual(200)
-                    expect(response.data.promotion.code).toEqual("UPDATED_CODE")
+                    expect(getResponse.data.promotion.code).toEqual(originalCode)
                 })
 
                 it("should create a promotion with a usage limit", async () => {
@@ -691,7 +871,6 @@ medusaIntegrationTestRunner({
                     const createResponse = await api.post(
                         `/vendor/promotions`,
                         {
-                            code: "STATUS_UPDATE_PROMO",
                             type: "standard",
                             status: "draft",
                             application_method: {
@@ -721,7 +900,6 @@ medusaIntegrationTestRunner({
                     const createResponse = await api.post(
                         `/vendor/promotions`,
                         {
-                            code: "AUTO_UPDATE_PROMO",
                             type: "standard",
                             is_automatic: false,
                             application_method: {
@@ -751,7 +929,6 @@ medusaIntegrationTestRunner({
                     const createResponse = await api.post(
                         `/vendor/promotions`,
                         {
-                            code: "VALUE_UPDATE_PROMO",
                             type: "standard",
                             application_method: {
                                 type: "percentage",
@@ -782,7 +959,6 @@ medusaIntegrationTestRunner({
                     const createResponse = await api.post(
                         `/vendor/promotions`,
                         {
-                            code: "SELLER1_UPDATE_PROMO",
                             type: "standard",
                             application_method: {
                                 type: "percentage",
@@ -798,7 +974,7 @@ medusaIntegrationTestRunner({
                     const response = await api
                         .post(
                             `/vendor/promotions/${promotionId}`,
-                            { code: "HACKED_CODE" },
+                            { status: "active" },
                             seller2Headers
                         )
                         .catch((e) => e.response)
@@ -812,7 +988,6 @@ medusaIntegrationTestRunner({
                     const createResponse = await api.post(
                         `/vendor/promotions`,
                         {
-                            code: "DELETE_PROMO",
                             type: "standard",
                             application_method: {
                                 type: "percentage",
@@ -848,7 +1023,6 @@ medusaIntegrationTestRunner({
                     const createResponse = await api.post(
                         `/vendor/promotions`,
                         {
-                            code: "SELLER1_DELETE_PROMO",
                             type: "standard",
                             application_method: {
                                 type: "percentage",
@@ -881,7 +1055,6 @@ medusaIntegrationTestRunner({
                     const createResponse = await api.post(
                         `/vendor/promotions`,
                         {
-                            code: "RULES_PROMO",
                             type: "standard",
                             application_method: {
                                 type: "percentage",
@@ -917,7 +1090,6 @@ medusaIntegrationTestRunner({
                     const createResponse = await api.post(
                         `/vendor/promotions`,
                         {
-                            code: "UPDATE_RULES_PROMO",
                             type: "standard",
                             application_method: {
                                 type: "percentage",
@@ -959,7 +1131,6 @@ medusaIntegrationTestRunner({
                     const createResponse = await api.post(
                         `/vendor/promotions`,
                         {
-                            code: "DELETE_RULES_PROMO",
                             type: "standard",
                             application_method: {
                                 type: "percentage",
@@ -997,7 +1168,6 @@ medusaIntegrationTestRunner({
                     const createResponse = await api.post(
                         `/vendor/promotions`,
                         {
-                            code: "SELLER1_RULES_PROMO",
                             type: "standard",
                             application_method: {
                                 type: "percentage",
@@ -1035,7 +1205,6 @@ medusaIntegrationTestRunner({
                     const createResponse = await api.post(
                         `/vendor/promotions`,
                         {
-                            code: "GET_RULES_PROMO",
                             type: "standard",
                             application_method: {
                                 type: "percentage",
@@ -1068,7 +1237,6 @@ medusaIntegrationTestRunner({
                     const createResponse = await api.post(
                         `/vendor/promotions`,
                         {
-                            code: "NO_RULES_PROMO",
                             type: "standard",
                             application_method: {
                                 type: "percentage",
@@ -1094,7 +1262,6 @@ medusaIntegrationTestRunner({
                     const createResponse = await api.post(
                         `/vendor/promotions`,
                         {
-                            code: "SELLER1_GET_RULES_PROMO",
                             type: "standard",
                             application_method: {
                                 type: "percentage",

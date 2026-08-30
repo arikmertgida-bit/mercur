@@ -6,6 +6,7 @@ import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
 import { HttpTypes } from "@mercurjs/types"
 
 import { createSellerPromotionsWorkflow } from "../../../workflows/promotion"
+import { verifyCodeReservationToken } from "../../../workflows/promotion/utils"
 import { refetchPromotion } from "./helpers"
 import {
   VendorCreatePromotionType,
@@ -38,11 +39,17 @@ export const POST = async (
   res: MedusaResponse<HttpTypes.VendorPromotionResponse>
 ) => {
   const sellerId = req.seller_context!.seller_id
+  const { code_reservation_token, ...promotionData } = req.validatedBody
+
+  const preferredCode = code_reservation_token
+    ? verifyCodeReservationToken(req.scope, code_reservation_token, sellerId)
+    : null
 
   const { result } = await createSellerPromotionsWorkflow(req.scope).run({
     input: {
       seller_id: sellerId,
-      promotions: [req.validatedBody],
+      promotions: [promotionData],
+      preferredCode,
     },
   })
 

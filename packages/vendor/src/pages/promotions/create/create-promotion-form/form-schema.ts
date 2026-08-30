@@ -26,7 +26,6 @@ export const CreatePromotionSchema = z
     campaign_id: z.string().optional(),
     campaign_choice: z.enum(["none", "existing", "new"]).optional(),
     is_automatic: z.string().toLowerCase(),
-    code: z.string().min(1, { message: i18n.t("validation.requiredField") }),
     type: z.enum(["buyget", "standard"]),
     status: z.enum(["draft", "active", "inactive"]),
     is_tax_inclusive: z.boolean().optional(),

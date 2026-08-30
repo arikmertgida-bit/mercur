@@ -66,6 +66,13 @@ export const vendorPromotionsMiddlewares: MiddlewareRoute[] = [
   },
   {
     method: ["GET"],
+    matcher: "/vendor/promotions/generate-code",
+    // The preview only exists to feed the create call, so it is gated the
+    // same way POST /vendor/promotions is.
+    middlewares: [requirePermission("promotions", "edit")],
+  },
+  {
+    method: ["GET"],
     matcher: "/vendor/promotions/rule-attribute-options/:rule_type",
     middlewares: [
       requirePermission("promotions", "view"),

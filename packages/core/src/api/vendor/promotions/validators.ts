@@ -178,7 +178,6 @@ const automaticLimitRefinement = (promo: any) => {
 export type VendorCreatePromotionType = z.infer<typeof VendorCreatePromotion>
 export const VendorCreatePromotion = z
   .object({
-    code: z.string(),
     is_automatic: z.boolean().optional(),
     type: z.nativeEnum(PromotionType),
     is_tax_inclusive: z.boolean().optional(),
@@ -189,6 +188,10 @@ export const VendorCreatePromotion = z
     application_method: VendorCreateApplicationMethod,
     rules: z.array(VendorCreatePromotionRule).optional(),
     additional_data: z.record(z.string(), z.unknown()).nullish(),
+    // Opaque, server-signed reference to a code this same server already
+    // generated and showed the vendor as a live preview (see the
+    // generate-code route) — never a literal code the vendor can set.
+    code_reservation_token: z.string().optional(),
   })
   .strict()
   .refine(buygetRefinement, {
@@ -203,7 +206,6 @@ export const VendorCreatePromotion = z
 export type VendorUpdatePromotionType = z.infer<typeof VendorUpdatePromotion>
 export const VendorUpdatePromotion = z
   .object({
-    code: z.string().optional(),
     is_automatic: z.boolean().optional(),
     is_tax_inclusive: z.boolean().optional(),
     type: z.nativeEnum(PromotionType).optional(),
