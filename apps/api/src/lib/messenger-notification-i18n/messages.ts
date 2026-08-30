@@ -46,6 +46,9 @@ export interface NotificationMessages {
     subject: string
     /** Placeholders: {customerName}, {displayId} */
     preview: string
+    receivedSubject: string
+    /** Placeholders: {sellerName}, {displayId} */
+    receivedPreview: string
   }
   request: {
     statusSubject: string
@@ -89,6 +92,8 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     return: {
       subject: "New Return Request",
       preview: "{customerName} requested a return for order #{displayId}.",
+      receivedSubject: "Return Received",
+      receivedPreview: "{sellerName} has received your return for order #{displayId}.",
     },
     request: {
       statusSubject: "Request Status",
@@ -134,6 +139,8 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     return: {
       subject: "Yeni İade Talebi",
       preview: "{customerName} #{displayId} numaralı sipariş için iade talebinde bulundu.",
+      receivedSubject: "İade Teslim Alındı",
+      receivedPreview: "{sellerName}, #{displayId} numaralı siparişteki iadenizi teslim aldı.",
     },
     request: {
       statusSubject: "Talep Durumu",
@@ -179,6 +186,8 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     return: {
       subject: "Neue Rückgabeanfrage",
       preview: "{customerName} hat für Bestellung #{displayId} eine Rückgabe angefordert.",
+      receivedSubject: "Rückgabe erhalten",
+      receivedPreview: "{sellerName} hat Ihre Rückgabe zu Bestellung #{displayId} erhalten.",
     },
     request: {
       statusSubject: "Anfragestatus",
@@ -224,6 +233,8 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     return: {
       subject: "Nouvelle demande de retour",
       preview: "{customerName} a demandé un retour pour la commande #{displayId}.",
+      receivedSubject: "Retour reçu",
+      receivedPreview: "{sellerName} a reçu votre retour pour la commande #{displayId}.",
     },
     request: {
       statusSubject: "Statut de la demande",
@@ -269,6 +280,8 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     return: {
       subject: "Nueva solicitud de devolución",
       preview: "{customerName} solicitó una devolución del pedido #{displayId}.",
+      receivedSubject: "Devolución recibida",
+      receivedPreview: "{sellerName} ha recibido tu devolución del pedido #{displayId}.",
     },
     request: {
       statusSubject: "Estado de la solicitud",
@@ -314,6 +327,8 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     return: {
       subject: "Nuova richiesta di reso",
       preview: "{customerName} ha richiesto un reso per l'ordine #{displayId}.",
+      receivedSubject: "Reso ricevuto",
+      receivedPreview: "{sellerName} ha ricevuto il tuo reso per l'ordine #{displayId}.",
     },
     request: {
       statusSubject: "Stato della richiesta",
@@ -359,6 +374,8 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     return: {
       subject: "Nova solicitação de devolução",
       preview: "{customerName} solicitou a devolução do pedido #{displayId}.",
+      receivedSubject: "Devolução recebida",
+      receivedPreview: "{sellerName} recebeu sua devolução do pedido #{displayId}.",
     },
     request: {
       statusSubject: "Status da solicitação",
@@ -404,6 +421,8 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     return: {
       subject: "Novo pedido de devolução",
       preview: "{customerName} pediu a devolução da encomenda #{displayId}.",
+      receivedSubject: "Devolução recebida",
+      receivedPreview: "{sellerName} recebeu a sua devolução da encomenda #{displayId}.",
     },
     request: {
       statusSubject: "Estado do pedido",
@@ -449,6 +468,8 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     return: {
       subject: "Новый запрос на возврат",
       preview: "{customerName} запросил(а) возврат по заказу #{displayId}.",
+      receivedSubject: "Возврат получен",
+      receivedPreview: "{sellerName} получил ваш возврат по заказу #{displayId}.",
     },
     request: {
       statusSubject: "Статус заявки",
@@ -494,6 +515,8 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     return: {
       subject: "Новий запит на повернення",
       preview: "{customerName} подав(-ла) запит на повернення замовлення #{displayId}.",
+      receivedSubject: "Повернення отримано",
+      receivedPreview: "{sellerName} отримав(-ла) ваше повернення за замовленням #{displayId}.",
     },
     request: {
       statusSubject: "Статус заявки",
@@ -539,6 +562,8 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     return: {
       subject: "Nowa prośba o zwrot",
       preview: "{customerName} poprosił(a) o zwrot zamówienia #{displayId}.",
+      receivedSubject: "Zwrot otrzymany",
+      receivedPreview: "{sellerName} otrzymał(a) Twój zwrot zamówienia #{displayId}.",
     },
     request: {
       statusSubject: "Status wniosku",
@@ -584,6 +609,8 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     return: {
       subject: "Nová žádost o vrácení",
       preview: "{customerName} požádal(a) o vrácení objednávky #{displayId}.",
+      receivedSubject: "Vrácení přijato",
+      receivedPreview: "{sellerName} přijal(a) vaše vrácení objednávky #{displayId}.",
     },
     request: {
       statusSubject: "Stav žádosti",
@@ -629,6 +656,8 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     return: {
       subject: "Нова заявка за връщане",
       preview: "{customerName} поиска връщане на поръчка #{displayId}.",
+      receivedSubject: "Връщането е получено",
+      receivedPreview: "{sellerName} получи вашето връщане на поръчка #{displayId}.",
     },
     request: {
       statusSubject: "Статус на заявката",
@@ -674,6 +703,8 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     return: {
       subject: "Novi zahtjev za povrat",
       preview: "{customerName} je zatražio(la) povrat za narudžbu #{displayId}.",
+      receivedSubject: "Povrat primljen",
+      receivedPreview: "{sellerName} je primio(la) vaš povrat za narudžbu #{displayId}.",
     },
     request: {
       statusSubject: "Status zahtjeva",
@@ -719,6 +750,8 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     return: {
       subject: "Νέο αίτημα επιστροφής",
       preview: "Ο/Η {customerName} ζήτησε επιστροφή για την παραγγελία #{displayId}.",
+      receivedSubject: "Η επιστροφή παραλήφθηκε",
+      receivedPreview: "Ο/Η {sellerName} παρέλαβε την επιστροφή σας για την παραγγελία #{displayId}.",
     },
     request: {
       statusSubject: "Κατάσταση αιτήματος",
@@ -764,6 +797,8 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     return: {
       subject: "درخواست مرجوعی جدید",
       preview: "{customerName} برای سفارش #{displayId} درخواست مرجوعی ثبت کرد.",
+      receivedSubject: "مرجوعی دریافت شد",
+      receivedPreview: "{sellerName} مرجوعی شما برای سفارش #{displayId} را دریافت کرد.",
     },
     request: {
       statusSubject: "وضعیت درخواست",
@@ -809,6 +844,8 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     return: {
       subject: "בקשת החזרה חדשה",
       preview: "{customerName} ביקש/ה החזרה עבור הזמנה #{displayId}.",
+      receivedSubject: "ההחזרה התקבלה",
+      receivedPreview: "{sellerName} קיבל/ה את ההחזרה שלך עבור הזמנה #{displayId}.",
     },
     request: {
       statusSubject: "סטטוס הבקשה",
@@ -854,6 +891,8 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     return: {
       subject: "Új visszaküldési kérelem",
       preview: "{customerName} visszaküldést kért a(z) #{displayId} rendeléshez.",
+      receivedSubject: "Visszaküldés megérkezett",
+      receivedPreview: "{sellerName} megkapta a(z) #{displayId} rendeléshez tartozó visszaküldését.",
     },
     request: {
       statusSubject: "Kérelem állapota",
@@ -899,6 +938,8 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     return: {
       subject: "Permintaan Retur Baru",
       preview: "{customerName} meminta retur untuk pesanan #{displayId}.",
+      receivedSubject: "Retur Diterima",
+      receivedPreview: "{sellerName} telah menerima retur Anda untuk pesanan #{displayId}.",
     },
     request: {
       statusSubject: "Status Permintaan",
@@ -944,6 +985,8 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     return: {
       subject: "新しい返品リクエスト",
       preview: "{customerName}様が注文 #{displayId} の返品をリクエストしました。",
+      receivedSubject: "返品を受け取りました",
+      receivedPreview: "{sellerName}が注文 #{displayId} の返品を受け取りました。",
     },
     request: {
       statusSubject: "リクエストの状況",
@@ -989,6 +1032,8 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     return: {
       subject: "새 반품 요청",
       preview: "{customerName}님이 주문 #{displayId}에 대해 반품을 요청했습니다.",
+      receivedSubject: "반품 수령 완료",
+      receivedPreview: "{sellerName}님이 주문 #{displayId}의 반품을 수령했습니다.",
     },
     request: {
       statusSubject: "요청 상태",
@@ -1034,6 +1079,8 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     return: {
       subject: "Naujas grąžinimo prašymas",
       preview: "{customerName} paprašė grąžinti užsakymą #{displayId}.",
+      receivedSubject: "Grąžinimas gautas",
+      receivedPreview: "{sellerName} gavo jūsų grąžinimą už užsakymą #{displayId}.",
     },
     request: {
       statusSubject: "Užklausos būsena",
@@ -1079,6 +1126,8 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     return: {
       subject: "Ново барање за враќање",
       preview: "{customerName} побара враќање за нарачката #{displayId}.",
+      receivedSubject: "Враќањето е примено",
+      receivedPreview: "{sellerName} го прими вашето враќање за нарачката #{displayId}.",
     },
     request: {
       statusSubject: "Статус на барањето",
@@ -1124,6 +1173,8 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     return: {
       subject: "Шинэ буцаалтын хүсэлт",
       preview: "{customerName} #{displayId} захиалгын буцаалтыг хүслээ.",
+      receivedSubject: "Буцаалт хүлээн авлаа",
+      receivedPreview: "{sellerName} таны #{displayId} захиалгын буцаалтыг хүлээн авлаа.",
     },
     request: {
       statusSubject: "Хүсэлтийн төлөв",
@@ -1169,6 +1220,8 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     return: {
       subject: "Nieuw retourverzoek",
       preview: "{customerName} heeft een retour aangevraagd voor bestelling #{displayId}.",
+      receivedSubject: "Retour ontvangen",
+      receivedPreview: "{sellerName} heeft uw retour voor bestelling #{displayId} ontvangen.",
     },
     request: {
       statusSubject: "Status van aanvraag",
@@ -1214,6 +1267,8 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     return: {
       subject: "Cerere nouă de retur",
       preview: "{customerName} a solicitat returnarea comenzii #{displayId}.",
+      receivedSubject: "Retur primit",
+      receivedPreview: "{sellerName} a primit returul dvs. pentru comanda #{displayId}.",
     },
     request: {
       statusSubject: "Starea cererii",
@@ -1259,6 +1314,8 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     return: {
       subject: "คำขอคืนสินค้าใหม่",
       preview: "{customerName} ขอคืนสินค้าสำหรับคำสั่งซื้อ #{displayId}",
+      receivedSubject: "ได้รับสินค้าคืนแล้ว",
+      receivedPreview: "{sellerName} ได้รับสินค้าคืนของคุณสำหรับคำสั่งซื้อ #{displayId} แล้ว",
     },
     request: {
       statusSubject: "สถานะคำขอ",
@@ -1304,6 +1361,8 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     return: {
       subject: "Yêu cầu trả hàng mới",
       preview: "{customerName} đã yêu cầu trả hàng cho đơn hàng #{displayId}.",
+      receivedSubject: "Đã nhận hàng trả lại",
+      receivedPreview: "{sellerName} đã nhận được hàng trả lại của bạn cho đơn hàng #{displayId}.",
     },
     request: {
       statusSubject: "Trạng thái yêu cầu",
@@ -1349,6 +1408,8 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     return: {
       subject: "新退货申请",
       preview: "{customerName} 为订单 #{displayId} 申请了退货。",
+      receivedSubject: "退货已收到",
+      receivedPreview: "{sellerName} 已收到您订单 #{displayId} 的退货。",
     },
     request: {
       statusSubject: "申请状态",
@@ -1394,6 +1455,8 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     return: {
       subject: "新退貨申請",
       preview: "{customerName} 為訂單 #{displayId} 申請了退貨。",
+      receivedSubject: "退貨已收到",
+      receivedPreview: "{sellerName} 已收到您訂單 #{displayId} 的退貨。",
     },
     request: {
       statusSubject: "申請狀態",
@@ -1439,6 +1502,8 @@ export const NOTIFICATION_MESSAGES: Record<NotificationLanguage, NotificationMes
     return: {
       subject: "طلب إرجاع جديد",
       preview: "طلب {customerName} إرجاع الطلب رقم #{displayId}.",
+      receivedSubject: "تم استلام الإرجاع",
+      receivedPreview: "استلم {sellerName} إرجاعك لطلب #{displayId}.",
     },
     request: {
       statusSubject: "حالة الطلب",

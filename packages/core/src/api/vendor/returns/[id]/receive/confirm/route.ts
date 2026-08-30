@@ -23,6 +23,7 @@ export const POST = async (
     input: {
       return_id: id,
       confirmed_by: req.seller_context!.seller_id,
+      no_notification: req.validatedBody.no_notification,
     },
   })
 
