@@ -63,6 +63,11 @@ export const vendorPromotionsMiddlewares: MiddlewareRoute[] = [
   },
   {
     method: ["GET"],
+    matcher: "/vendor/promotions/generate-code",
+    middlewares: [],
+  },
+  {
+    method: ["GET"],
     matcher: "/vendor/promotions/rule-attribute-options/:rule_type",
     middlewares: [
       validateAndTransformQuery(

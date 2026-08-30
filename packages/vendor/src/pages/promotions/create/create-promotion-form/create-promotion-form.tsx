@@ -14,6 +14,7 @@ import {
   Badge,
   Button,
   clx,
+  Copy,
   CurrencyInput,
   Divider,
   Heading,
@@ -33,7 +34,7 @@ import { DeprecatedPercentageInput } from "@components/inputs/percentage-input"
 import { RouteFocusModal, useRouteModal } from "@components/modals"
 import { KeyboundForm } from "@components/utilities/keybound-form"
 import { useCampaigns } from "@hooks/api/campaigns"
-import { useCreatePromotion } from "@hooks/api/promotions"
+import { useCreatePromotion, useGenerateVendorPromotionCode } from "@hooks/api/promotions"
 import { getCurrencySymbol } from "@lib/data/currencies"
 import { DEFAULT_CAMPAIGN_VALUES } from "@pages/campaigns/common/constants"
 import { RulesFormField } from "../../common/edit-rules/components/rules-form-field"
@@ -47,7 +48,6 @@ const defaultValues = {
   template_id: templates[0].id!,
   campaign_choice: 'none' as const,
   is_automatic: 'false',
-  code: '',
   type: 'standard' as PromotionTypeValues,
   status: 'draft' as PromotionStatusValues,
   rules: [],
@@ -64,6 +64,16 @@ const defaultValues = {
 
 type TabState = Record<Tab, ProgressStatus>;
 
+type CreatedPromotion = {
+  id: string;
+  code: string;
+};
+
+type PreviewCode = {
+  code: string;
+  token: string;
+};
+
 export const CreatePromotionForm = () => {
   const [tab, setTab] = useState<Tab>(Tab.TYPE);
   const [tabState, setTabState] = useState<TabState>({
@@ -71,6 +81,8 @@ export const CreatePromotionForm = () => {
     [Tab.PROMOTION]: 'not-started',
     [Tab.CAMPAIGN]: 'not-started'
   });
+  const [createdPromotion, setCreatedPromotion] = useState<CreatedPromotion | null>(null);
+  const [previewCode, setPreviewCode] = useState<PreviewCode | null>(null);
 
   const { t } = useTranslation();
   const { handleSuccess } = useRouteModal();
@@ -82,6 +94,20 @@ export const CreatePromotionForm = () => {
   const { setValue, reset, getValues } = form;
 
   const { mutateAsync: createPromotion } = useCreatePromotion();
+  const { mutate: generatePromotionCode } = useGenerateVendorPromotionCode();
+
+  useEffect(() => {
+    generatePromotionCode(undefined, {
+      onSuccess: data => {
+        setPreviewCode({ code: data.code, token: data.code_reservation_token });
+      }
+    });
+    // Generated once per modal open — the previewed code stays valid (and
+    // displayed) for the whole session regardless of which template/tab
+    // the vendor is on; see code-reservation-token for why it's safe to
+    // leave stale on close instead of explicitly revoking it.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleSubmit = form.handleSubmit(
     async data => {
@@ -151,7 +177,8 @@ export const CreatePromotionForm = () => {
             target_rules: buildRulesData(targetRulesData),
             buy_rules: buildRulesData(buyRulesData)
           },
-          is_automatic: is_automatic === 'true'
+          is_automatic: is_automatic === 'true',
+          code_reservation_token: previewCode?.token
         },
         {
           onSuccess: ({ promotion }) => {
@@ -160,6 +187,12 @@ export const CreatePromotionForm = () => {
                 code: promotion.code
               })
             );
+
+            if (promotion.code) {
+              form.reset(data);
+              setCreatedPromotion({ id: promotion.id, code: promotion.code });
+              return;
+            }
 
             handleSuccess(`/promotions/${promotion.id}`);
           },
@@ -204,7 +237,7 @@ export const CreatePromotionForm = () => {
         setTab(tab);
         break;
       case Tab.CAMPAIGN: {
-        const valid = await form.trigger(['code', 'application_method.value']);
+        const valid = await form.trigger(['application_method.value']);
 
         if (!valid) {
           setTabState({
@@ -233,16 +266,10 @@ export const CreatePromotionForm = () => {
         handleTabChange(Tab.PROMOTION);
         break;
       case Tab.PROMOTION: {
-        const valid = !!form.getValues('code') && !!form.getValues('application_method.value');
+        const valid = !!form.getValues('application_method.value');
 
         if (valid) {
           handleTabChange(Tab.CAMPAIGN);
-        }
-
-        if (!form.getValues('code')) {
-          form.setError('code', {
-            message: t('promotions.errors.requiredField')
-          });
         }
 
         if (!form.getValues('application_method.value')) {
@@ -390,6 +417,58 @@ export const CreatePromotionForm = () => {
         className="flex h-full flex-col"
         onSubmit={handleSubmit}
       >
+        {createdPromotion ? (
+          <>
+            <RouteFocusModal.Header />
+
+            <RouteFocusModal.Body className="flex size-full flex-col items-center overflow-y-auto">
+              <div className="flex w-full max-w-[720px] flex-col items-center gap-y-8 py-16">
+                <Heading className="text-center">
+                  {t('promotions.toasts.promotionCreateSuccess', {
+                    code: createdPromotion.code
+                  })}
+                </Heading>
+
+                <div className="flex flex-col items-center gap-y-2">
+                  <Text
+                    size="small"
+                    weight="plus"
+                    leading="compact"
+                  >
+                    {t('promotions.form.code.title')}
+                  </Text>
+
+                  <Copy
+                    content={createdPromotion.code}
+                    className="text-ui-tag-neutral-text"
+                    asChild
+                  >
+                    <Badge
+                      size="large"
+                      rounded="full"
+                      className="cursor-pointer text-pretty"
+                    >
+                      {createdPromotion.code}
+                    </Badge>
+                  </Copy>
+                </div>
+              </div>
+            </RouteFocusModal.Body>
+
+            <RouteFocusModal.Footer>
+              <div className="flex items-center justify-end gap-x-2">
+                <Button
+                  type="button"
+                  size="small"
+                  onClick={() => handleSuccess(`/promotions/${createdPromotion.id}`)}
+                >
+                  {t('actions.close')}
+                </Button>
+              </div>
+            </RouteFocusModal.Footer>
+          </>
+        ) : (
+        <>
         <ProgressTabs
           value={tab}
           onValueChange={tab => handleTabChange(tab as Tab)}
@@ -577,36 +656,39 @@ export const CreatePromotionForm = () => {
                   />
 
                   <div className="flex gap-y-4">
-                    <Form.Field
-                      control={form.control}
-                      name="code"
-                      render={({ field }) => {
-                        return (
-                          <Form.Item className="basis-1/2">
-                            <Form.Label>{t('promotions.form.code.title')}</Form.Label>
+                    <div className="flex basis-1/2 flex-col gap-y-1">
+                      <Text
+                        size="small"
+                        weight="plus"
+                        leading="compact"
+                      >
+                        {t('promotions.form.code.title')}
+                      </Text>
 
-                            <Form.Control>
-                              <Input
-                                {...field}
-                                placeholder="SUMMER15"
-                              />
-                            </Form.Control>
+                      <Text
+                        size="small"
+                        leading="compact"
+                        className="text-ui-fg-subtle"
+                      >
+                        {t('promotions.form.code.autoGeneratedHint')}
+                      </Text>
 
-                            <Text
-                              size="small"
-                              leading="compact"
-                              className="text-ui-fg-subtle"
-                            >
-                              <Trans
-                                t={t}
-                                i18nKey="promotions.form.code.description"
-                                components={[<br key="break" />]}
-                              />
-                            </Text>
-                          </Form.Item>
-                        );
-                      }}
-                    />
+                      {previewCode && (
+                        <Copy
+                          content={previewCode.code}
+                          className="text-ui-tag-neutral-text mt-1 w-fit"
+                          asChild
+                        >
+                          <Badge
+                            size="large"
+                            rounded="full"
+                            className="cursor-pointer text-pretty"
+                          >
+                            {previewCode.code}
+                          </Badge>
+                        </Copy>
+                      )}
+                    </div>
                   </div>
 
                   {!currentTemplate?.hiddenFields?.includes('type') && (
@@ -910,6 +992,8 @@ export const CreatePromotionForm = () => {
             )}
           </div>
         </RouteFocusModal.Footer>
+        </>
+        )}
       </KeyboundForm>
     </RouteFocusModal.Form>
   );

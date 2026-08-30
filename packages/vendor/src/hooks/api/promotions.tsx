@@ -202,6 +202,19 @@ export const useDeletePromotion = (
   });
 };
 
+export const useGenerateVendorPromotionCode = (
+  options?: UseMutationOptions<
+    InferClientOutput<typeof sdk.vendor.promotions.generateCode.query>,
+    ClientError,
+    void
+  >,
+) => {
+  return useMutation({
+    mutationFn: async () => sdk.vendor.promotions.generateCode.query(),
+    ...options,
+  });
+};
+
 export const useCreatePromotion = (
   options?: UseMutationOptions<
     InferClientOutput<typeof sdk.vendor.promotions.mutate>,

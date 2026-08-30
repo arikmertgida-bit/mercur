@@ -833,6 +833,7 @@ export type Routes = {
                     $ruleAttributeId: typeof import("../src/api/vendor/promotions/rule-value-options/[rule_type]/[rule_attribute_id]/route");
                 };
             };
+            generateCode: typeof import("../src/api/vendor/promotions/generate-code/route");
         };
         refundReasons: typeof import("../src/api/vendor/refund-reasons/route") & {
             $id: typeof import("../src/api/vendor/refund-reasons/[id]/route");
