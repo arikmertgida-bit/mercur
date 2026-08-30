@@ -150,6 +150,7 @@ function prepareInventoryUpdate({
 export type ConfirmReceiveReturnRequestWorkflowInput = {
   return_id: string
   confirmed_by?: string
+  no_notification?: boolean
 }
 
 export const confirmReturnReceiveWorkflowId = "mercur-confirm-return-receive"
@@ -342,6 +343,7 @@ export const confirmReturnReceiveWorkflow = createWorkflow(
         data: {
           order_id: order.id,
           return_id: orderReturn.id,
+          no_notification: input.no_notification,
         },
       }),
     )
