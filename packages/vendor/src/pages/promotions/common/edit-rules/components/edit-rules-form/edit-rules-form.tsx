@@ -9,7 +9,7 @@ import { KeyboundForm } from "@components/utilities/keybound-form"
 import { RuleTypeValues } from "../../edit-rules"
 import { RulesFormField } from "../rules-form-field"
 import { EditRules, EditRulesType } from "./form-schema"
-import { CreatePromotionSchemaType } from "../../../../promotion-create/components/create-promotion-form/form-schema"
+import { CreatePromotionSchemaType } from "../../../../create/create-promotion-form/form-schema"
 
 import { RuleToRemove } from "../rules-form-field/rules-form-field"
 

@@ -14,7 +14,7 @@ import { useCurrentSeller } from "../../../../../../hooks/api/sellers";
 import { useComboboxData } from "../../../../../../hooks/use-combobox-data";
 import { sdk } from "../../../../../../lib/client";
 
-import { CreatePromotionSchemaType } from "../../../../promotion-create/components/create-promotion-form/form-schema";
+import { CreatePromotionSchemaType } from "../../../../create/create-promotion-form/form-schema";
 
 type PromotionRuleField = {
   attribute: string;

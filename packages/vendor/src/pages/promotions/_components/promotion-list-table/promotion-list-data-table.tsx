@@ -5,7 +5,7 @@ import { createColumnHelper } from "@tanstack/react-table";
 import { useExtendableTable, useLinkQuery } from "@mercurjs/dashboard-shared";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { Outlet, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { ActionMenu } from "@components/common/action-menu";
 import { _DataTable } from "@components/table/data-table";
@@ -61,31 +61,28 @@ export const PromotionListDataTable = () => {
   }
 
   return (
-    <>
-      <_DataTable
-        table={table}
-        columns={columns}
-        count={count}
-        pageSize={PAGE_SIZE}
-        filters={filters}
-        search
-        pagination
-        isLoading={isLoading}
-        queryObject={raw}
-        navigateTo={(row) => `${row.original.id}`}
-        orderBy={[
-          {
-            key: "created_at",
-            label: t("fields.createdAt"),
-          },
-          {
-            key: "updated_at",
-            label: t("fields.updatedAt"),
-          },
-        ]}
-      />
-      <Outlet />
-    </>
+    <_DataTable
+      table={table}
+      columns={columns}
+      count={count}
+      pageSize={PAGE_SIZE}
+      filters={filters}
+      search
+      pagination
+      isLoading={isLoading}
+      queryObject={raw}
+      navigateTo={(row) => `${row.original.id}`}
+      orderBy={[
+        {
+          key: "created_at",
+          label: t("fields.createdAt"),
+        },
+        {
+          key: "updated_at",
+          label: t("fields.updatedAt"),
+        },
+      ]}
+    />
   );
 };
 

@@ -61,41 +61,13 @@ export const CreatePromotionSchema = z
       message: i18n.t("validation.requiredField"),
     }
   )
-  .refine(
-    (data) => {
-      if (data.application_method.type !== "fixed") {
-        return true
-      }
 
-      return !!data.application_method.currency_code
-    },
-    {
-      path: ["root"],
-      message: i18n.t("promotions.errors.promotionTabError"),
-    }
-  )
-  .refine(
-    (data) => {
-      if (data.type !== "buyget") {
-        return true
-      }
-
-      const hasBuyCondition = data.application_method.buy_rules.some(
-        (rule) => !rule.disguised
-      )
-      const hasMinQuantity = data.application_method.buy_rules.some(
-        (rule) => rule.disguised && rule.attribute === "buy_rules_min_quantity" && !!rule.values
-      )
-      const hasApplyToQuantity = data.application_method.target_rules.some(
-        (rule) => rule.disguised && rule.attribute === "apply_to_quantity" && !!rule.values
-      )
-
-      return hasBuyCondition && hasMinQuantity && hasApplyToQuantity
-    },
-    {
-      path: ["root"],
-      message: i18n.t("promotions.errors.promotionTabError"),
-    }
-  )
-
+// The currency-required-for-fixed-type and buyget-conditions-required business
+// rules are intentionally enforced in create-promotion-form.tsx's onSubmit,
+// not here: react-hook-form's zodResolver returns `values: {}` whenever
+// `.parse()` throws, and RHF only treats `errors.root` as an informational,
+// non-blocking form-level error (documented RHF behavior — a `path: ["root"]`
+// Zod refine's failure does not stop handleSubmit's success branch from
+// running). A `.refine()` here would silently hand the submit handler an
+// empty `data` object instead of blocking submission.
 export type CreatePromotionSchemaType = z.infer<typeof CreatePromotionSchema>

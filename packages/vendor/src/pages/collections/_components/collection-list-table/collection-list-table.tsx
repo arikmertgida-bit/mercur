@@ -1,6 +1,5 @@
 import { Children, ReactNode } from "react";
 import { Container } from "@medusajs/ui";
-import { Outlet } from "react-router-dom";
 
 import { CollectionListHeader } from "./collection-list-header";
 import { CollectionListDataTable } from "./collection-list-data-table";
@@ -16,7 +15,6 @@ export const CollectionListTable = ({ children }: { children?: ReactNode }) => {
           <CollectionListDataTable />
         </>
       )}
-      <Outlet />
     </Container>
   );
 };

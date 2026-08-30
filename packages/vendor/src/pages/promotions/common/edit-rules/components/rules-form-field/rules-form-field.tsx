@@ -14,7 +14,7 @@ import {
   usePromotionRuleAttributes,
   usePromotionRules,
 } from "../../../../../../hooks/api";
-import { CreatePromotionSchemaType } from "../../../../promotion-create/components/create-promotion-form/form-schema";
+import { CreatePromotionSchemaType } from "../../../../create/create-promotion-form/form-schema";
 import {
   generateRuleAttributes,
   translateRuleAttributeLabel,

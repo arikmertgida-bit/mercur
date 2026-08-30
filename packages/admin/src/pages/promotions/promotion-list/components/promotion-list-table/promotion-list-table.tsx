@@ -5,7 +5,7 @@ import { createColumnHelper, type ColumnDef } from "@tanstack/react-table"
 import { useExtendableTable, useLinkQuery } from "@mercurjs/dashboard-shared"
 import { Children, ReactNode, useMemo } from "react"
 import { useTranslation } from "react-i18next"
-import { Link, Outlet, useLoaderData, useNavigate } from "react-router-dom"
+import { Link, useLoaderData, useNavigate } from "react-router-dom"
 
 import { keepPreviousData } from "@tanstack/react-query"
 
@@ -133,7 +133,6 @@ export const PromotionListTable = ({ children }: { children?: ReactNode }) => {
           <PromotionListDataTable />
         </>
       )}
-      <Outlet />
     </Container>
   )
 }

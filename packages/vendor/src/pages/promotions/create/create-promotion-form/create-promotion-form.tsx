@@ -109,11 +109,46 @@ export const CreatePromotionForm = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const showPromotionTabError = () => {
+    toast.error(t('promotions.errors.promotionTabError'));
+
+    setTabState({
+      [Tab.TYPE]: 'completed',
+      [Tab.PROMOTION]: 'in-progress',
+      [Tab.CAMPAIGN]: 'not-started'
+    });
+    setTab(Tab.PROMOTION);
+  };
+
   const handleSubmit = form.handleSubmit(
     async data => {
       if (data.campaign_choice === 'existing' && !data.campaign_id) {
         form.setError('campaign_id', { message: t('promotions.errors.requiredField') });
         return;
+      }
+
+      if (data.application_method.type === 'fixed' && !data.application_method.currency_code) {
+        form.setError('root', { message: t('promotions.errors.promotionTabError') });
+        showPromotionTabError();
+        return;
+      }
+
+      if (data.type === 'buyget') {
+        const hasBuyCondition = data.application_method.buy_rules.some(
+          rule => !rule.disguised
+        );
+        const hasMinQuantity = data.application_method.buy_rules.some(
+          rule => rule.disguised && rule.attribute === 'buy_rules_min_quantity' && !!rule.values
+        );
+        const hasApplyToQuantity = data.application_method.target_rules.some(
+          rule => rule.disguised && rule.attribute === 'apply_to_quantity' && !!rule.values
+        );
+
+        if (!hasBuyCondition || !hasMinQuantity || !hasApplyToQuantity) {
+          form.setError('root', { message: t('promotions.errors.promotionTabError') });
+          showPromotionTabError();
+          return;
+        }
       }
 
       const {
@@ -207,14 +242,7 @@ export const CreatePromotionForm = () => {
       const errorInPromotionTab = !!Object.keys(rest || {}).length;
 
       if (errorInPromotionTab) {
-        toast.error(t('promotions.errors.promotionTabError'));
-
-        setTabState({
-          [Tab.TYPE]: 'completed',
-          [Tab.PROMOTION]: 'in-progress',
-          [Tab.CAMPAIGN]: 'not-started'
-        });
-        setTab(Tab.PROMOTION);
+        showPromotionTabError();
       }
     }
   );
