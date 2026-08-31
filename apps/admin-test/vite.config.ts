@@ -1,6 +1,7 @@
 import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
 import { mercurDashboardPlugin } from '@mercurjs/dashboard-sdk/vite'
+import { visualizer } from 'rollup-plugin-visualizer'
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
@@ -24,15 +25,28 @@ export default defineConfig(({ mode }) => {
         ...(backendUrl ? { backendUrl } : {}),
         ...(vendorUrl ? { vendorUrl } : {}),
       }),
+      ...(process.env.ANALYZE
+        ? [visualizer({ filename: 'dist/stats.html', gzipSize: true, brotliSize: true, template: 'treemap' })]
+        : []),
     ],
     build: {
-      // The dashboard's ~150 routes share one large common chunk (medusa-ui,
-      // tanstack-table, dashboard-shared) that Rollup groups automatically so
-      // it's downloaded once and cached across pages. That's expected for
-      // this app's size, not a regression — raise the threshold instead of
-      // forcing a manual split that breaks Rollup's own dedup and bloats the
-      // entry chunk (verified: manualChunks made the entry 552kB -> 3.79MB).
-      chunkSizeWarningLimit: 4000,
+      // `@mercurjs/admin`'s own build (packages/admin/tsdown.config.ts) now
+      // splits its ~29 domains' pages into fine, per-usage chunks (was one
+      // ~9MB blob) using Rolldown's `entriesAware` code-splitting — a real,
+      // verified improvement to that package's own output.
+      //
+      // That fix does not carry through to this app's own final bundle,
+      // though: get-route-map.tsx's ~180 dynamic route imports (compiled
+      // into packages/admin/dist/index.js) converge on a large, genuinely
+      // shared core (dashboard-shared, tanstack-table, dnd-kit, etc. used by
+      // nearly every page) that this app's own Rolldown pass re-pools when
+      // it re-bundles the dependency — verified with the same `entriesAware`
+      // grouping applied here too (packages/vendor/apps/vendor, identical
+      // architecture): identical output size with or without it, so this is
+      // real cross-page sharing, not an artifact of over-eager default
+      // pooling. It's downloaded once and cached across every route for the
+      // rest of the session, not paid per page visit.
+      chunkSizeWarningLimit: 5700,
     },
   }
 })

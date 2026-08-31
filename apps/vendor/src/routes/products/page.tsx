@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 import { useTranslation } from "react-i18next"
 import { Button } from "@medusajs/ui"
 import { ArrowDownTray, ArrowUpTray } from "@medusajs/icons"
-import { ProductListPage } from "@mercurjs/vendor/pages"
+import { ProductListPage } from "@mercurjs/vendor/pages/products"
 
 export default function ProductsWithImportExport() {
   const { t } = useTranslation()

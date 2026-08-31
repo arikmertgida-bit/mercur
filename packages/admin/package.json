@@ -9,6 +9,7 @@
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "sideEffects": ["*.css"],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -28,9 +29,9 @@
     "dist"
   ],
   "scripts": {
-    "dev": "tsup --watch",
+    "dev": "tsdown --watch & tsup --config tsup.css.config.ts --watch & tsup --watch & wait",
     "generate:targets": "bun run scripts/generate-extension-targets.ts",
-    "build": "tsup && bun run generate:targets",
+    "build": "tsdown && tsup --config tsup.css.config.ts && tsup && bun run generate:targets",
     "lint": "oxlint --max-warnings 0",
     "test": "vitest run"
   },
@@ -86,6 +87,7 @@
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.49",
     "tailwindcss": "3.4.19",
+    "tsdown": "^0.22.14",
     "tsup": "^8.0.2",
     "typescript": "5.9.3",
     "vite": "^8.1.3",
