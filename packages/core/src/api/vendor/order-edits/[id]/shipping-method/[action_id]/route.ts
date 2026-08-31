@@ -9,12 +9,15 @@ import {
 } from "@medusajs/framework/http"
 
 import { VendorPostOrderEditsShippingActionReqType } from "../../../validators"
+import { validateSellerOrder } from "../../../../orders/helpers"
 
 export const POST = async (
   req: AuthenticatedMedusaRequest<VendorPostOrderEditsShippingActionReqType>,
   res: MedusaResponse<HttpTypes.AdminOrderEditPreviewResponse>
 ) => {
   const { id, action_id } = req.params
+
+  await validateSellerOrder(req.scope, req.seller_context!.seller_id, id)
 
   const { result } = await updateOrderEditShippingMethodWorkflow(req.scope).run(
     {
@@ -42,6 +45,8 @@ export const DELETE = async (
   res: MedusaResponse<HttpTypes.AdminOrderEditPreviewResponse>
 ) => {
   const { id, action_id } = req.params
+
+  await validateSellerOrder(req.scope, req.seller_context!.seller_id, id)
 
   const { result: orderPreview } = await removeOrderEditShippingMethodWorkflow(
     req.scope

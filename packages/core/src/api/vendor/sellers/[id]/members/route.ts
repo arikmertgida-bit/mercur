@@ -5,12 +5,15 @@ import {
 import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
 
 import { VendorInviteMemberType } from "../../validators"
+import { assertOwnSeller } from "../../helpers"
 import { createMemberInvitesWorkflow } from "../../../../../workflows/seller"
 
 export const GET = async (
   req: AuthenticatedMedusaRequest,
   res: MedusaResponse
 ) => {
+  assertOwnSeller(req)
+
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
 
   const { data: sellerMembers, metadata } = await query.graph({
@@ -34,6 +37,8 @@ export const POST = async (
   req: AuthenticatedMedusaRequest<VendorInviteMemberType>,
   res: MedusaResponse
 ) => {
+  assertOwnSeller(req)
+
   const { result: invites } = await createMemberInvitesWorkflow(req.scope).run({
     input: [{
       seller_id: req.params.id,

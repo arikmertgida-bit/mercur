@@ -5,10 +5,14 @@ import {
 import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
 import { HttpTypes } from "@mercurjs/types"
 
+import { assertOwnSeller } from "../../../helpers"
+
 export const GET = async (
   req: AuthenticatedMedusaRequest,
   res: MedusaResponse<HttpTypes.VendorMemberInviteListResponse>
 ) => {
+  assertOwnSeller(req)
+
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
 
   const { data: memberInvites, metadata } = await query.graph({

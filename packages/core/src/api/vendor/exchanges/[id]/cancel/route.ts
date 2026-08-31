@@ -6,12 +6,15 @@ import {
 } from "@medusajs/framework/http"
 
 import { VendorPostCancelExchangeReqType } from "../../validators"
+import { validateSellerExchange } from "../../helpers"
 
 export const POST = async (
   req: AuthenticatedMedusaRequest<VendorPostCancelExchangeReqType>,
   res: MedusaResponse<HttpTypes.AdminExchangeResponse>
 ) => {
   const { id } = req.params
+
+  await validateSellerExchange(req.scope, req.seller_context!.seller_id, id)
 
   const { result } = await cancelOrderExchangeWorkflow(req.scope).run({
     input: {

@@ -9,6 +9,7 @@ import {
 import { HttpTypes } from "@medusajs/framework/types"
 
 import { VendorPostClaimsAddItemsActionReqType } from "../../../../validators"
+import { validateSellerClaim } from "../../../../helpers"
 
 export const POST = async (
   req: AuthenticatedMedusaRequest<VendorPostClaimsAddItemsActionReqType>,
@@ -17,6 +18,8 @@ export const POST = async (
   }>
 ) => {
   const { id, action_id } = req.params
+
+  await validateSellerClaim(req.scope, req.seller_context!.seller_id, id)
 
   const { result } = await updateClaimAddItemWorkflow(req.scope).run({
     input: {
@@ -44,6 +47,8 @@ export const DELETE = async (
   }>
 ) => {
   const { id, action_id } = req.params
+
+  await validateSellerClaim(req.scope, req.seller_context!.seller_id, id)
 
   const { result } = await removeAddItemClaimActionWorkflow(req.scope).run({
     input: {

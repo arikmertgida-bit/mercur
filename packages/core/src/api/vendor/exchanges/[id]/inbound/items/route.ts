@@ -7,6 +7,7 @@ import {
 import { HttpTypes } from "@medusajs/framework/types"
 
 import { VendorPostExchangesReturnRequestItemsReqType } from "../../../validators"
+import { validateSellerExchange } from "../../../helpers"
 
 export const POST = async (
   req: AuthenticatedMedusaRequest<VendorPostExchangesReturnRequestItemsReqType>,
@@ -15,6 +16,8 @@ export const POST = async (
   }>
 ) => {
   const { id } = req.params
+
+  await validateSellerExchange(req.scope, req.seller_context!.seller_id, id)
 
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
 

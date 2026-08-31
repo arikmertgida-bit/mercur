@@ -11,6 +11,7 @@ import {
 
 import { resolveAddItems } from "../../../../orders/resolve-add-items"
 import { VendorPostExchangesAddItemsReqType } from "../../../validators"
+import { validateSellerExchange } from "../../../helpers"
 
 export const POST = async (
   req: AuthenticatedMedusaRequest<VendorPostExchangesAddItemsReqType>,
@@ -19,6 +20,8 @@ export const POST = async (
   }>
 ) => {
   const { id } = req.params
+
+  await validateSellerExchange(req.scope, req.seller_context!.seller_id, id)
 
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
   const {

@@ -6,6 +6,7 @@ import {
 } from "@medusajs/framework/http"
 
 import { confirmClaimRequestWorkflow } from "../../../../../workflows/order/workflows/confirm-claim-request"
+import { validateSellerClaim } from "../../helpers"
 
 export const POST = async (
   req: AuthenticatedMedusaRequest,
@@ -14,6 +15,8 @@ export const POST = async (
   }>
 ) => {
   const { id } = req.params
+
+  await validateSellerClaim(req.scope, req.seller_context!.seller_id, id)
 
   const { result } = await confirmClaimRequestWorkflow(req.scope).run({
     input: {
@@ -38,6 +41,8 @@ export const DELETE = async (
   res: MedusaResponse<HttpTypes.AdminClaimDeleteResponse>
 ) => {
   const { id } = req.params
+
+  await validateSellerClaim(req.scope, req.seller_context!.seller_id, id)
 
   await cancelBeginOrderClaimWorkflow(req.scope).run({
     input: { claim_id: id },

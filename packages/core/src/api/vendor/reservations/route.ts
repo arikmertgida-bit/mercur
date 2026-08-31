@@ -4,6 +4,7 @@ import {
 } from "@medusajs/framework/http"
 import {
   ContainerRegistrationKeys,
+  MedusaError,
   remoteQueryObjectFromString,
 } from "@medusajs/framework/utils"
 
@@ -17,11 +18,25 @@ export const GET = async (
   res: MedusaResponse<HttpTypes.AdminReservationListResponse>
 ) => {
   const remoteQuery = req.scope.resolve(ContainerRegistrationKeys.REMOTE_QUERY)
+  const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
+  const sellerId = req.seller_context!.seller_id
+
+  // reservation carries no seller_id of its own — resolve the seller's own
+  // inventory item ids first so the list can never surface another
+  // seller's stock reservations.
+  const { data: sellerInventoryItems } = await query.graph({
+    entity: "inventory_item_seller",
+    fields: ["inventory_item_id"],
+    filters: { seller_id: sellerId },
+  })
+  const ownInventoryItemIds = sellerInventoryItems.map(
+    (item) => item.inventory_item_id
+  )
 
   const queryObject = remoteQueryObjectFromString({
     entryPoint: "reservation",
     variables: {
-      filters: req.filterableFields,
+      filters: { ...req.filterableFields, inventory_item_id: ownInventoryItemIds },
       ...req.queryConfig.pagination,
     },
     fields: req.queryConfig.fields,
@@ -44,6 +59,26 @@ export const POST = async (
   >,
   res: MedusaResponse<HttpTypes.AdminReservationResponse>
 ) => {
+  const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
+
+  const {
+    data: [sellerInventoryItem],
+  } = await query.graph({
+    entity: "inventory_item_seller",
+    fields: ["seller_id"],
+    filters: {
+      seller_id: req.seller_context!.seller_id,
+      inventory_item_id: req.validatedBody.inventory_item_id,
+    },
+  })
+
+  if (!sellerInventoryItem) {
+    throw new MedusaError(
+      MedusaError.Types.NOT_FOUND,
+      `Inventory item with id: ${req.validatedBody.inventory_item_id} was not found`
+    )
+  }
+
   const input = [req.validatedBody]
 
   const { result } = await createReservationsWorkflow(req.scope).run({

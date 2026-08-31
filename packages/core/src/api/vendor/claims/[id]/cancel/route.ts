@@ -6,12 +6,15 @@ import {
 } from "@medusajs/framework/http"
 
 import { VendorPostCancelClaimReqType } from "../../validators"
+import { validateSellerClaim } from "../../helpers"
 
 export const POST = async (
   req: AuthenticatedMedusaRequest<VendorPostCancelClaimReqType>,
   res: MedusaResponse<HttpTypes.AdminClaimResponse>
 ) => {
   const { id } = req.params
+
+  await validateSellerClaim(req.scope, req.seller_context!.seller_id, id)
 
   const { result } = await cancelOrderClaimWorkflow(req.scope).run({
     input: {

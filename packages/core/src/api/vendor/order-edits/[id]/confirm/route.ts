@@ -5,12 +5,15 @@ import {
 } from "@medusajs/framework/http"
 
 import { confirmOrderEditRequestWorkflow } from "../../../../../workflows/order/workflows"
+import { validateSellerOrder } from "../../../orders/helpers"
 
 export const POST = async (
   req: AuthenticatedMedusaRequest,
   res: MedusaResponse<HttpTypes.AdminOrderEditPreviewResponse>
 ) => {
   const { id } = req.params
+
+  await validateSellerOrder(req.scope, req.seller_context!.seller_id, id)
 
   const { result } = await confirmOrderEditRequestWorkflow(req.scope).run({
     input: {

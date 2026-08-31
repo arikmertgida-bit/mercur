@@ -6,6 +6,7 @@ import {
 import { HttpTypes } from "@medusajs/framework/types"
 
 import { VendorPostClaimItemsReqType } from "../../validators"
+import { validateSellerClaim } from "../../helpers"
 
 export const POST = async (
   req: AuthenticatedMedusaRequest<VendorPostClaimItemsReqType>,
@@ -14,6 +15,8 @@ export const POST = async (
   }>
 ) => {
   const { id } = req.params
+
+  await validateSellerClaim(req.scope, req.seller_context!.seller_id, id)
 
   const { result } = await orderClaimItemWorkflow(req.scope).run({
     input: { ...req.validatedBody, claim_id: id },

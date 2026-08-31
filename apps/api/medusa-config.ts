@@ -30,8 +30,13 @@ module.exports = withMercur({
       adminCors: requireEnv('ADMIN_CORS'),
       vendorCors: requireEnv('VENDOR_CORS'),
       authCors: requireEnv('AUTH_CORS'),
-      jwtSecret: process.env.JWT_SECRET || "supersecret",
-      cookieSecret: process.env.COOKIE_SECRET || "supersecret",
+      // No "supersecret" fallback like the framework default — Medusa's own
+      // fallback string is public (visible in its source), so silently
+      // falling back to it on a missing env var would let anyone forge
+      // valid JWTs/session cookies for any user. Fail fast instead, same as
+      // every other secret in this file.
+      jwtSecret: requireEnv('JWT_SECRET'),
+      cookieSecret: requireEnv('COOKIE_SECRET'),
     },
     // Admin/vendor `connect.sid` session cookie. Framework default is a
     // fixed 10h window (rolling: false) with no idle expiry — anyone with

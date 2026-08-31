@@ -4,6 +4,7 @@ import {
 } from "@medusajs/framework"
 
 import { VendorUpdateMemberRoleType } from "../../../validators"
+import { assertOwnSeller, assertMemberOfSeller } from "../../../helpers"
 import {
   updateMemberRoleWorkflow,
   removeSellerMemberWorkflow,
@@ -13,6 +14,9 @@ export const POST = async (
   req: AuthenticatedMedusaRequest<VendorUpdateMemberRoleType>,
   res: MedusaResponse
 ) => {
+  assertOwnSeller(req)
+  await assertMemberOfSeller(req)
+
   await updateMemberRoleWorkflow(req.scope).run({
     input: {
       seller_member_id: req.params.member_id,
@@ -27,6 +31,9 @@ export const DELETE = async (
   req: AuthenticatedMedusaRequest,
   res: MedusaResponse
 ) => {
+  assertOwnSeller(req)
+  await assertMemberOfSeller(req)
+
   await removeSellerMemberWorkflow(req.scope).run({
     input: {
       seller_member_id: req.params.member_id,

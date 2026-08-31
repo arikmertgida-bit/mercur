@@ -9,12 +9,15 @@ import {
 import { HttpTypes } from "@mercurjs/types"
 
 import { VendorUpdateSellerType } from "../validators"
+import { assertOwnSeller } from "../helpers"
 import { updateSellersWorkflow } from "../../../../workflows/seller"
 
 export const GET = async (
   req: AuthenticatedMedusaRequest,
   res: MedusaResponse<HttpTypes.VendorSellerResponse>
 ) => {
+  assertOwnSeller(req)
+
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
 
   const {
@@ -39,6 +42,8 @@ export const POST = async (
   req: AuthenticatedMedusaRequest<VendorUpdateSellerType>,
   res: MedusaResponse<HttpTypes.VendorSellerResponse>
 ) => {
+  assertOwnSeller(req)
+
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
 
   const { additional_data, ...update } = req.validatedBody

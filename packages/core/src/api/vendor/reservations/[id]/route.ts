@@ -9,13 +9,15 @@ import {
 } from "@medusajs/core-flows"
 import { HttpTypes } from "@medusajs/framework/types"
 
-import { refetchReservation } from "../helpers"
+import { refetchReservation, validateSellerReservation } from "../helpers"
 
 export const GET = async (
   req: AuthenticatedMedusaRequest<HttpTypes.AdminReservationParams>,
   res: MedusaResponse<HttpTypes.AdminReservationResponse>
 ) => {
   const { id } = req.params
+
+  await validateSellerReservation(req.scope, req.seller_context!.seller_id, id)
 
   const reservation = await refetchReservation(
     id,
@@ -41,6 +43,9 @@ export const POST = async (
   res: MedusaResponse<HttpTypes.AdminReservationResponse>
 ) => {
   const { id } = req.params
+
+  await validateSellerReservation(req.scope, req.seller_context!.seller_id, id)
+
   await updateReservationsWorkflow(req.scope).run({
     input: {
       updates: [{ ...req.validatedBody, id }],
@@ -60,6 +65,8 @@ export const DELETE = async (
   res: MedusaResponse<HttpTypes.AdminReservationDeleteResponse>
 ) => {
   const id = req.params.id
+
+  await validateSellerReservation(req.scope, req.seller_context!.seller_id, id)
 
   await deleteReservationsWorkflow(req.scope).run({
     input: { ids: [id] },

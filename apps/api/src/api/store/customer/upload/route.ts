@@ -7,6 +7,7 @@ import { MedusaError } from "@medusajs/framework/utils"
 
 import { StoreDeleteCustomerUploadType } from "./validators"
 import { fixMultipartFilenameEncoding } from "../../../../lib/fix-multipart-filename-encoding"
+import { matchesAllowedImageMagicBytes } from "../../../../lib/file-validation"
 
 export const POST = async (
   req: AuthenticatedMedusaRequest,
@@ -18,6 +19,14 @@ export const POST = async (
     throw new MedusaError(
       MedusaError.Types.INVALID_DATA,
       "No files were uploaded"
+    )
+  }
+
+  const invalidFile = files.find((f) => !matchesAllowedImageMagicBytes(f.buffer))
+  if (invalidFile) {
+    throw new MedusaError(
+      MedusaError.Types.INVALID_DATA,
+      `File "${invalidFile.originalname}" is not a valid image`
     )
   }
 

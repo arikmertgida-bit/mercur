@@ -6,6 +6,7 @@ import {
 import { FileDTO, HttpTypes } from "@medusajs/framework/types"
 import { MedusaError } from "@medusajs/framework/utils"
 import { fixMultipartFilenameEncoding } from "../../../utils/fix-multipart-filename-encoding"
+import { matchesAllowedImageMagicBytes } from "./file-validation"
 
 export const POST = async (
   req: AuthenticatedMedusaRequest<HttpTypes.AdminUploadFile>,
@@ -17,6 +18,14 @@ export const POST = async (
     throw new MedusaError(
       MedusaError.Types.INVALID_DATA,
       "No files were uploaded"
+    )
+  }
+
+  const invalidFile = input.find((f) => !matchesAllowedImageMagicBytes(f.buffer))
+  if (invalidFile) {
+    throw new MedusaError(
+      MedusaError.Types.INVALID_DATA,
+      `File "${invalidFile.originalname}" is not a valid image`
     )
   }
 

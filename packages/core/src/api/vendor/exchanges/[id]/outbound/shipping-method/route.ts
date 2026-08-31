@@ -6,6 +6,7 @@ import {
 import { HttpTypes } from "@medusajs/framework/types"
 
 import { VendorPostExchangesShippingReqType } from "../../../validators"
+import { validateSellerExchange } from "../../../helpers"
 
 export const POST = async (
   req: AuthenticatedMedusaRequest<VendorPostExchangesShippingReqType>,
@@ -14,6 +15,8 @@ export const POST = async (
   }>
 ) => {
   const { id } = req.params
+
+  await validateSellerExchange(req.scope, req.seller_context!.seller_id, id)
 
   const { result } = await createExchangeShippingMethodWorkflow(req.scope).run({
     input: { ...req.validatedBody, exchange_id: id },

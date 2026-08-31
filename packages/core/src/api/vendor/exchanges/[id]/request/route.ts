@@ -6,6 +6,7 @@ import {
 } from "@medusajs/framework/http"
 
 import { confirmExchangeRequestWorkflow } from "../../../../../workflows/order/workflows/confirm-exchange-request"
+import { validateSellerExchange } from "../../helpers"
 
 export const POST = async (
   req: AuthenticatedMedusaRequest,
@@ -14,6 +15,8 @@ export const POST = async (
   }>
 ) => {
   const { id } = req.params
+
+  await validateSellerExchange(req.scope, req.seller_context!.seller_id, id)
 
   const { result } = await confirmExchangeRequestWorkflow(req.scope).run({
     input: {
@@ -38,6 +41,8 @@ export const DELETE = async (
   res: MedusaResponse<HttpTypes.AdminExchangeDeleteResponse>
 ) => {
   const { id } = req.params
+
+  await validateSellerExchange(req.scope, req.seller_context!.seller_id, id)
 
   await cancelBeginOrderExchangeWorkflow(req.scope).run({
     input: { exchange_id: id },

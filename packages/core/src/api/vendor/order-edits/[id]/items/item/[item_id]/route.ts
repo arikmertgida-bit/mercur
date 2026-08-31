@@ -10,12 +10,15 @@ import {
 } from "@medusajs/framework/utils"
 
 import { VendorPostOrderEditsUpdateItemQuantityReqType } from "../../../../validators"
+import { validateSellerOrder } from "../../../../../orders/helpers"
 
 export const POST = async (
   req: AuthenticatedMedusaRequest<VendorPostOrderEditsUpdateItemQuantityReqType>,
   res: MedusaResponse<HttpTypes.AdminOrderEditPreviewResponse>
 ) => {
   const { id, item_id } = req.params
+
+  await validateSellerOrder(req.scope, req.seller_context!.seller_id, id)
 
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
   const {

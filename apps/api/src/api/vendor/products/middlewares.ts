@@ -7,15 +7,14 @@ import {
 import { MedusaError } from "@medusajs/framework/utils"
 import { SellerStatus } from "@mercurjs/types"
 import type {} from "@mercurjs/core/types/seller-context"
-import multer from "multer"
 
-const upload = multer({ storage: multer.memoryStorage() })
+import { csvUpload } from "../../../lib/file-validation"
 
 export const productImportExportMiddlewares: MiddlewareRoute[] = [
   {
     method: ["POST"],
     matcher: "/vendor/products/import",
-    middlewares: [upload.single("file")],
+    middlewares: [csvUpload.single("file")],
   },
 ]
 

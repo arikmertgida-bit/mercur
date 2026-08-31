@@ -10,6 +10,7 @@ import {
 } from "@medusajs/framework/utils"
 
 import { resolveAddItems } from "../../../orders/resolve-add-items"
+import { validateSellerOrder } from "../../../orders/helpers"
 import { VendorPostOrderEditsAddItemsReqType } from "../../validators"
 
 export const POST = async (
@@ -17,6 +18,8 @@ export const POST = async (
   res: MedusaResponse<HttpTypes.AdminOrderEditPreviewResponse>
 ) => {
   const { id } = req.params
+
+  await validateSellerOrder(req.scope, req.seller_context!.seller_id, id)
 
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
   const { data: orders } = await query.graph({

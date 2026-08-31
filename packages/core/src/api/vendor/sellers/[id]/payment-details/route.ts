@@ -6,12 +6,15 @@ import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
 import { HttpTypes } from "@mercurjs/types"
 
 import { VendorUpsertSellerPaymentDetailsType } from "../../validators"
+import { assertOwnSeller } from "../../helpers"
 import { updateSellerPaymentDetailsWorkflow } from "../../../../../workflows/seller"
 
 export const POST = async (
   req: AuthenticatedMedusaRequest<VendorUpsertSellerPaymentDetailsType>,
   res: MedusaResponse<HttpTypes.VendorSellerResponse>
 ) => {
+  assertOwnSeller(req)
+
   const { additional_data, ...data } = req.validatedBody
 
   await updateSellerPaymentDetailsWorkflow(req.scope).run({

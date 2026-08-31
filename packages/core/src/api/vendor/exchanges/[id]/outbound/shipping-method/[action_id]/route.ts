@@ -9,6 +9,7 @@ import {
 import { HttpTypes } from "@medusajs/framework/types"
 
 import { VendorPostExchangesShippingActionReqType } from "../../../../validators"
+import { validateSellerExchange } from "../../../../helpers"
 
 export const POST = async (
   req: AuthenticatedMedusaRequest<VendorPostExchangesShippingActionReqType>,
@@ -17,6 +18,8 @@ export const POST = async (
   }>
 ) => {
   const { id, action_id } = req.params
+
+  await validateSellerExchange(req.scope, req.seller_context!.seller_id, id)
 
   const { result } = await updateExchangeShippingMethodWorkflow(req.scope).run({
     input: {
@@ -44,6 +47,8 @@ export const DELETE = async (
   }>
 ) => {
   const { id, action_id } = req.params
+
+  await validateSellerExchange(req.scope, req.seller_context!.seller_id, id)
 
   const { result } = await removeExchangeShippingMethodWorkflow(req.scope).run({
     input: {

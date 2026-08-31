@@ -8,6 +8,7 @@ import {
 } from "@mercurjs/types"
 
 import { VendorUpsertSellerProfessionalDetailsType } from "../../validators"
+import { assertOwnSeller } from "../../helpers"
 import {
   updateSellerProfessionalDetailsWorkflow,
   deleteSellerProfessionalDetailsWorkflow,
@@ -17,6 +18,8 @@ export const POST = async (
   req: AuthenticatedMedusaRequest<VendorUpsertSellerProfessionalDetailsType>,
   res: MedusaResponse<HttpTypes.VendorSellerResponse>
 ) => {
+  assertOwnSeller(req)
+
   const { additional_data, ...data } = req.validatedBody
 
   await updateSellerProfessionalDetailsWorkflow(req.scope).run({
@@ -43,6 +46,8 @@ export const DELETE = async (
   req: AuthenticatedMedusaRequest,
   res: MedusaResponse<HttpTypes.VendorSellerResponse>
 ) => {
+  assertOwnSeller(req)
+
   await deleteSellerProfessionalDetailsWorkflow(req.scope).run({
     input: {
       seller_id: req.params.id,

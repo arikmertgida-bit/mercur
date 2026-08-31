@@ -10,6 +10,7 @@ import { HttpTypes } from "@medusajs/framework/types"
 import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
 
 import { VendorPostExchangesShippingActionReqType } from "../../../../validators"
+import { validateSellerExchange } from "../../../../helpers"
 
 export const POST = async (
   req: AuthenticatedMedusaRequest<VendorPostExchangesShippingActionReqType>,
@@ -18,6 +19,8 @@ export const POST = async (
   }>
 ) => {
   const { id, action_id } = req.params
+
+  await validateSellerExchange(req.scope, req.seller_context!.seller_id, id)
 
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
 
@@ -55,6 +58,8 @@ export const DELETE = async (
   }>
 ) => {
   const { id, action_id } = req.params
+
+  await validateSellerExchange(req.scope, req.seller_context!.seller_id, id)
 
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
 

@@ -7,6 +7,7 @@ import { MedusaError } from "@medusajs/framework/utils"
 import type {} from "@mercurjs/core/types/seller-context"
 import { importSellerProductsWorkflow } from "../../../../workflows/product-import-export/workflows/import-seller-products"
 import { fetchSellerByAuthActorId } from "../helpers"
+import { looksLikeTextCsv } from "../../../../lib/file-validation"
 
 type ImportProductsRequest = AuthenticatedMedusaRequest & {
   file?: Express.Multer.File
@@ -22,6 +23,13 @@ export const POST = async (
     throw new MedusaError(
       MedusaError.Types.INVALID_DATA,
       "No file uploaded. Please upload a CSV file."
+    )
+  }
+
+  if (!looksLikeTextCsv(file.buffer)) {
+    throw new MedusaError(
+      MedusaError.Types.INVALID_DATA,
+      "The uploaded file does not look like a valid CSV file."
     )
   }
 
