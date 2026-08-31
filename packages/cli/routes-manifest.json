@@ -478,6 +478,7 @@
   "/vendor/promotions/:id/buy-rules/batch": "typeof import(\"@mercurjs/core/api/vendor/promotions/[id]/buy-rules/batch/route\")",
   "/vendor/promotions/:id/rules/batch": "typeof import(\"@mercurjs/core/api/vendor/promotions/[id]/rules/batch/route\")",
   "/vendor/promotions/:id/target-rules/batch": "typeof import(\"@mercurjs/core/api/vendor/promotions/[id]/target-rules/batch/route\")",
+  "/vendor/promotions/generate-code": "typeof import(\"@mercurjs/core/api/vendor/promotions/generate-code/route\")",
   "/vendor/promotions/rule-attribute-options/:rule_type": "typeof import(\"@mercurjs/core/api/vendor/promotions/rule-attribute-options/[rule_type]/route\")",
   "/vendor/promotions/rule-value-options/:rule_type/:rule_attribute_id": "typeof import(\"@mercurjs/core/api/vendor/promotions/rule-value-options/[rule_type]/[rule_attribute_id]/route\")",
   "/vendor/refund-reasons": "typeof import(\"@mercurjs/core/api/vendor/refund-reasons/route\")",

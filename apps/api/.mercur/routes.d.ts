@@ -909,6 +909,7 @@ export type Routes = {
                     batch: typeof import("@mercurjs/core/api/vendor/promotions/[id]/target-rules/batch/route");
                 };
             };
+            generateCode: typeof import("@mercurjs/core/api/vendor/promotions/generate-code/route");
             ruleAttributeOptions: {
                 $ruleType: typeof import("@mercurjs/core/api/vendor/promotions/rule-attribute-options/[rule_type]/route");
             };

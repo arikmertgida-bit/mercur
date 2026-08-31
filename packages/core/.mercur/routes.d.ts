@@ -825,6 +825,7 @@ export type Routes = {
                     batch: typeof import("../src/api/vendor/promotions/[id]/target-rules/batch/route");
                 };
             };
+            generateCode: typeof import("../src/api/vendor/promotions/generate-code/route");
             ruleAttributeOptions: {
                 $ruleType: typeof import("../src/api/vendor/promotions/rule-attribute-options/[rule_type]/route");
             };
@@ -833,7 +834,6 @@ export type Routes = {
                     $ruleAttributeId: typeof import("../src/api/vendor/promotions/rule-value-options/[rule_type]/[rule_attribute_id]/route");
                 };
             };
-            generateCode: typeof import("../src/api/vendor/promotions/generate-code/route");
         };
         refundReasons: typeof import("../src/api/vendor/refund-reasons/route") & {
             $id: typeof import("../src/api/vendor/refund-reasons/[id]/route");
