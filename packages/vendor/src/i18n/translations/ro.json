@@ -4328,7 +4328,8 @@
     "login": {
       "authenticationFailed": "Autentificare eșuată",
       "cloud": "Autentificare cu Kayı.com"
-    }
+    },
+    "backToStore": "Înapoi la Kayı.com"
   },
   "sellerSuspension": {
     "description": "Magazinul tău a fost suspendat de administrație. Nu vei putea crea produse noi până la reactivare. Dacă ai întrebări, echipa noastră de asistență este aici să te ajute.",

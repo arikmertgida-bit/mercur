@@ -17923,10 +17923,14 @@
             "cloud"
           ],
           "additionalProperties": false
+        },
+        "backToStore": {
+          "type": "string"
         }
       },
       "required": [
-        "login"
+        "login",
+        "backToStore"
       ],
       "additionalProperties": false
     },

@@ -4328,7 +4328,8 @@
     "login": {
       "authenticationFailed": "인증에 실패했습니다",
       "cloud": "Kayı.com으로 로그인"
-    }
+    },
+    "backToStore": "Kayı.com으로 돌아가기"
   },
   "sellerSuspension": {
     "description": "귀하의 스토어가 운영진에 의해 정지되었습니다. 재활성화될 때까지 새 상품을 만들 수 없습니다. 문의 사항이 있으시면 지원팀이 도와드리겠습니다.",

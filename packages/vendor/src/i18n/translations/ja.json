@@ -4328,7 +4328,8 @@
     "login": {
       "authenticationFailed": "認証に失敗しました",
       "cloud": "Kayı.comでログイン"
-    }
+    },
+    "backToStore": "Kayı.comに戻る"
   },
   "sellerSuspension": {
     "description": "運営によりストアが一時停止されました。再開されるまで新しい商品を作成することはできません。ご不明な点がございましたら、サポートチームがお手伝いいたします。",

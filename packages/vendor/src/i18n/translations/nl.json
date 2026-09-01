@@ -4328,7 +4328,8 @@
     "login": {
       "authenticationFailed": "Authenticatie mislukt",
       "cloud": "Inloggen met Kayı.com"
-    }
+    },
+    "backToStore": "Terug naar Kayı.com"
   },
   "sellerSuspension": {
     "description": "Je winkel is opgeschort door het management. Je kunt geen nieuwe producten aanmaken totdat deze weer is geactiveerd. Heb je vragen, dan staat ons supportteam klaar om te helpen.",

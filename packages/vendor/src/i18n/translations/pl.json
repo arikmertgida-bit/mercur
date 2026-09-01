@@ -4422,7 +4422,8 @@
     "login": {
       "authenticationFailed": "Uwierzytelnianie nie powiodło się",
       "cloud": "Zaloguj się przez Kayı.com"
-    }
+    },
+    "backToStore": "Powrót do Kayı.com"
   },
   "sellerSuspension": {
     "description": "Twój sklep został zawieszony przez administrację. Nie będziesz mógł tworzyć nowych produktów, dopóki nie zostanie ponownie aktywowany. W razie pytań nasz zespół wsparcia chętnie pomoże.",

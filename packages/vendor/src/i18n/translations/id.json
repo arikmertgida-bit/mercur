@@ -4328,7 +4328,8 @@
     "login": {
       "authenticationFailed": "Autentikasi gagal",
       "cloud": "Masuk dengan Kayı.com"
-    }
+    },
+    "backToStore": "Kembali ke Kayı.com"
   },
   "sellerSuspension": {
     "description": "Toko Anda telah ditangguhkan oleh pihak manajemen. Anda tidak akan dapat membuat produk baru hingga diaktifkan kembali. Jika Anda memiliki pertanyaan, tim dukungan kami siap membantu.",

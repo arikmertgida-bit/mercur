@@ -4328,7 +4328,8 @@
     "login": {
       "authenticationFailed": "Autentifikacija nije uspjela",
       "cloud": "Prijavi se putem Kayı.com-a"
-    }
+    },
+    "backToStore": "Povratak na Kayı.com"
   },
   "sellerSuspension": {
     "description": "Vaša prodavnica je suspendovana od strane uprave. Nećete moći kreirati nove proizvode dok se ne ponovo aktivira. Ako imate pitanja, naš tim za podršku je tu da pomogne.",

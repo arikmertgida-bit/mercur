@@ -4328,7 +4328,8 @@
     "login": {
       "authenticationFailed": "Échec de l'authentification",
       "cloud": "Se connecter avec Kayı.com"
-    }
+    },
+    "backToStore": "Retour à Kayı.com"
   },
   "sellerSuspension": {
     "description": "Votre boutique a été suspendue par l'administration. Vous ne pourrez pas créer de nouveaux produits tant qu'elle n'aura pas été réactivée. Pour toute question, notre équipe d'assistance est là pour vous aider.",

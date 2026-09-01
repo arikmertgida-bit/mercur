@@ -4328,7 +4328,8 @@
     "login": {
       "authenticationFailed": "身份验证失败",
       "cloud": "使用 Kayı.com 登录"
-    }
+    },
+    "backToStore": "返回 Kayı.com"
   },
   "sellerSuspension": {
     "description": "您的店铺已被管理方暂停。在重新激活之前,您将无法创建新商品。如有疑问,我们的支持团队随时为您提供帮助。",

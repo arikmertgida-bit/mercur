@@ -4328,7 +4328,8 @@
     "login": {
       "authenticationFailed": "Ověření se nezdařilo",
       "cloud": "Přihlásit se přes Kayı.com"
-    }
+    },
+    "backToStore": "Zpět na Kayı.com"
   },
   "sellerSuspension": {
     "description": "Váš obchod byl pozastaven administrací. Dokud nebude znovu aktivován, nebudete moci vytvářet nové produkty. Máte-li dotazy, náš tým podpory je tu, aby vám pomohl.",

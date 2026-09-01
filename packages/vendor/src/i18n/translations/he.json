@@ -4328,7 +4328,8 @@
     "login": {
       "authenticationFailed": "האימות נכשל",
       "cloud": "התחבר עם Kayı.com"
-    }
+    },
+    "backToStore": "חזרה ל-Kayı.com"
   },
   "sellerSuspension": {
     "description": "החנות שלך הושעתה על ידי ההנהלה. לא תוכל ליצור מוצרים חדשים עד להפעלתה מחדש. אם יש לך שאלות, צוות התמיכה שלנו כאן כדי לעזור.",

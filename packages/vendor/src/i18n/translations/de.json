@@ -4328,7 +4328,8 @@
     "login": {
       "authenticationFailed": "Authentifizierung fehlgeschlagen",
       "cloud": "Mit Kayı.com anmelden"
-    }
+    },
+    "backToStore": "Zurück zu Kayı.com"
   },
   "sellerSuspension": {
     "description": "Ihr Shop wurde von der Verwaltung gesperrt. Sie können keine neuen Produkte erstellen, bis er wieder aktiviert wird. Bei Fragen steht Ihnen unser Support-Team gerne zur Verfügung.",

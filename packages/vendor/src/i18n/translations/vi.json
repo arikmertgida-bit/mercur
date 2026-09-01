@@ -4328,7 +4328,8 @@
     "login": {
       "authenticationFailed": "Xác thực thất bại",
       "cloud": "Đăng nhập bằng Kayı.com"
-    }
+    },
+    "backToStore": "Quay lại Kayı.com"
   },
   "sellerSuspension": {
     "description": "Cửa hàng của bạn đã bị tạm ngưng bởi ban quản trị. Bạn sẽ không thể tạo sản phẩm mới cho đến khi được kích hoạt lại. Nếu có thắc mắc, đội ngũ hỗ trợ của chúng tôi luôn sẵn sàng giúp đỡ.",

@@ -4328,7 +4328,8 @@
     "login": {
       "authenticationFailed": "Sikertelen hitelesítés",
       "cloud": "Bejelentkezés a Kayı.com-mal"
-    }
+    },
+    "backToStore": "Vissza a Kayı.com-hoz"
   },
   "sellerSuspension": {
     "description": "Áruházát a vezetés felfüggesztette. Amíg nem aktiválják újra, nem tud új termékeket létrehozni. Ha kérdése van, ügyfélszolgálati csapatunk készséggel segít.",

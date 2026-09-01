@@ -4328,7 +4328,8 @@
     "login": {
       "authenticationFailed": "Autentifikacija nepavyko",
       "cloud": "Prisijungti su Kayı.com"
-    }
+    },
+    "backToStore": "Atgal į Kayı.com"
   },
   "sellerSuspension": {
     "description": "Jūsų parduotuvė buvo laikinai sustabdyta administracijos. Negalėsite kurti naujų produktų, kol ji nebus vėl aktyvuota. Jei turite klausimų, mūsų palaikymo komanda pasiruošusi padėti.",

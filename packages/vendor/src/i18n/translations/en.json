@@ -4316,7 +4316,8 @@
     "login": {
       "authenticationFailed": "Authentication failed",
       "cloud": "Log in with Kayı.com"
-    }
+    },
+    "backToStore": "Back to Kayı.com"
   },
   "attributes": {
     "fields": {

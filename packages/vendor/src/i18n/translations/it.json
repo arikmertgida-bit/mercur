@@ -4328,7 +4328,8 @@
     "login": {
       "authenticationFailed": "Autenticazione non riuscita",
       "cloud": "Accedi con Kayı.com"
-    }
+    },
+    "backToStore": "Torna a Kayı.com"
   },
   "sellerSuspension": {
     "description": "Il tuo negozio è stato sospeso dall'amministrazione. Non potrai creare nuovi prodotti finché non verrà riattivato. Per qualsiasi domanda, il nostro team di supporto è qui per aiutarti.",
