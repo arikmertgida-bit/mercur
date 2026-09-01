@@ -1,3 +1,4 @@
+import i18next from "i18next"
 import type { Conversation, Message } from "./types"
 import { mapUnknownBackendError } from "../backend-error-mapper"
 import { getMessengerAuthToken } from "./auth-token"
@@ -13,6 +14,13 @@ function getAuthHeader(): Record<string, string> {
   return { Authorization: `Bearer ${token}` }
 }
 
+// Keys off the panel's active language on every call — mirrors
+// apps/vendor/src/lib/messenger/client.ts so messenger error responses
+// (see messenger/src/lib/error-i18n) come back translated for admins too.
+function getLanguageHeader(): Record<string, string> {
+  return { "Accept-Language": i18next.language }
+}
+
 interface RequestOptions {
   method?: string
   body?: string
@@ -24,6 +32,7 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
     headers: {
       "Content-Type": "application/json",
       ...getAuthHeader(),
+      ...getLanguageHeader(),
     },
     body: options.body,
     credentials: "include",
@@ -83,7 +92,7 @@ export async function uploadImage(
 
   const res = await fetch(`${BASE_URL}/api/upload`, {
     method: "POST",
-    headers: getAuthHeader(),
+    headers: { ...getAuthHeader(), ...getLanguageHeader() },
     body: formData,
     credentials: "include",
   })

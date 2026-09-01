@@ -37,10 +37,12 @@ function statusCodeFor(type: string): number {
 }
 
 /**
- * Replaces Medusa's default error handler only for `/admin/*` requests
- * whose `Accept-Language` resolves to a supported, non-English admin
- * panel language — everything else (store, vendor, and admin requests with
- * no/English language) is delegated untouched to `defaultErrorHandler`.
+ * Replaces Medusa's default error handler only for `/admin/*` and
+ * `/auth/user/*` requests (see middlewares.ts::scopedErrorHandler for why
+ * the latter is included) whose `Accept-Language` resolves to a supported,
+ * non-English admin panel language — everything else (store, vendor, and
+ * admin/user-auth requests with no/English language) is delegated untouched
+ * to `defaultErrorHandler`.
  */
 export const adminAwareErrorHandler: MedusaErrorHandlerFunction = (
   error,
@@ -48,7 +50,9 @@ export const adminAwareErrorHandler: MedusaErrorHandlerFunction = (
   res,
   next
 ) => {
-  if (!req.path.startsWith("/admin") || !(error instanceof Error)) {
+  const isAdminScoped =
+    req.path.startsWith("/admin") || req.path.startsWith("/auth/user")
+  if (!isAdminScoped || !(error instanceof Error)) {
     fallbackErrorHandler(error, req, res, next)
     return
   }

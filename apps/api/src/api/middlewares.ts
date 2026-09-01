@@ -48,20 +48,21 @@ const fallbackErrorHandler = defaultErrorHandler();
  * for its own "en" case; anything outside all three prefixes goes straight
  * to the default handler here.
  *
- * `/auth/customer/*` (storefront login/register/reset-password/update) is
- * routed to the store translator too — it's the same "customer" actor and
- * Accept-Language as `/store/*`, just served by Medusa's built-in auth
- * router instead of a route under `/store`. Without this, every customer
- * auth error bypassed translation entirely and was always English,
- * regardless of the shopper's language. `/auth/user/*` (admin) and
- * `/auth/seller/*` (vendor) are untouched here.
+ * `/auth/customer/*` (storefront login/register/reset-password/update),
+ * `/auth/user/*` (admin login), and `/auth/seller/*` (vendor login) are
+ * routed to the store/admin/vendor translators too — same actor and
+ * Accept-Language as `/store/*` / `/admin/*` / `/vendor/*`, just served by
+ * Medusa's built-in auth router instead of a route under those prefixes.
+ * Without this, every customer, admin, or vendor auth error bypassed
+ * translation entirely and was always English, regardless of the user's
+ * language.
  */
 const scopedErrorHandler: MedusaErrorHandlerFunction = (error, req, res, next) => {
-    if (req.path.startsWith("/vendor")) {
+    if (req.path.startsWith("/vendor") || req.path.startsWith("/auth/seller")) {
         vendorAwareErrorHandler(error, req, res, next);
         return;
     }
-    if (req.path.startsWith("/admin")) {
+    if (req.path.startsWith("/admin") || req.path.startsWith("/auth/user")) {
         adminAwareErrorHandler(error, req, res, next);
         return;
     }
