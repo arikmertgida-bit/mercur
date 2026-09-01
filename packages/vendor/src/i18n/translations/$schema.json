@@ -12817,6 +12817,9 @@
               "type": "string"
             }
           }
+        },
+        "backToStore": {
+          "type": "string"
         }
       }
     },

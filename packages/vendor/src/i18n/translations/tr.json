@@ -4335,6 +4335,7 @@
     "login": {
       "authenticationFailed": "Kimlik doğrulama başarısız oldu",
       "cloud": "Kayı.com ile Giriş Yap"
-    }
+    },
+    "backToStore": "Kayı.com'a geri dön"
   }
 }
