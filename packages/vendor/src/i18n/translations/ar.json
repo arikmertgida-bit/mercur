@@ -640,7 +640,7 @@
         "heading": "لا يوجد بدائل"
       },
       "filtered": {
-        "description": "هذا المنتج لديه {{count}} بديلات معروفة.",
+        "description": "لا توجد متغيرات تطابق معايير التصفية الحالية.",
         "heading": "بدائل معروفة"
       },
       "header": "البدائل",
@@ -1255,7 +1255,7 @@
         "heading": "لا يوجد مجموعات عملاء."
       },
       "filtered": {
-        "description": "هذا المنتج لديه {{count}} مجموعات عملاء معروفة.",
+        "description": "لا توجد مجموعات عملاء تطابق معايير التصفية الحالية.",
         "heading": "مجموعات عملاء معروفة"
       }
     },
@@ -1503,7 +1503,7 @@
       },
       "policyHint": "يتم قبول الإرجاعات خلال {{days}} يومًا من التسليم.",
       "outOfPolicy": "يتم قبول الإرجاعات خلال {{days}} يومًا من التسليم.",
-      "restockPreview": "استلام {{quantity}} × {{offerSku}} → +{{delta}} إلى {{inventoryItem}} في {{location}}",
+      "restockPreview": "استلام {{quantity}} × {{variantSku}} → +{{delta}} إلى {{inventoryItem}} في {{location}}",
       "noItemsSelected": "اختر عنصرًا واحدًا على الأقل للإرجاع.",
       "estDifference": "الفرق المقدر",
       "emptyState": {
@@ -2011,16 +2011,16 @@
           "minOrMaxRequired": "يجب أن يكون الحد الأدنى أو الحد الأعلى موجود.",
           "overlappingConditions": "لا يمكن أن يكون الحد الأدنى أكبر من الحد الأعلى."
         },
-        "header": "قواعد الأسعار المخصصة",
+        "header": "أسعار مشروطة لـ {{name}}",
         "rules": {
           "amount": "الحد",
           "gte": "أكبر من أو يساوي",
           "lte": "أقل من أو يساوي"
         },
         "summaries": {
-          "greaterThan": "أكبر من",
-          "lessThan": "أقل من",
-          "range": "في النطاق"
+          "greaterThan": "إذا كانت <0>{{attribute}}</0> ≥ <1>{{gte}}</1>",
+          "lessThan": "إذا كانت <0>{{attribute}}</0> ≤ <1>{{lte}}</1>",
+          "range": "إذا كانت <0>{{attribute}}</0> بين <1>{{gte}}</1> و <2>{{lte}}</2>"
         }
       },
       "create": {
@@ -2872,7 +2872,7 @@
     }
   },
   "users": {
-    "deleteUserSuccess": "تم حذف المستخدم بنجاح",
+    "deleteUserSuccess": "تم حذف المستخدم {{name}} بنجاح.",
     "list": {
       "empty": {
         "description": "لا يوجد مستخدمين في هذا المتجر.",
@@ -3429,15 +3429,15 @@
     }
   },
   "invite": {
-    "title": "مرحبًا بك في Kayı.com",
+    "title": "تمت دعوتك للانضمام إلى {{name}}!",
     "hint": "أنشئ حسابك أدناه",
     "backToLogin": "العودة إلى تسجيل الدخول",
     "createAccount": "إنشاء حساب",
-    "alreadyHaveAccount": "هل لديك حساب بالفعل؟ - <0>تسجيل الدخول</0>",
+    "alreadyHaveAccount": "هل لديك حساب بالفعل؟",
     "emailTooltip": "لا يمكن تغيير بريدك الإلكتروني. إذا كنت ترغب في استخدام بريد إلكتروني آخر، يجب إرسال دعوة جديدة.",
     "invalidInvite": "الدعوة غير صالحة أو انتهت صلاحيتها.",
-    "successTitle": "تم تسجيل حسابك بنجاح",
-    "successHint": "ابدأ باستخدام Kayı.com الآن.",
+    "successTitle": "مرحبًا بك في {{name}}!",
+    "successHint": "جارٍ إعداد حسابك...",
     "invalidTokenTitle": "رمز الدعوة غير صالح",
     "invalidTokenHint": "حاول طلب رابط دعوة جديد.",
     "passwordMismatch": "كلمات المرور غير متطابقة",

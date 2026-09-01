@@ -856,7 +856,7 @@
       "edit": {
         "header": "Konfigurace dopravy",
         "toasts": {
-          "success": "Profil dopravy pro {{title}} byl úspěšně aktualizován."
+          "success": "Konfigurace dopravy byla úspěšně aktualizována."
         }
       },
       "create": {
@@ -1529,7 +1529,7 @@
       },
       "policyHint": "Vrácení je přijímáno do {{days}} dnů od doručení.",
       "outOfPolicy": "Vrácení je přijímáno do {{days}} dnů od doručení.",
-      "restockPreview": "Příjem {{quantity}} × {{offerSku}} → +{{delta}} do {{inventoryItem}} na {{location}}",
+      "restockPreview": "Příjem {{quantity}} × {{variantSku}} → +{{delta}} do {{inventoryItem}} na {{location}}",
       "noItemsSelected": "Vyberte alespoň jednu položku k vrácení.",
       "emptyState": {
         "title": "Zatím žádné záznamy",
@@ -3429,15 +3429,15 @@
     }
   },
   "invite": {
-    "title": "Vítejte v Kayı.com",
+    "title": "Byli jste pozváni, abyste se připojili k {{name}}!",
     "hint": "Vytvořte si svůj účet níže",
     "backToLogin": "Zpět na přihlášení",
     "createAccount": "Vytvořit účet",
-    "alreadyHaveAccount": "Již máte účet? - <0>Přihlásit se</0>",
+    "alreadyHaveAccount": "Již máte účet?",
     "emailTooltip": "Váš e-mail nelze změnit. Pokud byste chtěli použít jiný e-mail, musí být odeslána nová pozvánka.",
     "invalidInvite": "Pozvánka je neplatná nebo vypršela.",
-    "successTitle": "Váš účet byl zaregistrován",
-    "successHint": "Začněte s Kayı.com Admin hned teď.",
+    "successTitle": "Vítejte v {{name}}!",
+    "successHint": "Nastavování vašeho účtu...",
     "invalidTokenTitle": "Váš pozvánkový token je neplatný",
     "invalidTokenHint": "Zkuste požádat o nový odkaz na pozvánku.",
     "passwordMismatch": "Hesla se neshodují",
@@ -3867,7 +3867,7 @@
         "successToast": "Varianta nabídky byla úspěšně aktualizována."
       },
       "shipping": {
-        "successToast": "Profil dopravy pro {{title}} byl úspěšně aktualizován."
+        "successToast": "Konfigurace dopravy byla úspěšně aktualizována."
       }
     },
     "pricing": {

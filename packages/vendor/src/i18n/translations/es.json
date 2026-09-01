@@ -878,7 +878,7 @@
       "edit": {
         "header": "Configuración de envío",
         "toasts": {
-          "success": "El perfil de envío para {{title}} se actualizó correctamente."
+          "success": "La configuración de envío se actualizó correctamente."
         }
       },
       "create": {
@@ -1556,7 +1556,7 @@
       },
       "policyHint": "Las devoluciones se aceptan dentro de los {{days}} días posteriores a la entrega.",
       "outOfPolicy": "Las devoluciones se aceptan dentro de los {{days}} días posteriores a la entrega.",
-      "restockPreview": "Recibiendo {{quantity}} × {{offerSku}} → +{{delta}} a {{inventoryItem}} en {{location}}",
+      "restockPreview": "Recibiendo {{quantity}} × {{variantSku}} → +{{delta}} a {{inventoryItem}} en {{location}}",
       "noItemsSelected": "Selecciona al menos un artículo para devolver.",
       "emptyState": {
         "title": "Aún no hay registros",
@@ -2053,15 +2053,15 @@
         "action": "Editar precios"
       },
       "conditionalPrices": {
-        "header": "Precios Condicionales",
+        "header": "Precios condicionales para {{name}}",
         "description": "Establece precios diferentes basados en condiciones específicas.",
         "attributes": {
           "cartItemTotal": "Total de artículos del carrito"
         },
         "summaries": {
-          "range": "Rango",
-          "greaterThan": "Mayor que",
-          "lessThan": "Menor que"
+          "range": "Si <0>{{attribute}}</0> está entre <1>{{gte}}</1> y <2>{{lte}}</2>",
+          "greaterThan": "Si <0>{{attribute}}</0> ≥ <1>{{gte}}</1>",
+          "lessThan": "Si <0>{{attribute}}</0> ≤ <1>{{lte}}</1>"
         },
         "actions": {
           "addPrice": "Agregar precio",
@@ -3490,15 +3490,15 @@
     }
   },
   "invite": {
-    "title": "Bienvenido a Kayı.com",
+    "title": "¡Estás invitado a unirte a {{name}}!",
     "hint": "Crea tu cuenta a continuación",
     "backToLogin": "Volver al login",
     "createAccount": "Crear cuenta",
-    "alreadyHaveAccount": "¿Ya tienes una cuenta? - <0>Iniciar sesión</0>",
+    "alreadyHaveAccount": "¿Ya tienes una cuenta?",
     "emailTooltip": "Tu correo electrónico no puede ser cambiado. Si deseas usar otro correo, debe enviarse una nueva invitación.",
     "invalidInvite": "La invitación es inválida o ha expirado.",
-    "successTitle": "Tu cuenta ha sido registrada",
-    "successHint": "Comienza a usar Kayı.com Admin de inmediato.",
+    "successTitle": "¡Bienvenido a {{name}}!",
+    "successHint": "Configurando tu cuenta...",
     "invalidTokenTitle": "Tu token de invitación es inválido",
     "invalidTokenHint": "Intenta solicitar un nuevo enlace de invitación.",
     "passwordMismatch": "Las contraseñas no coinciden",
@@ -3928,7 +3928,7 @@
         "successToast": "La variante de la oferta se actualizó correctamente."
       },
       "shipping": {
-        "successToast": "El perfil de envío para {{title}} se actualizó correctamente."
+        "successToast": "La configuración de envío se actualizó correctamente."
       }
     },
     "pricing": {

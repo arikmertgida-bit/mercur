@@ -875,7 +875,7 @@
       "edit": {
         "header": "Edytuj konfigurację wysyłki",
         "toasts": {
-          "success": "Pomyślnie zaktualizowano profil wysyłki dla {{title}}."
+          "success": "Konfiguracja wysyłki została pomyślnie zaktualizowana."
         }
       },
       "create": {
@@ -1310,7 +1310,7 @@
         "successToast": "Wariant oferty został pomyślnie zaktualizowany."
       },
       "shipping": {
-        "successToast": "Pomyślnie zaktualizowano profil wysyłki dla {{title}}."
+        "successToast": "Konfiguracja wysyłki została pomyślnie zaktualizowana."
       }
     }
   },
@@ -1731,7 +1731,7 @@
       },
       "policyHint": "Zwroty są przyjmowane w ciągu {{days}} dni od dostawy.",
       "outOfPolicy": "Zwroty są przyjmowane w ciągu {{days}} dni od dostawy.",
-      "restockPreview": "Odbiór {{quantity}} × {{offerSku}} → +{{delta}} do {{inventoryItem}} w lokalizacji {{location}}",
+      "restockPreview": "Odbiór {{quantity}} × {{variantSku}} → +{{delta}} do {{inventoryItem}} w lokalizacji {{location}}",
       "noItemsSelected": "Wybierz co najmniej jedną pozycję do zwrotu.",
       "emptyState": {
         "title": "Brak rekordów",
@@ -3908,15 +3908,15 @@
     }
   },
   "invite": {
-    "title": "Witamy w Kayı.com",
+    "title": "Zostałeś zaproszony do {{name}}!",
     "hint": "Utwórz swoje konto poniżej",
     "backToLogin": "Powrót do logowania",
     "createAccount": "Utwórz konto",
-    "alreadyHaveAccount": "Masz już konto? - <0>Zaloguj się</0>",
+    "alreadyHaveAccount": "Masz już konto?",
     "emailTooltip": "Nie można zmienić Twojego adresu e-mail. Jeśli chcesz skorzystać z innego adresu e-mail, należy wysłać nowe zaproszenie.",
     "invalidInvite": "Zaproszenie jest nieprawidłowe lub wygasło.",
-    "successTitle": "Twoje konto zostało zarejestrowane",
-    "successHint": "Zacznij od razu z Kayı.com Admin.",
+    "successTitle": "Witamy w {{name}}!",
+    "successHint": "Konfigurowanie Twojego konta...",
     "invalidTokenTitle": "Twój token zaproszenia jest nieprawidłowy",
     "invalidTokenHint": "Spróbuj poprosić o nowy link z zaproszeniem.",
     "passwordMismatch": "Hasła nie pasują",

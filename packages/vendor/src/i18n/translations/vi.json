@@ -856,7 +856,7 @@
       "edit": {
         "header": "Cấu hình vận chuyển",
         "toasts": {
-          "success": "Đã cập nhật thành công hồ sơ vận chuyển cho {{title}}."
+          "success": "Cấu hình vận chuyển đã được cập nhật thành công."
         }
       },
       "create": {
@@ -1529,7 +1529,7 @@
       },
       "policyHint": "Chấp nhận trả hàng trong vòng {{days}} ngày kể từ khi giao hàng.",
       "outOfPolicy": "Chấp nhận trả hàng trong vòng {{days}} ngày kể từ khi giao hàng.",
-      "restockPreview": "Nhận {{quantity}} × {{offerSku}} → +{{delta}} vào {{inventoryItem}} tại {{location}}",
+      "restockPreview": "Nhận {{quantity}} × {{variantSku}} → +{{delta}} vào {{inventoryItem}} tại {{location}}",
       "noItemsSelected": "Chọn ít nhất một mặt hàng để trả.",
       "emptyState": {
         "title": "Chưa có bản ghi nào",
@@ -3429,15 +3429,15 @@
     }
   },
   "invite": {
-    "title": "Chào mừng đến với Kayı.com",
+    "title": "Bạn được mời tham gia {{name}}!",
     "hint": "Tạo tài khoản của bạn dưới đây",
     "backToLogin": "Quay lại đăng nhập",
     "createAccount": "Tạo tài khoản",
-    "alreadyHaveAccount": "Đã có tài khoản? - <0>Đăng nhập</0>",
+    "alreadyHaveAccount": "Đã có tài khoản?",
     "emailTooltip": "Email của bạn không thể thay đổi. Nếu muốn dùng email khác, cần gửi một lời mời mới.",
     "invalidInvite": "Lời mời không hợp lệ hoặc đã hết hạn.",
-    "successTitle": "Tài khoản của bạn đã được đăng ký",
-    "successHint": "Bắt đầu ngay với Kayı.com Admin.",
+    "successTitle": "Chào mừng đến với {{name}}!",
+    "successHint": "Đang thiết lập tài khoản của bạn...",
     "invalidTokenTitle": "Mã mời của bạn không hợp lệ",
     "invalidTokenHint": "Hãy thử yêu cầu một liên kết mời mới.",
     "passwordMismatch": "Mật khẩu không khớp",
@@ -3867,7 +3867,7 @@
         "successToast": "Đã cập nhật biến thể ưu đãi thành công."
       },
       "shipping": {
-        "successToast": "Đã cập nhật thành công hồ sơ vận chuyển cho {{title}}."
+        "successToast": "Cấu hình vận chuyển đã được cập nhật thành công."
       }
     },
     "pricing": {

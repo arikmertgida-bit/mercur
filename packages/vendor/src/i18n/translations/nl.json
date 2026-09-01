@@ -856,7 +856,7 @@
       "edit": {
         "header": "Verzendconfiguratie",
         "toasts": {
-          "success": "Het verzendprofiel voor {{title}} is succesvol bijgewerkt."
+          "success": "De verzendconfiguratie is succesvol bijgewerkt."
         }
       },
       "create": {
@@ -1504,7 +1504,7 @@
       },
       "policyHint": "Retouren worden geaccepteerd binnen {{days}} dagen na levering.",
       "outOfPolicy": "Retouren worden geaccepteerd binnen {{days}} dagen na levering.",
-      "restockPreview": "Ontvangst van {{quantity}} × {{offerSku}} → +{{delta}} naar {{inventoryItem}} bij {{location}}",
+      "restockPreview": "Ontvangst van {{quantity}} × {{variantSku}} → +{{delta}} naar {{inventoryItem}} bij {{location}}",
       "noItemsSelected": "Selecteer ten minste één artikel om te retourneren.",
       "emptyState": {
         "title": "Nog geen records",
@@ -3429,15 +3429,15 @@
     }
   },
   "invite": {
-    "title": "Welkom bij Kayı.com",
+    "title": "Je bent uitgenodigd om lid te worden van {{name}}!",
     "hint": "Maak hieronder uw account aan",
     "backToLogin": "Terug naar inloggen",
     "createAccount": "Account aanmaken",
-    "alreadyHaveAccount": "Heeft u al een account? - <0>Log in</0>",
+    "alreadyHaveAccount": "Heeft u al een account?",
     "emailTooltip": "Uw e-mail kan niet worden gewijzigd. Als u een andere e-mail wilt gebruiken, moet een nieuwe uitnodiging worden verzonden.",
     "invalidInvite": "De uitnodiging is ongeldig of verlopen.",
-    "successTitle": "Uw account is geregistreerd",
-    "successHint": "Begin meteen met Kayı.com Admin.",
+    "successTitle": "Welkom bij {{name}}!",
+    "successHint": "Je account wordt ingesteld...",
     "invalidTokenTitle": "Uw uitnodigingstoken is ongeldig",
     "invalidTokenHint": "Probeer een nieuwe uitnodigingslink aan te vragen.",
     "passwordMismatch": "Wachtwoorden komen niet overeen",
@@ -3867,7 +3867,7 @@
         "successToast": "Aanbiedingsvariant is succesvol bijgewerkt."
       },
       "shipping": {
-        "successToast": "Het verzendprofiel voor {{title}} is succesvol bijgewerkt."
+        "successToast": "De verzendconfiguratie is succesvol bijgewerkt."
       }
     },
     "pricing": {

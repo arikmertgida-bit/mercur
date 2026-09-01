@@ -694,7 +694,7 @@
     "noSalesChannels": "Não disponível em nenhum canal de venda",
     "variantCount_one": "{{count}} variante",
     "variantCount_other": "{{count}} variantes",
-    "deleteVariantWarning": "Tens a certeza que queres eliminar esta variante?",
+    "deleteVariantWarning": "Estás prestes a eliminar a variante {{title}}. Esta ação não pode ser anulada.",
     "productStatus": {
       "draft": "Rascunho",
       "published": "Publicado",
@@ -880,7 +880,7 @@
       "edit": {
         "header": "Configuração de envio",
         "toasts": {
-          "success": "Perfil de envio de {{title}} atualizado com sucesso."
+          "success": "A configuração de envio foi atualizada com sucesso."
         }
       },
       "create": {
@@ -1529,7 +1529,7 @@
       },
       "policyHint": "As devoluções são aceites até {{days}} dias após a entrega.",
       "outOfPolicy": "As devoluções são aceites até {{days}} dias após a entrega.",
-      "restockPreview": "A receber {{quantity}} × {{offerSku}} → +{{delta}} para {{inventoryItem}} em {{location}}",
+      "restockPreview": "A receber {{quantity}} × {{variantSku}} → +{{delta}} para {{inventoryItem}} em {{location}}",
       "noItemsSelected": "Selecione pelo menos um item para devolver.",
       "emptyState": {
         "title": "Ainda não há registos",
@@ -3464,15 +3464,15 @@
     }
   },
   "invite": {
-    "title": "Bem-vindo ao Kayı.com",
+    "title": "Foi convidado para se juntar a {{name}}!",
     "hint": "Cria a tua conta abaixo",
     "backToLogin": "Voltar ao login",
     "createAccount": "Criar conta",
-    "alreadyHaveAccount": "Já tens conta? - <0>Inicia sessão</0>",
+    "alreadyHaveAccount": "Já tens conta?",
     "emailTooltip": "O teu email não pode ser alterado. Se quiseres usar outro email, tem de ser enviado um novo convite.",
     "invalidInvite": "O convite é inválido ou expirou.",
-    "successTitle": "A tua conta foi registada",
-    "successHint": "Começa já a usar o Kayı.com Admin.",
+    "successTitle": "Bem-vindo à {{name}}!",
+    "successHint": "A configurar a sua conta...",
     "invalidTokenTitle": "O teu token de convite é inválido",
     "invalidTokenHint": "Tenta pedir um novo link de convite.",
     "passwordMismatch": "As palavras-passe não coincidem",
@@ -3958,7 +3958,7 @@
         "successToast": "A variante da oferta foi atualizada com sucesso."
       },
       "shipping": {
-        "successToast": "Perfil de envio de {{title}} atualizado com sucesso."
+        "successToast": "A configuração de envio foi atualizada com sucesso."
       }
     },
     "pricing": {

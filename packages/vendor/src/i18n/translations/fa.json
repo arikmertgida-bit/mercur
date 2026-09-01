@@ -1503,7 +1503,7 @@
       },
       "policyHint": "بازگشت‌ها تا {{days}} روز پس از تحویل پذیرفته می‌شوند.",
       "outOfPolicy": "بازگشت‌ها تا {{days}} روز پس از تحویل پذیرفته می‌شوند.",
-      "restockPreview": "دریافت {{quantity}} × {{offerSku}} ← +{{delta}} به {{inventoryItem}} در {{location}}",
+      "restockPreview": "دریافت {{quantity}} × {{variantSku}} ← +{{delta}} به {{inventoryItem}} در {{location}}",
       "noItemsSelected": "برای بازگشت، حداقل یک مورد انتخاب کنید.",
       "estDifference": "تفاوت تخمینی",
       "emptyState": {
@@ -3429,15 +3429,15 @@
     }
   },
   "invite": {
-    "title": "به Kayı.com خوش آمدید",
+    "title": "شما دعوت شده‌اید تا به {{name}} بپیوندید!",
     "hint": "در زیر حساب کاربری خود را ایجاد کنید",
     "backToLogin": "بازگشت به ورود",
     "createAccount": "ایجاد حساب کاربری",
-    "alreadyHaveAccount": "قبلاً حساب کاربری دارید؟ - <0>وارد شوید</0>",
+    "alreadyHaveAccount": "قبلاً حساب کاربری دارید؟",
     "emailTooltip": "ایمیل شما قابل تغییر نیست. اگر می‌خواهید از ایمیل دیگری استفاده کنید، باید دعوت‌نامه جدیدی ارسال شود.",
     "invalidInvite": "دعوت‌نامه نامعتبر است یا منقضی شده است.",
-    "successTitle": "حساب کاربری شما ثبت شد",
-    "successHint": "همین حالا کار با Kayı.com ادمین را شروع کنید.",
+    "successTitle": "به {{name}} خوش آمدید!",
+    "successHint": "در حال راه‌اندازی حساب شما...",
     "invalidTokenTitle": "توکن دعوت شما نامعتبر است",
     "invalidTokenHint": "سعی کنید لینک دعوت جدیدی درخواست دهید.",
     "passwordMismatch": "رمزهای عبور مطابقت ندارند",

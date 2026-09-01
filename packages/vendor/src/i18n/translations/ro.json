@@ -1503,7 +1503,7 @@
       },
       "policyHint": "Returnările sunt acceptate în termen de {{days}} zile de la livrare.",
       "outOfPolicy": "Returnările sunt acceptate în termen de {{days}} zile de la livrare.",
-      "restockPreview": "Se primesc {{quantity}} × {{offerSku}} → +{{delta}} la {{inventoryItem}} în {{location}}",
+      "restockPreview": "Se primesc {{quantity}} × {{variantSku}} → +{{delta}} la {{inventoryItem}} în {{location}}",
       "noItemsSelected": "Selectați cel puțin un articol pentru returnare.",
       "estDifference": "Diferenta estimata",
       "emptyState": {
@@ -3429,15 +3429,15 @@
     }
   },
   "invite": {
-    "title": "Bun venit la Kayı.com",
+    "title": "Ai fost invitat să te alături {{name}}!",
     "hint": "Creează-ți contul mai jos",
     "backToLogin": "Înapoi la autentificare",
     "createAccount": "Creează cont",
-    "alreadyHaveAccount": "Aveți deja un cont?  <0>Log in</0>",
+    "alreadyHaveAccount": "Aveți deja un cont?",
     "emailTooltip": "E-mailul dvs. nu poate fi schimbat. ",
     "invalidInvite": "Invitația este nevalidă sau a expirat.",
-    "successTitle": "Contul dvs. a fost înregistrat",
-    "successHint": "Începeți imediat cu Kayı.com Admin.",
+    "successTitle": "Bine ai venit la {{name}}!",
+    "successHint": "Configurăm contul tău...",
     "invalidTokenTitle": "Indicatorul dvs. de invitație este nevalid",
     "invalidTokenHint": "Încercați să solicitați un nou link de invitație.",
     "passwordMismatch": "Parolele nu se potrivesc",

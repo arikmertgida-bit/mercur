@@ -856,7 +856,7 @@
       "edit": {
         "header": "Konfiguracija dostave",
         "toasts": {
-          "success": "Profil dostave za {{title}} je uspješno ažuriran."
+          "success": "Konfiguracija dostave je uspješno ažurirana."
         }
       },
       "create": {
@@ -1504,7 +1504,7 @@
       },
       "policyHint": "Povrati se prihvataju u roku od {{days}} dana od dostave.",
       "outOfPolicy": "Povrati se prihvataju u roku od {{days}} dana od dostave.",
-      "restockPreview": "Prijem {{quantity}} × {{offerSku}} → +{{delta}} za {{inventoryItem}} na lokaciji {{location}}",
+      "restockPreview": "Prijem {{quantity}} × {{variantSku}} → +{{delta}} za {{inventoryItem}} na lokaciji {{location}}",
       "noItemsSelected": "Odaberite najmanje jedan artikal za povrat.",
       "emptyState": {
         "title": "Još nema zapisa",
@@ -3429,15 +3429,15 @@
     }
   },
   "invite": {
-    "title": "Dobrodošli u Kayı.com",
+    "title": "Pozvani ste da se pridružite {{name}}!",
     "hint": "Kreirajte svoj račun ispod",
     "backToLogin": "Povratak na prijavu",
     "createAccount": "Kreiraj račun",
-    "alreadyHaveAccount": "Već imate račun? - <0>Prijavite se</0>",
+    "alreadyHaveAccount": "Već imate račun?",
     "emailTooltip": "Vaš email se ne može mijenjati. Ako želite koristiti drugi email, mora se poslati nova pozivnica.",
     "invalidInvite": "Pozivnica je nevažeća ili je istekao rok.",
-    "successTitle": "Vaš račun je registriran",
-    "successHint": "Počnite odmah s Kayı.com Admin.",
+    "successTitle": "Dobrodošli u {{name}}!",
+    "successHint": "Postavljanje vašeg računa...",
     "invalidTokenTitle": "Vaš pozivni token je nevažeći",
     "invalidTokenHint": "Pokušajte zatražiti novi pozivni link.",
     "passwordMismatch": "Lozinke se ne podudaraju",
@@ -3867,7 +3867,7 @@
         "successToast": "Varijanta ponude je uspješno ažurirana."
       },
       "shipping": {
-        "successToast": "Profil dostave za {{title}} je uspješno ažuriran."
+        "successToast": "Konfiguracija dostave je uspješno ažurirana."
       }
     },
     "pricing": {

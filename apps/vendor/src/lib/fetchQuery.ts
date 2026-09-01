@@ -1,3 +1,4 @@
+import i18next from "i18next"
 import { z } from "zod"
 import { getCatchMessage } from "./errors"
 import { logger } from "./logger"
@@ -44,6 +45,7 @@ export const fetchQuery = async <T>(
   }
   const reqHeaders: Record<string, string> = {
     "Content-Type": "application/json",
+    "Accept-Language": i18next.language,
     ...headers,
   }
 

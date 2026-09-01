@@ -1503,7 +1503,7 @@
       },
       "policyHint": "Возвраты принимаются в течение {{days}} дней с момента доставки.",
       "outOfPolicy": "Возвраты принимаются в течение {{days}} дней с момента доставки.",
-      "restockPreview": "Получение {{quantity}} × {{offerSku}} → +{{delta}} к {{inventoryItem}} на складе {{location}}",
+      "restockPreview": "Получение {{quantity}} × {{variantSku}} → +{{delta}} к {{inventoryItem}} на складе {{location}}",
       "noItemsSelected": "Выберите хотя бы одну позицию для возврата.",
       "estDifference": "Расчетная разница",
       "emptyState": {
@@ -1812,7 +1812,7 @@
         "transfer": {
           "requested": "Передача заказа #{{transferId}} запрошена",
           "confirmed": "Передача заказа #{{transferId}} подтверждена",
-          "declined": "Передача отклонена"
+          "declined": "Передача заказа №{{transferId}} отклонена"
         },
         "update_order": {
           "shipping_address": "Адрес доставки обновлен",
@@ -2911,7 +2911,7 @@
         "description": "Нет пользователей, соответствующих текущим критериям фильтра."
       }
     },
-    "deleteUserSuccess": "Пользователь успешно удален",
+    "deleteUserSuccess": "Пользователь {{name}} успешно удалён",
     "selectRole": "Выберите роль",
     "inviteForm": {
       "validation": {
@@ -3429,15 +3429,15 @@
     }
   },
   "invite": {
-    "title": "Добро пожаловать в Kayı.com",
+    "title": "Вас пригласили присоединиться к {{name}}!",
     "hint": "Создайте свой аккаунт ниже",
     "backToLogin": "Вернуться к входу",
     "createAccount": "Создать аккаунт",
-    "alreadyHaveAccount": "Уже есть аккаунт? - <0>Войти</0>",
+    "alreadyHaveAccount": "Уже есть аккаунт?",
     "emailTooltip": "Ваш email нельзя изменить. Если вы хотите использовать другой email, необходимо запросить новое приглашение.",
     "invalidInvite": "Приглашение недействительно или истекло.",
-    "successTitle": "Ваш аккаунт зарегистрирован",
-    "successHint": "Начните работу с Kayı.com Admin прямо сейчас.",
+    "successTitle": "Добро пожаловать в {{name}}!",
+    "successHint": "Настройка вашей учётной записи...",
     "invalidTokenTitle": "Ваш токен приглашения недействителен",
     "invalidTokenHint": "Попробуйте запросить новую ссылку приглашения.",
     "passwordMismatch": "Пароли не совпадают",

@@ -1503,7 +1503,7 @@
       },
       "policyHint": "Хүргэлтийн дараах {{days}} хоногийн дотор буцаалт хийх боломжтой.",
       "outOfPolicy": "Хүргэлтийн дараах {{days}} хоногийн дотор буцаалт хийх боломжтой.",
-      "restockPreview": "{{quantity}} × {{offerSku}} хүлээн авч байна → {{location}}-д {{inventoryItem}}-д +{{delta}}",
+      "restockPreview": "{{quantity}} × {{variantSku}} хүлээн авч байна → {{location}}-д {{inventoryItem}}-д +{{delta}}",
       "noItemsSelected": "Буцаах дор хаяж нэг бараа сонгоно уу.",
       "estDifference": "Тооцоолсон зөрүү",
       "emptyState": {
@@ -3429,15 +3429,15 @@
     }
   },
   "invite": {
-    "title": "Kayı.com-д тавтай морилно уу",
+    "title": "Та {{name}}-д нэгдэхийг урьж байна!",
     "hint": "Доор бүртгэл үүсгэ.",
     "backToLogin": "Нэвтрэх хуудас руу буцах",
     "createAccount": "Бүртгэл үүсгэх",
-    "alreadyHaveAccount": "Бүртгэлтэй юу? - <0>Нэвтрэх</0>",
+    "alreadyHaveAccount": "Бүртгэлтэй юу?",
     "emailTooltip": "Таны имэйл өөрчлөгдөхгүй. Өөр имэйл ашиглахыг хүсвэл шинэ урилга илгээх шаардлагатай.",
     "invalidInvite": "Урилга хүчин төгөлдөр бус эсвэл дууссан байна.",
-    "successTitle": "Таны бүртгэл бүртгэгдсэн",
-    "successHint": "Kayı.com Админтай шууд эхлээрэй.",
+    "successTitle": "{{name}}-д тавтай морил!",
+    "successHint": "Таны бүртгэлийг тохируулж байна...",
     "invalidTokenTitle": "Таны урилгын токен хүчин төгөлдөр бус",
     "invalidTokenHint": "Шинэ урилгын холбоос хүсэхийг оролдоно уу.",
     "passwordMismatch": "Нууц үг тохирохгүй байна",

@@ -1479,7 +1479,7 @@
       },
       "policyHint": "Rücksendungen werden innerhalb von {{days}} Tagen nach Lieferung akzeptiert.",
       "outOfPolicy": "Rücksendungen werden innerhalb von {{days}} Tagen nach Lieferung akzeptiert.",
-      "restockPreview": "Eingang von {{quantity}} × {{offerSku}} → +{{delta}} zu {{inventoryItem}} bei {{location}}",
+      "restockPreview": "Eingang von {{quantity}} × {{variantSku}} → +{{delta}} zu {{inventoryItem}} bei {{location}}",
       "noItemsSelected": "Wählen Sie mindestens einen Artikel für die Rücksendung aus.",
       "estDifference": "Geschätzter Unterschied",
       "emptyState": {
@@ -2882,7 +2882,7 @@
     "resendInvite": "Einladung erneut senden",
     "copyInviteLink": "Einladungslink kopieren",
     "expiredOnDate": "Abgelaufen am {{date}}",
-    "validFromUntil": "Gültig von <0>{{von}}</0> - <1>{{bis}}</1>",
+    "validFromUntil": "Gültig von <0>{{from}}</0> - <1>{{until}}</1>",
     "acceptedOnDate": "Akzeptiert am {{date}}",
     "inviteStatus": {
       "accepted": "Akzeptiert",
@@ -3429,15 +3429,15 @@
     }
   },
   "invite": {
-    "title": "Willkommen bei Kayı.com",
+    "title": "Sie wurden eingeladen, {{name}} beizutreten!",
     "hint": "Erstellen Sie unten Ihr Konto",
     "backToLogin": "Zurück zum Login",
     "createAccount": "Benutzerkonto erstellen",
-    "alreadyHaveAccount": "Sie haben bereits ein Konto? - <0>Anmelden</0>",
+    "alreadyHaveAccount": "Sie haben bereits ein Konto?",
     "emailTooltip": "Ihre E-Mail-Adresse kann nicht geändert werden. Wenn Sie eine andere E-Mail-Adresse verwenden möchten, muss eine neue Einladung gesendet werden.",
     "invalidInvite": "Die Einladung ist ungültig oder abgelaufen.",
-    "successTitle": "Ihr Konto wurde registriert",
-    "successHint": "Beginnen Sie sofort mit Kayı.com Admin.",
+    "successTitle": "Willkommen bei {{name}}!",
+    "successHint": "Ihr Konto wird eingerichtet...",
     "invalidTokenTitle": "Ihr Einladungstoken ist ungültig",
     "invalidTokenHint": "Versuchen Sie, einen neuen Einladungslink anzufordern.",
     "passwordMismatch": "Passwörter stimmen nicht überein",

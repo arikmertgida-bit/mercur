@@ -880,7 +880,7 @@
       "edit": {
         "header": "運送配置",
         "toasts": {
-          "success": "已成功更新 {{title}} 的運送設定檔。"
+          "success": "運送設定已成功更新。"
         }
       },
       "create": {
@@ -1541,7 +1541,7 @@
       },
       "policyHint": "送達後 {{days}} 天內可申請退貨。",
       "outOfPolicy": "送達後 {{days}} 天內可申請退貨。",
-      "restockPreview": "收貨 {{quantity}} × {{offerSku}} → 於 {{location}} 為 {{inventoryItem}} 增加 +{{delta}}",
+      "restockPreview": "收貨 {{quantity}} × {{variantSku}} → 於 {{location}} 為 {{inventoryItem}} 增加 +{{delta}}",
       "noItemsSelected": "請至少選擇一項要退貨的商品。",
       "emptyState": {
         "title": "尚無記錄",
@@ -3464,15 +3464,15 @@
     }
   },
   "invite": {
-    "title": "歡迎使用 Kayı.com",
+    "title": "您已受邀加入 {{name}}！",
     "hint": "在下方建立您的帳戶",
     "backToLogin": "返回登入",
     "createAccount": "建立帳戶",
-    "alreadyHaveAccount": "已有帳戶？ - <0>登入</0>",
+    "alreadyHaveAccount": "已有帳戶？",
     "emailTooltip": "您的電子郵件無法變更。如果您想使用其他電子郵件，必須發送新的邀請。",
     "invalidInvite": "邀請無效或已過期。",
-    "successTitle": "您的帳戶已註冊",
-    "successHint": "立即開始使用 Kayı.com 管理後臺。",
+    "successTitle": "歡迎加入 {{name}}！",
+    "successHint": "正在設定您的帳戶...",
     "invalidTokenTitle": "您的邀請令牌無效",
     "invalidTokenHint": "請嘗試請求新的邀請連結。",
     "passwordMismatch": "密碼不符合",
@@ -3958,7 +3958,7 @@
         "successToast": "報價款式已成功更新。"
       },
       "shipping": {
-        "successToast": "已成功更新 {{title}} 的運送設定檔。"
+        "successToast": "運送設定已成功更新。"
       }
     },
     "pricing": {

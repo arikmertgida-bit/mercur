@@ -1470,11 +1470,11 @@
       "placeholders": {
         "noReturnShippingOptions": {
           "title": "Не се пронајдени опции за повратна испорака",
-          "hint": "Не беа создадени опции за повратна испорака за локацијата.  <LinkComponent>Локација и испорака</LinkComponent>."
+          "hint": "Не беа создадени опции за повратна испорака за локацијата. Можете да создадете една во <LinkComponent>Локација и испорака</LinkComponent>."
         },
         "outboundShippingOptions": {
           "title": "Не се пронајдени опции за излезна испорака",
-          "hint": "Не беа создадени опции за излезна испорака за локацијата.  <LinkComponent>Локација и испорака</LinkComponent>."
+          "hint": "Не беа создадени опции за излезна испорака за локацијата. Можете да создадете една во <LinkComponent>Локација и испорака</LinkComponent>."
         }
       },
       "receive": {
@@ -1503,7 +1503,7 @@
       },
       "policyHint": "Враќањата се прифаќаат во рок од {{days}} дена по доставата.",
       "outOfPolicy": "Враќањата се прифаќаат во рок од {{days}} дена по доставата.",
-      "restockPreview": "Примање {{quantity}} × {{offerSku}} → +{{delta}} на {{inventoryItem}} во {{location}}",
+      "restockPreview": "Примање {{quantity}} × {{variantSku}} → +{{delta}} на {{inventoryItem}} во {{location}}",
       "noItemsSelected": "Изберете барем еден артикл за враќање.",
       "estDifference": "Проценета разлика",
       "emptyState": {
@@ -3429,15 +3429,15 @@
     }
   },
   "invite": {
-    "title": "Добредојдовте во Kayı.com",
+    "title": "Поканети сте да се придружите на {{name}}!",
     "hint": "Направете ја вашата сметка подолу",
     "backToLogin": "Назад на најавување",
     "createAccount": "Креирај сметка",
-    "alreadyHaveAccount": "Веќе имате сметка?  <0>Најавете се</0>",
+    "alreadyHaveAccount": "Веќе имате сметка?",
     "emailTooltip": "Вашата е-пошта не може да се промени. ",
     "invalidInvite": "Поканата е неважечка или е истечена.",
-    "successTitle": "Вашата сметка е регистрирана",
-    "successHint": "Започнете со Kayı.com Админ веднаш.",
+    "successTitle": "Добредојдовте во {{name}}!",
+    "successHint": "Се поставува вашата сметка...",
     "invalidTokenTitle": "Вашиот токен за покана е неважечки",
     "invalidTokenHint": "Обидете се да побарате врска за нова покана.",
     "passwordMismatch": "Лозинките не се совпаѓаат",

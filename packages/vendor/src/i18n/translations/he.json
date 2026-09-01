@@ -856,7 +856,7 @@
       "edit": {
         "header": "תצורת שילוח",
         "toasts": {
-          "success": "עודכן בהצלחה פרופיל השילוח עבור {{title}}."
+          "success": "תצורת המשלוח עודכנה בהצלחה."
         }
       },
       "create": {
@@ -1471,11 +1471,11 @@
       "placeholders": {
         "noReturnShippingOptions": {
           "title": "לא נמצאו אפשרויות משלוח להחזרה",
-          "hint": "לא נוצרו אפשרויות משלוח להחזרה למיקום. ניתן ליצור אחת ב< LinkComponent >מיקום ומשלוח< /LinkComponent >."
+          "hint": "לא נוצרו אפשרויות משלוח להחזרה למיקום. ניתן ליצור אחת ב<LinkComponent>מיקום ומשלוח</LinkComponent>."
         },
         "outboundShippingOptions": {
           "title": "לא נמצאו אפשרויות משלוח יוצאות",
-          "hint": "לא נוצרו אפשרויות משלוח יוצאות למיקום. ניתן ליצור אחת ב< LinkComponent >מיקום ומשלוח< /LinkComponent >."
+          "hint": "לא נוצרו אפשרויות משלוח יוצאות למיקום. ניתן ליצור אחת ב<LinkComponent>מיקום ומשלוח</LinkComponent>."
         }
       },
       "receive": {
@@ -1504,7 +1504,7 @@
       },
       "policyHint": "החזרות מתקבלות בתוך {{days}} ימים מהמסירה.",
       "outOfPolicy": "החזרות מתקבלות בתוך {{days}} ימים מהמסירה.",
-      "restockPreview": "מתקבל {{quantity}} × {{offerSku}} ← +{{delta}} ל-{{inventoryItem}} במיקום {{location}}",
+      "restockPreview": "מתקבל {{quantity}} × {{variantSku}} ← +{{delta}} ל-{{inventoryItem}} במיקום {{location}}",
       "noItemsSelected": "בחר לפחות פריט אחד להחזרה.",
       "emptyState": {
         "title": "אין רשומות עדיין",
@@ -3429,15 +3429,15 @@
     }
   },
   "invite": {
-    "title": "ברוכים הבאים ל-Kayı.com",
+    "title": "הוזמנת להצטרף אל {{name}}!",
     "hint": "צור את החשבון שלך למטה",
     "backToLogin": "חזרה להתחברות",
     "createAccount": "צור חשבון",
-    "alreadyHaveAccount": "כבר יש לך חשבון? - <0>התחבר</0>",
+    "alreadyHaveAccount": "כבר יש לך חשבון?",
     "emailTooltip": "לא ניתן לשנות את האימייל שלך. אם ברצונך להשתמש באימייל אחר, יש לשלוח הזמנה חדשה.",
     "invalidInvite": "ההזמנה אינה חוקית או פג תוקפה.",
-    "successTitle": "החשבון שלך נרשם",
-    "successHint": "התחל להשתמש ב-Kayı.com Admin מיד.",
+    "successTitle": "ברוך הבא אל {{name}}!",
+    "successHint": "מגדירים את החשבון שלך...",
     "invalidTokenTitle": "אסימון ההזמנה שלך אינו תקף",
     "invalidTokenHint": "נסה לבקש קישור הזמנה חדש.",
     "passwordMismatch": "הסיסמאות אינן תואמות",
@@ -3867,7 +3867,7 @@
         "successToast": "וריאנט ההצעה עודכן בהצלחה."
       },
       "shipping": {
-        "successToast": "עודכן בהצלחה פרופיל השילוח עבור {{title}}."
+        "successToast": "תצורת המשלוח עודכנה בהצלחה."
       }
     },
     "pricing": {

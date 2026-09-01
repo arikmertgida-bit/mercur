@@ -856,7 +856,7 @@
       "edit": {
         "header": "Szállítási konfiguráció",
         "toasts": {
-          "success": "Szállítási profil sikeresen szerkesztve a(z) {{title}} termékhez."
+          "success": "A szállítási konfiguráció sikeresen frissült."
         }
       },
       "create": {
@@ -1504,7 +1504,7 @@
       },
       "policyHint": "A visszaküldés a kézbesítéstől számított {{days}} napon belül fogadható el.",
       "outOfPolicy": "A visszaküldés a kézbesítéstől számított {{days}} napon belül fogadható el.",
-      "restockPreview": "{{quantity}} × {{offerSku}} átvétele → +{{delta}} ehhez: {{inventoryItem}}, itt: {{location}}",
+      "restockPreview": "{{quantity}} × {{variantSku}} átvétele → +{{delta}} ehhez: {{inventoryItem}}, itt: {{location}}",
       "noItemsSelected": "Válasszon legalább egy visszaküldendő tételt.",
       "emptyState": {
         "title": "Még nincsenek rekordok",
@@ -3429,15 +3429,15 @@
     }
   },
   "invite": {
-    "title": "Üdvözöljük a Kayı.com-ban",
+    "title": "Meghívást kaptál, hogy csatlakozz a(z) {{name}} céghez!",
     "hint": "Hozza létre fiókját alább",
     "backToLogin": "Vissza a bejelentkezéshez",
     "createAccount": "Fiók létrehozása",
-    "alreadyHaveAccount": "Már van fiókja? - <0>Jelentkezzen be</0>",
+    "alreadyHaveAccount": "Már van fiókja?",
     "emailTooltip": "Az email cím nem módosítható. Ha másik email címet szeretne használni, új meghívót kell küldeni.",
     "invalidInvite": "A meghívó érvénytelen vagy lejárt.",
-    "successTitle": "Fiókja regisztrálva lett",
-    "successHint": "Kezdje el azonnal használni a Kayı.com Admin-t.",
+    "successTitle": "Üdvözlünk a(z) {{name}} oldalán!",
+    "successHint": "Fiókod beállítása...",
     "invalidTokenTitle": "Meghívó tokenje érvénytelen",
     "invalidTokenHint": "Próbáljon új meghívó linket kérni.",
     "passwordMismatch": "A jelszavak nem egyeznek",
@@ -3867,7 +3867,7 @@
         "successToast": "Az ajánlat variánsa sikeresen frissítve."
       },
       "shipping": {
-        "successToast": "Szállítási profil sikeresen szerkesztve a(z) {{title}} termékhez."
+        "successToast": "A szállítási konfiguráció sikeresen frissült."
       }
     },
     "pricing": {

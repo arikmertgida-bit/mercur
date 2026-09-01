@@ -31,6 +31,7 @@ const uploadProductImportCsv = async (
     method: "POST",
     body: formData,
     credentials: "include",
+    headers: { "Accept-Language": i18next.language },
   })
 
   if (!response.ok) {
