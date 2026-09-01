@@ -23,10 +23,16 @@ function fetchCustomerAvatar(customerId: string): Promise<CustomerAvatarInfo> {
   const pending = inFlight.get(customerId)
   if (pending) return pending
 
-  const promise = client.admin.customers.$id
-    .query({ $id: customerId })
+  // Deliberately queries the list route (filtered to this one id) instead
+  // of `.customers.$id.query(...)` — this project's own DELETE override at
+  // `apps/api/src/api/admin/customers/[id]/route.ts` makes the codegen'd
+  // type for that detail route lose Medusa core's GET signature, even
+  // though the runtime endpoint is untouched and still works. The list
+  // route has no local override, so it keeps its real, fully-typed GET.
+  const promise = client.admin.customers
+    .query({ id: customerId })
     .then((raw): CustomerAvatarInfo => {
-      const parsed = CustomerMetadataSchema.safeParse(raw.customer?.metadata)
+      const parsed = CustomerMetadataSchema.safeParse(raw.customers?.[0]?.metadata)
       if (!parsed.success) return EMPTY
       const result: CustomerAvatarInfo = { avatarUrl: parsed.data.avatar_url ?? null }
       avatarCache.set(customerId, result)
