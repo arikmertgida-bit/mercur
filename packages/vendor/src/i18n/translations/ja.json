@@ -1493,7 +1493,7 @@
       },
       "policyHint": "返品は配達から {{days}} 日以内に受け付けられます。",
       "outOfPolicy": "返品は配達から {{days}} 日以内に受け付けられます。",
-      "restockPreview": "{{quantity}} × {{offerSku}} を受領 → {{location}} の {{inventoryItem}} に +{{delta}}",
+      "restockPreview": "{{quantity}} × {{variantSku}} を受領 → {{location}} の {{inventoryItem}} に +{{delta}}",
       "noItemsSelected": "返品するアイテムを少なくとも1つ選択してください。",
       "estDifference": "見積もり差額",
       "emptyState": {
@@ -3429,15 +3429,15 @@
     }
   },
   "invite": {
-    "title": "Kayı.comへようこそ",
+    "title": "{{name}} に参加するよう招待されました！",
     "hint": "以下でアカウントを作成してください",
     "backToLogin": "ログインに戻る",
     "createAccount": "アカウントを作成",
-    "alreadyHaveAccount": "すでにアカウントをお持ちですか？ - <0>ログイン</0>",
+    "alreadyHaveAccount": "すでにアカウントをお持ちですか？",
     "emailTooltip": "Eメールは変更できません。別のEメールを使用したい場合は、新しい招待を送信する必要があります。",
     "invalidInvite": "招待が無効であるか、期限が切れています。",
-    "successTitle": "アカウントが登録されました",
-    "successHint": "Kayı.com Adminをすぐに始めましょう。",
+    "successTitle": "{{name}} へようこそ！",
+    "successHint": "アカウントを設定しています...",
     "invalidTokenTitle": "招待トークンが無効です",
     "invalidTokenHint": "新しい招待リンクをリクエストしてみてください。",
     "passwordMismatch": "パスワードが一致しません",

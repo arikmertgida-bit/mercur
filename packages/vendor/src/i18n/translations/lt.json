@@ -856,7 +856,7 @@
       "edit": {
         "header": "Siuntimo nustatymai",
         "toasts": {
-          "success": "Siuntimo nustatymai {{title}} sėkmingai atnaujinti."
+          "success": "Siuntimo konfigūracija sėkmingai atnaujinta."
         }
       },
       "create": {
@@ -1470,7 +1470,7 @@
       "placeholders": {
         "noReturnShippingOptions": {
           "title": "Nėra grąžinimo siuntimo variantų",
-          "hint": "Nėra sukurtų siuntimo variantų šiai vietovei. Galite sukurti Galite sukurti jį <LinkComponent>Vietos ir siuntimas</LinkComponent>."
+          "hint": "Nėra sukurtų siuntimo variantų šiai vietovei. Galite sukurti jį <LinkComponent>Vietos ir siuntimas</LinkComponent>."
         },
         "outboundShippingOptions": {
           "title": "Nėra išeinančio siuntimo variantų",
@@ -1503,7 +1503,7 @@
       },
       "policyHint": "Grąžinimai priimami per {{days}} d. nuo pristatymo.",
       "outOfPolicy": "Grąžinimai priimami per {{days}} d. nuo pristatymo.",
-      "restockPreview": "Priimama {{quantity}} × {{offerSku}} → +{{delta}} į {{inventoryItem}}, vieta {{location}}",
+      "restockPreview": "Priimama {{quantity}} × {{variantSku}} → +{{delta}} į {{inventoryItem}}, vieta {{location}}",
       "noItemsSelected": "Pasirinkite bent vieną grąžinamą prekę.",
       "estDifference": "Numatomas skirtumas",
       "emptyState": {
@@ -3429,15 +3429,15 @@
     }
   },
   "invite": {
-    "title": "Sveiki atvykę į Kayı.com",
+    "title": "Jūs pakviesti prisijungti prie {{name}}!",
     "hint": "Sukurkite savo paskyrą žemiau",
     "backToLogin": "Atgal į prisijungimą",
     "createAccount": "Sukurti paskyrą",
-    "alreadyHaveAccount": "Jau turite paskyrą? - <0>Prisijunkite</0>",
+    "alreadyHaveAccount": "Jau turite paskyrą?",
     "emailTooltip": "Jūsų el. pašto adresas negali būti pakeistas. Jei norite naudoti kitą el. pašto adresą, turite gauti naują kvietimą.",
     "invalidInvite": "Kvietimas neteisingas arba pasibaigęs.",
-    "successTitle": "Jūsų paskyra sukurta",
-    "successHint": "Pradėkite naudotis Kayı.com administravimo aplinka nedelsiant.",
+    "successTitle": "Sveiki atvykę į {{name}}!",
+    "successHint": "Nustatoma jūsų paskyra...",
     "invalidTokenTitle": "Jūsų kvietimo prieigos raktas neteisingas",
     "invalidTokenHint": "Pabandykite paprašyti naujos kvietimo nuorodos.",
     "passwordMismatch": "Slptažodžiai nesutampa",
@@ -3867,7 +3867,7 @@
         "successToast": "Pasiūlymo variantas sėkmingai atnaujintas."
       },
       "shipping": {
-        "successToast": "Siuntimo nustatymai {{title}} sėkmingai atnaujinti."
+        "successToast": "Siuntimo konfigūracija sėkmingai atnaujinta."
       }
     },
     "pricing": {

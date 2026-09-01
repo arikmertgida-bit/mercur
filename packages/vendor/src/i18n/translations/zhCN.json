@@ -856,7 +856,7 @@
       "edit": {
         "header": "运输配置",
         "toasts": {
-          "success": "已成功更新 {{title}} 的运输资料。"
+          "success": "运输配置已成功更新。"
         }
       },
       "create": {
@@ -1504,7 +1504,7 @@
       },
       "policyHint": "自送达之日起 {{days}} 天内可申请退货。",
       "outOfPolicy": "自送达之日起 {{days}} 天内可申请退货。",
-      "restockPreview": "接收 {{quantity}} × {{offerSku}} → 在 {{location}} 为 {{inventoryItem}} 增加 {{delta}}",
+      "restockPreview": "接收 {{quantity}} × {{variantSku}} → 在 {{location}} 为 {{inventoryItem}} 增加 {{delta}}",
       "noItemsSelected": "请至少选择一件退货商品。",
       "emptyState": {
         "title": "暂无记录",
@@ -3429,15 +3429,15 @@
     }
   },
   "invite": {
-    "title": "欢迎使用Kayı.com",
+    "title": "您已受邀加入 {{name}}！",
     "hint": "在下面创建您的账户",
     "backToLogin": "返回登录",
     "createAccount": "创建账户",
-    "alreadyHaveAccount": "已经有账户？ - <0>登录</0>",
+    "alreadyHaveAccount": "已经有账户？",
     "emailTooltip": "您的电子邮件无法更改。如果您想使用另一个电子邮件,必须发送新的邀请。",
     "invalidInvite": "邀请无效或已过期。",
-    "successTitle": "您的账户已注册",
-    "successHint": "立即开始使用Kayı.com Admin。",
+    "successTitle": "欢迎加入 {{name}}！",
+    "successHint": "正在设置您的账户...",
     "invalidTokenTitle": "您的邀请令牌无效",
     "invalidTokenHint": "尝试请求新的邀请链接。",
     "passwordMismatch": "密码不匹配",
@@ -3867,7 +3867,7 @@
         "successToast": "报价变体已成功更新。"
       },
       "shipping": {
-        "successToast": "已成功更新 {{title}} 的运输资料。"
+        "successToast": "运输配置已成功更新。"
       }
     },
     "pricing": {

@@ -1479,7 +1479,7 @@
       },
       "policyHint": "รับคืนสินค้าภายใน {{days}} วันหลังจากจัดส่ง",
       "outOfPolicy": "รับคืนสินค้าภายใน {{days}} วันหลังจากจัดส่ง",
-      "restockPreview": "กำลังรับ {{quantity}} × {{offerSku}} → +{{delta}} ไปยัง {{inventoryItem}} ที่ {{location}}",
+      "restockPreview": "กำลังรับ {{quantity}} × {{variantSku}} → +{{delta}} ไปยัง {{inventoryItem}} ที่ {{location}}",
       "noItemsSelected": "เลือกรายการอย่างน้อยหนึ่งรายการเพื่อคืนสินค้า",
       "estDifference": "ผลต่างที่คาดว่าจะคืน",
       "emptyState": {
@@ -3429,15 +3429,15 @@
     }
   },
   "invite": {
-    "title": "ยินดีต้อนรับสู่ Kayı.com",
+    "title": "คุณได้รับเชิญให้เข้าร่วม {{name}}!",
     "hint": "สร้างบัญชีของคุณด้านล่าง",
     "backToLogin": "กลับไปยังหน้าล็อกอิน",
     "createAccount": "สร้างบัญชี",
-    "alreadyHaveAccount": "มีบัญชีอยู่แล้ว? - <0>เข้าสู่ระบบ</0>",
+    "alreadyHaveAccount": "มีบัญชีอยู่แล้ว?",
     "emailTooltip": "อีเมลของคุณไม่สามารถเปลี่ยนแปลงได้ หากต้องการใช้อีเมลอื่น จำเป็นต้องส่งคำเชิญใหม่",
     "invalidInvite": "คำเชิญนี้ไม่ถูกต้องหรือหมดอายุแล้ว",
-    "successTitle": "บัญชีของคุณถูกลงทะเบียนเรียบร้อยแล้ว",
-    "successHint": "เริ่มต้นใช้งาน Kayı.com Admin ได้เลย",
+    "successTitle": "ยินดีต้อนรับสู่ {{name}}!",
+    "successHint": "กำลังตั้งค่าบัญชีของคุณ...",
     "invalidTokenTitle": "โทเค็นคำเชิญของคุณไม่ถูกต้อง",
     "invalidTokenHint": "ลองขอคำเชิญใหม่อีกครั้ง",
     "passwordMismatch": "รหัสผ่านไม่ตรงกัน",

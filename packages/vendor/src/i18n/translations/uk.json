@@ -1493,7 +1493,7 @@
       },
       "policyHint": "Повернення приймаються протягом {{days}} днів після доставки.",
       "outOfPolicy": "Повернення приймаються протягом {{days}} днів після доставки.",
-      "restockPreview": "Отримання {{quantity}} × {{offerSku}} → +{{delta}} до {{inventoryItem}} у {{location}}",
+      "restockPreview": "Отримання {{quantity}} × {{variantSku}} → +{{delta}} до {{inventoryItem}} у {{location}}",
       "noItemsSelected": "Виберіть принаймні одну позицію для повернення.",
       "estDifference": "Оціночна різниця",
       "emptyState": {
@@ -3429,15 +3429,15 @@
     }
   },
   "invite": {
-    "title": "Ласкаво просимо до Kayı.com",
+    "title": "Вас запросили приєднатися до {{name}}!",
     "hint": "Створіть акаунт нижче",
     "backToLogin": "Повернутися до входу",
     "createAccount": "Створити акаунт",
-    "alreadyHaveAccount": "Вже маєте акаунт? - <0>Увійти</0>",
+    "alreadyHaveAccount": "Вже маєте акаунт?",
     "emailTooltip": "Вашу електронну пошту не можна змінити. Якщо ви хочете використовувати іншу електронну пошту, потрібно надіслати нове запрошення.",
     "invalidInvite": "Запрошення недійсне або сплив термін.",
-    "successTitle": "Ваш акаунт зареєстровано",
-    "successHint": "Розпочніть роботу з Kayı.com Admin прямо зараз.",
+    "successTitle": "Ласкаво просимо до {{name}}!",
+    "successHint": "Налаштування вашого облікового запису...",
     "invalidTokenTitle": "Ваш токен запрошення недійсний",
     "invalidTokenHint": "Спробуйте запросити нове посилання для запрошення.",
     "passwordMismatch": "Паролі не збігаються",

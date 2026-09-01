@@ -856,7 +856,7 @@
       "edit": {
         "header": "Konfigurasi Pengiriman",
         "toasts": {
-          "success": "Berhasil memperbarui profil pengiriman untuk {{title}}."
+          "success": "Konfigurasi pengiriman berhasil diperbarui."
         }
       },
       "create": {
@@ -1504,7 +1504,7 @@
       },
       "policyHint": "Pengembalian diterima dalam {{days}} hari setelah pengantaran.",
       "outOfPolicy": "Pengembalian diterima dalam {{days}} hari setelah pengantaran.",
-      "restockPreview": "Menerima {{quantity}} × {{offerSku}} → +{{delta}} untuk {{inventoryItem}} di {{location}}",
+      "restockPreview": "Menerima {{quantity}} × {{variantSku}} → +{{delta}} untuk {{inventoryItem}} di {{location}}",
       "noItemsSelected": "Pilih setidaknya satu item untuk dikembalikan.",
       "emptyState": {
         "title": "Belum ada data",
@@ -3429,15 +3429,15 @@
     }
   },
   "invite": {
-    "title": "Selamat datang di Kayı.com",
+    "title": "Anda diundang untuk bergabung dengan {{name}}!",
     "hint": "Buat akun Anda di bawah",
     "backToLogin": "Kembali ke login",
     "createAccount": "Buat akun",
-    "alreadyHaveAccount": "Sudah punya akun? - <0>Masuk</0>",
+    "alreadyHaveAccount": "Sudah punya akun?",
     "emailTooltip": "Alamat email Anda tidak dapat diubah. Jika Anda ingin menggunakan email lain, undangan baru harus dikirim.",
     "invalidInvite": "Undangan tidak valid atau sudah kedaluwarsa.",
-    "successTitle": "Akun Anda telah terdaftar",
-    "successHint": "Mulai gunakan Kayı.com Admin sekarang juga.",
+    "successTitle": "Selamat datang di {{name}}!",
+    "successHint": "Menyiapkan akun Anda...",
     "invalidTokenTitle": "Token undangan Anda tidak valid",
     "invalidTokenHint": "Coba minta tautan undangan baru.",
     "passwordMismatch": "Kata sandi tidak cocok",
@@ -3867,7 +3867,7 @@
         "successToast": "Varian penawaran berhasil diperbarui."
       },
       "shipping": {
-        "successToast": "Berhasil memperbarui profil pengiriman untuk {{title}}."
+        "successToast": "Konfigurasi pengiriman berhasil diperbarui."
       }
     },
     "pricing": {

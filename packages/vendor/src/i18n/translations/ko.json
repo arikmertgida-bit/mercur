@@ -856,7 +856,7 @@
       "edit": {
         "header": "배송 구성",
         "toasts": {
-          "success": "{{title}}의 배송 프로필이 성공적으로 업데이트되었습니다."
+          "success": "배송 구성이 성공적으로 업데이트되었습니다."
         }
       },
       "create": {
@@ -1504,7 +1504,7 @@
       },
       "policyHint": "반품은 배송 완료 후 {{days}}일 이내에 접수됩니다.",
       "outOfPolicy": "반품은 배송 완료 후 {{days}}일 이내에 접수됩니다.",
-      "restockPreview": "{{quantity}} × {{offerSku}} 입고 → {{location}}의 {{inventoryItem}}에 +{{delta}}",
+      "restockPreview": "{{quantity}} × {{variantSku}} 입고 → {{location}}의 {{inventoryItem}}에 +{{delta}}",
       "noItemsSelected": "반품할 품목을 하나 이상 선택하세요.",
       "emptyState": {
         "title": "아직 기록이 없습니다",
@@ -3429,15 +3429,15 @@
     }
   },
   "invite": {
-    "title": "Kayı.com에 오신 것을 환영합니다",
+    "title": "{{name}}에 합류하도록 초대되었습니다!",
     "hint": "아래에서 계정을 생성하세요",
     "backToLogin": "로그인으로 돌아가기",
     "createAccount": "계정 생성",
-    "alreadyHaveAccount": "이미 계정이 있으신가요? - <0>로그인</0>",
+    "alreadyHaveAccount": "이미 계정이 있으신가요?",
     "emailTooltip": "이메일은 변경할 수 없습니다. 다른 이메일을 사용하고 싶다면 새 초대장을 보내야 합니다.",
     "invalidInvite": "초대장이 유효하지 않거나 만료되었습니다.",
-    "successTitle": "계정이 등록되었습니다",
-    "successHint": "지금 바로 Kayı.com 관리자를 시작하세요.",
+    "successTitle": "{{name}}에 오신 것을 환영합니다!",
+    "successHint": "계정을 설정하는 중입니다...",
     "invalidTokenTitle": "초대 토큰이 유효하지 않습니다",
     "invalidTokenHint": "새 초대 링크를 요청해 보세요.",
     "passwordMismatch": "비밀번호가 일치하지 않습니다",
@@ -3867,7 +3867,7 @@
         "successToast": "오퍼 옵션이 성공적으로 업데이트되었습니다."
       },
       "shipping": {
-        "successToast": "{{title}}의 배송 프로필이 성공적으로 업데이트되었습니다."
+        "successToast": "배송 구성이 성공적으로 업데이트되었습니다."
       }
     },
     "pricing": {

@@ -1029,14 +1029,14 @@
     "products": {
       "add": {
         "disabledTooltip": "Le produit est déjà dans cette catégorie.",
-        "successToast_one": "Produit ajouté à la catégorie avec succès.",
-        "successToast_other": "Produits ajoutés à la catégorie avec succès."
+        "successToast_one": "{{count}} produit ajouté à la catégorie.",
+        "successToast_other": "{{count}} produits ajoutés à la catégorie."
       },
       "remove": {
         "confirmation_one": "Vous êtes sur le point de supprimer {{count}} produit de la catégorie. Cette action ne peut être annulée.",
         "confirmation_other": "Vous êtes sur le point de supprimer {{count}} produits de la catégorie. Cette action ne peut être annulée.",
-        "successToast_one": "Produit retiré de la catégorie avec succès.",
-        "successToast_other": "Produits retirés de la catégorie avec succès."
+        "successToast_one": "{{count}} produit retiré de la catégorie.",
+        "successToast_other": "{{count}} produits retirés de la catégorie."
       },
       "list": {
         "noRecordsMessage": "Il n'y a pas de produits dans la catégorie."
@@ -1479,7 +1479,7 @@
       },
       "policyHint": "Les retours sont acceptés dans les {{days}} jours suivant la livraison.",
       "outOfPolicy": "Les retours sont acceptés dans les {{days}} jours suivant la livraison.",
-      "restockPreview": "Réception de {{quantity}} × {{offerSku}} → +{{delta}} pour {{inventoryItem}} à {{location}}",
+      "restockPreview": "Réception de {{quantity}} × {{variantSku}} → +{{delta}} pour {{inventoryItem}} à {{location}}",
       "noItemsSelected": "Sélectionnez au moins un article à retourner.",
       "estDifference": "Différence estimée",
       "emptyState": {
@@ -2733,7 +2733,7 @@
       "alreadyAddedDiffCampaign": "Cette promotion a déjà été ajoutée à une autre campagne ({{name}}).",
       "currencyMismatch": "La devise de la promotion et de la campagne ne correspondent pas",
       "toast": {
-        "success": "Promotion(s) ajoutée(s) à la campagne avec succès"
+        "success": "{{count}} promotion(s) ajoutée(s) à la campagne avec succès"
       },
       "add": {
         "list": {
@@ -3429,15 +3429,15 @@
     }
   },
   "invite": {
-    "title": "Bienvenue sur Kayı.com",
+    "title": "Vous êtes invité(e) à rejoindre {{name}} !",
     "hint": "Créez votre compte ci-dessous",
     "backToLogin": "Retour à la connexion",
     "createAccount": "Créer un compte",
-    "alreadyHaveAccount": "Vous avez déjà un compte? - <0>Se connecter</0>",
+    "alreadyHaveAccount": "Vous avez déjà un compte?",
     "emailTooltip": "Votre email ne peut être modifié. Si vous souhaitez utiliser un autre email, un nouveau lien d'invitation doit être envoyé.",
     "invalidInvite": "Le lien d'invitation est invalide ou a expiré.",
-    "successTitle": "Votre compte a été enregistré",
-    "successHint": "Commencez avec Kayı.com Admin dès maintenant.",
+    "successTitle": "Bienvenue chez {{name}} !",
+    "successHint": "Configuration de votre compte...",
     "invalidTokenTitle": "Votre lien d'invitation est invalide",
     "invalidTokenHint": "Essayez de demander un nouveau lien d'invitation.",
     "passwordMismatch": "Les mots de passe ne correspondent pas",

@@ -1485,7 +1485,7 @@
       },
       "policyHint": "İadeler teslimattan itibaren {{days}} gün içinde kabul edilir.",
       "outOfPolicy": "İadeler teslimattan itibaren {{days}} gün içinde kabul edilir.",
-      "restockPreview": "{{location}} konumundaki {{inventoryItem}} için {{quantity}} × {{offerSku}} teslim alınıyor → +{{delta}}",
+      "restockPreview": "{{location}} konumundaki {{inventoryItem}} için {{quantity}} × {{variantSku}} teslim alınıyor → +{{delta}}",
       "noItemsSelected": "İade etmek için en az bir ürün seçin.",
       "estDifference": "Tahmini fark",
       "emptyState": {
@@ -3434,15 +3434,15 @@
     }
   },
   "invite": {
-    "title": "Kayı.com'a Hoş Geldiniz",
+    "title": "{{name}}'e katılmaya davet edildiniz!",
     "hint": "Aşağıda hesabınızı oluşturun",
     "backToLogin": "Girişe geri dön",
     "createAccount": "Hesap oluştur",
-    "alreadyHaveAccount": "Zaten bir hesabınız var mı? - <0>Giriş Yap</0>",
+    "alreadyHaveAccount": "Zaten bir hesabınız var mı?",
     "emailTooltip": "E-postanız değiştirilemez. Başka bir e-posta kullanmak istiyorsanız, yeni bir davet gönderilmelidir.",
     "invalidInvite": "Davet geçersiz veya süresi dolmuş.",
-    "successTitle": "Hesabınız kaydedildi",
-    "successHint": "Hemen Kayı.com Yönetici ile başlayın.",
+    "successTitle": "{{name}}'e hoş geldiniz!",
+    "successHint": "Hesabınız hazırlanıyor...",
     "invalidTokenTitle": "Davet tokeniniz geçersiz",
     "invalidTokenHint": "Yeni bir davet bağlantısı talep etmeyi deneyin.",
     "passwordMismatch": "Şifreler uyuşmuyor",

@@ -1479,7 +1479,7 @@
       },
       "policyHint": "I resi sono accettati entro {{days}} giorni dalla consegna.",
       "outOfPolicy": "I resi sono accettati entro {{days}} giorni dalla consegna.",
-      "restockPreview": "Ricezione {{quantity}} × {{offerSku}} → +{{delta}} a {{inventoryItem}} presso {{location}}",
+      "restockPreview": "Ricezione {{quantity}} × {{variantSku}} → +{{delta}} a {{inventoryItem}} presso {{location}}",
       "noItemsSelected": "Seleziona almeno un articolo da restituire.",
       "estDifference": "Differenza stimata",
       "emptyState": {
@@ -3429,15 +3429,15 @@
     }
   },
   "invite": {
-    "title": "Benvenuto in Kayı.com",
+    "title": "Sei stato invitato a unirti a {{name}}!",
     "hint": "Crea il tuo account qui sotto",
     "backToLogin": "Torna al login",
     "createAccount": "Crea account",
-    "alreadyHaveAccount": "Hai già un account? - <0>Accedi</0>",
+    "alreadyHaveAccount": "Hai già un account?",
     "emailTooltip": "La tua email non può essere cambiata. Se desideri utilizzare un'altra email, deve essere inviato un nuovo invito.",
     "invalidInvite": "L'invito non è valido o è scaduto.",
-    "successTitle": "Il tuo account è stato registrato",
-    "successHint": "Inizia subito con Kayı.com Admin.",
+    "successTitle": "Benvenuto in {{name}}!",
+    "successHint": "Configurazione del tuo account in corso...",
     "invalidTokenTitle": "Il tuo token di invito non è valido",
     "invalidTokenHint": "Prova a richiedere un nuovo link di invito.",
     "passwordMismatch": "Le password non corrispondono",
