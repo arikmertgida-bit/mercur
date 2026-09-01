@@ -37,10 +37,12 @@ function statusCodeFor(type: string): number {
 }
 
 /**
- * Replaces Medusa's default error handler only for `/store/*` requests
- * whose `Accept-Language` resolves to a supported, non-English shopper
- * language — everything else (admin, vendor, and store requests with
- * no/English language) is delegated untouched to `defaultErrorHandler`.
+ * Replaces Medusa's default error handler only for `/store/*` and
+ * `/auth/customer/*` requests (see middlewares.ts::scopedErrorHandler for
+ * why the latter is included) whose `Accept-Language` resolves to a
+ * supported, non-English shopper language — everything else (admin,
+ * vendor, and store/customer-auth requests with no/English language) is
+ * delegated untouched to `defaultErrorHandler`.
  */
 export const storeAwareErrorHandler: MedusaErrorHandlerFunction = (
   error,
@@ -48,7 +50,9 @@ export const storeAwareErrorHandler: MedusaErrorHandlerFunction = (
   res,
   next
 ) => {
-  if (!req.path.startsWith("/store") || !(error instanceof Error)) {
+  const isStoreScoped =
+    req.path.startsWith("/store") || req.path.startsWith("/auth/customer")
+  if (!isStoreScoped || !(error instanceof Error)) {
     fallbackErrorHandler(error, req, res, next)
     return
   }
