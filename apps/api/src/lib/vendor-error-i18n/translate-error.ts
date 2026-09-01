@@ -13,6 +13,20 @@ const VALIDATION_PREFIX = "Invalid request: "
 const CUSTOM_CODE_PREFIX = "vendor_error."
 
 /**
+ * Matches a bare camelCase identifier (`"duplicateOrderReview"`,
+ * `"orderNotFound"`) with no spaces or punctuation — the shape this
+ * codebase's own `MedusaError(type, "someCode")` throws use, distinct from
+ * a human sentence. The storefront's `backend-error-mapper.ts` and the
+ * dashboards match these exact strings against their own translated code
+ * catalog, so translating one here would only ever destroy a more precise,
+ * already-localized frontend message in favor of a generic one. A plain
+ * English MedusaError ("Unauthorized", "Not allowed") never matches: this
+ * requires an uppercase letter after the first character, which those
+ * don't have.
+ */
+const CODE_LIKE_MESSAGE = /^[a-z][a-zA-Z0-9]*[A-Z][a-zA-Z0-9]*$/
+
+/**
  * Matches the exact validator message we set via `.refine({ message })` in
  * packages/core/src/api/vendor/{products,shipping-options}/validators.ts.
  */
@@ -191,6 +205,14 @@ export function translateVendorError(
   const messages = VENDOR_ERROR_MESSAGES[language]
 
   if (MedusaError.isMedusaError(error)) {
+    if (CODE_LIKE_MESSAGE.test(error.message)) {
+      return {
+        code: error.code ?? error.message,
+        type: error.type,
+        message: error.message,
+      }
+    }
+
     if (
       error.type === MedusaError.Types.INVALID_DATA &&
       error.message.startsWith(VALIDATION_PREFIX)

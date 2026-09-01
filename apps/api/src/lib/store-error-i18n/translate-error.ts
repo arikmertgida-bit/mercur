@@ -12,6 +12,21 @@ export interface TranslatedStoreError {
 const VALIDATION_PREFIX = "Invalid request: "
 
 /**
+ * Matches a bare camelCase identifier (`"duplicateOrderReview"`,
+ * `"orderNotFound"`) with no spaces or punctuation — the shape this
+ * codebase's own `MedusaError(type, "someCode")` throws use (see e.g.
+ * `workflows/review/steps/validate-review.ts`) instead of a human sentence.
+ * The storefront's `backend-error-mapper.ts` matches these exact strings
+ * against its own `BackendErrorCodeSchema` catalog and renders its own
+ * (already 31-locale-translated) copy from `message` — so translating the
+ * code here would only ever destroy a more precise, already-localized
+ * frontend message in favor of a generic one. A plain English MedusaError
+ * ("Unauthorized", "Not allowed") never matches: this requires an uppercase
+ * letter after the first character, which those don't have.
+ */
+const CODE_LIKE_MESSAGE = /^[a-z][a-zA-Z0-9]*[A-Z][a-zA-Z0-9]*$/
+
+/**
  * Translates one `; `-joined segment of the message
  * `@medusajs/framework`'s `zodValidator` produces (see
  * `zod-helpers.js::formatError`) — the exact phrasings below are that
@@ -162,6 +177,14 @@ export function translateStoreError(
   const messages = STORE_ERROR_MESSAGES[language]
 
   if (MedusaError.isMedusaError(error)) {
+    if (CODE_LIKE_MESSAGE.test(error.message)) {
+      return {
+        code: error.code ?? error.message,
+        type: error.type,
+        message: error.message,
+      }
+    }
+
     if (
       error.type === MedusaError.Types.INVALID_DATA &&
       error.message.startsWith(VALIDATION_PREFIX)
