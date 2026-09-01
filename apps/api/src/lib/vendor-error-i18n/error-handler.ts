@@ -37,10 +37,12 @@ function statusCodeFor(type: string): number {
 }
 
 /**
- * Replaces Medusa's default error handler only for `/vendor/*` requests
- * whose `Accept-Language` resolves to a supported, non-English vendor
- * panel language — everything else (admin, store, and vendor requests with
- * no/English language) is delegated untouched to `defaultErrorHandler`.
+ * Replaces Medusa's default error handler only for `/vendor/*` and
+ * `/auth/seller/*` requests (see middlewares.ts::scopedErrorHandler for why
+ * the latter is included) whose `Accept-Language` resolves to a supported,
+ * non-English vendor panel language — everything else (admin, store, and
+ * vendor/seller-auth requests with no/English language) is delegated
+ * untouched to `defaultErrorHandler`.
  */
 export const vendorAwareErrorHandler: MedusaErrorHandlerFunction = (
   error,
@@ -48,7 +50,9 @@ export const vendorAwareErrorHandler: MedusaErrorHandlerFunction = (
   res,
   next
 ) => {
-  if (!req.path.startsWith("/vendor") || !(error instanceof Error)) {
+  const isVendorScoped =
+    req.path.startsWith("/vendor") || req.path.startsWith("/auth/seller")
+  if (!isVendorScoped || !(error instanceof Error)) {
     fallbackErrorHandler(error, req, res, next)
     return
   }

@@ -2099,7 +2099,7 @@
         "summaries": {
           "greaterThan": "إذا كان <0>{{attribute}}</0> ≥ <1>{{gte}}</1>",
           "lessThan": "إذا كان <0>{{attribute}}</0> ≤ <1>{{lte}}</1>",
-          "range": "إذا كان <0>{{attribute}}</0> بين <1>{{gte}}</1> و<2>{{lte}}</2>"
+          "range": "إذا كان <0>{{attribute}}</0> بين <1>{{gte}}</1> و <2>{{lte}}</2>"
         }
       },
       "create": {
