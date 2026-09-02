@@ -40,7 +40,7 @@ const StoreSelectHeader = () => {
   const { t } = useTranslation();
 
   return (
-    <div className="mb-6 flex flex-col">
+    <div className="flex flex-col">
       <Heading>{t("storeSelect.title")}</Heading>
       <Text size="small" className="text-ui-fg-subtle">
         {t("storeSelect.subtitle")}
@@ -157,14 +157,15 @@ const Root = ({ children }: { children?: ReactNode }) => {
         children
       ) : (
         <>
-          <StoreSelectLogo />
-          <div className="mt-8">
+          <div className="flex flex-1 flex-col items-center justify-center gap-y-4 text-center">
+            <StoreSelectLogo />
             <StoreSelectHeader />
-            <StoreSelectList
-              seller_members={seller_members ?? []}
-              email={email}
-            />
           </div>
+          <StoreSelectList
+            seller_members={seller_members ?? []}
+            email={email}
+          />
+          <div className="flex-1" />
           <StoreSelectFooter />
         </>
       )}
