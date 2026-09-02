@@ -71,7 +71,7 @@ export const ProductEditVariantForm = ({
     [regions],
   )
 
-  const variantPrices = variant.prices ?? []
+  const variantPrices = useMemo(() => variant.prices ?? [], [variant.prices])
   const defaultPrices = useMemo(
     () =>
       currencies.reduce<Record<string, string>>((acc, currency) => {

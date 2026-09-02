@@ -11040,6 +11040,23 @@
               "type": "string"
             }
           }
+        },
+        "fields": {
+          "type": "object",
+          "properties": {
+            "firstName": {
+              "type": "string"
+            },
+            "lastName": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "password": {
+              "type": "string"
+            }
+          }
         }
       }
     },
@@ -11420,6 +11437,15 @@
                 },
                 "currencyHint": {
                   "type": "string"
+                },
+                "emailHint": {
+                  "type": "string"
+                },
+                "phone": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
                 }
               }
             },
@@ -11430,12 +11456,6 @@
               "type": "object",
               "properties": {
                 "title": {
-                  "type": "string"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "namePlaceholder": {
                   "type": "string"
                 },
                 "address": {
@@ -11451,9 +11471,6 @@
                   "type": "string"
                 },
                 "country": {
-                  "type": "string"
-                },
-                "state": {
                   "type": "string"
                 }
               }
@@ -11474,6 +11491,24 @@
                   "type": "string"
                 },
                 "taxId": {
+                  "type": "string"
+                },
+                "disclaimer": {
+                  "type": "string"
+                },
+                "typeLabel": {
+                  "type": "string"
+                },
+                "typeIndividual": {
+                  "type": "string"
+                },
+                "typeIndividualDescription": {
+                  "type": "string"
+                },
+                "typeCorporate": {
+                  "type": "string"
+                },
+                "typeCorporateDescription": {
                   "type": "string"
                 }
               }
@@ -11520,6 +11555,15 @@
                   "type": "string"
                 },
                 "accountNameRequired": {
+                  "type": "string"
+                },
+                "companyTypeRequired": {
+                  "type": "string"
+                },
+                "registrationNumberRequired": {
+                  "type": "string"
+                },
+                "taxIdRequired": {
                   "type": "string"
                 }
               }

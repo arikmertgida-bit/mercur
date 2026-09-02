@@ -9,13 +9,11 @@ import { Form } from "@components/common/form";
 import { CountrySelect } from "@components/inputs/country-select/country-select";
 
 const AddressStepSchema = z.object({
-  name: z.string().min(1, i18n.t("onboarding.wizard.validation.nameRequired")),
   address_1: z.string().optional(),
   address_2: z.string().optional(),
   postal_code: z.string().optional(),
   city: z.string().optional(),
   country_code: z.string().min(1, i18n.t("onboarding.wizard.validation.countryRequired")),
-  province: z.string().optional(),
 });
 
 type AddressStepValues = z.infer<typeof AddressStepSchema>;
@@ -32,13 +30,11 @@ export const AddressStep = ({ onSubmit, onSkip, isPending }: AddressStepProps) =
   const form = useForm<AddressStepValues>({
     resolver: zodResolver(AddressStepSchema),
     defaultValues: {
-      name: "",
       address_1: "",
       address_2: "",
       postal_code: "",
       city: "",
       country_code: "",
-      province: "",
     },
   });
 
@@ -55,21 +51,6 @@ export const AddressStep = ({ onSubmit, onSkip, isPending }: AddressStepProps) =
       <Form {...form}>
         <form onSubmit={handleSubmit} className="flex flex-col gap-y-6">
           <div className="flex flex-col gap-y-4">
-            <Form.Field
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <Form.Item>
-                  <Form.Label>
-                    {t("onboarding.wizard.address.name")}
-                  </Form.Label>
-                  <Form.Control>
-                    <Input {...field} />
-                  </Form.Control>
-                  <Form.ErrorMessage />
-                </Form.Item>
-              )}
-            />
             <Form.Field
               control={form.control}
               name="address_1"
@@ -132,19 +113,6 @@ export const AddressStep = ({ onSubmit, onSkip, isPending }: AddressStepProps) =
                   <Form.Label>{t("onboarding.wizard.address.country")}</Form.Label>
                   <Form.Control>
                     <CountrySelect {...field} onChange={onChange} />
-                  </Form.Control>
-                  <Form.ErrorMessage />
-                </Form.Item>
-              )}
-            />
-            <Form.Field
-              control={form.control}
-              name="province"
-              render={({ field }) => (
-                <Form.Item>
-                  <Form.Label optional>{t("onboarding.wizard.address.state")}</Form.Label>
-                  <Form.Control>
-                    <Input autoComplete="address-level1" {...field} />
                   </Form.Control>
                   <Form.ErrorMessage />
                 </Form.Item>
