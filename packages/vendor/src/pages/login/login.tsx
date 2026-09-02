@@ -217,16 +217,17 @@ const Root = ({ children }: { children?: ReactNode }) => {
       {Children.count(children) > 0 ? (
         children
       ) : (
-        <div className="flex w-full flex-1 flex-col justify-center gap-y-6">
-          <div className="flex flex-col items-center gap-y-4 text-center">
+        <>
+          <div className="flex flex-1 flex-col items-center justify-center gap-y-4 text-center">
             <LoginLogo />
             <WidgetZone id="login.before" />
             <LoginHeader />
           </div>
           <LoginForm />
           <WidgetZone id="login.after" />
+          <div className="flex-1" />
           <LoginFooter />
-        </div>
+        </>
       )}
     </AuthLayout>
   );
