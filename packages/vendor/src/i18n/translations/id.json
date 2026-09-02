@@ -506,7 +506,8 @@
         "mediaRequired": "Tambahkan minimal satu gambar untuk varian ini.",
         "priceRequired": "Masukkan harga untuk varian ini dalam setidaknya satu mata uang.",
         "shippingProfileRequired": "Silakan pilih profil pengiriman.",
-        "stockRequired": "Tetapkan jumlah stok untuk varian ini di setidaknya satu lokasi."
+        "stockRequired": "Tetapkan jumlah stok untuk varian ini di setidaknya satu lokasi.",
+        "mediaUploadFailed": "Satu atau beberapa gambar gagal diunggah. Hapus gambar yang gagal dan coba lagi sebelum mempublikasikan."
       },
       "variants": {
         "header": "Varian",
@@ -674,9 +675,12 @@
       "selectImagesHint": "Klik gambar untuk menambahkannya ke varian ini.",
       "editLabel": "Edit",
       "limitExceeded": {
-        "description": "Anda dapat mengunggah hingga {{max}} gambar per produk. {{max}} gambar pertama ditambahkan — sisanya dilewati.",
-        "title": "Batas gambar tercapai"
-      }
+        "description": "Anda dapat mengunggah maksimal {{max}} gambar per produk.",
+        "title": "Batas gambar tercapai",
+        "confirm": "Mengerti"
+      },
+      "uploading": "Mengunggah...",
+      "uploadError": "Gagal mengunggah"
     },
     "discountableHint": "Jika tidak dicentang, diskon tidak akan diterapkan pada produk ini.",
     "noSalesChannels": "Tidak tersedia di saluran penjualan mana pun",

@@ -1555,6 +1555,9 @@
                 },
                 "formIncomplete": {
                   "type": "string"
+                },
+                "mediaUploadFailed": {
+                  "type": "string"
                 }
               }
             },
@@ -2098,8 +2101,17 @@
                 },
                 "description": {
                   "type": "string"
+                },
+                "confirm": {
+                  "type": "string"
                 }
               }
+            },
+            "uploading": {
+              "type": "string"
+            },
+            "uploadError": {
+              "type": "string"
             }
           }
         },

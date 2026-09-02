@@ -506,7 +506,8 @@
         "mediaRequired": "Adaugă cel puțin o imagine pentru această variantă.",
         "priceRequired": "Introdu un preț pentru această variantă în cel puțin o monedă.",
         "shippingProfileRequired": "Selectează un profil de livrare.",
-        "stockRequired": "Setează o cantitate de stoc pentru această variantă în cel puțin o locație."
+        "stockRequired": "Setează o cantitate de stoc pentru această variantă în cel puțin o locație.",
+        "mediaUploadFailed": "Una sau mai multe imagini nu au putut fi încărcate. Elimină imaginea eșuată și încearcă din nou înainte de publicare."
       },
       "variants": {
         "header": "Variante",
@@ -674,9 +675,12 @@
       "selectImagesHint": "Apăsați pe imagini pentru a le adăuga la această variantă.",
       "editLabel": "Edita",
       "limitExceeded": {
-        "description": "Poți încărca până la {{max}} de imagini per produs. Primele {{max}} au fost adăugate — restul au fost omise.",
-        "title": "Limita de imagini a fost atinsă"
-      }
+        "description": "Poți încărca maximum {{max}} imagini per produs.",
+        "title": "Limita de imagini a fost atinsă",
+        "confirm": "Am înțeles"
+      },
+      "uploading": "Se încarcă...",
+      "uploadError": "Încărcare eșuată"
     },
     "discountableHint": "Dacă nu este bifată, reducerile nu vor fi aplicate acestui produs.",
     "noSalesChannels": "Nu este disponibil în niciun canal de vânzare",

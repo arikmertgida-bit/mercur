@@ -24,7 +24,8 @@ export const UploadMediaFormItem = ({
   showHint = true,
   maxCount,
   existingCount = 0,
-  onLimitExceeded
+  onLimitExceeded,
+  onFilesAppended
 }: {
   form:
     | UseFormReturn<ProductCreateSchemaType>
@@ -39,6 +40,10 @@ export const UploadMediaFormItem = ({
   maxCount?: number;
   existingCount?: number;
   onLimitExceeded?: (skippedCount: number) => void;
+  /** Called once per selection with the files actually appended (post-limit
+   * trim), so a caller can kick off a background upload for them. Omit to
+   * leave uploads untouched (existing behavior). */
+  onFilesAppended?: (files: { id: string; file: File }[]) => void;
 }) => {
   const { t } = useTranslation();
 
@@ -97,11 +102,15 @@ export const UploadMediaFormItem = ({
 
       filesToAppend.forEach(f => append({ ...f, isThumbnail: false }));
 
+      if (filesToAppend.length > 0) {
+        onFilesAppended?.(filesToAppend.map(f => ({ id: f.id, file: f.file })));
+      }
+
       if (skippedFiles.length > 0) {
         onLimitExceeded?.(skippedFiles.length);
       }
     },
-    [form, append, hasInvalidFiles, maxCount, existingCount, onLimitExceeded]
+    [form, append, hasInvalidFiles, maxCount, existingCount, onLimitExceeded, onFilesAppended]
   );
 
   return (

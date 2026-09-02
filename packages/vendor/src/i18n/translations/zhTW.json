@@ -506,7 +506,8 @@
         "mediaRequired": "請為此款式至少新增一張圖片。",
         "priceRequired": "請至少以一種貨幣為此款式輸入價格。",
         "shippingProfileRequired": "請選擇一個物流方案。",
-        "stockRequired": "請至少為此款式在一個地點設定庫存數量。"
+        "stockRequired": "請至少為此款式在一個地點設定庫存數量。",
+        "mediaUploadFailed": "一張或多張圖片上傳失敗。請先刪除上傳失敗的圖片，再重新嘗試發佈。"
       },
       "variants": {
         "header": "變體",
@@ -674,9 +675,12 @@
       "selectImagesHint": "點選圖片以新增至此款式。",
       "editLabel": "編輯",
       "limitExceeded": {
-        "description": "每個商品最多可上傳 {{max}} 張圖片。已新增前 {{max}} 張——其餘已略過。",
-        "title": "已達圖片數量上限"
-      }
+        "description": "每個商品最多可上傳 {{max}} 張圖片。",
+        "title": "已達圖片數量上限",
+        "confirm": "知道了"
+      },
+      "uploading": "上傳中...",
+      "uploadError": "上傳失敗"
     },
     "variantMedia": {
       "label": "變體媒體",

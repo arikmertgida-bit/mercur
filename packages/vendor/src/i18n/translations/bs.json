@@ -506,7 +506,8 @@
         "mediaRequired": "Dodajte barem jednu sliku za ovu varijantu.",
         "priceRequired": "Unesite cijenu za ovu varijantu u barem jednoj valuti.",
         "shippingProfileRequired": "Odaberite profil dostave.",
-        "stockRequired": "Postavite zalihu za ovu varijantu u barem jednoj lokaciji."
+        "stockRequired": "Postavite zalihu za ovu varijantu u barem jednoj lokaciji.",
+        "mediaUploadFailed": "Jedna ili više slika nije otpremljeno. Uklonite sliku koja nije uspjela i pokušajte ponovo prije objavljivanja."
       },
       "variants": {
         "header": "Varijante",
@@ -674,9 +675,12 @@
       "selectImagesHint": "Kliknite na slike da biste ih dodali ovoj varijanti.",
       "editLabel": "Uredi",
       "limitExceeded": {
-        "description": "Možete otpremiti do {{max}} slika po proizvodu. Prvih {{max}} je dodano — ostale su preskočene.",
-        "title": "Dostignut je limit slika"
-      }
+        "description": "Možete otpremiti najviše {{max}} slika po proizvodu.",
+        "title": "Dostignut je limit slika",
+        "confirm": "Razumijem"
+      },
+      "uploading": "Otpremanje...",
+      "uploadError": "Otpremanje nije uspjelo"
     },
     "discountableHint": "Kada je neoznačeno, popusti neće biti primijenjeni na ovaj proizvod.",
     "noSalesChannels": "Nema dostupnosti u prodajnim kanalima",

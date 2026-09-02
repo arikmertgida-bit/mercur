@@ -506,7 +506,8 @@
         "mediaRequired": "Vui lòng thêm ít nhất một hình ảnh cho biến thể này.",
         "priceRequired": "Vui lòng nhập giá cho biến thể này bằng ít nhất một loại tiền tệ.",
         "shippingProfileRequired": "Vui lòng chọn hồ sơ vận chuyển.",
-        "stockRequired": "Vui lòng đặt số lượng tồn kho cho biến thể này tại ít nhất một địa điểm."
+        "stockRequired": "Vui lòng đặt số lượng tồn kho cho biến thể này tại ít nhất một địa điểm.",
+        "mediaUploadFailed": "Một hoặc nhiều hình ảnh tải lên không thành công. Hãy xóa hình ảnh bị lỗi và thử lại trước khi đăng."
       },
       "variants": {
         "header": "Biến thể",
@@ -674,9 +675,12 @@
       "selectImagesHint": "Nhấp vào hình ảnh để thêm vào biến thể này.",
       "editLabel": "Chỉnh sửa",
       "limitExceeded": {
-        "description": "Bạn có thể tải lên tối đa {{max}} hình ảnh cho mỗi sản phẩm. {{max}} hình đầu tiên đã được thêm — phần còn lại bị bỏ qua.",
-        "title": "Đã đạt giới hạn hình ảnh"
-      }
+        "description": "Bạn có thể tải lên tối đa {{max}} hình ảnh cho mỗi sản phẩm.",
+        "title": "Đã đạt giới hạn hình ảnh",
+        "confirm": "Đã hiểu"
+      },
+      "uploading": "Đang tải lên...",
+      "uploadError": "Tải lên thất bại"
     },
     "discountableHint": "Khi bỏ chọn, các chương trình giảm giá sẽ không áp dụng cho sản phẩm này.",
     "noSalesChannels": "Không có sẵn trên bất kỳ kênh bán hàng nào",
