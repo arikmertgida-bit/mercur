@@ -536,7 +536,8 @@
         "priceRequired": "Please enter a price for this variant in at least one currency.",
         "stockRequired": "Please set a stock quantity for this variant in at least one location.",
         "mediaRequired": "Please add at least one image for this variant.",
-        "formIncomplete": "Some required fields are missing — check the highlighted rows before publishing."
+        "formIncomplete": "Some required fields are missing — check the highlighted rows before publishing.",
+        "mediaUploadFailed": "One or more images failed to upload. Remove the failed image and try again before publishing."
       },
       "variants": {
         "header": "Variants",
@@ -725,8 +726,11 @@
       "editLabel": "Edit",
       "limitExceeded": {
         "title": "Image limit reached",
-        "description": "You can upload up to {{max}} images per product. The first {{max}} were added — the rest were skipped."
-      }
+        "description": "You can upload up to {{max}} images per product listing.",
+        "confirm": "Got it"
+      },
+      "uploading": "Uploading...",
+      "uploadError": "Upload failed"
     },
     "variantMedia": {
       "label": "Variant Media",

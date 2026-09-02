@@ -2,6 +2,7 @@ import { HttpTypes } from "@medusajs/types"
 import { AttributeType, ProductAttributeBatchAdd } from "@mercurjs/types"
 import { i18n } from "../../../components/utilities/i18n/i18n"
 import { castNumber } from "../../../lib/cast-number"
+import { ResolvedMediaEntry } from "../common/hooks/use-product-media-upload"
 import { ProductCreateSchemaType } from "./types"
 
 export type NormalizedCreateProductVariant =
@@ -34,8 +35,12 @@ export const hasVariantMediaColumn = (
 ): boolean => (attributes ?? []).some((attr) => attr.use_for_variants && attr.title)
 
 export const normalizeProductFormValues = (
-  values: ProductCreateSchemaType & {
+  values: Omit<ProductCreateSchemaType, "media"> & {
     status: HttpTypes.AdminProductStatus
+    // By this point every entry has already been uploaded (see
+    // `ProductMediaUploadProvider.resolveMedia`) — no raw `File` survives
+    // into this shape, only the resolved url/id.
+    media?: ResolvedMediaEntry[]
   },
   currencies: string[]
 ): NormalizedCreateProduct => {

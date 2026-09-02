@@ -506,7 +506,8 @@
         "mediaRequired": "Voeg ten minste één afbeelding toe voor deze variant.",
         "priceRequired": "Voer een prijs in voor deze variant in ten minste één valuta.",
         "shippingProfileRequired": "Selecteer een verzendprofiel.",
-        "stockRequired": "Stel een voorraadhoeveelheid in voor deze variant op ten minste één locatie."
+        "stockRequired": "Stel een voorraadhoeveelheid in voor deze variant op ten minste één locatie.",
+        "mediaUploadFailed": "Een of meer afbeeldingen konden niet worden geüpload. Verwijder de mislukte afbeelding en probeer het opnieuw voordat je publiceert."
       },
       "variants": {
         "header": "Varianten",
@@ -674,9 +675,12 @@
       "selectImagesHint": "Klik op afbeeldingen om ze aan deze variant toe te voegen.",
       "editLabel": "Bewerken",
       "limitExceeded": {
-        "description": "Je kunt tot {{max}} afbeeldingen per product uploaden. De eerste {{max}} zijn toegevoegd — de rest is overgeslagen.",
-        "title": "Afbeeldingslimiet bereikt"
-      }
+        "description": "Je kunt maximaal {{max}} afbeeldingen per product uploaden.",
+        "title": "Afbeeldingslimiet bereikt",
+        "confirm": "Begrepen"
+      },
+      "uploading": "Uploaden...",
+      "uploadError": "Uploaden mislukt"
     },
     "discountableHint": "Wanneer uitgeschakeld, worden kortingen niet toegepast op dit product.",
     "noSalesChannels": "Niet beschikbaar in verkoopkanalen",

@@ -11,10 +11,11 @@ export const MediaSchema = z.object({
   file: z.instanceof(File).nullable(),
 })
 
-// Sellers upload product photography from phone cameras; capping the
-// gallery keeps the create-product payload and storefront gallery
-// predictable across every product.
-export const MAX_PRODUCT_MEDIA_COUNT = 12
+// Mirrors the hard limit multer enforces server-side on `/vendor/uploads`
+// (`MAX_IMAGE_FILES` in `packages/core/src/api/vendor/uploads/file-validation.ts`).
+// Keep the two in sync — if this is ever raised, that limit must move with it,
+// otherwise the extra files silently fail to upload at submit time.
+export const MAX_PRODUCT_MEDIA_COUNT = 10
 
 const ProductCreateVariantSchema = z.object({
   should_create: z.boolean(),

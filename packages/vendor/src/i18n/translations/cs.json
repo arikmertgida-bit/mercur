@@ -506,7 +506,8 @@
         "mediaRequired": "Přidejte alespoň jeden obrázek pro tuto variantu.",
         "priceRequired": "Zadejte cenu této varianty alespoň v jedné měně.",
         "shippingProfileRequired": "Vyberte přepravní profil.",
-        "stockRequired": "Nastavte skladové množství této varianty alespoň pro jedno místo."
+        "stockRequired": "Nastavte skladové množství této varianty alespoň pro jedno místo.",
+        "mediaUploadFailed": "Jeden nebo více obrázků se nepodařilo nahrát. Před publikováním odstraňte obrázek, jehož nahrání selhalo, a zkuste to znovu."
       },
       "variants": {
         "header": "Varianty",
@@ -674,9 +675,12 @@
       "selectImagesHint": "Kliknutím na obrázky je přidáte k této variantě.",
       "editLabel": "Upravit",
       "limitExceeded": {
-        "description": "Můžete nahrát až {{max}} obrázků na produkt. Prvních {{max}} bylo přidáno — zbytek byl přeskočen.",
-        "title": "Dosažen limit obrázků"
-      }
+        "description": "Na jeden produkt lze nahrát maximálně {{max}} obrázků.",
+        "title": "Dosažen limit obrázků",
+        "confirm": "Rozumím"
+      },
+      "uploading": "Nahrávání...",
+      "uploadError": "Nahrání se nezdařilo"
     },
     "discountableHint": "Když není zaškrtnuto, slevy nebudou na tento produkt aplikovány.",
     "noSalesChannels": "Není dostupné v žádných prodejních kanálech",

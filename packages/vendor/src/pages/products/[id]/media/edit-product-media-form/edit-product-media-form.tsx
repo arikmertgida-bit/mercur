@@ -20,7 +20,7 @@ import {
 } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { ThumbnailBadge } from "@medusajs/icons"
+import { ExclamationCircleSolid, Spinner, ThumbnailBadge } from "@medusajs/icons"
 import { HttpTypes } from "@medusajs/types"
 import { MercurFeatureFlags } from "@mercurjs/types"
 import { ExtendedAdminProduct } from "@custom-types/products"
@@ -38,10 +38,15 @@ import {
 import { KeyboundForm } from "@components/utilities/keybound-form"
 import { useFeatureFlags } from "@hooks/api"
 import { useUpdateProduct } from "@hooks/api/products"
-import { sdk } from "@lib/client"
+import { ProductMediaLimitModal } from "../../../common/components/product-media-limit-modal/product-media-limit-modal"
 import { UploadMediaFormItem } from "../../../common/components/upload-media-form-item"
 import {
+  ProductMediaUploadProvider,
+  useProductMediaUpload,
+} from "../../../common/hooks/use-product-media-upload"
+import {
   EditProductMediaSchema,
+  MAX_PRODUCT_MEDIA_COUNT,
   MediaSchema,
 } from "../../../create/constants"
 import { EditProductMediaSchemaType } from "../../../create/types"
@@ -52,10 +57,30 @@ type ProductMediaViewProps = {
 
 type Media = z.infer<typeof MediaSchema>
 
+// Uploads happen in the background the moment a seller picks an image (see
+// `ProductMediaUploadProvider`), so the provider has to sit above the whole
+// form — the upload widget registers uploads into it, and this component's
+// own submit handler reads the finished results back out of it.
 export const EditProductMediaForm = ({ product }: ProductMediaViewProps) => {
+  return (
+    <ProductMediaUploadProvider>
+      <EditProductMediaFormContent product={product} />
+    </ProductMediaUploadProvider>
+  )
+}
+
+const EditProductMediaFormContent = ({ product }: ProductMediaViewProps) => {
   const [selection, setSelection] = useState<Record<string, true>>({})
+  const [limitModalOpen, setLimitModalOpen] = useState(false)
   const { t } = useTranslation()
   const { handleSuccess } = useRouteModal()
+  const {
+    registerFiles,
+    removeEntry,
+    getEntryStatus,
+    isUploading: isMediaUploading,
+    resolveMedia,
+  } = useProductMediaUpload()
 
   const { feature_flags } = useFeatureFlags()
   const isProductRequestEnabled =
@@ -109,45 +134,28 @@ export const EditProductMediaForm = ({ product }: ProductMediaViewProps) => {
   const { mutateAsync, isPending } = useUpdateProduct(product.id!)
 
   const handleSubmit = form.handleSubmit(async ({ media }) => {
-    const filesToUpload = media
-      .map((m, i) => ({ file: m.file, index: i }))
-      .filter((m) => !!m.file)
-
-    let uploaded: HttpTypes.AdminFile[] = []
-
-    if (filesToUpload.length) {
-      const { files } = await sdk.vendor.uploads
-        .mutate({ files: filesToUpload.map((m) => m.file) })
-        .catch(() => {
-          form.setError("media", {
-            type: "invalid_file",
-            message: t("products.media.failedToUpload"),
-          })
-          return { files: [] }
-        })
-      uploaded = files
+    // Every freshly picked file was already uploaded in the background as
+    // soon as it was selected (see `ProductMediaUploadProvider`) — this just
+    // reads back the finished results. `null` means something is still
+    // uploading or failed; the Save button already guards against that via
+    // `isMediaUploading`, but re-checking here closes the race where a
+    // request fails in the instant between the button re-enabling and the
+    // click landing.
+    const resolved = resolveMedia(media)
+    if (resolved === null) {
+      toast.error(t("products.media.failedToUpload"))
+      return
     }
-
-    const withUpdatedUrls = media.map((entry, i) => {
-      const toUploadIndex = filesToUpload.findIndex((m) => m.index === i)
-      if (toUploadIndex > -1) {
-        return {
-          ...entry,
-          url: uploaded[toUploadIndex]?.url,
-        }
-      }
-      return entry
-    })
 
     // Same self-healing fallback as product-create: an already-broken
     // product (created before that fix, with no thumbnail at all) gets one
     // assigned the next time its media is touched here.
     const thumbnail =
-      withUpdatedUrls.find((m) => m.isThumbnail)?.url ?? withUpdatedUrls[0]?.url
+      resolved.find((m) => m.isThumbnail)?.url ?? resolved[0]?.url
 
     await mutateAsync(
       {
-        images: withUpdatedUrls.map((file) => ({
+        images: resolved.map((file) => ({
           url: file.url,
           id: file.id,
         })),
@@ -187,6 +195,7 @@ export const EditProductMediaForm = ({ product }: ProductMediaViewProps) => {
     const ids = Object.keys(selection)
     const indices = ids.map((id) => fields.findIndex((m) => m.id === id))
 
+    ids.forEach((id) => removeEntry(id))
     remove(indices)
     setSelection({})
   }
@@ -255,6 +264,7 @@ export const EditProductMediaForm = ({ product }: ProductMediaViewProps) => {
                           checked={!!selection[m.id!]}
                           key={m.field_id}
                           media={m}
+                          status={m.id ? getEntryStatus(m.id) : undefined}
                         />
                       )
                     })}
@@ -275,7 +285,18 @@ export const EditProductMediaForm = ({ product }: ProductMediaViewProps) => {
               </div>
             </DndContext>
             <div className="bg-ui-bg-base overflow-auto border-b px-6 py-4 lg:border-b-0 lg:border-l">
-              <UploadMediaFormItem form={form} append={append} />
+              <ProductMediaLimitModal
+                open={limitModalOpen}
+                onOpenChange={setLimitModalOpen}
+              />
+              <UploadMediaFormItem
+                form={form}
+                append={append}
+                maxCount={MAX_PRODUCT_MEDIA_COUNT}
+                existingCount={fields.length}
+                onLimitExceeded={() => setLimitModalOpen(true)}
+                onFilesAppended={registerFiles}
+              />
             </div>
           </div>
         </RouteFocusModal.Body>
@@ -311,7 +332,11 @@ export const EditProductMediaForm = ({ product }: ProductMediaViewProps) => {
                 {t("actions.cancel")}
               </Button>
             </RouteFocusModal.Close>
-            <Button size="small" type="submit" isLoading={isPending}>
+            <Button
+              size="small"
+              type="submit"
+              isLoading={isPending || isMediaUploading}
+            >
               {t("actions.save")}
             </Button>
           </div>
@@ -367,12 +392,14 @@ const dropAnimationConfig: DropAnimation = {
 interface MediaGridItemProps {
   media: MediaView
   checked: boolean
+  status?: "uploading" | "done" | "error"
   onCheckedChange: (value: boolean) => void
 }
 
 const MediaGridItem = ({
   media,
   checked,
+  status,
   onCheckedChange,
 }: MediaGridItemProps) => {
   const { t } = useTranslation()
@@ -403,7 +430,8 @@ const MediaGridItem = ({
   return (
     <div
       className={clx(
-        "shadow-elevation-card-rest hover:shadow-elevation-card-hover focus-visible:shadow-borders-focus bg-ui-bg-subtle-hover group relative aspect-square h-auto max-w-full overflow-hidden rounded-lg outline-none"
+        "shadow-elevation-card-rest hover:shadow-elevation-card-hover focus-visible:shadow-borders-focus bg-ui-bg-subtle-hover group relative aspect-square h-auto max-w-full overflow-hidden rounded-lg outline-none",
+        { "border-2 border-ui-border-error": status === "error" }
       )}
       style={style}
       ref={setNodeRef}
@@ -443,6 +471,18 @@ const MediaGridItem = ({
         alt=""
         className="size-full object-cover object-center"
       />
+      {status === "uploading" && (
+        <div className="bg-ui-bg-overlay absolute inset-0 flex items-center justify-center">
+          <Spinner className="text-ui-fg-on-color animate-spin" />
+        </div>
+      )}
+      {status === "error" && (
+        <div className="bg-ui-bg-overlay absolute inset-0 flex items-center justify-center">
+          <Tooltip content={t("products.media.uploadError")}>
+            <ExclamationCircleSolid className="text-ui-fg-error" />
+          </Tooltip>
+        </div>
+      )}
     </div>
   )
 }

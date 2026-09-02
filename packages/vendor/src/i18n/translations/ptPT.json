@@ -506,7 +506,8 @@
         "mediaRequired": "Adicione pelo menos uma imagem para esta variante.",
         "priceRequired": "Introduza um preço para esta variante em pelo menos uma moeda.",
         "shippingProfileRequired": "Selecione um perfil de envio.",
-        "stockRequired": "Defina uma quantidade em stock para esta variante em pelo menos um local."
+        "stockRequired": "Defina uma quantidade em stock para esta variante em pelo menos um local.",
+        "mediaUploadFailed": "Não foi possível carregar uma ou mais imagens. Remova a imagem com falha e tente novamente antes de publicar."
       },
       "variants": {
         "header": "Variantes",
@@ -674,9 +675,12 @@
       "selectImagesHint": "Clique nas imagens para as adicionar a esta variante.",
       "editLabel": "Editar",
       "limitExceeded": {
-        "description": "Pode carregar até {{max}} imagens por produto. As primeiras {{max}} foram adicionadas — as restantes foram ignoradas.",
-        "title": "Limite de imagens atingido"
-      }
+        "description": "Pode carregar até {{max}} imagens por produto.",
+        "title": "Limite de imagens atingido",
+        "confirm": "Entendi"
+      },
+      "uploading": "A carregar...",
+      "uploadError": "Falha no carregamento"
     },
     "variantMedia": {
       "label": "Multimédia da variante",

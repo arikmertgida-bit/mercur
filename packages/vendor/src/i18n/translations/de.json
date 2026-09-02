@@ -506,7 +506,8 @@
         "mediaRequired": "Bitte fügen Sie mindestens ein Bild für diese Variante hinzu.",
         "priceRequired": "Bitte geben Sie für diese Variante einen Preis in mindestens einer Währung ein.",
         "shippingProfileRequired": "Bitte wählen Sie ein Versandprofil aus.",
-        "stockRequired": "Bitte legen Sie eine Lagermenge für diese Variante an mindestens einem Standort fest."
+        "stockRequired": "Bitte legen Sie eine Lagermenge für diese Variante an mindestens einem Standort fest.",
+        "mediaUploadFailed": "Ein oder mehrere Bilder konnten nicht hochgeladen werden. Entfernen Sie das fehlgeschlagene Bild und versuchen Sie es vor der Veröffentlichung erneut."
       },
       "variants": {
         "header": "Varianten",
@@ -674,9 +675,12 @@
       "selectImagesHint": "Klicken Sie auf Bilder, um sie dieser Variante hinzuzufügen.",
       "editLabel": "Bearbeiten",
       "limitExceeded": {
-        "description": "Sie können bis zu {{max}} Bilder pro Produkt hochladen. Die ersten {{max}} wurden hinzugefügt — der Rest wurde übersprungen.",
-        "title": "Bildlimit erreicht"
-      }
+        "description": "Pro Produkt können maximal {{max}} Bilder hochgeladen werden.",
+        "title": "Bildlimit erreicht",
+        "confirm": "Verstanden"
+      },
+      "uploading": "Wird hochgeladen...",
+      "uploadError": "Hochladen fehlgeschlagen"
     },
     "discountableHint": "Wenn diese Option deaktiviert ist, werden auf dieses Produkt keine Rabatte gewährt.",
     "noSalesChannels": "In keinem Vertriebskanal verfügbar",

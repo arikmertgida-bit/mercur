@@ -3,25 +3,27 @@ import { Dialog as RadixDialog } from "radix-ui"
 import { useEffect } from "react"
 import { useTranslation } from "react-i18next"
 
-import { MAX_PRODUCT_MEDIA_COUNT } from "../../../../constants"
+import { MAX_PRODUCT_MEDIA_COUNT } from "../../../create/constants"
 
 const AUTO_CLOSE_MS = 10_000
 
-type ProductCreateMediaLimitModalProps = {
+type ProductMediaLimitModalProps = {
   open: boolean
   onOpenChange: (open: boolean) => void
 }
 
 /**
  * Non-blocking info dialog — auto-dismisses after AUTO_CLOSE_MS, or the
- * seller can close it immediately with the OK button. Mirrors
+ * seller can close it immediately with the confirm button. Mirrors
  * DataGridKeyboardShortcutModal's raw-RadixDialog shell (no route to open
- * this from, so RouteFocusModal/StackedFocusModal don't apply).
+ * this from, so RouteFocusModal/StackedFocusModal don't apply). Shared by
+ * the product-create media tab and the existing-product media edit screen —
+ * both cap uploads at the same `MAX_PRODUCT_MEDIA_COUNT`.
  */
-export const ProductCreateMediaLimitModal = ({
+export const ProductMediaLimitModal = ({
   open,
   onOpenChange,
-}: ProductCreateMediaLimitModalProps) => {
+}: ProductMediaLimitModalProps) => {
   const { t } = useTranslation()
 
   useEffect(() => {
@@ -37,11 +39,11 @@ export const ProductCreateMediaLimitModal = ({
   }, [open, onOpenChange])
 
   return (
-    // Opens on top of the already-open /products/create RouteFocusModal —
-    // `modal={false}` keeps this dialog from re-locking body scroll on
-    // top of the parent's own lock, which is what causes the visible
-    // layout jump when a second modal Dialog mounts (see StackedDrawer for
-    // the same fix applied to the Variants-tab media picker).
+    // Opens on top of the already-open parent RouteFocusModal — `modal={false}`
+    // keeps this dialog from re-locking body scroll on top of the parent's
+    // own lock, which is what causes the visible layout jump when a second
+    // modal Dialog mounts (see StackedDrawer for the same fix applied to the
+    // Variants-tab media picker).
     <RadixDialog.Root open={open} onOpenChange={onOpenChange} modal={false}>
       <RadixDialog.Portal>
         <RadixDialog.Overlay
@@ -52,7 +54,7 @@ export const ProductCreateMediaLimitModal = ({
         />
         <RadixDialog.Content
           className="bg-ui-bg-subtle shadow-elevation-modal fixed left-[50%] top-[50%] flex w-full max-w-[400px] translate-x-[-50%] translate-y-[-50%] flex-col gap-y-4 rounded-lg p-6 outline-none"
-          data-testid="product-create-media-limit-modal"
+          data-testid="product-media-limit-modal"
           // This dialog opens right after a native file-picker selection
           // resolves; the element that opened it (the dropzone button)
           // typically still has DOM focus at that instant, which lies
@@ -60,7 +62,7 @@ export const ProductCreateMediaLimitModal = ({
           // DismissableLayer treats that as an immediate "focus moved
           // outside" event and closes the dialog before it's ever seen —
           // the ~1ms flash the seller reported. The dialog still closes on
-          // its own timeout or the OK button; it just shouldn't close
+          // its own timeout or the confirm button; it just shouldn't close
           // itself because something else already had focus when it opened.
           onFocusOutside={(event) => event.preventDefault()}
         >
@@ -84,9 +86,9 @@ export const ProductCreateMediaLimitModal = ({
                 size="small"
                 variant="primary"
                 type="button"
-                data-testid="product-create-media-limit-modal-ok"
+                data-testid="product-media-limit-modal-confirm"
               >
-                {t("actions.ok")}
+                {t("products.media.limitExceeded.confirm")}
               </Button>
             </RadixDialog.Close>
           </div>

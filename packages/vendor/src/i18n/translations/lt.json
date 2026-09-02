@@ -506,7 +506,8 @@
         "mediaRequired": "Pridėkite bent vieną šio varianto vaizdą.",
         "priceRequired": "Įveskite šio varianto kainą bent viena valiuta.",
         "shippingProfileRequired": "Pasirinkite siuntimo profilį.",
-        "stockRequired": "Nustatykite šio varianto atsargų kiekį bent vienoje vietoje."
+        "stockRequired": "Nustatykite šio varianto atsargų kiekį bent vienoje vietoje.",
+        "mediaUploadFailed": "Nepavyko įkelti vieno ar kelių paveikslėlių. Prieš publikuodami pašalinkite nepavykusį paveikslėlį ir bandykite dar kartą."
       },
       "variants": {
         "header": "Variantai",
@@ -674,9 +675,12 @@
       "selectImagesHint": "Spustelėkite nuotraukas, kad pridėtumėte jas prie šio varianto.",
       "editLabel": "Keisti",
       "limitExceeded": {
-        "description": "Vienam produktui galite įkelti iki {{max}} vaizdų. Pirmieji {{max}} buvo pridėti — likę buvo praleisti.",
-        "title": "Pasiektas vaizdų limitas"
-      }
+        "description": "Vienam produktui galima įkelti ne daugiau kaip {{max}} nuotraukas.",
+        "title": "Pasiektas vaizdų limitas",
+        "confirm": "Supratau"
+      },
+      "uploading": "Įkeliama...",
+      "uploadError": "Įkelti nepavyko"
     },
     "discountableHint": "Jei nepažymėta, nuolaidos prekei netaikomos.",
     "noSalesChannels": "Nėra nei vienam pardavimo kanale",

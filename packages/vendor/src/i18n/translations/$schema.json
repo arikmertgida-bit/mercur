@@ -2158,6 +2158,9 @@
                 },
                 "formIncomplete": {
                   "type": "string"
+                },
+                "mediaUploadFailed": {
+                  "type": "string"
                 }
               },
               "required": [
@@ -2177,7 +2180,8 @@
                 "priceRequired",
                 "stockRequired",
                 "mediaRequired",
-                "formIncomplete"
+                "formIncomplete",
+                "mediaUploadFailed"
               ],
               "additionalProperties": false
             },
@@ -2905,13 +2909,23 @@
                 },
                 "description": {
                   "type": "string"
+                },
+                "confirm": {
+                  "type": "string"
                 }
               },
               "required": [
                 "title",
-                "description"
+                "description",
+                "confirm"
               ],
               "additionalProperties": false
+            },
+            "uploading": {
+              "type": "string"
+            },
+            "uploadError": {
+              "type": "string"
             }
           },
           "required": [
@@ -2942,7 +2956,9 @@
             "selectImages",
             "selectImagesHint",
             "editLabel",
-            "limitExceeded"
+            "limitExceeded",
+            "uploading",
+            "uploadError"
           ],
           "additionalProperties": false
         },

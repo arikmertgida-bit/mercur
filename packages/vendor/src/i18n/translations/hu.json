@@ -506,7 +506,8 @@
         "mediaRequired": "Adjon hozzá legalább egy képet ehhez a variánshoz.",
         "priceRequired": "Adjon meg egy árat ehhez a variánshoz legalább egy pénznemben.",
         "shippingProfileRequired": "Válasszon szállítási profilt.",
-        "stockRequired": "Állítson be egy készletmennyiséget ehhez a variánshoz legalább egy helyszínen."
+        "stockRequired": "Állítson be egy készletmennyiséget ehhez a variánshoz legalább egy helyszínen.",
+        "mediaUploadFailed": "Egy vagy több kép feltöltése sikertelen volt. Közzététel előtt távolítsa el a sikertelen képet, és próbálja újra."
       },
       "variants": {
         "header": "Variánsok",
@@ -674,9 +675,12 @@
       "selectImagesHint": "Kattintson a képekre, hogy hozzáadja őket ehhez a varánshoz.",
       "editLabel": "Szerkesztés",
       "limitExceeded": {
-        "description": "Termékenként legfeljebb {{max}} képet tölthet fel. Az első {{max}} hozzáadva — a többi kimaradt.",
-        "title": "Elérte a képkorlátot"
-      }
+        "description": "Termékenként legfeljebb {{max}} kép tölthető fel.",
+        "title": "Elérte a képkorlátot",
+        "confirm": "Értem"
+      },
+      "uploading": "Feltöltés...",
+      "uploadError": "A feltöltés sikertelen"
     },
     "discountableHint": "Ha kikapcsolja, a termékre nem alkalmazhatók kedvezmények.",
     "noSalesChannels": "A termék nem érhető el egyetlen értékesítési csatornán sem.",

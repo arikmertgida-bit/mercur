@@ -28,6 +28,11 @@ import {
   normalizeProductFormValues,
   VariantMediaUpdate,
 } from "../../utils"
+import {
+  ProductMediaUploadProvider,
+  ResolvedMediaEntry,
+  useProductMediaUpload,
+} from "../../../common/hooks/use-product-media-upload"
 import { ProductCreateAttributesForm } from "../product-create-attributes-form"
 import { ProductCreateDetailsForm } from "../product-create-details-form"
 import { ProductCreateOrganizeForm } from "../product-create-organize-form"
@@ -39,15 +44,7 @@ type ProductCreateFormProps = {
   defaultValues?: DeepPartial<ProductCreateSchemaType>
 }
 
-type UploadedFile = { id?: string; url: string }
-type UploadedMediaEntry = UploadedFile & {
-  isThumbnail: boolean
-  // The local, pre-upload `media[].id` this file came from — carried
-  // through so the post-create variant-image follow-up (see
-  // `applyVariantMediaUpdates` below) can resolve a seller's Image
-  // selections (still keyed by that local id) to the just-uploaded URL.
-  clientMediaId?: string
-}
+type UploadedMediaEntry = ResolvedMediaEntry
 
 /**
  * Fires the per-variant `thumbnail`/`images.add` follow-up calls (see
@@ -101,13 +98,26 @@ const applyVariantMediaUpdates = async (
   }
 }
 
-export const ProductCreateForm = ({
+// Uploads happen in the background the moment a seller picks an image (see
+// `ProductMediaUploadProvider`), so the provider has to sit above the whole
+// tabbed form — the media tab registers uploads into it, and this
+// component's own submit handler reads the finished results back out of it.
+export const ProductCreateForm = (props: ProductCreateFormProps) => {
+  return (
+    <ProductMediaUploadProvider>
+      <ProductCreateFormContent {...props} />
+    </ProductMediaUploadProvider>
+  )
+}
+
+const ProductCreateFormContent = ({
   children,
   schema,
   defaultValues: extraDefaults,
 }: ProductCreateFormProps) => {
   const { t } = useTranslation()
   const { handleSuccess } = useRouteModal()
+  const { isUploading: isMediaUploading, resolveMedia } = useProductMediaUpload()
   const form = useForm<ProductCreateSchemaType>({
     defaultValues: {
       ...PRODUCT_CREATE_FORM_DEFAULTS,
@@ -166,31 +176,17 @@ export const ProductCreateForm = ({
     const media = values.media || []
     const payload = { ...values, media: undefined }
 
-    let uploadedMedia: UploadedMediaEntry[] = []
-    try {
-      const filesToUpload = media
-        .map((m) => ({
-          file: m.file,
-          isThumbnail: m.isThumbnail,
-          clientMediaId: m.id,
-        }))
-        .filter((m) => !!m.file)
-
-      if (filesToUpload.length) {
-        const result = await sdk.vendor.uploads.mutate({
-          files: filesToUpload.map(({ file }) => file),
-        })
-        const uploadedFiles: UploadedFile[] = result?.files ?? []
-        uploadedMedia = uploadedFiles.map((file, i) => ({
-          ...file,
-          isThumbnail: filesToUpload[i].isThumbnail,
-          clientMediaId: filesToUpload[i].clientMediaId,
-        }))
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        toast.error(error.message)
-      }
+    // Every file was already uploaded in the background as soon as it was
+    // picked (see `ProductMediaUploadProvider`) — this just reads back the
+    // finished results. `null` means something is still uploading or failed,
+    // which the Publish/Save-as-draft buttons already guard against via
+    // `isMediaUploading`, but re-checking here closes the race where a
+    // request fails in the instant between the button re-enabling and the
+    // click landing.
+    const uploadedMedia: UploadedMediaEntry[] | null = resolveMedia(media)
+    if (uploadedMedia === null) {
+      toast.error(t("products.create.errors.mediaUploadFailed"))
+      return
     }
 
     const submittedStatus = isDraftSubmission
@@ -318,7 +314,7 @@ export const ProductCreateForm = ({
       zone="create"
       form={form}
       onSubmit={handleSubmit}
-      isLoading={isPending}
+      isLoading={isPending || isMediaUploading}
       // oxlint-disable-next-line react/no-unstable-nested-components -- TabbedForm footer render-prop, invoked as a function by TabbedForm, never mounted as JSX
       footer={({ isLastTab, onNext, isLoading }) => (
         <div

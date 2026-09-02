@@ -511,7 +511,8 @@
         "requiredAttributeEnter": "Bu öznitelik pazar yeri tarafından zorunlu kılınmıştır. Lütfen bir değer girin.",
         "requiredAttributeMultiSelect": "Bu öznitelik pazar yeri tarafından zorunlu kılınmıştır. Lütfen en az bir değer seçin.",
         "requiredAttributeSelect": "Bu öznitelik pazar yeri tarafından zorunlu kılınmıştır. Lütfen bir değer seçin.",
-        "titleRequired": "Başlık zorunludur"
+        "titleRequired": "Başlık zorunludur",
+        "mediaUploadFailed": "Bir veya daha fazla görsel yüklenemedi. Yayınlamadan önce başarısız olan görseli kaldırıp tekrar deneyin."
       },
       "variants": {
         "header": "Varyantlar",
@@ -670,8 +671,11 @@
       "successToast": "Medya başarıyla güncellendi.",
       "limitExceeded": {
         "title": "Görsel yükleme sınırına ulaşıldı",
-        "description": "Bir ürüne en fazla {{max}} görsel yükleyebilirsiniz. İlk {{max}} görsel eklendi, kalanlar atlandı."
+        "description": "Ürün kartlarında en fazla {{max}} adet görsel yüklenebilir.",
+        "confirm": "Anladım"
       },
+      "uploading": "Yükleniyor...",
+      "uploadError": "Yükleme başarısız",
       "availableImages": "Görselleri seç",
       "editLabel": "Düzenle",
       "fileTooLarge": "Bir veya daha fazla dosya en fazla {{size}} dosya boyutunu aşıyor: {{name}}",

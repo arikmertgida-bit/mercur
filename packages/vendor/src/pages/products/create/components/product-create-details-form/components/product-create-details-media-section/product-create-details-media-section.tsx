@@ -20,6 +20,8 @@ import {
 import { CSS } from "@dnd-kit/utilities"
 import {
   DotsSix,
+  ExclamationCircleSolid,
+  Spinner,
   StackPerspective,
   ThumbnailBadge,
   Trash,
@@ -32,10 +34,11 @@ import { useTranslation } from "react-i18next"
 
 import { ActionMenu } from "@components/common/action-menu"
 import { useTabbedForm } from "@components/tabbed-form/tabbed-form"
+import { ProductMediaLimitModal } from "../../../../../common/components/product-media-limit-modal/product-media-limit-modal"
 import { UploadMediaFormItem } from "../../../../../common/components/upload-media-form-item"
+import { useProductMediaUpload } from "../../../../../common/hooks/use-product-media-upload"
 import { MAX_PRODUCT_MEDIA_COUNT } from "../../../../constants"
 import { ProductCreateSchemaType } from "../../../../types"
-import { ProductCreateMediaLimitModal } from "./product-create-media-limit-modal"
 
 const dropAnimationConfig: DropAnimation = {
   sideEffects: defaultDropAnimationSideEffects({
@@ -49,6 +52,7 @@ const dropAnimationConfig: DropAnimation = {
 
 export const ProductCreateMediaSection = () => {
   const form = useTabbedForm<ProductCreateSchemaType>()
+  const { registerFiles, removeEntry, getEntryStatus } = useProductMediaUpload()
 
   const { fields, append, remove } = useFieldArray({
     name: "media",
@@ -91,6 +95,10 @@ export const ProductCreateMediaSection = () => {
 
   const getOnDelete = (index: number) => {
     return () => {
+      const id = fields[index]?.id
+      if (id) {
+        removeEntry(id)
+      }
       remove(index)
     }
   }
@@ -120,7 +128,7 @@ export const ProductCreateMediaSection = () => {
 
   return (
     <div id="media" className="flex flex-col gap-y-2" data-testid="product-create-media-section">
-      <ProductCreateMediaLimitModal
+      <ProductMediaLimitModal
         open={limitModalOpen}
         onOpenChange={setLimitModalOpen}
       />
@@ -131,6 +139,7 @@ export const ProductCreateMediaSection = () => {
         maxCount={MAX_PRODUCT_MEDIA_COUNT}
         existingCount={fields.length}
         onLimitExceeded={() => setLimitModalOpen(true)}
+        onFilesAppended={registerFiles}
       />
       <DndContext
         sensors={sensors}
@@ -154,6 +163,7 @@ export const ProductCreateMediaSection = () => {
                 <MediaItem
                   key={field.field_id}
                   field={field}
+                  status={field.id ? getEntryStatus(field.id) : undefined}
                   onDelete={onDelete}
                   onMakeThumbnail={onMakeThumbnail}
                 />
@@ -170,17 +180,18 @@ type MediaField = {
   isThumbnail: boolean
   url: string
   id?: string | undefined
-  file?: File
+  file: File | null
   field_id: string
 }
 
 type MediaItemProps = {
   field: MediaField
+  status?: "uploading" | "done" | "error"
   onDelete: () => void
   onMakeThumbnail: () => void
 }
 
-const MediaItem = ({ field, onDelete, onMakeThumbnail }: MediaItemProps) => {
+const MediaItem = ({ field, status, onDelete, onMakeThumbnail }: MediaItemProps) => {
   const { t } = useTranslation()
 
   const {
@@ -232,13 +243,29 @@ const MediaItem = ({ field, onDelete, onMakeThumbnail }: MediaItemProps) => {
             </Text>
             <div className="flex items-center gap-x-1">
               {field.isThumbnail && <ThumbnailBadge />}
-              <Text
-                size="xsmall"
-                leading="compact"
-                className="text-ui-fg-subtle"
-              >
-                {formatFileSize(field.file.size)}
-              </Text>
+              {status === "uploading" ? (
+                <div className="flex items-center gap-x-1">
+                  <Spinner className="text-ui-fg-subtle animate-spin" />
+                  <Text size="xsmall" leading="compact" className="text-ui-fg-subtle">
+                    {t("products.media.uploading")}
+                  </Text>
+                </div>
+              ) : status === "error" ? (
+                <div className="flex items-center gap-x-1">
+                  <ExclamationCircleSolid className="text-ui-fg-error" />
+                  <Text size="xsmall" leading="compact" className="text-ui-fg-error">
+                    {t("products.media.uploadError")}
+                  </Text>
+                </div>
+              ) : (
+                <Text
+                  size="xsmall"
+                  leading="compact"
+                  className="text-ui-fg-subtle"
+                >
+                  {formatFileSize(field.file.size)}
+                </Text>
+              )}
             </div>
           </div>
         </div>

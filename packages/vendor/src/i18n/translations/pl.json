@@ -519,7 +519,8 @@
         "mediaRequired": "Dodaj co najmniej jeden obraz dla tego wariantu.",
         "priceRequired": "Wprowadź cenę tego wariantu w co najmniej jednej walucie.",
         "shippingProfileRequired": "Wybierz profil wysyłki.",
-        "stockRequired": "Ustaw ilość na stanie dla tego wariantu w co najmniej jednej lokalizacji."
+        "stockRequired": "Ustaw ilość na stanie dla tego wariantu w co najmniej jednej lokalizacji.",
+        "mediaUploadFailed": "Nie udało się przesłać jednego lub więcej zdjęć. Usuń zdjęcie, którego przesyłanie się nie powiodło, i spróbuj ponownie przed publikacją."
       },
       "attributes": {
         "header": "Atrybuty",
@@ -689,9 +690,12 @@
       "selectImagesHint": "Kliknij obrazy, aby dodać je do tego wariantu.",
       "editLabel": "Edytuj",
       "limitExceeded": {
-        "description": "Możesz przesłać maksymalnie {{max}} obrazów na produkt. Dodano pierwsze {{max}} — resztę pominięto.",
-        "title": "Osiągnięto limit obrazów"
-      }
+        "description": "Możesz przesłać maksymalnie {{max}} zdjęć na produkt.",
+        "title": "Osiągnięto limit obrazów",
+        "confirm": "Rozumiem"
+      },
+      "uploading": "Przesyłanie...",
+      "uploadError": "Przesyłanie nie powiodło się"
     },
     "discountableHint": "Jeśli odznaczone, rabaty nie będą stosowane do tego produktu.",
     "noSalesChannels": "Niedostępny w żadnych kanałach sprzedaży",
