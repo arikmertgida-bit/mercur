@@ -4090,6 +4090,12 @@
     "agreement": {
       "label": "Ho letto e accetto i <0>Termini di Partnership e Utilizzo per Venditori</0>.",
       "drawerDescription": "Rivedi i termini qui sotto prima di continuare."
+    },
+    "fields": {
+      "firstName": "Nome dell'utente",
+      "lastName": "Cognome dell'utente",
+      "email": "E-mail dell'utente",
+      "password": "Password dell'utente"
     }
   },
   "sellerAgreement": {
@@ -4217,33 +4223,39 @@
       },
       "store": {
         "title": "Inserisci i dettagli del tuo negozio",
-        "name": "Nome",
-        "email": "Email",
+        "name": "Nome del negozio",
+        "email": "E-mail del negozio",
         "handle": "Identificativo",
         "handleTooltip": "L'identificativo diventa lo slug URL del tuo negozio. Lascia vuoto per generarlo automaticamente dal nome.",
         "handlePlaceholder": "il-mio-negozio",
         "currency": "Valuta",
         "selectCurrency": "Seleziona",
-        "currencyHint": "Non può essere modificata dopo la creazione del negozio"
+        "currencyHint": "Non può essere modificata dopo la creazione del negozio",
+        "emailHint": "Questa è l'e-mail di contatto pubblica del tuo negozio, diversa dall'e-mail del tuo account personale.",
+        "phone": "Telefono del negozio",
+        "description": "Descrizione del negozio"
       },
       "skip": "Salta",
       "address": {
         "title": "Inserisci il tuo indirizzo",
-        "name": "Nome",
-        "namePlaceholder": "Sede centrale",
-        "address": "Indirizzo",
+        "address": "Indirizzo del negozio",
         "address2": "Appartamento, suite, ecc.",
         "postalCode": "Codice postale",
         "city": "Città",
-        "country": "Paese",
-        "state": "Stato"
+        "country": "Paese"
       },
       "company": {
         "title": "Inserisci i dettagli della tua azienda",
         "subtitle": "Informazioni sul negozio professionale",
         "corporateName": "Azienda",
-        "registrationNumber": "Numero di registrazione",
-        "taxId": "Partita IVA"
+        "registrationNumber": "Numero di identità nazionale turco (T.C. Kimlik No)",
+        "taxId": "Partita IVA",
+        "disclaimer": "Inserisci i dati della tua azienda. La fattura di commissione sarà emessa in base alle informazioni fornite qui. La responsabilità legale sull'accuratezza di queste informazioni ricade sul venditore che le ha inserite.",
+        "typeLabel": "Tipo di attività",
+        "typeIndividual": "Ditta individuale",
+        "typeIndividualDescription": "Venditore individuale — la fatturazione avviene in base al tuo numero di identità nazionale turco.",
+        "typeCorporate": "Società registrata (S.r.l. / S.p.A. / altro)",
+        "typeCorporateDescription": "Persona giuridica — la fatturazione avviene in base alla tua partita IVA."
       },
       "payment": {
         "title": "Inserisci i tuoi dettagli di pagamento",
@@ -4259,7 +4271,10 @@
         "emailInvalid": "Inserisci un'email",
         "currencyRequired": "Seleziona una valuta",
         "countryRequired": "Seleziona un paese",
-        "accountNameRequired": "Inserisci il nome dell'intestatario"
+        "accountNameRequired": "Inserisci il nome dell'intestatario",
+        "companyTypeRequired": "Seleziona un tipo di attività",
+        "registrationNumberRequired": "Inserisci il tuo numero di identità nazionale turco",
+        "taxIdRequired": "Inserisci la tua partita IVA"
       },
       "preview": {
         "title": "Benvenuto in Kayı.com",

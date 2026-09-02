@@ -4146,6 +4146,12 @@
     "agreement": {
       "label": "Li e aceito os <0>Termos de Parceria e Utilização para Vendedores</0>.",
       "drawerDescription": "Reveja os termos abaixo antes de continuar."
+    },
+    "fields": {
+      "firstName": "Primeiro nome do utilizador",
+      "lastName": "Apelido do utilizador",
+      "email": "E-mail do utilizador",
+      "password": "Palavra-passe do utilizador"
     }
   },
   "sellerAgreement": {
@@ -4273,33 +4279,39 @@
       },
       "store": {
         "title": "Introduza os detalhes da sua loja",
-        "name": "Nome",
-        "email": "Email",
+        "name": "Nome da loja",
+        "email": "E-mail da loja",
         "handle": "Identificador",
         "handleTooltip": "O identificador torna-se o slug do URL da sua loja. Deixe em branco para gerar automaticamente a partir do nome.",
         "handlePlaceholder": "my-store",
         "currency": "Moeda",
         "selectCurrency": "Selecionar",
-        "currencyHint": "Não pode ser alterado após a criação da loja"
+        "currencyHint": "Não pode ser alterado após a criação da loja",
+        "emailHint": "Este é o e-mail público de contacto da sua loja — diferente do e-mail da sua conta pessoal.",
+        "phone": "Telefone da loja",
+        "description": "Descrição da loja"
       },
       "skip": "Ignorar",
       "address": {
         "title": "Introduza a sua morada",
-        "name": "Nome",
-        "namePlaceholder": "Sede",
-        "address": "Morada",
+        "address": "Morada da loja",
         "address2": "Apartamento, fração, etc.",
         "postalCode": "Código postal",
         "city": "Cidade",
-        "country": "País",
-        "state": "Estado"
+        "country": "País"
       },
       "company": {
         "title": "Introduza os detalhes da sua empresa",
         "subtitle": "Informação profissional da loja",
         "corporateName": "Empresa",
-        "registrationNumber": "Número de registo",
-        "taxId": "NIF"
+        "registrationNumber": "Número de identidade nacional turco (T.C. Kimlik No)",
+        "taxId": "NIF",
+        "disclaimer": "Introduza os dados da sua empresa. A fatura de comissão será emitida com base nas informações fornecidas aqui. A responsabilidade legal pela exatidão destas informações pertence ao vendedor que as introduziu.",
+        "typeLabel": "Tipo de empresa",
+        "typeIndividual": "Empresário em nome individual",
+        "typeIndividualDescription": "Vendedor individual — faturação com base no seu número de identidade nacional turco.",
+        "typeCorporate": "Empresa registada (Lda. / S.A. / outro)",
+        "typeCorporateDescription": "Pessoa coletiva — faturação com base no seu número de identificação fiscal."
       },
       "payment": {
         "title": "Introduza os seus detalhes de pagamento",
@@ -4315,7 +4327,10 @@
         "emailInvalid": "Introduza um email",
         "currencyRequired": "Selecione uma moeda",
         "countryRequired": "Selecione um país",
-        "accountNameRequired": "Introduza um nome de conta"
+        "accountNameRequired": "Introduza um nome de conta",
+        "companyTypeRequired": "Selecione um tipo de empresa",
+        "registrationNumberRequired": "Introduza o seu número de identidade nacional turco",
+        "taxIdRequired": "Introduza o seu número de identificação fiscal"
       },
       "preview": {
         "title": "Bem-vindo ao Kayı.com",

@@ -4090,6 +4090,12 @@
     "agreement": {
       "label": "我已阅读并接受<0>《卖家合作与使用条款》</0>。",
       "drawerDescription": "请在继续之前查看以下条款。"
+    },
+    "fields": {
+      "firstName": "用户名字",
+      "lastName": "用户姓氏",
+      "email": "用户邮箱",
+      "password": "用户密码"
     }
   },
   "sellerAgreement": {
@@ -4217,33 +4223,39 @@
       },
       "store": {
         "title": "输入您的店铺详情",
-        "name": "名称",
-        "email": "邮箱",
+        "name": "店铺名称",
+        "email": "店铺邮箱",
         "handle": "标识",
         "handleTooltip": "标识将作为您店铺的 URL 别名。留空将根据名称自动生成。",
         "handlePlaceholder": "my-store",
         "currency": "货币",
         "selectCurrency": "选择",
-        "currencyHint": "店铺创建后无法更改"
+        "currencyHint": "店铺创建后无法更改",
+        "emailHint": "这是您店铺的公开联系邮箱，与您的个人账户邮箱不同。",
+        "phone": "店铺电话",
+        "description": "店铺简介"
       },
       "skip": "跳过",
       "address": {
         "title": "输入您的地址",
-        "name": "名称",
-        "namePlaceholder": "总部",
-        "address": "地址",
+        "address": "店铺地址",
         "address2": "公寓、套房等",
         "postalCode": "邮政编码",
         "city": "城市",
-        "country": "国家",
-        "state": "州"
+        "country": "国家"
       },
       "company": {
         "title": "输入您的公司详情",
         "subtitle": "专业店铺信息",
         "corporateName": "公司",
-        "registrationNumber": "注册号",
-        "taxId": "税号"
+        "registrationNumber": "土耳其国民身份证号（T.C. Kimlik No）",
+        "taxId": "税号",
+        "disclaimer": "请填写您的公司信息。佣金发票将根据此处填写的信息开具。所填信息准确性的法律责任由填写信息的卖家承担。",
+        "typeLabel": "企业类型",
+        "typeIndividual": "个体工商户",
+        "typeIndividualDescription": "个人卖家——根据您的土耳其国民身份证号开具发票。",
+        "typeCorporate": "注册公司（有限责任公司／股份公司／其他）",
+        "typeCorporateDescription": "法人实体——根据您的税号开具发票。"
       },
       "payment": {
         "title": "输入您的支付详情",
@@ -4259,7 +4271,10 @@
         "emailInvalid": "请输入邮箱",
         "currencyRequired": "请选择货币",
         "countryRequired": "请选择国家",
-        "accountNameRequired": "请输入账户名称"
+        "accountNameRequired": "请输入账户名称",
+        "companyTypeRequired": "请选择企业类型",
+        "registrationNumberRequired": "请填写您的土耳其国民身份证号",
+        "taxIdRequired": "请填写您的税号"
       },
       "preview": {
         "title": "欢迎使用 Kayı.com",

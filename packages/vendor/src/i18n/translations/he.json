@@ -4090,6 +4090,12 @@
     "agreement": {
       "label": "קראתי ואני מאשר/ת את <0>תנאי השותפות והשימוש למוכרים</0>.",
       "drawerDescription": "עיין בתנאים שלהלן לפני שתמשיך."
+    },
+    "fields": {
+      "firstName": "שם פרטי של המשתמש",
+      "lastName": "שם משפחה של המשתמש",
+      "email": "אימייל המשתמש",
+      "password": "סיסמת המשתמש"
     }
   },
   "sellerAgreement": {
@@ -4217,33 +4223,39 @@
       },
       "store": {
         "title": "הזן את פרטי החנות שלך",
-        "name": "שם",
-        "email": "אימייל",
+        "name": "שם החנות",
+        "email": "אימייל החנות",
         "handle": "מזהה",
         "handleTooltip": "המזהה הופך לתבנית ה-URL של החנות שלך. השאר ריק ליצירה אוטומטית מהשם.",
         "handlePlaceholder": "my-store",
         "currency": "מטבע",
         "selectCurrency": "בחר",
-        "currencyHint": "לא ניתן לשנות לאחר יצירת החנות"
+        "currencyHint": "לא ניתן לשנות לאחר יצירת החנות",
+        "emailHint": "זהו כתובת האימייל הציבורית ליצירת קשר עם החנות שלך — שונה מכתובת האימייל של החשבון האישי שלך.",
+        "phone": "טלפון החנות",
+        "description": "תיאור החנות"
       },
       "skip": "דלג",
       "address": {
         "title": "הזן את הכתובת שלך",
-        "name": "שם",
-        "namePlaceholder": "משרד ראשי",
-        "address": "כתובת",
+        "address": "כתובת החנות",
         "address2": "דירה, בניין וכו'",
         "postalCode": "מיקוד",
         "city": "עיר",
-        "country": "מדינה",
-        "state": "מדינה"
+        "country": "מדינה"
       },
       "company": {
         "title": "הזן את פרטי החברה שלך",
         "subtitle": "מידע מקצועי על החנות",
         "corporateName": "חברה",
-        "registrationNumber": "מספר רישום",
-        "taxId": "מספר עוסק"
+        "registrationNumber": "מספר תעודת זהות טורקית (T.C. Kimlik No)",
+        "taxId": "מספר עוסק",
+        "disclaimer": "הזן את פרטי החברה שלך. חשבונית העמלה תונפק בהתאם למידע שיוזן כאן. האחריות המשפטית לדיוק המידע חלה על המוכר שהזין אותו.",
+        "typeLabel": "סוג עסק",
+        "typeIndividual": "עוסק פטור/מורשה",
+        "typeIndividualDescription": "מוכר פרטי — החשבונית תופק לפי מספר תעודת הזהות הטורקית שלך.",
+        "typeCorporate": "חברה רשומה (בע\"מ / אחר)",
+        "typeCorporateDescription": "תאגיד — החשבונית תופק לפי מספר העוסק/מס שלך."
       },
       "payment": {
         "title": "הזן את פרטי התשלום שלך",
@@ -4259,7 +4271,10 @@
         "emailInvalid": "יש להזין כתובת דוא\"ל",
         "currencyRequired": "יש לבחור מטבע",
         "countryRequired": "נא לבחור מדינה",
-        "accountNameRequired": "יש להזין שם חשבון"
+        "accountNameRequired": "יש להזין שם חשבון",
+        "companyTypeRequired": "אנא בחר סוג עסק",
+        "registrationNumberRequired": "אנא הזן את מספר תעודת הזהות הטורקית שלך",
+        "taxIdRequired": "אנא הזן את מספר העוסק/מס שלך"
       },
       "preview": {
         "title": "ברוך הבא ל-Kayı.com",

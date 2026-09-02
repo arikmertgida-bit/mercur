@@ -4090,6 +4090,12 @@
     "agreement": {
       "label": "Li e aceito os <0>Termos de Parceria e Uso para Vendedores</0>.",
       "drawerDescription": "Revise os termos abaixo antes de continuar."
+    },
+    "fields": {
+      "firstName": "Nome do usuário",
+      "lastName": "Sobrenome do usuário",
+      "email": "E-mail do usuário",
+      "password": "Senha do usuário"
     }
   },
   "sellerAgreement": {
@@ -4217,33 +4223,39 @@
       },
       "store": {
         "title": "Informe os detalhes da sua loja",
-        "name": "Nome",
-        "email": "E-mail",
+        "name": "Nome da loja",
+        "email": "E-mail da loja",
         "handle": "Identificador",
         "handleTooltip": "O identificador (handle) se torna o slug de URL da sua loja. Deixe em branco para gerar automaticamente a partir do nome.",
         "handlePlaceholder": "minha-loja",
         "currency": "Moeda",
         "selectCurrency": "Selecionar",
-        "currencyHint": "Não pode ser alterado após a criação da loja"
+        "currencyHint": "Não pode ser alterado após a criação da loja",
+        "emailHint": "Este é o e-mail público de contato da sua loja — diferente do e-mail da sua conta pessoal.",
+        "phone": "Telefone da loja",
+        "description": "Descrição da loja"
       },
       "skip": "Pular",
       "address": {
         "title": "Informe seu endereço",
-        "name": "Nome",
-        "namePlaceholder": "Sede",
-        "address": "Endereço",
+        "address": "Endereço da loja",
         "address2": "Apartamento, suíte, etc.",
         "postalCode": "CEP",
         "city": "Cidade",
-        "country": "País",
-        "state": "Estado"
+        "country": "País"
       },
       "company": {
         "title": "Informe os detalhes da sua empresa",
         "subtitle": "Informações profissionais da loja",
         "corporateName": "Empresa",
-        "registrationNumber": "Número de registro",
-        "taxId": "CPF/CNPJ"
+        "registrationNumber": "Número de identidade nacional turco (T.C. Kimlik No)",
+        "taxId": "CPF/CNPJ",
+        "disclaimer": "Informe os dados da sua empresa. A nota fiscal de comissão será emitida com base nas informações fornecidas aqui. A responsabilidade legal pela exatidão dessas informações é do vendedor que as informou.",
+        "typeLabel": "Tipo de empresa",
+        "typeIndividual": "Empresário individual (pessoa física)",
+        "typeIndividualDescription": "Vendedor individual — faturamento com base no seu número de identidade nacional turco.",
+        "typeCorporate": "Empresa registrada (Ltda. / S.A. / outro)",
+        "typeCorporateDescription": "Pessoa jurídica — faturamento com base no seu CNPJ/número fiscal."
       },
       "payment": {
         "title": "Informe seus detalhes de pagamento",
@@ -4259,7 +4271,10 @@
         "emailInvalid": "Informe um e-mail",
         "currencyRequired": "Selecione uma moeda",
         "countryRequired": "Por favor, selecione um país",
-        "accountNameRequired": "Informe um nome de conta"
+        "accountNameRequired": "Informe um nome de conta",
+        "companyTypeRequired": "Selecione um tipo de empresa",
+        "registrationNumberRequired": "Informe seu número de identidade nacional turco",
+        "taxIdRequired": "Informe seu número fiscal"
       },
       "preview": {
         "title": "Bem-vindo ao Kayı.com",

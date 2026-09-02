@@ -4090,6 +4090,12 @@
     "agreement": {
       "label": "Ich habe die <0>Partnerschafts- und Nutzungsbedingungen für Verkäufer</0> gelesen und akzeptiere sie.",
       "drawerDescription": "Lesen Sie die folgenden Bedingungen, bevor Sie fortfahren."
+    },
+    "fields": {
+      "firstName": "Vorname des Nutzers",
+      "lastName": "Nachname des Nutzers",
+      "email": "E-Mail des Nutzers",
+      "password": "Passwort des Nutzers"
     }
   },
   "sellerAgreement": {
@@ -4217,33 +4223,39 @@
       },
       "store": {
         "title": "Geben Sie Ihre Shop-Details ein",
-        "name": "Name",
-        "email": "E-Mail",
+        "name": "Shopname",
+        "email": "Shop-E-Mail",
         "handle": "Identifikator",
         "handleTooltip": "Der Identifikator wird zum URL-Slug für Ihren Shop. Leer lassen, um ihn automatisch aus dem Namen zu generieren.",
         "handlePlaceholder": "mein-shop",
         "currency": "Währung",
         "selectCurrency": "Wählen",
-        "currencyHint": "Kann nach Erstellung des Shops nicht mehr geändert werden"
+        "currencyHint": "Kann nach Erstellung des Shops nicht mehr geändert werden",
+        "emailHint": "Dies ist die öffentliche Kontakt-E-Mail Ihres Shops — sie unterscheidet sich von der E-Mail Ihres persönlichen Kontos.",
+        "phone": "Shop-Telefon",
+        "description": "Shop-Beschreibung"
       },
       "skip": "Überspringen",
       "address": {
         "title": "Geben Sie Ihre Adresse ein",
-        "name": "Name",
-        "namePlaceholder": "Hauptsitz",
-        "address": "Adresse",
+        "address": "Shop-Adresse",
         "address2": "Apartment, Suite usw.",
         "postalCode": "Postleitzahl",
         "city": "Stadt",
-        "country": "Land",
-        "state": "Zustand"
+        "country": "Land"
       },
       "company": {
         "title": "Geben Sie Ihre Unternehmensdetails ein",
         "subtitle": "Professionelle Shop-Informationen",
         "corporateName": "Unternehmen",
-        "registrationNumber": "Handelsregisternummer",
-        "taxId": "Steuernummer"
+        "registrationNumber": "Türkische Personalausweisnummer (T.C. Kimlik No)",
+        "taxId": "Steuernummer",
+        "disclaimer": "Geben Sie Ihre Firmendaten ein. Die Provisionsrechnung wird anhand der hier eingegebenen Angaben ausgestellt. Die rechtliche Verantwortung für die Richtigkeit dieser Angaben liegt beim eintragenden Verkäufer.",
+        "typeLabel": "Unternehmensform",
+        "typeIndividual": "Einzelunternehmer",
+        "typeIndividualDescription": "Einzelverkäufer — Rechnungsstellung anhand Ihrer türkischen Personalausweisnummer.",
+        "typeCorporate": "Eingetragenes Unternehmen (GmbH / AG / Sonstige)",
+        "typeCorporateDescription": "Juristische Person — Rechnungsstellung anhand Ihrer Steuernummer."
       },
       "payment": {
         "title": "Geben Sie Ihre Zahlungsdetails ein",
@@ -4259,7 +4271,10 @@
         "emailInvalid": "Bitte geben Sie eine E-Mail-Adresse ein",
         "currencyRequired": "Bitte wählen Sie eine Währung aus",
         "countryRequired": "Bitte wählen Sie ein Land aus",
-        "accountNameRequired": "Bitte geben Sie einen Kontoinhaber ein"
+        "accountNameRequired": "Bitte geben Sie einen Kontoinhaber ein",
+        "companyTypeRequired": "Bitte wählen Sie eine Unternehmensform",
+        "registrationNumberRequired": "Bitte geben Sie Ihre türkische Personalausweisnummer ein",
+        "taxIdRequired": "Bitte geben Sie Ihre Steuernummer ein"
       },
       "preview": {
         "title": "Willkommen bei Kayı.com",

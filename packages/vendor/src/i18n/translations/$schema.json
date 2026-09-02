@@ -15389,6 +15389,30 @@
             "drawerDescription"
           ],
           "additionalProperties": false
+        },
+        "fields": {
+          "type": "object",
+          "properties": {
+            "firstName": {
+              "type": "string"
+            },
+            "lastName": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "password": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "firstName",
+            "lastName",
+            "email",
+            "password"
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
@@ -15407,7 +15431,8 @@
         "successTitle",
         "successHint",
         "backToLogin",
-        "agreement"
+        "agreement",
+        "fields"
       ],
       "additionalProperties": false
     },
@@ -15943,6 +15968,15 @@
                 },
                 "currencyHint": {
                   "type": "string"
+                },
+                "phone": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "emailHint": {
+                  "type": "string"
                 }
               },
               "required": [
@@ -15954,7 +15988,10 @@
                 "handlePlaceholder",
                 "currency",
                 "selectCurrency",
-                "currencyHint"
+                "currencyHint",
+                "phone",
+                "description",
+                "emailHint"
               ],
               "additionalProperties": false
             },
@@ -15965,12 +16002,6 @@
               "type": "object",
               "properties": {
                 "title": {
-                  "type": "string"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "namePlaceholder": {
                   "type": "string"
                 },
                 "address": {
@@ -15987,21 +16018,15 @@
                 },
                 "country": {
                   "type": "string"
-                },
-                "state": {
-                  "type": "string"
                 }
               },
               "required": [
                 "title",
-                "name",
-                "namePlaceholder",
                 "address",
                 "address2",
                 "postalCode",
                 "city",
-                "country",
-                "state"
+                "country"
               ],
               "additionalProperties": false
             },
@@ -16022,6 +16047,24 @@
                 },
                 "taxId": {
                   "type": "string"
+                },
+                "disclaimer": {
+                  "type": "string"
+                },
+                "typeLabel": {
+                  "type": "string"
+                },
+                "typeIndividual": {
+                  "type": "string"
+                },
+                "typeIndividualDescription": {
+                  "type": "string"
+                },
+                "typeCorporate": {
+                  "type": "string"
+                },
+                "typeCorporateDescription": {
+                  "type": "string"
                 }
               },
               "required": [
@@ -16029,7 +16072,13 @@
                 "subtitle",
                 "corporateName",
                 "registrationNumber",
-                "taxId"
+                "taxId",
+                "disclaimer",
+                "typeLabel",
+                "typeIndividual",
+                "typeIndividualDescription",
+                "typeCorporate",
+                "typeCorporateDescription"
               ],
               "additionalProperties": false
             },
@@ -16086,6 +16135,15 @@
                 },
                 "accountNameRequired": {
                   "type": "string"
+                },
+                "companyTypeRequired": {
+                  "type": "string"
+                },
+                "registrationNumberRequired": {
+                  "type": "string"
+                },
+                "taxIdRequired": {
+                  "type": "string"
                 }
               },
               "required": [
@@ -16093,7 +16151,10 @@
                 "emailInvalid",
                 "currencyRequired",
                 "countryRequired",
-                "accountNameRequired"
+                "accountNameRequired",
+                "companyTypeRequired",
+                "registrationNumberRequired",
+                "taxIdRequired"
               ],
               "additionalProperties": false
             },

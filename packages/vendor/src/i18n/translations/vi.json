@@ -4090,6 +4090,12 @@
     "agreement": {
       "label": "Tôi đã đọc và chấp nhận <0>Điều khoản Hợp tác và Sử dụng dành cho Người bán</0>.",
       "drawerDescription": "Xem lại các điều khoản bên dưới trước khi tiếp tục."
+    },
+    "fields": {
+      "firstName": "Tên người dùng",
+      "lastName": "Họ người dùng",
+      "email": "Email người dùng",
+      "password": "Mật khẩu người dùng"
     }
   },
   "sellerAgreement": {
@@ -4217,33 +4223,39 @@
       },
       "store": {
         "title": "Nhập thông tin cửa hàng của bạn",
-        "name": "Tên",
-        "email": "Email",
+        "name": "Tên cửa hàng",
+        "email": "Email cửa hàng",
         "handle": "Định danh",
         "handleTooltip": "Định danh sẽ trở thành slug URL cho cửa hàng của bạn. Để trống để tự động tạo từ tên.",
         "handlePlaceholder": "my-store",
         "currency": "Tiền tệ",
         "selectCurrency": "Chọn",
-        "currencyHint": "Không thể thay đổi sau khi cửa hàng được tạo"
+        "currencyHint": "Không thể thay đổi sau khi cửa hàng được tạo",
+        "emailHint": "Đây là email liên hệ công khai của cửa hàng bạn — khác với email tài khoản cá nhân của bạn.",
+        "phone": "Số điện thoại cửa hàng",
+        "description": "Mô tả cửa hàng"
       },
       "skip": "Bỏ qua",
       "address": {
         "title": "Nhập địa chỉ của bạn",
-        "name": "Tên",
-        "namePlaceholder": "Trụ sở chính",
-        "address": "Địa chỉ",
+        "address": "Địa chỉ cửa hàng",
         "address2": "Căn hộ, dãy nhà, v.v.",
         "postalCode": "Mã bưu điện",
         "city": "Thành phố",
-        "country": "Quốc gia",
-        "state": "Bang"
+        "country": "Quốc gia"
       },
       "company": {
         "title": "Nhập thông tin công ty của bạn",
         "subtitle": "Thông tin cửa hàng chuyên nghiệp",
         "corporateName": "Công ty",
-        "registrationNumber": "Mã số đăng ký kinh doanh",
-        "taxId": "Mã số thuế"
+        "registrationNumber": "Số định danh quốc gia Thổ Nhĩ Kỳ (T.C. Kimlik No)",
+        "taxId": "Mã số thuế",
+        "disclaimer": "Nhập thông tin công ty của bạn. Hóa đơn hoa hồng sẽ được lập dựa trên thông tin nhập ở đây. Trách nhiệm pháp lý về tính chính xác của thông tin này thuộc về người bán đã nhập.",
+        "typeLabel": "Loại hình kinh doanh",
+        "typeIndividual": "Hộ kinh doanh cá thể",
+        "typeIndividualDescription": "Người bán cá nhân — xuất hóa đơn theo số định danh quốc gia Thổ Nhĩ Kỳ của bạn.",
+        "typeCorporate": "Công ty đã đăng ký (TNHH / Cổ phần / khác)",
+        "typeCorporateDescription": "Pháp nhân — xuất hóa đơn theo mã số thuế của bạn."
       },
       "payment": {
         "title": "Nhập thông tin thanh toán của bạn",
@@ -4259,7 +4271,10 @@
         "emailInvalid": "Vui lòng nhập email",
         "currencyRequired": "Vui lòng chọn tiền tệ",
         "countryRequired": "Vui lòng chọn quốc gia",
-        "accountNameRequired": "Vui lòng nhập tên tài khoản"
+        "accountNameRequired": "Vui lòng nhập tên tài khoản",
+        "companyTypeRequired": "Vui lòng chọn loại hình kinh doanh",
+        "registrationNumberRequired": "Vui lòng nhập số định danh quốc gia Thổ Nhĩ Kỳ của bạn",
+        "taxIdRequired": "Vui lòng nhập mã số thuế của bạn"
       },
       "preview": {
         "title": "Chào mừng đến với Kayı.com",

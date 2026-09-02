@@ -4112,6 +4112,12 @@
     "agreement": {
       "label": "He leído y acepto los <0>Términos de Colaboración y Uso para Vendedores</0>.",
       "drawerDescription": "Revise los términos a continuación antes de continuar."
+    },
+    "fields": {
+      "firstName": "Nombre del usuario",
+      "lastName": "Apellido del usuario",
+      "email": "Correo electrónico del usuario",
+      "password": "Contraseña del usuario"
     }
   },
   "sellerAgreement": {
@@ -4239,33 +4245,39 @@
       },
       "store": {
         "title": "Introduce los detalles de tu tienda",
-        "name": "Nombre",
-        "email": "Correo electrónico",
+        "name": "Nombre de la tienda",
+        "email": "Correo electrónico de la tienda",
         "handle": "Identificador",
         "handleTooltip": "El identificador se convierte en el slug de URL de tu tienda. Déjalo vacío para generarlo automáticamente a partir del nombre.",
         "handlePlaceholder": "mi-tienda",
         "currency": "Moneda",
         "selectCurrency": "Seleccionar",
-        "currencyHint": "No se puede cambiar después de crear la tienda"
+        "currencyHint": "No se puede cambiar después de crear la tienda",
+        "emailHint": "Este es el correo electrónico público de contacto de tu tienda; es diferente del correo de tu cuenta personal.",
+        "phone": "Teléfono de la tienda",
+        "description": "Descripción de la tienda"
       },
       "skip": "Omitir",
       "address": {
         "title": "Introduce tu dirección",
-        "name": "Nombre",
-        "namePlaceholder": "Sede central",
-        "address": "Dirección",
+        "address": "Dirección de la tienda",
         "address2": "Apartamento, suite, etc.",
         "postalCode": "Código postal",
         "city": "Ciudad",
-        "country": "País",
-        "state": "Estado"
+        "country": "País"
       },
       "company": {
         "title": "Introduce los datos de tu empresa",
         "subtitle": "Información profesional de la tienda",
         "corporateName": "Empresa",
-        "registrationNumber": "Número de registro",
-        "taxId": "ID fiscal"
+        "registrationNumber": "Número de identificación turco (T.C. Kimlik No)",
+        "taxId": "ID fiscal",
+        "disclaimer": "Introduce los datos de tu empresa. La factura de comisión se emitirá según la información proporcionada aquí. La responsabilidad legal sobre la exactitud de estos datos corresponde al vendedor que los introduce.",
+        "typeLabel": "Tipo de negocio",
+        "typeIndividual": "Autónomo / Persona física",
+        "typeIndividualDescription": "Vendedor individual: se factura con tu número de identificación turco.",
+        "typeCorporate": "Empresa registrada (S.L. / S.A. / otro)",
+        "typeCorporateDescription": "Persona jurídica: se factura con tu número de identificación fiscal."
       },
       "payment": {
         "title": "Introduce tus datos de pago",
@@ -4281,7 +4293,10 @@
         "emailInvalid": "Introduce un correo electrónico",
         "currencyRequired": "Selecciona una moneda",
         "countryRequired": "Por favor, seleccione un país",
-        "accountNameRequired": "Introduce un nombre de cuenta"
+        "accountNameRequired": "Introduce un nombre de cuenta",
+        "companyTypeRequired": "Selecciona un tipo de negocio",
+        "registrationNumberRequired": "Introduce tu número de identificación turco",
+        "taxIdRequired": "Introduce tu número de identificación fiscal"
       },
       "preview": {
         "title": "Bienvenido a Kayı.com",

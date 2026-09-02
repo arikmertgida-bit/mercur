@@ -18,6 +18,20 @@ import { HandleInput } from "@components/inputs/handle-input";
 import { useStore } from "@hooks/api";
 import { onboardingLoader } from "../../../pages/onboarding/loader";
 
+const MAX_PHONE_LENGTH = 20;
+
+// Keeps a global-friendly phone charset (digits, leading "+", spaces,
+// hyphens, parentheses) — no letters or other symbols, no country-specific
+// format assumption since sellers can register from any country.
+const toPhoneCharsOnly = (value: string): string => {
+  const hasLeadingPlus = value.startsWith("+");
+  const allowedChars = value.replace(/[^\d+\-\s()]/g, "");
+  const withSingleLeadingPlus = hasLeadingPlus
+    ? "+" + allowedChars.slice(1).replace(/\+/g, "")
+    : allowedChars.replace(/\+/g, "");
+  return withSingleLeadingPlus.slice(0, MAX_PHONE_LENGTH);
+};
+
 const StoreStepSchema = z.object({
   name: z.string().min(1, i18n.t("onboarding.wizard.validation.nameRequired")),
   email: z.string().email(i18n.t("onboarding.wizard.validation.emailInvalid")),
@@ -107,6 +121,7 @@ export const StoreStep = ({ onSubmit, isPending }: StoreStepProps) => {
                   <Form.Control>
                     <Input type="email" autoComplete="email" {...field} />
                   </Form.Control>
+                  <Form.Hint>{t("onboarding.wizard.store.emailHint")}</Form.Hint>
                   <Form.ErrorMessage />
                 </Form.Item>
               )}
@@ -116,9 +131,18 @@ export const StoreStep = ({ onSubmit, isPending }: StoreStepProps) => {
               name="phone"
               render={({ field }) => (
                 <Form.Item>
-                  <Form.Label optional>{t("fields.phone")}</Form.Label>
+                  <Form.Label optional>{t("onboarding.wizard.store.phone")}</Form.Label>
                   <Form.Control>
-                    <Input type="tel" autoComplete="tel" {...field} />
+                    <Input
+                      type="tel"
+                      autoComplete="tel"
+                      inputMode="tel"
+                      maxLength={MAX_PHONE_LENGTH}
+                      {...field}
+                      onChange={(e) =>
+                        field.onChange(toPhoneCharsOnly(e.target.value))
+                      }
+                    />
                   </Form.Control>
                   <Form.ErrorMessage />
                 </Form.Item>
@@ -130,7 +154,7 @@ export const StoreStep = ({ onSubmit, isPending }: StoreStepProps) => {
               render={({ field }) => (
                 <Form.Item>
                   <Form.Label optional>
-                    {t("fields.description")}
+                    {t("onboarding.wizard.store.description")}
                   </Form.Label>
                   <Form.Control>
                     <Textarea {...field} />

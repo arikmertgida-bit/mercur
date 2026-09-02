@@ -4095,6 +4095,12 @@
     "agreement": {
       "label": "<0>Satıcı İş Ortaklığı ve Kullanım Esasları</0>'nı okudum ve kabul ediyorum.",
       "drawerDescription": "Devam etmeden önce aşağıdaki şartları inceleyin."
+    },
+    "fields": {
+      "firstName": "Kullanıcı Adı",
+      "lastName": "Kullanıcı Soyadı",
+      "email": "Kullanıcı E-Posta",
+      "password": "Kullanıcı Şifresi"
     }
   },
   "sellerAgreement": {
@@ -4222,33 +4228,39 @@
       },
       "store": {
         "title": "Mağaza detaylarınızı girin",
-        "name": "Ad",
-        "email": "E-posta",
+        "name": "Mağaza Adı",
+        "email": "Mağaza E-posta",
         "handle": "URL Slug",
         "handleTooltip": "Mağaza adından otomatik olarak oluşturulur. Yalnızca küçük harfler, rakamlar ve tire kullanılabilir — bu alan doğrudan düzenlenemez.",
         "handlePlaceholder": "magazam",
         "currency": "Para birimi",
         "selectCurrency": "Seç",
-        "currencyHint": "Mağaza oluşturulduktan sonra değiştirilemez"
+        "currencyHint": "Mağaza oluşturulduktan sonra değiştirilemez",
+        "emailHint": "Bu, mağazanızın herkese açık iletişim e-postasıdır — kişisel hesap e-postanızdan farklıdır.",
+        "phone": "Mağaza Telefon",
+        "description": "Mağaza Açıklama"
       },
       "skip": "Atla",
       "address": {
         "title": "Adresinizi girin",
-        "name": "Ad",
-        "namePlaceholder": "Merkez Ofis",
-        "address": "Adres",
+        "address": "Mağaza Adresi",
         "address2": "Daire, apartman vb.",
         "postalCode": "Posta Kodu",
         "city": "Şehir",
-        "country": "Ülke",
-        "state": "İl"
+        "country": "Ülke"
       },
       "company": {
         "title": "Şirket detaylarınızı girin",
         "subtitle": "Profesyonel mağaza bilgileri",
         "corporateName": "Şirket",
-        "registrationNumber": "Sicil numarası",
-        "taxId": "Vergi Kimlik No"
+        "registrationNumber": "T.C. Kimlik Numarası",
+        "taxId": "Vergi Kimlik No",
+        "disclaimer": "Şirket detaylarınızı girin. Bu alandaki bilgilere göre komisyon faturası kesilecektir. Girilen bilgilerin yasal sorumluluğu giriş yapan satıcıya aittir.",
+        "typeLabel": "İşletme Türü",
+        "typeIndividual": "Şahıs Şirketi",
+        "typeIndividualDescription": "Bireysel satıcı — T.C. Kimlik Numaranız ile faturalandırılır.",
+        "typeCorporate": "Sermaye Şirketi (Ltd. Şti. / A.Ş. / Diğer)",
+        "typeCorporateDescription": "Tüzel kişilik — Vergi Kimlik Numaranız ile faturalandırılır."
       },
       "payment": {
         "title": "Ödeme detaylarınızı girin",
@@ -4264,7 +4276,10 @@
         "emailInvalid": "Lütfen bir e-posta girin",
         "currencyRequired": "Lütfen bir para birimi seçin",
         "countryRequired": "Lütfen bir ülke seçin",
-        "accountNameRequired": "Lütfen bir hesap adı girin"
+        "accountNameRequired": "Lütfen bir hesap adı girin",
+        "companyTypeRequired": "Lütfen bir işletme türü seçin",
+        "registrationNumberRequired": "Lütfen T.C. Kimlik Numaranızı girin",
+        "taxIdRequired": "Lütfen Vergi Kimlik Numaranızı girin"
       },
       "preview": {
         "title": "Kayı.com'a Hoş Geldiniz",

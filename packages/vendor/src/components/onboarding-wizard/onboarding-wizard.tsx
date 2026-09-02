@@ -33,7 +33,6 @@ export const OnboardingWizard = ({ memberEmail }: OnboardingWizardProps) => {
     submitAddressStep,
     skipAddressStep,
     submitCompanyStep,
-    skipCompanyStep,
     submitPaymentStep,
     skipPaymentStep,
   } = useOnboarding(memberEmail);
@@ -78,7 +77,6 @@ export const OnboardingWizard = ({ memberEmail }: OnboardingWizardProps) => {
           <WizardStep key="company">
             <CompanyStep
               onSubmit={submitCompanyStep}
-              onSkip={skipCompanyStep}
               isPending={isPending}
             />
           </WizardStep>

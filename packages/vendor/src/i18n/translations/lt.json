@@ -4090,6 +4090,12 @@
     "agreement": {
       "label": "Perskaičiau ir sutinku su <0>Pardavėjų partnerystės ir naudojimo sąlygomis</0>.",
       "drawerDescription": "Prieš tęsdami peržiūrėkite toliau pateiktas sąlygas."
+    },
+    "fields": {
+      "firstName": "Naudotojo vardas",
+      "lastName": "Naudotojo pavardė",
+      "email": "Naudotojo el. paštas",
+      "password": "Naudotojo slaptažodis"
     }
   },
   "sellerAgreement": {
@@ -4217,33 +4223,39 @@
       },
       "store": {
         "title": "Įveskite savo parduotuvės informaciją",
-        "name": "Pavadinimas",
-        "email": "El. paštas",
+        "name": "Parduotuvės pavadinimas",
+        "email": "Parduotuvės el. paštas",
         "handle": "Nuoroda",
         "handleTooltip": "Nuoroda taps jūsų parduotuvės URL. Palikite tuščią, kad būtų sugeneruota automatiškai iš pavadinimo.",
         "handlePlaceholder": "mano-parduotuve",
         "currency": "valiuta",
         "selectCurrency": "Pasirinkite",
-        "currencyHint": "Negalima keisti po parduotuvės sukūrimo"
+        "currencyHint": "Negalima keisti po parduotuvės sukūrimo",
+        "emailHint": "Tai yra viešas jūsų parduotuvės kontaktinis el. paštas — jis skiriasi nuo jūsų asmeninės paskyros el. pašto.",
+        "phone": "Parduotuvės telefonas",
+        "description": "Parduotuvės aprašymas"
       },
       "skip": "Praleisti",
       "address": {
         "title": "Įveskite savo adresą",
-        "name": "Pavadinimas",
-        "namePlaceholder": "Būstinė",
-        "address": "Adresas",
+        "address": "Parduotuvės adresas",
         "address2": "Butas, apartamentai, kt.",
         "postalCode": "Pašto kodas",
         "city": "Miestas",
-        "country": "Šalis",
-        "state": "Valstija"
+        "country": "Šalis"
       },
       "company": {
         "title": "Įveskite savo įmonės informaciją",
         "subtitle": "Profesionalios parduotuvės informacija",
         "corporateName": "Įmonė",
-        "registrationNumber": "Registracijos numeris",
-        "taxId": "Mokesčių mokėtojo kodas"
+        "registrationNumber": "Turkijos asmens identifikavimo numeris (T.C. Kimlik No)",
+        "taxId": "Mokesčių mokėtojo kodas",
+        "disclaimer": "Įveskite savo įmonės duomenis. Komisinio mokesčio sąskaita faktūra bus išrašyta pagal čia pateiktą informaciją. Teisinė atsakomybė už šios informacijos tikslumą tenka ją pateikusiam pardavėjui.",
+        "typeLabel": "Verslo tipas",
+        "typeIndividual": "Individuali veikla",
+        "typeIndividualDescription": "Individualus pardavėjas — sąskaita išrašoma pagal jūsų Turkijos asmens identifikavimo numerį.",
+        "typeCorporate": "Registruota įmonė (UAB / AB / kita)",
+        "typeCorporateDescription": "Juridinis asmuo — sąskaita išrašoma pagal jūsų mokesčių mokėtojo numerį."
       },
       "payment": {
         "title": "Įveskite savo mokėjimo informaciją",
@@ -4259,7 +4271,10 @@
         "emailInvalid": "Įveskite el. paštą",
         "currencyRequired": "Pasirinkite valiutą",
         "countryRequired": "Prašome pasirinkti šalį",
-        "accountNameRequired": "Įveskite sąskaitos savininko vardą"
+        "accountNameRequired": "Įveskite sąskaitos savininko vardą",
+        "companyTypeRequired": "Pasirinkite verslo tipą",
+        "registrationNumberRequired": "Įveskite savo Turkijos asmens identifikavimo numerį",
+        "taxIdRequired": "Įveskite savo mokesčių mokėtojo numerį"
       },
       "preview": {
         "title": "Sveiki atvykę į Kayı.com",

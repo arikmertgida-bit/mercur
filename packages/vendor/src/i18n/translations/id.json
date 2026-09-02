@@ -4090,6 +4090,12 @@
     "agreement": {
       "label": "Saya telah membaca dan menyetujui <0>Syarat Kemitraan dan Penggunaan Penjual</0>.",
       "drawerDescription": "Tinjau syarat di bawah ini sebelum melanjutkan."
+    },
+    "fields": {
+      "firstName": "Nama Depan Pengguna",
+      "lastName": "Nama Belakang Pengguna",
+      "email": "Email Pengguna",
+      "password": "Kata Sandi Pengguna"
     }
   },
   "sellerAgreement": {
@@ -4217,33 +4223,39 @@
       },
       "store": {
         "title": "Masukkan detail toko Anda",
-        "name": "Nama",
-        "email": "Email",
+        "name": "Nama Toko",
+        "email": "Email Toko",
         "handle": "Slug",
         "handleTooltip": "Slug akan menjadi slug URL untuk toko Anda. Kosongkan untuk membuat otomatis dari nama.",
         "handlePlaceholder": "toko-saya",
         "currency": "Mata uang",
         "selectCurrency": "Pilih",
-        "currencyHint": "Tidak dapat diubah setelah toko dibuat"
+        "currencyHint": "Tidak dapat diubah setelah toko dibuat",
+        "emailHint": "Ini adalah email kontak publik toko Anda — berbeda dari email akun pribadi Anda.",
+        "phone": "Telepon Toko",
+        "description": "Deskripsi Toko"
       },
       "skip": "Lewati",
       "address": {
         "title": "Masukkan alamat Anda",
-        "name": "Nama",
-        "namePlaceholder": "Kantor Pusat",
-        "address": "Alamat",
+        "address": "Alamat Toko",
         "address2": "Apartemen, suite, dll.",
         "postalCode": "Kode Pos",
         "city": "Kota",
-        "country": "Negara",
-        "state": "Negara Bagian"
+        "country": "Negara"
       },
       "company": {
         "title": "Masukkan detail perusahaan Anda",
         "subtitle": "Informasi toko profesional",
         "corporateName": "Perusahaan",
-        "registrationNumber": "Nomor registrasi",
-        "taxId": "NPWP"
+        "registrationNumber": "Nomor Identitas Nasional Turki (T.C. Kimlik No)",
+        "taxId": "NPWP",
+        "disclaimer": "Masukkan detail perusahaan Anda. Faktur komisi akan diterbitkan berdasarkan informasi yang dimasukkan di sini. Tanggung jawab hukum atas keakuratan informasi ini berada pada penjual yang memasukkannya.",
+        "typeLabel": "Jenis Usaha",
+        "typeIndividual": "Usaha Perorangan",
+        "typeIndividualDescription": "Penjual perorangan — faktur diterbitkan berdasarkan Nomor Identitas Nasional Turki Anda.",
+        "typeCorporate": "Perusahaan Terdaftar (PT / CV / lainnya)",
+        "typeCorporateDescription": "Badan hukum — faktur diterbitkan berdasarkan Nomor Pajak Anda."
       },
       "payment": {
         "title": "Masukkan detail pembayaran Anda",
@@ -4259,7 +4271,10 @@
         "emailInvalid": "Silakan masukkan email",
         "currencyRequired": "Silakan pilih mata uang",
         "countryRequired": "Silakan pilih negara",
-        "accountNameRequired": "Silakan masukkan nama akun"
+        "accountNameRequired": "Silakan masukkan nama akun",
+        "companyTypeRequired": "Silakan pilih jenis usaha",
+        "registrationNumberRequired": "Silakan masukkan Nomor Identitas Nasional Turki Anda",
+        "taxIdRequired": "Silakan masukkan Nomor Pajak Anda"
       },
       "preview": {
         "title": "Selamat datang di Kayı.com",

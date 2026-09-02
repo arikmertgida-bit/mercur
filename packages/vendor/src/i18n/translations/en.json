@@ -3700,6 +3700,12 @@
     "agreement": {
       "label": "I have read and accept the <0>Seller Partnership and Usage Terms</0>.",
       "drawerDescription": "Review the terms below before continuing."
+    },
+    "fields": {
+      "firstName": "User First Name",
+      "lastName": "User Last Name",
+      "email": "User Email",
+      "password": "User Password"
     }
   },
   "sellerAgreement": {
@@ -3827,33 +3833,39 @@
       },
       "store": {
         "title": "Enter your store details",
-        "name": "Name",
-        "email": "Email",
+        "name": "Store Name",
+        "email": "Store Email",
         "handle": "Handle",
         "handleTooltip": "Automatically generated from the store name. Lowercase letters, numbers, and hyphens only — this field can't be edited directly.",
         "handlePlaceholder": "my-store",
         "currency": "Currency",
         "selectCurrency": "Select",
-        "currencyHint": "Cannot be changed after store is created"
+        "currencyHint": "Cannot be changed after store is created",
+        "emailHint": "This is your store's public contact email — different from your personal account email.",
+        "phone": "Store Phone",
+        "description": "Store Description"
       },
       "skip": "Skip",
       "address": {
         "title": "Enter your address",
-        "name": "Name",
-        "namePlaceholder": "Headquarters",
-        "address": "Address",
+        "address": "Store Address",
         "address2": "Apartment, suite, etc.",
         "postalCode": "Postal Code",
         "city": "City",
-        "country": "Country",
-        "state": "State"
+        "country": "Country"
       },
       "company": {
         "title": "Enter your company details",
         "subtitle": "Professional store information",
         "corporateName": "Company",
-        "registrationNumber": "Registration number",
-        "taxId": "Tax ID"
+        "registrationNumber": "Turkish National ID Number (T.C. Kimlik No)",
+        "taxId": "Tax ID",
+        "disclaimer": "Enter your company details. Your commission invoice will be issued based on the information provided here. Legal responsibility for the accuracy of this information belongs to the seller submitting it.",
+        "typeLabel": "Business Type",
+        "typeIndividual": "Sole Proprietor",
+        "typeIndividualDescription": "Individual seller — invoiced using your Turkish National ID Number.",
+        "typeCorporate": "Registered Company (Ltd. / Inc. / Other)",
+        "typeCorporateDescription": "Legal entity — invoiced using your Tax ID Number."
       },
       "payment": {
         "title": "Enter your payment details",
@@ -3869,7 +3881,10 @@
         "emailInvalid": "Please enter an email",
         "currencyRequired": "Please select a currency",
         "countryRequired": "Please select a country",
-        "accountNameRequired": "Please enter an account name"
+        "accountNameRequired": "Please enter an account name",
+        "companyTypeRequired": "Please select a business type",
+        "registrationNumberRequired": "Please enter your Turkish National ID Number",
+        "taxIdRequired": "Please enter your Tax ID Number"
       },
       "preview": {
         "title": "Welcome to Kayı.com",

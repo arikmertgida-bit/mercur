@@ -4146,6 +4146,12 @@
     "agreement": {
       "label": "我已閱讀並接受<0>《賣家合作與使用條款》</0>。",
       "drawerDescription": "請在繼續之前查看以下條款。"
+    },
+    "fields": {
+      "firstName": "使用者名字",
+      "lastName": "使用者姓氏",
+      "email": "使用者電子郵件",
+      "password": "使用者密碼"
     }
   },
   "sellerAgreement": {
@@ -4273,33 +4279,39 @@
       },
       "store": {
         "title": "輸入您的商店詳細資料",
-        "name": "名稱",
-        "email": "電子郵件",
+        "name": "店鋪名稱",
+        "email": "店鋪電子郵件",
         "handle": "識別碼",
         "handleTooltip": "識別碼將成為您商店的網址別名。留空則會依名稱自動產生。",
         "handlePlaceholder": "my-store",
         "currency": "貨幣",
         "selectCurrency": "選擇",
-        "currencyHint": "商店建立後即無法變更"
+        "currencyHint": "商店建立後即無法變更",
+        "emailHint": "這是您店鋪的公開聯絡電子郵件，與您的個人帳戶電子郵件不同。",
+        "phone": "店鋪電話",
+        "description": "店鋪說明"
       },
       "skip": "略過",
       "address": {
         "title": "輸入您的地址",
-        "name": "名稱",
-        "namePlaceholder": "總部",
-        "address": "地址",
+        "address": "店鋪地址",
         "address2": "公寓、樓層、等等",
         "postalCode": "郵遞區號",
         "city": "城市",
-        "country": "國家",
-        "state": "州"
+        "country": "國家"
       },
       "company": {
         "title": "輸入您的公司詳細資料",
         "subtitle": "專業商店資訊",
         "corporateName": "公司",
-        "registrationNumber": "登記編號",
-        "taxId": "稅籍編號"
+        "registrationNumber": "土耳其國民身分證號（T.C. Kimlik No）",
+        "taxId": "稅籍編號",
+        "disclaimer": "請填寫您的公司資訊。佣金發票將根據此處填寫的資訊開立。所填資訊準確性的法律責任由填寫資訊的賣家承擔。",
+        "typeLabel": "企業類型",
+        "typeIndividual": "個體工商戶",
+        "typeIndividualDescription": "個人賣家——根據您的土耳其國民身分證號開立發票。",
+        "typeCorporate": "註冊公司（有限公司／股份公司／其他）",
+        "typeCorporateDescription": "法人實體——根據您的稅號開立發票。"
       },
       "payment": {
         "title": "輸入您的付款詳細資料",
@@ -4315,7 +4327,10 @@
         "emailInvalid": "請輸入電子郵件",
         "currencyRequired": "請選擇貨幣",
         "countryRequired": "請選擇國家",
-        "accountNameRequired": "請輸入帳戶名稱"
+        "accountNameRequired": "請輸入帳戶名稱",
+        "companyTypeRequired": "請選擇企業類型",
+        "registrationNumberRequired": "請填寫您的土耳其國民身分證號",
+        "taxIdRequired": "請填寫您的稅號"
       },
       "preview": {
         "title": "歡迎使用 Kayı.com",

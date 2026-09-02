@@ -4090,6 +4090,12 @@
     "agreement": {
       "label": "J'ai lu et j'accepte les <0>Conditions de partenariat et d'utilisation vendeur</0>.",
       "drawerDescription": "Consultez les conditions ci-dessous avant de continuer."
+    },
+    "fields": {
+      "firstName": "Prénom de l'utilisateur",
+      "lastName": "Nom de l'utilisateur",
+      "email": "E-mail de l'utilisateur",
+      "password": "Mot de passe de l'utilisateur"
     }
   },
   "sellerAgreement": {
@@ -4217,33 +4223,39 @@
       },
       "store": {
         "title": "Saisissez les détails de votre boutique",
-        "name": "Nom",
-        "email": "E-mail",
+        "name": "Nom de la boutique",
+        "email": "E-mail de la boutique",
         "handle": "Identifiant",
         "handleTooltip": "L'identifiant devient le slug d'URL de votre boutique. Laissez vide pour le générer automatiquement à partir du nom.",
         "handlePlaceholder": "ma-boutique",
         "currency": "Devise",
         "selectCurrency": "Sélectionner",
-        "currencyHint": "Ne peut pas être modifié après la création de la boutique"
+        "currencyHint": "Ne peut pas être modifié après la création de la boutique",
+        "emailHint": "Il s'agit de l'e-mail de contact public de votre boutique, différent de l'e-mail de votre compte personnel.",
+        "phone": "Téléphone de la boutique",
+        "description": "Description de la boutique"
       },
       "skip": "Ignorer",
       "address": {
         "title": "Saisissez votre adresse",
-        "name": "Nom",
-        "namePlaceholder": "Siège social",
-        "address": "Adresse",
+        "address": "Adresse de la boutique",
         "address2": "Appartement, suite, etc.",
         "postalCode": "Code postal",
         "city": "Ville",
-        "country": "Pays",
-        "state": "État"
+        "country": "Pays"
       },
       "company": {
         "title": "Saisissez les détails de votre entreprise",
         "subtitle": "Informations professionnelles de la boutique",
         "corporateName": "Entreprise",
-        "registrationNumber": "Numéro d'immatriculation",
-        "taxId": "Numéro fiscal"
+        "registrationNumber": "Numéro d'identité nationale turque (T.C. Kimlik No)",
+        "taxId": "Numéro fiscal",
+        "disclaimer": "Renseignez les informations de votre société. La facture de commission sera émise sur la base des informations saisies ici. La responsabilité légale de l'exactitude de ces informations incombe au vendeur qui les a saisies.",
+        "typeLabel": "Type d'entreprise",
+        "typeIndividual": "Entreprise individuelle",
+        "typeIndividualDescription": "Vendeur individuel — facturation basée sur votre numéro d'identité nationale turque.",
+        "typeCorporate": "Société immatriculée (SARL / SA / autre)",
+        "typeCorporateDescription": "Personne morale — facturation basée sur votre numéro d'identification fiscale."
       },
       "payment": {
         "title": "Saisissez vos détails de paiement",
@@ -4259,7 +4271,10 @@
         "emailInvalid": "Veuillez saisir un e-mail",
         "currencyRequired": "Veuillez sélectionner une devise",
         "countryRequired": "Veuillez sélectionner un pays",
-        "accountNameRequired": "Veuillez saisir un nom de compte"
+        "accountNameRequired": "Veuillez saisir un nom de compte",
+        "companyTypeRequired": "Veuillez sélectionner un type d'entreprise",
+        "registrationNumberRequired": "Veuillez saisir votre numéro d'identité nationale turque",
+        "taxIdRequired": "Veuillez saisir votre numéro d'identification fiscale"
       },
       "preview": {
         "title": "Bienvenue sur Kayı.com",

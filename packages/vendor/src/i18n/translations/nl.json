@@ -4090,6 +4090,12 @@
     "agreement": {
       "label": "Ik heb de <0>Verkopers­partnerschap- en Gebruiksvoorwaarden</0> gelezen en geaccepteerd.",
       "drawerDescription": "Bekijk onderstaande voorwaarden voordat u doorgaat."
+    },
+    "fields": {
+      "firstName": "Voornaam van de gebruiker",
+      "lastName": "Achternaam van de gebruiker",
+      "email": "E-mailadres van de gebruiker",
+      "password": "Wachtwoord van de gebruiker"
     }
   },
   "sellerAgreement": {
@@ -4217,33 +4223,39 @@
       },
       "store": {
         "title": "Voer je winkelgegevens in",
-        "name": "Naam",
-        "email": "E-mail",
+        "name": "Winkelnaam",
+        "email": "Winkel-e-mail",
         "handle": "Slug",
         "handleTooltip": "De slug wordt de URL-slug voor je winkel. Laat leeg om automatisch te genereren op basis van de naam.",
         "handlePlaceholder": "mijn-winkel",
         "currency": "Valuta",
         "selectCurrency": "Selecteer",
-        "currencyHint": "Kan niet worden gewijzigd nadat de winkel is aangemaakt"
+        "currencyHint": "Kan niet worden gewijzigd nadat de winkel is aangemaakt",
+        "emailHint": "Dit is het openbare contact-e-mailadres van je winkel — dit verschilt van het e-mailadres van je persoonlijke account.",
+        "phone": "Winkeltelefoon",
+        "description": "Winkelbeschrijving"
       },
       "skip": "Overslaan",
       "address": {
         "title": "Voer je adres in",
-        "name": "Naam",
-        "namePlaceholder": "Hoofdkantoor",
-        "address": "Adres",
+        "address": "Winkeladres",
         "address2": "Appartement, suite, etc.",
         "postalCode": "Postcode",
         "city": "Stad",
-        "country": "Land",
-        "state": "Staat"
+        "country": "Land"
       },
       "company": {
         "title": "Voer je bedrijfsgegevens in",
         "subtitle": "Professionele winkelinformatie",
         "corporateName": "Bedrijf",
-        "registrationNumber": "Registratienummer",
-        "taxId": "Btw-nummer"
+        "registrationNumber": "Turks nationaal identiteitsnummer (T.C. Kimlik No)",
+        "taxId": "Btw-nummer",
+        "disclaimer": "Voer uw bedrijfsgegevens in. De commissiefactuur wordt opgesteld op basis van de hier ingevoerde gegevens. De juridische verantwoordelijkheid voor de juistheid van deze gegevens ligt bij de verkoper die ze heeft ingevoerd.",
+        "typeLabel": "Bedrijfstype",
+        "typeIndividual": "Eenmanszaak",
+        "typeIndividualDescription": "Individuele verkoper — facturering op basis van uw Turkse nationale identiteitsnummer.",
+        "typeCorporate": "Geregistreerd bedrijf (bv / nv / overig)",
+        "typeCorporateDescription": "Rechtspersoon — facturering op basis van uw btw-/belastingnummer."
       },
       "payment": {
         "title": "Voer je betaalgegevens in",
@@ -4259,7 +4271,10 @@
         "emailInvalid": "Voer een e-mailadres in",
         "currencyRequired": "Selecteer een valuta",
         "countryRequired": "Selecteer een land",
-        "accountNameRequired": "Voer een naam voor de rekeninghouder in"
+        "accountNameRequired": "Voer een naam voor de rekeninghouder in",
+        "companyTypeRequired": "Selecteer een bedrijfstype",
+        "registrationNumberRequired": "Voer uw Turkse nationale identiteitsnummer in",
+        "taxIdRequired": "Voer uw belastingnummer in"
       },
       "preview": {
         "title": "Welkom bij Kayı.com",

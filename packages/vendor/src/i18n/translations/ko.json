@@ -4090,6 +4090,12 @@
     "agreement": {
       "label": "<0>판매자 파트너십 및 이용 약관</0>을 읽었으며 이에 동의합니다.",
       "drawerDescription": "계속하기 전에 아래 약관을 검토하세요."
+    },
+    "fields": {
+      "firstName": "사용자 이름",
+      "lastName": "사용자 성",
+      "email": "사용자 이메일",
+      "password": "사용자 비밀번호"
     }
   },
   "sellerAgreement": {
@@ -4217,33 +4223,39 @@
       },
       "store": {
         "title": "스토어 세부 정보를 입력하세요",
-        "name": "이름",
-        "email": "이메일",
+        "name": "스토어 이름",
+        "email": "스토어 이메일",
         "handle": "핸들",
         "handleTooltip": "핸들은 스토어의 URL 슬러그가 됩니다. 비워두면 이름에서 자동으로 생성됩니다.",
         "handlePlaceholder": "my-store",
         "currency": "통화",
         "selectCurrency": "선택",
-        "currencyHint": "스토어 생성 후에는 변경할 수 없습니다"
+        "currencyHint": "스토어 생성 후에는 변경할 수 없습니다",
+        "emailHint": "이 이메일은 스토어의 공개 연락용 이메일이며, 개인 계정 이메일과는 다릅니다.",
+        "phone": "스토어 전화번호",
+        "description": "스토어 설명"
       },
       "skip": "건너뛰기",
       "address": {
         "title": "주소를 입력하세요",
-        "name": "이름",
-        "namePlaceholder": "본사",
-        "address": "주소",
+        "address": "스토어 주소",
         "address2": "아파트, 호수 등",
         "postalCode": "우편번호",
         "city": "도시",
-        "country": "국가",
-        "state": "주"
+        "country": "국가"
       },
       "company": {
         "title": "회사 정보를 입력하세요",
         "subtitle": "사업자 스토어 정보",
         "corporateName": "회사",
-        "registrationNumber": "사업자 등록번호",
-        "taxId": "세금 ID"
+        "registrationNumber": "터키 국민 등록번호 (T.C. Kimlik No)",
+        "taxId": "세금 ID",
+        "disclaimer": "회사 정보를 입력하세요. 수수료 인보이스는 여기에 입력된 정보를 기준으로 발행됩니다. 입력한 정보의 정확성에 대한 법적 책임은 입력한 판매자에게 있습니다.",
+        "typeLabel": "사업자 유형",
+        "typeIndividual": "개인사업자",
+        "typeIndividualDescription": "개인 판매자 — 터키 국민 등록번호를 기준으로 인보이스가 발행됩니다.",
+        "typeCorporate": "등록 법인 (유한회사 / 주식회사 / 기타)",
+        "typeCorporateDescription": "법인 — 사업자등록번호를 기준으로 인보이스가 발행됩니다."
       },
       "payment": {
         "title": "결제 정보를 입력하세요",
@@ -4259,7 +4271,10 @@
         "emailInvalid": "이메일을 입력해 주세요",
         "currencyRequired": "통화를 선택해 주세요",
         "countryRequired": "국가를 선택해주세요",
-        "accountNameRequired": "계좌 예금주명을 입력해 주세요"
+        "accountNameRequired": "계좌 예금주명을 입력해 주세요",
+        "companyTypeRequired": "사업자 유형을 선택해 주세요",
+        "registrationNumberRequired": "터키 국민 등록번호를 입력해 주세요",
+        "taxIdRequired": "사업자등록번호를 입력해 주세요"
       },
       "preview": {
         "title": "Kayı.com에 오신 것을 환영합니다",

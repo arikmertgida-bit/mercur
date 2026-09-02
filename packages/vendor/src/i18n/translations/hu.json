@@ -4090,6 +4090,12 @@
     "agreement": {
       "label": "Elolvastam és elfogadom az <0>Eladói Partnerségi és Felhasználási Feltételeket</0>.",
       "drawerDescription": "Folytatás előtt tekintse át az alábbi feltételeket."
+    },
+    "fields": {
+      "firstName": "Felhasználó keresztneve",
+      "lastName": "Felhasználó vezetékneve",
+      "email": "Felhasználó e-mail címe",
+      "password": "Felhasználó jelszava"
     }
   },
   "sellerAgreement": {
@@ -4217,33 +4223,39 @@
       },
       "store": {
         "title": "Adja meg az üzlet adatait",
-        "name": "Név",
-        "email": "E-mail-cím",
+        "name": "Bolt neve",
+        "email": "Bolt e-mail címe",
         "handle": "Azonosító",
         "handleTooltip": "Az azonosító lesz az üzlet URL-slugja. Hagyja üresen, hogy automatikusan a névből generálódjon.",
         "handlePlaceholder": "sajat-uzletem",
         "currency": "Pénznem",
         "selectCurrency": "Válasszon",
-        "currencyHint": "Az üzlet létrehozása után nem módosítható"
+        "currencyHint": "Az üzlet létrehozása után nem módosítható",
+        "emailHint": "Ez a bolt nyilvános kapcsolattartási e-mail címe — eltér a személyes fiókod e-mail címétől.",
+        "phone": "Bolt telefonszáma",
+        "description": "Bolt leírása"
       },
       "skip": "Kihagyás",
       "address": {
         "title": "Adja meg a címét",
-        "name": "Név",
-        "namePlaceholder": "Székhely",
-        "address": "Cím",
+        "address": "Bolt címe",
         "address2": "Lakás, lakosztály, stb.",
         "postalCode": "Irányítószám",
         "city": "Város",
-        "country": "Ország",
-        "state": "Állam"
+        "country": "Ország"
       },
       "company": {
         "title": "Adja meg a cégadatait",
         "subtitle": "Professzionális üzleti információk",
         "corporateName": "Cég",
-        "registrationNumber": "Cégjegyzékszám",
-        "taxId": "Adószám"
+        "registrationNumber": "Török személyi azonosító szám (T.C. Kimlik No)",
+        "taxId": "Adószám",
+        "disclaimer": "Adja meg cége adatait. A jutalékszámla az itt megadott adatok alapján kerül kiállításra. Az adatok pontosságáért a jogi felelősség a beküldő eladót terheli.",
+        "typeLabel": "Vállalkozás típusa",
+        "typeIndividual": "Egyéni vállalkozó",
+        "typeIndividualDescription": "Egyéni eladó — a számlázás a török személyi azonosító száma alapján történik.",
+        "typeCorporate": "Bejegyzett cég (Kft. / Rt. / egyéb)",
+        "typeCorporateDescription": "Jogi személy — a számlázás az adószáma alapján történik."
       },
       "payment": {
         "title": "Adja meg a fizetési adatait",
@@ -4259,7 +4271,10 @@
         "emailInvalid": "Kérjük, adjon meg egy e-mail-címet",
         "currencyRequired": "Kérjük, válasszon pénznemet",
         "countryRequired": "Kérjük, válasszon országot",
-        "accountNameRequired": "Kérjük, adja meg a számlatulajdonos nevét"
+        "accountNameRequired": "Kérjük, adja meg a számlatulajdonos nevét",
+        "companyTypeRequired": "Kérjük, válasszon vállalkozási típust",
+        "registrationNumberRequired": "Kérjük, adja meg török személyi azonosító számát",
+        "taxIdRequired": "Kérjük, adja meg adószámát"
       },
       "preview": {
         "title": "Üdvözöljük a Kayı.com-ban",

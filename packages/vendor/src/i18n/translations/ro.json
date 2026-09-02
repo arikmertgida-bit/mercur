@@ -4090,6 +4090,12 @@
     "agreement": {
       "label": "Am citit și accept <0>Termenii de Parteneriat și Utilizare pentru Vânzători</0>.",
       "drawerDescription": "Analizați termenii de mai jos înainte de a continua."
+    },
+    "fields": {
+      "firstName": "Prenumele utilizatorului",
+      "lastName": "Numele utilizatorului",
+      "email": "E-mailul utilizatorului",
+      "password": "Parola utilizatorului"
     }
   },
   "sellerAgreement": {
@@ -4217,33 +4223,39 @@
       },
       "store": {
         "title": "Introduceți detaliile magazinului dumneavoastră",
-        "name": "Nume",
-        "email": "E-mail",
+        "name": "Numele magazinului",
+        "email": "E-mailul magazinului",
         "handle": "Identificator",
         "handleTooltip": "Identificatorul devine slug-ul URL al magazinului dumneavoastră. Lăsați gol pentru a-l genera automat din nume.",
         "handlePlaceholder": "magazinul-meu",
         "currency": "Valută",
         "selectCurrency": "Selecta",
-        "currencyHint": "Nu poate fi modificat după crearea magazinului"
+        "currencyHint": "Nu poate fi modificat după crearea magazinului",
+        "emailHint": "Acesta este e-mailul public de contact al magazinului dvs. — diferit de e-mailul contului dvs. personal.",
+        "phone": "Telefonul magazinului",
+        "description": "Descrierea magazinului"
       },
       "skip": "Omite",
       "address": {
         "title": "Introduceți adresa dumneavoastră",
-        "name": "Nume",
-        "namePlaceholder": "Sediu central",
-        "address": "Adresa",
+        "address": "Adresa magazinului",
         "address2": "Apartament, apartament etc.",
         "postalCode": "Cod poștal",
         "city": "Oraş",
-        "country": "Ţară",
-        "state": "Stat"
+        "country": "Ţară"
       },
       "company": {
         "title": "Introduceți detaliile companiei dumneavoastră",
         "subtitle": "Informații despre magazinul profesional",
         "corporateName": "Companie",
-        "registrationNumber": "Număr de înregistrare",
-        "taxId": "Cod fiscal"
+        "registrationNumber": "Numărul de identificare național turc (T.C. Kimlik No)",
+        "taxId": "Cod fiscal",
+        "disclaimer": "Introduceți datele companiei dvs. Factura de comision va fi emisă pe baza informațiilor furnizate aici. Responsabilitatea legală pentru exactitatea acestor informații revine vânzătorului care le-a introdus.",
+        "typeLabel": "Tipul afacerii",
+        "typeIndividual": "Persoană fizică autorizată",
+        "typeIndividualDescription": "Vânzător persoană fizică — facturare pe baza numărului dvs. de identificare național turc.",
+        "typeCorporate": "Companie înregistrată (SRL / SA / altul)",
+        "typeCorporateDescription": "Persoană juridică — facturare pe baza codului dvs. fiscal."
       },
       "payment": {
         "title": "Introduceți detaliile de plată",
@@ -4259,7 +4271,10 @@
         "emailInvalid": "Vă rugăm introduceți un email",
         "currencyRequired": "Vă rugăm selectați o monedă",
         "countryRequired": "Vă rugăm să selectați o țară",
-        "accountNameRequired": "Vă rugăm introduceți un nume de cont"
+        "accountNameRequired": "Vă rugăm introduceți un nume de cont",
+        "companyTypeRequired": "Selectați tipul afacerii",
+        "registrationNumberRequired": "Introduceți numărul dvs. de identificare național turc",
+        "taxIdRequired": "Introduceți codul dvs. fiscal"
       },
       "preview": {
         "title": "Bine ați venit la Kayı.com",

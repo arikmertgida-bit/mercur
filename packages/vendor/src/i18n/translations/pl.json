@@ -3729,6 +3729,12 @@
     "agreement": {
       "label": "Przeczytałem/-am i akceptuję <0>Warunki Partnerstwa i Korzystania dla Sprzedawców</0>.",
       "drawerDescription": "Zapoznaj się z poniższymi warunkami przed kontynuowaniem."
+    },
+    "fields": {
+      "firstName": "Imię użytkownika",
+      "lastName": "Nazwisko użytkownika",
+      "email": "E-mail użytkownika",
+      "password": "Hasło użytkownika"
     }
   },
   "sellerAgreement": {
@@ -3856,33 +3862,39 @@
       },
       "store": {
         "title": "Wprowadź dane swojego sklepu",
-        "name": "Nazwa",
-        "email": "E-mail",
+        "name": "Nazwa sklepu",
+        "email": "E-mail sklepu",
         "handle": "Identyfikator",
         "handleTooltip": "Identyfikator staje się fragmentem URL Twojego sklepu. Pozostaw puste, aby wygenerować automatycznie z nazwy.",
         "handlePlaceholder": "moj-sklep",
         "currency": "Waluta",
         "selectCurrency": "Wybierz",
-        "currencyHint": "Nie można zmienić po utworzeniu sklepu"
+        "currencyHint": "Nie można zmienić po utworzeniu sklepu",
+        "emailHint": "To jest publiczny adres e-mail kontaktowy Twojego sklepu — inny niż e-mail Twojego konta osobistego.",
+        "phone": "Telefon sklepu",
+        "description": "Opis sklepu"
       },
       "skip": "Pomiń",
       "address": {
         "title": "Wprowadź swój adres",
-        "name": "Nazwa",
-        "namePlaceholder": "Siedziba",
-        "address": "Adres",
+        "address": "Adres sklepu",
         "address2": "Mieszkanie, apartament itp.",
         "postalCode": "Kod pocztowy",
         "city": "Miasto",
-        "country": "Kraj",
-        "state": "Województwo"
+        "country": "Kraj"
       },
       "company": {
         "title": "Wprowadź dane swojej firmy",
         "subtitle": "Informacje o sklepie biznesowym",
         "corporateName": "Firma",
-        "registrationNumber": "Numer rejestracyjny",
-        "taxId": "NIP"
+        "registrationNumber": "Turecki numer identyfikacyjny obywatela (T.C. Kimlik No)",
+        "taxId": "NIP",
+        "disclaimer": "Podaj dane swojej firmy. Faktura za prowizję zostanie wystawiona na podstawie informacji podanych tutaj. Odpowiedzialność prawną za poprawność tych danych ponosi sprzedawca, który je wprowadził.",
+        "typeLabel": "Rodzaj działalności",
+        "typeIndividual": "Jednoosobowa działalność gospodarcza",
+        "typeIndividualDescription": "Sprzedawca indywidualny — fakturowanie na podstawie tureckiego numeru identyfikacyjnego obywatela.",
+        "typeCorporate": "Zarejestrowana spółka (sp. z o.o. / S.A. / inne)",
+        "typeCorporateDescription": "Osoba prawna — fakturowanie na podstawie numeru identyfikacji podatkowej."
       },
       "payment": {
         "title": "Wprowadź dane płatności",
@@ -3898,7 +3910,10 @@
         "emailInvalid": "Wprowadź adres e-mail",
         "currencyRequired": "Wybierz walutę",
         "countryRequired": "Wybierz kraj",
-        "accountNameRequired": "Wprowadź nazwę właściciela konta"
+        "accountNameRequired": "Wprowadź nazwę właściciela konta",
+        "companyTypeRequired": "Wybierz rodzaj działalności",
+        "registrationNumberRequired": "Podaj swój turecki numer identyfikacyjny obywatela",
+        "taxIdRequired": "Podaj swój numer identyfikacji podatkowej"
       },
       "preview": {
         "title": "Witamy w Kayı.com",

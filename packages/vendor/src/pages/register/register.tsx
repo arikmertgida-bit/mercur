@@ -86,7 +86,7 @@ const RegisterForm = () => {
             name="first_name"
             render={({ field }) => (
               <Form.Item>
-                <Form.Label>{t("register.firstName")}</Form.Label>
+                <Form.Label>{t("register.fields.firstName")}</Form.Label>
                 <Form.Control>
                   <Input autoComplete="given-name" {...field} />
                 </Form.Control>
@@ -99,7 +99,7 @@ const RegisterForm = () => {
             name="last_name"
             render={({ field }) => (
               <Form.Item>
-                <Form.Label>{t("register.lastName")}</Form.Label>
+                <Form.Label>{t("register.fields.lastName")}</Form.Label>
                 <Form.Control>
                   <Input autoComplete="family-name" {...field} />
                 </Form.Control>
@@ -112,7 +112,7 @@ const RegisterForm = () => {
             name="email"
             render={({ field }) => (
               <Form.Item>
-                <Form.Label>{t("fields.email")}</Form.Label>
+                <Form.Label>{t("register.fields.email")}</Form.Label>
                 <Form.Control>
                   <Input autoComplete="email" {...field} />
                 </Form.Control>
@@ -125,7 +125,7 @@ const RegisterForm = () => {
             name="password"
             render={({ field }) => (
               <Form.Item>
-                <Form.Label>{t("fields.password")}</Form.Label>
+                <Form.Label>{t("register.fields.password")}</Form.Label>
                 <Form.Control>
                   <Input
                     type="password"
@@ -241,11 +241,14 @@ const Root = ({ children }: { children?: ReactNode }) => {
         children
       ) : (
         <>
-          <RegisterLogo />
-          <div className="mt-6">
-            <RegisterHeader />
-            <RegisterForm />
+          <div className="flex flex-1 flex-col items-center justify-center text-center">
+            <RegisterLogo />
+            <div className="mt-6">
+              <RegisterHeader />
+            </div>
           </div>
+          <RegisterForm />
+          <div className="flex-1" />
           <RegisterFooter />
         </>
       )}

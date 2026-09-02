@@ -1,6 +1,7 @@
 import { useState, useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "@medusajs/ui";
+import { useTranslation } from "react-i18next";
 
 import { useCreateSellerAccount, useLogout } from "@hooks/api";
 import { queryClient } from "@lib/query-client";
@@ -17,13 +18,11 @@ type StoreData = {
 };
 
 type AddressData = {
-  name?: string;
   address_1?: string;
   address_2?: string;
   postal_code?: string;
   city?: string;
   country_code: string;
-  province?: string;
 };
 
 type CompanyData = {
@@ -43,6 +42,7 @@ type PaymentData = {
 
 export const useOnboarding = (memberEmail: string) => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [currentStep, setCurrentStep] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -81,14 +81,9 @@ export const useOnboarding = (memberEmail: string) => {
     setCurrentStep(2);
   }, []);
 
-  // Step 3: Company — save locally
+  // Step 3: Company — save locally (mandatory, no skip)
   const submitCompanyStep = useCallback(async (data: CompanyData) => {
     companyDataRef.current = data;
-    setCurrentStep(3);
-  }, []);
-
-  const skipCompanyStep = useCallback(() => {
-    companyDataRef.current = null;
     setCurrentStep(3);
   }, []);
 
@@ -150,13 +145,11 @@ export const useOnboarding = (memberEmail: string) => {
             : {}),
           address: addressData
             ? {
-                name: addressData.name || undefined,
                 address_1: addressData.address_1 || undefined,
                 address_2: addressData.address_2 || undefined,
                 postal_code: addressData.postal_code || undefined,
                 city: addressData.city || undefined,
                 country_code: addressData.country_code,
-                province: addressData.province || undefined,
               }
             : undefined,
           professional_details: hasCompanyData
@@ -202,7 +195,7 @@ export const useOnboarding = (memberEmail: string) => {
         setIsSubmitting(false);
       }
     },
-    [createSeller, logout, memberEmail, navigate],
+    [createSeller, logout, memberEmail, navigate, t],
   );
 
   // Step 4: Payment — create seller with everything and finish
@@ -235,7 +228,6 @@ export const useOnboarding = (memberEmail: string) => {
     submitAddressStep,
     skipAddressStep,
     submitCompanyStep,
-    skipCompanyStep,
     submitPaymentStep,
     skipPaymentStep,
   };

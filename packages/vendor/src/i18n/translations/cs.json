@@ -4090,6 +4090,12 @@
     "agreement": {
       "label": "Přečetl(a) jsem si a přijímám <0>Podmínky partnerství a používání pro prodejce</0>.",
       "drawerDescription": "Před pokračováním si přečtěte níže uvedené podmínky."
+    },
+    "fields": {
+      "firstName": "Jméno uživatele",
+      "lastName": "Příjmení uživatele",
+      "email": "E-mail uživatele",
+      "password": "Heslo uživatele"
     }
   },
   "sellerAgreement": {
@@ -4217,33 +4223,39 @@
       },
       "store": {
         "title": "Zadejte detaily svého obchodu",
-        "name": "Název",
-        "email": "E-mail",
+        "name": "Název obchodu",
+        "email": "E-mail obchodu",
         "handle": "Identifikátor",
         "handleTooltip": "Identifikátor se stane URL slugem vašeho obchodu. Ponechte prázdné pro automatické vygenerování z názvu.",
         "handlePlaceholder": "muj-obchod",
         "currency": "Měna",
         "selectCurrency": "Vybrat",
-        "currencyHint": "Nelze změnit po vytvoření obchodu"
+        "currencyHint": "Nelze změnit po vytvoření obchodu",
+        "emailHint": "Toto je veřejný kontaktní e-mail vašeho obchodu — liší se od e-mailu vašeho osobního účtu.",
+        "phone": "Telefon obchodu",
+        "description": "Popis obchodu"
       },
       "skip": "Přeskočit",
       "address": {
         "title": "Zadejte svou adresu",
-        "name": "Název",
-        "namePlaceholder": "Sídlo",
-        "address": "Adresa",
+        "address": "Adresa obchodu",
         "address2": "Byt, apartmán, atd.",
         "postalCode": "PSČ",
         "city": "Město",
-        "country": "Země",
-        "state": "Stát"
+        "country": "Země"
       },
       "company": {
         "title": "Zadejte své firemní údaje",
         "subtitle": "Informace o profesionálním obchodu",
         "corporateName": "Společnost",
-        "registrationNumber": "IČO",
-        "taxId": "DIČ"
+        "registrationNumber": "Turecké rodné číslo (T.C. Kimlik No)",
+        "taxId": "DIČ",
+        "disclaimer": "Zadejte údaje o vaší společnosti. Faktura za provizi bude vystavena na základě zde uvedených údajů. Právní odpovědnost za správnost těchto údajů nese prodejce, který je zadal.",
+        "typeLabel": "Typ podnikání",
+        "typeIndividual": "Živnostník",
+        "typeIndividualDescription": "Individuální prodejce — faktura se vystavuje na vaše turecké rodné číslo (T.C. Kimlik No).",
+        "typeCorporate": "Registrovaná společnost (s.r.o. / a.s. / jiné)",
+        "typeCorporateDescription": "Právnická osoba — faktura se vystavuje na vaše daňové identifikační číslo."
       },
       "payment": {
         "title": "Zadejte své platební údaje",
@@ -4259,7 +4271,10 @@
         "emailInvalid": "Zadejte prosím e-mail",
         "currencyRequired": "Vyberte prosím měnu",
         "countryRequired": "Prosím vyberte zemi",
-        "accountNameRequired": "Zadejte prosím název účtu"
+        "accountNameRequired": "Zadejte prosím název účtu",
+        "companyTypeRequired": "Vyberte prosím typ podnikání",
+        "registrationNumberRequired": "Zadejte prosím své turecké rodné číslo",
+        "taxIdRequired": "Zadejte prosím své daňové identifikační číslo"
       },
       "preview": {
         "title": "Vítejte v Kayı.com",

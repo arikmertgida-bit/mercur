@@ -4090,6 +4090,12 @@
     "agreement": {
       "label": "<0>販売者向けパートナーシップおよび利用規約</0>を読み、同意します。",
       "drawerDescription": "続行する前に、以下の規約をご確認ください。"
+    },
+    "fields": {
+      "firstName": "ユーザーの名",
+      "lastName": "ユーザーの姓",
+      "email": "ユーザーのメールアドレス",
+      "password": "ユーザーのパスワード"
     }
   },
   "sellerAgreement": {
@@ -4217,33 +4223,39 @@
       },
       "store": {
         "title": "ストアの詳細を入力してください",
-        "name": "名前",
-        "email": "Eメール",
+        "name": "ストア名",
+        "email": "ストアのメールアドレス",
         "handle": "ハンドル",
         "handleTooltip": "ハンドルはストアのURLスラッグになります。空欄の場合、名前から自動生成されます。",
         "handlePlaceholder": "my-store",
         "currency": "通貨",
         "selectCurrency": "選択",
-        "currencyHint": "ストア作成後は変更できません"
+        "currencyHint": "ストア作成後は変更できません",
+        "emailHint": "これはストアの公開連絡先メールアドレスです。個人アカウントのメールアドレスとは異なります。",
+        "phone": "ストアの電話番号",
+        "description": "ストアの説明"
       },
       "skip": "スキップ",
       "address": {
         "title": "住所を入力してください",
-        "name": "名前",
-        "namePlaceholder": "本社",
-        "address": "住所",
+        "address": "ストアの住所",
         "address2": "アパート、部屋番号など",
         "postalCode": "郵便番号",
         "city": "市区町村",
-        "country": "国",
-        "state": "州"
+        "country": "国"
       },
       "company": {
         "title": "会社情報を入力してください",
         "subtitle": "法人ストア情報",
         "corporateName": "会社",
-        "registrationNumber": "登録番号",
-        "taxId": "税番号"
+        "registrationNumber": "トルコ国民識別番号(T.C. Kimlik No)",
+        "taxId": "税番号",
+        "disclaimer": "会社情報を入力してください。手数料の請求書はここで入力された情報に基づいて発行されます。入力情報の正確性に関する法的責任は、入力した販売者にあります。",
+        "typeLabel": "事業形態",
+        "typeIndividual": "個人事業主",
+        "typeIndividualDescription": "個人販売者 — トルコの国民識別番号に基づいて請求書が発行されます。",
+        "typeCorporate": "登録法人(有限会社／株式会社／その他)",
+        "typeCorporateDescription": "法人 — 納税者番号に基づいて請求書が発行されます。"
       },
       "payment": {
         "title": "支払い詳細を入力してください",
@@ -4259,7 +4271,10 @@
         "emailInvalid": "メールアドレスを入力してください",
         "currencyRequired": "通貨を選択してください",
         "countryRequired": "国を選択してください",
-        "accountNameRequired": "口座名義を入力してください"
+        "accountNameRequired": "口座名義を入力してください",
+        "companyTypeRequired": "事業形態を選択してください",
+        "registrationNumberRequired": "トルコの国民識別番号を入力してください",
+        "taxIdRequired": "納税者番号を入力してください"
       },
       "preview": {
         "title": "Kayı.comへようこそ",

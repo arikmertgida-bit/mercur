@@ -4090,6 +4090,12 @@
     "agreement": {
       "label": "Pročitao/la sam i prihvatam <0>Uslove partnerstva i korištenja za prodavače</0>.",
       "drawerDescription": "Pregledajte uslove ispod prije nego što nastavite."
+    },
+    "fields": {
+      "firstName": "Korisničko ime",
+      "lastName": "Korisničko prezime",
+      "email": "Korisnički e-mail",
+      "password": "Korisnička lozinka"
     }
   },
   "sellerAgreement": {
@@ -4217,33 +4223,39 @@
       },
       "store": {
         "title": "Unesite detalje svoje prodavnice",
-        "name": "Naziv",
-        "email": "Email",
+        "name": "Naziv trgovine",
+        "email": "E-mail trgovine",
         "handle": "Identifikator",
         "handleTooltip": "Identifikator (handle) postaje URL slug za vašu prodavnicu. Ostavite prazno da se automatski generiše iz naziva.",
         "handlePlaceholder": "moja-prodavnica",
         "currency": "Valuta",
         "selectCurrency": "Odabir",
-        "currencyHint": "Ne može se promijeniti nakon kreiranja prodavnice"
+        "currencyHint": "Ne može se promijeniti nakon kreiranja prodavnice",
+        "emailHint": "Ovo je javni kontakt e-mail vaše trgovine — razlikuje se od e-maila vašeg ličnog naloga.",
+        "phone": "Telefon trgovine",
+        "description": "Opis trgovine"
       },
       "skip": "Preskoči",
       "address": {
         "title": "Unesite svoju adresu",
-        "name": "Naziv",
-        "namePlaceholder": "Sjedište",
-        "address": "Adresa",
+        "address": "Adresa trgovine",
         "address2": "Stan, apartman, itd.",
         "postalCode": "Poštanski broj",
         "city": "Grad",
-        "country": "Država",
-        "state": "Država"
+        "country": "Država"
       },
       "company": {
         "title": "Unesite detalje svoje kompanije",
         "subtitle": "Informacije o profesionalnoj prodavnici",
         "corporateName": "Kompanija",
-        "registrationNumber": "Registarski broj",
-        "taxId": "Poreski broj"
+        "registrationNumber": "Turski matični broj građana (T.C. Kimlik No)",
+        "taxId": "Poreski broj",
+        "disclaimer": "Unesite podatke o svojoj kompaniji. Račun za proviziju biće izdat na osnovu ovdje unesenih informacija. Pravnu odgovornost za tačnost ovih podataka snosi prodavac koji ih je unio.",
+        "typeLabel": "Vrsta poslovnog subjekta",
+        "typeIndividual": "Samostalni preduzetnik",
+        "typeIndividualDescription": "Individualni prodavac — račun se izdaje na osnovu vašeg turskog matičnog broja građana.",
+        "typeCorporate": "Registrovana kompanija (d.o.o. / d.d. / drugo)",
+        "typeCorporateDescription": "Pravno lice — račun se izdaje na osnovu vašeg poreskog broja."
       },
       "payment": {
         "title": "Unesite detalje plaćanja",
@@ -4259,7 +4271,10 @@
         "emailInvalid": "Unesite email",
         "currencyRequired": "Odaberite valutu",
         "countryRequired": "Molimo odaberite zemlju",
-        "accountNameRequired": "Unesite naziv računa"
+        "accountNameRequired": "Unesite naziv računa",
+        "companyTypeRequired": "Molimo odaberite vrstu poslovnog subjekta",
+        "registrationNumberRequired": "Molimo unesite svoj turski matični broj građana",
+        "taxIdRequired": "Molimo unesite svoj poreski broj"
       },
       "preview": {
         "title": "Dobrodošli u Kayı.com",
