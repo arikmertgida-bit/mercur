@@ -248,6 +248,7 @@
       "viewInventory": "Нөөц харах"
     },
     "quickAccess": {
+      "returns": "Буцаалтууд",
       "followers": "Дагагчид",
       "unreadMessages": "Уншаагүй мессеж"
     }

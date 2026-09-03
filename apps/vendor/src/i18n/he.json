@@ -248,6 +248,7 @@
       "viewInventory": "מעבר למלאי"
     },
     "quickAccess": {
+      "returns": "החזרות",
       "followers": "עוקבים",
       "unreadMessages": "הודעות שלא נקראו"
     }

@@ -248,6 +248,7 @@
       "viewInventory": "Перейти к складу"
     },
     "quickAccess": {
+      "returns": "Возвраты",
       "followers": "Подписчики",
       "unreadMessages": "Непрочитанные сообщения"
     }

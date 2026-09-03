@@ -248,6 +248,7 @@
       "viewInventory": "Idi na zalihe"
     },
     "quickAccess": {
+      "returns": "Povrati",
       "followers": "Pratioci",
       "unreadMessages": "Nepročitane poruke"
     }

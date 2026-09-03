@@ -248,6 +248,7 @@
       "viewInventory": "Към наличностите"
     },
     "quickAccess": {
+      "returns": "Връщания",
       "followers": "Последователи",
       "unreadMessages": "Непрочетени съобщения"
     }

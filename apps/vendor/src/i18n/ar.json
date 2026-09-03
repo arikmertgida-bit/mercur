@@ -248,6 +248,7 @@
       "viewInventory": "عرض المخزون"
     },
     "quickAccess": {
+      "returns": "المرتجعات",
       "followers": "المتابعون",
       "unreadMessages": "رسائل غير مقروءة"
     }

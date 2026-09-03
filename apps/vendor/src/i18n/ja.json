@@ -248,6 +248,7 @@
       "viewInventory": "在庫を見る"
     },
     "quickAccess": {
+      "returns": "返品",
       "followers": "フォロワー",
       "unreadMessages": "未読メッセージ"
     }

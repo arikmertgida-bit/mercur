@@ -248,6 +248,7 @@
       "viewInventory": "Zobrazit sklad"
     },
     "quickAccess": {
+      "returns": "Vrácení zboží",
       "followers": "Sledující",
       "unreadMessages": "Nepřečtené zprávy"
     }

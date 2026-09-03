@@ -248,6 +248,7 @@
       "viewInventory": "Оди на залихи"
     },
     "quickAccess": {
+      "returns": "Враќања",
       "followers": "Следбеници",
       "unreadMessages": "Непрочитани пораки"
     }

@@ -248,6 +248,7 @@
       "viewInventory": "Készlet megtekintése"
     },
     "quickAccess": {
+      "returns": "Visszaküldések",
       "followers": "Követők",
       "unreadMessages": "Olvasatlan üzenetek"
     }

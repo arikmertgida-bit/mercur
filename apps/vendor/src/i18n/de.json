@@ -248,6 +248,7 @@
       "viewInventory": "Zum Lagerbestand"
     },
     "quickAccess": {
+      "returns": "Rücksendungen",
       "followers": "Follower",
       "unreadMessages": "Ungelesene Nachrichten"
     }

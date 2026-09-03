@@ -248,6 +248,7 @@
       "viewInventory": "查看库存"
     },
     "quickAccess": {
+      "returns": "退货",
       "followers": "关注者",
       "unreadMessages": "未读消息"
     }

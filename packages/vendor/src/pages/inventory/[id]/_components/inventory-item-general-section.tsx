@@ -1,6 +1,7 @@
 import { Container, Heading } from "@medusajs/ui"
 import { HttpTypes } from "@medusajs/types"
 import { PencilSquare } from "@medusajs/icons"
+import { TFunction } from "i18next"
 import { useTranslation } from "react-i18next"
 
 import { DisplayExtensionZone, DisplayField } from "@mercurjs/dashboard-shared"
@@ -74,6 +75,7 @@ export const InventoryItemGeneralSection = ({
         <SectionRow
           title={t("fields.inStock")}
           value={getQuantityFormat(
+            t,
             stockedQuantity,
             inventoryItem.location_levels?.length
           )}
@@ -88,6 +90,7 @@ export const InventoryItemGeneralSection = ({
         <SectionRow
           title={t("inventory.reserved")}
           value={getQuantityFormat(
+            t,
             reservedQuantity,
             inventoryItem.location_levels?.length
           )}
@@ -102,6 +105,7 @@ export const InventoryItemGeneralSection = ({
         <SectionRow
           title={t("inventory.available")}
           value={getQuantityFormat(
+            t,
             availableQuantity,
             inventoryItem.location_levels?.length
           )}
@@ -117,9 +121,16 @@ export const InventoryItemGeneralSection = ({
   )
 }
 
-const getQuantityFormat = (quantity: number, locations?: number) => {
+const getQuantityFormat = (
+  t: TFunction,
+  quantity: number,
+  locations?: number
+) => {
   if (quantity !== undefined && !isNaN(quantity)) {
-    return `${quantity} across ${locations ?? "-"} locations`
+    return t("inventory.quantityAcrossLocations", {
+      quantity,
+      locations: locations ?? "-",
+    })
   }
 
   return "-"

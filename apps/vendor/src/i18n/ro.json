@@ -248,6 +248,7 @@
       "viewInventory": "Vezi inventarul"
     },
     "quickAccess": {
+      "returns": "Retururi",
       "followers": "Urmăritori",
       "unreadMessages": "Mesaje necitite"
     }

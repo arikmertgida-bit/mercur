@@ -278,6 +278,19 @@ export const InventoryItemSellerLinkRowSchema = z.object({
         )
         .nullable()
         .optional(),
+      variants: z
+        .array(
+          z.object({
+            product: z
+              .object({
+                status: z.string().nullable().optional(),
+              })
+              .nullable()
+              .optional(),
+          })
+        )
+        .nullable()
+        .optional(),
     })
     .nullable()
     .optional(),
