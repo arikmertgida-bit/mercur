@@ -248,6 +248,7 @@
       "viewInventory": "مشاهده انبار"
     },
     "quickAccess": {
+      "returns": "مرجوعی‌ها",
       "followers": "دنبال‌کنندگان",
       "unreadMessages": "پیام‌های خوانده‌نشده"
     }

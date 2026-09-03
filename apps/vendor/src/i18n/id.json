@@ -248,6 +248,7 @@
       "viewInventory": "Lihat Inventaris"
     },
     "quickAccess": {
+      "returns": "Retur",
       "followers": "Pengikut",
       "unreadMessages": "Pesan Belum Dibaca"
     }

@@ -248,6 +248,7 @@
       "viewInventory": "Ver stock"
     },
     "quickAccess": {
+      "returns": "Devoluções",
       "followers": "Seguidores",
       "unreadMessages": "Mensagens não lidas"
     }

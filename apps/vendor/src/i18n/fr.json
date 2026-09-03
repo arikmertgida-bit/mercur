@@ -248,6 +248,7 @@
       "viewInventory": "Voir l'inventaire"
     },
     "quickAccess": {
+      "returns": "Retours",
       "followers": "Abonnés",
       "unreadMessages": "Messages non lus"
     }

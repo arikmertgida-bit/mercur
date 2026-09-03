@@ -248,6 +248,7 @@
       "viewInventory": "Naar voorraad"
     },
     "quickAccess": {
+      "returns": "Retouren",
       "followers": "Volgers",
       "unreadMessages": "Ongelezen berichten"
     }

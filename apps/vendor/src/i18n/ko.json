@@ -248,6 +248,7 @@
       "viewInventory": "재고 보기"
     },
     "quickAccess": {
+      "returns": "반품",
       "followers": "팔로워",
       "unreadMessages": "읽지 않은 메시지"
     }

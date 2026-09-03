@@ -248,6 +248,7 @@
       "viewInventory": "Xem kho hàng"
     },
     "quickAccess": {
+      "returns": "Trả hàng",
       "followers": "Người theo dõi",
       "unreadMessages": "Tin nhắn chưa đọc"
     }

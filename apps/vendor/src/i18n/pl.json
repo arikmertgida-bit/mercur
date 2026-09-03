@@ -248,6 +248,7 @@
       "viewInventory": "Przejdź do magazynu"
     },
     "quickAccess": {
+      "returns": "Zwroty",
       "followers": "Obserwujący",
       "unreadMessages": "Nieprzeczytane wiadomości"
     }

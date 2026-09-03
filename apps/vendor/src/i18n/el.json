@@ -248,6 +248,7 @@
       "viewInventory": "Μετάβαση στο απόθεμα"
     },
     "quickAccess": {
+      "returns": "Επιστροφές",
       "followers": "Ακόλουθοι",
       "unreadMessages": "Μη αναγνωσμένα μηνύματα"
     }

@@ -248,6 +248,7 @@
       "viewInventory": "Peržiūrėti atsargas"
     },
     "quickAccess": {
+      "returns": "Grąžinimai",
       "followers": "Sekėjai",
       "unreadMessages": "Neperskaitytos žinutės"
     }

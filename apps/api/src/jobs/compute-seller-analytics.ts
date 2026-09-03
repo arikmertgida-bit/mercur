@@ -41,6 +41,7 @@ const LOW_STOCK_MAX_ITEMS_PER_SELLER = 10
 const INVENTORY_SCAN_LIMIT_PER_SELLER = 500
 const DEFAULT_CURRENCY_CODE = "try"
 const TERMINATED_SELLER_STATUS = "terminated"
+const PUBLISHED_PRODUCT_STATUS = "published"
 
 // @mercurjs/core only publishes each module's index barrel (its Module()
 // definition), not the concrete service class — so the container-resolved
@@ -189,6 +190,7 @@ async function loadLowStockForSeller(
       "inventory_item.title",
       "inventory_item.location_levels.stocked_quantity",
       "inventory_item.location_levels.reserved_quantity",
+      "inventory_item.variants.product.status",
     ],
     filters: { seller_id: sellerId },
     pagination: { skip: 0, take: INVENTORY_SCAN_LIMIT_PER_SELLER },
@@ -198,6 +200,17 @@ async function loadLowStockForSeller(
   for (const link of parseRows(InventoryItemSellerLinkRowSchema, rows as object[])) {
     const item = link.inventory_item
     if (!item) {
+      continue
+    }
+    // An inventory item still attached to a draft/proposed/rejected product
+    // isn't actually sellable on the marketplace yet, so it shouldn't nag
+    // the seller/admin with a "stock running low" reminder meant for live
+    // listings. Only flag it once at least one of its variants belongs to a
+    // published product.
+    const hasPublishedListing = (item.variants ?? []).some(
+      (variant) => variant.product?.status === PUBLISHED_PRODUCT_STATUS
+    )
+    if (!hasPublishedListing) {
       continue
     }
     const available = (item.location_levels ?? []).reduce(
@@ -230,7 +243,7 @@ async function loadPlatformTotals(query: Query): Promise<{
       query.graph({
         entity: "product",
         fields: ["id"],
-        filters: { status: "published" },
+        filters: { status: PUBLISHED_PRODUCT_STATUS },
         pagination: { skip: 0, take: 1 },
       }),
       query.graph({

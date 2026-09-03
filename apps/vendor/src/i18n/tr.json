@@ -248,6 +248,7 @@
       "viewInventory": "Envantere Git"
     },
     "quickAccess": {
+      "returns": "İadeler",
       "followers": "Takipçiler",
       "unreadMessages": "Okunmamış Mesaj"
     }

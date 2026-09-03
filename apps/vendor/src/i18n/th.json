@@ -248,6 +248,7 @@
       "viewInventory": "ไปที่คลังสินค้า"
     },
     "quickAccess": {
+      "returns": "การคืนสินค้า",
       "followers": "ผู้ติดตาม",
       "unreadMessages": "ข้อความที่ยังไม่ได้อ่าน"
     }
