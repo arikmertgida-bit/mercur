@@ -216,5 +216,40 @@
       "reviewsAverage": "Note Moyenne"
     },
     "count": "Abonnés : {{count}}"
+  },
+  "dashboard": {
+    "domain": "Tableau de bord",
+    "pageTitle": "Tableau de bord",
+    "orders": {
+      "title": "Résumé des commandes",
+      "subtitle": "Nombre de commandes en direct de votre boutique",
+      "today": "Aujourd'hui",
+      "thisWeek": "Cette semaine",
+      "thisMonth": "Ce mois-ci",
+      "earningsToday": "Gains du jour"
+    },
+    "analytics": {
+      "title": "Analytique",
+      "subtitle": "Suivez la performance de vos ventes dans le temps",
+      "orders": "Commandes",
+      "earnings": "Gains",
+      "noData": "Pas encore de données",
+      "updatedAt": "Dernière mise à jour : {{date}}",
+      "updatePending": "Pas encore calculé",
+      "updateNotice": "Les données analytiques sont actualisées toutes les 12 heures"
+    },
+    "lowStock": {
+      "title": "Stock faible",
+      "subtitle": "Produits dont le stock est bas",
+      "noRecords": "Aucun produit à faible stock",
+      "product": "Produit",
+      "sku": "Référence",
+      "available": "Disponible",
+      "viewInventory": "Voir l'inventaire"
+    },
+    "quickAccess": {
+      "followers": "Abonnés",
+      "unreadMessages": "Messages non lus"
+    }
   }
 }

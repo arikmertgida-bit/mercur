@@ -23,6 +23,7 @@ import {
   currencies,
   getCurrencySymbol,
 } from "@lib/data/currencies"
+import { getLocalizedCurrencyName } from "@lib/format-currency-name"
 import { CampaignFormFields, WithNestedCampaign } from "@custom-types/campaign"
 
 
@@ -36,7 +37,7 @@ export const CreateCampaignFormFields = <T extends CampaignFormFields | WithNest
   fieldScope = ""
 }: CreateCampaignFormFieldsProps<T>) => {
   
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const { currency_code: sellerCurrencyCode } = useCurrentSeller()
 
   const namePath = `${fieldScope}name` as Path<T>
@@ -329,7 +330,10 @@ export const CreateCampaignFormFields = <T extends CampaignFormFields | WithNest
                               value={currency.code.toLowerCase()}
                               key={currency.code}
                             >
-                              {currency.name}
+                              {getLocalizedCurrencyName(
+                                currency.code,
+                                i18n.language,
+                              )}
                             </Select.Item>
                           ))}
                       </Select.Content>

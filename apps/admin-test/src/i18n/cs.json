@@ -189,11 +189,17 @@
       "heading": "Žádosti o typy",
       "noRecords": "Nebyly nalezeny žádné žádosti o typy"
     },
+    "returnReasons": {
+      "navLabel": "Důvody vrácení",
+      "heading": "Žádosti o důvody vrácení",
+      "noRecords": "Nebyly nalezeny žádné žádosti o důvody vrácení"
+    },
     "typeLabels": {
       "product_category": "Kategorie",
       "product_collection": "Kolekce",
       "product_tag": "Štítek",
-      "product_type": "Typ"
+      "product_type": "Typ",
+      "return_reason": "Důvod vrácení"
     },
     "fields": {
       "name": "Název",
@@ -202,7 +208,8 @@
       "active": "Aktivní",
       "internal": "Interní",
       "title": "Nadpis",
-      "value": "Hodnota"
+      "value": "Hodnota",
+      "label": "Popisek"
     },
     "values": {
       "yes": "Ano",
@@ -260,6 +267,33 @@
       "rating": "Hodnocení",
       "reference": "Reference",
       "customerNote": "Poznámka zákazníka"
+    }
+  },
+  "dashboard": {
+    "domain": "Přehled",
+    "pageTitle": "Přehled",
+    "orders": {
+      "title": "Souhrn objednávek",
+      "subtitle": "Aktuální počty objednávek napříč tržištěm",
+      "today": "Dnes",
+      "thisWeek": "Tento týden",
+      "thisMonth": "Tento měsíc"
+    },
+    "totals": {
+      "products": "Produkty",
+      "sellers": "Prodejci",
+      "customers": "Zákazníci",
+      "lowStock": "Položky s nízkými zásobami"
+    },
+    "analytics": {
+      "title": "Analytika",
+      "subtitle": "Sledujte výkon tržiště v čase",
+      "orders": "Objednávky",
+      "commissionEarnings": "Příjem z provizí",
+      "noData": "Zatím žádná data",
+      "updatedAt": "Poslední aktualizace: {{date}}",
+      "updatePending": "Zatím nevypočteno",
+      "updateNotice": "Data analytiky se aktualizují každých 12 hodin"
     }
   }
 }

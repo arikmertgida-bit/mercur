@@ -189,11 +189,17 @@
       "heading": "Төрлийн хүсэлтүүд",
       "noRecords": "Төрлийн хүсэлт олдсонгүй"
     },
+    "returnReasons": {
+      "navLabel": "Буцаалтын Шалтгаанууд",
+      "heading": "Буцаалтын шалтгааны хүсэлтүүд",
+      "noRecords": "Буцаалтын шалтгааны хүсэлт олдсонгүй"
+    },
     "typeLabels": {
       "product_category": "Ангилал",
       "product_collection": "Цуглуулга",
       "product_tag": "Шошго",
-      "product_type": "Төрөл"
+      "product_type": "Төрөл",
+      "return_reason": "Буцаалтын Шалтгаан"
     },
     "fields": {
       "name": "Нэр",
@@ -202,7 +208,8 @@
       "active": "Идэвхтэй",
       "internal": "Дотоод",
       "title": "Гарчиг",
-      "value": "Утга"
+      "value": "Утга",
+      "label": "Шошго"
     },
     "values": {
       "yes": "Тийм",
@@ -260,6 +267,33 @@
       "rating": "Үнэлгээ",
       "reference": "Лавлагаа",
       "customerNote": "Үйлчлүүлэгчийн тэмдэглэл"
+    }
+  },
+  "dashboard": {
+    "domain": "Хяналтын самбар",
+    "pageTitle": "Хяналтын самбар",
+    "orders": {
+      "title": "Захиалгын хураангуй",
+      "subtitle": "Зах зээлийн бодит цагийн захиалгын тоо",
+      "today": "Өнөөдөр",
+      "thisWeek": "Энэ долоо хоног",
+      "thisMonth": "Энэ сар"
+    },
+    "totals": {
+      "products": "Бүтээгдэхүүн",
+      "sellers": "Худалдагчид",
+      "customers": "Хэрэглэгчид",
+      "lowStock": "Нөөц багатай бараа"
+    },
+    "analytics": {
+      "title": "Аналитик",
+      "subtitle": "Зах зээлийн үр дүнг цаг хугацааны хувьд хянаарай",
+      "orders": "Захиалгууд",
+      "commissionEarnings": "Шимтгэлийн орлого",
+      "noData": "Одоогоор мэдээлэл алга",
+      "updatedAt": "Сүүлд шинэчлэгдсэн: {{date}}",
+      "updatePending": "Одоогоор тооцоолоогүй",
+      "updateNotice": "Аналитик мэдээлэл 12 цаг тутамд шинэчлэгддэг"
     }
   }
 }

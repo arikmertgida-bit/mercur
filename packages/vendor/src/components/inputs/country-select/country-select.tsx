@@ -8,20 +8,13 @@ import {
 } from "react";
 import { useTranslation } from "react-i18next";
 import { countries } from "../../../lib/data/countries";
+import { getLocalizedCountryName } from "../../../lib/format-country-name";
 import { Select } from "@medusajs/ui";
 
 type CountrySelectProps = ComponentPropsWithoutRef<typeof Select> & {
   placeholder?: string;
   defaultValue?: string;
   onChange?: (value: string) => void;
-};
-
-const getDisplayNames = (language: string) => {
-  try {
-    return new Intl.DisplayNames([language], { type: "region" });
-  } catch {
-    return null;
-  }
 };
 
 export const CountrySelect: ComponentType<CountrySelectProps> = forwardRef<
@@ -34,14 +27,13 @@ export const CountrySelect: ComponentType<CountrySelectProps> = forwardRef<
   useImperativeHandle(ref, () => innerRef.current as HTMLButtonElement);
 
   const localizedCountries = useMemo(() => {
-    const displayNames = getDisplayNames(i18n.language);
     const collator = new Intl.Collator(i18n.language, { sensitivity: "base" });
 
     return countries
       .map((country) => ({
         ...country,
         localized_name:
-          displayNames?.of(country.iso_2.toUpperCase()) ?? country.display_name,
+          getLocalizedCountryName(country, i18n.language) ?? country.display_name,
       }))
       .sort((a, b) => collator.compare(a.localized_name, b.localized_name));
   }, [i18n.language]);

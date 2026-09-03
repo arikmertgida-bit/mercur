@@ -189,11 +189,17 @@
       "heading": "유형 요청",
       "noRecords": "유형 요청이 없습니다"
     },
+    "returnReasons": {
+      "navLabel": "반품 사유",
+      "heading": "반품 사유 요청",
+      "noRecords": "반품 사유 요청이 없습니다"
+    },
     "typeLabels": {
       "product_category": "카테고리",
       "product_collection": "컬렉션",
       "product_tag": "태그",
-      "product_type": "유형"
+      "product_type": "유형",
+      "return_reason": "반품 사유"
     },
     "fields": {
       "name": "이름",
@@ -202,7 +208,8 @@
       "active": "활성",
       "internal": "내부",
       "title": "제목",
-      "value": "값"
+      "value": "값",
+      "label": "라벨"
     },
     "values": {
       "yes": "예",
@@ -260,6 +267,33 @@
       "rating": "평점",
       "reference": "참조",
       "customerNote": "고객 메모"
+    }
+  },
+  "dashboard": {
+    "domain": "대시보드",
+    "pageTitle": "대시보드",
+    "orders": {
+      "title": "주문 요약",
+      "subtitle": "마켓플레이스 전체의 실시간 주문 수",
+      "today": "오늘",
+      "thisWeek": "이번 주",
+      "thisMonth": "이번 달"
+    },
+    "totals": {
+      "products": "상품",
+      "sellers": "판매자",
+      "customers": "고객",
+      "lowStock": "재고 부족 상품"
+    },
+    "analytics": {
+      "title": "분석",
+      "subtitle": "시간에 따른 마켓플레이스 실적을 확인하세요",
+      "orders": "주문",
+      "commissionEarnings": "수수료 수익",
+      "noData": "아직 데이터가 없습니다",
+      "updatedAt": "마지막 업데이트: {{date}}",
+      "updatePending": "아직 계산되지 않음",
+      "updateNotice": "분석 데이터는 12시간마다 업데이트됩니다"
     }
   }
 }

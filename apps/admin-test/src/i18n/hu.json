@@ -189,11 +189,17 @@
       "heading": "Típuskérések",
       "noRecords": "Nem található típuskérés"
     },
+    "returnReasons": {
+      "navLabel": "Visszaküldési Okok",
+      "heading": "Visszaküldési Ok kérések",
+      "noRecords": "Nem található visszaküldési ok kérés"
+    },
     "typeLabels": {
       "product_category": "Kategória",
       "product_collection": "Kollekció",
       "product_tag": "Címke",
-      "product_type": "Típus"
+      "product_type": "Típus",
+      "return_reason": "Visszaküldési Ok"
     },
     "fields": {
       "name": "Név",
@@ -202,7 +208,8 @@
       "active": "Aktív",
       "internal": "Belső",
       "title": "Cím",
-      "value": "Érték"
+      "value": "Érték",
+      "label": "Címke"
     },
     "values": {
       "yes": "Igen",
@@ -260,6 +267,33 @@
       "rating": "Értékelés",
       "reference": "Hivatkozás",
       "customerNote": "Vásárlói megjegyzés"
+    }
+  },
+  "dashboard": {
+    "domain": "Irányítópult",
+    "pageTitle": "Irányítópult",
+    "orders": {
+      "title": "Rendelés-összesítő",
+      "subtitle": "Élő rendelésszámok a teljes piactéren",
+      "today": "Ma",
+      "thisWeek": "Ezen a héten",
+      "thisMonth": "Ebben a hónapban"
+    },
+    "totals": {
+      "products": "Termékek",
+      "sellers": "Eladók",
+      "customers": "Vásárlók",
+      "lowStock": "Alacsony készletű termékek"
+    },
+    "analytics": {
+      "title": "Elemzés",
+      "subtitle": "Kövesse a piactér teljesítményét az idő múlásával",
+      "orders": "Rendelések",
+      "commissionEarnings": "Jutalékbevétel",
+      "noData": "Még nincs adat",
+      "updatedAt": "Utolsó frissítés: {{date}}",
+      "updatePending": "Még nincs kiszámítva",
+      "updateNotice": "Az elemzési adatok 12 óránként frissülnek"
     }
   }
 }

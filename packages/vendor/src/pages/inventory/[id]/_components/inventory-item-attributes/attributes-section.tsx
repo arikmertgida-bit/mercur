@@ -16,7 +16,7 @@ type InventoryItemAttributeSectionProps = {
 export const InventoryItemAttributeSection = ({
   inventoryItem,
 }: InventoryItemAttributeSectionProps) => {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
 
   return (
     <Container className="divide-y p-0">
@@ -46,7 +46,7 @@ export const InventoryItemAttributeSection = ({
       <SectionRow title={t("fields.material")} value={inventoryItem.material} />
       <SectionRow
         title={t("fields.countryOfOrigin")}
-        value={getFormattedCountry(inventoryItem.origin_country)}
+        value={getFormattedCountry(inventoryItem.origin_country, i18n.language)}
       />
       <DisplayExtensionZone
         model="inventory_item"

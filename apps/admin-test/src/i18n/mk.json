@@ -189,11 +189,17 @@
       "heading": "Барања за типови",
       "noRecords": "Не се пронајдени барања за типови"
     },
+    "returnReasons": {
+      "navLabel": "Причини за враќање",
+      "heading": "Барања за причини за враќање",
+      "noRecords": "Не се пронајдени барања за причини за враќање"
+    },
     "typeLabels": {
       "product_category": "Категорија",
       "product_collection": "Колекција",
       "product_tag": "Ознака",
-      "product_type": "Тип"
+      "product_type": "Тип",
+      "return_reason": "Причина за враќање"
     },
     "fields": {
       "name": "Име",
@@ -202,7 +208,8 @@
       "active": "Активно",
       "internal": "Внатрешно",
       "title": "Наслов",
-      "value": "Вредност"
+      "value": "Вредност",
+      "label": "Ознака"
     },
     "values": {
       "yes": "Да",
@@ -260,6 +267,33 @@
       "rating": "Оценка",
       "reference": "Референца",
       "customerNote": "Забелешка од купувачот"
+    }
+  },
+  "dashboard": {
+    "domain": "Контролна табла",
+    "pageTitle": "Контролна табла",
+    "orders": {
+      "title": "Преглед на нарачки",
+      "subtitle": "Број на нарачки во живо на целиот пазар",
+      "today": "Денес",
+      "thisWeek": "Оваа седмица",
+      "thisMonth": "Овој месец"
+    },
+    "totals": {
+      "products": "Производи",
+      "sellers": "Продавачи",
+      "customers": "Клиенти",
+      "lowStock": "Артикли со мала залиха"
+    },
+    "analytics": {
+      "title": "Аналитика",
+      "subtitle": "Следете ги перформансите на пазарот низ времето",
+      "orders": "Нарачки",
+      "commissionEarnings": "Приход од провизија",
+      "noData": "Сè уште нема податоци",
+      "updatedAt": "Последно ажурирање: {{date}}",
+      "updatePending": "Сè уште не е пресметано",
+      "updateNotice": "Аналитичките податоци се ажурираат на секои 12 часа"
     }
   }
 }

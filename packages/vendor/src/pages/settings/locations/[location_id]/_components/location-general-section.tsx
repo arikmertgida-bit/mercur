@@ -43,6 +43,7 @@ import {
   StaticCountry,
   countries as staticCountries,
 } from "@lib/data/countries"
+import { getLocalizedCountryName } from "@lib/format-country-name"
 import { formatProvider } from "@lib/format-provider"
 import {
   getShippingProfileName,
@@ -61,6 +62,8 @@ type LocationGeneralSectionProps = {
 export const LocationGeneralSection = ({
   location,
 }: LocationGeneralSectionProps) => {
+  const { i18n } = useTranslation()
+
   return (
     <>
       <Container className="p-0">
@@ -70,6 +73,7 @@ export const LocationGeneralSection = ({
             <Text className="text-ui-fg-subtle txt-small">
               {getFormattedAddress({
                 address: location.address,
+                locale: i18n.language,
               }).join(", ")}
             </Text>
           </div>
@@ -299,7 +303,7 @@ function ServiceZone({
   fulfillmentSetId,
   type,
 }: ServiceZoneProps) {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const prompt = usePrompt()
   const [open, setOpen] = useState(true)
 
@@ -372,7 +376,9 @@ function ServiceZone({
           <div className="flex items-center gap-2">
             <ListSummary
               variant="base"
-              list={countries.map((c) => c.display_name)}
+              list={countries.map(
+                (c) => getLocalizedCountryName(c, i18n.language) ?? c.display_name,
+              )}
               inline
               n={1}
             />

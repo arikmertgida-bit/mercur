@@ -189,11 +189,17 @@
       "heading": "Yêu cầu loại",
       "noRecords": "Không tìm thấy yêu cầu loại nào"
     },
+    "returnReasons": {
+      "navLabel": "Lý do trả hàng",
+      "heading": "Yêu cầu lý do trả hàng",
+      "noRecords": "Không tìm thấy yêu cầu lý do trả hàng nào"
+    },
     "typeLabels": {
       "product_category": "Danh mục",
       "product_collection": "Bộ sưu tập",
       "product_tag": "Thẻ",
-      "product_type": "Loại"
+      "product_type": "Loại",
+      "return_reason": "Lý do trả hàng"
     },
     "fields": {
       "name": "Tên",
@@ -202,7 +208,8 @@
       "active": "Hoạt động",
       "internal": "Nội bộ",
       "title": "Tiêu đề",
-      "value": "Giá trị"
+      "value": "Giá trị",
+      "label": "Nhãn"
     },
     "values": {
       "yes": "Có",
@@ -260,6 +267,33 @@
       "rating": "Xếp hạng",
       "reference": "Mã tham chiếu",
       "customerNote": "Ghi chú của khách hàng"
+    }
+  },
+  "dashboard": {
+    "domain": "Bảng điều khiển",
+    "pageTitle": "Bảng điều khiển",
+    "orders": {
+      "title": "Tóm tắt đơn hàng",
+      "subtitle": "Số lượng đơn hàng theo thời gian thực trên toàn bộ chợ",
+      "today": "Hôm nay",
+      "thisWeek": "Tuần này",
+      "thisMonth": "Tháng này"
+    },
+    "totals": {
+      "products": "Sản phẩm",
+      "sellers": "Người bán",
+      "customers": "Khách hàng",
+      "lowStock": "Mặt hàng sắp hết"
+    },
+    "analytics": {
+      "title": "Phân tích",
+      "subtitle": "Theo dõi hiệu suất toàn chợ theo thời gian",
+      "orders": "Đơn hàng",
+      "commissionEarnings": "Doanh thu hoa hồng",
+      "noData": "Chưa có dữ liệu",
+      "updatedAt": "Cập nhật lần cuối: {{date}}",
+      "updatePending": "Chưa được tính toán",
+      "updateNotice": "Dữ liệu phân tích được cập nhật mỗi 12 giờ"
     }
   }
 }

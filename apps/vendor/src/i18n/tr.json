@@ -216,5 +216,40 @@
       "reviewsAverage": "Ort. Puan"
     },
     "count": "Takipçi: {{count}}"
+  },
+  "dashboard": {
+    "domain": "Gösterge Paneli",
+    "pageTitle": "Gösterge Paneli",
+    "orders": {
+      "title": "Sipariş Özeti",
+      "subtitle": "Mağazanızın anlık sipariş sayıları",
+      "today": "Bugün",
+      "thisWeek": "Bu Hafta",
+      "thisMonth": "Bu Ay",
+      "earningsToday": "Bugünkü Kazanç"
+    },
+    "analytics": {
+      "title": "Analitik",
+      "subtitle": "Satış performansınızı zaman içinde takip edin",
+      "orders": "Siparişler",
+      "earnings": "Kazanç",
+      "noData": "Henüz veri yok",
+      "updatedAt": "Son güncelleme: {{date}}",
+      "updatePending": "Henüz hesaplanmadı",
+      "updateNotice": "Analiz verileri 12 saatte bir güncellenir"
+    },
+    "lowStock": {
+      "title": "Azalan Stok",
+      "subtitle": "Stoğu azalan ürünleriniz",
+      "noRecords": "Azalan stoklu ürün yok",
+      "product": "Ürün",
+      "sku": "SKU",
+      "available": "Stok",
+      "viewInventory": "Envantere Git"
+    },
+    "quickAccess": {
+      "followers": "Takipçiler",
+      "unreadMessages": "Okunmamış Mesaj"
+    }
   }
 }

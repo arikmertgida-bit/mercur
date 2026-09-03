@@ -2,7 +2,9 @@ import React from "react"
 import { Badge, StatusBadge, Tooltip } from "@medusajs/ui"
 import { HttpTypes, JsonRecord, JsonValue } from "@mercurjs/types"
 import ReactCountryFlag from "react-country-flag"
+import i18n from "i18next"
 import { getCountryByIso2 } from "../data/countries"
+import { getLocalizedCountryName } from "../format-country-name"
 import { ProductCell } from "../../components/table/table-cells/product/product-cell"
 import { CollectionCell } from "../../components/table/table-cells/product/collection-cell"
 import { SalesChannelsCell } from "../../components/table/table-cells/product/sales-channels-cell"
@@ -237,7 +239,8 @@ const CountryCodeRenderer: CellRenderer = (_, row, _column, _t) => {
   if (!countryCode) return <div className="flex w-full justify-center">-</div>
 
   const country = getCountryByIso2(countryCode)
-  const displayName = country?.display_name || countryCode.toUpperCase()
+  const displayName =
+    getLocalizedCountryName(country, i18n.language) || countryCode.toUpperCase()
 
   return (
     <div className="flex w-full items-center justify-center">

@@ -216,5 +216,40 @@
       "reviewsAverage": "Vidutinis įvertinimas"
     },
     "count": "Sekėjai: {{count}}"
+  },
+  "dashboard": {
+    "domain": "Skydelis",
+    "pageTitle": "Skydelis",
+    "orders": {
+      "title": "Užsakymų suvestinė",
+      "subtitle": "Gyvas jūsų parduotuvės užsakymų skaičius",
+      "today": "Šiandien",
+      "thisWeek": "Šią savaitę",
+      "thisMonth": "Šį mėnesį",
+      "earningsToday": "Šiandienos pajamos"
+    },
+    "analytics": {
+      "title": "Analitika",
+      "subtitle": "Stebėkite pardavimų rezultatus laikui bėgant",
+      "orders": "Užsakymai",
+      "earnings": "Pajamos",
+      "noData": "Duomenų dar nėra",
+      "updatedAt": "Paskutinį kartą atnaujinta: {{date}}",
+      "updatePending": "Dar neapskaičiuota",
+      "updateNotice": "Analitikos duomenys atnaujinami kas 12 valandų"
+    },
+    "lowStock": {
+      "title": "Mažos atsargos",
+      "subtitle": "Produktai, kurių atsargos senka",
+      "noRecords": "Nėra produktų su mažomis atsargomis",
+      "product": "Produktas",
+      "sku": "SKU",
+      "available": "Turima",
+      "viewInventory": "Peržiūrėti atsargas"
+    },
+    "quickAccess": {
+      "followers": "Sekėjai",
+      "unreadMessages": "Neperskaitytos žinutės"
+    }
   }
 }

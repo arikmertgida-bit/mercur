@@ -128,7 +128,7 @@ const AddressPrint = ({
     | HttpTypes.AdminOrder["billing_address"]
   type: "shipping" | "billing"
 }) => {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
 
   return (
     <div className="text-ui-fg-subtle grid grid-cols-2 items-start px-6 py-4">
@@ -140,7 +140,7 @@ const AddressPrint = ({
       {address ? (
         <div className="grid grid-cols-[1fr_20px] items-start gap-x-2">
           <Text size="small" leading="compact">
-            {getFormattedAddress({ address }).map((line, i) => {
+            {getFormattedAddress({ address, locale: i18n.language }).map((line, i) => {
               return (
                 // oxlint-disable-next-line react/no-array-index-key -- read-only formatted address lines, no stable id, not persistent/reorderable
                 <span key={i} className="break-words">
@@ -152,7 +152,7 @@ const AddressPrint = ({
           </Text>
           <div className="flex justify-end">
             <Copy
-              content={getFormattedAddress({ address }).join("\n")}
+              content={getFormattedAddress({ address, locale: i18n.language }).join("\n")}
               className="text-ui-fg-muted"
             />
           </div>

@@ -189,11 +189,17 @@
       "heading": "Tipų užklausos",
       "noRecords": "Tipų užklausų nerasta"
     },
+    "returnReasons": {
+      "navLabel": "Grąžinimo priežastys",
+      "heading": "Grąžinimo priežasčių užklausos",
+      "noRecords": "Grąžinimo priežasčių užklausų nerasta"
+    },
     "typeLabels": {
       "product_category": "Kategorija",
       "product_collection": "Kolekcija",
       "product_tag": "Žyma",
-      "product_type": "Tipas"
+      "product_type": "Tipas",
+      "return_reason": "Grąžinimo priežastis"
     },
     "fields": {
       "name": "Pavadinimas",
@@ -202,7 +208,8 @@
       "active": "Aktyvus",
       "internal": "Vidinis",
       "title": "Pavadinimas",
-      "value": "Reikšmė"
+      "value": "Reikšmė",
+      "label": "Etiketė"
     },
     "values": {
       "yes": "Taip",
@@ -260,6 +267,33 @@
       "rating": "Įvertinimas",
       "reference": "Nuoroda",
       "customerNote": "Kliento pastaba"
+    }
+  },
+  "dashboard": {
+    "domain": "Skydelis",
+    "pageTitle": "Skydelis",
+    "orders": {
+      "title": "Užsakymų suvestinė",
+      "subtitle": "Gyvas visos prekyvietės užsakymų skaičius",
+      "today": "Šiandien",
+      "thisWeek": "Šią savaitę",
+      "thisMonth": "Šį mėnesį"
+    },
+    "totals": {
+      "products": "Produktai",
+      "sellers": "Pardavėjai",
+      "customers": "Klientai",
+      "lowStock": "Prekės su mažomis atsargomis"
+    },
+    "analytics": {
+      "title": "Analitika",
+      "subtitle": "Stebėkite prekyvietės rezultatus laikui bėgant",
+      "orders": "Užsakymai",
+      "commissionEarnings": "Komisinių pajamos",
+      "noData": "Duomenų dar nėra",
+      "updatedAt": "Paskutinį kartą atnaujinta: {{date}}",
+      "updatePending": "Dar neapskaičiuota",
+      "updateNotice": "Analitikos duomenys atnaujinami kas 12 valandų"
     }
   }
 }

@@ -55,7 +55,7 @@ const LoginForm = () => {
   const [searchParams] = useSearchParams();
 
   const reason = searchParams.get("reason") || "";
-  const from = location.state?.from?.pathname || "/orders";
+  const from = location.state?.from?.pathname || "/";
 
   useEffect(() => {
     if (reason && reason.toLowerCase() === "unauthorized") {

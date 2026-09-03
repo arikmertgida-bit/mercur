@@ -189,11 +189,17 @@
       "heading": "類型請求",
       "noRecords": "找不到類型請求"
     },
+    "returnReasons": {
+      "navLabel": "退貨原因",
+      "heading": "退貨原因請求",
+      "noRecords": "找不到退貨原因請求"
+    },
     "typeLabels": {
       "product_category": "分類",
       "product_collection": "系列",
       "product_tag": "標籤",
-      "product_type": "類型"
+      "product_type": "類型",
+      "return_reason": "退貨原因"
     },
     "fields": {
       "name": "名稱",
@@ -202,7 +208,8 @@
       "active": "啟用",
       "internal": "內部",
       "title": "標題",
-      "value": "值"
+      "value": "值",
+      "label": "標籤"
     },
     "values": {
       "yes": "是",
@@ -260,6 +267,33 @@
       "rating": "評分",
       "reference": "參考編號",
       "customerNote": "顧客備註"
+    }
+  },
+  "dashboard": {
+    "domain": "儀表板",
+    "pageTitle": "儀表板",
+    "orders": {
+      "title": "訂單摘要",
+      "subtitle": "整個平台的即時訂單數量",
+      "today": "今天",
+      "thisWeek": "本週",
+      "thisMonth": "本月"
+    },
+    "totals": {
+      "products": "商品",
+      "sellers": "賣家",
+      "customers": "客戶",
+      "lowStock": "庫存不足商品"
+    },
+    "analytics": {
+      "title": "數據分析",
+      "subtitle": "隨時間追蹤平台整體表現",
+      "orders": "訂單",
+      "commissionEarnings": "佣金收入",
+      "noData": "尚無資料",
+      "updatedAt": "上次更新：{{date}}",
+      "updatePending": "尚未計算",
+      "updateNotice": "分析資料每 12 小時更新一次"
     }
   }
 }

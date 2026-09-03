@@ -189,11 +189,17 @@
       "heading": "Typanfragen",
       "noRecords": "Keine Typanfragen gefunden"
     },
+    "returnReasons": {
+      "navLabel": "Rückgabegründe",
+      "heading": "Rückgabegrund-Anfragen",
+      "noRecords": "Keine Rückgabegrund-Anfragen gefunden"
+    },
     "typeLabels": {
       "product_category": "Kategorie",
       "product_collection": "Kollektion",
       "product_tag": "Tag",
-      "product_type": "Typ"
+      "product_type": "Typ",
+      "return_reason": "Rückgabegrund"
     },
     "fields": {
       "name": "Name",
@@ -202,7 +208,8 @@
       "active": "Aktiv",
       "internal": "Intern",
       "title": "Titel",
-      "value": "Wert"
+      "value": "Wert",
+      "label": "Bezeichnung"
     },
     "values": {
       "yes": "Ja",
@@ -260,6 +267,33 @@
       "rating": "Bewertung",
       "reference": "Referenz",
       "customerNote": "Kundenhinweis"
+    }
+  },
+  "dashboard": {
+    "domain": "Dashboard",
+    "pageTitle": "Dashboard",
+    "orders": {
+      "title": "Bestellübersicht",
+      "subtitle": "Aktuelle Bestellzahlen im gesamten Marktplatz",
+      "today": "Heute",
+      "thisWeek": "Diese Woche",
+      "thisMonth": "Diesen Monat"
+    },
+    "totals": {
+      "products": "Produkte",
+      "sellers": "Verkäufer",
+      "customers": "Kunden",
+      "lowStock": "Artikel mit niedrigem Bestand"
+    },
+    "analytics": {
+      "title": "Analysen",
+      "subtitle": "Verfolgen Sie die Marktplatzleistung im Zeitverlauf",
+      "orders": "Bestellungen",
+      "commissionEarnings": "Provisionseinnahmen",
+      "noData": "Noch keine Daten",
+      "updatedAt": "Zuletzt aktualisiert: {{date}}",
+      "updatePending": "Noch nicht berechnet",
+      "updateNotice": "Analysedaten werden alle 12 Stunden aktualisiert"
     }
   }
 }

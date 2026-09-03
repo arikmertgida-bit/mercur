@@ -189,11 +189,17 @@
       "heading": "Typeaanvragen",
       "noRecords": "Geen typeaanvragen gevonden"
     },
+    "returnReasons": {
+      "navLabel": "Retourredenen",
+      "heading": "Retourreden-aanvragen",
+      "noRecords": "Geen retourreden-aanvragen gevonden"
+    },
     "typeLabels": {
       "product_category": "Categorie",
       "product_collection": "Collectie",
       "product_tag": "Tag",
-      "product_type": "Type"
+      "product_type": "Type",
+      "return_reason": "Retourreden"
     },
     "fields": {
       "name": "Naam",
@@ -202,7 +208,8 @@
       "active": "Actief",
       "internal": "Intern",
       "title": "Titel",
-      "value": "Waarde"
+      "value": "Waarde",
+      "label": "Label"
     },
     "values": {
       "yes": "Ja",
@@ -260,6 +267,33 @@
       "rating": "Beoordeling",
       "reference": "Referentie",
       "customerNote": "Klantnotitie"
+    }
+  },
+  "dashboard": {
+    "domain": "Dashboard",
+    "pageTitle": "Dashboard",
+    "orders": {
+      "title": "Bestellingsoverzicht",
+      "subtitle": "Live bestelaantallen op de hele marketplace",
+      "today": "Vandaag",
+      "thisWeek": "Deze week",
+      "thisMonth": "Deze maand"
+    },
+    "totals": {
+      "products": "Producten",
+      "sellers": "Verkopers",
+      "customers": "Klanten",
+      "lowStock": "Artikelen met lage voorraad"
+    },
+    "analytics": {
+      "title": "Analyse",
+      "subtitle": "Volg de prestaties van de marketplace in de tijd",
+      "orders": "Bestellingen",
+      "commissionEarnings": "Commissie-inkomsten",
+      "noData": "Nog geen gegevens",
+      "updatedAt": "Laatst bijgewerkt: {{date}}",
+      "updatePending": "Nog niet berekend",
+      "updateNotice": "Analysegegevens worden elke 12 uur bijgewerkt"
     }
   }
 }

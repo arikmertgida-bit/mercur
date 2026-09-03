@@ -216,5 +216,40 @@
       "reviewsAverage": "میانگین امتیاز"
     },
     "count": "دنبال‌کنندگان: {{count}}"
+  },
+  "dashboard": {
+    "domain": "داشبورد",
+    "pageTitle": "داشبورد",
+    "orders": {
+      "title": "خلاصه سفارش‌ها",
+      "subtitle": "تعداد لحظه‌ای سفارش‌های فروشگاه شما",
+      "today": "امروز",
+      "thisWeek": "این هفته",
+      "thisMonth": "این ماه",
+      "earningsToday": "درآمد امروز"
+    },
+    "analytics": {
+      "title": "تحلیل‌ها",
+      "subtitle": "عملکرد فروش خود را در طول زمان دنبال کنید",
+      "orders": "سفارش‌ها",
+      "earnings": "درآمد",
+      "noData": "هنوز داده‌ای وجود ندارد",
+      "updatedAt": "آخرین به‌روزرسانی: {{date}}",
+      "updatePending": "هنوز محاسبه نشده است",
+      "updateNotice": "داده‌های تحلیلی هر ۱۲ ساعت به‌روزرسانی می‌شوند"
+    },
+    "lowStock": {
+      "title": "موجودی کم",
+      "subtitle": "محصولاتی که موجودی آن‌ها رو به اتمام است",
+      "noRecords": "محصولی با موجودی کم وجود ندارد",
+      "product": "محصول",
+      "sku": "کد کالا",
+      "available": "موجود",
+      "viewInventory": "مشاهده انبار"
+    },
+    "quickAccess": {
+      "followers": "دنبال‌کنندگان",
+      "unreadMessages": "پیام‌های خوانده‌نشده"
+    }
   }
 }

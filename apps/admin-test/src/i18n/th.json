@@ -189,11 +189,17 @@
       "heading": "คำขอประเภท",
       "noRecords": "ไม่พบคำขอประเภท"
     },
+    "returnReasons": {
+      "navLabel": "เหตุผลในการคืนสินค้า",
+      "heading": "คำขอเหตุผลการคืนสินค้า",
+      "noRecords": "ไม่พบคำขอเหตุผลการคืนสินค้า"
+    },
     "typeLabels": {
       "product_category": "หมวดหมู่",
       "product_collection": "คอลเลกชัน",
       "product_tag": "แท็ก",
-      "product_type": "ประเภท"
+      "product_type": "ประเภท",
+      "return_reason": "เหตุผลการคืนสินค้า"
     },
     "fields": {
       "name": "ชื่อ",
@@ -202,7 +208,8 @@
       "active": "ใช้งาน",
       "internal": "ภายใน",
       "title": "ชื่อเรื่อง",
-      "value": "ค่า"
+      "value": "ค่า",
+      "label": "ป้ายกำกับ"
     },
     "values": {
       "yes": "ใช่",
@@ -260,6 +267,33 @@
       "rating": "คะแนน",
       "reference": "หมายเลขอ้างอิง",
       "customerNote": "หมายเหตุลูกค้า"
+    }
+  },
+  "dashboard": {
+    "domain": "แดชบอร์ด",
+    "pageTitle": "แดชบอร์ด",
+    "orders": {
+      "title": "สรุปคำสั่งซื้อ",
+      "subtitle": "จำนวนคำสั่งซื้อแบบเรียลไทม์ทั่วทั้งมาร์เก็ตเพลส",
+      "today": "วันนี้",
+      "thisWeek": "สัปดาห์นี้",
+      "thisMonth": "เดือนนี้"
+    },
+    "totals": {
+      "products": "สินค้า",
+      "sellers": "ผู้ขาย",
+      "customers": "ลูกค้า",
+      "lowStock": "สินค้าที่ใกล้หมดสต็อก"
+    },
+    "analytics": {
+      "title": "การวิเคราะห์",
+      "subtitle": "ติดตามผลการดำเนินงานของมาร์เก็ตเพลสตามช่วงเวลา",
+      "orders": "คำสั่งซื้อ",
+      "commissionEarnings": "รายได้ค่าคอมมิชชัน",
+      "noData": "ยังไม่มีข้อมูล",
+      "updatedAt": "อัปเดตล่าสุด: {{date}}",
+      "updatePending": "ยังไม่ได้คำนวณ",
+      "updateNotice": "ข้อมูลการวิเคราะห์จะอัปเดตทุก 12 ชั่วโมง"
     }
   }
 }

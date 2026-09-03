@@ -35,6 +35,7 @@ import { useCreateRegion } from "@hooks/api/regions"
 import { useDataTable } from "@hooks/use-data-table"
 import { countries as staticCountries, StaticCountry } from "@lib/data/countries"
 import { CurrencyInfo } from "@lib/data/currencies"
+import { getLocalizedCurrencyName } from "@lib/format-currency-name"
 import { formatProvider } from "@lib/format-provider"
 import { useCountries } from "@pages/settings/regions/_common/hooks/use-countries"
 import { useCountryTableColumns } from "@pages/settings/regions/_common/hooks/use-country-table-columns"
@@ -86,7 +87,7 @@ export const CreateRegionForm = ({
     defaultValue: [],
   })
 
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
 
   const { mutateAsync: createRegion, isPending: isPendingRegion } =
     useCreateRegion()
@@ -119,7 +120,7 @@ export const CreateRegionForm = ({
   })
   const { countries, count } = useCountries({
     countries: staticCountries.map((c, i) => ({
-      display_name: c.display_name,
+      display_name: getLocalizedCountryName(c, i18n.language) ?? c.display_name,
       name: c.name,
       id: i,
       iso_2: c.iso_2,
@@ -155,10 +156,13 @@ export const CreateRegionForm = ({
 
     form.setValue(
       "countries",
-      selected.map((key) => ({
-        code: key,
-        name: staticCountries.find((c) => c.iso_2 === key)!.display_name,
-      })),
+      selected.map((key) => {
+        const country = staticCountries.find((c) => c.iso_2 === key)!
+        return {
+          code: key,
+          name: getLocalizedCountryName(country, i18n.language) ?? country.display_name,
+        }
+      }),
       { shouldDirty: true, shouldTouch: true }
     )
 
@@ -250,7 +254,10 @@ export const CreateRegionForm = ({
                                     value={currency.code}
                                     key={currency.code}
                                   >
-                                    {currency.name}
+                                    {getLocalizedCurrencyName(
+                                      currency.code,
+                                      i18n.language,
+                                    )}
                                   </Select.Item>
                                 ))}
                               </Select.Content>

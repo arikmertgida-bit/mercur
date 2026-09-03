@@ -189,11 +189,17 @@
       "heading": "Wnioski o typy",
       "noRecords": "Nie znaleziono wniosków o typy"
     },
+    "returnReasons": {
+      "navLabel": "Powody zwrotu",
+      "heading": "Wnioski o powody zwrotu",
+      "noRecords": "Nie znaleziono wniosków o powody zwrotu"
+    },
     "typeLabels": {
       "product_category": "Kategoria",
       "product_collection": "Kolekcja",
       "product_tag": "Tag",
-      "product_type": "Typ"
+      "product_type": "Typ",
+      "return_reason": "Powód zwrotu"
     },
     "fields": {
       "name": "Nazwa",
@@ -202,7 +208,8 @@
       "active": "Aktywny",
       "internal": "Wewnętrzny",
       "title": "Tytuł",
-      "value": "Wartość"
+      "value": "Wartość",
+      "label": "Etykieta"
     },
     "values": {
       "yes": "Tak",
@@ -260,6 +267,33 @@
       "rating": "Ocena",
       "reference": "Numer referencyjny",
       "customerNote": "Notatka klienta"
+    }
+  },
+  "dashboard": {
+    "domain": "Panel",
+    "pageTitle": "Panel",
+    "orders": {
+      "title": "Podsumowanie zamówień",
+      "subtitle": "Liczba zamówień na żywo w całym marketplace",
+      "today": "Dzisiaj",
+      "thisWeek": "W tym tygodniu",
+      "thisMonth": "W tym miesiącu"
+    },
+    "totals": {
+      "products": "Produkty",
+      "sellers": "Sprzedawcy",
+      "customers": "Klienci",
+      "lowStock": "Towary z niskim stanem"
+    },
+    "analytics": {
+      "title": "Analityka",
+      "subtitle": "Śledź wyniki marketplace w czasie",
+      "orders": "Zamówienia",
+      "commissionEarnings": "Przychód z prowizji",
+      "noData": "Brak danych",
+      "updatedAt": "Ostatnia aktualizacja: {{date}}",
+      "updatePending": "Jeszcze nie obliczono",
+      "updateNotice": "Dane analityczne są aktualizowane co 12 godzin"
     }
   }
 }

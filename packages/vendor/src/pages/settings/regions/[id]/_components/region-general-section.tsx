@@ -8,7 +8,7 @@ import { useCan } from "@mercurjs/dashboard-shared"
 import { ActionMenu } from "@components/common/action-menu/index.ts"
 import { ListSummary } from "@components/common/list-summary/index.ts"
 import { useDeleteRegion } from "@hooks/api/regions.tsx"
-import { currencies } from "@lib/data/currencies.ts"
+import { getLocalizedCurrencyName } from "@lib/format-currency-name.ts"
 import { formatProvider } from "@lib/format-provider.ts"
 import { SectionRow } from "@components/common/section/section-row.tsx"
 
@@ -21,7 +21,7 @@ export const RegionGeneralSection = ({
   region,
   pricePreferences,
 }: RegionGeneralSectionProps) => {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const canViewPreferences = useCan("price_preferences")
   const pricePreferenceForRegion = pricePreferences?.find(
     (preference) =>
@@ -42,7 +42,7 @@ export const RegionGeneralSection = ({
               {region.currency_code}
             </Badge>
             <Text size="small" leading="compact">
-              {currencies[region.currency_code.toUpperCase()].name}
+              {getLocalizedCurrencyName(region.currency_code, i18n.language)}
             </Text>
           </div>
         }

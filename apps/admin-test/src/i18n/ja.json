@@ -189,11 +189,17 @@
       "heading": "タイプリクエスト",
       "noRecords": "タイプリクエストが見つかりません"
     },
+    "returnReasons": {
+      "navLabel": "返品理由",
+      "heading": "返品理由リクエスト",
+      "noRecords": "返品理由リクエストが見つかりません"
+    },
     "typeLabels": {
       "product_category": "カテゴリ",
       "product_collection": "コレクション",
       "product_tag": "タグ",
-      "product_type": "タイプ"
+      "product_type": "タイプ",
+      "return_reason": "返品理由"
     },
     "fields": {
       "name": "名前",
@@ -202,7 +208,8 @@
       "active": "有効",
       "internal": "内部",
       "title": "タイトル",
-      "value": "値"
+      "value": "値",
+      "label": "ラベル"
     },
     "values": {
       "yes": "はい",
@@ -260,6 +267,33 @@
       "rating": "評価",
       "reference": "参照番号",
       "customerNote": "顧客メモ"
+    }
+  },
+  "dashboard": {
+    "domain": "ダッシュボード",
+    "pageTitle": "ダッシュボード",
+    "orders": {
+      "title": "注文サマリー",
+      "subtitle": "マーケットプレイス全体のリアルタイム注文数",
+      "today": "本日",
+      "thisWeek": "今週",
+      "thisMonth": "今月"
+    },
+    "totals": {
+      "products": "商品",
+      "sellers": "販売者",
+      "customers": "顧客",
+      "lowStock": "在庫僅少の商品"
+    },
+    "analytics": {
+      "title": "分析",
+      "subtitle": "マーケットプレイスの実績推移を確認できます",
+      "orders": "注文数",
+      "commissionEarnings": "手数料収益",
+      "noData": "まだデータがありません",
+      "updatedAt": "最終更新: {{date}}",
+      "updatePending": "まだ計算されていません",
+      "updateNotice": "分析データは12時間ごとに更新されます"
     }
   }
 }

@@ -216,5 +216,40 @@
       "reviewsAverage": "Valutazione Media"
     },
     "count": "Follower: {{count}}"
+  },
+  "dashboard": {
+    "domain": "Dashboard",
+    "pageTitle": "Dashboard",
+    "orders": {
+      "title": "Riepilogo ordini",
+      "subtitle": "Conteggio ordini in tempo reale del tuo negozio",
+      "today": "Oggi",
+      "thisWeek": "Questa settimana",
+      "thisMonth": "Questo mese",
+      "earningsToday": "Guadagni di oggi"
+    },
+    "analytics": {
+      "title": "Analisi",
+      "subtitle": "Monitora l'andamento delle tue vendite nel tempo",
+      "orders": "Ordini",
+      "earnings": "Guadagni",
+      "noData": "Nessun dato ancora",
+      "updatedAt": "Ultimo aggiornamento: {{date}}",
+      "updatePending": "Non ancora calcolato",
+      "updateNotice": "I dati analitici si aggiornano ogni 12 ore"
+    },
+    "lowStock": {
+      "title": "Scorte basse",
+      "subtitle": "Prodotti con scorte in esaurimento",
+      "noRecords": "Nessun prodotto con scorte basse",
+      "product": "Prodotto",
+      "sku": "SKU",
+      "available": "Disponibile",
+      "viewInventory": "Vai all'inventario"
+    },
+    "quickAccess": {
+      "followers": "Follower",
+      "unreadMessages": "Messaggi non letti"
+    }
   }
 }

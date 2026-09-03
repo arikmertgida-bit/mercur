@@ -1,6 +1,16 @@
 import { HttpTypes } from "@medusajs/types"
 
 import { countries, getCountryByIso2 } from "./data/countries"
+import { getLocalizedCountryName } from "./format-country-name"
+
+/**
+ * These are plain (non-hook) helpers called from many places, some without
+ * easy access to `useTranslation()`'s `i18n.language`. Callers should always
+ * pass it explicitly; this is only a graceful fallback so an update that
+ * misses one never regresses back to hardcoded English.
+ */
+const fallbackLocale = (): string =>
+  typeof navigator !== "undefined" ? navigator.language : "en"
 
 export const isSameAddress = (
   a?: HttpTypes.AdminOrderAddress | null,
@@ -24,7 +34,9 @@ export const isSameAddress = (
 
 export const getFormattedAddress = ({
   address,
+  locale = fallbackLocale(),
 }: {
+  locale?: string
   address?: {
     first_name?: string | null
     last_name?: string | null
@@ -86,12 +98,17 @@ export const getFormattedAddress = ({
   }
 
   if (country) {
-    formattedAddress.push(country.display_name!)
+    formattedAddress.push(
+      getLocalizedCountryName(
+        { iso_2: country_code, display_name: country.display_name },
+        locale,
+      ) ?? country.display_name!,
+    )
   } else if (country_code) {
     const country = getCountryByIso2(country_code)
 
     if (country) {
-      formattedAddress.push(country.display_name)
+      formattedAddress.push(getLocalizedCountryName(country, locale) ?? country.display_name)
     } else {
       formattedAddress.push(country_code.toUpperCase())
     }
@@ -100,11 +117,17 @@ export const getFormattedAddress = ({
   return formattedAddress
 }
 
-export const getFormattedCountry = (countryCode: string | null | undefined) => {
+export const getFormattedCountry = (
+  countryCode: string | null | undefined,
+  locale: string = fallbackLocale(),
+) => {
   if (!countryCode) {
     return ""
   }
 
   const country = countries.find((c) => c.iso_2 === countryCode)
-  return country ? country.display_name : countryCode
+  if (!country) {
+    return countryCode
+  }
+  return getLocalizedCountryName(country, locale) ?? country.display_name
 }

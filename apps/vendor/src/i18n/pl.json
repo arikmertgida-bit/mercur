@@ -216,5 +216,40 @@
       "reviewsAverage": "Śr. Ocena"
     },
     "count": "Obserwujący: {{count}}"
+  },
+  "dashboard": {
+    "domain": "Panel",
+    "pageTitle": "Panel",
+    "orders": {
+      "title": "Podsumowanie zamówień",
+      "subtitle": "Liczba zamówień na żywo w Twoim sklepie",
+      "today": "Dzisiaj",
+      "thisWeek": "W tym tygodniu",
+      "thisMonth": "W tym miesiącu",
+      "earningsToday": "Dzisiejszy zarobek"
+    },
+    "analytics": {
+      "title": "Analityka",
+      "subtitle": "Śledź wyniki sprzedaży w czasie",
+      "orders": "Zamówienia",
+      "earnings": "Zarobek",
+      "noData": "Brak danych",
+      "updatedAt": "Ostatnia aktualizacja: {{date}}",
+      "updatePending": "Jeszcze nie obliczono",
+      "updateNotice": "Dane analityczne są aktualizowane co 12 godzin"
+    },
+    "lowStock": {
+      "title": "Niski stan magazynowy",
+      "subtitle": "Produkty z kończącym się stanem magazynowym",
+      "noRecords": "Brak produktów z niskim stanem magazynowym",
+      "product": "Produkt",
+      "sku": "SKU",
+      "available": "Dostępne",
+      "viewInventory": "Przejdź do magazynu"
+    },
+    "quickAccess": {
+      "followers": "Obserwujący",
+      "unreadMessages": "Nieprzeczytane wiadomości"
+    }
   }
 }

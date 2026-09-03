@@ -216,5 +216,40 @@
       "reviewsAverage": "Avg. Rating"
     },
     "count": "Followers: {{count}}"
+  },
+  "dashboard": {
+    "domain": "Dashboard",
+    "pageTitle": "Dashboard",
+    "orders": {
+      "title": "Order Summary",
+      "subtitle": "Live order counts for your store",
+      "today": "Today",
+      "thisWeek": "This Week",
+      "thisMonth": "This Month",
+      "earningsToday": "Today's Earnings"
+    },
+    "analytics": {
+      "title": "Analytics",
+      "subtitle": "Track your sales performance over time",
+      "orders": "Orders",
+      "earnings": "Earnings",
+      "noData": "No data yet",
+      "updatedAt": "Last updated: {{date}}",
+      "updatePending": "Not yet computed",
+      "updateNotice": "Analytics data refreshes every 12 hours"
+    },
+    "lowStock": {
+      "title": "Low Stock",
+      "subtitle": "Products running low on inventory",
+      "noRecords": "No low-stock products",
+      "product": "Product",
+      "sku": "SKU",
+      "available": "Available",
+      "viewInventory": "View Inventory"
+    },
+    "quickAccess": {
+      "followers": "Followers",
+      "unreadMessages": "Unread Messages"
+    }
   }
 }

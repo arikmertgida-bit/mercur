@@ -216,5 +216,40 @@
       "reviewsAverage": "Gem. Beoordeling"
     },
     "count": "Volgers: {{count}}"
+  },
+  "dashboard": {
+    "domain": "Dashboard",
+    "pageTitle": "Dashboard",
+    "orders": {
+      "title": "Bestellingsoverzicht",
+      "subtitle": "Live bestelaantallen van uw winkel",
+      "today": "Vandaag",
+      "thisWeek": "Deze week",
+      "thisMonth": "Deze maand",
+      "earningsToday": "Omzet vandaag"
+    },
+    "analytics": {
+      "title": "Analyse",
+      "subtitle": "Volg uw verkoopprestaties in de tijd",
+      "orders": "Bestellingen",
+      "earnings": "Omzet",
+      "noData": "Nog geen gegevens",
+      "updatedAt": "Laatst bijgewerkt: {{date}}",
+      "updatePending": "Nog niet berekend",
+      "updateNotice": "Analysegegevens worden elke 12 uur bijgewerkt"
+    },
+    "lowStock": {
+      "title": "Lage voorraad",
+      "subtitle": "Producten met een lage voorraad",
+      "noRecords": "Geen producten met lage voorraad",
+      "product": "Product",
+      "sku": "SKU",
+      "available": "Beschikbaar",
+      "viewInventory": "Naar voorraad"
+    },
+    "quickAccess": {
+      "followers": "Volgers",
+      "unreadMessages": "Ongelezen berichten"
+    }
   }
 }

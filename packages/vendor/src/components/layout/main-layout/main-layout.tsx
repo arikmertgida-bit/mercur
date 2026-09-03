@@ -141,19 +141,34 @@ const useSidebarRoutes = () => {
       ),
     }));
 
-  const customRoutesWithNested = customMenuItems
-    .sort((a, b) => (a.rank ?? 0) - (b.rank ?? 0))
-    .map((item) => {
-      const Icon = item.icon;
-      return {
-        label: item.label,
-        to: item.path,
-        icon: Icon ? <Icon /> : undefined,
-        translationNs: item.translationNs,
-        group: item.group,
-        items: addNestedItems(item.path, visibleMenuItems),
-      };
-    });
+  const toNavItem = (item: (typeof customMenuItems)[number]) => {
+    const Icon = item.icon;
+    return {
+      label: item.label,
+      to: item.path,
+      icon: Icon ? <Icon /> : undefined,
+      translationNs: item.translationNs,
+      group: item.group,
+      items: addNestedItems(item.path, visibleMenuItems),
+    };
+  };
+
+  /**
+   * The core routes above (Orders, Products, ...) are a fixed array with no
+   * rank of its own, so a custom page can only be ordered relative to it by
+   * opting into a negative `rank` — that pins it above the core list instead
+   * of the default (appended after). Every existing custom page keeps its
+   * current position untouched since none use a negative rank today.
+   */
+  const sortedCustomMenuItems = [...customMenuItems].sort(
+    (a, b) => (a.rank ?? 0) - (b.rank ?? 0),
+  );
+  const pinnedCustomRoutes = sortedCustomMenuItems
+    .filter((item) => (item.rank ?? 0) < 0)
+    .map(toNavItem);
+  const trailingCustomRoutes = sortedCustomMenuItems
+    .filter((item) => (item.rank ?? 0) >= 0)
+    .map(toNavItem);
 
   const groupById = new Map<string, string | undefined>(
     navOverrides.map((o) => [o.id, o.group]),
@@ -161,11 +176,12 @@ const useSidebarRoutes = () => {
 
   return groupNavItems<SidebarRoute>(
     [
+      ...pinnedCustomRoutes,
       ...routesWithNested.map((route) => ({
         ...route,
         group: groupById.get(route.id),
       })),
-      ...customRoutesWithNested,
+      ...trailingCustomRoutes,
     ],
     extension.getNavGroups(),
   );

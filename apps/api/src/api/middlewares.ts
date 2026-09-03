@@ -49,8 +49,11 @@ const fallbackErrorHandler = defaultErrorHandler();
  * to the default handler here.
  *
  * `/auth/customer/*` (storefront login/register/reset-password/update),
- * `/auth/user/*` (admin login), and `/auth/seller/*` (vendor login) are
- * routed to the store/admin/vendor translators too — same actor and
+ * `/auth/user/*` (admin login), and `/auth/member/*` (vendor panel
+ * login/register — `apps/vendor`'s own auth calls use `$actorType: "member"`,
+ * not `"seller"`; `/auth/seller/*` is also matched since that actor type is
+ * registered too, but the real vendor-panel traffic is all on `/auth/member`)
+ * are routed to the store/admin/vendor translators too — same actor and
  * Accept-Language as `/store/*` / `/admin/*` / `/vendor/*`, just served by
  * Medusa's built-in auth router instead of a route under those prefixes.
  * Without this, every customer, admin, or vendor auth error bypassed
@@ -58,7 +61,11 @@ const fallbackErrorHandler = defaultErrorHandler();
  * language.
  */
 const scopedErrorHandler: MedusaErrorHandlerFunction = (error, req, res, next) => {
-    if (req.path.startsWith("/vendor") || req.path.startsWith("/auth/seller")) {
+    if (
+        req.path.startsWith("/vendor") ||
+        req.path.startsWith("/auth/seller") ||
+        req.path.startsWith("/auth/member")
+    ) {
         vendorAwareErrorHandler(error, req, res, next);
         return;
     }

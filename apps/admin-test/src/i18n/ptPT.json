@@ -189,11 +189,17 @@
       "heading": "Pedidos de tipos",
       "noRecords": "Não foram encontrados pedidos de tipos"
     },
+    "returnReasons": {
+      "navLabel": "Motivos de Devolução",
+      "heading": "Pedidos de motivos de devolução",
+      "noRecords": "Não foram encontrados pedidos de motivos de devolução"
+    },
     "typeLabels": {
       "product_category": "Categoria",
       "product_collection": "Coleção",
       "product_tag": "Etiqueta",
-      "product_type": "Tipo"
+      "product_type": "Tipo",
+      "return_reason": "Motivo de Devolução"
     },
     "fields": {
       "name": "Nome",
@@ -202,7 +208,8 @@
       "active": "Ativo",
       "internal": "Interno",
       "title": "Título",
-      "value": "Valor"
+      "value": "Valor",
+      "label": "Rótulo"
     },
     "values": {
       "yes": "Sim",
@@ -260,6 +267,33 @@
       "rating": "Classificação",
       "reference": "Referência",
       "customerNote": "Nota do cliente"
+    }
+  },
+  "dashboard": {
+    "domain": "Painel",
+    "pageTitle": "Painel",
+    "orders": {
+      "title": "Resumo de encomendas",
+      "subtitle": "Contagem de encomendas em tempo real de todo o marketplace",
+      "today": "Hoje",
+      "thisWeek": "Esta semana",
+      "thisMonth": "Este mês"
+    },
+    "totals": {
+      "products": "Produtos",
+      "sellers": "Vendedores",
+      "customers": "Clientes",
+      "lowStock": "Itens com stock baixo"
+    },
+    "analytics": {
+      "title": "Análises",
+      "subtitle": "Acompanhe o desempenho do marketplace ao longo do tempo",
+      "orders": "Encomendas",
+      "commissionEarnings": "Receita de comissão",
+      "noData": "Ainda não há dados",
+      "updatedAt": "Última atualização: {{date}}",
+      "updatePending": "Ainda não calculado",
+      "updateNotice": "Os dados de análise são atualizados a cada 12 horas"
     }
   }
 }

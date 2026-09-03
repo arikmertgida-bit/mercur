@@ -189,11 +189,17 @@
       "heading": "Permintaan Jenis",
       "noRecords": "Tidak ada permintaan jenis ditemukan"
     },
+    "returnReasons": {
+      "navLabel": "Alasan Pengembalian",
+      "heading": "Permintaan Alasan Pengembalian",
+      "noRecords": "Tidak ada permintaan alasan pengembalian ditemukan"
+    },
     "typeLabels": {
       "product_category": "Kategori",
       "product_collection": "Koleksi",
       "product_tag": "Tag",
-      "product_type": "Jenis"
+      "product_type": "Jenis",
+      "return_reason": "Alasan Pengembalian"
     },
     "fields": {
       "name": "Nama",
@@ -202,7 +208,8 @@
       "active": "Aktif",
       "internal": "Internal",
       "title": "Judul",
-      "value": "Nilai"
+      "value": "Nilai",
+      "label": "Label"
     },
     "values": {
       "yes": "Ya",
@@ -260,6 +267,33 @@
       "rating": "Peringkat",
       "reference": "Referensi",
       "customerNote": "Catatan pelanggan"
+    }
+  },
+  "dashboard": {
+    "domain": "Dasbor",
+    "pageTitle": "Dasbor",
+    "orders": {
+      "title": "Ringkasan Pesanan",
+      "subtitle": "Jumlah pesanan langsung di seluruh marketplace",
+      "today": "Hari Ini",
+      "thisWeek": "Minggu Ini",
+      "thisMonth": "Bulan Ini"
+    },
+    "totals": {
+      "products": "Produk",
+      "sellers": "Penjual",
+      "customers": "Pelanggan",
+      "lowStock": "Barang Stok Menipis"
+    },
+    "analytics": {
+      "title": "Analitik",
+      "subtitle": "Pantau performa marketplace dari waktu ke waktu",
+      "orders": "Pesanan",
+      "commissionEarnings": "Pendapatan Komisi",
+      "noData": "Belum ada data",
+      "updatedAt": "Terakhir diperbarui: {{date}}",
+      "updatePending": "Belum dihitung",
+      "updateNotice": "Data analitik diperbarui setiap 12 jam"
     }
   }
 }

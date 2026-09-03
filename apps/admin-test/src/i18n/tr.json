@@ -268,5 +268,32 @@
       "reference": "Referans",
       "customerNote": "Müşteri Notu"
     }
+  },
+  "dashboard": {
+    "domain": "Gösterge Paneli",
+    "pageTitle": "Gösterge Paneli",
+    "orders": {
+      "title": "Sipariş Özeti",
+      "subtitle": "Platform genelinde anlık sipariş sayıları",
+      "today": "Bugün",
+      "thisWeek": "Bu Hafta",
+      "thisMonth": "Bu Ay"
+    },
+    "totals": {
+      "products": "Ürünler",
+      "sellers": "Satıcılar",
+      "customers": "Müşteriler",
+      "lowStock": "Azalan Stok"
+    },
+    "analytics": {
+      "title": "Analitik",
+      "subtitle": "Platform performansını zaman içinde takip edin",
+      "orders": "Siparişler",
+      "commissionEarnings": "Komisyon Kazancı",
+      "noData": "Henüz veri yok",
+      "updatedAt": "Son güncelleme: {{date}}",
+      "updatePending": "Henüz hesaplanmadı",
+      "updateNotice": "Analiz verileri 12 saatte bir güncellenir"
+    }
   }
 }

@@ -9,6 +9,7 @@ import { Link } from "react-router-dom"
 import { ActionMenu } from "@components/common/action-menu"
 import { IconAvatar } from "@components/common/icon-avatar"
 import { getCountryByIso2 } from "@lib/data/countries"
+import { getLocalizedCountryName } from "@lib/format-country-name"
 import {
   getProvinceByIso2,
   isProvinceInCountry,
@@ -30,11 +31,12 @@ export const TaxRegionCard = ({
   asLink = true,
   badge,
 }: TaxRegionCardProps) => {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const { id, country_code, province_code } = taxRegion
 
   const country = getCountryByIso2(country_code)
   const province = getProvinceByIso2(province_code)
+  const localizedCountryName = getLocalizedCountryName(country, i18n.language)
 
   let name = "N/A"
   let misconfiguredSublevelTooltip: string | null = null
@@ -42,7 +44,7 @@ export const TaxRegionCard = ({
   if (province || province_code) {
     name = province ? province : province_code!.toUpperCase()
   } else if (country || country_code) {
-    name = country ? country.display_name : country_code!.toUpperCase()
+    name = localizedCountryName ?? country_code!.toUpperCase()
   }
 
   if (
@@ -54,7 +56,7 @@ export const TaxRegionCard = ({
     misconfiguredSublevelTooltip = t(
       "taxRegions.fields.sublevels.tooltips.notPartOfCountry",
       {
-        country: country?.display_name,
+        country: localizedCountryName,
         province: province_code.toUpperCase(),
       }
     )
@@ -94,7 +96,7 @@ export const TaxRegionCard = ({
                       ? { width: "12px", height: "9px" }
                       : { width: "16px", height: "12px" }
                   }
-                  aria-label={country?.display_name}
+                  aria-label={localizedCountryName}
                 />
               </div>
             ) : (

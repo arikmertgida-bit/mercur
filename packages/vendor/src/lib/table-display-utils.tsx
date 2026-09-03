@@ -2,7 +2,9 @@ import React from "react"
 import { Badge, StatusBadge, Tooltip } from "@medusajs/ui"
 import { HttpTypes, JsonRecord, JsonValue } from "@mercurjs/types"
 import ReactCountryFlag from "react-country-flag"
+import i18n from "i18next"
 import { getCountryByIso2 } from "./data/countries"
+import { getLocalizedCountryName } from "./format-country-name"
 import { getStylizedAmount } from "./money-amount-helpers"
 
 type DisplayStrategyFn = (value: JsonValue, row?: JsonRecord) => React.ReactNode
@@ -363,7 +365,8 @@ export const COMPUTED_COLUMN_FUNCTIONS = {
     if (!countryCode) return <div className="flex w-full justify-center">-</div>
 
     const country = getCountryByIso2(countryCode)
-    const displayName = country?.display_name || countryCode.toUpperCase()
+    const displayName =
+      getLocalizedCountryName(country, i18n.language) || countryCode.toUpperCase()
 
     return (
       <div className="flex w-full items-center justify-center">

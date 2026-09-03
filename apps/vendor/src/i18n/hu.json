@@ -216,5 +216,40 @@
       "reviewsAverage": "Átlagos Értékelés"
     },
     "count": "Követők: {{count}}"
+  },
+  "dashboard": {
+    "domain": "Irányítópult",
+    "pageTitle": "Irányítópult",
+    "orders": {
+      "title": "Rendelés-összesítő",
+      "subtitle": "Élő rendelésszámok az üzletében",
+      "today": "Ma",
+      "thisWeek": "Ezen a héten",
+      "thisMonth": "Ebben a hónapban",
+      "earningsToday": "Mai bevétel"
+    },
+    "analytics": {
+      "title": "Elemzés",
+      "subtitle": "Kövesse nyomon értékesítési teljesítményét az idő múlásával",
+      "orders": "Rendelések",
+      "earnings": "Bevétel",
+      "noData": "Még nincs adat",
+      "updatedAt": "Utolsó frissítés: {{date}}",
+      "updatePending": "Még nincs kiszámítva",
+      "updateNotice": "Az elemzési adatok 12 óránként frissülnek"
+    },
+    "lowStock": {
+      "title": "Alacsony készlet",
+      "subtitle": "Fogyóban lévő termékek",
+      "noRecords": "Nincs alacsony készletű termék",
+      "product": "Termék",
+      "sku": "Cikkszám",
+      "available": "Elérhető",
+      "viewInventory": "Készlet megtekintése"
+    },
+    "quickAccess": {
+      "followers": "Követők",
+      "unreadMessages": "Olvasatlan üzenetek"
+    }
   }
 }

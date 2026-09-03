@@ -268,5 +268,32 @@
       "reference": "Reference",
       "customerNote": "Customer Note"
     }
+  },
+  "dashboard": {
+    "domain": "Dashboard",
+    "pageTitle": "Dashboard",
+    "orders": {
+      "title": "Order Summary",
+      "subtitle": "Live order counts across the marketplace",
+      "today": "Today",
+      "thisWeek": "This Week",
+      "thisMonth": "This Month"
+    },
+    "totals": {
+      "products": "Products",
+      "sellers": "Sellers",
+      "customers": "Customers",
+      "lowStock": "Low Stock Items"
+    },
+    "analytics": {
+      "title": "Analytics",
+      "subtitle": "Track marketplace performance over time",
+      "orders": "Orders",
+      "commissionEarnings": "Commission Earnings",
+      "noData": "No data yet",
+      "updatedAt": "Last updated: {{date}}",
+      "updatePending": "Not yet computed",
+      "updateNotice": "Analytics data refreshes every 12 hours"
+    }
   }
 }
