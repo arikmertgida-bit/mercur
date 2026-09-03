@@ -508,6 +508,7 @@ export type Routes = {
             messengerToken: typeof import("../src/api/admin/custom/messenger-token/route");
             vendorSupportConversations: typeof import("../src/api/admin/custom/vendor-support-conversations/route");
         };
+        dashboard: typeof import("../src/api/admin/dashboard/route");
         productReports: typeof import("../src/api/admin/product-reports/route") & {
             $id: typeof import("../src/api/admin/product-reports/[id]/route");
         };
@@ -998,6 +999,7 @@ export type Routes = {
         auth: {
             messengerToken: typeof import("../src/api/vendor/auth/messenger-token/route");
         };
+        dashboard: typeof import("../src/api/vendor/dashboard/route");
         followers: typeof import("../src/api/vendor/followers/route");
         notificationPreferences: typeof import("../src/api/vendor/notification-preferences/route");
         requests: {

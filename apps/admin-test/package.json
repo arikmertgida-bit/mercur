@@ -31,6 +31,7 @@
     "@hookform/resolvers": "3.4.2",
     "jsonwebtoken": "9.0.2",
     "react-jwt": "^2.0.0",
+    "recharts": "^2.15.1",
     "socket.io-client": "4.8.3"
   },
   "devDependencies": {

@@ -137,6 +137,9 @@ module.exports = withMercur({
       resolve: './src/modules/variant-price-history',
     },
     {
+      resolve: './src/modules/seller-analytics',
+    },
+    {
       resolve: './src/modules/wishlist',
     },
     {
