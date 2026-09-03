@@ -243,6 +243,46 @@ export const ProductSellerLinkRowSchema = z.object({
   product_id: z.string(),
 })
 
+export const SellerScopedOrderLinkRowSchema = z.object({
+  order_id: z.string(),
+  seller_id: z.string(),
+})
+
+export const OrderAnalyticsRowSchema = z.object({
+  id: z.string(),
+  currency_code: z.string(),
+  total: z.number(),
+  item_total: z.number(),
+  created_at: z.union([z.string(), z.date()]),
+  items: z.array(z.object({ id: z.string() })).nullable(),
+})
+
+export const SellerStatusRowSchema = z.object({
+  id: z.string(),
+  status: z.string(),
+})
+
+export const InventoryItemSellerLinkRowSchema = z.object({
+  seller_id: z.string(),
+  inventory_item: z
+    .object({
+      id: z.string(),
+      sku: z.string().nullable().optional(),
+      title: z.string().nullable().optional(),
+      location_levels: z
+        .array(
+          z.object({
+            stocked_quantity: z.number(),
+            reserved_quantity: z.number(),
+          })
+        )
+        .nullable()
+        .optional(),
+    })
+    .nullable()
+    .optional(),
+})
+
 export function buildCustomerDisplayName(
   customer: z.infer<typeof CustomerSummarySchema>
 ): string {
