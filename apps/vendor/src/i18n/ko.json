@@ -216,5 +216,40 @@
       "reviewsAverage": "평균 평점"
     },
     "count": "팔로워: {{count}}"
+  },
+  "dashboard": {
+    "domain": "대시보드",
+    "pageTitle": "대시보드",
+    "orders": {
+      "title": "주문 요약",
+      "subtitle": "스토어의 실시간 주문 수",
+      "today": "오늘",
+      "thisWeek": "이번 주",
+      "thisMonth": "이번 달",
+      "earningsToday": "오늘의 수익"
+    },
+    "analytics": {
+      "title": "분석",
+      "subtitle": "시간에 따른 판매 실적을 확인하세요",
+      "orders": "주문",
+      "earnings": "수익",
+      "noData": "아직 데이터가 없습니다",
+      "updatedAt": "마지막 업데이트: {{date}}",
+      "updatePending": "아직 계산되지 않음",
+      "updateNotice": "분석 데이터는 12시간마다 업데이트됩니다"
+    },
+    "lowStock": {
+      "title": "재고 부족",
+      "subtitle": "재고가 부족해지고 있는 상품",
+      "noRecords": "재고 부족 상품이 없습니다",
+      "product": "상품",
+      "sku": "SKU",
+      "available": "가용 수량",
+      "viewInventory": "재고 보기"
+    },
+    "quickAccess": {
+      "followers": "팔로워",
+      "unreadMessages": "읽지 않은 메시지"
+    }
   }
 }

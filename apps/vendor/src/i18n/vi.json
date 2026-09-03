@@ -216,5 +216,40 @@
       "reviewsAverage": "Đánh Giá TB"
     },
     "count": "Người Theo Dõi: {{count}}"
+  },
+  "dashboard": {
+    "domain": "Bảng điều khiển",
+    "pageTitle": "Bảng điều khiển",
+    "orders": {
+      "title": "Tóm tắt đơn hàng",
+      "subtitle": "Số lượng đơn hàng theo thời gian thực của cửa hàng bạn",
+      "today": "Hôm nay",
+      "thisWeek": "Tuần này",
+      "thisMonth": "Tháng này",
+      "earningsToday": "Doanh thu hôm nay"
+    },
+    "analytics": {
+      "title": "Phân tích",
+      "subtitle": "Theo dõi hiệu suất bán hàng của bạn theo thời gian",
+      "orders": "Đơn hàng",
+      "earnings": "Doanh thu",
+      "noData": "Chưa có dữ liệu",
+      "updatedAt": "Cập nhật lần cuối: {{date}}",
+      "updatePending": "Chưa được tính toán",
+      "updateNotice": "Dữ liệu phân tích được cập nhật mỗi 12 giờ"
+    },
+    "lowStock": {
+      "title": "Sắp hết hàng",
+      "subtitle": "Sản phẩm sắp hết hàng trong kho",
+      "noRecords": "Không có sản phẩm sắp hết hàng",
+      "product": "Sản phẩm",
+      "sku": "SKU",
+      "available": "Còn lại",
+      "viewInventory": "Xem kho hàng"
+    },
+    "quickAccess": {
+      "followers": "Người theo dõi",
+      "unreadMessages": "Tin nhắn chưa đọc"
+    }
   }
 }

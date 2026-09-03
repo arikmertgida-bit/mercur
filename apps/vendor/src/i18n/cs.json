@@ -216,5 +216,40 @@
       "reviewsAverage": "Průměrné hodnocení"
     },
     "count": "Sledující: {{count}}"
+  },
+  "dashboard": {
+    "domain": "Přehled",
+    "pageTitle": "Přehled",
+    "orders": {
+      "title": "Souhrn objednávek",
+      "subtitle": "Aktuální počty objednávek vašeho obchodu",
+      "today": "Dnes",
+      "thisWeek": "Tento týden",
+      "thisMonth": "Tento měsíc",
+      "earningsToday": "Dnešní tržby"
+    },
+    "analytics": {
+      "title": "Analytika",
+      "subtitle": "Sledujte výkon svého prodeje v čase",
+      "orders": "Objednávky",
+      "earnings": "Tržby",
+      "noData": "Zatím žádná data",
+      "updatedAt": "Poslední aktualizace: {{date}}",
+      "updatePending": "Zatím nevypočteno",
+      "updateNotice": "Data analytiky se aktualizují každých 12 hodin"
+    },
+    "lowStock": {
+      "title": "Nízké zásoby",
+      "subtitle": "Produkty s docházejícími zásobami",
+      "noRecords": "Žádné produkty s nízkými zásobami",
+      "product": "Produkt",
+      "sku": "SKU",
+      "available": "Dostupné",
+      "viewInventory": "Zobrazit sklad"
+    },
+    "quickAccess": {
+      "followers": "Sledující",
+      "unreadMessages": "Nepřečtené zprávy"
+    }
   }
 }

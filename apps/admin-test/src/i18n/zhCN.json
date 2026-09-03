@@ -189,11 +189,17 @@
       "heading": "类型请求",
       "noRecords": "未找到类型请求"
     },
+    "returnReasons": {
+      "navLabel": "退货原因",
+      "heading": "退货原因请求",
+      "noRecords": "未找到退货原因请求"
+    },
     "typeLabels": {
       "product_category": "分类",
       "product_collection": "系列",
       "product_tag": "标签",
-      "product_type": "类型"
+      "product_type": "类型",
+      "return_reason": "退货原因"
     },
     "fields": {
       "name": "名称",
@@ -202,7 +208,8 @@
       "active": "启用",
       "internal": "内部",
       "title": "标题",
-      "value": "值"
+      "value": "值",
+      "label": "标签"
     },
     "values": {
       "yes": "是",
@@ -260,6 +267,33 @@
       "rating": "评分",
       "reference": "参考编号",
       "customerNote": "客户备注"
+    }
+  },
+  "dashboard": {
+    "domain": "仪表盘",
+    "pageTitle": "仪表盘",
+    "orders": {
+      "title": "订单摘要",
+      "subtitle": "整个平台的实时订单数量",
+      "today": "今天",
+      "thisWeek": "本周",
+      "thisMonth": "本月"
+    },
+    "totals": {
+      "products": "商品",
+      "sellers": "卖家",
+      "customers": "客户",
+      "lowStock": "库存不足商品"
+    },
+    "analytics": {
+      "title": "数据分析",
+      "subtitle": "随时间追踪平台整体表现",
+      "orders": "订单",
+      "commissionEarnings": "佣金收入",
+      "noData": "暂无数据",
+      "updatedAt": "上次更新：{{date}}",
+      "updatePending": "尚未计算",
+      "updateNotice": "分析数据每 12 小时更新一次"
     }
   }
 }

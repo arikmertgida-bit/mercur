@@ -89,15 +89,30 @@ const MainSidebar = () => {
     items: addNestedItems(route.to, route.items),
   }));
 
-  const customRoutesWithNested = customMenuItems
-    .sort((a, b) => (a.rank ?? 0) - (b.rank ?? 0))
-    .map((item) => ({
-      label: item.label,
-      to: item.path,
-      icon: item.icon ? <item.icon /> : undefined,
-      translationNs: item.translationNs,
-      items: addNestedItems(item.path),
-    }));
+  const toNavItem = (item: (typeof customMenuItems)[number]) => ({
+    label: item.label,
+    to: item.path,
+    icon: item.icon ? <item.icon /> : undefined,
+    translationNs: item.translationNs,
+    items: addNestedItems(item.path),
+  });
+
+  /**
+   * The core routes above (Orders, Products, ...) are a fixed array with no
+   * rank of its own, so a custom page can only be ordered relative to it by
+   * opting into a negative `rank` — that pins it above the core list instead
+   * of the default (appended after). Every existing custom page keeps its
+   * current position untouched since none use a negative rank today.
+   */
+  const sortedCustomMenuItems = [...customMenuItems].sort(
+    (a, b) => (a.rank ?? 0) - (b.rank ?? 0),
+  );
+  const pinnedCustomRoutes = sortedCustomMenuItems
+    .filter((item) => (item.rank ?? 0) < 0)
+    .map(toNavItem);
+  const trailingCustomRoutes = sortedCustomMenuItems
+    .filter((item) => (item.rank ?? 0) >= 0)
+    .map(toNavItem);
 
   return (
     <aside
@@ -121,10 +136,13 @@ const MainSidebar = () => {
               data-testid="sidebar-core-routes"
             >
               <Searchbar />
+              {pinnedCustomRoutes.map((route) => (
+                <NavItem key={route.to} {...route} />
+              ))}
               {routesWithNested.map((route) => {
                 return <NavItem key={route.to} {...route} />;
               })}
-              {customRoutesWithNested.map((route) => (
+              {trailingCustomRoutes.map((route) => (
                 <NavItem key={route.to} {...route} />
               ))}
             </nav>

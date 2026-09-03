@@ -216,5 +216,40 @@
       "reviewsAverage": "Rating Rata-rata"
     },
     "count": "Pengikut: {{count}}"
+  },
+  "dashboard": {
+    "domain": "Dasbor",
+    "pageTitle": "Dasbor",
+    "orders": {
+      "title": "Ringkasan Pesanan",
+      "subtitle": "Jumlah pesanan langsung untuk toko Anda",
+      "today": "Hari Ini",
+      "thisWeek": "Minggu Ini",
+      "thisMonth": "Bulan Ini",
+      "earningsToday": "Pendapatan Hari Ini"
+    },
+    "analytics": {
+      "title": "Analitik",
+      "subtitle": "Pantau performa penjualan Anda dari waktu ke waktu",
+      "orders": "Pesanan",
+      "earnings": "Pendapatan",
+      "noData": "Belum ada data",
+      "updatedAt": "Terakhir diperbarui: {{date}}",
+      "updatePending": "Belum dihitung",
+      "updateNotice": "Data analitik diperbarui setiap 12 jam"
+    },
+    "lowStock": {
+      "title": "Stok Menipis",
+      "subtitle": "Produk dengan stok yang menipis",
+      "noRecords": "Tidak ada produk dengan stok menipis",
+      "product": "Produk",
+      "sku": "SKU",
+      "available": "Tersedia",
+      "viewInventory": "Lihat Inventaris"
+    },
+    "quickAccess": {
+      "followers": "Pengikut",
+      "unreadMessages": "Pesan Belum Dibaca"
+    }
   }
 }

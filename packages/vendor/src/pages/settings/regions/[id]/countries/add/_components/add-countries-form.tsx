@@ -19,6 +19,7 @@ import { KeyboundForm } from "@components/utilities/keybound-form"
 import { useUpdateRegion } from "@hooks/api/regions"
 import { useDataTable } from "@hooks/use-data-table"
 import { countries as staticCountries, StaticCountry } from "@lib/data/countries"
+import { getLocalizedCountryName } from "@lib/format-country-name"
 import { useCountries } from "@pages/settings/regions/_common/hooks/use-countries"
 import { useCountryTableColumns } from "@pages/settings/regions/_common/hooks/use-country-table-columns"
 import { useCountryTableQuery } from "@pages/settings/regions/_common/hooks/use-country-table-query"
@@ -35,7 +36,7 @@ const PAGE_SIZE = 50
 const PREFIX = "ac"
 
 export const AddCountriesForm = ({ region }: AddCountriesFormProps) => {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const { handleSuccess } = useRouteModal()
 
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({})
@@ -64,7 +65,7 @@ export const AddCountriesForm = ({ region }: AddCountriesFormProps) => {
   })
   const { countries, count } = useCountries({
     countries: staticCountries.map((c, i) => ({
-      display_name: c.display_name,
+      display_name: getLocalizedCountryName(c, i18n.language) ?? c.display_name,
       name: c.name,
       id: String(i),
       iso_2: c.iso_2,

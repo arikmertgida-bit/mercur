@@ -189,11 +189,17 @@
       "heading": "Zahtjevi za tipove",
       "noRecords": "Nisu pronađeni zahtjevi za tipove"
     },
+    "returnReasons": {
+      "navLabel": "Razlozi za povrat",
+      "heading": "Zahtjevi za razloge povrata",
+      "noRecords": "Nisu pronađeni zahtjevi za razloge povrata"
+    },
     "typeLabels": {
       "product_category": "Kategorija",
       "product_collection": "Kolekcija",
       "product_tag": "Oznaka",
-      "product_type": "Tip"
+      "product_type": "Tip",
+      "return_reason": "Razlog povrata"
     },
     "fields": {
       "name": "Naziv",
@@ -202,7 +208,8 @@
       "active": "Aktivan",
       "internal": "Interni",
       "title": "Naslov",
-      "value": "Vrijednost"
+      "value": "Vrijednost",
+      "label": "Oznaka"
     },
     "values": {
       "yes": "Da",
@@ -260,6 +267,33 @@
       "rating": "Ocjena",
       "reference": "Referenca",
       "customerNote": "Napomena kupca"
+    }
+  },
+  "dashboard": {
+    "domain": "Kontrolna tabla",
+    "pageTitle": "Kontrolna tabla",
+    "orders": {
+      "title": "Pregled narudžbi",
+      "subtitle": "Broj narudžbi uživo na cijelom tržištu",
+      "today": "Danas",
+      "thisWeek": "Ove sedmice",
+      "thisMonth": "Ovog mjeseca"
+    },
+    "totals": {
+      "products": "Proizvodi",
+      "sellers": "Prodavci",
+      "customers": "Kupci",
+      "lowStock": "Artikli s niskim zalihama"
+    },
+    "analytics": {
+      "title": "Analitika",
+      "subtitle": "Pratite učinak tržišta tokom vremena",
+      "orders": "Narudžbe",
+      "commissionEarnings": "Prihod od provizije",
+      "noData": "Još nema podataka",
+      "updatedAt": "Zadnje ažuriranje: {{date}}",
+      "updatePending": "Još nije izračunato",
+      "updateNotice": "Podaci analitike se ažuriraju svakih 12 sati"
     }
   }
 }

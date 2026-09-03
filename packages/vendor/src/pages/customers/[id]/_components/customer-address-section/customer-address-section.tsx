@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 
 import { NoRecords } from "@components/common/empty-table-content";
 import { getCountryByIso2 } from "@lib/data/countries";
+import { getLocalizedCountryName } from "@lib/format-country-name";
 
 type CustomerAddressSectionProps = {
   customer: HttpTypes.AdminCustomer;
@@ -25,7 +26,7 @@ const getAddressLabel = (address: HttpTypes.AdminCustomerAddress) => {
 export const CustomerAddressSection = ({
   customer,
 }: CustomerAddressSectionProps) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const addresses = customer.addresses ?? [];
 
@@ -53,8 +54,10 @@ export const CustomerAddressSection = ({
         <div className="flex flex-col gap-y-2 p-3">
           {addresses.map((address) => {
             const country =
-              getCountryByIso2(address.country_code)?.display_name ??
-              address.country_code?.toUpperCase();
+              getLocalizedCountryName(
+                getCountryByIso2(address.country_code),
+                i18n.language,
+              ) ?? address.country_code?.toUpperCase();
             const cityLine = [address.city, address.postal_code]
               .filter(Boolean)
               .join(", ");

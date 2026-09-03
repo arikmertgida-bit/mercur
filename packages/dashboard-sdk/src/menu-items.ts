@@ -9,6 +9,7 @@ import {
     isNumericLiteral,
     isObjectProperty,
     isStringLiteral,
+    isUnaryExpression,
     isVariableDeclaration,
     isVariableDeclarator,
     isCallExpression,
@@ -17,7 +18,31 @@ import {
     type TraverseRoot,
     type VariableDeclarator,
 } from "./babel"
+import type { Node } from "@babel/types"
 import type { NodePath } from "@babel/traverse"
+
+/**
+ * Babel represents a negative number literal (`-1`) as a `UnaryExpression`
+ * wrapping a `NumericLiteral`, never as a `NumericLiteral` with a negative
+ * `value` — so `isNumericLiteral(node)` alone silently drops any negative
+ * `rank` a route's `config` declares (it's parsed as `undefined`, not `-1`).
+ * A negative rank is a real, supported value (main-layout treats it as
+ * "pin above the core nav list"), so this must be unwrapped here rather
+ * than requiring every consumer to work around it.
+ */
+function numericLiteralValue(node: Node): number | null {
+    if (isNumericLiteral(node)) {
+        return node.value
+    }
+    if (
+        isUnaryExpression(node) &&
+        node.operator === "-" &&
+        isNumericLiteral(node.argument)
+    ) {
+        return -node.argument.value
+    }
+    return null
+}
 import type { BuiltMercurConfig } from "./types"
 
 type MenuItemConfig = {
@@ -173,8 +198,11 @@ function processConfigProperties(
         (prop) => isObjectProperty(prop) && isIdentifier(prop.key, { name: "rank" })
     )
     let rankValue: number | undefined
-    if (rank && isObjectProperty(rank) && isNumericLiteral(rank.value)) {
-        rankValue = rank.value.value
+    if (rank && isObjectProperty(rank)) {
+        const parsed = numericLiteralValue(rank.value)
+        if (parsed !== null) {
+            rankValue = parsed
+        }
     }
 
     return { label: hasLabel, icon: hasIcon, rank: rankValue, nested: nestedValue, translationNs: translationNsValue }

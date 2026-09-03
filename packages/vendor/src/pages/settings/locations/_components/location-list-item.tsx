@@ -84,7 +84,7 @@ type LocationProps = {
 
 function LocationListItem(props: LocationProps) {
   const { location } = props;
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const prompt = usePrompt();
 
   const { mutateAsync: deleteLocation } = useDeleteStockLocation(location.id);
@@ -140,6 +140,7 @@ function LocationListItem(props: LocationProps) {
                   province: location.address?.province,
                   country_code: location.address?.country_code,
                 },
+                locale: i18n.language,
               }).join(", ")}
             </Text>
           </div>

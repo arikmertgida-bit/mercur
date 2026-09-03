@@ -32,7 +32,7 @@ export const Login = () => {
     reason && reason.toLowerCase() === "unauthorized"
       ? t("login.sessionExpired")
       : reason;
-  const from = location.state?.from?.pathname || "/orders";
+  const from = location.state?.from?.pathname || "/";
 
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),

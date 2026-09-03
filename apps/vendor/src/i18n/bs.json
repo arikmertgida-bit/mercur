@@ -216,5 +216,40 @@
       "reviewsAverage": "Prosječna ocjena"
     },
     "count": "Pratioci: {{count}}"
+  },
+  "dashboard": {
+    "domain": "Kontrolna tabla",
+    "pageTitle": "Kontrolna tabla",
+    "orders": {
+      "title": "Pregled narudžbi",
+      "subtitle": "Broj narudžbi uživo za vašu prodavnicu",
+      "today": "Danas",
+      "thisWeek": "Ove sedmice",
+      "thisMonth": "Ovog mjeseca",
+      "earningsToday": "Današnja zarada"
+    },
+    "analytics": {
+      "title": "Analitika",
+      "subtitle": "Pratite učinak prodaje tokom vremena",
+      "orders": "Narudžbe",
+      "earnings": "Zarada",
+      "noData": "Još nema podataka",
+      "updatedAt": "Zadnje ažuriranje: {{date}}",
+      "updatePending": "Još nije izračunato",
+      "updateNotice": "Podaci analitike se ažuriraju svakih 12 sati"
+    },
+    "lowStock": {
+      "title": "Niske zalihe",
+      "subtitle": "Proizvodi kojima ponestaje zaliha",
+      "noRecords": "Nema proizvoda s niskim zalihama",
+      "product": "Proizvod",
+      "sku": "Šifra",
+      "available": "Dostupno",
+      "viewInventory": "Idi na zalihe"
+    },
+    "quickAccess": {
+      "followers": "Pratioci",
+      "unreadMessages": "Nepročitane poruke"
+    }
   }
 }

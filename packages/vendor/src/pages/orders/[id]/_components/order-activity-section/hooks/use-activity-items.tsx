@@ -38,7 +38,7 @@ export type Activity = {
 }
 
 export const useActivityItems = (order: ExtendedAdminOrder): Activity[] => {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
 
   const { order_changes: orderChanges = [] } = useOrderChanges(order.id)
 
@@ -329,9 +329,11 @@ export const useActivityItems = (order: ExtendedAdminOrder): Activity[] => {
               title={t(`orders.activity.events.update_order.shipping_address`)}
               previous={getFormattedAddress({
                 address: oldAddress,
+                locale: i18n.language,
               }).join(", ")}
               next={getFormattedAddress({
                 address: newAddress,
+                locale: i18n.language,
               }).join(", ")}
             />
           ),
@@ -347,16 +349,18 @@ export const useActivityItems = (order: ExtendedAdminOrder): Activity[] => {
       if (updateType === "billing_address") {
         const oldAddress = update?.actions[0]?.details?.old as AdminOrderAddress | AdminStockLocationAddress | null | undefined
         const newAddress = update?.actions[0]?.details?.new as AdminOrderAddress | AdminStockLocationAddress | null | undefined
-        
+
         items.push({
           title: (
             <ChangeDetailsTooltip
               title={t(`orders.activity.events.update_order.billing_address`)}
               previous={getFormattedAddress({
                 address: oldAddress,
+                locale: i18n.language,
               }).join(", ")}
               next={getFormattedAddress({
                 address: newAddress,
+                locale: i18n.language,
               }).join(", ")}
             />
           ),

@@ -13,6 +13,7 @@ import { _DataTable } from "@components/table/data-table"
 import { useUpdateRegion } from "@hooks/api/regions"
 import { useDataTable } from "@hooks/use-data-table"
 import { StaticCountry } from "@lib/data/countries"
+import { getLocalizedCountryName } from "@lib/format-country-name"
 import { useCountries } from "@pages/settings/regions/_common/hooks/use-countries"
 import { useCountryTableColumns } from "@pages/settings/regions/_common/hooks/use-country-table-columns"
 import { useCountryTableQuery } from "@pages/settings/regions/_common/hooks/use-country-table-query"
@@ -26,7 +27,7 @@ const PREFIX = "c"
 const PAGE_SIZE = 10
 
 export const RegionCountrySection = ({ region }: RegionCountrySectionProps) => {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const prompt = usePrompt()
 
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({})
@@ -35,8 +36,14 @@ export const RegionCountrySection = ({ region }: RegionCountrySectionProps) => {
     pageSize: PAGE_SIZE,
     prefix: PREFIX,
   })
+  const localizedRegionCountries = convertToStaticCountries(
+    region.countries,
+  ).map((country) => ({
+    ...country,
+    display_name: getLocalizedCountryName(country, i18n.language) ?? country.display_name,
+  }))
   const { countries, count } = useCountries({
-    countries: convertToStaticCountries(region.countries),
+    countries: localizedRegionCountries,
     ...searchParams,
   })
 
@@ -149,17 +156,19 @@ const CountryActions = ({
   country: StaticCountry
   region: HttpTypes.AdminRegion
 }) => {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const prompt = usePrompt()
   const { mutateAsync } = useUpdateRegion(region.id)
+  const localizedCountryName =
+    getLocalizedCountryName(country, i18n.language) ?? country.display_name
 
   const handleRemove = async () => {
     const res = await prompt({
       title: t("general.areYouSure"),
       description: t("regions.removeCountryWarning", {
-        name: country.display_name,
+        name: localizedCountryName,
       }),
-      verificationText: country.display_name,
+      verificationText: localizedCountryName,
       verificationInstruction: t("general.typeToConfirm"),
       cancelText: t("actions.cancel"),
       confirmText: t("actions.remove"),

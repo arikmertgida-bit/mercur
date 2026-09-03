@@ -189,11 +189,17 @@
       "heading": "Заявки за типове",
       "noRecords": "Не са намерени заявки за типове"
     },
+    "returnReasons": {
+      "navLabel": "Причини за връщане",
+      "heading": "Заявки за причини за връщане",
+      "noRecords": "Не са намерени заявки за причини за връщане"
+    },
     "typeLabels": {
       "product_category": "Категория",
       "product_collection": "Колекция",
       "product_tag": "Етикет",
-      "product_type": "Тип"
+      "product_type": "Тип",
+      "return_reason": "Причина за връщане"
     },
     "fields": {
       "name": "Име",
@@ -202,7 +208,8 @@
       "active": "Активен",
       "internal": "Вътрешен",
       "title": "Заглавие",
-      "value": "Стойност"
+      "value": "Стойност",
+      "label": "Етикет"
     },
     "values": {
       "yes": "Да",
@@ -260,6 +267,33 @@
       "rating": "Оценка",
       "reference": "Референция",
       "customerNote": "Бележка от клиента"
+    }
+  },
+  "dashboard": {
+    "domain": "Табло",
+    "pageTitle": "Табло",
+    "orders": {
+      "title": "Обобщение на поръчките",
+      "subtitle": "Брой поръчки на живо в целия пазар",
+      "today": "Днес",
+      "thisWeek": "Тази седмица",
+      "thisMonth": "Този месец"
+    },
+    "totals": {
+      "products": "Продукти",
+      "sellers": "Продавачи",
+      "customers": "Клиенти",
+      "lowStock": "Артикули с ниска наличност"
+    },
+    "analytics": {
+      "title": "Анализи",
+      "subtitle": "Следете представянето на пазара във времето",
+      "orders": "Поръчки",
+      "commissionEarnings": "Приходи от комисиони",
+      "noData": "Все още няма данни",
+      "updatedAt": "Последна актуализация: {{date}}",
+      "updatePending": "Все още не е изчислено",
+      "updateNotice": "Данните се актуализират на всеки 12 часа"
     }
   }
 }

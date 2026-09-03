@@ -189,11 +189,17 @@
       "heading": "בקשות סוג",
       "noRecords": "לא נמצאו בקשות סוג"
     },
+    "returnReasons": {
+      "navLabel": "סיבות החזרה",
+      "heading": "בקשות סיבת החזרה",
+      "noRecords": "לא נמצאו בקשות סיבת החזרה"
+    },
     "typeLabels": {
       "product_category": "קטגוריה",
       "product_collection": "אוסף",
       "product_tag": "תגית",
-      "product_type": "סוג"
+      "product_type": "סוג",
+      "return_reason": "סיבת החזרה"
     },
     "fields": {
       "name": "שם",
@@ -202,7 +208,8 @@
       "active": "פעיל",
       "internal": "פנימי",
       "title": "כותרת",
-      "value": "ערך"
+      "value": "ערך",
+      "label": "תווית"
     },
     "values": {
       "yes": "כן",
@@ -260,6 +267,33 @@
       "rating": "דירוג",
       "reference": "מזהה",
       "customerNote": "הערת לקוח"
+    }
+  },
+  "dashboard": {
+    "domain": "לוח בקרה",
+    "pageTitle": "לוח בקרה",
+    "orders": {
+      "title": "סיכום הזמנות",
+      "subtitle": "מספר הזמנות בזמן אמת בכל השוק",
+      "today": "היום",
+      "thisWeek": "השבוע",
+      "thisMonth": "החודש"
+    },
+    "totals": {
+      "products": "מוצרים",
+      "sellers": "מוכרים",
+      "customers": "לקוחות",
+      "lowStock": "פריטים במלאי נמוך"
+    },
+    "analytics": {
+      "title": "אנליטיקה",
+      "subtitle": "עקבו אחר ביצועי השוק לאורך זמן",
+      "orders": "הזמנות",
+      "commissionEarnings": "הכנסות מעמלות",
+      "noData": "אין עדיין נתונים",
+      "updatedAt": "עודכן לאחרונה: {{date}}",
+      "updatePending": "טרם חושב",
+      "updateNotice": "נתוני האנליטיקה מתעדכנים כל 12 שעות"
     }
   }
 }

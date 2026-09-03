@@ -13,6 +13,7 @@ import {
 import { KeyboundForm } from "@components/utilities/keybound-form"
 import { useUpdateFulfillmentSetServiceZone } from "@hooks/api/fulfillment-sets"
 import { countries } from "@lib/data/countries"
+import { getLocalizedCountryName } from "@lib/format-country-name"
 import { GeoZoneForm } from "@pages/settings/locations/_common/components/geo-zone-form"
 import { GEO_ZONE_STACKED_MODAL_ID } from "@pages/settings/locations/_common/constants"
 
@@ -33,7 +34,7 @@ export function EditServiceZoneAreasForm({
   locationId,
   zone,
 }: EditServiceZoneAreasFormProps) {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const { handleSuccess } = useRouteModal()
 
   const form = useForm<z.infer<typeof EditeServiceZoneSchema>>({
@@ -43,7 +44,9 @@ export function EditServiceZoneAreasForm({
 
         return {
           iso_2: z.country_code,
-          display_name: country?.display_name || z.country_code.toUpperCase(),
+          display_name:
+            getLocalizedCountryName(country, i18n.language) ||
+            z.country_code.toUpperCase(),
         }
       }),
     },

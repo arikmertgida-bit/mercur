@@ -216,5 +216,40 @@
       "reviewsAverage": "คะแนนเฉลี่ย"
     },
     "count": "ผู้ติดตาม: {{count}}"
+  },
+  "dashboard": {
+    "domain": "แดชบอร์ด",
+    "pageTitle": "แดชบอร์ด",
+    "orders": {
+      "title": "สรุปคำสั่งซื้อ",
+      "subtitle": "จำนวนคำสั่งซื้อแบบเรียลไทม์ของร้านคุณ",
+      "today": "วันนี้",
+      "thisWeek": "สัปดาห์นี้",
+      "thisMonth": "เดือนนี้",
+      "earningsToday": "รายได้วันนี้"
+    },
+    "analytics": {
+      "title": "การวิเคราะห์",
+      "subtitle": "ติดตามผลการขายของคุณตามช่วงเวลา",
+      "orders": "คำสั่งซื้อ",
+      "earnings": "รายได้",
+      "noData": "ยังไม่มีข้อมูล",
+      "updatedAt": "อัปเดตล่าสุด: {{date}}",
+      "updatePending": "ยังไม่ได้คำนวณ",
+      "updateNotice": "ข้อมูลการวิเคราะห์จะอัปเดตทุก 12 ชั่วโมง"
+    },
+    "lowStock": {
+      "title": "สินค้าใกล้หมด",
+      "subtitle": "สินค้าที่มีสต็อกใกล้หมด",
+      "noRecords": "ไม่มีสินค้าที่สต็อกใกล้หมด",
+      "product": "สินค้า",
+      "sku": "SKU",
+      "available": "คงเหลือ",
+      "viewInventory": "ไปที่คลังสินค้า"
+    },
+    "quickAccess": {
+      "followers": "ผู้ติดตาม",
+      "unreadMessages": "ข้อความที่ยังไม่ได้อ่าน"
+    }
   }
 }

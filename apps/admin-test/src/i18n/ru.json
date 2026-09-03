@@ -189,11 +189,17 @@
       "heading": "Запросы типов",
       "noRecords": "Запросы типов не найдены"
     },
+    "returnReasons": {
+      "navLabel": "Причины возврата",
+      "heading": "Запросы причин возврата",
+      "noRecords": "Запросы причин возврата не найдены"
+    },
     "typeLabels": {
       "product_category": "Категория",
       "product_collection": "Коллекция",
       "product_tag": "Тег",
-      "product_type": "Тип"
+      "product_type": "Тип",
+      "return_reason": "Причина возврата"
     },
     "fields": {
       "name": "Название",
@@ -202,7 +208,8 @@
       "active": "Активен",
       "internal": "Внутренний",
       "title": "Заголовок",
-      "value": "Значение"
+      "value": "Значение",
+      "label": "Метка"
     },
     "values": {
       "yes": "Да",
@@ -260,6 +267,33 @@
       "rating": "Рейтинг",
       "reference": "Артикул",
       "customerNote": "Заметка клиента"
+    }
+  },
+  "dashboard": {
+    "domain": "Панель управления",
+    "pageTitle": "Панель управления",
+    "orders": {
+      "title": "Сводка заказов",
+      "subtitle": "Количество заказов по всей площадке в реальном времени",
+      "today": "Сегодня",
+      "thisWeek": "На этой неделе",
+      "thisMonth": "В этом месяце"
+    },
+    "totals": {
+      "products": "Товары",
+      "sellers": "Продавцы",
+      "customers": "Клиенты",
+      "lowStock": "Товары с низким остатком"
+    },
+    "analytics": {
+      "title": "Аналитика",
+      "subtitle": "Отслеживайте динамику площадки со временем",
+      "orders": "Заказы",
+      "commissionEarnings": "Доход от комиссии",
+      "noData": "Данных пока нет",
+      "updatedAt": "Последнее обновление: {{date}}",
+      "updatePending": "Ещё не рассчитано",
+      "updateNotice": "Данные аналитики обновляются каждые 12 часов"
     }
   }
 }

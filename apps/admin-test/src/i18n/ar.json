@@ -189,11 +189,17 @@
       "heading": "طلبات الأنواع",
       "noRecords": "لم يتم العثور على طلبات أنواع"
     },
+    "returnReasons": {
+      "navLabel": "أسباب الإرجاع",
+      "heading": "طلبات أسباب الإرجاع",
+      "noRecords": "لم يتم العثور على طلبات أسباب الإرجاع"
+    },
     "typeLabels": {
       "product_category": "فئة",
       "product_collection": "مجموعة",
       "product_tag": "وسم",
-      "product_type": "نوع"
+      "product_type": "نوع",
+      "return_reason": "سبب الإرجاع"
     },
     "fields": {
       "name": "الاسم",
@@ -202,7 +208,8 @@
       "active": "نشِط",
       "internal": "داخلي",
       "title": "العنوان",
-      "value": "القيمة"
+      "value": "القيمة",
+      "label": "التسمية"
     },
     "values": {
       "yes": "نعم",
@@ -260,6 +267,33 @@
       "rating": "التقييم",
       "reference": "المرجع",
       "customerNote": "ملاحظة العميل"
+    }
+  },
+  "dashboard": {
+    "domain": "لوحة التحكم",
+    "pageTitle": "لوحة التحكم",
+    "orders": {
+      "title": "ملخص الطلبات",
+      "subtitle": "عدد الطلبات الحية عبر السوق بالكامل",
+      "today": "اليوم",
+      "thisWeek": "هذا الأسبوع",
+      "thisMonth": "هذا الشهر"
+    },
+    "totals": {
+      "products": "المنتجات",
+      "sellers": "البائعون",
+      "customers": "العملاء",
+      "lowStock": "منتجات منخفضة المخزون"
+    },
+    "analytics": {
+      "title": "التحليلات",
+      "subtitle": "تابع أداء السوق بمرور الوقت",
+      "orders": "الطلبات",
+      "commissionEarnings": "أرباح العمولة",
+      "noData": "لا توجد بيانات بعد",
+      "updatedAt": "آخر تحديث: {{date}}",
+      "updatePending": "لم يُحسب بعد",
+      "updateNotice": "يتم تحديث بيانات التحليلات كل 12 ساعة"
     }
   }
 }

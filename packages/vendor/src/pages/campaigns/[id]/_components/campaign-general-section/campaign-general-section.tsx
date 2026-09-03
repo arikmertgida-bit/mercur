@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom"
 import { DisplayExtensionZone, DisplayField } from "@mercurjs/dashboard-shared"
 import { ActionMenu } from "@components/common/action-menu"
 import { useDeleteCampaign } from "@hooks/api/campaigns"
-import { currencies } from "@lib/data/currencies"
+import { getLocalizedCurrencyName } from "@lib/format-currency-name"
 import {
   campaignStatus,
   statusColor,
@@ -27,7 +27,7 @@ type CampaignGeneralSectionProps = {
 export const CampaignGeneralSection = ({
   campaign,
 }: CampaignGeneralSectionProps) => {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const prompt = usePrompt()
   const navigate = useNavigate()
   const { mutateAsync } = useDeleteCampaign(campaign.id)
@@ -157,7 +157,12 @@ export const CampaignGeneralSection = ({
             <div>
               <Badge size="xsmall">{campaign?.budget.currency_code}</Badge>
               <Text className="inline pl-3" size="small" leading="compact">
-                {currencies[campaign?.budget.currency_code?.toUpperCase()]?.name}
+                {campaign?.budget.currency_code
+                  ? getLocalizedCurrencyName(
+                      campaign.budget.currency_code,
+                      i18n.language,
+                    )
+                  : ""}
               </Text>
             </div>
           </div>

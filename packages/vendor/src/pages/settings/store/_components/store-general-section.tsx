@@ -9,7 +9,7 @@ import {
 import { HttpTypes } from "@mercurjs/types";
 
 import { StoreDetailHeader } from "./store-detail-header";
-import { currencies } from "@/lib/data/currencies";
+import { getLocalizedCurrencyName } from "@/lib/format-currency-name";
 
 type StoreGeneralSectionProps = {
   seller: HttpTypes.StoreSellerResponse["seller"];
@@ -20,7 +20,7 @@ export const StoreGeneralSection = ({
   seller,
   children,
 }: StoreGeneralSectionProps) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   return (
     <Container className="divide-y p-0">
@@ -126,7 +126,9 @@ export const StoreGeneralSection = ({
                   {seller.currency_code?.toUpperCase()}
                 </Badge>
                 <Text size="small" leading="compact">
-                  {currencies[seller.currency_code?.toUpperCase()]?.name || "-"}
+                  {seller.currency_code
+                    ? getLocalizedCurrencyName(seller.currency_code, i18n.language)
+                    : "-"}
                 </Text>
               </div>
             </div>

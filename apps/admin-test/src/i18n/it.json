@@ -189,11 +189,17 @@
       "heading": "Richieste di tipi",
       "noRecords": "Nessuna richiesta di tipo trovata"
     },
+    "returnReasons": {
+      "navLabel": "Motivi di Restituzione",
+      "heading": "Richieste di motivi di restituzione",
+      "noRecords": "Nessuna richiesta di motivo di restituzione trovata"
+    },
     "typeLabels": {
       "product_category": "Categoria",
       "product_collection": "Collezione",
       "product_tag": "Tag",
-      "product_type": "Tipo"
+      "product_type": "Tipo",
+      "return_reason": "Motivo di Restituzione"
     },
     "fields": {
       "name": "Nome",
@@ -202,7 +208,8 @@
       "active": "Attivo",
       "internal": "Interno",
       "title": "Titolo",
-      "value": "Valore"
+      "value": "Valore",
+      "label": "Etichetta"
     },
     "values": {
       "yes": "Sì",
@@ -260,6 +267,33 @@
       "rating": "Valutazione",
       "reference": "Riferimento",
       "customerNote": "Nota del cliente"
+    }
+  },
+  "dashboard": {
+    "domain": "Dashboard",
+    "pageTitle": "Dashboard",
+    "orders": {
+      "title": "Riepilogo ordini",
+      "subtitle": "Conteggio ordini in tempo reale sull'intero marketplace",
+      "today": "Oggi",
+      "thisWeek": "Questa settimana",
+      "thisMonth": "Questo mese"
+    },
+    "totals": {
+      "products": "Prodotti",
+      "sellers": "Venditori",
+      "customers": "Clienti",
+      "lowStock": "Articoli con scorte basse"
+    },
+    "analytics": {
+      "title": "Analisi",
+      "subtitle": "Monitora l'andamento del marketplace nel tempo",
+      "orders": "Ordini",
+      "commissionEarnings": "Ricavi da commissioni",
+      "noData": "Nessun dato ancora",
+      "updatedAt": "Ultimo aggiornamento: {{date}}",
+      "updatePending": "Non ancora calcolato",
+      "updateNotice": "I dati analitici si aggiornano ogni 12 ore"
     }
   }
 }

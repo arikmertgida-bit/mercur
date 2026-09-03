@@ -33,6 +33,8 @@ export const wrapCollectionsWithProducts = async (collections: ProductCollection
   })
 
   collections.forEach(collection => {
-    collection.products = sellerProducts.filter(({ product }) => product.collection_id === collection.id).map(({ product }) => product)
+    collection.products = sellerProducts
+      .filter(({ product }) => product?.collection_id === collection.id)
+      .map(({ product }) => product)
   })
 }

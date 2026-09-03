@@ -216,5 +216,40 @@
       "reviewsAverage": "平均評価"
     },
     "count": "フォロワー: {{count}}"
+  },
+  "dashboard": {
+    "domain": "ダッシュボード",
+    "pageTitle": "ダッシュボード",
+    "orders": {
+      "title": "注文サマリー",
+      "subtitle": "ストアのリアルタイム注文数",
+      "today": "本日",
+      "thisWeek": "今週",
+      "thisMonth": "今月",
+      "earningsToday": "本日の売上"
+    },
+    "analytics": {
+      "title": "分析",
+      "subtitle": "販売実績の推移を確認できます",
+      "orders": "注文数",
+      "earnings": "売上",
+      "noData": "まだデータがありません",
+      "updatedAt": "最終更新: {{date}}",
+      "updatePending": "まだ計算されていません",
+      "updateNotice": "分析データは12時間ごとに更新されます"
+    },
+    "lowStock": {
+      "title": "在庫僅少",
+      "subtitle": "在庫が少なくなっている商品",
+      "noRecords": "在庫僅少の商品はありません",
+      "product": "商品",
+      "sku": "SKU",
+      "available": "在庫数",
+      "viewInventory": "在庫を見る"
+    },
+    "quickAccess": {
+      "followers": "フォロワー",
+      "unreadMessages": "未読メッセージ"
+    }
   }
 }

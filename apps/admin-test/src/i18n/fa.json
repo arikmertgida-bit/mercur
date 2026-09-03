@@ -189,11 +189,17 @@
       "heading": "درخواست‌های نوع",
       "noRecords": "درخواست نوع یافت نشد"
     },
+    "returnReasons": {
+      "navLabel": "دلایل بازگشت",
+      "heading": "درخواست‌های دلیل بازگشت",
+      "noRecords": "درخواست دلیل بازگشت یافت نشد"
+    },
     "typeLabels": {
       "product_category": "دسته‌بندی",
       "product_collection": "مجموعه",
       "product_tag": "برچسب",
-      "product_type": "نوع"
+      "product_type": "نوع",
+      "return_reason": "دلیل بازگشت"
     },
     "fields": {
       "name": "نام",
@@ -202,7 +208,8 @@
       "active": "فعال",
       "internal": "داخلی",
       "title": "عنوان",
-      "value": "مقدار"
+      "value": "مقدار",
+      "label": "برچسب"
     },
     "values": {
       "yes": "بله",
@@ -260,6 +267,33 @@
       "rating": "امتیاز",
       "reference": "مرجع",
       "customerNote": "یادداشت مشتری"
+    }
+  },
+  "dashboard": {
+    "domain": "داشبورد",
+    "pageTitle": "داشبورد",
+    "orders": {
+      "title": "خلاصه سفارش‌ها",
+      "subtitle": "تعداد لحظه‌ای سفارش‌ها در کل بازار",
+      "today": "امروز",
+      "thisWeek": "این هفته",
+      "thisMonth": "این ماه"
+    },
+    "totals": {
+      "products": "محصولات",
+      "sellers": "فروشندگان",
+      "customers": "مشتریان",
+      "lowStock": "کالاهای با موجودی کم"
+    },
+    "analytics": {
+      "title": "تحلیل‌ها",
+      "subtitle": "عملکرد بازار را در طول زمان دنبال کنید",
+      "orders": "سفارش‌ها",
+      "commissionEarnings": "درآمد کمیسیون",
+      "noData": "هنوز داده‌ای وجود ندارد",
+      "updatedAt": "آخرین به‌روزرسانی: {{date}}",
+      "updatePending": "هنوز محاسبه نشده است",
+      "updateNotice": "داده‌های تحلیلی هر ۱۲ ساعت به‌روزرسانی می‌شوند"
     }
   }
 }

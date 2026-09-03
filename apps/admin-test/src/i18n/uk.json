@@ -189,11 +189,17 @@
       "heading": "Запити на типи",
       "noRecords": "Запитів на типи не знайдено"
     },
+    "returnReasons": {
+      "navLabel": "Причини повернення",
+      "heading": "Запити на причини повернення",
+      "noRecords": "Запитів на причини повернення не знайдено"
+    },
     "typeLabels": {
       "product_category": "Категорія",
       "product_collection": "Колекція",
       "product_tag": "Тег",
-      "product_type": "Тип"
+      "product_type": "Тип",
+      "return_reason": "Причина повернення"
     },
     "fields": {
       "name": "Назва",
@@ -202,7 +208,8 @@
       "active": "Активний",
       "internal": "Внутрішній",
       "title": "Заголовок",
-      "value": "Значення"
+      "value": "Значення",
+      "label": "Мітка"
     },
     "values": {
       "yes": "Так",
@@ -260,6 +267,33 @@
       "rating": "Рейтинг",
       "reference": "Референс",
       "customerNote": "Примітка клієнта"
+    }
+  },
+  "dashboard": {
+    "domain": "Панель керування",
+    "pageTitle": "Панель керування",
+    "orders": {
+      "title": "Огляд замовлень",
+      "subtitle": "Кількість замовлень на всьому майданчику в реальному часі",
+      "today": "Сьогодні",
+      "thisWeek": "Цього тижня",
+      "thisMonth": "Цього місяця"
+    },
+    "totals": {
+      "products": "Товари",
+      "sellers": "Продавці",
+      "customers": "Клієнти",
+      "lowStock": "Товари з низьким залишком"
+    },
+    "analytics": {
+      "title": "Аналітика",
+      "subtitle": "Відстежуйте динаміку майданчика із часом",
+      "orders": "Замовлення",
+      "commissionEarnings": "Дохід від комісії",
+      "noData": "Даних поки немає",
+      "updatedAt": "Останнє оновлення: {{date}}",
+      "updatePending": "Ще не обчислено",
+      "updateNotice": "Дані аналітики оновлюються кожні 12 годин"
     }
   }
 }

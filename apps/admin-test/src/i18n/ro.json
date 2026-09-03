@@ -189,11 +189,17 @@
       "heading": "Cereri de tipuri",
       "noRecords": "Nu s-au găsit cereri de tipuri"
     },
+    "returnReasons": {
+      "navLabel": "Motive de întoarcere",
+      "heading": "Cereri de motive de întoarcere",
+      "noRecords": "Nu s-au găsit cereri de motive de întoarcere"
+    },
     "typeLabels": {
       "product_category": "Categorie",
       "product_collection": "Colecție",
       "product_tag": "Etichetă",
-      "product_type": "Tip"
+      "product_type": "Tip",
+      "return_reason": "Motiv de întoarcere"
     },
     "fields": {
       "name": "Nume",
@@ -202,7 +208,8 @@
       "active": "Activ",
       "internal": "Intern",
       "title": "Titlu",
-      "value": "Valoare"
+      "value": "Valoare",
+      "label": "Etichetă"
     },
     "values": {
       "yes": "Da",
@@ -260,6 +267,33 @@
       "rating": "Evaluare",
       "reference": "Referință",
       "customerNote": "Notă client"
+    }
+  },
+  "dashboard": {
+    "domain": "Panou de control",
+    "pageTitle": "Panou de control",
+    "orders": {
+      "title": "Rezumatul comenzilor",
+      "subtitle": "Numărul de comenzi în timp real din întreaga piață",
+      "today": "Astăzi",
+      "thisWeek": "Săptămâna aceasta",
+      "thisMonth": "Luna aceasta"
+    },
+    "totals": {
+      "products": "Produse",
+      "sellers": "Vânzători",
+      "customers": "Clienți",
+      "lowStock": "Articole cu stoc redus"
+    },
+    "analytics": {
+      "title": "Analitice",
+      "subtitle": "Urmărește performanța pieței în timp",
+      "orders": "Comenzi",
+      "commissionEarnings": "Venituri din comisioane",
+      "noData": "Încă nu există date",
+      "updatedAt": "Ultima actualizare: {{date}}",
+      "updatePending": "Încă necalculat",
+      "updateNotice": "Datele analitice se actualizează la fiecare 12 ore"
     }
   }
 }

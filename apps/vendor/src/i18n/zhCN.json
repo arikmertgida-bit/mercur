@@ -216,5 +216,40 @@
       "reviewsAverage": "平均评分"
     },
     "count": "关注者：{{count}}"
+  },
+  "dashboard": {
+    "domain": "仪表盘",
+    "pageTitle": "仪表盘",
+    "orders": {
+      "title": "订单摘要",
+      "subtitle": "您店铺的实时订单数量",
+      "today": "今天",
+      "thisWeek": "本周",
+      "thisMonth": "本月",
+      "earningsToday": "今日收益"
+    },
+    "analytics": {
+      "title": "数据分析",
+      "subtitle": "随时间追踪您的销售表现",
+      "orders": "订单",
+      "earnings": "收益",
+      "noData": "暂无数据",
+      "updatedAt": "上次更新：{{date}}",
+      "updatePending": "尚未计算",
+      "updateNotice": "分析数据每 12 小时更新一次"
+    },
+    "lowStock": {
+      "title": "库存不足",
+      "subtitle": "库存即将不足的商品",
+      "noRecords": "没有库存不足的商品",
+      "product": "商品",
+      "sku": "SKU",
+      "available": "可用库存",
+      "viewInventory": "查看库存"
+    },
+    "quickAccess": {
+      "followers": "关注者",
+      "unreadMessages": "未读消息"
+    }
   }
 }

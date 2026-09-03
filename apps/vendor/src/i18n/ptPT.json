@@ -216,5 +216,40 @@
       "reviewsAverage": "Avaliação Média"
     },
     "count": "Seguidores: {{count}}"
+  },
+  "dashboard": {
+    "domain": "Painel",
+    "pageTitle": "Painel",
+    "orders": {
+      "title": "Resumo de encomendas",
+      "subtitle": "Contagem de encomendas em tempo real da sua loja",
+      "today": "Hoje",
+      "thisWeek": "Esta semana",
+      "thisMonth": "Este mês",
+      "earningsToday": "Ganhos de hoje"
+    },
+    "analytics": {
+      "title": "Análises",
+      "subtitle": "Acompanhe o desempenho das suas vendas ao longo do tempo",
+      "orders": "Encomendas",
+      "earnings": "Ganhos",
+      "noData": "Ainda não há dados",
+      "updatedAt": "Última atualização: {{date}}",
+      "updatePending": "Ainda não calculado",
+      "updateNotice": "Os dados de análise são atualizados a cada 12 horas"
+    },
+    "lowStock": {
+      "title": "Stock baixo",
+      "subtitle": "Produtos com stock baixo",
+      "noRecords": "Nenhum produto com stock baixo",
+      "product": "Produto",
+      "sku": "SKU",
+      "available": "Disponível",
+      "viewInventory": "Ver stock"
+    },
+    "quickAccess": {
+      "followers": "Seguidores",
+      "unreadMessages": "Mensagens não lidas"
+    }
   }
 }

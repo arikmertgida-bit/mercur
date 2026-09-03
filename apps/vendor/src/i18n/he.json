@@ -216,5 +216,40 @@
       "reviewsAverage": "דירוג ממוצע"
     },
     "count": "עוקבים: {{count}}"
+  },
+  "dashboard": {
+    "domain": "לוח בקרה",
+    "pageTitle": "לוח בקרה",
+    "orders": {
+      "title": "סיכום הזמנות",
+      "subtitle": "מספר הזמנות בזמן אמת בחנות שלך",
+      "today": "היום",
+      "thisWeek": "השבוע",
+      "thisMonth": "החודש",
+      "earningsToday": "רווחי היום"
+    },
+    "analytics": {
+      "title": "אנליטיקה",
+      "subtitle": "עקבו אחר ביצועי המכירות שלכם לאורך זמן",
+      "orders": "הזמנות",
+      "earnings": "רווחים",
+      "noData": "אין עדיין נתונים",
+      "updatedAt": "עודכן לאחרונה: {{date}}",
+      "updatePending": "טרם חושב",
+      "updateNotice": "נתוני האנליטיקה מתעדכנים כל 12 שעות"
+    },
+    "lowStock": {
+      "title": "מלאי נמוך",
+      "subtitle": "מוצרים שהמלאי שלהם עומד להיגמר",
+      "noRecords": "אין מוצרים במלאי נמוך",
+      "product": "מוצר",
+      "sku": "מק\"ט",
+      "available": "זמין",
+      "viewInventory": "מעבר למלאי"
+    },
+    "quickAccess": {
+      "followers": "עוקבים",
+      "unreadMessages": "הודעות שלא נקראו"
+    }
   }
 }

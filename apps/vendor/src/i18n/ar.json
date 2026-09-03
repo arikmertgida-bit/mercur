@@ -216,5 +216,40 @@
       "reviewsAverage": "متوسط التقييم"
     },
     "count": "المتابعون: {{count}}"
+  },
+  "dashboard": {
+    "domain": "لوحة التحكم",
+    "pageTitle": "لوحة التحكم",
+    "orders": {
+      "title": "ملخص الطلبات",
+      "subtitle": "عدد الطلبات الحية لمتجرك",
+      "today": "اليوم",
+      "thisWeek": "هذا الأسبوع",
+      "thisMonth": "هذا الشهر",
+      "earningsToday": "أرباح اليوم"
+    },
+    "analytics": {
+      "title": "التحليلات",
+      "subtitle": "تابع أداء مبيعاتك بمرور الوقت",
+      "orders": "الطلبات",
+      "earnings": "الأرباح",
+      "noData": "لا توجد بيانات بعد",
+      "updatedAt": "آخر تحديث: {{date}}",
+      "updatePending": "لم يُحسب بعد",
+      "updateNotice": "يتم تحديث بيانات التحليلات كل 12 ساعة"
+    },
+    "lowStock": {
+      "title": "مخزون منخفض",
+      "subtitle": "المنتجات التي أوشك مخزونها على النفاد",
+      "noRecords": "لا توجد منتجات منخفضة المخزون",
+      "product": "المنتج",
+      "sku": "رمز المنتج",
+      "available": "المتوفر",
+      "viewInventory": "عرض المخزون"
+    },
+    "quickAccess": {
+      "followers": "المتابعون",
+      "unreadMessages": "رسائل غير مقروءة"
+    }
   }
 }

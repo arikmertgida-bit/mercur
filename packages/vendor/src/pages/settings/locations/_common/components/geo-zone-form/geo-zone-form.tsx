@@ -21,6 +21,7 @@ import {
   StaticCountry,
   countries as staticCountries,
 } from "@lib/data/countries"
+import { getLocalizedCountryName } from "@lib/format-country-name"
 import { useCountries } from "@pages/settings/regions/_common/hooks/use-countries"
 import { useCountryTableColumns } from "@pages/settings/regions/_common/hooks/use-country-table-columns"
 import { useCountryTableQuery } from "@pages/settings/regions/_common/hooks/use-country-table-query"
@@ -112,7 +113,7 @@ const AreaStackedModal = <TForm extends UseFormReturn<any>>({
 }: AreasStackedModalProps<TForm>) => {
   const castForm = form as UseFormReturn<z.infer<typeof GeoZoneSchema>>
 
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const { getValues, setValue } = castForm
   const { setIsOpen, getIsOpen } = useStackedModal()
 
@@ -129,7 +130,7 @@ const AreaStackedModal = <TForm extends UseFormReturn<any>>({
   })
   const { countries, count } = useCountries({
     countries: staticCountries.map((c) => ({
-      display_name: c.display_name,
+      display_name: getLocalizedCountryName(c, i18n.language) ?? c.display_name,
       name: c.name,
       iso_2: c.iso_2,
       iso_3: c.iso_3,

@@ -216,5 +216,40 @@
       "reviewsAverage": "平均評分"
     },
     "count": "關注者：{{count}}"
+  },
+  "dashboard": {
+    "domain": "儀表板",
+    "pageTitle": "儀表板",
+    "orders": {
+      "title": "訂單摘要",
+      "subtitle": "您商店的即時訂單數量",
+      "today": "今天",
+      "thisWeek": "本週",
+      "thisMonth": "本月",
+      "earningsToday": "今日收益"
+    },
+    "analytics": {
+      "title": "數據分析",
+      "subtitle": "隨時間追蹤您的銷售表現",
+      "orders": "訂單",
+      "earnings": "收益",
+      "noData": "尚無資料",
+      "updatedAt": "上次更新：{{date}}",
+      "updatePending": "尚未計算",
+      "updateNotice": "分析資料每 12 小時更新一次"
+    },
+    "lowStock": {
+      "title": "庫存不足",
+      "subtitle": "庫存即將不足的商品",
+      "noRecords": "沒有庫存不足的商品",
+      "product": "商品",
+      "sku": "SKU",
+      "available": "可用庫存",
+      "viewInventory": "查看庫存"
+    },
+    "quickAccess": {
+      "followers": "追蹤者",
+      "unreadMessages": "未讀訊息"
+    }
   }
 }

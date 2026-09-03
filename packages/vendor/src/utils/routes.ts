@@ -30,17 +30,27 @@ const createBranchRoute = (segment: string): RouteObject => ({
 })
 
 /**
- * Creates a route object for a leaf node with its component
+ * Creates a route object for a leaf node with its component.
  * @param Component - The React component to render at this route
+ * @param withErrorBoundary - False for a route that will be spread directly
+ *   onto an existing base route object (the root-path case in `addRoute`) —
+ *   that base object already carries its own `errorElement`, and having
+ *   both `errorElement` and `ErrorBoundary` on the same route object is a
+ *   react-router warning (`ErrorBoundary` silently wins, so the pair is
+ *   never actually a bug, just noise — omitting it here is the correct fix
+ *   rather than suppressing the warning). Every other call site nests its
+ *   leaf a level below the base route that owns `errorElement`, so it never
+ *   collides and keeps its own.
  */
 const createLeafRoute = (
     Component: ComponentType,
     loader?: LoaderFunction,
     handle?: object,
-    path: string = ""
+    path: string = "",
+    withErrorBoundary: boolean = true
 ): RouteObject => ({
     path,
-    ErrorBoundary: ErrorBoundary,
+    ...(withErrorBoundary ? { ErrorBoundary } : {}),
     async lazy() {
         const result: {
             Component: ComponentType
@@ -130,6 +140,19 @@ const addRoute = (
     componentPath?: string
 ) => {
     if (!pathSegments.length) {
+        /**
+         * A custom route registered at the literal root path ("/") has no
+         * path segments to walk (`"/".split("/").filter(Boolean)` is `[]`),
+         * so without this branch it was silently dropped instead of ever
+         * reaching `mergeRoutes` — the app's own root-overriding custom page
+         * (e.g. a Dashboard home) never mounted, and the base "/" route
+         * (a redirect stub) kept winning. `mergeRoutes` matches by path with
+         * leading slashes stripped, so this must land as `path: ""` to match
+         * the base list's `"/"` entry.
+         */
+        const rootLeaf = createLeafRoute(Component, loader, handle, "", false)
+        rootLeaf.children = processParallelRoutes(parallelRoutes, fullPath ?? "")
+        currentLevel.push(rootLeaf)
         return
     }
 

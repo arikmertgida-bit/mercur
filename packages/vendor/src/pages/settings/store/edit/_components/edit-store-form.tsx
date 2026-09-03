@@ -28,7 +28,7 @@ import { RouteDrawer, useRouteModal } from "@components/modals";
 import { KeyboundForm } from "@components/utilities/keybound-form";
 import { useDocumentDirection } from "@hooks/use-document-direction";
 import { sdk } from "@lib/client";
-import { currencies } from "@lib/data/currencies";
+import { getLocalizedCurrencyName } from "@lib/format-currency-name";
 import { MediaSchema } from "@pages/products/create/constants";
 import { HttpTypes } from "@mercurjs/types";
 import { useUpdateSeller } from "@hooks/api";
@@ -329,7 +329,9 @@ export const EditStoreForm = ({ seller }: EditStoreFormProps) => {
   };
 
   const currencyCode = seller.currency_code?.toUpperCase() ?? "";
-  const currencyName = currencies[currencyCode]?.name ?? currencyCode;
+  const currencyName = currencyCode
+    ? getLocalizedCurrencyName(currencyCode, i18n.language)
+    : currencyCode;
 
   return (
     <RouteDrawer.Form form={form}>

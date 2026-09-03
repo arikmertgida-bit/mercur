@@ -216,5 +216,40 @@
       "reviewsAverage": "Evaluare Medie"
     },
     "count": "Urmăritori: {{count}}"
+  },
+  "dashboard": {
+    "domain": "Panou de control",
+    "pageTitle": "Panou de control",
+    "orders": {
+      "title": "Rezumatul comenzilor",
+      "subtitle": "Numărul de comenzi în timp real al magazinului tău",
+      "today": "Astăzi",
+      "thisWeek": "Săptămâna aceasta",
+      "thisMonth": "Luna aceasta",
+      "earningsToday": "Câștiguri de azi"
+    },
+    "analytics": {
+      "title": "Analitice",
+      "subtitle": "Urmărește performanța vânzărilor tale în timp",
+      "orders": "Comenzi",
+      "earnings": "Câștiguri",
+      "noData": "Încă nu există date",
+      "updatedAt": "Ultima actualizare: {{date}}",
+      "updatePending": "Încă necalculat",
+      "updateNotice": "Datele analitice se actualizează la fiecare 12 ore"
+    },
+    "lowStock": {
+      "title": "Stoc redus",
+      "subtitle": "Produse cu stoc pe terminate",
+      "noRecords": "Niciun produs cu stoc redus",
+      "product": "Produs",
+      "sku": "SKU",
+      "available": "Disponibil",
+      "viewInventory": "Vezi inventarul"
+    },
+    "quickAccess": {
+      "followers": "Urmăritori",
+      "unreadMessages": "Mesaje necitite"
+    }
   }
 }
