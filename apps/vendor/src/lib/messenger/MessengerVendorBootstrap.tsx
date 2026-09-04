@@ -61,6 +61,18 @@ function useSellerSession(): { sellerId: string | null; sellerName: string | und
     let cancelled = false
     let pollTimer: ReturnType<typeof setInterval> | null = null
     let fastAttempts = 0
+    // `/vendor/members/me` (packages/vendor's `ProtectedRoute`) and this
+    // hook's own `/vendor/sellers/me` both race the same "am I logged in"
+    // round-trip independently the instant either mounts at the bare `/`
+    // root — before `ProtectedRoute` has had a chance to redirect a
+    // signed-out visitor to `/login` (which the route-exclusion checks
+    // above would then correctly skip). A signed-out visitor is guaranteed
+    // to lose that race (no cookie exists yet to send), producing a 401
+    // that's purely this hook's own duplicate of the check `ProtectedRoute`
+    // was already making. Skipping only this one mount-time call — never
+    // the poll ticks right behind it — closes that window without ever
+    // withholding seller data from a signed-in visitor genuinely on `/`.
+    let skipRootRaceOnce = window.location.pathname === "/"
 
     const startPolling = (intervalMs: number): void => {
       if (pollTimer) clearInterval(pollTimer)
@@ -70,6 +82,10 @@ function useSellerSession(): { sellerId: string | null; sellerName: string | und
     }
 
     const resolveSeller = async (): Promise<void> => {
+      if (skipRootRaceOnce) {
+        skipRootRaceOnce = false
+        return
+      }
       if (isOnUnauthenticatedRoute() || isOnRouteWithoutSelectableSeller()) {
         return
       }
