@@ -152,6 +152,9 @@ module.exports = withMercur({
       resolve: './src/modules/attribute-legacy-cleanup',
     },
     {
+      resolve: './src/modules/inventory-integrity-guard',
+    },
+    {
       resolve: '@mercurjs/core/modules/admin-ui',
       options: {
         appDir: '',

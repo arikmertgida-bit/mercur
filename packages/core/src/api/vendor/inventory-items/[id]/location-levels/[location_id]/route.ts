@@ -5,12 +5,14 @@ import {
 import {
   ContainerRegistrationKeys,
   MedusaError,
+  Modules,
 } from "@medusajs/framework/utils"
 import {
   deleteInventoryLevelsWorkflow,
   updateInventoryLevelsWorkflow,
 } from "@medusajs/core-flows"
 import { HttpTypes } from "@mercurjs/types"
+import { InventoryWorkflowEvents } from "../../../../../../workflows"
 
 import { validateSellerStockLocations } from "../../../../stock-locations/helpers"
 import { refetchInventoryItem, validateSellerInventoryItem } from "../../../helpers"
@@ -31,6 +33,11 @@ export const POST = async (
     input: {
       updates: [{ ...req.validatedBody, inventory_item_id: id, location_id }],
     },
+  })
+
+  await req.scope.resolve(Modules.EVENT_BUS).emit({
+    name: InventoryWorkflowEvents.LEVEL_CHANGED,
+    data: { inventory_item_ids: [id] },
   })
 
   const inventoryItem = await refetchInventoryItem(
@@ -78,6 +85,11 @@ export const DELETE = async (
     input: {
       id: [level.id],
     },
+  })
+
+  await req.scope.resolve(Modules.EVENT_BUS).emit({
+    name: InventoryWorkflowEvents.LEVEL_CHANGED,
+    data: { inventory_item_ids: [id] },
   })
 
   const inventoryItem = await refetchInventoryItem(

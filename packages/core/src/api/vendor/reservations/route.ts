@@ -4,11 +4,13 @@ import {
 } from "@medusajs/framework/http"
 import {
   ContainerRegistrationKeys,
+  Modules,
   remoteQueryObjectFromString,
 } from "@medusajs/framework/utils"
 
 import { createReservationsWorkflow } from "@medusajs/core-flows"
 import { HttpTypes } from "@medusajs/framework/types"
+import { InventoryWorkflowEvents } from "../../../workflows"
 
 import { refetchReservation } from "./helpers"
 
@@ -48,6 +50,11 @@ export const POST = async (
 
   const { result } = await createReservationsWorkflow(req.scope).run({
     input: { reservations: input },
+  })
+
+  await req.scope.resolve(Modules.EVENT_BUS).emit({
+    name: InventoryWorkflowEvents.LEVEL_CHANGED,
+    data: { inventory_item_ids: [req.validatedBody.inventory_item_id] },
   })
 
   const reservation = await refetchReservation(

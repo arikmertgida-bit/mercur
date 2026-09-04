@@ -38,6 +38,7 @@ import {
   VariantInventoryLink,
   VariantInventoryRow,
 } from "../utils"
+import { InventoryWorkflowEvents } from "../../events"
 
 export const cancelOrderFulfillmentValidateOrderStepId =
   "mercur-cancel-order-fulfillment-validate-order"
@@ -296,6 +297,19 @@ export const cancelOrderFulfillmentWorkflow = createWorkflow(
       }
     })
 
+    const changedInventoryItemIds = transform(
+      { inventoryAdjustment },
+      ({ inventoryAdjustment }) => {
+        return {
+          inventory_item_ids: Array.from(
+            new Set(
+              inventoryAdjustment.map((adjustment) => adjustment.inventory_item_id)
+            )
+          ),
+        }
+      },
+    )
+
     parallelize(
       cancelOrderFulfillmentStep(cancelOrderFulfillmentData),
       createReservationsStep(toCreate),
@@ -303,6 +317,13 @@ export const cancelOrderFulfillmentWorkflow = createWorkflow(
       emitEventStep({
         eventName: OrderWorkflowEvents.FULFILLMENT_CANCELED,
         data: eventData,
+      }),
+      // Restocked here (adjustInventoryLevelsStep above already resolved).
+      emitEventStep({
+        eventName: InventoryWorkflowEvents.LEVEL_CHANGED,
+        data: changedInventoryItemIds,
+      }).config({
+        name: "inventory-level-changed-event",
       }),
     )
 

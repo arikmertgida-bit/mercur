@@ -56,6 +56,44 @@ export const reindexProductsById = async (
   }
 }
 
+// Shared by the event-driven drain loader and the reconciliation cron —
+// `inventory_items` on `product_variant` is a cross-module link, not a plain
+// foreign key: it can be *selected* in a nested field path, but filtering a
+// `product_variant` query by that nested path 500s ("missing FROM-clause
+// entry"), same as `product_seller` elsewhere in this codebase needs its own
+// two-hop resolution. Query the link table directly for variant ids, then
+// the variants for their product ids.
+export const resolveProductIdsFromInventoryItemIds = async (
+  container: MedusaContainer,
+  inventoryItemIds: string[]
+): Promise<string[]> => {
+  const ids = uniq(inventoryItemIds)
+  if (!ids.length) {
+    return []
+  }
+
+  const query = container.resolve<Query>(ContainerRegistrationKeys.QUERY)
+
+  const { data: links } = await query.graph({
+    entity: 'product_variant_inventory_item',
+    fields: ['variant_id'],
+    filters: { inventory_item_id: ids },
+  })
+  const variantIds = uniq(
+    links.map((link: { variant_id: string | null }) => link.variant_id)
+  )
+  if (!variantIds.length) {
+    return []
+  }
+
+  const { data: variants } = await query.graph({
+    entity: 'product_variant',
+    fields: ['product_id'],
+    filters: { id: variantIds },
+  })
+  return uniq(variants.map((v: { product_id: string | null }) => v.product_id))
+}
+
 export const getProductIdsForSeller = async (
   container: MedusaContainer,
   sellerId: string
