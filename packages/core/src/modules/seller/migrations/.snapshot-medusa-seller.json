@@ -196,6 +196,15 @@
       "schema": "public",
       "indexes": [
         {
+          "keyName": "IDX_order_group_cart_id_unique",
+          "columnNames": [],
+          "composite": false,
+          "constraint": false,
+          "primary": false,
+          "unique": false,
+          "expression": "CREATE UNIQUE INDEX IF NOT EXISTS \"IDX_order_group_cart_id_unique\" ON \"order_group\" (\"cart_id\") WHERE deleted_at IS NULL"
+        },
+        {
           "keyName": "IDX_order_group_deleted_at",
           "columnNames": [],
           "composite": false,
