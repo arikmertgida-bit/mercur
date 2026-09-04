@@ -9,6 +9,7 @@ export type ReplaceSellerLowStockItemsInput = {
     inventory_item_id: string
     product_title: string
     sku: string | null
+    thumbnail: string | null
     available_quantity: number
     computed_at: Date
   }[]

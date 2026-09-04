@@ -2,26 +2,39 @@ import type { Query } from "@medusajs/framework"
 import { MedusaContainer } from "@medusajs/framework/types"
 import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
 import { CommissionLineDTO, MercurModules } from "@mercurjs/types"
-import type { z } from "zod"
 
 import {
   InventoryItemSellerLinkRowSchema,
+  OrderAnalyticsRow,
   OrderAnalyticsRowSchema,
   SellerScopedOrderLinkRowSchema,
   SellerStatusRowSchema,
   parseRows,
 } from "../lib/graph-schemas"
+import {
+  LOW_STOCK_THRESHOLD,
+  PUBLISHED_PRODUCT_STATUS,
+  computeAvailableQuantity,
+  hasPublishedListing,
+  resolveThumbnail,
+} from "../lib/low-stock"
 import { getIstanbulDateString } from "../lib/reference-price"
 import { computeSellerAnalyticsWorkflow } from "../workflows/compute-seller-analytics"
 import { UpsertSellerDailyStatInput } from "../workflows/steps/upsert-seller-daily-stats"
 
 /**
- * Materializes the Vendor + Admin dashboards' "kazanç"/"azalan stok"
- * widgets every 12h, so a dashboard page load never pays for a live
- * commission/inventory aggregation across a seller's full order history.
- * Order COUNTS stay live (see api/vendor/dashboard, api/admin/dashboard) —
- * only this job's output (earnings, low stock, platform rollup) is on a
+ * Materializes the Vendor + Admin dashboards' "kazanç" (earnings) and
+ * platform-rollup widgets every 12h, so a dashboard page load never pays for
+ * a live commission aggregation across a seller's full order history. Order
+ * COUNTS stay live (see api/vendor/dashboard, api/admin/dashboard) on a
  * YouTube-Analytics-style delayed refresh.
+ *
+ * "Azalan Stok" (low stock) is seeded by this job's initial per-seller scan
+ * but then kept live in between runs by
+ * subscribers/inventory-level-changed-low-stock.ts, which reacts to every
+ * `inventory_level.changed` event — a seller restocking above
+ * LOW_STOCK_THRESHOLD (see lib/low-stock.ts) drops off the widget the
+ * instant they save, not up to 12h later.
  *
  * Runs once per calendar day (Europe/Istanbul), idempotently overwriting
  * that day's row(s) on every run (the 12h schedule just means "today"'s
@@ -31,7 +44,6 @@ const JOB_NAME = "compute-seller-analytics"
 const CRON_SCHEDULE = "0 */12 * * *" // 00:00 and 12:00 UTC
 const SELLER_BATCH_LIMIT = 100
 const ID_BATCH_LIMIT = 200
-const LOW_STOCK_THRESHOLD = 5
 const LOW_STOCK_MAX_ITEMS_PER_SELLER = 10
 // A seller's inventory is scanned up to this many items when looking for
 // low-stock candidates — bounded so one very large catalog can't blow up a
@@ -41,7 +53,6 @@ const LOW_STOCK_MAX_ITEMS_PER_SELLER = 10
 const INVENTORY_SCAN_LIMIT_PER_SELLER = 500
 const DEFAULT_CURRENCY_CODE = "try"
 const TERMINATED_SELLER_STATUS = "terminated"
-const PUBLISHED_PRODUCT_STATUS = "published"
 
 // @mercurjs/core only publishes each module's index barrel (its Module()
 // definition), not the concrete service class — so the container-resolved
@@ -117,8 +128,6 @@ async function loadOrderIdsBySeller(
   return orderIdsBySeller
 }
 
-type OrderAnalyticsRow = z.infer<typeof OrderAnalyticsRowSchema>
-
 async function loadOrdersSince(
   query: Query,
   orderIds: string[],
@@ -129,7 +138,7 @@ async function loadOrdersSince(
   for (const orderIdChunk of chunk(orderIds, ID_BATCH_LIMIT)) {
     const { data: rows } = await query.graph({
       entity: "order",
-      fields: ["id", "currency_code", "total", "item_total", "created_at", "items.id"],
+      fields: ["id", "currency_code", "summary.accounting_total", "created_at", "items.id"],
       filters: { id: orderIdChunk, created_at: { $gte: sinceIso } },
     })
 
@@ -174,6 +183,7 @@ type LowStockCandidate = {
   inventory_item_id: string
   product_title: string
   sku: string | null
+  thumbnail: string | null
   available_quantity: number
 }
 
@@ -191,6 +201,7 @@ async function loadLowStockForSeller(
       "inventory_item.location_levels.stocked_quantity",
       "inventory_item.location_levels.reserved_quantity",
       "inventory_item.variants.product.status",
+      "inventory_item.variants.product.thumbnail",
     ],
     filters: { seller_id: sellerId },
     pagination: { skip: 0, take: INVENTORY_SCAN_LIMIT_PER_SELLER },
@@ -199,24 +210,10 @@ async function loadLowStockForSeller(
   const candidates: LowStockCandidate[] = []
   for (const link of parseRows(InventoryItemSellerLinkRowSchema, rows as object[])) {
     const item = link.inventory_item
-    if (!item) {
+    if (!item || !hasPublishedListing(item.variants)) {
       continue
     }
-    // An inventory item still attached to a draft/proposed/rejected product
-    // isn't actually sellable on the marketplace yet, so it shouldn't nag
-    // the seller/admin with a "stock running low" reminder meant for live
-    // listings. Only flag it once at least one of its variants belongs to a
-    // published product.
-    const hasPublishedListing = (item.variants ?? []).some(
-      (variant) => variant.product?.status === PUBLISHED_PRODUCT_STATUS
-    )
-    if (!hasPublishedListing) {
-      continue
-    }
-    const available = (item.location_levels ?? []).reduce(
-      (sum, level) => sum + (level.stocked_quantity - level.reserved_quantity),
-      0
-    )
+    const available = computeAvailableQuantity(item.location_levels)
     if (available > LOW_STOCK_THRESHOLD) {
       continue
     }
@@ -224,6 +221,7 @@ async function loadLowStockForSeller(
       inventory_item_id: item.id,
       product_title: item.title ?? item.sku ?? item.id,
       sku: item.sku ?? null,
+      thumbnail: resolveThumbnail(item.variants),
       available_quantity: available,
     })
   }
@@ -321,6 +319,7 @@ export default async function computeSellerAnalyticsJob(
         inventory_item_id: string
         product_title: string
         sku: string | null
+        thumbnail: string | null
         available_quantity: number
         computed_at: Date
       }[] = []
@@ -332,7 +331,10 @@ export default async function computeSellerAnalyticsJob(
           .filter((order): order is OrderAnalyticsRow => Boolean(order))
 
         const currencyCode = sellerOrders[0]?.currency_code ?? DEFAULT_CURRENCY_CODE
-        const grossRevenue = sellerOrders.reduce((sum, order) => sum + order.total, 0)
+        const grossRevenue = sellerOrders.reduce(
+          (sum, order) => sum + order.summary.accounting_total,
+          0
+        )
         const commissionTotal = sellerOrders.reduce(
           (sum, order) => sum + (commissionByOrderId.get(order.id) ?? 0),
           0
@@ -362,6 +364,7 @@ export default async function computeSellerAnalyticsJob(
             inventory_item_id: candidate.inventory_item_id,
             product_title: candidate.product_title,
             sku: candidate.sku,
+            thumbnail: candidate.thumbnail,
             available_quantity: candidate.available_quantity,
             computed_at: now,
           })

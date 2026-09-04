@@ -248,14 +248,33 @@ export const SellerScopedOrderLinkRowSchema = z.object({
   seller_id: z.string(),
 })
 
+// Only what apps/api/src/api/vendor/dashboard/helpers.ts's live order-count
+// tally needs (bucketing orders into today/this_week/this_month by date) —
+// kept separate from OrderAnalyticsRowSchema below on purpose, since asking
+// for money/item fields this function never reads only adds ways for
+// parseRows() to silently drop a row it didn't need to.
+export const OrderLiveCountRowSchema = z.object({
+  id: z.string(),
+  created_at: z.union([z.string(), z.date()]),
+})
+
+// `order.total`/`order.item_total` are computed getters, not stored
+// columns (see @medusajs/order's order model — it carries no such field at
+// all), and asking query.graph() for them directly returns a stale/wrong
+// value with no relation to the order's real total (verified live: an order
+// with a real total of 4600 came back as 100). `order_summary.accounting_total`
+// is the same persisted, correctly-computed total the vendor/admin order
+// list & detail routes already display, and — unlike `total`/`item_total` —
+// comes back as a plain number, not a BigNumber instance.
 export const OrderAnalyticsRowSchema = z.object({
   id: z.string(),
   currency_code: z.string(),
-  total: z.number(),
-  item_total: z.number(),
+  summary: z.object({ accounting_total: z.number() }),
   created_at: z.union([z.string(), z.date()]),
   items: z.array(z.object({ id: z.string() })).nullable(),
 })
+
+export type OrderAnalyticsRow = z.infer<typeof OrderAnalyticsRowSchema>
 
 export const SellerStatusRowSchema = z.object({
   id: z.string(),
@@ -284,6 +303,7 @@ export const InventoryItemSellerLinkRowSchema = z.object({
             product: z
               .object({
                 status: z.string().nullable().optional(),
+                thumbnail: z.string().nullable().optional(),
               })
               .nullable()
               .optional(),

@@ -9,6 +9,7 @@ const SellerLowStockItem = model.define("seller_low_stock_item", {
   inventory_item_id: model.text(),
   product_title: model.text(),
   sku: model.text().nullable(),
+  thumbnail: model.text().nullable(),
   available_quantity: model.number(),
   computed_at: model.dateTime(),
 })

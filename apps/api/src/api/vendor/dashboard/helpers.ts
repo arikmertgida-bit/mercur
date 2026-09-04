@@ -1,7 +1,7 @@
 import type { Query } from "@medusajs/framework"
 
 import {
-  OrderAnalyticsRowSchema,
+  OrderLiveCountRowSchema,
   SellerScopedOrderLinkRowSchema,
   parseRows,
 } from "../../../lib/graph-schemas"
@@ -46,10 +46,10 @@ export async function resolveLiveOrderCounts(
 
   const { data: orderRows } = await query.graph({
     entity: "order",
-    fields: ["id", "currency_code", "total", "item_total", "created_at", "items.id"],
+    fields: ["id", "created_at"],
     filters: { id: orderIds, created_at: { $gte: startOfMonthIso } },
   })
-  const orders = parseRows(OrderAnalyticsRowSchema, orderRows as object[])
+  const orders = parseRows(OrderLiveCountRowSchema, orderRows as object[])
 
   let today = 0
   let thisWeek = 0

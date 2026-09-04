@@ -20,6 +20,7 @@ export type VendorDashboardLowStockItem = {
   inventory_item_id: string
   product_title: string
   sku: string | null
+  thumbnail: string | null
   available_quantity: number
 }
 
@@ -104,6 +105,7 @@ export const GET = async (
       inventory_item_id: row.inventory_item_id,
       product_title: row.product_title,
       sku: row.sku,
+      thumbnail: row.thumbnail,
       available_quantity: row.available_quantity,
     })),
     analytics_computed_at: latest ? new Date(latest.computed_at).toISOString() : null,
