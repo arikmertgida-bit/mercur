@@ -24,6 +24,7 @@ type FilterValue = FilterOperand | FilterOperand[] | OperatorFilter
 
 export type OrderGroupFilters = {
   id?: string | string[]
+  cart_id?: string | string[]
   customer_id?: string | string[]
   seller_id?: string | string[]
   status?: string | string[]
@@ -110,6 +111,15 @@ export class OrderGroupRepository extends DALUtils.mikroOrmBaseRepositoryFactory
       const placeholders = ids.map(() => "?").join(",")
       whereClauses.push(`og.id IN (${placeholders})`)
       params.push(...ids)
+    }
+
+    if (filters.cart_id) {
+      const cartIds = Array.isArray(filters.cart_id)
+        ? filters.cart_id
+        : [filters.cart_id]
+      const placeholders = cartIds.map(() => "?").join(",")
+      whereClauses.push(`og.cart_id IN (${placeholders})`)
+      params.push(...cartIds)
     }
 
     if (filters.customer_id) {

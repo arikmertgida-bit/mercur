@@ -63,9 +63,17 @@ type CompleteCartWithSplitOrdersWorkflowInput = {
     cart_id: string
 }
 
-export const THREE_DAYS = 3 * 24 * 60 * 60 * 1000
-export const THIRTY_SECONDS = 30 * 1000
-export const TWO_MINUTES = 2 * 60 * 1000
+// Workflow `retentionTime` and lock `timeout`/`ttl` are measured in PLAIN
+// SECONDS by their respective Medusa APIs (confirmed against
+// @medusajs/core-flows' own completeCartWorkflow, which defines its
+// equivalent THREE_DAYS as `60 * 60 * 24 * 3`) — never milliseconds. A prior
+// `* 1000` here silently inflated the lock's acquire-retry ceiling to ~8.3
+// hours, its Redis TTL to ~33 hours, and this workflow's execution-history
+// retention to ~8 years — never the intent, and never exercised by a normal
+// checkout, only by lock contention or the retention sweep.
+export const THREE_DAYS = 60 * 60 * 24 * 3
+export const THIRTY_SECONDS = 30
+export const TWO_MINUTES = 2 * 60
 
 export const completeCartWithSplitOrdersWorkflow = createWorkflow(
     {
@@ -113,7 +121,11 @@ export const completeCartWithSplitOrdersWorkflow = createWorkflow(
             cart: cartData.data,
         })
 
-        const createdOrderGroup = when("create-order-group", { orderGroupId }, ({ orderGroupId }) => {
+        // PHASE 1 — validate the cart and create (or, under a lost
+        // concurrency race, gracefully recover) the order group. Skipped
+        // entirely when `orderGroupId` was already found above: the cheap,
+        // common path for a plain retry against an already-completed cart.
+        const preparedOrderGroup = when("prepare-order-group", { orderGroupId }, ({ orderGroupId }) => {
             return !orderGroupId
         }).then(() => {
             const cartOptionIds = transform({ cart: cartData.data }, ({ cart }) => {
@@ -307,13 +319,60 @@ export const completeCartWithSplitOrdersWorkflow = createWorkflow(
                 name: "existing-seller-customer-links-query",
             })
 
-            const [createdOrderGroup, createdOrders] = parallelize(
-                createOrderGroupStep(orderGroupData),
-                createOrdersStep(ordersToCreate)
+            // Create the order group ALONE first (not in parallel with
+            // createOrdersStep as before) so a concurrent completion of this
+            // same cart that loses the DB-level race (see createOrderGroupStep)
+            // is detected here, before any order, reservation, or payment
+            // work is attempted — not after.
+            const orderGroupResult = createOrderGroupStep(orderGroupData)
+
+            const wasOrderGroupCreated = transform(
+                { orderGroupResult },
+                ({ orderGroupResult }) => {
+                    return orderGroupResult.wasCreated
+                }
             )
 
+            return {
+                orderGroupResult,
+                wasOrderGroupCreated,
+                sales_channel_id,
+                ordersToCreate,
+                sellerOrdersMap,
+                variantIdsByOrderId,
+                existingSellerCustomerLinks,
+            }
+        })
+
+        // PHASE 2 — create the per-seller orders, reserve inventory, and
+        // authorize payment. Only for the execution that genuinely OWNS a
+        // freshly created order group: not a plain retry against an
+        // already-completed cart (`preparedOrderGroup` undefined, phase 1
+        // skipped above), and not the loser of a genuine concurrency race
+        // (`wasOrderGroupCreated` false) — that loser must never reserve
+        // inventory or authorize payment a second time.
+        //
+        // This is a SIBLING top-level `when`, not nested inside phase 1's
+        // `.then()`: `when().then()` tracks the steps created during its
+        // callback via a single shared global variable, and a nested `when`
+        // overwrites (and on completion deletes) that same global before
+        // control returns to the outer one — confirmed by a startup crash
+        // ("Cannot read properties of undefined (reading 'steps')") the
+        // first time this was written as a nested block.
+        const shouldCreateChildOrders = transform(
+            { preparedOrderGroup },
+            ({ preparedOrderGroup }) => {
+                return preparedOrderGroup?.wasOrderGroupCreated === true
+            }
+        )
+
+        when("create-child-orders", { shouldCreateChildOrders }, ({ shouldCreateChildOrders }) => {
+            return shouldCreateChildOrders
+        }).then(() => {
+            const createdOrders = createOrdersStep(preparedOrderGroup.ordersToCreate)
+
             const orderLineVariantItems = transform(
-                { createdOrders, variantIdsByOrderId },
+                { createdOrders, variantIdsByOrderId: preparedOrderGroup.variantIdsByOrderId },
                 ({ createdOrders, variantIdsByOrderId }) => {
                     const items: Array<{
                         id: string
@@ -357,7 +416,7 @@ export const completeCartWithSplitOrdersWorkflow = createWorkflow(
             const formatedInventoryItems = transform(
                 {
                     input: {
-                        sales_channel_id,
+                        sales_channel_id: preparedOrderGroup.sales_channel_id,
                         items: orderLineVariantItems,
                         variants: variantsWithInventory,
                     },
@@ -413,8 +472,15 @@ export const completeCartWithSplitOrdersWorkflow = createWorkflow(
             )
 
             const linksToCreate = transform(
-                { cart: cartData.data, createdOrders, createdOrderGroup, sellerOrdersMap, existingSellerCustomerLinks, ordersToCreate },
-                ({ cart, createdOrders, createdOrderGroup, sellerOrdersMap, existingSellerCustomerLinks, ordersToCreate }) => {
+                {
+                    cart: cartData.data,
+                    createdOrders,
+                    orderGroupId: preparedOrderGroup.orderGroupResult.orderGroup.id,
+                    sellerOrdersMap: preparedOrderGroup.sellerOrdersMap,
+                    existingSellerCustomerLinks: preparedOrderGroup.existingSellerCustomerLinks,
+                    ordersToCreate: preparedOrderGroup.ordersToCreate,
+                },
+                ({ cart, createdOrders, orderGroupId, sellerOrdersMap, existingSellerCustomerLinks, ordersToCreate }) => {
                     const links: LinkDefinition[] = createdOrders.map((order) => ({
                         [Modules.ORDER]: { order_id: order.id },
                         [Modules.CART]: { cart_id: cart.id },
@@ -458,7 +524,7 @@ export const completeCartWithSplitOrdersWorkflow = createWorkflow(
                     })))
 
                     links.push(...createdOrders.map((order) => ({
-                        [MercurModules.SELLER]: { order_group_id: createdOrderGroup.id },
+                        [MercurModules.SELLER]: { order_group_id: orderGroupId },
                         [Modules.ORDER]: { order_id: order.id },
                     })))
 
@@ -515,7 +581,7 @@ export const completeCartWithSplitOrdersWorkflow = createWorkflow(
                 }),
                 emitEventStep({
                     eventName: OrderGroupWorkflowEvents.CREATED,
-                    data: { id: createdOrderGroup.id },
+                    data: { id: preparedOrderGroup.orderGroupResult.orderGroup.id },
                 }).config({
                     name: "order-group-created-event",
                 })
@@ -581,20 +647,21 @@ export const completeCartWithSplitOrdersWorkflow = createWorkflow(
                 }))
 
             createHook("orderGroupCreated", {
-                order_group_id: createdOrderGroup.id,
+                order_group_id: preparedOrderGroup.orderGroupResult.orderGroup.id,
                 cart_id: cartData.data.id,
             })
-
-            return createdOrderGroup
         })
 
         releaseLockStep({
             key: input.cart_id,
         })
 
-        const result = transform({ createdOrderGroup, orderGroupId }, ({ createdOrderGroup, orderGroupId }) => {
-            return { order_group_id: createdOrderGroup?.id ?? orderGroupId }
-        })
+        const result = transform(
+            { preparedOrderGroup, orderGroupId },
+            ({ preparedOrderGroup, orderGroupId }) => {
+                return { order_group_id: preparedOrderGroup?.orderGroupResult?.orderGroup?.id ?? orderGroupId }
+            }
+        )
 
         return new WorkflowResponse(result, {
             hooks: [validate],
