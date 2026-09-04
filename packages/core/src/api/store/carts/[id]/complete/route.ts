@@ -33,6 +33,22 @@ export const POST = async (
         )
 
         if (!statusOKErrors.includes(error?.type)) {
+            // The PostgreSQL-level second oversell defense
+            // (trg_enforce_reservation_limit, see the inventory-integrity-
+            // guard module) surfaces as a raw driver error, not a
+            // MedusaError — only reached if the app-level Redis lock around
+            // reserveInventoryStep somehow still let two reservations race.
+            // Translate it to the exact same error type/shape the normal
+            // `ensureInventoryLevels` oversell check already throws, so
+            // every existing downstream error-translation/i18n path handles
+            // it identically without a new surface.
+            const rawMessage = error instanceof Error ? error.message : String(error)
+            if (rawMessage.includes("INVENTORY_OVERSELL_BLOCKED")) {
+                throw new MedusaError(
+                    MedusaError.Types.NOT_ALLOWED,
+                    "Not enough stock available for one or more items in this cart."
+                )
+            }
             throw error
         }
 

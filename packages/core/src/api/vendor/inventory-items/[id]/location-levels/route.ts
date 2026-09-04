@@ -2,9 +2,10 @@ import {
   AuthenticatedMedusaRequest,
   MedusaResponse,
 } from "@medusajs/framework/http"
-import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
+import { ContainerRegistrationKeys, Modules } from "@medusajs/framework/utils"
 import { createInventoryLevelsWorkflow } from "@medusajs/core-flows"
 import { HttpTypes } from "@mercurjs/types"
+import { InventoryWorkflowEvents } from "../../../../../workflows"
 
 import { refetchInventoryItem, validateSellerInventoryItem } from "../../helpers"
 import {
@@ -54,6 +55,11 @@ export const POST = async (
         },
       ],
     },
+  })
+
+  await req.scope.resolve(Modules.EVENT_BUS).emit({
+    name: InventoryWorkflowEvents.LEVEL_CHANGED,
+    data: { inventory_item_ids: [id] },
   })
 
   const inventoryItem = await refetchInventoryItem(

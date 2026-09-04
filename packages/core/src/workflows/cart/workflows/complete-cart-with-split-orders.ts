@@ -57,6 +57,7 @@ import {
 } from "../utils"
 import { registerUsageStep } from "../../promotion"
 import { refreshOrderCommissionLinesWorkflow } from "../../commission/workflows/refresh-order-commission-lines"
+import { InventoryWorkflowEvents } from "../../events"
 
 type CompleteCartWithSplitOrdersWorkflowInput = {
     cart_id: string
@@ -485,6 +486,21 @@ export const completeCartWithSplitOrdersWorkflow = createWorkflow(
                 return createdOrders.map((order) => ({ id: order.id }))
             })
 
+            const changedInventoryItemIds = transform(
+                { formatedInventoryItems },
+                ({ formatedInventoryItems }) => {
+                    return {
+                        inventory_item_ids: Array.from(
+                            new Set(
+                                formatedInventoryItems.items.map(
+                                    (item) => item.inventory_item_id
+                                )
+                            )
+                        ),
+                    }
+                }
+            )
+
             createRemoteLinkStep(linksToCreate)
 
             parallelize(
@@ -504,6 +520,17 @@ export const completeCartWithSplitOrdersWorkflow = createWorkflow(
                     name: "order-group-created-event",
                 })
             )
+
+            // Emitted only after reserveInventoryStep above has resolved (not
+            // inside the same parallelize block), so the search-sync
+            // subscriber never reads inventory_level before the reservation
+            // it's reacting to has actually committed.
+            emitEventStep({
+                eventName: InventoryWorkflowEvents.LEVEL_CHANGED,
+                data: changedInventoryItemIds,
+            }).config({
+                name: "inventory-level-changed-event",
+            })
 
             createHook("beforePaymentAuthorization", {
                 input,

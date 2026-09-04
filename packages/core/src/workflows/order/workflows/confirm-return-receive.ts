@@ -35,6 +35,7 @@ import {
   useRemoteQueryStep,
 } from "@medusajs/medusa/core-flows"
 import { buildVariantInventoryLinkMap, VariantInventoryRow } from "../utils"
+import { InventoryWorkflowEvents } from "../../events"
 
 type ConfirmOrderChangesInput = {
   orderId: string
@@ -334,6 +335,19 @@ export const confirmReturnReceiveWorkflow = createWorkflow(
       adjustInventoryLevelsStep(inventoryAdjustment),
     )
 
+    const changedInventoryItemIds = transform(
+      { inventoryAdjustment },
+      ({ inventoryAdjustment }) => {
+        return {
+          inventory_item_ids: Array.from(
+            new Set(
+              inventoryAdjustment.map((adjustment) => adjustment.inventory_item_id)
+            )
+          ),
+        }
+      },
+    )
+
     parallelize(
       createOrUpdateOrderPaymentCollectionWorkflow.runAsStep({
         input: { order_id: order.id },
@@ -345,6 +359,13 @@ export const confirmReturnReceiveWorkflow = createWorkflow(
           return_id: orderReturn.id,
           no_notification: input.no_notification,
         },
+      }),
+      // Restocked in the parallelize block above (already resolved).
+      emitEventStep({
+        eventName: InventoryWorkflowEvents.LEVEL_CHANGED,
+        data: changedInventoryItemIds,
+      }).config({
+        name: "inventory-level-changed-event",
       }),
     )
 

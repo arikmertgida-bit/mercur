@@ -43,6 +43,7 @@ import {
   VariantInventoryLink,
   VariantInventoryRow,
 } from "../utils"
+import { InventoryWorkflowEvents } from "../../events"
 
 function buildReservationsMap(reservations: ReservationItemDTO[]) {
   const map = new Map<string, ReservationItemDTO[]>()
@@ -552,6 +553,20 @@ export const createOrderFulfillmentWorkflow: ReturnWorkflow<
     )
 
     adjustInventoryLevelsStep(inventoryAdjustment)
+
+    const changedInventoryItemIds = transform(
+      { inventoryAdjustment },
+      ({ inventoryAdjustment }) => {
+        return {
+          inventory_item_ids: Array.from(
+            new Set(
+              inventoryAdjustment.map((adjustment) => adjustment.inventory_item_id)
+            )
+          ),
+        }
+      },
+    )
+
     parallelize(
       registerOrderFulfillmentStep(registerOrderFulfillmentData),
       createRemoteLinkStep(link),
@@ -564,6 +579,15 @@ export const createOrderFulfillmentWorkflow: ReturnWorkflow<
           fulfillment_id: fulfillment.id,
           no_notification: input.no_notification,
         },
+      }),
+      // Stock physically decrements here (adjustInventoryLevelsStep above,
+      // already resolved) — this is the fulfillment-side counterpart to the
+      // reservation-side emit in complete-cart-with-split-orders.ts.
+      emitEventStep({
+        eventName: InventoryWorkflowEvents.LEVEL_CHANGED,
+        data: changedInventoryItemIds,
+      }).config({
+        name: "inventory-level-changed-event",
       }),
     )
 
