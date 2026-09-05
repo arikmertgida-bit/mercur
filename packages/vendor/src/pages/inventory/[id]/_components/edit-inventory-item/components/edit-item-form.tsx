@@ -18,7 +18,10 @@ type EditInventoryItemFormProps = {
 
 const EditInventoryItemSchema = z.object({
   title: z.string().optional(),
-  sku: z.string().min(1),
+  // Read-only in this form (see the disabled input below) — kept in the
+  // schema only so `defaultValues` stays typed against the real item, and
+  // deliberately never sent back in the update payload (see handleSubmit).
+  sku: z.string().optional(),
 })
 
 const getDefaultValues = (item: HttpTypes.AdminInventoryItem) => {
@@ -42,13 +45,18 @@ export const EditInventoryItemForm = ({ item }: EditInventoryItemFormProps) => {
   const { mutateAsync, isPending: isLoading } = useUpdateInventoryItem(item.id)
 
   const handleSubmit = form.handleSubmit(async (values) => {
-    mutateAsync(values, {
-      onSuccess: () => {
-        toast.success(t("inventory.toast.updateItem"))
-        handleSuccess()
-      },
-      onError: (e) => toast.error(e.message),
-    })
+    // SKU is read-only for sellers — never forwarded to the update mutation
+    // (the backend's own `.strict()` schema rejects it outright either way).
+    mutateAsync(
+      { title: values.title },
+      {
+        onSuccess: () => {
+          toast.success(t("inventory.toast.updateItem"))
+          handleSuccess()
+        },
+        onError: (e) => toast.error(e.message),
+      }
+    )
   })
 
   return (
@@ -79,9 +87,9 @@ export const EditInventoryItemForm = ({ item }: EditInventoryItemFormProps) => {
             render={({ field }) => {
               return (
                 <Form.Item>
-                  <Form.Label>{t("fields.sku")}</Form.Label>
+                  <Form.Label optional>{t("fields.sku")}</Form.Label>
                   <Form.Control>
-                    <Input {...field} />
+                    <Input {...field} disabled />
                   </Form.Control>
                   <Form.ErrorMessage />
                 </Form.Item>

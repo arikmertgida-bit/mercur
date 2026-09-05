@@ -94,11 +94,14 @@ const CreateProductVariant = z
   })
   .strict()
 
+// `sku` is deliberately absent here (mirroring `VendorUpdateProductVariant`
+// below): it is permanently read-only once a variant exists — the vendor UI
+// never sends it through a whole-product update, and `.strict()` rejects
+// any request that still tries to.
 const UpdateProductVariant = z
   .object({
     id: z.string().optional(),
     title: z.string().optional(),
-    sku: z.string().nullish(),
     ean: z.string().nullish(),
     upc: z.string().nullish(),
     isbn: z.string().nullish(),

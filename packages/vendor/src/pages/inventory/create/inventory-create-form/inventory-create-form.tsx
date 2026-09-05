@@ -23,6 +23,7 @@ import {
   useRouteModal,
 } from "@components/modals"
 import { KeyboundForm } from "@components/utilities/keybound-form"
+import { useCurrentSeller } from "@hooks/api"
 import {
   inventoryItemsQueryKeys,
   useCreateInventoryItem,
@@ -33,6 +34,7 @@ import {
   transformNullableFormNumber,
   transformNullableFormNumbers,
 } from "@lib/form-helpers"
+import { generateVariantSku } from "@lib/generate-sku"
 import { queryClient } from "@lib/query-client"
 import { InventoryAvailabilityForm } from "./inventory-availability-form"
 import { CreateInventoryItemSchema } from "./schema"
@@ -53,6 +55,7 @@ type InventoryCreateFormProps = {
 export function InventoryCreateForm({ locations }: InventoryCreateFormProps) {
   const { t } = useTranslation()
   const { handleSuccess } = useRouteModal()
+  const { seller } = useCurrentSeller()
   const [tab, setTab] = useState<Tab>(Tab.DETAILS)
 
   const form = useForm<CreateInventoryItemSchema>({
@@ -81,6 +84,16 @@ export function InventoryCreateForm({ locations }: InventoryCreateFormProps) {
     trigger,
     formState: { isDirty },
   } = form
+
+  // SKU is store-only and read-only for sellers (see the disabled input
+  // below) — fill it in as soon as the seller loads, mirroring
+  // products/create's generateVariantSku so every seller-minted SKU across
+  // the platform follows the same convention.
+  useEffect(() => {
+    if (!seller || form.getValues("sku")) return
+
+    form.setValue("sku", generateVariantSku(seller), { shouldDirty: false })
+  }, [seller, form])
 
   const { mutateAsync: createInventoryItem, isPending: isLoading } =
     useCreateInventoryItem()
@@ -274,9 +287,9 @@ export function InventoryCreateForm({ locations }: InventoryCreateFormProps) {
                         render={({ field }) => {
                           return (
                             <Form.Item>
-                              <Form.Label>{t("fields.sku")}</Form.Label>
+                              <Form.Label optional>{t("fields.sku")}</Form.Label>
                               <Form.Control>
-                                <Input {...field} placeholder="sku-123" />
+                                <Input {...field} disabled />
                               </Form.Control>
                               <Form.ErrorMessage />
                             </Form.Item>
