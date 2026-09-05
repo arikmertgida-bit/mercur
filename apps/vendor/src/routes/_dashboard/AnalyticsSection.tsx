@@ -11,6 +11,7 @@ import {
   YAxis,
 } from "recharts"
 import { VendorDashboardData } from "../../hooks/api/dashboard"
+import { formatCurrency } from "../../lib/format-currency"
 
 type MetricKey = "orders_count" | "net_earnings"
 
@@ -34,6 +35,7 @@ export const AnalyticsSection = ({
     "net_earnings",
   ])
 
+  const currencyCode = data?.earnings.currency_code ?? "try"
   const trend = data?.earnings.trend ?? []
   const totals = trend.reduce(
     (acc, point) => ({
@@ -81,7 +83,9 @@ export const AnalyticsSection = ({
                 <CartesianGrid stroke="#333" vertical={false} />
                 <Tooltip
                   formatter={(value: number, key: string) => [
-                    value,
+                    key === "orders_count"
+                      ? value
+                      : formatCurrency(value, currencyCode, i18n.language),
                     key === "orders_count"
                       ? t("dashboard.analytics.orders")
                       : t("dashboard.analytics.earnings"),
@@ -135,7 +139,9 @@ export const AnalyticsSection = ({
                     : "var(--border-strong, #a1a1aa)",
                 }}
               />
-              <Text className="text-ui-fg-subtle">{totals.net_earnings.toFixed(2)}</Text>
+              <Text className="text-ui-fg-subtle">
+                {formatCurrency(totals.net_earnings, currencyCode, i18n.language)}
+              </Text>
             </div>
           </button>
         </div>

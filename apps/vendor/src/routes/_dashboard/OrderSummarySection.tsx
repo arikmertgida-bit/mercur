@@ -2,19 +2,8 @@ import { useTranslation } from "react-i18next"
 import { CalendarMini, ChartBar, Clock, CurrencyDollar } from "@medusajs/icons"
 import { Container, Heading, Text } from "@medusajs/ui"
 import { StatCard } from "./StatCard"
+import { formatCurrency } from "../../lib/format-currency"
 import { VendorDashboardData } from "../../hooks/api/dashboard"
-
-const formatCurrency = (amount: number, currencyCode: string, locale: string): string => {
-  try {
-    return new Intl.NumberFormat(locale, {
-      style: "currency",
-      currency: currencyCode.toUpperCase(),
-      maximumFractionDigits: 2,
-    }).format(amount)
-  } catch {
-    return amount.toLocaleString(locale)
-  }
-}
 
 export const OrderSummarySection = ({
   data,

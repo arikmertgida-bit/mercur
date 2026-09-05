@@ -375,6 +375,15 @@ export function MessengerProvider({
         })
     }
 
+    // Deliberately separate from `onNotification` above — a data-refresh
+    // signal (e.g. fired on every stock change) must never trigger a browser
+    // Notification popup or an extra conversations-list refetch. Forwarded
+    // as-is through kayiEventManager for any interested query hook to pick up
+    // (see hooks/api/dashboard.tsx).
+    const onDashboardSync = () => {
+      kayiEventManager.emitNotification(MESSENGER_SOCKET_EVENTS.dashboardSync)
+    }
+
     const init = async () => {
       if (!isStoredTokenValid(sellerId)) {
         const token = await fetchMessengerToken()
@@ -400,6 +409,7 @@ export function MessengerProvider({
       socketInstance.on("read_receipt", onReadReceipt)
       socketInstance.on("message_deleted", onMessageDeleted)
       socketInstance.on("notification", onNotification)
+      socketInstance.on(MESSENGER_SOCKET_EVENTS.dashboardSync, onDashboardSync)
       socketInstance.on(MESSENGER_SOCKET_EVENTS.unreadCountUpdated, onUnreadCountUpdated)
       socketInstance.on("conversation_deleted", (payload: { conversationId: string }) => {
         setConversations((prev) => prev.filter((c) => c.id !== payload.conversationId))
@@ -444,6 +454,7 @@ export function MessengerProvider({
         socketInstance.off("read_receipt", onReadReceipt)
         socketInstance.off("message_deleted", onMessageDeleted)
         socketInstance.off("notification", onNotification)
+        socketInstance.off(MESSENGER_SOCKET_EVENTS.dashboardSync, onDashboardSync)
         socketInstance.off(MESSENGER_SOCKET_EVENTS.unreadCountUpdated, onUnreadCountUpdated)
       }
       if (!persistSession) {
