@@ -101,6 +101,54 @@ export async function notifyMessengerUser(params: NotifyParams): Promise<boolean
 }
 
 /**
+ * Socket event name kayi-messenger's `/api/internal/broadcast` allow-list
+ * (see messenger/src/constants/socket-events.ts's BROADCASTABLE_EVENTS)
+ * accepts for this signal — the two must be kept in sync since they're
+ * separate deployables and can't share a TS import.
+ */
+const DASHBOARD_SYNC_EVENT = "dashboard_sync"
+
+/**
+ * Pushes an instant "your dashboard data changed, refetch" signal to every
+ * connected session of a seller — used so the Vendor Panel dashboard (Azalan
+ * Stok, live stock) updates the moment stock changes, regardless of source
+ * (a vendor's own edit, an order fulfillment/return, another seller member's
+ * session), without the seller needing to refresh the page. Deliberately a
+ * plain socket relay (see broadcast vs. notify docs on the messenger side) —
+ * never creates a chat message/notification, so it's safe to fire at high
+ * frequency. Best-effort: a messenger outage never blocks or fails the
+ * caller (the underlying stock/analytics data is already correctly
+ * persisted by the time this runs).
+ */
+export async function broadcastDashboardSync(sellerId: string, reason: string): Promise<void> {
+  try {
+    const response = await fetch(`${MESSENGER_URL}/api/internal/broadcast`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-internal-secret": INTERNAL_SECRET,
+      },
+      body: JSON.stringify({
+        targetUserId: sellerId,
+        event: DASHBOARD_SYNC_EVENT,
+        payload: { reason },
+      }),
+      signal: AbortSignal.timeout(2000),
+    })
+
+    if (!response.ok) {
+      const text = await response.text().catch(() => "")
+      moduleKayiLogger.warn(`[messenger] broadcast failed (${response.status}): ${text}`)
+    }
+  } catch (err) {
+    const message = getCatchMessage(
+      err instanceof Error ? err : typeof err === "string" ? err : null
+    )
+    moduleKayiLogger.warn(`[messenger] broadcast error: ${message}`)
+  }
+}
+
+/**
  * GDPR/KVKK "right to be forgotten" — notifies kayi-messenger when a
  * customer or seller member is deleted. Messenger anonymizes all of that
  * user's message content (the conversation structure is kept, no rows are

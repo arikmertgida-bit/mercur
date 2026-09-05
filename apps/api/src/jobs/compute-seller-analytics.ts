@@ -32,7 +32,7 @@ import { UpsertSellerDailyStatInput } from "../workflows/steps/upsert-seller-dai
  * "Azalan Stok" (low stock) is seeded by this job's initial per-seller scan
  * but then kept live in between runs by
  * subscribers/inventory-level-changed-low-stock.ts, which reacts to every
- * `inventory_level.changed` event — a seller restocking above
+ * `inventory_level.changed` event — a seller restocking to at/above
  * LOW_STOCK_THRESHOLD (see lib/low-stock.ts) drops off the widget the
  * instant they save, not up to 12h later.
  *
@@ -81,20 +81,26 @@ function roundCurrency(amount: number): number {
   return Math.round(amount * 100) / 100
 }
 
-async function loadActiveSellerIds(query: Query): Promise<string[]> {
-  const ids: string[] = []
+// Keyed by seller id -> the seller's own onboarding-chosen operating
+// currency (Seller.currency_code, always set — see packages/core's seller
+// model). This is the authoritative currency for a seller's earnings
+// display, independent of which currency any single order happened to use.
+async function loadActiveSellerCurrencies(query: Query): Promise<Map<string, string>> {
+  const currencyBySeller = new Map<string, string>()
   let skip = 0
 
   for (;;) {
     const { data: rows } = await query.graph({
       entity: "seller",
-      fields: ["id", "status"],
+      fields: ["id", "status", "currency_code"],
       filters: { status: { $ne: TERMINATED_SELLER_STATUS } },
       pagination: { skip, take: SELLER_BATCH_LIMIT },
     })
 
     const sellers = parseRows(SellerStatusRowSchema, rows as object[])
-    ids.push(...sellers.map((seller) => seller.id))
+    for (const seller of sellers) {
+      currencyBySeller.set(seller.id, seller.currency_code)
+    }
 
     if (rows.length < SELLER_BATCH_LIMIT) {
       break
@@ -102,7 +108,7 @@ async function loadActiveSellerIds(query: Query): Promise<string[]> {
     skip += SELLER_BATCH_LIMIT
   }
 
-  return ids
+  return currencyBySeller
 }
 
 async function loadOrderIdsBySeller(
@@ -214,7 +220,7 @@ async function loadLowStockForSeller(
       continue
     }
     const available = computeAvailableQuantity(item.location_levels)
-    if (available > LOW_STOCK_THRESHOLD) {
+    if (available >= LOW_STOCK_THRESHOLD) {
       continue
     }
     candidates.push({
@@ -280,7 +286,8 @@ export default async function computeSellerAnalyticsJob(
     // created_at >= filter (Istanbul is UTC+3, no DST).
     const startOfTodayIso = `${today}T00:00:00+03:00`
 
-    const sellerIds = await loadActiveSellerIds(query)
+    const currencyBySeller = await loadActiveSellerCurrencies(query)
+    const sellerIds = Array.from(currencyBySeller.keys())
     if (sellerIds.length === 0) {
       logger.info(`[${JOB_NAME}] no active sellers found`)
       return
@@ -330,7 +337,12 @@ export default async function computeSellerAnalyticsJob(
           .map((id) => orderById.get(id))
           .filter((order): order is OrderAnalyticsRow => Boolean(order))
 
-        const currencyCode = sellerOrders[0]?.currency_code ?? DEFAULT_CURRENCY_CODE
+        // The seller's own onboarding-chosen currency, not the incidental
+        // currency of any one order — stays correct even for a seller with
+        // zero orders today, and once global currencies launch this is the
+        // currency a multi-currency-aware seller actually operates (and
+        // gets paid out) in.
+        const currencyCode = currencyBySeller.get(sellerId) ?? DEFAULT_CURRENCY_CODE
         const grossRevenue = sellerOrders.reduce(
           (sum, order) => sum + order.summary.accounting_total,
           0

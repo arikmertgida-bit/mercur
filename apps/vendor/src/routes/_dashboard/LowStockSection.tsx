@@ -11,9 +11,9 @@ const LOW_STOCK_CARD_GRID_CLASSES =
 // Same visual language as packages/vendor's product-detail live-stock
 // warning (see StockSummarySection) — a red pulsing dot for "this needs
 // attention". Reused as-is (not a fork) since every item reaching this list
-// is already at/below apps/api's own low-stock threshold (see
-// apps/api/src/jobs/compute-seller-analytics.ts's LOW_STOCK_THRESHOLD), so
-// there is no separate "still fine" state to distinguish here.
+// is already below apps/api's own low-stock threshold (see
+// apps/api/src/lib/low-stock.ts's LOW_STOCK_THRESHOLD), so there is no
+// separate "still fine" state to distinguish here.
 const LowStockDot = () => (
   <span
     aria-hidden

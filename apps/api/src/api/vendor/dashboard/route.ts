@@ -81,7 +81,13 @@ export const GET = async (
 
   const sortedStats = [...dailyStats].sort((a, b) => a.date.localeCompare(b.date))
   const latest = dailyStats[0] ?? null
-  const currencyCode = latest?.currency_code ?? "try"
+  // The seller's own onboarding-chosen currency (always set — see
+  // packages/core's seller model) is authoritative for display, not
+  // whatever currency happened to be stored on an already-materialized
+  // stat row — this stays correct for a seller with no earnings history
+  // yet, and once global currencies launch it reflects what the seller
+  // actually configured their store for.
+  const currencyCode = req.seller_context.currency_code
 
   res.json({
     orders,

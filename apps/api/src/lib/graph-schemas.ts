@@ -279,6 +279,11 @@ export type OrderAnalyticsRow = z.infer<typeof OrderAnalyticsRowSchema>
 export const SellerStatusRowSchema = z.object({
   id: z.string(),
   status: z.string(),
+  // The seller's own onboarding-chosen operating currency — authoritative
+  // for what a seller's earnings/analytics should be displayed in,
+  // independent of which currency any single order happened to be placed
+  // in. See apps/api/src/jobs/compute-seller-analytics.ts.
+  currency_code: z.string(),
 })
 
 export const InventoryItemSellerLinkRowSchema = z.object({

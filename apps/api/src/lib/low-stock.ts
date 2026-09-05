@@ -5,7 +5,9 @@ import { InventoryItemSellerLinkRowSchema, parseRows } from "./graph-schemas"
 // Shared with apps/api/src/jobs/compute-seller-analytics.ts (the 12h batch
 // snapshot) and apps/api/src/subscribers/inventory-level-changed-low-stock.ts
 // (the instant per-item update) so both agree on what "low stock" means.
-export const LOW_STOCK_THRESHOLD = 5
+// An item is flagged once its available quantity drops strictly below this
+// value (available < LOW_STOCK_THRESHOLD) — see the comparisons below.
+export const LOW_STOCK_THRESHOLD = 10
 export const PUBLISHED_PRODUCT_STATUS = "published"
 
 type InventoryItemLocationLevel = {
@@ -102,7 +104,7 @@ export async function evaluateLowStockForInventoryItems(
 
     const availableQuantity = computeAvailableQuantity(item.location_levels)
     const isLowStock =
-      hasPublishedListing(item.variants) && availableQuantity <= LOW_STOCK_THRESHOLD
+      hasPublishedListing(item.variants) && availableQuantity < LOW_STOCK_THRESHOLD
 
     return [
       {
