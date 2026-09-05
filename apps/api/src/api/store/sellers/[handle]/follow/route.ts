@@ -2,6 +2,7 @@ import {
   AuthenticatedMedusaRequest,
   MedusaResponse,
 } from "@medusajs/framework"
+import { MedusaStoreRequest } from "@medusajs/framework/http"
 import { ContainerRegistrationKeys, MedusaError } from "@medusajs/framework/utils"
 import type { Query } from "@medusajs/framework"
 
@@ -41,15 +42,17 @@ async function resolveSellerIdByHandle(
 }
 
 export const GET = async (
-  req: AuthenticatedMedusaRequest,
+  req: MedusaStoreRequest,
   res: MedusaResponse
 ) => {
   const query = req.scope.resolve<Query>(ContainerRegistrationKeys.QUERY)
   const sellerId = await resolveSellerIdByHandle(query, req.params.handle)
-  const customerId = req.auth_context.actor_id
+  const customerId = req.auth_context?.actor_id
 
-  const follow = await findSellerFollow(req.scope, customerId, sellerId)
-  const followersCount = await countSellerFollowers(req.scope, sellerId)
+  const [follow, followersCount] = await Promise.all([
+    customerId ? findSellerFollow(req.scope, customerId, sellerId) : null,
+    countSellerFollowers(req.scope, sellerId),
+  ])
 
   res.json({
     following: Boolean(follow),
