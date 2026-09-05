@@ -1,5 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Button, Heading, Input, toast } from "@medusajs/ui"
+import { useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { z } from "zod"
@@ -11,8 +12,9 @@ import { Form } from "@components/common/form"
 import { AttributeValueInput } from "@components/inputs/attribute-value-input"
 import { RouteFocusModal, useRouteModal } from "@components/modals"
 import { KeyboundForm } from "@components/utilities/keybound-form"
-import { useFeatureFlags } from "@hooks/api"
+import { useCurrentSeller, useFeatureFlags } from "@hooks/api"
 import { useCreateProductVariant } from "@hooks/api/products"
+import { generateVariantSku } from "@lib/generate-sku"
 import { CreateProductVariantSchema } from "./constants"
 
 export type CreateProductVariantSchemaType = z.infer<
@@ -28,6 +30,7 @@ export const CreateProductVariantForm = ({
 }: CreateProductVariantFormProps) => {
   const { t } = useTranslation()
   const { handleSuccess } = useRouteModal()
+  const { seller } = useCurrentSeller()
 
   const { feature_flags } = useFeatureFlags()
   const isProductRequestEnabled =
@@ -56,6 +59,16 @@ export const CreateProductVariantForm = ({
     },
     resolver: zodResolver(CreateProductVariantSchema),
   })
+
+  // SKU is store-only and read-only for sellers (see the disabled input
+  // below) — fill it in as soon as the seller loads, mirroring
+  // products/create's generateVariantSku so every seller-minted SKU across
+  // the platform follows the same convention.
+  useEffect(() => {
+    if (!seller || form.getValues("sku")) return
+
+    form.setValue("sku", generateVariantSku(seller), { shouldDirty: false })
+  }, [seller, form])
 
   const { mutateAsync, isPending } = useCreateProductVariant(product.id)
 
@@ -146,6 +159,7 @@ export const CreateProductVariantForm = ({
                       <Form.Control>
                         <Input
                           {...field}
+                          disabled
                           data-testid="create-variant-sku-input"
                         />
                       </Form.Control>

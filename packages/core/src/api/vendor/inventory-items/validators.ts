@@ -146,9 +146,12 @@ export const VendorCreateInventoryItem = z
 export type VendorUpdateInventoryItemType = z.infer<
   typeof VendorUpdateInventoryItem
 >
+// `sku` is deliberately absent here (unlike `VendorCreateInventoryItem`):
+// it is permanently read-only once an inventory item exists — the vendor UI
+// never sends it, and `.strict()` below rejects any request that still
+// tries to.
 export const VendorUpdateInventoryItem = z
   .object({
-    sku: z.string().nullish(),
     hs_code: z.string().nullish(),
     weight: z.number().nullish(),
     length: z.number().nullish(),

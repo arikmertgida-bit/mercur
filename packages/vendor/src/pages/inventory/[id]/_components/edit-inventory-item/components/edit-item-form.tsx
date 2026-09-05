@@ -43,8 +43,10 @@ export const EditInventoryItemForm = ({ item }: EditInventoryItemFormProps) => {
   const { mutateAsync, isPending: isLoading } = useUpdateInventoryItem(item.id)
 
   const handleSubmit = form.handleSubmit(async (values) => {
+    // SKU is read-only for sellers — never forwarded to the update mutation
+    // (the backend's own `.strict()` schema rejects it outright either way).
     mutateAsync(
-      { title: values.title, sku: values.sku },
+      { title: values.title },
       {
         onSuccess: () => {
           toast.success(t("inventory.toast.updateItem"))
@@ -85,7 +87,7 @@ export const EditInventoryItemForm = ({ item }: EditInventoryItemFormProps) => {
                 <Form.Item>
                   <Form.Label optional>{t("fields.sku")}</Form.Label>
                   <Form.Control>
-                    <Input {...field} />
+                    <Input {...field} disabled />
                   </Form.Control>
                   <Form.ErrorMessage />
                 </Form.Item>
