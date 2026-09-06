@@ -277,7 +277,8 @@
       "subtitle": "Liczba zamówień na żywo w całym marketplace",
       "today": "Dzisiaj",
       "thisWeek": "W tym tygodniu",
-      "thisMonth": "W tym miesiącu"
+      "thisMonth": "W tym miesiącu",
+      "earningsToday": "Dzisiejszy zarobek"
     },
     "totals": {
       "products": "Produkty",

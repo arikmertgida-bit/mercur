@@ -277,7 +277,8 @@
       "subtitle": "عدد الطلبات الحية عبر السوق بالكامل",
       "today": "اليوم",
       "thisWeek": "هذا الأسبوع",
-      "thisMonth": "هذا الشهر"
+      "thisMonth": "هذا الشهر",
+      "earningsToday": "أرباح اليوم"
     },
     "totals": {
       "products": "المنتجات",

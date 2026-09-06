@@ -277,7 +277,8 @@
       "subtitle": "マーケットプレイス全体のリアルタイム注文数",
       "today": "本日",
       "thisWeek": "今週",
-      "thisMonth": "今月"
+      "thisMonth": "今月",
+      "earningsToday": "本日の売上"
     },
     "totals": {
       "products": "商品",

@@ -1,7 +1,8 @@
 import { useTranslation } from "react-i18next"
-import { CalendarMini, ChartBar, Clock } from "@medusajs/icons"
+import { CalendarMini, ChartBar, Clock, CurrencyDollar } from "@medusajs/icons"
 import { Container, Heading, Text } from "@medusajs/ui"
 import { StatCard } from "./StatCard"
+import { formatCurrency } from "../../lib/format-currency"
 import { AdminDashboardData } from "../../hooks/api/dashboard"
 
 export const OrderSummarySection = ({
@@ -11,7 +12,10 @@ export const OrderSummarySection = ({
   data: AdminDashboardData | undefined
   isLoading: boolean
 }) => {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+
+  const earningsToday = data?.earnings.today.commission_earnings ?? 0
+  const currencyCode = data?.earnings.currency_code ?? "try"
 
   return (
     <Container className="divide-y p-0">
@@ -23,7 +27,7 @@ export const OrderSummarySection = ({
           </Text>
         </div>
       </div>
-      <div className="grid grid-cols-1 gap-4 px-6 py-4 sm:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 px-6 py-4 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard
           icon={<Clock />}
           label={t("dashboard.orders.today")}
@@ -43,6 +47,12 @@ export const OrderSummarySection = ({
           label={t("dashboard.orders.thisMonth")}
           value={data?.orders.this_month ?? 0}
           to="/orders"
+          isLoading={isLoading}
+        />
+        <StatCard
+          icon={<CurrencyDollar />}
+          label={t("dashboard.orders.earningsToday")}
+          value={formatCurrency(earningsToday, currencyCode, i18n.language)}
           isLoading={isLoading}
         />
       </div>

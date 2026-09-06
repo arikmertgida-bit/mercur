@@ -277,7 +277,8 @@
       "subtitle": "Conteggio ordini in tempo reale sull'intero marketplace",
       "today": "Oggi",
       "thisWeek": "Questa settimana",
-      "thisMonth": "Questo mese"
+      "thisMonth": "Questo mese",
+      "earningsToday": "Guadagni di oggi"
     },
     "totals": {
       "products": "Prodotti",

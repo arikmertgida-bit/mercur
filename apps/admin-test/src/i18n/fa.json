@@ -277,7 +277,8 @@
       "subtitle": "تعداد لحظه‌ای سفارش‌ها در کل بازار",
       "today": "امروز",
       "thisWeek": "این هفته",
-      "thisMonth": "این ماه"
+      "thisMonth": "این ماه",
+      "earningsToday": "درآمد امروز"
     },
     "totals": {
       "products": "محصولات",

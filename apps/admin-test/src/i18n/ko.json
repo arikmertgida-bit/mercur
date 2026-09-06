@@ -277,7 +277,8 @@
       "subtitle": "마켓플레이스 전체의 실시간 주문 수",
       "today": "오늘",
       "thisWeek": "이번 주",
-      "thisMonth": "이번 달"
+      "thisMonth": "이번 달",
+      "earningsToday": "오늘의 수익"
     },
     "totals": {
       "products": "상품",

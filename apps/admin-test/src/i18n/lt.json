@@ -277,7 +277,8 @@
       "subtitle": "Gyvas visos prekyvietės užsakymų skaičius",
       "today": "Šiandien",
       "thisWeek": "Šią savaitę",
-      "thisMonth": "Šį mėnesį"
+      "thisMonth": "Šį mėnesį",
+      "earningsToday": "Šiandienos pajamos"
     },
     "totals": {
       "products": "Produktai",

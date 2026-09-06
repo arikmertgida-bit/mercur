@@ -277,7 +277,8 @@
       "subtitle": "Numărul de comenzi în timp real din întreaga piață",
       "today": "Astăzi",
       "thisWeek": "Săptămâna aceasta",
-      "thisMonth": "Luna aceasta"
+      "thisMonth": "Luna aceasta",
+      "earningsToday": "Câștiguri de azi"
     },
     "totals": {
       "products": "Produse",

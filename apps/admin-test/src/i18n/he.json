@@ -277,7 +277,8 @@
       "subtitle": "מספר הזמנות בזמן אמת בכל השוק",
       "today": "היום",
       "thisWeek": "השבוע",
-      "thisMonth": "החודש"
+      "thisMonth": "החודש",
+      "earningsToday": "רווחי היום"
     },
     "totals": {
       "products": "מוצרים",

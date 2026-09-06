@@ -277,7 +277,8 @@
       "subtitle": "整个平台的实时订单数量",
       "today": "今天",
       "thisWeek": "本周",
-      "thisMonth": "本月"
+      "thisMonth": "本月",
+      "earningsToday": "今日收益"
     },
     "totals": {
       "products": "商品",

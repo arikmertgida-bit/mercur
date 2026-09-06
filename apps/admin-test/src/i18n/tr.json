@@ -277,7 +277,8 @@
       "subtitle": "Platform genelinde anlık sipariş sayıları",
       "today": "Bugün",
       "thisWeek": "Bu Hafta",
-      "thisMonth": "Bu Ay"
+      "thisMonth": "Bu Ay",
+      "earningsToday": "Bugünkü Kazanç"
     },
     "totals": {
       "products": "Ürünler",

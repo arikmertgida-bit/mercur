@@ -277,7 +277,8 @@
       "subtitle": "Broj narudžbi uživo na cijelom tržištu",
       "today": "Danas",
       "thisWeek": "Ove sedmice",
-      "thisMonth": "Ovog mjeseca"
+      "thisMonth": "Ovog mjeseca",
+      "earningsToday": "Današnja zarada"
     },
     "totals": {
       "products": "Proizvodi",

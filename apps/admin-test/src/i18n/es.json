@@ -277,7 +277,8 @@
       "subtitle": "Recuento de pedidos en vivo de todo el marketplace",
       "today": "Hoy",
       "thisWeek": "Esta semana",
-      "thisMonth": "Este mes"
+      "thisMonth": "Este mes",
+      "earningsToday": "Ganancias de hoy"
     },
     "totals": {
       "products": "Productos",
