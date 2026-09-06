@@ -1,11 +1,18 @@
 import { AuthenticatedMedusaRequest, MedusaResponse } from "@medusajs/framework/http"
 import { ContainerRegistrationKeys, MedusaError } from "@medusajs/framework/utils"
 import type { Query } from "@medusajs/framework"
+import { MercurModules } from "@mercurjs/types"
 import type {} from "@mercurjs/core/types/seller-context"
 
 import { SELLER_ANALYTICS_MODULE } from "../../../modules/seller-analytics"
 import type SellerAnalyticsModuleService from "../../../modules/seller-analytics/service"
-import { resolveLiveOrderCounts, VendorLiveOrderCounts } from "./helpers"
+import {
+  CommissionLineReader,
+  loadSellerOrderIds,
+  resolveLiveOrderCounts,
+  resolveLiveTodayEarnings,
+  VendorLiveOrderCounts,
+} from "./helpers"
 
 const TREND_DAYS = 14
 
@@ -32,7 +39,7 @@ export type VendorDashboardResponse = {
       orders_count: number
       gross_revenue: number
       net_earnings: number
-    } | null
+    }
     trend: VendorDashboardTrendPoint[]
   }
   low_stock: VendorDashboardLowStockItem[]
@@ -42,9 +49,9 @@ export type VendorDashboardResponse = {
 /**
  * GET /vendor/dashboard
  *
- * Orders (today/this_week/this_month) are computed live, bounded to the
- * authenticated seller (cheap — see ./helpers.ts). Earnings, the trend
- * chart, and low stock are read from tables materialized every 12h by
+ * Orders (today/this_week/this_month) and today's earnings are computed
+ * live, bounded to the authenticated seller (cheap — see ./helpers.ts). The
+ * trend chart and low stock are read from tables materialized every 12h by
  * apps/api/src/jobs/compute-seller-analytics.ts — never aggregated live,
  * so this endpoint stays fast at any seller-catalog size.
  */
@@ -64,11 +71,16 @@ export const GET = async (
   const analyticsService = req.scope.resolve<SellerAnalyticsModuleService>(
     SELLER_ANALYTICS_MODULE
   )
+  const commissionService = req.scope.resolve<CommissionLineReader>(
+    MercurModules.COMMISSION
+  )
 
   const now = new Date()
+  const orderIds = await loadSellerOrderIds(query, sellerId)
 
-  const [orders, dailyStats, lowStockRows] = await Promise.all([
-    resolveLiveOrderCounts(query, sellerId, now),
+  const [orders, todayEarnings, dailyStats, lowStockRows] = await Promise.all([
+    resolveLiveOrderCounts(query, orderIds, now),
+    resolveLiveTodayEarnings(query, orderIds, now, commissionService),
     analyticsService.listSellerDailyStats(
       { seller_id: sellerId },
       { order: { date: "DESC" }, take: TREND_DAYS }
@@ -93,13 +105,7 @@ export const GET = async (
     orders,
     earnings: {
       currency_code: currencyCode,
-      today: latest
-        ? {
-            orders_count: latest.orders_count,
-            gross_revenue: Number(latest.gross_revenue),
-            net_earnings: Number(latest.net_earnings),
-          }
-        : null,
+      today: todayEarnings,
       trend: sortedStats.map((row) => ({
         date: row.date,
         orders_count: row.orders_count,

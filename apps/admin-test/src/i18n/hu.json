@@ -277,7 +277,8 @@
       "subtitle": "Élő rendelésszámok a teljes piactéren",
       "today": "Ma",
       "thisWeek": "Ezen a héten",
-      "thisMonth": "Ebben a hónapban"
+      "thisMonth": "Ebben a hónapban",
+      "earningsToday": "Mai bevétel"
     },
     "totals": {
       "products": "Termékek",

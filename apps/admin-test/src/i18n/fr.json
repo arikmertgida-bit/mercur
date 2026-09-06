@@ -277,7 +277,8 @@
       "subtitle": "Nombre de commandes en direct sur toute la marketplace",
       "today": "Aujourd'hui",
       "thisWeek": "Cette semaine",
-      "thisMonth": "Ce mois-ci"
+      "thisMonth": "Ce mois-ci",
+      "earningsToday": "Gains du jour"
     },
     "totals": {
       "products": "Produits",

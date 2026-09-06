@@ -277,7 +277,8 @@
       "subtitle": "Số lượng đơn hàng theo thời gian thực trên toàn bộ chợ",
       "today": "Hôm nay",
       "thisWeek": "Tuần này",
-      "thisMonth": "Tháng này"
+      "thisMonth": "Tháng này",
+      "earningsToday": "Doanh thu hôm nay"
     },
     "totals": {
       "products": "Sản phẩm",

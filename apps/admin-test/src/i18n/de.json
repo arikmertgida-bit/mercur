@@ -277,7 +277,8 @@
       "subtitle": "Aktuelle Bestellzahlen im gesamten Marktplatz",
       "today": "Heute",
       "thisWeek": "Diese Woche",
-      "thisMonth": "Diesen Monat"
+      "thisMonth": "Diesen Monat",
+      "earningsToday": "Heutiger Umsatz"
     },
     "totals": {
       "products": "Produkte",

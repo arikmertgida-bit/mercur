@@ -277,7 +277,8 @@
       "subtitle": "Брой поръчки на живо в целия пазар",
       "today": "Днес",
       "thisWeek": "Тази седмица",
-      "thisMonth": "Този месец"
+      "thisMonth": "Този месец",
+      "earningsToday": "Печалба днес"
     },
     "totals": {
       "products": "Продукти",

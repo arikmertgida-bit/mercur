@@ -14,7 +14,7 @@ export const OrderSummarySection = ({
 }) => {
   const { t, i18n } = useTranslation()
 
-  const earningsToday = data?.earnings.today
+  const earningsToday = data?.earnings.today.net_earnings ?? 0
   const currencyCode = data?.earnings.currency_code ?? "try"
 
   return (
@@ -52,11 +52,7 @@ export const OrderSummarySection = ({
         <StatCard
           icon={<CurrencyDollar />}
           label={t("dashboard.orders.earningsToday")}
-          value={
-            earningsToday
-              ? formatCurrency(earningsToday.net_earnings, currencyCode, i18n.language)
-              : formatCurrency(0, currencyCode, i18n.language)
-          }
+          value={formatCurrency(earningsToday, currencyCode, i18n.language)}
           isLoading={isLoading}
         />
       </div>
