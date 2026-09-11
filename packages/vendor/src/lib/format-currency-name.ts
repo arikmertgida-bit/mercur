@@ -1,4 +1,5 @@
 import { currencies } from "./data/currencies"
+import { toIntlLocale } from "../i18n/languages"
 
 /**
  * `currencies.ts` (auto-generated from an upstream dataset) only carries
@@ -16,7 +17,7 @@ export const getLocalizedCurrencyName = (
   const fallbackName = currencies[normalizedCode]?.name ?? normalizedCode
 
   try {
-    const displayNames = new Intl.DisplayNames([locale], { type: "currency" })
+    const displayNames = new Intl.DisplayNames([toIntlLocale(locale)], { type: "currency" })
     return displayNames.of(normalizedCode) ?? fallbackName
   } catch {
     return fallbackName

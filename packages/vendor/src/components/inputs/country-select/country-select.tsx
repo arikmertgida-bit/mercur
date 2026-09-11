@@ -9,6 +9,7 @@ import {
 import { useTranslation } from "react-i18next";
 import { countries } from "../../../lib/data/countries";
 import { getLocalizedCountryName } from "../../../lib/format-country-name";
+import { toIntlLocale } from "../../../i18n/languages";
 import { Select } from "@medusajs/ui";
 
 type CountrySelectProps = ComponentPropsWithoutRef<typeof Select> & {
@@ -27,7 +28,7 @@ export const CountrySelect: ComponentType<CountrySelectProps> = forwardRef<
   useImperativeHandle(ref, () => innerRef.current as HTMLButtonElement);
 
   const localizedCountries = useMemo(() => {
-    const collator = new Intl.Collator(i18n.language, { sensitivity: "base" });
+    const collator = new Intl.Collator(toIntlLocale(i18n.language), { sensitivity: "base" });
 
     return countries
       .map((country) => ({

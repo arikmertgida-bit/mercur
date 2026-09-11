@@ -1,3 +1,5 @@
+import { toIntlLocale } from "../i18n/languages"
+
 type CountryNameSource = {
   iso_2?: string | null
   display_name?: string | null
@@ -26,7 +28,7 @@ export const getLocalizedCountryName = (
   }
 
   try {
-    const displayNames = new Intl.DisplayNames([locale], { type: "region" })
+    const displayNames = new Intl.DisplayNames([toIntlLocale(locale)], { type: "region" })
     return displayNames.of(country.iso_2.toUpperCase()) ?? country.display_name ?? undefined
   } catch {
     return country.display_name ?? undefined
