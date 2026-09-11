@@ -16,11 +16,12 @@ import { DynamicAvatar } from "./DynamicAvatar"
 import { useAdminSellerAvatar } from "../../../hooks/api/seller-avatar"
 import { useCustomerAvatar } from "../../../hooks/useCustomerAvatar"
 import { resolveParticipantDisplayName } from "../../../lib/messenger/resolve-participant-display-name"
+import { toIntlLocale } from "../../../lib/intl-locale"
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
 function formatTime(iso: string, locale: string): string {
-  return new Date(iso).toLocaleTimeString(locale, {
+  return new Date(iso).toLocaleTimeString(toIntlLocale(locale), {
     hour: "2-digit",
     minute: "2-digit",
   })
@@ -33,7 +34,7 @@ function formatDate(iso: string, locale: string, todayLabel: string, yesterdayLa
   yesterday.setDate(today.getDate() - 1)
   if (d.toDateString() === today.toDateString()) return todayLabel
   if (d.toDateString() === yesterday.toDateString()) return yesterdayLabel
-  return d.toLocaleDateString(locale, { day: "numeric", month: "long", year: "numeric" })
+  return d.toLocaleDateString(toIntlLocale(locale), { day: "numeric", month: "long", year: "numeric" })
 }
 
 function getOtherParticipant(participants: Participant[]): Participant | null {

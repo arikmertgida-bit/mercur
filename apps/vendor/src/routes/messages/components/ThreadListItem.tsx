@@ -6,6 +6,7 @@ import { resolveParticipantDisplayName } from "../../../lib/messenger/resolve-pa
 import type { Conversation } from "../../../lib/messenger/types"
 import { DynamicAvatar } from "./DynamicAvatar"
 import { MEDUSA_STOREFRONT_URL } from "../../../lib/storefront"
+import { toIntlLocale } from "../../../lib/intl-locale"
 
 // ── Relative time without date-fns ────────────────────────────────────────────
 
@@ -15,7 +16,7 @@ function formatRelativeTime(dateStr: string, locale: string): string {
   const mins = Math.round(secs / 60)
   const hours = Math.round(mins / 60)
   const days = Math.round(hours / 24)
-  const rtf = new Intl.RelativeTimeFormat(locale, { numeric: "auto" })
+  const rtf = new Intl.RelativeTimeFormat(toIntlLocale(locale), { numeric: "auto" })
   if (secs < 60) return rtf.format(-secs, "second")
   if (mins < 60) return rtf.format(-mins, "minute")
   if (hours < 24) return rtf.format(-hours, "hour")

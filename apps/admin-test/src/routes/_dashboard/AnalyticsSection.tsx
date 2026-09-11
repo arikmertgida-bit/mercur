@@ -11,6 +11,7 @@ import {
   YAxis,
 } from "recharts"
 import { AdminDashboardData } from "../../hooks/api/dashboard"
+import { toIntlLocale } from "../../lib/intl-locale"
 
 type MetricKey = "orders_count" | "commission_earnings"
 
@@ -49,7 +50,7 @@ export const AnalyticsSection = ({
     )
 
   const computedAt = data?.analytics_computed_at
-    ? new Intl.DateTimeFormat(i18n.language, {
+    ? new Intl.DateTimeFormat(toIntlLocale(i18n.language), {
         dateStyle: "medium",
         timeStyle: "short",
       }).format(new Date(data.analytics_computed_at))

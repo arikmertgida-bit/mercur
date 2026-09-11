@@ -30,6 +30,7 @@ import {
 } from "../../../hooks/api/reviews";
 import { useCreateReviewReport } from "../../../hooks/api/review-reports";
 import { ReplyStatusBadge } from "../components/ReplyStatusBadge";
+import { toIntlLocale } from "../../../lib/intl-locale";
 
 const REPLY_MAX_LENGTH = 300;
 const REPORT_REASON_MAX_LENGTH = 500;
@@ -44,6 +45,7 @@ const ratingColor = (rating: number) => {
 
 const ReviewGeneralSection = ({ review }: { review: ReviewDTO }) => {
   const { t, i18n } = useTranslation();
+  const dateLocale = toIntlLocale(i18n.language);
 
   return (
     <Container className="divide-y p-0">
@@ -86,7 +88,7 @@ const ReviewGeneralSection = ({ review }: { review: ReviewDTO }) => {
           {t("reviews.columns.createdAt")}
         </Text>
         <Text size="small" leading="compact">
-          {new Date(review.created_at).toLocaleDateString(i18n.language, {
+          {new Date(review.created_at).toLocaleDateString(dateLocale, {
             year: "numeric",
             month: "long",
             day: "numeric",
@@ -100,7 +102,7 @@ const ReviewGeneralSection = ({ review }: { review: ReviewDTO }) => {
           {t("reviews.columns.updatedAt")}
         </Text>
         <Text size="small" leading="compact">
-          {new Date(review.updated_at).toLocaleDateString(i18n.language, {
+          {new Date(review.updated_at).toLocaleDateString(dateLocale, {
             year: "numeric",
             month: "long",
             day: "numeric",
@@ -177,7 +179,7 @@ const replyInitials = (name: string): string => (name.trim().charAt(0) || "?").t
 const ReviewReplyMessage = ({ reply }: { reply: ReviewReplyDTO }) => {
   const { t, i18n } = useTranslation();
   const name = replyDisplayName(reply, t("messenger.unknown"));
-  const timestamp = new Date(reply.created_at).toLocaleString(i18n.language, {
+  const timestamp = new Date(reply.created_at).toLocaleString(toIntlLocale(i18n.language), {
     dateStyle: "medium",
     timeStyle: "short",
   });

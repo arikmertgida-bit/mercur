@@ -19,11 +19,12 @@ import { ChatHeader } from "./ChatHeader"
 import { DynamicAvatar } from "./DynamicAvatar"
 import { logger } from "../../../lib/logger"
 import { getCatchMessage } from "../../../lib/errors"
+import { toIntlLocale } from "../../../lib/intl-locale"
 
 // ── Helpers ──────────────────────────────────────────────────────────────
 
 function formatTime(iso: string, locale: string): string {
-  return new Date(iso).toLocaleTimeString(locale, {
+  return new Date(iso).toLocaleTimeString(toIntlLocale(locale), {
     hour: "2-digit",
     minute: "2-digit",
   })
