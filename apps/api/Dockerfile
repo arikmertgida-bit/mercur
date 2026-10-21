@@ -7,14 +7,19 @@
 # BuildKit's linter flags AUTH_CORS solely because its name contains "AUTH";
 # this directive suppresses that specific false positive without disabling
 # other real secret checks.
-FROM node:22-alpine
+FROM node:22-alpine AS builder
 
 # `medusa build`'in ürettiği .medusa/server/package.json, @mercurjs/* paketlerini
 # workspace protokolü olmadan "*" sürümüyle listeler. Bu bundle'ı `npm install`
 # ile kurmak, npm'in bu paketleri gerçek npm registry'sinden (yerel workspace
 # kaynağı yerine, tamamen farklı/eski bir sürümle) çekmesine yol açar. bun,
 # workspace'i doğru şekilde symlink'leyerek yerel packages/* kaynağını kullanır.
-RUN npm install -g bun@1.3.14 @medusajs/cli ts-node
+# Sadece bun global olarak gerekli (bootstrap: bun install'ı çalıştırmak için
+# bizzat bun'ın kendisi lazım). @medusajs/cli ve ts-node ARTIK global npm ile
+# kurulmuyor — apps/api/package.json'da gerçek dependency oldukları için
+# `bun install` onları zaten yerel node_modules'a doğru şekilde symlink'ler
+# (aşağıdaki `bun run build` bu yerel ikilileri kullanır).
+RUN npm install -g bun@1.3.14
 
 WORKDIR /monorepo
 
@@ -74,14 +79,54 @@ RUN bunx turbo run build --filter=@acme/api
 # workspace'te zaten mevcut @mercurjs/cli'yi bulamaz ve npm registry'sinden
 # (2000+ bağımlılığıyla) sıfırdan kurmaya çalışarak dakikalarca donar.
 # node_modules'ı workspace köküne symlink'leyerek hem npm hem node çözümlemesi
-# yerel pristine paketi anında bulur.
+# yerel pristine paketi anında bulur. Bu symlink COPY --from ile runner'a
+# da taşınır (hedef yol aynı göreli konumda yeniden oluşturulduğu için
+# geçerliliğini korur).
 RUN ln -s /monorepo/node_modules /monorepo/apps/api/.medusa/server/node_modules
 
-# Runs as root up to this point (single-stage build, unlike storefront/
-# messenger's multi-stage Dockerfiles) — drop to an unprivileged user before
-# the process actually starts serving traffic.
-RUN addgroup -S medusa && adduser -S medusa -G medusa \
-    && chown -R medusa:medusa /monorepo
+# Araştırıldı ve CANLI test edildi: `bun install --frozen-lockfile --production`
+# burada hiçbir fayda sağlamıyor — bun, zaten kurulu/frozen bir node_modules
+# ağacını bu bayrakla prune ETMİYOR (yalnızca sıfırdan kurulumda devDependencies'i
+# atlar); image boyutu ve node_modules/ içeriği birebir aynı kaldı. Bu yüzden
+# eklenmedi — build süresini uzatan faydasız bir adım olurdu.
+
+# --- Runner: yalnızca çalışma zamanında gereken şeyler ---
+# builder'daki bun/npm global kurulumu, devDependencies dahil tüm monorepo
+# kaynağı (apps/docs, apps/vendor, apps/admin-test — bu servisin hiç
+# ihtiyacı olmayan ~140MB) ve "RUN chown -R" katman-şişmesi (~1.47GB, COPY
+# sonrası ayrı bir layer'da yapılan chown, overlay fs'te tüm ağacı ikinci
+# kez kopyalatıyordu) buraya hiç taşınmaz. @medusajs/cli ve ts-node de artık
+# global npm ile BURADA ayrıca kurulmuyor (~618MB katman tasarrufu) —
+# apps/api/package.json'daki gerçek dependency'leri sayesinde zaten
+# apps/api/node_modules altında kopyalanıyorlar (aşağıdaki PATH ayarı ile
+# çözümlenir).
+FROM node:22-alpine AS runner
+
+RUN addgroup -S medusa && adduser -S medusa -G medusa
+
+WORKDIR /monorepo
+
+# --chown tek bir COPY içinde uygulanır (ayrı bir "RUN chown -R" katmanı
+# değil) — bu yüzden builder'daki gibi tüm ağacın ikinci kez kopyalanmasına
+# yol açmaz.
+COPY --from=builder --chown=medusa:medusa /monorepo/node_modules ./node_modules
+COPY --from=builder --chown=medusa:medusa /monorepo/apps/api/.medusa ./apps/api/.medusa
+# bun workspace'leri node_modules/@mercurjs/* için packages/* kaynağına
+# symlink kurar (örn. @mercurjs/core -> ../../packages/core). packages/
+# buraya kopyalanmazsa bu symlink'ler kırık kalır ve runtime'da modül
+# çözümlemesi "Cannot find module"/"id must be a string" hatalarıyla çöker
+# (canlı testte yakalandı).
+COPY --from=builder --chown=medusa:medusa /monorepo/packages ./packages
+# bun, apps/api'nin DOĞRUDAN bağımlılıklarını (@medusajs/medusa, @aws-sdk/*
+# vb.) kök node_modules'a hoist etmek yerine apps/api/node_modules altında
+# küçük symlink'ler olarak tutuyor (gerçek içerik yine kök node_modules/.bun
+# deposunda). @medusajs/cli'nin runtime komut çözümlemesi (resolveLocalCommand
+# → resolve-cwd) CWD'den (.medusa/server) yukarı doğru node_modules ararken
+# tam olarak bu dizine ihtiyaç duyuyor — eksik olunca "@medusajs/medusa/
+# commands/db-migrate" bulunamıyor ve CLI "id must be a string" ile çöküyor
+# (canlı testte yakalandı).
+COPY --from=builder --chown=medusa:medusa /monorepo/apps/api/node_modules ./apps/api/node_modules
+
 USER medusa
 
 WORKDIR /monorepo/apps/api/.medusa/server
@@ -89,5 +134,13 @@ WORKDIR /monorepo/apps/api/.medusa/server
 EXPOSE 9000
 
 ENV NODE_ENV=production
+# CMD'nin çağırdığı `medusa` komutu artık global npm kurulumundan değil,
+# apps/api/package.json'daki gerçek dependency'si sayesinde zaten kopyalanmış
+# olan apps/api/node_modules/.bin/medusa'dan çözümlenir (bkz. runner
+# başındaki yorum). ts-node de aynı şekilde apps/api/node_modules/ts-node
+# olarak gerçek bir dependency — @medusajs/cli'nin production'da fallback
+# loader olarak require('ts-node') çağırdığı davranış (canlı testte
+# yakalandı) artık global kurulum yerine bu yerel paketle karşılanıyor.
+ENV PATH="/monorepo/apps/api/node_modules/.bin:${PATH}"
 
 CMD ["sh", "-c", "medusa db:migrate --execute-safe-links && medusa start"]
