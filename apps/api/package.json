@@ -43,6 +43,7 @@
     "ulid": "^2.3.0",
     "@mercurjs/core": "*",
     "@mercurjs/types": "*",
+    "express-rate-limit": "^8.7.0",
     "http-proxy-middleware": "^3.0.3",
     "@mercurjs/cli": "*",
     "@mercurjs/docs": "*",

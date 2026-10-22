@@ -1,10 +1,8 @@
-import multer from "multer"
 import { authenticate, validateAndTransformBody } from "@medusajs/framework"
 import { MiddlewareRoute } from "@medusajs/medusa"
 
 import { StoreDeleteCustomerUpload } from "./validators"
-
-const upload = multer({ storage: multer.memoryStorage() })
+import { imageUpload, MAX_IMAGE_FILES } from "../../../../lib/file-validation"
 
 export const storeCustomerUploadMiddlewares: MiddlewareRoute[] = [
   {
@@ -12,7 +10,7 @@ export const storeCustomerUploadMiddlewares: MiddlewareRoute[] = [
     matcher: "/store/customer/upload",
     middlewares: [
       authenticate("customer", ["bearer", "session"]),
-      upload.array("files"),
+      imageUpload.array("files", MAX_IMAGE_FILES),
     ],
   },
   {

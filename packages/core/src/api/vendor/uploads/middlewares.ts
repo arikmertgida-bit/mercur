@@ -1,9 +1,7 @@
-import { requireAnyPermission } from "../../utils"
-import multer from "multer"
-
 import { MiddlewareRoute } from "@medusajs/framework/http"
 
-const upload = multer({ storage: multer.memoryStorage() })
+import { requireAnyPermission } from "../../utils"
+import { imageUpload, MAX_IMAGE_FILES } from "./file-validation"
 
 export const vendorUploadsMiddlewares: MiddlewareRoute[] = [
   {
@@ -15,7 +13,7 @@ export const vendorUploadsMiddlewares: MiddlewareRoute[] = [
         { key: "products", right: "edit" },
         { key: "store", right: "edit" },
       ]),
-      upload.array("files"),
+      imageUpload.array("files", MAX_IMAGE_FILES),
     ],
   },
 ]

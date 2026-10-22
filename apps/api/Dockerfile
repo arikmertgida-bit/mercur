@@ -31,6 +31,15 @@ ENV ADMIN_CORS=http://admin:7000,http://localhost:7000
 ENV VENDOR_CORS=http://vendor:7001,http://localhost:7001
 ENV AUTH_CORS=http://admin:7000,http://vendor:7001,http://localhost:7000,http://localhost:7001,http://localhost:3000,http://storefront:3000
 
+# JWT_SECRET/COOKIE_SECRET are validated (requireEnv) at config-load time too,
+# same reason as CORS above — no real token is signed during build, but the
+# values must be defined or the build step throws. BUILD-TIME PLACEHOLDERS
+# ONLY: docker-compose.yml's env_file/environment supplies the real secrets
+# at container start, which overrides these ENV defaults per standard Docker
+# precedence.
+ENV JWT_SECRET=build-placeholder
+ENV COOKIE_SECRET=build-placeholder
+
 # The MinIO file provider options are validated (requireEnv) at config-load
 # time too, for the same reason as CORS above — no real connection happens
 # during build, but the values must be defined or the build step throws.
@@ -67,6 +76,13 @@ RUN bunx turbo run build --filter=@acme/api
 # node_modules'ı workspace köküne symlink'leyerek hem npm hem node çözümlemesi
 # yerel pristine paketi anında bulur.
 RUN ln -s /monorepo/node_modules /monorepo/apps/api/.medusa/server/node_modules
+
+# Runs as root up to this point (single-stage build, unlike storefront/
+# messenger's multi-stage Dockerfiles) — drop to an unprivileged user before
+# the process actually starts serving traffic.
+RUN addgroup -S medusa && adduser -S medusa -G medusa \
+    && chown -R medusa:medusa /monorepo
+USER medusa
 
 WORKDIR /monorepo/apps/api/.medusa/server
 

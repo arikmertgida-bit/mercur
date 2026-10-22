@@ -34,6 +34,7 @@ import { storeSearchSuggestMiddlewares } from "./store/search/suggest/middleware
 import { storeCampaignsMiddlewares } from "./store/campaigns/middlewares";
 import { storeReturnsReturnWindowMiddlewares } from "./store/returns/middlewares";
 import { vendorFollowersMiddlewares } from "./vendor/followers/middlewares";
+import { authRateLimiter, registrationRateLimiter } from "../lib/rate-limit";
 import { vendorAwareErrorHandler } from "../lib/vendor-error-i18n";
 import { adminAwareErrorHandler } from "../lib/admin-error-i18n";
 import { storeAwareErrorHandler } from "../lib/store-error-i18n";
@@ -66,6 +67,16 @@ const scopedErrorHandler: MedusaErrorHandlerFunction = (error, req, res, next) =
 export default defineMiddlewares({
     errorHandler: scopedErrorHandler,
     routes: [
+        {
+            matcher: "/auth/*",
+            method: ["POST"],
+            middlewares: [authRateLimiter],
+        },
+        {
+            matcher: "/vendor/sellers",
+            method: ["POST"],
+            middlewares: [registrationRateLimiter],
+        },
         ...storeWishlistMiddlewares,
         ...adminWishlistMiddlewares,
         ...storeCustomerUploadMiddlewares,
