@@ -14,7 +14,7 @@ export function excludePendingRequestEntities(alias: string) {
       request_status: 'pending',
     }, {})
 
-    const pendingIds = pendingRows.map((row: Record<string, string>) => row[`${alias}_id`])
+    const pendingIds = pendingRows.map((row) => row[`${alias}_id`])
 
     if (pendingIds.length > 0) {
       const existingIdFilter = req.filterableFields.id
@@ -26,7 +26,7 @@ export function excludePendingRequestEntities(alias: string) {
           : [existingIdFilter]
 
         req.filterableFields.id = existingIds.filter(
-          (id) => !pendingIds.includes(id as string)
+          (id) => !(typeof id === "string" && pendingIds.includes(id))
         )
       } else {
         req.filterableFields.id = { $nin: pendingIds }

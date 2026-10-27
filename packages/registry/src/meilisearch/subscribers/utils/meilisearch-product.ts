@@ -3,37 +3,43 @@ import { z } from 'zod'
 import { MedusaContainer } from '@medusajs/framework'
 import { IEventBusModuleService } from '@medusajs/framework/types'
 import { ContainerRegistrationKeys, Modules, arrayDifference } from '@medusajs/framework/utils'
-import { JsonRecord } from '@mercurjs/types'
+import { parseGraphRow, parseGraphRows } from '@mercurjs/core/utils/graph-rows'
 
-import { MeilisearchProductValidator } from '../../modules/meilisearch/types'
+import {
+  MeilisearchProductValidator,
+  MeilisearchVariantValidator,
+} from '../../modules/meilisearch/types'
 import { MeilisearchEvents } from '../../modules/meilisearch/types'
 
 const CHUNK_SIZE = 100
 
-type ProductOptionGraph = {
-  title?: string
-  values?: Array<{ value: string }>
-}
+const ProductOptionRowSchema = z.object({
+  title: z.string().nullish(),
+  values: z.array(z.object({ value: z.string() })).nullish(),
+})
 
-type VariantOptionGraph = {
-  value: string
-  option?: { title: string }
-}
+const ProductSellerRowSchema = z.object({
+  id: z.string(),
+  handle: z.string().nullish(),
+  name: z.string().nullish(),
+  status: z.string().nullish(),
+})
 
-type MeilisearchVariantGraph = JsonRecord & {
-  options?: VariantOptionGraph[]
-}
+const MeilisearchProductRowSchema = z.object({
+  options: z.array(ProductOptionRowSchema).nullish(),
+  variants: z.array(MeilisearchVariantValidator).nullish(),
+  // `sellers` is a many-to-many link: an array, or a single object.
+  sellers: z
+    .union([z.array(ProductSellerRowSchema), ProductSellerRowSchema])
+    .nullish(),
+})
 
-type MeilisearchProductGraph = JsonRecord & {
-  id: string
-  options?: ProductOptionGraph[]
-  variants?: MeilisearchVariantGraph[]
-  sellers?: Array<{ id: string }> | { id: string } | null
-}
+const SellerProductsRowSchema = z.object({
+  products: z.array(z.object({ id: z.string() })).nullish(),
+})
 
-type SellerProductsGraph = {
-  products?: Array<{ id: string }>
-}
+type ProductOptionRow = z.infer<typeof ProductOptionRowSchema>
+type MeilisearchVariant = z.infer<typeof MeilisearchVariantValidator>
 
 export function chunkArray<T>(arr: T[], size: number): T[][] {
   const chunks: T[][] = []
@@ -67,23 +73,26 @@ export async function filterProductsByStatus(
   }
 }
 
-function flattenProductOptions(options: ProductOptionGraph[]): Record<string, string>[] {
-  return (options ?? [])
-    .filter((option) => option?.title && option?.values)
-    .flatMap((option) =>
-      (option.values ?? []).map((value) => ({
-        [option.title!.toLowerCase()]: value.value,
-      }))
-    )
+function flattenProductOptions(options: ProductOptionRow[]): Record<string, string>[] {
+  return options.flatMap((option) => {
+    const title = option.title
+    if (!title || !option.values) {
+      return []
+    }
+    return option.values.map((value) => ({
+      [title.toLowerCase()]: value.value,
+    }))
+  })
 }
 
-function flattenVariantOptions(variant: MeilisearchVariantGraph): JsonRecord {
-  return (variant.options ?? []).reduce<JsonRecord>((entry, item) => {
-    if (item?.option?.title) {
+function flattenVariantOptions(variant: MeilisearchVariant): MeilisearchVariant {
+  const entry: MeilisearchVariant = { ...variant }
+  for (const item of variant.options) {
+    if (item.option.title) {
       entry[item.option.title.toLowerCase()] = item.value
     }
-    return entry
-  }, { ...variant })
+  }
+  return entry
 }
 
 export async function findAndTransformMeilisearchProducts(
@@ -117,12 +126,16 @@ export async function findAndTransformMeilisearchProducts(
       : { status: 'published' },
   })
 
-  const transformed = (products as MeilisearchProductGraph[]).map((product) => {
-    const { sellers, ...rest } = product
+  const transformed = products.map((row) => {
+    const { options, variants, sellers } = parseGraphRow(
+      MeilisearchProductRowSchema,
+      row
+    )
+    const { sellers: _sellers, ...rest } = row
     return {
       ...rest,
-      options: flattenProductOptions(product.options ?? []),
-      variants: (product.variants ?? []).map(flattenVariantOptions),
+      options: flattenProductOptions(options ?? []),
+      variants: (variants ?? []).map(flattenVariantOptions),
       seller: Array.isArray(sellers) ? (sellers[0] ?? null) : (sellers ?? null),
     }
   })
@@ -146,7 +159,7 @@ export async function reindexSellerProducts(
       filters: { id: sellerId },
     })
 
-    const seller = sellers[0] as SellerProductsGraph | undefined
+    const [seller] = parseGraphRows(SellerProductsRowSchema, sellers)
     const productIds: string[] =
       seller?.products?.map((p) => p.id) ?? []
 

@@ -17,8 +17,8 @@ function evaluateMessage(
 
   // 1. Exact word match
   for (const word of words) {
-    if (ruleset.exactWords.has(word)) {
-      const ruleId = ruleset.exactRules.get(word)
+    const ruleId = ruleset.exactRules.get(word)
+    if (ruleId !== undefined) {
       return {
         matched: true,
         rule_id: ruleId,
@@ -73,8 +73,7 @@ describe("Content Filter Evaluation", () => {
 
       const result = evaluateMessage("This is SPAM content", ruleset)
       expect(result.matched).toBe(true)
-      expect(result.rule_id).toBe("filt_001")
-      expect(result.match_type).toBe("exact")
+      expect(result).toMatchObject({ rule_id: "filt_001", match_type: "exact" })
     })
 
     it("does not match partial words for exact match", () => {
@@ -104,8 +103,7 @@ describe("Content Filter Evaluation", () => {
 
       const result = evaluateMessage("You should BUY NOW at discount", ruleset)
       expect(result.matched).toBe(true)
-      expect(result.rule_id).toBe("filt_010")
-      expect(result.match_type).toBe("contains")
+      expect(result).toMatchObject({ rule_id: "filt_010", match_type: "contains" })
     })
 
     it("matches when pattern appears inside a word", () => {
@@ -135,8 +133,7 @@ describe("Content Filter Evaluation", () => {
 
       const result = evaluateMessage("Contact me at user@example.com", ruleset)
       expect(result.matched).toBe(true)
-      expect(result.rule_id).toBe("filt_builtin_email")
-      expect(result.match_type).toBe("regex")
+      expect(result).toMatchObject({ rule_id: "filt_builtin_email", match_type: "regex" })
     })
 
     it("matches phone numbers", () => {
@@ -185,8 +182,7 @@ describe("Content Filter Evaluation", () => {
       ruleset.containsPatterns.push({ id: "filt_contains", pattern: "spam" })
 
       const result = evaluateMessage("This is spam", ruleset)
-      expect(result.rule_id).toBe("filt_exact")
-      expect(result.match_type).toBe("exact")
+      expect(result).toMatchObject({ rule_id: "filt_exact", match_type: "exact" })
     })
 
     it("contains takes priority over regex", () => {
@@ -198,8 +194,7 @@ describe("Content Filter Evaluation", () => {
       })
 
       const result = evaluateMessage("Contact user@example.com", ruleset)
-      expect(result.rule_id).toBe("filt_contains")
-      expect(result.match_type).toBe("contains")
+      expect(result).toMatchObject({ rule_id: "filt_contains", match_type: "contains" })
     })
 
     it("short-circuits on first match (does not check all rules)", () => {
@@ -212,7 +207,7 @@ describe("Content Filter Evaluation", () => {
       // "spam" appears as first matching word
       const result = evaluateMessage("spam virus", ruleset)
       expect(result.matched).toBe(true)
-      expect(result.rule_id).toBe("filt_first")
+      expect(result).toMatchObject({ rule_id: "filt_first" })
     })
   })
 

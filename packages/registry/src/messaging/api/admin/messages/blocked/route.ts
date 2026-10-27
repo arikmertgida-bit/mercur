@@ -8,19 +8,15 @@ import type MessagingFiltersModuleService from "../../../../modules/messaging-fi
 import { AdminListBlockedType } from "../filters/validators"
 
 export const GET = async (
-  req: AuthenticatedMedusaRequest<AdminListBlockedType>,
+  req: AuthenticatedMedusaRequest<Partial<AdminListBlockedType>, AdminListBlockedType>,
   res: MedusaResponse
 ) => {
   const service = req.scope.resolve<MessagingFiltersModuleService>(
     MESSAGING_FILTERS_MODULE
   )
 
-  const limit = req.validatedQuery?.limit ?? 20
-  const filters: Record<string, any> = {}
-
-  if (req.validatedQuery?.sender_type) {
-    filters.sender_type = req.validatedQuery.sender_type
-  }
+  const { limit, sender_type } = req.validatedQuery
+  const filters = sender_type ? { sender_type } : {}
 
   const [logs, count] = await service.listAndCountBlockedMessageLogs(
     filters,

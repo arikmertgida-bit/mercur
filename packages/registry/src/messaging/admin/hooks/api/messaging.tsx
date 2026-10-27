@@ -1,4 +1,6 @@
 import {
+  InfiniteData,
+  QueryKey,
   useQuery,
   useInfiniteQuery,
   useMutation,
@@ -6,61 +8,25 @@ import {
   UseQueryOptions,
 } from "@tanstack/react-query"
 import { ClientError } from "@mercurjs/client"
-import { adminMessagesApi } from "../../lib/messaging-api"
+import { z } from "zod"
+import {
+  AdminConversationDetailResponse,
+  AdminConversationListResponse,
+  AdminConversationSchema,
+  AdminMessageSchema,
+  adminMessagesApi,
+} from "../../lib/messaging-api"
+
+export type { AdminConversationDetailResponse }
 
 const ADMIN_CONVERSATIONS_KEY = "admin_conversations" as const
 const ADMIN_CONVERSATION_KEY = "admin_conversation" as const
 
-export type AdminConversationDTO = {
-  id: string
-  buyer_id: string
-  seller_id: string
-  buyer_name?: string | null
-  buyer_email?: string | null
-  seller_name?: string | null
-  last_message_preview: string | null
-  last_message_sender_type: "customer" | "seller" | null
-  last_message_at: string | null
-  unread_count_customer: number
-  unread_count_seller: number
-  created_at: string
-  is_buyer_blocked?: boolean
-  block_reason?: string | null
-}
+export type AdminConversationDTO = z.infer<typeof AdminConversationSchema>
 
-export type AdminMessageDTO = {
-  id: string
-  sender_id: string
-  sender_type: "customer" | "seller"
-  body: string
-  context_type: "product" | "order" | null
-  context_id: string | null
-  context_label: string | null
-  read_at: string | null
-  created_at: string
-}
+export type AdminMessageDTO = z.infer<typeof AdminMessageSchema>
 
-type AdminConversationListResponse = {
-  conversations: AdminConversationDTO[]
-  next_cursor: string | null
-}
-
-export type AdminConversationDetailResponse = {
-  conversation: AdminConversationDTO
-  messages: AdminMessageDTO[]
-  next_cursor: string | null
-}
-
-type SearchParams = {
-  cursor?: string
-  limit?: number
-  seller_name?: string
-  buyer_name?: string
-  date_from?: string
-  date_to?: string
-  context_type?: string
-  context_id?: string
-}
+type SearchParams = Parameters<typeof adminMessagesApi.query>[0]
 
 export const useAdminConversations = (
   query?: SearchParams,
@@ -82,7 +48,13 @@ export const useAdminConversation = (
   const limit = query?.limit ?? 20
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, ...rest } =
-    useInfiniteQuery<AdminConversationDetailResponse, ClientError>({
+    useInfiniteQuery<
+      AdminConversationDetailResponse,
+      ClientError,
+      InfiniteData<AdminConversationDetailResponse, string | undefined>,
+      QueryKey,
+      string | undefined
+    >({
       queryKey: [ADMIN_CONVERSATION_KEY, id, { limit }],
       queryFn: async ({ pageParam }) =>
         adminMessagesApi.$id.query({
@@ -90,7 +62,7 @@ export const useAdminConversation = (
           limit,
           ...(pageParam ? { cursor: pageParam } : {}),
         }),
-      initialPageParam: undefined as string | undefined,
+      initialPageParam: undefined,
       getNextPageParam: (lastPage) => lastPage.next_cursor ?? undefined,
     })
 
@@ -112,7 +84,7 @@ export const useBlockCustomer = () => {
 
   return useMutation({
     mutationFn: async (data: { customer_id: string; reason?: string }) =>
-      adminMessagesApi["chat-blocks"].mutate(data),
+      adminMessagesApi.chatBlocks.mutate(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [ADMIN_CONVERSATIONS_KEY] })
       queryClient.invalidateQueries({ queryKey: [ADMIN_CONVERSATION_KEY] })
@@ -125,7 +97,7 @@ export const useUnblockCustomer = () => {
 
   return useMutation({
     mutationFn: async (customerId: string) =>
-      adminMessagesApi["chat-blocks"].$customer_id.delete({ $customer_id: customerId }),
+      adminMessagesApi.chatBlocks.$customerId.delete({ $customerId: customerId }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [ADMIN_CONVERSATIONS_KEY] })
       queryClient.invalidateQueries({ queryKey: [ADMIN_CONVERSATION_KEY] })

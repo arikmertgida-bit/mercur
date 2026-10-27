@@ -30,7 +30,9 @@ type CreateBuiltinFilterRuleInput = (typeof BUILTIN_RULES)[number]
 export default async function seedBuiltinRules({
   container,
 }: LoaderOptions): Promise<void> {
-  const service = container.resolve("filterRuleService") as IMedusaInternalService<typeof FilterRule>
+  const service = container.resolve<IMedusaInternalService<typeof FilterRule>>(
+    "filterRuleService"
+  )
 
   for (const rule of BUILTIN_RULES) {
     try {

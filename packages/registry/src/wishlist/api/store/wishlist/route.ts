@@ -62,16 +62,16 @@ export const GET = async (
     productIds.push(product.id);
   });
 
-  let context: object = {};
-
-  if (isPresent(req.pricingContext)) {
-    const pricingContext = { ...req.pricingContext, customer_id: customerId };
-    context = {
-      variants: {
-        calculated_price: QueryContext(pricingContext),
-      },
-    };
-  }
+  const context = isPresent(req.pricingContext)
+    ? {
+        variants: {
+          calculated_price: QueryContext({
+            ...req.pricingContext,
+            customer_id: customerId,
+          }),
+        },
+      }
+    : {};
 
   const { data: products, metadata } = await query.graph({
     entity: "product",

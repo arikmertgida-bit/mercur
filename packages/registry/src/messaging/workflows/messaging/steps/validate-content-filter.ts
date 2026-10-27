@@ -37,7 +37,7 @@ export const validateContentFilterStep = createStep(
         sender_id: input.sender_id,
         sender_type: input.sender_type,
         conversation_id: input.conversation_id,
-        matched_rule_id: result.rule_id!,
+        matched_rule_id: result.rule_id,
         message_body: input.body,
       })
 

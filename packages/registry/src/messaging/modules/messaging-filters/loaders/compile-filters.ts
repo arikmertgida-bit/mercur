@@ -42,9 +42,11 @@ type MessagingFiltersModuleService = {
 async function compileFilters(container: MedusaContainer): Promise<void> {
   let rules: FilterRuleDTO[]
   try {
-    const service = container.resolve("filterRuleService") as IMedusaInternalService<typeof FilterRule>
+    const service = container.resolve<IMedusaInternalService<typeof FilterRule>>(
+      "filterRuleService"
+    )
     const [results] = await service.listAndCount({ is_enabled: true }, { take: 1000 })
-    rules = results as FilterRuleDTO[]
+    rules = results
   } catch {
     try {
       const service = container.resolve<MessagingFiltersModuleService>("messagingFilters")

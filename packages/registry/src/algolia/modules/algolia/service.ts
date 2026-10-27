@@ -1,5 +1,4 @@
 import {
-  Action,
   Algoliasearch,
   BatchRequest,
   IndexSettings,
@@ -8,7 +7,13 @@ import {
   algoliasearch,
 } from "algoliasearch";
 
+import { Logger } from "@medusajs/framework/types";
+
 import { AlgoliaEntity, IndexType } from "./types";
+
+type InjectedDependencies = {
+  logger: Logger;
+};
 
 type ModuleOptions = {
   appId: string;
@@ -31,7 +36,7 @@ class AlgoliaModuleService {
   private options_: ModuleOptions;
   private algolia_: Algoliasearch;
 
-  constructor(_: object, options: ModuleOptions) {
+  constructor(_container: InjectedDependencies, options: ModuleOptions) {
     this.options_ = options;
     this.algolia_ = algoliasearch(this.options_.appId, this.options_.apiKey);
   }
@@ -56,7 +61,7 @@ class AlgoliaModuleService {
   batch(type: IndexType, toAdd: AlgoliaEntity[], toDelete: string[]) {
     const addRequests: BatchRequest[] = toAdd.map((entity) => {
       return {
-        action: "addObject" as Action,
+        action: "addObject",
         objectID: entity.id,
         body: entity,
       };
@@ -64,7 +69,7 @@ class AlgoliaModuleService {
 
     const deleteRequests: BatchRequest[] = toDelete.map((id) => {
       return {
-        action: "deleteObject" as Action,
+        action: "deleteObject",
         objectID: id,
         body: {},
       };
@@ -136,7 +141,7 @@ class AlgoliaModuleService {
     });
   }
 
-  search<T = Record<string, unknown>>(
+  search<T>(
     indexName: IndexType,
     params: SearchParams,
   ): Promise<SearchResponse<T>> {

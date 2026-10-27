@@ -114,10 +114,10 @@ export default async function algoliaIntermediateEventsBridgeHandler({
     await eventBus.emit(
       ids.map((id) => ({ name: intermediateEvent, data: { id } }))
     )
-  } catch (error: unknown) {
+  } catch (error) {
     logger.error(
       `Algolia bridge: failed to forward event ${event.name}:`,
-      error as Error
+      error instanceof Error ? error : new Error(String(error))
     )
     throw error
   }

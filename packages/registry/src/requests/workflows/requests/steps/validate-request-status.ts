@@ -1,8 +1,10 @@
 import { createStep } from "@medusajs/framework/workflows-sdk"
 import { ContainerRegistrationKeys, MedusaError } from "@medusajs/framework/utils"
-
-import { RequestCustomFields, RequestStatus } from "../../../types"
+import { parseGraphRow } from "@mercurjs/core/utils/graph-rows"
 import { Query } from "@mercurjs/types"
+import { z } from "zod"
+
+import { RequestStatus } from "../../../types"
 
 type ValidateRequestStatusStepInput = {
   alias: string
@@ -10,10 +12,12 @@ type ValidateRequestStatusStepInput = {
   expected_status: RequestStatus | RequestStatus[]
 }
 
-type RequestEntityGraph = {
-  id: string
-  custom_fields?: RequestCustomFields
-}
+const RequestEntityStatusRowSchema = z.object({
+  id: z.string(),
+  custom_fields: z
+    .object({ request_status: z.nativeEnum(RequestStatus) })
+    .nullish(),
+})
 
 export const validateRequestStatusStep = createStep(
   "validate-request-status",
@@ -32,7 +36,7 @@ export const validateRequestStatusStep = createStep(
       throw new MedusaError(MedusaError.Types.NOT_FOUND, "Request not found")
     }
 
-    const requestEntity = entity as RequestEntityGraph
+    const requestEntity = parseGraphRow(RequestEntityStatusRowSchema, entity)
     const status = requestEntity.custom_fields?.request_status
 
     const expected = Array.isArray(input.expected_status)

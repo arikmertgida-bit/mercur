@@ -1,7 +1,8 @@
 import { AuthenticatedMedusaRequest, MedusaResponse } from "@medusajs/framework"
 import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
+import { ensureDefined } from "@mercurjs/core/utils/ensure-defined"
 
-import { AdminRequestResponse, RequestEntityResponse } from "../../../../../../types"
+import { AdminRequestResponse } from "../../../../../../types"
 import { acceptRequestWorkflow } from "../../../../../../workflows/requests/workflows"
 import { AdminReviewNoteType } from "../../../validators"
 
@@ -11,8 +12,8 @@ export async function POST(
 ): Promise<void> {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
 
-  const alias = req.params.type!
-  const entityId = req.params.id!
+  const alias = ensureDefined(req.params.type, "Request type")
+  const entityId = ensureDefined(req.params.id, "Request id")
 
   await acceptRequestWorkflow(req.scope).run({
     input: {
@@ -31,5 +32,5 @@ export async function POST(
     filters: { id: entityId },
   })
 
-  res.json({ request: entity as RequestEntityResponse })
+  res.json({ request: entity })
 }

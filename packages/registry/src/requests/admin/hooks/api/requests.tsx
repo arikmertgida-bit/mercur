@@ -9,6 +9,7 @@ import { queryKeysFactory } from "@mercurjs/dashboard-shared";
 import { client } from "../../lib/client";
 import {
   ClientError,
+  InferClientInput,
   InferClientOutput,
 } from "@mercurjs/client";
 
@@ -19,12 +20,22 @@ export type RequestDTO = InferClientOutput<
   typeof client.admin.requests.$type.$id.query
 >["request"];
 
+type RequestsListQuery = Omit<
+  InferClientInput<typeof client.admin.requests.$type.query>,
+  "$type"
+>;
+
+type RequestDetailQuery = Omit<
+  InferClientInput<typeof client.admin.requests.$type.$id.query>,
+  "$type" | "$id"
+>;
+
 export const useRequests = (
   type: string,
-  query?: Record<string, any>,
+  query?: RequestsListQuery,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof client.admin.requests.$type.query>,
       ClientError,
       InferClientOutput<typeof client.admin.requests.$type.query>
     >,
@@ -49,10 +60,10 @@ export const useRequests = (
 export const useRequest = (
   type: string,
   id: string,
-  query?: Record<string, any>,
+  query?: RequestDetailQuery,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof client.admin.requests.$type.$id.query>,
       ClientError,
       InferClientOutput<typeof client.admin.requests.$type.$id.query>
     >,

@@ -3,6 +3,8 @@ import {
   MedusaResponse,
 } from "@medusajs/framework"
 
+import { ensureDefined } from "@mercurjs/core/utils/ensure-defined"
+
 import { MESSAGING_MODULE } from "../../../../../modules/messaging"
 import type MessagingModuleService from "../../../../../modules/messaging/service"
 import { unblockCustomerWorkflow } from "../../../../../workflows/messaging/workflows/unblock-customer"
@@ -12,9 +14,10 @@ export const GET = async (
   res: MedusaResponse
 ) => {
   const service = req.scope.resolve<MessagingModuleService>(MESSAGING_MODULE)
-  const blocked = await service.checkBuyersBlocked([req.params.customer_id])
+  const customerId = ensureDefined(req.params.customer_id, "Customer id")
+  const blocked = await service.checkBuyersBlocked([customerId])
 
-  res.json({ is_blocked: blocked.has(req.params.customer_id) })
+  res.json({ is_blocked: blocked.has(customerId) })
 }
 
 export const DELETE = async (
@@ -23,7 +26,7 @@ export const DELETE = async (
 ) => {
   await unblockCustomerWorkflow.run({
     container: req.scope,
-    input: { customer_id: req.params.customer_id },
+    input: { customer_id: ensureDefined(req.params.customer_id, "Customer id") },
   })
 
   res.status(200).json({ success: true })

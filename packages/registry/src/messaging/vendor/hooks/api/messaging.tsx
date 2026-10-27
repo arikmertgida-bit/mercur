@@ -1,4 +1,6 @@
 import {
+  InfiniteData,
+  QueryKey,
   useQuery,
   useInfiniteQuery,
   useMutation,
@@ -8,7 +10,20 @@ import {
 } from "@tanstack/react-query"
 import { queryKeysFactory } from "@mercurjs/dashboard-shared"
 import { ClientError } from "@mercurjs/client"
-import { vendorMessagesApi } from "../../lib/messaging-api"
+import { z } from "zod"
+import {
+  BuyerOrderSummarySchema,
+  ConversationDetailResponse,
+  ConversationListResponse,
+  ConversationSchema,
+  MarkReadResponse,
+  MessageSchema,
+  SendReplyResponse,
+  UnreadResponse,
+  vendorMessagesApi,
+} from "../../lib/messaging-api"
+
+export type { ConversationDetailResponse }
 
 const CONVERSATIONS_QUERY_KEY = "vendor_conversations" as const
 export const conversationsQueryKeys = queryKeysFactory(CONVERSATIONS_QUERY_KEY)
@@ -16,58 +31,14 @@ export const conversationsQueryKeys = queryKeysFactory(CONVERSATIONS_QUERY_KEY)
 const UNREAD_QUERY_KEY = "vendor_messaging_unread" as const
 export const unreadQueryKeys = queryKeysFactory(UNREAD_QUERY_KEY)
 
-export type ConversationDTO = {
-  id: string
-  seller_id: string
-  buyer_id: string
-  buyer_first_name?: string | null
-  last_message_preview: string | null
-  last_message_sender_type: "customer" | "seller" | null
-  last_message_at: string | null
-  unread_count_seller: number
-  created_at: string
-  updated_at: string
-  is_buyer_blocked?: boolean
-}
+export type ConversationDTO = z.infer<typeof ConversationSchema>
 
-export type MessageDTO = {
-  id: string
-  sender_type: "customer" | "seller"
-  body: string
-  context_type: "product" | "order" | null
-  context_id: string | null
-  context_label: string | null
-  read_at: string | null
-  created_at: string
-}
+export type MessageDTO = z.infer<typeof MessageSchema>
 
-export type BuyerOrderSummary = {
-  id: string
-  display_id: number | string
-  status: string
-  total: number
-  currency_code: string
-  created_at: string
-}
-
-type ConversationListResponse = {
-  conversations: ConversationDTO[]
-  next_cursor: string | null
-}
-
-export type ConversationDetailResponse = {
-  conversation: ConversationDTO
-  messages: MessageDTO[]
-  next_cursor: string | null
-  buyer_orders: BuyerOrderSummary[]
-}
-
-type UnreadResponse = {
-  unread_count: number
-}
+export type BuyerOrderSummary = z.infer<typeof BuyerOrderSummarySchema>
 
 export const useVendorConversations = (
-  query?: { cursor?: string; limit?: number },
+  query?: Parameters<typeof vendorMessagesApi.query>[0],
   options?: Omit<
     UseQueryOptions<ConversationListResponse, ClientError>,
     "queryKey" | "queryFn"
@@ -89,7 +60,13 @@ export const useVendorConversation = (
   const limit = query?.limit ?? 20
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, ...rest } =
-    useInfiniteQuery<ConversationDetailResponse, ClientError>({
+    useInfiniteQuery<
+      ConversationDetailResponse,
+      ClientError,
+      InfiniteData<ConversationDetailResponse, string | undefined>,
+      QueryKey,
+      string | undefined
+    >({
       queryKey: conversationsQueryKeys.detail(id, { limit }),
       queryFn: async ({ pageParam }) =>
         vendorMessagesApi.$id.query({
@@ -97,7 +74,7 @@ export const useVendorConversation = (
           limit,
           ...(pageParam ? { cursor: pageParam } : {}),
         }),
-      initialPageParam: undefined as string | undefined,
+      initialPageParam: undefined,
       getNextPageParam: (lastPage) => lastPage.next_cursor ?? undefined,
     })
 
@@ -133,7 +110,7 @@ export const useVendorUnread = (
 
 export const useSendVendorReply = (
   conversationId: string,
-  options?: UseMutationOptions<{ message: MessageDTO }, ClientError, { body: string }>
+  options?: UseMutationOptions<SendReplyResponse, ClientError, { body: string }>
 ) => {
   const queryClient = useQueryClient()
   const { onSuccess, onError, ...restOptions } = options ?? {}
@@ -160,7 +137,7 @@ export const useSendVendorReply = (
 
 export const useMarkVendorRead = (
   conversationId: string,
-  options?: UseMutationOptions<{ success: boolean }, ClientError, void>
+  options?: UseMutationOptions<MarkReadResponse, ClientError, void>
 ) => {
   const queryClient = useQueryClient()
   const { onSuccess, onError, ...restOptions } = options ?? {}

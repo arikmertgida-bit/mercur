@@ -19,13 +19,16 @@ import {
 } from "../../../modules/messaging/types/common"
 
 export const GET = async (
-  req: AuthenticatedMedusaRequest<StoreListConversationsType>,
+  req: AuthenticatedMedusaRequest<
+    Partial<StoreListConversationsType>,
+    StoreListConversationsType
+  >,
   res: MedusaResponse
 ) => {
   const service = req.scope.resolve<MessagingModuleService>(MESSAGING_MODULE)
   const customerId = req.auth_context.actor_id
 
-  const queryParams = (req.validatedQuery ?? {}) as StoreListConversationsType
+  const queryParams = req.validatedQuery
   const { data: conversations, next_cursor } =
     await service.listConversationsCursor(
       { buyer_id: customerId },
@@ -78,8 +81,9 @@ export const POST = async (
     { take: 1 }
   )
 
-  if (existing && existing.length > 0) {
-    conversation = existing[0]
+  const [existingConversation] = existing
+  if (existingConversation) {
+    conversation = existingConversation
   } else {
     const { result } = await createConversationWorkflow.run({
       container: req.scope,

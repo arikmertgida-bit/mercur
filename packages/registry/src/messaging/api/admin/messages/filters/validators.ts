@@ -1,6 +1,8 @@
 import { z } from "zod"
 
 export type AdminCreateFilterType = z.infer<typeof AdminCreateFilter>
+// The wire contract: `is_enabled` may be omitted (it defaults to true).
+export type AdminCreateFilterInput = z.input<typeof AdminCreateFilter>
 export const AdminCreateFilter = z.object({
   match_type: z.enum(["exact", "contains"]),
   pattern: z.string().min(1).max(500),

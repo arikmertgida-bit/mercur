@@ -3,14 +3,18 @@ import {
   ContainerRegistrationKeys,
   QueryContext
 } from '@medusajs/framework/utils'
+import type { SearchParamsObject } from 'algoliasearch'
+import { z } from 'zod'
 
 import { ALGOLIA_MODULE } from '../../../../modules/algolia'
 import { IAlgoliaModuleService, IndexType } from '../../../../modules/algolia/types'
 import { StoreSearchProductsType } from './validators'
 
-type AlgoliaHit = {
-  id: string
-}
+const AlgoliaHitSchema = z.object({
+  id: z.string()
+})
+
+type AlgoliaHit = z.infer<typeof AlgoliaHitSchema>
 
 export const POST = async (
   req: MedusaRequest<StoreSearchProductsType>,
@@ -33,7 +37,7 @@ export const POST = async (
     customer_group_id
   } = req.validatedBody
 
-  const searchParams: Record<string, unknown> = {
+  const searchParams: SearchParamsObject = {
     query: searchQuery,
     page,
     hitsPerPage,
@@ -56,7 +60,10 @@ export const POST = async (
     searchParams
   )
 
-  const productIds = algoliaResult.hits.map((hit) => hit.id)
+  const productIds = z
+    .array(AlgoliaHitSchema)
+    .parse(algoliaResult.hits)
+    .map((hit) => hit.id)
 
   if (productIds.length === 0) {
     return res.json({
@@ -75,17 +82,18 @@ export const POST = async (
   const hasPricingContext =
     currency_code || region_id || customer_id || customer_group_id
 
-  const contextParams: Record<string, unknown> = {}
-  if (hasPricingContext) {
-    contextParams.variants = {
-      calculated_price: QueryContext({
-        ...(currency_code && { currency_code }),
-        ...(region_id && { region_id }),
-        ...(customer_id && { customer_id }),
-        ...(customer_group_id && { customer_group_id })
-      })
-    }
-  }
+  const pricingContext = hasPricingContext
+    ? {
+        variants: {
+          calculated_price: QueryContext({
+            ...(currency_code && { currency_code }),
+            ...(region_id && { region_id }),
+            ...(customer_id && { customer_id }),
+            ...(customer_group_id && { customer_group_id })
+          })
+        }
+      }
+    : undefined
 
   const { data: products } = await query.graph({
     entity: 'product',
@@ -107,7 +115,7 @@ export const POST = async (
     filters: {
       id: productIds
     },
-    ...(Object.keys(contextParams).length > 0 && { context: contextParams })
+    ...(pricingContext && { context: pricingContext })
   })
 
   const productMap = new Map(products.map((p) => [p.id, p]))

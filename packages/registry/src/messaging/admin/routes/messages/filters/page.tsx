@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { z } from "zod"
 import {
   Badge,
   Button,
@@ -73,14 +74,23 @@ const FilterRow = ({
   )
 }
 
+// Custom rules cannot use the regex match type (built-in rules only).
+const CustomMatchTypeSchema = z.enum(["exact", "contains"])
+
+type CreateFilterFormState = {
+  match_type: z.infer<typeof CustomMatchTypeSchema>
+  pattern: string
+  description: string
+}
+
 const AdminFiltersPage = () => {
   const { filter_rules, isLoading, isError, error } = useAdminFilters()
   const createFilter = useCreateFilter()
   const deleteFilter = useDeleteFilter()
 
   const [showForm, setShowForm] = useState(false)
-  const [formState, setFormState] = useState({
-    match_type: "exact" as "exact" | "contains",
+  const [formState, setFormState] = useState<CreateFilterFormState>({
+    match_type: "exact",
     pattern: "",
     description: "",
   })
@@ -128,12 +138,12 @@ const AdminFiltersPage = () => {
                 <Label size="xsmall">Match Type</Label>
                 <Select
                   value={formState.match_type}
-                  onValueChange={(v) =>
-                    setFormState((s) => ({
-                      ...s,
-                      match_type: v as "exact" | "contains",
-                    }))
-                  }
+                  onValueChange={(v) => {
+                    const matchType = CustomMatchTypeSchema.safeParse(v)
+                    if (matchType.success) {
+                      setFormState((s) => ({ ...s, match_type: matchType.data }))
+                    }
+                  }}
                 >
                   <Select.Trigger>
                     <Select.Value />

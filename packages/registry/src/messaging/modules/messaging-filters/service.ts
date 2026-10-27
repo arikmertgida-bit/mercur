@@ -20,8 +20,8 @@ class MessagingFiltersModuleService extends MedusaService({
 
     // 1. Exact word match — O(1) per word via hash set
     for (const word of words) {
-      if (ruleset.exactWords.has(word)) {
-        const ruleId = ruleset.exactRules.get(word)
+      const ruleId = ruleset.exactRules.get(word)
+      if (ruleId !== undefined) {
         return {
           matched: true,
           rule_id: ruleId,

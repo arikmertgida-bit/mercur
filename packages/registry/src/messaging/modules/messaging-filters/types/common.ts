@@ -31,12 +31,14 @@ export interface CompiledRuleset {
   regexPatterns: Array<{ id: string; regex: RegExp }>
 }
 
-export interface FilterEvaluationResult {
-  matched: boolean
-  rule_id?: string
-  match_type?: MatchType
-  pattern?: string
-}
+export type FilterEvaluationResult =
+  | {
+      matched: true
+      rule_id: string
+      match_type: MatchType
+      pattern: string
+    }
+  | { matched: false }
 
 export interface AdminFilterRuleResponse {
   filter: FilterRuleDTO

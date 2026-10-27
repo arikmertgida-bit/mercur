@@ -60,7 +60,7 @@ export default async function reconcileUnreadCounts(
     )
   } catch (err) {
     logger.error(
-      `Messaging: reconcile-unread-counts error: ${(err as Error).message}`
+      `Messaging: reconcile-unread-counts error: ${err instanceof Error ? err.message : String(err)}`
     )
   }
 }

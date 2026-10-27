@@ -1,13 +1,10 @@
 import { createStep, StepResponse } from "@medusajs/framework/workflows-sdk"
 import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
 import { Query } from "@medusajs/framework/modules-sdk"
+import { HttpTypes } from "@medusajs/framework/types"
 
 type GetSellerProductsStepInput = {
   seller_id: string
-}
-
-type ProductSellerRelation = {
-  product: Record<string, string | number | boolean | null>
 }
 
 export const getSellerProductsStep = createStep(
@@ -35,7 +32,11 @@ export const getSellerProductsStep = createStep(
       },
     })
 
-    const products = (relations as ProductSellerRelation[]).map((relation) => relation.product)
+    // The selected fields mirror Medusa's own product export, so each linked
+    // product is handed to `generateProductCsvStep` unchanged.
+    const products: HttpTypes.AdminProduct[] = relations.map(
+      (relation) => relation.product
+    )
 
     return new StepResponse(products)
   }

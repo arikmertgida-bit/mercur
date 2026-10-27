@@ -5,42 +5,33 @@ import {
   UseQueryOptions,
   UseMutationOptions,
 } from "@tanstack/react-query"
-import { adminMessagesApi } from "../../lib/messaging-api"
+import {
+  BlockedListResponse,
+  BlockedMessageSchema,
+  FilterListResponse,
+  FilterRuleDeleteResponse,
+  FilterRuleResponse,
+  FilterRuleSchema,
+  adminMessagesApi,
+} from "../../lib/messaging-api"
 import { ClientError } from "@mercurjs/client"
+import { z } from "zod"
 
 const FILTERS_KEY = "admin_messaging_filters" as const
 const BLOCKED_KEY = "admin_messaging_blocked" as const
 
-export type FilterRuleDTO = {
-  id: string
-  match_type: "exact" | "contains" | "regex"
-  pattern: string
-  is_builtin: boolean
-  is_enabled: boolean
-  description: string | null
-  created_at: string
-  updated_at: string
-}
+export type FilterRuleDTO = z.infer<typeof FilterRuleSchema>
 
-export type BlockedMessageDTO = {
-  id: string
-  sender_id: string
-  sender_type: "customer" | "seller"
-  conversation_id: string
-  matched_rule_id: string
-  message_body: string
-  created_at: string
-}
+export type BlockedMessageDTO = z.infer<typeof BlockedMessageSchema>
 
-type FilterListResponse = {
-  filter_rules: FilterRuleDTO[]
-  count: number
-}
+type CreateFilterPayload = Parameters<typeof adminMessagesApi.filters.mutate>[0]
 
-type BlockedListResponse = {
-  blocked_messages: BlockedMessageDTO[]
-  count: number
-}
+type UpdateFilterPayload = Omit<
+  Parameters<typeof adminMessagesApi.filters.$id.mutate>[0],
+  "$id"
+>
+
+type BlockedListQuery = Parameters<typeof adminMessagesApi.blocked.query>[0]
 
 export const useAdminFilters = (
   options?: Omit<UseQueryOptions<FilterListResponse, ClientError>, "queryKey" | "queryFn">
@@ -56,9 +47,9 @@ export const useAdminFilters = (
 
 export const useCreateFilter = (
   options?: UseMutationOptions<
-    { filter_rule: FilterRuleDTO },
+    FilterRuleResponse,
     ClientError,
-    { match_type: string; pattern: string; description?: string; is_enabled?: boolean }
+    CreateFilterPayload
   >
 ) => {
   const queryClient = useQueryClient()
@@ -76,9 +67,9 @@ export const useCreateFilter = (
 export const useUpdateFilter = (
   id: string,
   options?: UseMutationOptions<
-    { filter_rule: FilterRuleDTO },
+    FilterRuleResponse,
     ClientError,
-    Record<string, string | boolean | null | undefined>
+    UpdateFilterPayload
   >
 ) => {
   const queryClient = useQueryClient()
@@ -95,7 +86,7 @@ export const useUpdateFilter = (
 }
 
 export const useDeleteFilter = (
-  options?: UseMutationOptions<{ id: string; deleted: boolean }, ClientError, string>
+  options?: UseMutationOptions<FilterRuleDeleteResponse, ClientError, string>
 ) => {
   const queryClient = useQueryClient()
 
@@ -110,7 +101,7 @@ export const useDeleteFilter = (
 }
 
 export const useAdminBlockedMessages = (
-  query?: { sender_type?: string; date_from?: string; date_to?: string },
+  query?: BlockedListQuery,
   options?: Omit<UseQueryOptions<BlockedListResponse, ClientError>, "queryKey" | "queryFn">
 ) => {
   const { data, ...rest } = useQuery({

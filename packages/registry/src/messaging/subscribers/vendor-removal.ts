@@ -20,7 +20,7 @@ export default async function vendorRemovalHandler({
     )
   } catch (err) {
     logger.error(
-      `Messaging: vendor removal handler error: ${(err as Error).message}`
+      `Messaging: vendor removal handler error: ${err instanceof Error ? err.message : String(err)}`
     )
   }
 }

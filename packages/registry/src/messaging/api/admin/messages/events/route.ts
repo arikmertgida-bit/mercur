@@ -5,6 +5,7 @@ import {
 
 import { MESSAGING_REDIS_MODULE } from "../../../../modules/messaging-redis"
 import type MessagingRedisModuleService from "../../../../modules/messaging-redis/service"
+import { parseMessagingEvent } from "../../../../modules/messaging-redis/service"
 
 export const GET = async (
   req: AuthenticatedMedusaRequest,
@@ -36,7 +37,10 @@ export const GET = async (
       // Admin receives ALL messaging events (no filtering)
       subscriber.on("message", (_channel: string, message: string) => {
         try {
-          const event = JSON.parse(message)
+          const event = parseMessagingEvent(message)
+          if (!event) {
+            return
+          }
           const eventId = event.message_id || `evt_${Date.now()}`
           const eventType = event.event_type || "message"
 
@@ -52,7 +56,9 @@ export const GET = async (
     res.write(`event: connected\ndata: {"status":"connected"}\n\n`)
 
     // Sanitize Last-Event-ID to prevent SSE frame injection
-    const lastEventId = req.headers["last-event-id"] as string | undefined
+    const lastEventIdHeader = req.headers["last-event-id"]
+    const lastEventId =
+      typeof lastEventIdHeader === "string" ? lastEventIdHeader : undefined
     if (lastEventId) {
       const sanitized = lastEventId.replace(/[\n\r]/g, "")
       res.write(`event: reconnected\ndata: ${JSON.stringify({ last_event_id: sanitized })}\n\n`)

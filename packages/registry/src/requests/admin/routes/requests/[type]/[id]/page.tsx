@@ -16,27 +16,25 @@ import { ExclamationCircleSolid, TriangleRightMini } from "@medusajs/icons";
 
 import { SingleColumnPage } from "@mercurjs/dashboard-shared";
 import {
+  RequestDTO,
   useRequest,
   useAcceptRequest,
   useRejectRequest,
 } from "../../../../hooks/api/requests";
-import { JsonValue } from "@mercurjs/types";
-import { InferClientOutput } from "@mercurjs/client";
 import { client } from "../../../../lib/client";
-import { RequestCustomFields } from "../../../../types";
 
 const DetailBreadcrumb = (props: UIMatch) => {
   const { type, id } = props.params || {};
-  const { request } = useRequest(type!, id!, {
+  const { request } = useRequest(type ?? "", id ?? "", undefined, {
     enabled: Boolean(type && id),
   });
 
-  if (!request) return null;
+  if (!request || !type) return null;
 
-  const nameKey = ENTITY_NAME_KEY[type!] ?? "name";
-  const name = request[nameKey as keyof typeof request];
+  const nameKey = ENTITY_NAME_KEY[type] ?? "name";
+  const name = request[nameKey];
 
-  return <span>{name ?? id}</span>;
+  return <span>{typeof name === "string" ? name : id}</span>;
 };
 
 export const handle = {
@@ -86,7 +84,7 @@ const ENTITY_NAME_KEY: Record<string, string> = {
   product_type: "value",
 };
 
-const formatFieldValue = (_key: string, value: JsonValue): string => {
+const formatFieldValue = (_key: string, value: RequestDTO[string]): string => {
   if (value === null || value === undefined) return "-";
   if (typeof value === "boolean") return value ? "Yes" : "No";
   return String(value);
@@ -113,29 +111,24 @@ const SectionRow = ({
   </div>
 );
 
-type SellerDetailResponse = InferClientOutput<typeof client.admin.sellers.$id.query>
-type UserDetailResponse = InferClientOutput<typeof client.admin.users.$id.query>
-
 const useSeller = (id?: string | null) => {
   const { data, ...rest } = useQuery({
     queryKey: ["seller", id],
-    queryFn: () => client.admin.sellers.$id.query({ $id: id! }),
+    queryFn: () => client.admin.sellers.$id.query({ $id: id ?? "" }),
     enabled: !!id,
   });
 
-  const sellerData = data as SellerDetailResponse | undefined
-  return { seller: sellerData?.seller, ...rest };
+  return { seller: data?.seller, ...rest };
 };
 
 const useUser = (id?: string | null) => {
   const { data, ...rest } = useQuery({
     queryKey: ["user", id],
-    queryFn: () => client.admin.users.$id.query({ $id: id! }),
+    queryFn: () => client.admin.users.$id.query({ $id: id ?? "" }),
     enabled: !!id,
   });
 
-  const userData = data as UserDetailResponse | undefined
-  return { user: userData?.user, ...rest };
+  return { user: data?.user, ...rest };
 };
 
 const RequestDetailPage = () => {
@@ -143,20 +136,25 @@ const RequestDetailPage = () => {
   const { t } = useTranslation();
   const prompt = usePrompt();
 
-  const { request, isLoading, isError, error } = useRequest(type!, id!);
+  const { request, isLoading, isError, error } = useRequest(
+    type ?? "",
+    id ?? "",
+    undefined,
+    { enabled: Boolean(type && id) },
+  );
 
   const { mutateAsync: acceptRequest, isPending: isAccepting } =
-    useAcceptRequest(type!, id!);
+    useAcceptRequest(type ?? "", id ?? "");
 
   const { mutateAsync: rejectRequest, isPending: isRejecting } =
-    useRejectRequest(type!, id!);
+    useRejectRequest(type ?? "", id ?? "");
 
-  const customFields = (request?.custom_fields ?? {}) as RequestCustomFields;
+  const customFields = request?.custom_fields;
 
   const { seller } = useSeller(customFields?.submitter_id);
   const { user } = useUser(customFields?.reviewer_id);
 
-  if (isLoading || !request) {
+  if (isLoading || !request || !type) {
     return (
       <SingleColumnPage>
         <Container className="animate-pulse p-6">
@@ -170,10 +168,10 @@ const RequestDetailPage = () => {
 
   const status = customFields?.request_status ?? "draft";
   const isPending = status === "pending";
-  const entityFields = ENTITY_FIELDS[type!] ?? [];
-  const typeLabel = TYPE_LABELS[type!] ?? type;
-  const nameKey = ENTITY_NAME_KEY[type!] ?? "name";
-  const entityName = String(request[nameKey as keyof typeof request] ?? request.id);
+  const entityFields = ENTITY_FIELDS[type] ?? [];
+  const typeLabel = TYPE_LABELS[type] ?? type;
+  const nameKey = ENTITY_NAME_KEY[type] ?? "name";
+  const entityName = String(request[nameKey] ?? request.id);
 
   const handleAccept = async () => {
     const res = await prompt({
@@ -271,13 +269,13 @@ const RequestDetailPage = () => {
           </div>
         </div>
         {entityFields.map(({ key, label }) => {
-          const value = request[key as keyof typeof request];
+          const value = request[key];
           if (value === undefined || value === null) return null;
           return (
             <SectionRow
               key={key}
               title={label}
-              value={formatFieldValue(key, value as JsonValue)}
+              value={formatFieldValue(key, value)}
             />
           );
         })}
@@ -350,7 +348,7 @@ const RequestDetailPage = () => {
               </div>
             ) : (
               <Text size="small" className="text-ui-fg-muted">
-                {customFields.reviewer_id}
+                {customFields?.reviewer_id}
               </Text>
             )}
           </div>

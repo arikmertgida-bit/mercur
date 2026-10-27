@@ -2,6 +2,8 @@ import { MedusaNextFunction, AuthenticatedMedusaRequest, MedusaResponse } from "
 import { MercurModules } from "@mercurjs/types"
 import type { CustomFieldsModuleService } from "@mercurjs/core/modules/custom-fields"
 
+import { RequestStatusFilterSchema } from "../../../../types"
+
 export function applyRequestCustomFieldsFilter() {
   return async function (
     req: AuthenticatedMedusaRequest,
@@ -11,11 +13,15 @@ export function applyRequestCustomFieldsFilter() {
     const customFieldsService = req.scope.resolve<CustomFieldsModuleService>(MercurModules.CUSTOM_FIELDS)
 
     const filters: Record<string, string | string[]> = {
-      submitter_id: req.auth_context!.actor_id,
+      submitter_id: req.auth_context.actor_id,
     }
 
-    if (req.filterableFields.request_status) {
-      filters.request_status = req.filterableFields.request_status as string | string[]
+    const requestStatus = RequestStatusFilterSchema.optional().parse(
+      req.filterableFields.request_status
+    )
+
+    if (requestStatus) {
+      filters.request_status = requestStatus
       delete req.filterableFields.request_status
     }
 

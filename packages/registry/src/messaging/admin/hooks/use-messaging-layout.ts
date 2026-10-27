@@ -10,9 +10,10 @@ export function useMessagingLayout() {
   useCollapsedSidebar()
 
   useLayoutEffect(() => {
-    const main = document.querySelector("main") as HTMLElement | null
-    const contentCol = main?.parentElement as HTMLElement | null
-    const gutter = main?.firstElementChild as HTMLElement | null
+    const main = document.querySelector("main")
+    const contentCol = main?.parentElement ?? null
+    const firstChild = main?.firstElementChild
+    const gutter = firstChild instanceof HTMLElement ? firstChild : null
 
     const origMain = main?.style.cssText ?? ""
     const origCol = contentCol?.style.cssText ?? ""

@@ -1,3 +1,4 @@
+import type { SearchParams } from 'meilisearch'
 import { z } from 'zod'
 
 const removeTags = (value: string) => {
@@ -119,6 +120,6 @@ export type MeilisearchSearchResult = {
 export interface IMeilisearchModuleService {
   search(
     query: string,
-    options: Record<string, unknown>
+    options: SearchParams
   ): Promise<MeilisearchSearchResult>
 }

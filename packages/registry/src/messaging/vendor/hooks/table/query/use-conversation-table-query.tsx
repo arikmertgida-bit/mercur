@@ -16,7 +16,7 @@ export const useConversationTableQuery = ({
 
   const { offset, order } = queryObject
 
-  const searchParams: Record<string, any> = {
+  const searchParams = {
     limit: pageSize,
     offset: offset ? Number(offset) : 0,
     order: order ? order : "-last_message_at",

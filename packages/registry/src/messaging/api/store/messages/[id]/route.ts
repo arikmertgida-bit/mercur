@@ -3,6 +3,7 @@ import {
   MedusaResponse,
 } from "@medusajs/framework"
 import { MedusaError } from "@medusajs/framework/utils"
+import { ensureDefined } from "@mercurjs/core/utils/ensure-defined"
 
 import { MESSAGING_MODULE } from "../../../../modules/messaging"
 import type MessagingModuleService from "../../../../modules/messaging/service"
@@ -11,29 +12,27 @@ import { resolveContextLabel } from "../helpers"
 import { StoreGetMessagesType, StoreSendMessageType } from "../validators"
 
 export const GET = async (
-  req: AuthenticatedMedusaRequest<StoreGetMessagesType>,
+  req: AuthenticatedMedusaRequest<Partial<StoreGetMessagesType>, StoreGetMessagesType>,
   res: MedusaResponse
 ) => {
   const service = req.scope.resolve<MessagingModuleService>(MESSAGING_MODULE)
   const customerId = req.auth_context.actor_id
-  const conversationId = req.params.id!
+  const conversationId = ensureDefined(req.params.id, "Conversation id")
 
   // Verify ownership
-  const conversations = await service.listConversations(
+  const [conversation] = await service.listConversations(
     { id: conversationId, buyer_id: customerId },
     { take: 1 }
   )
 
-  if (!conversations || conversations.length === 0) {
+  if (!conversation) {
     throw new MedusaError(
       MedusaError.Types.NOT_FOUND,
       "Conversation not found"
     )
   }
 
-  const conversation = conversations[0]!
-
-  const queryParams = (req.validatedQuery ?? {}) as StoreGetMessagesType
+  const queryParams = req.validatedQuery
   const { data: messages, next_cursor } = await service.listMessagesCursor(
     conversationId,
     {
@@ -51,22 +50,20 @@ export const POST = async (
 ) => {
   const service = req.scope.resolve<MessagingModuleService>(MESSAGING_MODULE)
   const customerId = req.auth_context.actor_id
-  const conversationId = req.params.id!
+  const conversationId = ensureDefined(req.params.id, "Conversation id")
 
   // Verify ownership
-  const conversations = await service.listConversations(
+  const [conversation] = await service.listConversations(
     { id: conversationId, buyer_id: customerId },
     { take: 1 }
   )
 
-  if (!conversations || conversations.length === 0) {
+  if (!conversation) {
     throw new MedusaError(
       MedusaError.Types.NOT_FOUND,
       "Conversation not found"
     )
   }
-
-  const conversation = conversations[0]!
 
   // Check if buyer is blocked from chat
   const blocked = await service.checkBuyersBlocked([customerId])

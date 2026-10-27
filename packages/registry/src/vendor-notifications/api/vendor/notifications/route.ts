@@ -1,12 +1,9 @@
 import { AuthenticatedMedusaRequest, MedusaResponse } from "@medusajs/framework"
 import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
-
-type VendorRequest = AuthenticatedMedusaRequest & {
-  seller_context?: { seller_id: string }
-}
+import { getSellerId } from "@mercurjs/core/api/utils/seller-context"
 
 export async function GET(
-  req: VendorRequest,
+  req: AuthenticatedMedusaRequest,
   res: MedusaResponse
 ): Promise<void> {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
@@ -14,7 +11,7 @@ export async function GET(
   const { data: notifications, metadata } = await query.graph({
     entity: "notification",
     fields: req.queryConfig.fields,
-    filters: { channel: "seller_feed", to: req.seller_context!.seller_id },
+    filters: { channel: "seller_feed", to: getSellerId(req) },
     pagination: req.queryConfig.pagination,
   })
 

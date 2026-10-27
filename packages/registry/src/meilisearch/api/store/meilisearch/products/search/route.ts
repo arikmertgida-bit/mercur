@@ -65,17 +65,18 @@ export const POST = async (
   const hasPricingContext =
     currency_code || region_id || customer_id || customer_group_id
 
-  const contextParams: Record<string, unknown> = {}
-  if (hasPricingContext) {
-    contextParams.variants = {
-      calculated_price: QueryContext({
-        ...(currency_code && { currency_code }),
-        ...(region_id && { region_id }),
-        ...(customer_id && { customer_id }),
-        ...(customer_group_id && { customer_group_id }),
-      }),
-    }
-  }
+  const pricingContext = hasPricingContext
+    ? {
+        variants: {
+          calculated_price: QueryContext({
+            ...(currency_code && { currency_code }),
+            ...(region_id && { region_id }),
+            ...(customer_id && { customer_id }),
+            ...(customer_group_id && { customer_group_id }),
+          }),
+        },
+      }
+    : undefined
 
   const { data: products } = await query.graph({
     entity: 'product',
@@ -95,7 +96,7 @@ export const POST = async (
       'sellers.*',
     ],
     filters: { id: productIds },
-    ...(Object.keys(contextParams).length > 0 && { context: contextParams }),
+    ...(pricingContext && { context: pricingContext }),
   })
 
   const productMap = new Map(products.map((p) => [p.id, p]))

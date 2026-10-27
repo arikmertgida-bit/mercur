@@ -126,9 +126,9 @@ const Notifications = () => {
         </Drawer.Header>
         <Drawer.Body className="overflow-y-auto px-0">
           <InfiniteList<
-            VendorNotificationListResponse,
+            "notifications",
             VendorNotification,
-            VendorNotificationListParams
+            VendorNotificationListResponse
           >
             responseKey="notifications"
             queryKey={notificationQueryKeys.all}

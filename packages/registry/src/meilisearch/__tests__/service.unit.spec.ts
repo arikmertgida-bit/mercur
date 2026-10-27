@@ -17,7 +17,7 @@ const mockIndex = jest.fn().mockReturnValue({
 })
 
 jest.mock('meilisearch', () => ({
-  MeiliSearch: jest.fn().mockImplementation(() => ({
+  Meilisearch: jest.fn().mockImplementation(() => ({
     index: mockIndex,
     config: { host: 'http://localhost:7700' },
   })),

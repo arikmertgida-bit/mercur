@@ -1,5 +1,6 @@
 import { AuthenticatedMedusaRequest, MedusaResponse } from "@medusajs/framework"
 import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
+import { ensureDefined } from "@mercurjs/core/utils/ensure-defined"
 
 import { AdminRequestListResponse } from "../../../../types"
 import { AdminGetRequestsParamsType } from "../validators"
@@ -10,7 +11,7 @@ export async function GET(
 ): Promise<void> {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
 
-  const alias = req.params.type!
+  const alias = ensureDefined(req.params.type, "Request type")
 
   const { data: entities, metadata } = await query.graph({
     entity: alias,

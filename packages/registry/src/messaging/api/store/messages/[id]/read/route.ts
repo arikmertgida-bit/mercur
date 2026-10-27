@@ -3,6 +3,7 @@ import {
   MedusaResponse,
 } from "@medusajs/framework"
 import { MedusaError } from "@medusajs/framework/utils"
+import { ensureDefined } from "@mercurjs/core/utils/ensure-defined"
 
 import { MESSAGING_MODULE } from "../../../../../modules/messaging"
 import type MessagingModuleService from "../../../../../modules/messaging/service"
@@ -14,15 +15,15 @@ export const POST = async (
 ) => {
   const service = req.scope.resolve<MessagingModuleService>(MESSAGING_MODULE)
   const customerId = req.auth_context.actor_id
-  const conversationId = req.params.id!
+  const conversationId = ensureDefined(req.params.id, "Conversation id")
 
   // Verify ownership
-  const conversations = await service.listConversations(
+  const [conversation] = await service.listConversations(
     { id: conversationId, buyer_id: customerId },
     { take: 1 }
   )
 
-  if (!conversations || conversations.length === 0) {
+  if (!conversation) {
     throw new MedusaError(
       MedusaError.Types.NOT_FOUND,
       "Conversation not found"
@@ -35,7 +36,7 @@ export const POST = async (
       conversation_id: conversationId,
       reader_id: customerId,
       reader_type: "customer",
-      sender_id: conversations[0]!.seller_id,
+      sender_id: conversation.seller_id,
     },
   })
 

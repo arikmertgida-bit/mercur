@@ -1,4 +1,35 @@
 import Redis from "ioredis"
+import { JsonValueSchema } from "@mercurjs/core/utils/json-schema"
+import type { JsonRecord } from "@mercurjs/types"
+import { z } from "zod"
+
+/**
+ * An event on the `messaging` channel. Subscribers re-validate it, since
+ * anything with access to the Redis instance can publish on the channel.
+ */
+export const MessagingEventSchema = z
+  .object({
+    message_id: z.string().nullish(),
+    event_type: z.string().nullish(),
+    recipient_id: z.string().nullish(),
+    sender_id: z.string().nullish(),
+  })
+  .catchall(JsonValueSchema)
+
+export type MessagingEvent = z.infer<typeof MessagingEventSchema>
+
+/** Parses a raw pub/sub payload; `null` when it is not a messaging event. */
+export function parseMessagingEvent(message: string): MessagingEvent | null {
+  try {
+    const parsed = MessagingEventSchema.safeParse(JSON.parse(message))
+    return parsed.success ? parsed.data : null
+  } catch {
+    return null
+  }
+}
+
+// The Lua script below returns the INCR result, an integer.
+const RateLimitCountSchema = z.number()
 
 type MessagingRedisModuleOptions = {
   redisUrl?: string
@@ -61,16 +92,16 @@ class MessagingRedisModuleService {
       end
       return count
     `
-    const count = await this.connection_.eval(
-      luaScript, 1, key, windowSeconds
-    ) as number
+    const count = RateLimitCountSchema.parse(
+      await this.connection_.eval(luaScript, 1, key, windowSeconds)
+    )
 
     return { allowed: count <= limit, count }
   }
 
   // --- Pub/Sub: publish ---
 
-  async publish(channel: string, data: Record<string, unknown>): Promise<void> {
+  async publish(channel: string, data: JsonRecord): Promise<void> {
     if (!this.connection_) return
     await this.connection_.publish(channel, JSON.stringify(data))
   }

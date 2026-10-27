@@ -1,11 +1,21 @@
 import { PaginatedResponse, JsonValue } from "@mercurjs/types"
+import { z } from "zod"
 
-export enum RequestStatus {
-  DRAFT = "draft",
-  PENDING = "pending",
-  ACCEPTED = "accepted",
-  REJECTED = "rejected",
-}
+// A const object rather than a TS `enum`: the dashboards send the status as
+// a plain string literal, which a nominal enum type would not accept.
+export const RequestStatus = {
+  DRAFT: "draft",
+  PENDING: "pending",
+  ACCEPTED: "accepted",
+  REJECTED: "rejected",
+} as const
+
+export type RequestStatus = (typeof RequestStatus)[keyof typeof RequestStatus]
+
+export const RequestStatusFilterSchema = z.union([
+  z.nativeEnum(RequestStatus),
+  z.array(z.nativeEnum(RequestStatus)),
+])
 
 export interface RequestCustomFields {
   id: string

@@ -1,4 +1,6 @@
 import { z } from 'zod'
+import { JsonRecordSchema } from '@mercurjs/core/utils/json-schema'
+import type { SearchParamsObject } from 'algoliasearch'
 
 const removeTags = (value: string) => {
   let result = value
@@ -129,7 +131,8 @@ export const AlgoliaProductValidator = z.object({
       })
     )
     .optional(),
-  variants: z.any().nullable().default(null),
+  // Variants with each option flattened onto them as `{ [title]: value }`.
+  variants: z.array(JsonRecordSchema).nullable().default(null),
   sku: z.string().nullable().optional(),
   ean: z.string().nullable().optional(),
   upc: z.string().nullable().optional(),
@@ -169,8 +172,8 @@ export type AlgoliaSearchResult<T> = {
 }
 
 export interface IAlgoliaModuleService {
-  search<T = Record<string, unknown>>(
+  search<T>(
     indexName: IndexType,
-    params: Record<string, unknown>
+    params: SearchParamsObject
   ): Promise<AlgoliaSearchResult<T>>
 }

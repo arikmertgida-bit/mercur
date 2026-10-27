@@ -1,5 +1,6 @@
 import { SubscriberArgs, SubscriberConfig } from "@medusajs/framework"
-import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
+import { INotificationModuleService } from "@medusajs/framework/types"
+import { ContainerRegistrationKeys, Modules } from "@medusajs/framework/utils"
 
 import { MESSAGING_REDIS_MODULE } from "../modules/messaging-redis"
 import type MessagingRedisModuleService from "../modules/messaging-redis/service"
@@ -96,8 +97,9 @@ export default async function messageNotificationHandler({
     // Send notification via Medusa notification module
     // Privacy: no message body included in email
     try {
-      const notificationService: { createNotifications: (data: Record<string, unknown>) => Promise<void> } =
-        container.resolve("notification")
+      const notificationService = container.resolve<INotificationModuleService>(
+        Modules.NOTIFICATION
+      )
       await notificationService.createNotifications({
         to: recipientEmail,
         channel: "email",
@@ -113,12 +115,12 @@ export default async function messageNotificationHandler({
       )
     } catch (err) {
       logger.warn(
-        `Messaging: failed to send email notification: ${(err as Error).message}`
+        `Messaging: failed to send email notification: ${err instanceof Error ? err.message : String(err)}`
       )
     }
   } catch (err) {
     logger.error(
-      `Messaging: notification handler error: ${(err as Error).message}`
+      `Messaging: notification handler error: ${err instanceof Error ? err.message : String(err)}`
     )
   }
 }

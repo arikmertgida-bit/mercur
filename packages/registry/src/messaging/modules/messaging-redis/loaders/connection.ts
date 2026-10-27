@@ -2,6 +2,11 @@ import { LoaderOptions } from "@medusajs/framework/types"
 import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
 import { asValue } from "@medusajs/framework/awilix"
 import Redis from "ioredis"
+import { z } from "zod"
+
+const MessagingRedisOptionsSchema = z.object({
+  redisUrl: z.string().optional(),
+})
 
 export default async function messagingRedisConnectionLoader({
   container,
@@ -9,7 +14,7 @@ export default async function messagingRedisConnectionLoader({
 }: LoaderOptions): Promise<void> {
   const logger = container.resolve(ContainerRegistrationKeys.LOGGER)
 
-  const redisUrl = options?.redisUrl as string | undefined
+  const { redisUrl } = MessagingRedisOptionsSchema.parse(options ?? {})
 
   if (!redisUrl) {
     logger.warn(
@@ -36,7 +41,7 @@ export default async function messagingRedisConnectionLoader({
     logger.info("[messaging-redis] Connected to Redis")
   } catch (err) {
     logger.error(
-      `[messaging-redis] Failed to connect to Redis: ${(err as Error).message}`
+      `[messaging-redis] Failed to connect to Redis: ${err instanceof Error ? err.message : String(err)}`
     )
     container.register("messagingRedisConnection", asValue(null))
   }

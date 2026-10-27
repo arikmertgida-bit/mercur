@@ -5,6 +5,7 @@ import {
 
 import { MESSAGING_REDIS_MODULE } from "../../../../modules/messaging-redis"
 import type MessagingRedisModuleService from "../../../../modules/messaging-redis/service"
+import { parseMessagingEvent } from "../../../../modules/messaging-redis/service"
 
 export const GET = async (
   req: AuthenticatedMedusaRequest,
@@ -37,7 +38,10 @@ export const GET = async (
 
       subscriber.on("message", (_channel: string, message: string) => {
         try {
-          const event = JSON.parse(message)
+          const event = parseMessagingEvent(message)
+          if (!event) {
+            return
+          }
 
           // Only deliver events for this vendor
           if (event.recipient_id !== sellerId && event.sender_id !== sellerId) {
@@ -60,7 +64,9 @@ export const GET = async (
     res.write(`event: connected\ndata: {"status":"connected"}\n\n`)
 
     // Handle Last-Event-ID for reconnection (sanitize to prevent SSE frame injection)
-    const lastEventId = req.headers["last-event-id"] as string | undefined
+    const lastEventIdHeader = req.headers["last-event-id"]
+    const lastEventId =
+      typeof lastEventIdHeader === "string" ? lastEventIdHeader : undefined
     if (lastEventId) {
       const sanitized = lastEventId.replace(/[\n\r]/g, "")
       res.write(`event: reconnected\ndata: ${JSON.stringify({ last_event_id: sanitized })}\n\n`)

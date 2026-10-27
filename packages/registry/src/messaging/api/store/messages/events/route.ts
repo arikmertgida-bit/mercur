@@ -2,9 +2,10 @@ import { MedusaRequest, MedusaResponse } from "@medusajs/framework"
 
 import { MESSAGING_REDIS_MODULE } from "../../../../modules/messaging-redis"
 import type MessagingRedisModuleService from "../../../../modules/messaging-redis/service"
+import { parseMessagingEvent } from "../../../../modules/messaging-redis/service"
 
 export const GET = async (req: MedusaRequest, res: MedusaResponse) => {
-  const token = req.query.token as string | undefined
+  const token = typeof req.query.token === "string" ? req.query.token : undefined
 
   if (!token) {
     res.status(401).json({ message: "Missing token" })
@@ -56,7 +57,10 @@ export const GET = async (req: MedusaRequest, res: MedusaResponse) => {
 
       subscriber.on("message", (_channel: string, message: string) => {
         try {
-          const event = JSON.parse(message)
+          const event = parseMessagingEvent(message)
+          if (!event) {
+            return
+          }
 
           // Only deliver events for this buyer
           if (event.recipient_id !== customerId && event.sender_id !== customerId) {
@@ -78,7 +82,8 @@ export const GET = async (req: MedusaRequest, res: MedusaResponse) => {
     res.write(`event: connected\ndata: {"status":"connected"}\n\n`)
 
     // Handle Last-Event-ID (sanitize to prevent SSE frame injection)
-    const lastEventId = req.query.last_event_id as string | undefined
+    const lastEventId =
+      typeof req.query.last_event_id === "string" ? req.query.last_event_id : undefined
     if (lastEventId) {
       const sanitized = lastEventId.replace(/[\n\r]/g, "")
       res.write(`event: reconnected\ndata: ${JSON.stringify({ last_event_id: sanitized })}\n\n`)

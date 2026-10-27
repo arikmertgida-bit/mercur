@@ -7,10 +7,10 @@ import { MedusaError } from "@medusajs/framework/utils"
 import { MESSAGING_FILTERS_MODULE } from "../../../../modules/messaging-filters"
 import type MessagingFiltersModuleService from "../../../../modules/messaging-filters/service"
 import { createFilterRuleWorkflow } from "../../../../workflows/messaging-filters/workflows/create-filter-rule"
-import { AdminCreateFilterType, AdminListFiltersType } from "./validators"
+import { AdminCreateFilterInput, AdminListFiltersType } from "./validators"
 
 export const GET = async (
-  req: AuthenticatedMedusaRequest<AdminListFiltersType>,
+  req: AuthenticatedMedusaRequest<Partial<AdminListFiltersType>, AdminListFiltersType>,
   res: MedusaResponse
 ) => {
   const service = req.scope.resolve<MessagingFiltersModuleService>(
@@ -31,7 +31,7 @@ export const GET = async (
 }
 
 export const POST = async (
-  req: AuthenticatedMedusaRequest<AdminCreateFilterType>,
+  req: AuthenticatedMedusaRequest<AdminCreateFilterInput>,
   res: MedusaResponse
 ) => {
   const { match_type, pattern, description, is_enabled } = req.validatedBody

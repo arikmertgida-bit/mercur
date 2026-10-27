@@ -1,5 +1,5 @@
 import { useRef, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useRequiredParam } from "@mercurjs/dashboard-shared"
 import { Badge, Button, Container, Heading, Input, Label, Text, clx, toast, usePrompt } from "@medusajs/ui"
 
 import {
@@ -55,7 +55,7 @@ const MessageRow = ({ message }: { message: AdminMessageDTO }) => {
 }
 
 const AdminConversationDetailPage = () => {
-  const { id } = useParams<{ id: string }>()
+  const id = useRequiredParam("id")
   useAdminMessagingSSE(id)
   const prompt = usePrompt()
 
@@ -75,7 +75,7 @@ const AdminConversationDetailPage = () => {
     isLoading,
     isError,
     error,
-  } = useAdminConversation(id!)
+  } = useAdminConversation(id)
 
   const handleBlock = () => {
     if (!conversation?.buyer_id) return

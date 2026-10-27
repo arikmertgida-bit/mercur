@@ -1,4 +1,5 @@
 import { createStep, StepResponse } from "@medusajs/framework/workflows-sdk"
+import { HttpTypes } from "@medusajs/framework/types"
 import { MedusaError } from "@medusajs/framework/utils"
 import { z } from "zod"
 
@@ -59,7 +60,7 @@ const CreateProduct = z.object({
 })
 
 type ValidateProductsToImportStepInput = {
-  products: Record<string, any>[]
+  products: HttpTypes.AdminCreateProduct[]
 }
 
 export const validateProductsToImportStep = createStep(

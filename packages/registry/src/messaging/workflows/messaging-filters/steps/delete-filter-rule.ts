@@ -16,15 +16,13 @@ export const deleteFilterRuleStep = createStep(
       MESSAGING_FILTERS_MODULE
     )
 
-    const existing = await service.listFilterRules({ id: input.id })
-    if (!existing || existing.length === 0) {
+    const [current] = await service.listFilterRules({ id: input.id })
+    if (!current) {
       throw new MedusaError(
         MedusaError.Types.NOT_FOUND,
         `Filter rule ${input.id} not found`
       )
     }
-
-    const current = existing[0]!
 
     if (current.is_builtin) {
       throw new MedusaError(

@@ -5,51 +5,94 @@ import {
   ContainerRegistrationKeys,
   arrayDifference,
 } from '@medusajs/framework/utils'
+import { parseGraphRow, parseGraphRows } from '@mercurjs/core/utils/graph-rows'
+import type { JsonRecord } from '@mercurjs/types'
 
 import {
   AlgoliaProductValidator,
   AlgoliaVariantValidator
 } from '../../modules/algolia/types'
 
-type VariantInventoryGraph = {
-  inventory_items?: Array<{
-    inventory?: {
-      location_levels?: Array<{ location_id: string }>
+const VariantInventoryRowSchema = z.object({
+  inventory_items: z
+    .array(
+      z.object({
+        inventory: z
+          .object({
+            location_levels: z
+              .array(z.object({ location_id: z.string() }))
+              .nullish()
+          })
+          .nullish()
+      })
+    )
+    .nullish()
+})
+
+const StockLocationRowSchema = z.object({
+  fulfillment_sets: z
+    .array(
+      z.object({
+        service_zones: z
+          .array(
+            z.object({
+              geo_zones: z
+                .array(z.object({ country_code: z.string() }))
+                .nullish()
+            })
+          )
+          .nullish()
+      })
+    )
+    .nullish()
+})
+
+const ProductSellerRowSchema = z.object({
+  seller: z
+    .object({
+      id: z.string(),
+      handle: z.string().nullable(),
+      status: z.string().nullable()
+    })
+    .nullish()
+})
+
+const ProductOptionRowSchema = z.object({
+  title: z.string().nullish(),
+  values: z.array(z.object({ value: z.string() })).nullish()
+})
+
+const AlgoliaProductRowSchema = z.object({
+  id: z.string(),
+  options: z.array(ProductOptionRowSchema).nullish(),
+  variants: z.array(AlgoliaVariantValidator).nullish()
+})
+
+type ProductOptionRow = z.infer<typeof ProductOptionRowSchema>
+type AlgoliaVariant = z.infer<typeof AlgoliaVariantValidator>
+
+function flattenProductOptions(
+  options: ProductOptionRow[]
+): Record<string, string>[] {
+  return options.flatMap((option) => {
+    const title = option.title
+    if (!title || !option.values) {
+      return []
     }
-  }>
+    return option.values.map((value) => ({
+      [title.toLowerCase()]: value.value
+    }))
+  })
 }
 
-type StockLocationGraph = {
-  fulfillment_sets?: Array<{
-    service_zones?: Array<{
-      geo_zones?: Array<{ country_code: string }>
-    }>
-  }>
-}
-
-type ProductSellerGraph = {
-  seller?: {
-    id: string
-    handle: string | null
-    status: string | null
-  } | null
-}
-
-type ProductOptionGraph = {
-  title?: string
-  values?: Array<{ value: string }>
-}
-
-type VariantOptionGraph = {
-  value: string
-  option?: { title: string }
-}
-
-type AlgoliaProductGraph = {
-  id: string
-  status?: string
-  options?: ProductOptionGraph[]
-  variants?: Array<Record<string, string | number | boolean | null | VariantOptionGraph[]>>
+function flattenVariantOptions(variant: AlgoliaVariant): JsonRecord {
+  const entry: JsonRecord = { ...variant }
+  for (const item of variant.options) {
+    if (item.option.title) {
+      entry[item.option.title.toLowerCase()] = item.value
+    }
+  }
+  return entry
 }
 
 async function selectProductVariantsSupportedCountries(
@@ -67,7 +110,7 @@ async function selectProductVariantsSupportedCountries(
 
   let location_ids: string[] = []
 
-  for (const variant of variants as VariantInventoryGraph[]) {
+  for (const variant of parseGraphRows(VariantInventoryRowSchema, variants)) {
     const inventory_items =
       variant.inventory_items?.map((item) => item.inventory) || []
     const locations = inventory_items
@@ -87,7 +130,7 @@ async function selectProductVariantsSupportedCountries(
 
   let country_codes: string[] = []
 
-  for (const location of stock_locations as StockLocationGraph[]) {
+  for (const location of parseGraphRows(StockLocationRowSchema, stock_locations)) {
     const fulfillmentSets =
       location.fulfillment_sets?.flatMap((set) => set.service_zones || []) || []
     const codes = fulfillmentSets
@@ -116,7 +159,7 @@ async function selectProductSeller(
     }
   })
 
-  const p = product as ProductSellerGraph | undefined
+  const p = product ? parseGraphRow(ProductSellerRowSchema, product) : undefined
   return p?.seller?.id
     ? {
         id: p.seller.id,
@@ -184,41 +227,22 @@ export async function findAndTransformAlgoliaProducts(
       : { status: 'published' }
   })
 
-  for (const product of products as AlgoliaProductGraph[]) {
-    product.average_rating = 0
-    product.supported_countries = await selectProductVariantsSupportedCountries(
-      container,
-      product.id
-    )
-    product.seller = await selectProductSeller(container, product.id)
+  const transformed = []
+  for (const row of products) {
+    const product = parseGraphRow(AlgoliaProductRowSchema, row)
 
-    product.options = (product.options ?? [])
-      .filter((option) => option?.title && option?.values)
-      .map((option) => {
-        return (option.values ?? []).map((value) => {
-          const entry: Record<string, string> = {}
-          entry[option.title!.toLowerCase()] = value.value
-          return entry
-        })
-      })
-      .flat()
-
-    product.variants = z
-      .array(AlgoliaVariantValidator)
-      .parse(product.variants ?? [])
-    product.variants = (product.variants ?? [])
-      .map((variant) => {
-        const variantOptions = (variant.options ?? []) as VariantOptionGraph[]
-        return variantOptions.reduce<Record<string, string | number | boolean | null | VariantOptionGraph[]>>((entry, item) => {
-          if (item?.option?.title) {
-            entry[item.option.title.toLowerCase()] = item.value
-          }
-          return entry
-        }, variant)
-      })
-      .flat()
-
+    transformed.push({
+      ...row,
+      average_rating: 0,
+      supported_countries: await selectProductVariantsSupportedCountries(
+        container,
+        product.id
+      ),
+      seller: await selectProductSeller(container, product.id),
+      options: flattenProductOptions(product.options ?? []),
+      variants: (product.variants ?? []).map(flattenVariantOptions)
+    })
   }
 
-  return z.array(AlgoliaProductValidator).parse(products)
+  return z.array(AlgoliaProductValidator).parse(transformed)
 }

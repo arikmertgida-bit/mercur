@@ -39,7 +39,7 @@ export default async function cleanupBlockedMessages(
     )
   } catch (err) {
     logger.error(
-      `Messaging: cleanup-blocked-messages error: ${(err as Error).message}`
+      `Messaging: cleanup-blocked-messages error: ${err instanceof Error ? err.message : String(err)}`
     )
   }
 }

@@ -5,16 +5,21 @@ import {
 
 import { MESSAGING_MODULE } from "../../../modules/messaging"
 import type MessagingModuleService from "../../../modules/messaging/service"
-import { ConversationDTO } from "../../../modules/messaging/types/common"
+import { parseGraphRows } from "@mercurjs/core/utils/graph-rows"
+import { z } from "zod"
+
 import { VendorListConversationsType } from "./validators"
 
-type EnrichedConversation = ConversationDTO & {
-  buyer_first_name?: string | null
-  is_buyer_blocked?: boolean
-}
+const CustomerFirstNameRowSchema = z.object({
+  id: z.string(),
+  first_name: z.string().nullable(),
+})
 
 export const GET = async (
-  req: AuthenticatedMedusaRequest<VendorListConversationsType>,
+  req: AuthenticatedMedusaRequest<
+    Partial<VendorListConversationsType>,
+    VendorListConversationsType
+  >,
   res: MedusaResponse
 ) => {
   const service = req.scope.resolve<MessagingModuleService>(MESSAGING_MODULE)
@@ -24,45 +29,45 @@ export const GET = async (
     await service.listConversationsCursor(
       { seller_id: sellerId },
       {
-        cursor: (req.validatedQuery as VendorListConversationsType)?.cursor,
-        limit: (req.validatedQuery as VendorListConversationsType)?.limit,
+        cursor: req.validatedQuery.cursor,
+        limit: req.validatedQuery.limit,
       }
     )
 
-  const enriched = conversations as EnrichedConversation[]
+  const buyerIds = [...new Set(conversations.map((c) => c.buyer_id))]
 
   // Resolve buyer first names via customer link
-  if (enriched.length > 0) {
+  let buyerFirstNames: Map<string, string | null> | null = null
+  if (buyerIds.length > 0) {
     try {
       const query = req.scope.resolve("query")
-      const buyerIds = [...new Set(enriched.map((c) => c.buyer_id))]
 
-      const { data: customers } = await query.graph({
+      const { data: customerRows } = await query.graph({
         entity: "customer",
         fields: ["id", "first_name"],
         filters: { id: buyerIds },
       })
 
-      const customerMap = new Map(
-        (customers ?? []).map((c: { id: string; first_name: string }) => [c.id, c.first_name])
+      buyerFirstNames = new Map(
+        parseGraphRows(CustomerFirstNameRowSchema, customerRows).map((c) => [
+          c.id,
+          c.first_name,
+        ])
       )
-
-      for (const conv of enriched) {
-        conv.buyer_first_name = customerMap.get(conv.buyer_id) ?? null
-      }
     } catch {
       // Continue without buyer names
     }
   }
 
   // Annotate block status
-  if (enriched.length > 0) {
-    const buyerIds = [...new Set(enriched.map((c) => c.buyer_id))]
-    const blockedSet = await service.checkBuyersBlocked(buyerIds)
-    for (const conv of enriched) {
-      conv.is_buyer_blocked = blockedSet.has(conv.buyer_id)
-    }
-  }
+  const blockedSet = await service.checkBuyersBlocked(buyerIds)
+  const enriched = conversations.map((conv) => ({
+    ...conv,
+    ...(buyerFirstNames
+      ? { buyer_first_name: buyerFirstNames.get(conv.buyer_id) ?? null }
+      : {}),
+    is_buyer_blocked: blockedSet.has(conv.buyer_id),
+  }))
 
   res.json({ conversations: enriched, next_cursor })
 }

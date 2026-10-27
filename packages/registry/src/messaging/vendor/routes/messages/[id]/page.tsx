@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useRequiredParam } from "@mercurjs/dashboard-shared"
 import {
   Badge,
   Button,
@@ -141,7 +141,7 @@ const OrderSidebar = ({
 }
 
 const VendorConversationDetailPage = () => {
-  const { id } = useParams<{ id: string }>()
+  const id = useRequiredParam("id")
   useMessagingSSE(id)
   const [replyBody, setReplyBody] = useState("")
   const messagesContainerRef = useRef<HTMLDivElement>(null)
@@ -157,10 +157,10 @@ const VendorConversationDetailPage = () => {
     isLoading,
     isError,
     error,
-  } = useVendorConversation(id!)
+  } = useVendorConversation(id)
 
-  const markRead = useMarkVendorRead(id!)
-  const sendReply = useSendVendorReply(id!)
+  const markRead = useMarkVendorRead(id)
+  const sendReply = useSendVendorReply(id)
 
   useMessagingLayout()
 

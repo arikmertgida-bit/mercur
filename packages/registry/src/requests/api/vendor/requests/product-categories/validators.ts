@@ -1,7 +1,9 @@
 import { z } from "zod"
 import { createFindParams, createOperatorMap } from "@medusajs/medusa/api/utils/validators"
 import { isValidHandle } from "@medusajs/framework/utils"
-import { RequestStatus } from "../../../../types"
+import { JsonRecordSchema } from "@mercurjs/core/utils/json-schema"
+
+import { RequestStatusFilterSchema } from "../../../../types"
 
 export type VendorCreateProductCategoryRequestType = z.infer<typeof VendorCreateProductCategoryRequest>
 export const VendorCreateProductCategoryRequest = z.object({
@@ -16,18 +18,19 @@ export const VendorCreateProductCategoryRequest = z.object({
   is_active: z.boolean().optional(),
   is_internal: z.boolean().optional(),
   parent_category_id: z.string().nullish(),
-  metadata: z.record(z.string(), z.unknown()).optional(),
+  metadata: JsonRecordSchema.optional(),
 })
 
-export type VendorGetProductCategoryRequestsParamsType = z.infer<typeof VendorGetProductCategoryRequestsParams>
+// Client-facing contract: every query param is optional on the wire
+// (`createFindParams` defaults offset/limit server-side), while zod marks
+// defaulted keys as required in the parsed output type.
+export type VendorGetProductCategoryRequestsParamsType = Partial<z.infer<typeof VendorGetProductCategoryRequestsParams>>
 export const VendorGetProductCategoryRequestsParams = createFindParams({
   offset: 0,
   limit: 50,
 }).extend({
   q: z.string().optional(),
-  request_status: z
-    .union([z.nativeEnum(RequestStatus), z.array(z.nativeEnum(RequestStatus))])
-    .optional(),
+  request_status: RequestStatusFilterSchema.optional(),
   created_at: createOperatorMap().optional(),
   updated_at: createOperatorMap().optional(),
 })

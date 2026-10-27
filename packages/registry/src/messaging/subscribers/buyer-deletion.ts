@@ -20,7 +20,7 @@ export default async function buyerDeletionHandler({
     )
   } catch (err) {
     logger.error(
-      `Messaging: buyer deletion handler error: ${(err as Error).message}`
+      `Messaging: buyer deletion handler error: ${err instanceof Error ? err.message : String(err)}`
     )
   }
 }

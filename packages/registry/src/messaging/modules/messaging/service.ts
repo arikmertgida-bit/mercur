@@ -1,6 +1,7 @@
-import { InjectManager, MedusaContext, MedusaService } from "@medusajs/framework/utils"
-import { Context } from "@medusajs/framework/types"
+import { InjectManager, MedusaContext, MedusaError, MedusaService } from "@medusajs/framework/utils"
+import { Context, DAL } from "@medusajs/framework/types"
 import { EntityManager } from "@medusajs/framework/mikro-orm/knex"
+import { z } from "zod"
 
 import { Conversation } from "./models/conversation"
 import { Message } from "./models/message"
@@ -20,26 +21,62 @@ const TABLE_CHAT_BLOCK = "chat_block"
 const MAX_PREVIEW_LENGTH = 100
 
 type AdminConversationSearchRow = ConversationDTO & {
-  seller_name?: string
-  buyer_first_name?: string | null
-  buyer_last_name?: string | null
-  buyer_email?: string | null
+  seller_name: string | null
+  buyer_first_name: string | null
+  buyer_last_name: string | null
+  buyer_email: string | null
+}
+
+export type AdminConversationSearchResult = AdminConversationSearchRow & {
+  buyer_name: string
 }
 
 function escapeLike(value: string): string {
   return value.replace(/[\\%_]/g, (ch) => `\\${ch}`)
 }
 
-export function encodeCursor(values: Record<string, string | number | null>): string {
+type InjectedDependencies = {
+  baseRepository: DAL.RepositoryService
+}
+
+// Cursors come back from the client, so a decoded cursor is validated
+// before any of its values reach a query.
+const CursorSchema = z.record(z.string(), z.union([z.string(), z.number(), z.null()]))
+
+type CursorValues = z.infer<typeof CursorSchema>
+
+export function encodeCursor(values: CursorValues): string {
   return Buffer.from(JSON.stringify(values)).toString("base64url")
 }
 
-export function decodeCursor(cursor: string): Record<string, string | number | null> | null {
+export function decodeCursor(cursor: string): CursorValues | null {
   try {
-    return JSON.parse(Buffer.from(cursor, "base64url").toString("utf-8"))
+    const parsed = CursorSchema.safeParse(
+      JSON.parse(Buffer.from(cursor, "base64url").toString("utf-8"))
+    )
+    return parsed.success ? parsed.data : null
   } catch {
     return null
   }
+}
+
+// Knex returns timestamps as Date objects; cursors carry them as ISO strings.
+function toCursorTimestamp(value: Date | string | null): string | null {
+  return value instanceof Date ? value.toISOString() : value
+}
+
+// `@InjectManager()` always provides the manager; a missing one is a wiring bug.
+function getKnex(
+  sharedContext: Context<EntityManager> | undefined
+): ReturnType<EntityManager["getKnex"]> {
+  const manager = sharedContext?.manager
+  if (!manager) {
+    throw new MedusaError(
+      MedusaError.Types.UNEXPECTED_STATE,
+      "Messaging: no entity manager in the shared context"
+    )
+  }
+  return manager.getKnex()
 }
 
 class MessagingModuleService extends MedusaService({
@@ -49,8 +86,8 @@ class MessagingModuleService extends MedusaService({
 }) {
   protected readonly options_: ResolvedMessagingModuleOptions
 
-  constructor(_deps: object, options?: MessagingModuleOptions) {
-    // @ts-expect-error MedusaService base accepts arbitrary constructor args
+  constructor(_container: InjectedDependencies, options?: MessagingModuleOptions) {
+    // eslint-disable-next-line prefer-rest-params
     super(...arguments)
     this.options_ = {
       rateLimits: {
@@ -70,7 +107,7 @@ class MessagingModuleService extends MedusaService({
     @MedusaContext() sharedContext?: Context<EntityManager>
   ): Promise<Set<string>> {
     if (buyerIds.length === 0) return new Set()
-    const knex = sharedContext!.manager!.getKnex()
+    const knex = getKnex(sharedContext)
     const rows: { customer_id: string }[] = await knex(TABLE_CHAT_BLOCK)
       .select("customer_id")
       .whereIn("customer_id", buyerIds)
@@ -83,7 +120,7 @@ class MessagingModuleService extends MedusaService({
     customerId: string,
     @MedusaContext() sharedContext?: Context<EntityManager>
   ): Promise<{ blocked: boolean; reason: string | null }> {
-    const knex = sharedContext!.manager!.getKnex()
+    const knex = getKnex(sharedContext)
     const row: { reason: string | null } | undefined = await knex(TABLE_CHAT_BLOCK)
       .select("reason")
       .where("customer_id", customerId)
@@ -101,7 +138,7 @@ class MessagingModuleService extends MedusaService({
     pagination: { cursor?: string | null; limit?: number },
     @MedusaContext() sharedContext?: Context<EntityManager>
   ): Promise<CursorPaginatedResult<ConversationDTO>> {
-    const knex = sharedContext!.manager!.getKnex()
+    const knex = getKnex(sharedContext)
     const limit = Math.min(pagination.limit ?? 20, 50)
 
     let query = knex(TABLE_CONVERSATION)
@@ -120,12 +157,14 @@ class MessagingModuleService extends MedusaService({
 
     if (pagination.cursor) {
       const decoded = decodeCursor(pagination.cursor)
-      if (decoded && decoded.last_message_at && decoded.id) {
+      const lastMessageAt = decoded?.last_message_at
+      const cursorId = decoded?.id
+      if (lastMessageAt && cursorId) {
         query = query.where(function () {
-          this.where("last_message_at", "<", decoded.last_message_at!)
+          this.where("last_message_at", "<", lastMessageAt)
             .orWhere(function () {
-              this.where("last_message_at", "=", decoded.last_message_at!)
-                .andWhere("id", "<", decoded.id!)
+              this.where("last_message_at", "=", lastMessageAt)
+                .andWhere("id", "<", cursorId)
             })
         })
       }
@@ -137,10 +176,10 @@ class MessagingModuleService extends MedusaService({
     const data = hasMore ? rows.slice(0, limit) : rows
 
     let next_cursor: string | null = null
-    if (hasMore && data.length > 0) {
-      const lastRow = data[data.length - 1]
+    const lastRow = hasMore ? data.at(-1) : undefined
+    if (lastRow) {
       next_cursor = encodeCursor({
-        last_message_at: lastRow.last_message_at?.toISOString?.() ?? lastRow.last_message_at,
+        last_message_at: toCursorTimestamp(lastRow.last_message_at),
         id: lastRow.id,
       })
     }
@@ -154,7 +193,7 @@ class MessagingModuleService extends MedusaService({
     pagination: { cursor?: string | null; limit?: number },
     @MedusaContext() sharedContext?: Context<EntityManager>
   ): Promise<CursorPaginatedResult<MessageDTO>> {
-    const knex = sharedContext!.manager!.getKnex()
+    const knex = getKnex(sharedContext)
     const limit = Math.min(pagination.limit ?? 30, 100)
 
     let query = knex(TABLE_MESSAGE)
@@ -166,12 +205,14 @@ class MessagingModuleService extends MedusaService({
 
     if (pagination.cursor) {
       const decoded = decodeCursor(pagination.cursor)
-      if (decoded && decoded.created_at && decoded.id) {
+      const createdAt = decoded?.created_at
+      const cursorId = decoded?.id
+      if (createdAt && cursorId) {
         query = query.where(function () {
-          this.where("created_at", "<", decoded.created_at!)
+          this.where("created_at", "<", createdAt)
             .orWhere(function () {
-              this.where("created_at", "=", decoded.created_at!)
-                .andWhere("id", "<", decoded.id!)
+              this.where("created_at", "=", createdAt)
+                .andWhere("id", "<", cursorId)
             })
         })
       }
@@ -183,10 +224,10 @@ class MessagingModuleService extends MedusaService({
     const data = hasMore ? rows.slice(0, limit) : rows
 
     let next_cursor: string | null = null
-    if (hasMore && data.length > 0) {
-      const lastRow = data[data.length - 1]
+    const lastRow = hasMore ? data.at(-1) : undefined
+    if (lastRow) {
       next_cursor = encodeCursor({
-        created_at: lastRow.created_at?.toISOString?.() ?? lastRow.created_at,
+        created_at: toCursorTimestamp(lastRow.created_at),
         id: lastRow.id,
       })
     }
@@ -213,8 +254,8 @@ class MessagingModuleService extends MedusaService({
     },
     pagination: { cursor?: string | null; limit?: number },
     @MedusaContext() sharedContext?: Context<EntityManager>
-  ): Promise<CursorPaginatedResult<ConversationDTO & { seller_name?: string; buyer_name?: string; buyer_email?: string; message_count?: number }>> {
-    const knex = sharedContext!.manager!.getKnex()
+  ): Promise<CursorPaginatedResult<AdminConversationSearchResult>> {
+    const knex = getKnex(sharedContext)
     const limit = Math.min(pagination.limit ?? 20, 50)
 
     let query = knex(`${TABLE_CONVERSATION} as c`)
@@ -278,12 +319,14 @@ class MessagingModuleService extends MedusaService({
 
     if (pagination.cursor) {
       const decoded = decodeCursor(pagination.cursor)
-      if (decoded && decoded.last_message_at && decoded.id) {
+      const lastMessageAt = decoded?.last_message_at
+      const cursorId = decoded?.id
+      if (lastMessageAt && cursorId) {
         query = query.where(function () {
-          this.where("c.last_message_at", "<", decoded.last_message_at!)
+          this.where("c.last_message_at", "<", lastMessageAt)
             .orWhere(function () {
-              this.where("c.last_message_at", "=", decoded.last_message_at!)
-                .andWhere("c.id", "<", decoded.id!)
+              this.where("c.last_message_at", "=", lastMessageAt)
+                .andWhere("c.id", "<", cursorId)
             })
         })
       }
@@ -300,10 +343,10 @@ class MessagingModuleService extends MedusaService({
     }))
 
     let next_cursor: string | null = null
-    if (hasMore && data.length > 0) {
-      const lastRow = data[data.length - 1]
+    const lastRow = hasMore ? data.at(-1) : undefined
+    if (lastRow) {
       next_cursor = encodeCursor({
-        last_message_at: lastRow.last_message_at?.toISOString?.() ?? lastRow.last_message_at,
+        last_message_at: toCursorTimestamp(lastRow.last_message_at),
         id: lastRow.id,
       })
     }
@@ -316,7 +359,7 @@ class MessagingModuleService extends MedusaService({
     filter: { buyer_id?: string; seller_id?: string },
     @MedusaContext() sharedContext?: Context<EntityManager>
   ): Promise<number> {
-    const knex = sharedContext!.manager!.getKnex()
+    const knex = getKnex(sharedContext)
 
     const countField = filter.buyer_id
       ? "unread_count_customer"
@@ -352,7 +395,7 @@ class MessagingModuleService extends MedusaService({
     },
     @MedusaContext() sharedContext?: Context<EntityManager>
   ): Promise<MessageDTO> {
-    const knex = sharedContext!.manager!.getKnex()
+    const knex = getKnex(sharedContext)
 
     const preview = data.body.substring(0, MAX_PREVIEW_LENGTH)
     const recipientCounterField =
@@ -400,7 +443,7 @@ class MessagingModuleService extends MedusaService({
     readerType: "customer" | "seller",
     @MedusaContext() sharedContext?: Context<EntityManager>
   ): Promise<number> {
-    const knex = sharedContext!.manager!.getKnex()
+    const knex = getKnex(sharedContext)
 
     const senderType = readerType === "customer" ? "seller" : "customer"
     const counterField =

@@ -1,6 +1,24 @@
-import { MeiliSearch } from 'meilisearch'
+import { Logger } from '@medusajs/framework/types'
+import { Meilisearch, SearchParams } from 'meilisearch'
+import { z } from 'zod'
 
 import { IndexType, MeilisearchEntity, MeilisearchSearchResult } from './types'
+
+type InjectedDependencies = {
+  logger: Logger
+}
+
+// Search responses come from the Meilisearch server; only the fields the
+// result is built from are read, and they are validated first.
+const SearchHitSchema = z.object({ id: z.string() })
+
+const SearchPaginationSchema = z.object({
+  totalHits: z.number().optional(),
+  page: z.number().optional(),
+  totalPages: z.number().optional(),
+  hitsPerPage: z.number().optional(),
+  estimatedTotalHits: z.number().optional(),
+})
 
 type ModuleOptions = {
   host: string
@@ -32,12 +50,12 @@ const FILTERABLE_ATTRIBUTES = [
 const SORTABLE_ATTRIBUTES = ['title', 'variants.prices.amount']
 
 class MeilisearchModuleService {
-  private client_: MeiliSearch
+  private client_: Meilisearch
   private host_: string
-  private productIndex_: ReturnType<MeiliSearch['index']>
+  private productIndex_: ReturnType<Meilisearch['index']>
   private settingsApplied_ = false
 
-  constructor(_: object, options: ModuleOptions) {
+  constructor(_container: InjectedDependencies, options: ModuleOptions) {
     if (!options?.host || !options?.apiKey) {
       const missing = [
         !options?.host && 'MEILISEARCH_HOST',
@@ -50,7 +68,7 @@ class MeilisearchModuleService {
       )
     }
     this.host_ = options.host
-    this.client_ = new MeiliSearch({
+    this.client_ = new Meilisearch({
       host: options.host,
       apiKey: options.apiKey,
     })
@@ -86,20 +104,14 @@ class MeilisearchModuleService {
 
   async search(
     query: string,
-    options: Record<string, unknown>
+    options: SearchParams
   ): Promise<MeilisearchSearchResult> {
     const result = await this.productIndex_.search(query, options)
 
-    const pagination = result as Partial<{
-      totalHits: number
-      page: number
-      totalPages: number
-      hitsPerPage: number
-      estimatedTotalHits: number
-    }>
+    const pagination = SearchPaginationSchema.parse(result)
 
     return {
-      hits: (result.hits ?? []) as Array<{ id: string }>,
+      hits: z.array(SearchHitSchema).parse(result.hits ?? []),
       totalHits: pagination.totalHits ?? pagination.estimatedTotalHits ?? 0,
       page: pagination.page ?? 0,
       totalPages: pagination.totalPages ?? 0,
