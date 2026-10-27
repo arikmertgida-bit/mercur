@@ -213,7 +213,6 @@ export const AddressForm = ({
                         </Select.Content>
                       </Select>
                     ) : (
-                      // @ts-expect-error
                       <CountrySelect {...field} ref={ref} onChange={onChange} /> // When no countries are provided, use the country select component that has a built-in list of all countries
                     )}
                   </Form.Control>

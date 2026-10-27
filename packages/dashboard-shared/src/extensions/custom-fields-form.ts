@@ -40,7 +40,14 @@ export function buildAdditionalDataSchema(
     ? registry.getFormFields(model, zone, tab)
     : registry.getAllFormFields(model)
   for (const { name, field } of fields) {
-    shape[name] = field.validation as z.ZodTypeAny
+    // `CustomFormField.validation` is the SDK's zod-free structural stand-in;
+    // the configs are authored with zod (see `createFormHelper`).
+    if (!(field.validation instanceof z.ZodType)) {
+      throw new Error(
+        `Custom field "${name}" of "${model}" must use a zod schema as its validation`
+      )
+    }
+    shape[name] = field.validation
   }
   return z.object(shape)
 }

@@ -84,7 +84,7 @@ const sortProductFieldDiffs = (diffs: FieldDiff[]): FieldDiff[] =>
     .map(({ diff }) => diff)
 
 export const isReferenceField = (field: string): field is ReferenceField =>
-  (REFERENCE_FIELDS as string[]).includes(field)
+  REFERENCE_FIELDS.some((reference) => reference === field)
 
 /**
  * Variant fields that are not vendor-editable and must never surface in the
@@ -131,17 +131,14 @@ const diffImages = (previous: JsonValue, next: JsonValue): MediaDiff => {
   }
 }
 
-type VariantMediaPatch = { add?: JsonValue; remove?: JsonValue }
-
 /** A variant `images` field is staged as `{ add?: [], remove?: [] }`. */
 const variantMedia = (value: JsonValue): MediaDiff => {
   if (!value || typeof value !== "object" || Array.isArray(value)) {
     return { added: [], removed: [] }
   }
-  const v = value as VariantMediaPatch
   return {
-    added: normalizeImages(v.add ?? null),
-    removed: normalizeImages(v.remove ?? null),
+    added: normalizeImages(value.add ?? null),
+    removed: normalizeImages(value.remove ?? null),
   }
 }
 
@@ -160,8 +157,11 @@ export const extractReferenceIds = (
       .map((entry) =>
         typeof entry === "string"
           ? entry
-          : typeof entry === "object" && entry !== null && "id" in entry
-            ? String((entry as { id: JsonValue }).id ?? "")
+          : typeof entry === "object" &&
+              entry !== null &&
+              !Array.isArray(entry) &&
+              "id" in entry
+            ? String(entry.id ?? "")
             : ""
       )
       .filter(Boolean)
@@ -188,7 +188,7 @@ const formatAttributeValues = (value: JsonValue): string | null => {
     return value.length ? value.join(", ") : null
   }
   if (value && typeof value === "object") {
-    const entries = Object.entries(value as JsonRecord)
+    const entries = Object.entries(value)
     if (!entries.length) return null
     return entries
       .map(([k, v]) => `${k}: ${Array.isArray(v) ? v.join(", ") : String(v)}`)
@@ -221,6 +221,15 @@ export const formatFieldValue = (
 const asRecord = (value: JsonValue): JsonRecord =>
   value && typeof value === "object" && !Array.isArray(value) ? value : {}
 
+const toScalarValue = (
+  value: JsonValue | undefined
+): AttributeChange["scalarValue"] =>
+  typeof value === "string" ||
+  typeof value === "number" ||
+  typeof value === "boolean"
+    ? value
+    : undefined
+
 const toAttributeAdd = (details: JsonRecord): AttributeChange => {
   const attribute = asRecord(details.attribute)
   const id = typeof attribute.id === "string" ? attribute.id : undefined
@@ -239,7 +248,7 @@ const toAttributeAdd = (details: JsonRecord): AttributeChange => {
     addValueIds: valueIds,
     addValueNames: valueNames,
     removeValueIds: [],
-    scalarValue: attribute.value as AttributeChange["scalarValue"],
+    scalarValue: toScalarValue(attribute.value),
   }
 }
 
@@ -266,7 +275,7 @@ const toAttributeUpdate = (details: JsonRecord): AttributeChange | null => {
     addValueIds,
     addValueNames,
     removeValueIds,
-    scalarValue: update.value as AttributeChange["scalarValue"],
+    scalarValue: toScalarValue(update.value),
   }
 }
 
@@ -291,10 +300,7 @@ export const buildProductChangeView = (
   }
 
   for (const action of actions) {
-    // `action.details` is `Record<string, unknown>` because it mirrors a
-    // MikroORM `model.json()` column (packages/core) — the DB only ever
-    // stores JSON there, so narrowing to `JsonRecord` here is safe.
-    const details = action.details as JsonRecord
+    const details = action.details
 
     switch (action.action) {
       case ProductChangeActionType.UPDATE: {

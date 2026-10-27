@@ -15,7 +15,12 @@ export {
   getExtensionRegistry,
   type ExtensionProviderProps,
 } from "./context"
-export { WidgetZone, type WidgetZoneProps } from "./widget-zone"
+export {
+  WidgetTabContent,
+  WidgetZone,
+  type WidgetTabContentProps,
+  type WidgetZoneProps,
+} from "./widget-zone"
 export { useWidgetTabs, type WidgetTab, type WidgetTabs } from "./use-widget-tabs"
 export {
   applyNavOverrides,
@@ -46,6 +51,7 @@ export {
   type ExtendableTable,
 } from "./use-extendable-table"
 export { mergeListFilters } from "./list-filters"
+export type { ListFilterAddition } from "./list-filters"
 export { withLinkFields, linkFields, getLinkQuery, useLinkQuery } from "./links"
 export {
   createFormHelper,

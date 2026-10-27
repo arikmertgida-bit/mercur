@@ -2,12 +2,8 @@ import { CellContext } from "@tanstack/react-table"
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 
 import { useDataGridContext } from "../context"
-import {
-  DataGridCellContext,
-  DataGridCellRenderProps,
-  DataGridCoordinates,
-} from "../types"
-import { isCellMatch, isSpecialFocusKey } from "../utils"
+import { DataGridCellRenderProps, DataGridCoordinates } from "../types"
+import { getCellCoordinates, isCellMatch, isSpecialFocusKey } from "../utils"
 
 type UseDataGridCellOptions<TData, TValue> = {
   context: CellContext<TData, TValue>
@@ -35,10 +31,7 @@ export const useDataGridCell = <TData, TValue>({
     getCellMetadata,
   } = useDataGridContext()
 
-  const { rowIndex, columnIndex } = context as DataGridCellContext<
-    TData,
-    TValue
-  >
+  const { row: rowIndex, col: columnIndex } = getCellCoordinates(context)
 
   const coords: DataGridCoordinates = useMemo(
     () => ({ row: rowIndex, col: columnIndex }),

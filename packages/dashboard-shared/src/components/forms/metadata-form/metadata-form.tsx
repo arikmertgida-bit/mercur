@@ -18,6 +18,7 @@ import {
   EllipsisVertical,
   Trash,
 } from "@medusajs/icons"
+import type { MetadataType } from "@medusajs/types"
 import { ClientError } from "@mercurjs/client"
 import { ComponentPropsWithoutRef, forwardRef } from "react"
 import { ConditionalTooltip } from "../../common/conditional-tooltip"
@@ -28,21 +29,26 @@ import { KeyboundForm } from "../../utilities/keybound-form"
 import { useDocumentDirection } from "../../../hooks/use-document-direction"
 
 type MetaDataSubmitHook<TRes> = (
-  params: { metadata?: Record<string, any> | null },
+  params: { metadata?: MetadataType },
   callbacks: { onSuccess: () => void; onError: (error: ClientError) => void }
 ) => Promise<TRes>
 
 type MetadataFormProps<TRes> = {
-  metadata?: Record<string, any> | null
+  metadata?: MetadataType
   hook: MetaDataSubmitHook<TRes>
   isPending: boolean
   isMutating: boolean
 }
 
+/**
+ * `value` is the editable text of a primitive entry. Complex entries
+ * (objects, arrays, ...) are shown read-only with a placeholder and are
+ * submitted unchanged from the original metadata.
+ */
 const MetadataFieldSchema = z.object({
   key: z.string(),
   disabled: z.boolean().optional(),
-  value: z.any(),
+  value: z.string(),
 })
 
 const MetadataSchema = z.object({
@@ -155,15 +161,6 @@ const InnerForm = <TRes,>({
             </div>
             {fields.map((field, index) => {
               const isDisabled = field.disabled || false
-              let placeholder = "-"
-
-              if (typeof field.value === "object") {
-                placeholder = "{ ... }"
-              }
-
-              if (Array.isArray(field.value)) {
-                placeholder = "[ ... ]"
-              }
 
               return (
                 <ConditionalTooltip
@@ -206,7 +203,7 @@ const InnerForm = <TRes,>({
                                 <GridInput
                                   aria-labelledby={METADATA_VALUE_LABEL_ID}
                                   {...field}
-                                  value={isDisabled ? placeholder : value}
+                                  value={value}
                                   disabled={isDisabled}
                                   placeholder={t("metadata.edit.labels.value")}
                                 />
@@ -330,8 +327,18 @@ const PlaceholderInner = () => {
 
 const EDITABLE_TYPES = ["string", "number", "boolean"]
 
+function getComplexValuePlaceholder(
+  value: NonNullable<MetadataType>[string]
+): string {
+  if (Array.isArray(value)) {
+    return "[ ... ]"
+  }
+
+  return typeof value === "object" ? "{ ... }" : "-"
+}
+
 function getDefaultValues(
-  metadata?: Record<string, any> | null
+  metadata?: MetadataType
 ): z.infer<typeof MetadataFieldSchema>[] {
   if (!metadata || !Object.keys(metadata).length) {
     return [
@@ -347,29 +354,22 @@ function getDefaultValues(
     if (!EDITABLE_TYPES.includes(typeof value)) {
       return {
         key,
-        value: value,
+        value: getComplexValuePlaceholder(value),
         disabled: true,
       }
     }
 
-    let stringValue = value
-
-    if (typeof value !== "string") {
-      stringValue = JSON.stringify(value)
-    }
-
     return {
       key,
-      value: stringValue,
-      original_key: key,
+      value: typeof value === "string" ? value : JSON.stringify(value),
     }
   })
 }
 
 function parseValues(
   values: z.infer<typeof MetadataSchema>,
-  original?: Record<string, any> | null
-): Record<string, any> | null {
+  original?: MetadataType
+): MetadataType {
   const metadata = values.metadata
 
   const isEmpty =
@@ -380,7 +380,7 @@ function parseValues(
     return null
   }
 
-  const update: Record<string, any> = {}
+  const update: NonNullable<MetadataType> = {}
 
   // First, handle removed keys from original
   if (original) {
@@ -393,21 +393,19 @@ function parseValues(
   }
 
   metadata.forEach((field) => {
-    let key = field.key
-    let value = field.value
     const disabled = field.disabled
 
-    if (!key) {
+    if (!field.key) {
       return
     }
 
     if (disabled) {
-      update[key] = value
+      update[field.key] = original?.[field.key]
       return
     }
 
-    key = key.trim()
-    value = value?.trim() ?? ""
+    const key = field.key.trim()
+    const value = field.value.trim()
 
     // We try to cast the value to a boolean or number if possible
     if (value === "true") {
@@ -427,7 +425,7 @@ function parseValues(
   return update
 }
 
-function getHasUneditableRows(metadata?: Record<string, any> | null) {
+function getHasUneditableRows(metadata?: MetadataType) {
   if (!metadata) {
     return false
   }

@@ -1,4 +1,4 @@
-import { Fragment, useContext, type ReactNode } from "react"
+import { Fragment, useContext, type ComponentType, type ReactNode } from "react"
 import { isPermitted } from "../permissions/permission-check"
 import { PermissionsContext } from "../permissions/permissions-context"
 import type { JsonRecord } from "@mercurjs/types"
@@ -52,3 +52,19 @@ export const WidgetZone = <TData = JsonRecord,>({
     </Fragment>
   )
 }
+
+export type WidgetTabContentProps<TData = JsonRecord> = {
+  /** A tab returned by `useWidgetTabs`. */
+  Component: ComponentType<{ data?: JsonRecord }>
+  data?: TData
+}
+
+/**
+ * Renders a `useWidgetTabs` tab's widget with the host's entity, bridging the
+ * concrete DTO to the widget's erased `JsonRecord` shape the same way
+ * `WidgetZone` does (generic `data`, spread into a fresh object literal).
+ */
+export const WidgetTabContent = <TData = JsonRecord,>({
+  Component,
+  data,
+}: WidgetTabContentProps<TData>) => <Component data={data && { ...data }} />

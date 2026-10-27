@@ -42,6 +42,12 @@ export const applyActionPermissions = <
 
 export type PermissionedCommand<TCommand> = TCommand & Permissioned
 
+/** A permitted command, with its permission requirements stripped. */
+export type PermittedCommand<TCommand> = Omit<
+  PermissionedCommand<TCommand>,
+  keyof Permissioned
+>
+
 /**
  * The Medusa UI command bar can't render a disabled command, so bulk commands
  * the actor may not run are left out.
@@ -49,13 +55,14 @@ export type PermissionedCommand<TCommand> = TCommand & Permissioned
 export const filterCommandsByPermission = <TCommand>(
   commands: PermissionedCommand<TCommand>[],
   checks: PermissionChecks | null
-): TCommand[] =>
+): PermittedCommand<TCommand>[] =>
   commands
     .filter((command) =>
       isPermitted(checks, command.permission, command.requireAll)
     )
-    .map(({ permission: _permission, requireAll: _requireAll, ...command }) =>
-      command as TCommand
+    .map(
+      ({ permission: _permission, requireAll: _requireAll, ...command }) =>
+        command
     )
 
 /**
@@ -68,7 +75,7 @@ export const filterCommandsByPermission = <TCommand>(
  */
 export const usePermittedCommands = <TCommand>(
   commands: PermissionedCommand<TCommand>[]
-): TCommand[] => {
+): PermittedCommand<TCommand>[] => {
   const context = useContext(PermissionsContext)
 
   return useMemo(

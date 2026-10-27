@@ -1,8 +1,7 @@
 import { useMemo } from "react"
-import { createColumnHelper, type ColumnDef } from "@tanstack/react-table"
+import { createColumnHelper, type TableOptions } from "@tanstack/react-table"
 import type {
   CustomColumn,
-  CustomListExtension,
   CustomListFilter,
   ExtendableTableRow,
   SectionAction,
@@ -44,26 +43,32 @@ function readRowFieldValue(
   return isJsonValue(raw) ? raw : undefined
 }
 
-function columnId<TData>(col: ColumnDef<TData, unknown>): string | undefined {
-  return (
-    (col as { id?: string }).id ??
-    (col as { accessorKey?: string }).accessorKey
-  )
+/**
+ * A table's column list as TanStack's `useReactTable` accepts it — columns
+ * with different value types side by side.
+ */
+type TableColumns<TData> = TableOptions<TData>["columns"]
+
+function columnId<TData>(col: TableColumns<TData>[number]): string | undefined {
+  if (col.id) {
+    return col.id
+  }
+
+  return "accessorKey" in col && typeof col.accessorKey === "string"
+    ? col.accessorKey
+    : undefined
 }
 
-export type UseExtendableTableProps<
-  TData extends ExtendableTableRow,
-  TValue = never,
-> = {
+export type UseExtendableTableProps<TData extends ExtendableTableRow> = {
   /** Model whose custom-fields `list` block extends this table (e.g. `product`). */
   model: string
   /** Base columns to extend. */
-  columns: ColumnDef<TData, TValue>[]
+  columns: TableColumns<TData>
 }
 
 export type ExtendableTable<TData> = {
   /** Base columns with custom override/add/hide/order applied. */
-  columns: ColumnDef<TData, unknown>[]
+  columns: TableColumns<TData>
   /** List filters contributed by custom-fields configs; apply with `mergeListFilters`. */
   filters: CustomListFilter[]
   /** Extra multi-select bulk actions (rank-sorted). */
@@ -79,18 +84,15 @@ export type ExtendableTable<TData> = {
  * (merge them into the base filters with `mergeListFilters`) and `bulkActions`
  * for the caller to render.
  */
-export function useExtendableTable<
-  TData extends ExtendableTableRow,
-  TValue = never,
->({
+export function useExtendableTable<TData extends ExtendableTableRow>({
   model,
   columns: baseColumns,
-}: UseExtendableTableProps<TData, TValue>): ExtendableTable<TData> {
+}: UseExtendableTableProps<TData>): ExtendableTable<TData> {
   const ext = useExtension().getListExtension(model)
 
   return useMemo(() => {
     const helper = createColumnHelper<TData>()
-    const build = (c: CustomColumn): ColumnDef<TData, unknown> =>
+    const build = (c: CustomColumn): TableColumns<TData>[number] =>
       helper.display({
         id: c.id,
         header: () => c.header ?? c.id,
@@ -100,12 +102,12 @@ export function useExtendableTable<
           const value = readRowFieldValue(row.original, c.id)
           return <Comp row={row.original} value={value} />
         },
-      }) as ColumnDef<TData, unknown>
+      })
 
     const overrides = new Map((ext.columns ?? []).map((c) => [c.id, c]))
 
     // override in place (preserve base position)
-    let columns: ColumnDef<TData, unknown>[] = baseColumns.map((col) => {
+    let columns: TableColumns<TData> = baseColumns.map((col) => {
       const id = columnId(col)
       const o = id ? overrides.get(id) : undefined
       return o ? build(o) : col

@@ -1,5 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMemo } from "react"
+import type { JsonRecord } from "@mercurjs/types"
 import { FieldValues, useForm, UseFormProps } from "react-hook-form"
 import { z, ZodObject } from "zod"
 
@@ -10,13 +11,14 @@ import {
 } from "./custom-fields-form"
 
 type WithAdditionalData<T> = T & {
-  additional_data?: Record<string, unknown>
+  additional_data?: JsonRecord
 }
 
 export interface UseExtendableFormProps<
   TSchema extends ZodObject<Record<string, z.ZodTypeAny>>,
-  TContext = unknown,
-  TData = unknown,
+  // react-hook-form's `context` option; no context unless one is passed.
+  TContext = undefined,
+  TData = JsonRecord,
   TTransformedValues extends FieldValues = WithAdditionalData<z.infer<TSchema>>
 > extends Omit<
     UseFormProps<WithAdditionalData<z.infer<TSchema>>, TContext, TTransformedValues>,
@@ -49,8 +51,8 @@ export interface UseExtendableFormProps<
  */
 export const useExtendableForm = <
   TSchema extends ZodObject<Record<string, z.ZodTypeAny>>,
-  TContext = unknown,
-  TData = unknown,
+  TContext = undefined,
+  TData = JsonRecord,
   TTransformedValues extends FieldValues = WithAdditionalData<z.infer<TSchema>>
 >({
   schema: baseSchema,
@@ -68,11 +70,9 @@ export const useExtendableForm = <
       .partial()
       .optional()
 
-    // `.extend` is ZodObject-only; a refined base schema needs intersection.
-    return typeof (baseSchema as ZodObject<Record<string, z.ZodTypeAny>>)
-      .extend === "function"
-      ? baseSchema.extend({ additional_data: additionalData })
-      : (baseSchema.and(z.object({ additional_data: additionalData })) as unknown as typeof baseSchema)
+    // Zod 4 keeps a refined object schema a `ZodObject`, and `.extend` keeps
+    // its refinements.
+    return baseSchema.extend({ additional_data: additionalData })
   }, [baseSchema, extension, model, zone, tab])
 
   const defaultValues = useMemo(
@@ -95,14 +95,14 @@ export const useExtendableForm = <
     TTransformedValues
   >({
     ...props,
-    defaultValues: defaultValues as UseFormProps<
-      WithAdditionalData<z.infer<TSchema>>,
-      TContext
-    >["defaultValues"],
-    resolver: zodResolver(schema) as unknown as UseFormProps<
-      WithAdditionalData<z.infer<TSchema>>,
-      TContext,
-      TTransformedValues
-    >["resolver"],
+    // react-hook-form / zod boundary: `DefaultValues` and `zodResolver`'s
+    // inferred input/output are mapped and conditional types that TypeScript
+    // cannot relate to `WithAdditionalData<z.infer<TSchema>>` while `TSchema`
+    // is still generic; they do line up for every concrete schema a caller
+    // passes. Each directive fails the build once that is no longer an error.
+    // @ts-expect-error -- see above
+    defaultValues,
+    // @ts-expect-error -- see above
+    resolver: zodResolver(schema),
   })
 }

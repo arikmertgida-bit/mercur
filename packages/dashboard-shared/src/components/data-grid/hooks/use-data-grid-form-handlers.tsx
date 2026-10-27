@@ -1,47 +1,47 @@
-import type { JsonRecord, JsonValue } from "@mercurjs/types"
+import type { JsonValue } from "@mercurjs/types"
 import { useCallback } from "react"
-import { FieldValues, Path, PathValue, UseFormReturn } from "react-hook-form"
+import { z } from "zod"
+
+import { isJsonObject, JsonValueSchema } from "../../../lib/json"
 
 import { DataGridMatrix } from "../models"
 import {
   DataGridColumnType,
   DataGridCoordinates,
+  DataGridForm,
+  DataGridFormValues,
   DataGridToggleableNumber,
 } from "../types"
+import { getValueAtPath, setValueAtPath } from "../utils"
 
-type UseDataGridFormHandlersOptions<TData, TFieldValues extends FieldValues> = {
-  matrix: DataGridMatrix<TData, TFieldValues>
-  form: UseFormReturn<TFieldValues>
+type UseDataGridFormHandlersOptions<TData> = {
+  matrix: DataGridMatrix<TData>
+  form: DataGridForm
   anchor: DataGridCoordinates | null
 }
 
-export const useDataGridFormHandlers = <
-  TData,
-  TFieldValues extends FieldValues
->({
+export const useDataGridFormHandlers = <TData,>({
   matrix,
   form,
   anchor,
-}: UseDataGridFormHandlersOptions<TData, TFieldValues>) => {
+}: UseDataGridFormHandlersOptions<TData>) => {
   const { getValues, reset } = form
 
   const getSelectionValues = useCallback(
-    (fields: string[]): PathValue<TFieldValues, Path<TFieldValues>>[] => {
+    (fields: string[]): JsonValue[] => {
       if (!fields.length) {
         return []
       }
 
       const allValues = getValues()
 
-      return fields.map((field) => {
-        return field.split(".").reduce((obj, key) => obj?.[key], allValues)
-      }) as PathValue<TFieldValues, Path<TFieldValues>>[]
+      return fields.map((field) => getValueAtPath(allValues, field) ?? null)
     },
     [getValues]
   )
 
   const setSelectionValues = useCallback(
-    async (fields: string[], values: string[], isHistory?: boolean) => {
+    async (fields: string[], values: JsonValue[], isHistory?: boolean) => {
       if (!fields.length || !anchor) {
         return
       }
@@ -52,7 +52,7 @@ export const useDataGridFormHandlers = <
       }
 
       const convertedValues = convertArrayToPrimitive(values, type)
-      const currentValues = getValues() as JsonRecord
+      const currentValues = getValues()
 
       fields.forEach((field, index) => {
         if (!field) {
@@ -65,7 +65,7 @@ export const useDataGridFormHandlers = <
         setValue(currentValues, field, newValue, type, isHistory)
       })
 
-      reset(currentValues as TFieldValues, {
+      reset(currentValues, {
         keepDirty: true,
         keepTouched: true,
         keepDefaultValues: true,
@@ -80,7 +80,7 @@ export const useDataGridFormHandlers = <
   }
 }
 
-function convertToNumber(value: string | number): number {
+function convertToNumber(value: JsonValue): number {
   if (typeof value === "number") {
     return value
   }
@@ -94,13 +94,17 @@ function convertToNumber(value: string | number): number {
   return converted
 }
 
-function convertToBoolean(value: string | boolean): boolean {
+function convertToBoolean(value: JsonValue): boolean {
   if (typeof value === "boolean") {
     return value
   }
 
   if (typeof value === "undefined" || value === null) {
     return false
+  }
+
+  if (typeof value !== "string") {
+    throw new Error(`Value "${value}" cannot be converted to boolean.`)
   }
 
   const lowerValue = value.toLowerCase()
@@ -120,79 +124,88 @@ function covertToString(value: JsonValue): string {
   return String(value)
 }
 
-function convertToggleableNumber(value: JsonValue): DataGridToggleableNumber {
-  let obj: JsonValue = value
+/**
+ * A pasted or restored togglable-number value: an object whose `checked` /
+ * `disabledToggle` entries are read as truthy flags.
+ */
+const ToggleableNumberInputSchema = z.object({
+  quantity: z.union([z.number(), z.string()]).optional(),
+  checked: JsonValueSchema.optional(),
+  disabledToggle: JsonValueSchema.optional(),
+})
 
-  if (typeof obj === "string") {
-    try {
-      obj = JSON.parse(obj) as JsonValue
-    } catch (error) {
-      throw new Error(`String "${value}" cannot be converted to object.`, { cause: error })
-    }
+const ToggleableNumberStateSchema = z.object({
+  disabledToggle: z.boolean().optional(),
+})
+
+function parseJsonText(value: string): JsonValue {
+  try {
+    return JsonValueSchema.parse(JSON.parse(value))
+  } catch (error) {
+    const reason = error instanceof Error ? ` ${error.message}` : ""
+    throw new Error(`String "${value}" cannot be converted to object.${reason}`)
   }
+}
 
-  if (
-    typeof obj !== "object" ||
-    obj === null ||
-    Array.isArray(obj)
-  ) {
+function convertToggleableNumber(value: JsonValue): DataGridToggleableNumber {
+  const obj = typeof value === "string" ? parseJsonText(value) : value
+  const parsed = ToggleableNumberInputSchema.safeParse(obj)
+
+  if (!isJsonObject(obj) || !parsed.success) {
     throw new Error(`Value cannot be converted to togglable number.`)
   }
 
-  const record = obj as JsonRecord
   return {
-    quantity: record.quantity as DataGridToggleableNumber["quantity"],
-    checked: Boolean(record.checked),
-    disabledToggle: Boolean(record.disabledToggle),
+    quantity: parsed.data.quantity ?? "",
+    checked: Boolean(parsed.data.checked),
+    disabledToggle: Boolean(parsed.data.disabledToggle),
   }
 }
 
-function setValue<
-  T extends DataGridToggleableNumber = DataGridToggleableNumber
->(
-  currentValues: JsonRecord,
+function setValue(
+  currentValues: DataGridFormValues,
   field: string,
-  newValue: T,
-  type: string,
+  newValue: JsonValue,
+  type: DataGridColumnType,
   isHistory?: boolean
 ) {
   if (type !== "togglable-number") {
-    field.split(".").reduce((curr, key, index) => {
-      if (index === field.split(".").length - 1) {
-        curr[key] = newValue
-      }
-      curr[key] ??= {}
-      return curr[key]
-    }, currentValues)
+    setValueAtPath(currentValues, field, newValue)
     return
   }
 
-  setValueToggleableNumber(currentValues, field, newValue, isHistory)
+  setValueToggleableNumber(
+    currentValues,
+    field,
+    convertToggleableNumber(newValue),
+    isHistory
+  )
 }
 
 function setValueToggleableNumber(
-  currentValues: JsonRecord = {},
+  currentValues: DataGridFormValues,
   field: string,
   newValue: DataGridToggleableNumber,
   isHistory?: boolean
 ) {
-  const currentValue = field
-    .split(".")
-    .reduce((obj, key) => obj?.[key], currentValues)
-  const { disabledToggle } = currentValue || {}
+  const currentValue = getValueAtPath(currentValues, field)
+  const currentState = ToggleableNumberStateSchema.safeParse(currentValue)
+  const disabledToggle = currentState.success
+    ? currentState.data.disabledToggle
+    : undefined
 
-  const normalizeQuantity = (value: number | string | null | undefined) => {
+  const normalizeQuantity = (value: number | string) => {
     if (disabledToggle && value === "") {
       return 0
     }
     return value
   }
 
-  const determineChecked = (quantity: number | string | null | undefined) => {
+  const determineChecked = (quantity: number | string) => {
     if (disabledToggle) {
       return true
     }
-    return quantity !== "" && quantity != null
+    return quantity !== ""
   }
 
   const quantity = normalizeQuantity(newValue.quantity)
@@ -202,23 +215,18 @@ function setValueToggleableNumber(
       : newValue.checked
     : determineChecked(quantity)
 
-  const fieldParts = field.split(".")
-  fieldParts.reduce((curr, key: string, index) => {
-    if (index === fieldParts.length - 1) {
-      curr[key] = {
-        ...(currentValue || {}),
-        quantity,
-        checked,
-        disabledToggle: disabledToggle ?? false,
-      }
-    }
-    curr[key] ??= {}
-    return curr[key]
-  }, currentValues)
+  const currentFields = isJsonObject(currentValue) ? currentValue : {}
+
+  setValueAtPath(currentValues, field, {
+    ...currentFields,
+    quantity,
+    checked,
+    disabledToggle: disabledToggle ?? false,
+  })
 }
 
 export function convertArrayToPrimitive(
-  values: string[],
+  values: JsonValue[],
   type: DataGridColumnType
 ): JsonValue[] {
   switch (type) {

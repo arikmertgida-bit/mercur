@@ -28,8 +28,10 @@ const Root = <TData,>({
 }: TwoColumnPageProps<TData>) => {
   if (showJSON && !data) {
     if (process.env.NODE_ENV === "development") {
-      process.stderr.write(
-        "`showJSON` is true but no data is provided. To display JSON, provide data prop.\n",
+      reportError(
+        new Error(
+          "`showJSON` is true but no data is provided. To display JSON, provide data prop.",
+        ),
       );
     }
 
@@ -38,8 +40,10 @@ const Root = <TData,>({
 
   if (showMetadata && !data) {
     if (process.env.NODE_ENV === "development") {
-      process.stderr.write(
-        "`showMetadata` is true but no data is provided. To display metadata, provide data prop.\n",
+      reportError(
+        new Error(
+          "`showMetadata` is true but no data is provided. To display metadata, provide data prop.",
+        ),
       );
     }
 
@@ -62,8 +66,8 @@ const Root = <TData,>({
           {main}
           {showExtraData && (
             <div className="hidden flex-col gap-y-3 xl:flex">
-              {showMetadata && <MetadataSection data={data!} />}
-              {showJSON && <JsonViewSection data={data!} />}
+              {showMetadata && data && <MetadataSection data={data} />}
+              {showJSON && data && <JsonViewSection data={data} />}
             </div>
           )}
         </div>
@@ -71,8 +75,8 @@ const Root = <TData,>({
           {sidebar}
           {showExtraData && (
             <div className="flex flex-col gap-y-3 xl:hidden">
-              {showMetadata && <MetadataSection data={data!} />}
-              {showJSON && <JsonViewSection data={data!} />}
+              {showMetadata && data && <MetadataSection data={data} />}
+              {showJSON && data && <JsonViewSection data={data} />}
             </div>
           )}
         </div>

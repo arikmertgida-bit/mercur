@@ -2,13 +2,20 @@ import { Button, ProgressTabs } from "@medusajs/ui"
 import {
   Children,
   createContext,
+  isValidElement,
   ReactElement,
   ReactNode,
   useContext,
   useMemo,
 } from "react"
-import { FieldValues, UseFormReturn } from "react-hook-form"
+import {
+  FieldPath,
+  FieldValues,
+  useFormContext,
+  UseFormReturn,
+} from "react-hook-form"
 import { useTranslation } from "react-i18next"
+import { z } from "zod"
 
 import { RouteFocusModal } from "@components/modals"
 import { KeyboundForm } from "@components/utilities/keybound-form"
@@ -16,33 +23,56 @@ import { KeyboundForm } from "@components/utilities/keybound-form"
 import { TabDefinition } from "./types"
 import { useTabManagement } from "./use-tab-management"
 
-type TabbedFormContextValue = UseFormReturn<FieldValues>
+/** Marks that a tab is rendered inside a `TabbedForm`. */
+const TabbedFormContext = createContext(false)
 
-const TabbedFormContext = createContext<TabbedFormContextValue | null>(null)
+/**
+ * The wizard's form, read through react-hook-form's own context (the
+ * `TabbedForm` renders its form inside a `FormProvider`).
+ */
+export const useTabbedForm = <
+  T extends FieldValues = FieldValues,
+>(): UseFormReturn<T> => {
+  const isInTabbedForm = useContext(TabbedFormContext)
+  const form = useFormContext<T>()
 
-export const useTabbedForm = <T extends FieldValues = FieldValues>() => {
-  const form = useContext(TabbedFormContext)
-  if (!form) {
+  if (!isInTabbedForm) {
     throw new Error("useTabbedForm must be used within a TabbedForm")
   }
-  return form as UseFormReturn<T>
+
+  return form
 }
 
-type TabComponentWithMeta<T extends FieldValues> = {
-  _tabMeta?: TabDefinition<T>
-}
+/**
+ * A tab's definition comes from its component's static `_tabMeta` and/or the
+ * element's props; both are untyped at runtime, so they are validated here.
+ */
+const createTabMetaSchema = <T extends FieldValues>() =>
+  z.object({
+    id: z.string().optional(),
+    labelKey: z.string().optional(),
+    label: z.string().optional(),
+    validationFields: z
+      .array(z.custom<FieldPath<T>>((value) => typeof value === "string"))
+      .optional(),
+    isVisible: z
+      .custom<NonNullable<TabDefinition<T>["isVisible"]>>(
+        (value) => typeof value === "function"
+      )
+      .optional(),
+  })
 
 function resolveTabMeta<T extends FieldValues>(
   child: ReactElement
 ): TabDefinition<T> | null {
-  const type = child.type as TabComponentWithMeta<T>
-  const meta: TabDefinition<T> | undefined = type?._tabMeta
-  const props = (child.props ?? {}) as Partial<{
-    id: string
-    label: string
-    validationFields: TabDefinition<T>["validationFields"]
-    isVisible: TabDefinition<T>["isVisible"]
-  }>
+  const schema = createTabMetaSchema<T>()
+  const { type } = child
+  const parsedMeta = schema.safeParse(
+    typeof type !== "string" && "_tabMeta" in type ? type._tabMeta : undefined
+  )
+  const parsedProps = schema.safeParse(child.props ?? {})
+  const meta = parsedMeta.success ? parsedMeta.data : undefined
+  const props = parsedProps.success ? parsedProps.data : {}
 
   if (!meta && !props.id) {
     return null
@@ -65,14 +95,14 @@ function collectTabs<T extends FieldValues>(children: ReactNode): {
   const elements: ReactElement[] = []
 
   Children.forEach(children, (child) => {
-    if (!child || typeof child !== "object" || !("type" in child)) {
+    if (!isValidElement(child)) {
       return
     }
 
-    const meta = resolveTabMeta<T>(child as ReactElement)
+    const meta = resolveTabMeta<T>(child)
     if (meta) {
       tabs.push(meta)
-      elements.push(child as ReactElement)
+      elements.push(child)
     }
   })
 
@@ -130,13 +160,15 @@ function Root<T extends FieldValues>({
     form,
   })
 
-  const visibleElements = elements.filter((el) => {
-    const meta = resolveTabMeta<T>(el)
+  const visibleElements = elements.flatMap((element) => {
+    const meta = resolveTabMeta<T>(element)
     return meta && visibleTabs.some((vt) => vt.id === meta.id)
+      ? [{ element, meta }]
+      : []
   })
 
   return (
-    <TabbedFormContext.Provider value={form as TabbedFormContextValue}>
+    <TabbedFormContext.Provider value={true}>
       <RouteFocusModal.Form form={form}>
         <KeyboundForm
           onKeyDown={(e) => {
@@ -188,8 +220,7 @@ function Root<T extends FieldValues>({
               </div>
             </RouteFocusModal.Header>
             <RouteFocusModal.Body className="size-full overflow-hidden">
-              {visibleElements.map((element) => {
-                const meta = resolveTabMeta<T>(element)!
+              {visibleElements.map(({ element, meta }) => {
                 return (
                   <ProgressTabs.Content
                     key={meta.id}

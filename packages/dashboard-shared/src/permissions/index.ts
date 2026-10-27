@@ -29,4 +29,5 @@ export {
   filterCommandsByPermission,
   usePermittedCommands,
   type PermissionedCommand,
+  type PermittedCommand,
 } from "./action-permissions"

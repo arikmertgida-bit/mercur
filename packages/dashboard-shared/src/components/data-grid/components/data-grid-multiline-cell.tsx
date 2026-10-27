@@ -1,13 +1,15 @@
 import { clx } from "@medusajs/ui"
 import { useCallback, useEffect, useRef, useState } from "react"
+import type { JsonValue } from "@mercurjs/types"
 import { Controller, ControllerRenderProps } from "react-hook-form"
 
 import { useCombinedRefs } from "../../../hooks/use-combined-refs"
 import { useDataGridCell, useDataGridCellError } from "../hooks"
-import { DataGridCellProps, InputProps } from "../types"
+import { DataGridCellProps, DataGridFormValues, InputProps } from "../types"
+import { toInputValue } from "../utils"
 import { DataGridCellContainer } from "./data-grid-cell-container"
 
-export const DataGridMultilineCell = <TData, TValue = any>({
+export const DataGridMultilineCell = <TData, TValue = JsonValue>({
   context,
 }: DataGridCellProps<TData, TValue>) => {
   const { field, control, renderProps } = useDataGridCell({
@@ -36,13 +38,13 @@ const Inner = ({
   field,
   inputProps,
 }: {
-  field: ControllerRenderProps<any, string>
+  field: ControllerRenderProps<DataGridFormValues, string>
   inputProps: InputProps
 }) => {
   const { onChange: _, onBlur, ref, value, ...rest } = field
   const { ref: inputRef, onBlur: onInputBlur, onChange, ...input } = inputProps
 
-  const [localValue, setLocalValue] = useState(value)
+  const [localValue, setLocalValue] = useState<JsonValue>(value)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   useEffect(() => {
@@ -84,7 +86,7 @@ const Inner = ({
       )}
       autoComplete="off"
       tabIndex={-1}
-      value={localValue ?? ""}
+      value={toInputValue(localValue)}
       onChange={(e) => {
         setLocalValue(e.target.value)
         adjustTextareaHeight()

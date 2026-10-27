@@ -1,9 +1,4 @@
-import {
-  CellContext,
-  ColumnDefTemplate,
-  createColumnHelper,
-  HeaderContext,
-} from "@tanstack/react-table"
+import { createColumnHelper, DisplayColumnDef } from "@tanstack/react-table"
 import { FieldValues } from "react-hook-form"
 
 import { DataGridColumnType, FieldFunction } from "../types"
@@ -20,11 +15,11 @@ type DataGridHelperColumnsProps<TData, TFieldValues extends FieldValues> = {
   /**
    * The header template for the column.
    */
-  header: ColumnDefTemplate<HeaderContext<TData, unknown>> | undefined
+  header: DisplayColumnDef<TData>["header"]
   /**
    * The cell template for the column.
    */
-  cell: ColumnDefTemplate<CellContext<TData, unknown>> | undefined
+  cell: DisplayColumnDef<TData>["cell"]
   /**
    * Callback to set the field path for each cell in the column.
    * If a callback is not provided, or returns null, the cell will not be editable.

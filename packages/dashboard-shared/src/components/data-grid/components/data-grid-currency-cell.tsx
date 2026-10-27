@@ -2,21 +2,23 @@ import CurrencyInput, {
   CurrencyInputProps,
   formatValue,
 } from "react-currency-input-field"
+import type { JsonValue } from "@mercurjs/types"
 import { Controller, ControllerRenderProps } from "react-hook-form"
 
 import { useCallback, useEffect, useState } from "react"
 import { useCombinedRefs } from "../../../hooks/use-combined-refs"
 import { CurrencyInfo, currencies } from "../../../lib/data/currencies"
 import { useDataGridCell, useDataGridCellError } from "../hooks"
-import { DataGridCellProps, InputProps } from "../types"
+import { DataGridCellProps, DataGridFormValues, InputProps } from "../types"
+import { toInputValue } from "../utils"
 import { DataGridCellContainer } from "./data-grid-cell-container"
 
-export interface DataGridCurrencyCellProps<TData, TValue = any>
+export interface DataGridCurrencyCellProps<TData, TValue = JsonValue>
   extends DataGridCellProps<TData, TValue> {
   code: string
 }
 
-export const DataGridCurrencyCell = <TData, TValue = any>({
+export const DataGridCurrencyCell = <TData, TValue = JsonValue>({
   context,
   code,
 }: DataGridCurrencyCellProps<TData, TValue>) => {
@@ -49,7 +51,7 @@ const Inner = ({
   inputProps,
   currencyInfo,
 }: {
-  field: ControllerRenderProps<any, string>
+  field: ControllerRenderProps<DataGridFormValues, string>
   inputProps: InputProps
   currencyInfo: CurrencyInfo
 }) => {
@@ -77,7 +79,9 @@ const Inner = ({
     [currencyInfo]
   )
 
-  const [localValue, setLocalValue] = useState<string | number>(value || "")
+  const [localValue, setLocalValue] = useState<string | number>(
+    toInputValue(value) || ""
+  )
 
   const handleValueChange: CurrencyInputProps["onValueChange"] = (
     value,
@@ -93,7 +97,7 @@ const Inner = ({
   }
 
   useEffect(() => {
-    let update = value
+    let update = toInputValue(value)
 
     // The component we use is a bit fidly when the value is updated externally
     // so we need to ensure a format that will result in the cell being formatted correctly

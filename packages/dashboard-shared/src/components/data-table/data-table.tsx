@@ -1,4 +1,6 @@
 import type { Permission } from "@mercurjs/dashboard-sdk"
+import { JsonValueSchema } from "../../lib/json"
+import { parseJsonQueryParam } from "../../lib/query-filters"
 import { usePermissionGate } from "../../permissions/use-permission-gate"
 import {
   usePermittedCommands,
@@ -7,7 +9,6 @@ import {
 import {
   DataTable as UiDataTable,
   useDataTable,
-  DataTableColumnDef,
   DataTableCommand,
   DataTableEmptyStateProps,
   DataTableFilter,
@@ -71,7 +72,7 @@ type DataTableActionMenuProps = {
 
 interface DataTableProps<TData> {
   data?: TData[];
-  columns: DataTableColumnDef<TData, any>[];
+  columns: Parameters<typeof useDataTable<TData>>[0]["columns"];
   filters?: DataTableFilter[];
   /** A command with a `permission` is left out when the actor lacks it. */
   commands?: PermissionedCommand<DataTableCommand>[];
@@ -457,10 +458,10 @@ function parseFilterState(
   const filters: DataTableFilteringState = {};
 
   for (const id of filterIds) {
-    const filterValue = value[id];
+    const filterValue = parseJsonQueryParam(value[id], JsonValueSchema);
 
     if (filterValue !== undefined) {
-      filters[id] = JSON.parse(filterValue);
+      filters[id] = filterValue;
     }
   }
 

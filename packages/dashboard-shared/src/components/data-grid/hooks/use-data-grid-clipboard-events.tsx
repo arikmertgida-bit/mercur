@@ -1,31 +1,20 @@
+import type { JsonValue } from "@mercurjs/types"
 import { useCallback } from "react"
-import { FieldValues, Path, PathValue } from "react-hook-form"
 
 import { DataGridBulkUpdateCommand, DataGridMatrix } from "../models"
 import { DataGridCoordinates } from "../types"
 
-type UseDataGridClipboardEventsOptions<
-  TData,
-  TFieldValues extends FieldValues
-> = {
-  matrix: DataGridMatrix<TData, TFieldValues>
+type UseDataGridClipboardEventsOptions<TData> = {
+  matrix: DataGridMatrix<TData>
   isEditing: boolean
   anchor: DataGridCoordinates | null
   rangeEnd: DataGridCoordinates | null
-  getSelectionValues: (
-    fields: string[]
-  ) => PathValue<TFieldValues, Path<TFieldValues>>[]
-  setSelectionValues: (
-    fields: string[],
-    values: PathValue<TFieldValues, Path<TFieldValues>>[]
-  ) => void
+  getSelectionValues: (fields: string[]) => JsonValue[]
+  setSelectionValues: (fields: string[], values: JsonValue[]) => void
   execute: (command: DataGridBulkUpdateCommand) => void
 }
 
-export const useDataGridClipboardEvents = <
-  TData,
-  TFieldValues extends FieldValues
->({
+export const useDataGridClipboardEvents = <TData,>({
   matrix,
   anchor,
   rangeEnd,
@@ -33,7 +22,7 @@ export const useDataGridClipboardEvents = <
   getSelectionValues,
   setSelectionValues,
   execute,
-}: UseDataGridClipboardEventsOptions<TData, TFieldValues>) => {
+}: UseDataGridClipboardEventsOptions<TData>) => {
   const handleCopyEvent = useCallback(
     (e: ClipboardEvent) => {
       if (isEditing || !anchor || !rangeEnd) {

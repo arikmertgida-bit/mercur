@@ -1,22 +1,17 @@
 import { useCallback, useState } from "react"
-import { FieldValues, Path, UseFormReturn } from "react-hook-form"
 import { DataGridMatrix } from "../models"
-import { DataGridCellSnapshot, DataGridCoordinates } from "../types"
+import { DataGridCellSnapshot, DataGridCoordinates, DataGridForm } from "../types"
 
-type UseDataGridCellSnapshotOptions<TData, TFieldValues extends FieldValues> = {
-  matrix: DataGridMatrix<TData, TFieldValues>
-  form: UseFormReturn<TFieldValues>
+type UseDataGridCellSnapshotOptions<TData> = {
+  matrix: DataGridMatrix<TData>
+  form: DataGridForm
 }
 
-export const useDataGridCellSnapshot = <
-  TData,
-  TFieldValues extends FieldValues
->({
+export const useDataGridCellSnapshot = <TData,>({
   matrix,
   form,
-}: UseDataGridCellSnapshotOptions<TData, TFieldValues>) => {
-  const [snapshot, setSnapshot] =
-    useState<DataGridCellSnapshot<TFieldValues> | null>(null)
+}: UseDataGridCellSnapshotOptions<TData>) => {
+  const [snapshot, setSnapshot] = useState<DataGridCellSnapshot | null>(null)
 
   const { getValues, setValue } = form
 
@@ -35,7 +30,7 @@ export const useDataGridCellSnapshot = <
         return null
       }
 
-      const value = getValues(field as Path<TFieldValues>)
+      const value = getValues(field)
 
       setSnapshot((curr) => {
         /**
@@ -64,7 +59,7 @@ export const useDataGridCellSnapshot = <
     const { field, value } = snapshot
 
     requestAnimationFrame(() => {
-      setValue(field as Path<TFieldValues>, value)
+      setValue(field, value)
     })
   }, [setValue, snapshot])
 

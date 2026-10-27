@@ -27,7 +27,12 @@ import { createPortal } from "react-dom"
 
 import { sortableTreeKeyboardCoordinates } from "./keyboard-coordinates"
 import { SortableTreeItem } from "./sortable-tree-item"
-import type { FlattenedItem, SensorContext, TreeItem } from "./types"
+import type {
+  FlattenedItem,
+  SensorContext,
+  TreeChildrenAccessor,
+  TreeItem,
+} from "./types"
 import {
   buildTree,
   flattenTree,
@@ -65,16 +70,20 @@ const dropAnimationConfig: DropAnimation = {
   },
 }
 
-interface Props<T extends TreeItem> {
+/**
+ * `getChildren`/`setChildren` should be stable references (module-level
+ * functions or memoized callbacks) so the flattened tree is not rebuilt on
+ * every render.
+ */
+interface Props<T extends TreeItem> extends TreeChildrenAccessor<T> {
   collapsible?: boolean
-  childrenProp?: string
   items: T[]
   indentationWidth?: number
   /**
    * Enable drag for all items or provide a function to enable drag for specific items.
    * @default true
    */
-  enableDrag?: boolean | ((item: TreeItem) => boolean)
+  enableDrag?: boolean | ((item: T) => boolean)
   onChange: (
     updatedItem: {
       id: UniqueIdentifier
@@ -83,18 +92,24 @@ interface Props<T extends TreeItem> {
     },
     items: T[]
   ) => void
-  renderValue: (item: TreeItem) => ReactNode
+  renderValue: (item: T) => ReactNode
 }
 
 export function SortableTree<T extends TreeItem>({
   collapsible = true,
-  childrenProp = "children", // "children" is the default children prop name
+  getChildren,
+  setChildren,
   enableDrag = true,
   items = [],
   indentationWidth = 40,
   onChange,
   renderValue,
 }: Props<T>) {
+  const accessor: TreeChildrenAccessor<T> = useMemo(
+    () => ({ getChildren, setChildren }),
+    [getChildren, setChildren]
+  )
+
   const [collapsedState, setCollapsedState] = useState<
     Record<UniqueIdentifier, boolean>
   >({})
@@ -108,24 +123,21 @@ export function SortableTree<T extends TreeItem>({
   } | null>(null)
 
   const flattenedItems = useMemo(() => {
-    const flattenedTree = flattenTree(items, childrenProp)
+    const flattenedTree = flattenTree(items, accessor)
     const collapsedItems = flattenedTree.reduce<UniqueIdentifier[]>(
-      (acc, item) => {
-        const { id } = item
-        const children = (item[childrenProp] || []) as FlattenedItem[]
+      (acc, { id, childCount }) => {
         const collapsed = collapsedState[id]
 
-        return collapsed && children.length ? [...acc, id] : acc
+        return collapsed && childCount ? [...acc, id] : acc
       },
       []
     )
 
     return removeChildrenOf(
       flattenedTree,
-      activeId ? [activeId, ...collapsedItems] : collapsedItems,
-      childrenProp
+      activeId ? [activeId, ...collapsedItems] : collapsedItems
     )
-  }, [activeId, items, childrenProp, collapsedState])
+  }, [activeId, items, accessor, collapsedState])
 
   const projected =
     activeId && overId
@@ -199,9 +211,7 @@ export function SortableTree<T extends TreeItem>({
 
     if (projected && over) {
       const { depth, parentId } = projected
-      const clonedItems: FlattenedItem[] = JSON.parse(
-        JSON.stringify(flattenTree(items, childrenProp))
-      )
+      const clonedItems = flattenTree(items, accessor)
       const overIndex = clonedItems.findIndex(({ id }) => id === over.id)
 
       const activeIndex = clonedItems.findIndex(({ id }) => id === active.id)
@@ -211,10 +221,10 @@ export function SortableTree<T extends TreeItem>({
 
       const sortedItems = arrayMove(clonedItems, activeIndex, overIndex)
 
-      const { items: newItems, update } = buildTree<T>(
+      const { items: newItems, update } = buildTree(
         sortedItems,
         overIndex,
-        childrenProp
+        accessor
       )
 
       onChange(update, newItems)
@@ -262,9 +272,7 @@ export function SortableTree<T extends TreeItem>({
         }
       }
 
-      const clonedItems: FlattenedItem[] = JSON.parse(
-        JSON.stringify(flattenTree(items, childrenProp))
-      )
+      const clonedItems = flattenTree(items, accessor)
       const overIndex = clonedItems.findIndex(({ id }) => id === overId)
       const activeIndex = clonedItems.findIndex(({ id }) => id === activeId)
       const sortedItems = arrayMove(clonedItems, activeIndex, overIndex)
@@ -282,7 +290,7 @@ export function SortableTree<T extends TreeItem>({
         if (projected.depth > previousItem.depth) {
           announcement = `${activeId} was ${nestedVerb} under ${previousItem.id}.`
         } else {
-          let previousSibling: FlattenedItem | undefined = previousItem
+          let previousSibling: FlattenedItem<T> | undefined = previousItem
           while (previousSibling && projected.depth < previousSibling.depth) {
             const parentId: UniqueIdentifier | null = previousSibling.parentId
             previousSibling = sortedItems.find(({ id }) => id === parentId)
@@ -331,10 +339,7 @@ export function SortableTree<T extends TreeItem>({
       onDragCancel={handleDragCancel}
     >
       <SortableContext items={sortedIds} strategy={verticalListSortingStrategy}>
-        {flattenedItems.map((item) => {
-          const { id, depth } = item
-          const children = (item[childrenProp] || []) as FlattenedItem[]
-
+        {flattenedItems.map(({ id, depth, childCount, item }) => {
           const disabled =
             typeof enableDrag === "function"
               ? !enableDrag(item)
@@ -348,10 +353,10 @@ export function SortableTree<T extends TreeItem>({
               disabled={disabled}
               depth={id === activeId && projected ? projected.depth : depth}
               indentationWidth={indentationWidth}
-              collapsed={Boolean(collapsedState[id] && children.length)}
-              childCount={children.length}
+              collapsed={Boolean(collapsedState[id] && childCount)}
+              childCount={childCount}
               onCollapse={
-                collapsible && children.length
+                collapsible && childCount
                   ? () => handleCollapse(id)
                   : undefined
               }
@@ -365,8 +370,8 @@ export function SortableTree<T extends TreeItem>({
                 id={activeId}
                 depth={activeItem.depth}
                 clone
-                childCount={getChildCount(items, activeId, childrenProp) + 1}
-                value={renderValue(activeItem)}
+                childCount={getChildCount(items, activeId, accessor) + 1}
+                value={renderValue(activeItem.item)}
                 indentationWidth={0}
               />
             ) : null}

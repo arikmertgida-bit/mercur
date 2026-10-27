@@ -2,12 +2,17 @@ import type { JsonValue } from "@mercurjs/types"
 import { clx, Textarea } from "@medusajs/ui";
 import { Popover as RadixPopover } from "radix-ui";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Controller, ControllerRenderProps, FieldValues } from "react-hook-form";
+import { Controller, ControllerRenderProps } from "react-hook-form";
 
 import { useCombinedRefs } from "../../../hooks/use-combined-refs";
 import { useDataGridCell, useDataGridCellError } from "../hooks";
 import { useDataGridContext } from "../context";
-import { DataGridCellProps, DataGridCellContainerProps, InputProps } from "../types";
+import {
+  DataGridCellProps,
+  DataGridCellContainerProps,
+  DataGridFormValues,
+  InputProps,
+} from "../types";
 import { DataGridCellContainer } from "./data-grid-cell-container";
 
 const toTextValue = (value: JsonValue | undefined): string =>
@@ -63,7 +68,7 @@ const Inner = ({
   container,
   errorProps,
 }: {
-  field: ControllerRenderProps<FieldValues, string>;
+  field: ControllerRenderProps<DataGridFormValues, string>;
   inputProps: InputProps;
   fieldLabel?: string;
   container: DataGridCellContainerProps;
@@ -74,19 +79,19 @@ const Inner = ({
   const { setSingleRange, anchor } = useDataGridContext();
   const { row, col } = anchor || { row: 0, col: 0 };
 
-  const textValue = toTextValue(value as JsonValue)
+  const textValue = toTextValue(value)
   const [localValue, setLocalValue] = useState(textValue);
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const [popoverValue, setPopoverValue] = useState(textValue);
   const popoverContentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setLocalValue(toTextValue(value as JsonValue));
+    setLocalValue(toTextValue(value));
   }, [value]);
 
   useEffect(() => {
     if (isPopoverOpen) {
-      setPopoverValue(toTextValue(value as JsonValue));
+      setPopoverValue(toTextValue(value));
     }
   }, [isPopoverOpen, value]);
 
@@ -97,10 +102,12 @@ const Inner = ({
     }
 
     const handleKeyDownCapture = (e: KeyboardEvent) => {
-      const target = e.target as HTMLElement;
-      const isTextarea = target.tagName === "TEXTAREA";
+      const target = e.target;
+      const isTextarea = target instanceof HTMLTextAreaElement;
       const isInPopover =
-        popoverContentRef.current && popoverContentRef.current.contains(target);
+        target instanceof Node &&
+        popoverContentRef.current &&
+        popoverContentRef.current.contains(target);
 
       if (isTextarea || isInPopover) {
         const dataGridKeys = [
@@ -132,7 +139,7 @@ const Inner = ({
   const combinedRefs = useCombinedRefs(inputRef, ref);
 
   const handleOverlayMouseDown = useCallback(
-    (e: React.MouseEvent) => {
+    (e: React.MouseEvent<HTMLElement>) => {
       if (e.detail === 2) {
         e.preventDefault();
         e.stopPropagation();
@@ -141,7 +148,7 @@ const Inner = ({
         return;
       }
       // For single clicks, use the normal handler which sets anchor and focuses container
-      container.overlayProps.onMouseDown?.(e as React.MouseEvent<HTMLElement>);
+      container.overlayProps.onMouseDown?.(e);
     },
     [container.overlayProps, setSingleRange, row, col],
   );

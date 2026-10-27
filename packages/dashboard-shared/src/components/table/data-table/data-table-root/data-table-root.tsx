@@ -3,9 +3,9 @@ import { isPermitted } from "../../../../permissions/permission-check"
 import { PermissionsContext } from "../../../../permissions/permissions-context"
 import { CommandBar, Table, clx } from "@medusajs/ui"
 import {
-  ColumnDef,
   Table as ReactTable,
   Row,
+  TableOptions,
   flexRender,
 } from "@tanstack/react-table"
 import {
@@ -38,7 +38,7 @@ export interface DataTableRootProps<TData> {
   /**
    * The columns to render
    */
-  columns: ColumnDef<TData, any>[]
+  columns: TableOptions<TData>["columns"]
   /**
    * Function to generate a link to navigate to when clicking on a row
    */

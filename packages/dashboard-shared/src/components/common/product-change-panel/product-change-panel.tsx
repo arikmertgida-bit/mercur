@@ -23,8 +23,16 @@ import {
   type BooleanLabels,
   type ReferenceField,
 } from "../../../lib/product-change-diff";
+import { isJsonObject } from "../../../lib/json";
 
 type WrappedAttributeValue = { id: string; name?: string | null };
+
+const getRemovedVariantId = (
+  action: ProductChangeActionDTO,
+): string | undefined => {
+  const id = action.details.variant_id;
+  return typeof id === "string" ? id : undefined;
+};
 
 export type ProductChangeAttribute = {
   id: string;
@@ -219,11 +227,11 @@ const FieldDiffValue = ({
     return (
       <div className="flex flex-wrap items-center gap-2">
         {hasPrev && isImageList(diff.previous) && (
-          <ImageStrip images={diff.previous as ImageRef[]} faded />
+          <ImageStrip images={diff.previous} faded />
         )}
         {hasPrev && <ValueText>→</ValueText>}
         {isImageList(diff.next) ? (
-          <ImageStrip images={diff.next as ImageRef[]} />
+          <ImageStrip images={diff.next} />
         ) : (
           <ValueText>
             {formatFieldValue(diff.next, diff.field, booleanLabels)}
@@ -482,7 +490,7 @@ export const ProductChangePanel = ({
   const variantIdsToFetch = useMemo(() => {
     const ids = new Set<string>();
     for (const action of view.variantsRemoved) {
-      const id = (action.details as { variant_id?: string })?.variant_id;
+      const id = getRemovedVariantId(action);
       if (id && !variantsById.has(id)) ids.add(id);
     }
     for (const group of view.variantGroups) {
@@ -647,13 +655,12 @@ export const ProductChangePanel = ({
   const variantAddIdentity = (
     action: ProductChangeActionDTO,
   ): ProductChangeVariant => {
-    const details = (action.details ?? {}) as {
-      variant?: { title?: string; sku?: string };
-    };
+    const variant = action.details.variant;
+    const details = isJsonObject(variant) ? variant : {};
     return {
       id: action.id,
-      title: details.variant?.title,
-      sku: details.variant?.sku,
+      title: typeof details.title === "string" ? details.title : undefined,
+      sku: typeof details.sku === "string" ? details.sku : undefined,
     };
   };
 
@@ -732,8 +739,7 @@ export const ProductChangePanel = ({
               testId="product-active-edit-removed"
             >
               {view.variantsRemoved.map((action) => {
-                const id = (action.details as { variant_id?: string })
-                  ?.variant_id;
+                const id = getRemovedVariantId(action);
                 return (
                   <ItemRow key={`rv-${action.id}`} label={typeVariant}>
                     <VariantIdentity

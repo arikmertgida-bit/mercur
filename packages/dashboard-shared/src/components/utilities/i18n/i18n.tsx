@@ -1,3 +1,4 @@
+import type { JsonRecord } from "@mercurjs/types";
 import i18n from "i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 import { initReactI18next } from "react-i18next";
@@ -7,25 +8,18 @@ import translations from "../../../i18n/translations";
 import customI18nResources from "virtual:mercur/i18n";
 import config from "virtual:mercur/config";
 
-function deepMerge(
-  target: Record<string, any>,
-  source: Record<string, any>,
-): Record<string, any> {
-  const result = { ...target };
+import { isJsonObject } from "../../../lib/json";
 
-  for (const key of Object.keys(source)) {
-    if (
-      source[key] &&
-      typeof source[key] === "object" &&
-      !Array.isArray(source[key]) &&
-      target[key] &&
-      typeof target[key] === "object" &&
-      !Array.isArray(target[key])
-    ) {
-      result[key] = deepMerge(target[key], source[key]);
-    } else {
-      result[key] = source[key];
-    }
+function deepMerge(target: JsonRecord, source: JsonRecord): JsonRecord {
+  const result: JsonRecord = { ...target };
+
+  for (const [key, value] of Object.entries(source)) {
+    const current = target[key];
+
+    result[key] =
+      isJsonObject(value) && isJsonObject(current)
+        ? deepMerge(current, value)
+        : value;
   }
 
   return result;

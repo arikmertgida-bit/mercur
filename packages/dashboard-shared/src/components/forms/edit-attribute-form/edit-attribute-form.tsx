@@ -25,7 +25,7 @@ export type EditAttributeAttribute = {
   id: string
   name: string
   type: AttributeType | string
-  description?: string
+  description?: string | null
   is_required?: boolean
   is_variant_axis?: boolean
   is_scoped?: boolean

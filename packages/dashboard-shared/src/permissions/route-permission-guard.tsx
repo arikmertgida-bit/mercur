@@ -3,7 +3,8 @@ import { Container, Heading, Text } from "@medusajs/ui"
 import { useMemo } from "react"
 import { useTranslation } from "react-i18next"
 import { Navigate, Outlet, useMatches } from "react-router-dom"
-import type { Permission, RouteHandle } from "@mercurjs/dashboard-sdk"
+import type { Permission } from "@mercurjs/dashboard-sdk"
+import { z } from "zod"
 import { usePermissions } from "./use-permissions"
 
 type ResolvedRequirement = {
@@ -12,14 +13,39 @@ type ResolvedRequirement = {
   redirectTo?: string
 }
 
+// Permissions only have to be strings here: a malformed one is kept and denies
+// access through the permission check, rather than dropping the requirement.
+const PermissionSchema = z.custom<Permission>(
+  (value) => typeof value === "string"
+)
+
+// The part of `RouteHandle` the guard reads. Optional fields that are not
+// well-formed fall back to their defaults instead of voiding the requirement.
+const RouteHandleRequirementSchema = z.object({
+  permissions: z.union([PermissionSchema, z.array(PermissionSchema)]).optional(),
+  requireAll: z.boolean().optional().catch(undefined),
+  redirectTo: z.string().optional().catch(undefined),
+})
+
+const PERMISSIONS_KEY = "permissions"
+
 const readRequirementFromHandle = (
-  handle: unknown
+  parsed: ReturnType<typeof RouteHandleRequirementSchema.safeParse>
 ): ResolvedRequirement | undefined => {
-  if (!handle || typeof handle !== "object") {
+  if (!parsed.success) {
+    // A route without a handle is not an error; a handle declaring
+    // non-string permissions is a misconfiguration worth surfacing.
+    if (parsed.error.issues.some((issue) => issue.path[0] === PERMISSIONS_KEY)) {
+      reportError(
+        new Error(
+          `Invalid permissions: all permissions must be strings (${parsed.error.message})`
+        )
+      )
+    }
     return undefined
   }
 
-  const declared = handle as RouteHandle
+  const declared = parsed.data
   const rawPermissions = declared.permissions
   if (!rawPermissions) {
     return undefined
@@ -28,14 +54,6 @@ const readRequirementFromHandle = (
   const permissions = Array.isArray(rawPermissions)
     ? rawPermissions
     : [rawPermissions]
-
-  if (!permissions.every((permission) => typeof permission === "string")) {
-    console.error(
-      "Invalid permissions: all permissions must be strings",
-      permissions
-    )
-    return undefined
-  }
 
   if (!permissions.length) {
     return undefined
@@ -70,7 +88,9 @@ export const RoutePermissionGuard = () => {
   // Deepest match wins so a child route can override its parent.
   const requirement = useMemo(() => {
     for (let i = matches.length - 1; i >= 0; i--) {
-      const found = readRequirementFromHandle(matches[i].handle)
+      const found = readRequirementFromHandle(
+        RouteHandleRequirementSchema.safeParse(matches[i].handle)
+      )
       if (found) {
         return found
       }

@@ -33,10 +33,7 @@ export const createDataGridPriceColumns = <
   isReadyOnly,
   getFieldName,
   t,
-}: CreateDataGridPriceColumnsProps<TData, TFieldValues>): ColumnDef<
-  TData,
-  unknown
->[] => {
+}: CreateDataGridPriceColumnsProps<TData, TFieldValues>): ColumnDef<TData>[] => {
   const columnHelper = createDataGridHelper<TData, TFieldValues>();
 
   return [

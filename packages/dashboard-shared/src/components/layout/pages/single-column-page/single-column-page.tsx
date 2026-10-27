@@ -24,8 +24,10 @@ export const SingleColumnPage = <TData,>({
 }: PageProps<TData>) => {
   if (showJSON && !data) {
     if (process.env.NODE_ENV === "development") {
-      process.stderr.write(
-        "`showJSON` is true but no data is provided. To display JSON, provide data prop.\n"
+      reportError(
+        new Error(
+          "`showJSON` is true but no data is provided. To display JSON, provide data prop."
+        )
       )
     }
 
@@ -34,8 +36,10 @@ export const SingleColumnPage = <TData,>({
 
   if (showMetadata && !data) {
     if (process.env.NODE_ENV === "development") {
-      process.stderr.write(
-        "`showMetadata` is true but no data is provided. To display metadata, provide data prop.\n"
+      reportError(
+        new Error(
+          "`showMetadata` is true but no data is provided. To display metadata, provide data prop."
+        )
       )
     }
 
@@ -45,8 +49,8 @@ export const SingleColumnPage = <TData,>({
   return (
     <div className="flex flex-col gap-y-3">
       {children}
-      {showMetadata && <MetadataSection data={data!} />}
-      {showJSON && <JsonViewSection data={data!} />}
+      {showMetadata && data && <MetadataSection data={data} />}
+      {showJSON && data && <JsonViewSection data={data} />}
       {hasOutlet && <Outlet />}
     </div>
   )

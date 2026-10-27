@@ -259,12 +259,11 @@ export const ProductAttributeSection = ({
   const missing = (requiredAttributes ?? [])
     .filter((required) => !attachedIds.has(required.id))
     .map(
-      (required) =>
-        ({
-          ...required,
-          values: [],
-          is_required: true,
-        }) as unknown as ProductAttributeDTO,
+      (required): ProductAttributeDTO => ({
+        ...required,
+        values: [],
+        is_required: true,
+      }),
     );
 
   const allAttributes = [...attributes, ...missing];

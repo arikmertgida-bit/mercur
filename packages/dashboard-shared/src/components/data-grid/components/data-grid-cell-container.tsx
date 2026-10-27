@@ -1,8 +1,7 @@
-import { ErrorMessage } from "@hookform/error-message"
 import { ExclamationCircle } from "@medusajs/icons"
 import { Tooltip, clx } from "@medusajs/ui"
 import { PropsWithChildren } from "react"
-import { get } from "react-hook-form"
+import { FieldError, FieldValues, get } from "react-hook-form"
 
 import { DataGridCellContainerProps, DataGridErrorRenderProps } from "../types"
 import { DataGridRowErrorIndicator } from "./data-grid-row-error-indicator"
@@ -22,8 +21,8 @@ export const DataGridCellContainer = ({
   outerComponent,
   isMultiLine,
 }: DataGridCellContainerProps &
-  DataGridErrorRenderProps<any> & { isMultiLine?: boolean }) => {
-  const error = get(errors, field)
+  DataGridErrorRenderProps<FieldValues> & { isMultiLine?: boolean }) => {
+  const error: FieldError | undefined = get(errors, field)
   const hasError = !!error
 
   return (
@@ -45,19 +44,13 @@ export const DataGridCellContainer = ({
         tabIndex={-1}
         {...innerProps}
       >
-        <ErrorMessage
-          name={field}
-          errors={errors}
-          render={({ message }) => {
-            return (
-              <div className="flex items-center justify-center">
-                <Tooltip content={message} delayDuration={0}>
-                  <ExclamationCircle className="text-ui-tag-red-icon z-[3]" />
-                </Tooltip>
-              </div>
-            )
-          }}
-        />
+        {error && (
+          <div className="flex items-center justify-center">
+            <Tooltip content={error.message} delayDuration={0}>
+              <ExclamationCircle className="text-ui-tag-red-icon z-[3]" />
+            </Tooltip>
+          </div>
+        )}
         <div
           className={clx("relative z-[1] flex h-full w-full", {
             "items-center justify-center": !isMultiLine,

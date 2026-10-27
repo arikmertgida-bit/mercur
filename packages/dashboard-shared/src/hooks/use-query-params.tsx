@@ -1,8 +1,6 @@
 import { useSearchParams } from "react-router-dom"
 
-type QueryParams<T extends string> = {
-  [key in T]: string | undefined
-}
+type QueryParams<T extends string> = Partial<Record<T, string>>
 
 export function useQueryParams<T extends string>(
   keys: T[],
@@ -10,8 +8,7 @@ export function useQueryParams<T extends string>(
 ): QueryParams<T> {
   const [params] = useSearchParams()
 
-  // Use a type assertion to initialize the result
-  const result = {} as QueryParams<T>
+  const result: QueryParams<T> = {}
 
   keys.forEach((key) => {
     const prefixedKey = prefix ? `${prefix}_${key}` : key

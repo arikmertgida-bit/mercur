@@ -26,11 +26,11 @@ export const createWithPermission =
     permission: Permission | Permission[],
     options: { requireAll?: boolean } = {}
   ) =>
-  async (args: TArgs): Promise<TResult> => {
+  async (args: TArgs): Promise<TResult | null> => {
     const permissions = await getPermissions().catch(() => null)
 
     if (!permissionMapAllows(permissions, permission, options.requireAll ?? true)) {
-      return null as TResult
+      return null
     }
 
     return loader(args)

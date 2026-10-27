@@ -12,12 +12,14 @@ export const ErrorBoundary = () => {
 
   let code: number | null = null
 
-  if (isClientError(error)) {
-    if (error.status === 401) {
+  const thrownError = error instanceof Error ? error : undefined
+
+  if (isClientError(thrownError)) {
+    if (thrownError.status === 401) {
       return <Navigate to="/login" state={{ from: location }} replace />
     }
 
-    code = error.status ?? null
+    code = thrownError.status ?? null
   }
 
   /**
@@ -27,7 +29,7 @@ export const ErrorBoundary = () => {
    * so this ensures that we always log it.
    */
   if (process.env.NODE_ENV === "development") {
-    process.stderr.write(`${String(error)}\n`)
+    reportError(error)
   }
 
   let title: string

@@ -6,6 +6,7 @@ import type {
   CustomFieldsConfig,
   CustomFormField,
   CustomListExtension,
+  ExtendableEntity,
   NavGroupConfig,
   NavItemOverride,
   Permission,
@@ -54,9 +55,10 @@ function splitZone(zone: string): { slot: string; placement: WidgetPlacement } {
   if (lastDot === -1) {
     return { slot: zone, placement: "after" }
   }
-  const maybePlacement = zone.slice(lastDot + 1) as WidgetPlacement
-  if (PLACEMENTS.includes(maybePlacement)) {
-    return { slot: zone.slice(0, lastDot), placement: maybePlacement }
+  const suffix = zone.slice(lastDot + 1)
+  const placement = PLACEMENTS.find((p) => p === suffix)
+  if (placement) {
+    return { slot: zone.slice(0, lastDot), placement }
   }
   return { slot: zone, placement: "after" }
 }
@@ -139,18 +141,19 @@ export class ExtensionRegistry {
   }
 
   /** First lock reason a config returns for an action on this entity. */
-  getActionLock(model: string, action: string, entity: unknown): string | undefined {
+  getActionLock(
+    model: string,
+    action: string,
+    entity: ExtendableEntity
+  ): string | undefined {
     for (const config of this.configsFor(model)) {
-      const locks = config.actionLocks as
-        | Record<string, ((entity: unknown) => string | undefined) | undefined>
-        | undefined
-      const reason = locks?.[action]?.(entity)
+      const reason = config.actionLocks?.[action]?.(entity)
       if (reason) return reason
     }
     return undefined
   }
 
-  getActivity(model: string, entity: unknown): ActivityEntry[] {
+  getActivity(model: string, entity: ExtendableEntity): ActivityEntry[] {
     return this.configsFor(model).flatMap((c) => c.activity?.(entity) ?? [])
   }
 
@@ -203,11 +206,12 @@ export class ExtensionRegistry {
 
   /** Merged list-table extension for a model. */
   getListExtension(model: string): CustomListExtension {
+    const columnVisibility: Record<string, boolean> = {}
     const merged: Required<CustomListExtension> = {
       columns: [],
       bulkActions: [],
       filters: [],
-      viewDefaults: { columnVisibility: {}, columnOrder: [] },
+      viewDefaults: { columnVisibility, columnOrder: [] },
     }
     for (const config of this.configsFor(model)) {
       const list = config.list
@@ -216,10 +220,7 @@ export class ExtensionRegistry {
       if (list.bulkActions) merged.bulkActions.push(...list.bulkActions)
       if (list.filters) merged.filters.push(...list.filters)
       if (list.viewDefaults?.columnVisibility) {
-        Object.assign(
-          merged.viewDefaults.columnVisibility!,
-          list.viewDefaults.columnVisibility
-        )
+        Object.assign(columnVisibility, list.viewDefaults.columnVisibility)
       }
       if (list.viewDefaults?.columnOrder) {
         merged.viewDefaults.columnOrder = list.viewDefaults.columnOrder

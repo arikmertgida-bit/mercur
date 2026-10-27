@@ -1,8 +1,9 @@
+import type { ExtendableEntity } from "@mercurjs/dashboard-sdk"
 import { useCallback, useMemo } from "react"
 import { useExtension } from "./context"
 
 /** Returns a lookup for the lock reason plugins declare on an entity's action. */
-export const useActionLocks = (model: string, entity: unknown) => {
+export const useActionLocks = (model: string, entity: ExtendableEntity) => {
   const registry = useExtension()
   return useCallback(
     (action: string) => registry.getActionLock(model, action, entity),
@@ -11,7 +12,10 @@ export const useActionLocks = (model: string, entity: unknown) => {
 }
 
 /** Timeline entries plugins contribute for an entity. */
-export const useExtensionActivity = (model: string, entity: unknown) => {
+export const useExtensionActivity = (
+  model: string,
+  entity: ExtendableEntity
+) => {
   const registry = useExtension()
   return useMemo(
     () => registry.getActivity(model, entity),

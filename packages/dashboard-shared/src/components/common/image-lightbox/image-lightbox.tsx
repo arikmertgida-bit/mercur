@@ -34,8 +34,11 @@ export const ImageLightbox = ({
   index,
   onIndexChange,
 }: ImageLightboxProps) => {
-  const open = index !== null && images.length > 0
-  const activeIndex = open ? ((index as number) + images.length) % images.length : null
+  const activeIndex =
+    index !== null && images.length > 0
+      ? (index + images.length) % images.length
+      : null
+  const open = activeIndex !== null
   const current = activeIndex !== null ? images[activeIndex] : null
 
   const goTo = (delta: number): void => {

@@ -2,7 +2,12 @@ import type { CustomListFilter } from "@mercurjs/dashboard-sdk"
 
 type Keyed = { key: string }
 
-const isRemoval = (filter: CustomListFilter): filter is { key: string; remove: true } =>
+type ListFilterRemoval = Extract<CustomListFilter, { remove: true }>
+
+/** A filter a custom-fields config adds or swaps in for a built-in one. */
+export type ListFilterAddition = Exclude<CustomListFilter, ListFilterRemoval>
+
+const isRemoval = (filter: CustomListFilter): filter is ListFilterRemoval =>
   "remove" in filter && filter.remove === true
 
 /**
@@ -13,27 +18,27 @@ const isRemoval = (filter: CustomListFilter): filter is { key: string; remove: t
 export function mergeListFilters<TFilter extends Keyed>(
   base: TFilter[],
   extensions: readonly CustomListFilter[]
-): TFilter[] {
+): (TFilter | ListFilterAddition)[] {
   if (!extensions.length) {
     return base
   }
 
   const byKey = new Map(extensions.map((f) => [f.key, f]))
-  const merged: TFilter[] = []
+  const merged: (TFilter | ListFilterAddition)[] = []
 
   for (const filter of base) {
     const override = byKey.get(filter.key)
     if (!override) {
       merged.push(filter)
     } else if (!isRemoval(override)) {
-      merged.push(override as unknown as TFilter)
+      merged.push(override)
     }
   }
 
   const baseKeys = new Set(base.map((f) => f.key))
   for (const filter of extensions) {
     if (!baseKeys.has(filter.key) && !isRemoval(filter)) {
-      merged.push(filter as unknown as TFilter)
+      merged.push(filter)
     }
   }
 

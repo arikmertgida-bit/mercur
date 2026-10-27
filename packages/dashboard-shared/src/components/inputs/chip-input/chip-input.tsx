@@ -53,7 +53,7 @@ export const ChipInput = forwardRef<HTMLInputElement, ChipInputProps>(
 
     const [duplicateIndex, setDuplicateIndex] = useState<number | null>(null)
 
-    const chips = isControlled ? (value as string[]) : uncontrolledValue
+    const chips = isControlled ? (value ?? []) : uncontrolledValue
 
     const handleAddChip = (chip: string) => {
       const cleanValue = chip.trim()

@@ -57,7 +57,6 @@ export const permissionMapAllows = (
 }
 
 /** True for a 403 from the API (`ClientError.status`). */
-export const isForbidden = (error: unknown): boolean =>
-  !!error &&
-  typeof error === "object" &&
-  (error as { status?: unknown }).status === 403
+export const isForbidden = (
+  error: { status?: number } | null | undefined
+): boolean => error?.status === 403

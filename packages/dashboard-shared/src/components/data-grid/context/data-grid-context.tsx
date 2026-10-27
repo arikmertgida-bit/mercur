@@ -1,20 +1,23 @@
 import type { JsonValue } from "@mercurjs/types"
 import { FocusEvent, MouseEvent, createContext } from "react"
+import { Control, FieldErrors, UseFormRegister } from "react-hook-form"
 import {
-  Control,
-  FieldErrors,
-  FieldValues,
-  Path,
-  UseFormRegister,
-} from "react-hook-form"
-import { CellErrorMetadata, CellMetadata, DataGridCoordinates } from "../types"
+  CellErrorMetadata,
+  CellMetadata,
+  DataGridCoordinates,
+  DataGridFormValues,
+} from "../types"
 
-export type DataGridContextType<TFieldValues extends FieldValues> = {
+export type DataGridContextValue = {
   // Grid state
   anchor: DataGridCoordinates | null
   trapActive: boolean
   setTrapActive: (value: boolean) => void
-  errors: FieldErrors<TFieldValues>
+  /**
+   * Errors are only read by runtime path (`get(errors, field)`), so they
+   * are kept as RHF's untyped error tree.
+   */
+  errors: FieldErrors
   // Cell handlers
   getIsCellSelected: (coords: DataGridCoordinates) => boolean
   getIsCellDragSelected: (coords: DataGridCoordinates) => boolean
@@ -24,10 +27,10 @@ export type DataGridContextType<TFieldValues extends FieldValues> = {
   setRangeEnd: (coords: DataGridCoordinates) => void
   setSingleRange: (coords: DataGridCoordinates) => void
   // Form state and handlers
-  register: UseFormRegister<TFieldValues>
-  control: Control<TFieldValues>
+  register: UseFormRegister<DataGridFormValues>
+  control: Control<DataGridFormValues>
   getInputChangeHandler: (
-    field: Path<TFieldValues>
+    field: string
   ) => (next: JsonValue, prev: JsonValue) => void
   // Wrapper handlers
   getWrapperFocusHandler: (
@@ -40,8 +43,6 @@ export type DataGridContextType<TFieldValues extends FieldValues> = {
   getCellErrorMetadata: (coords: DataGridCoordinates) => CellErrorMetadata
   navigateToField: (field: string) => void
 }
-
-export type DataGridContextValue = DataGridContextType<FieldValues>
 
 export const DataGridContext =
   createContext<DataGridContextValue | null>(null)

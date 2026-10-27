@@ -1,5 +1,6 @@
+import type { JsonValue } from "@mercurjs/types"
 import { clx } from "@medusajs/ui"
-import { memo } from "react"
+import { useMemo } from "react"
 import {
   NoRecords,
   NoRecordsProps,
@@ -14,14 +15,11 @@ interface DataTableProps<TData>
     DataTableQueryProps<TData> {
   isLoading?: boolean
   pageSize: number
-  queryObject?: Record<string, any>
+  queryObject?: Record<string, JsonValue | undefined>
   noRecords?: Pick<NoRecordsProps, "title" | "message" | "icon" | "action">
   noResults?: Pick<NoResultsProps, "title" | "message" | "icon">
 }
 
-// Maybe we should use the memoized version of DataTableRoot
-// const MemoizedDataTableRoot = memo(DataTableRoot) as typeof DataTableRoot
-const MemoizedDataTableQuery = memo(DataTableQuery) as typeof DataTableQuery
 
 /**
  * @deprecated Use the DataTable component from "/components/data-table" instead
@@ -45,6 +43,19 @@ export const _DataTable = <TData,>({
   noRecords: noRecordsProps = {},
   noResults: noResultsProps = {},
 }: DataTableProps<TData>) => {
+  // Memoized like React.memo(DataTableQuery) would be, without erasing TData.
+  const query = useMemo(
+    () => (
+      <DataTableQuery
+        search={search}
+        orderBy={orderBy}
+        filters={filters}
+        prefix={prefix}
+      />
+    ),
+    [search, orderBy, filters, prefix]
+  )
+
   if (isLoading) {
     return (
       <TableSkeleton
@@ -80,12 +91,7 @@ export const _DataTable = <TData,>({
         "flex h-full flex-col overflow-hidden": layout === "fill",
       })}
     >
-      <MemoizedDataTableQuery
-        search={search}
-        orderBy={orderBy}
-        filters={filters}
-        prefix={prefix}
-      />
+      {query}
       <DataTableRoot
         table={table}
         count={count}

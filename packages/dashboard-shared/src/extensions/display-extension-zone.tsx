@@ -2,10 +2,16 @@ import { Fragment, type ComponentType, type ReactNode } from "react"
 import type { JsonRecord } from "@mercurjs/types"
 import { useExtension } from "./context"
 
-export type DisplayExtensionZoneProps = {
+// `data` is generic for the same reason as `WidgetZone`'s: hosts pass
+// concrete entity DTOs (e.g. a product with its `ProductAttributeDTO[]`) that
+// carry no index signature, while registered display components are declared
+// against the erased `JsonRecord` shape. Spreading into a fresh object
+// literal before forwarding bridges the two without a type assertion.
+
+export type DisplayExtensionZoneProps<TData = JsonRecord> = {
   model: string
   zone: string
-  data?: JsonRecord
+  data?: TData
   /**
    * Ids of the section's built-in fields — those are overridden inline by
    * `<DisplayField>`, so the zone skips them and only renders genuinely added
@@ -19,15 +25,16 @@ export type DisplayExtensionZoneProps = {
  * field) plus the section's custom `ActionMenu` contributions. Built-in fields
  * are overridden in place by `<DisplayField>` / `useDisplayFieldOverride`.
  */
-export const DisplayExtensionZone = ({
+export const DisplayExtensionZone = <TData = JsonRecord,>({
   model,
   zone,
   data,
   builtInFieldIds = [],
-}: DisplayExtensionZoneProps) => {
+}: DisplayExtensionZoneProps<TData>) => {
   const { fields, actions } = useExtension().getDisplays(model, zone)
   const builtIn = new Set(builtInFieldIds)
   const added = fields.filter((f) => f.component && !builtIn.has(f.id))
+  const displayData = data && { ...data }
 
   if (added.length === 0 && actions.length === 0) return null
 
@@ -35,21 +42,21 @@ export const DisplayExtensionZone = ({
     <>
       {added.map(({ id, component: Component }) => {
         if (!Component) return null
-        return <Component key={id} data={data} />
+        return <Component key={id} data={displayData} />
       })}
       {actions.map(({ component: Component }, i) => (
-        <Component key={`action-${i}`} data={data} />
+        <Component key={`action-${i}`} data={displayData} />
       ))}
     </>
   )
 }
 
-export type DisplayFieldProps = {
+export type DisplayFieldProps<TData = JsonRecord> = {
   model: string
   zone: string
   /** Stable id of this built-in field (e.g. `title`, `description`). */
   id: string
-  data?: JsonRecord
+  data?: TData
   /** The built-in default rendering, shown when there is no override. */
   children?: ReactNode
 }
@@ -60,16 +67,16 @@ export type DisplayFieldProps = {
  * With no matching override, renders the built-in `children` unchanged. This is
  * the host the panel codegen scans to type `displayFieldIds`.
  */
-export const DisplayField = ({
+export const DisplayField = <TData = JsonRecord,>({
   model,
   zone,
   id,
   data,
   children,
-}: DisplayFieldProps) => {
+}: DisplayFieldProps<TData>) => {
   const { overridden, Component } = useDisplayFieldOverride(model, zone, id)
   if (overridden) {
-    return Component ? <Component data={data} /> : null
+    return Component ? <Component data={data && { ...data }} /> : null
   }
   return <Fragment>{children}</Fragment>
 }
@@ -81,10 +88,10 @@ export type DisplaySectionField = {
   render: ReactNode
 }
 
-export type DisplaySectionProps = {
+export type DisplaySectionProps<TData = JsonRecord> = {
   model: string
   zone: string
-  data?: JsonRecord
+  data?: TData
   /** Built-in fields of this section, each overridable/removable by id. */
   fields: DisplaySectionField[]
 }
@@ -95,12 +102,12 @@ export type DisplaySectionProps = {
  * appends the section's added fields + actions via `<DisplayExtensionZone>`,
  * deriving `builtInFieldIds` from `fields`.
  */
-export const DisplaySection = ({
+export const DisplaySection = <TData = JsonRecord,>({
   model,
   zone,
   data,
   fields,
-}: DisplaySectionProps) => (
+}: DisplaySectionProps<TData>) => (
   <>
     {fields.map(({ id, render }) => (
       <DisplayField key={id} model={model} zone={zone} id={id} data={data}>
