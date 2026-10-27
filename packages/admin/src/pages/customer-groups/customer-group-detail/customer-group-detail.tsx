@@ -1,6 +1,6 @@
 import { Children, ReactNode } from "react"
-import { useLoaderData, useParams } from "react-router-dom"
-import { useLinkQuery, WidgetZone } from "@mercurjs/dashboard-shared"
+import { useLoaderData } from "react-router-dom"
+import { useLinkQuery, WidgetZone, useRequiredParam } from "@mercurjs/dashboard-shared"
 
 import { SingleColumnPage } from "../../../components/layout/pages"
 import { useCustomerGroup } from "../../../hooks/api/customer-groups"
@@ -12,14 +12,12 @@ import { SingleColumnPageSkeleton } from "../../../components/common/skeleton"
 import { CUSTOMER_GROUP_DETAIL_FIELDS } from "./constants"
 
 const Root = ({ children }: { children?: ReactNode }) => {
-  const initialData = useLoaderData() as Awaited<
-    ReturnType<typeof customerGroupLoader>
-  >
+  const initialData = useLoaderData<typeof customerGroupLoader>()
 
-  const { id } = useParams()
+  const id = useRequiredParam("id")
   const query = useLinkQuery("customer_group", CUSTOMER_GROUP_DETAIL_FIELDS)
   const { customer_group, isLoading, isError, error } = useCustomerGroup(
-    id!,
+    id,
     query,
     { initialData },
   )

@@ -1,12 +1,13 @@
 import { Checkbox } from "@medusajs/ui"
+import type { JsonValue } from "@mercurjs/types"
 import { Controller, ControllerRenderProps } from "react-hook-form"
 
 import { useCombinedRefs } from "../../../hooks/use-combined-refs"
 import { useDataGridCell, useDataGridCellError } from "../hooks"
-import { DataGridCellProps, InputProps } from "../types"
+import { DataGridCellProps, DataGridFormValues, InputProps } from "../types"
 import { DataGridCellContainer } from "./data-grid-cell-container"
 
-export const DataGridBooleanCell = <TData, TValue = any>({
+export const DataGridBooleanCell = <TData, TValue = JsonValue>({
   context,
   disabled,
 }: DataGridCellProps<TData, TValue> & { disabled?: boolean }) => {
@@ -37,7 +38,7 @@ const Inner = ({
   inputProps,
   disabled,
 }: {
-  field: ControllerRenderProps<any, string>
+  field: ControllerRenderProps<DataGridFormValues, string>
   inputProps: InputProps
   disabled?: boolean
 }) => {
@@ -56,7 +57,7 @@ const Inner = ({
     <Checkbox
       disabled={disabled || fieldDisabled}
       name={name}
-      checked={value}
+      checked={value === true}
       onCheckedChange={(newValue) => onChange(newValue === true, value)}
       onFocus={onFocus}
       onBlur={() => {

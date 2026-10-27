@@ -1,15 +1,15 @@
 import { useTranslation } from "react-i18next"
-import { useParams } from "react-router-dom"
 
 import { RouteFocusModal } from "../../../components/modals"
 import { useCollection } from "../../../hooks/api/collections"
 import { CollectionMediaView } from "./components/collection-media-view"
+import { useRequiredParam } from "@mercurjs/dashboard-shared"
 
 export const CollectionMedia = () => {
   const { t } = useTranslation()
-  const { id } = useParams()
+  const id = useRequiredParam("id")
 
-  const { collection, isLoading, isError, error } = useCollection(id!)
+  const { collection, isLoading, isError, error } = useCollection(id)
 
   const ready = !isLoading && !!collection
 

@@ -88,7 +88,10 @@ const BulkEditStatusCell = <TData,>({
           {...errorProps}
           showOverlay={false}
         >
-          <Select value={value} onValueChange={onChange}>
+          <Select
+            value={typeof value === "string" ? value : undefined}
+            onValueChange={onChange}
+          >
             <Select.Trigger
               ref={ref}
               className={clx(
@@ -133,7 +136,7 @@ const BulkEditDiscountableCell = <TData,>({
           <div className="flex w-full items-center justify-between">
             <Switch
               ref={ref}
-              checked={value}
+              checked={value === true}
               onCheckedChange={onChange}
               size="small"
             />

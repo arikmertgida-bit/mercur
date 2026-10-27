@@ -1,3 +1,7 @@
+import {
+  DateComparisonFilterSchema,
+  parseJsonQueryParam,
+} from "@mercurjs/dashboard-shared"
 import { useQueryParams } from "../../use-query-params"
 
 type UsePayoutTableQueryProps = {
@@ -16,13 +20,13 @@ export const usePayoutTableQuery = ({
 
   const { offset, q, order, created_at, updated_at, status } = queryObject
 
-  const searchParams: Record<string, string | number | string[] | undefined> = {
+  const searchParams = {
     limit: pageSize,
     offset: offset ? Number(offset) : 0,
     q,
     order: order ?? "-created_at",
-    created_at: created_at ? JSON.parse(created_at) : undefined,
-    updated_at: updated_at ? JSON.parse(updated_at) : undefined,
+    created_at: parseJsonQueryParam(created_at, DateComparisonFilterSchema),
+    updated_at: parseJsonQueryParam(updated_at, DateComparisonFilterSchema),
     status: status?.split(","),
   }
 

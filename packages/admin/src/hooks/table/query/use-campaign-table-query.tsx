@@ -1,3 +1,7 @@
+import {
+  DateComparisonFilterSchema,
+  parseJsonQueryParam,
+} from "@mercurjs/dashboard-shared"
 import { useQueryParams } from "../../use-query-params"
 
 type UseCampaignTableQueryProps = {
@@ -39,8 +43,8 @@ export const useCampaignTableQuery = ({
     offset: offset ? Number(offset) : 0,
     order: order || "-created_at",
     fields: "+seller.id,+seller.name,+budget.type",
-    created_at: created_at ? JSON.parse(created_at) : undefined,
-    updated_at: updated_at ? JSON.parse(updated_at) : undefined,
+    created_at: parseJsonQueryParam(created_at, DateComparisonFilterSchema),
+    updated_at: parseJsonQueryParam(updated_at, DateComparisonFilterSchema),
     seller_id: seller_id || undefined,
     budget_type: budget_type || undefined,
     status: status || undefined,

@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 
@@ -10,20 +10,21 @@ import { ReturnCreateForm } from "./components/return-create-form"
 import { useOrder, useOrderPreview } from "../../../hooks/api/orders"
 import { useInitiateReturn, useReturn } from "../../../hooks/api/returns"
 import { DEFAULT_FIELDS } from "../order-detail/constants"
+import { useRequiredParam } from "@mercurjs/dashboard-shared"
 
 let IS_REQUEST_RUNNING = false
 
 export const ReturnCreate = () => {
-  const { id } = useParams()
+  const id = useRequiredParam("id")
 
   const navigate = useNavigate()
   const { t } = useTranslation()
 
-  const { order } = useOrder(id!, {
+  const { order } = useOrder(id, {
     fields: DEFAULT_FIELDS,
   })
 
-  const { order: preview } = useOrderPreview(id!, undefined, {})
+  const { order: preview } = useOrderPreview(id, undefined, {})
 
   const [activeReturnId, setActiveReturnId] = useState()
 

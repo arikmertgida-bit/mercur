@@ -29,7 +29,7 @@ export const ApiKeyManagementListDataTable = () => {
   }
 
   const { api_keys, count, isLoading, isError, error } = useApiKeys(
-    query as Parameters<typeof useApiKeys>[0],
+    query,
     {
       placeholderData: keepPreviousData,
     }

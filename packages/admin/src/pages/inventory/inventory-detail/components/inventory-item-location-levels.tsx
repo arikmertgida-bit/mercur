@@ -5,10 +5,10 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 import { ItemLocationListTable } from "./location-levels-table/location-list-table";
-import type { ExtendedAdminInventoryItem } from "@custom-types/inventory";
+import type { HttpTypes } from "@medusajs/types";
 
 type InventoryItemLocationLevelsSectionProps = {
-  inventoryItem: ExtendedAdminInventoryItem;
+  inventoryItem: HttpTypes.AdminInventoryItem;
 };
 export const InventoryItemLocationLevelsSection = ({
   inventoryItem,

@@ -3,7 +3,6 @@ import {
   InferClientInput,
   InferClientOutput,
 } from "@mercurjs/client"
-import type { HttpTypes } from "@medusajs/types"
 import {
   QueryKey,
   UseMutationOptions,
@@ -14,6 +13,7 @@ import {
 import { sdk, fetchQuery } from "../../lib/client"
 import { queryClient } from "../../lib/query-client"
 import { queryKeysFactory } from "../../lib/query-key-factory"
+import { z } from "zod"
 
 const INVITES_QUERY_KEY = "invites" as const
 const invitesQueryKeys = queryKeysFactory(INVITES_QUERY_KEY)
@@ -122,22 +122,31 @@ type AcceptInvitePayload = {
   auth_token: string
 }
 
+// Medusa's accept route answers `{ user }`; the body comes off the wire
+// through `fetchQuery` (the token travels as a query param, which the typed
+// client cannot send on a POST), so it is validated here.
+const AcceptInviteResponseSchema = z.object({
+  user: z.object({ id: z.string(), email: z.string() }),
+})
+
 export const useAcceptInvite = (
   inviteToken: string,
   options?: UseMutationOptions<
-    HttpTypes.AdminAcceptInviteResponse,
+    z.infer<typeof AcceptInviteResponseSchema>,
     ClientError,
     AcceptInvitePayload
   >
 ) => {
   return useMutation({
-    mutationFn: ({ auth_token, ...body }) =>
-      fetchQuery('/admin/invites/accept', {
-        method: 'POST',
-        query: { token: inviteToken },
-        body,
-        headers: { Authorization: `Bearer ${auth_token}` },
-      }),
+    mutationFn: async ({ auth_token, ...body }) =>
+      AcceptInviteResponseSchema.parse(
+        await fetchQuery('/admin/invites/accept', {
+          method: 'POST',
+          query: { token: inviteToken },
+          body,
+          headers: { Authorization: `Bearer ${auth_token}` },
+        })
+      ),
     onSuccess: (data, variables, context) => {
       options?.onSuccess?.(data, variables, context)
     },

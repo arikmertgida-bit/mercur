@@ -6,7 +6,6 @@ import {
 import { QueryKey, UseQueryOptions, useQuery } from "@tanstack/react-query";
 import { sdk } from "../../lib/client";
 import { queryKeysFactory } from "../../lib/query-key-factory";
-import { PayoutDTO } from "@mercurjs/types";
 
 const PAYOUTS_QUERY_KEY = "payouts" as const;
 export const payoutsQueryKeys = queryKeysFactory(PAYOUTS_QUERY_KEY);
@@ -16,9 +15,9 @@ export const usePayout = (
   query?: Omit<InferClientInput<typeof sdk.admin.payouts.$id.query>, "$id">,
   options?: Omit<
     UseQueryOptions<
-      { payout: PayoutDTO },
+      InferClientOutput<typeof sdk.admin.payouts.$id.query>,
       ClientError,
-      { payout: PayoutDTO },
+      InferClientOutput<typeof sdk.admin.payouts.$id.query>,
       QueryKey
     >,
     "queryKey" | "queryFn"

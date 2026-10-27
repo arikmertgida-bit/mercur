@@ -2850,7 +2850,9 @@
         "noVariants": "이 상품에는 옵션이 없습니다"
       },
       "edit": {
-        "successToast": "가격이 성공적으로 업데이트되었습니다."
+        "successToast": "가격이 성공적으로 업데이트되었습니다.",
+        "header": "{{title}} 가격 편집",
+        "description": "이 가격 목록에 있는 제품의 가격을 업데이트합니다."
       }
     },
     "fields": {

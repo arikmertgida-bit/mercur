@@ -4,6 +4,7 @@ import { LoaderFunctionArgs } from "react-router-dom"
 import { ordersQueryKeys } from "../../../hooks/api/orders"
 import { sdk } from "../../../lib/client"
 import { queryClient } from "../../../lib/query-client"
+import { getRequiredParam } from "../../../lib/route-params"
 import { DEFAULT_FIELDS } from "./constants"
 
 const orderDetailQuery = (id: string) => {
@@ -14,9 +15,8 @@ const orderDetailQuery = (id: string) => {
   }
 }
 
-export const orderLoader = async ({ params }: LoaderFunctionArgs): Promise<any> => {
-  const id = params.id
-  const query = orderDetailQuery(id!)
+export const orderLoader = async ({ params }: LoaderFunctionArgs) => {
+  const query = orderDetailQuery(getRequiredParam(params, "id"))
 
   return queryClient.ensureQueryData(query)
 }

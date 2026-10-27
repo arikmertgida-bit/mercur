@@ -206,10 +206,6 @@ const useColumns = () => {
   const base = useCampaignTableColumns()
   const { columns: extended } = useExtendableTable<AdminCampaign>({
     model: "campaign",
-    // tanstack's ColumnDef<T, TValue> is contravariant in TValue (cell/header
-    // render props), so a heterogeneous per-column accessor array can't widen
-    // to ColumnDef<T, unknown>[] without a cast.
-    // @ts-expect-error
     columns: base,
   })
 

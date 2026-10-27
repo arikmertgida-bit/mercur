@@ -29,9 +29,7 @@ const Root = () => {
 
   const { regions } = useRegions({ limit: 9999 });
   const { stock_locations } = useStockLocations({ limit: 100 });
-  const { shipping_profiles } = useShippingProfiles({ limit: 100 }) as {
-    shipping_profiles?: ShippingProfileLite[];
-  };
+  const { shipping_profiles } = useShippingProfiles({ limit: 100 });
   const { price_preferences: pricePreferences } = usePricePreferences({});
 
   const currencies = useMemo(() => {
@@ -96,7 +94,7 @@ const Root = () => {
   const columns = useColumns({
     variantAxes,
     currencies,
-    stockLocations: stock_locations as HttpTypes.AdminStockLocation[] | undefined,
+    stockLocations: stock_locations,
     shippingProfiles: shipping_profiles ?? [],
     pricePreferences,
   });
@@ -181,7 +179,7 @@ const columnHelper = createDataGridHelper<
 type ColumnArgs = {
   variantAxes: { title: string }[];
   currencies?: string[];
-  stockLocations?: HttpTypes.AdminStockLocation[];
+  stockLocations?: Pick<HttpTypes.AdminStockLocation, "id" | "name">[];
   shippingProfiles?: ShippingProfileLite[];
   pricePreferences?: HttpTypes.AdminPricePreference[];
 };

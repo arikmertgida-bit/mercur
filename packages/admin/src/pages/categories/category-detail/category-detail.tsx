@@ -1,6 +1,6 @@
-import { PermissionGuard, useLinkQuery, WidgetZone } from "@mercurjs/dashboard-shared"
+import { PermissionGuard, useLinkQuery, WidgetZone, useRequiredParam } from "@mercurjs/dashboard-shared"
 import { ReactNode, Children } from "react"
-import { useLoaderData, useParams } from "react-router-dom"
+import { useLoaderData } from "react-router-dom"
 
 import { TwoColumnPageSkeleton } from "../../../components/common/skeleton"
 import { TwoColumnPage } from "../../../components/layout/pages"
@@ -13,16 +13,14 @@ import { CategoryProductSection } from "./components/category-product-section"
 import { categoryLoader } from "./loader"
 
 const Root = ({ children }: { children?: ReactNode }) => {
-  const { id } = useParams()
+  const id = useRequiredParam("id")
 
-  const initialData = useLoaderData() as Awaited<
-    ReturnType<typeof categoryLoader>
-  >
+  const initialData = useLoaderData<typeof categoryLoader>()
 
   const linkQuery = useLinkQuery("category")
 
   const { product_category, isLoading, isError, error } = useProductCategory(
-    id!,
+    id,
     linkQuery,
     {
       initialData,

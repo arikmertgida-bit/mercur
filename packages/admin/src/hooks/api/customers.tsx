@@ -259,7 +259,7 @@ export const useDeleteCustomerAddress = (
 
 export const useListCustomerAddresses = (
   id: string,
-  query?: Record<string, any>,
+  query?: Omit<InferClientInput<typeof sdk.admin.customers.$id.addresses.query>, "$id">,
   options?: UseQueryOptions<
     InferClientOutput<typeof sdk.admin.customers.$id.addresses.query>,
     ClientError,

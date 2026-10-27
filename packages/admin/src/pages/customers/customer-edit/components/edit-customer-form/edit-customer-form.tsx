@@ -161,7 +161,6 @@ export const EditCustomerForm = ({ customer }: EditCustomerFormProps) => {
             <FormExtensionZone
               model="customer"
               zone="edit"
-              control={form.control}
               data={customer}
             />
           </div>

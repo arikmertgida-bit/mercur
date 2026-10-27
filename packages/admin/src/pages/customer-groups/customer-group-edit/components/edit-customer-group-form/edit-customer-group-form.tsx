@@ -80,7 +80,6 @@ export const EditCustomerGroupForm = ({
           <FormExtensionZone
             model="customer_group"
             zone="edit"
-            control={form.control}
             data={group}
           />
         </RouteDrawer.Body>

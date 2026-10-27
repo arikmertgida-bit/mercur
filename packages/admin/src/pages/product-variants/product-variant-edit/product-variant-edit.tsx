@@ -1,24 +1,28 @@
 import { Heading } from "@medusajs/ui";
 import { useTranslation } from "react-i18next";
 import { useLoaderData, useParams, useSearchParams } from "react-router-dom";
+import { useRequiredParam } from "@mercurjs/dashboard-shared";
 import { RouteDrawer } from "../../../components/modals";
 import { useProduct, useProductVariant } from "../../../hooks/api/products";
 import { ProductEditVariantForm } from "./components/product-edit-variant-form";
 import { editProductVariantLoader } from "./loader";
+import { resolveEditVariantId } from "./variant-id";
 
 export const ProductVariantEdit = () => {
-  const initialData = useLoaderData() as Awaited<
-    ReturnType<typeof editProductVariantLoader>
-  >;
+  const initialData = useLoaderData<typeof editProductVariantLoader>();
 
   const { t } = useTranslation();
-  const { id, variant_id } = useParams();
+  const id = useRequiredParam("id");
+  const { variant_id } = useParams();
   const [URLSearchParms] = useSearchParams();
-  const searchVariantId = URLSearchParms.get("variant_id");
+  const variantId = resolveEditVariantId(
+    variant_id,
+    URLSearchParms.get("variant_id"),
+  );
 
   const { variant, isPending, isError, error } = useProductVariant(
-    id!,
-    variant_id || searchVariantId!,
+    id,
+    variantId,
     { fields: "*options,*options.option" },
     {
       initialData,
@@ -31,12 +35,12 @@ export const ProductVariantEdit = () => {
     isError: isProductError,
     error: productError,
   } = useProduct(
-    variant?.product_id,
+    id,
     {
       fields: "-variants",
     },
     {
-      enabled: !!variant?.product_id,
+      enabled: !!variant,
     },
   );
 

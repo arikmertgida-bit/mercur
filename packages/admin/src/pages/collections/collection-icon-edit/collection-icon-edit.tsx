@@ -3,7 +3,6 @@ import { HttpTypes } from "@medusajs/types"
 import { Button, Heading, toast } from "@medusajs/ui"
 import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
-import { useParams } from "react-router-dom"
 import { z } from "zod"
 
 import { Form } from "../../../components/common/form"
@@ -20,12 +19,13 @@ import {
   getCollectionIcon,
   uploadCollectionImages,
 } from "../common/components/collection-image-fields"
+import { useRequiredParam } from "@mercurjs/dashboard-shared"
 
 const EditCollectionIconSchema = z.object({
   icon: z
     .object({
       url: z.string(),
-      file: z.any().nullable(),
+      file: z.instanceof(File).nullable(),
     })
     .nullable(),
 })
@@ -111,10 +111,10 @@ const EditCollectionIconForm = ({
 }
 
 export const CollectionIconEdit = () => {
-  const { id } = useParams()
+  const id = useRequiredParam("id")
   const { t } = useTranslation()
 
-  const { collection, isLoading, isError, error } = useCollection(id!)
+  const { collection, isLoading, isError, error } = useCollection(id)
 
   const ready = !isLoading && !!collection
 

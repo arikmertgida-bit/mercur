@@ -378,8 +378,15 @@ export const useDeleteSellerProfessionalDetails = (
 
 export const useSellerMembers = (
   sellerId: string,
-  query?: Record<string, any>,
-  options?: Omit<UseQueryOptions<any, ClientError>, "queryKey" | "queryFn">,
+  query?: Omit<InferClientInput<typeof sdk.admin.sellers.$id.members.query>, "$id">,
+  options?: Omit<
+    UseQueryOptions<
+      InferClientOutput<typeof sdk.admin.sellers.$id.members.query>,
+      ClientError,
+      InferClientOutput<typeof sdk.admin.sellers.$id.members.query>
+    >,
+    "queryKey" | "queryFn"
+  >,
 ) => {
   const { data, ...rest } = useQuery({
     queryFn: () =>
@@ -527,8 +534,15 @@ export const useResendSellerInvite = (
 
 export const useSellerInvites = (
   sellerId: string,
-  query?: Record<string, any>,
-  options?: Omit<UseQueryOptions<any, ClientError>, "queryKey" | "queryFn">,
+  query?: Omit<InferClientInput<typeof sdk.admin.sellers.$id.members.invites.query>, "$id">,
+  options?: Omit<
+    UseQueryOptions<
+      InferClientOutput<typeof sdk.admin.sellers.$id.members.invites.query>,
+      ClientError,
+      InferClientOutput<typeof sdk.admin.sellers.$id.members.invites.query>
+    >,
+    "queryKey" | "queryFn"
+  >,
 ) => {
   const { data, ...rest } = useQuery({
     queryFn: () =>

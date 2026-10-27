@@ -55,7 +55,7 @@ const Root = () => {
               <Form.Label>{t("attributes.fields.type")}</Form.Label>
               <Form.Control>
                 <Select
-                  value={field.value as string}
+                  value={field.value}
                   onValueChange={field.onChange}
                   data-testid="attribute-create-type-select"
                 >

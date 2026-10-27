@@ -4,10 +4,9 @@ import { Heading } from "@medusajs/ui";
 import { useEffect, useRef } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
 
 import { ProductAttributeDTO } from "@mercurjs/types";
-import { toHandle } from "@mercurjs/dashboard-shared";
+import { toHandle, useRequiredParam } from "@mercurjs/dashboard-shared";
 import { Form } from "../../../components/common/form";
 import { SwitchBox } from "../../../components/common/switch-box";
 import { HandleInput } from "../../../components/inputs/handle-input";
@@ -176,14 +175,14 @@ const AttributeEditForm = ({ attribute }: AttributeEditFormProps) => {
 };
 
 export const AttributeEdit = () => {
-  const { id } = useParams();
+  const id = useRequiredParam("id");
 
   const {
     product_attribute: attribute,
     isPending,
     isError,
     error,
-  } = useProductAttribute(id!);
+  } = useProductAttribute(id);
 
   if (isError) {
     throw error;

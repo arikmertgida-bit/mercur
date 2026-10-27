@@ -1,22 +1,8 @@
 import { Children, ReactNode, useEffect, useMemo } from "react"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import type {
-  ApplicationMethodAllocationValues,
-  ApplicationMethodTargetTypeValues,
-  ApplicationMethodTypeValues,
-  PromotionRuleOperatorValues,
-  PromotionStatusValues,
-  PromotionTypeValues,
-} from "@medusajs/types"
 import { toast } from "@medusajs/ui"
-import {
-  DeepPartial,
-  FieldPath,
-  FieldPathValue,
-  useForm,
-  useWatch,
-} from "react-hook-form"
+import { DeepPartial, useForm, useWatch } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
 import { useRouteModal } from "../../../../../components/modals"
@@ -26,6 +12,12 @@ import {
   useUpsertPromotionCost,
 } from "../../../../../hooks/api/promotions"
 import { DEFAULT_CAMPAIGN_VALUES } from "../../../../campaigns/common/constants"
+import { getRuleValue } from "../../../common/edit-rules/components/edit-rules-wrapper/utils"
+import { PromotionRuleRow } from "../../../common/edit-rules/form-values"
+import {
+  toPromotionRuleOperator,
+  toRuleValues,
+} from "../../../common/edit-rules/rule-payload"
 import { CreatePromotionSchema, CreatePromotionSchemaType } from "./form-schema"
 import { PromotionCampaignTab } from "./promotion-campaign-tab"
 import { PromotionDetailsTab } from "./promotion-details-tab"
@@ -34,27 +26,27 @@ import { templates } from "./templates"
 
 const PROMOTION_CREATE_DEFAULTS = {
   campaign_id: undefined,
-  template_id: templates[0].id!,
-  campaign_choice: "none" as const,
+  template_id: templates[0]?.id,
+  campaign_choice: "none",
   is_automatic: "false",
   code: "",
-  type: "standard" as PromotionTypeValues,
-  status: "draft" as PromotionStatusValues,
+  type: "standard",
+  status: "draft",
   rules: [],
   is_tax_inclusive: false,
   limit: undefined,
-  cost_bearer: "store" as const,
+  cost_bearer: "store",
   shared_marketplace_percentage: null,
   application_method: {
-    allocation: "each" as ApplicationMethodAllocationValues,
-    type: "fixed" as ApplicationMethodTypeValues,
-    target_type: "items" as ApplicationMethodTargetTypeValues,
+    allocation: "each",
+    type: "fixed",
+    target_type: "items",
     max_quantity: 1,
     target_rules: [],
     buy_rules: [],
   },
   campaign: undefined,
-}
+} satisfies DeepPartial<CreatePromotionSchemaType>
 
 type CreatePromotionFormProps = {
   children?: ReactNode
@@ -108,8 +100,7 @@ export function CreatePromotionForm({
         buy_rules: buyRulesData = [],
         ...applicationMethodData
       } = application_method
-      const allocationTyped =
-        applicationMethodData.allocation as ApplicationMethodAllocationValues
+      const allocation = applicationMethodData.allocation
 
       const disguisedRules = [
         ...targetRulesData.filter((r) => !!r.disguised),
@@ -123,27 +114,25 @@ export function CreatePromotionForm({
       > = {}
 
       for (const rule of disguisedRules) {
-        applicationMethodRuleData[rule.attribute] =
-          rule.field_type === "number"
-            ? parseInt(rule.values as string)
-            : rule.values
+        applicationMethodRuleData[rule.attribute] = getRuleValue(rule)
       }
 
-      const buildRulesData = (
-        rules: {
-          operator: string
-          attribute: string
-          values: string[] | string | number
-          disguised?: boolean
-        }[]
-      ) => {
+      const buildRulesData = (rules: PromotionRuleRow[]) => {
         return rules
           .filter((r) => !r.disguised)
-          .map((rule) => ({
-            operator: rule.operator as PromotionRuleOperatorValues,
-            attribute: rule.attribute,
-            values: rule.values as string | string[],
-          }))
+          .flatMap((rule) => {
+            const operator = toPromotionRuleOperator(rule.operator)
+
+            return operator
+              ? [
+                  {
+                    operator,
+                    attribute: rule.attribute,
+                    values: toRuleValues(rule.values),
+                  },
+                ]
+              : []
+          })
       }
 
       if (data.campaign) {
@@ -160,13 +149,16 @@ export function CreatePromotionForm({
           rules: buildRulesData(rules),
           application_method: {
             ...applicationMethodData,
-            allocation: allocationTyped,
+            allocation,
             ...applicationMethodRuleData,
-            value: parseFloat(applicationMethodData.value as string) as number,
+            value:
+              typeof applicationMethodData.value === "number"
+                ? applicationMethodData.value
+                : parseFloat(applicationMethodData.value),
             target_rules: buildRulesData(targetRulesData),
             buy_rules: buildRulesData(buyRulesData),
             max_quantity:
-              allocationTyped === "across"
+              allocation === "across"
                 ? undefined
                 : applicationMethodData.max_quantity,
           },
@@ -185,7 +177,7 @@ export function CreatePromotionForm({
                     : null,
               })
             } catch (e) {
-              toast.error((e as Error).message)
+              toast.error((e instanceof Error ? e.message : String(e)))
             }
 
             toast.success(
@@ -233,41 +225,30 @@ export function CreatePromotionForm({
       template_id: watchTemplateId,
     })
 
-    for (const [key, value] of Object.entries(currentTemplate.defaults)) {
-      if (typeof value === "object") {
-        for (const [subKey, subValue] of Object.entries(
-          value as Record<string, unknown>
-        )) {
-          // Template defaults are a loosely-typed lookup table, so the field
-          // path/value can't be statically narrowed beyond the form's own
-          // FieldPath/FieldPathValue generics.
-          setValue(
-            `application_method.${subKey}` as FieldPath<CreatePromotionSchemaType>,
-            subValue as FieldPathValue<
-              CreatePromotionSchemaType,
-              FieldPath<CreatePromotionSchemaType>
-            >
-          )
-        }
-      } else {
-        setValue(
-          key as FieldPath<CreatePromotionSchemaType>,
-          value as FieldPathValue<
-            CreatePromotionSchemaType,
-            FieldPath<CreatePromotionSchemaType>
-          >
-        )
-      }
+    const { is_automatic, type, application_method } = currentTemplate.defaults
+
+    setValue("is_automatic", is_automatic)
+    setValue("type", type)
+
+    if (application_method.allocation !== undefined) {
+      setValue("application_method.allocation", application_method.allocation)
+    }
+    if (application_method.target_type !== undefined) {
+      setValue("application_method.target_type", application_method.target_type)
+    }
+    if (application_method.type !== undefined) {
+      setValue("application_method.type", application_method.type)
+    }
+    if (application_method.value !== undefined) {
+      setValue("application_method.value", application_method.value)
+    }
+    if (application_method.max_quantity !== undefined) {
+      setValue("application_method.max_quantity", application_method.max_quantity)
     }
 
     // `across` allocation forbids max_quantity, but the reset above restores the
     // default of 1; null it so the payload is valid for order-scoped templates.
-    const templateAllocation = (
-      currentTemplate.defaults?.application_method as
-        | { allocation?: string }
-        | undefined
-    )?.allocation
-    if (templateAllocation === "across") {
+    if (application_method.allocation === "across") {
       setValue("application_method.max_quantity", null)
     }
 
@@ -299,7 +280,6 @@ export function CreatePromotionForm({
           ...DEFAULT_CAMPAIGN_VALUES,
           budget: {
             ...DEFAULT_CAMPAIGN_VALUES.budget,
-            type: DEFAULT_CAMPAIGN_VALUES.budget.type as "spend" | "usage" | "use_by_attribute",
             currency_code: formData.application_method.currency_code,
           },
         })
@@ -322,8 +302,8 @@ export function CreatePromotionForm({
     const currencyCode = formData.application_method.currency_code
     const ruleValue = watchCurrencyRule.values
 
-    if (!Array.isArray(ruleValue) && currencyCode !== ruleValue) {
-      form.setValue("application_method.currency_code", ruleValue as string)
+    if (typeof ruleValue === "string" && currencyCode !== ruleValue) {
+      form.setValue("application_method.currency_code", ruleValue)
     }
   }
 

@@ -1,3 +1,4 @@
+import { JsonValueSchema } from "@mercurjs/dashboard-shared"
 import i18next from "i18next"
 import { FieldPath, FieldValues, UseFormReturn } from "react-hook-form"
 import { z } from "zod"
@@ -59,12 +60,18 @@ export const optionalFloat = z
 export const metadataFormSchema = z.array(
   z.object({
     key: z.string(),
-    value: z.unknown(),
+    value: JsonValueSchema,
     isInitial: z.boolean().optional(),
     isDeleted: z.boolean().optional(),
     isIgnored: z.boolean().optional(),
   })
 )
+
+const isFieldPathOf = <TForm extends FieldValues>(
+  fields: FieldPath<TForm>[],
+  name: string
+): name is FieldPath<TForm> =>
+  fields.some((field) => name === field || name.startsWith(`${field}.`))
 
 /**
  * Validate subset of form fields
@@ -75,26 +82,24 @@ export const metadataFormSchema = z.array(
 export function partialFormValidation<TForm extends FieldValues>(
   form: UseFormReturn<TForm>,
   fields: FieldPath<TForm>[],
-  schema: z.ZodSchema<any>
-) {
+  schema: z.ZodType
+): boolean {
   form.clearErrors(fields)
 
-  const values = fields.reduce((acc, key) => {
-    acc[key] = form.getValues(key)
-    return acc
-  }, {} as Record<string, unknown>)
+  const values = Object.fromEntries(
+    fields.map((field) => [field, form.getValues(field)])
+  )
 
   const validationResult = schema.safeParse(values)
 
   if (!validationResult.success) {
-    validationResult.error.errors.forEach(({ path, message, code }) => {
-      // Runtime path built from the schema's own validation result — can't
-      // be statically narrowed to react-hook-form's FieldPath literal union.
-      form.setError(path.join(".") as FieldPath<TForm>, {
-        type: code,
-        message,
-      })
-    })
+    for (const { path, message, code } of validationResult.error.issues) {
+      const name = path.join(".")
+
+      if (isFieldPathOf(fields, name)) {
+        form.setError(name, { type: code, message })
+      }
+    }
 
     return false
   }

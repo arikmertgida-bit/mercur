@@ -1,3 +1,7 @@
+import {
+  DateComparisonFilterSchema,
+  parseJsonQueryParam,
+} from "@mercurjs/dashboard-shared"
 import { HttpTypes } from "@medusajs/types"
 import { useQueryParams } from "../../../../../hooks/use-query-params"
 
@@ -29,8 +33,8 @@ export const useReservationTableQuery = ({
     limit: pageSize,
     offset: offset ? parseInt(offset) : undefined,
     location_id: location_id,
-    created_at: created_at ? JSON.parse(created_at) : undefined,
-    updated_at: updated_at ? JSON.parse(updated_at) : undefined,
+    created_at: parseJsonQueryParam(created_at, DateComparisonFilterSchema),
+    updated_at: parseJsonQueryParam(updated_at, DateComparisonFilterSchema),
     order: order ?? "inventory_item.title",
     ...rest,
   }

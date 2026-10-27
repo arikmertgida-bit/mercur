@@ -3,7 +3,8 @@ import { useMemo } from "react"
 import { FieldError, FieldErrors, get } from "react-hook-form"
 
 import { useDataGridContext } from "../context"
-import { DataGridCellContext, DataGridRowError } from "../types"
+import { DataGridRowError } from "../types"
+import { getCellCoordinates } from "../utils"
 
 type UseDataGridCellErrorOptions<TData, TValue> = {
   context: CellContext<TData, TValue>
@@ -14,10 +15,7 @@ export const useDataGridCellError = <TextData, TValue>({
 }: UseDataGridCellErrorOptions<TextData, TValue>) => {
   const { errors, getCellErrorMetadata, navigateToField } = useDataGridContext()
 
-  const { rowIndex, columnIndex } = context as DataGridCellContext<
-    TextData,
-    TValue
-  >
+  const { row: rowIndex, col: columnIndex } = getCellCoordinates(context)
 
   const { accessor, field } = useMemo(() => {
     return getCellErrorMetadata({ row: rowIndex, col: columnIndex })

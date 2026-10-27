@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import i18n from "i18next";
 import {
@@ -16,6 +15,7 @@ import {
   ImageLightbox,
   SingleColumnPageSkeleton,
   SingleColumnPage,
+  useRequiredParam,
 } from "@mercurjs/dashboard-shared";
 
 import {
@@ -43,12 +43,12 @@ const ratingColor = (rating: number) => {
 };
 
 const AdminReviewReportDetailPage = () => {
-  const { id } = useParams();
+  const id = useRequiredParam("id");
   const { t } = useTranslation();
   const dialog = usePrompt();
 
-  const { report, isLoading, isError, error } = useReviewReport(id!);
-  const { mutateAsync: resolve, isPending } = useResolveReviewReport(id!);
+  const { report, isLoading, isError, error } = useReviewReport(id);
+  const { mutateAsync: resolve, isPending } = useResolveReviewReport(id);
 
   const [rejectNote, setRejectNote] = useState(
     t("requests.reviews.detail.defaultRejectNote"),

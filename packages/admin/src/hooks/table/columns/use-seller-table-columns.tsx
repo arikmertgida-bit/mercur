@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 
 import { SellerStatusCell } from "../../../components/table/table-cells/seller/seller-status-cell/seller-status-cell";
 import { DateCell } from "@/components/table/table-cells/common/date-cell";
-import { SellerDTO, SellerStatus } from "@mercurjs/types";
+import { SellerDTO } from "@mercurjs/types";
 
 const columnHelper = createColumnHelper<SellerDTO>();
 
@@ -29,7 +29,7 @@ export const useSellersTableColumns = () => {
         cell: ({ row }) => {
           return (
             <SellerStatusCell
-              status={row.original.status as SellerStatus}
+              status={row.original.status}
             />
           );
         },

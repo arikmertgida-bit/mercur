@@ -21,6 +21,7 @@ import { useProductTableColumns } from "../../../../hooks/table/columns/use-prod
 import { useProductTableFilters } from "../../../../hooks/table/filters/use-product-table-filters"
 import { useProductTableQuery } from "../../../../hooks/table/query/use-product-table-query"
 import { useDataTable } from "../../../../hooks/use-data-table"
+import { getTableMetaString } from "@lib/table-meta"
 
 type AddProductsToSalesChannelFormProps = {
   salesChannel: SalesChannelDTO
@@ -214,9 +215,8 @@ const useColumns = () => {
           )
         },
         cell: ({ row, table }) => {
-          const { salesChannelId } = table.options.meta as {
-            salesChannelId: string
-          }
+          const salesChannelId =
+            getTableMetaString(table.options.meta, "salesChannelId") ?? ""
 
           const isAdded = row.original.sales_channels
             ?.map((sc) => sc.id)

@@ -12,10 +12,8 @@ import {
 import { ComponentPropsWithoutRef, ReactNode } from "react"
 import { useTranslation } from "react-i18next"
 import { Link } from "react-router-dom"
-import {
-  Action,
-  ActionMenu,
-} from "../../../../../components/common/action-menu"
+import { ActionMenu } from "../../../../../components/common/action-menu"
+import { isTruthy } from "../../../../../lib/is-truthy"
 import { IconAvatar } from "../../../../../components/common/icon-avatar"
 import { getCountryByIso2 } from "../../../../../lib/data/countries"
 import {
@@ -49,9 +47,9 @@ export const TaxRegionCard = ({
   let misconfiguredSublevelTooltip: string | null = null
 
   if (province || province_code) {
-    name = province ? province : province_code!.toUpperCase()
+    name = province || province_code?.toUpperCase() || name
   } else if (country || country_code) {
-    name = country ? country.display_name : country_code!.toUpperCase()
+    name = country?.display_name || country_code?.toUpperCase() || name
   }
 
   if (
@@ -203,17 +201,17 @@ const TaxRegionCardActions = ({
           actions: [
             !hasParent && {
               icon: <PencilSquare />,
-              permission: "tax_regions:edit",
+              permission: "tax_regions:edit" as const,
               label: t("actions.edit"),
               to: `/settings/tax-regions/${taxRegion.id}/edit`,
             },
             {
               icon: <Trash />,
-              permission: "tax_regions:manage",
+              permission: "tax_regions:manage" as const,
               label: t("actions.delete"),
               onClick: handleDelete,
             },
-          ].filter((action): action is Action => Boolean(action)),
+          ].filter(isTruthy),
         },
       ]}
       data-testid={`tax-region-card-action-menu-${taxRegion.id}`}

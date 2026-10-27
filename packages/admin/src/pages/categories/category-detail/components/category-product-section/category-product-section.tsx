@@ -1,5 +1,5 @@
 import { ExclamationCircle, PlusMini } from "@medusajs/icons";
-import { HttpTypes } from "@medusajs/types";
+import { HttpTypes } from "@mercurjs/types"
 import { DisplayExtensionZone, usePermissionGate } from "@mercurjs/dashboard-shared";
 import { ProductDTO } from "@mercurjs/types";
 import {

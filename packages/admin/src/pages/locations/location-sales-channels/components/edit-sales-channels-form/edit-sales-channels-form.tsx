@@ -223,9 +223,9 @@ const useColumns = () => {
 
 function getInitialState(location: HttpTypes.AdminStockLocation) {
   return (
-    location.sales_channels?.reduce((acc, curr) => {
+    location.sales_channels?.reduce<DataTableRowSelectionState>((acc, curr) => {
       acc[curr.id] = true
       return acc
-    }, {} as DataTableRowSelectionState) ?? {}
+    }, {}) ?? {}
   )
 }

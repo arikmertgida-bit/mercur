@@ -2,9 +2,9 @@ import { createColumnHelper } from "@tanstack/react-table"
 
 import { AdminCampaign } from "@medusajs/types"
 import { StatusBadge } from "@medusajs/ui"
-import { SellerDTO } from "@mercurjs/types"
 import { useMemo } from "react"
 import { useTranslation } from "react-i18next"
+import { z } from "zod"
 import { DateCell } from "../../../components/table/table-cells/common/date-cell"
 import {
   TextCell,
@@ -24,6 +24,12 @@ import {
 } from "../../../pages/campaigns/common/utils/campaign-status"
 
 const columnHelper = createColumnHelper<AdminCampaign>()
+
+// The campaign list is Medusa's own route, typed without Mercur's `seller`
+// link; the list query selects `seller.name`, so it is read from the row.
+const CampaignOwnerSchema = z.object({
+  seller: z.object({ name: z.string() }).nullish(),
+})
 
 export const useCampaignTableColumns = () => {
   const { t } = useTranslation()
@@ -62,15 +68,12 @@ export const useCampaignTableColumns = () => {
         id: "owner",
         header: () => <TextHeader text={t("campaigns.fields.owner")} />,
         cell: ({ row }) => {
-          const campaign = row.original as AdminCampaign & {
-            seller?: Pick<SellerDTO, "name"> | null
-          }
+          const owner = CampaignOwnerSchema.safeParse(row.original)
+          const sellerName = owner.success ? owner.data.seller?.name : undefined
 
           return (
             <TextCell
-              text={
-                campaign.seller?.name ?? t("campaigns.fields.platformOwner")
-              }
+              text={sellerName ?? t("campaigns.fields.platformOwner")}
             />
           )
         },

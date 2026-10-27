@@ -41,10 +41,10 @@ import {
 } from "../../../../../hooks/api/stock-locations"
 import { getFormattedAddress } from "../../../../../lib/addresses"
 import {
-  StaticCountry,
   countries as staticCountries,
 } from "../../../../../lib/data/countries"
 import { formatProvider } from "../../../../../lib/format-provider"
+import { isTruthy } from "../../../../../lib/is-truthy"
 import {
   isOptionEnabledInStore,
   isReturnOption,
@@ -361,7 +361,7 @@ function ServiceZone({
       .map(({ country_code }) =>
         staticCountries.find((c) => c.iso_2 === country_code)
       )
-      .filter((c) => !!c) as StaticCountry[]
+      .filter(isTruthy)
 
     return countries.sort((c1, c2) => c1.name.localeCompare(c2.name))
   }, [zone.geo_zones])

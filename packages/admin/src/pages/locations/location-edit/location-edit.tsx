@@ -1,16 +1,16 @@
 import { Heading } from "@medusajs/ui"
 import { useTranslation } from "react-i18next"
-import { useParams } from "react-router-dom"
+import { useRequiredParam } from "@mercurjs/dashboard-shared"
 import { RouteDrawer } from "../../../components/modals"
 import { useStockLocation } from "../../../hooks/api/stock-locations"
 import { EditLocationForm } from "./components/edit-location-form"
 
 export const LocationEdit = () => {
   const { t } = useTranslation()
-  const { location_id } = useParams()
+  const location_id = useRequiredParam("location_id")
 
   const { stock_location, isPending, isError, error } = useStockLocation(
-    location_id!,
+    location_id,
     {
       fields: "*address",
     }

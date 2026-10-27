@@ -1,4 +1,5 @@
 import { useMemo } from "react"
+import { AdminOrderLineItem } from "@medusajs/types"
 import { Checkbox } from "@medusajs/ui"
 import { createColumnHelper } from "@tanstack/react-table"
 import { useTranslation } from "react-i18next"
@@ -10,7 +11,7 @@ import {
 import { getStylizedAmount } from "../../../../../lib/money-amount-helpers"
 import { getReturnableQuantity } from "../../../../../lib/rma"
 
-const columnHelper = createColumnHelper<any>()
+const columnHelper = createColumnHelper<AdminOrderLineItem>()
 
 export const useClaimItemTableColumns = (currencyCode: string) => {
   const { t } = useTranslation()
@@ -55,7 +56,7 @@ export const useClaimItemTableColumns = (currencyCode: string) => {
           <ProductCell
             product={{
               thumbnail: row.original.thumbnail,
-              title: row.original.product_title,
+              title: row.original.product_title ?? "",
             }}
           />
         ),

@@ -1,18 +1,19 @@
 import { Heading } from "@medusajs/ui"
 import { useTranslation } from "react-i18next"
-import { useParams } from "react-router-dom"
 
 import { RouteDrawer } from "../../../components/modals"
 import { useCustomerAddress } from "../../../hooks/api/customers"
 import { EditCustomerAddressForm } from "./components/edit-customer-address-form"
+import { useRequiredParam } from "@mercurjs/dashboard-shared"
 
 export const CustomerEditAddress = () => {
   const { t } = useTranslation()
-  const { id, address_id } = useParams()
+  const id = useRequiredParam("id")
+  const address_id = useRequiredParam("address_id")
 
   const { address, isPending, isError, error } = useCustomerAddress(
-    id!,
-    address_id!
+    id,
+    address_id
   )
 
   const ready = !isPending && !!address
@@ -31,7 +32,7 @@ export const CustomerEditAddress = () => {
           {t("customers.addresses.edit.hint")}
         </RouteDrawer.Description>
       </RouteDrawer.Header>
-      {ready && <EditCustomerAddressForm customerId={id!} address={address} />}
+      {ready && <EditCustomerAddressForm customerId={id} address={address} />}
     </RouteDrawer>
   )
 }

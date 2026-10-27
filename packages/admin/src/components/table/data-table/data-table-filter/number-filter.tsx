@@ -7,8 +7,14 @@ import {
 } from "radix-ui"
 import { ChangeEvent, useCallback, useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
+import { z } from "zod"
 
 import { TFunction } from "i18next"
+import {
+  parseJsonQueryParam,
+  RangeNumberFilterValue,
+  RangeNumberFilterValueSchema,
+} from "@mercurjs/dashboard-shared"
 import { useSelectedParams } from "../hooks"
 import { useDataTableFilterContext } from "./context"
 import FilterChip from "./filter-chip"
@@ -16,7 +22,9 @@ import { IFilter } from "./types"
 
 type NumberFilterProps = IFilter
 
-type Comparison = "exact" | "range"
+const ComparisonSchema = z.enum(["exact", "range"])
+
+type Comparison = z.infer<typeof ComparisonSchema>
 type Operator = "lt" | "gt" | "eq"
 
 export const NumberFilter = ({
@@ -50,23 +58,22 @@ export const NumberFilter = ({
   const debouncedOnChange = useCallback(
     debounce((e: ChangeEvent<HTMLInputElement>, operator: Operator) => {
       const value = e.target.value
-      const curr = JSON.parse(currentValue?.join(",") || "{}")
-      const isCurrentNumber = !isNaN(Number(curr))
+      const curr = parseValue(currentValue) ?? {}
 
-      const handleValue = (operator: Operator) => {
-        if (!value && isCurrentNumber) {
-          selectedParams.delete()
-          return
-        }
+      const handleValue = (operator: "lt" | "gt") => {
+        if (typeof curr === "number") {
+          if (!value) {
+            selectedParams.delete()
+            return
+          }
 
-        if (curr && !value) {
-          delete curr[operator]
-          selectedParams.add(JSON.stringify(curr))
-          return
-        }
-
-        if (!curr) {
           selectedParams.add(JSON.stringify({ [operator]: value }))
+          return
+        }
+
+        if (!value) {
+          const { [operator]: _removed, ...remaining } = curr
+          selectedParams.add(JSON.stringify(remaining))
           return
         }
 
@@ -170,7 +177,13 @@ export const NumberFilter = ({
             <div className="p-1">
               <RadixRadioGroup.Root
                 value={operator}
-                onValueChange={(val) => setOperator(val as Comparison)}
+                onValueChange={(val) => {
+                  const parsed = ComparisonSchema.safeParse(val)
+
+                  if (parsed.success) {
+                    setOperator(parsed.data)
+                  }
+                }}
                 className="flex flex-col items-start"
                 orientation="vertical"
                 
@@ -253,7 +266,7 @@ const parseDisplayValue = (
   value: string[] | null | undefined,
   t: TFunction
 ) => {
-  const parsed = JSON.parse(value?.join(",") || "{}")
+  const parsed = parseValue(value) ?? {}
   let displayValue = ""
 
   if (typeof parsed === "object") {
@@ -280,27 +293,19 @@ const parseDisplayValue = (
   return displayValue
 }
 
-const parseValue = (value: string[] | null | undefined) => {
-  if (!value) {
-    return undefined
-  }
-
-  const val = value.join(",")
-  if (!val) {
-    return undefined
-  }
-
-  return JSON.parse(val)
-}
+const parseValue = (
+  value: string[] | null | undefined
+): RangeNumberFilterValue | undefined =>
+  parseJsonQueryParam(value?.join(","), RangeNumberFilterValueSchema)
 
 const getValue = (
   value: string[] | null | undefined,
   key: Operator
-): number | undefined => {
+): string | number | undefined => {
   const parsed = parseValue(value)
 
   if (typeof parsed === "object") {
-    return parsed[key]
+    return key === "eq" ? undefined : parsed[key]
   }
   if (typeof parsed === "number" && key === "eq") {
     return parsed

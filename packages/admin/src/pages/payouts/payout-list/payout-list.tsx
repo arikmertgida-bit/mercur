@@ -11,7 +11,6 @@ import { usePayouts } from "../../../hooks/api/payouts"
 import { usePayoutTableColumns } from "../../../hooks/table/columns/use-payout-table-columns"
 import { usePayoutTableQuery } from "../../../hooks/table/query/use-payout-table-query"
 import { useDataTable } from "../../../hooks/use-data-table"
-import { PayoutDTO } from "@mercurjs/types"
 
 const PAGE_SIZE = 10
 
@@ -63,7 +62,7 @@ export const PayoutListDataTable = () => {
   const columns = usePayoutTableColumns()
 
   const { table } = useDataTable({
-    data: (payouts as PayoutDTO[]) ?? [],
+    data: payouts ?? [],
     columns,
     enablePagination: true,
     count: count ?? 0,

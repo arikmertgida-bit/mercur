@@ -1,8 +1,8 @@
 import { PencilSquare, Trash } from "@medusajs/icons"
-import { AdminProductCategoryResponse } from "@medusajs/types"
+import { HttpTypes } from "@mercurjs/types"
 import { useExtendableTable, useLinkQuery } from "@mercurjs/dashboard-shared"
 import { keepPreviousData } from "@tanstack/react-query"
-import { createColumnHelper, type ColumnDef } from "@tanstack/react-table"
+import { createColumnHelper } from "@tanstack/react-table"
 import { useMemo } from "react"
 import { useTranslation } from "react-i18next"
 
@@ -88,7 +88,7 @@ export const CategoryListDataTable = () => {
 const CategoryRowActions = ({
   category,
 }: {
-  category: AdminProductCategoryResponse["product_category"]
+  category: HttpTypes.AdminProductCategory
 }) => {
   const { t } = useTranslation()
   const handleDelete = useDeleteProductCategoryAction(category)
@@ -122,18 +122,14 @@ const CategoryRowActions = ({
 }
 
 const columnHelper =
-  createColumnHelper<AdminProductCategoryResponse["product_category"]>()
+  createColumnHelper<HttpTypes.AdminProductCategory>()
 
-type CategoryRow = AdminProductCategoryResponse["product_category"]
+type CategoryRow = HttpTypes.AdminProductCategory
 
 const useColumns = () => {
   const base = useCategoryTableColumns()
   const { columns: extended } = useExtendableTable<CategoryRow>({
     model: "category",
-    // tanstack's ColumnDef<T, TValue> is contravariant in TValue (cell/header
-    // render props), so a heterogeneous per-column accessor array can't widen
-    // to ColumnDef<T, unknown>[] without a cast.
-    // @ts-expect-error
     columns: base,
   })
 

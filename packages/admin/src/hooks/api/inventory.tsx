@@ -1,4 +1,8 @@
-import type { ClientError } from "@mercurjs/client"
+import type {
+  ClientError,
+  InferClientInput,
+  InferClientOutput,
+} from "@mercurjs/client"
 import type { HttpTypes } from "@medusajs/types"
 import {
   type QueryKey,
@@ -12,7 +16,14 @@ import { sdk } from "@lib/client"
 import { queryClient } from "@lib/query-client"
 import { queryKeysFactory } from "@lib/query-key-factory"
 import { variantsQueryKeys } from "./products"
-import type { ExtendedAdminInventoryItemResponse, ExtendedInventoryItemLevelsResponse } from "@custom-types/inventory"
+
+type InventoryItemResponse = InferClientOutput<
+  typeof sdk.admin.inventoryItems.$id.query
+>
+
+type InventoryItemLevelsResponse = InferClientOutput<
+  typeof sdk.admin.inventoryItems.$id.locationLevels.query
+>
 
 const INVENTORY_ITEMS_QUERY_KEY = "inventory_items" as const
 export const inventoryItemsQueryKeys = queryKeysFactory(
@@ -47,12 +58,15 @@ export const useInventoryItems = (
 
 export const useInventoryItem = (
   id: string,
-  query?: Record<string, unknown>,
+  query?: Omit<
+    InferClientInput<typeof sdk.admin.inventoryItems.$id.query>,
+    "$id"
+  >,
   options?: Omit<
     UseQueryOptions<
-      ExtendedAdminInventoryItemResponse,
+      InventoryItemResponse,
       ClientError,
-      ExtendedAdminInventoryItemResponse,
+      InventoryItemResponse,
       QueryKey
     >,
     "queryKey" | "queryFn"
@@ -60,7 +74,7 @@ export const useInventoryItem = (
 ) => {
   const { data, ...rest } = useQuery({
     queryFn: () =>
-      sdk.admin.inventoryItems.$id.query({ $id: id, ...query }) as Promise<ExtendedAdminInventoryItemResponse>,
+      sdk.admin.inventoryItems.$id.query({ $id: id, ...query }),
     queryKey: inventoryItemsQueryKeys.detail(id, query),
     ...options,
   })
@@ -168,12 +182,15 @@ export const useDeleteInventoryItemLevel = (
 
 export const useInventoryItemLevels = (
   inventoryItemId: string,
-  query?: Record<string, unknown>,
+  query?: Omit<
+    InferClientInput<typeof sdk.admin.inventoryItems.$id.locationLevels.query>,
+    "$id"
+  >,
   options?: Omit<
     UseQueryOptions<
-      ExtendedInventoryItemLevelsResponse,
+      InventoryItemLevelsResponse,
       ClientError,
-      ExtendedInventoryItemLevelsResponse,
+      InventoryItemLevelsResponse,
       QueryKey
     >,
     "queryKey" | "queryFn"
@@ -184,7 +201,7 @@ export const useInventoryItemLevels = (
       sdk.admin.inventoryItems.$id.locationLevels.query({
         $id: inventoryItemId,
         ...query,
-      }) as Promise<ExtendedInventoryItemLevelsResponse>,
+      }),
     queryKey: inventoryItemLevelsQueryKeys.list({
       ...(query || {}),
       inventoryItemId,

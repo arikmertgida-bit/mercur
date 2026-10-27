@@ -80,10 +80,32 @@ export const MarketplaceCurrencySection = ({ store }: MarketplaceCurrencySection
   const preferencesForbidden =
     !canViewPreferences || isForbidden(pricePreferencesError)
 
-  const columns = useColumns(!preferencesForbidden)
   const prefMap = useMemo(() => {
-    return new Map(pricePreferences?.map((pref) => [pref.value!, pref]))
+    const map = new Map<string, HttpTypes.AdminPricePreference>()
+
+    for (const pref of pricePreferences ?? []) {
+      if (pref.value) {
+        map.set(pref.value, pref)
+      }
+    }
+
+    return map
   }, [pricePreferences])
+
+  const actionsContext = useMemo<CurrencyActionsContext>(
+    () => ({
+      storeId: store.id,
+      supportedCurrencies: store.supported_currencies ?? [],
+      defaultCurrencyCode:
+        store.supported_currencies?.find((c) => c.is_default)?.currency_code ??
+        "",
+      preferencesMap: prefMap,
+      canTogglePreferences: !preferencesForbidden,
+    }),
+    [store.id, store.supported_currencies, prefMap, preferencesForbidden]
+  )
+
+  const columns = useColumns(!preferencesForbidden, actionsContext)
 
   const withTaxInclusivity = currencies?.map((c) => ({
     ...c,
@@ -102,14 +124,6 @@ export const MarketplaceCurrencySection = ({ store }: MarketplaceCurrencySection
     enablePagination: true,
     enableRowSelection: true,
     pageSize: PAGE_SIZE,
-    meta: {
-      storeId: store.id,
-      supportedCurrencies: store.supported_currencies,
-      defaultCurrencyCode: store.supported_currencies?.find((c) => c.is_default)
-        ?.currency_code,
-      preferencesMap: prefMap,
-      canTogglePreferences: !preferencesForbidden,
-    },
   })
 
   const { mutateAsync } = useUpdateStore(store.id)
@@ -342,7 +356,19 @@ const columnHelper = createColumnHelper<
   HttpTypes.AdminCurrency & { is_tax_inclusive?: boolean }
 >()
 
-const useColumns = (withTaxInclusivity: boolean) => {
+/** What the row actions need from the section, passed into the columns. */
+type CurrencyActionsContext = {
+  storeId: string
+  supportedCurrencies: HttpTypes.AdminStoreCurrency[]
+  defaultCurrencyCode: string
+  preferencesMap: Map<string, HttpTypes.AdminPricePreference>
+  canTogglePreferences: boolean
+}
+
+const useColumns = (
+  withTaxInclusivity: boolean,
+  actionsContext: CurrencyActionsContext
+) => {
   const base = useCurrenciesTableColumns()
   const { t } = useTranslation()
 
@@ -396,20 +422,14 @@ const useColumns = (withTaxInclusivity: boolean) => {
         : []),
       columnHelper.display({
         id: "actions",
-        cell: ({ row, table }) => {
+        cell: ({ row }) => {
           const {
             supportedCurrencies,
             storeId,
             defaultCurrencyCode,
             preferencesMap,
             canTogglePreferences,
-          } = table.options.meta as {
-            supportedCurrencies: HttpTypes.AdminStoreCurrency[]
-            storeId: string
-            defaultCurrencyCode: string
-            preferencesMap: Map<string, HttpTypes.AdminPricePreference>
-            canTogglePreferences: boolean
-          }
+          } = actionsContext
 
           return (
             <CurrencyActions
@@ -424,6 +444,6 @@ const useColumns = (withTaxInclusivity: boolean) => {
         },
       }),
     ],
-    [base, t, withTaxInclusivity]
+    [base, t, withTaxInclusivity, actionsContext]
   )
 }

@@ -55,7 +55,7 @@ import {
 const MediaSchema = z.object({
   id: z.string().optional(),
   url: z.string(),
-  file: z.any().nullable(), // File
+  file: z.instanceof(File).nullable(),
   is_thumbnail: z.boolean(),
   is_banner: z.boolean(),
 })
@@ -100,6 +100,12 @@ export const EditCollectionMediaForm = ({
   })
 
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null)
+
+  const activeMedia = activeId
+
+    ? fields.find((m) => m.field_id === activeId)
+
+    : undefined
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -233,10 +239,8 @@ export const EditCollectionMediaForm = ({
                     ))}
                   </SortableContext>
                   <DragOverlay dropAnimation={dropAnimationConfig}>
-                    {activeId ? (
-                      <MediaGridItemOverlay
-                        media={fields.find((m) => m.field_id === activeId)!}
-                      />
+                    {activeMedia ? (
+                      <MediaGridItemOverlay media={activeMedia} />
                     ) : null}
                   </DragOverlay>
                 </div>

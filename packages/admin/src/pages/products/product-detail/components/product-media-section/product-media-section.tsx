@@ -13,7 +13,7 @@ import {
 import { useState } from "react"
 import { useTranslation } from "react-i18next"
 import { Link } from "react-router-dom"
-import { HttpTypes } from "@medusajs/types"
+import { HttpTypes } from "@mercurjs/types"
 import { DisplayExtensionZone, PermissionAction, usePermissionGate } from "@mercurjs/dashboard-shared"
 import { ActionMenu } from "../../../../../components/common/action-menu"
 import { useUpdateProduct } from "../../../../../hooks/api/products"
@@ -226,7 +226,7 @@ type Media = {
   isThumbnail: boolean
 }
 
-const getMedia = (product: Product) => {
+const getMedia = (product: HttpTypes.AdminProduct) => {
   const { images = [], thumbnail } = product
 
   const media: Media[] = images.map((image) => ({

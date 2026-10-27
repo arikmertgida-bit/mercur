@@ -1,13 +1,13 @@
-import { useParams } from "react-router-dom"
 import { RouteFocusModal } from "../../../components/modals"
 import { AddCustomersForm } from "./components/add-customers-form"
+import { useRequiredParam } from "@mercurjs/dashboard-shared"
 
 export const CustomerGroupAddCustomers = () => {
-  const { id } = useParams()
+  const id = useRequiredParam("id")
 
   return (
     <RouteFocusModal>
-      <AddCustomersForm customerGroupId={id!} />
+      <AddCustomersForm customerGroupId={id} />
     </RouteFocusModal>
   )
 }

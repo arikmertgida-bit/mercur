@@ -11,7 +11,7 @@ export const ReservationDetailBreadcrumb = (
 ) => {
   const { id } = props.params || {}
 
-  const { reservation } = useReservationItem(id!, undefined, {
+  const { reservation } = useReservationItem(id ?? "", undefined, {
     initialData: props.data,
     enabled: Boolean(id),
   })

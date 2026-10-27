@@ -12,6 +12,8 @@ import {
   useNavigation,
 } from "react-router-dom"
 
+import { z } from "zod"
+
 import { WidgetZone } from "@mercurjs/dashboard-shared"
 import { KeybindProvider } from "../../../providers/keybind-provider"
 import { useGlobalShortcuts } from "../../../providers/keybind-provider/hooks"
@@ -98,23 +100,28 @@ const Gutter = ({ children }: PropsWithChildren) => {
   )
 }
 
+// Route handles are untyped in React Router; a crumb is any route whose
+// handle carries a `breadcrumb` renderer.
+const BreadcrumbHandleSchema = z.object({
+  breadcrumb: z.custom<(match: UIMatch) => string | ReactNode>(
+    (value) => typeof value === "function"
+  ),
+})
+
 const Breadcrumbs = () => {
-  const matches = useMatches() as UIMatch<
-    unknown,
-    {
-      breadcrumb?: (match?: UIMatch) => string | ReactNode
-    }
-  >[]
+  const matches = useMatches()
 
   const crumbs = matches
-    .filter((match) => match.handle?.breadcrumb)
     .map((match) => {
-      const handle = match.handle
+      const handle = BreadcrumbHandleSchema.safeParse(match.handle)
+      if (!handle.success) {
+        return null
+      }
 
       let label: string | ReactNode | undefined = undefined
 
       try {
-        label = handle.breadcrumb?.(match)
+        label = handle.data.breadcrumb(match)
       } catch  {
         // noop
       }
@@ -128,7 +135,7 @@ const Breadcrumbs = () => {
         path: match.pathname,
       }
     })
-    .filter(Boolean) as { label: string | ReactNode; path: string }[]
+    .filter((crumb) => crumb !== null)
 
   return (
     <ol

@@ -1,7 +1,7 @@
 import { ReactNode, Children } from "react"
-import { useLoaderData, useParams } from "react-router-dom"
+import { useLoaderData } from "react-router-dom"
 
-import { PermissionGuard, WidgetZone } from "@mercurjs/dashboard-shared"
+import { PermissionGuard, WidgetZone, useRequiredParam } from "@mercurjs/dashboard-shared"
 import { SingleColumnPageSkeleton } from "../../../components/common/skeleton"
 import { SingleColumnPage } from "../../../components/layout/pages"
 import { useSalesChannel } from "../../../hooks/api/sales-channels"
@@ -10,12 +10,10 @@ import { SalesChannelProductSection } from "./components/sales-channel-product-s
 import { salesChannelLoader } from "./loader"
 
 const Root = ({ children }: { children?: ReactNode }) => {
-  const initialData = useLoaderData() as Awaited<
-    ReturnType<typeof salesChannelLoader>
-  >
+  const initialData = useLoaderData<typeof salesChannelLoader>()
 
-  const { id } = useParams()
-  const { sales_channel, isPending: isLoading } = useSalesChannel(id!, {
+  const id = useRequiredParam("id")
+  const { sales_channel, isPending: isLoading } = useSalesChannel(id, {
     initialData,
   })
 

@@ -3,7 +3,6 @@ import { Button, Heading, Input, Text, toast } from "@medusajs/ui"
 import i18n from "i18next"
 import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
-import { useParams } from "react-router-dom"
 import * as zod from "zod"
 import { Form } from "../../../../../components/common/form"
 import { CountrySelect } from "../../../../../components/inputs/country-select"
@@ -13,6 +12,7 @@ import {
 } from "../../../../../components/modals"
 import { KeyboundForm } from "../../../../../components/utilities/keybound-form"
 import { useCreateCustomerAddress } from "../../../../../hooks/api/customers"
+import { useRequiredParam } from "@mercurjs/dashboard-shared"
 
 const CreateCustomerAddressSchema = zod.object({
   address_name: zod.string().min(1, {
@@ -35,7 +35,7 @@ const CreateCustomerAddressSchema = zod.object({
 
 export const CreateCustomerAddressForm = () => {
   const { t } = useTranslation()
-  const { id } = useParams()
+  const id = useRequiredParam("id")
   const { handleSuccess } = useRouteModal()
 
   const form = useForm<zod.infer<typeof CreateCustomerAddressSchema>>({
@@ -53,7 +53,7 @@ export const CreateCustomerAddressForm = () => {
     resolver: zodResolver(CreateCustomerAddressSchema),
   })
 
-  const { mutateAsync, isPending } = useCreateCustomerAddress(id!)
+  const { mutateAsync, isPending } = useCreateCustomerAddress(id)
 
   const handleSubmit = form.handleSubmit(async (values) => {
     await mutateAsync(

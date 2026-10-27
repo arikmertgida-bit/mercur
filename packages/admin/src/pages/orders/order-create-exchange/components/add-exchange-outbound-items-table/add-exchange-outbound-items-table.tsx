@@ -72,11 +72,6 @@ export const AddExchangeOutboundItemsTable = ({
     onSelectionChange(Object.keys(newState))
   }
 
-  const { searchParams, raw } = useExchangeOutboundItemTableQuery({
-    pageSize: PAGE_SIZE,
-    prefix: PREFIX,
-  })
-
   const productsResponse = useProducts(
     {
       ...searchParams,
@@ -84,9 +79,8 @@ export const AddExchangeOutboundItemsTable = ({
     },
     { enabled: canViewProducts }
   )
-  const rawProducts = productsResponse.products as
-    | ProductPickerRow[]
-    | undefined
+  const rawProducts: ProductPickerRow[] | undefined =
+    productsResponse.products
   const rawCount = productsResponse.count ?? 0
 
   const variants = useMemo<OutboundVariantPickerRow[]>(() => {

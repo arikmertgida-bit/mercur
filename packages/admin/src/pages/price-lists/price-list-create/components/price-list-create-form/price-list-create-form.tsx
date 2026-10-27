@@ -4,11 +4,11 @@ import { Children, ReactNode, useMemo } from "react"
 import { DeepPartial, useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
-import { HttpTypes, PriceListStatus, PriceListType } from "@medusajs/types"
+import { HttpTypes } from "@medusajs/types"
 import { useRouteModal } from "../../../../../components/modals"
 import { TabbedForm } from "../../../../../components/tabbed-form/tabbed-form"
 import { useCreatePriceList } from "../../../../../hooks/api/price-lists"
-import { extractPricesFromOffers } from "../../../common/utils"
+import { exctractPricesFromProducts } from "../../../common/utils"
 import { PriceListDetailsForm } from "./price-list-details-form"
 import { PriceListPricesForm } from "./price-list-prices-form"
 import { PriceListProductsForm } from "./price-list-products-form"
@@ -39,38 +39,37 @@ export const PriceListCreateForm = ({
   const form = useForm<PricingCreateSchemaType>({
     defaultValues: {
       type: "sale",
-      status: "draft",
+      status: "active",
       title: "",
       description: "",
       starts_at: null,
       ends_at: null,
       product_ids: [],
-      offer_ids: [],
-      offers: {},
+      products: {},
       rules: {
         customer_group_id: [],
       },
       ...extraDefaults,
-    } as PricingCreateSchemaType,
+    },
     resolver: zodResolver(schema ?? PricingCreateSchema),
   })
 
   const { mutateAsync, isPending } = useCreatePriceList()
 
   const handleSubmit = form.handleSubmit(async (data) => {
-    const { rules, offers } = data
+    const { rules, products } = data
 
     const rulesPayload = rules?.customer_group_id?.length
       ? { "customer.groups.id": rules.customer_group_id.map((cg) => cg.id) }
       : undefined
 
-    const prices = extractPricesFromOffers(offers, regions)
+    const prices = exctractPricesFromProducts(products, regions)
 
     await mutateAsync(
       {
         title: data.title,
-        type: data.type as PriceListType,
-        status: data.status as PriceListStatus,
+        type: data.type,
+        status: data.status,
         description: data.description,
         starts_at: data.starts_at ? data.starts_at.toISOString() : null,
         ends_at: data.ends_at ? data.ends_at.toISOString() : null,

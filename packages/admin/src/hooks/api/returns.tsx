@@ -342,7 +342,7 @@ export const useUpdateReturnShipping = (
   options?: UseMutationOptions<
     HttpTypes.AdminReturnResponse,
     ClientError,
-    HttpTypes.AdminAddReturnShipping
+    HttpTypes.AdminAddReturnShipping & { actionId: string }
   >
 ) => {
   return useMutation({

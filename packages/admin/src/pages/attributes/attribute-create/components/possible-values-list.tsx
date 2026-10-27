@@ -48,8 +48,7 @@ export const PossibleValuesList = () => {
 
   const valuesError = errors.values
   const shouldShowListError = valuesError && !Array.isArray(valuesError)
-  const listErrorMessage =
-    shouldShowListError && (valuesError as { message?: string }).message
+  const listErrorMessage = shouldShowListError && valuesError.message
 
   return (
     <div
@@ -80,11 +79,7 @@ export const PossibleValuesList = () => {
           onChange={handleRankChange}
           renderItem={(item, index) => {
             const fieldError = Array.isArray(valuesError)
-              ? (
-                  valuesError[index] as
-                    | { name?: { message?: string } }
-                    | undefined
-                )?.name
+              ? valuesError[index]?.name
               : undefined
 
             return (
@@ -109,7 +104,7 @@ export const PossibleValuesList = () => {
                       className="mt-1"
                       data-testid={`attribute-form-value-error-${index}`}
                     >
-                      {fieldError.message as string}
+                      {fieldError.message}
                     </Hint>
                   )}
                 </div>

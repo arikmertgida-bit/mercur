@@ -28,7 +28,10 @@ import {
 } from "../../../../../components/modals/index.ts";
 
 import { Form } from "../../../../../components/common/form/index.ts";
-import { Combobox } from "../../../../../components/inputs/combobox/index.ts";
+import {
+  Combobox,
+  getSingleComboboxValue,
+} from "../../../../../components/inputs/combobox/index.ts";
 import { useShippingOptions } from "../../../../../hooks/api/shipping-options.tsx";
 import { useStockLocations } from "../../../../../hooks/api/stock-locations.tsx";
 import { getStylizedAmount } from "../../../../../lib/money-amount-helpers.ts";
@@ -55,6 +58,11 @@ import { ReturnShippingPlaceholder } from "../../../common/placeholders.tsx";
 import { ClaimOutboundSection } from "./claim-outbound-section.tsx";
 import { ItemPlaceholder } from "./item-placeholder.tsx";
 import { ConditionalTooltip } from "../../../../../components/common/conditional-tooltip";
+import {
+  getOrderChangeActionAmount,
+  getOrderChangeActionDetails,
+} from "../../../../../lib/order-change-action";
+import { getOrderSellerId } from "../../../../../lib/orders";
 
 type ReturnCreateFormProps = {
   order: AdminOrder;
@@ -207,7 +215,8 @@ export const ClaimCreateForm = ({
             variant_id: i.variant_id,
             quantity: i.detail.return_requested_quantity,
             note: inboundAction?.internal_note,
-            reason_id: inboundAction?.details?.reason_id as string | undefined,
+            reason_id:
+              getOrderChangeActionDetails(inboundAction).reason_id ?? undefined,
           };
         }),
         outbound_items: outboundPreviewItems.map((i) => ({
@@ -233,9 +242,7 @@ export const ClaimCreateForm = ({
   /**
    * HOOKS
    */
-  // Mercur seller link — not part of Medusa's AdminOrder type; included via
-  // order-detail/constants.ts DEFAULT_FIELDS (`*seller`).
-  const sellerId = (order as { seller?: { id?: string } | null }).seller?.id;
+  const sellerId = getOrderSellerId(order);
   const locationsGate = usePermissionGate("stock_locations:view");
   const shippingOptionsGate = usePermissionGate("shipping_options:view");
   const { stock_locations = [] } = useStockLocations(
@@ -249,7 +256,7 @@ export const ClaimCreateForm = ({
     {
       limit: 999,
       fields: "*prices,+service_zone.fulfillment_set.location.id",
-      stock_location_id: locationId,
+      stock_location_id: locationId ?? undefined,
       ...(sellerId ? { seller_id: sellerId } : {}),
     },
     {
@@ -331,7 +338,9 @@ export const ClaimCreateForm = ({
             ...inboundItems[ind],
             quantity: i.detail.return_requested_quantity,
             note: returnItemAction?.internal_note,
-            reason_id: returnItemAction?.details?.reason_id as string,
+            reason_id:
+              getOrderChangeActionDetails(returnItemAction).reason_id ??
+              undefined,
           });
         }
       } else {
@@ -534,7 +543,7 @@ export const ClaimCreateForm = ({
         !!sm.actions?.find((a) => a.action === "SHIPPING_ADD" && !!a.return_id),
     );
 
-    return (method?.total as number) || 0;
+    return method?.total || 0;
   }, [preview.shipping_methods]);
 
   const outboundShippingTotal = useMemo(() => {
@@ -543,7 +552,7 @@ export const ClaimCreateForm = ({
         !!sm.actions?.find((a) => a.action === "SHIPPING_ADD" && !a.return_id),
     );
 
-    return (method?.total as number) || 0;
+    return method?.total || 0;
   }, [preview.shipping_methods]);
 
   return (
@@ -571,7 +580,7 @@ export const ClaimCreateForm = ({
                   <StackedFocusModal.Header />
 
                   <AddClaimItemsTable
-                    items={order.items!}
+                    items={order.items ?? []}
                     selectedItems={inboundItems.map((i) => i.item_id)}
                     currencyCode={order.currency_code}
                     onSelectionChange={(finalSelection) => {
@@ -619,17 +628,20 @@ export const ClaimCreateForm = ({
               </StackedFocusModal>
             </div>
             {showInboundItemsPlaceholder && <ItemPlaceholder />}
-            {inboundItems.map(
-              (item, index) =>
-                previewItemsMap.get(item.item_id) &&
-                itemsMap.get(item.item_id)! && (
+            {inboundItems.map((item, index) => {
+              const orderItem = itemsMap.get(item.item_id);
+              const previewItem = previewItemsMap.get(item.item_id);
+
+              return (
+                previewItem &&
+                orderItem && (
                   <ClaimInboundItem
                     key={item.id}
-                    item={itemsMap.get(item.item_id)!}
-                    previewItem={previewItemsMap.get(item.item_id)!}
+                    item={orderItem}
+                    previewItem={previewItem}
                     currencyCode={order.currency_code}
                     form={form}
-                    locationId={locationId}
+                    locationId={locationId ?? undefined}
                     locationName={
                       stock_locations.find((l) => l.id === locationId)?.name
                     }
@@ -656,13 +668,13 @@ export const ClaimCreateForm = ({
                           { ...payload, actionId: action.id },
                           {
                             onError: (error) => {
-                              if (
-                                action.details?.quantity &&
-                                payload.quantity
-                              ) {
+                              const { quantity } =
+                                getOrderChangeActionDetails(action);
+
+                              if (quantity && payload.quantity) {
                                 form.setValue(
                                   `inbound_items.${index}.quantity`,
-                                  action.details?.quantity as number,
+                                  quantity,
                                 );
                               }
 
@@ -674,8 +686,9 @@ export const ClaimCreateForm = ({
                     }}
                     index={index}
                   />
-                ),
-            )}
+                )
+              );
+            })}
             {!showInboundItemsPlaceholder && (
               <div className="mt-8 flex flex-col gap-y-4">
                 {/* LOCATION*/}
@@ -702,7 +715,8 @@ export const ClaimCreateForm = ({
                                 <Combobox
                                   {...field}
                                   value={value ?? undefined}
-                                  onChange={(v) => {
+                                  onChange={(next) => {
+                                    const v = getSingleComboboxValue(next);
                                     onChange(v);
                                     onLocationChange(v);
                                   }}
@@ -757,7 +771,8 @@ export const ClaimCreateForm = ({
                                 <Combobox
                                   allowClear
                                   value={value ?? undefined}
-                                  onChange={(val) => {
+                                  onChange={(next) => {
+                                    const val = getSingleComboboxValue(next);
                                     onChange(val);
                                     onShippingOptionChange(val);
                                   }}
@@ -807,7 +822,7 @@ export const ClaimCreateForm = ({
                       const action = item.actions?.find(
                         (act) => act.action === "RETURN_ITEM",
                       );
-                      acc = acc + (action?.amount || 0);
+                      acc = acc + getOrderChangeActionAmount(action);
 
                       return acc;
                     }, 0) * -1,
@@ -830,7 +845,7 @@ export const ClaimCreateForm = ({
                       const action = item.actions?.find(
                         (act) => act.action === "ITEM_ADD",
                       );
-                      acc = acc + (action?.amount || 0);
+                      acc = acc + getOrderChangeActionAmount(action);
 
                       return acc;
                     }, 0),

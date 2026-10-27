@@ -1,7 +1,7 @@
 import { toast } from "@medusajs/ui"
 import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 import { RouteFocusModal } from "../../../components/modals"
 import { useCreateExchange, useExchange } from "../../../hooks/api/exchanges"
@@ -9,23 +9,24 @@ import { useOrder, useOrderPreview } from "../../../hooks/api/orders"
 import { useReturn } from "../../../hooks/api/returns"
 import { DEFAULT_FIELDS } from "../order-detail/constants"
 import { ExchangeCreateForm } from "./components/exchange-create-form"
+import { useRequiredParam } from "@mercurjs/dashboard-shared"
 
 let IS_REQUEST_RUNNING = false
 
 export const ExchangeCreate = () => {
-  const { id } = useParams()
+  const id = useRequiredParam("id")
   const navigate = useNavigate()
   const { t } = useTranslation()
 
-  const { order } = useOrder(id!, {
+  const { order } = useOrder(id, {
     fields: DEFAULT_FIELDS,
   })
 
-  const { order: preview } = useOrderPreview(id!)
+  const { order: preview } = useOrderPreview(id)
   const [activeExchangeId, setActiveExchangeId] = useState<string>()
   const { mutateAsync: createExchange } = useCreateExchange(order.id)
 
-  const { exchange } = useExchange(activeExchangeId!, undefined, {
+  const { exchange } = useExchange(activeExchangeId ?? "", undefined, {
     enabled: !!activeExchangeId,
   })
 

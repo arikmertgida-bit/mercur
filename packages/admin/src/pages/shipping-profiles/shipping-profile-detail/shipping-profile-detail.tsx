@@ -1,7 +1,7 @@
 import { ReactNode, Children } from "react"
-import { useLoaderData, useParams } from "react-router-dom"
+import { useLoaderData } from "react-router-dom"
 
-import { WidgetZone } from "@mercurjs/dashboard-shared"
+import { WidgetZone, useRequiredParam } from "@mercurjs/dashboard-shared"
 import { SingleColumnPageSkeleton } from "../../../components/common/skeleton"
 import { useShippingProfile } from "../../../hooks/api/shipping-profiles"
 import { ShippingProfileGeneralSection } from "./components/shipping-profile-general-section"
@@ -10,14 +10,12 @@ import { SingleColumnPage } from "../../../components/layout/pages"
 import { shippingProfileLoader } from "./loader"
 
 const Root = ({ children }: { children?: ReactNode }) => {
-  const { shipping_profile_id } = useParams()
+  const shipping_profile_id = useRequiredParam("shipping_profile_id")
 
-  const initialData = useLoaderData() as Awaited<
-    ReturnType<typeof shippingProfileLoader>
-  >
+  const initialData = useLoaderData<typeof shippingProfileLoader>()
 
   const { shipping_profile, isLoading, isError, error } = useShippingProfile(
-    shipping_profile_id!,
+    shipping_profile_id,
     undefined,
     { initialData }
   )

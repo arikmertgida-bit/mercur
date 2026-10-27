@@ -32,6 +32,7 @@ import {
   useUpdateExchangeOutboundShipping,
 } from "../../../../../hooks/api/exchanges.tsx";
 import { currencies } from "../../../../../lib/data/currencies.ts";
+import { getOrderChangeActionDetails } from "../../../../../lib/order-change-action";
 import { ExchangeInboundSection } from "./exchange-inbound-section.tsx";
 import { ExchangeOutboundSection } from "./exchange-outbound-section.tsx";
 
@@ -145,7 +146,8 @@ export const ExchangeCreateForm = ({
             variant_id: i.variant_id,
             quantity: i.detail.return_requested_quantity,
             note: inboundAction?.internal_note,
-            reason_id: inboundAction?.details?.reason_id as string | undefined,
+            reason_id:
+              getOrderChangeActionDetails(inboundAction).reason_id ?? undefined,
           };
         }),
         outbound_items: outboundPreviewItems.map((i) => ({
@@ -261,7 +263,7 @@ export const ExchangeCreateForm = ({
         !!sm.actions?.find((a) => a.action === "SHIPPING_ADD" && !!a.return_id),
     );
 
-    return (method?.total as number) || 0;
+    return method?.total || 0;
   }, [preview.shipping_methods]);
 
   const outboundShippingTotal = useMemo(() => {
@@ -270,7 +272,7 @@ export const ExchangeCreateForm = ({
         !!sm.actions?.find((a) => a.action === "SHIPPING_ADD" && !a.return_id),
     );
 
-    return (method?.total as number) || 0;
+    return method?.total || 0;
   }, [preview.shipping_methods]);
 
   return (

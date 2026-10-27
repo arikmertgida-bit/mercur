@@ -2,35 +2,34 @@ import { PromotionRuleDTO } from "@medusajs/types"
 import { Heading } from "@medusajs/ui"
 import { useTranslation } from "react-i18next"
 import { useParams } from "react-router-dom"
-import { useLinkQuery } from "@mercurjs/dashboard-shared"
+import { useLinkQuery, useRequiredParam } from "@mercurjs/dashboard-shared"
+import { z } from "zod"
 
 import { RouteDrawer } from "../../../../components/modals"
 import { usePromotion } from "../../../../hooks/api/promotions"
 import { PROMOTION_DETAIL_BASE_FIELDS } from "../../promotion-detail/loader"
 import { EditRulesWrapper } from "./components/edit-rules-wrapper"
 
-export enum RuleType {
-  RULES = "rules",
-  BUY_RULES = "buy-rules",
-  TARGET_RULES = "target-rules",
-}
-export type RuleTypeValues = "rules" | "buy-rules" | "target-rules"
+export const RuleType = {
+  RULES: "rules",
+  BUY_RULES: "buy-rules",
+  TARGET_RULES: "target-rules",
+} as const
+export type RuleTypeValues = (typeof RuleType)[keyof typeof RuleType]
+
+const RuleTypeSchema = z.enum(RuleType)
 
 export const EditRules = () => {
   const params = useParams()
-  const allowedParams: string[] = [
-    RuleType.RULES,
-    RuleType.BUY_RULES,
-    RuleType.TARGET_RULES,
-  ]
+  const parsedRuleType = RuleTypeSchema.safeParse(params.ruleType)
 
-  if (!allowedParams.includes(params.ruleType!)) {
+  if (!parsedRuleType.success) {
     throw "invalid page"
   }
 
   const { t } = useTranslation()
-  const ruleType = params.ruleType as RuleTypeValues
-  const id = params.id as string
+  const ruleType = parsedRuleType.data
+  const id = useRequiredParam("id")
   const rules: PromotionRuleDTO[] = []
   const linkQuery = useLinkQuery("promotion", PROMOTION_DETAIL_BASE_FIELDS)
   const { promotion, isPending: isLoading, isError, error } = usePromotion(

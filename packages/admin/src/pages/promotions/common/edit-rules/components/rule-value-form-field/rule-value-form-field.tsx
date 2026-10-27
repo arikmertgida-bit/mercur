@@ -1,13 +1,9 @@
 import { useEffect, useRef } from "react";
 
-import {
-  ApplicationMethodTargetTypeValues,
-  HttpTypes,
-  RuleTypeValues,
-} from "@medusajs/types";
+import { ApplicationMethodTargetTypeValues, HttpTypes } from "@medusajs/types";
 import { Input } from "@medusajs/ui";
 
-import { UseFormReturn, useWatch } from "react-hook-form";
+import { useFormContext, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 import { Form } from "../../../../../../components/common/form";
@@ -15,7 +11,8 @@ import { Combobox } from "../../../../../../components/inputs/combobox";
 import { useStore } from "../../../../../../hooks/api";
 import { useComboboxData } from "../../../../../../hooks/use-combobox-data";
 import { sdk } from "../../../../../../lib/client";
-import { CreatePromotionSchemaType } from "../../../../promotion-create/components/create-promotion-form/form-schema";
+import { RuleTypeValues } from "../../edit-rules";
+import { PromotionRuleScope, PromotionRulesFormValues } from "../../form-values";
 
 // The subset of a rule field's own schema fields this component reads;
 // the field array item also carries an RHF-generated key prop, which
@@ -25,14 +22,9 @@ type PromotionRuleField = {
 };
 
 type RuleValueFormFieldType = {
-  form: UseFormReturn<CreatePromotionSchemaType>;
-  identifier: string;
-  scope:
-    | "application_method.buy_rules"
-    | "rules"
-    | "application_method.target_rules";
-  name: string;
-  operator: string;
+  identifier?: string;
+  scope: PromotionRuleScope;
+  index: number;
   fieldRule: PromotionRuleField;
   attributes: HttpTypes.AdminRuleAttributeOption[];
   ruleType: RuleTypeValues;
@@ -54,17 +46,18 @@ const buildFilters = (attribute?: string, store?: HttpTypes.AdminStore) => {
 };
 
 export const RuleValueFormField = ({
-  form,
   identifier,
   scope,
-  name,
-  operator,
+  index,
   fieldRule,
   attributes,
   ruleType,
   applicationMethodTargetType,
 }: RuleValueFormFieldType) => {
   const { t } = useTranslation();
+  const form = useFormContext<PromotionRulesFormValues>();
+  const name: `${PromotionRuleScope}.${number}.values` = `${scope}.${index}.values`;
+  const operator: `${PromotionRuleScope}.${number}.operator` = `${scope}.${index}.operator`;
 
   const attribute = attributes?.find(
     (attr) => attr.value === fieldRule.attribute,
@@ -85,15 +78,16 @@ export const RuleValueFormField = ({
   const sellerId = useWatch({
     control: form.control,
     name: "seller_id",
-  }) as string | undefined;
+  });
 
   const comboboxData = useComboboxData({
     queryFn: async (params) => {
       return await sdk.admin.promotions.ruleValueOptions.$ruleType.$ruleAttributeId.query({
         $ruleType: ruleType,
-        $ruleAttributeId: attribute?.id,
+        // Only runs once an attribute is picked (see `enabled`).
+        $ruleAttributeId: attribute?.id ?? "",
         ...params,
-        ...buildFilters(attribute?.id, store!),
+        ...buildFilters(attribute?.id, store),
         ...(attribute?.id === "product" && sellerId ? { seller_id: sellerId } : {}),
         application_method_target_type: applicationMethodTargetType,
       });
@@ -104,7 +98,8 @@ export const RuleValueFormField = ({
       !isStoreLoading,
     getOptions: (data) => data.values,
     queryKey: ["rule-value-options", ruleType, attribute?.id, sellerId],
-    defaultValue: watchValue,
+    // Number values belong to number fields, which never render the combobox.
+    defaultValue: typeof watchValue === "number" ? String(watchValue) : watchValue,
     defaultValueKey: "value",
   });
 
@@ -133,8 +128,7 @@ export const RuleValueFormField = ({
 	form
 ]);
 
-  const fieldIndex = name.split(".").slice(-2, -1)[0];
-  const testIdBase = `rule-value-form-field-${ruleType}-${fieldIndex}`;
+  const testIdBase = `rule-value-form-field-${ruleType}-${index}`;
 
   return (
     <Form.Field

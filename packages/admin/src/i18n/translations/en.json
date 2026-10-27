@@ -2872,7 +2872,9 @@
         "noVariants": "This offer has no variants"
       },
       "edit": {
-        "successToast": "Prices were successfully updated."
+        "successToast": "Prices were successfully updated.",
+        "header": "Edit prices for {{title}}",
+        "description": "Update the prices of the offers in this price list."
       }
     },
     "fields": {

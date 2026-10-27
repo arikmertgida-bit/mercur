@@ -1,9 +1,10 @@
+import type { JsonValue } from "@mercurjs/types"
 import { Select, clx } from "@medusajs/ui"
 import { Controller, ControllerRenderProps } from "react-hook-form"
 
 import { useCombinedRefs } from "../../../hooks/use-combined-refs"
 import { useDataGridCell, useDataGridCellError } from "../hooks"
-import { DataGridCellProps, InputProps } from "../types"
+import { DataGridCellProps, DataGridFormValues, InputProps } from "../types"
 import { DataGridCellContainer } from "./data-grid-cell-container"
 
 type Option = {
@@ -11,7 +12,7 @@ type Option = {
   value: string
 }
 
-type DataGridSelectCellProps<TData, TValue = any> = DataGridCellProps<
+type DataGridSelectCellProps<TData, TValue = JsonValue> = DataGridCellProps<
   TData,
   TValue
 > & {
@@ -19,7 +20,7 @@ type DataGridSelectCellProps<TData, TValue = any> = DataGridCellProps<
   placeholder?: string
 }
 
-export const DataGridSelectCell = <TData, TValue = any>({
+export const DataGridSelectCell = <TData, TValue = JsonValue>({
   context,
   options,
   placeholder,
@@ -53,7 +54,7 @@ const Inner = ({
   options,
   placeholder,
 }: {
-  field: ControllerRenderProps<any, string>
+  field: ControllerRenderProps<DataGridFormValues, string>
   inputProps: InputProps
   options: Option[]
   placeholder?: string
@@ -69,11 +70,14 @@ const Inner = ({
 
   const combinedRefs = useCombinedRefs(inputRef, ref)
 
-  const selectedOption = options.find((option) => option.value === value)
+  const selectedValue = typeof value === "string" ? value : ""
+  const selectedOption = options.find(
+    (option) => option.value === selectedValue
+  )
 
   return (
     <Select
-      value={value ?? ""}
+      value={selectedValue}
       onValueChange={(next) => {
         onChange(next)
         onBlur()
@@ -82,7 +86,7 @@ const Inner = ({
       {...fieldProps}
     >
       <Select.Trigger
-        ref={combinedRefs as React.Ref<HTMLButtonElement>}
+        ref={combinedRefs}
         onFocus={onFocus}
         onBlur={() => {
           onBlur()

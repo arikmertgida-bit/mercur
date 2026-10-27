@@ -9,7 +9,7 @@ export const RegionDetailBreadcrumb = (props: RegionDetailBreadcrumbProps) => {
   const { id } = props.params || {}
 
   const { region } = useRegion(
-    id!,
+    id ?? "",
     {
       fields: REGION_DETAIL_FIELDS,
     },

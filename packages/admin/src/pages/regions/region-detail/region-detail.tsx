@@ -1,23 +1,21 @@
 import { ReactNode, Children } from "react";
-import { useLoaderData, useParams } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 
 import { useRegion } from "../../../hooks/api/regions";
 import { RegionCountrySection } from "./components/region-country-section";
 import { RegionGeneralSection } from "./components/region-general-section";
 import { regionLoader } from "./loader";
 
-import { WidgetZone, isForbidden, useCan } from "@mercurjs/dashboard-shared";
+import { WidgetZone, isForbidden, useCan, useRequiredParam } from "@mercurjs/dashboard-shared";
 import { SingleColumnPageSkeleton } from "../../../components/common/skeleton";
 import { SingleColumnPage } from "../../../components/layout/pages";
 import { usePricePreferences } from "../../../hooks/api/price-preferences";
 import { REGION_DETAIL_FIELDS } from "./constants";
 
 const Root = ({ children }: { children?: ReactNode }) => {
-  const initialData = useLoaderData() as Awaited<
-    ReturnType<typeof regionLoader>
-  >
+  const initialData = useLoaderData<typeof regionLoader>()
 
-  const { id } = useParams()
+  const id = useRequiredParam("id")
   const canViewPreferences = useCan("price_preferences")
   const {
     region,
@@ -25,7 +23,7 @@ const Root = ({ children }: { children?: ReactNode }) => {
     isError: isRegionError,
     error: regionError,
   } = useRegion(
-    id!,
+    id,
     { fields: REGION_DETAIL_FIELDS },
     {
       initialData,

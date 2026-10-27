@@ -14,6 +14,7 @@ import {
   mergeListFilters,
 } from "@mercurjs/dashboard-shared";
 import { useMemo } from "react";
+import { TFunction } from "i18next";
 import { useTranslation } from "react-i18next";
 
 import {
@@ -78,7 +79,7 @@ type OrderGroupWithOrders = OrderGroupDTO & {
 
 function transformOrderGroups(
   orderGroups: OrderGroupWithOrders[],
-  t: (key: string, options?: Record<string, unknown>) => string,
+  t: TFunction,
 ): OrderGroupRow[] {
   return orderGroups.map((group) => {
     const orders = group.orders ?? [];
@@ -317,10 +318,6 @@ const useColumns = () => {
 
   const { columns: extended, filters } = useExtendableTable<OrderGroupRow>({
     model: "order",
-    // tanstack's ColumnDef<T, TValue> is contravariant in TValue (cell/header
-    // render props), so a heterogeneous per-column accessor array can't widen
-    // to ColumnDef<T, unknown>[] without a cast.
-    // @ts-expect-error
     columns: base,
   });
 

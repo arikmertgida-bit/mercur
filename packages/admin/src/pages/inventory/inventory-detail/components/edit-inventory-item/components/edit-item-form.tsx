@@ -98,7 +98,6 @@ export const EditInventoryItemForm = ({ item }: EditInventoryItemFormProps) => {
           <FormExtensionZone
             model="inventory_item"
             zone="edit"
-            control={form.control}
             data={item}
           />
         </RouteDrawer.Body>

@@ -1,15 +1,15 @@
 import { Heading } from "@medusajs/ui"
 import { useTranslation } from "react-i18next"
-import { useParams } from "react-router-dom"
 import { RouteDrawer } from "../../../components/modals"
 import { TaxRegionEditForm } from "./components/tax-region-edit"
 import { useTaxRegion } from "../../../hooks/api"
+import { useRequiredParam } from "@mercurjs/dashboard-shared"
 
 export const TaxRegionEdit = () => {
   const { t } = useTranslation()
-  const { id } = useParams()
+  const id = useRequiredParam("id")
 
-  const { tax_region, isPending, isError, error } = useTaxRegion(id!)
+  const { tax_region, isPending, isError, error } = useTaxRegion(id)
 
   const ready = !isPending && !!tax_region
 

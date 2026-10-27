@@ -10,7 +10,7 @@ export const CustomerDetailBreadcrumb = (
 ) => {
   const { id } = props.params || {}
 
-  const { customer } = useCustomer(id!, undefined, {
+  const { customer } = useCustomer(id ?? "", undefined, {
     initialData: props.data,
     enabled: Boolean(id),
   })

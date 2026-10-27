@@ -102,11 +102,11 @@ const UnfulfilledItem = ({
 }
 
 const UnfulfilledItemBreakdown = ({ order }: { order: AdminOrder }) => {
-  const unfulfilledItemsWithShipping = order.items!.filter(
+  const unfulfilledItemsWithShipping = order.items.filter(
     (i) => i.requires_shipping && i.detail.fulfilled_quantity < i.quantity
   )
 
-  const unfulfilledItemsWithoutShipping = order.items!.filter(
+  const unfulfilledItemsWithoutShipping = order.items.filter(
     (i) => !i.requires_shipping && i.detail.fulfilled_quantity < i.quantity
   )
 
@@ -193,7 +193,7 @@ const Fulfillment = ({
     FulfillmentSetType.Pickup
 
   const { stock_location, isError, error } = useStockLocation(
-    fulfillment.location_id!,
+    fulfillment.location_id ?? "",
     undefined,
     {
       enabled: showLocation,

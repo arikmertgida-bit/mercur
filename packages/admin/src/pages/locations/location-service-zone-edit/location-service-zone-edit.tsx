@@ -1,6 +1,6 @@
 import { Heading } from "@medusajs/ui"
 import { useTranslation } from "react-i18next"
-import { useParams } from "react-router-dom"
+import { useRequiredParam } from "@mercurjs/dashboard-shared"
 
 import { RouteDrawer } from "../../../components/modals"
 import { useStockLocation } from "../../../hooks/api/stock-locations"
@@ -8,10 +8,12 @@ import { EditServiceZoneForm } from "./components/edit-region-form"
 
 export const LocationServiceZoneEdit = () => {
   const { t } = useTranslation()
-  const { location_id, fset_id, zone_id } = useParams()
+  const location_id = useRequiredParam("location_id")
+  const fset_id = useRequiredParam("fset_id")
+  const zone_id = useRequiredParam("zone_id")
 
   const { stock_location, isPending, isFetching, isError, error } =
-    useStockLocation(location_id!, {
+    useStockLocation(location_id, {
       fields: "*fulfillment_sets.service_zones",
     })
 
@@ -40,8 +42,8 @@ export const LocationServiceZoneEdit = () => {
       {serviceZone && (
         <EditServiceZoneForm
           zone={serviceZone}
-          fulfillmentSetId={fset_id!}
-          locationId={location_id!}
+          fulfillmentSetId={fset_id}
+          locationId={location_id}
         />
       )}
     </RouteDrawer>

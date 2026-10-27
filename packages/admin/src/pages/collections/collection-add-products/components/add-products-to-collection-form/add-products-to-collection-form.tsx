@@ -24,6 +24,7 @@ import { useProductTableColumns } from "../../../../../hooks/table/columns/use-p
 import { useProductTableFilters } from "../../../../../hooks/table/filters/use-product-table-filters.tsx"
 import { useProductTableQuery } from "../../../../../hooks/table/query/use-product-table-query.tsx"
 import { useDataTable } from "../../../../../hooks/use-data-table.tsx"
+import { getTableMetaString } from "@lib/table-meta"
 
 type AddProductsToCollectionFormProps = {
   collection: HttpTypes.AdminCollection
@@ -52,7 +53,7 @@ export const AddProductsToCollectionForm = ({
   const { setValue } = form
 
   const { mutateAsync, isPending: isMutating } = useUpdateCollectionProducts(
-    collection.id!
+    collection.id
   )
 
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({})
@@ -231,9 +232,8 @@ const useColumns = () => {
           )
         },
         cell: ({ row, table }) => {
-          const { collectionId } = table.options.meta as {
-            collectionId: string
-          }
+          const collectionId =
+            getTableMetaString(table.options.meta, "collectionId") ?? ""
 
           const isAdded = row.original.collection_id === collectionId
 

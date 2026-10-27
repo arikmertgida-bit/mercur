@@ -1,16 +1,21 @@
 import { CurrencyInput, Label } from "@medusajs/ui";
-import { Control, FieldValues } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 import { Form } from "../../../../components/common/form";
 import { DeprecatedPercentageInput } from "../../../../components/inputs/percentage-input";
 import { getCurrencySymbol } from "../../../../lib/data/currencies";
 
+/**
+ * The value fields every commission form (wizard, global drawer, rule
+ * drawer) shares; the component reads them from the host's form provider.
+ */
+export type CommissionValueFormValues = {
+  value?: number | null;
+  fixed_values?: Record<string, number | undefined>;
+};
+
 type CommissionValueFieldsProps = {
-  // The form control is shared across heterogeneous schemas; `any` keeps the
-  // component reusable from the wizard, global drawer and rule drawer.
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  control: Control<any>;
   type: "percentage" | "fixed";
   currencies: string[];
 };
@@ -21,18 +26,18 @@ type CommissionValueFieldsProps = {
  *  - Fixed → one `CurrencyInput` per store currency, bound to
  *    `fixed_values.<currency_code>`.
  */
-export const CommissionValueFields = <T extends FieldValues = FieldValues>({
-  control,
+export const CommissionValueFields = ({
   type,
   currencies,
-}: CommissionValueFieldsProps & { control: Control<T> }) => {
+}: CommissionValueFieldsProps) => {
   const { t } = useTranslation();
+  const { control } = useFormContext<CommissionValueFormValues>();
 
   if (type === "percentage") {
     return (
       <Form.Field
         control={control}
-        name={"value" as never}
+        name="value"
         render={({ field: { value, onChange, ...field } }) => (
           <Form.Item>
             <Form.Label>{t("commissions.fields.value")}</Form.Label>
@@ -66,7 +71,7 @@ export const CommissionValueFields = <T extends FieldValues = FieldValues>({
           <Form.Field
             key={code}
             control={control}
-            name={`fixed_values.${code}` as never}
+            name={`fixed_values.${code}`}
             render={({ field: { value, onChange, ...field } }) => (
               <Form.Item>
                 <Form.Control>

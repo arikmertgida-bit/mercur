@@ -8,7 +8,7 @@ export const MediaSchema = z.object({
   id: z.string().optional(),
   url: z.string(),
   isThumbnail: z.boolean(),
-  file: z.any().nullable(), // File
+  file: z.instanceof(File).nullable(),
 })
 
 const ProductCreateVariantSchema = z.object({
@@ -29,15 +29,19 @@ const ProductCreateVariantSchema = z.object({
   sku: z.string().optional(),
   options: z.record(z.string(), z.string()).optional(),
   variant_rank: z.number(),
+  // `z.literal("")` MUST come before `z.coerce.number()` in these unions:
+  // Zod tries union members in order, and `z.coerce.number()` coerces an
+  // empty string to `0` (`Number("") === 0`) — tried first, a blank cell
+  // would silently become a valid zero.
   prices: z
-    .record(z.string(), z.union([z.coerce.number().min(0), z.literal("")]))
+    .record(z.string(), z.union([z.literal(""), z.coerce.number().min(0)]))
     .default({}),
   inventory: z
     .record(
       z.string(),
       z.object({
         checked: z.boolean().default(false),
-        quantity: z.union([z.coerce.number().min(0), z.literal("")]).default(""),
+        quantity: z.union([z.literal(""), z.coerce.number().min(0)]).default(""),
         disabledToggle: z.boolean().optional(),
       })
     )

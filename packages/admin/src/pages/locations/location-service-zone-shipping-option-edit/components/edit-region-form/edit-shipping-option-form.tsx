@@ -32,7 +32,7 @@ type EditShippingOptionFormProps = {
 
 const EditShippingOptionSchema = zod.object({
   name: zod.string().min(1),
-  price_type: zod.nativeEnum(ShippingOptionPriceType),
+  price_type: zod.enum(ShippingOptionPriceType),
   enabled_in_store: zod.boolean().optional(),
   shipping_profile_id: zod.string(),
   shipping_option_type_id: zod.string(),
@@ -76,7 +76,7 @@ export const EditShippingOptionForm = ({
   const form = useForm<zod.infer<typeof EditShippingOptionSchema>>({
     defaultValues: {
       name: shippingOption.name,
-      price_type: shippingOption.price_type as ShippingOptionPriceType,
+      price_type: shippingOption.price_type,
       enabled_in_store: isOptionEnabledInStore(shippingOption),
       shipping_profile_id: shippingOption.shipping_profile_id,
       shipping_option_type_id: shippingOption.type.id,

@@ -163,7 +163,6 @@ declare module "@mercurjs/dashboard-sdk" {
     "products": true
     "promotions": true
     "reservations": true
-    "reviews": true
     "settings/attributes": true
     "settings/commissions": true
     "settings/locations": true

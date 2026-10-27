@@ -1,5 +1,5 @@
 import { PencilSquare, Trash } from "@medusajs/icons"
-import { HttpTypes } from "@medusajs/types"
+import { HttpTypes } from "@mercurjs/types"
 import { Container, Heading, StatusBadge, Text } from "@medusajs/ui"
 import { DisplayExtensionZone, DisplayField } from "@mercurjs/dashboard-shared"
 import { useTranslation } from "react-i18next"

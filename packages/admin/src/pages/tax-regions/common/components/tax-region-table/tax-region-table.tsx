@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 
 import { HttpTypes } from "@medusajs/types";
+import type { JsonValue } from "@mercurjs/types";
 import { Button } from "@medusajs/ui";
 
 import { Table } from "@tanstack/react-table";
@@ -20,7 +21,7 @@ import { TaxRegionCard } from "../tax-region-card";
 type TaxRegionTableProps = {
   variant?: "country" | "province";
   isPending: boolean;
-  queryObject: Record<string, any>;
+  queryObject: Record<string, JsonValue | undefined>;
   count?: number;
   table: Table<HttpTypes.AdminTaxRegion>;
   action?: { label: string; to: string };

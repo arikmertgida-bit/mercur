@@ -235,7 +235,7 @@ export const useUpdateExchangeInboundShipping = (
   options?: UseMutationOptions<
     HttpTypes.AdminExchangeResponse,
     ClientError,
-    HttpTypes.AdminExchangeUpdateInboundShipping
+    HttpTypes.AdminExchangeUpdateInboundShipping & { actionId: string }
   >
 ) => {
   return useMutation({
@@ -397,7 +397,7 @@ export const useUpdateExchangeOutboundShipping = (
   options?: UseMutationOptions<
     HttpTypes.AdminExchangeResponse,
     ClientError,
-    HttpTypes.AdminExchangeUpdateOutboundShipping
+    HttpTypes.AdminExchangeUpdateOutboundShipping & { actionId: string }
   >
 ) => {
   return useMutation({

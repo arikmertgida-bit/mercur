@@ -10,7 +10,7 @@ import { MarketplaceGeneralSection } from "./components/marketplace-general-sect
 import { storeLoader } from "./loader"
 
 const Root = ({ children }: { children?: ReactNode }) => {
-  const initialData = useLoaderData() as Awaited<ReturnType<typeof storeLoader>>
+  const initialData = useLoaderData<typeof storeLoader>()
 
   const { store, isPending, isError, error } = useStore(undefined, {
     initialData,

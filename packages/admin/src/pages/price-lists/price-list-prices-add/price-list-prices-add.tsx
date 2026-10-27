@@ -1,10 +1,9 @@
 import { Children, ReactNode } from "react"
-import { useParams } from "react-router-dom"
+import { useRequiredParam } from "@mercurjs/dashboard-shared"
 
 import { RouteFocusModal } from "../../../components/modals"
 import { TabbedForm } from "../../../components/tabbed-form/tabbed-form"
 import { usePriceList } from "../../../hooks/api"
-import { SectionNoAccess } from "@mercurjs/dashboard-shared"
 import { usePriceListCurrencyData } from "../common/hooks/use-price-list-currency-data"
 import {
   PriceListPricesAddForm,
@@ -15,9 +14,9 @@ import { PriceListPricesAddPricesForm } from "./components/price-list-prices-add
 import { PriceListPricesAddSchema } from "./components/price-list-prices-add-form/schema"
 
 const Root = ({ children }: { children?: ReactNode }) => {
-  const { id } = useParams<{ id: string }>()
+  const id = useRequiredParam("id")
 
-  const { price_list, isPending, isError, error } = usePriceList(id!, {
+  const { price_list, isPending, isError, error } = usePriceList(id, {
     fields: "*prices",
   })
   const currencyData = usePriceListCurrencyData()
@@ -29,15 +28,7 @@ const Root = ({ children }: { children?: ReactNode }) => {
   }
 
   return (
-    <RouteFocusModal prev={`/price-lists/${id}`}>
-      {currencyData.isForbidden && (
-        <>
-          <RouteFocusModal.Header />
-          <RouteFocusModal.Body>
-            <SectionNoAccess />
-          </RouteFocusModal.Body>
-        </>
-      )}
+    <RouteFocusModal prev="../..">
       {ready && (
         Children.count(children) > 0 ? (
           children

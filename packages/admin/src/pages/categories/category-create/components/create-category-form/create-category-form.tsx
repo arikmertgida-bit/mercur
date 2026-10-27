@@ -8,7 +8,7 @@ import { z } from "zod"
 import { useRouteModal } from "../../../../../components/modals"
 import { TabbedForm } from "../../../../../components/tabbed-form/tabbed-form"
 import { useCreateProductCategory } from "../../../../../hooks/api/categories"
-import { transformNullableFormData } from "../../../../../lib/form-helpers"
+import { transformNullableFormValue } from "../../../../../lib/form-helpers"
 import { uploadCategoryImages } from "../../../common/components/category-image-fields"
 import { CreateCategoryDetails } from "./create-category-details"
 import { CreateCategoryNesting } from "./create-category-nesting"
@@ -43,7 +43,7 @@ export const CreateCategoryForm = ({
       rank: parentCategoryId ? 0 : null,
       parent_category_id: parentCategoryId,
       ...extraDefaults,
-    } as CreateCategorySchemaType,
+    },
     resolver: zodResolver(schema ?? CreateCategorySchema),
   })
 
@@ -59,9 +59,9 @@ export const CreateCategoryForm = ({
       name,
       media,
       icon,
-      ...rest
+      description,
+      handle,
     } = data
-    const parsedData = transformNullableFormData(rest, false)
 
     const images = await uploadCategoryImages({
       media: media ?? [],
@@ -71,7 +71,8 @@ export const CreateCategoryForm = ({
     await mutateAsync(
       {
         name: name,
-        ...parsedData,
+        description: transformNullableFormValue(description, false),
+        handle: transformNullableFormValue(handle, false),
         parent_category_id: parent_category_id ?? undefined,
         rank: rank ?? undefined,
         is_active: status === "active",

@@ -54,7 +54,7 @@ export const Invite = () => {
       <div className="flex w-full max-w-[360px] flex-col items-center" data-testid="invite-container">
         <AvatarBox checked={success} />
         <div className="max-h-[557px] w-full will-change-contents">
-          {isValidInvite ? (
+          {isValidInvite && token ? (
             <AnimatePresence>
               {!success ? (
                 <motion.div
@@ -95,7 +95,7 @@ export const Invite = () => {
                   >
                     <CreateView
                       onSuccess={() => setSuccess(true)}
-                      token={token!}
+                      token={token}
                       invite={invite}
                     />
                   </motion.div>
@@ -220,7 +220,7 @@ const CreateView = ({
 
       onSuccess()
     } catch (error) {
-      if (isFetchError(error) && error.status === 400) {
+      if (error instanceof Error && isFetchError(error) && error.status === 400) {
         form.setError("root", {
           type: "manual",
           message: t("invite.invalidInvite"),

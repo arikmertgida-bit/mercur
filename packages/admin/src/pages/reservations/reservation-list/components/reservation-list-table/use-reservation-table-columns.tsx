@@ -1,11 +1,11 @@
 import { createColumnHelper } from "@tanstack/react-table"
 import { useMemo } from "react"
 import { useTranslation } from "react-i18next"
-import { OfferDTO, SellerDTO } from "@mercurjs/types"
 import { DateCell } from "../../../../../components/table/table-cells/common/date-cell"
 import { PlaceholderCell } from "../../../../../components/table/table-cells/common/placeholder-cell"
 import { ReservationActions } from "./reservation-actions"
 import { ExtendedReservationItem } from "../../../../inventory/inventory-detail/components/reservations-table/use-reservation-list-table-columns"
+import { z } from "zod"
 
 const columnHelper = createColumnHelper<ExtendedReservationItem>()
 
@@ -21,22 +21,36 @@ const TruncatedTextCell = ({ value }: { value?: string | null }) => {
   )
 }
 
+// The product is reached through Medusa's own inventory_item -> variants ->
+// product relation (requested as `variants.product.title`), which the HTTP
+// types don't declare — so it is read through this schema instead of a cast.
+const InventoryItemProductSchema = z.object({
+  variants: z
+    .array(
+      z.object({
+        product: z.object({ title: z.string() }).nullish(),
+      })
+    )
+    .nullish(),
+})
+
 // Product + Store come from links that may not be populated on every payload;
-// read them defensively and fall back to a placeholder. Inventory is
-// offer-scoped in Mercur, so the product is reached through the offer:
-// inventory_item -> offers -> product.
+// read them defensively and fall back to a placeholder.
 const getProductTitle = (reservation: ExtendedReservationItem) => {
-  const item = reservation.inventory_item as
-    | { offers?: OfferDTO[] | null }
-    | undefined
-  return item?.offers?.[0]?.product?.title ?? undefined
+  const parsed = InventoryItemProductSchema.safeParse(reservation.inventory_item)
+  return parsed.success
+    ? parsed.data.variants?.[0]?.product?.title ?? undefined
+    : undefined
 }
 
+// The store is the inventory item's Mercur seller link (`seller.name`).
+const InventoryItemSellerSchema = z.object({
+  seller: z.object({ name: z.string() }).nullish(),
+})
+
 const getStoreName = (reservation: ExtendedReservationItem) => {
-  const item = reservation.inventory_item as
-    | { seller?: SellerDTO | null }
-    | undefined
-  return item?.seller?.name ?? undefined
+  const parsed = InventoryItemSellerSchema.safeParse(reservation.inventory_item)
+  return parsed.success ? parsed.data.seller?.name ?? undefined : undefined
 }
 
 export const useReservationTableColumns = () => {

@@ -2,7 +2,6 @@ import { ClientError, InferClientInput, InferClientOutput } from "@mercurjs/clie
 import {
   HttpTypes,
   ProductAttributeBatchInput,
-  ProductChangeDTO,
 } from "@mercurjs/types";
 import {
   QueryKey,
@@ -27,13 +26,15 @@ export const productChangeQueryKeys = queryKeysFactory(
   PRODUCT_CHANGE_QUERY_KEY,
 );
 
-type ProductChangeResponse = { product_change: ProductChangeDTO };
+type ProductChangeResponse = InferClientOutput<
+  typeof sdk.admin.products.$id.preview.query
+>;
 
 // --- Product queries ---
 
 export const useProduct = (
   id: string,
-  query?: Record<string, any>,
+  query?: Omit<InferClientInput<typeof sdk.admin.products.$id.query>, "$id">,
   options?: Omit<
     UseQueryOptions<
       HttpTypes.AdminProductResponse,
@@ -54,7 +55,7 @@ export const useProduct = (
 };
 
 export const useProducts = (
-  query?: Record<string, any>,
+  query?: InferClientInput<typeof sdk.admin.products.query>,
   options?: Omit<
     UseQueryOptions<
       HttpTypes.AdminProductListResponse,
@@ -80,7 +81,7 @@ export const useCreateProduct = (
   options?: UseMutationOptions<
     HttpTypes.AdminProductResponse,
     ClientError,
-    Record<string, any>
+    InferClientInput<typeof sdk.admin.products.mutate>
   >,
 ) => {
   return useMutation({
@@ -101,7 +102,7 @@ export const useUpdateProduct = (
   options?: UseMutationOptions<
     HttpTypes.AdminProductResponse,
     ClientError,
-    Record<string, any>
+    Omit<InferClientInput<typeof sdk.admin.products.$id.mutate>, "$id">
   >,
 ) => {
   return useMutation({
@@ -260,9 +261,7 @@ export const useProductChange = (
 ) => {
   const { data, ...rest } = useQuery({
     queryFn: () =>
-      sdk.admin.products.$id.preview.query({ $id: productId }) as Promise<
-        ProductChangeResponse
-      >,
+      sdk.admin.products.$id.preview.query({ $id: productId }),
     queryKey: productChangeQueryKeys.detail(productId),
     ...options,
   });
@@ -274,7 +273,7 @@ export const useConfirmProductChange = (
   productChangeId: string,
   productId: string,
   options?: UseMutationOptions<
-    unknown,
+    InferClientOutput<typeof sdk.admin.productChanges.$id.confirm.mutate>,
     ClientError,
     { internal_note?: string } | void
   >,
@@ -304,7 +303,7 @@ export const useCancelProductChange = (
   productChangeId: string,
   productId: string,
   options?: UseMutationOptions<
-    ProductChangeResponse,
+    InferClientOutput<typeof sdk.admin.productChanges.$id.cancel.mutate>,
     ClientError,
     { internal_note?: string } | void
   >,
@@ -314,7 +313,7 @@ export const useCancelProductChange = (
       sdk.admin.productChanges.$id.cancel.mutate({
         $id: productChangeId,
         ...(payload ?? {}),
-      }) as Promise<ProductChangeResponse>,
+      }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: productChangeQueryKeys.detail(productId),
@@ -333,7 +332,7 @@ export const useCancelProductChange = (
 export const useProductVariant = (
   productId: string,
   variantId: string,
-  query?: Record<string, any>,
+  query?: Omit<InferClientInput<typeof sdk.admin.products.$id.variants.$variantId.query>, "$id" | "$variantId">,
   options?: Omit<
     UseQueryOptions<
       HttpTypes.AdminProductVariantResponse,
@@ -360,7 +359,7 @@ export const useProductVariant = (
 
 export const useProductVariants = (
   productId: string,
-  query?: Record<string, any>,
+  query?: Omit<InferClientInput<typeof sdk.admin.products.$id.variants.query>, "$id">,
   options?: Omit<
     UseQueryOptions<
       HttpTypes.AdminProductVariantListResponse,
@@ -469,7 +468,13 @@ export const useDeleteVariant = (
 
 export const useDeleteVariantLazy = (
   productId: string,
-  options?: UseMutationOptions<any, ClientError, { variantId: string }>,
+  options?: UseMutationOptions<
+    InferClientOutput<
+      typeof sdk.admin.products.$id.variants.$variantId.delete
+    >,
+    ClientError,
+    { variantId: string }
+  >,
 ) => {
   return useMutation({
     mutationFn: ({ variantId }) =>
@@ -500,6 +505,10 @@ export const scopedProductAttributesQueryKeys = queryKeysFactory(
   PRODUCT_ATTRIBUTES_QUERY_KEY,
 );
 
+type ProductAttributeBatchResponse = InferClientOutput<
+  typeof sdk.admin.products.$id.attributes.batch.mutate
+>;
+
 /** The batch body minus `product_id` (sourced from the path). */
 export type ProductAttributeBatchPayload = Omit<
   ProductAttributeBatchInput,
@@ -514,7 +523,7 @@ export type ProductAttributeBatchPayload = Omit<
 export const useBatchProductAttributes = (
   productId: string,
   options?: UseMutationOptions<
-    HttpTypes.AdminProductResponse,
+    ProductAttributeBatchResponse,
     ClientError,
     ProductAttributeBatchPayload
   >,
@@ -524,7 +533,7 @@ export const useBatchProductAttributes = (
       sdk.admin.products.$id.attributes.batch.mutate({
         $id: productId,
         ...payload,
-      }) as Promise<HttpTypes.AdminProductResponse>,
+      }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: scopedProductAttributesQueryKeys.lists(),
@@ -544,14 +553,14 @@ export const useBatchProductAttributes = (
 export const useRemoveAttributeFromProduct = (
   productId: string,
   attributeId: string,
-  options?: UseMutationOptions<HttpTypes.AdminProductResponse, ClientError, void>,
+  options?: UseMutationOptions<ProductAttributeBatchResponse, ClientError, void>,
 ) => {
   return useMutation({
     mutationFn: () =>
       sdk.admin.products.$id.attributes.batch.mutate({
         $id: productId,
         remove: [attributeId],
-      }) as Promise<HttpTypes.AdminProductResponse>,
+      }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: scopedProductAttributesQueryKeys.lists(),

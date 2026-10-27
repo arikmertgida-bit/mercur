@@ -5,9 +5,9 @@ import { useTranslation } from "react-i18next"
 
 import { DateCell } from "../../../components/table/table-cells/common/date-cell"
 import { getStylizedAmount } from "../../../lib/money-amount-helpers"
-import { PayoutDTO } from "@mercurjs/types"
+import { HttpTypes } from "@mercurjs/types"
 
-const columnHelper = createColumnHelper<PayoutDTO>()
+const columnHelper = createColumnHelper<HttpTypes.AdminPayout>()
 
 const payoutStatusColor = (status: string) => {
   switch (status) {
@@ -49,7 +49,7 @@ export const usePayoutTableColumns = () => {
       columnHelper.accessor("amount", {
         header: t("fields.amount"),
         cell: ({ getValue, row }) =>
-          getStylizedAmount(getValue() as number, row.original.currency_code),
+          getStylizedAmount(getValue(), row.original.currency_code),
       }),
       columnHelper.accessor("created_at", {
         header: t("fields.createdAt"),

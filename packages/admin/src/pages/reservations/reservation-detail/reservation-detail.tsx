@@ -1,7 +1,7 @@
 import { ReactNode, Children } from "react";
-import { useLoaderData, useParams } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 
-import { useCan, useLinkQuery, WidgetZone } from "@mercurjs/dashboard-shared";
+import { useCan, useLinkQuery, WidgetZone, useRequiredParam } from "@mercurjs/dashboard-shared";
 
 import { TwoColumnPageSkeleton } from "../../../components/common/skeleton";
 import { TwoColumnPage } from "../../../components/layout/pages";
@@ -13,14 +13,12 @@ import { ReservationInventorySection } from "./components/reservation-inventory-
 import { reservationItemLoader } from "./loader";
 
 const Root = ({ children }: { children?: ReactNode }) => {
-  const { id } = useParams();
+  const id = useRequiredParam("id");
 
-  const initialData = useLoaderData() as Awaited<
-    ReturnType<typeof reservationItemLoader>
-  >;
+  const initialData = useLoaderData<typeof reservationItemLoader>();
 
   const { reservation, isLoading, isError, error } = useReservationItem(
-    id!,
+    id,
     useLinkQuery("reservation"),
     {
       initialData,
@@ -31,7 +29,7 @@ const Root = ({ children }: { children?: ReactNode }) => {
 
   // TEMP: fetch directly since the fields are not populated with reservation call
   const { inventory_item } = useInventoryItem(
-    reservation?.inventory_item?.id!,
+    reservation?.inventory_item?.id ?? "",
     useLinkQuery("inventory_item"),
     { enabled: !!reservation?.inventory_item?.id && canViewInventoryItems },
   );

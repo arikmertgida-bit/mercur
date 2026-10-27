@@ -1,7 +1,9 @@
+import { HttpTypes } from "@medusajs/types"
 import { QueryClient } from "@tanstack/react-query"
+import { LoaderFunctionArgs } from "react-router-dom"
+
 import { promotionsQueryKeys } from "../../../hooks/api/promotions"
 import { sdk } from "../../../lib/client"
-import { queryClient } from "../../../lib/query-client"
 
 const params = {
   limit: 20,
@@ -14,12 +16,9 @@ const promotionsListQuery = () => ({
 })
 
 export const promotionsLoader = (client: QueryClient) => {
-  return async () => {
-    const query = promotionsListQuery()
-
-    return (
-      queryClient.getQueryData(query.queryKey) ??
-      (await client.fetchQuery(query))
-    )
+  return async (
+    _args: LoaderFunctionArgs
+  ): Promise<HttpTypes.AdminPromotionListResponse> => {
+    return client.ensureQueryData(promotionsListQuery())
   }
 }

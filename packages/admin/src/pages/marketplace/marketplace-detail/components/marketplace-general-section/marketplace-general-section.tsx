@@ -21,18 +21,18 @@ export const MarketplaceGeneralSection = ({ store }: MarketplaceGeneralSectionPr
   const canViewSalesChannels = can("sales_channels")
   const canViewLocations = can("stock_locations")
 
-  const { region } = useRegion(store.default_region_id!, undefined, {
+  const { region } = useRegion(store.default_region_id ?? "", undefined, {
     enabled: !!store.default_region_id && canViewRegions,
   })
 
   const defaultCurrency = store.supported_currencies?.find((c) => c.is_default)
 
-  const { sales_channel } = useSalesChannel(store.default_sales_channel_id!, {
+  const { sales_channel } = useSalesChannel(store.default_sales_channel_id ?? "", {
     enabled: !!store.default_sales_channel_id && canViewSalesChannels,
   })
 
   const { stock_location } = useStockLocation(
-    store.default_location_id!,
+    store.default_location_id ?? "",
     {
       fields: "id,name",
     },

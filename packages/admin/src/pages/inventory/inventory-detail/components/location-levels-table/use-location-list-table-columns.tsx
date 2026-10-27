@@ -1,17 +1,14 @@
 import { useMemo } from "react";
 
 import { PencilSquare, Trash } from "@medusajs/icons";
-import {
-  createDataTableColumnHelper,
-  DataTableColumnDef,
-  toast,
-  usePrompt,
-} from "@medusajs/ui";
+import { toast, usePrompt } from "@medusajs/ui";
 
+import { createColumnHelper, type TableOptions } from "@tanstack/react-table";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
-import type { ExtendedInventoryItemLevel } from "@custom-types/inventory";
+import type { HttpTypes } from "@medusajs/types";
+import { z } from "zod";
 
 import { ActionMenu } from "@components/common/action-menu";
 import { PlaceholderCell } from "@components/table/table-cells/common/placeholder-cell";
@@ -24,19 +21,31 @@ import {
 import { sdk } from "@lib/client";
 import { queryClient } from "@lib/query-client";
 
-const columnHelper = createDataTableColumnHelper<ExtendedInventoryItemLevel>();
+/** The linked stock locations the levels query expands (`+stock_locations.name`). */
+const LevelStockLocationsSchema = z.object({
+  stock_locations: z.array(z.object({ name: z.string() })).nullish(),
+});
 
-export const useLocationListTableColumns =
-  (): DataTableColumnDef<ExtendedInventoryItemLevel>[] => {
+const getLevelLocationName = (
+  level: HttpTypes.AdminInventoryLevel,
+): string | undefined => {
+  const parsed = LevelStockLocationsSchema.safeParse(level);
+
+  return parsed.success
+    ? parsed.data.stock_locations?.map((location) => location.name).join(", ")
+    : undefined;
+};
+
+const columnHelper = createColumnHelper<HttpTypes.AdminInventoryLevel>();
+
+export const useLocationListTableColumns = (): TableOptions<HttpTypes.AdminInventoryLevel>["columns"] => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
   const prompt = usePrompt();
 
-  const handleDelete = async (level: ExtendedInventoryItemLevel) => {
-    const locationName = level.stock_locations
-      ?.map((location) => location.name)
-      .join(", ");
+  const handleDelete = async (level: HttpTypes.AdminInventoryLevel) => {
+    const locationName = getLevelLocationName(level);
 
     const res = await prompt({
       title: t("inventory.level.deleteTitle"),
@@ -52,10 +61,10 @@ export const useLocationListTableColumns =
     }
 
     try {
-      await sdk.admin.inventoryItem.deleteLevel(
-        level.inventory_item_id,
-        level.location_id,
-      );
+      await sdk.admin.inventoryItems.$id.locationLevels.$locationId.delete({
+        $id: level.inventory_item_id,
+        $locationId: level.location_id,
+      });
 
       toast.success(t("inventory.levelDeleted"));
 
@@ -74,7 +83,7 @@ export const useLocationListTableColumns =
         queryKey: inventoryItemLevelsQueryKeys.detail(level.inventory_item_id),
       });
     } catch (e) {
-      toast.error(e instanceof Error ? e.message : "An error occurred");
+      toast.error(e instanceof Error ? e.message : t("general.unknownError"));
     }
   };
 
@@ -84,9 +93,7 @@ export const useLocationListTableColumns =
         id: "location",
         header: t("fields.location"),
         cell: ({ row }) => {
-          const locationName = row.original.stock_locations
-            ?.map((location) => location.name)
-            .join(", ");
+          const locationName = getLevelLocationName(row.original);
 
           if (!locationName) {
             return <PlaceholderCell />;

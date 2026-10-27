@@ -218,7 +218,7 @@ export const ApiKeyGeneralSection = ({ apiKey }: ApiKeyGeneralSectionProps) => {
 
 const ActionBy = ({ userId, "data-testid": dataTestId }: { userId: string | null; "data-testid"?: string }) => {
   const canViewUsers = useCan("users")
-  const { user, isLoading, isError, error } = useUser(userId!, undefined, {
+  const { user, isLoading, isError, error } = useUser(userId ?? "", undefined, {
     enabled: !!userId && canViewUsers,
   })
 

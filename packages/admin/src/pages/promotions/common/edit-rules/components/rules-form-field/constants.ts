@@ -1,4 +1,6 @@
-export const requiredProductRule = {
+import { HttpTypes } from "@mercurjs/types"
+
+export const requiredProductRule: HttpTypes.AdminPromotionRuleDetail = {
   id: "product",
   attribute: "items.product.id",
   attribute_label: "Product",

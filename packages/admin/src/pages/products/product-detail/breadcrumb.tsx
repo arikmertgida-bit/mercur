@@ -1,4 +1,4 @@
-import { HttpTypes } from "@medusajs/types";
+import { HttpTypes } from "@mercurjs/types";
 import { UIMatch } from "react-router-dom";
 import { useProduct } from "../../../hooks/api";
 import { PRODUCT_DETAIL_QUERY } from "../constants";
@@ -11,7 +11,7 @@ export const ProductDetailBreadcrumb = (
   const { id } = props.params || {};
 
   const { product } = useProduct(
-    id!,
+    id ?? "",
     PRODUCT_DETAIL_QUERY,
     {
       initialData: props.data,

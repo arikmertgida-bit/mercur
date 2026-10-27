@@ -1,9 +1,5 @@
 import { useCan } from "@mercurjs/dashboard-shared"
-import {
-  AdminInventoryItem,
-  AdminStockLocation,
-  HttpTypes,
-} from "@medusajs/types"
+import { AdminInventoryItem, AdminStockLocation } from "@medusajs/types"
 import { Button, Text, toast } from "@medusajs/ui"
 import { useTranslation } from "react-i18next"
 import { RouteDrawer, useRouteModal } from "../../../../../../components/modals"
@@ -14,7 +10,10 @@ import { useMemo, useState } from "react"
 import { LocationItem } from "./location-item"
 import { LocationSearchInput } from "./location-search-input"
 import { InfiniteList } from "../../../../../../components/common/infinite-list/infinite-list"
-import { useStockLocations } from "../../../../../../hooks/api/stock-locations"
+import {
+  AdminStockLocationListQuery,
+  useStockLocations,
+} from "../../../../../../hooks/api/stock-locations"
 
 type EditInventoryItemAttributeFormProps = {
   item: AdminInventoryItem
@@ -138,27 +137,21 @@ export const ManageLocationsForm = ({
         </div>
 
         <div className="min-h-0 flex-1" data-testid="inventory-manage-locations-form-locations-list">
-          <InfiniteList<
-            HttpTypes.AdminStockLocationListResponse,
-            HttpTypes.AdminStockLocation,
-            HttpTypes.AdminStockLocationListParams
-          >
+          <InfiniteList
             queryKey={["stock-locations", searchQuery, sellerId ?? "all"]}
             queryFn={async (params) => {
               // Only the item's store may stock it — scope to that seller's
               // warehouses via the admin stock-locations `seller_id` filter.
-              const response = await sdk.admin.stockLocations.query({
+              const query: AdminStockLocationListQuery = {
                 limit: params.limit,
                 offset: params.offset,
                 ...(sellerId && { seller_id: sellerId }),
                 ...(searchQuery && { q: searchQuery }),
-              } as HttpTypes.AdminStockLocationListParams & {
-                seller_id?: string
-              })
-              return response
+              }
+              return sdk.admin.stockLocations.query({ ...query })
             }}
             responseKey="stock_locations"
-            renderItem={(location) => (
+            renderItem={(location: AdminStockLocation) => (
               <div className="pb-2 last:pb-0">
                 <LocationItem
                   selected={selectedLocationIds.has(location.id)}

@@ -43,7 +43,7 @@ export const useVendorRequests = (
 export const useVendorRequest = (
   id: string,
   options?: Omit<
-    UseQueryOptions<unknown, Error, { request?: AdminRequest }, QueryKey>,
+    UseQueryOptions<{ request?: AdminRequest }, Error, { request?: AdminRequest }, QueryKey>,
     "queryFn" | "queryKey"
   >,
 ) => {

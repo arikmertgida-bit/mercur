@@ -1,5 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { HttpTypes } from "@medusajs/types"
+import type { ProductDTO } from "@mercurjs/types"
 import { Button, toast } from "@medusajs/ui"
 import { useRef } from "react"
 import { useForm } from "react-hook-form"
@@ -14,29 +15,28 @@ import {
 import { KeyboundForm } from "../../../../../components/utilities/keybound-form"
 import { useBatchPriceListPrices } from "../../../../../hooks/api/price-lists"
 import { castNumber } from "../../../../../lib/cast-number"
+import { usePriceListGridColumns } from "../../../common/hooks/use-price-list-grid-columns"
 import {
-  PriceListGridRow,
-  usePriceListGridColumns,
-} from "../../../common/hooks/use-price-list-grid-columns"
-import { PriceListUpdateOffersSchema } from "../../../common/schemas"
+  PriceListUpdateProductVariantsSchema,
+  PriceListUpdateProductsSchema,
+} from "../../../common/schemas"
+import { isProductRow } from "../../../common/utils"
 
 type PriceListPricesEditFormProps = {
   priceList: HttpTypes.AdminPriceList
-  gridData: PriceListGridRow[]
-  variantIdByOffer: Record<string, string>
+  products: ProductDTO[]
   regions: HttpTypes.AdminRegion[]
   currencies: HttpTypes.AdminStoreCurrency[]
   pricePreferences: HttpTypes.AdminPricePreference[]
 }
 
-const PricingOfferPricesSchema = z.object({
-  offers: PriceListUpdateOffersSchema,
+const PricingProductPricesSchema = z.object({
+  products: PriceListUpdateProductsSchema,
 })
 
 export const PriceListPricesEditForm = ({
   priceList,
-  gridData,
-  variantIdByOffer,
+  products,
   regions,
   currencies,
   pricePreferences,
@@ -44,23 +44,24 @@ export const PriceListPricesEditForm = ({
   const { t } = useTranslation()
   const { handleSuccess, setCloseOnEscape } = useRouteModal()
 
-  const initialValue = useRef(initRecord(priceList))
+  const initialValue = useRef(initRecord(priceList, products))
 
-  const form = useForm<z.infer<typeof PricingOfferPricesSchema>>({
+  const form = useForm<z.infer<typeof PricingProductPricesSchema>>({
     defaultValues: {
-      offers: initialValue.current,
+      products: initialValue.current,
     },
-    resolver: zodResolver(PricingOfferPricesSchema),
+    resolver: zodResolver(PricingProductPricesSchema),
   })
 
   const { mutateAsync, isPending } = useBatchPriceListPrices(priceList.id)
 
   const handleSubmit = form.handleSubmit(async (values) => {
+    const { products } = values
+
     const { pricesToDelete, pricesToCreate, pricesToUpdate } = sortPrices(
-      values.offers,
+      products,
       initialValue.current,
-      regions,
-      variantIdByOffer
+      regions
     )
 
     mutateAsync(
@@ -72,6 +73,7 @@ export const PriceListPricesEditForm = ({
       {
         onSuccess: () => {
           toast.success(t("priceLists.products.edit.successToast"))
+
           handleSuccess()
         },
         onError: (error) => {
@@ -94,7 +96,12 @@ export const PriceListPricesEditForm = ({
         <RouteFocusModal.Body className="flex flex-col overflow-hidden" data-testid="price-list-prices-edit-form-body">
           <DataGrid
             columns={columns}
-            data={gridData}
+            data={products}
+            getSubRows={(row) => {
+              if (isProductRow(row) && row.variants) {
+                return row.variants
+              }
+            }}
             state={form}
             onEditingChange={(editing) => setCloseOnEscape(!editing)}
             data-testid="price-list-prices-edit-form-data-grid"
@@ -118,35 +125,47 @@ export const PriceListPricesEditForm = ({
 }
 
 function initRecord(
-  priceList: HttpTypes.AdminPriceList
-): PriceListUpdateOffersSchema {
-  const record: PriceListUpdateOffersSchema = {}
+  priceList: HttpTypes.AdminPriceList,
+  products: ProductDTO[]
+): PriceListUpdateProductsSchema {
+  const record: PriceListUpdateProductsSchema = {}
 
-  for (const price of priceList.prices ?? []) {
-    const offerId = (price as { rules?: Record<string, string> }).rules?.offer_id
-    const variantId = (price as { variant_id?: string }).variant_id
-    if (!offerId || !variantId) {
-      continue
-    }
+  const variantPrices = priceList.prices?.reduce<PriceListUpdateProductVariantsSchema>((variants, price) => {
+    const variantObject = variants[price.variant_id] || {}
 
-    const entry = (record[offerId] ??= {
-      variant_id: variantId,
-      currency_prices: {},
-      region_prices: {},
-    })
+    const regionId = price.rules?.region_id
 
-    const regionId = (price as { rules?: Record<string, string> }).rules
-      ?.region_id
-    if (regionId) {
-      entry.region_prices[regionId] = {
-        amount: price.amount.toString(),
-        id: price.id,
+    if (typeof regionId === "string" && regionId) {
+      variantObject.region_prices = {
+        ...variantObject.region_prices,
+        [regionId]: {
+          amount: price.amount.toString(),
+          id: price.id,
+        },
       }
     } else {
-      entry.currency_prices[price.currency_code] = {
-        amount: price.amount.toString(),
-        id: price.id,
+      variantObject.currency_prices = {
+        ...variantObject.currency_prices,
+        [price.currency_code]: {
+          amount: price.amount.toString(),
+          id: price.id,
+        },
       }
+    }
+
+    variants[price.variant_id] = variantObject
+    return variants
+  }, {})
+
+  for (const product of products) {
+    record[product.id] = {
+      variants:
+        product.variants?.reduce<PriceListUpdateProductVariantsSchema>((variants, variant) => {
+          const prices = variantPrices[variant.id] || {}
+          variants[variant.id] = prices
+
+          return variants
+        }, {}) || {},
     }
   }
 
@@ -154,7 +173,6 @@ function initRecord(
 }
 
 type PriceObject = {
-  offerId: string
   variantId: string
   currencyCode: string
   regionId?: string
@@ -163,41 +181,54 @@ type PriceObject = {
 }
 
 function convertToPriceArray(
-  data: PriceListUpdateOffersSchema,
+  data: PriceListUpdateProductsSchema,
   regions: HttpTypes.AdminRegion[]
 ) {
   const prices: PriceObject[] = []
 
-  const regionCurrencyMap = regions.reduce((map, region) => {
+  const regionCurrencyMap = regions.reduce<Record<string, string>>((map, region) => {
     map[region.id] = region.currency_code
     return map
-  }, {} as Record<string, string>)
+  }, {})
 
-  for (const [offerId, offer] of Object.entries(data || {})) {
-    const { variant_id, currency_prices, region_prices } = offer || {}
+  for (const [_productId, product] of Object.entries(data || {})) {
+    const { variants } = product || {}
 
-    for (const [currencyCode, price] of Object.entries(currency_prices || {})) {
-      if (price?.amount !== "" && typeof price?.amount !== "undefined") {
-        prices.push({
-          offerId,
-          variantId: variant_id,
-          currencyCode,
-          amount: castNumber(price.amount),
-          id: price.id,
-        })
+    for (const [variantId, variant] of Object.entries(variants || {})) {
+      const { currency_prices: currencyPrices, region_prices: regionPrices } =
+        variant || {}
+
+      for (const [currencyCode, currencyPrice] of Object.entries(
+        currencyPrices || {}
+      )) {
+        if (
+          currencyPrice?.amount !== "" &&
+          typeof currencyPrice?.amount !== "undefined"
+        ) {
+          prices.push({
+            variantId,
+            currencyCode,
+            amount: castNumber(currencyPrice.amount),
+            id: currencyPrice.id,
+          })
+        }
       }
-    }
 
-    for (const [regionId, price] of Object.entries(region_prices || {})) {
-      if (price?.amount !== "" && typeof price?.amount !== "undefined") {
-        prices.push({
-          offerId,
-          variantId: variant_id,
-          regionId,
-          currencyCode: regionCurrencyMap[regionId],
-          amount: castNumber(price.amount),
-          id: price.id,
-        })
+      for (const [regionId, regionPrice] of Object.entries(
+        regionPrices || {}
+      )) {
+        if (
+          regionPrice?.amount !== "" &&
+          typeof regionPrice?.amount !== "undefined"
+        ) {
+          prices.push({
+            variantId,
+            regionId,
+            currencyCode: regionCurrencyMap[regionId],
+            amount: castNumber(regionPrice.amount),
+            id: regionPrice.id,
+          })
+        }
       }
     }
   }
@@ -206,16 +237,9 @@ function convertToPriceArray(
 }
 
 function createMapKey(obj: PriceObject) {
-  return `${obj.offerId}-${obj.currencyCode}-${obj.regionId || "none"}-${
+  return `${obj.variantId}-${obj.currencyCode}-${obj.regionId || "none"}-${
     obj.id || "none"
   }`
-}
-
-function buildRules(price: PriceObject) {
-  return {
-    offer_id: price.offerId,
-    ...(price.regionId ? { region_id: price.regionId } : {}),
-  }
 }
 
 function comparePrices(initialPrices: PriceObject[], newPrices: PriceObject[]) {
@@ -223,15 +247,15 @@ function comparePrices(initialPrices: PriceObject[], newPrices: PriceObject[]) {
   const pricesToCreate: HttpTypes.AdminCreatePriceListPrice[] = []
   const pricesToDelete: string[] = []
 
-  const initialPriceMap = initialPrices.reduce((map, price) => {
+  const initialPriceMap = initialPrices.reduce<Record<string, (typeof initialPrices)[0]>>((map, price) => {
     map[createMapKey(price)] = price
     return map
-  }, {} as Record<string, PriceObject>)
+  }, {})
 
-  const newPriceMap = newPrices.reduce((map, price) => {
+  const newPriceMap = newPrices.reduce<Record<string, (typeof newPrices)[0]>>((map, price) => {
     map[createMapKey(price)] = price
     return map
-  }, {} as Record<string, PriceObject>)
+  }, {})
 
   const keys = new Set([
     ...Object.keys(initialPriceMap),
@@ -252,7 +276,9 @@ function comparePrices(initialPrices: PriceObject[], newPrices: PriceObject[]) {
           id: newPrice.id,
           variant_id: newPrice.variantId,
           currency_code: newPrice.currencyCode,
-          rules: buildRules(newPrice),
+          rules: newPrice.regionId
+            ? { region_id: newPrice.regionId }
+            : undefined,
           amount: newPrice.amount,
         })
       }
@@ -262,7 +288,7 @@ function comparePrices(initialPrices: PriceObject[], newPrices: PriceObject[]) {
       pricesToCreate.push({
         variant_id: newPrice.variantId,
         currency_code: newPrice.currencyCode,
-        rules: buildRules(newPrice),
+        rules: newPrice.regionId ? { region_id: newPrice.regionId } : undefined,
         amount: newPrice.amount,
       })
     }
@@ -276,10 +302,9 @@ function comparePrices(initialPrices: PriceObject[], newPrices: PriceObject[]) {
 }
 
 function sortPrices(
-  data: PriceListUpdateOffersSchema,
-  initialValue: PriceListUpdateOffersSchema,
-  regions: HttpTypes.AdminRegion[],
-  _variantIdByOffer: Record<string, string>
+  data: PriceListUpdateProductsSchema,
+  initialValue: PriceListUpdateProductsSchema,
+  regions: HttpTypes.AdminRegion[]
 ) {
   const initialPrices = convertToPriceArray(initialValue, regions)
   const newPrices = convertToPriceArray(data, regions)

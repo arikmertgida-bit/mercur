@@ -1,16 +1,20 @@
 import { Heading } from "@medusajs/ui"
 import { useTranslation } from "react-i18next"
-import { useParams } from "react-router-dom"
+import { useRequiredParam } from "@mercurjs/dashboard-shared"
 
 import { RouteDrawer } from "../../../components/modals"
 import { useShippingOptions } from "../../../hooks/api/shipping-options"
 import { EditShippingOptionForm } from "./components/edit-region-form"
-import { FulfillmentSetType } from "../common/constants"
+import {
+  FulfillmentSetType,
+  toFulfillmentSetType,
+} from "../common/constants"
 
 export const LocationServiceZoneShippingOptionEdit = () => {
   const { t } = useTranslation()
 
-  const { location_id, so_id } = useParams()
+  const location_id = useRequiredParam("location_id")
+  const so_id = useRequiredParam("so_id")
 
   const { shipping_options, isPending, isFetching, isError, error } =
     useShippingOptions({
@@ -49,11 +53,10 @@ export const LocationServiceZoneShippingOptionEdit = () => {
       {shippingOption && (
         <EditShippingOptionForm
           shippingOption={shippingOption}
-          locationId={location_id!}
-          type={
-            shippingOption.service_zone.fulfillment_set
-              .type as FulfillmentSetType
-          }
+          locationId={location_id}
+          type={toFulfillmentSetType(
+            shippingOption.service_zone.fulfillment_set.type
+          )}
         />
       )}
     </RouteDrawer>

@@ -92,7 +92,7 @@ export const InviteUserForm = () => {
       await mutateAsync({ email: values.email });
       form.reset();
     } catch (error) {
-      if (isFetchError(error) && error.status === 400) {
+      if (error instanceof Error && isFetchError(error) && error.status === 400) {
         form.setError("root", {
           type: "manual",
           message: error.message,

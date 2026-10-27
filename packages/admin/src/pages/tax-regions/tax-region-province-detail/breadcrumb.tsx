@@ -14,7 +14,7 @@ export const TaxRegionDetailBreadcrumb = (
 ) => {
   const { province_id } = props.params || {}
 
-  const { tax_region } = useTaxRegion(province_id!, undefined, {
+  const { tax_region } = useTaxRegion(province_id ?? "", undefined, {
     initialData: props.data,
     enabled: Boolean(province_id),
   })

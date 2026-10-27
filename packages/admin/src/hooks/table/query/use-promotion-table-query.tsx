@@ -1,3 +1,7 @@
+import {
+  DateComparisonFilterSchema,
+  parseJsonQueryParam,
+} from "@mercurjs/dashboard-shared"
 import { HttpTypes } from "@medusajs/types"
 import { useQueryParams } from "../../use-query-params"
 
@@ -45,8 +49,8 @@ export const usePromotionTableQuery = ({
   } = {
     limit: pageSize,
     fields: "+seller.id,+seller.name",
-    created_at: created_at ? JSON.parse(created_at) : undefined,
-    updated_at: updated_at ? JSON.parse(updated_at) : undefined,
+    created_at: parseJsonQueryParam(created_at, DateComparisonFilterSchema),
+    updated_at: parseJsonQueryParam(updated_at, DateComparisonFilterSchema),
     campaign_id: campaign_id || undefined,
     seller_id: seller_id || undefined,
     is_automatic: is_automatic ? is_automatic === "true" : undefined,

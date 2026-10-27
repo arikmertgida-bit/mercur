@@ -7,7 +7,7 @@ type UserDetailBreadcrumbProps = UIMatch<HttpTypes.AdminUserResponse>
 export const UserDetailBreadcrumb = (props: UserDetailBreadcrumbProps) => {
   const { id } = props.params || {}
 
-  const { user } = useUser(id!, undefined, {
+  const { user } = useUser(id ?? "", undefined, {
     initialData: props.data,
     enabled: Boolean(id),
   })

@@ -1,15 +1,15 @@
 import { Heading } from "@medusajs/ui"
 import { useTranslation } from "react-i18next"
-import { useParams } from "react-router-dom"
 import { RouteDrawer } from "../../../components/modals"
 import { useProductType } from "../../../hooks/api/product-types"
 import { EditProductTypeForm } from "./components/edit-product-type-form"
+import { useRequiredParam } from "@mercurjs/dashboard-shared"
 
 export const ProductTypeEdit = () => {
-  const { id } = useParams()
+  const id = useRequiredParam("id")
   const { t } = useTranslation()
 
-  const { product_type, isPending, isError, error } = useProductType(id!)
+  const { product_type, isPending, isError, error } = useProductType(id)
 
   const ready = !isPending && !!product_type
 

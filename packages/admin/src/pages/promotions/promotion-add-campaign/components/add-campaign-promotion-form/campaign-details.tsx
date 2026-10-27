@@ -1,9 +1,9 @@
-import { AdminCampaign } from "@medusajs/types"
+import { AdminCampaign, CampaignBudgetTypeValues } from "@medusajs/types"
 import { Heading, Text } from "@medusajs/ui"
 import { Fragment } from "react"
 import { useTranslation } from "react-i18next"
 
-const translationKeyMap = {
+const translationKeyMap: Partial<Record<CampaignBudgetTypeValues, string>> = {
   spend: "spend",
   usage: "usage",
   use_by_attribute: "useByAttribute",
@@ -19,6 +19,9 @@ export const CampaignDetails = ({ campaign }: CampaignDetailsProps) => {
   if (!campaign) {
     return
   }
+
+  const budgetTypeKey =
+    campaign.budget?.type && translationKeyMap[campaign.budget.type]
 
   return (
     <Fragment>
@@ -84,12 +87,11 @@ export const CampaignDetails = ({ campaign }: CampaignDetailsProps) => {
 
           <div className="flex items-center gap-1">
             <Text className="txt-small truncate">
-              {t(
-                `campaigns.budget.type.${translationKeyMap[campaign.budget?.type]}.title`,
-                {
-                  defaultValue: "-",
-                }
-              )}
+              {budgetTypeKey
+                ? t(`campaigns.budget.type.${budgetTypeKey}.title`, {
+                    defaultValue: "-",
+                  })
+                : "-"}
             </Text>
           </div>
         </div>

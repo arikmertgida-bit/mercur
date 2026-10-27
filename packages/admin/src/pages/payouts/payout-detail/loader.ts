@@ -2,6 +2,7 @@ import { LoaderFunctionArgs } from "react-router-dom"
 
 import { payoutsQueryKeys } from "../../../hooks/api/payouts"
 import { sdk } from "../../../lib/client"
+import { getRequiredParam } from "@lib/route-params"
 import { queryClient } from "../../../lib/query-client"
 
 const payoutDetailQuery = (id: string) => ({
@@ -10,8 +11,7 @@ const payoutDetailQuery = (id: string) => ({
 })
 
 export const payoutLoader = async ({ params }: LoaderFunctionArgs) => {
-  const id = params.id
-  const query = payoutDetailQuery(id!)
+  const query = payoutDetailQuery(getRequiredParam(params, "id"))
 
   return queryClient.ensureQueryData(query)
 }

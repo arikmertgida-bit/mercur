@@ -1,17 +1,16 @@
 import { PencilSquare } from "@medusajs/icons"
-import { HttpTypes } from "@medusajs/types"
+import { HttpTypes } from "@mercurjs/types"
 import { Container, Heading, Text } from "@medusajs/ui"
 import { DisplayExtensionZone } from "@mercurjs/dashboard-shared"
 import { useTranslation } from "react-i18next"
 
 import { ActionMenu } from "../../../../../components/common/action-menu"
 import {
-  CategoryWithImages,
   getCategoryIcon,
 } from "../../../common/components/category-image-fields"
 
 type CategoryIconSectionProps = {
-  category: HttpTypes.AdminProductCategory & CategoryWithImages
+  category: HttpTypes.AdminProductCategory
 }
 
 export const CategoryIconSection = ({

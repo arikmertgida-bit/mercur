@@ -1,19 +1,15 @@
 import { useCallback } from "react"
-import { FieldValues } from "react-hook-form"
 import { DataGridMatrix } from "../models"
 import { CellErrorMetadata, CellMetadata, DataGridCoordinates } from "../types"
 import { generateCellId } from "../utils"
 
-type UseDataGridCellMetadataOptions<TData, TFieldValues extends FieldValues> = {
-  matrix: DataGridMatrix<TData, TFieldValues>
+type UseDataGridCellMetadataOptions<TData> = {
+  matrix: DataGridMatrix<TData>
 }
 
-export const useDataGridCellMetadata = <
-  TData,
-  TFieldValues extends FieldValues
->({
+export const useDataGridCellMetadata = <TData,>({
   matrix,
-}: UseDataGridCellMetadataOptions<TData, TFieldValues>) => {
+}: UseDataGridCellMetadataOptions<TData>) => {
   /**
    * Creates metadata for a cell.
    */

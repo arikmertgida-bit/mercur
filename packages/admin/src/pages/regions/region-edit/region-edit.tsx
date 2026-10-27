@@ -1,7 +1,6 @@
 import { Heading } from "@medusajs/ui"
-import { isForbidden, useCan } from "@mercurjs/dashboard-shared"
+import { isForbidden, useCan, useRequiredParam } from "@mercurjs/dashboard-shared"
 import { useTranslation } from "react-i18next"
-import { useParams } from "react-router-dom"
 
 import { RouteDrawer } from "../../../components/modals"
 import { useRegion } from "../../../hooks/api/regions"
@@ -12,7 +11,7 @@ import { usePricePreferences } from "../../../hooks/api/price-preferences"
 
 export const RegionEdit = () => {
   const { t } = useTranslation()
-  const { id } = useParams()
+  const id = useRequiredParam("id")
   const canViewPreferences = useCan("price_preferences")
 
   const {
@@ -20,7 +19,7 @@ export const RegionEdit = () => {
     isPending: isRegionLoading,
     isError: isRegionError,
     error: regionError,
-  } = useRegion(id!, {
+  } = useRegion(id, {
     fields: "*payment_providers,*countries,+automatic_taxes",
   })
 

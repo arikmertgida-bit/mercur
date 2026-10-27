@@ -1,4 +1,4 @@
-import { HttpTypes } from "@medusajs/types"
+import { HttpTypes } from "@mercurjs/types"
 import { UIMatch } from "react-router-dom"
 import { useProductCategory } from "../../../hooks/api"
 
@@ -11,7 +11,7 @@ export const CategoryDetailBreadcrumb = (
   const { id } = props.params || {}
 
   const { product_category } = useProductCategory(
-    id!,
+    id ?? "",
     {
       fields: "name",
     },

@@ -3,10 +3,9 @@ import { Button, Heading, Input, Select, toast } from "@medusajs/ui";
 import i18n from "i18next";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
 import * as zod from "zod";
 
-import { usePermissionGate } from "@mercurjs/dashboard-shared";
+import { usePermissionGate, useRequiredParam } from "@mercurjs/dashboard-shared";
 
 import { ConditionalTooltip } from "../../../components/common/conditional-tooltip";
 import { Combobox } from "../../../components/inputs/combobox";
@@ -165,7 +164,7 @@ const EditCommissionRuleForm = ({ rule }: { rule: CommissionRate }) => {
       );
       handleSuccess();
     } catch (e) {
-      toast.error((e as Error).message);
+      toast.error((e instanceof Error ? e.message : String(e)));
     }
   });
 
@@ -396,16 +395,11 @@ const EditCommissionRuleForm = ({ rule }: { rule: CommissionRate }) => {
 
 export const CommissionRuleEdit = () => {
   const { t } = useTranslation();
-  const { id } = useParams();
+  const id = useRequiredParam("id");
   const { commission_rate, isPending, isError, error } = useCommissionRule(
-    id!,
+    id,
     { fields: "*rules,*values" }
-  ) as {
-    commission_rate?: CommissionRate;
-    isPending: boolean;
-    isError: boolean;
-    error: Error | null;
-  };
+  );
 
   const ready = !isPending && !!commission_rate;
 

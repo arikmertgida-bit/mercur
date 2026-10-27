@@ -11,8 +11,6 @@ import { defineTabMeta } from "../../../../components/tabbed-form/types";
 import { useMembers } from "../../../../hooks/api/members";
 import { CreateStoreSchemaType } from "./schema";
 
-type Member = { id: string; email: string };
-
 const Root = () => {
   const { t } = useTranslation();
   const form = useTabbedForm<CreateStoreSchemaType>();
@@ -33,7 +31,7 @@ const Root = () => {
   );
 
   const memberList = useMemo(
-    () => (members as Member[] | undefined) ?? [],
+    () => members ?? [],
     [members],
   );
 

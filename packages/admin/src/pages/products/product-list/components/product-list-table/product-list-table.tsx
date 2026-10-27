@@ -8,11 +8,7 @@ import {
   usePrompt,
 } from "@medusajs/ui";
 import { keepPreviousData } from "@tanstack/react-query";
-import {
-  createColumnHelper,
-  RowSelectionState,
-  type ColumnDef,
-} from "@tanstack/react-table";
+import { createColumnHelper, RowSelectionState } from "@tanstack/react-table";
 import { useExtendableTable, mergeListFilters } from "@mercurjs/dashboard-shared";
 import { ReactNode, useMemo, useState, Children } from "react";
 import { useTranslation } from "react-i18next";
@@ -109,9 +105,7 @@ export const ProductListDataTable = () => {
 
   const { mutateAsync: batchProducts } = useBatchProducts();
 
-  const initialData = useLoaderData() as Awaited<
-    ReturnType<ReturnType<typeof productsLoader>>
-  >;
+  const initialData = useLoaderData<ReturnType<typeof productsLoader>>();
 
   const { searchParams, raw } = useProductTableQuery({ pageSize: PAGE_SIZE });
   const { products, count, isLoading, isError, error } = useProducts(
@@ -317,10 +311,6 @@ const useColumns = () => {
   const base = useProductTableColumns();
   const { columns: extended, filters } = useExtendableTable<ProductDTO>({
     model: "product",
-    // tanstack's ColumnDef<T, TValue> is contravariant in TValue (cell/header
-    // render props), so a heterogeneous per-column accessor array can't widen
-    // to ColumnDef<T, unknown>[] without a cast.
-    // @ts-expect-error
     columns: base,
   });
 

@@ -32,7 +32,7 @@ export const SalesChannelListDataTable = () => {
   })
 
   const { sales_channels, count, isPending, isError, error } = useSalesChannels(
-    searchParams as Parameters<typeof useSalesChannels>[0],
+    searchParams,
     {
       placeholderData: keepPreviousData,
     }

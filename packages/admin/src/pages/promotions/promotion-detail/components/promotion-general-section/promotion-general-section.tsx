@@ -1,6 +1,5 @@
 import { PencilSquare, Trash } from "@medusajs/icons"
 import { HttpTypes } from "@medusajs/types"
-import { PromotionCostDTO } from "@mercurjs/types"
 import {
   Badge,
   Container,
@@ -14,15 +13,11 @@ import {
 import { useTranslation } from "react-i18next"
 import { useNavigate } from "react-router-dom"
 
-import { useParams } from "react-router-dom"
 
-import {
-  DisplayExtensionZone,
-  DisplayField,
-  useLinkQuery,
-} from "@mercurjs/dashboard-shared"
+import { DisplayExtensionZone, DisplayField, useLinkQuery, useRequiredParam } from "@mercurjs/dashboard-shared"
 
 import { ActionMenu } from "../../../../../components/common/action-menu"
+import { getPromotionLinks } from "../../../common/promotion-links"
 import { useDeletePromotion, usePromotion } from "../../../../../hooks/api/promotions"
 import { formatCurrency } from "../../../../../lib/format-currency"
 import { formatPercentage } from "../../../../../lib/percentage-helpers"
@@ -75,14 +70,14 @@ export const PromotionGeneralSection = ({
   const { t } = useTranslation()
   const prompt = usePrompt()
   const navigate = useNavigate()
-  const { id } = useParams()
+  const id = useRequiredParam("id")
   const linkQuery = useLinkQuery("promotion", PROMOTION_DETAIL_BASE_FIELDS)
-  const { promotion: fetched } = usePromotion(id!, linkQuery, {
+  const { promotion: fetched } = usePromotion(id, linkQuery, {
     enabled: !promotionProp,
   })
   const promotion = promotionProp ?? fetched
 
-  const { mutateAsync } = useDeletePromotion(promotion?.id)
+  const { mutateAsync } = useDeletePromotion(promotion?.id ?? id)
 
   if (!promotion) {
     return null
@@ -110,16 +105,13 @@ export const PromotionGeneralSection = ({
         navigate("/promotions", { replace: true })
       },
       onError: (e) => {
-        toast.error((e as Error).message)
+        toast.error((e instanceof Error ? e.message : String(e)))
       },
     })
   }
 
-  const costBearer = (
-    promotion as HttpTypes.AdminPromotion & {
-      promotion_cost?: PromotionCostDTO | null
-    }
-  ).promotion_cost?.cost_bearer
+  const links = getPromotionLinks(promotion)
+  const costBearer = links.promotion_cost?.cost_bearer
 
   const [color, text] = getPromotionStatus(promotion)
   const displayValue = getDisplayValue(promotion)
@@ -198,7 +190,7 @@ export const PromotionGeneralSection = ({
         </Text>
 
         <Copy
-          content={promotion.code!}
+          content={promotion.code ?? ""}
           className="text-ui-tag-neutral-text"
           asChild
           data-testid="promotion-general-section-code-copy"
@@ -297,8 +289,7 @@ export const PromotionGeneralSection = ({
         </Text>
 
         <Text size="small" leading="compact" className="text-pretty" data-testid="promotion-general-section-owner-value">
-          {(promotion as HttpTypes.AdminPromotion & { seller?: { name?: string } | null }).seller?.name
-            ?? t("promotions.fields.platformOwner")}
+          {links.seller?.name ?? t("promotions.fields.platformOwner")}
         </Text>
       </div>
       </DisplayField>

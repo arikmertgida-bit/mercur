@@ -1,28 +1,28 @@
 import { RouteDrawer } from "@components/modals";
 import { useInventoryItem, useStockLocation } from "@hooks/api";
 import { Heading } from "@medusajs/ui";
-import { SectionNoAccess, useCan } from "@mercurjs/dashboard-shared";
+import { SectionNoAccess, useCan, useRequiredParam } from "@mercurjs/dashboard-shared";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
 import { AdjustInventoryForm } from "./components/adjust-inventory-form";
 
 export const AdjustInventoryDrawer = () => {
-  const { id, location_id } = useParams();
+  const id = useRequiredParam("id");
+  const location_id = useRequiredParam("location_id");
   const { t } = useTranslation();
   const {
     inventory_item: inventoryItem,
     isPending: isLoading,
     isError,
     error,
-  } = useInventoryItem(id!);
+  } = useInventoryItem(id);
 
-  const inventoryLevel = inventoryItem?.location_levels!.find(
+  const inventoryLevel = inventoryItem?.location_levels?.find(
     (level) => level.location_id === location_id,
   );
 
   const canViewLocations = useCan("stock_locations");
   const { stock_location, isLoading: isLoadingLocation } = useStockLocation(
-    location_id!,
+    location_id,
     undefined,
     { enabled: canViewLocations },
   );

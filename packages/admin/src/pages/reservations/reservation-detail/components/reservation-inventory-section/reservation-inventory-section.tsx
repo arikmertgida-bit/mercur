@@ -1,12 +1,12 @@
 import { Container, Heading } from "@medusajs/ui"
 import { BuildingStorefront } from "@medusajs/icons"
 import { useTranslation } from "react-i18next"
-import type { ExtendedAdminInventoryItem } from "@custom-types/inventory"
+import type { HttpTypes } from "@medusajs/types"
 import { ActionMenu } from "../../../../../components/common/action-menu"
 import { SectionRow } from "../../../../../components/common/section"
 
 type ReservationInventorySectionProps = {
-  inventoryItem: ExtendedAdminInventoryItem
+  inventoryItem: HttpTypes.AdminInventoryItem
 }
 
 export const ReservationInventorySection = ({

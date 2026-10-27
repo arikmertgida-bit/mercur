@@ -3,8 +3,7 @@ import { Button, Container, Heading, Text, toast } from "@medusajs/ui";
 import { ExclamationCircleSolid } from "@medusajs/icons";
 import { useTranslation } from "react-i18next";
 
-import { HttpTypes } from "@medusajs/types";
-import { SellerDTO, ProductStatus } from "@mercurjs/types";
+import { HttpTypes, ProductStatus } from "@mercurjs/types";
 import { DisplayExtensionZone, PermissionAction } from "@mercurjs/dashboard-shared";
 import { ConfirmPrompt } from "../../../../../components/common/confirm-prompt";
 import {
@@ -13,12 +12,8 @@ import {
   useRequestProductChanges,
 } from "../../../../../hooks/api/products";
 
-type ProductWithSellers = HttpTypes.AdminProduct & {
-  sellers?: SellerDTO[];
-};
-
 type ProductActiveRequestSectionProps = {
-  product: ProductWithSellers;
+  product: HttpTypes.AdminProduct;
 };
 
 export const ProductActiveRequestSection = ({
@@ -47,7 +42,7 @@ export const ProductActiveRequestSection = ({
       toast.success(t("products.request.toast.publishedSuccessfully"));
       setConfirmOpen(false);
     } catch (e) {
-      toast.error((e as Error).message);
+      toast.error((e instanceof Error ? e.message : String(e)));
     }
   };
 
@@ -57,7 +52,7 @@ export const ProductActiveRequestSection = ({
       toast.success(t("products.request.toast.updateRequestedSuccessfully"));
       setRequestUpdateOpen(false);
     } catch (e) {
-      toast.error((e as Error).message);
+      toast.error((e instanceof Error ? e.message : String(e)));
     }
   };
 
@@ -67,7 +62,7 @@ export const ProductActiveRequestSection = ({
       toast.success(t("products.request.toast.rejectedSuccessfully"));
       setRejectOpen(false);
     } catch (e) {
-      toast.error((e as Error).message);
+      toast.error((e instanceof Error ? e.message : String(e)));
     }
   };
 

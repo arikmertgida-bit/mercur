@@ -36,12 +36,13 @@ import {
 } from "../../../../../lib/data/currencies"
 import { SwitchBox } from "../../../../../components/common/switch-box"
 import { useDocumentDirection } from "../../../../../hooks/use-document-direction"
+import { getPromotionLinks } from "../../../common/promotion-links"
 
 type EditPromotionFormProps = {
   promotion: AdminPromotion
 }
 
-type AllocationMode = "each" | "across" | "once"
+type AllocationMode = ApplicationMethodAllocationValues
 
 const EditPromotionSchema = zod.object({
   is_automatic: zod.string().toLowerCase(),
@@ -63,23 +64,10 @@ export const EditPromotionDetailsForm = ({
 }: EditPromotionFormProps) => {
   const { t } = useTranslation()
   const { handleSuccess } = useRouteModal()
-  const allocationRaw = promotion.application_method?.allocation as
-    | string
-    | undefined
   const allocationDefault: AllocationMode =
-    allocationRaw === "once"
-      ? "once"
-      : allocationRaw === "across"
-        ? "across"
-        : "each"
+    promotion.application_method?.allocation ?? "each"
 
-  const promotionWithLinks = promotion as AdminPromotion & {
-    seller?: { id?: string } | null
-    promotion_cost?: {
-      cost_bearer?: "store" | "marketplace" | "shared" | null
-      shared_marketplace_percentage?: number | null
-    } | null
-  }
+  const promotionWithLinks = getPromotionLinks(promotion)
 
   // Coverage (who bears the discount cost) is only editable for
   // marketplace-owned promotions; when a store owns it, the field is hidden.
@@ -96,15 +84,17 @@ export const EditPromotionDetailsForm = ({
     zone: "edit",
     data: promotion,
     defaultValues: {
-      is_automatic: promotion.is_automatic!.toString(),
+      is_automatic: String(promotion.is_automatic ?? false),
       is_tax_inclusive: promotion.is_tax_inclusive,
-      code: promotion.code,
-      status: promotion.status,
-      value: promotion.application_method!.value,
+      // A stored promotion always has these; the fallbacks are the create
+      // form's defaults (an empty code/value makes the admin enter one).
+      code: promotion.code ?? "",
+      status: promotion.status ?? "draft",
+      value: promotion.application_method?.value ?? "",
       allocation: allocationDefault,
       max_quantity: promotion.application_method?.max_quantity ?? null,
-      value_type: promotion.application_method!.type,
-      target_type: promotion.application_method!.target_type,
+      value_type: promotion.application_method?.type ?? "fixed",
+      target_type: promotion.application_method?.target_type ?? "items",
       cost_bearer: costDefault,
       shared_marketplace_percentage: sharedPercentageDefault,
       limit: promotion.limit ?? null,
@@ -178,7 +168,7 @@ return
         application_method: {
           value,
           type: data.value_type,
-          allocation: data.allocation as ApplicationMethodAllocationValues,
+          allocation: data.allocation,
           max_quantity: data.max_quantity ?? null,
         },
       },
@@ -195,7 +185,7 @@ return
                     : null,
               })
             } catch (e) {
-              toast.error((e as Error).message)
+              toast.error((e instanceof Error ? e.message : String(e)))
             }
           }
 
@@ -203,7 +193,7 @@ return
           handleSuccess()
         },
         onError: (e) => {
-          toast.error((e as Error).message)
+          toast.error((e instanceof Error ? e.message : String(e)))
         },
       }
     )
@@ -659,7 +649,6 @@ return (
             <FormExtensionZone
               model="promotion"
               zone="edit"
-              control={form.control}
               data={promotion}
             />
           </div>

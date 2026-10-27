@@ -13,14 +13,20 @@ import { useTranslation } from "react-i18next"
 import { Link } from "react-router-dom"
 import { PermissionAction } from "@mercurjs/dashboard-shared"
 
-import { ProductAttributeDTO, ProductAttributeValueDTO, AttributeType } from "@mercurjs/types"
+import { ClientError } from "@mercurjs/client"
+import {
+  ProductAttributeDTO,
+  ProductAttributeValueDTO,
+  AttributeType,
+  ProductAttributeErrorCode,
+} from "@mercurjs/types"
 import { ActionMenu } from "../../../../../components/common/action-menu"
 import { NoRecords } from "../../../../../components/common/empty-table-content"
 import { _DataTable } from "../../../../../components/table/data-table"
 import { TextCell } from "../../../../../components/table/table-cells/common/text-cell"
 import { useDataTable } from "../../../../../hooks/use-data-table"
 import { useQueryParams } from "../../../../../hooks/use-query-params"
-import { useUpdateProductAttribute } from "../../../../../hooks/api/product-attributes"
+import { useDeleteProductAttributeValue } from "../../../../../hooks/api/product-attributes"
 
 type AttributePossibleValuesSectionProps = {
   attribute: ProductAttributeDTO
@@ -35,7 +41,7 @@ const PossibleValueActions = ({
 }) => {
   const { t } = useTranslation()
   const prompt = usePrompt()
-  const { mutateAsync } = useUpdateProductAttribute(attribute.id)
+  const { mutateAsync } = useDeleteProductAttributeValue(attribute.id, value.id)
   const [inUseOpen, setInUseOpen] = useState(false)
 
   const handleDelete = async () => {
@@ -50,25 +56,21 @@ const PossibleValueActions = ({
 
     if (!res) return
 
-    const remainingValues = (attribute.values ?? [])
-      .filter((pv) => pv.id !== value.id)
-      .map((pv) => ({ id: pv.id, name: pv.name, rank: pv.rank }))
-
     try {
-      await mutateAsync({ possible_values: remainingValues })
+      await mutateAsync()
       toast.success(
         t("attributes.deletePossibleValue.successToast", {
           value: value.name,
         })
       )
     } catch (err) {
-      const message = err instanceof Error ? err.message : "An error occurred"
-      const isInUse = message.includes("can't be deleted")
-
-      if (isInUse) {
+      if (
+        err instanceof ClientError &&
+        err.code === ProductAttributeErrorCode.VALUE_IN_USE
+      ) {
         setInUseOpen(true)
       } else {
-        toast.error(message)
+        toast.error(err instanceof Error ? err.message : t("general.unknownError"))
       }
     }
   }

@@ -1,3 +1,4 @@
+import { HttpTypes } from "@medusajs/types"
 import { Checkbox } from "@medusajs/ui"
 import { createColumnHelper } from "@tanstack/react-table"
 import { useMemo } from "react"
@@ -10,7 +11,7 @@ import {
 import { getStylizedAmount } from "../../../../../lib/money-amount-helpers"
 import { getReturnableQuantity } from "../../../../../lib/rma"
 
-const columnHelper = createColumnHelper<any>()
+const columnHelper = createColumnHelper<HttpTypes.AdminOrderLineItem>()
 
 export const useExchangeItemTableColumns = (currencyCode: string) => {
   const { t } = useTranslation()
@@ -55,7 +56,7 @@ export const useExchangeItemTableColumns = (currencyCode: string) => {
           <ProductCell
             product={{
               thumbnail: row.original.thumbnail,
-              title: row.original.product_title,
+              title: row.original.product_title ?? "",
             }}
           />
         ),

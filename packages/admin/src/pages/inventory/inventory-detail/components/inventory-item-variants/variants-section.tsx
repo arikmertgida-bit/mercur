@@ -4,11 +4,21 @@ import { DisplayExtensionZone } from "@mercurjs/dashboard-shared"
 import { useTranslation } from "react-i18next"
 import { Link } from "react-router-dom"
 
-import type { ProductVariantDTO } from "@medusajs/types"
+import { z } from "zod"
 import { Thumbnail } from "@components/common/thumbnail"
 
+/** The variant fields the inventory detail query expands and this section renders. */
+export const InventoryItemVariantSchema = z.object({
+  id: z.string(),
+  title: z.string().nullable(),
+  options: z.array(z.object({ value: z.string() })).nullish(),
+  product: z
+    .object({ id: z.string(), thumbnail: z.string().nullish() })
+    .nullish(),
+})
+
 type InventoryItemVariantsSectionProps = {
-  variants: ProductVariantDTO[]
+  variants: z.infer<typeof InventoryItemVariantSchema>[]
 }
 
 export const InventoryItemVariantsSection = ({
@@ -43,7 +53,7 @@ export const InventoryItemVariantsSection = ({
                     {variant.title}
                   </span>
                   <span className="text-ui-fg-subtle" data-testid={`inventory-item-variant-options-${variant.id}`}>
-                    {variant.options.map((o) => o.value).join(" ⋅ ")}
+                    {(variant.options ?? []).map((o) => o.value).join(" ⋅ ")}
                   </span>
                 </div>
                 <div className="size-7 flex items-center justify-center" data-testid={`inventory-item-variant-arrow-${variant.id}`}>

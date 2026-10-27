@@ -1,35 +1,34 @@
 import { ReactNode, Children } from "react";
-import { useLoaderData, useParams } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 
-import { useLinkQuery, WidgetZone } from "@mercurjs/dashboard-shared";
+import { useLinkQuery, WidgetZone, useRequiredParam } from "@mercurjs/dashboard-shared";
 
 import { TwoColumnPageSkeleton } from "../../../components/common/skeleton";
 import { TwoColumnPage } from "../../../components/layout/pages";
-import { usePromotion, usePromotionRules } from "../../../hooks/api/promotions";
+import {
+  PromotionRulesQuery,
+  usePromotion,
+  usePromotionRules,
+} from "../../../hooks/api/promotions";
 import { CampaignSection } from "./components/campaign-section";
 import { PromotionConditionsSection } from "./components/promotion-conditions-section";
 import { PromotionGeneralSection } from "./components/promotion-general-section";
 import { PROMOTION_DETAIL_BASE_FIELDS, promotionLoader } from "./loader";
 
 const Root = ({ children }: { children?: ReactNode }) => {
-  const initialData = useLoaderData() as Awaited<
-    ReturnType<typeof promotionLoader>
-  >;
+  const initialData = useLoaderData<typeof promotionLoader>();
 
-  const { id } = useParams();
+  const id = useRequiredParam("id");
   const linkQuery = useLinkQuery("promotion", PROMOTION_DETAIL_BASE_FIELDS);
-  const { promotion, isLoading } = usePromotion(id!, linkQuery, {
+  const { promotion, isLoading } = usePromotion(id, linkQuery, {
     initialData,
   });
-  const query: Record<string, string> = {};
+  const query: PromotionRulesQuery =
+    promotion?.type === "buyget" ? { promotion_type: promotion.type } : {};
 
-  if (promotion?.type === "buyget") {
-    query.promotion_type = promotion.type;
-  }
-
-  const { rules } = usePromotionRules(id!, "rules", query);
-  const { rules: targetRules } = usePromotionRules(id!, "target-rules", query);
-  const { rules: buyRules } = usePromotionRules(id!, "buy-rules", query);
+  const { rules } = usePromotionRules(id, "rules", query);
+  const { rules: targetRules } = usePromotionRules(id, "target-rules", query);
+  const { rules: buyRules } = usePromotionRules(id, "buy-rules", query);
 
   if (isLoading || !promotion) {
     return (
@@ -68,7 +67,7 @@ const Root = ({ children }: { children?: ReactNode }) => {
       </TwoColumnPage.Main>
       <TwoColumnPage.Sidebar>
         <WidgetZone id="promotions.detail.side" data={promotion}>
-          <CampaignSection campaign={promotion.campaign!} promotion={promotion} />
+          <CampaignSection campaign={promotion.campaign ?? null} promotion={promotion} />
         </WidgetZone>
       </TwoColumnPage.Sidebar>
     </TwoColumnPage>

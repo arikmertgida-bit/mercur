@@ -2850,7 +2850,9 @@
         "noVariants": "Sản phẩm này không có biến thể"
       },
       "edit": {
-        "successToast": "Giá đã được cập nhật thành công."
+        "successToast": "Giá đã được cập nhật thành công.",
+        "header": "Chỉnh sửa giá cho {{title}}",
+        "description": "Cập nhật giá của các sản phẩm trong bảng giá này."
       }
     },
     "fields": {

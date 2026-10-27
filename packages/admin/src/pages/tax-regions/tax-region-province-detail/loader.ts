@@ -1,6 +1,7 @@
 import { LoaderFunctionArgs } from "react-router-dom"
 import { taxRegionsQueryKeys } from "../../../hooks/api/tax-regions"
 import { sdk } from "../../../lib/client"
+import { getRequiredParam } from "@lib/route-params"
 import { queryClient } from "../../../lib/query-client"
 
 const taxRegionDetailQuery = (id: string) => ({
@@ -9,8 +10,7 @@ const taxRegionDetailQuery = (id: string) => ({
 })
 
 export const taxRegionLoader = async ({ params }: LoaderFunctionArgs) => {
-  const id = params.province_id
-  const query = taxRegionDetailQuery(id!)
+  const query = taxRegionDetailQuery(getRequiredParam(params, "province_id"))
 
   return queryClient.ensureQueryData(query)
 }

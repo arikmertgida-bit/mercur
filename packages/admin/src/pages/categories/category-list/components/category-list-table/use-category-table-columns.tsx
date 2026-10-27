@@ -1,5 +1,5 @@
 import { TriangleRightMini } from "@medusajs/icons"
-import { AdminProductCategoryResponse } from "@medusajs/types"
+import { HttpTypes } from "@mercurjs/types"
 import { IconButton, Text, clx } from "@medusajs/ui"
 import { createColumnHelper } from "@tanstack/react-table"
 import { useMemo } from "react"
@@ -12,7 +12,6 @@ import {
   TextHeader,
 } from "../../../../../components/table/table-cells/common/text-cell"
 import {
-  CategoryWithImages,
   getCategoryGallery,
 } from "../../../common/components/category-image-fields"
 import {
@@ -22,7 +21,7 @@ import {
 } from "../../../common/utils"
 
 const columnHelper =
-  createColumnHelper<AdminProductCategoryResponse["product_category"]>()
+  createColumnHelper<HttpTypes.AdminProductCategory>()
 
 export const useCategoryTableColumns = () => {
   const { t } = useTranslation()
@@ -62,7 +61,7 @@ export const useCategoryTableColumns = () => {
           }
 
           const gallery = getCategoryGallery(
-            (row.original as CategoryWithImages).media_images
+            row.original.media_images
           )
           const thumbnailSrc =
             gallery.find((image) => image.is_thumbnail)?.url ??

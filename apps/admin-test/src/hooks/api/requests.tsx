@@ -37,7 +37,7 @@ export const useRequests = (
   query?: RequestsListQuery,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof client.admin.requests.$type.query>,
       ClientError,
       InferClientOutput<typeof client.admin.requests.$type.query>
     >,
@@ -63,7 +63,7 @@ export const useRequest = (
   query?: RequestDetailQuery,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof client.admin.requests.$type.$id.query>,
       ClientError,
       InferClientOutput<typeof client.admin.requests.$type.$id.query>
     >,

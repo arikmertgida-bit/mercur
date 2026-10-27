@@ -1,5 +1,5 @@
 import type { HttpTypes } from "@medusajs/types";
-import type { AdminReviewResponse } from "@mercurjs/types";
+import type { HttpTypes as MercurHttpTypes } from "@mercurjs/types";
 
 import { t } from "i18next";
 import { Outlet, type RouteObject, type UIMatch } from "react-router-dom";
@@ -49,22 +49,33 @@ function mergeRoutes(
 
     if (existingIndex !== -1) {
       const { children: customChildren, ...customRest } = customRoute;
-      const baseHandle = result[existingIndex].handle as object | undefined;
-      const customHandle = customRest.handle as object | undefined;
-      result[existingIndex] = {
-        ...result[existingIndex],
-        ...customRest,
-        path: result[existingIndex].path,
-        // Merge rather than replace, so a custom route declaring only
-        // `permissions` doesn't drop the base route's `breadcrumb`.
-        handle:
-          baseHandle || customHandle
-            ? { ...baseHandle, ...customHandle }
-            : undefined,
-        children: customChildren
-          ? mergeRoutes(result[existingIndex].children ?? [], customChildren)
-          : result[existingIndex].children,
-      } as RouteObject;
+      const baseRoute = result[existingIndex];
+      // Merge rather than replace, so a custom route declaring only
+      // `permissions` doesn't drop the base route's `breadcrumb`.
+      const handle =
+        baseRoute.handle || customRest.handle
+          ? { ...baseRoute.handle, ...customRest.handle }
+          : undefined;
+
+      result[existingIndex] = baseRoute.index
+        ? // Index routes never carry children, so there is nothing to merge below.
+          {
+            ...baseRoute,
+            ...customRest,
+            index: true,
+            path: baseRoute.path,
+            handle,
+          }
+        : {
+            ...baseRoute,
+            ...customRest,
+            index: false,
+            path: baseRoute.path,
+            handle,
+            children: customChildren
+              ? mergeRoutes(baseRoute.children ?? [], customChildren)
+              : baseRoute.children,
+          };
     } else {
       result.push(customRoute);
     }
@@ -140,7 +151,7 @@ export function getRouteMap({
                         loader: withPermission(loader, "products:view"),
                         handle: {
                           breadcrumb: (
-                            match: UIMatch<HttpTypes.AdminProductResponse>,
+                            match: UIMatch<MercurHttpTypes.AdminProductResponse>,
                           ) => <Breadcrumb {...match} />,
                         },
                       };
@@ -235,7 +246,7 @@ export function getRouteMap({
                             handle: {
                               breadcrumb: (
                                 // eslint-disable-next-line max-len
-                                match: UIMatch<HttpTypes.AdminProductVariantResponse>,
+                                match: UIMatch<MercurHttpTypes.AdminProductVariantResponse>,
                               ) => <Breadcrumb {...match} />,
                             },
                           };
@@ -303,7 +314,7 @@ export function getRouteMap({
                         loader: withPermission(loader, "product_categories:view"),
                         handle: {
                           breadcrumb: (
-                            match: UIMatch<HttpTypes.AdminProductCategoryResponse>,
+                            match: UIMatch<MercurHttpTypes.AdminProductCategoryResponse>,
                           ) => <Breadcrumb {...match} />,
                         },
                       };
@@ -579,58 +590,6 @@ export function getRouteMap({
                             handle: { permissions: ["campaigns:edit", "promotions:view"] },
                             lazy: () =>
                               import("./pages/campaigns/add-campaign-promotions"),
-                          },
-                        ],
-                      },
-                    ],
-                  },
-                ],
-              },
-              {
-                path: "/reviews",
-                errorElement: <ErrorBoundary />,
-                handle: {
-                  breadcrumb: () => t("reviews.domain"),
-                  permissions: "reviews:view",
-                },
-                children: [
-                  {
-                    path: "",
-                    lazy: () => import("./pages/reviews/review-list"),
-                    children: [],
-                  },
-                  {
-                    path: ":id",
-                    lazy: async () => {
-                      const { Breadcrumb, loader } = await import(
-                        "./pages/reviews/review-detail"
-                      )
-
-                      return {
-                        Component: Outlet,
-                        loader: withPermission(loader, "reviews:view"),
-                        handle: {
-                          breadcrumb: (
-                            match: UIMatch<AdminReviewResponse>,
-                          ) => <Breadcrumb {...match} />,
-                        },
-                      }
-                    },
-                    children: [
-                      {
-                        path: "",
-                        lazy: () => import("./pages/reviews/review-detail").then(withLoaderPermission("reviews:view")),
-                        children: [
-                          {
-                            path: "edit",
-                            handle: { permissions: "reviews:edit" },
-                            lazy: () => import("./pages/reviews/review-edit"),
-                          },
-                          {
-                            path: "respond",
-                            handle: { permissions: "reviews:edit" },
-                            lazy: () =>
-                              import("./pages/reviews/review-respond"),
                           },
                         ],
                       },

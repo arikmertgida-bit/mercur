@@ -54,7 +54,7 @@ export const StoreCreateForm = ({ children }: StoreCreateFormProps) => {
       );
       handleSuccess();
     } catch (error) {
-      toast.error((error as Error).message);
+      toast.error((error instanceof Error ? error.message : String(error)));
     }
   });
 

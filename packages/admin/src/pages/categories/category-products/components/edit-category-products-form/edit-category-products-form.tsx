@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { HttpTypes } from "@medusajs/types"
+import { ProductDTO } from "@mercurjs/types"
 import { Button, Checkbox, Hint, Tooltip, toast } from "@medusajs/ui"
 import {
   OnChangeFn,
@@ -27,7 +27,7 @@ import { useDataTable } from "../../../../../hooks/use-data-table"
 
 type EditCategoryProductsFormProps = {
   categoryId: string
-  products?: Pick<HttpTypes.AdminProduct, "id">[]
+  products?: Pick<ProductDTO, "id">[]
 }
 
 const EditCategoryProductsSchema = z.object({
@@ -45,10 +45,10 @@ export const EditCategoryProductsForm = ({
   const { handleSuccess } = useRouteModal()
 
   const [selection, setSelection] = useState<RowSelectionState>(
-    products.reduce((acc, p) => {
-      acc[p.id!] = true
+    products.reduce<RowSelectionState>((acc, p) => {
+      acc[p.id] = true
       return acc
-    }, {} as RowSelectionState)
+    }, {})
   )
 
   const form = useForm<z.infer<typeof EditCategoryProductsSchema>>({
@@ -198,7 +198,7 @@ export const EditCategoryProductsForm = ({
   )
 }
 
-const columnHelper = createColumnHelper<HttpTypes.AdminProduct>()
+const columnHelper = createColumnHelper<ProductDTO>()
 
 const useColumns = () => {
   const { t } = useTranslation()

@@ -7,8 +7,6 @@ import type {
 } from "@tanstack/react-query";
 import { useMutation, useQuery, UseMutationOptions } from "@tanstack/react-query";
 
-import type { AdminStoreListResponse } from "@custom-types/store";
-
 import { sdk } from "@/lib/client";
 import { queryClient } from "@/lib/query-client";
 import { queryKeysFactory } from "@/lib/query-key-factory";
@@ -24,9 +22,7 @@ export const storeQueryKeys = queryKeysFactory(STORE_QUERY_KEY);
 export async function retrieveActiveStore(
   query?: HttpTypes.AdminStoreParams,
 ): Promise<HttpTypes.AdminStoreResponse> {
-  const response = (await sdk.admin.stores.query(
-    query
-  )) as HttpTypes.AdminStoreListResponse;
+  const response = await sdk.admin.stores.query({ ...query });
 
   const activeStore = response.stores?.[0];
 
@@ -90,20 +86,18 @@ export const useUpdateStore = (
   });
 };
 
+type StoreListResponse = InferClientOutput<typeof sdk.admin.stores.query>;
+
 export const useStores = (
-  query?: Record<string, string | number>,
+  query?: InferClientInput<typeof sdk.admin.stores.query>,
   options?: Omit<
-    UseQueryOptions<unknown, Error, AdminStoreListResponse, QueryKey>,
+    UseQueryOptions<StoreListResponse, ClientError, StoreListResponse, QueryKey>,
     "queryFn" | "queryKey"
   >,
 ) => {
   const { data, ...other } = useQuery({
     queryKey: storeQueryKeys.list(query),
-    queryFn: () =>
-      sdk.client.fetch("/admin/stores", {
-        method: "GET",
-        query,
-      }),
+    queryFn: () => sdk.admin.stores.query({ ...query }),
     ...options,
   });
 

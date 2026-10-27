@@ -1,5 +1,5 @@
-import { HttpTypes } from "@medusajs/types";
-import { Button, Input, Select, Text, toast } from "@medusajs/ui";
+import { HttpTypes } from "@mercurjs/types";
+import { Button, Input, Select, toast } from "@medusajs/ui";
 import { RichTextEditor, plainTextToHtml } from "@mercurjs/dashboard-shared";
 import i18n from "i18next";
 
@@ -15,7 +15,7 @@ import { RouteDrawer, useRouteModal } from "../../../../../components/modals";
 import { KeyboundForm } from "../../../../../components/utilities/keybound-form";
 import { useUpdateProduct } from "../../../../../hooks/api/products";
 import { useDocumentDirection } from "../../../../../hooks/use-document-direction";
-import { transformNullableFormData } from "../../../../../lib/form-helpers";
+import { transformNullableFormValue } from "../../../../../lib/form-helpers";
 import { uploadRichTextImage } from "../../../../../lib/upload-rich-text-image";
 import { useEffect, useRef } from "react";
 import { useForm, useWatch } from "react-hook-form";
@@ -79,16 +79,21 @@ export const EditProductForm = ({ product }: EditProductFormProps) => {
   const { mutateAsync, isPending } = useUpdateProduct(product.id);
 
   const handleSubmit = form.handleSubmit(async (data) => {
-    const { title, discountable, handle, status, ...optional } = data;
+    const { title, discountable, handle, status, subtitle, material, description } =
+      data;
 
-    const nullableData = transformNullableFormData(optional);
+    const nullableData = {
+      subtitle: transformNullableFormValue(subtitle),
+      material: transformNullableFormValue(material),
+      description: transformNullableFormValue(description),
+    };
 
     await mutateAsync(
       {
         title,
         discountable,
         handle,
-        status: status as HttpTypes.AdminProductStatus,
+        status,
         ...nullableData,
       },
       {

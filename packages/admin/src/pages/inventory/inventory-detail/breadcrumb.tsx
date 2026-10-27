@@ -13,7 +13,7 @@ export const InventoryDetailBreadcrumb = (
   const { id } = props.params || {}
 
   const { inventory_item } = useInventoryItem(
-    id!,
+    id ?? "",
     {
       fields: INVENTORY_DETAIL_FIELDS,
     },

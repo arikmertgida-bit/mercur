@@ -1,43 +1,41 @@
 import { forwardRef, Fragment, useEffect, useRef } from 'react';
 
 import { XMarkMini } from '@medusajs/icons';
-import { PromotionDTO } from '@medusajs/types';
+import { HttpTypes } from '@medusajs/types';
 import { Badge, Button, Heading, IconButton, Select, Text } from '@medusajs/ui';
-import { ControllerRenderProps, useFieldArray, UseFormReturn, useWatch } from 'react-hook-form';
+import { ControllerRenderProps, useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { Form } from '../../../../../../components/common/form';
 import {
+  PromotionRulesQuery,
   usePromotionRuleAttributes,
   usePromotionRules
 } from '../../../../../../hooks/api/promotions';
 import { useDocumentDirection } from '../../../../../../hooks/use-document-direction';
-import { CreatePromotionSchemaType } from '../../../../promotion-create/components/create-promotion-form/form-schema';
+import { PromotionRuleScope, PromotionRulesFormValues } from '../../form-values';
 import { generateRuleAttributes } from '../edit-rules-form/utils';
 import { RuleValueFormField } from '../rule-value-form-field';
 import { requiredProductRule } from './constants';
 
-// The subset of a promotion rule field needed to later remove it from the
-// database; `id`/`disguised` are optional on the form schema itself, but
-// removal always needs a concrete value for both.
+// `id` is absent for rules that only exist in the form (disguised
+// application-method fields and unsaved rows).
 export type RuleToRemove = {
-  id: string;
+  id?: string;
   disguised: boolean;
   attribute: string;
 };
 
 type RulesFormFieldType = {
-  promotion?: PromotionDTO;
-  form: UseFormReturn<CreatePromotionSchemaType>;
+  promotion?: HttpTypes.AdminPromotion;
   ruleType: 'rules' | 'target-rules' | 'buy-rules';
   setRulesToRemove?: (rules: RuleToRemove[]) => void;
   rulesToRemove?: RuleToRemove[];
-  scope?: 'application_method.buy_rules' | 'rules' | 'application_method.target_rules';
+  scope?: PromotionRuleScope;
   formType?: 'create' | 'edit';
 };
 
 export const RulesFormField = ({
-  form,
   ruleType,
   setRulesToRemove,
   rulesToRemove,
@@ -49,6 +47,7 @@ export const RulesFormField = ({
 
   const { t } = useTranslation();
   const direction = useDocumentDirection();
+  const form = useFormContext<PromotionRulesFormValues>();
   const formData = form.getValues();
   const { attributes } = usePromotionRuleAttributes(
     ruleType,
@@ -80,7 +79,7 @@ export const RulesFormField = ({
     defaultValue: promotion?.application_method?.target_type
   });
 
-  const query: Record<string, string> = promotionType
+  const query: PromotionRulesQuery = promotionType
     ? {
         promotion_type: promotionType,
         application_method_type: applicationMethodType,
@@ -108,27 +107,27 @@ export const RulesFormField = ({
     if (ruleType === 'rules' && !fields.length) {
       form.resetField('rules');
 
-      replace(generateRuleAttributes(rules) as Parameters<typeof replace>[0]);
+      replace(generateRuleAttributes(rules));
     }
 
     if (ruleType === 'buy-rules' && !fields.length) {
       form.resetField('application_method.buy_rules');
       const rulesToAppend =
-        promotion?.id || promotionType === 'standard' ? rules : [...rules, requiredProductRule];
+        promotion?.id || promotionType === 'standard'
+          ? rules
+          : [...(rules ?? []), requiredProductRule];
 
-      replace(
-        generateRuleAttributes(rulesToAppend) as Parameters<typeof replace>[0]
-      );
+      replace(generateRuleAttributes(rulesToAppend));
     }
 
     if (ruleType === 'target-rules' && !fields.length) {
       form.resetField('application_method.target_rules');
       const rulesToAppend =
-        promotion?.id || promotionType === 'standard' ? rules : [...rules, requiredProductRule];
+        promotion?.id || promotionType === 'standard'
+          ? rules
+          : [...(rules ?? []), requiredProductRule];
 
-      replace(
-        generateRuleAttributes(rulesToAppend) as Parameters<typeof replace>[0]
-      );
+      replace(generateRuleAttributes(rulesToAppend));
     }
 
     initialRulesSet.current = true;
@@ -360,13 +359,11 @@ export const RulesFormField = ({
                   />
 
                   <RuleValueFormField
-                    form={form}
                     identifier={identifier}
                     scope={scope}
-                    name={`${scope}.${index}.values`}
-                    operator={`${scope}.${index}.operator`}
+                    index={index}
                     fieldRule={fieldRule}
-                    attributes={attributes}
+                    attributes={attributes ?? []}
                     ruleType={ruleType}
                     applicationMethodTargetType={applicationMethodTargetType}
                   />
@@ -386,7 +383,7 @@ export const RulesFormField = ({
                           setRulesToRemove([
                             ...(rulesToRemove ?? []),
                             {
-                              id: fieldRule.id ?? '',
+                              id: fieldRule.id,
                               attribute: fieldRule.attribute,
                               disguised: fieldRule.disguised ?? false,
                             },
@@ -439,7 +436,7 @@ export const RulesFormField = ({
               operator: '',
               values: [],
               required: false
-            } as Parameters<typeof append>[0]);
+            });
           }}
           data-testid={`rules-form-field-add-condition-button-${ruleType}`}
         >
@@ -452,16 +449,16 @@ export const RulesFormField = ({
             variant="transparent"
             className="ml-2 inline-block text-ui-fg-muted hover:text-ui-fg-subtle"
             onClick={() => {
-              const indicesToRemove = fields
-                .map((field, index) => (field.required ? null : index))
-                .filter(f => f !== null);
+              const indicesToRemove = fields.flatMap((field, index) =>
+                field.required ? [] : [index]
+              );
 
               if (setRulesToRemove) {
                 setRulesToRemove(
                   fields
                     .filter((field) => !field.required)
                     .map((field) => ({
-                      id: field.id ?? '',
+                      id: field.id,
                       attribute: field.attribute,
                       disguised: field.disguised ?? false,
                     }))

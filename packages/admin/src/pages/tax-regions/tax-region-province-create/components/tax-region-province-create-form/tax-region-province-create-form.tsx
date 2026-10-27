@@ -20,6 +20,7 @@ import { getCountryProvinceObjectByIso2 } from "../../../../../lib/data/country-
 
 type TaxRegionProvinceCreateFormProps = {
   parent: HttpTypes.AdminTaxRegion
+  countryCode: string
 }
 
 const CreateTaxRegionProvinceSchema = z.object({
@@ -37,6 +38,7 @@ const CreateTaxRegionProvinceSchema = z.object({
 
 export const TaxRegionProvinceCreateForm = ({
   parent,
+  countryCode,
 }: TaxRegionProvinceCreateFormProps) => {
   const { t } = useTranslation()
   const { handleSuccess } = useRouteModal()
@@ -69,7 +71,7 @@ export const TaxRegionProvinceCreateForm = ({
 
     await mutateAsync(
       {
-        country_code: parent.country_code!,
+        country_code: countryCode,
         province_code: values.province_code,
         parent_id: parent.id,
         default_tax_rate: defaultRate,
@@ -88,9 +90,7 @@ export const TaxRegionProvinceCreateForm = ({
     )
   })
 
-  const countryProvinceObject = getCountryProvinceObjectByIso2(
-    parent.country_code!
-  )
+  const countryProvinceObject = getCountryProvinceObjectByIso2(countryCode)
 
   const type = countryProvinceObject?.type || "sublevel"
   const label = t(`taxRegions.fields.sublevels.labels.${type}`)
@@ -130,7 +130,7 @@ export const TaxRegionProvinceCreateForm = ({
                         <Form.Control data-testid="tax-region-province-create-form-province-control">
                           {countryProvinceObject ? (
                             <ProvinceSelect
-                              country_code={parent.country_code!}
+                              country_code={countryCode}
                               {...field}
                               data-testid="tax-region-province-create-form-province-select"
                             />

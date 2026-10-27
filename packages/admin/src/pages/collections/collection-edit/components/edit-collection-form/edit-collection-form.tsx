@@ -116,7 +116,6 @@ export const EditCollectionForm = ({ collection }: EditCollectionFormProps) => {
             <FormExtensionZone
               model="collection"
               zone="edit"
-              control={form.control}
               data={collection}
             />
           </div>

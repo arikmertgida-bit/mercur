@@ -1,16 +1,16 @@
 import { Heading } from "@medusajs/ui"
 import { useTranslation } from "react-i18next"
-import { useParams } from "react-router-dom"
 import { RouteDrawer } from "../../../components/modals"
 import { useShippingOptionType } from "../../../hooks/api"
 import { EditShippingOptionTypeForm } from "./components/edit-shipping-option-type-form"
+import { useRequiredParam } from "@mercurjs/dashboard-shared"
 
 export const ShippingOptionTypeEdit = () => {
-  const { id } = useParams()
+  const id = useRequiredParam("id")
   const { t } = useTranslation()
 
   const { shipping_option_type, isPending, isError, error } =
-    useShippingOptionType(id!)
+    useShippingOptionType(id)
 
   const ready = !isPending && !!shipping_option_type
 

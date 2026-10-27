@@ -16,8 +16,5 @@ const attributeListQuery = () => ({
 export const attributeListLoader = async (_args: LoaderFunctionArgs) => {
   const query = attributeListQuery()
 
-  return (
-    queryClient.getQueryData<any>(query.queryKey) ??
-    (await queryClient.fetchQuery(query))
-  )
+  return queryClient.ensureQueryData(query)
 }

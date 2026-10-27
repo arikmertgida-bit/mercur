@@ -18,37 +18,21 @@ import {
 } from "@tanstack/react-query";
 import { sdk } from "../../lib/client";
 import { queryClient } from "../../lib/query-client";
-import { queryKeysFactory, TQueryKey } from "../../lib/query-key-factory";
+import { queryKeysFactory } from "../../lib/query-key-factory";
 
 const ORDERS_QUERY_KEY = "orders" as const;
-type OrdersDetailSuffixKey = readonly [
-  ...ReturnType<TQueryKey<"orders">["detail"]>,
-  string,
-];
-const _orderKeys = queryKeysFactory(ORDERS_QUERY_KEY) as TQueryKey<"orders"> & {
-  preview: (orderId: string) => OrdersDetailSuffixKey;
-  changes: (orderId: string) => OrdersDetailSuffixKey;
-  lineItems: (orderId: string) => OrdersDetailSuffixKey;
-  shippingOptions: (orderId: string) => OrdersDetailSuffixKey;
-};
+const baseOrdersQueryKeys = queryKeysFactory(ORDERS_QUERY_KEY);
 
-_orderKeys.preview = function (id: string) {
-  return [this.detail(id), "preview"];
+// The detail key is nested as the first element, not spread into the tuple.
+export const ordersQueryKeys = {
+  ...baseOrdersQueryKeys,
+  preview: (id: string) => [baseOrdersQueryKeys.detail(id), "preview"] as const,
+  changes: (id: string) => [baseOrdersQueryKeys.detail(id), "changes"] as const,
+  lineItems: (id: string) =>
+    [baseOrdersQueryKeys.detail(id), "lineItems"] as const,
+  shippingOptions: (id: string) =>
+    [baseOrdersQueryKeys.detail(id), "shippingOptions"] as const,
 };
-
-_orderKeys.changes = function (id: string) {
-  return [this.detail(id), "changes"];
-};
-
-_orderKeys.lineItems = function (id: string) {
-  return [this.detail(id), "lineItems"];
-};
-
-_orderKeys.shippingOptions = function (id: string) {
-  return [this.detail(id), "shippingOptions"];
-};
-
-export const ordersQueryKeys = _orderKeys;
 
 export const useOrder = (
   id: string,
@@ -268,7 +252,11 @@ export const useRequestTransferOrder = (
 
 export const useCancelOrderTransfer = (
   orderId: string,
-  options?: UseMutationOptions<any, ClientError, void>,
+  options?: UseMutationOptions<
+    InferClientOutput<typeof sdk.admin.orders.$id.transfer.cancel.mutate>,
+    ClientError,
+    void
+  >,
 ) => {
   return useMutation({
     mutationFn: () =>

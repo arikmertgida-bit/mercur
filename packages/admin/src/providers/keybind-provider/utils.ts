@@ -1,17 +1,23 @@
 import { Keys, Platform, Shortcut } from "./types"
 
-export const findFirstPlatformMatch = (keys: Keys) => {
-  const match =
-    Object.entries(keys as Record<any, any>).filter(
-      ([, value]) => value.length > 0
-    )[0] ?? []
+const PLATFORMS: Platform[] = ["Mac", "Windows", "Linux"]
 
-  return match.length
-    ? {
-        platform: match[0] as Platform,
-        keys: match[1] as string[],
-      }
-    : null
+const toPlatform = (value: string): Platform | undefined =>
+  PLATFORMS.find((platform) => platform === value)
+
+export const findFirstPlatformMatch = (
+  keys: Keys
+): { platform: Platform; keys: string[] } | null => {
+  for (const key of Object.keys(keys)) {
+    const platform = toPlatform(key)
+    const platformKeys = platform ? keys[platform] : undefined
+
+    if (platform && platformKeys && platformKeys.length > 0) {
+      return { platform, keys: platformKeys }
+    }
+  }
+
+  return null
 }
 
 export const getShortcutKeys = (shortcut: Shortcut) => {

@@ -1,3 +1,7 @@
+import {
+  DateComparisonFilterSchema,
+  parseJsonQueryParam,
+} from "@mercurjs/dashboard-shared";
 import { useQueryParams } from "../../use-query-params";
 
 type UseAttributeTableQueryProps = {
@@ -17,12 +21,12 @@ export const useAttributeTableQuery = ({
   const { offset, q, order, created_at, updated_at, is_filterable } =
     queryObject;
 
-  const searchParams: Record<string, any> = {
+  const searchParams = {
     limit: pageSize,
     offset: offset ? Number(offset) : 0,
     order,
-    created_at: created_at ? JSON.parse(created_at) : undefined,
-    updated_at: updated_at ? JSON.parse(updated_at) : undefined,
+    created_at: parseJsonQueryParam(created_at, DateComparisonFilterSchema),
+    updated_at: parseJsonQueryParam(updated_at, DateComparisonFilterSchema),
     is_filterable:
       is_filterable !== undefined ? is_filterable === "true" : undefined,
     q,

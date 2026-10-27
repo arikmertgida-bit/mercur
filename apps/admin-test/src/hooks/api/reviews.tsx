@@ -18,7 +18,7 @@ export const useReviews = (
   query?: InferClientInput<typeof client.admin.reviews.query>,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof client.admin.reviews.query>,
       ClientError,
       InferClientOutput<typeof client.admin.reviews.query>
     >,
@@ -42,7 +42,7 @@ export const useReview = (
   query?: InferClientInput<typeof client.admin.reviews.$id.query>,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof client.admin.reviews.$id.query>,
       ClientError,
       InferClientOutput<typeof client.admin.reviews.$id.query>
     >,

@@ -2,7 +2,6 @@ import { Children, ReactNode } from "react"
 
 import { RouteFocusModal } from "../../../components/modals"
 import { TabbedForm } from "../../../components/tabbed-form/tabbed-form"
-import { SectionNoAccess } from "@mercurjs/dashboard-shared"
 import { usePriceListCurrencyData } from "../common/hooks/use-price-list-currency-data"
 import { PriceListCreateForm } from "./components/price-list-create-form"
 import { PriceListDetailsForm } from "./components/price-list-create-form/price-list-details-form"
@@ -11,19 +10,11 @@ import { PriceListPricesForm } from "./components/price-list-create-form/price-l
 import { PricingCreateSchema, PricingCreateSchemaType } from "./components/price-list-create-form/schema"
 
 const Root = ({ children }: { children?: ReactNode }) => {
-  const { isReady, isForbidden, regions, currencies, pricePreferences } =
+  const { isReady, regions, currencies, pricePreferences } =
     usePriceListCurrencyData()
 
   return (
     <RouteFocusModal>
-      {isForbidden && (
-        <>
-          <RouteFocusModal.Header />
-          <RouteFocusModal.Body>
-            <SectionNoAccess />
-          </RouteFocusModal.Body>
-        </>
-      )}
       {isReady && (
         Children.count(children) > 0 ? (
           children

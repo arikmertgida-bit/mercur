@@ -1,7 +1,7 @@
 import { ReactNode, Children } from "react"
-import { useLoaderData, useParams } from "react-router-dom"
+import { useLoaderData } from "react-router-dom"
 
-import { PermissionGuard, WidgetZone } from "@mercurjs/dashboard-shared"
+import { PermissionGuard, WidgetZone, useRequiredParam } from "@mercurjs/dashboard-shared"
 import { SingleColumnPageSkeleton } from "../../../components/common/skeleton"
 import { SingleColumnPage } from "../../../components/layout/pages"
 import { useProductTag } from "../../../hooks/api"
@@ -11,14 +11,12 @@ import { ProductTagProductSection } from "./components/product-tag-product-secti
 import { productTagLoader } from "./loader"
 
 const Root = ({ children }: { children?: ReactNode }) => {
-  const { id } = useParams()
+  const id = useRequiredParam("id")
 
-  const initialData = useLoaderData() as Awaited<
-    ReturnType<typeof productTagLoader>
-  >
+  const initialData = useLoaderData<typeof productTagLoader>()
 
   const { product_tag, isPending, isError, error } = useProductTag(
-    id!,
+    id,
     undefined,
     {
       initialData,

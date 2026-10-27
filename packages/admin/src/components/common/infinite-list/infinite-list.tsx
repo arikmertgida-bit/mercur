@@ -3,20 +3,27 @@ import { ReactNode, useEffect, useMemo, useRef } from "react"
 import { toast } from "@medusajs/ui"
 import { Spinner } from "@medusajs/icons"
 
-type InfiniteListProps<TResponse, TEntity, TParams> = {
+type PageInfo = { count: number; offset: number; limit: number }
+
+type InfiniteListProps<
+  TKey extends string,
+  TEntity,
+  TResponse extends PageInfo & Record<TKey, TEntity[]>,
+> = {
   queryKey: QueryKey
-  queryFn: (params: TParams) => Promise<TResponse>
+  queryFn: (params: { limit: number; offset: number }) => Promise<TResponse>
   queryOptions?: { enabled?: boolean }
   renderItem: (item: TEntity) => ReactNode
   renderEmpty: () => ReactNode
-  responseKey: keyof TResponse
+  /** The response field holding the page's entities. */
+  responseKey: TKey
   pageSize?: number
 }
 
 export const InfiniteList = <
-  TResponse extends { count: number; offset: number; limit: number },
+  TKey extends string,
   TEntity extends { id: string },
-  TParams extends { offset?: number; limit?: number },
+  TResponse extends PageInfo & Record<TKey, TEntity[]>,
 >({
   queryKey,
   queryFn,
@@ -25,7 +32,7 @@ export const InfiniteList = <
   renderEmpty,
   responseKey,
   pageSize = 20,
-}: InfiniteListProps<TResponse, TEntity, TParams>) => {
+}: InfiniteListProps<TKey, TEntity, TResponse>) => {
   const {
     data,
     error,
@@ -41,7 +48,7 @@ export const InfiniteList = <
       return await queryFn({
         limit: pageSize,
         offset: pageParam,
-      } as TParams)
+      })
     },
     initialPageParam: 0,
     maxPages: 5,
@@ -59,7 +66,7 @@ export const InfiniteList = <
   })
 
   const items = useMemo(() => {
-    return data?.pages.flatMap((p) => p[responseKey] as TEntity[]) ?? []
+    return data?.pages.flatMap((p): TEntity[] => p[responseKey]) ?? []
   }, [data, responseKey])
 
   const parentRef = useRef<HTMLDivElement>(null)
@@ -106,11 +113,14 @@ export const InfiniteList = <
       )
 
       // Register the new observers to observe the new first and last children
-      if (parentRef.current?.firstChild) {
-        startObserver.current?.observe(parentRef.current.firstChild as Element)
+      const firstItem = parentRef.current?.firstElementChild
+      const lastItem = parentRef.current?.lastElementChild
+
+      if (firstItem) {
+        startObserver.current?.observe(firstItem)
       }
-      if (parentRef.current?.lastChild) {
-        endObserver.current?.observe(parentRef.current.lastChild as Element)
+      if (lastItem) {
+        endObserver.current?.observe(lastItem)
       }
     }
 

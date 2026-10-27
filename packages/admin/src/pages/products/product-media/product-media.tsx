@@ -1,15 +1,15 @@
 import { useTranslation } from "react-i18next"
-import { useParams } from "react-router-dom"
 import { RouteFocusModal } from "../../../components/modals"
 import { useProduct } from "../../../hooks/api/products"
 import { PRODUCT_DETAIL_QUERY } from "../constants"
 import { ProductMediaView } from "./components/product-media-view"
+import { useRequiredParam } from "@mercurjs/dashboard-shared"
 
 export const ProductMedia = () => {
   const { t } = useTranslation()
-  const { id } = useParams()
+  const id = useRequiredParam("id")
 
-  const { product, isLoading, isError, error } = useProduct(id!, PRODUCT_DETAIL_QUERY)
+  const { product, isLoading, isError, error } = useProduct(id, PRODUCT_DETAIL_QUERY)
 
   const ready = !isLoading && product
 

@@ -3,6 +3,7 @@ import { LoaderFunctionArgs } from "react-router-dom"
 
 import { categoriesQueryKeys } from "../../../hooks/api/categories"
 import { sdk } from "../../../lib/client"
+import { getRequiredParam } from "@lib/route-params"
 import { queryClient } from "../../../lib/query-client"
 
 const categoryDetailQuery = (id: string) => {
@@ -15,9 +16,8 @@ const categoryDetailQuery = (id: string) => {
   }
 }
 
-export const categoryLoader = async ({ params }: LoaderFunctionArgs): Promise<any> => {
-  const id = params.id
-  const query = categoryDetailQuery(id!)
+export const categoryLoader = async ({ params }: LoaderFunctionArgs) => {
+  const query = categoryDetailQuery(getRequiredParam(params, "id"))
 
   return queryClient.ensureQueryData(query)
 }

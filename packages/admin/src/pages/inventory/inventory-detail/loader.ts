@@ -4,7 +4,7 @@ import { INVENTORY_DETAIL_FIELDS } from "./constants"
 import { inventoryItemsQueryKeys } from "@hooks/api"
 import { sdk } from "@lib/client"
 import { queryClient } from "@lib/query-client"
-import type { ExtendedAdminInventoryItemResponse } from "@custom-types/inventory"
+import { getRequiredParam } from "@lib/route-params"
 
 const inventoryDetailQuery = (id: string) => {
   const query = getLinkQuery("inventory_item", INVENTORY_DETAIL_FIELDS)
@@ -14,13 +14,12 @@ const inventoryDetailQuery = (id: string) => {
       sdk.admin.inventoryItems.$id.query({
         $id: id,
         ...query,
-      }) as Promise<ExtendedAdminInventoryItemResponse>,
+      }),
   }
 }
 
 export const inventoryItemLoader = async ({ params }: LoaderFunctionArgs) => {
-  const id = params.id
-  const query = inventoryDetailQuery(id!)
+  const query = inventoryDetailQuery(getRequiredParam(params, "id"))
 
   return queryClient.ensureQueryData(query)
 }

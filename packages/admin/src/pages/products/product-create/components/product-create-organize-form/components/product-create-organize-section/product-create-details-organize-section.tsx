@@ -27,8 +27,8 @@ export const ProductCreateOrganizationSection = () => {
     queryFn: (params) => sdk.admin.collections.query(params),
     getOptions: (data) =>
       data.collections.map((collection) => ({
-        label: collection.title!,
-        value: collection.id!,
+        label: collection.title,
+        value: collection.id,
       })),
     enabled: collectionsGate.allowed,
   })

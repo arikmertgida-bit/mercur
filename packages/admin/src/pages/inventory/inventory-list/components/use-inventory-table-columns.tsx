@@ -1,5 +1,5 @@
-import { InventoryTypes, ProductVariantDTO } from "@medusajs/types"
-import { OfferDTO, SellerDTO } from "@mercurjs/types"
+import { HttpTypes } from "@medusajs/types"
+import { z } from "zod"
 
 import { Checkbox } from "@medusajs/ui"
 import { createColumnHelper } from "@tanstack/react-table"
@@ -9,17 +9,29 @@ import { PlaceholderCell } from "../../../../components/table/table-cells/common
 import { InventoryActions } from "./inventory-actions"
 
 /**
- * Adds missing properties to the InventoryItemDTO type.
+ * The link fields the list query expands (`+variants.product.title,+seller.name`);
+ * Medusa's inventory item type doesn't carry them.
  */
-interface ExtendedInventoryItem extends InventoryTypes.InventoryItemDTO {
-  variants?: ProductVariantDTO[] | null
-  offers?: OfferDTO[] | null
-  seller?: SellerDTO | null
-  stocked_quantity?: number
-  reserved_quantity?: number
+const InventoryItemLinksSchema = z.object({
+  variants: z
+    .array(
+      z.object({
+        product: z.object({ title: z.string() }).nullish(),
+      })
+    )
+    .nullish(),
+  seller: z.object({ name: z.string() }).nullish(),
+})
+
+const getInventoryItemLinks = (
+  item: HttpTypes.AdminInventoryItem
+): z.infer<typeof InventoryItemLinksSchema> => {
+  const parsed = InventoryItemLinksSchema.safeParse(item)
+
+  return parsed.success ? parsed.data : {}
 }
 
-const columnHelper = createColumnHelper<ExtendedInventoryItem>()
+const columnHelper = createColumnHelper<HttpTypes.AdminInventoryItem>()
 
 export const useInventoryTableColumns = () => {
   const { t } = useTranslation()
@@ -88,7 +100,7 @@ export const useInventoryTableColumns = () => {
           </div>
         ),
         cell: ({ getValue, row }) => {
-          const sku = getValue() as string
+          const sku = getValue()
 
           if (!sku) {
             return <PlaceholderCell />
@@ -115,7 +127,7 @@ export const useInventoryTableColumns = () => {
         ),
         cell: ({ row }) => {
           const productTitle =
-            row.original.offers?.[0]?.product_variant?.product?.title
+            getInventoryItemLinks(row.original).variants?.[0]?.product?.title
 
           if (!productTitle) {
             return <PlaceholderCell />
@@ -141,7 +153,7 @@ export const useInventoryTableColumns = () => {
           </div>
         ),
         cell: ({ row }) => {
-          const store = row.original.seller?.name
+          const store = getInventoryItemLinks(row.original).seller?.name
 
           if (!store) {
             return <PlaceholderCell />

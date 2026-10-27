@@ -1,3 +1,8 @@
+import {
+  NumberFilterValueSchema,
+  parseJsonQueryParam,
+} from "@mercurjs/dashboard-shared";
+
 import { useQueryParams } from "@hooks/use-query-params";
 
 export const useLocationLevelTableQuery = ({
@@ -24,12 +29,14 @@ export const useLocationLevelTableQuery = ({
   const searchParams = {
     limit: pageSize,
     offset: offset ? Number(offset) : 0,
-    stocked_quantity: stocked_quantity
-      ? JSON.parse(stocked_quantity)
-      : undefined,
-    reserved_quantity: reserved_quantity
-      ? JSON.parse(reserved_quantity)
-      : undefined,
+    stocked_quantity: parseJsonQueryParam(
+      stocked_quantity,
+      NumberFilterValueSchema,
+    ),
+    reserved_quantity: parseJsonQueryParam(
+      reserved_quantity,
+      NumberFilterValueSchema,
+    ),
     ...rest,
   };
 

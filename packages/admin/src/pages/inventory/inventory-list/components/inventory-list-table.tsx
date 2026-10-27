@@ -1,8 +1,8 @@
-import { InventoryTypes, ProductVariantDTO } from "@medusajs/types"
+import { HttpTypes } from "@medusajs/types"
 import { Buildings } from "@medusajs/icons"
 import { Container, Heading, Text } from "@medusajs/ui"
 
-import { ColumnDef, RowSelectionState } from "@tanstack/react-table"
+import { RowSelectionState } from "@tanstack/react-table"
 import { useExtendableTable, useLinkQuery, mergeListFilters } from "@mercurjs/dashboard-shared"
 import { Children, ReactNode, useMemo, useState } from "react"
 import { useTranslation } from "react-i18next"
@@ -14,16 +14,6 @@ import { INVENTORY_ITEM_IDS_KEY } from "../../common/constants"
 import { useInventoryTableColumns } from "./use-inventory-table-columns"
 import { useInventoryTableFilters } from "./use-inventory-table-filters"
 import { useInventoryTableQuery } from "./use-inventory-table-query"
-
-/**
- * Extended type matching the columns definition — API returns these fields
- * but they're not in the base InventoryItemDTO.
- */
-interface ExtendedInventoryItem extends InventoryTypes.InventoryItemDTO {
-  variants?: ProductVariantDTO[] | null
-  stocked_quantity?: number
-  reserved_quantity?: number
-}
 
 const PAGE_SIZE = 20
 
@@ -85,7 +75,7 @@ export const InventoryListDataTable = () => {
     ...searchParams,
     ...useLinkQuery(
       "inventory_item",
-      "+offers.product_variant.product.title,+seller.name"
+      "+variants.product.title,+seller.name"
     ),
   })
 
@@ -93,12 +83,8 @@ export const InventoryListDataTable = () => {
   const baseColumns = useInventoryTableColumns()
   const actionsColumn = baseColumns[baseColumns.length - 1]
   const { columns: extended, filters: extFilters } =
-    useExtendableTable<ExtendedInventoryItem>({
+    useExtendableTable<HttpTypes.AdminInventoryItem>({
       model: "inventory_item",
-      // tanstack's ColumnDef<T, TValue> is contravariant in TValue
-      // (cell/header render props), so a heterogeneous per-column accessor
-      // array can't widen to ColumnDef<T, unknown>[] without a cast.
-      // @ts-expect-error
       columns: baseColumns.slice(0, -1),
     })
   const columns = useMemo(
@@ -111,7 +97,7 @@ export const InventoryListDataTable = () => {
   )
 
   const { table } = useDataTable({
-    data: (inventory_items ?? []) as ExtendedInventoryItem[],
+    data: inventory_items ?? [],
     columns,
     count,
     enablePagination: true,

@@ -2850,7 +2850,9 @@
         "noVariants": "この商品にはバリエーションがありません"
       },
       "edit": {
-        "successToast": "価格が正常に更新されました。"
+        "successToast": "価格が正常に更新されました。",
+        "header": "{{title}} の価格を編集",
+        "description": "この価格リスト内の商品の価格を更新します。"
       }
     },
     "fields": {

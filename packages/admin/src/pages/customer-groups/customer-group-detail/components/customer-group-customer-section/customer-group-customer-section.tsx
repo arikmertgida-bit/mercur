@@ -15,6 +15,7 @@ import { useCustomerTableColumns } from "../../../../../hooks/table/columns/use-
 import { useCustomerTableFilters } from "../../../../../hooks/table/filters/use-customer-table-filters"
 import { useCustomerTableQuery } from "../../../../../hooks/table/query/use-customer-table-query"
 import { useDataTable } from "../../../../../hooks/use-data-table"
+import { getTableMetaString } from "@lib/table-meta"
 
 type CustomerGroupCustomerSectionProps = {
   group: HttpTypes.AdminCustomerGroup
@@ -237,9 +238,8 @@ const useColumns = () => {
       columnHelper.display({
         id: "actions",
         cell: ({ row, table }) => {
-          const { customerGroupId } = table.options.meta as {
-            customerGroupId: string
-          }
+          const customerGroupId =
+            getTableMetaString(table.options.meta, "customerGroupId") ?? ""
 
           return (
             <CustomerActions

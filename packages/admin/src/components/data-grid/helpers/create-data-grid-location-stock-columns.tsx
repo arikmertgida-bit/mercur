@@ -11,7 +11,7 @@ type CreateDataGridLocationStockColumnsProps<
   TData,
   TFieldValues extends FieldValues,
 > = {
-  stockLocations: HttpTypes.AdminStockLocation[]
+  stockLocations: Pick<HttpTypes.AdminStockLocation, "id" | "name">[]
   isReadyOnly?: (context: FieldContext<TData>) => boolean
   getFieldName: (
     context: FieldContext<TData>,
@@ -28,10 +28,7 @@ export const createDataGridLocationStockColumns = <
   isReadyOnly,
   getFieldName,
   t,
-}: CreateDataGridLocationStockColumnsProps<TData, TFieldValues>): ColumnDef<
-  TData,
-  unknown
->[] => {
+}: CreateDataGridLocationStockColumnsProps<TData, TFieldValues>): ColumnDef<TData>[] => {
   const columnHelper = createDataGridHelper<TData, TFieldValues>()
 
   return [

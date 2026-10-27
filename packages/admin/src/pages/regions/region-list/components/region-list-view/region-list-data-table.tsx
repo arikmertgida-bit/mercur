@@ -30,7 +30,7 @@ export const RegionListDataTable = () => {
     {
       ...searchParams,
       fields: "*payment_providers",
-    } as Parameters<typeof useRegions>[0],
+    },
     {
       placeholderData: keepPreviousData,
     }
@@ -40,7 +40,7 @@ export const RegionListDataTable = () => {
   const columns = useColumns()
 
   const { table } = useDataTable({
-    data: (regions ?? []) as HttpTypes.AdminRegion[],
+    data: regions ?? [],
     columns,
     count,
     enablePagination: true,

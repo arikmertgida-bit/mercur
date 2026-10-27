@@ -40,7 +40,7 @@ export const CreateProductVariantForm = ({
     defaultValues: {
       ...CREATE_VARIANT_DEFAULTS,
       ...extraDefaults,
-    } as CreateProductVariantSchemaType,
+    },
     resolver: zodResolver(schema ?? CreateProductVariantSchema),
   });
 

@@ -1,4 +1,4 @@
-import { useLinkQuery } from "@mercurjs/dashboard-shared";
+import { useLinkQuery, DateComparisonFilterSchema, parseJsonQueryParam } from "@mercurjs/dashboard-shared";
 import { useQueryParams } from "@hooks/use-query-params";
 import { SellerStatus } from "@mercurjs/types";
 
@@ -25,11 +25,11 @@ export const useSellersTableQuery = ({
 
   const { offset, created_at, updated_at, status, is_premium, q, order } = queryObject;
 
-  const searchParams: Record<string, string | number | string[] | boolean | undefined> = {
+  const searchParams = {
     limit: pageSize,
     offset: offset ? Number(offset) : 0,
-    created_at: created_at ? JSON.parse(created_at) : undefined,
-    updated_at: updated_at ? JSON.parse(updated_at) : undefined,
+    created_at: parseJsonQueryParam(created_at, DateComparisonFilterSchema),
+    updated_at: parseJsonQueryParam(updated_at, DateComparisonFilterSchema),
     status: status?.split(",") ?? ACTIVE_STATUSES,
     is_premium: is_premium ? is_premium === "true" : undefined,
     q,

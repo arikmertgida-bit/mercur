@@ -120,7 +120,7 @@ function OrderEditItem({ item, currencyCode, orderId }: OrderEditItemProps) {
         ],
       })
     } catch (e) {
-      toast.error(e instanceof Error ? e.message : "An error occurred")
+      toast.error(e instanceof Error ? e.message : t("general.unknownError"))
     }
   }
 

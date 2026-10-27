@@ -1,14 +1,7 @@
 import { ReactNode, Children, useState } from "react";
-import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-import {
-  WidgetZone,
-  useLinkQuery,
-  usePermissions,
-  useWidgetTabs,
-  type WidgetTab,
-} from "@mercurjs/dashboard-shared";
+import { WidgetTabContent, WidgetZone, useLinkQuery, usePermissions, useWidgetTabs, type WidgetTab, useRequiredParam } from "@mercurjs/dashboard-shared";
 
 import { TwoColumnPageSkeleton } from "../../../../components/common/skeleton";
 import { TwoColumnPage } from "../../../../components/layout/pages";
@@ -84,14 +77,14 @@ const TabBar = ({
 };
 
 const Root = ({ children }: { children?: ReactNode }) => {
-  const { id } = useParams();
+  const id = useRequiredParam("id");
   const { t } = useTranslation();
   const [selectedTab, setActiveTab] = useState("orders");
   const { can } = usePermissions();
   const customTabs = useWidgetTabs("stores.detail.tabs");
 
   const query = useLinkQuery("seller", STORE_DETAIL_FIELDS);
-  const { seller, isLoading, isError, error } = useSeller(id!, query);
+  const { seller, isLoading, isError, error } = useSeller(id, query);
 
   if (isLoading || !seller) {
     return <TwoColumnPageSkeleton mainSections={3} sidebarSections={3} />;
@@ -112,7 +105,7 @@ const Root = ({ children }: { children?: ReactNode }) => {
   const toTab = ({ id, label, Component }: WidgetTab): Tab => ({
     id,
     label: t(label, { defaultValue: label }),
-    content: <Component data={seller} />,
+    content: <WidgetTabContent Component={Component} data={seller} />,
   });
 
   const tabs: Tab[] = [

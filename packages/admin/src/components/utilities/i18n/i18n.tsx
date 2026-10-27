@@ -1,6 +1,7 @@
-import i18n from "i18next";
+import i18n, { Resource } from "i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 import { initReactI18next } from "react-i18next";
+import type { TranslationTree } from "../../../i18n/types";
 
 import { defaultI18nOptions } from "../../../i18n/config";
 import translations from "../../../i18n/translations";
@@ -8,30 +9,34 @@ import customI18nResources from "virtual:mercur/i18n";
 import config from "virtual:mercur/config";
 
 function deepMerge(
-  target: Record<string, any>,
-  source: Record<string, any>,
-): Record<string, any> {
-  const result = { ...target };
+  target: TranslationTree,
+  source: TranslationTree,
+): TranslationTree {
+  const result: TranslationTree = { ...target };
 
-  for (const key of Object.keys(source)) {
-    if (
-      source[key] &&
-      typeof source[key] === "object" &&
-      !Array.isArray(source[key]) &&
-      target[key] &&
-      typeof target[key] === "object" &&
-      !Array.isArray(target[key])
-    ) {
-      result[key] = deepMerge(target[key], source[key]);
-    } else {
-      result[key] = source[key];
-    }
+  for (const [key, sourceValue] of Object.entries(source)) {
+    const targetValue = target[key];
+
+    result[key] =
+      typeof sourceValue === "object" && typeof targetValue === "object"
+        ? deepMerge(targetValue, sourceValue)
+        : sourceValue;
   }
 
   return result;
 }
 
-const mergedTranslations = deepMerge(translations, customI18nResources);
+// i18next keys resources by language; only object entries can be languages.
+const toResource = (tree: TranslationTree): Resource =>
+  Object.fromEntries(
+    Object.entries(tree).flatMap(([language, namespaces]) =>
+      typeof namespaces === "object" ? [[language, namespaces]] : [],
+    ),
+  );
+
+const mergedTranslations = toResource(
+  deepMerge(translations, customI18nResources),
+);
 
 export const I18n = () => {
   if (i18n.isInitialized) {

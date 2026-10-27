@@ -1,8 +1,8 @@
 import { ClientError } from "@mercurjs/client"
 
-// Alias avoids a bare `unknown` annotation on the exported guards below;
-// callers pass whatever a catch block hands them, which is genuinely unknown.
-type CaughtError = unknown
+// Takes what the data layer hands out: react-query errors and, through
+// `instanceof` narrowing at the call site, router errors.
+type CaughtError = Error | null | undefined
 
 export const isClientError = (error: CaughtError): error is ClientError => {
   return error instanceof ClientError

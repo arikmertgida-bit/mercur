@@ -2,6 +2,7 @@ import { LoaderFunctionArgs } from "react-router-dom"
 import { getLinkQuery } from "@mercurjs/dashboard-shared"
 import { reservationItemsQueryKeys } from "../../../hooks/api/reservations"
 import { sdk } from "../../../lib/client"
+import { getRequiredParam } from "@lib/route-params"
 import { queryClient } from "../../../lib/query-client"
 
 const reservationDetailQuery = (id: string) => {
@@ -13,8 +14,7 @@ const reservationDetailQuery = (id: string) => {
 }
 
 export const reservationItemLoader = async ({ params }: LoaderFunctionArgs) => {
-  const id = params.id
-  const query = reservationDetailQuery(id!)
+  const query = reservationDetailQuery(getRequiredParam(params, "id"))
 
   return queryClient.ensureQueryData(query)
 }

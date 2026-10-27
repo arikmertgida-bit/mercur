@@ -14,7 +14,7 @@ export const CollectionRowActions = ({
   const { t } = useTranslation()
   const prompt = usePrompt()
 
-  const { mutateAsync } = useDeleteCollection(collection.id!)
+  const { mutateAsync } = useDeleteCollection(collection.id)
 
   const handleDeleteCollection = async () => {
     const res = await prompt({

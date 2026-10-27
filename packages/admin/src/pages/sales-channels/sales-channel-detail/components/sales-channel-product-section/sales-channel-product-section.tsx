@@ -23,6 +23,7 @@ import { useProductTableColumns } from "../../../../../hooks/table/columns/use-p
 import { useProductTableFilters } from "../../../../../hooks/table/filters/use-product-table-filters"
 import { useProductTableQuery } from "../../../../../hooks/table/query/use-product-table-query"
 import { useDataTable } from "../../../../../hooks/use-data-table"
+import { getTableMetaString } from "@lib/table-meta"
 
 const PAGE_SIZE = 10
 
@@ -196,9 +197,8 @@ const useColumns = () => {
       columnHelper.display({
         id: "actions",
         cell: ({ row, table }) => {
-          const { salesChannelId } = table.options.meta as {
-            salesChannelId: string
-          }
+          const salesChannelId =
+            getTableMetaString(table.options.meta, "salesChannelId") ?? ""
 
           return (
             <ProductListCellActions

@@ -1,4 +1,5 @@
 import type { HttpTypes } from "@medusajs/types"
+import type { ProductDTO } from "@mercurjs/types"
 import { Button, Checkbox } from "@medusajs/ui"
 import { SectionNoAccess, isForbidden, useCan } from "@mercurjs/dashboard-shared"
 import { keepPreviousData } from "@tanstack/react-query"
@@ -49,11 +50,11 @@ type TargetFormProps = {
 }
 
 function initRowSelection(state: TaxRateRuleReference[]) {
-  return state.reduce((acc, reference) => {
+  return state.reduce<RowSelectionState>((acc, reference) => {
     acc[reference.value] = true
     
     return acc
-  }, {} as RowSelectionState)
+  }, {})
 }
 
 export const TargetForm = ({
@@ -303,7 +304,7 @@ const ProductTable = ({
         ?.filter((p) => newIds.includes(p.id))
         .map((p) => ({
           value: p.id,
-          label: p.title!,
+          label: p.title,
         })) || []
 
     const filteredIntermediate = intermediate.filter(
@@ -362,7 +363,7 @@ const ProductTable = ({
   )
 }
 
-const pColumnHelper = createColumnHelper<HttpTypes.AdminProduct>()
+const pColumnHelper = createColumnHelper<ProductDTO>()
 
 const useProductColumns = () => {
   const base = useProductTableColumns()

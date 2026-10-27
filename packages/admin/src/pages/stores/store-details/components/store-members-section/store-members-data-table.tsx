@@ -19,7 +19,7 @@ import {
 } from "../../../../../hooks/api/sellers";
 import { useMemberTableQuery } from "../../../../../hooks/table/query";
 import { useDataTable } from "../../../../../hooks/use-data-table";
-import { MemberInviteDTO, SellerMemberDTO, SellerRole } from "@mercurjs/types";
+import { SellerMemberDTO, SellerRole } from "@mercurjs/types";
 
 const PAGE_SIZE = 20;
 
@@ -107,7 +107,7 @@ export const StoreMembersDataTable = ({
 
   const rows: UserRow[] = useMemo(() => {
     const members: MemberRow[] = (
-      (seller_members as (SellerMemberDTO & { is_owner?: boolean })[] | undefined) ?? []
+      seller_members ?? []
     ).map((m) => ({
       kind: "member",
       id: m.id,
@@ -122,7 +122,7 @@ export const StoreMembersDataTable = ({
     const hasOwnerMember = members.some((m) => m.is_owner);
 
     const pendingInvites = (
-      (member_invites as MemberInviteDTO[] | undefined) ?? []
+      member_invites ?? []
     ).filter((invite) => !invite.accepted);
 
     // If no accepted owner member exists yet and there's only one pending
@@ -291,7 +291,7 @@ const InviteActions = ({
         t("stores.members.invite.resendSuccess", { email: invite.email }),
       );
     } catch (e) {
-      toast.error((e as Error).message);
+      toast.error((e instanceof Error ? e.message : String(e)));
     }
   };
 
@@ -299,10 +299,8 @@ const InviteActions = ({
     try {
       let token: string | null = invite.token;
       if (!token) {
-        const response = (await resend({ invite_id: invite.id })) as {
-          member_invite?: { token?: string | null };
-        };
-        token = response?.member_invite?.token ?? null;
+        const response = await resend({ invite_id: invite.id });
+        token = response.member_invite?.token ?? null;
       }
 
       if (!token) {
@@ -313,7 +311,7 @@ const InviteActions = ({
       await navigator.clipboard.writeText(buildVendorInviteUrl(token));
       toast.success(t("stores.members.invite.linkCopied"));
     } catch (e) {
-      toast.error((e as Error).message);
+      toast.error((e instanceof Error ? e.message : String(e)));
     }
   };
 
@@ -324,7 +322,7 @@ const InviteActions = ({
         t("stores.members.invite.deleteSuccess", { email: invite.email }),
       );
     } catch (e) {
-      toast.error((e as Error).message);
+      toast.error((e instanceof Error ? e.message : String(e)));
     }
   };
 
@@ -381,7 +379,7 @@ const MemberActions = ({
         }),
       );
     } catch (e) {
-      toast.error((e as Error).message);
+      toast.error((e instanceof Error ? e.message : String(e)));
     }
   };
 

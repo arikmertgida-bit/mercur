@@ -1,14 +1,13 @@
 import type { Column, Table } from "@tanstack/react-table"
 import { useCallback } from "react"
-import type { FieldValues } from "react-hook-form"
 
 import { DataGridMatrix } from "../models"
-import { GridColumnOption } from "../types"
+import { createDataGridColumnMetaSchema, GridColumnOption } from "../types"
 
-export function useDataGridColumnVisibility<
-  TData,
-  TFieldValues extends FieldValues
->(grid: Table<TData>, matrix: DataGridMatrix<TData, TFieldValues>) {
+export function useDataGridColumnVisibility<TData>(
+  grid: Table<TData>,
+  matrix: DataGridMatrix<TData>
+) {
   const columns = grid.getAllLeafColumns()
 
   const columnOptions: GridColumnOption[] = columns.map((column) => ({
@@ -47,13 +46,25 @@ export function useDataGridColumnVisibility<
   }
 }
 
-function getColumnName<TData>(column: Column<TData, unknown>): string {
+function getColumnName<TData>(column: Column<TData>): string {
   const id = column.columnDef.id
-  const meta = column?.columnDef.meta as { name?: string } | undefined
+  const enableHiding = column.columnDef.enableHiding
+  const parsedMeta = createDataGridColumnMetaSchema<TData>().safeParse(
+    column.columnDef.meta ?? {}
+  )
+  const meta = parsedMeta.success ? parsedMeta.data : undefined
 
   if (!id) {
     throw new Error(
       "Column is missing an id, which is a required field. Please provide an id for the column."
+    )
+  }
+
+  if (process.env.NODE_ENV === "development" && !meta?.name && enableHiding) {
+    reportError(
+      new Error(
+        `Column "${id}" does not have a name. You should add a name to the column definition. Falling back to the column id.`
+      )
     )
   }
 

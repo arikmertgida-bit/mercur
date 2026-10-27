@@ -19,7 +19,6 @@ import { CSS } from "@dnd-kit/utilities"
 import { DotsSix, TagIllustration } from "@medusajs/icons"
 import { Button, clx, IconButton, toast } from "@medusajs/ui"
 import { useTranslation } from "react-i18next"
-import { useParams } from "react-router-dom"
 
 import {
   RouteFocusModal,
@@ -29,6 +28,7 @@ import {
   useProductAttribute,
   useUpsertProductAttributeValues,
 } from "../../../hooks/api/product-attributes"
+import { useRequiredParam } from "@mercurjs/dashboard-shared"
 
 type RankingItem = {
   id: string
@@ -88,11 +88,11 @@ const SortableRankingItem = ({ item, isGhost }: SortableRankingItemProps) => {
 }
 
 const EditRankingInner = () => {
-  const { id } = useParams()
+  const id = useRequiredParam("id")
   const { t } = useTranslation()
   const { handleSuccess } = useRouteModal()
 
-  const { product_attribute: attribute, isPending: isLoading } = useProductAttribute(id!)
+  const { product_attribute: attribute, isPending: isLoading } = useProductAttribute(id)
 
   const existingValues: RankingItem[] = (attribute?.values ?? [])
     .sort((a, b) => (a.rank ?? 0) - (b.rank ?? 0))
@@ -131,7 +131,7 @@ const EditRankingInner = () => {
   }
 
   const { mutateAsync: upsertValues, isPending: isSaving } =
-    useUpsertProductAttributeValues(id!, {
+    useUpsertProductAttributeValues(id, {
       onSuccess: () => {
         toast.success(t("attributes.editRanking.successToast"))
         handleSuccess()
@@ -161,7 +161,7 @@ const EditRankingInner = () => {
         <DndContext
           sensors={sensors}
           collisionDetection={closestCenter}
-          onDragStart={({ active }) => setActiveId(active.id as string)}
+          onDragStart={({ active }) => setActiveId(String(active.id))}
           onDragEnd={handleDragEnd}
         >
           <SortableContext

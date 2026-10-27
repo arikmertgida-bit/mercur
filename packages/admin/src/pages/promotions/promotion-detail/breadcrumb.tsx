@@ -12,7 +12,7 @@ export const PromotionDetailBreadcrumb = (
   const { id } = props.params || {}
 
   const linkQuery = useLinkQuery("promotion", PROMOTION_DETAIL_BASE_FIELDS)
-  const { promotion } = usePromotion(id!, linkQuery, {
+  const { promotion } = usePromotion(id ?? "", linkQuery, {
     initialData: props.data,
     enabled: Boolean(id),
   })

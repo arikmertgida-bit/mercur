@@ -12,6 +12,7 @@ import { RouteFocusModal, useRouteModal } from "@components/modals";
 import { KeyboundForm } from "@components/utilities/keybound-form";
 import { sdk } from "@lib/client";
 import { queryClient } from "@lib/query-client";
+import { parseSellerStatus } from "@lib/seller-status";
 import { sellersQueryKeys, useSellers } from "@hooks/api/sellers";
 import { SellerDTO, SellerStatus } from "@mercurjs/types";
 
@@ -96,7 +97,10 @@ export const StoreBulkEditForm = () => {
     if (sellers) {
       form.reset({
         statuses: Object.fromEntries(
-          sellers.map((s) => [s.id, s.status as SellerStatus]),
+          sellers.flatMap((s) => {
+            const status = parseSellerStatus(s.status);
+            return status ? [[s.id, status]] : [];
+          }),
         ),
       });
     }
@@ -131,7 +135,7 @@ export const StoreBulkEditForm = () => {
       );
       handleSuccess();
     } catch (error) {
-      toast.error((error as Error).message);
+      toast.error((error instanceof Error ? error.message : String(error)));
     }
   });
 

@@ -1,7 +1,7 @@
 import { Fragment, useCallback, useState } from "react";
 
 import { ThumbnailBadge } from "@medusajs/icons";
-import { HttpTypes } from "@medusajs/types";
+import { HttpTypes } from "@mercurjs/types";
 import {
   Button,
   Checkbox,
@@ -108,12 +108,12 @@ export const EditProductMediaForm = ({ product }: ProductMediaViewProps) => {
     setActiveId(null);
   };
 
-  const { mutateAsync, isPending } = useUpdateProduct(product.id!);
+  const { mutateAsync, isPending } = useUpdateProduct(product.id);
 
   const handleSubmit = form.handleSubmit(async ({ media }) => {
-    const filesToUpload = media
-      .map((m, i) => ({ file: m.file, index: i }))
-      .filter((m) => !!m.file);
+    const filesToUpload = media.flatMap((m, i) =>
+      m.file ? [{ file: m.file, index: i }] : [],
+    );
 
     let uploaded: HttpTypes.AdminFile[] = [];
 
@@ -174,7 +174,9 @@ export const EditProductMediaForm = ({ product }: ProductMediaViewProps) => {
 
   const handleDelete = () => {
     const ids = Object.keys(selection);
-    const indices = ids.map((id) => fields.findIndex((m) => m.id === id));
+    const indices = ids.map((id) =>
+      fields.findIndex((m) => getSelectionKey(m) === id),
+    );
 
     remove(indices);
     setSelection({});
@@ -196,7 +198,7 @@ export const EditProductMediaForm = ({ product }: ProductMediaViewProps) => {
       });
     }
 
-    const index = fields.findIndex((m) => m.id === ids[0]);
+    const index = fields.findIndex((m) => getSelectionKey(m) === ids[0]);
 
     update(index, {
       ...fields[index],
@@ -207,6 +209,10 @@ export const EditProductMediaForm = ({ product }: ProductMediaViewProps) => {
   };
 
   const selectionCount = Object.keys(selection).length;
+
+  const activeMedia = activeId
+    ? fields.find((m) => m.field_id === activeId)
+    : undefined;
 
   return (
     <RouteFocusModal.Form
@@ -270,8 +276,10 @@ export const EditProductMediaForm = ({ product }: ProductMediaViewProps) => {
                     {fields.map((m) => {
                       return (
                         <MediaGridItem
-                          onCheckedChange={handleCheckedChange(m.id!)}
-                          checked={!!selection[m.id!]}
+                          onCheckedChange={handleCheckedChange(
+                            getSelectionKey(m),
+                          )}
+                          checked={!!selection[getSelectionKey(m)]}
                           key={m.field_id}
                           media={m}
                           data-testid={`product-edit-media-form-media-item-${m.id}`}
@@ -283,14 +291,10 @@ export const EditProductMediaForm = ({ product }: ProductMediaViewProps) => {
                     dropAnimation={dropAnimationConfig}
                     data-testid="product-edit-media-form-drag-overlay"
                   >
-                    {activeId ? (
+                    {activeMedia ? (
                       <MediaGridItemOverlay
-                        media={fields.find((m) => m.field_id === activeId)!}
-                        checked={
-                          !!selection[
-                            fields.find((m) => m.field_id === activeId)!.id!
-                          ]
-                        }
+                        media={activeMedia}
+                        checked={!!selection[getSelectionKey(activeMedia)]}
                         data-testid={`product-edit-media-form-media-item-overlay-${activeId}`}
                       />
                     ) : null}
@@ -303,7 +307,6 @@ export const EditProductMediaForm = ({ product }: ProductMediaViewProps) => {
               data-testid="product-edit-media-form-upload-section"
             >
               <UploadMediaFormItem
-                form={form}
                 append={append}
                 data-testid="product-edit-media-form-upload-item"
               />
@@ -372,14 +375,17 @@ export const EditProductMediaForm = ({ product }: ProductMediaViewProps) => {
   );
 };
 
+const getSelectionKey = (media: { id?: string; field_id: string }): string =>
+  media.id ?? media.field_id;
+
 const getDefaultValues = (
-  images: HttpTypes.AdminProductImage[] | null | undefined,
+  images: HttpTypes.AdminProduct["images"] | null | undefined,
   thumbnail: string | null | undefined,
 ) => {
   const media: Media[] =
     images?.map((image) => ({
-      id: image.id!,
-      url: image.url!,
+      id: image.id,
+      url: image.url,
       isThumbnail: image.url === thumbnail,
       file: null,
     })) || [];

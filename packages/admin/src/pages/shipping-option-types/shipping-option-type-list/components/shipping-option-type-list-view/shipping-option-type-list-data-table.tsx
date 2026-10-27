@@ -22,7 +22,7 @@ export const ShippingOptionTypeListDataTable = () => {
   })
   const { shipping_option_types, count, isLoading, isError, error } =
     useShippingOptionTypes(
-      searchParams as Parameters<typeof useShippingOptionTypes>[0],
+      searchParams,
       {
         placeholderData: keepPreviousData,
       }

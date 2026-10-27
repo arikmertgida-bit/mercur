@@ -4,10 +4,10 @@ import { useTranslation } from "react-i18next"
 import { DisplayExtensionZone, DisplayField } from "@mercurjs/dashboard-shared"
 import { ActionMenu } from "@components/common/action-menu"
 import { SectionRow } from "@components/common/section"
-import type { ExtendedAdminInventoryItem } from "@custom-types/inventory"
+import type { HttpTypes } from "@medusajs/types"
 
 type InventoryItemGeneralSectionProps = {
-  inventoryItem: ExtendedAdminInventoryItem
+  inventoryItem: HttpTypes.AdminInventoryItem
 }
 
 export const InventoryItemGeneralSection = ({

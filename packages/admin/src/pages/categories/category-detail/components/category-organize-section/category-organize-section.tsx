@@ -3,7 +3,7 @@ import {
   PencilSquare,
   TriangleRightMini,
 } from "@medusajs/icons"
-import { HttpTypes } from "@medusajs/types"
+import { HttpTypes } from "@mercurjs/types"
 import { Badge, Container, Heading, Text, Tooltip } from "@medusajs/ui"
 import { DisplayExtensionZone } from "@mercurjs/dashboard-shared"
 import { useMemo, useState } from "react"

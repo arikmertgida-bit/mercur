@@ -37,7 +37,7 @@ export const useOrderGroup = (
 
 export const useOrderGroupByOrderId = (
   orderId: string,
-  query?: Record<string, any>,
+  query?: Omit<InferClientInput<typeof sdk.admin.orders.$id.orderGroup.query>, "$id">,
   options?: Omit<
     UseQueryOptions<
       InferClientOutput<typeof sdk.admin.orders.$id.orderGroup.query>,

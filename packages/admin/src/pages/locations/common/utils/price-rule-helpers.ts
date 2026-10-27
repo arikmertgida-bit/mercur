@@ -1,9 +1,11 @@
+import type { PricingRuleOperatorValues } from "@medusajs/types"
+
 import { castNumber } from "../../../../lib/cast-number"
 import { ITEM_TOTAL_ATTRIBUTE } from "../constants"
 
 const createPriceRule = (
   attribute: string,
-  operator: string,
+  operator: PricingRuleOperatorValues,
   value: string | number
 ) => {
   const rule = {
@@ -22,7 +24,10 @@ export const buildShippingOptionPriceRules = (rule: {
   lt?: string | number | null
   eq?: string | number | null
 }) => {
-  const conditions = [
+  const conditions: {
+    value: string | number | null | undefined
+    operator: PricingRuleOperatorValues
+  }[] = [
     { value: rule.gte, operator: "gte" },
     { value: rule.lte, operator: "lte" },
     { value: rule.gt, operator: "gt" },
@@ -30,12 +35,7 @@ export const buildShippingOptionPriceRules = (rule: {
     { value: rule.eq, operator: "eq" },
   ]
 
-  const conditionsWithValues = conditions.filter(({ value }) => value) as {
-    value: string | number
-    operator: string
-  }[]
-
-  return conditionsWithValues.map(({ operator, value }) =>
-    createPriceRule(ITEM_TOTAL_ATTRIBUTE, operator, value)
+  return conditions.flatMap(({ operator, value }) =>
+    value ? [createPriceRule(ITEM_TOTAL_ATTRIBUTE, operator, value)] : []
   )
 }

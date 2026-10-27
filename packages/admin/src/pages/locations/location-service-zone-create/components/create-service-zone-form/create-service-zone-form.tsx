@@ -121,10 +121,10 @@ export function CreateServiceZoneForm({
                   {t("stockLocations.serviceZones.fields.tip")}
                 </InlineTip>
 
-                <GeoZoneForm form={form} />
+                <GeoZoneForm />
               </div>
             </div>
-            <GeoZoneForm.AreaDrawer form={form} />
+            <GeoZoneForm.AreaDrawer />
           </StackedFocusModal>
         </RouteFocusModal.Body>
 

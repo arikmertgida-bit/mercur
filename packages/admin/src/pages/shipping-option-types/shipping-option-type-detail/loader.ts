@@ -2,6 +2,7 @@ import { LoaderFunctionArgs } from "react-router-dom"
 
 import { shippingOptionTypesQueryKeys } from "../../../hooks/api/shipping-option-types"
 import { sdk } from "../../../lib/client"
+import { getRequiredParam } from "@lib/route-params"
 import { queryClient } from "../../../lib/query-client"
 
 const shippingOptionTypeDetailQuery = (id: string) => ({
@@ -12,8 +13,7 @@ const shippingOptionTypeDetailQuery = (id: string) => ({
 export const shippingOptionTypeLoader = async ({
   params,
 }: LoaderFunctionArgs) => {
-  const id = params.id
-  const query = shippingOptionTypeDetailQuery(id!)
+  const query = shippingOptionTypeDetailQuery(getRequiredParam(params, "id"))
 
   return queryClient.ensureQueryData(query)
 }

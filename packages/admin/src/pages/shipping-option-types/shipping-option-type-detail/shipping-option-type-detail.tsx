@@ -1,7 +1,7 @@
 import { ReactNode, Children } from "react"
-import { useLoaderData, useParams } from "react-router-dom"
+import { useLoaderData } from "react-router-dom"
 
-import { WidgetZone } from "@mercurjs/dashboard-shared"
+import { WidgetZone, useRequiredParam } from "@mercurjs/dashboard-shared"
 import { SingleColumnPageSkeleton } from "../../../components/common/skeleton"
 import { SingleColumnPage } from "../../../components/layout/pages"
 import { useShippingOptionType } from "../../../hooks/api"
@@ -9,13 +9,11 @@ import { ShippingOptionTypeGeneralSection } from "./components/shipping-option-t
 import { shippingOptionTypeLoader } from "./loader"
 
 const Root = ({ children }: { children?: ReactNode }) => {
-  const { id } = useParams()
-  const initialData = useLoaderData() as Awaited<
-    ReturnType<typeof shippingOptionTypeLoader>
-  >
+  const id = useRequiredParam("id")
+  const initialData = useLoaderData<typeof shippingOptionTypeLoader>()
 
   const { shipping_option_type, isPending, isError, error } =
-    useShippingOptionType(id!, undefined, {
+    useShippingOptionType(id, undefined, {
       initialData,
     })
 

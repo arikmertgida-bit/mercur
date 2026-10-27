@@ -10,7 +10,8 @@ import {
   usePrompt,
 } from "@medusajs/ui"
 import { PencilSquare, Trash } from "@medusajs/icons"
-import { ProductAttributeDTO } from "@mercurjs/types"
+import { ClientError } from "@mercurjs/client"
+import { ProductAttributeDTO, ProductAttributeErrorCode } from "@mercurjs/types"
 import { TextCell } from "../../../components/table/table-cells/common/text-cell"
 import { ActionMenu } from "../../../components/common/action-menu"
 import {
@@ -37,13 +38,14 @@ const FilterableToggle = ({
 }: {
   attribute: ProductAttributeDTO
 }) => {
+  const { t } = useTranslation()
   const { mutateAsync } = useUpdateProductAttribute(attribute.id)
 
   const handleToggle = async (checked: boolean) => {
     try {
       await mutateAsync({ is_filterable: checked })
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "An error occurred")
+      toast.error(err instanceof Error ? err.message : t("general.unknownError"))
     }
   }
 
@@ -79,13 +81,14 @@ const RequiredToggle = ({
 }: {
   attribute: ProductAttributeDTO
 }) => {
+  const { t } = useTranslation()
   const { mutateAsync } = useUpdateProductAttribute(attribute.id)
 
   const handleToggle = async (checked: boolean) => {
     try {
       await mutateAsync({ is_required: checked })
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "An error occurred")
+      toast.error(err instanceof Error ? err.message : t("general.unknownError"))
     }
   }
 
@@ -144,13 +147,13 @@ const AttributeActions = ({
         t("attributes.delete.successToast", { name: attribute.name })
       )
     } catch (err) {
-      const message = err instanceof Error ? err.message : "An error occurred"
-      const isInUse = message.includes("can't be deleted")
-
-      if (isInUse) {
+      if (
+        err instanceof ClientError &&
+        err.code === ProductAttributeErrorCode.ATTRIBUTE_IN_USE
+      ) {
         setInUseOpen(true)
       } else {
-        toast.error(message)
+        toast.error(err instanceof Error ? err.message : t("general.unknownError"))
       }
     }
   }

@@ -1,6 +1,5 @@
 import { Button, Container, Heading, Text } from "@medusajs/ui"
 import { useExtendableTable, useLinkQuery, mergeListFilters } from "@mercurjs/dashboard-shared"
-import type { ColumnDef } from "@tanstack/react-table"
 
 import { Children, ReactNode, useMemo } from "react"
 import { useTranslation } from "react-i18next"
@@ -131,24 +130,19 @@ const useColumns = () => {
   const base = useReservationTableColumns()
 
   const actionsColumn = base.filter(
-    (c) => (c as { id?: string }).id === "actions"
+    (c) => c.id === "actions"
   )
   const dataColumns = base.filter(
-    (c) => (c as { id?: string }).id !== "actions"
+    (c) => c.id !== "actions"
   )
 
   const { columns: extended, filters } =
     useExtendableTable<ExtendedReservationItem>({
       model: "reservation",
-      // tanstack's ColumnDef<T, TValue> is contravariant in TValue
-      // (cell/header render props), so a heterogeneous per-column accessor
-      // array can't widen to ColumnDef<T, unknown>[] without a cast.
-      // @ts-expect-error
       columns: dataColumns,
     })
 
   const columns = useMemo(
-    // @ts-expect-error — same ColumnDef<T, TValue> variance limitation as above
     () => [...extended, ...actionsColumn],
     [extended, actionsColumn]
   )

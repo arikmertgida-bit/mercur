@@ -85,8 +85,8 @@ export const getFormattedAddress = ({
     formattedAddress.push(cityProvincePostal)
   }
 
-  if (country) {
-    formattedAddress.push(country.display_name!)
+  if (country?.display_name) {
+    formattedAddress.push(country.display_name)
   } else if (country_code) {
     const country = getCountryByIso2(country_code)
 

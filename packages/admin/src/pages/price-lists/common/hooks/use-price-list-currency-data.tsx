@@ -1,5 +1,4 @@
 import { HttpTypes } from "@medusajs/types"
-import { isForbidden, usePermissions } from "@mercurjs/dashboard-shared"
 import { useRegions } from "../../../../hooks/api/regions"
 import { useStore } from "../../../../hooks/api/store"
 import { usePricePreferences } from "../../../../hooks/api/price-preferences"
@@ -7,24 +6,18 @@ import { usePricePreferences } from "../../../../hooks/api/price-preferences"
 type UsePriceListCurrencyDataReturn =
   | {
       isReady: false
-      isForbidden: boolean
       currencies: undefined
       regions: undefined
       pricePreferences: undefined
     }
   | {
       isReady: true
-      isForbidden: false
       currencies: HttpTypes.AdminStoreCurrency[]
       regions: HttpTypes.AdminRegion[]
       pricePreferences: HttpTypes.AdminPricePreference[]
     }
 
 export const usePriceListCurrencyData = (): UsePriceListCurrencyDataReturn => {
-  const { can } = usePermissions()
-  const canViewRegions = can("regions")
-  const canViewPreferences = can("price_preferences")
-
   const {
     store,
     isPending: isStorePending,
@@ -41,26 +34,17 @@ export const usePriceListCurrencyData = (): UsePriceListCurrencyDataReturn => {
     isPending: isRegionsPending,
     isError: isRegionsError,
     error: regionsError,
-  } = useRegions(
-    {
-      fields: "id,name,currency_code",
-      limit: 999,
-    },
-    { enabled: canViewRegions }
-  )
+  } = useRegions({
+    fields: "id,name,currency_code",
+    limit: 999,
+  })
 
   const {
     price_preferences: pricePreferences,
     isPending: isPreferencesPending,
     isError: isPreferencesError,
     error: preferencesError,
-  } = usePricePreferences({}, { enabled: canViewPreferences })
-
-  const forbidden =
-    !canViewRegions ||
-    !canViewPreferences ||
-    isForbidden(regionsError) ||
-    isForbidden(preferencesError)
+  } = usePricePreferences({})
 
   const isReady =
     !!currencies &&
@@ -70,7 +54,7 @@ export const usePriceListCurrencyData = (): UsePriceListCurrencyDataReturn => {
     !isRegionsPending &&
     !isPreferencesPending
 
-  if (isRegionsError && !forbidden) {
+  if (isRegionsError) {
     throw regionsError
   }
 
@@ -78,19 +62,18 @@ export const usePriceListCurrencyData = (): UsePriceListCurrencyDataReturn => {
     throw storeError
   }
 
-  if (isPreferencesError && !forbidden) {
+  if (isPreferencesError) {
     throw preferencesError
   }
 
-  if (forbidden || !isReady) {
+  if (!isReady) {
     return {
-      isForbidden: forbidden,
       regions: undefined,
       currencies: undefined,
       pricePreferences: undefined,
-      isReady: false as const,
+      isReady: false,
     }
   }
 
-  return { regions, currencies, pricePreferences, isReady, isForbidden: false }
+  return { regions, currencies, pricePreferences, isReady }
 }

@@ -45,13 +45,17 @@ export const useStockLocation = (
   return { ...data, ...rest }
 }
 
+export type AdminStockLocationListQuery = InferClientInput<
+  typeof sdk.admin.stockLocations.query
+> & {
+  // Mercur seller link — when set, `/admin/stock-locations` filters via
+  // the `stock_location_seller` link table. Server-side handler lives in
+  // `packages/core/src/api/admin/stock-locations/middlewares.ts`.
+  seller_id?: string | string[]
+}
+
 export const useStockLocations = (
-  query?: InferClientInput<typeof sdk.admin.stockLocations.query> & {
-    // Mercur seller link — when set, `/admin/stock-locations` filters via
-    // the `stock_location_seller` link table. Server-side handler lives in
-    // `packages/core/src/api/admin/stock-locations/middlewares.ts`.
-    seller_id?: string | string[]
-  },
+  query?: AdminStockLocationListQuery,
   options?: Omit<
     UseQueryOptions<
       InferClientOutput<typeof sdk.admin.stockLocations.query>,

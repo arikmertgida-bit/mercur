@@ -2850,7 +2850,9 @@
         "noVariants": "Ovaj proizvod nema varijanti"
       },
       "edit": {
-        "successToast": "Cijene su uspješno ažurirane."
+        "successToast": "Cijene su uspješno ažurirane.",
+        "header": "Izmijeni cijene za {{title}}",
+        "description": "Ažurirajte cijene proizvoda u ovoj cjenovnoj listi."
       }
     },
     "fields": {

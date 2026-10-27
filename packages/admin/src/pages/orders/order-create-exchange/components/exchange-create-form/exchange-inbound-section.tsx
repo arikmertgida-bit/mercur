@@ -12,7 +12,10 @@ import { useTranslation } from "react-i18next"
 
 import { HttpTypes } from "@medusajs/types"
 import { Form } from "../../../../../components/common/form"
-import { Combobox } from "../../../../../components/inputs/combobox"
+import {
+  Combobox,
+  getSingleComboboxValue,
+} from "../../../../../components/inputs/combobox"
 import {
   RouteFocusModal,
   StackedFocusModal,
@@ -33,6 +36,8 @@ import { AddExchangeInboundItemsTable } from "../add-exchange-inbound-items-tabl
 import { ExchangeInboundItem } from "./exchange-inbound-item"
 import { CreateExchangeSchemaType } from "./schema"
 import { ConditionalTooltip } from "../../../../../components/common/conditional-tooltip"
+import { getOrderChangeActionDetails } from "../../../../../lib/order-change-action"
+import { getOrderSellerId } from "../../../../../lib/orders"
 
 type ExchangeInboundSectionProps = {
   order: AdminOrder
@@ -115,9 +120,7 @@ export const ExchangeInboundSection = ({
   /**
    * HOOKS
    */
-  // Mercur seller link — not part of Medusa's AdminOrder type; included via
-  // order-detail/constants.ts DEFAULT_FIELDS (`*seller`).
-  const sellerId = (order as { seller?: { id?: string } | null }).seller?.id
+  const sellerId = getOrderSellerId(order)
   const locationsGate = usePermissionGate("stock_locations:view")
   const shippingOptionsGate = usePermissionGate("shipping_options:view")
   const { stock_locations = [] } = useStockLocations(
@@ -179,7 +182,9 @@ export const ExchangeInboundSection = ({
             ...inboundItems[ind],
             quantity: i.detail.return_requested_quantity,
             note: returnItemAction?.internal_note,
-            reason_id: returnItemAction?.details?.reason_id as string,
+            reason_id:
+              getOrderChangeActionDetails(returnItemAction).reason_id ??
+              undefined,
           })
         }
       } else {
@@ -312,7 +317,7 @@ export const ExchangeInboundSection = ({
             <StackedFocusModal.Header />
 
             <AddExchangeInboundItemsTable
-              items={order.items!}
+              items={order.items ?? []}
               selectedItems={inboundItems.map((i) => i.item_id)}
               currencyCode={order.currency_code}
               onSelectionChange={(finalSelection) => {
@@ -355,14 +360,17 @@ export const ExchangeInboundSection = ({
 
       {showInboundItemsPlaceholder && <ItemPlaceholder />}
 
-      {inboundItems.map(
-        (item, index) =>
-          inboundItemsMap.get(item.item_id) &&
-          itemsMap.get(item.item_id)! && (
+      {inboundItems.map((item, index) => {
+        const orderItem = itemsMap.get(item.item_id)
+        const previewItem = inboundItemsMap.get(item.item_id)
+
+        return (
+          previewItem &&
+          orderItem && (
             <ExchangeInboundItem
               key={item.id}
-              item={itemsMap.get(item.item_id)!}
-              previewItem={inboundItemsMap.get(item.item_id)!}
+              item={orderItem}
+              previewItem={previewItem}
               currencyCode={order.currency_code}
               form={form}
               locationId={locationId}
@@ -392,10 +400,12 @@ export const ExchangeInboundSection = ({
                     { ...payload, actionId: action.id },
                     {
                       onError: (error) => {
-                        if (action.details?.quantity && payload.quantity) {
+                        const { quantity } = getOrderChangeActionDetails(action)
+
+                        if (quantity && payload.quantity) {
                           form.setValue(
                             `inbound_items.${index}.quantity`,
-                            action.details?.quantity as number
+                            quantity
                           )
                         }
 
@@ -408,7 +418,8 @@ export const ExchangeInboundSection = ({
               index={index}
             />
           )
-      )}
+        )
+      })}
       {!showInboundItemsPlaceholder && (
         <div className="mt-8 flex flex-col gap-y-4">
           {/*LOCATION*/}
@@ -435,7 +446,8 @@ export const ExchangeInboundSection = ({
                           <Combobox
                             {...field}
                             value={value ?? undefined}
-                            onChange={(v) => {
+                            onChange={(next) => {
+                              const v = getSingleComboboxValue(next)
                               onChange(v)
                               onLocationChange(v)
                             }}
@@ -490,7 +502,8 @@ export const ExchangeInboundSection = ({
                           <Combobox
                             allowClear
                             value={value ?? undefined}
-                            onChange={(val) => {
+                            onChange={(next) => {
+                              const val = getSingleComboboxValue(next)
                               onChange(val)
                               onShippingOptionChange(val)
                             }}

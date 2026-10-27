@@ -17,6 +17,7 @@ import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router-dom";
 import * as zod from "zod";
+import i18next from "i18next";
 
 import { Form } from "../../../../../components/common/form/index.ts";
 import {
@@ -41,10 +42,14 @@ type CreateRefundFormProps = {
 };
 
 const CreateRefundSchema = zod.object({
-  amount: zod.object({
-    value: zod.string().or(zod.number()),
-    float: zod.number().or(zod.null()),
-  }),
+  amount: zod
+    .object({
+      value: zod.string().or(zod.number()),
+      float: zod.number().or(zod.null()),
+    })
+    .refine((amount) => amount.float !== null && amount.float > 0, {
+      message: i18next.t("validation.mustBePositive"),
+    }),
   note: zod.string().optional(),
   refund_reason_id: zod.string().optional(),
 });
@@ -83,8 +88,8 @@ export const CreateRefundForm = ({ order }: CreateRefundFormProps) => {
   });
 
   useEffect(() => {
-    const pendingDifference = order.summary.pending_difference as number;
-    const paymentAmount = (payment?.amount || 0) as number;
+    const pendingDifference = order.summary.pending_difference;
+    const paymentAmount = payment?.amount || 0;
     const pendingAmount =
       pendingDifference < 0
         ? Math.min(Math.abs(pendingDifference), paymentAmount)
@@ -110,9 +115,12 @@ export const CreateRefundForm = ({ order }: CreateRefundFormProps) => {
   const { mutateAsync, isPending } = useRefundPayment(order.id, payment?.id);
 
   const handleSubmit = form.handleSubmit(async (data) => {
+    // The schema only accepts a positive amount.
+    const amount = data.amount.float ?? 0;
+
     await mutateAsync(
       {
-        amount: data.amount.float!,
+        amount,
         note: data.note,
         refund_reason_id: data.refund_reason_id,
       },
@@ -120,10 +128,7 @@ export const CreateRefundForm = ({ order }: CreateRefundFormProps) => {
         onSuccess: () => {
           toast.success(
             t("orders.payment.refundPaymentSuccess", {
-              amount: formatCurrency(
-                data.amount.float!,
-                payment?.currency_code,
-              ),
+              amount: formatCurrency(amount, payment?.currency_code),
             }),
           );
 
@@ -179,7 +184,7 @@ export const CreateRefundForm = ({ order }: CreateRefundFormProps) => {
 
                     return (
                       <Select.Item
-                        value={payment!.id}
+                        value={payment.id}
                         key={payment.id}
                         disabled={
                           !!payment.canceled_at ||
@@ -190,7 +195,7 @@ export const CreateRefundForm = ({ order }: CreateRefundFormProps) => {
                       >
                         <span>
                           {getLocaleAmount(
-                            payment.amount as number,
+                            payment.amount,
                             payment.currency_code,
                           )}
                           {" - "}
@@ -203,17 +208,14 @@ export const CreateRefundForm = ({ order }: CreateRefundFormProps) => {
                 </Select.Content>
               </Select>
             )}
-            {hasPaymentIdInSearchParams && (
+            {hasPaymentIdInSearchParams && payment && (
               <Heading
                 level="h2"
                 data-testid="order-create-refund-payment-display"
               >
-                {getLocaleAmount(
-                  payment!.amount as number,
-                  payment!.currency_code,
-                )}{" "}
+                {getLocaleAmount(payment.amount, payment.currency_code)}{" "}
                 - (#
-                {payment!.id.substring(23)})
+                {payment.id.substring(23)})
               </Heading>
             )}
 

@@ -11,7 +11,7 @@ import { useCallback, useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { Link, useLocation } from "react-router-dom"
 
-import { HttpTypes } from "@medusajs/types"
+import { HttpTypes } from "@mercurjs/types"
 import { RouteFocusModal } from "../../../../../components/modals"
 import { useUpdateProduct } from "../../../../../hooks/api/products"
 
@@ -61,9 +61,7 @@ export const ProductMediaGallery = ({ product }: ProductMediaGalleryProps) => {
       return
     }
 
-    const a = document.createElement("a") as HTMLAnchorElement & {
-      download: string
-    }
+    const a = document.createElement("a")
 
     a.href = media[curr].url
     a.download = "image"
@@ -336,7 +334,7 @@ type Media = {
 }
 
 const getMedia = (
-  images: HttpTypes.AdminProductImage[] | null,
+  images: HttpTypes.AdminProduct["images"] | null,
   thumbnail: string | null
 ) => {
   const media: Media[] =

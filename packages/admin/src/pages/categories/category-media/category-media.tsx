@@ -1,16 +1,16 @@
 import { useTranslation } from "react-i18next"
-import { useParams } from "react-router-dom"
 
 import { RouteFocusModal } from "../../../components/modals"
 import { useProductCategory } from "../../../hooks/api/categories"
 import { CategoryMediaView } from "./components/category-media-view"
+import { useRequiredParam } from "@mercurjs/dashboard-shared"
 
 export const CategoryMedia = () => {
   const { t } = useTranslation()
-  const { id } = useParams()
+  const id = useRequiredParam("id")
 
   const { product_category, isLoading, isError, error } = useProductCategory(
-    id!
+    id
   )
 
   const ready = !isLoading && !!product_category

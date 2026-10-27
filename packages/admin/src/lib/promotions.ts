@@ -56,11 +56,17 @@ export const getPromotionStatus = (promotion: HttpTypes.AdminPromotion) => {
   const campaign = promotion.campaign
   const statusMap = getPromotionStatusMap()
 
+  // Medusa creates promotions as drafts, so a promotion without a serialized
+  // status is shown as one.
+  const promotionStatus = statusMap[
+    promotion.status?.toUpperCase() ?? PromotionStatus.DRAFT
+  ]
+
   if (!campaign) {
-    return statusMap[promotion.status!.toUpperCase()]
+    return promotionStatus
   }
 
-  if (campaign.starts_at && new Date(campaign.starts_at!) > date) {
+  if (campaign.starts_at && new Date(campaign.starts_at) > date) {
     return statusMap[PromotionStatus.SCHEDULED]
   }
 
@@ -68,11 +74,11 @@ export const getPromotionStatus = (promotion: HttpTypes.AdminPromotion) => {
   const overBudget =
     campaignBudget &&
     campaignBudget.limit &&
-    campaignBudget.used! > campaignBudget.limit!
+    (campaignBudget.used ?? 0) > campaignBudget.limit
 
   if ((campaign.ends_at && new Date(campaign.ends_at) < date) || overBudget) {
     return statusMap[PromotionStatus.EXPIRED]
   }
 
-  return statusMap[promotion.status!.toUpperCase()]
+  return promotionStatus
 }

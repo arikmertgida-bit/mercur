@@ -1,43 +1,22 @@
-import { useParams } from "react-router-dom"
-import { useTranslation } from "react-i18next"
 import { MetadataForm } from "@components/forms/metadata-form/metadata-form"
 import { useProduct, useUpdateProduct } from "@hooks/api"
-import { ClientError } from "@mercurjs/client"
+import { useRequiredParam } from "@mercurjs/dashboard-shared"
 import { PRODUCT_DETAIL_QUERY } from "../constants"
 
 export const ProductMetadata = () => {
-  const { t } = useTranslation()
-  const { id } = useParams()
+  const id = useRequiredParam("id")
 
-  const { product, isPending, isError, error } = useProduct(id!, PRODUCT_DETAIL_QUERY)
-  const { mutateAsync, isPending: isMutating } = useUpdateProduct(id!)
+  const { product, isPending, isError, error } = useProduct(id, PRODUCT_DETAIL_QUERY)
+  const { mutateAsync, isPending: isMutating } = useUpdateProduct(id)
 
   if (isError) {
     throw error
   }
 
-  const handleSubmit = async (
-    params: { metadata?: Record<string, unknown> | null },
-    callbacks: { onSuccess?: () => void; onError?: (error: ClientError | string) => void }
-  ) => {
-    try {
-      const result = await mutateAsync({
-        metadata: params.metadata === undefined ? undefined : params.metadata,
-      })
-      callbacks.onSuccess?.()
-
-      return result
-    } catch (error) {
-      const message = error instanceof ClientError ? error.message : t("errorBoundary.defaultTitle")
-      callbacks.onError?.(message)
-      throw error
-    }
-  }
-
   return (
     <MetadataForm
       metadata={product?.metadata}
-      hook={handleSubmit}
+      hook={mutateAsync}
       isPending={isPending}
       isMutating={isMutating}
     />

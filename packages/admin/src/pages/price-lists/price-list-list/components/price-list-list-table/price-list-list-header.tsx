@@ -1,7 +1,6 @@
 import { ReactNode, Children } from "react"
-import { Button, Heading } from "@medusajs/ui"
+import { Button, Heading, Text } from "@medusajs/ui"
 import { useTranslation } from "react-i18next"
-import { PermissionGuard } from "@mercurjs/dashboard-shared"
 import { Link } from "react-router-dom"
 
 export const PriceListListTitle = () => {
@@ -9,6 +8,9 @@ export const PriceListListTitle = () => {
   return (
     <div>
       <Heading>{t("priceLists.domain")}</Heading>
+      <Text className="text-ui-fg-subtle" size="small">
+        {t("priceLists.subtitle")}
+      </Text>
     </div>
   )
 }
@@ -24,11 +26,9 @@ export const PriceListListActions = ({
       {Children.count(children) > 0 ? (
         children
       ) : (
-        <PermissionGuard permission="price_lists:edit">
-          <Button size="small" variant="secondary" asChild>
-            <Link to="create">{t("actions.create")}</Link>
-          </Button>
-        </PermissionGuard>
+        <Button size="small" variant="secondary" asChild>
+          <Link to="create">{t("actions.create")}</Link>
+        </Button>
       )}
     </div>
   )

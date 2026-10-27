@@ -31,12 +31,9 @@ export const useCustomerTableFilters = (
       label: t("customers.groups.label"),
       type: "select",
       multiple: true,
-      options: customer_groups
-      .filter((s) => s?.name)
-      .map((s) => ({
-        label: s.name as string,
-        value: s.id,
-      })),
+      options: customer_groups.flatMap((s) =>
+        s?.name ? [{ label: s.name, value: s.id }] : []
+      ),
     }
 
     filters = [...filters, customerGroupFilter]

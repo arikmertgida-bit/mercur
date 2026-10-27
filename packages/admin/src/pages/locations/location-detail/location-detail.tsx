@@ -1,30 +1,28 @@
 import { ReactNode, Children } from "react";
-import { useLoaderData, useParams } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 
 import { useStockLocation } from "../../../hooks/api/stock-locations";
 import { LocationGeneralSection } from "./components/location-general-section";
 import LocationsSalesChannelsSection from "./components/location-sales-channels-section/locations-sales-channels-section";
 import { locationLoader } from "./loader";
 
-import { WidgetZone } from "@mercurjs/dashboard-shared";
+import { WidgetZone, useRequiredParam } from "@mercurjs/dashboard-shared";
 import { TwoColumnPageSkeleton } from "../../../components/common/skeleton";
 import { TwoColumnPage } from "../../../components/layout/pages";
 import LocationsFulfillmentProvidersSection from "./components/location-fulfillment-providers-section/location-fulfillment-providers-section";
 import { LOCATION_DETAILS_FIELD } from "./constants";
 
 const Root = ({ children }: { children?: ReactNode }) => {
-  const initialData = useLoaderData() as Awaited<
-    ReturnType<typeof locationLoader>
-  >;
+  const initialData = useLoaderData<typeof locationLoader>();
 
-  const { location_id } = useParams();
+  const location_id = useRequiredParam("location_id");
   const {
     stock_location: location,
     isPending: isLoading,
     isError,
     error,
   } = useStockLocation(
-    location_id!,
+    location_id,
     { fields: LOCATION_DETAILS_FIELD },
     { initialData },
   );

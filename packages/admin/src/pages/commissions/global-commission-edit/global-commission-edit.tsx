@@ -144,7 +144,6 @@ const EditGlobalCommissionForm = ({ rate }: { rate: CommissionRate }) => {
               )}
             />
             <CommissionValueFields
-              control={form.control}
               type={watchType}
               currencies={currencies}
             />
@@ -184,7 +183,7 @@ export const GlobalCommissionEdit = () => {
   const { default_commission, isPending, isError, error } =
     useDefaultCommission();
 
-  const rate = default_commission as CommissionRate | undefined;
+  const rate = default_commission;
   const ready = !isPending && !!rate;
 
   if (isError) {

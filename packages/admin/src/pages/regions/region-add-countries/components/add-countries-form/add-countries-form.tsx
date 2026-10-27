@@ -102,7 +102,7 @@ export const AddCountriesForm = ({ region }: AddCountriesFormProps) => {
 
   const handleSubmit = form.handleSubmit(async (values) => {
     const payload = [
-      ...(region.countries?.map((c) => c.iso_2!) ?? []),
+      ...(region.countries?.flatMap((c) => (c.iso_2 ? [c.iso_2] : [])) ?? []),
       ...values.countries,
     ]
 

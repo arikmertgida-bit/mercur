@@ -1,6 +1,4 @@
-import {
-  ClientError,
-} from "@mercurjs/client"
+import { ClientError, InferClientOutput } from "@mercurjs/client"
 import { HttpTypes } from "@medusajs/types"
 import { useMutation, UseMutationOptions } from "@tanstack/react-query"
 import { sdk } from "../../lib/client"
@@ -113,7 +111,11 @@ export const useConfirmOrderEdit = (
 
 export const useCancelOrderEdit = (
   orderId: string,
-  options?: UseMutationOptions<any, ClientError, any>
+  options?: UseMutationOptions<
+    InferClientOutput<typeof sdk.admin.orderEdits.$id.delete>,
+    ClientError,
+    void
+  >
 ) => {
   return useMutation({
     mutationFn: () => sdk.admin.orderEdits.$id.delete({ $id: orderId }),

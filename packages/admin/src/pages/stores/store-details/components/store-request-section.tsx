@@ -31,15 +31,6 @@ type StoreRequestSectionProps = {
   seller: Seller;
 };
 
-type OwnerMember = {
-  is_owner?: boolean;
-  member?: {
-    email?: string | null;
-    first_name?: string | null;
-    last_name?: string | null;
-  } | null;
-};
-
 export const StoreRequestSection = ({ seller }: StoreRequestSectionProps) => {
   const { t } = useTranslation();
 
@@ -54,7 +45,7 @@ export const StoreRequestSection = ({ seller }: StoreRequestSectionProps) => {
     { limit: 100 },
     { enabled: canViewMembers },
   );
-  const owner = (seller_members as OwnerMember[] | undefined)?.find(
+  const owner = seller_members?.find(
     (m) => m.is_owner,
   );
   const ownerFullName = [owner?.member?.first_name, owner?.member?.last_name]
@@ -98,7 +89,7 @@ export const StoreRequestSection = ({ seller }: StoreRequestSectionProps) => {
               await approveSeller();
               toast.success(t("stores.request.confirmSuccess"));
             } catch (error) {
-              toast.error((error as Error).message);
+              toast.error((error instanceof Error ? error.message : String(error)));
               throw error;
             }
           }}
@@ -125,7 +116,7 @@ export const StoreRequestSection = ({ seller }: StoreRequestSectionProps) => {
               await suspendSeller({ reason: note || undefined });
               toast.success(t("stores.request.rejectSuccess"));
             } catch (error) {
-              toast.error((error as Error).message);
+              toast.error((error instanceof Error ? error.message : String(error)));
               throw error;
             }
           }}

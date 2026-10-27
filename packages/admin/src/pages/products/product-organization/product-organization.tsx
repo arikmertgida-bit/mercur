@@ -1,17 +1,17 @@
 import { Heading } from "@medusajs/ui";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
 
 import { RouteDrawer } from "../../../components/modals";
 import { useProduct } from "../../../hooks/api/products";
 import { ProductOrganizationForm } from "./components/product-organization-form";
 import { PRODUCT_DETAIL_QUERY } from "../constants";
+import { useRequiredParam } from "@mercurjs/dashboard-shared";
 
 export const ProductOrganization = () => {
-  const { id } = useParams();
+  const id = useRequiredParam("id");
   const { t } = useTranslation();
 
-  const { product, isLoading, isError, error } = useProduct(id!, PRODUCT_DETAIL_QUERY);
+  const { product, isLoading, isError, error } = useProduct(id, PRODUCT_DETAIL_QUERY);
 
   if (isError) {
     throw error;

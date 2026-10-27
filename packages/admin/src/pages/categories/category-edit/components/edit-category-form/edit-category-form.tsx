@@ -5,7 +5,7 @@ import { useWatch } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { z } from "zod"
 
-import { HttpTypes } from "@medusajs/types"
+import { HttpTypes } from "@mercurjs/types"
 import {
   FormExtensionZone,
   isValidHandleFormat,
@@ -224,7 +224,6 @@ export const EditCategoryForm = ({ category }: EditCategoryFormProps) => {
             <FormExtensionZone
               model="category"
               zone="edit"
-              control={form.control}
               data={category}
             />
           </div>

@@ -13,7 +13,7 @@ export const CustomerGroupDetailBreadcrumb = (
   const { id } = props.params || {}
 
   const { customer_group } = useCustomerGroup(
-    id!,
+    id ?? "",
     {
       fields: CUSTOMER_GROUP_DETAIL_FIELDS,
     },

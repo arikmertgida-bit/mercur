@@ -21,6 +21,6 @@ export const convertToStaticCountries = (
       
       return requiredFields.every(field => !!c[field])
     })
-    .map(({ ...country }) => country as StaticCountry)
+    .map(({ ...country }) => country)
 }
 

@@ -1,10 +1,9 @@
 import { z } from "zod"
-import { PriceListCreateOffersSchema } from "../../../common/schemas"
+import { PriceListCreateProductsSchema } from "../../../common/schemas"
 
 export const PriceListPricesAddSchema = z.object({
   product_ids: z.array(z.object({ id: z.string() })).min(1),
-  offer_ids: z.array(z.string()),
-  offers: PriceListCreateOffersSchema,
+  products: PriceListCreateProductsSchema,
 })
 
 export type PriceListPricesAddSchema = z.infer<typeof PriceListPricesAddSchema>
@@ -15,14 +14,10 @@ export const PriceListPricesAddProductIdsSchema = PriceListPricesAddSchema.pick(
   }
 )
 
-export const PriceListPricesAddProductsIdsFields = Object.keys(
-  PriceListPricesAddProductIdsSchema.shape
-) as (keyof typeof PriceListPricesAddProductIdsSchema.shape)[]
+export const PriceListPricesAddProductsIdsFields = PriceListPricesAddProductIdsSchema.keyof().options
 
 export const PriceListPricesAddProductsSchema = PriceListPricesAddSchema.pick({
-  offers: true,
+  products: true,
 })
 
-export const PriceListPricesAddProductsFields = Object.keys(
-  PriceListPricesAddProductsSchema.shape
-) as (keyof typeof PriceListPricesAddProductsSchema.shape)[]
+export const PriceListPricesAddProductsFields = PriceListPricesAddProductsSchema.keyof().options

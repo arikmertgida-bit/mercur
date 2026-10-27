@@ -9,7 +9,7 @@ import { z } from "zod"
 import { useRouteModal } from "../../../../../components/modals"
 import { TabbedForm } from "../../../../../components/tabbed-form/tabbed-form"
 import { useBatchPriceListPrices } from "../../../../../hooks/api/price-lists"
-import { extractPricesFromOffers } from "../../../common/utils"
+import { exctractPricesFromProducts } from "../../../common/utils"
 import { PriceListPricesAddPricesForm } from "./price-list-prices-add-prices-form"
 import { PriceListPricesAddProductIdsForm } from "./price-list-prices-add-product-ids-form"
 import { PriceListPricesAddSchema } from "./schema"
@@ -40,20 +40,19 @@ export const PriceListPricesAddForm = ({
 
   const form = useForm<PriceListPricesAddSchemaType>({
     defaultValues: {
-      offers: {},
+      products: {},
       product_ids: [],
-      offer_ids: [],
       ...extraDefaults,
-    } as PriceListPricesAddSchemaType,
+    },
     resolver: zodResolver(schema ?? PriceListPricesAddSchema),
   })
 
   const { mutateAsync, isPending } = useBatchPriceListPrices(priceList.id)
 
   const handleSubmit = form.handleSubmit(async (values) => {
-    const { offers } = values
+    const { products } = values
 
-    const prices = extractPricesFromOffers(offers, regions)
+    const prices = exctractPricesFromProducts(products, regions)
 
     await mutateAsync(
       {

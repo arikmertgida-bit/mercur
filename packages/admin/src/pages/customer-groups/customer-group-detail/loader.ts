@@ -3,6 +3,7 @@ import { getLinkQuery } from "@mercurjs/dashboard-shared"
 import { customerGroupsQueryKeys } from "../../../hooks/api/customer-groups"
 import { sdk } from "../../../lib/client"
 import { queryClient } from "../../../lib/query-client"
+import { getRequiredParam } from "@lib/route-params"
 import { CUSTOMER_GROUP_DETAIL_FIELDS } from "./constants"
 
 const customerGroupDetailQuery = (id: string) => {
@@ -18,8 +19,7 @@ const customerGroupDetailQuery = (id: string) => {
 }
 
 export const customerGroupLoader = async ({ params }: LoaderFunctionArgs) => {
-  const id = params.id
-  const query = customerGroupDetailQuery(id!)
+  const query = customerGroupDetailQuery(getRequiredParam(params, "id"))
 
   return queryClient.ensureQueryData(query)
 }

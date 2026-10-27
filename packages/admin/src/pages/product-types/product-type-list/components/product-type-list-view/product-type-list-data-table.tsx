@@ -21,7 +21,7 @@ export const ProductTypeListDataTable = () => {
     pageSize: PAGE_SIZE,
   })
   const { product_types, count, isLoading, isError, error } = useProductTypes(
-    searchParams as Parameters<typeof useProductTypes>[0],
+    searchParams,
     {
       placeholderData: keepPreviousData,
     }

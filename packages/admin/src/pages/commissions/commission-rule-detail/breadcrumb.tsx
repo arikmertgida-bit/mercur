@@ -12,13 +12,13 @@ export const CommissionRuleBreadcrumb = (
   const { id } = props.params || {};
 
   const { commission_rate } = useCommissionRule(
-    id!,
+    id ?? "",
     undefined,
     {
       initialData: props.data,
       enabled: Boolean(id),
     }
-  ) as { commission_rate?: { name?: string } };
+  );
 
   if (!commission_rate) {
     return null;

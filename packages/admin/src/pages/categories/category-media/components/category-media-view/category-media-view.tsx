@@ -1,14 +1,13 @@
-import { HttpTypes } from "@medusajs/types"
+import { HttpTypes } from "@mercurjs/types"
 import { useMemo } from "react"
 import { useSearchParams } from "react-router-dom"
 
-import { CategoryWithImages } from "../../../common/components/category-image-fields"
 import { EditCategoryMediaForm } from "../edit-category-media-form"
 import { CategoryMediaGallery } from "../category-media-gallery"
 import { CategoryMediaViewContext } from "./category-media-view-context"
 
 type CategoryMediaViewProps = {
-  category: HttpTypes.AdminProductCategory & CategoryWithImages
+  category: HttpTypes.AdminProductCategory
 }
 
 enum View {

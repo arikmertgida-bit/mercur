@@ -74,8 +74,9 @@ export const OrganizeCategoryForm = () => {
     setChanges((prev) => [
       ...prev,
       {
-        id: value.id as string,
-        parent_category_id: value.parentId as string | null,
+        id: String(value.id),
+        parent_category_id:
+          value.parentId === null ? null : String(value.parentId),
         rank: value.index,
       },
     ])

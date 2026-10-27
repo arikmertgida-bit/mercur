@@ -1,9 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod"
-import { HttpTypes } from "@medusajs/types"
+import { HttpTypes } from "@mercurjs/types"
 import { Button, Heading, toast } from "@medusajs/ui"
 import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
-import { useParams } from "react-router-dom"
 import { z } from "zod"
 
 import { Form } from "../../../components/common/form"
@@ -13,18 +12,18 @@ import { useProductCategory, useUpdateProductCategory } from "../../../hooks/api
 import {
   CategoryIconInput,
   CategoryIconTip,
-  CategoryWithImages,
   getCategoryIcon,
   uploadCategoryImages,
 } from "../common/components/category-image-fields"
 import { CategoryIconSchema } from "../category-create/components/create-category-form/schema"
+import { useRequiredParam } from "@mercurjs/dashboard-shared"
 
 const EditCategoryIconSchema = z.object({
   icon: CategoryIconSchema.nullable(),
 })
 
 type EditCategoryIconFormProps = {
-  category: HttpTypes.AdminProductCategory & CategoryWithImages
+  category: HttpTypes.AdminProductCategory
 }
 
 const EditCategoryIconForm = ({ category }: EditCategoryIconFormProps) => {
@@ -100,11 +99,11 @@ const EditCategoryIconForm = ({ category }: EditCategoryIconFormProps) => {
 }
 
 export const CategoryIconEdit = () => {
-  const { id } = useParams()
+  const id = useRequiredParam("id")
   const { t } = useTranslation()
 
   const { product_category, isPending, isError, error } = useProductCategory(
-    id!
+    id
   )
 
   const ready = !isPending && !!product_category

@@ -1,11 +1,11 @@
 import { Heading } from "@medusajs/ui";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
 import { RouteDrawer } from "../../../components/modals";
 import { CreateAttributeForm } from "./components/create-attribute-form";
+import { useRequiredParam } from "@mercurjs/dashboard-shared";
 
 export const ProductCreateAttribute = () => {
-  const { id } = useParams();
+  const id = useRequiredParam("id");
   const { t } = useTranslation();
 
   return (
@@ -15,7 +15,7 @@ export const ProductCreateAttribute = () => {
           <Heading>{t("products.addAttribute")}</Heading>
         </RouteDrawer.Title>
       </RouteDrawer.Header>
-      <CreateAttributeForm productId={id!} />
+      <CreateAttributeForm productId={id} />
     </RouteDrawer>
   );
 };

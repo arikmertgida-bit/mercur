@@ -1,7 +1,7 @@
 import { ReactNode, Children } from "react"
-import { useLoaderData, useParams } from "react-router-dom"
+import { useLoaderData } from "react-router-dom"
 
-import { WidgetZone } from "@mercurjs/dashboard-shared"
+import { WidgetZone, useRequiredParam } from "@mercurjs/dashboard-shared"
 import { SingleColumnPageSkeleton } from "../../../components/common/skeleton"
 import { SingleColumnPage } from "../../../components/layout/pages"
 import { useUser } from "../../../hooks/api/users"
@@ -9,15 +9,15 @@ import { UserGeneralSection } from "./components/user-general-section"
 import { userLoader } from "./loader"
 
 const Root = ({ children }: { children?: ReactNode }) => {
-  const initialData = useLoaderData() as Awaited<ReturnType<typeof userLoader>>
+  const initialData = useLoaderData<typeof userLoader>()
 
-  const { id } = useParams()
+  const id = useRequiredParam("id")
   const {
     user,
     isPending: isLoading,
     isError,
     error,
-  } = useUser(id!, undefined, {
+  } = useUser(id, undefined, {
     initialData,
   })
 

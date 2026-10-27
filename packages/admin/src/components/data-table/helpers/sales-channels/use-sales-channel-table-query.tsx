@@ -1,5 +1,11 @@
 import { HttpTypes } from "@medusajs/types"
+import { z } from "zod"
+
 import { useQueryParams } from "../../../../hooks/use-query-params"
+import {
+  DateComparisonFilterSchema,
+  parseJsonQueryParam,
+} from "@mercurjs/dashboard-shared"
 
 type UseSalesChannelTableQueryProps = {
   prefix?: string
@@ -20,9 +26,9 @@ export const useSalesChannelTableQuery = ({
   const searchParams: HttpTypes.AdminSalesChannelListParams = {
     limit: pageSize,
     offset: offset ? Number(offset) : 0,
-    created_at: created_at ? JSON.parse(created_at) : undefined,
-    updated_at: updated_at ? JSON.parse(updated_at) : undefined,
-    is_disabled: is_disabled ? JSON.parse(is_disabled) : undefined,
+    created_at: parseJsonQueryParam(created_at, DateComparisonFilterSchema),
+    updated_at: parseJsonQueryParam(updated_at, DateComparisonFilterSchema),
+    is_disabled: parseJsonQueryParam(is_disabled, z.boolean()),
     ...rest,
   }
 

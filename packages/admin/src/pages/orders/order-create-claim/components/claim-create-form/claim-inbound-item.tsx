@@ -8,14 +8,17 @@ import { useTranslation } from "react-i18next"
 import { ActionMenu } from "../../../../../components/common/action-menu"
 import { Form } from "../../../../../components/common/form"
 import { Thumbnail } from "../../../../../components/common/thumbnail"
-import { Combobox } from "../../../../../components/inputs/combobox"
+import {
+  Combobox,
+  getSingleComboboxValue,
+} from "../../../../../components/inputs/combobox"
 import { MoneyAmountCell } from "../../../../../components/table/table-cells/common/money-amount-cell"
 import { useReturnReasons } from "../../../../../hooks/api/return-reasons"
-import {
-  getVariantRestockPreview,
-  type LineItemShape,
-} from "../../../../../lib/inventory-preview"
+import { getVariantRestockPreview } from "../../../../../lib/inventory-preview"
+import { isTruthy } from "../../../../../lib/is-truthy"
+import type { CreateClaimSchemaType } from "./schema"
 import { ConditionalTooltip } from "../../../../../components/common/conditional-tooltip"
+
 
 type OrderEditItemProps = {
   item: AdminOrderLineItem
@@ -24,9 +27,9 @@ type OrderEditItemProps = {
   index: number
 
   onRemove: () => void
-  onUpdate: (payload: HttpTypes.AdminUpdateReturnItems) => void
+  onUpdate: (payload: Omit<HttpTypes.AdminUpdateReturnItems, "metadata">) => void
 
-  form: UseFormReturn<any>
+  form: UseFormReturn<CreateClaimSchemaType>
 
   locationId?: string
   locationName?: string
@@ -55,7 +58,7 @@ function ClaimInboundItem({
   const showNote = typeof formItem.note === "string"
 
   const restockRows = locationId
-    ? getVariantRestockPreview(item as LineItemShape, formItem?.quantity ?? 0)
+    ? getVariantRestockPreview(item, formItem?.quantity ?? 0)
     : []
   const variantSku = item.variant_sku ?? null
 
@@ -144,7 +147,7 @@ function ClaimInboundItem({
                     onClick: onRemove,
                     icon: <XCircle />,
                   },
-                ].filter(Boolean),
+                ].filter(isTruthy),
               },
             ]}
           />
@@ -198,8 +201,9 @@ function ClaimInboundItem({
                             <Form.Control>
                               <Combobox
                                 className="bg-ui-bg-field-component hover:bg-ui-bg-field-component-hover"
-                                value={value}
-                                onChange={(v) => {
+                                value={value ?? undefined}
+                                onChange={(next) => {
+                                  const v = getSingleComboboxValue(next)
                                   onUpdate({ reason_id: v })
                                   onChange(v)
                                 }}

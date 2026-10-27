@@ -1,4 +1,3 @@
-import { AdminProductCategoryResponse } from "@medusajs/types"
 import { TFunction } from "i18next"
 
 import { CategoryTreeItem } from "./types"
@@ -44,9 +43,16 @@ type ChipProps = {
   name: string
 }
 
-export function getCategoryPath(
-  category?: AdminProductCategoryResponse["product_category"]
-): ChipProps[] {
+/** The category fields the path/children chips read (vendor and admin shapes). */
+type CategoryPathNode = ChipProps & {
+  parent_category?: CategoryPathNode | null
+}
+
+type CategoryWithChildren = {
+  category_children?: ChipProps[] | null
+}
+
+export function getCategoryPath(category?: CategoryPathNode): ChipProps[] {
   if (!category) {
     return []
   }
@@ -60,7 +66,7 @@ export function getCategoryPath(
 }
 
 export function getCategoryChildren(
-  category?: AdminProductCategoryResponse["product_category"]
+  category?: CategoryWithChildren
 ): ChipProps[] {
   if (!category || !category.category_children) {
     return []
@@ -85,8 +91,11 @@ export const insertCategoryTreeItem = (
     const stack = [...items]
     const result: CategoryTreeItem[] = []
 
-    while (stack.length > 0) {
-      const item = stack.pop()!
+    for (
+      let item = stack.pop();
+      item !== undefined;
+      item = stack.pop()
+    ) {
       if (item.id !== id) {
         if (item.category_children) {
           item.category_children = remove(item.category_children, id)
@@ -101,8 +110,11 @@ export const insertCategoryTreeItem = (
   const insert = (items: CategoryTreeItem[]): CategoryTreeItem[] => {
     const stack = [...items]
 
-    while (stack.length > 0) {
-      const item = stack.pop()!
+    for (
+      let item = stack.pop();
+      item !== undefined;
+      item = stack.pop()
+    ) {
       if (seen.has(item.id)) {
         continue // Prevent revisiting the same node
       }

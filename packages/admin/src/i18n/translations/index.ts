@@ -1,3 +1,4 @@
+import type { TranslationResources } from "../types"
 import bg from "./bg.json"
 import de from "./de.json"
 import el from "./el.json"
@@ -29,7 +30,7 @@ import nl from "./nl.json"
 import bs from "./bs.json"
 import id from "./id.json"
 import zhTW from "./zhTW.json"
-const translations: Record<string, { translation: Record<string, unknown> }> = {
+const translations: TranslationResources = {
   bs: {
     translation: bs,
   },

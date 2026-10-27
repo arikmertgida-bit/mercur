@@ -1,4 +1,5 @@
-import { AdminOrderLineItem, DateComparisonOperator } from "@medusajs/types"
+import { HttpTypes } from "@medusajs/types"
+import type { DateComparisonFilter } from "@mercurjs/dashboard-shared"
 import { OnChangeFn, RowSelectionState } from "@tanstack/react-table"
 import { useMemo, useState } from "react"
 
@@ -16,7 +17,7 @@ const PREFIX = "rit"
 type AddExchangeInboundItemsTableProps = {
   onSelectionChange: (ids: string[]) => void
   selectedItems: string[]
-  items: AdminOrderLineItem[]
+  items: HttpTypes.AdminOrderLineItem[]
   currencyCode: string
 }
 
@@ -29,10 +30,10 @@ export const AddExchangeInboundItemsTable = ({
   const { t } = useTranslation()
 
   const [rowSelection, setRowSelection] = useState<RowSelectionState>(
-    selectedItems.reduce((acc, id) => {
+    selectedItems.reduce<RowSelectionState>((acc, id) => {
       acc[id] = true
       return acc
-    }, {} as RowSelectionState)
+    }, {})
   )
 
   const updater: OnChangeFn<RowSelectionState> = (fn) => {
@@ -51,7 +52,7 @@ export const AddExchangeInboundItemsTable = ({
   const queriedItems = useMemo(() => {
     const { order, offset, limit, q, created_at, updated_at } = searchParams
 
-    let results: AdminOrderLineItem[] = items
+    let results: HttpTypes.AdminOrderLineItem[] = items
 
     if (q) {
       results = results.filter((i) => {
@@ -85,7 +86,7 @@ export const AddExchangeInboundItemsTable = ({
   const filters = useExchangeItemTableFilters()
 
   const { table } = useDataTable({
-    data: queriedItems as AdminOrderLineItem[],
+    data: queriedItems,
     columns: columns,
     count: queriedItems.length,
     enablePagination: true,
@@ -124,7 +125,7 @@ export const AddExchangeInboundItemsTable = ({
 }
 
 const sortItems = (
-  items: AdminOrderLineItem[],
+  items: HttpTypes.AdminOrderLineItem[],
   field: string,
   direction: "asc" | "desc"
 ) => {
@@ -154,11 +155,12 @@ const sortItems = (
 }
 
 const filterByDate = (
-  items: AdminOrderLineItem[],
-  date: DateComparisonOperator,
+  items: HttpTypes.AdminOrderLineItem[],
+  date: DateComparisonFilter,
   field: "created_at" | "updated_at"
 ) => {
-  const { gt, gte, lt, lte } = date
+  // The date filter writes Medusa's `$gt/$gte/$lt/$lte` operators to the URL.
+  const { $gt: gt, $gte: gte, $lt: lt, $lte: lte } = date
 
   return items.filter((i) => {
     const itemDate = new Date(i[field])

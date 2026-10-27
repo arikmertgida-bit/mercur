@@ -2850,7 +2850,9 @@
         "noVariants": "该商品没有变体"
       },
       "edit": {
-        "successToast": "价格列表中成功更新价格。"
+        "successToast": "价格列表中成功更新价格。",
+        "header": "编辑 {{title}} 的价格",
+        "description": "更新此价格列表中产品的价格。"
       }
     },
     "fields": {

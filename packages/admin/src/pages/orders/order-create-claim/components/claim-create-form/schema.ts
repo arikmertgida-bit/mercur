@@ -4,6 +4,7 @@ export const ClaimCreateSchema = z.object({
   inbound_items: z.array(
     z.object({
       item_id: z.string(),
+      variant_id: z.string().nullish(),
       quantity: z.number(),
       reason_id: z.string().nullish(),
       note: z.string().nullish(),
@@ -11,11 +12,12 @@ export const ClaimCreateSchema = z.object({
   ),
   outbound_items: z.array(
     z.object({
-      item_id: z.string(), // TODO: variant id?
+      item_id: z.string(),
+      variant_id: z.string().nullish(),
       quantity: z.number(),
     })
   ),
-  location_id: z.string().optional(),
+  location_id: z.string().nullish(),
   inbound_option_id: z.string().nullish(),
   outbound_option_id: z.string().nullish(),
   send_notification: z.boolean().optional(),

@@ -1,9 +1,7 @@
 import { ReactNode, Children } from "react";
-import { useLoaderData, useParams } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 
-import { HttpTypes } from "@medusajs/types";
-import { SellerDTO } from "@mercurjs/types";
-import { WidgetZone, useLinkQuery } from "@mercurjs/dashboard-shared";
+import { WidgetZone, useLinkQuery, useRequiredParam } from "@mercurjs/dashboard-shared";
 import { TwoColumnPageSkeleton } from "../../../components/common/skeleton";
 import { TwoColumnPage } from "../../../components/layout/pages";
 import { useProduct } from "../../../hooks/api/products";
@@ -17,26 +15,14 @@ import { ProductVariantSection } from "./components/product-variant-section";
 import { productLoader } from "./loader";
 import { PRODUCT_DETAIL_QUERY } from "../constants";
 
-type AdminProductWithSeller = HttpTypes.AdminProduct & {
-  sellers?: SellerDTO[];
-};
-
 const Root = ({ children }: { children?: ReactNode }) => {
-  const initialData = useLoaderData() as Awaited<
-    ReturnType<typeof productLoader>
-  >;
+  const initialData = useLoaderData<typeof productLoader>();
 
-  const { id } = useParams();
+  const id = useRequiredParam("id");
   const query = useLinkQuery("product", PRODUCT_DETAIL_QUERY.fields);
-  const {
-    product: rawProduct,
-    isLoading,
-    isError,
-    error,
-  } = useProduct(id!, query, {
+  const { product, isLoading, isError, error } = useProduct(id, query, {
     initialData,
   });
-  const product = rawProduct as AdminProductWithSeller | undefined;
 
   if (isLoading || !product) {
     return (

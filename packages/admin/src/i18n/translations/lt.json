@@ -2835,7 +2835,7 @@
       "header": "Prekės",
       "actions": {
         "addProducts": "Pridėti prekes",
-        "editPrices": "Keisti prices",
+        "editPrices": "Keisti kainas",
         "editPricesDisabled": "Pridėkite prekes prieš keisdami kainas"
       },
       "delete": {
@@ -2850,7 +2850,9 @@
         "noVariants": "Šis produktas neturi variantų"
       },
       "edit": {
-        "successToast": "Kainos sėkmingai pakeistos."
+        "successToast": "Kainos sėkmingai pakeistos.",
+        "header": "Keisti kainas: {{title}}",
+        "description": "Atnaujinkite šio kainoraščio prekių kainas."
       }
     },
     "fields": {

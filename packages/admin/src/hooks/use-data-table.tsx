@@ -1,9 +1,10 @@
 import {
-  ColumnDef,
   OnChangeFn,
   PaginationState,
   Row,
   RowSelectionState,
+  TableOptions,
+  functionalUpdate,
   getCoreRowModel,
   getExpandedRowModel,
   getPaginationRowModel,
@@ -14,7 +15,7 @@ import { useSearchParams } from "react-router-dom"
 
 type UseDataTableProps<TData> = {
   data?: TData[]
-  columns: ColumnDef<TData, any>[]
+  columns: TableOptions<TData>["columns"]
   count?: number
   pageSize?: number
   enableRowSelection?: boolean | ((row: Row<TData>) => boolean)
@@ -26,7 +27,7 @@ type UseDataTableProps<TData> = {
   enableExpandableRows?: boolean
   getRowId?: (original: TData, index: number) => string
   getSubRows?: (original: TData) => TData[]
-  meta?: Record<string, unknown>
+  meta?: TableOptions<TData>["meta"]
   prefix?: string
 }
 
@@ -80,10 +81,8 @@ export const useDataTable = <TData,>({
     }))
   }, [offset, enablePagination, _pageSize, pageIndex])
 
-  const onPaginationChange = (
-    updater: (old: PaginationState) => PaginationState
-  ) => {
-    const state = updater(pagination)
+  const onPaginationChange: OnChangeFn<PaginationState> = (updater) => {
+    const state = functionalUpdate(updater, pagination)
     const { pageIndex, pageSize } = state
 
     setSearchParams((prev) => {
@@ -114,9 +113,7 @@ export const useDataTable = <TData,>({
     getRowId,
     getSubRows,
     onRowSelectionChange: enableRowSelection ? setRowSelection : undefined,
-    onPaginationChange: enablePagination
-      ? (onPaginationChange as OnChangeFn<PaginationState>)
-      : undefined,
+    onPaginationChange: enablePagination ? onPaginationChange : undefined,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: enablePagination
       ? getPaginationRowModel()

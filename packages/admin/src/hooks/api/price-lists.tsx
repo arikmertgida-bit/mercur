@@ -134,7 +134,6 @@ export const useDeletePriceList = (
 
 export const useBatchPriceListPrices = (
   id: string,
-  query?: Record<string, any>,
   options?: UseMutationOptions<
     InferClientOutput<typeof sdk.admin.priceLists.$id.prices.batch.mutate>,
     ClientError,

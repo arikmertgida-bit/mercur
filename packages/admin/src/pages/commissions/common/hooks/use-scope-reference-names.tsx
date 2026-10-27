@@ -55,13 +55,13 @@ export const useScopeReferenceNames = (rules: CommissionRuleDTO[] = []) => {
 
   const names = useMemo(() => {
     const map: Record<string, string> = {};
-    for (const s of (sellers ?? []) as { id: string; name: string }[]) {
+    for (const s of sellers ?? []) {
       map[s.id] = s.name;
     }
-    for (const pt of (productTypes ?? []) as { id: string; value: string }[]) {
+    for (const pt of productTypes ?? []) {
       map[pt.id] = pt.value;
     }
-    for (const c of (categories ?? []) as { id: string; name: string }[]) {
+    for (const c of categories ?? []) {
       map[c.id] = c.name;
     }
     return map;

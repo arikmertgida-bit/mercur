@@ -34,7 +34,7 @@ export const useCampaignTableFilters = (): Filter[] => {
       options: [
         { label: t("campaigns.fields.platformOwner"), value: "platform" },
         ...(sellers ?? []).map((seller) => ({
-          label: seller.name!,
+          label: seller.name,
           value: seller.id,
         })),
       ],

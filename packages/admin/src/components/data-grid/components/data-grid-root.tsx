@@ -9,8 +9,6 @@ import {
 } from "@medusajs/icons"
 import { Button, DropdownMenu, clx } from "@medusajs/ui"
 import {
-  Cell,
-  CellContext,
   Column,
   ColumnDef,
   Row,
@@ -33,13 +31,13 @@ import React, {
   useRef,
   useState,
 } from "react"
-import { FieldValues, UseFormReturn } from "react-hook-form"
+import { FieldErrors, FieldValues, UseFormReturn } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
 import { useCommandHistory } from "../../../hooks/use-command-history"
 import { useDocumentDirection } from "../../../hooks/use-document-direction"
 import { ConditionalTooltip } from "../../common/conditional-tooltip"
-import { DataGridContext } from "../context"
+import { DataGridContext, type DataGridContextValue } from "../context"
 import {
   useDataGridCellHandlers,
   useDataGridCellMetadata,
@@ -54,7 +52,7 @@ import {
   useDataGridQueryTool,
 } from "../hooks"
 import { DataGridMatrix } from "../models"
-import { DataGridCoordinates, GridColumnOption } from "../types"
+import { DataGridCoordinates, DataGridForm, GridColumnOption } from "../types"
 import { isCellMatch, isSpecialFocusKey } from "../utils"
 import { DataGridKeyboardShortcutModal } from "./data-grid-keyboard-shortcut-modal"
 export interface DataGridRootProps<
@@ -90,6 +88,20 @@ export interface DataGridRootProps<
 }
 
 const ROW_HEIGHT = 40
+const EMPTY_DATA: never[] = []
+
+/**
+ * Widens the caller's form to the grid's path-addressed view of it. The grid
+ * only reaches form values through the runtime path strings returned by the
+ * column `field` callbacks, and treats the values they address as the JSON
+ * primitives/objects its cells edit.
+ */
+function toDataGridForm<TFieldValues extends FieldValues>(
+  form: UseFormReturn<TFieldValues>
+): DataGridForm {
+  // @ts-expect-error -- react-hook-form boundary: UseFormReturn (Control, register, setValue, ...) is invariant in its field-values type, so a concrete form cannot be widened to the record view the grid addresses by runtime path.
+  return form
+}
 
 const getCommonPinningStyles = <TData,>(
   column: Column<TData>
@@ -126,7 +138,7 @@ export const DataGridRoot = <
   TData,
   TFieldValues extends FieldValues = FieldValues
 >({
-  data = [],
+  data = EMPTY_DATA,
   columns,
   state,
   getSubRows,
@@ -145,13 +157,14 @@ export const DataGridRoot = <
   const containerRef = useRef<HTMLDivElement>(null)
 
   const { redo, undo, execute } = useCommandHistory()
+  const form = toDataGridForm(state)
   const {
     register,
     control,
     getValues,
     setValue,
-    formState: { errors },
-  } = state
+  } = form
+  const errors: FieldErrors = state.formState.errors
 
   const [internalTrapActive, setTrapActive] = useState(true)
 
@@ -174,7 +187,7 @@ export const DataGridRoot = <
     columns,
     initialState: {
       columnPinning: {
-        left: [columns[0].id!],
+        left: columns[0]?.id ? [columns[0].id] : [],
       },
     },
     state: {
@@ -199,7 +212,7 @@ export const DataGridRoot = <
   )
   const visibleColumns = grid.getVisibleLeafColumns()
 
-  const effectiveRowCount = isLazyMode ? totalRowCount! : visibleRows.length
+  const effectiveRowCount = totalRowCount ?? visibleRows.length
 
   const rowVirtualizer = useVirtualizer({
     count: effectiveRowCount,
@@ -267,7 +280,11 @@ export const DataGridRoot = <
 
     const scrollElement = containerRef.current
 
-    const { scrollTop, clientHeight } = scrollElement!
+    if (!scrollElement) {
+      return
+    }
+
+    const { scrollTop, clientHeight } = scrollElement
     const loadedHeight = loadedRowCount * ROW_HEIGHT
     const viewportBottom = scrollTop + clientHeight
     const fetchThreshold = loadedHeight - ROW_HEIGHT * 10
@@ -357,11 +374,7 @@ export const DataGridRoot = <
 
   const matrix = useMemo(
     () =>
-      new DataGridMatrix<TData, TFieldValues>(
-        flatRows,
-        columns,
-        multiColumnSelection
-      ),
+      new DataGridMatrix<TData>(flatRows, columns, multiColumnSelection),
     [flatRows, columns, multiColumnSelection]
   )
   const queryTool = useDataGridQueryTool(containerRef)
@@ -400,10 +413,7 @@ export const DataGridRoot = <
     [handleToggleColumn]
   )
 
-  const { navigateToField, scrollToCoordinates } = useDataGridNavigation<
-    TData,
-    TFieldValues
-  >({
+  const { navigateToField, scrollToCoordinates } = useDataGridNavigation({
     matrix,
     queryTool,
     anchor,
@@ -416,12 +426,9 @@ export const DataGridRoot = <
     visibleRows,
   })
 
-  const { createSnapshot, restoreSnapshot } = useDataGridCellSnapshot<
-    TData,
-    TFieldValues
-  >({
+  const { createSnapshot, restoreSnapshot } = useDataGridCellSnapshot({
     matrix,
-    form: state,
+    form,
   })
 
   const onEditingChangeHandler = useCallback(
@@ -439,17 +446,14 @@ export const DataGridRoot = <
     [anchor, createSnapshot, onEditingChange]
   )
 
-  const { getSelectionValues, setSelectionValues } = useDataGridFormHandlers<
-    TData,
-    TFieldValues
-  >({
+  const { getSelectionValues, setSelectionValues } = useDataGridFormHandlers({
     matrix,
-    form: state,
+    form,
     anchor,
   })
 
   const { handleKeyDownEvent, handleSpecialFocusKeys } =
-    useDataGridKeydownEvent<TData, TFieldValues>({
+    useDataGridKeydownEvent({
       containerRef,
       matrix,
       queryTool,
@@ -472,7 +476,7 @@ export const DataGridRoot = <
       setValue,
     })
 
-  const { handleMouseUpEvent } = useDataGridMouseUpEvent<TData, TFieldValues>({
+  const { handleMouseUpEvent } = useDataGridMouseUpEvent({
     matrix,
     anchor,
     dragEnd,
@@ -486,10 +490,7 @@ export const DataGridRoot = <
     execute,
   })
 
-  const { handleCopyEvent, handlePasteEvent } = useDataGridClipboardEvents<
-    TData,
-    TFieldValues
-  >({
+  const { handleCopyEvent, handlePasteEvent } = useDataGridClipboardEvents({
     matrix,
     isEditing,
     anchor,
@@ -507,7 +508,7 @@ export const DataGridRoot = <
     getIsCellDragSelected,
     getIsCellSelected,
     onDragToFillStart,
-  } = useDataGridCellHandlers<TData, TFieldValues>({
+  } = useDataGridCellHandlers({
     matrix,
     anchor,
     rangeEnd,
@@ -524,10 +525,7 @@ export const DataGridRoot = <
     multiColumnSelection,
   })
 
-  const { getCellErrorMetadata, getCellMetadata } = useDataGridCellMetadata<
-    TData,
-    TFieldValues
-  >({
+  const { getCellErrorMetadata, getCellMetadata } = useDataGridCellMetadata({
     matrix,
   })
 
@@ -613,7 +611,7 @@ export const DataGridRoot = <
     }
   }, [anchor, matrix, setSingleRange])
 
-  const values = useMemo(
+  const values = useMemo<DataGridContextValue>(
     () => ({
       anchor,
       control,
@@ -715,7 +713,7 @@ export const DataGridRoot = <
                         style={{ display: "flex", width: virtualPaddingLeft }}
                       />
                     ) : null}
-                    {virtualColumns.reduce((acc, vc, index, array) => {
+                    {virtualColumns.reduce<ReactNode[]>((acc, vc, index, array) => {
                       const header = headerGroup.headers[vc.index]
                       const previousVC = array[index - 1]
 
@@ -768,7 +766,7 @@ export const DataGridRoot = <
                       )
 
                       return acc
-                    }, [] as ReactNode[])}
+                    }, [])}
                     {virtualPaddingRight ? (
                       <div
                         role="presentation"
@@ -789,7 +787,8 @@ export const DataGridRoot = <
                 }}
               >
                 {virtualRows.map((virtualRow) => {
-                  const row = visibleRows[virtualRow.index] as Row<TData>
+                  const row: Row<TData> | undefined =
+                    visibleRows[virtualRow.index]
 
                   // In lazy mode, rows beyond loaded data show as skeleton
                   if (!row) {
@@ -966,7 +965,8 @@ const DataGridHeader = ({
 }
 
 type DataGridCellProps<TData> = {
-  cell: Cell<TData, unknown>
+  column: Column<TData>
+  content: ReactNode
   columnIndex: number
   rowIndex: number
   anchor: DataGridCoordinates | null
@@ -975,7 +975,8 @@ type DataGridCellProps<TData> = {
 }
 
 const DataGridCell = <TData,>({
-  cell,
+  column,
+  content,
   columnIndex,
   rowIndex,
   anchor,
@@ -995,8 +996,8 @@ const DataGridCell = <TData,>({
       aria-rowindex={rowIndex}
       aria-colindex={columnIndex}
       style={{
-        width: cell.column.getSize(),
-        ...getCommonPinningStyles(cell.column),
+        width: column.getSize(),
+        ...getCommonPinningStyles(column),
       }}
       data-row-index={rowIndex}
       data-column-index={columnIndex}
@@ -1006,11 +1007,7 @@ const DataGridCell = <TData,>({
       tabIndex={-1}
     >
       <div className="relative w-full">
-        {flexRender(cell.column.columnDef.cell, {
-          ...cell.getContext(),
-          columnIndex,
-          rowIndex: rowIndex,
-        } as CellContext<TData, any>)}
+        {content}
         {isAnchor && (
           <div
             onMouseDown={onDragToFillStart}
@@ -1035,7 +1032,7 @@ type DataGridRowProps<TData> = {
   virtualPaddingLeft?: number
   virtualPaddingRight?: number
   virtualColumns: VirtualItem[]
-  flatColumns: Column<TData, unknown>[]
+  flatColumns: Column<TData>[]
   anchor: DataGridCoordinates | null
   onDragToFillStart: (e: React.MouseEvent<HTMLElement>) => void
   multiColumnSelection: boolean
@@ -1073,7 +1070,7 @@ const DataGridRow = <TData,>({
           style={{ display: "flex", width: virtualPaddingLeft }}
         />
       ) : null}
-      {virtualColumns.reduce((acc, vc, index, array) => {
+      {virtualColumns.reduce<ReactNode[]>((acc, vc, index, array) => {
         const cell = visibleCells[vc.index]
         const column = cell.column
         const columnIndex = flatColumns.findIndex((c) => c.id === column.id)
@@ -1093,10 +1090,14 @@ const DataGridRow = <TData,>({
           )
         }
 
+        // Cells read their grid position from the context (see getCellCoordinates).
+        const context = { ...cell.getContext(), columnIndex, rowIndex }
+
         acc.push(
           <DataGridCell
             key={cell.id}
-            cell={cell}
+            column={column}
+            content={flexRender(cell.column.columnDef.cell, context)}
             columnIndex={columnIndex}
             rowIndex={rowIndex}
             anchor={anchor}
@@ -1106,7 +1107,7 @@ const DataGridRow = <TData,>({
         )
 
         return acc
-      }, [] as ReactNode[])}
+      }, [])}
       {virtualPaddingRight ? (
         <div
           role="presentation"

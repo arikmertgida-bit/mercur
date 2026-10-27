@@ -47,7 +47,7 @@ export const ProductCreateForm = ({
     defaultValues: {
       ...PRODUCT_CREATE_FORM_DEFAULTS,
       ...extraDefaults,
-    } as ProductCreateSchemaType,
+    },
     resolver: zodResolver(schema ?? ProductCreateSchema),
   });
 
@@ -71,12 +71,12 @@ export const ProductCreateForm = ({
       return {};
     }
 
-    return regions.reduce(
+    return regions.reduce<Record<string, string>>(
       (acc, reg) => {
         acc[reg.id] = reg.currency_code;
         return acc;
       },
-      {} as Record<string, string>,
+      {},
     );
   }, [regions]);
 
@@ -89,8 +89,10 @@ export const ProductCreateForm = ({
 
     let isDraftSubmission = false;
     if (e?.nativeEvent instanceof SubmitEvent) {
-      const submitter = e?.nativeEvent?.submitter as HTMLButtonElement;
-      isDraftSubmission = submitter.dataset.name === SAVE_DRAFT_BUTTON;
+      const submitter = e.nativeEvent.submitter;
+      isDraftSubmission =
+        submitter instanceof HTMLElement &&
+        submitter.dataset.name === SAVE_DRAFT_BUTTON;
     }
 
     const media = values.media || [];

@@ -157,7 +157,8 @@ export const CreateRegionForm = ({ currencies }: CreateRegionFormProps) => {
       "countries",
       selected.map((key) => ({
         code: key,
-        name: staticCountries.find((c) => c.iso_2 === key)!.display_name,
+        name:
+          staticCountries.find((c) => c.iso_2 === key)?.display_name ?? key,
       })),
       { shouldDirty: true, shouldTouch: true },
     );
@@ -169,11 +170,11 @@ export const CreateRegionForm = ({ currencies }: CreateRegionFormProps) => {
     const update = selectedCountries.filter((c) => c.code !== code);
     const ids = update
       .map((c) => c.code)
-      .reduce((acc, c) => {
+      .reduce<RowSelectionState>((acc, c) => {
         acc[c] = true;
 
         return acc;
-      }, {} as RowSelectionState);
+      }, {});
 
     form.setValue("countries", update, {
       shouldDirty: true,

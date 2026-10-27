@@ -2850,7 +2850,9 @@
         "noVariants": "Bu ürünün varyantı yok"
       },
       "edit": {
-        "successToast": "Fiyatlar başarıyla güncellendi."
+        "successToast": "Fiyatlar başarıyla güncellendi.",
+        "header": "{{title}} için fiyatları düzenle",
+        "description": "Bu fiyat listesindeki ürünlerin fiyatlarını güncelleyin."
       }
     },
     "fields": {

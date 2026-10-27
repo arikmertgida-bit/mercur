@@ -1,10 +1,11 @@
 import { Children, ReactNode } from "react"
-import { useParams, useSearchParams } from "react-router-dom"
+import { useRequiredParam } from "@mercurjs/dashboard-shared"
+import { useSearchParams } from "react-router-dom"
 
 import { RouteFocusModal } from "../../../components/modals"
 import { TabbedForm } from "../../../components/tabbed-form/tabbed-form"
 import { useStockLocation } from "../../../hooks/api/stock-locations"
-import { FulfillmentSetType } from "../common/constants"
+import { toFulfillmentSetType } from "../common/constants"
 import {
   CreateShippingOptionsForm,
   CreateShippingOptionSchemaType,
@@ -15,17 +16,19 @@ import { CreateShippingOptionSchema } from "./components/create-shipping-options
 import { LOC_CREATE_SHIPPING_OPTION_FIELDS } from "./constants"
 
 const Root = ({ children }: { children?: ReactNode }) => {
-  const { location_id, fset_id, zone_id } = useParams()
+  const location_id = useRequiredParam("location_id")
+  const fset_id = useRequiredParam("fset_id")
+  const zone_id = useRequiredParam("zone_id")
   const [searchParams] = useSearchParams()
   const isReturn = searchParams.has("is_return")
 
   const { stock_location, isPending, isFetching, isError, error } =
-    useStockLocation(location_id!, {
+    useStockLocation(location_id, {
       fields: LOC_CREATE_SHIPPING_OPTION_FIELDS,
     })
 
   const fulfillmentSet = stock_location?.fulfillment_sets?.find(
-    (f: { id: string }) => f.id === fset_id
+    (f) => f.id === fset_id
   )
 
   if (!isPending && !isFetching && !fulfillmentSet) {
@@ -35,7 +38,7 @@ const Root = ({ children }: { children?: ReactNode }) => {
     )
   }
 
-  const zone = fulfillmentSet?.service_zones?.find((z: { id: string }) => z.id === zone_id)
+  const zone = fulfillmentSet?.service_zones?.find((z) => z.id === zone_id)
 
   if (!isPending && !isFetching && !zone) {
     throw new Response(
@@ -50,15 +53,15 @@ const Root = ({ children }: { children?: ReactNode }) => {
 
   return (
     <RouteFocusModal prev={`/settings/locations/${location_id}`} data-testid="location-shipping-option-create-modal">
-      {zone && (
+      {zone && fulfillmentSet && (
         Children.count(children) > 0 ? (
           children
         ) : (
           <CreateShippingOptionsForm
             zone={zone}
             isReturn={isReturn}
-            locationId={location_id!}
-            type={fulfillmentSet!.type as FulfillmentSetType}
+            locationId={location_id}
+            type={toFulfillmentSetType(fulfillmentSet.type)}
           />
         )
       )}

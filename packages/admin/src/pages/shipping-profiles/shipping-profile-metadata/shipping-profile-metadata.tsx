@@ -1,49 +1,28 @@
-import { useParams } from "react-router-dom"
-import { useTranslation } from "react-i18next"
 import { MetadataForm } from "@components/forms/metadata-form/metadata-form"
 import {
   useShippingProfile,
   useUpdateShippingProfile,
 } from "@hooks/api"
-import { ClientError } from "@mercurjs/client"
+import { useRequiredParam } from "@mercurjs/dashboard-shared"
 
 export const ShippingProfileMetadata = () => {
-  const { t } = useTranslation()
-  const { shipping_profile_id } = useParams()
+  const shipping_profile_id = useRequiredParam("shipping_profile_id")
 
   const { shipping_profile, isPending, isError, error } = useShippingProfile(
-    shipping_profile_id!
+    shipping_profile_id
   )
   const { mutateAsync, isPending: isMutating } = useUpdateShippingProfile(
-    shipping_profile_id!
+    shipping_profile_id
   )
 
   if (isError) {
     throw error
   }
 
-  const handleSubmit = async (
-    params: { metadata?: Record<string, unknown> | null },
-    callbacks: { onSuccess?: () => void; onError?: (error: ClientError | string) => void }
-  ) => {
-    try {
-      const result = await mutateAsync({
-        metadata: params.metadata === undefined ? undefined : params.metadata,
-      })
-      callbacks.onSuccess?.()
-
-      return result
-    } catch (error) {
-      const message = error instanceof ClientError ? error.message : t("errorBoundary.defaultTitle")
-      callbacks.onError?.(message)
-      throw error
-    }
-  }
-
   return (
     <MetadataForm
       metadata={shipping_profile?.metadata}
-      hook={handleSubmit}
+      hook={mutateAsync}
       isPending={isPending}
       isMutating={isMutating}
     />

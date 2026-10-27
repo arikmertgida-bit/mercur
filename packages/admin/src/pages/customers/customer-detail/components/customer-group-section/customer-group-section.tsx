@@ -1,3 +1,4 @@
+import { z } from "zod"
 import { HttpTypes } from "@medusajs/types"
 import {
   Button,
@@ -237,9 +238,11 @@ const CustomerGroupRowActions = ({
 
 // `seller` comes from the Mercur `customer_group_seller` link (requested via
 // `+seller.id,+seller.name`); it is not on Medusa's base customer-group type.
-type CustomerGroupWithOwner = HttpTypes.AdminCustomerGroup & {
-  seller?: { id: string; name: string } | null
-}
+// Medusa's customer group type has no Mercur `seller` link; the section's
+// query selects it, so the owner is read from the row.
+const CustomerGroupOwnerSchema = z.object({
+  seller: z.object({ name: z.string() }).nullish(),
+})
 
 const columnHelper = createColumnHelper<HttpTypes.AdminCustomerGroup>()
 
@@ -281,7 +284,8 @@ const useColumns = (customerId: string) => {
         id: "owner",
         header: t("fields.owner"),
         cell: ({ row }) => {
-          const seller = (row.original as CustomerGroupWithOwner).seller
+          const owner = CustomerGroupOwnerSchema.safeParse(row.original)
+          const seller = owner.success ? owner.data.seller : undefined
           return (
             <span data-testid={`customer-group-section-owner-${row.original.id}`}>
               {seller?.name ?? "-"}

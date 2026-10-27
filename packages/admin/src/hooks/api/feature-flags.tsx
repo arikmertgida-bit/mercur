@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
 
-import { fetchQuery } from "../../lib/client"
+import { sdk } from "../../lib/client"
 
 export type FeatureFlags = {
   view_configurations?: boolean
@@ -13,9 +13,7 @@ export const useFeatureFlags = () => {
   return useQuery<FeatureFlags>({
     queryKey: ["admin", "feature-flags"],
     queryFn: async () => {
-      const response = (await fetchQuery("/admin/feature-flags", {
-        method: "GET",
-      })) as { feature_flags: FeatureFlags }
+      const response = await sdk.admin.featureFlags.query()
 
       return response.feature_flags
     },

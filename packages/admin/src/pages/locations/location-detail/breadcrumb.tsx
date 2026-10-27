@@ -13,7 +13,7 @@ export const LocationDetailBreadcrumb = (
   const { location_id } = props.params || {}
 
   const { stock_location } = useStockLocation(
-    location_id!,
+    location_id ?? "",
     {
       fields: LOCATION_DETAILS_FIELD,
     },

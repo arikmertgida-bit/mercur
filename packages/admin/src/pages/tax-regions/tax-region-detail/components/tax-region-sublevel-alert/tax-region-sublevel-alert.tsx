@@ -18,7 +18,7 @@ export const TaxRegionSublevelAlert = ({
   const { t } = useTranslation()
 
   const [dismissed, setDismissed] = useState(false)
-  const provinceObject = getCountryProvinceObjectByIso2(taxRegion.country_code!)
+  const provinceObject = getCountryProvinceObjectByIso2(taxRegion.country_code)
 
   if (
     provinceObject ||

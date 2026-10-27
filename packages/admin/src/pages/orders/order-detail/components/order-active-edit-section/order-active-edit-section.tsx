@@ -67,7 +67,7 @@ export const OrderActiveEditSection = ({
     const added = [];
     const removed = [];
 
-    const orderLookupMap = new Map(order.items!.map((i) => [i.id, i]));
+    const orderLookupMap = new Map(order.items.map((i) => [i.id, i]));
 
     (orderPreview?.items || []).forEach((currentItem) => {
       const originalItem = orderLookupMap.get(currentItem.id);

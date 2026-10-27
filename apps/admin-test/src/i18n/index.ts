@@ -1,3 +1,4 @@
+import type { Resource } from "i18next"
 import ar from "./ar.json"
 import bg from "./bg.json"
 import bs from "./bs.json"
@@ -30,7 +31,7 @@ import vi from "./vi.json"
 import zhCN from "./zhCN.json"
 import zhTW from "./zhTW.json"
 
-const i18nResources: Record<string, { translation: Record<string, unknown> }> = {
+const i18nResources: Resource = {
   ar: { translation: ar },
   bg: { translation: bg },
   bs: { translation: bs },

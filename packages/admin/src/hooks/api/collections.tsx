@@ -1,4 +1,8 @@
-import { ClientError, InferClientInput } from "@mercurjs/client";
+import {
+  ClientError,
+  InferClientInput,
+  InferClientOutput,
+} from "@mercurjs/client";
 import {
   QueryKey,
   UseMutationOptions,
@@ -44,9 +48,9 @@ export const useCollections = (
   query?: InferClientInput<typeof sdk.admin.collections.query>,
   options?: Omit<
     UseQueryOptions<
-      AdminCollectionResponse,
+      InferClientOutput<typeof sdk.admin.collections.query>,
       ClientError,
-      AdminCollectionResponse,
+      InferClientOutput<typeof sdk.admin.collections.query>,
       QueryKey
     >,
     "queryFn" | "queryKey"

@@ -12,6 +12,7 @@ import {
 import { useFieldArray, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import * as zod from "zod";
+import { parseSellerStatus } from "@lib/seller-status";
 import { useCallback, useEffect, useRef } from "react";
 
 import { FileType, FileUpload } from "@components/common/file-upload";
@@ -115,7 +116,7 @@ export const StoreEditForm = ({ seller }: StoreEditFormProps) => {
     zone: "edit",
     data: seller,
     defaultValues: {
-      status: (seller.status as SellerStatus) ?? SellerStatus.OPEN,
+      status: parseSellerStatus(seller.status) ?? SellerStatus.OPEN,
       name: seller.name ?? "",
       description: seller.description ?? "",
       handle: seller.handle ?? "",
@@ -179,13 +180,13 @@ export const StoreEditForm = ({ seller }: StoreEditFormProps) => {
     let logoUrl: string | null = null;
     let bannerUrl: string | null = null;
 
-    const newLogoFile = values.media?.find((m) => m.file);
-    const newBannerFile = values.bannerMedia?.find((m) => m.file);
+    const newLogoFile = values.media?.find((m) => m.file)?.file;
+    const newBannerFile = values.bannerMedia?.find((m) => m.file)?.file;
 
     try {
       if (newLogoFile) {
         const uploaded = await sdk.admin.uploads.mutate({
-          files: [newLogoFile.file],
+          files: [newLogoFile],
         });
         logoUrl = uploaded.files?.[0]?.url || null;
       } else if (values.media?.length) {
@@ -194,7 +195,7 @@ export const StoreEditForm = ({ seller }: StoreEditFormProps) => {
 
       if (newBannerFile) {
         const uploaded = await sdk.admin.uploads.mutate({
-          files: [newBannerFile.file],
+          files: [newBannerFile],
         });
         bannerUrl = uploaded.files?.[0]?.url || null;
       } else if (values.bannerMedia?.length) {
@@ -499,7 +500,6 @@ export const StoreEditForm = ({ seller }: StoreEditFormProps) => {
           <FormExtensionZone
             model="seller"
             zone="edit"
-            control={form.control}
             data={seller}
           />
         </RouteDrawer.Body>

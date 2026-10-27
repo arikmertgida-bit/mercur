@@ -32,6 +32,7 @@ import { useDate } from "../../../../../hooks/use-date";
 import { getFormattedAddress } from "../../../../../lib/addresses";
 import { getStylizedAmount } from "../../../../../lib/money-amount-helpers";
 import { getPaymentsFromOrder } from "../../../../../lib/orders";
+import { getOrderChangeActionDetails } from "../../../../../lib/order-change-action";
 import ActivityItems from "./activity-items";
 import ChangeDetailsTooltip from "./change-details-tooltip";
 
@@ -215,17 +216,19 @@ const useActivityItems = (order: AdminOrder): Activity[] => {
     const items: Activity[] = [];
 
     for (const payment of payments) {
-      const amount = payment.amount as number;
+      const amount = payment.amount;
 
-      items.push({
-        title: t("orders.activity.events.payment.awaiting"),
-        timestamp: payment.created_at!,
-        children: (
-          <Text size="small" className="text-ui-fg-subtle">
-            {getStylizedAmount(amount, payment.currency_code)}
-          </Text>
-        ),
-      });
+      if (payment.created_at) {
+        items.push({
+          title: t("orders.activity.events.payment.awaiting"),
+          timestamp: payment.created_at,
+          children: (
+            <Text size="small" className="text-ui-fg-subtle">
+              {getStylizedAmount(amount, payment.currency_code)}
+            </Text>
+          ),
+        });
+      }
 
       if (payment.canceled_at) {
         items.push({
@@ -258,7 +261,7 @@ const useActivityItems = (order: AdminOrder): Activity[] => {
           children: (
             <Text size="small" className="text-ui-fg-subtle">
               {getStylizedAmount(
-                refund.amount as number,
+                refund.amount,
                 payment.currency_code,
               )}
             </Text>
@@ -357,7 +360,9 @@ const useActivityItems = (order: AdminOrder): Activity[] => {
     }
 
     for (const claim of claims) {
-      const claimReturn = returnMap.get(claim.return_id!);
+      const claimReturn = claim.return_id
+        ? returnMap.get(claim.return_id)
+        : undefined;
 
       items.push({
         title: t(
@@ -377,7 +382,9 @@ const useActivityItems = (order: AdminOrder): Activity[] => {
     }
 
     for (const exchange of exchanges) {
-      const exchangeReturn = returnMap.get(exchange.return_id!);
+      const exchangeReturn = exchange.return_id
+        ? returnMap.get(exchange.return_id)
+        : undefined;
 
       items.push({
         title: t(
@@ -892,7 +899,7 @@ const ClaimBody = ({
   };
 
   const outboundItems = (claim.additional_items || []).reduce(
-    (acc, item) => (acc + item.quantity) as number,
+    (acc, item) => acc + item.quantity,
     0,
   );
 
@@ -970,7 +977,7 @@ const ExchangeBody = ({
   };
 
   const outboundItems = (exchange.additional_items || []).reduce(
-    (acc, item) => (acc + item.quantity) as number,
+    (acc, item) => acc + item.quantity,
     0,
   );
 
@@ -1117,11 +1124,13 @@ function countItemsChange(actions: AdminOrderChange["actions"]) {
   let removed = 0;
 
   actions.forEach((action) => {
+    const { quantity, quantity_diff } = getOrderChangeActionDetails(action);
+
     if (action.action === "ITEM_ADD") {
-      added += action.details!.quantity as number;
+      added += quantity ?? 0;
     }
     if (action.action === "ITEM_UPDATE") {
-      const quantityDiff = action.details!.quantity_diff as number;
+      const quantityDiff = quantity_diff ?? 0;
 
       if (quantityDiff > 0) {
         added += quantityDiff;
@@ -1147,15 +1156,17 @@ function getMissingLineItemIds(order: AdminOrder, changes: AdminOrderChange[]) {
 
   changes.forEach((change) => {
     change.actions.forEach((action) => {
-      if (!action.details?.reference_id) {
+      const { reference_id } = getOrderChangeActionDetails(action);
+
+      if (!reference_id) {
         return;
       }
 
       if (
-        (action.details.reference_id as string).startsWith("ordli_") &&
-        !existingItemsMap.has(action.details.reference_id as string)
+        reference_id.startsWith("ordli_") &&
+        !existingItemsMap.has(reference_id)
       ) {
-        retIds.add(action.details.reference_id as string);
+        retIds.add(reference_id);
       }
     });
   });

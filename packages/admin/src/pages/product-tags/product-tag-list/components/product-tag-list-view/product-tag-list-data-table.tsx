@@ -24,12 +24,10 @@ export const ProductTagListDataTable = () => {
     pageSize: PAGE_SIZE,
   })
 
-  const initialData = useLoaderData() as Awaited<
-    ReturnType<typeof productTagListLoader>
-  >
+  const initialData = useLoaderData<typeof productTagListLoader>()
 
   const { product_tags, count, isPending, isError, error } = useProductTags(
-    searchParams as Parameters<typeof useProductTags>[0],
+    searchParams,
     {
       initialData,
       placeholderData: keepPreviousData,

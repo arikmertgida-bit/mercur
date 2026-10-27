@@ -2881,7 +2881,9 @@
         "noVariants": "Ten produkt nie ma wariantów"
       },
       "edit": {
-        "successToast": "Ceny zostały pomyślnie zaktualizowane."
+        "successToast": "Ceny zostały pomyślnie zaktualizowane.",
+        "header": "Edytuj ceny dla {{title}}",
+        "description": "Zaktualizuj ceny produktów w tym cenniku."
       }
     },
     "fields": {

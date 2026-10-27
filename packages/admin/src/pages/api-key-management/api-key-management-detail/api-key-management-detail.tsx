@@ -1,7 +1,7 @@
 import { ReactNode, Children } from "react"
-import { useLoaderData, useParams } from "react-router-dom"
+import { useLoaderData } from "react-router-dom"
 
-import { PermissionGuard, WidgetZone } from "@mercurjs/dashboard-shared"
+import { PermissionGuard, WidgetZone, useRequiredParam } from "@mercurjs/dashboard-shared"
 import { SingleColumnPageSkeleton } from "../../../components/common/skeleton"
 import { SingleColumnPage } from "../../../components/layout/pages"
 import { useApiKey } from "../../../hooks/api/api-keys"
@@ -11,13 +11,11 @@ import { ApiKeySalesChannelSection } from "./components/api-key-sales-channel-se
 import { apiKeyLoader } from "./loader"
 
 const Root = ({ children }: { children?: ReactNode }) => {
-  const initialData = useLoaderData() as Awaited<
-    ReturnType<typeof apiKeyLoader>
-  >
+  const initialData = useLoaderData<typeof apiKeyLoader>()
 
-  const { id } = useParams()
+  const id = useRequiredParam("id")
 
-  const { api_key, isLoading, isError, error } = useApiKey(id!, undefined, {
+  const { api_key, isLoading, isError, error } = useApiKey(id, undefined, {
     initialData,
   })
 

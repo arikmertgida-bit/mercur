@@ -6,7 +6,6 @@ import { ActionMenu } from "../../../../../components/common/action-menu";
 import { SectionRow } from "../../../../../components/common/section";
 import { Skeleton } from "../../../../../components/common/skeleton";
 import { useDefaultCommission } from "../../../../../hooks/api/commissions";
-import { CommissionRate } from "../../../common/types";
 import { formatCommissionValue } from "../../../common/utils";
 
 const GLOBAL_COMMISSION_ROWS = [
@@ -25,7 +24,7 @@ export const GlobalCommissionSection = () => {
     throw error;
   }
 
-  const rate = default_commission as CommissionRate | undefined;
+  const rate = default_commission;
 
   return (
     <Container className="divide-y p-0" data-testid="global-commission-section">

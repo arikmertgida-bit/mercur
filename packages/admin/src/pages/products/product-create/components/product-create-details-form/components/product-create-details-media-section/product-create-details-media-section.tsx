@@ -114,9 +114,13 @@ export const ProductCreateMediaSection = () => {
     }
   }
 
+  const activeField = activeId
+    ? fields.find((m) => m.field_id === activeId)
+    : undefined
+
   return (
     <div id="media" className="flex flex-col gap-y-2" data-testid="product-create-media-section">
-      <UploadMediaFormItem form={form} append={append} showHint={false} data-testid="product-create-media-section-upload" />
+      <UploadMediaFormItem append={append} showHint={false} data-testid="product-create-media-section-upload" />
       <DndContext
         sensors={sensors}
         onDragEnd={handleDragEnd}
@@ -124,11 +128,7 @@ export const ProductCreateMediaSection = () => {
         onDragCancel={handleDragCancel}
       >
         <DragOverlay dropAnimation={dropAnimationConfig}>
-          {activeId ? (
-            <MediaGridItemOverlay
-              field={fields.find((m) => m.field_id === activeId)!}
-            />
-          ) : null}
+          {activeField ? <MediaGridItemOverlay field={activeField} /> : null}
         </DragOverlay>
         <ul className="flex flex-col gap-y-2" data-testid="product-create-media-section-list">
           <SortableContext items={fields.map((field) => field.field_id)}>
@@ -155,7 +155,7 @@ type MediaField = {
   isThumbnail: boolean
   url: string
   id?: string | undefined
-  file?: File
+  file: File | null
   field_id: string
 }
 

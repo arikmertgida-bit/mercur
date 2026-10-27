@@ -14,6 +14,8 @@ import {
 import { ExclamationCircle, Trash, CheckCircleSolid, EyeSlash } from "@medusajs/icons"
 import { ActionMenu, NoRecords } from "@mercurjs/dashboard-shared"
 
+import type { InferClientOutput } from "@mercurjs/client"
+
 import { client } from "../../lib/client"
 
 export const config = {
@@ -23,20 +25,16 @@ export const config = {
   rank: 89,
 }
 
-type ReportStatus = "pending" | "resolved" | "dismissed"
+type ProductReportRow = InferClientOutput<
+  typeof client.admin.productReports.query
+>["product_reports"][number]
 
-type ProductReportRow = {
-  id: string
-  product_id: string
-  customer_id: string
-  customer_name: string
-  reason: string
-  comment: string | null
-  status: ReportStatus
-  product_title: string
-  product_handle: string | null
-  seller_name: string | null
-}
+type ReportStatus = ProductReportRow["status"]
+
+const STATUS_FILTERS: ReadonlyArray<ReportStatus | "all"> = ["all", "pending", "resolved", "dismissed"]
+
+const isStatusFilter = (value: string): value is ReportStatus | "all" =>
+  STATUS_FILTERS.some((status) => status === value)
 
 const STATUS_COLOR: Record<ReportStatus, "orange" | "green" | "grey"> = {
   pending: "orange",
@@ -130,7 +128,7 @@ const ProductReportsPage = () => {
     }
   }
 
-  const reports = (data?.product_reports ?? []) as ProductReportRow[]
+  const reports = data?.product_reports ?? []
   const count = data?.count ?? 0
 
   return (
@@ -146,7 +144,8 @@ const ProductReportsPage = () => {
           size="small"
           value={status}
           onValueChange={(value) => {
-            setStatus(value as ReportStatus | "all")
+            if (!isStatusFilter(value)) return
+            setStatus(value)
             setOffset(0)
           }}
         >

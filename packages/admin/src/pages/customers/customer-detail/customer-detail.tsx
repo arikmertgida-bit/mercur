@@ -1,7 +1,7 @@
 import { ReactNode, Children } from "react"
-import { useLoaderData, useParams } from "react-router-dom"
+import { useLoaderData } from "react-router-dom"
 
-import { PermissionGuard, WidgetZone, useLinkQuery } from "@mercurjs/dashboard-shared"
+import { PermissionGuard, WidgetZone, useLinkQuery, useRequiredParam } from "@mercurjs/dashboard-shared"
 import { SingleColumnPageSkeleton } from "../../../components/common/skeleton"
 import { TwoColumnPage } from "../../../components/layout/pages"
 import { useCustomer } from "../../../hooks/api/customers"
@@ -12,13 +12,11 @@ import { CustomerOrderSection } from "./components/customer-order-section"
 import { customerLoader } from "./loader"
 
 const Root = ({ children }: { children?: ReactNode }) => {
-  const { id } = useParams()
+  const id = useRequiredParam("id")
 
-  const initialData = useLoaderData() as Awaited<
-    ReturnType<typeof customerLoader>
-  >
+  const initialData = useLoaderData<typeof customerLoader>()
   const query = useLinkQuery("customer", "+*addresses")
-  const { customer, isLoading, isError, error } = useCustomer(id!, query, {
+  const { customer, isLoading, isError, error } = useCustomer(id, query, {
     initialData,
   })
 

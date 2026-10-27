@@ -154,9 +154,7 @@ export const TaxRegionTaxOverrideEditForm = ({
       // customerGroupRules,
       // productCollectionRules,
       // productTagRules,
-    ]
-      .filter((rule) => Boolean(rule))
-      .flatMap((r) => r) as HttpTypes.AdminCreateTaxRate["rules"]
+    ].flatMap((r) => r ?? [])
 
     await mutateAsync(
       {
@@ -336,12 +334,12 @@ export const TaxRegionTaxOverrideEditForm = ({
   })
 
   const addRule = () => {
-    const firstDisabledRule = Object.keys(watchedEnabledRules).find(
-      (key) => !watchedEnabledRules[key as TaxRateRuleReferenceType]
+    const firstDisabledRule = Object.values(TaxRateRuleReferenceType).find(
+      (type) => !watchedEnabledRules[type]
     )
 
     if (firstDisabledRule) {
-      enableRule(firstDisabledRule as TaxRateRuleReferenceType)
+      enableRule(firstDisabledRule)
     }
   }
 

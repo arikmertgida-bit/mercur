@@ -1,9 +1,8 @@
 import { useCallback, useMemo } from "react";
 
 import { PencilSquare, Trash } from "@medusajs/icons";
-import { HttpTypes } from "@medusajs/types";
-import { ProductDTO, ProductVariantDTO } from "@mercurjs/types";
-import { DisplayExtensionZone, PermissionAction } from "@mercurjs/dashboard-shared";
+import { HttpTypes, ProductVariantDTO } from "@mercurjs/types";
+import { DisplayExtensionZone, PermissionAction, DateComparisonFilterSchema, parseJsonQueryParam } from "@mercurjs/dashboard-shared";
 import {
   Badge,
   Button,
@@ -51,8 +50,8 @@ export const ProductVariantSection = ({
       order: order ? order : "variant_rank",
       offset: offset ? parseInt(offset) : undefined,
       limit: PAGE_SIZE,
-      created_at: created_at ? JSON.parse(created_at) : undefined,
-      updated_at: updated_at ? JSON.parse(updated_at) : undefined,
+      created_at: parseJsonQueryParam(created_at, DateComparisonFilterSchema),
+      updated_at: parseJsonQueryParam(updated_at, DateComparisonFilterSchema),
       fields: "title,sku,created_at,updated_at,*options,*options.option",
     },
     {
@@ -166,9 +165,9 @@ const useColumns = (product: HttpTypes.AdminProduct) => {
   // on `variant.options[]` (keyed by `option.title`, which the wrapper
   // synthesizes from the attribute name). Read from there.
   const attributeColumns = useMemo(() => {
-    const variantAttributes = (
-      product as HttpTypes.AdminProduct & Pick<ProductDTO, "attributes">
-    )?.attributes?.filter((attr) => attr.is_variant_axis);
+    const variantAttributes = product.attributes?.filter(
+      (attr) => attr.is_variant_axis,
+    );
 
     if (!variantAttributes?.length) {
       return [];

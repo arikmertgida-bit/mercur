@@ -53,10 +53,10 @@ export const LocationEditFulfillmentProvidersForm = ({
   const { setValue } = form
 
   const initialState =
-    location.fulfillment_providers?.reduce((acc, curr) => {
+    location.fulfillment_providers?.reduce<RowSelectionState>((acc, curr) => {
       acc[curr.id] = true
       return acc
-    }, {} as RowSelectionState) ?? {}
+    }, {}) ?? {}
 
   const [rowSelection, setRowSelection] =
     useState<RowSelectionState>(initialState)

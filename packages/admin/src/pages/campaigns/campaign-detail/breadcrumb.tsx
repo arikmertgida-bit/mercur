@@ -11,7 +11,7 @@ export const CampaignDetailBreadcrumb = (
   const { id } = props.params || {}
 
   const { campaign } = useCampaign(
-    id!,
+    id ?? "",
     {
       fields: CAMPAIGN_DETAIL_FIELDS,
     },

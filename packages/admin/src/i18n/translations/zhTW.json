@@ -2851,7 +2851,9 @@
         "noVariants": "此商品沒有任何款式"
       },
       "edit": {
-        "successToast": "價格已成功更新。"
+        "successToast": "價格已成功更新。",
+        "header": "編輯 {{title}} 的價格",
+        "description": "更新此價格表中商品的價格。"
       }
     },
     "fields": {

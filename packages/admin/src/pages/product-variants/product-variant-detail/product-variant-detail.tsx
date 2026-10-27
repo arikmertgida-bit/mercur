@@ -1,30 +1,28 @@
 import { ReactNode, Children } from "react";
-import { useLoaderData, useParams } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 
-import { HttpTypes } from "@medusajs/types";
 import { useProductVariant } from "../../../hooks/api/products";
 
-import { WidgetZone } from "@mercurjs/dashboard-shared";
+import { WidgetZone, useRequiredParam } from "@mercurjs/dashboard-shared";
 import { TwoColumnPageSkeleton } from "../../../components/common/skeleton";
 import { TwoColumnPage } from "../../../components/layout/pages";
 import { VariantGeneralSection } from "./components/variant-general-section";
 import { variantLoader } from "./loader";
 
 const Root = ({ children }: { children?: ReactNode }) => {
-  const initialData = useLoaderData() as Awaited<
-    ReturnType<typeof variantLoader>
-  >;
+  const initialData = useLoaderData<typeof variantLoader>();
 
-  const { id, variant_id } = useParams();
-  const { variant: rawVariant, isLoading, isError, error } = useProductVariant(
-    id!,
-    variant_id!,
+  const id = useRequiredParam("id");
+
+  const variant_id = useRequiredParam("variant_id");
+  const { variant, isLoading, isError, error } = useProductVariant(
+    id,
+    variant_id,
     { fields: "*options,*options.option" },
     {
       initialData,
     },
   );
-  const variant = rawVariant as HttpTypes.AdminProductVariant | undefined;
 
   if (isLoading || !variant) {
     return (

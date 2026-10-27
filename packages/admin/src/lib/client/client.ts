@@ -1,5 +1,7 @@
 import { createClient, InferClient } from '@mercurjs/client'
 import { Routes } from '@mercurjs/core/_generated'
+import { JsonValue } from '@mercurjs/types'
+import { z } from 'zod'
 import config from 'virtual:mercur/config'
 
 import { assetUrl } from '../../utils/asset-url'
@@ -22,6 +24,28 @@ export const sdk: InferClient<Routes> = createClient<Routes>({
   headers: getAuthHeaders,
 })
 
+/**
+ * A JSON request body; `undefined` members are allowed because
+ * `JSON.stringify` drops them, as optional form fields rely on.
+ */
+type FetchQueryBody =
+  | JsonValue
+  | FetchQueryBody[]
+  | { [key: string]: FetchQueryBody | undefined }
+
+// Error bodies come off the wire; only the message is read from them.
+const FetchErrorBodySchema = z.object({ message: z.string().optional() })
+
+/** A non-2xx response from `fetchQuery`, carrying the HTTP status. */
+export class FetchQueryError extends Error {
+  status: number
+
+  constructor(message: string, status: number) {
+    super(message)
+    this.status = status
+  }
+}
+
 export const fetchQuery = async (
   url: string,
   {
@@ -31,8 +55,8 @@ export const fetchQuery = async (
     headers,
   }: {
     method: 'GET' | 'POST' | 'DELETE'
-    body?: object
-    query?: Record<string, string | number | boolean | object>
+    body?: FetchQueryBody
+    query?: Record<string, JsonValue | undefined>
     headers?: { [key: string]: string }
   }
 ) => {
@@ -42,7 +66,7 @@ export const fetchQuery = async (
         const arrayParams = value
           .map(
             (item) =>
-              `${encodeURIComponent(key)}[]=${encodeURIComponent(item)}`
+              `${encodeURIComponent(key)}[]=${encodeURIComponent(String(item))}`
           )
           .join('&')
         if (acc) {
@@ -84,9 +108,11 @@ export const fetchQuery = async (
       return
     }
 
-    const error = new Error(errorData.message || 'Server error')
-      ; (error as Error & { status: number }).status = response.status
-    throw error
+    const parsedError = FetchErrorBodySchema.safeParse(errorData)
+    throw new FetchQueryError(
+      (parsedError.success && parsedError.data.message) || 'Server error',
+      response.status
+    )
   }
 
   return response.json()

@@ -1,4 +1,4 @@
-import { ClientError } from "@mercurjs/client"
+import { InferClientInput, ClientError } from "@mercurjs/client"
 import { HttpTypes } from "@mercurjs/types"
 import {
   QueryKey,
@@ -33,7 +33,7 @@ const sortAttributeValuesByRank = (
 
 export const useProductAttribute = (
   id: string,
-  query?: Record<string, any>,
+  query?: Omit<InferClientInput<typeof sdk.admin.productAttributes.$id.query>, "$id">,
   options?: Omit<
     UseQueryOptions<
       HttpTypes.AdminProductAttributeResponse,
@@ -63,7 +63,7 @@ export const useProductAttribute = (
 }
 
 export const useProductAttributes = (
-  query?: Record<string, any>,
+  query?: InferClientInput<typeof sdk.admin.productAttributes.query>,
   options?: Omit<
     UseQueryOptions<
       HttpTypes.AdminProductAttributeListResponse,
@@ -91,11 +91,11 @@ export const useCreateProductAttribute = (
   options?: UseMutationOptions<
     HttpTypes.AdminProductAttributeResponse,
     ClientError,
-    Record<string, any>
+    InferClientInput<typeof sdk.admin.productAttributes.mutate>
   >
 ) => {
   return useMutation({
-    mutationFn: (payload: Record<string, any>) =>
+    mutationFn: (payload) =>
       sdk.admin.productAttributes.mutate(payload),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
@@ -113,11 +113,11 @@ export const useUpdateProductAttribute = (
   options?: UseMutationOptions<
     HttpTypes.AdminProductAttributeResponse,
     ClientError,
-    Record<string, any>
+    Omit<InferClientInput<typeof sdk.admin.productAttributes.$id.mutate>, "$id">
   >
 ) => {
   return useMutation({
-    mutationFn: (payload: Record<string, any>) =>
+    mutationFn: (payload) =>
       sdk.admin.productAttributes.$id.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
@@ -163,11 +163,11 @@ export const useUpsertProductAttributeValues = (
   options?: UseMutationOptions<
     HttpTypes.AdminProductAttributeResponse,
     ClientError,
-    Record<string, any>
+    Omit<InferClientInput<typeof sdk.admin.productAttributes.$id.values.mutate>, "$id">
   >
 ) => {
   return useMutation({
-    mutationFn: (payload: Record<string, any>) =>
+    mutationFn: (payload) =>
       sdk.admin.productAttributes.$id.values.mutate({
         $id: attributeId,
         ...payload,
@@ -192,11 +192,11 @@ export const useUpdateProductAttributeValue = (
   options?: UseMutationOptions<
     HttpTypes.AdminProductAttributeResponse,
     ClientError,
-    Record<string, any>
+    Omit<InferClientInput<typeof sdk.admin.productAttributes.$id.values.$valueId.mutate>, "$id" | "$valueId">
   >
 ) => {
   return useMutation({
-    mutationFn: (payload: Record<string, any>) =>
+    mutationFn: (payload) =>
       sdk.admin.productAttributes.$id.values.$valueId.mutate({
         $id: attributeId,
         $valueId: valueId,

@@ -1,47 +1,47 @@
+import type { JsonValue } from "@mercurjs/types"
 import { useCallback } from "react"
-import { FieldValues, Path, PathValue, UseFormReturn } from "react-hook-form"
+import { z } from "zod"
+
+import { isJsonObject, JsonValueSchema } from "@mercurjs/dashboard-shared"
 
 import { DataGridMatrix } from "../models"
 import {
-  DataGridCellValue,
   DataGridColumnType,
   DataGridCoordinates,
+  DataGridForm,
+  DataGridFormValues,
   DataGridToggleableNumber,
 } from "../types"
+import { getValueAtPath, setValueAtPath } from "../utils"
 
-type UseDataGridFormHandlersOptions<TData, TFieldValues extends FieldValues> = {
-  matrix: DataGridMatrix<TData, TFieldValues>
-  form: UseFormReturn<TFieldValues>
+type UseDataGridFormHandlersOptions<TData> = {
+  matrix: DataGridMatrix<TData>
+  form: DataGridForm
   anchor: DataGridCoordinates | null
 }
 
-export const useDataGridFormHandlers = <
-  TData,
-  TFieldValues extends FieldValues
->({
+export const useDataGridFormHandlers = <TData,>({
   matrix,
   form,
   anchor,
-}: UseDataGridFormHandlersOptions<TData, TFieldValues>) => {
+}: UseDataGridFormHandlersOptions<TData>) => {
   const { getValues, reset } = form
 
   const getSelectionValues = useCallback(
-    (fields: string[]): PathValue<TFieldValues, Path<TFieldValues>>[] => {
+    (fields: string[]): JsonValue[] => {
       if (!fields.length) {
         return []
       }
 
       const allValues = getValues()
 
-      return fields.map((field) => {
-        return field.split(".").reduce((obj, key) => obj?.[key], allValues)
-      }) as PathValue<TFieldValues, Path<TFieldValues>>[]
+      return fields.map((field) => getValueAtPath(allValues, field) ?? null)
     },
     [getValues]
   )
 
   const setSelectionValues = useCallback(
-    async (fields: string[], values: DataGridCellValue[], isHistory?: boolean) => {
+    async (fields: string[], values: JsonValue[], isHistory?: boolean) => {
       if (!fields.length || !anchor) {
         return
       }
@@ -80,7 +80,7 @@ export const useDataGridFormHandlers = <
   }
 }
 
-function convertToNumber(value: string | number): number {
+function convertToNumber(value: JsonValue): number {
   if (typeof value === "number") {
     return value
   }
@@ -94,13 +94,17 @@ function convertToNumber(value: string | number): number {
   return converted
 }
 
-function convertToBoolean(value: string | boolean): boolean {
+function convertToBoolean(value: JsonValue): boolean {
   if (typeof value === "boolean") {
     return value
   }
 
   if (typeof value === "undefined" || value === null) {
     return false
+  }
+
+  if (typeof value !== "string") {
+    throw new Error(`Value "${value}" cannot be converted to boolean.`)
   }
 
   const lowerValue = value.toLowerCase()
@@ -112,7 +116,7 @@ function convertToBoolean(value: string | boolean): boolean {
   throw new Error(`String "${value}" cannot be converted to boolean.`)
 }
 
-function covertToString(value: DataGridCellValue): string {
+function covertToString(value: JsonValue): string {
   if (typeof value === "undefined" || value === null) {
     return ""
   }
@@ -120,77 +124,88 @@ function covertToString(value: DataGridCellValue): string {
   return String(value)
 }
 
-function convertToggleableNumber(value: DataGridCellValue): {
-  quantity: number
-  checked: boolean
-  disabledToggle: boolean
-} {
-  let obj = value
+/**
+ * A pasted or restored togglable-number value: an object whose `checked` /
+ * `disabledToggle` entries are read as truthy flags.
+ */
+const ToggleableNumberInputSchema = z.object({
+  quantity: z.union([z.number(), z.string()]).optional(),
+  checked: JsonValueSchema.optional(),
+  disabledToggle: JsonValueSchema.optional(),
+})
 
-  if (typeof obj === "string") {
-    try {
-      obj = JSON.parse(obj)
-    } catch (error) {
-      throw new Error(`String "${value}" cannot be converted to object.`, { cause: error })
-    }
+const ToggleableNumberStateSchema = z.object({
+  disabledToggle: z.boolean().optional(),
+})
+
+function parseJsonText(value: string): JsonValue {
+  try {
+    return JsonValueSchema.parse(JSON.parse(value))
+  } catch (error) {
+    const reason = error instanceof Error ? ` ${error.message}` : ""
+    throw new Error(`String "${value}" cannot be converted to object.${reason}`)
+  }
+}
+
+function convertToggleableNumber(value: JsonValue): DataGridToggleableNumber {
+  const obj = typeof value === "string" ? parseJsonText(value) : value
+  const parsed = ToggleableNumberInputSchema.safeParse(obj)
+
+  if (!isJsonObject(obj) || !parsed.success) {
+    throw new Error(`Value cannot be converted to togglable number.`)
   }
 
-  return obj as DataGridToggleableNumber
+  return {
+    quantity: parsed.data.quantity ?? "",
+    checked: Boolean(parsed.data.checked),
+    disabledToggle: Boolean(parsed.data.disabledToggle),
+  }
 }
 
 function setValue(
-  currentValues: Record<string, unknown>,
+  currentValues: DataGridFormValues,
   field: string,
-  newValue: DataGridCellValue,
-  type: string,
+  newValue: JsonValue,
+  type: DataGridColumnType,
   isHistory?: boolean
 ) {
   if (type !== "togglable-number") {
-    field.split(".").reduce<Record<string, unknown>>((curr, key, index) => {
-      if (index === field.split(".").length - 1) {
-        curr[key] = newValue
-      }
-      curr[key] ??= {}
-      return curr[key] as Record<string, unknown>
-    }, currentValues)
+    setValueAtPath(currentValues, field, newValue)
     return
   }
 
-  // `type === "togglable-number"` guarantees newValue is a DataGridToggleableNumber here.
   setValueToggleableNumber(
     currentValues,
     field,
-    newValue as DataGridToggleableNumber,
+    convertToggleableNumber(newValue),
     isHistory
   )
 }
 
 function setValueToggleableNumber(
-  currentValues: Record<string, unknown> = {},
+  currentValues: DataGridFormValues,
   field: string,
   newValue: DataGridToggleableNumber,
   isHistory?: boolean
 ) {
-  const currentValue = field
-    .split(".")
-    .reduce<Record<string, unknown> | undefined>(
-      (obj, key) => obj?.[key] as Record<string, unknown> | undefined,
-      currentValues
-    )
-  const { disabledToggle } = (currentValue as DataGridToggleableNumber) || {}
+  const currentValue = getValueAtPath(currentValues, field)
+  const currentState = ToggleableNumberStateSchema.safeParse(currentValue)
+  const disabledToggle = currentState.success
+    ? currentState.data.disabledToggle
+    : undefined
 
-  const normalizeQuantity = (value: number | string | null | undefined) => {
+  const normalizeQuantity = (value: number | string) => {
     if (disabledToggle && value === "") {
       return 0
     }
     return value
   }
 
-  const determineChecked = (quantity: number | string | null | undefined) => {
+  const determineChecked = (quantity: number | string) => {
     if (disabledToggle) {
       return true
     }
-    return quantity !== "" && quantity != null
+    return quantity !== ""
   }
 
   const quantity = normalizeQuantity(newValue.quantity)
@@ -200,25 +215,20 @@ function setValueToggleableNumber(
       : newValue.checked
     : determineChecked(quantity)
 
-  const fieldParts = field.split(".")
-  fieldParts.reduce<Record<string, unknown>>((curr, key, index) => {
-    if (index === fieldParts.length - 1) {
-      curr[key] = {
-        ...(currentValue || {}),
-        quantity,
-        checked,
-        disabledToggle: disabledToggle ?? false,
-      }
-    }
-    curr[key] ??= {}
-    return curr[key] as Record<string, unknown>
-  }, currentValues)
+  const currentFields = isJsonObject(currentValue) ? currentValue : {}
+
+  setValueAtPath(currentValues, field, {
+    ...currentFields,
+    quantity,
+    checked,
+    disabledToggle: disabledToggle ?? false,
+  })
 }
 
 export function convertArrayToPrimitive(
-  values: DataGridCellValue[],
+  values: JsonValue[],
   type: DataGridColumnType
-): DataGridCellValue[] {
+): JsonValue[] {
   switch (type) {
     case "number":
       return values.map((v) => {
@@ -230,14 +240,12 @@ export function convertArrayToPrimitive(
           return ""
         }
 
-        // `type` guarantees the caller only passes number-like cell values here.
-        return convertToNumber(v as string | number)
+        return convertToNumber(v)
       })
     case "togglable-number":
       return values.map(convertToggleableNumber)
     case "boolean":
-      // `type` guarantees the caller only passes boolean-like cell values here.
-      return values.map((v) => convertToBoolean(v as string | boolean))
+      return values.map(convertToBoolean)
     case "text":
     case "multiline-text":
       return values.map(covertToString)

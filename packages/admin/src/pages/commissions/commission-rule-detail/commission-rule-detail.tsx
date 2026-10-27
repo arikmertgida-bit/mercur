@@ -1,9 +1,8 @@
 import { PencilSquare, Trash } from "@medusajs/icons";
 import { Container, Heading, StatusBadge } from "@medusajs/ui";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
 
-import { WidgetZone } from "@mercurjs/dashboard-shared";
+import { WidgetZone, useRequiredParam } from "@mercurjs/dashboard-shared";
 import { ActionMenu } from "../../../components/common/action-menu";
 import { SectionRow } from "../../../components/common/section";
 import { SingleColumnPage } from "../../../components/layout/pages";
@@ -148,16 +147,11 @@ const CommissionSection = ({ rule }: { rule: CommissionRate }) => {
 };
 
 export const CommissionRuleDetail = () => {
-  const { id } = useParams();
+  const id = useRequiredParam("id");
   const { commission_rate, isLoading, isError, error } = useCommissionRule(
-    id!,
+    id,
     { fields: "*rules,*values" }
-  ) as {
-    commission_rate?: CommissionRate;
-    isLoading: boolean;
-    isError: boolean;
-    error: Error | null;
-  };
+  );
 
   if (isError) {
     throw error;

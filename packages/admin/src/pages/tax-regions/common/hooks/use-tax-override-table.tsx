@@ -51,10 +51,8 @@ export const useTaxOverrideTable = ({
     }))
   }, [offset, _pageSize, pageIndex])
 
-  const onPaginationChange = (
-    updater: (old: PaginationState) => PaginationState
-  ) => {
-    const state = updater(pagination)
+  const onPaginationChange: OnChangeFn<PaginationState> = (updater) => {
+    const state = typeof updater === "function" ? updater(pagination) : updater
     const { pageIndex, pageSize } = state
 
     setSearchParams((prev) => {
@@ -81,7 +79,7 @@ export const useTaxOverrideTable = ({
       pagination,
     },
     getCoreRowModel: getCoreRowModel(),
-    onPaginationChange: onPaginationChange as OnChangeFn<PaginationState>,
+    onPaginationChange,
     getPaginationRowModel: getPaginationRowModel(),
     manualPagination: true,
   })

@@ -14,6 +14,7 @@ import { useProductTableColumns } from "../../../../../hooks/table/columns/use-p
 import { useProductTableFilters } from "../../../../../hooks/table/filters/use-product-table-filters"
 import { useProductTableQuery } from "../../../../../hooks/table/query/use-product-table-query"
 import { useDataTable } from "../../../../../hooks/use-data-table"
+import { getTableMetaString } from "@lib/table-meta"
 
 type CollectionProductSectionProps = {
   collection: HttpTypes.AdminCollection
@@ -31,7 +32,7 @@ export const CollectionProductSection = ({
     {
       limit: PAGE_SIZE,
       ...searchParams,
-      collection_id: [collection.id!],
+      collection_id: [collection.id],
     },
     {
       placeholderData: keepPreviousData,
@@ -56,7 +57,7 @@ export const CollectionProductSection = ({
 
   const prompt = usePrompt()
 
-  const { mutateAsync } = useUpdateCollectionProducts(collection.id!)
+  const { mutateAsync } = useUpdateCollectionProducts(collection.id)
 
   const handleRemove = async (selection: Record<string, boolean>) => {
     const ids = Object.keys(selection)
@@ -259,9 +260,8 @@ const useColumns = () => {
       columnHelper.display({
         id: "actions",
         cell: ({ row, table }) => {
-          const { collectionId } = table.options.meta as {
-            collectionId: string
-          }
+          const collectionId =
+            getTableMetaString(table.options.meta, "collectionId") ?? ""
 
           return (
             <ProductActions

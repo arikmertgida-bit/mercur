@@ -21,7 +21,7 @@ const PAGE_SIZE = 20
 export const UserListDataTable = () => {
   const { t } = useTranslation()
 
-  const { searchParams, raw } = useUserTableQuery({ pageSize: PAGE_SIZE } as { pageSize: number })
+  const { searchParams, raw } = useUserTableQuery({ pageSize: PAGE_SIZE })
   const { users, count, isPending, isError, error } = useUsers(
     {
       ...searchParams,
@@ -155,10 +155,10 @@ const useColumns = () => {
 
   const { columns: extended, filters } = useExtendableTable<HttpTypes.AdminUser>({
     model: "user",
-    columns: base as unknown as ColumnDef<HttpTypes.AdminUser, unknown>[],
+    columns: base,
   })
 
-  const columns = useMemo(
+  const columns = useMemo<ColumnDef<HttpTypes.AdminUser>[]>(
     () => [
       ...extended,
       columnHelper.display({
@@ -166,7 +166,7 @@ const useColumns = () => {
         cell: ({ row }) => {
           return <UserActions user={row.original} />
         },
-      }) as ColumnDef<HttpTypes.AdminUser, unknown>,
+      }),
     ],
     [extended]
   )

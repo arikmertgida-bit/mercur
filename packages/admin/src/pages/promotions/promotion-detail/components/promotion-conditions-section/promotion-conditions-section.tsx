@@ -1,23 +1,30 @@
 import { PencilSquare } from "@medusajs/icons";
-import {
-  ApplicationMethodTargetTypeValues,
-  HttpTypes,
-} from "@medusajs/types";
+import { ApplicationMethodTargetTypeValues } from "@medusajs/types";
 import { Badge, Container, Heading } from "@medusajs/ui";
+import { HttpTypes } from "@mercurjs/types";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
 
-import { DisplayExtensionZone, useLinkQuery } from "@mercurjs/dashboard-shared";
+import { DisplayExtensionZone, useLinkQuery, useRequiredParam } from "@mercurjs/dashboard-shared";
 
 import { ActionMenu } from "../../../../../components/common/action-menu";
 import { BadgeListSummary } from "../../../../../components/common/badge-list-summary";
 import { NoRecords } from "../../../../../components/common/empty-table-content";
-import { usePromotion, usePromotionRules } from "../../../../../hooks/api/promotions";
+import {
+  PromotionRulesQuery,
+  usePromotion,
+  usePromotionRules,
+} from "../../../../../hooks/api/promotions";
 import { PROMOTION_DETAIL_BASE_FIELDS } from "../../loader";
 
 type RuleProps = {
-  rule: HttpTypes.AdminPromotionRule;
+  rule: HttpTypes.AdminPromotionRuleDetail;
 };
+
+// Number-typed (disguised) rules carry their value directly.
+const getRuleValueLabels = (rule: HttpTypes.AdminPromotionRuleDetail) =>
+  typeof rule.values === "number"
+    ? [String(rule.values)]
+    : (rule.values ?? []).map((v) => v.label ?? v.value);
 
 function RuleBlock({ rule }: RuleProps) {
   return (
@@ -38,11 +45,7 @@ function RuleBlock({ rule }: RuleProps) {
         <BadgeListSummary
           inline
           className="!txt-compact-small-plus"
-          list={
-            rule.field_type === "number"
-              ? [rule.values]
-              : rule.values?.map((v) => v.label)
-          }
+          list={getRuleValueLabels(rule)}
         />
       </div>
     </div>
@@ -50,7 +53,7 @@ function RuleBlock({ rule }: RuleProps) {
 }
 
 type PromotionConditionsSectionProps = {
-  rules?: HttpTypes.AdminPromotionRule[];
+  rules?: HttpTypes.AdminPromotionRuleDetail[];
   ruleType: string;
   applicationMethodTargetType?: ApplicationMethodTargetTypeValues;
 };
@@ -61,16 +64,14 @@ export const PromotionConditionsSection = ({
   applicationMethodTargetType,
 }: PromotionConditionsSectionProps) => {
   const { t } = useTranslation();
-  const { id } = useParams();
+  const id = useRequiredParam("id");
   const linkQuery = useLinkQuery("promotion", PROMOTION_DETAIL_BASE_FIELDS);
-  const { promotion } = usePromotion(id!, linkQuery, {
+  const { promotion } = usePromotion(id, linkQuery, {
     enabled: rulesProp === undefined,
   });
-  const query: Record<string, string> = {};
-  if (promotion?.type === "buyget") {
-    query.promotion_type = promotion.type;
-  }
-  const { rules: fetchedRules } = usePromotionRules(id!, ruleType, query, {
+  const query: PromotionRulesQuery =
+    promotion?.type === "buyget" ? { promotion_type: promotion.type } : {};
+  const { rules: fetchedRules } = usePromotionRules(id, ruleType, query, {
     enabled: rulesProp === undefined,
   });
   const rules = rulesProp ?? fetchedRules ?? [];

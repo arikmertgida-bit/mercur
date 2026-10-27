@@ -2850,7 +2850,9 @@
         "noVariants": "Dit product heeft geen varianten"
       },
       "edit": {
-        "successToast": "Prijzen zijn succesvol bijgewerkt."
+        "successToast": "Prijzen zijn succesvol bijgewerkt.",
+        "header": "Prijzen bewerken voor {{title}}",
+        "description": "Werk de prijzen bij van de producten in deze prijslijst."
       }
     },
     "fields": {

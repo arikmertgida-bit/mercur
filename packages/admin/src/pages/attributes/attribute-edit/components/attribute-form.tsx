@@ -6,7 +6,7 @@ import {
 } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Input, Select, Textarea } from "@medusajs/ui"
-import { FormProvider, useForm, useWatch } from "react-hook-form"
+import { FieldPath, FormProvider, useForm, useWatch } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
 import { ProductAttributeDTO, AttributeType } from "@mercurjs/types"
@@ -24,8 +24,14 @@ import type {
 } from "../types"
 import { PossibleValuesList } from "../../attribute-create/components/possible-values-list"
 
+type AttributeFormField = FieldPath<
+  CreateAttributeFormValues | UpdateAttributeFormValues
+>
+
+type AttributeFormStatus = "not-started" | "in-progress" | "completed"
+
 export interface AttributeFormRef {
-  validateFields: (fields: string[]) => Promise<boolean>
+  validateFields: (fields: AttributeFormField[]) => Promise<boolean>
 }
 
 export interface AttributeFormProps {
@@ -36,8 +42,8 @@ export interface AttributeFormProps {
   mode?: "create" | "update"
   activeTab?: "details" | "type"
   onFormStateChange?: (formState: {
-    detailsStatus: "not-started" | "in-progress" | "completed"
-    typeStatus: "not-started" | "in-progress" | "completed"
+    detailsStatus: AttributeFormStatus
+    typeStatus: AttributeFormStatus
   }) => void
 }
 
@@ -93,13 +99,8 @@ export const AttributeForm = forwardRef<AttributeFormRef, AttributeFormProps>(
     })
 
     useImperativeHandle(ref, () => ({
-      validateFields: async (fields: string[]) => {
-        const result = await form.trigger(
-          fields as (keyof (
-            | CreateAttributeFormValues
-            | UpdateAttributeFormValues
-          ))[]
-        )
+      validateFields: async (fields: AttributeFormField[]) => {
+        const result = await form.trigger(fields)
         return result
       },
     }))
@@ -124,22 +125,18 @@ export const AttributeForm = forwardRef<AttributeFormRef, AttributeFormProps>(
 
       const hasName = name?.trim()
       const hasDetailsData = description?.trim() || handle?.trim()
-      const detailsStatus = hasName
+      const detailsStatus: AttributeFormStatus = hasName
         ? "completed"
         : hasDetailsData
           ? "in-progress"
           : "not-started"
 
       const hasTypeData = type && (values?.length ?? 0) > 0
-      const typeStatus = hasTypeData ? "completed" : "not-started"
+      const typeStatus: AttributeFormStatus = hasTypeData
+        ? "completed"
+        : "not-started"
 
-      onFormStateChange({
-        detailsStatus: detailsStatus as
-          | "not-started"
-          | "in-progress"
-          | "completed",
-        typeStatus: typeStatus as "not-started" | "in-progress" | "completed",
-      })
+      onFormStateChange({ detailsStatus, typeStatus })
     }, [
 	formStateKey,
 	onFormStateChange,
@@ -255,7 +252,7 @@ export const AttributeForm = forwardRef<AttributeFormRef, AttributeFormProps>(
               <Form.Label>{t("attributes.fields.type")}</Form.Label>
               <Form.Control>
                 <Select
-                  value={field.value as string}
+                  value={field.value}
                   onValueChange={field.onChange}
                   data-testid="attribute-form-type-select"
                 >

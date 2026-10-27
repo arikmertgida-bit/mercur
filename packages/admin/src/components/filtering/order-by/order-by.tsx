@@ -3,6 +3,7 @@ import { DropdownMenu, IconButton } from "@medusajs/ui"
 import { useState } from "react"
 import { useTranslation } from "react-i18next"
 import { useSearchParams } from "react-router-dom"
+import { z } from "zod"
 
 import { useDocumentDirection } from "../../../hooks/use-document-direction"
 
@@ -14,6 +15,8 @@ enum SortDirection {
   ASC = "asc",
   DESC = "desc",
 }
+
+const SortDirectionSchema = z.enum(SortDirection)
 
 type SortState = {
   key?: string
@@ -60,14 +63,22 @@ export const OrderBy = ({ keys }: OrderByProps) => {
   const { t } = useTranslation()
   const direction = useDocumentDirection()
 
-  const handleDirChange = (dir: string) => {
+  const handleDirChange = (value: string) => {
+    const parsed = SortDirectionSchema.safeParse(value)
+
+    if (!parsed.success) {
+      return
+    }
+
+    const dir = parsed.data
+
     setState((prev) => ({
       ...prev,
-      dir: dir as SortDirection,
+      dir,
     }))
     updateOrderParam({
       key: state.key,
-      dir: dir as SortDirection,
+      dir,
     })
   }
 

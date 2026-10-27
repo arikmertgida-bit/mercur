@@ -1,8 +1,11 @@
-import { CurrencyDollar } from "@medusajs/icons"
 import { HttpTypes } from "@medusajs/types"
 import { keepPreviousData } from "@tanstack/react-query"
-import { createColumnHelper, type ColumnDef } from "@tanstack/react-table"
-import { useExtendableTable, useLinkQuery, mergeListFilters } from "@mercurjs/dashboard-shared"
+import { createColumnHelper } from "@tanstack/react-table"
+import {
+  mergeListFilters,
+  useExtendableTable,
+  useLinkQuery,
+} from "@mercurjs/dashboard-shared"
 import { useMemo } from "react"
 import { useTranslation } from "react-i18next"
 import { _DataTable } from "../../../../../components/table/data-table"
@@ -22,10 +25,6 @@ const useColumns = () => {
   const { columns: extended, filters } =
     useExtendableTable<HttpTypes.AdminPriceList>({
       model: "price_list",
-      // tanstack's ColumnDef<T, TValue> is contravariant in TValue
-      // (cell/header render props), so a heterogeneous per-column accessor
-      // array can't widen to ColumnDef<T, unknown>[] without a cast.
-      // @ts-expect-error
       columns: base,
     })
 
@@ -51,7 +50,7 @@ export const PriceListListDataTable = () => {
   const { searchParams, raw } = usePricingTableQuery({
     pageSize: PAGE_SIZE,
   })
-  const linkQuery = useLinkQuery("price_list", "+seller.name,+prices.id")
+  const linkQuery = useLinkQuery("price_list")
   const { price_lists, count, isLoading, isError, error } = usePriceLists(
     { ...searchParams, ...linkQuery },
     {
@@ -87,23 +86,14 @@ export const PriceListListDataTable = () => {
       filters={filters}
       orderBy={[
         { key: "title", label: t("fields.title") },
+        { key: "status", label: t("fields.status") },
         { key: "created_at", label: t("fields.createdAt") },
         { key: "updated_at", label: t("fields.updatedAt") },
       ]}
-      defaultOrder="title"
       queryObject={raw}
       pageSize={PAGE_SIZE}
       navigateTo={(row) => row.original.id}
       isLoading={isLoading}
-      noRecords={{
-        icon: <CurrencyDollar className="text-ui-fg-subtle" />,
-        title: t("priceLists.list.noRecords.title"),
-        message: t("priceLists.list.noRecords.message"),
-        action: {
-          to: "create",
-          label: t("actions.create"),
-        },
-      }}
       pagination
       search
     />

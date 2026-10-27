@@ -11,7 +11,7 @@ export const ShippingOptionTypeDetailBreadcrumb = (
 ) => {
   const { id } = props.params || {}
 
-  const { shipping_option_type } = useShippingOptionType(id!, undefined, {
+  const { shipping_option_type } = useShippingOptionType(id ?? "", undefined, {
     initialData: props.data,
     enabled: Boolean(id),
   })

@@ -23,7 +23,7 @@ type PriceListCustomerAvailabilityFormProps = {
 }
 
 const PriceListCustomerAvailabilitySchema = z.object({
-  customer_group_ids: z.array(z.string()).default([]),
+  customer_group_ids: z.array(z.string()),
 })
 
 export const PriceListCustomerAvailabilityForm = ({
@@ -48,7 +48,7 @@ export const PriceListCustomerAvailabilityForm = ({
     queryFn: (params) => sdk.admin.customerGroups.query(params),
     getOptions: (data) =>
       data.customer_groups.map((group) => ({
-        label: group.name!,
+        label: group.name ?? "",
         value: group.id,
       })),
     defaultValue: customerGroups.map((group) => group.id),

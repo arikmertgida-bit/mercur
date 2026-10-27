@@ -5,6 +5,8 @@ import { Container, Heading, Text, Table, usePrompt, toast } from "@medusajs/ui"
 import { Heart, Trash } from "@medusajs/icons"
 import { ActionMenu, NoRecords } from "@mercurjs/dashboard-shared"
 
+import type { InferClientOutput } from "@mercurjs/client"
+
 import { client } from "../../lib/client"
 
 export const config = {
@@ -14,15 +16,9 @@ export const config = {
   rank: 87,
 }
 
-type WishlistRow = {
-  id: string
-  reference: string
-  created_at: string
-  updated_at: string
-  customer_id: string | null
-  customer_name: string
-  products: { id: string; title: string }[]
-}
+type WishlistRow = InferClientOutput<
+  typeof client.admin.wishlist.query
+>["wishlists"][number]
 
 const PAGE_SIZE = 20
 
@@ -69,7 +65,7 @@ const WishlistModerationPage = () => {
     }
   }
 
-  const wishlists = (data?.wishlists ?? []) as WishlistRow[]
+  const wishlists = data?.wishlists ?? []
   const count = data?.count ?? 0
 
   return (

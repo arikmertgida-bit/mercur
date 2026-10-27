@@ -1,16 +1,15 @@
 import { ReactNode, Children } from "react"
-import { useParams } from "react-router-dom"
 
-import { WidgetZone } from "@mercurjs/dashboard-shared"
+import { WidgetZone, useRequiredParam } from "@mercurjs/dashboard-shared"
 import { SingleColumnPageSkeleton } from "../../../components/common/skeleton"
 import { SingleColumnPage } from "../../../components/layout/pages"
 import { usePayout } from "../../../hooks/api/payouts"
 import { PayoutGeneralSection } from "./components/payout-general-section"
 
 const Root = ({ children }: { children?: ReactNode }) => {
-  const { id } = useParams()
+  const id = useRequiredParam("id")
 
-  const { payout, isLoading, isError, error } = usePayout(id!)
+  const { payout, isLoading, isError, error } = usePayout(id)
 
   if (isLoading || !payout) {
     return <SingleColumnPageSkeleton sections={1} />

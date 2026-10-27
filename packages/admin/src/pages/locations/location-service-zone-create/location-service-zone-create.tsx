@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom"
+import { useRequiredParam } from "@mercurjs/dashboard-shared"
 
 import { RouteFocusModal } from "../../../components/modals"
 import { useStockLocation } from "../../../hooks/api/stock-locations"
@@ -6,10 +6,11 @@ import { CreateServiceZoneForm } from "./components/create-service-zone-form"
 import { FulfillmentSetType } from "../common/constants"
 
 export function LocationCreateServiceZone() {
-  const { fset_id, location_id } = useParams()
+  const location_id = useRequiredParam("location_id")
+  const fset_id = useRequiredParam("fset_id")
 
   const { stock_location, isPending, isFetching, isError, error } =
-    useStockLocation(location_id!, {
+    useStockLocation(location_id, {
       fields: "*fulfillment_sets",
     })
 
@@ -35,10 +36,10 @@ export function LocationCreateServiceZone() {
 
   return (
     <RouteFocusModal prev={`/settings/locations/${location_id}`} data-testid="location-service-zone-create-modal">
-      {fulfillmentSet && (
+      {stock_location && fulfillmentSet && (
         <CreateServiceZoneForm
           fulfillmentSet={fulfillmentSet}
-          location={stock_location!}
+          location={stock_location}
           type={type}
         />
       )}

@@ -60,7 +60,10 @@ import { useMarkPaymentCollectionAsPaid } from "../../../../../hooks/api/payment
 import { useReservationItems } from "../../../../../hooks/api/reservations.tsx";
 import { useReturns } from "../../../../../hooks/api/returns.tsx";
 import { useDate } from "../../../../../hooks/use-date.tsx";
-import { getTotalCreditLines } from "../../../../../lib/credit-line.ts";
+import {
+  getCreditLineAmount,
+  getTotalCreditLines,
+} from "../../../../../lib/credit-line.ts";
 import { formatCurrency } from "../../../../../lib/format-currency.ts";
 import { getReservationsLimitCount } from "../../../../../lib/orders.ts";
 import {
@@ -91,7 +94,7 @@ export const OrderSummarySection = ({ order }: OrderSummarySectionProps) => {
     { enabled: Array.isArray(order?.items) && can("reservations") },
   );
 
-  const { order: orderPreview } = useOrderPreview(order.id!);
+  const { order: orderPreview } = useOrderPreview(order.id);
 
   const unpaidPaymentCollection = order.payment_collections.find(
     (pc) => pc.status === "not_paid",
@@ -119,7 +122,7 @@ export const OrderSummarySection = ({ order }: OrderSummarySectionProps) => {
       title: t("orders.payment.markAsPaid"),
       description: t("orders.payment.markAsPaidPayment", {
         amount: formatCurrency(
-          paymentCollection.amount as number,
+          paymentCollection.amount,
           order.currency_code,
         ),
       }),
@@ -139,7 +142,7 @@ export const OrderSummarySection = ({ order }: OrderSummarySectionProps) => {
           toast.success(
             t("orders.payment.markAsPaidPaymentSuccess", {
               amount: formatCurrency(
-                paymentCollection.amount as number,
+                paymentCollection.amount,
                 order.currency_code,
               ),
             }),
@@ -158,7 +161,7 @@ export const OrderSummarySection = ({ order }: OrderSummarySectionProps) => {
       data-testid="order-summary-section"
     >
       <Header order={order} orderPreview={orderPreview} />
-      <ItemBreakdown order={order} reservations={reservations!} />
+      <ItemBreakdown order={order} reservations={reservations} />
       <CostBreakdown order={order} />
       <DiscountAndTotalBreakdown order={order} />
       <Total order={order} />
@@ -655,8 +658,10 @@ const CostBreakdown = ({
       {isShippingOpen && (
         <div className="flex flex-col gap-1 pl-5">
           {(order.shipping_methods || [])
-            .sort((m1, m2) =>
-              (m1.created_at as string).localeCompare(m2.created_at as string),
+            .sort(
+              (m1, m2) =>
+                new Date(m1.created_at).getTime() -
+                new Date(m2.created_at).getTime(),
             )
             .map((sm, i) => {
               return (
@@ -831,7 +836,9 @@ const DiscountAndTotalBreakdown = ({
           new Set(
             order.items
               .flatMap((item) => item.adjustments || [])
-              .map((adjustment) => adjustment.code!),
+              .flatMap((adjustment) =>
+                adjustment.code ? [adjustment.code] : [],
+              ),
           ),
         ).sort(),
       });
@@ -844,7 +851,9 @@ const DiscountAndTotalBreakdown = ({
           new Set(
             order.shipping_methods
               .flatMap((shippingMethod) => shippingMethod.adjustments || [])
-              .map((adjustment) => adjustment.code!),
+              .flatMap((adjustment) =>
+                adjustment.code ? [adjustment.code] : [],
+              ),
           ),
         ).sort(),
       });
@@ -987,7 +996,7 @@ const DiscountAndTotalBreakdown = ({
                     </div>
                     <span className="txt-small text-ui-fg-muted">
                       {getLocaleAmount(
-                        creditLine.amount as number,
+                        getCreditLineAmount(creditLine),
                         order.currency_code,
                       )}
                     </span>

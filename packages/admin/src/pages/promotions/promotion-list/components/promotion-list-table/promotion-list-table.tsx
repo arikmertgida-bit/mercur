@@ -1,7 +1,7 @@
 import { PencilSquare, ReceiptPercent, Trash } from "@medusajs/icons"
 import { HttpTypes } from "@medusajs/types"
 import { Button, Container, Heading, toast, usePrompt } from "@medusajs/ui"
-import { createColumnHelper, type ColumnDef } from "@tanstack/react-table"
+import { createColumnHelper } from "@tanstack/react-table"
 import { useExtendableTable, useLinkQuery, mergeListFilters } from "@mercurjs/dashboard-shared"
 import { Children, ReactNode, useMemo } from "react"
 import { useTranslation } from "react-i18next"
@@ -20,6 +20,7 @@ import { usePromotionTableFilters } from "../../../../../hooks/table/filters/use
 import { usePromotionTableQuery } from "../../../../../hooks/table/query/use-promotion-table-query"
 import { PermissionGuard } from "@mercurjs/dashboard-shared"
 import { useDataTable } from "../../../../../hooks/use-data-table"
+import { promotionsLoader } from "../../loader"
 
 const PAGE_SIZE = 20
 
@@ -71,8 +72,7 @@ export const PromotionListHeader = ({ children }: { children?: ReactNode }) => {
 
 export const PromotionListDataTable = () => {
   const { t } = useTranslation()
-  const initialData =
-    useLoaderData() as HttpTypes.AdminPromotionListResponse | undefined
+  const initialData = useLoaderData<ReturnType<typeof promotionsLoader>>()
 
   const { searchParams, raw } = usePromotionTableQuery({ pageSize: PAGE_SIZE })
   const linkQuery = useLinkQuery("promotion")
@@ -156,7 +156,7 @@ const PromotionActions = ({ promotion }: { promotion: HttpTypes.AdminPromotion }
   const handleDelete = async () => {
     const res = await prompt({
       title: t("general.areYouSure"),
-      description: t("promotions.deleteWarning", { code: promotion.code! }),
+      description: t("promotions.deleteWarning", { code: promotion.code }),
       confirmText: t("actions.delete"),
       cancelText: t("actions.cancel"),
       verificationInstruction: t("general.typeToConfirm"),
@@ -173,7 +173,7 @@ const PromotionActions = ({ promotion }: { promotion: HttpTypes.AdminPromotion }
         navigate("/promotions", { replace: true })
       },
       onError: (e) => {
-        toast.error((e as Error).message)
+        toast.error((e instanceof Error ? e.message : String(e)))
       },
     })
   }
@@ -210,10 +210,6 @@ const useColumns = () => {
   const { columns: extended, filters } =
     useExtendableTable<HttpTypes.AdminPromotion>({
       model: "promotion",
-      // tanstack's ColumnDef<T, TValue> is contravariant in TValue
-      // (cell/header render props), so a heterogeneous per-column accessor
-      // array can't widen to ColumnDef<T, unknown>[] without a cast.
-      // @ts-expect-error
       columns: base,
     })
 

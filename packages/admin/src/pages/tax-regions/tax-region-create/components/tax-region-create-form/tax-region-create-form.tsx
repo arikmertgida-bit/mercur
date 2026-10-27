@@ -86,10 +86,9 @@ export const TaxRegionCreateForm = ({ parentId }: TaxRegionCreateFormProps) => {
     const defaultRate = values.name
       ? {
           name: values.name,
-          rate:
-            values.rate?.value === ""
-              ? undefined
-              : parseFloat(values.rate.value!),
+          rate: values.rate.value
+            ? parseFloat(values.rate.value)
+            : undefined,
               // TODO: Check if optional region's tax code is correct - was it intentionally set as optional? It's same for vendor panel.
               // Leaving it like this, previously it was sent as empty string too if not provided
           code: values.code ?? "",

@@ -65,7 +65,7 @@ export const AddCurrenciesForm = ({
   const form = useForm<zod.infer<typeof AddCurrenciesSchema>>({
     defaultValues: {
       currencies: [],
-      pricePreferences: pricePreferences?.reduce(
+      pricePreferences: pricePreferences?.reduce<Record<string, boolean>>(
         (acc, curr) => {
           if (curr.value) {
             acc[curr.value] = curr.is_tax_inclusive
@@ -73,7 +73,7 @@ export const AddCurrenciesForm = ({
 
           return acc
         },
-        {} as Record<string, boolean>
+        {}
       ),
     },
     resolver: zodResolver(AddCurrenciesSchema),
@@ -128,7 +128,7 @@ export const AddCurrenciesForm = ({
   const handleSubmit = form.handleSubmit(async (data) => {
     const currencies = Array.from(
       new Set([...data.currencies, ...preSelectedRows])
-    ) as string[]
+    )
 
     let defaultCurrency = store.supported_currencies?.find(
       (c) => c.is_default

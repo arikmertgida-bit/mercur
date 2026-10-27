@@ -57,7 +57,7 @@ export const usePromotionTableFilters = (): Filter[] => {
       type: "select",
       searchable: true,
       options: (campaigns ?? []).map((campaign) => ({
-        label: campaign.name!,
+        label: campaign.name,
         value: campaign.id,
       })),
     }
@@ -70,7 +70,7 @@ export const usePromotionTableFilters = (): Filter[] => {
       options: [
         { label: t("promotions.fields.platformOwner"), value: "platform" },
         ...(sellers ?? []).map((seller) => ({
-          label: seller.name!,
+          label: seller.name,
           value: seller.id,
         })),
       ],

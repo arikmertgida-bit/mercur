@@ -39,7 +39,7 @@ export function EditOrderEmailForm({ order }: EditOrderEmailFormProps) {
       toast.success(t('orders.edit.email.requestSuccess'));
       handleSuccess();
     } catch (error) {
-      toast.error((error as Error).message);
+      toast.error(error instanceof Error ? error.message : String(error));
     }
   });
 

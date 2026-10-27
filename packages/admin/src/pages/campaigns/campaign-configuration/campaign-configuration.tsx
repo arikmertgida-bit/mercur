@@ -1,15 +1,15 @@
 import { Heading } from "@medusajs/ui"
 import { useTranslation } from "react-i18next"
-import { useParams } from "react-router-dom"
 import { RouteDrawer } from "../../../components/modals"
 import { useCampaign } from "../../../hooks/api/campaigns"
 import { CampaignConfigurationForm } from "./components/campaign-configuration-form"
+import { useRequiredParam } from "@mercurjs/dashboard-shared"
 
 export const CampaignConfiguration = () => {
   const { t } = useTranslation()
 
-  const { id } = useParams()
-  const { campaign, isLoading, isError, error } = useCampaign(id!)
+  const id = useRequiredParam("id")
+  const { campaign, isLoading, isError, error } = useCampaign(id)
 
   if (isError) {
     throw error

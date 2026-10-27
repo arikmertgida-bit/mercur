@@ -1,23 +1,21 @@
 import { Heading } from "@medusajs/ui"
-import { SectionNoAccess, isForbidden, useCan } from "@mercurjs/dashboard-shared"
+import { SectionNoAccess, isForbidden, useCan, useRequiredParam } from "@mercurjs/dashboard-shared"
 import { useTranslation } from "react-i18next"
-import { useParams } from "react-router-dom"
 import { RouteDrawer } from "../../../components/modals"
 import { useCustomerGroups } from "../../../hooks/api/customer-groups"
 import { usePriceList } from "../../../hooks/api/price-lists"
+import { getPriceListCustomerGroupIds } from "../common/utils"
 import { PriceListCustomerAvailabilityForm } from "./components/price-list-customer-availability-form"
 
 export const PriceListCustomerAvailability = () => {
   const { t } = useTranslation()
-  const { id } = useParams()
+  const id = useRequiredParam("id")
 
   const canViewCustomerGroups = useCan("customer_groups")
 
-  const { price_list, isPending, isError, error } = usePriceList(id!)
+  const { price_list, isPending, isError, error } = usePriceList(id)
 
-  const customerGroupIds = price_list?.rules?.["customer.groups.id"] as
-    | string[]
-    | undefined
+  const customerGroupIds = getPriceListCustomerGroupIds(price_list?.rules)
 
   const {
     customer_groups,
@@ -38,7 +36,7 @@ export const PriceListCustomerAvailability = () => {
   const initialCustomerGroups =
     customer_groups?.map((group) => ({
       id: group.id,
-      name: group.name!,
+      name: group.name ?? "",
     })) || []
 
   const isCustomerGroupsReady = isPending

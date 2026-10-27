@@ -49,7 +49,7 @@ export const RegionListTable = () => {
   const columns = useColumns()
 
   const { table } = useDataTable({
-    data: (regions ?? []) as HttpTypes.AdminRegion[],
+    data: regions ?? [],
     columns,
     count,
     enablePagination: true,

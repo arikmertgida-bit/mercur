@@ -1,30 +1,21 @@
+import { InferClientInput } from "@mercurjs/client"
 import { HttpTypes } from "@medusajs/types"
 import { AttributeType, ProductAttributeBatchAdd } from "@mercurjs/types"
 import { UseFormReturn } from "react-hook-form"
+import { sdk } from "../../../lib/client"
+import { isTruthy } from "../../../lib/is-truthy"
+import { toAttributeType } from "../common/utils/attribute-type"
 import { ProductCreateSchemaType } from "./types"
 
-export type NormalizedCreateProductVariant =
-  HttpTypes.AdminCreateProductVariant & {
-    // Mercur extension: initial stock levels to seed on the variant's
-    // auto-created inventory item, keyed by stock location.
-    inventory?: { location_id: string; quantity: number }[]
-  }
+// The create-product body as Mercur's admin route validates it (seller,
+// attribute and per-variant inventory fields included).
+export type ProductCreatePayload = InferClientInput<
+  typeof sdk.admin.products.mutate
+>
 
-// Mercur adds seller/attribute fields to the create-product payload that
-// aren't part of stock Medusa's `AdminCreateProduct`.
-export type ProductCreatePayload = Omit<
-  HttpTypes.AdminCreateProduct,
-  "variants"
-> & {
-  seller_ids?: string[]
-  origin_country?: string
-  material?: string
-  mid_code?: string
-  hs_code?: string
-  attributes?: ProductAttributeBatchAdd[]
-  shipping_profile_id?: string
-  variants: NormalizedCreateProductVariant[]
-}
+export type NormalizedCreateProductVariant = NonNullable<
+  ProductCreatePayload["variants"]
+>[number]
 
 export const normalizeProductFormValues = (
   values: ProductCreateSchemaType & {
@@ -155,8 +146,9 @@ const normalizeFormAttributes = (
 
   for (const attr of attributes) {
     const vals = toValueArray(attr.values)
-    const type = attr.type as string | undefined
-    const isSelect = type === "single_select" || type === "multi_select"
+    const type = toAttributeType(attr.type)
+    const isSelect =
+      type === AttributeType.SINGLE_SELECT || type === AttributeType.MULTI_SELECT
 
     if (attr.attribute_id) {
       // Existing catalog attribute referenced by id.
@@ -167,7 +159,7 @@ const normalizeFormAttributes = (
         )
         const valueIds = vals
           .map((name) => nameToId.get(name))
-          .filter(Boolean) as string[]
+          .filter(isTruthy)
 
         // A variant axis without chosen values is meaningless (stock Medusa
         // would synthesise a valueless option and reject the default variant),
@@ -180,7 +172,7 @@ const normalizeFormAttributes = (
         if (!vals.length || !vals[0]) continue
         result.push({
           id: attr.attribute_id,
-          value: type === "toggle" ? vals[0] === "true" : vals[0],
+          value: type === AttributeType.TOGGLE ? vals[0] === "true" : vals[0],
         })
       }
     } else if (attr.is_custom && attr.title) {
@@ -190,21 +182,21 @@ const normalizeFormAttributes = (
       if (attr.use_for_variants) {
         result.push({
           title: attr.title,
-          type: (type as AttributeType) ?? AttributeType.MULTI_SELECT,
+          type: type ?? AttributeType.MULTI_SELECT,
           values: vals,
           is_variant_axis: true,
         })
       } else if (isSelect) {
         result.push({
           title: attr.title,
-          type: type as AttributeType,
+          type,
           values: vals,
         })
       } else {
         result.push({
           title: attr.title,
-          type: (type as AttributeType) ?? AttributeType.TEXT,
-          value: type === "toggle" ? vals[0] === "true" : vals[0],
+          type: type ?? AttributeType.TEXT,
+          value: type === AttributeType.TOGGLE ? vals[0] === "true" : vals[0],
         })
       }
     }
@@ -279,7 +271,7 @@ export const generateVariantsFromAttributes = (
   const permutations = getPermutations(variantAxes)
 
   // Preserve existing variants that still match a permutation
-  const newVariants = currentVariants.reduce((acc, variant) => {
+  const newVariants = currentVariants.reduce<typeof currentVariants>((acc, variant) => {
     const opts = variant.options
     if (!opts || Object.keys(opts).length === 0) return acc
 
@@ -295,7 +287,7 @@ export const generateVariantsFromAttributes = (
       })
     }
     return acc
-  }, [] as typeof currentVariants)
+  }, [])
 
   // Add new permutations not yet in the list
   const usedSet = new Set(

@@ -7,6 +7,7 @@ import { getLocaleAmount, getStylizedAmount } from "@lib/money-amount-helpers";
 import { getOrderPaymentStatus } from "@lib/order-helpers";
 import { getPaymentsFromOrder } from "@lib/orders";
 import { getTotalCaptured, getTotalPending } from "@lib/payment";
+import { getCreditLineAmount } from "@lib/credit-line";
 import { ArrowDownRightMini, DocumentText, XCircle } from "@medusajs/icons";
 import type {
   AdminOrder,
@@ -29,6 +30,11 @@ import { DisplayExtensionZone } from "@mercurjs/dashboard-shared";
 import { format } from "date-fns";
 import { Trans, useTranslation } from "react-i18next";
 
+type PaymentBreakdownEntry =
+  | { type: "payment"; event: HttpTypes.AdminPayment }
+  | { type: "refund"; event: HttpTypes.AdminRefund }
+  | { type: "credit_line_refund"; event: OrderCreditLineDTO };
+
 type OrderPaymentSectionProps = {
   order: HttpTypes.AdminOrder;
 };
@@ -36,10 +42,7 @@ type OrderPaymentSectionProps = {
 export const OrderPaymentSection = ({ order }: OrderPaymentSectionProps) => {
   const payments = getPaymentsFromOrder(order);
 
-  const refunds = payments
-    .map((payment) => payment?.refunds)
-    .flat(1)
-    .filter(Boolean) as HttpTypes.AdminRefund[];
+  const refunds = payments.flatMap((payment) => payment?.refunds ?? []);
 
   return (
     <Container
@@ -131,7 +134,7 @@ const Refund = ({
       </div>
       <div className="flex shrink-0 items-center justify-end gap-4">
         <Text size="small" leading="compact">
-          - {getLocaleAmount(refund.amount as number, currencyCode)}
+          - {getLocaleAmount(refund.amount, currencyCode)}
         </Text>
         <div className="h-7 w-5" />
       </div>
@@ -158,7 +161,7 @@ const Payment = ({
     const res = await prompt({
       title: t("orders.payment.capture"),
       description: t("orders.payment.capturePayment", {
-        amount: formatCurrency(payment.amount as number, currencyCode),
+        amount: formatCurrency(payment.amount, currencyCode),
       }),
       confirmText: t("actions.confirm"),
       cancelText: t("actions.cancel"),
@@ -170,12 +173,12 @@ const Payment = ({
     }
 
     await mutateAsync(
-      { amount: payment.amount as number },
+      { amount: payment.amount },
       {
         onSuccess: () => {
           toast.success(
             t("orders.payment.capturePaymentSuccess", {
-              amount: formatCurrency(payment.amount as number, currencyCode),
+              amount: formatCurrency(payment.amount, currencyCode),
             }),
           );
         },
@@ -186,7 +189,9 @@ const Payment = ({
     );
   };
 
-  const getPaymentStatusAttributes = (payment: AdminPayment) => {
+  const getPaymentStatusAttributes = (
+    payment: AdminPayment,
+  ): [string, "green" | "orange" | "red"] => {
     if (payment.canceled_at) {
       return ["Canceled", "red"];
     } else if (payment.captured_at) {
@@ -196,10 +201,7 @@ const Payment = ({
     }
   };
 
-  const [status, color] = getPaymentStatusAttributes(payment) as [
-    string,
-    "green" | "orange" | "red",
-  ];
+  const [status, color] = getPaymentStatusAttributes(payment);
 
   const showCapture =
     isOrderActionable(order) &&
@@ -263,7 +265,7 @@ const Payment = ({
             leading="compact"
             data-testid={`order-payment-${payment.id}-amount`}
           >
-            {getLocaleAmount(payment.amount as number, payment.currency_code)}
+            {getLocaleAmount(payment.amount, payment.currency_code)}
           </Text>
         </div>
         <ActionMenu
@@ -376,7 +378,7 @@ const CreditLine = ({
         </div>
         <div className="flex items-center justify-end">
           <Text size="small" leading="compact">
-            {getLocaleAmount(creditLine.amount as number, currencyCode)}
+            {getLocaleAmount(getCreditLineAmount(creditLine), currencyCode)}
           </Text>
         </div>
       </div>
@@ -401,32 +403,21 @@ const PaymentBreakdown = ({
   const orderRefunds = refunds.filter((refund) => refund.payment_id === null);
   const creditLines = order.credit_lines ?? [];
   const creditLineRefunds = creditLines.filter(
-    (creditLine) => (creditLine.amount as number) < 0,
+    (creditLine) => getCreditLineAmount(creditLine) < 0,
   );
 
-  const entries = [...orderRefunds, ...payments, ...creditLineRefunds]
-    .sort((a, b) => {
-      return (
-        new Date(a.created_at as string).getTime() -
-        new Date(b.created_at as string).getTime()
-      );
-    })
-    .map((entry) => {
-      let type = entry.id.startsWith("pay_") ? "payment" : "refund";
-
-      if (entry.id.startsWith("ordcl_")) {
-        type = "credit_line_refund";
-      }
-
-      return { event: entry, type };
-    }) as (
-    | { type: "payment"; event: HttpTypes.AdminPayment }
-    | { type: "refund"; event: HttpTypes.AdminRefund }
-    | {
-        type: "credit_line_refund";
-        event: OrderCreditLineDTO;
-      }
-  )[];
+  const entries: PaymentBreakdownEntry[] = [
+    ...orderRefunds.map((event) => ({ type: "refund" as const, event })),
+    ...payments.map((event) => ({ type: "payment" as const, event })),
+    ...creditLineRefunds.map((event) => ({
+      type: "credit_line_refund" as const,
+      event,
+    })),
+  ].sort(
+    (a, b) =>
+      new Date(a.event.created_at ?? 0).getTime() -
+      new Date(b.event.created_at ?? 0).getTime(),
+  );
 
   return (
     <div

@@ -1,7 +1,6 @@
-import i18n from "i18next"
 import { z } from "zod"
 import {
-  PriceListCreateOffersSchema,
+  PriceListCreateProductsSchema,
   PriceListRulesSchema,
 } from "../../../common/schemas"
 
@@ -19,19 +18,12 @@ export type PricingCustomerGroupsArrayType = z.infer<
 export const PricingCreateSchema = z.object({
   type: z.enum(["sale", "override"]),
   status: z.enum(["draft", "active"]),
-  title: z.string().min(1, i18n.t("priceLists.create.validation.title")),
-  description: z
-    .string()
-    .min(1, i18n.t("priceLists.create.validation.description")),
+  title: z.string().min(1),
+  description: z.string().min(1),
   starts_at: z.date().nullish(),
   ends_at: z.date().nullish(),
   product_ids: z.array(z.object({ id: z.string() })).min(1),
-  // Offer ids selected in the picker (every variant of the chosen store+product
-  // groups). The Prices tab hydrates `offers` from these.
-  offer_ids: z.array(z.string()).default([]),
-  // Offer-keyed prices (offer_id -> { variant_id, prices }), so the same variant
-  // from two sellers stays separate.
-  offers: PriceListCreateOffersSchema.default({}),
+  products: PriceListCreateProductsSchema,
   rules: PriceListRulesSchema.nullish(),
 })
 
@@ -45,22 +37,16 @@ export const PricingDetailsSchema = PricingCreateSchema.pick({
   ends_at: true,
 })
 
-export const PricingDetailsFields = Object.keys(
-  PricingDetailsSchema.shape
-) as (keyof typeof PricingDetailsSchema.shape)[]
+export const PricingDetailsFields = PricingDetailsSchema.keyof().options
 
 export const PricingProductsSchema = PricingCreateSchema.pick({
   product_ids: true,
 })
 
-export const PricingProductsFields = Object.keys(
-  PricingProductsSchema.shape
-) as (keyof typeof PricingProductsSchema.shape)[]
+export const PricingProductsFields = PricingProductsSchema.keyof().options
 
 export const PricingPricesSchema = PricingCreateSchema.pick({
-  offers: true,
+  products: true,
 })
 
-export const PricingPricesFields = Object.keys(
-  PricingPricesSchema.shape
-) as (keyof typeof PricingPricesSchema.shape)[]
+export const PricingPricesFields = PricingPricesSchema.keyof().options

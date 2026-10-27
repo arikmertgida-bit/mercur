@@ -1,6 +1,18 @@
-import type { ProductStatus } from "@mercurjs/types";
-import { useLinkQuery } from "@mercurjs/dashboard-shared";
+import { ProductStatus } from "@mercurjs/types";
+import { z } from "zod";
+import { useLinkQuery, DateComparisonFilterSchema, parseJsonQueryParam } from "@mercurjs/dashboard-shared";
 import { useQueryParams } from "@hooks/use-query-params";
+
+// The status filter comes from the URL, so unknown values are dropped.
+const ProductStatusSchema = z.enum(ProductStatus);
+
+const parseProductStatuses = (
+  value: string | undefined,
+): ProductStatus[] | undefined =>
+  value?.split(",").flatMap((entry) => {
+    const parsed = ProductStatusSchema.safeParse(entry);
+    return parsed.success ? [parsed.data] : [];
+  });
 
 type UseProductTableQueryProps = {
   prefix?: string;
@@ -48,14 +60,14 @@ export const useProductTableQuery = ({
   const searchParams = {
     limit: pageSize,
     offset: offset ? Number(offset) : 0,
-    created_at: created_at ? JSON.parse(created_at) : undefined,
-    updated_at: updated_at ? JSON.parse(updated_at) : undefined,
+    created_at: parseJsonQueryParam(created_at, DateComparisonFilterSchema),
+    updated_at: parseJsonQueryParam(updated_at, DateComparisonFilterSchema),
     category_id: category_id?.split(","),
     collection_id: collection_id?.split(","),
     order: order ?? "-title",
     tag_id: tag_id ? tag_id.split(",") : undefined,
     type_id: type_id?.split(","),
-    status: status?.split(",") as ProductStatus[],
+    status: parseProductStatuses(status),
     q,
     fields: linkQuery.fields,
   };

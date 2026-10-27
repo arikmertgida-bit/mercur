@@ -1,17 +1,20 @@
 import {
-  DateComparisonOperator,
-  NumericalComparisonOperator,
-} from "@medusajs/types"
+  DateComparisonFilter,
+  DateComparisonFilterSchema,
+  parseJsonQueryParam,
+  RangeNumberFilterValue,
+  RangeNumberFilterValueSchema,
+} from "@mercurjs/dashboard-shared"
 import { useQueryParams } from "../../../../../hooks/use-query-params"
 
 export type ReturnItemTableQuery = {
   q?: string
   offset: number
   order?: string
-  created_at?: DateComparisonOperator
-  updated_at?: DateComparisonOperator
-  returnable_quantity?: NumericalComparisonOperator | number
-  refundable_amount?: NumericalComparisonOperator | number
+  created_at?: DateComparisonFilter
+  updated_at?: DateComparisonFilter
+  returnable_quantity?: RangeNumberFilterValue
+  refundable_amount?: RangeNumberFilterValue
 }
 
 export const useClaimItemTableQuery = ({
@@ -47,14 +50,16 @@ export const useClaimItemTableQuery = ({
     ...rest,
     limit: pageSize,
     offset: offset ? Number(offset) : 0,
-    created_at: created_at ? JSON.parse(created_at) : undefined,
-    updated_at: updated_at ? JSON.parse(updated_at) : undefined,
-    refundable_amount: refundable_amount
-      ? JSON.parse(refundable_amount)
-      : undefined,
-    returnable_quantity: returnable_quantity
-      ? JSON.parse(returnable_quantity)
-      : undefined,
+    created_at: parseJsonQueryParam(created_at, DateComparisonFilterSchema),
+    updated_at: parseJsonQueryParam(updated_at, DateComparisonFilterSchema),
+    refundable_amount: parseJsonQueryParam(
+      refundable_amount,
+      RangeNumberFilterValueSchema
+    ),
+    returnable_quantity: parseJsonQueryParam(
+      returnable_quantity,
+      RangeNumberFilterValueSchema
+    ),
   }
 
   return { searchParams, raw }

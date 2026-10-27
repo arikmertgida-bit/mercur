@@ -1,7 +1,7 @@
 import { ReactNode, Children } from "react";
-import { useLoaderData, useParams } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 
-import { WidgetZone } from "@mercurjs/dashboard-shared";
+import { WidgetZone, useRequiredParam } from "@mercurjs/dashboard-shared";
 import { SingleColumnPageSkeleton } from "../../../components/common/skeleton";
 import { SingleColumnPage } from "../../../components/layout/pages";
 import { useProductAttribute } from "../../../hooks/api";
@@ -11,11 +11,9 @@ import { AttributePossibleValuesSection } from "./components/attribute-possible-
 import { attributeDetailLoader } from "./loader";
 
 const Root = ({ children }: { children?: ReactNode }) => {
-  const { id } = useParams();
+  const id = useRequiredParam("id");
 
-  const initialData = useLoaderData() as Awaited<
-    ReturnType<typeof attributeDetailLoader>
-  >;
+  const initialData = useLoaderData<typeof attributeDetailLoader>();
 
   const {
     product_attribute: attribute,
@@ -23,7 +21,7 @@ const Root = ({ children }: { children?: ReactNode }) => {
     isError,
     error,
   } = useProductAttribute(
-    id!,
+    id,
     {},
     {
       initialData: initialData,

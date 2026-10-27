@@ -114,7 +114,8 @@ function refineDuplicates(
       ] as const
 
       conditions.forEach((condition1) => {
-        if (!condition1.value && condition1.value !== 0) {
+        const value1 = condition1.value
+        if (value1 == null || value1 === "") {
           return
         }
 
@@ -127,16 +128,13 @@ function refineDuplicates(
         ] as const
 
         conditions2.forEach((condition2) => {
-          if (!condition2.value && condition2.value !== 0) {
+          const value2 = condition2.value
+          if (value2 == null || value2 === "") {
             return
           }
 
-          const condition1Value = castNumber(
-            condition1.value as string | number
-          )
-          const condition2Value = castNumber(
-            condition2.value as string | number
-          )
+          const condition1Value = castNumber(value1)
+          const condition2Value = castNumber(value2)
 
           if (condition1Value === condition2Value) {
             addOverlappingConditionError(ctx, j, condition2.type)

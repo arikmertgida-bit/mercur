@@ -1,3 +1,4 @@
+import type { LoaderFunction } from "react-router-dom"
 import type { Permission } from "@mercurjs/dashboard-sdk"
 import { createWithPermission } from "@mercurjs/dashboard-shared"
 
@@ -10,7 +11,7 @@ export const withPermission = createWithPermission(async () => {
   return user?.permissions ?? null
 })
 
-type LoaderModule = { loader?: (args: never) => unknown }
+type LoaderModule = { loader?: LoaderFunction }
 
 /**
  * For `lazy: () => import("./page").then(withLoaderPermission("x:view"))`,

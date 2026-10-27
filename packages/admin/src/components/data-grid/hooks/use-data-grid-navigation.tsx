@@ -1,24 +1,23 @@
 import { Column, Row, VisibilityState } from "@tanstack/react-table"
 import { ScrollToOptions, Virtualizer } from "@tanstack/react-virtual"
 import { Dispatch, SetStateAction, useCallback } from "react"
-import { FieldValues } from "react-hook-form"
 import { DataGridMatrix, DataGridQueryTool } from "../models"
 import { DataGridCoordinates } from "../types"
 
-type UseDataGridNavigationOptions<TData, TFieldValues extends FieldValues> = {
-  matrix: DataGridMatrix<TData, TFieldValues>
+type UseDataGridNavigationOptions<TData> = {
+  matrix: DataGridMatrix<TData>
   anchor: DataGridCoordinates | null
   visibleRows: Row<TData>[]
-  visibleColumns: Column<TData, unknown>[]
+  visibleColumns: Column<TData>[]
   rowVirtualizer: Virtualizer<HTMLDivElement, Element>
   columnVirtualizer: Virtualizer<HTMLDivElement, Element>
   setColumnVisibility: Dispatch<SetStateAction<VisibilityState>>
-  flatColumns: Column<TData, unknown>[]
+  flatColumns: Column<TData>[]
   queryTool: DataGridQueryTool | null
   setSingleRange: (coords: DataGridCoordinates | null) => void
 }
 
-export const useDataGridNavigation = <TData, TFieldValues extends FieldValues>({
+export const useDataGridNavigation = <TData,>({
   matrix,
   anchor,
   visibleColumns,
@@ -29,7 +28,7 @@ export const useDataGridNavigation = <TData, TFieldValues extends FieldValues>({
   flatColumns,
   queryTool,
   setSingleRange,
-}: UseDataGridNavigationOptions<TData, TFieldValues>) => {
+}: UseDataGridNavigationOptions<TData>) => {
   const scrollToCoordinates = useCallback(
     (coords: DataGridCoordinates, direction: "horizontal" | "vertical" | "both") => {
       if (!anchor) {

@@ -1,11 +1,10 @@
-import { usePermissions } from "@mercurjs/dashboard-shared";
+import { usePermissions, useRequiredParam } from "@mercurjs/dashboard-shared";
 import { zodResolver } from "@hookform/resolvers/zod";
 import i18n from "i18next";
 import { Button, Input, Select, Text, clx, toast } from "@medusajs/ui";
 import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
 import * as zod from "zod";
 
 import { Form } from "../../../../components/common/form";
@@ -18,7 +17,7 @@ import {
   useSellerInvites,
   useSellerMembers,
 } from "../../../../hooks/api/sellers";
-import { SellerMemberDTO, SellerRole } from "@mercurjs/types";
+import { SellerRole } from "@mercurjs/types";
 
 const ROLE_OPTIONS = [
   {
@@ -42,21 +41,22 @@ const InviteMemberSchema = zod.object({
     .string()
     .min(1, { message: i18n.t("stores.create.validation.emailRequired") })
     .email({ message: i18n.t("stores.create.validation.emailInvalid") }),
+  // The select starts empty (""), so the field is a string until it holds
+  // one of the seller roles the member endpoints accept.
   role_id: zod
     .string()
-    .min(1, { message: i18n.t("stores.members.addUser.validation.roleRequired") }),
+    .min(1, { message: i18n.t("stores.members.addUser.validation.roleRequired") })
+    .pipe(zod.enum(SellerRole)),
 });
-
-type Member = { id: string; email: string };
 
 export const InviteMemberForm = () => {
   const { t } = useTranslation();
-  const { id } = useParams();
+  const id = useRequiredParam("id");
   const { handleSuccess } = useRouteModal();
 
   const [suggestionsOpen, setSuggestionsOpen] = useState(false);
 
-  const form = useForm<zod.infer<typeof InviteMemberSchema>>({
+  const form = useForm({
     defaultValues: {
       email: "",
       role_id: "",
@@ -79,7 +79,7 @@ export const InviteMemberForm = () => {
   // Fetch current sellers members and pending invites so we can filter
   // suggestions to never show emails that are already added or invited.
   const { seller_members: currentMembers } = useSellerMembers(
-    id!,
+    id,
     {
       limit: 100,
       offset: 0,
@@ -87,21 +87,21 @@ export const InviteMemberForm = () => {
     { enabled: canViewMembers },
   );
 
-  const { member_invites: pendingInvites } = useSellerInvites(id!, undefined, {
+  const { member_invites: pendingInvites } = useSellerInvites(id, undefined, {
     enabled: can("members.invites"),
   });
 
   const existingEmails = useMemo(() => {
     const emails = new Set<string>();
     (
-      (currentMembers as SellerMemberDTO[] | undefined) ?? []
+      currentMembers ?? []
     ).forEach((sm) => {
       const email = sm.member?.email;
       if (email) {
         emails.add(email.toLowerCase());
       }
     });
-    ((pendingInvites as { email?: string; accepted?: boolean }[] | undefined) ?? [])
+    (pendingInvites ?? [])
       .filter((invite) => !invite.accepted)
       .forEach((invite) => {
         if (invite.email) {
@@ -112,16 +112,16 @@ export const InviteMemberForm = () => {
   }, [currentMembers, pendingInvites]);
 
   const memberList = useMemo(() => {
-    const all = (members as Member[] | undefined) ?? [];
+    const all = members ?? [];
     return all.filter(
       (m) => !existingEmails.has(m.email.toLowerCase()),
     );
   }, [members, existingEmails]);
 
   const { mutateAsync: inviteMember, isPending: isInviting } =
-    useInviteSellerMember(id!);
+    useInviteSellerMember(id);
   const { mutateAsync: addMember, isPending: isAdding } = useAddSellerMember(
-    id!,
+    id,
   );
 
   const isPending = isInviting || isAdding;
@@ -135,20 +135,20 @@ export const InviteMemberForm = () => {
       if (matched) {
         await addMember({
           member_id: matched.id,
-          role_id: values.role_id as SellerRole,
+          role_id: values.role_id,
         });
         toast.success(t("stores.members.addUser.addedToast"));
       } else {
         await inviteMember({
           email: values.email,
-          role_id: values.role_id as SellerRole,
+          role_id: values.role_id,
         });
         toast.success(t("stores.members.addUser.invitedToast"));
       }
 
       handleSuccess();
     } catch (error) {
-      toast.error((error as Error).message);
+      toast.error((error instanceof Error ? error.message : String(error)));
     }
   });
 

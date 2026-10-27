@@ -1,13 +1,10 @@
-import { HttpTypes } from "@medusajs/types"
+import { HttpTypes } from "@mercurjs/types"
 import { createColumnHelper } from "@tanstack/react-table"
 import { useMemo } from "react"
 import { useTranslation } from "react-i18next"
 import { Thumbnail } from "../../../components/common/thumbnail"
 import { TextCell } from "../../../components/table/table-cells/common/text-cell"
-import {
-  CollectionWithImages,
-  getCollectionGallery,
-} from "../../../pages/collections/common/components/collection-image-fields"
+import { getCollectionGallery } from "../../../pages/collections/common/components/collection-image-fields"
 
 const columnHelper = createColumnHelper<HttpTypes.AdminCollection>()
 
@@ -19,9 +16,7 @@ export const useCollectionTableColumns = () => {
       columnHelper.accessor("title", {
         header: t("fields.title"),
         cell: ({ getValue, row }) => {
-          const gallery = getCollectionGallery(
-            (row.original as CollectionWithImages).media_images
-          )
+          const gallery = getCollectionGallery(row.original.media_images)
           const thumbnailSrc =
             gallery.find((image) => image.is_thumbnail)?.url ??
             gallery[0]?.url ??

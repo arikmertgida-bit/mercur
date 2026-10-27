@@ -10,7 +10,7 @@ export const ProductTagDetailBreadcrumb = (
 ) => {
   const { id } = props.params || {}
 
-  const { product_tag } = useProductTag(id!, undefined, {
+  const { product_tag } = useProductTag(id ?? "", undefined, {
     initialData: props.data,
     enabled: Boolean(id),
   })

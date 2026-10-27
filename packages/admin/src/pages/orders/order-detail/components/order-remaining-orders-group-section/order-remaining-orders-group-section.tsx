@@ -1,10 +1,12 @@
-import { HttpTypes } from "@medusajs/types"
 import { Container, Heading } from "@medusajs/ui"
-import { DisplayExtensionZone } from "@mercurjs/dashboard-shared"
+import {
+  DisplayExtensionZone,
+  useRequiredParam,
+} from "@mercurjs/dashboard-shared"
+import { HttpTypes } from "@mercurjs/types"
 import { createColumnHelper } from "@tanstack/react-table"
 import { useMemo } from "react"
 import { useTranslation } from "react-i18next"
-import { useParams } from "react-router-dom"
 
 import { _DataTable } from "@components/table/data-table"
 import {
@@ -37,29 +39,20 @@ import { useDataTable } from "@hooks/use-data-table"
 const DEFAULT_FIELDS =
   "id,*orders,*orders.customer,*orders.seller,*orders.sales_channel"
 
-// The order group's `orders` are joined in via `fields: DEFAULT_FIELDS` above
-// (query.graph field selection) — `seller` isn't part of the base AdminOrder type.
-type OrderWithSeller = HttpTypes.AdminOrder & {
-  seller?: { name?: string | null } | null
-}
-
-type OrderGroupWithOrders = {
-  orders?: OrderWithSeller[]
-}
+type OrderWithSeller = HttpTypes.AdminOrderGroupOrder
 
 export const OrderRemainingOrdersGroupSection = () => {
-  const { id } = useParams()
+  const id = useRequiredParam("id")
   const { t } = useTranslation()
 
   const { order_group, isLoading, isError, error } = useOrderGroupByOrderId(
-    id!,
+    id,
     { fields: DEFAULT_FIELDS }
   )
 
   const orders = useMemo(() => {
-    const group = order_group as OrderGroupWithOrders | undefined
-    if (!group?.orders) return []
-    return group.orders.filter((o) => o.id !== id)
+    if (!order_group?.orders) return []
+    return order_group.orders.filter((o) => o.id !== id)
   }, [order_group, id])
 
   const columns = useColumns()
@@ -123,7 +116,7 @@ const useColumns = () => {
     () => [
       columnHelper.accessor("display_id", {
         header: () => <DisplayIdHeader />,
-        cell: ({ getValue }) => <DisplayIdCell displayId={getValue()!} />,
+        cell: ({ getValue }) => <DisplayIdCell displayId={getValue()} />,
       }),
       columnHelper.display({
         id: "seller",

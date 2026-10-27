@@ -17,7 +17,6 @@ const Root = () => {
     <div className="flex flex-col items-center">
       <div className="flex w-full max-w-[720px] flex-col gap-y-8 py-16">
         <AddCampaignPromotionFields
-          form={form}
           promotionCurrencyCode={currencyCode}
         />
       </div>

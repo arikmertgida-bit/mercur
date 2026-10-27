@@ -34,7 +34,7 @@ const LocationListContent = () => {
   } = useStockLocations(
     {
       fields: LOCATION_LIST_FIELDS,
-      ...(searchParams as Record<string, unknown>),
+      ...searchParams,
     },
     {
       placeholderData: keepPreviousData,

@@ -13,9 +13,10 @@ import { createAttributeSchema } from "../../attribute-edit/schema";
 import { AttributeCreateDetailsTab } from "./attribute-create-details-tab";
 import { AttributeCreateTypeTab } from "./attribute-create-type-tab";
 
-type CreateAttributeFormValues = z.infer<
-  ReturnType<typeof createAttributeSchema>
->;
+type CreateAttributeSchema = ReturnType<typeof createAttributeSchema>;
+// `.default()` fields are optional on input and required on output.
+type CreateAttributeFormInput = z.input<CreateAttributeSchema>;
+type CreateAttributeFormValues = z.output<CreateAttributeSchema>;
 
 type AttributeCreateFormProps = {
   children?: ReactNode;
@@ -27,7 +28,11 @@ export const AttributeCreateForm = ({ children }: AttributeCreateFormProps) => {
 
   const schema = useMemo(() => createAttributeSchema(t), [t]);
 
-  const form = useForm<CreateAttributeFormValues>({
+  const form = useForm<
+    CreateAttributeFormInput,
+    undefined,
+    CreateAttributeFormValues
+  >({
     defaultValues: {
       name: "",
       description: "",

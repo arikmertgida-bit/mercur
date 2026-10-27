@@ -1,6 +1,6 @@
 import { ProgressStatus } from "@medusajs/ui"
 import { useCallback, useEffect, useMemo, useState } from "react"
-import { FieldPath, FieldValues, UseFormReturn } from "react-hook-form"
+import { FieldValues, UseFormReturn } from "react-hook-form"
 
 import { TabDefinition } from "./types"
 
@@ -15,7 +15,7 @@ const validateTab = async <T extends FieldValues>(
   tab: TabDefinition<T>
 ): Promise<boolean> => {
   if (tab.validationFields?.length) {
-    return form.trigger(tab.validationFields as FieldPath<T>[])
+    return form.trigger(tab.validationFields)
   }
   return form.trigger()
 }
@@ -30,8 +30,8 @@ const validateTabRange = async <T extends FieldValues>(
   fromIndex: number,
   toIndex: number
 ): Promise<boolean> => {
-
   for (let i = fromIndex; i <= toIndex; i++) {
+    // oxlint-disable-next-line eslint/no-await-in-loop -- intentional short-circuit: stop at the first invalid tab instead of validating all tabs in parallel
     if (!(await validateTab(form, tabs[i]))) {
       return false
     }
@@ -111,9 +111,7 @@ export const useTabManagement = <T extends FieldValues>({
       const targetIndex = visibleTabs.findIndex((t) => t.id === tabId)
       if (targetIndex === -1) return
 
-      const currentIndex = visibleTabs.findIndex(
-        (t) => t.id === activeTabId
-      )
+      const currentIndex = visibleTabs.findIndex((t) => t.id === activeTabId)
 
       if (currentIndex === -1) {
         setActiveTabId(tabId)

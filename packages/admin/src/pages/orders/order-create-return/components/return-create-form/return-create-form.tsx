@@ -30,7 +30,10 @@ import {
 } from "../../../../../components/modals"
 
 import { Form } from "../../../../../components/common/form"
-import { Combobox } from "../../../../../components/inputs/combobox"
+import {
+  Combobox,
+  getSingleComboboxValue,
+} from "../../../../../components/inputs/combobox"
 import { KeyboundForm } from "../../../../../components/utilities/keybound-form"
 import {
   useAddReturnItem,
@@ -53,6 +56,8 @@ import { AddReturnItemsTable } from "../add-return-items-table"
 import { ReturnItem } from "./return-item"
 import { ReturnCreateSchema, ReturnCreateSchemaType } from "./schema"
 import { ConditionalTooltip } from "../../../../../components/common/conditional-tooltip"
+import { getOrderChangeActionDetails } from "../../../../../lib/order-change-action"
+import { getOrderSellerId } from "../../../../../lib/orders"
 
 type ReturnCreateFormProps = {
   order: AdminOrder
@@ -110,9 +115,7 @@ export const ReturnCreateForm = ({
   /**
    * HOOKS
    */
-  // Mercur seller link — not part of Medusa's AdminOrder type; included via
-  // order-detail/constants.ts DEFAULT_FIELDS (`*seller`).
-  const sellerId = (order as { seller?: { id?: string } | null }).seller?.id
+  const sellerId = getOrderSellerId(order)
   const locationsGate = usePermissionGate("stock_locations:view")
   const shippingOptionsGate = usePermissionGate("shipping_options:view")
   const { stock_locations = [] } = useStockLocations(
@@ -270,7 +273,7 @@ export const ReturnCreateForm = ({
     )
 
     if (method) {
-      form.setValue("option_id", method.shipping_option_id!)
+      form.setValue("option_id", method.shipping_option_id ?? "")
     } else {
       form.setValue("option_id", "")
     }
@@ -457,7 +460,7 @@ export const ReturnCreateForm = ({
                   <StackedFocusModal.Header />
 
                   <AddReturnItemsTable
-                    items={order.items!}
+                    items={order.items ?? []}
                     selectedItems={items.map((i) => i.item_id)}
                     currencyCode={order.currency_code}
                     onSelectionChange={(s) => (selectedItems = s)}
@@ -502,11 +505,17 @@ export const ReturnCreateForm = ({
             )}
             {items
               .filter((item) => !!previewItemsMap.get(item.item_id))
-              .map((item, index) => (
+              .map((item, index) => {
+                const orderItem = itemsMap.get(item.item_id)
+                const previewItem = previewItemsMap.get(item.item_id)
+
+                return (
+                  orderItem &&
+                  previewItem && (
                 <ReturnItem
                   key={item.id}
-                  item={itemsMap.get(item.item_id)!}
-                  previewItem={previewItemsMap.get(item.item_id)}
+                  item={orderItem}
+                  previewItem={previewItem}
                   currencyCode={order.currency_code}
                   form={form}
                   locationId={locationId}
@@ -532,11 +541,11 @@ export const ReturnCreateForm = ({
                         { ...payload, actionId: action.id },
                         {
                           onError: (error) => {
-                            if (action.details?.quantity && payload.quantity) {
-                              form.setValue(
-                                `items.${index}.quantity`,
-                                action.details?.quantity as number
-                              )
+                            const { quantity } =
+                              getOrderChangeActionDetails(action)
+
+                            if (quantity && payload.quantity) {
+                              form.setValue(`items.${index}.quantity`, quantity)
                             }
 
                             toast.error(error.message)
@@ -547,7 +556,9 @@ export const ReturnCreateForm = ({
                   }}
                   index={index}
                 />
-              ))}
+                  )
+                )
+              })}
             {!showPlaceholder && (
               <div className="mt-8 flex flex-col gap-y-4">
                 {/* LOCATION*/}
@@ -573,7 +584,8 @@ export const ReturnCreateForm = ({
                               <Form.Control data-testid="order-create-return-location-control">
                                 <Combobox
                                   value={value}
-                                  onChange={(v) => {
+                                  onChange={(next) => {
+                                    const v = getSingleComboboxValue(next)
                                     onChange(v)
                                     onLocationChange(v)
                                   }}
@@ -630,7 +642,8 @@ export const ReturnCreateForm = ({
                                 <Combobox
                                   allowClear
                                   value={value}
-                                  onChange={(v) => {
+                                  onChange={(next) => {
+                                    const v = getSingleComboboxValue(next)
                                     onChange(v)
                                     onShippingOptionChange(v)
                                   }}
@@ -639,8 +652,8 @@ export const ReturnCreateForm = ({
                                     .filter(
                                       (so) =>
                                         (locationId
-                                          ? so.service_zone.fulfillment_set!
-                                              .location.id === locationId
+                                          ? so.service_zone.fulfillment_set
+                                              ?.location?.id === locationId
                                           : true) &&
                                         !!so.rules.find(
                                           (r) =>

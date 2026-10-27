@@ -1,16 +1,16 @@
 import { Heading } from "@medusajs/ui"
 import { useTranslation } from "react-i18next"
-import { useParams } from "react-router-dom"
 import { RouteDrawer } from "../../../components/modals"
 import { VisuallyHidden } from "../../../components/utilities/visually-hidden"
 import { useApiKey } from "../../../hooks/api/api-keys"
 import { EditApiKeyForm } from "./components/edit-api-key-form"
+import { useRequiredParam } from "@mercurjs/dashboard-shared"
 
 export const ApiKeyManagementEdit = () => {
-  const { id } = useParams()
+  const id = useRequiredParam("id")
   const { t } = useTranslation()
 
-  const { api_key, isLoading, isError, error } = useApiKey(id!)
+  const { api_key, isLoading, isError, error } = useApiKey(id)
 
   if (isError) {
     throw error

@@ -1,37 +1,44 @@
+import type { JsonValue } from "@mercurjs/types"
 import {
   CellContext,
   ColumnDef,
-  ColumnMeta,
   Row,
   VisibilityState,
 } from "@tanstack/react-table"
-import React, { PropsWithChildren, ReactNode, RefObject } from "react"
-import {
-  FieldErrors,
-  FieldPath,
-  FieldValues,
-  Path,
-  PathValue,
-} from "react-hook-form"
+import React, { ReactNode, RefObject } from "react"
+import { FieldErrors, FieldPath, FieldValues, UseFormReturn } from "react-hook-form"
+import { z } from "zod"
 
-export type DataGridColumnType =
-  | "text"
-  | "multiline-text"
-  | "number"
-  | "boolean"
-  | "togglable-number"
-  | "select"
+export const DataGridColumnTypeSchema = z.enum([
+  "text",
+  "multiline-text",
+  "number",
+  "boolean",
+  "togglable-number",
+  "select",
+])
+
+export type DataGridColumnType = z.infer<typeof DataGridColumnTypeSchema>
+
+/**
+ * The grid addresses form values through runtime path strings (produced by
+ * the column `field` callbacks), so internally it works on the form as a
+ * record of JSON values.
+ */
+export type DataGridFormValues = Record<string, JsonValue>
+
+export type DataGridForm = UseFormReturn<DataGridFormValues>
 
 export type DataGridCoordinates = {
   row: number
   col: number
 }
 
-export interface DataGridCellProps<TData = unknown, TValue = any> {
+export interface DataGridCellProps<TData = JsonValue, TValue = JsonValue> {
   context: CellContext<TData, TValue>
 }
 
-export interface DataGridCellContext<TData = unknown, TValue = any>
+export interface DataGridCellContext<TData = JsonValue, TValue = JsonValue>
   extends CellContext<TData, TValue> {
   /**
    * The index of the column in the grid.
@@ -69,7 +76,7 @@ export interface InputProps {
   ref: RefObject<HTMLElement>
   onBlur: () => void
   onFocus: () => void
-  onChange: (next: DataGridCellValue, prev: DataGridCellValue) => void
+  onChange: (next: JsonValue, prev: JsonValue) => void
   "data-row": number
   "data-col": number
   "data-cell-id": string
@@ -93,7 +100,8 @@ interface OverlayProps {
   onMouseDown: (e: React.MouseEvent<HTMLElement>) => void
 }
 
-export interface DataGridCellContainerProps extends PropsWithChildren<{}> {
+export interface DataGridCellContainerProps {
+  children?: ReactNode
   field: string
   innerProps: InnerProps
   overlayProps: OverlayProps
@@ -105,11 +113,9 @@ export interface DataGridCellContainerProps extends PropsWithChildren<{}> {
   outerComponent?: ReactNode
 }
 
-export type DataGridCellSnapshot<
-  TFieldValues extends FieldValues = FieldValues,
-> = {
+export type DataGridCellSnapshot = {
   field: string
-  value: PathValue<TFieldValues, Path<TFieldValues>>
+  value: JsonValue
 }
 
 export type FieldContext<TData> = {
@@ -121,26 +127,29 @@ export type FieldFunction<TData, TFieldValues extends FieldValues> = (
   context: FieldContext<TData>
 ) => FieldPath<TFieldValues> | null
 
-export type InternalColumnMeta<TData, TFieldValues extends FieldValues> = {
-  name: string
-  field?: FieldFunction<TData, TFieldValues>
-} & (
-  | {
-      field: FieldFunction<TData, TFieldValues>
-      type: DataGridColumnType
-    }
-  | { field?: null | undefined; type?: never }
-) &
-  ColumnMeta<TData, any>
+/**
+ * The grid-specific entries `createDataGridHelper` stores in a column's
+ * TanStack `meta`. TanStack's `ColumnMeta` is not generic over the form,
+ * so the entries are validated when the grid reads them back.
+ */
+export const createDataGridColumnMetaSchema = <TData>() =>
+  z.object({
+    name: z.string().optional(),
+    field: z
+      .custom<(context: FieldContext<TData>) => string | null>(
+        (value) => typeof value === "function"
+      )
+      .nullish(),
+    type: DataGridColumnTypeSchema.optional(),
+  })
 
-export type GridCell<TFieldValues extends FieldValues> = {
-  field: FieldPath<TFieldValues>
+export type GridCell = {
+  field: string
   type: DataGridColumnType
   enabled: boolean
 }
 
-export type Grid<TFieldValues extends FieldValues> =
-  (GridCell<TFieldValues> | null)[][]
+export type Grid = (GridCell | null)[][]
 
 export type CellMetadata = {
   id: string
@@ -167,16 +176,13 @@ export type GridColumnOption = {
   disabled: boolean
 }
 
-export type DataGridToggleableNumber = {
-  quantity: number | string
-  checked: boolean
-  disabledToggle: boolean
-}
+export const DataGridToggleableNumberSchema = z.object({
+  quantity: z.union([z.number(), z.string()]),
+  checked: z.boolean(),
+  disabledToggle: z.boolean(),
+})
 
-// The value a single data-grid cell can hold, across every column type
-// (plain scalar columns vs. the combined quantity+checked toggle column).
-export type DataGridCellValue =
-  | string
-  | number
-  | boolean
-  | DataGridToggleableNumber
+export type DataGridToggleableNumber = z.infer<
+  typeof DataGridToggleableNumberSchema
+>
+

@@ -1,10 +1,10 @@
+import type { JsonValue } from "@mercurjs/types"
 import { FocusEvent, MouseEvent, useCallback } from "react"
-import { FieldValues, Path, PathValue, UseFormSetValue } from "react-hook-form"
 import { DataGridMatrix, DataGridUpdateCommand } from "../models"
-import { DataGridCellValue, DataGridCoordinates } from "../types"
+import { DataGridCoordinates, DataGridForm } from "../types"
 
-type UseDataGridCellHandlersOptions<TData, TFieldValues extends FieldValues> = {
-  matrix: DataGridMatrix<TData, TFieldValues>
+type UseDataGridCellHandlersOptions<TData> = {
+  matrix: DataGridMatrix<TData>
   anchor: DataGridCoordinates | null
   rangeEnd: DataGridCoordinates | null
   setRangeEnd: (coords: DataGridCoordinates | null) => void
@@ -15,15 +15,12 @@ type UseDataGridCellHandlersOptions<TData, TFieldValues extends FieldValues> = {
   setSingleRange: (coords: DataGridCoordinates) => void
   dragEnd: DataGridCoordinates | null
   setDragEnd: (coords: DataGridCoordinates | null) => void
-  setValue: UseFormSetValue<TFieldValues>
+  setValue: DataGridForm["setValue"]
   execute: (command: DataGridUpdateCommand) => void
   multiColumnSelection?: boolean
 }
 
-export const useDataGridCellHandlers = <
-  TData,
-  TFieldValues extends FieldValues
->({
+export const useDataGridCellHandlers = <TData,>({
   matrix,
   anchor,
   rangeEnd,
@@ -38,7 +35,7 @@ export const useDataGridCellHandlers = <
   setValue,
   execute,
   multiColumnSelection,
-}: UseDataGridCellHandlersOptions<TData, TFieldValues>) => {
+}: UseDataGridCellHandlersOptions<TData>) => {
   const getWrapperFocusHandler = useCallback(
     (coords: DataGridCoordinates) => {
       return (_e: FocusEvent<HTMLElement>) => {
@@ -100,15 +97,13 @@ export const useDataGridCellHandlers = <
   )
 
   const getInputChangeHandler = useCallback(
-    // Using `string` here as the generic type of Path<TFieldValues> will
-    // not be inferred correctly.
     (field: string) => {
-      return (next: DataGridCellValue, prev: DataGridCellValue) => {
+      return (next: JsonValue, prev: JsonValue) => {
         const command = new DataGridUpdateCommand({
           next,
           prev,
           setter: (value) => {
-            setValue(field as Path<TFieldValues>, value as PathValue<TFieldValues, Path<TFieldValues>>, {
+            setValue(field, value, {
               shouldDirty: true,
               shouldTouch: true,
             })

@@ -2850,7 +2850,9 @@
         "noVariants": "Ennek a terméknek nincsenek variánsai"
       },
       "edit": {
-        "successToast": "Az árak sikeresen frissítve."
+        "successToast": "Az árak sikeresen frissítve.",
+        "header": "{{title}} árainak szerkesztése",
+        "description": "Frissítse az árlistában szereplő termékek árait."
       }
     },
     "fields": {

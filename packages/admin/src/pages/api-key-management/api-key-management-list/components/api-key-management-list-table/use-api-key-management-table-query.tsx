@@ -1,3 +1,7 @@
+import {
+  DateComparisonFilterSchema,
+  parseJsonQueryParam,
+} from "@mercurjs/dashboard-shared"
 import { HttpTypes } from "@medusajs/types"
 import { useQueryParams } from "../../../../../hooks/use-query-params"
 
@@ -20,9 +24,9 @@ export const useApiKeyManagementTableQuery = ({
   const searchParams: HttpTypes.AdminGetApiKeysParams = {
     limit: pageSize,
     offset: offset ? Number(offset) : 0,
-    created_at: created_at ? JSON.parse(created_at) : undefined,
-    updated_at: updated_at ? JSON.parse(updated_at) : undefined,
-    revoked_at: revoked_at ? JSON.parse(revoked_at) : undefined,
+    created_at: parseJsonQueryParam(created_at, DateComparisonFilterSchema),
+    updated_at: parseJsonQueryParam(updated_at, DateComparisonFilterSchema),
+    revoked_at: parseJsonQueryParam(revoked_at, DateComparisonFilterSchema),
     order,
     q,
   }

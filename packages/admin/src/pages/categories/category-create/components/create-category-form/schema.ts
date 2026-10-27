@@ -5,7 +5,7 @@ import { isValidHandleFormat } from "@mercurjs/dashboard-shared"
 
 export const CategoryMediaSchema = z.object({
   url: z.string(),
-  file: z.any().nullable(), // File
+  file: z.instanceof(File).nullable(),
   is_thumbnail: z.boolean(),
   is_banner: z.boolean(),
   field_id: z.string().optional(),
@@ -13,7 +13,7 @@ export const CategoryMediaSchema = z.object({
 
 export const CategoryIconSchema = z.object({
   url: z.string(),
-  file: z.any().nullable(), // File
+  file: z.instanceof(File).nullable(),
 })
 
 export const CreateCategoryDetailsSchema = z.object({

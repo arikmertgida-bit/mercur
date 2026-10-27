@@ -1,4 +1,4 @@
-import { HttpTypes } from "@medusajs/types";
+import { HttpTypes } from "@mercurjs/types";
 import { UIMatch } from "react-router-dom";
 import { useProductVariant } from "../../../hooks/api";
 
@@ -11,8 +11,8 @@ export const ProductVariantDetailBreadcrumb = (
   const { id, variant_id } = props.params || {};
 
   const { variant } = useProductVariant(
-    id!,
-    variant_id!,
+    id ?? "",
+    variant_id ?? "",
     {},
     {
       initialData: props.data,

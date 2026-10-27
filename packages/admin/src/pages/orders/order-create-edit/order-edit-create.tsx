@@ -1,26 +1,27 @@
 import { toast } from "@medusajs/ui"
 import { useEffect } from "react"
 import { useTranslation } from "react-i18next"
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 import { RouteFocusModal } from "../../../components/modals"
 import { useOrder, useOrderPreview } from "../../../hooks/api/orders"
 import { DEFAULT_FIELDS } from "../order-detail/constants"
 import { OrderEditCreateForm } from "./components/order-edit-create-form"
 import { useCreateOrderEdit } from "../../../hooks/api/order-edits"
+import { useRequiredParam } from "@mercurjs/dashboard-shared"
 
 let IS_REQUEST_RUNNING = false
 
 export const OrderEditCreate = () => {
-  const { id } = useParams()
+  const id = useRequiredParam("id")
   const navigate = useNavigate()
   const { t } = useTranslation()
 
-  const { order } = useOrder(id!, {
+  const { order } = useOrder(id, {
     fields: DEFAULT_FIELDS,
   })
 
-  const { order: preview } = useOrderPreview(id!)
+  const { order: preview } = useOrderPreview(id)
   const { mutateAsync: createOrderEdit } = useCreateOrderEdit(order.id)
 
   useEffect(() => {

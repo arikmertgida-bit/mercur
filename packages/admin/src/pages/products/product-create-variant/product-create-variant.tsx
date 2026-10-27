@@ -1,5 +1,4 @@
 import { Children, ReactNode } from "react"
-import { useParams } from "react-router-dom"
 import { RouteFocusModal } from "../../../components/modals"
 import { TabbedForm } from "../../../components/tabbed-form/tabbed-form"
 import { useProduct } from "../../../hooks/api/products"
@@ -10,11 +9,12 @@ import {
 } from "./components/create-product-variant-form"
 import { CreateProductVariantSchema } from "./components/create-product-variant-form/constants"
 import DetailsTab from "./components/create-product-variant-form/details-tab"
+import { useRequiredParam } from "@mercurjs/dashboard-shared"
 
 const Root = ({ children }: { children?: ReactNode }) => {
-  const { id } = useParams()
+  const id = useRequiredParam("id")
 
-  const { product, isLoading, isError, error } = useProduct(id!, PRODUCT_DETAIL_QUERY)
+  const { product, isLoading, isError, error } = useProduct(id, PRODUCT_DETAIL_QUERY)
 
   if (isError) {
     throw error

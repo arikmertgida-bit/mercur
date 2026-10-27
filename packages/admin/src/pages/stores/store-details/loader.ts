@@ -4,6 +4,7 @@ import { LoaderFunctionArgs } from "react-router-dom"
 import { sellersQueryKeys } from "../../../hooks/api/sellers"
 import { sdk } from "../../../lib/client"
 import { queryClient } from "../../../lib/query-client"
+import { getRequiredParam } from "../../../lib/route-params"
 
 export const STORE_DETAIL_FIELDS =
   "+address.*,+payment_details.*,+professional_details.*"
@@ -18,7 +19,7 @@ const sellerDetailQuery = (id: string) => {
 }
 
 export const storeDetailLoader = async ({ params }: LoaderFunctionArgs) => {
-  const id = params.id!
+  const id = getRequiredParam(params, "id")
 
   return queryClient.ensureQueryData({
     ...sellerDetailQuery(id),

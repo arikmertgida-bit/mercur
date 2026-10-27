@@ -65,7 +65,7 @@ export function CreateOrderTransferForm({
       toast.success(t("orders.transfer.requestSuccess", { email: order.email }))
       handleSuccess()
     } catch (error) {
-      toast.error((error as Error).message)
+      toast.error(error instanceof Error ? error.message : String(error))
     }
   })
 

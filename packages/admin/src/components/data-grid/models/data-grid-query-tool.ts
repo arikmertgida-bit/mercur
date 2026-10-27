@@ -13,21 +13,13 @@ export class DataGridQueryTool {
 
     const input = this.container?.querySelector(`[data-cell-id="${id}"]`)
 
-    if (!input) {
-      return null
-    }
-
-    return input as HTMLElement
+    return input instanceof HTMLElement ? input : null
   }
 
   getInputByField(field: string) {
     const input = this.container?.querySelector(`[data-field="${field}"]`)
 
-    if (!input) {
-      return null
-    }
-
-    return input as HTMLElement
+    return input instanceof HTMLElement ? input : null
   }
 
   getCoordinatesByField(field: string): DataGridCoordinates | null {
@@ -61,11 +53,7 @@ export class DataGridQueryTool {
       `[data-container-id="${id}"]`
     )
 
-    if (!container) {
-      return null
-    }
-
-    return container as HTMLElement
+    return container instanceof HTMLElement ? container : null
   }
 
   private _getCellId(cell: DataGridCoordinates): string {

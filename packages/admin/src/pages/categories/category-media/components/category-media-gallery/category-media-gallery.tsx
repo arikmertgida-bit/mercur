@@ -7,7 +7,7 @@ import {
   TriangleRightMini,
 } from "@medusajs/icons"
 import { ListBadge } from "@mercurjs/dashboard-shared"
-import { HttpTypes } from "@medusajs/types"
+import { HttpTypes } from "@mercurjs/types"
 import { Button, IconButton, Text, Tooltip, clx, usePrompt } from "@medusajs/ui"
 import { useCallback, useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
@@ -17,12 +17,11 @@ import { RouteFocusModal } from "../../../../../components/modals"
 import { useUpdateProductCategory } from "../../../../../hooks/api/categories"
 import {
   CategoryApiImage,
-  CategoryWithImages,
   getCategoryGallery,
 } from "../../../common/components/category-image-fields"
 
 type CategoryMediaGalleryProps = {
-  category: HttpTypes.AdminProductCategory & CategoryWithImages
+  category: HttpTypes.AdminProductCategory
 }
 
 export const CategoryMediaGallery = ({

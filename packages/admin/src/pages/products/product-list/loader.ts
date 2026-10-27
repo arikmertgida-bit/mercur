@@ -1,9 +1,10 @@
 import { QueryClient } from "@tanstack/react-query"
+import { LoaderFunctionArgs } from "react-router-dom"
 import { getLinkQuery } from "@mercurjs/dashboard-shared"
+import { HttpTypes } from "@mercurjs/types"
 
 import { productsQueryKeys } from "../../../hooks/api/products"
 import { sdk } from "../../../lib/client"
-import { queryClient } from "../../../lib/query-client"
 
 const LIST_FIELDS =
   "id,title,handle,status,*collection,*categories,variants.id,thumbnail"
@@ -18,12 +19,9 @@ const productsListQuery = () => {
 }
 
 export const productsLoader = (client: QueryClient) => {
-  return async () => {
-    const query = productsListQuery()
-
-    return (
-      queryClient.getQueryData(query.queryKey) ??
-      (await client.fetchQuery(query))
-    )
+  return async (
+    _args: LoaderFunctionArgs
+  ): Promise<HttpTypes.AdminProductListResponse> => {
+    return client.ensureQueryData(productsListQuery())
   }
 }

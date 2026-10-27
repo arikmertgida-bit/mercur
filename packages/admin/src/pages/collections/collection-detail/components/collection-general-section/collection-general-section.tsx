@@ -18,7 +18,7 @@ export const CollectionGeneralSection = ({
   const prompt = usePrompt()
   const navigate = useNavigate()
 
-  const { mutateAsync } = useDeleteCollection(collection.id!)
+  const { mutateAsync } = useDeleteCollection(collection.id)
 
   const handleDelete = async () => {
     const res = await prompt({

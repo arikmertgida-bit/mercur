@@ -70,15 +70,16 @@ export const useShortcuts = ({
 
   useEffect(() => {
     const listener = (event: KeyboardEvent) => {
-      const target = event.target as HTMLElement;
+      const target = event.target;
 
       /**
        * Ignore key events from input, textarea and contenteditable elements
        */
       if (
-        target.tagName === "INPUT" ||
-        target.tagName === "TEXTAREA" ||
-        target.contentEditable === "true"
+        target instanceof HTMLElement &&
+        (target.tagName === "INPUT" ||
+          target.tagName === "TEXTAREA" ||
+          target.contentEditable === "true")
       ) {
         removeKeys();
         return;

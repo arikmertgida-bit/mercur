@@ -9,7 +9,6 @@ import {
 } from "@tanstack/react-query"
 
 import { taxRegionsQueryKeys } from "./tax-regions"
-import type { ExtendedAdminTaxRateResponse } from "@custom-types/tax-rates"
 import { queryKeysFactory } from "@lib/query-key-factory";
 import { sdk } from "@lib/client";
 import { queryClient } from "@lib/query-client";
@@ -17,14 +16,16 @@ import { queryClient } from "@lib/query-client";
 const TAX_RATES_QUERY_KEY = "tax_rates" as const
 export const taxRatesQueryKeys = queryKeysFactory(TAX_RATES_QUERY_KEY)
 
+type TaxRateResponse = InferClientOutput<typeof sdk.admin.taxRates.$id.query>
+
 export const useTaxRate = (
   id: string,
-  query?: Record<string, unknown>,
+  query?: Omit<InferClientInput<typeof sdk.admin.taxRates.$id.query>, "$id">,
   options?: Omit<
     UseQueryOptions<
-      ExtendedAdminTaxRateResponse,
+      TaxRateResponse,
       ClientError,
-      ExtendedAdminTaxRateResponse,
+      TaxRateResponse,
       QueryKey
     >,
     "queryFn" | "queryKey"
@@ -32,7 +33,7 @@ export const useTaxRate = (
 ) => {
   const { data, ...rest } = useQuery({
     queryKey: taxRatesQueryKeys.detail(id),
-    queryFn: async () => sdk.admin.taxRates.$id.query({ $id: id, ...query }) as Promise<ExtendedAdminTaxRateResponse>,
+    queryFn: async () => sdk.admin.taxRates.$id.query({ $id: id, ...query }),
     ...options,
   })
 

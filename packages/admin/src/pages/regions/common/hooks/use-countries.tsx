@@ -1,5 +1,4 @@
 import type { StaticCountry } from "@lib/data/countries"
-import type { RegionCountryDTO } from "@medusajs/types"
 
 const acceptedOrderKeys = ["name", "code"]
 
@@ -33,20 +32,10 @@ export const useCountries = ({
       )
     }
 
-    const sortKey: keyof RegionCountryDTO = key === "code" ? "iso_2" : "name"
+    const sortKey: "iso_2" | "name" = key === "code" ? "iso_2" : "name"
 
     data.sort((a, b) => {
-      if (a[sortKey] === null && b[sortKey] === null) {
-        return 0
-      }
-      if (a[sortKey] === null) {
-        return direction
-      }
-      if (b[sortKey] === null) {
-        return -direction
-      }
-
-      return a[sortKey]! > b[sortKey]! ? direction : -direction
+      return a[sortKey] > b[sortKey] ? direction : -direction
     })
   }
 

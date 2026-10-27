@@ -1,7 +1,7 @@
 import { ReactNode, useState, Children } from "react";
-import { useLoaderData, useParams } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 
-import { WidgetZone } from "@mercurjs/dashboard-shared";
+import { WidgetZone, useRequiredParam } from "@mercurjs/dashboard-shared";
 import { SingleColumnPage } from "../../../components/layout/pages";
 import { useTaxRegion } from "../../../hooks/api/tax-regions";
 import { TaxRegionDetailSection } from "./components/tax-region-detail-section";
@@ -14,19 +14,17 @@ import { TaxRegionProviderSection } from "./tax-region-provider-section";
 import { taxRegionLoader } from "./loader";
 
 const Root = ({ children }: { children?: ReactNode }) => {
-  const { id } = useParams();
+  const id = useRequiredParam("id");
   const [showSublevelRegions, setShowSublevelRegions] = useState(false);
 
-  const initialData = useLoaderData() as Awaited<
-    ReturnType<typeof taxRegionLoader>
-  >
+  const initialData = useLoaderData<typeof taxRegionLoader>()
 
   const {
     tax_region: taxRegion,
     isLoading,
     isError,
     error,
-  } = useTaxRegion(id!, undefined, { initialData })
+  } = useTaxRegion(id, undefined, { initialData })
 
   if (isLoading || !taxRegion) {
     return <SingleColumnPageSkeleton sections={4} showJSON />

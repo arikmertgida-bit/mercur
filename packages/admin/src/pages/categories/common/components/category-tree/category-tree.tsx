@@ -4,6 +4,13 @@ import { ReactNode } from "react"
 import { SortableTree } from "../../../../../components/common/sortable-tree"
 import { CategoryTreeItem } from "../../types"
 
+const getCategoryChildren = (item: CategoryTreeItem) => item.category_children
+
+const setCategoryChildren = (
+  item: CategoryTreeItem,
+  children: CategoryTreeItem[]
+): CategoryTreeItem => ({ ...item, category_children: children })
+
 type CategoryTreeProps = {
   value: CategoryTreeItem[]
   onChange: (
@@ -39,7 +46,8 @@ export const CategoryTree = ({
   return (
     <SortableTree
       items={value}
-      childrenProp="category_children"
+      getChildren={getCategoryChildren}
+      setChildren={setCategoryChildren}
       collapsible
       enableDrag={enableDrag}
       onChange={onChange}

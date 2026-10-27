@@ -22,6 +22,7 @@ import { usePromotionTableColumns } from "../../../../../hooks/table/columns/use
 import { usePromotionTableFilters } from "../../../../../hooks/table/filters/use-promotion-table-filters"
 import { usePromotionTableQuery } from "../../../../../hooks/table/query/use-promotion-table-query"
 import { useDataTable } from "../../../../../hooks/use-data-table"
+import { getTableMetaString } from "@lib/table-meta"
 
 type CampaignPromotionSectionProps = {
   campaign: AdminCampaign
@@ -259,9 +260,8 @@ const useColumns = () => {
       columnHelper.display({
         id: "actions",
         cell: ({ row, table }) => {
-          const { campaignId } = table.options.meta as {
-            campaignId: string
-          }
+          const campaignId =
+            getTableMetaString(table.options.meta, "campaignId") ?? ""
 
           return (
             <PromotionActions

@@ -30,10 +30,6 @@ export type CategoryApiImage = {
   rank?: number
 }
 
-export type CategoryWithImages = {
-  media_images?: CategoryApiImage[] | null
-}
-
 /** Gallery images (type = null), ordered by rank. */
 export const getCategoryGallery = (
   images?: CategoryApiImage[] | null

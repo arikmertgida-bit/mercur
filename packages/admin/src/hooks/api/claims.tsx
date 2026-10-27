@@ -339,7 +339,7 @@ export const useUpdateClaimInboundShipping = (
   options?: UseMutationOptions<
     HttpTypes.AdminClaimResponse,
     ClientError,
-    HttpTypes.AdminClaimUpdateInboundShipping
+    HttpTypes.AdminClaimUpdateInboundShipping & { actionId: string }
   >
 ) => {
   return useMutation({
@@ -517,7 +517,7 @@ export const useUpdateClaimOutboundShipping = (
   options?: UseMutationOptions<
     HttpTypes.AdminClaimResponse,
     ClientError,
-    HttpTypes.AdminClaimUpdateOutboundShipping
+    HttpTypes.AdminClaimUpdateOutboundShipping & { actionId: string }
   >
 ) => {
   return useMutation({

@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Button, Heading, Input, toast } from "@medusajs/ui"
 import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
-import { useParams, useSearchParams } from "react-router-dom"
+import { useSearchParams } from "react-router-dom"
 
 import { Form } from "../../../components/common/form"
 import { RouteDrawer, useRouteModal } from "../../../components/modals"
@@ -13,6 +13,7 @@ import {
 } from "../../../hooks/api/product-attributes"
 import { UpdatePossibleValueSchema } from "../attribute-edit/schema"
 import type { UpdatePossibleValueFormValues } from "../attribute-edit/types"
+import { useRequiredParam } from "@mercurjs/dashboard-shared"
 
 type PossibleValue = {
   id: string
@@ -143,7 +144,7 @@ const EditPossibleValueForm = ({
 }
 
 export const AttributeEditPossibleValue = () => {
-  const { id } = useParams()
+  const id = useRequiredParam("id")
   const [searchParams] = useSearchParams()
   const { t } = useTranslation()
   const possibleValueId = searchParams.get("possible_value_id")
@@ -153,15 +154,15 @@ export const AttributeEditPossibleValue = () => {
     isPending,
     isError,
     error,
-  } = useProductAttribute(id!)
+  } = useProductAttribute(id)
 
   if (isError) {
     throw error
   }
 
   const possibleValue = attribute?.values?.find(
-    (pv: { id: string }) => pv.id === possibleValueId
-  ) as PossibleValue | undefined
+    (pv) => pv.id === possibleValueId
+  )
 
   const ready = !isPending && !!attribute && !!possibleValue
 
@@ -177,7 +178,7 @@ export const AttributeEditPossibleValue = () => {
       </RouteDrawer.Header>
       {ready && (
         <EditPossibleValueForm
-          attributeId={id!}
+          attributeId={id}
           possibleValue={possibleValue}
         />
       )}

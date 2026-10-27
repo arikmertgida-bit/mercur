@@ -2,16 +2,15 @@ import type { HttpTypes } from "@medusajs/types"
 import { PencilSquare, Trash } from "@medusajs/icons"
 import {
   createDataTableColumnHelper,
-  DataTableColumnDef,
   StatusBadge,
   toast,
   usePrompt,
 } from "@medusajs/ui"
+import type { useDataTable } from "@medusajs/ui"
 import { useTranslation } from "react-i18next"
 import { useMemo } from "react"
 import { useNavigate } from "react-router-dom"
 import { usePermissions } from "@mercurjs/dashboard-shared"
-import type { ClientError } from "@mercurjs/client"
 import { sdk } from "@lib/client"
 import { queryClient } from "@lib/query-client"
 import { stockLocationsQueryKeys } from "@hooks/api"
@@ -22,8 +21,11 @@ import { ListSummary } from "@components/common/list-summary"
 
 const columnHelper = createDataTableColumnHelper<HttpTypes.AdminStockLocation>()
 
-export const useLocationListTableColumns =
-  (): DataTableColumnDef<HttpTypes.AdminStockLocation>[] => {
+type LocationListColumns = Parameters<
+  typeof useDataTable<HttpTypes.AdminStockLocation>
+>[0]["columns"]
+
+export const useLocationListTableColumns = (): LocationListColumns => {
   const { t } = useTranslation()
   const { can } = usePermissions()
   const navigate = useNavigate()
@@ -44,7 +46,7 @@ export const useLocationListTableColumns =
     }
 
     try {
-      await sdk.admin.stockLocation.delete(location.id)
+      await sdk.admin.stockLocations.$id.delete({ $id: location.id })
       queryClient.invalidateQueries({
         queryKey: stockLocationsQueryKeys.lists(),
       })
@@ -59,11 +61,13 @@ export const useLocationListTableColumns =
         })
       )
     } catch (e) {
-      toast.error((e as ClientError).message)
+      toast.error(e instanceof Error ? e.message : t("general.unknownError"))
     }
   }
 
-  return useMemo(
+  // Built before the return so the cells keep their inferred value types
+  // instead of taking the wider column type DataTable accepts.
+  const columns = useMemo(
     () => [
       columnHelper.accessor("name", {
         header: t("fields.name"),
@@ -82,9 +86,8 @@ export const useLocationListTableColumns =
       }),
       columnHelper.accessor("address", {
         header: t("fields.address"),
-        cell: ({ getValue, row }) => {
+        cell: ({ getValue }) => {
           const address = getValue()
-          const location = row.original
 
           if (!address) {
             return <PlaceholderCell />
@@ -94,7 +97,7 @@ export const useLocationListTableColumns =
             <div className="flex flex-col">
               <span className="text-ui-fg-subtle text-small truncate">
                 {getFormattedAddress({
-                  address: location.address as HttpTypes.AdminOrderAddress,
+                  address,
                 }).join(", ")}
               </span>
             </div>
@@ -187,4 +190,6 @@ export const useLocationListTableColumns =
     // oxlint-disable-next-line react-hooks/exhaustive-deps
     [navigate, t, can]
   )
+
+  return columns
 }

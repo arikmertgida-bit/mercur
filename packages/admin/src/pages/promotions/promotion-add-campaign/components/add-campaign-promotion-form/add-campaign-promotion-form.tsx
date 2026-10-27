@@ -1,8 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod"
-import { AdminCampaign, AdminPromotion } from "@medusajs/types"
+import { AdminPromotion } from "@medusajs/types"
 import { Button, RadioGroup, toast } from "@medusajs/ui"
 import { useEffect } from "react"
-import { UseFormReturn, useForm, useWatch } from "react-hook-form"
+import { useForm, useFormContext, useWatch } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import * as zod from "zod"
 import { usePermissionGate } from "@mercurjs/dashboard-shared"
@@ -30,23 +30,23 @@ const EditPromotionSchema = zod.object({
 
 // This component is shared by the promotion-create tab (`CreatePromotionSchemaType`)
 // and the edit-campaign drawer (`EditPromotionSchema` below), which model
-// `campaign_choice` with different (but overlapping) enums.
+// `campaign_choice` with different (but overlapping) enums. Both render it
+// inside their RHF provider.
 type CampaignFieldValues = {
   campaign_id?: string | null
   campaign_choice?: "none" | "existing" | "new"
 }
 
-export const AddCampaignPromotionFields = <T extends CampaignFieldValues>({
-  form,
+export const AddCampaignPromotionFields = ({
   withNewCampaign = true,
   promotionCurrencyCode,
 }: {
-  form: UseFormReturn<T>
   withNewCampaign?: boolean
   promotionCurrencyCode?: string
 }) => {
   const { t } = useTranslation()
   const direction = useDocumentDirection()
+  const form = useFormContext<CampaignFieldValues>()
 
   const watchCampaignId = useWatch({
     control: form.control,
@@ -79,7 +79,7 @@ export const AddCampaignPromotionFields = <T extends CampaignFieldValues>({
   })
 
   const { campaign: selectedCampaign } = useCampaign(
-    watchCampaignId as string,
+    watchCampaignId ?? "",
     undefined,
     {
       enabled: !!watchCampaignId && campaignsGate.allowed,
@@ -164,6 +164,7 @@ export const AddCampaignPromotionFields = <T extends CampaignFieldValues>({
                         onSearchValueChange={campaignsCombobox.onSearchValueChange}
                         onChange={onChange}
                         {...field}
+                        value={field.value ?? undefined}
                         disabled={campaignsGate.denied}
                         data-testid="promotion-add-campaign-form-campaign-id-combobox"
                       ></Combobox>
@@ -187,7 +188,7 @@ export const AddCampaignPromotionFields = <T extends CampaignFieldValues>({
         <CreateCampaignFormFields form={form} fieldScope="campaign." />
       )}
 
-      <CampaignDetails campaign={selectedCampaign as AdminCampaign} />
+      <CampaignDetails campaign={selectedCampaign} />
     </div>
   )
 }
@@ -250,7 +251,6 @@ export const AddCampaignPromotionForm = ({
       >
         <RouteDrawer.Body className="size-full overflow-auto" data-testid="promotion-add-campaign-form-body">
           <AddCampaignPromotionFields
-            form={form}
             withNewCampaign={false}
             promotionCurrencyCode={promotion.application_method?.currency_code}
           />

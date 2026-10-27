@@ -2851,7 +2851,9 @@
         "noVariants": "Acest produs nu are variante"
       },
       "edit": {
-        "successToast": "Prețurile au fost actualizate cu succes."
+        "successToast": "Prețurile au fost actualizate cu succes.",
+        "header": "Editați prețurile pentru {{title}}",
+        "description": "Actualizați prețurile produselor din această listă de prețuri."
       }
     },
     "fields": {

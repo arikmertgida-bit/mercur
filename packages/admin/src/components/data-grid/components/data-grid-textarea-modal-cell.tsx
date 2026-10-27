@@ -1,3 +1,4 @@
+import type { JsonValue } from "@mercurjs/types"
 import { clx, Textarea } from "@medusajs/ui"
 import { Popover as RadixPopover } from "radix-ui"
 import { useCallback, useEffect, useRef, useState } from "react"
@@ -6,17 +7,25 @@ import { Controller, ControllerRenderProps } from "react-hook-form"
 import { useCombinedRefs } from "../../../hooks/use-combined-refs"
 import { useDataGridCell, useDataGridCellError } from "../hooks"
 import { useDataGridContext } from "../context"
-import { DataGridCellContainerProps, DataGridCellProps, InputProps } from "../types"
+import {
+  DataGridCellProps,
+  DataGridCellContainerProps,
+  DataGridFormValues,
+  InputProps,
+} from "../types"
 import { DataGridCellContainer } from "./data-grid-cell-container"
 
-type DataGridExpandableTextCellProps<TData, TValue = any> = DataGridCellProps<
+const toTextValue = (value: JsonValue | undefined): string =>
+  typeof value === "string" ? value : value == null ? "" : String(value)
+
+type DataGridExpandableTextCellProps<TData, TValue = JsonValue> = DataGridCellProps<
   TData,
   TValue
 > & {
   fieldLabel?: string
 }
 
-export const DataGridExpandableTextCell = <TData, TValue = any>({
+export const DataGridExpandableTextCell = <TData, TValue = JsonValue>({
   context,
   fieldLabel,
 }: DataGridExpandableTextCellProps<TData, TValue>) => {
@@ -53,7 +62,7 @@ const Inner = ({
   container,
   errorProps,
 }: {
-  field: ControllerRenderProps<any, string>
+  field: ControllerRenderProps<DataGridFormValues, string>
   inputProps: InputProps
   fieldLabel?: string
   container: DataGridCellContainerProps
@@ -64,18 +73,19 @@ const Inner = ({
   const { setSingleRange, anchor } = useDataGridContext()
   const { row, col } = anchor || { row: 0, col: 0 }
 
-  const [localValue, setLocalValue] = useState(value || "")
+  const textValue = toTextValue(value)
+  const [localValue, setLocalValue] = useState(textValue)
   const [isPopoverOpen, setIsPopoverOpen] = useState(false)
-  const [popoverValue, setPopoverValue] = useState(value || "")
+  const [popoverValue, setPopoverValue] = useState(textValue)
   const popoverContentRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    setLocalValue(value || "")
+    setLocalValue(toTextValue(value))
   }, [value])
 
   useEffect(() => {
     if (isPopoverOpen) {
-      setPopoverValue(value || "")
+      setPopoverValue(toTextValue(value))
     }
   }, [isPopoverOpen, value])
 
@@ -86,10 +96,12 @@ const Inner = ({
     }
 
     const handleKeyDownCapture = (e: KeyboardEvent) => {
-      const target = e.target as HTMLElement
-      const isTextarea = target.tagName === "TEXTAREA"
+      const target = e.target
+      const isTextarea = target instanceof HTMLTextAreaElement
       const isInPopover =
-        popoverContentRef.current && popoverContentRef.current.contains(target)
+        target instanceof Node &&
+        popoverContentRef.current &&
+        popoverContentRef.current.contains(target)
 
       if (isTextarea || isInPopover) {
         const dataGridKeys = [
@@ -121,7 +133,7 @@ const Inner = ({
   const combinedRefs = useCombinedRefs(inputRef, ref)
 
   const handleOverlayMouseDown = useCallback(
-    (e: React.MouseEvent) => {
+    (e: React.MouseEvent<HTMLElement>) => {
       if (e.detail === 2) {
         e.preventDefault()
         e.stopPropagation()
@@ -144,7 +156,7 @@ const Inner = ({
   }
 
   const handlePopoverSave = () => {
-    onChange(popoverValue, value)
+    onChange(popoverValue, textValue)
     setLocalValue(popoverValue)
     setIsPopoverOpen(false)
     onBlur()
@@ -197,7 +209,7 @@ const Inner = ({
           onBlur={() => {
             onBlur()
             onInputBlur()
-            onChange(localValue, value)
+            onChange(localValue, textValue)
           }}
           {...input}
           {...rest}

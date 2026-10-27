@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next"
 import * as zod from "zod"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { HttpTypes } from "@medusajs/types"
+import { HttpTypes } from "@mercurjs/types"
 import { keepPreviousData } from "@tanstack/react-query"
 import { useForm } from "react-hook-form"
 import { DataTable } from "../../../../../components/data-table"
@@ -45,10 +45,10 @@ export const EditSalesChannelsForm = ({
   const { setValue } = form
 
   const initialState =
-    product.sales_channels?.reduce((acc, curr) => {
+    product.sales_channels?.reduce<RowSelectionState>((acc, curr) => {
       acc[curr.id] = true
       return acc
-    }, {} as RowSelectionState) ?? {}
+    }, {}) ?? {}
 
   const [rowSelection, setRowSelection] =
     useState<RowSelectionState>(initialState)

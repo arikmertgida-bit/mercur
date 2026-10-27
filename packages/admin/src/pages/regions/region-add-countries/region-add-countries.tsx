@@ -1,17 +1,17 @@
-import { useParams } from "react-router-dom"
 import { RouteFocusModal } from "../../../components/modals"
 import { useRegion } from "../../../hooks/api/regions"
 import { AddCountriesForm } from "./components/add-countries-form"
+import { useRequiredParam } from "@mercurjs/dashboard-shared"
 
 export const RegionAddCountries = () => {
-  const { id } = useParams()
+  const id = useRequiredParam("id")
 
   const {
     region,
     isPending: isLoading,
     isError,
     error,
-  } = useRegion(id!, {
+  } = useRegion(id, {
     fields: "*payment_providers",
   })
 

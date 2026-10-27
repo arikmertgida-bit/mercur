@@ -1,12 +1,8 @@
-import { useTranslation } from "react-i18next"
-
 import { MetadataForm } from "@components/forms/metadata-form"
 import { RouteDrawer } from "@components/modals"
 import { useStore, useUpdateStore } from "@hooks/api"
-import { ClientError } from "@mercurjs/client"
 
 export const MarketplaceMetadata = () => {
-  const { t } = useTranslation()
   const { store, isPending, isError, error } = useStore()
 
   const { mutateAsync, isPending: isMutating } = useUpdateStore(store?.id ?? '')
@@ -15,36 +11,12 @@ export const MarketplaceMetadata = () => {
     throw error
   }
 
-  const handleSubmit = async (
-    params: { metadata?: Record<string, unknown> | null },
-    callbacks: { onSuccess?: () => void; onError?: (error: ClientError | string) => void }
-  ) => {
-    if (!store?.id) {
-      callbacks.onError?.('Store ID not available')
-
-      return
-    }
-
-    try {
-      const result = await mutateAsync({
-        metadata: params.metadata === undefined ? undefined : params.metadata,
-      })
-      callbacks.onSuccess?.()
-
-      return result
-    } catch (error) {
-      const message = error instanceof ClientError ? error.message : t("errorBoundary.defaultTitle")
-      callbacks.onError?.(message)
-      throw error
-    }
-  }
-
   return (
     <RouteDrawer>
       <MetadataForm
         isPending={isPending}
         isMutating={isMutating}
-        hook={handleSubmit}
+        hook={mutateAsync}
         metadata={store?.metadata}
       />
     </RouteDrawer>

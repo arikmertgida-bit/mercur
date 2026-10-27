@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod"
-import { ProductDTO, HttpTypes } from "@mercurjs/types"
+import { ProductDTO } from "@mercurjs/types"
 import { Button, toast } from "@medusajs/ui"
 import { useRef } from "react"
 import { DefaultValues, useForm } from "react-hook-form"
@@ -50,7 +50,7 @@ export const ProductBulkEditForm = ({ products }: ProductBulkEditFormProps) => {
       })
       .map((p) => ({
         id: p.id,
-        status: p.status as HttpTypes.AdminProductStatus,
+        status: p.status,
         discountable: p.discountable,
       }))
 

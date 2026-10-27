@@ -2850,7 +2850,9 @@
         "noVariants": "Questo prodotto non ha varianti"
       },
       "edit": {
-        "successToast": "Prezzi aggiornati con successo."
+        "successToast": "Prezzi aggiornati con successo.",
+        "header": "Modifica prezzi di {{title}}",
+        "description": "Aggiorna i prezzi dei prodotti in questo listino prezzi."
       }
     },
     "fields": {

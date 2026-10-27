@@ -1,4 +1,4 @@
-import React, { forwardRef, HTMLAttributes, ReactNode } from "react"
+import { forwardRef, HTMLAttributes, ReactNode } from "react"
 
 import {
   DotsSix,
@@ -51,11 +51,9 @@ export const TreeItem = forwardRef<HTMLDivElement, TreeItemProps>(
     return (
       <li
         ref={wrapperRef}
-        style={
-          {
-            paddingLeft: `${indentationWidth * depth}px`,
-          } as React.CSSProperties
-        }
+        style={{
+          paddingLeft: `${indentationWidth * depth}px`,
+        }}
         className={clx("-mb-px list-none", {
           "pointer-events-none": disableInteraction,
           "select-none": disableSelection,

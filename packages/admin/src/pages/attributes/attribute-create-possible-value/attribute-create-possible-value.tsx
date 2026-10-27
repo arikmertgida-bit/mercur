@@ -36,7 +36,6 @@ import {
   FormProvider,
 } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
 import { z } from "zod";
 
 import { RouteFocusModal, useRouteModal } from "../../../components/modals";
@@ -44,6 +43,9 @@ import {
   useProductAttribute,
   useUpsertProductAttributeValues,
 } from "../../../hooks/api/product-attributes";
+import { useRequiredParam } from "@mercurjs/dashboard-shared";
+
+const PossibleValueTabSchema = z.enum(["values", "organize-ranking"]);
 
 const CreatePossibleValuesSchema = z.object({
   new_values: z.array(
@@ -120,7 +122,7 @@ const SortableValueInput = ({
             className="mt-1"
             data-testid={`create-possible-value-error-${index}`}
           >
-            {fieldError.message as string}
+            {fieldError.message}
           </Hint>
         )}
       </div>
@@ -203,13 +205,13 @@ const SortableRankingItem = ({
 
 const AttributeCreatePossibleValueInner = () => {
   const { t } = useTranslation();
-  const { id } = useParams();
+  const id = useRequiredParam("id");
   const { handleSuccess } = useRouteModal();
 
   const { product_attribute: attribute, isPending: isAttributeLoading } =
-    useProductAttribute(id!);
+    useProductAttribute(id);
 
-  const { mutateAsync: upsertValues } = useUpsertProductAttributeValues(id!);
+  const { mutateAsync: upsertValues } = useUpsertProductAttributeValues(id);
 
   const [activeTab, setActiveTab] = useState<"values" | "organize-ranking">(
     "values",
@@ -307,7 +309,13 @@ const AttributeCreatePossibleValueInner = () => {
   });
 
   const handleTabChange = (value: string) => {
-    const newTab = value as "values" | "organize-ranking";
+    const parsedTab = PossibleValueTabSchema.safeParse(value);
+
+    if (!parsedTab.success) {
+      return;
+    }
+
+    const newTab = parsedTab.data;
 
     if (
       newTab === "organize-ranking" &&
@@ -334,7 +342,7 @@ const AttributeCreatePossibleValueInner = () => {
       toast.success(t("attributes.createPossibleValues.successToast"));
       handleSuccess(`/settings/attributes/${id}`);
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "An error occurred");
+      toast.error(error instanceof Error ? error.message : t("general.unknownError"));
     } finally {
       setIsSaving(false);
     }
@@ -448,7 +456,7 @@ const AttributeCreatePossibleValueInner = () => {
               sensors={sensors}
               collisionDetection={closestCenter}
               onDragStart={({ active }) =>
-                setRankingActiveId(active.id as string)
+                setRankingActiveId(String(active.id))
               }
               onDragEnd={handleRankingDragEnd}
             >

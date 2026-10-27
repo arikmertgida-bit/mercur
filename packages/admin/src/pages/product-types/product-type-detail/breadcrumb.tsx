@@ -11,7 +11,7 @@ export const ProductTypeDetailBreadcrumb = (
 ) => {
   const { id } = props.params || {}
 
-  const { product_type } = useProductType(id!, undefined, {
+  const { product_type } = useProductType(id ?? "", undefined, {
     initialData: props.data,
     enabled: Boolean(id),
   })

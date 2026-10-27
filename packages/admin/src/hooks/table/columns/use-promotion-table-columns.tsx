@@ -1,8 +1,8 @@
 import { HttpTypes } from "@medusajs/types"
-import { SellerDTO } from "@mercurjs/types"
 import { createColumnHelper } from "@tanstack/react-table"
 import { useMemo } from "react"
 import { useTranslation } from "react-i18next"
+import { z } from "zod"
 
 import {
   CodeCell,
@@ -16,6 +16,12 @@ import { StatusCell } from "../../../components/table/table-cells/promotion/stat
 import { getPromotionType } from "../../../lib/promotions"
 
 const columnHelper = createColumnHelper<HttpTypes.AdminPromotion>()
+
+// Medusa's promotion type has no Mercur `seller` link; the list query
+// selects `seller.name`, so it is read from the row.
+const PromotionOwnerSchema = z.object({
+  seller: z.object({ name: z.string() }).nullish(),
+})
 
 type UsePromotionTableColumnsOptions = {
   exclude?: string[]
@@ -33,7 +39,7 @@ export const usePromotionTableColumns = ({
       columnHelper.display({
         id: "code",
         header: () => <CodeHeader text={t("fields.code")} />,
-        cell: ({ row }) => <CodeCell code={row.original.code!} />,
+        cell: ({ row }) => <CodeCell code={row.original.code ?? ""} />,
       }),
 
       columnHelper.display({
@@ -66,15 +72,12 @@ export const usePromotionTableColumns = ({
         id: "owner",
         header: () => <TextHeader text={t("promotions.fields.owner")} />,
         cell: ({ row }) => {
-          const promotion = row.original as HttpTypes.AdminPromotion & {
-            seller?: Pick<SellerDTO, "name"> | null
-          }
+          const owner = PromotionOwnerSchema.safeParse(row.original)
+          const sellerName = owner.success ? owner.data.seller?.name : undefined
 
           return (
             <TextCell
-              text={
-                promotion.seller?.name ?? t("promotions.fields.platformOwner")
-              }
+              text={sellerName ?? t("promotions.fields.platformOwner")}
             />
           )
         },
@@ -88,7 +91,7 @@ export const usePromotionTableColumns = ({
     ]
 
     const filtered = exclude?.length
-      ? columns.filter((column) => !exclude.includes(column.id as string))
+      ? columns.filter((column) => !exclude.includes(column.id ?? ""))
       : columns
 
     if (!order?.length) {
@@ -96,8 +99,8 @@ export const usePromotionTableColumns = ({
     }
 
     return [...filtered].sort((a, b) => {
-      const aIndex = order.indexOf(a.id as string)
-      const bIndex = order.indexOf(b.id as string)
+      const aIndex = order.indexOf(a.id ?? "")
+      const bIndex = order.indexOf(b.id ?? "")
 
       return (
         (aIndex === -1 ? order.length : aIndex) -

@@ -1,16 +1,16 @@
-import { useParams } from "react-router-dom"
 import { RouteFocusModal } from "../../../components/modals"
 import { useSalesChannel } from "../../../hooks/api/sales-channels"
 import { AddProductsToSalesChannelForm } from "./components"
+import { useRequiredParam } from "@mercurjs/dashboard-shared"
 
 export const SalesChannelAddProducts = () => {
-  const { id } = useParams()
+  const id = useRequiredParam("id")
   const {
     sales_channel,
     isPending: isLoading,
     isError,
     error,
-  } = useSalesChannel(id!)
+  } = useSalesChannel(id)
 
   if (isError) {
     throw error

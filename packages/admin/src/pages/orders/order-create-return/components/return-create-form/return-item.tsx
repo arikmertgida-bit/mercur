@@ -10,24 +10,26 @@ import { Thumbnail } from "../../../../../components/common/thumbnail"
 import { MoneyAmountCell } from "../../../../../components/table/table-cells/common/money-amount-cell"
 import { Form } from "../../../../../components/common/form"
 import { ActionMenu } from "../../../../../components/common/action-menu"
-import { Combobox } from "../../../../../components/inputs/combobox"
-import { useReturnReasons } from "../../../../../hooks/api/return-reasons"
 import {
-  getVariantRestockPreview,
-  type LineItemShape,
-} from "../../../../../lib/inventory-preview"
+  Combobox,
+  getSingleComboboxValue,
+} from "../../../../../components/inputs/combobox"
+import { isTruthy } from "../../../../../lib/is-truthy"
+import { useReturnReasons } from "../../../../../hooks/api/return-reasons"
+import { getVariantRestockPreview } from "../../../../../lib/inventory-preview"
+import type { ReturnCreateSchemaType } from "./schema"
 import { ConditionalTooltip } from "../../../../../components/common/conditional-tooltip"
 
 type OrderEditItemProps = {
   item: AdminOrderLineItem
-  previewItem: AdminOrderLineItem
+  previewItem: HttpTypes.AdminOrderLinePreview
   currencyCode: string
   index: number
 
   onRemove: () => void
-  onUpdate: (payload: HttpTypes.AdminUpdateReturnItems) => void
+  onUpdate: (payload: Omit<HttpTypes.AdminUpdateReturnItems, "metadata">) => void
 
-  form: UseFormReturn<any>
+  form: UseFormReturn<ReturnCreateSchemaType>
 
   /**
    * Stock location chosen for this return. When set, the row renders the
@@ -68,7 +70,7 @@ function ReturnItem({
   // exactly how stock will move before confirming. No-op when the variant
   // carries no inventory link.
   const restockRows = locationId
-    ? getVariantRestockPreview(item as LineItemShape, formItem?.quantity ?? 0)
+    ? getVariantRestockPreview(item, formItem?.quantity ?? 0)
     : []
   const variantSku = item.variant_sku ?? null
 
@@ -155,7 +157,7 @@ function ReturnItem({
                     onClick: onRemove,
                     icon: <XCircle />,
                   },
-                ].filter(Boolean),
+                ].filter(isTruthy),
               },
             ]}
           />
@@ -209,9 +211,10 @@ function ReturnItem({
                             <Form.Control>
                               <Combobox
                                 className="bg-ui-bg-field-component hover:bg-ui-bg-field-component-hover"
-                                value={value}
-                                onChange={(v) => {
-                                  onUpdate({ reason_id: v })
+                                value={value ?? undefined}
+                                onChange={(next) => {
+                                  const v = getSingleComboboxValue(next)
+                                  onUpdate({ reason_id: v ?? null })
                                   onChange(v)
                                 }}
                                 {...field}
@@ -267,6 +270,7 @@ function ReturnItem({
                           <Input
                             onChange={onChange}
                             {...field}
+                            value={field.value ?? ""}
                             onBlur={() =>
                               onUpdate({ internal_note: field.value })
                             }
@@ -284,7 +288,7 @@ function ReturnItem({
                 className="flex-shrink"
                 variant="transparent"
                 onClick={() => {
-                  form.setValue(`items.${index}.note`, {
+                  form.setValue(`items.${index}.note`, null, {
                     shouldDirty: true,
                     shouldTouch: true,
                   })

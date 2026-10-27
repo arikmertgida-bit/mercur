@@ -1,6 +1,5 @@
 import { usePermissionGate } from "@mercurjs/dashboard-shared";
-import { HttpTypes } from "@medusajs/types";
-import { SellerDTO } from "@mercurjs/types";
+import { HttpTypes } from "@mercurjs/types";
 import { Button, toast } from "@medusajs/ui";
 import { useTranslation } from "react-i18next";
 import * as zod from "zod";
@@ -24,14 +23,14 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 type ProductOrganizationFormProps = {
-  product: HttpTypes.AdminProduct & { sellers?: SellerDTO[] };
+  product: HttpTypes.AdminProduct;
 };
 
 const ProductOrganizationSchema = zod
   .object({
     type_id: zod.string().nullable(),
     collection_id: zod.string().nullable(),
-    category_id: zod.string().optional(),
+    category_id: zod.string().nullable(),
     tag_ids: zod.array(zod.string()),
     globally_available: zod.boolean(),
     seller_ids: zod.array(zod.string()),
@@ -62,8 +61,8 @@ export const ProductOrganizationForm = ({
     queryFn: (params) => sdk.admin.collections.query(params),
     getOptions: (data) =>
       data.collections.map((collection) => ({
-        label: collection.title!,
-        value: collection.id!,
+        label: collection.title,
+        value: collection.id,
       })),
     enabled: collectionsGate.allowed,
   });
@@ -107,7 +106,7 @@ export const ProductOrganizationForm = ({
     defaultValues: {
       type_id: product.type_id ?? "",
       collection_id: product.collection_id ?? "",
-      category_id: product.categories?.[0]?.id ?? "",
+      category_id: product.categories?.[0]?.id ?? null,
       tag_ids: product.tags?.map((t) => t.id) || [],
       globally_available: initialSellerIds.length === 0,
       seller_ids: initialSellerIds,
@@ -189,6 +188,7 @@ export const ProductOrganizationForm = ({
                         <Form.Control data-testid="product-organization-form-type-control">
                           <Combobox
                             {...field}
+                            value={field.value ?? ""}
                             disabled={typesGate.denied}
                             options={types.options}
                             searchValue={types.searchValue}
@@ -224,6 +224,7 @@ export const ProductOrganizationForm = ({
                         <Form.Control data-testid="product-organization-form-collection-control">
                           <Combobox
                             {...field}
+                            value={field.value ?? ""}
                             multiple={false}
                             disabled={collectionsGate.denied}
                             options={collections.options}

@@ -1,11 +1,7 @@
-import {
-  CreatePromotionRuleDTO,
-  PromotionDTO,
-  PromotionRuleDTO,
-  PromotionRuleOperatorValues,
-  PromotionRuleResponse,
-} from "@medusajs/types";
+import { HttpTypes, PromotionRuleDTO } from "@medusajs/types";
 import { toast } from "@medusajs/ui";
+import { ClientError } from "@mercurjs/client";
+import { useTranslation } from "react-i18next";
 
 import { useRouteModal } from "../../../../../../components/modals";
 import {
@@ -14,13 +10,16 @@ import {
   usePromotionUpdateRules,
   useUpdatePromotion,
 } from "../../../../../../hooks/api/promotions";
+import { isTruthy } from "../../../../../../lib/is-truthy";
 import { RuleTypeValues } from "../../edit-rules";
+import { toPromotionRuleOperator, toRuleValues } from "../../rule-payload";
 import { EditRulesForm } from "../edit-rules-form";
+import { EditRulesType } from "../edit-rules-form/form-schema";
+import { RuleToRemove } from "../rules-form-field";
 import { getRuleValue } from "./utils";
-import { ClientError } from "@mercurjs/client";
 
 type EditPromotionFormProps = {
-  promotion: PromotionDTO;
+  promotion: HttpTypes.AdminPromotion;
   rules: PromotionRuleDTO[];
   ruleType: RuleTypeValues;
 };
@@ -30,6 +29,7 @@ export const EditRulesWrapper = ({
   rules,
   ruleType,
 }: EditPromotionFormProps) => {
+  const { t } = useTranslation();
   const { handleSuccess } = useRouteModal();
   const { mutateAsync: updatePromotion } = useUpdatePromotion(promotion.id);
   const { mutateAsync: addPromotionRules } = usePromotionAddRules(
@@ -45,11 +45,12 @@ export const EditRulesWrapper = ({
   const { mutateAsync: updatePromotionRules, isPending } =
     usePromotionUpdateRules(promotion.id, ruleType);
 
-  const handleSubmit = (
-    rulesToRemove?: { id: string; disguised: boolean; attribute: string }[],
-  ) => {
-    return async function (data: { rules: PromotionRuleResponse[] }) {
-      const applicationMethodData: Record<any, any> = {};
+  const handleSubmit = (rulesToRemove?: RuleToRemove[]) => {
+    return async function (data: EditRulesType) {
+      const applicationMethodData: Record<
+        string,
+        string | number | string[] | null
+      > = {};
       const { rules: allRules = [] } = data;
       const disguisedRules = allRules.filter((rule) => rule.disguised);
       const disguisedRulesToRemove =
@@ -69,11 +70,9 @@ export const EditRulesWrapper = ({
       // This variable will contain the rules that are actual rule objects, without the disguised
       // objects
       const rulesData = allRules.filter((rule) => !rule.disguised);
-      const rulesToCreate: CreatePromotionRuleDTO[] = rulesData.filter(
-        (rule) => !("id" in rule),
-      );
-      const rulesToUpdate = rulesData.filter(
-        (rule: { id: string }) => typeof rule.id === "string",
+      const rulesToCreate = rulesData.filter((rule) => !("id" in rule));
+      const rulesToUpdate = rulesData.flatMap((rule) =>
+        typeof rule.id === "string" ? [{ ...rule, id: rule.id }] : [],
       );
 
       try {
@@ -85,32 +84,36 @@ export const EditRulesWrapper = ({
 
         if (rulesToCreate.length) {
           await addPromotionRules({
-            rules: rulesToCreate.map((rule) => {
-              return {
-                attribute: rule.attribute,
-                operator: rule.operator,
-                values: rule.values,
-              };
+            create: rulesToCreate.flatMap((rule) => {
+              const operator = toPromotionRuleOperator(rule.operator);
+
+              return operator
+                ? [
+                    {
+                      attribute: rule.attribute,
+                      operator,
+                      values: toRuleValues(rule.values),
+                    },
+                  ]
+                : [];
             }),
           });
         }
 
         if (rulesToRemove?.length) {
           await removePromotionRules({
-            rule_ids: rulesToRemove.map((r) => r.id).filter(Boolean),
+            delete: rulesToRemove.map((r) => r.id).filter(isTruthy),
           });
         }
 
         if (rulesToUpdate.length) {
           await updatePromotionRules({
-            rules: rulesToUpdate.map((rule: PromotionRuleResponse) => {
-              return {
-                id: rule.id!,
-                attribute: rule.attribute,
-                operator: rule.operator as PromotionRuleOperatorValues,
-                values: rule.values as string | string[],
-              };
-            }),
+            update: rulesToUpdate.map((rule) => ({
+              id: rule.id,
+              attribute: rule.attribute,
+              operator: toPromotionRuleOperator(rule.operator),
+              values: toRuleValues(rule.values),
+            })),
           });
         }
 
@@ -122,7 +125,7 @@ export const EditRulesWrapper = ({
                 /(\w+_\w+)/g,
                 (match) => `"${match.replace(/_/g, " ")}"`,
               )
-            : "An error occurred";
+            : t("general.unknownError");
         toast.error(message);
       }
     };

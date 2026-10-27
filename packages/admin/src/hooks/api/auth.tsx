@@ -4,11 +4,18 @@ import {
   InferClientOutput,
 } from "@mercurjs/client"
 import { UseMutationOptions, useMutation } from "@tanstack/react-query"
+import { z } from "zod"
 import { clearAuthToken, sdk, setAuthToken } from "../../lib/client"
+
+// The emailpass login/register routes answer with the session token; the
+// payload comes off the wire, so it is validated before the token is stored.
+const AuthTokenResponseSchema = z.object({ token: z.string() })
+
+type AuthTokenResponse = z.infer<typeof AuthTokenResponseSchema>
 
 export const useSignInWithEmailPass = (
   options?: UseMutationOptions<
-    InferClientOutput<typeof sdk.auth.$actorType.$authProvider.mutate>,
+    AuthTokenResponse,
     ClientError,
     Omit<
       InferClientInput<typeof sdk.auth.$actorType.$authProvider.mutate>,
@@ -18,11 +25,13 @@ export const useSignInWithEmailPass = (
 ) => {
   return useMutation({
     mutationFn: async (payload) => {
-      const data = (await sdk.auth.$actorType.$authProvider.mutate({
-        $actorType: "user",
-        $authProvider: "emailpass",
-        ...payload,
-      })) as { token: string }
+      const data = AuthTokenResponseSchema.parse(
+        await sdk.auth.$actorType.$authProvider.mutate({
+          $actorType: "user",
+          $authProvider: "emailpass",
+          ...payload,
+        })
+      )
 
       setAuthToken(data.token)
 
@@ -37,7 +46,7 @@ export const useSignInWithEmailPass = (
 
 export const useSignUpWithEmailPass = (
   options?: UseMutationOptions<
-    { token: string },
+    AuthTokenResponse,
     ClientError,
     Omit<
       InferClientInput<
@@ -48,12 +57,14 @@ export const useSignUpWithEmailPass = (
   >
 ) => {
   return useMutation({
-    mutationFn: (payload) =>
-      sdk.auth.$actorType.$authProvider.register.mutate({
-        $actorType: "user",
-        $authProvider: "emailpass",
-        ...payload,
-      }) as Promise<{ token: string }>,
+    mutationFn: async (payload) =>
+      AuthTokenResponseSchema.parse(
+        await sdk.auth.$actorType.$authProvider.register.mutate({
+          $actorType: "user",
+          $authProvider: "emailpass",
+          ...payload,
+        })
+      ),
     onSuccess: async (data, variables, context) => {
       options?.onSuccess?.(data, variables, context)
     },

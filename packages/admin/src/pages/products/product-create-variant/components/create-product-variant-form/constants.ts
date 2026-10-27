@@ -12,6 +12,5 @@ export const CreateVariantDetailsSchema = CreateProductVariantSchema.pick({
   options: true,
 })
 
-export const CreateVariantDetailsFields = Object.keys(
-  CreateVariantDetailsSchema.shape
-) as (keyof typeof CreateVariantDetailsSchema.shape)[]
+export const CreateVariantDetailsFields =
+  CreateVariantDetailsSchema.keyof().options

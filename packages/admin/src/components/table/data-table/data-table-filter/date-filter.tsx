@@ -7,31 +7,17 @@ import { useMemo, useState } from "react"
 import { t } from "i18next"
 import { useTranslation } from "react-i18next"
 import { useDate } from "../../../../hooks/use-date"
+import {
+  DateComparisonFilter,
+  DateComparisonFilterSchema,
+  parseJsonQueryParam,
+} from "@mercurjs/dashboard-shared"
 import { useSelectedParams } from "../hooks"
 import { useDataTableFilterContext } from "./context"
 import FilterChip from "./filter-chip"
 import { IFilter } from "./types"
 
 type DateFilterProps = IFilter
-
-type DateComparisonOperator = {
-  /**
-   * The filtered date must be greater than or equal to this value.
-   */
-  $gte?: string
-  /**
-   * The filtered date must be less than or equal to this value.
-   */
-  $lte?: string
-  /**
-   * The filtered date must be less than this value.
-   */
-  $lt?: string
-  /**
-   * The filtered date must be greater than this value.
-   */
-  $gt?: string
-}
 
 export const DateFilter = ({
   filter,
@@ -51,7 +37,7 @@ export const DateFilter = ({
 
   const presets = usePresets()
 
-  const handleSelectPreset = (value: DateComparisonOperator) => {
+  const handleSelectPreset = (value: DateComparisonFilter) => {
     selectedParams.add(JSON.stringify(value))
     setShowCustom(false)
   }
@@ -303,21 +289,22 @@ const usePresets = () => {
   )
 }
 
-const parseDateComparison = (value: string[]) => {
-  return value?.length
-    ? (JSON.parse(value.join(",")) as DateComparisonOperator)
-    : null
-}
+const parseDateComparison = (
+  value: string[]
+): DateComparisonFilter | null =>
+  parseJsonQueryParam(value?.join(","), DateComparisonFilterSchema) ?? null
 
 const getDateFromComparison = (
-  comparison: DateComparisonOperator | null,
+  comparison: DateComparisonFilter | null,
   key: "$gte" | "$lte"
 ) => {
-  if (!comparison?.[key]) {
+  const value = comparison?.[key]
+
+  if (!value) {
     return undefined
   }
 
-  const compareDate = new Date(comparison[key] as string)
+  const compareDate = new Date(value)
 
   if (key === "$lte") {
     // offset back to the display date

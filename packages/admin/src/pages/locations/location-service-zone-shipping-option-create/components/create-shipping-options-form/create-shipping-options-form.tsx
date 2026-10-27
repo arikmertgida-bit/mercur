@@ -59,7 +59,7 @@ export function CreateShippingOptionsForm({
       conditional_region_prices: {},
       conditional_currency_prices: {},
       ...extraDefaults,
-    } as CreateShippingOptionSchemaType,
+    },
     resolver: zodResolver(schema ?? CreateShippingOptionSchema),
   })
 
@@ -119,7 +119,7 @@ export function CreateShippingOptionsForm({
           rules: buildShippingOptionPriceRules(rule),
         })) || []
 
-      return prices?.filter(Boolean) as HttpTypes.AdminCreateShippingOptionPriceWithRegion[]
+      return prices
     })
 
     const conditionalCurrencyPrices = Object.entries(
@@ -132,7 +132,7 @@ export function CreateShippingOptionsForm({
           rules: buildShippingOptionPriceRules(rule),
         })) || []
 
-      return prices?.filter(Boolean) as HttpTypes.AdminCreateShippingOptionPriceWithCurrency[]
+      return prices
     })
 
     const allPrices = [
@@ -143,7 +143,7 @@ export function CreateShippingOptionsForm({
     ]
 
     const fulfillmentOptionData = fulfillmentProviderOptions?.find(
-      (fo: { id: string }) => fo.id === data.fulfillment_option_id
+      (fo) => fo.id === data.fulfillment_option_id
     )
 
     await mutateAsync(
@@ -154,7 +154,7 @@ export function CreateShippingOptionsForm({
         shipping_profile_id: data.shipping_profile_id,
         provider_id: data.provider_id,
         prices: allPrices,
-        data: fulfillmentOptionData as Record<string, unknown>,
+        data: fulfillmentOptionData,
         rules: [
           {
             value: isReturn ? "true" : "false",

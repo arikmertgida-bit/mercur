@@ -10,7 +10,7 @@ export const SalesChannelDetailBreadcrumb = (
 ) => {
   const { id } = props.params || {}
 
-  const { sales_channel } = useSalesChannel(id!, {
+  const { sales_channel } = useSalesChannel(id ?? "", {
     initialData: props.data,
     enabled: Boolean(id),
   })

@@ -1,3 +1,7 @@
+import {
+  DateComparisonFilterSchema,
+  parseJsonQueryParam,
+} from "@mercurjs/dashboard-shared"
 import { useQueryParams } from "../../../../../hooks/use-query-params"
 
 export const useShippingProfileTableQuery = ({
@@ -17,8 +21,8 @@ export const useShippingProfileTableQuery = ({
     offset: raw.offset ? parseInt(raw.offset) : 0,
     q: raw.q,
     order: raw.order,
-    created_at: raw.created_at ? JSON.parse(raw.created_at) : undefined,
-    updated_at: raw.updated_at ? JSON.parse(raw.updated_at) : undefined,
+    created_at: parseJsonQueryParam(raw.created_at, DateComparisonFilterSchema),
+    updated_at: parseJsonQueryParam(raw.updated_at, DateComparisonFilterSchema),
     name: raw.name,
     type: raw.type,
   }

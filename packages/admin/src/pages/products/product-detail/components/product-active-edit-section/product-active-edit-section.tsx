@@ -1,13 +1,10 @@
 import { useState } from "react"
 import { Button, Text, toast } from "@medusajs/ui"
-import { HttpTypes } from "@medusajs/types"
-import { ProductChangeStatus, SellerDTO } from "@mercurjs/types"
+import { HttpTypes, ProductChangeStatus } from "@mercurjs/types"
 import {
   ProductChangePanel,
-  type ProductChangeAttribute,
   type ProductChangeProduct,
   type ProductChangeResolvers,
-  type ProductChangeVariant,
   usePermissions,
   PermissionAction,
 } from "@mercurjs/dashboard-shared"
@@ -22,13 +19,8 @@ import {
 import { useSeller } from "../../../../../hooks/api/sellers"
 import { sdk } from "../../../../../lib/client"
 
-type ProductWithSellers = HttpTypes.AdminProduct & {
-  sellers?: SellerDTO[]
-  attributes?: ProductChangeAttribute[]
-}
-
 type ProductActiveEditSectionProps = {
-  product: ProductWithSellers
+  product: HttpTypes.AdminProduct
 }
 
 const VARIANT_LOOKUP_FIELDS = "id,title,sku,*images"
@@ -81,7 +73,7 @@ const resolversFor = (
       $variantId: variantId,
       fields: VARIANT_LOOKUP_FIELDS,
     })
-    return (variant as ProductChangeVariant) ?? null
+    return variant ?? null
   },
 })
 
@@ -122,7 +114,7 @@ export const ProductActiveEditSection = ({
       toast.success(t("products.edits.toast.confirmedSuccessfully"))
       setConfirmOpen(false)
     } catch (e) {
-      toast.error((e as Error).message)
+      toast.error((e instanceof Error ? e.message : String(e)))
     }
   }
 
@@ -132,7 +124,7 @@ export const ProductActiveEditSection = ({
       toast.success(t("products.edits.toast.rejectedSuccessfully"))
       setRejectOpen(false)
     } catch (e) {
-      toast.error((e as Error).message)
+      toast.error((e instanceof Error ? e.message : String(e)))
     }
   }
 
@@ -140,7 +132,7 @@ export const ProductActiveEditSection = ({
     id: product.id,
     title: product.title,
     thumbnail: product.thumbnail,
-    variants: product.variants as ProductChangeVariant[] | undefined,
+    variants: product.variants,
     attributes: product.attributes,
   }
 

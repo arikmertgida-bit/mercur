@@ -2,6 +2,7 @@ import { getLinkQuery } from "@mercurjs/dashboard-shared"
 import { LoaderFunctionArgs } from "react-router-dom"
 import { promotionsQueryKeys } from "../../../hooks/api/promotions"
 import { sdk } from "../../../lib/client"
+import { getRequiredParam } from "@lib/route-params"
 import { queryClient } from "../../../lib/query-client"
 
 export const PROMOTION_DETAIL_BASE_FIELDS =
@@ -16,8 +17,7 @@ const promotionDetailQuery = (id: string) => {
 }
 
 export const promotionLoader = async ({ params }: LoaderFunctionArgs) => {
-  const id = params.id
-  const query = promotionDetailQuery(id!)
+  const query = promotionDetailQuery(getRequiredParam(params, "id"))
 
   return queryClient.ensureQueryData(query)
 }

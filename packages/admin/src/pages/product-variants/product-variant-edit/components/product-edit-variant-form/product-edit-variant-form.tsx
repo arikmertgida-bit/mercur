@@ -4,8 +4,7 @@ import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { z } from "zod";
 
-import { HttpTypes } from "@medusajs/types";
-import { ProductDTO, AttributeType } from "@mercurjs/types";
+import { ProductDTO, ProductVariantDTO, AttributeType } from "@mercurjs/types";
 import { Form } from "../../../../../components/common/form";
 import { AttributeValueInput } from "../../../../../components/inputs/attribute-value-input";
 import { CountrySelect } from "../../../../../components/inputs/country-select";
@@ -13,14 +12,14 @@ import { RouteDrawer, useRouteModal } from "../../../../../components/modals";
 import { KeyboundForm } from "../../../../../components/utilities/keybound-form";
 import { useUpdateProductVariant } from "../../../../../hooks/api/products";
 import {
-  transformNullableFormData,
   transformNullableFormNumber,
+  transformNullableFormValue,
 } from "../../../../../lib/form-helpers";
 import { optionalFloat } from "../../../../../lib/validation";
 
 type ProductEditVariantFormProps = {
-  product: HttpTypes.AdminProduct;
-  variant: HttpTypes.AdminProductVariant;
+  product: ProductDTO;
+  variant: ProductVariantDTO;
 };
 
 const ProductEditVariantSchema = z.object({
@@ -48,8 +47,7 @@ export const ProductEditVariantForm = ({
   const { handleSuccess } = useRouteModal();
 
   const variantAttributes =
-    (product as HttpTypes.AdminProduct & Pick<ProductDTO, "attributes">)
-      .attributes?.filter((a) => a.is_variant_axis) ?? [];
+    product.attributes?.filter((a) => a.is_variant_axis) ?? [];
 
   // Form fields are keyed by attribute handle/id; the submit payload
   // translates them to option titles (= attribute names) — the shape
@@ -89,7 +87,7 @@ export const ProductEditVariantForm = ({
   });
 
   const { mutateAsync, isPending } = useUpdateProductVariant(
-    variant.product_id!,
+    product.id,
     variant.id,
   );
 
@@ -101,10 +99,26 @@ export const ProductEditVariantForm = ({
       width,
       length,
       options,
-      ...optional
+      material,
+      sku,
+      ean,
+      upc,
+      barcode,
+      mid_code,
+      hs_code,
+      origin_country,
     } = data;
 
-    const nullableData = transformNullableFormData(optional);
+    const nullableData = {
+      material: transformNullableFormValue(material),
+      sku: transformNullableFormValue(sku),
+      ean: transformNullableFormValue(ean),
+      upc: transformNullableFormValue(upc),
+      barcode: transformNullableFormValue(barcode),
+      mid_code: transformNullableFormValue(mid_code),
+      hs_code: transformNullableFormValue(hs_code),
+      origin_country: transformNullableFormValue(origin_country),
+    };
 
     // Backend keys options by option title (= attribute name). Form
     // keys by handle/id; remap and drop empties.

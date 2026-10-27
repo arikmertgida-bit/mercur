@@ -14,7 +14,7 @@ import { sdk } from "../../lib/client";
 import { queryClient } from "../../lib/query-client";
 import { queryKeysFactory } from "../../lib/query-key-factory";
 import { productsQueryKeys } from "./products";
-import { AdminProductCategoryResponse } from "@mercurjs/types";
+import { HttpTypes } from "@mercurjs/types";
 
 const CATEGORIES_QUERY_KEY = "categories" as const;
 export const categoriesQueryKeys = queryKeysFactory(CATEGORIES_QUERY_KEY);
@@ -27,9 +27,9 @@ export const useProductCategory = (
   >,
   options?: Omit<
     UseQueryOptions<
-      AdminProductCategoryResponse,
+      HttpTypes.AdminProductCategoryResponse,
       ClientError,
-      AdminProductCategoryResponse,
+      HttpTypes.AdminProductCategoryResponse,
       QueryKey
     >,
     "queryFn" | "queryKey"
@@ -67,7 +67,7 @@ export const useProductCategories = (
 
 export const useCreateProductCategory = (
   options?: UseMutationOptions<
-    AdminProductCategoryResponse,
+    HttpTypes.AdminProductCategoryResponse,
     ClientError,
     InferClientInput<typeof sdk.admin.productCategories.mutate>
   >,
@@ -86,7 +86,7 @@ export const useCreateProductCategory = (
 export const useUpdateProductCategory = (
   id: string,
   options?: UseMutationOptions<
-    AdminProductCategoryResponse,
+    HttpTypes.AdminProductCategoryResponse,
     ClientError,
     Omit<InferClientInput<typeof sdk.admin.productCategories.$id.mutate>, "$id">
   >,
@@ -131,7 +131,7 @@ export const useDeleteProductCategory = (
 export const useUpdateProductCategoryProducts = (
   id: string,
   options?: UseMutationOptions<
-    AdminProductCategoryResponse,
+    InferClientOutput<typeof sdk.admin.productCategories.$id.products.mutate>,
     ClientError,
     Omit<
       InferClientInput<typeof sdk.admin.productCategories.$id.products.mutate>,

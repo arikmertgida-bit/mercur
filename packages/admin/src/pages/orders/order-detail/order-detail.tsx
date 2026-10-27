@@ -1,7 +1,11 @@
 import { ReactNode, Children } from "react";
-import { useLoaderData, useParams } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 
-import { useLinkQuery, WidgetZone } from "@mercurjs/dashboard-shared";
+import {
+  useLinkQuery,
+  useRequiredParam,
+  WidgetZone,
+} from "@mercurjs/dashboard-shared";
 import { TwoColumnPageSkeleton } from "../../../components/common/skeleton";
 import { TwoColumnPage } from "../../../components/layout/pages";
 import { useOrder, useOrderPreview } from "../../../hooks/api/orders";
@@ -16,20 +20,18 @@ import { OrderGeneralSection } from "./components/order-general-section";
 import { OrderPaymentSection } from "./components/order-payment-section";
 import { OrderSummarySection } from "./components/order-summary-section";
 import { DEFAULT_FIELDS } from "./constants";
-import { orderLoader } from "./loader";
+import type { orderLoader } from "./loader";
 import { OrderRemainingOrdersGroupSection } from "./components/order-remaining-orders-group-section";
 
 const Root = ({ children }: { children?: ReactNode }) => {
-  const initialData = useLoaderData() as Awaited<
-    ReturnType<typeof orderLoader>
-  >;
+  const initialData = useLoaderData<typeof orderLoader>();
 
-  const { id } = useParams();
+  const id = useRequiredParam("id");
 
   const query = useLinkQuery("order", DEFAULT_FIELDS);
 
   const { order: rawOrder, isLoading, isError, error } = useOrder(
-    id!,
+    id,
     query,
     {
       initialData,
@@ -53,7 +55,7 @@ const Root = ({ children }: { children?: ReactNode }) => {
     : rawOrder;
 
   const { order: orderPreview, isLoading: isPreviewLoading } = useOrderPreview(
-    id!,
+    id,
   );
 
   if (isLoading || !order || isPreviewLoading) {
@@ -87,9 +89,13 @@ const Root = ({ children }: { children?: ReactNode }) => {
       <TwoColumnPage.Main data-testid="order-detail-main">
         <WidgetZone id="orders.detail.main" data={order}>
           <OrderActiveEditSection order={order} />
-          <ActiveOrderClaimSection orderPreview={orderPreview!} />
-          <ActiveOrderExchangeSection orderPreview={orderPreview!} />
-          <ActiveOrderReturnSection orderPreview={orderPreview!} />
+          {orderPreview && (
+            <>
+              <ActiveOrderClaimSection orderPreview={orderPreview} />
+              <ActiveOrderExchangeSection orderPreview={orderPreview} />
+              <ActiveOrderReturnSection orderPreview={orderPreview} />
+            </>
+          )}
           <OrderGeneralSection order={order} />
           <OrderSummarySection order={order} />
           <OrderPaymentSection order={order} />

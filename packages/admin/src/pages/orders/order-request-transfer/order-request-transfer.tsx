@@ -12,7 +12,11 @@ export const OrderRequestTransfer = () => {
   const params = useParams()
 
   // Form is rendered bot on the order details page and customer page so we need to pick the correct param from URL
-  const orderId = (params.order_id || params.id) as string
+  const orderId = params.order_id || params.id
+
+  if (!orderId) {
+    throw new Error(`Route parameter "id" is missing`)
+  }
 
   const { order, isPending, isError } = useOrder(orderId, {
     fields: DEFAULT_FIELDS,

@@ -50,7 +50,6 @@ export const CreateCommissionRuleCommission = () => {
             )}
           />
           <CommissionValueFields
-            control={form.control}
             type={commissionType}
             currencies={currencies}
           />

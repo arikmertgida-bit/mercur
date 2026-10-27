@@ -1,12 +1,12 @@
 import { PencilSquare, Trash } from "@medusajs/icons"
 
 import { ActionMenu } from "../../../../components/common/action-menu"
-import { InventoryItemDTO } from "@medusajs/types"
+import { HttpTypes } from "@medusajs/types"
 import { useDeleteInventoryItem } from "../../../../hooks/api/inventory"
 import { toast, usePrompt } from "@medusajs/ui"
 import { useTranslation } from "react-i18next"
 
-export const InventoryActions = ({ item }: { item: InventoryItemDTO }) => {
+export const InventoryActions = ({ item }: { item: HttpTypes.AdminInventoryItem }) => {
   const { t } = useTranslation()
   const prompt = usePrompt()
   const { mutateAsync } = useDeleteInventoryItem(item.id)

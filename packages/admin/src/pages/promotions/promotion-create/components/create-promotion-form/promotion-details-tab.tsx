@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 
-import type { ApplicationMethodAllocationValues } from "@medusajs/types";
 import {
   Alert,
   Badge,
@@ -15,6 +14,7 @@ import {
 } from "@medusajs/ui";
 import { useWatch } from "react-hook-form";
 import { Trans, useTranslation } from "react-i18next";
+import { z } from "zod";
 
 import { usePermissionGate } from "@mercurjs/dashboard-shared";
 
@@ -35,7 +35,8 @@ import { RulesFormField } from "../../../common/edit-rules/components/rules-form
 import { CreatePromotionSchemaType } from "./form-schema";
 import { SwitchBox } from "@mercurjs/dashboard-shared";
 
-type AllocationMode = "each" | "across" | "once";
+const AllocationModeSchema = z.enum(["each", "across", "once"]);
+type AllocationMode = z.infer<typeof AllocationModeSchema>;
 
 type PromotionDetailsTabProps = {
   currentTemplate?: {
@@ -66,7 +67,7 @@ const Root = ({ currentTemplate }: PromotionDetailsTabProps) => {
 
   useEffect(() => {
     if (watchAllocation) {
-      setAllocationMode(watchAllocation as AllocationMode);
+      setAllocationMode(watchAllocation);
     }
   }, [watchAllocation]);
 
@@ -450,7 +451,7 @@ const Root = ({ currentTemplate }: PromotionDetailsTabProps) => {
 
         <Divider />
 
-        <RulesFormField form={form} ruleType="rules" />
+        <RulesFormField ruleType="rules" />
 
         {!currentTemplate?.hiddenFields?.includes(
           "application_method.type",
@@ -514,11 +515,8 @@ const Root = ({ currentTemplate }: PromotionDetailsTabProps) => {
             render={({ field }) => {
               const handleAllocationChange = (value: AllocationMode) => {
                 setAllocationMode(value);
-                setValue(
-                  "application_method.allocation",
-                  value as ApplicationMethodAllocationValues,
-                );
-                field.onChange(value as ApplicationMethodAllocationValues);
+                setValue("application_method.allocation", value);
+                field.onChange(value);
 
                 if (value === "once") {
                   setValue("application_method.max_quantity", 1);
@@ -536,9 +534,13 @@ const Root = ({ currentTemplate }: PromotionDetailsTabProps) => {
                       dir={direction}
                       className="flex gap-y-3"
                       value={allocationMode}
-                      onValueChange={(val) =>
-                        handleAllocationChange(val as AllocationMode)
-                      }
+                      onValueChange={(val) => {
+                        const parsed = AllocationModeSchema.safeParse(val);
+
+                        if (parsed.success) {
+                          handleAllocationChange(parsed.data);
+                        }
+                      }}
                       data-testid="promotion-create-form-allocation-radio-group"
                     >
                       <RadioGroup.ChoiceBox
@@ -767,7 +769,6 @@ const Root = ({ currentTemplate }: PromotionDetailsTabProps) => {
           <>
             <Divider />
             <RulesFormField
-              form={form}
               ruleType="buy-rules"
               scope="application_method.buy_rules"
             />
@@ -778,7 +779,6 @@ const Root = ({ currentTemplate }: PromotionDetailsTabProps) => {
           <>
             <Divider />
             <RulesFormField
-              form={form}
               ruleType="target-rules"
               scope="application_method.target_rules"
             />

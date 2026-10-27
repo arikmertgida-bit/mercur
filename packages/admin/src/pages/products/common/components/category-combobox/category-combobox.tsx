@@ -5,12 +5,12 @@ import {
   TrianglesMini,
   XMarkMini,
 } from "@medusajs/icons"
-import { AdminProductCategoryResponse } from "@medusajs/types"
+import { HttpTypes } from "@mercurjs/types"
 import { Divider, Text, clx } from "@medusajs/ui"
 import { usePermissionGate } from "@mercurjs/dashboard-shared"
 import { Popover as RadixPopover } from "radix-ui"
+import { tagWidthStyle } from "./tag-width-style"
 import {
-  CSSProperties,
   ComponentPropsWithoutRef,
   Fragment,
   MouseEvent,
@@ -273,11 +273,7 @@ export const CategoryCombobox = forwardRef<
               },
               className
             )}
-            style={
-              {
-                "--tag-width": `${tagWidth}px`,
-              } as CSSProperties
-            }
+            style={tagWidthStyle(tagWidth)}
           >
             {showTag && (
               <button
@@ -343,9 +339,10 @@ export const CategoryCombobox = forwardRef<
         onInteractOutside={(e) => {
           e.preventDefault()
 
-          const target = e.target as HTMLElement
-
-          if (target.closest("[data-anchor]")) {
+          if (
+            e.target instanceof Element &&
+            e.target.closest("[data-anchor]")
+          ) {
             return
           }
 
@@ -498,7 +495,7 @@ function getParentLabel(level: Level[]): string | null {
 }
 
 function getOptions(
-  categories: AdminProductCategoryResponse["product_category"][]
+  categories: HttpTypes.AdminProductCategory[]
 ): ProductCategoryOption[] {
   return categories.map((cat) => {
     return {

@@ -1,5 +1,5 @@
 import { usePermissionGate } from "@mercurjs/dashboard-shared"
-import { HttpTypes } from "@medusajs/types"
+import { HttpTypes } from "@mercurjs/types"
 import { Button, toast } from "@medusajs/ui"
 import { useTranslation } from "react-i18next"
 import * as zod from "zod"
@@ -17,9 +17,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useEffect } from "react"
 
 type ProductShippingProfileFormProps = {
-  product: HttpTypes.AdminProduct & {
-    shipping_profile?: HttpTypes.AdminShippingProfile
-  }
+  product: HttpTypes.AdminProduct
 }
 
 const ProductShippingProfileSchema = zod.object({

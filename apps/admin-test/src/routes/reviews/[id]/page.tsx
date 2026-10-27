@@ -1,9 +1,9 @@
-import { useParams } from "react-router-dom";
 import { Container, Heading, StatusBadge, Text } from "@medusajs/ui";
 
 import {
   SingleColumnPageSkeleton,
   SingleColumnPage,
+  useRequiredParam,
 } from "@mercurjs/dashboard-shared";
 import { useReview, ReviewDTO } from "../../../hooks/api/reviews";
 
@@ -81,9 +81,9 @@ const ReviewGeneralSection = ({ review }: { review: ReviewDTO }) => {
 };
 
 export const ReviewDetailPage = () => {
-  const { id } = useParams();
+  const id = useRequiredParam("id");
 
-  const { review, isLoading, isError, error } = useReview(id!);
+  const { review, isLoading, isError, error } = useReview(id);
 
   if (isLoading || !review) {
     return <SingleColumnPageSkeleton sections={1} />;

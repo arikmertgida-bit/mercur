@@ -1,7 +1,13 @@
 import { ReactNode, Children } from "react"
-import { useLoaderData, useParams } from "react-router-dom"
+import { useLoaderData } from "react-router-dom"
+import { z } from "zod"
 
-import { PermissionGuard, useLinkQuery, WidgetZone } from "@mercurjs/dashboard-shared"
+import {
+  PermissionGuard,
+  useLinkQuery,
+  useRequiredParam,
+  WidgetZone,
+} from "@mercurjs/dashboard-shared"
 
 import { TwoColumnPageSkeleton } from "@components/common/skeleton"
 import { TwoColumnPage } from "@components/layout/pages"
@@ -11,16 +17,23 @@ import { InventoryItemAttributeSection } from "./components/inventory-item-attri
 import { InventoryItemGeneralSection } from "./components/inventory-item-general-section"
 import { InventoryItemLocationLevelsSection } from "./components/inventory-item-location-levels"
 import { InventoryItemReservationsSection } from "./components/inventory-item-reservations"
-import { AssociatedOffersSection } from "./components/inventory-item-offers/associated-offers-section"
+import {
+  InventoryItemVariantSchema,
+  InventoryItemVariantsSection,
+} from "./components/inventory-item-variants/variants-section"
 import { INVENTORY_DETAIL_FIELDS } from "./constants"
 
 import type { inventoryItemLoader } from "./loader"
 
+// Medusa's inventory item type has no `variants`; the detail query expands
+// them (see INVENTORY_DETAIL_FIELDS), so they are read from the response.
+const InventoryItemVariantsSchema = z.object({
+  variants: z.array(InventoryItemVariantSchema).nullish(),
+})
+
 const Root = ({ children }: { children?: ReactNode }) => {
-  const { id } = useParams()
-  const initialData = useLoaderData() as Awaited<
-    ReturnType<typeof inventoryItemLoader>
-  >
+  const id = useRequiredParam("id")
+  const initialData = useLoaderData<typeof inventoryItemLoader>()
 
   const {
     inventory_item,
@@ -28,7 +41,7 @@ const Root = ({ children }: { children?: ReactNode }) => {
     isError,
     error,
   } = useInventoryItem(
-    id!,
+    id,
     useLinkQuery("inventory_item", INVENTORY_DETAIL_FIELDS),
     {
       initialData,
@@ -50,6 +63,11 @@ const Root = ({ children }: { children?: ReactNode }) => {
     throw error
   }
 
+  const parsedVariants = InventoryItemVariantsSchema.safeParse(inventory_item)
+  const variants = parsedVariants.success
+    ? (parsedVariants.data.variants ?? [])
+    : []
+
   return Children.count(children) > 0 ? (
     <TwoColumnPage data={inventory_item} showJSON showMetadata data-testid="inventory-detail-page">
       {children}
@@ -69,7 +87,9 @@ const Root = ({ children }: { children?: ReactNode }) => {
       </TwoColumnPage.Main>
       <TwoColumnPage.Sidebar data-testid="inventory-detail-sidebar">
         <WidgetZone id="inventory.detail.side" data={inventory_item}>
-          <AssociatedOffersSection offers={inventory_item.offers} />
+          {variants.length > 0 && (
+            <InventoryItemVariantsSection variants={variants} />
+          )}
           <InventoryItemAttributeSection inventoryItem={inventory_item} />
         </WidgetZone>
       </TwoColumnPage.Sidebar>
@@ -83,6 +103,6 @@ export const InventoryDetailPage = Object.assign(Root, {
   MainGeneralSection: InventoryItemGeneralSection,
   MainLocationLevelsSection: InventoryItemLocationLevelsSection,
   MainReservationsSection: InventoryItemReservationsSection,
-  SidebarOffersSection: AssociatedOffersSection,
+  SidebarVariantsSection: InventoryItemVariantsSection,
   SidebarAttributeSection: InventoryItemAttributeSection,
 })

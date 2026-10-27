@@ -3,7 +3,8 @@ import { Badge, Container, Heading, usePrompt } from "@medusajs/ui";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
-import { HttpTypes } from "@medusajs/types"
+import { useRequiredParam } from "@mercurjs/dashboard-shared"
+import { ProductVariantDTO } from "@mercurjs/types"
 import { ActionMenu } from "../../../../../components/common/action-menu"
 import { SectionRow } from "../../../../../components/common/section"
 import { useDeleteVariant } from "../../../../../hooks/api/products"
@@ -11,13 +12,15 @@ import { useDeleteVariant } from "../../../../../hooks/api/products"
 export function VariantGeneralSection({
   variant,
 }: {
-  variant: HttpTypes.AdminProductVariant;
+  variant: ProductVariantDTO;
 }) {
   const { t } = useTranslation();
   const prompt = usePrompt();
   const navigate = useNavigate();
 
-  const { mutateAsync } = useDeleteVariant(variant.product_id!, variant.id);
+  // The section renders under `products/:id/variants/:variant_id`.
+  const productId = useRequiredParam("id");
+  const { mutateAsync } = useDeleteVariant(productId, variant.id);
 
   const handleDelete = async () => {
     const res = await prompt({

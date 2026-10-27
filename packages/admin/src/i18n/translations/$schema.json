@@ -8093,6 +8093,12 @@
               "properties": {
                 "successToast": {
                   "type": "string"
+                },
+                "header": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
                 }
               }
             }

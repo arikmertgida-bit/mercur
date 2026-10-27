@@ -2851,7 +2851,9 @@
         "noVariants": "Tento produkt nemá žádné varianty"
       },
       "edit": {
-        "successToast": "Ceny byly úspěšně aktualizovány."
+        "successToast": "Ceny byly úspěšně aktualizovány.",
+        "header": "Upravit ceny pro {{title}}",
+        "description": "Aktualizujte ceny produktů v tomto ceníku."
       }
     },
     "fields": {

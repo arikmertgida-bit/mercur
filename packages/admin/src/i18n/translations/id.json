@@ -2850,7 +2850,9 @@
         "noVariants": "Produk ini tidak memiliki varian"
       },
       "edit": {
-        "successToast": "Harga berhasil diperbarui."
+        "successToast": "Harga berhasil diperbarui.",
+        "header": "Edit harga untuk {{title}}",
+        "description": "Perbarui harga produk dalam daftar harga ini."
       }
     },
     "fields": {

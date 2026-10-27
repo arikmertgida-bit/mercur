@@ -15,7 +15,7 @@ const ORDERS_REFETCH_INTERVAL_MS = 30_000
 
 export const useAdminDashboard = (
   options?: Omit<
-    UseQueryOptions<unknown, ClientError, AdminDashboardData>,
+    UseQueryOptions<AdminDashboardData, ClientError, AdminDashboardData>,
     "queryKey" | "queryFn"
   >,
 ) => {

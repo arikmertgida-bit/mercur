@@ -1,20 +1,19 @@
 import { Heading } from "@medusajs/ui"
-import { useLinkQuery } from "@mercurjs/dashboard-shared"
+import { useLinkQuery, useRequiredParam } from "@mercurjs/dashboard-shared"
 
 import { useTranslation } from "react-i18next"
-import { useParams } from "react-router-dom"
 import { RouteDrawer } from "../../../components/modals"
 import { useProductCategory } from "../../../hooks/api/categories"
 import { EditCategoryForm } from "./components/edit-category-form"
 
 export const CategoryEdit = () => {
-  const { id } = useParams()
+  const id = useRequiredParam("id")
   const { t } = useTranslation()
 
   const linkQuery = useLinkQuery("category")
 
   const { product_category, isPending, isError, error } = useProductCategory(
-    id!,
+    id,
     linkQuery
   )
 

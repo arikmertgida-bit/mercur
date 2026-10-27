@@ -16,13 +16,12 @@ import { formatProvider } from "../../../../../lib/format-provider"
 import { FulfillmentSetType, ShippingOptionPriceType } from "../../../common/constants"
 import { CreateShippingOptionSchema } from "./schema"
 import { useDocumentDirection } from "../../../../../hooks/use-document-direction"
-import type { ExtendedAdminFulfillmentProviderOption } from "@custom-types/fulfillment-providers/common"
 
 type CreateShippingOptionDetailsFormProps = {
   isReturn?: boolean
   zone: HttpTypes.AdminServiceZone
   locationId: string
-  fulfillmentProviderOptions: ExtendedAdminFulfillmentProviderOption[]
+  fulfillmentProviderOptions: HttpTypes.AdminFulfillmentProviderOption[]
   selectedProviderId?: string
   type: FulfillmentSetType
 }
@@ -269,7 +268,9 @@ const Root = ({
                         ?.filter((fo) => !!fo.is_return === isReturn)
                         .map((option) => (
                           <Select.Item value={option.id} key={option.id} data-testid={`location-shipping-option-create-details-form-fulfillment-option-option-${option.id}`}>
-                            {option.name || option.id}
+                            {typeof option.name === "string" && option.name
+                              ? option.name
+                              : option.id}
                           </Select.Item>
                         ))}
                     </Select.Content>

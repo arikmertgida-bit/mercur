@@ -10,7 +10,7 @@ export const PriceListDetailBreadcrumb = (
 ) => {
   const { id } = props.params || {}
 
-  const { price_list } = usePriceList(id!, undefined, {
+  const { price_list } = usePriceList(id ?? "", undefined, {
     initialData: props.data,
     enabled: Boolean(id),
   })

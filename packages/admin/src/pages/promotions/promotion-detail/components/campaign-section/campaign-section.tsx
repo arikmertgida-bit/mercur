@@ -2,9 +2,8 @@ import { ArrowUpRightOnBox, PencilSquare } from "@medusajs/icons"
 import { HttpTypes } from "@medusajs/types"
 import { Container, Heading, InlineTip, Text } from "@medusajs/ui"
 import { useTranslation } from "react-i18next"
-import { useParams } from "react-router-dom"
 
-import { DisplayExtensionZone, useLinkQuery } from "@mercurjs/dashboard-shared"
+import { DisplayExtensionZone, useLinkQuery, useRequiredParam } from "@mercurjs/dashboard-shared"
 
 import {
   ActionMenu,
@@ -59,9 +58,9 @@ export const CampaignSection = ({
   promotion?: HttpTypes.AdminPromotion
 }) => {
   const { t } = useTranslation()
-  const { id } = useParams()
+  const id = useRequiredParam("id")
   const linkQuery = useLinkQuery("promotion", PROMOTION_DETAIL_BASE_FIELDS)
-  const { promotion: fetchedPromotion } = usePromotion(id!, linkQuery, {
+  const { promotion: fetchedPromotion } = usePromotion(id, linkQuery, {
     enabled: campaignProp === undefined,
   })
   const promotion = promotionProp ?? fetchedPromotion

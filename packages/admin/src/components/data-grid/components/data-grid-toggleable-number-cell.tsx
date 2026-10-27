@@ -1,14 +1,35 @@
 import { Switch } from "@medusajs/ui"
 import { useEffect, useRef, useState } from "react"
 import CurrencyInput, { CurrencyInputProps } from "react-currency-input-field"
+import type { JsonValue } from "@mercurjs/types"
 import { Controller, ControllerRenderProps } from "react-hook-form"
 import { useCombinedRefs } from "../../../hooks/use-combined-refs"
 import { ConditionalTooltip } from "../../common/conditional-tooltip"
 import { useDataGridCell, useDataGridCellError } from "../hooks"
-import { DataGridCellProps, InputProps } from "../types"
+import {
+  DataGridCellProps,
+  DataGridFormValues,
+  DataGridToggleableNumber,
+  DataGridToggleableNumberSchema,
+  InputProps,
+} from "../types"
+
+const EMPTY_TOGGLEABLE_NUMBER: DataGridToggleableNumber = {
+  quantity: "",
+  checked: false,
+  disabledToggle: false,
+}
+
+const toToggleableNumber = (value: JsonValue): DataGridToggleableNumber => {
+  const parsed = DataGridToggleableNumberSchema.partial().safeParse(value)
+
+  return parsed.success
+    ? { ...EMPTY_TOGGLEABLE_NUMBER, ...parsed.data }
+    : EMPTY_TOGGLEABLE_NUMBER
+}
 import { DataGridCellContainer } from "./data-grid-cell-container"
 
-export const DataGridTogglableNumberCell = <TData, TValue = any>({
+export const DataGridTogglableNumberCell = <TData, TValue = JsonValue>({
   context,
   disabledToggleTooltip,
   ...rest
@@ -57,7 +78,7 @@ const OuterComponent = ({
   isAnchor,
   tooltip,
 }: {
-  field: ControllerRenderProps<any, string>
+  field: ControllerRenderProps<DataGridFormValues, string>
   inputProps: InputProps
   isAnchor: boolean
   tooltip?: string
@@ -66,10 +87,10 @@ const OuterComponent = ({
   const { value } = field
   const { onChange } = inputProps
 
-  const [localValue, setLocalValue] = useState(value)
+  const [localValue, setLocalValue] = useState(() => toToggleableNumber(value))
 
   useEffect(() => {
-    setLocalValue(value)
+    setLocalValue(toToggleableNumber(value))
   }, [value])
 
   const handleCheckedChange = (update: boolean) => {
@@ -101,7 +122,7 @@ const OuterComponent = ({
 
   return (
     <ConditionalTooltip
-      showTooltip={Boolean(localValue?.disabledToggle) && Boolean(tooltip)}
+      showTooltip={Boolean(localValue.disabledToggle && tooltip)}
       content={tooltip}
     >
       <div className="absolute inset-y-0 left-4 z-[3] flex w-fit items-center justify-center">
@@ -125,7 +146,7 @@ const Inner = ({
   placeholder,
   ...props
 }: {
-  field: ControllerRenderProps<any, string>
+  field: ControllerRenderProps<DataGridFormValues, string>
   inputProps: InputProps
   min?: number
   max?: number
@@ -140,10 +161,10 @@ const Inner = ({
     ...attributes
   } = inputProps
 
-  const [localValue, setLocalValue] = useState(value)
+  const [localValue, setLocalValue] = useState(() => toToggleableNumber(value))
 
   useEffect(() => {
-    setLocalValue(value)
+    setLocalValue(toToggleableNumber(value))
   }, [value])
 
   const combinedRefs = useCombinedRefs(inputRef, ref)
@@ -172,11 +193,12 @@ const Inner = ({
   }
 
   const handleOnChange = () => {
-    if (localValue?.disabledToggle && localValue.quantity === "") {
-      localValue.quantity = 0
-    }
+    const next =
+      localValue.disabledToggle && localValue.quantity === ""
+        ? { ...localValue, quantity: 0 }
+        : localValue
 
-    onChange(localValue, value)
+    onChange(next, value)
   }
 
   return (
@@ -187,7 +209,7 @@ const Inner = ({
         {...props}
         ref={combinedRefs}
         className="txt-compact-small w-full flex-1 cursor-default appearance-none bg-transparent pl-8 text-right outline-none"
-        value={localValue?.quantity}
+        value={localValue.quantity}
         onValueChange={handleInputChange}
         formatValueOnBlur
         onBlur={() => {

@@ -27,7 +27,10 @@ import { ActionMenu } from "../../../../../components/common/action-menu"
 import { useProductTypes } from "../../../../../hooks/api/product-types"
 import { useProducts } from "../../../../../hooks/api/products"
 import { formatPercentage } from "../../../../../lib/percentage-helpers"
-import { TaxRateRuleReferenceType } from "../../constants"
+import {
+  TaxRateRuleReferenceType,
+  isTaxRateRuleReferenceType,
+} from "../../constants"
 import { useDeleteTaxRateAction } from "../../hooks"
 import { useShippingOptions } from "../../../../../hooks/api"
 
@@ -43,7 +46,7 @@ export const TaxOverrideCard = ({ taxRate }: TaxOverrideCardProps) => {
     return null
   }
 
-  const groupedRules = taxRate.rules.reduce(
+  const groupedRules = taxRate.rules.reduce<Record<string, string[]>>(
     (acc, rule) => {
       if (!acc[rule.reference]) {
         acc[rule.reference] = []
@@ -53,13 +56,14 @@ export const TaxOverrideCard = ({ taxRate }: TaxOverrideCardProps) => {
 
       return acc
     },
-    {} as Record<string, string[]>
+    {}
   )
 
-  const validKeys = Object.values(TaxRateRuleReferenceType)
-  const numberOfTargets = Object.keys(groupedRules).map((key) =>
-    validKeys.includes(key as TaxRateRuleReferenceType)
-  ).length
+  const references = Object.entries(groupedRules).flatMap(
+    ([reference, ids]) =>
+      isTaxRateRuleReferenceType(reference) ? [{ reference, ids }] : []
+  )
+  const numberOfTargets = references.length
 
   return (
     <RadixCollapsible.Root>
@@ -141,7 +145,7 @@ export const TaxOverrideCard = ({ taxRate }: TaxOverrideCardProps) => {
                 >
                   {t("taxRegions.fields.targets.operators.on")}
                 </Text>
-                {Object.entries(groupedRules).map(([reference, ids], index) => {
+                {references.map(({ reference, ids }, index) => {
                   return (
                     <div
                       key={reference}
@@ -149,10 +153,10 @@ export const TaxOverrideCard = ({ taxRate }: TaxOverrideCardProps) => {
                     >
                       <Reference
                         key={reference}
-                        reference={reference as TaxRateRuleReferenceType}
+                        reference={reference}
                         ids={ids}
                       />
-                      {index < Object.keys(groupedRules).length - 1 && (
+                      {index < references.length - 1 && (
                         <Text
                           size="small"
                           leading="compact"

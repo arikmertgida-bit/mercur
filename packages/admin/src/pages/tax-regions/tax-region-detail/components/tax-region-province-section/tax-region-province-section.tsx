@@ -43,7 +43,7 @@ export const TaxRegionProvinceSection = ({
     prefix: PREFIX,
   })
 
-  const provinceObject = getCountryProvinceObjectByIso2(taxRegion.country_code!)
+  const provinceObject = getCountryProvinceObjectByIso2(taxRegion.country_code)
 
   if (!provinceObject && !showSublevelRegions && !taxRegion.children.length) {
     return null

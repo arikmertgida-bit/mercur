@@ -1,5 +1,5 @@
 import { Container, Heading, StatusBadge, Text } from "@medusajs/ui"
-import { PayoutDTO } from "@mercurjs/types"
+import { HttpTypes } from "@mercurjs/types"
 import { useTranslation } from "react-i18next"
 import { getStylizedAmount } from "../../../../lib/money-amount-helpers"
 
@@ -19,7 +19,7 @@ const payoutStatusColor = (status: string) => {
   }
 }
 
-export const PayoutGeneralSection = ({ payout }: { payout: PayoutDTO }) => {
+export const PayoutGeneralSection = ({ payout }: { payout: HttpTypes.AdminPayout }) => {
   const { t } = useTranslation()
 
   const statusText = t(`payouts.status.${payout.status}`, {
@@ -41,7 +41,7 @@ export const PayoutGeneralSection = ({ payout }: { payout: PayoutDTO }) => {
           {t("fields.amount")}
         </Text>
         <Text size="small" leading="compact">
-          {getStylizedAmount(payout.amount as number, payout.currency_code)}
+          {getStylizedAmount(payout.amount, payout.currency_code)}
         </Text>
       </div>
       <div className="text-ui-fg-subtle grid grid-cols-2 items-center px-6 py-4">

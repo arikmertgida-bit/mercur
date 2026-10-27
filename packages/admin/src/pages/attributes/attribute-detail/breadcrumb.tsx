@@ -11,7 +11,7 @@ export const AttributeDetailBreadcrumb = (
 ) => {
   const { id } = props.params || {}
 
-  const { product_attribute: attribute } = useProductAttribute(id!, undefined, {
+  const { product_attribute: attribute } = useProductAttribute(id ?? "", undefined, {
     initialData: props.data,
     enabled: Boolean(id),
   })

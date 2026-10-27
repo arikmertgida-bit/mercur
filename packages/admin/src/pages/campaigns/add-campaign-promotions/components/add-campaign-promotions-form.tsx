@@ -21,6 +21,7 @@ import { usePromotionTableColumns } from "../../../../hooks/table/columns/use-pr
 import { usePromotionTableFilters } from "../../../../hooks/table/filters/use-promotion-table-filters"
 import { usePromotionTableQuery } from "../../../../hooks/table/query/use-promotion-table-query"
 import { useDataTable } from "../../../../hooks/use-data-table"
+import { getTableMetaString } from "../../../../lib/table-meta"
 
 type AddCampaignPromotionsFormProps = {
   campaign: AdminCampaign
@@ -206,12 +207,12 @@ const useColumns = () => {
           )
         },
         cell: ({ row, table }) => {
-          const { campaignId, currencyCode, budgetType } = table.options
-            .meta as {
-            campaignId: string
-            currencyCode: string
-            budgetType: string
-          }
+          const campaignId =
+            getTableMetaString(table.options.meta, "campaignId") ?? ""
+          const currencyCode =
+            getTableMetaString(table.options.meta, "currencyCode") ?? ""
+          const budgetType =
+            getTableMetaString(table.options.meta, "budgetType") ?? ""
 
           const isTypeSpend = budgetType === "spend"
           const isAdded = row.original.campaign_id === campaignId

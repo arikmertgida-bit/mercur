@@ -21,14 +21,18 @@ import {
 import { useEffect, useMemo, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
 import { keepPreviousData } from "@tanstack/react-query";
 import { zodResolver } from "@hookform/resolvers/zod";
 import i18n from "i18next";
 import * as zod from "zod";
-import { isForbidden, SectionNoAccess } from "@mercurjs/dashboard-shared";
+import {
+  isForbidden,
+  SectionNoAccess,
+  useRequiredParam,
+} from "@mercurjs/dashboard-shared";
 
 import { DataTable } from "../../../components/data-table";
+import { useDataTableDateFilters } from "../../../components/data-table/helpers/general/use-data-table-date-filters";
 import { AttributeValueInput } from "../../../components/inputs/attribute-value-input";
 import { Form } from "../../../components/common/form";
 import { RouteFocusModal, useRouteModal } from "../../../components/modals";
@@ -39,6 +43,7 @@ import { PRODUCT_DETAIL_QUERY } from "../constants";
 import { useAttributeTableQuery } from "../../../hooks/table/query/use-attribute-table-query";
 import { useAttributeTableFilters } from "../../../hooks/table/filters/use-attribute-table-filters";
 import type { Filter } from "../../../components/table/data-table";
+import { isTruthy } from "../../../lib/is-truthy";
 
 const PAGE_SIZE = 20;
 const PREFIX = "add-existing-attrs";
@@ -46,17 +51,19 @@ const PREFIX = "add-existing-attrs";
 // `useAttributeTableFilters` returns the legacy `_DataTable` filter shape
 // (`key`/`options.value: string`); this page uses the newer `@medusajs/ui`
 // `DataTable`, which expects `DataTableFilter` (`id` instead of `key`).
+// Date filters need medusa-ui's preset options, so they come from
+// `useDataTableDateFilters` instead and are dropped here.
 function toDataTableFilters(filters: Filter[]): DataTableFilter[] {
-  return filters.map((f): DataTableFilter => {
+  return filters.flatMap((f): DataTableFilter[] => {
     switch (f.type) {
       case "select":
-        return { id: f.key, label: f.label, type: "select", options: f.options };
+        return [{ id: f.key, label: f.label, type: "select", options: f.options }];
       case "date":
-        return { id: f.key, label: f.label, type: "date" };
+        return [];
       case "string":
-        return { id: f.key, label: f.label, type: "string" };
+        return [{ id: f.key, label: f.label, type: "string" }];
       case "number":
-        return { id: f.key, label: f.label, type: "number" };
+        return [{ id: f.key, label: f.label, type: "number" }];
     }
   });
 }
@@ -100,12 +107,12 @@ type AddExistingFormValues = zod.infer<typeof AddExistingAttributesSchema>;
 // --- Component ---
 
 export const ProductAddExistingAttributes = () => {
-  const { id: productId } = useParams();
+  const productId = useRequiredParam("id");
 
   return (
     <RouteFocusModal>
       <RouteFocusModal.Header />
-      <Content productId={productId!} />
+      <Content productId={productId} />
     </RouteFocusModal>
   );
 };
@@ -132,18 +139,15 @@ const Content = ({ productId }: { productId: string }) => {
   const assignedIds = useMemo(
     () =>
       new Set(
-        (
-          (product as { attributes?: ProductAttributeDTO[] } | undefined)
-            ?.attributes ?? []
-        ).map((a) => a.id)
+        (product?.attributes ?? []).map((a) => a.id)
       ),
     [product]
   );
 
   const lockedIds = useMemo(() => {
-    const ids = new Set<string>(assignedIds as Set<string>);
+    const ids = new Set<string>(assignedIds);
     for (const attr of product_attributes ?? []) {
-      if ((attr as ProductAttributeDTO).is_required) ids.add(attr.id);
+      if (attr.is_required) ids.add(attr.id);
     }
     return ids;
   }, [assignedIds, product_attributes]);
@@ -176,9 +180,10 @@ const Content = ({ productId }: { productId: string }) => {
   });
 
   const legacyFilters = useAttributeTableFilters();
+  const dateFilters = useDataTableDateFilters();
   const filters = useMemo(
-    () => toDataTableFilters(legacyFilters),
-    [legacyFilters]
+    () => [...toDataTableFilters(legacyFilters), ...dateFilters],
+    [legacyFilters, dateFilters]
   );
   const columns = useColumns();
 
@@ -204,18 +209,16 @@ const Content = ({ productId }: { productId: string }) => {
 
     const attrs = selectedIds
       .map((id) => product_attributes?.find((a) => a.id === id))
-      .filter(Boolean)
+      .filter(isTruthy)
       .map((attr) => ({
-        attribute_id: attr!.id,
-        name: attr!.name,
-        type: attr!.type,
-        is_variant_axis: attr!.is_variant_axis,
+        attribute_id: attr.id,
+        name: attr.name,
+        type: attr.type,
+        is_variant_axis: attr.is_variant_axis,
         available_values:
-          attr!.values?.map((v) => ({ id: v.id, name: v.name })) ?? [],
+          attr.values?.map((v) => ({ id: v.id, name: v.name })) ?? [],
         values:
-          attr!.type === AttributeType.MULTI_SELECT
-            ? ([] as string[])
-            : "",
+          attr.type === AttributeType.MULTI_SELECT ? [] : "",
       }));
 
     form.reset({ attributes: attrs });
@@ -254,7 +257,7 @@ const Content = ({ productId }: { productId: string }) => {
         );
         const valueIds = vals
           .map((name) => nameToId.get(name))
-          .filter(Boolean) as string[];
+          .filter(isTruthy);
         if (!valueIds.length) continue;
         add.push({ id: attr.attribute_id, value_ids: valueIds });
       } else {

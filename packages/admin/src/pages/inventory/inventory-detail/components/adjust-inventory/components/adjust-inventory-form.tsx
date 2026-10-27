@@ -132,7 +132,7 @@ export const AdjustInventoryForm = ({
             />
             <AttributeGridRow 
               title={t("fields.sku")} 
-              value={item.sku!} 
+              value={item.sku ?? "-"} 
               testId="inventory-adjust-inventory-form-item-sku"
             />
             <AttributeGridRow

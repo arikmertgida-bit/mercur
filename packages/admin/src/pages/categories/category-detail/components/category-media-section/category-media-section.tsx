@@ -1,17 +1,16 @@
 import { PencilSquare, ThumbnailBadge } from "@medusajs/icons"
 import { DisplayExtensionZone, ListBadge } from "@mercurjs/dashboard-shared"
-import { HttpTypes } from "@medusajs/types"
+import { HttpTypes } from "@mercurjs/types"
 import { Container, Heading, Text, Tooltip } from "@medusajs/ui"
 import { useTranslation } from "react-i18next"
 
 import { ActionMenu } from "../../../../../components/common/action-menu"
 import {
-  CategoryWithImages,
   getCategoryGallery,
 } from "../../../common/components/category-image-fields"
 
 type CategoryMediaSectionProps = {
-  category: HttpTypes.AdminProductCategory & CategoryWithImages
+  category: HttpTypes.AdminProductCategory
 }
 
 export const CategoryMediaSection = ({

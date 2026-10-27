@@ -14,6 +14,8 @@ import {
 import { Photo, CheckCircleSolid, EyeSlash } from "@medusajs/icons"
 import { ActionMenu, NoRecords, Thumbnail } from "@mercurjs/dashboard-shared"
 
+import type { InferClientOutput } from "@mercurjs/client"
+
 import { client } from "../../lib/client"
 
 export const config = {
@@ -23,19 +25,16 @@ export const config = {
   rank: 88,
 }
 
-type ReportStatus = "pending" | "resolved"
+type ReviewImageReportRow = InferClientOutput<
+  typeof client.admin.reviewImageReports.query
+>["reports"][number]
 
-type ReviewImageReportRow = {
-  id: string
-  review_image_id: string
-  customer_id: string
-  reason: string
-  status: ReportStatus
-  action_taken?: string | null
-  customer_name: string
-  image_url: string | null
-  image_is_hidden: boolean | null
-}
+type ReportStatus = ReviewImageReportRow["status"]
+
+const STATUS_FILTERS: ReadonlyArray<ReportStatus | "all"> = ["all", "pending", "resolved"]
+
+const isStatusFilter = (value: string): value is ReportStatus | "all" =>
+  STATUS_FILTERS.some((status) => status === value)
 
 const STATUS_COLOR: Record<ReportStatus, "orange" | "green"> = {
   pending: "orange",
@@ -105,7 +104,7 @@ const ReportedImagesPage = () => {
     }
   }
 
-  const reports = (data?.reports ?? []) as ReviewImageReportRow[]
+  const reports = data?.reports ?? []
   const count = data?.count ?? 0
 
   return (
@@ -121,7 +120,8 @@ const ReportedImagesPage = () => {
           size="small"
           value={status}
           onValueChange={(value) => {
-            setStatus(value as ReportStatus | "all")
+            if (!isStatusFilter(value)) return
+            setStatus(value)
             setOffset(0)
           }}
         >

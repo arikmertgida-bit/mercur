@@ -2,7 +2,6 @@ import { PlusMini, Trash } from "@medusajs/icons"
 import type { HttpTypes } from "@medusajs/types"
 import { Checkbox, Container, Heading, toast, usePrompt } from "@medusajs/ui"
 import {
-  type ColumnDef,
   type RowSelectionState,
   createColumnHelper,
 } from "@tanstack/react-table"
@@ -40,7 +39,7 @@ export const RegionCountrySection = ({ region }: RegionCountrySectionProps) => {
     ...searchParams,
   })
 
-  const columns = useColumns()
+  const columns = useColumns(region)
 
   const { table } = useDataTable({
     data: countries || [],
@@ -55,9 +54,6 @@ export const RegionCountrySection = ({ region }: RegionCountrySectionProps) => {
       updater: setRowSelection,
     },
     prefix: PREFIX,
-    meta: {
-      region,
-    },
   })
 
   const { mutateAsync } = useUpdateRegion(region.id)
@@ -80,9 +76,9 @@ export const RegionCountrySection = ({ region }: RegionCountrySectionProps) => {
       return
     }
 
-    const payload = region.countries
-      ?.filter((c) => !ids.includes(c.iso_2!))
-      .map((c) => c.iso_2!)
+    const payload = region.countries?.flatMap((c) =>
+      c.iso_2 && !ids.includes(c.iso_2) ? [c.iso_2] : []
+    )
 
     await mutateAsync(
       {
@@ -214,7 +210,7 @@ const CountryActions = ({
 
 const columnHelper = createColumnHelper<StaticCountry>()
 
-const useColumns = () => {
+const useColumns = (region: HttpTypes.AdminRegion) => {
   const base = useCountryTableColumns()
 
   return useMemo(
@@ -252,15 +248,11 @@ const useColumns = () => {
       ...base,
       columnHelper.display({
         id: "actions",
-        cell: ({ row, table }) => {
-          const { region } = table.options.meta as {
-            region: HttpTypes.AdminRegion
-          }
-
+        cell: ({ row }) => {
           return <CountryActions country={row.original} region={region} />
         },
       }),
     ],
-    [base]
-  ) as ColumnDef<StaticCountry>[]
+    [base, region]
+  )
 }

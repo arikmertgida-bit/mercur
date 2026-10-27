@@ -3,7 +3,6 @@ import { Button, Heading, toast } from "@medusajs/ui";
 import { useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
 import * as zod from "zod";
 
 import { Form } from "../../../components/common/form";
@@ -20,6 +19,7 @@ import { useStoreCurrencies } from "../common/hooks/use-store-currencies";
 import { addCommissionValueIssues, optionalAmount } from "../common/schema";
 import { CommissionRate } from "../common/types";
 import { buildValuesPayload, fixedValuesFromRate } from "../common/utils";
+import { useRequiredParam } from "@mercurjs/dashboard-shared";
 
 const EditCommissionSchema = zod.object({
   type: zod.enum(["percentage", "fixed"]),
@@ -119,7 +119,6 @@ const EditCommissionForm = ({ rule }: { rule: CommissionRate }) => {
               )}
             />
             <CommissionValueFields
-              control={form.control}
               type={watchType}
               currencies={currencies}
             />
@@ -155,16 +154,11 @@ const EditCommissionForm = ({ rule }: { rule: CommissionRate }) => {
 
 export const CommissionRuleCommissionEdit = () => {
   const { t } = useTranslation();
-  const { id } = useParams();
+  const id = useRequiredParam("id");
   const { commission_rate, isPending, isError, error } = useCommissionRule(
-    id!,
+    id,
     { fields: "*rules,*values" }
-  ) as {
-    commission_rate?: CommissionRate;
-    isPending: boolean;
-    isError: boolean;
-    error: Error | null;
-  };
+  );
 
   const ready = !isPending && !!commission_rate;
 

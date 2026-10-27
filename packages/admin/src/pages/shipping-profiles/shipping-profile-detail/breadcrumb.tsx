@@ -11,7 +11,7 @@ export const ShippingProfileDetailBreadcrumb = (
   const { shipping_profile_id } = props.params || {}
 
   const { shipping_profile } = useShippingProfile(
-    shipping_profile_id!,
+    shipping_profile_id ?? "",
     undefined,
     {
       initialData: props.data,

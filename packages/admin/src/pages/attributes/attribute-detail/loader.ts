@@ -2,6 +2,7 @@ import { LoaderFunctionArgs } from "react-router-dom"
 
 import { productAttributesQueryKeys } from "../../../hooks/api"
 import { sdk } from "../../../lib/client"
+import { getRequiredParam } from "@lib/route-params"
 import { queryClient } from "../../../lib/query-client"
 
 const attributeDetailQuery = (id: string) => ({
@@ -11,8 +12,7 @@ const attributeDetailQuery = (id: string) => ({
 })
 
 export const attributeDetailLoader = async ({ params }: LoaderFunctionArgs) => {
-  const id = params.id
-  const query = attributeDetailQuery(id!)
+  const query = attributeDetailQuery(getRequiredParam(params, "id"))
 
   return queryClient.ensureQueryData(query)
 }

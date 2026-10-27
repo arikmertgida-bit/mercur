@@ -9,7 +9,10 @@ import { useFieldArray, UseFormReturn } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
 import { Form } from "../../../../../components/common/form"
-import { Combobox } from "../../../../../components/inputs/combobox"
+import {
+  Combobox,
+  getSingleComboboxValue,
+} from "../../../../../components/inputs/combobox"
 import {
   RouteFocusModal,
   StackedFocusModal,
@@ -296,12 +299,14 @@ export const ExchangeOutboundSection = ({
 
       {showOutboundItemsPlaceholder && <ItemPlaceholder />}
 
-      {outboundItems.map(
-        (item, index) =>
-          variantOutboundMap.get(item.variant_id) && (
+      {outboundItems.map((item, index) => {
+        const previewItem = variantOutboundMap.get(item.variant_id ?? null)
+
+        return (
+          previewItem && (
             <ExchangeOutboundItem
               key={item.id}
-              previewItem={variantOutboundMap.get(item.variant_id)!}
+              previewItem={previewItem}
               currencyCode={order.currency_code}
               form={form}
               onRemove={() => {
@@ -336,7 +341,8 @@ export const ExchangeOutboundSection = ({
               index={index}
             />
           )
-      )}
+        )
+      })}
       {!showOutboundItemsPlaceholder && (
         <div className="mt-8 flex flex-col gap-y-4">
           {/*OUTBOUND SHIPPING*/}
@@ -359,7 +365,8 @@ export const ExchangeOutboundSection = ({
                         allowClear
                         noResultsPlaceholder={<OutboundShippingPlaceholder />}
                         value={value ?? undefined}
-                        onChange={(val) => {
+                        onChange={(next) => {
+                          const val = getSingleComboboxValue(next)
                           onChange(val)
                           onShippingOptionChange(val)
                         }}

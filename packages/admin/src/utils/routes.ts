@@ -1,6 +1,7 @@
 import { ComponentType } from "react"
 import { LoaderFunction, RouteObject } from "react-router-dom"
 import type { Permission, RouteHandle } from "@mercurjs/dashboard-sdk"
+import { z } from "zod"
 import { ErrorBoundary } from "../components/utilities/error-boundary"
 
 export type Route = {
@@ -38,18 +39,28 @@ const createBranchRoute = (segment: string): RouteObject => ({
  * on every route below. Moved rather than copied, otherwise the list page would
  * show the domain crumb twice.
  */
+// React Router types route handles loosely; a branch already carries a crumb
+// when its handle has a `breadcrumb` renderer.
+const BreadcrumbHandleSchema = z.object({
+    breadcrumb: z.custom<NonNullable<RouteHandle["breadcrumb"]>>(
+        (value) => typeof value === "function"
+    ),
+})
+
 const hoistBreadcrumb = (
     branch: RouteObject,
     handle: RouteHandle | undefined,
     isIndex: boolean
 ): RouteHandle | undefined => {
-    const branchHandle = branch.handle as RouteHandle | undefined
+    const branchHasBreadcrumb = BreadcrumbHandleSchema.safeParse(
+        branch.handle
+    ).success
 
-    if (!isIndex || !handle?.breadcrumb || branchHandle?.breadcrumb) {
+    if (!isIndex || !handle?.breadcrumb || branchHasBreadcrumb) {
         return handle
     }
 
-    branch.handle = { ...branchHandle, breadcrumb: handle.breadcrumb }
+    branch.handle = { ...branch.handle, breadcrumb: handle.breadcrumb }
 
     const { breadcrumb: _breadcrumb, ...rest } = handle
     return Object.keys(rest).length ? rest : undefined
@@ -144,7 +155,7 @@ const processParallelRoutes = (
             }
             return createParallelRoute(childPath, Component, loader, handle)
         })
-        .filter(Boolean) as RouteObject[]
+        .filter((route) => route !== null)
 }
 
 /**

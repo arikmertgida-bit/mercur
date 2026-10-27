@@ -2,6 +2,7 @@ import { LoaderFunctionArgs } from "react-router-dom"
 
 import { productTypesQueryKeys } from "../../../hooks/api/product-types"
 import { sdk } from "../../../lib/client"
+import { getRequiredParam } from "@lib/route-params"
 import { queryClient } from "../../../lib/query-client"
 
 const productTypeDetailQuery = (id: string) => ({
@@ -10,8 +11,7 @@ const productTypeDetailQuery = (id: string) => ({
 })
 
 export const productTypeLoader = async ({ params }: LoaderFunctionArgs) => {
-  const id = params.id
-  const query = productTypeDetailQuery(id!)
+  const query = productTypeDetailQuery(getRequiredParam(params, "id"))
 
   return queryClient.ensureQueryData(query)
 }

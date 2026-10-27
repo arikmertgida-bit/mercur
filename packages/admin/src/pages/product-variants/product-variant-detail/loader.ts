@@ -2,6 +2,7 @@ import { LoaderFunctionArgs } from "react-router-dom"
 
 import { variantsQueryKeys } from "../../../hooks/api/products"
 import { sdk } from "../../../lib/client"
+import { getRequiredParam } from "@lib/route-params"
 import { queryClient } from "../../../lib/query-client"
 
 const VARIANT_DETAIL_FIELDS = "*options,*options.option"
@@ -16,11 +17,11 @@ const variantDetailQuery = (productId: string, variantId: string) => ({
     }),
 })
 
-export const variantLoader = async ({ params }: LoaderFunctionArgs): Promise<any> => {
-  const productId = params.id
-  const variantId = params.variant_id
-
-  const query = variantDetailQuery(productId!, variantId!)
+export const variantLoader = async ({ params }: LoaderFunctionArgs) => {
+  const query = variantDetailQuery(
+    getRequiredParam(params, "id"),
+    getRequiredParam(params, "variant_id")
+  )
 
   return queryClient.ensureQueryData(query)
 }

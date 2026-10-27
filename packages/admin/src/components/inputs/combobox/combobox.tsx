@@ -21,11 +21,11 @@ import {
   ComponentPropsWithoutRef,
   CSSProperties,
   ForwardedRef,
+  forwardRef,
   Fragment,
   ReactNode,
   useCallback,
   useDeferredValue,
-  useImperativeHandle,
   useMemo,
   useRef,
   useState,
@@ -33,7 +33,6 @@ import {
 } from "react"
 import { useTranslation } from "react-i18next"
 
-import { genericForwardRef } from "../../utilities/generic-forward-ref"
 
 type ComboboxOption = {
   value: string
@@ -43,15 +42,28 @@ type ComboboxOption = {
   disabled?: boolean
 }
 
+/**
+ * A single selection (`string`) or a multi selection (`string[]`); the mode
+ * follows the shape of the controlled `value`.
+ */
 type Value = string[] | string
+
+export type ComboboxValue = Value
+
+/**
+ * The selection of a single-value combobox (one rendered with a `string`
+ * value); a multi selection yields `undefined`.
+ */
+export const getSingleComboboxValue = (value?: Value): string | undefined =>
+  typeof value === "string" ? value : undefined
 
 const TABLUAR_NUM_WIDTH = 8
 const TAG_BASE_WIDTH = 28
 
-interface ComboboxProps<T extends Value = Value>
+interface ComboboxProps
   extends Omit<ComponentPropsWithoutRef<"input">, "onChange" | "value"> {
-  value?: T
-  onChange?: (value?: T) => void
+  value?: Value
+  onChange?: (value?: Value) => void
   searchValue?: string
   onSearchValueChange?: (value: string) => void
   options: ComboboxOption[]
@@ -63,7 +75,7 @@ interface ComboboxProps<T extends Value = Value>
   forceHideInput?: boolean // always hide input -> used for singe value select that don't have query/filter
 }
 
-const ComboboxImpl = <T extends Value = string>(
+const ComboboxImpl = (
   {
     value: controlledValue,
     onChange,
@@ -79,51 +91,46 @@ const ComboboxImpl = <T extends Value = string>(
     allowClear,
     forceHideInput,
     ...inputProps
-  }: ComboboxProps<T>,
+  }: ComboboxProps,
   ref: ForwardedRef<HTMLInputElement>
 ) => {
   const [open, setOpen] = useState(false)
   const [isPending, startTransition] = useTransition()
   const { t } = useTranslation()
 
-  const comboboxRef = useRef<HTMLInputElement>(null)
   const listboxRef = useRef<HTMLDivElement>(null)
-
-  useImperativeHandle(ref, () => comboboxRef.current!)
 
   const isValueControlled = controlledValue !== undefined
   const isSearchControlled = controlledSearchValue !== undefined
 
   const isArrayValue = Array.isArray(controlledValue)
-  const emptyState = (isArrayValue ? [] : "") as T
+  const emptyState: Value = isArrayValue ? [] : ""
 
   const [uncontrolledSearchValue, setUncontrolledSearchValue] = useState(
     controlledSearchValue || ""
   )
   const defferedSearchValue = useDeferredValue(uncontrolledSearchValue)
 
-  const [uncontrolledValue, setUncontrolledValue] = useState<T>(emptyState)
+  const [uncontrolledValue, setUncontrolledValue] = useState<Value>(emptyState)
 
   const searchValue = isSearchControlled
     ? controlledSearchValue
     : uncontrolledSearchValue
   const selectedValues = isValueControlled ? controlledValue : uncontrolledValue
 
-  const handleValueChange = (newValues?: T) => {
-    // check if the value already exists in options
-    const exists = options
-      .filter((o) => !o.disabled)
-      .find((o) => {
-        if (isArrayValue) {
-          return newValues?.includes(o.value)
-        }
-        return o.value === newValues
-      })
+  const handleValueChange = (newValues?: Value) => {
+    // If a selected value does not exist in the options, and the component has
+    // a handler for creating new options, call it.
+    if (onCreateOption) {
+      const optionValues = new Set(
+        options.filter((o) => !o.disabled).map((o) => o.value)
+      )
+      const selected =
+        typeof newValues === "string" ? [newValues] : (newValues ?? [])
 
-    // If the value does not exist in the options, and the component has a handler
-    // for creating new options, call it.
-    if (!exists && onCreateOption && newValues) {
-      onCreateOption(newValues as string)
+      selected
+        .filter((value) => value && !optionValues.has(value))
+        .forEach((value) => onCreateOption(value))
     }
 
     if (!isValueControlled) {
@@ -222,6 +229,10 @@ const ComboboxImpl = <T extends Value = string>(
     return TAG_BASE_WIDTH + digits * TABLUAR_NUM_WIDTH
   }, [selectedValues])
 
+  const tagWidthStyle: CSSProperties & { "--tag-width": string } = {
+    "--tag-width": `${tagWidth}px`,
+  }
+
   const results = useMemo(() => {
     return isSearchControlled ? options : matches
   }, [matches, options, isSearchControlled])
@@ -231,7 +242,7 @@ const ComboboxImpl = <T extends Value = string>(
       open={open}
       setOpen={handleOpenChange}
       selectedValue={selectedValues}
-      setSelectedValue={(value) => handleValueChange(value as T)}
+      setSelectedValue={(value) => handleValueChange(value)}
       value={uncontrolledSearchValue}
       setValue={(query) => {
         startTransition(() => handleSearchChange(query))
@@ -247,21 +258,13 @@ const ComboboxImpl = <T extends Value = string>(
           "has-[:disabled]:bg-ui-bg-disabled has-[:disabled]:text-ui-fg-disabled has-[:disabled]:cursor-not-allowed",
           className
         )}
-        style={
-          {
-            "--tag-width": `${tagWidth}px`,
-          } as CSSProperties
-        }
+        style={tagWidthStyle}
       >
         {showTag && (
           <button
             type="button"
             onClick={(e) => {
               e.preventDefault()
-              // T is an unconstrained `string[] | string` generic; which
-              // branch is live is only known at runtime via `isArrayValue`,
-              // so it can't be narrowed from `[]`/`undefined` without a cast.
-              // @ts-expect-error
               handleValueChange(isArrayValue ? [] : undefined)
             }}
             className="bg-ui-bg-base hover:bg-ui-bg-base-hover txt-compact-small-plus text-ui-fg-subtle focus-within:border-ui-fg-interactive transition-fg absolute start-0.5 top-0.5 z-[1] flex h-[28px] items-center rounded-[4px] border py-[3px] pe-1 ps-1.5 outline-none"
@@ -303,7 +306,7 @@ const ComboboxImpl = <T extends Value = string>(
           )}
           <PrimitiveCombobox
             autoSelect
-            ref={comboboxRef}
+            ref={ref}
             onFocus={() => setOpen(true)}
             className={clx(
               "txt-compact-small text-ui-fg-base !placeholder:text-ui-fg-muted transition-fg size-full cursor-pointer bg-transparent pe-8 ps-2 outline-none focus:cursor-text",
@@ -431,4 +434,6 @@ const ComboboxImpl = <T extends Value = string>(
   )
 }
 
-export const Combobox = genericForwardRef(ComboboxImpl)
+export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(
+  ComboboxImpl
+)

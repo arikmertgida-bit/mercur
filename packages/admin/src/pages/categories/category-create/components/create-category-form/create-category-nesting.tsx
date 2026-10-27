@@ -67,10 +67,14 @@ const Root = () => {
     },
     list: CategoryTreeItem[]
   ) => {
-    form.setValue("parent_category_id", parentId as string | null, {
-      shouldDirty: true,
-      shouldTouch: true,
-    })
+    form.setValue(
+      "parent_category_id",
+      parentId === null ? null : String(parentId),
+      {
+        shouldDirty: true,
+        shouldTouch: true,
+      }
+    )
 
     form.setValue("rank", index, {
       shouldDirty: true,

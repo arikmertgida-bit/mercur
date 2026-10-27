@@ -4,6 +4,7 @@ import {
   DragEndEvent,
   DragOverlay,
   DragStartEvent,
+  DraggableAttributes,
   DraggableSyntheticListeners,
   KeyboardSensor,
   PointerSensor,
@@ -141,7 +142,7 @@ type SortableItemProps<TItem extends SortableBaseItem> = PropsWithChildren<{
 }>
 
 type SortableItemContextValue = {
-  attributes: Record<string, any>
+  attributes: DraggableAttributes
   listeners: DraggableSyntheticListeners
   ref: (node: HTMLElement | null) => void
   isDragging: boolean

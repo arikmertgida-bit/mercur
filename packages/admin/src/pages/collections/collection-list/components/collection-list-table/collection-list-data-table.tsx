@@ -74,10 +74,6 @@ const useColumns = () => {
   const base = useCollectionTableColumns()
   const { columns: extended, filters } = useExtendableTable<HttpTypes.AdminCollection>({
     model: "collection",
-    // tanstack's ColumnDef<T, TValue> is contravariant in TValue (cell/header
-    // render props), so a heterogeneous per-column accessor array can't widen
-    // to ColumnDef<T, unknown>[] without a cast.
-    // @ts-expect-error
     columns: base,
   })
 

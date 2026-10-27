@@ -150,7 +150,7 @@ export function EditShippingOptionsPricingForm({
         }
 
         const existingPrice = shippingOption.prices.find(
-          (p) => p.currency_code === code && !p.price_rules!.length
+          (p) => p.currency_code === code && !p.price_rules?.length
         )
 
         if (existingPrice) {
@@ -323,6 +323,19 @@ const findRuleValue = (
   )
 }
 
+/**
+ * eq/gt/lt rules can only be managed through the API and the form keeps them
+ * as numbers, while price rule values come back from the API as strings.
+ */
+const findRuleNumber = (
+  rules: HttpTypes.AdminShippingOptionPriceRule[],
+  operator: "eq" | "gt" | "lt"
+) => {
+  const value = findRuleValue(rules, operator)
+
+  return value === undefined || value === null ? undefined : castNumber(value)
+}
+
 const mapToConditionalPrice = (
   price: HttpTypes.AdminShippingOptionPrice
 ): UpdateConditionalPrice => {
@@ -333,9 +346,9 @@ const mapToConditionalPrice = (
     amount: price.amount,
     gte: findRuleValue(rules, "gte"),
     lte: findRuleValue(rules, "lte"),
-    gt: findRuleValue(rules, "gt") as undefined | null,
-    lt: findRuleValue(rules, "lt") as undefined | null,
-    eq: findRuleValue(rules, "eq") as undefined | null,
+    gt: findRuleNumber(rules, "gt"),
+    lt: findRuleNumber(rules, "lt"),
+    eq: findRuleNumber(rules, "eq"),
   }
 }
 
@@ -361,13 +374,18 @@ const getDefaultValues = (prices: HttpTypes.AdminShippingOptionPrice[]) => {
 
   prices.forEach((price) => {
     if (!price.price_rules?.length) {
-      currency_prices[price.currency_code!] = price.amount
+      if (price.currency_code) {
+        currency_prices[price.currency_code] = price.amount
+      }
 
       return
     }
 
     if (hasAttributes(price, [ITEM_TOTAL_ATTRIBUTE], [REGION_ID_ATTRIBUTE])) {
-      const code = price.currency_code!
+      const code = price.currency_code
+      if (!code) {
+        return
+      }
       if (!conditional_currency_prices[code]) {
         conditional_currency_prices[code] = []
       }

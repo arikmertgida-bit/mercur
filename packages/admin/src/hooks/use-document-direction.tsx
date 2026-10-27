@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react"
 
+const readDocumentDirection = (): "ltr" | "rtl" | undefined => {
+  const dir = document.documentElement.getAttribute("dir")
+  return dir === "ltr" || dir === "rtl" ? dir : undefined
+}
+
 /**
  * Hook to get the current document direction (ltr/rtl) and listen for changes
  * @returns The current document direction as "ltr" | "rtl" | undefined
@@ -8,10 +13,7 @@ export const useDocumentDirection = (): "ltr" | "rtl" | undefined => {
   const [direction, setDirection] = useState<"ltr" | "rtl" | undefined>(() => {
     // Initialize with current value
     if (typeof document !== "undefined") {
-      return (
-        (document.documentElement.getAttribute("dir") as "ltr" | "rtl") ||
-        undefined
-      )
+      return readDocumentDirection()
     }
     return undefined
   })
@@ -30,10 +32,7 @@ export const useDocumentDirection = (): "ltr" | "rtl" | undefined => {
           mutation.attributeName === "dir" &&
           mutation.target === document.documentElement
         ) {
-          const newDirection = document.documentElement.getAttribute("dir") as
-            | "ltr"
-            | "rtl"
-          setDirection(newDirection || undefined)
+          setDirection(readDocumentDirection())
         }
       })
     })

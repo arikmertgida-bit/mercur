@@ -1,10 +1,14 @@
 import { ArrowPath, TriangleRightMini } from "@medusajs/icons"
 import { HttpTypes } from "@medusajs/types"
-import { OrderGroupDTO } from "@mercurjs/types"
+import type {
+  HttpTypes as MercurHttpTypes,
+  OrderGroupDTO,
+} from "@mercurjs/types"
 import { Container, Heading, IconButton, clx } from "@medusajs/ui"
 import { keepPreviousData } from "@tanstack/react-query"
 import { createColumnHelper } from "@tanstack/react-table"
 import { useMemo } from "react"
+import { TFunction } from "i18next"
 import { useTranslation } from "react-i18next"
 
 import { DisplayExtensionZone } from "@mercurjs/dashboard-shared"
@@ -67,32 +71,18 @@ type OrderGroupRow = Pick<OrderGroupDTO, "id" | "created_at" | "updated_at"> & {
   display_id: string
   order_ids: string
   store: string
-  payment_status: string | null
-  fulfillment_status: string | null
+  payment_status: HttpTypes.AdminOrder["payment_status"] | null
+  fulfillment_status: HttpTypes.AdminOrder["fulfillment_status"] | null
   total: number | null
   currency_code: string
   children: OrderGroupRow[]
 }
 
-// The `orders.*` fields are relations pulled in via `DEFAULT_FIELDS` and
-// aren't part of the base `OrderGroupDTO`.
-type OrderGroupWithOrders = OrderGroupDTO & {
-  orders?: Array<{
-    id: string
-    display_id: number
-    created_at: string | Date
-    updated_at: string | Date
-    payment_status?: string | null
-    fulfillment_status?: string | null
-    total?: number | null
-    currency_code?: string | null
-    seller?: { name?: string | null } | null
-  }>
-}
+type OrderGroupWithOrders = MercurHttpTypes.AdminOrderGroup
 
 function transformOrderGroups(
   orderGroups: OrderGroupWithOrders[],
-  t: (key: string, options?: Record<string, unknown>) => string
+  t: TFunction
 ): OrderGroupRow[] {
   return orderGroups.map((group) => {
     const orders = group.orders ?? []
@@ -312,7 +302,7 @@ const useColumns = () => {
           if (!status) {
             return "-"
           }
-          return <PaymentStatusCell status={status as never} />
+          return <PaymentStatusCell status={status} />
         },
       }),
       columnHelper.accessor("fulfillment_status", {
@@ -325,7 +315,7 @@ const useColumns = () => {
           if (!status) {
             return "-"
           }
-          return <FulfillmentStatusCell status={status as never} />
+          return <FulfillmentStatusCell status={status} />
         },
       }),
       columnHelper.accessor("total", {

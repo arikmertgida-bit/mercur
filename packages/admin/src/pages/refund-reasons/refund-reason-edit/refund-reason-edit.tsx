@@ -1,15 +1,15 @@
 import { Heading } from "@medusajs/ui"
 import { useTranslation } from "react-i18next"
-import { useParams } from "react-router-dom"
 import { RouteDrawer } from "../../../components/modals"
 import { useRefundReason } from "../../../hooks/api/refund-reasons"
 import { RefundReasonEditForm } from "./components/refund-reason-edit-form"
+import { useRequiredParam } from "@mercurjs/dashboard-shared"
 
 export const RefundReasonEdit = () => {
-  const { id } = useParams()
+  const id = useRequiredParam("id")
   const { t } = useTranslation()
 
-  const { refund_reason, isPending, isError, error } = useRefundReason(id!)
+  const { refund_reason, isPending, isError, error } = useRefundReason(id)
 
   const ready = !isPending && !!refund_reason
 

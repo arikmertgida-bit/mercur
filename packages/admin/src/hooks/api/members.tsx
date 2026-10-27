@@ -3,14 +3,25 @@ import type { UseQueryOptions } from "@tanstack/react-query";
 
 import { sdk } from "../../lib/client";
 import { queryKeysFactory } from "../../lib/query-key-factory";
-import type { ClientError } from "@mercurjs/client";
+import type {
+  ClientError,
+  InferClientInput,
+  InferClientOutput,
+} from "@mercurjs/client";
 
 const MEMBERS_QUERY_KEY = "members" as const;
 export const membersQueryKeys = queryKeysFactory(MEMBERS_QUERY_KEY);
 
 export const useMembers = (
-  query?: { q?: string; limit?: number; offset?: number; email?: string },
-  options?: Omit<UseQueryOptions<any, ClientError>, "queryKey" | "queryFn">,
+  query?: InferClientInput<typeof sdk.admin.members.query>,
+  options?: Omit<
+    UseQueryOptions<
+      InferClientOutput<typeof sdk.admin.members.query>,
+      ClientError,
+      InferClientOutput<typeof sdk.admin.members.query>
+    >,
+    "queryKey" | "queryFn"
+  >,
 ) => {
   const { data, ...rest } = useQuery({
     queryFn: () => sdk.admin.members.query(query),

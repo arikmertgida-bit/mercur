@@ -1,4 +1,3 @@
-import type { ExtendedInventoryItemLevel } from "@custom-types/inventory";
 
 import { _DataTable } from "@components/table/data-table";
 
@@ -41,7 +40,7 @@ export const ItemLocationListTable = ({
   }
 
   const { table } = useDataTable({
-    data: (inventory_levels ?? []) as ExtendedInventoryItemLevel[],
+    data: inventory_levels ?? [],
     columns,
     count,
     enablePagination: true,

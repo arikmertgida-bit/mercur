@@ -2,13 +2,13 @@ import { Container, Heading } from "@medusajs/ui"
 import { PencilSquare } from "@medusajs/icons"
 import { DisplayExtensionZone } from "@mercurjs/dashboard-shared"
 import { useTranslation } from "react-i18next"
-import type { ExtendedAdminInventoryItem } from "@custom-types/inventory"
+import type { HttpTypes } from "@medusajs/types"
 import { ActionMenu } from "@components/common/action-menu"
 import { SectionRow } from "@components/common/section"
 import { getFormattedCountry } from "@lib/addresses"
 
 type InventoryItemAttributeSectionProps = {
-  inventoryItem: ExtendedAdminInventoryItem
+  inventoryItem: HttpTypes.AdminInventoryItem
 }
 
 export const InventoryItemAttributeSection = ({

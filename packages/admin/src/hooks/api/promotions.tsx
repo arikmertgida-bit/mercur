@@ -1,5 +1,10 @@
 import { HttpTypes } from "@medusajs/types"
-import { ClientError } from "@mercurjs/client"
+import {
+  ClientError,
+  InferClientInput,
+  InferClientOutput,
+} from "@mercurjs/client"
+import { HttpTypes as MercurHttpTypes } from "@mercurjs/types"
 import {
   QueryKey,
   useMutation,
@@ -19,7 +24,7 @@ export const promotionsQueryKeys = {
   listRules: (
     id: string | null,
     ruleType: string,
-    query?: HttpTypes.AdminGetPromotionRuleParams
+    query?: PromotionRulesQuery
   ) => [PROMOTIONS_QUERY_KEY, id, ruleType, query],
   listRuleAttributes: (
     ruleType: string,
@@ -68,7 +73,7 @@ type UpsertPromotionCostPayload = {
 
 export const useUpsertPromotionCost = (
   options?: UseMutationOptions<
-    { promotion_cost: unknown },
+    MercurHttpTypes.AdminPromotionCostResponse,
     ClientError,
     UpsertPromotionCostPayload
   >
@@ -84,15 +89,26 @@ export const useUpsertPromotionCost = (
   })
 }
 
+// A promotion that is still being created has no id yet; Medusa's
+// `GET /admin/promotions/:id/:rule_type` then derives the rule attributes from
+// the `promotion_type` / `application_method_*` query params. Medusa's own
+// dashboard sends the literal "null" segment in that case.
+const UNSAVED_PROMOTION_ID = "null"
+
+export type PromotionRulesQuery = Omit<
+  InferClientInput<typeof sdk.admin.promotions.$id.$ruleType.query>,
+  "$id" | "$ruleType"
+>
+
 export const usePromotionRules = (
   id: string | null,
   ruleType: string,
-  query?: HttpTypes.AdminGetPromotionRuleParams,
+  query?: PromotionRulesQuery,
   options?: Omit<
     UseQueryOptions<
-      HttpTypes.AdminGetPromotionRuleParams,
+      MercurHttpTypes.AdminPromotionRuleDetailListResponse,
       ClientError,
-      HttpTypes.AdminPromotionRuleListResponse,
+      MercurHttpTypes.AdminPromotionRuleDetailListResponse,
       QueryKey
     >,
     "queryFn" | "queryKey"
@@ -102,7 +118,7 @@ export const usePromotionRules = (
     queryKey: promotionsQueryKeys.listRules(id, ruleType, query),
     queryFn: async () =>
       sdk.admin.promotions.$id.$ruleType.query({
-        $id: id!,
+        $id: id ?? UNSAVED_PROMOTION_ID,
         $ruleType: ruleType,
         ...query,
       }),
@@ -257,22 +273,48 @@ export const useUpdatePromotion = (
   })
 }
 
-export const usePromotionAddRules = (
+type PromotionRulesBatchPayload = Omit<
+  InferClientInput<typeof sdk.admin.promotions.$id.rules.batch.mutate>,
+  "$id"
+>
+
+type PromotionRulesBatchResponse = InferClientOutput<
+  typeof sdk.admin.promotions.$id.rules.batch.mutate
+>
+
+// Each rule type has its own batch route; `ruleType` is the URL segment of
+// the edit-rules page ("rules" | "buy-rules" | "target-rules").
+const batchPromotionRules = (
+  id: string,
+  ruleType: string,
+  payload: PromotionRulesBatchPayload
+) => {
+  if (ruleType === "buy-rules") {
+    return sdk.admin.promotions.$id.buyRules.batch.mutate({
+      $id: id,
+      ...payload,
+    })
+  }
+  if (ruleType === "target-rules") {
+    return sdk.admin.promotions.$id.targetRules.batch.mutate({
+      $id: id,
+      ...payload,
+    })
+  }
+  return sdk.admin.promotions.$id.rules.batch.mutate({ $id: id, ...payload })
+}
+
+const usePromotionRulesBatch = (
   id: string,
   ruleType: string,
   options?: UseMutationOptions<
-    HttpTypes.AdminPromotionResponse,
+    PromotionRulesBatchResponse,
     ClientError,
-    HttpTypes.BatchAddPromotionRulesReq
+    PromotionRulesBatchPayload
   >
 ) => {
   return useMutation({
-    mutationFn: (payload) =>
-      sdk.admin.promotions.$id.$ruleType.batch.mutate({
-        $id: id,
-        $ruleType: ruleType,
-        create: payload.rules,
-      }),
+    mutationFn: (payload) => batchPromotionRules(id, ruleType, payload),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: promotionsQueryKeys.all })
 
@@ -282,52 +324,6 @@ export const usePromotionAddRules = (
   })
 }
 
-export const usePromotionRemoveRules = (
-  id: string,
-  ruleType: string,
-  options?: UseMutationOptions<
-    HttpTypes.AdminPromotionResponse,
-    ClientError,
-    HttpTypes.BatchRemovePromotionRulesReq
-  >
-) => {
-  return useMutation({
-    mutationFn: (payload) =>
-      sdk.admin.promotions.$id.$ruleType.batch.mutate({
-        $id: id,
-        $ruleType: ruleType,
-        delete: payload.rule_ids,
-      }),
-    onSuccess: (data, variables, context) => {
-      queryClient.invalidateQueries({ queryKey: promotionsQueryKeys.all })
-
-      options?.onSuccess?.(data, variables, context)
-    },
-    ...options,
-  })
-}
-
-export const usePromotionUpdateRules = (
-  id: string,
-  ruleType: string,
-  options?: UseMutationOptions<
-    HttpTypes.AdminPromotionResponse,
-    ClientError,
-    HttpTypes.BatchUpdatePromotionRulesReq
-  >
-) => {
-  return useMutation({
-    mutationFn: (payload) =>
-      sdk.admin.promotions.$id.$ruleType.batch.mutate({
-        $id: id,
-        $ruleType: ruleType,
-        update: payload.rules,
-      }),
-    onSuccess: (data, variables, context) => {
-      queryClient.invalidateQueries({ queryKey: promotionsQueryKeys.all })
-
-      options?.onSuccess?.(data, variables, context)
-    },
-    ...options,
-  })
-}
+export const usePromotionAddRules = usePromotionRulesBatch
+export const usePromotionRemoveRules = usePromotionRulesBatch
+export const usePromotionUpdateRules = usePromotionRulesBatch
