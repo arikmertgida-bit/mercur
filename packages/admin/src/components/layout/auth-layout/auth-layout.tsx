@@ -10,16 +10,17 @@ type AuthLayoutProps = {
 export const AuthLayout = ({ children }: AuthLayoutProps) => {
   return (
     <div className="flex h-dvh w-dvw overflow-hidden" data-testid="login-page">
-      <div className="bg-ui-bg-base border-ui-border-base flex h-full w-full flex-col overflow-y-auto border-r lg:w-[584px] lg:shrink-0">
-        <div className="flex flex-1 flex-col px-8 pb-8 pt-8 lg:px-14 lg:pb-12 lg:pt-12">
+      <div className="bg-ui-bg-base border-ui-border-base flex h-full min-w-0 flex-1 flex-col overflow-y-auto border-r lg:min-w-[520px]">
+        <div className="mx-auto flex w-full max-w-[584px] flex-1 flex-col px-8 pb-8 pt-8 lg:px-14 lg:pb-12 lg:pt-12">
           {children}
         </div>
       </div>
-      <div className="bg-ui-bg-subtle hidden min-w-0 flex-1 items-center justify-center overflow-hidden lg:flex">
+      {/* Square panel sized by the viewport height, so the square illustration fills it without cropping */}
+      <div className="bg-ui-bg-subtle hidden aspect-square h-full max-w-[calc(100dvw-520px)] shrink-0 items-center justify-center overflow-hidden lg:flex">
         <img
           src={assetUrl(AUTH_ILLUSTRATION_PATH)}
           alt=""
-          className="h-full max-h-[1024px] w-full max-w-[1024px] object-contain"
+          className="h-full w-full object-contain"
         />
       </div>
     </div>
