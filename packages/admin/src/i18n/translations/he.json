@@ -183,6 +183,7 @@
     "store": "חנות",
     "details": "פרטים",
     "items_one": "{{count}} פריט",
+    "items_two": "{{count}} פריטים",
     "items_other": "{{count}} פריטים",
     "countSelected": "{{count}} נבחרו",
     "countOfTotalSelected": "{{count}} מתוך {{total}} נבחרו",
@@ -211,9 +212,11 @@
   "json": {
     "header": "JSON",
     "numberOfKeys_one": "{{count}} מפתח",
+    "numberOfKeys_two": "{{count}} מפתחות",
     "numberOfKeys_other": "{{count}} מפתחות",
     "drawer": {
       "header_one": "JSON <0>· {{count}} מפתח</0>",
+      "header_two": "JSON <0>· {{count}} מפתחות</0>",
       "header_other": "JSON <0>· {{count}} מפתחות</0>",
       "description": "צפה בנתוני ה-JSON עבור אובייקט זה."
     }
@@ -221,6 +224,7 @@
   "metadata": {
     "header": "מטא-נתונים",
     "numberOfKeys_one": "{{count}} מפתח",
+    "numberOfKeys_two": "{{count}} מפתחות",
     "numberOfKeys_other": "{{count}} מפתחות",
     "edit": {
       "header": "ערוך מטא-נתונים",
@@ -456,6 +460,7 @@
     "errors": {
       "fixError": "תקן שגיאה",
       "count_one": "{{count}} שגיאה",
+      "count_two": "{{count}} שגיאות",
       "count_other": "{{count}} שגיאות"
     }
   },
@@ -710,8 +715,10 @@
       "invalidFileType": "'{{name}}' אינו סוג קובץ נתמך. סוגי קבצים נתמכים הם: {{types}}.",
       "failedToUpload": "נכשל בהעלאת המדיה שנוספה. אנא נסה שוב.",
       "deleteWarning_one": "אתה עומד למחוק {{count}} תמונה. פעולה זו אינה ניתנת לביטול.",
+      "deleteWarning_two": "אתה עומד למחוק {{count}} תמונות. פעולה זו אינה ניתנת לביטול.",
       "deleteWarning_other": "אתה עומד למחוק {{count}} תמונות. פעולה זו אינה ניתנת לביטול.",
       "deleteWarningWithThumbnail_one": "אתה עומד למחוק {{count}} תמונה כולל התמונה הממוזערת. פעולה זו אינה ניתנת לביטול.",
+      "deleteWarningWithThumbnail_two": "אתה עומד למחוק {{count}} תמונות כולל התמונה הממוזערת. פעולה זו אינה ניתנת לביטול.",
       "deleteWarningWithThumbnail_other": "אתה עומד למחוק {{count}} תמונות כולל התמונה הממוזערת. פעולה זו אינה ניתנת לביטול.",
       "thumbnailTooltip": "תמונה ממוזערת",
       "galleryLabel": "גלריה",
@@ -728,6 +735,7 @@
     "discountableHint": "כאשר לא מסומן, הנחות לא יחולו על מוצר זה.",
     "noSalesChannels": "לא זמין באף ערוץ מכירות",
     "variantCount_one": "{{count}} וריאנט",
+    "variantCount_two": "{{count}} וריאנטים",
     "variantCount_other": "{{count}} וריאנטים",
     "deleteVariantWarning": "אתה עומד למחוק את הוריאנט {{title}}. פעולה זו אינה ניתנת לביטול.",
     "productStatus": {
@@ -839,6 +847,7 @@
       "pricesPagination": "1 - {{current}} מתוך {{total}} מחירים",
       "tableItemAvailable": "{{availableCount}} זמינים",
       "tableItem_one": "{{availableCount}} זמינים ב-{{locationCount}} מיקום",
+      "tableItem_two": "{{availableCount}} זמינים ב-{{locationCount}} מיקומים",
       "tableItem_other": "{{availableCount}} זמינים ב-{{locationCount}} מיקומים",
       "inventory": {
         "notManaged": "לא מנוהל",
@@ -931,12 +940,15 @@
       "description": "עדכן סטטוס והגדרות הנחה עבור המוצרים שנבחרו.",
       "action": "ערוך",
       "successToast_one": "מוצר {{count}} עודכן בהצלחה.",
+      "successToast_two": "{{count}} מוצרים עודכנו בהצלחה.",
       "successToast_other": "{{count}} מוצרים עודכנו בהצלחה."
     },
     "bulkDelete": {
       "warning_one": "אתה עומד למחוק מוצר {{count}}. פעולה זו אינה ניתנת לביטול.",
+      "warning_two": "אתה עומד למחוק {{count}} מוצרים. פעולה זו אינה ניתנת לביטול.",
       "warning_other": "אתה עומד למחוק {{count}} מוצרים. פעולה זו אינה ניתנת לביטול.",
       "successToast_one": "מוצר {{count}} נמחק בהצלחה.",
+      "successToast_two": "{{count}} מוצרים נמחקו בהצלחה.",
       "successToast_other": "{{count}} מוצרים נמחקו בהצלחה."
     },
     "attributeVariations": "וריאציות",
@@ -1036,6 +1048,7 @@
     "deleteWarning": "אתה עומד למחוק את הקולקציה {{title}}. פעולה זו אינה ניתנת לביטול.",
     "removeSingleProductWarning": "אתה עומד להסיר את המוצר {{title}} מהקולקציה. פעולה זו אינה ניתנת לביטול.",
     "removeProductsWarning_one": "אתה עומד להסיר {{count}} מוצר מהקולקציה. פעולה זו אינה ניתנת לביטול.",
+    "removeProductsWarning_two": "אתה עומד להסיר {{count}} מוצרים מהקולקציה. פעולה זו אינה ניתנת לביטול.",
     "removeProductsWarning_other": "אתה עומד להסיר {{count}} מוצרים מהקולקציה. פעולה זו אינה ניתנת לביטול.",
     "products": {
       "list": {
@@ -1044,10 +1057,12 @@
       },
       "add": {
         "successToast_one": "המוצר נוסף בהצלחה לקולקציה.",
+        "successToast_two": "המוצרים נוספו בהצלחה לקולקציה.",
         "successToast_other": "המוצרים נוספו בהצלחה לקולקציה."
       },
       "remove": {
         "successToast_one": "המוצר הוסר בהצלחה מהקולקציה.",
+        "successToast_two": "המוצרים הוסרו בהצלחה מהקולקציה.",
         "successToast_other": "המוצרים הוסרו בהצלחה מהקולקציה."
       }
     },
@@ -1133,12 +1148,15 @@
       "add": {
         "disabledTooltip": "המוצר כבר נמצא בקטגוריה זו.",
         "successToast_one": "נוסף {{count}} מוצר לקטגוריה.",
+        "successToast_two": "נוספו {{count}} מוצרים לקטגוריה.",
         "successToast_other": "נוספו {{count}} מוצרים לקטגוריה."
       },
       "remove": {
         "confirmation_one": "אתה עומד להסיר {{count}} מוצר מהקטגוריה. פעולה זו אינה ניתנת לביטול.",
+        "confirmation_two": "אתה עומד להסיר {{count}} מוצרים מהקטגוריה. פעולה זו אינה ניתנת לביטול.",
         "confirmation_other": "אתה עומד להסיר {{count}} מוצרים מהקטגוריה. פעולה זו אינה ניתנת לביטול.",
         "successToast_one": "הוסר {{count}} מוצר מהקטגוריה.",
+        "successToast_two": "הוסרו {{count}} מוצרים מהקטגוריה.",
         "successToast_other": "הוסרו {{count}} מוצרים מהקטגוריה."
       },
       "list": {
@@ -1296,6 +1314,7 @@
       "action": "ערוך רמות מלאי",
       "placeholder": "לא מופעל",
       "disablePrompt_one": "אתה עומד להשבית {{count}} רמת מיקום. פעולה זו אינה ניתנת לביטול.",
+      "disablePrompt_two": "אתה עומד להשבית {{count}} רמות מיקום. פעולה זו אינה ניתנת לביטול.",
       "disablePrompt_other": "אתה עומד להשבית {{count}} רמות מיקום. פעולה זו אינה ניתנת לביטול.",
       "disabledToggleTooltip": "לא ניתן להשבית: נקה כמות נכנסת ו/או שמורה לפני השבתה.",
       "successToast": "רמות המלאי עודכנו בהצלחה."
@@ -1441,6 +1460,7 @@
       "alreadyAddedTooltip": "הלקוח כבר נוסף לקבוצה.",
       "add": {
         "successToast_one": "הלקוח נוסף בהצלחה לקבוצה.",
+        "successToast_two": "הלקוחות נוספו בהצלחה לקבוצה.",
         "successToast_other": "הלקוחות נוספו בהצלחה לקבוצה.",
         "list": {
           "noRecordsMessage": "צור לקוח תחילה."
@@ -1448,8 +1468,10 @@
       },
       "remove": {
         "title_one": "הסר לקוח",
+        "title_two": "הסר לקוחות",
         "title_other": "הסר לקוחות",
         "description_one": "אתה עומד להסיר {{count}} לקוח מקבוצת הלקוחות. פעולה זו אינה ניתנת לביטול.",
+        "description_two": "אתה עומד להסיר {{count}} לקוחות מקבוצת הלקוחות. פעולה זו אינה ניתנת לביטול.",
         "description_other": "אתה עומד להסיר {{count}} לקוחות מקבוצת הלקוחות. פעולה זו אינה ניתנת לביטול."
       },
       "list": {
@@ -1660,7 +1682,7 @@
         "title": "החזרה התחילה",
         "description": "יש בקשת החזרה פתוחה להשלמה"
       },
-      "restockPreview": "מתקבל {{quantity}} × {{offerSku}} ← +{{delta}} ל-{{inventoryItem}} במיקום {{location}}"
+      "restockPreview": "מתקבל {{quantity}} × {{variantSku}} ← +{{delta}} ל-{{inventoryItem}} במיקום {{location}}"
     },
     "claims": {
       "create": "צור תביעה",
@@ -1782,6 +1804,7 @@
       "methodDescription": "בחר שיטת משלוח שונה מזו שהלקוח בחר",
       "error": {
         "wrongQuantity": "רק פריט אחד זמין למימוש",
+        "wrongQuantity_two": "הכמות צריכה להיות מספר בין 1 ל{{number}}",
         "wrongQuantity_other": "הכמות צריכה להיות מספר בין 1 ל{{number}}",
         "noItems": "אין פריטים למימוש.",
         "noShippingOption": "נדרשת אפשרות משלוח",
@@ -1819,7 +1842,8 @@
       "title": "צור החזר",
       "sendNotificationHint": "הודע ללקוחות על ההחזר שנוצר.",
       "systemPayment": "תשלום מערכת",
-      "systemPaymentDesc": "אחד או יותר מהתשלומים שלך הוא תשלום מערכת. שים לב, תפיסות והחזרים אינם מנוהלים על ידי Kayı.com עבור תשלומים אלו.",      "error": {
+      "systemPaymentDesc": "אחד או יותר מהתשלומים שלך הוא תשלום מערכת. שים לב, תפיסות והחזרים אינם מנוהלים על ידי Kayı.com עבור תשלומים אלו.",
+      "error": {
         "amountToLarge": "לא ניתן להחזיר יותר מסכום ההזמנה המקורי.",
         "amountNegative": "סכום ההחזר חייב להיות מספר חיובי.",
         "reasonRequired": "אנא בחר סיבת החזר."
@@ -1835,6 +1859,7 @@
     "activity": {
       "header": "פעילות",
       "showMoreActivities_one": "הצג עוד {{count}} פעילות",
+      "showMoreActivities_two": "הצג עוד {{count}} פעילויות",
       "showMoreActivities_other": "הצג עוד {{count}} פעילויות",
       "comment": {
         "label": "תגובה",
@@ -1868,6 +1893,7 @@
           "shipped": "פריטים נשלחו",
           "delivered": "פריטים נמסרו",
           "items_one": "{{count}} פריט",
+          "items_two": "{{count}} פריטים",
           "items_other": "{{count}} פריטים"
         },
         "return": {
@@ -1875,6 +1901,7 @@
           "canceled": "בקשת החזרה #{{returnId}} בוטלה",
           "received": "בקשת החזרה #{{returnId}} התקבלה",
           "items_one": "{{count}} פריט הוחזר",
+          "items_two": "{{count}} פריטים הוחזרו",
           "items_other": "{{count}} פריטים הוחזרו"
         },
         "note": {
@@ -1917,6 +1944,7 @@
       "orderIds": "מזהה הזמנה",
       "vendor": "חנות",
       "vendorsCount_one": "חנות {{count}}",
+      "vendorsCount_two": "{{count}} חנויות",
       "vendorsCount_other": "{{count}} חנויות"
     },
     "group": {
@@ -2147,10 +2175,13 @@
       "fields": {
         "count": {
           "shipping_one": "{{count}} אפשרות משלוח",
+          "shipping_two": "{{count}} אפשרויות משלוח",
           "shipping_other": "{{count}} אפשרויות משלוח",
           "pickup_one": "{{count}} אפשרות איסוף",
+          "pickup_two": "{{count}} אפשרויות איסוף",
           "pickup_other": "{{count}} אפשרויות איסוף",
           "returns_one": "{{count}} אפשרות החזרה",
+          "returns_two": "{{count}} אפשרויות החזרה",
           "returns_other": "{{count}} אפשרויות החזרה"
         },
         "priceType": {
@@ -2416,10 +2447,13 @@
           "header": "הוסף יעדים"
         },
         "values_one": "{{count}} ערך",
+        "values_two": "{{count}} ערכים",
         "values_other": "{{count}} ערכים",
         "numberOfTargets_one": "{{count}} יעד",
+        "numberOfTargets_two": "{{count}} יעדים",
         "numberOfTargets_other": "{{count}} יעדים",
         "additionalValues_one": "ועוד {{count}} ערך",
+        "additionalValues_two": "ועוד {{count}} ערכים",
         "additionalValues_other": "ועוד {{count}} ערכים",
         "action": "הוסף יעד"
       },
@@ -2490,10 +2524,6 @@
       "buyGet": {
         "title": "קנה X קבל Y",
         "description": "קנה X מוצר(ים), קבל Y מוצר(ים)"
-      },
-      "freeShipping": {
-        "title": "משלוח חינם",
-        "description": "מחיל הנחה של 100% על דמי המשלוח"
       }
     },
     "domain": "מבצעים",
@@ -2840,8 +2870,10 @@
       },
       "delete": {
         "confirmation_one": "אתה עומד למחוק את המחירים עבור {{count}} מוצר ברשימת המחירים. פעולה זו אינה ניתנת לביטול.",
+        "confirmation_two": "אתה עומד למחוק את המחירים עבור {{count}} מוצרים ברשימת המחירים. פעולה זו אינה ניתנת לביטול.",
         "confirmation_other": "אתה עומד למחוק את המחירים עבור {{count}} מוצרים ברשימת המחירים. פעולה זו אינה ניתנת לביטול.",
         "successToast_one": "המחירים עבור {{count}} מוצר נמחקו בהצלחה.",
+        "successToast_two": "המחירים עבור {{count}} מוצרים נמחקו בהצלחה.",
         "successToast_other": "המחירים עבור {{count}} מוצרים נמחקו בהצלחה."
       },
       "add": {
@@ -2911,7 +2943,8 @@
       "header": "ערוך פרופיל",
       "languageHint": "השפה שברצונך להשתמש בלוח הבקרה של המנהל. זה לא משנה את שפת החנות שלך.",
       "languagePlaceholder": "בחר שפה",
-      "usageInsightsHint": "שתף תובנות שימוש ועזור לנו לשפר את Kayı.com. ניתן לקרוא עוד על מה אנו אוספים ואיך אנו משתמשים בזה ב<0>התיעוד</0> שלנו."    },
+      "usageInsightsHint": "שתף תובנות שימוש ועזור לנו לשפר את Kayı.com. ניתן לקרוא עוד על מה אנו אוספים ואיך אנו משתמשים בזה ב<0>התיעוד</0> שלנו."
+    },
     "toast": {
       "edit": "השינויים בפרופיל נשמרו"
     }
@@ -2995,6 +3028,7 @@
     "enableTaxInclusivePricing": "הפעל תמחור כולל מס",
     "disableTaxInclusivePricing": "השבת תמחור כולל מס",
     "removeCurrencyWarning_one": "אתה עומד להסיר {{count}} מטבע מהחנות שלך. ודא שהסרת את כל המחירים המשתמשים במטבע לפני ההמשך.",
+    "removeCurrencyWarning_two": "אתה עומד להסיר {{count}} מטבעות מהחנות שלך. ודא שהסרת את כל המחירים המשתמשים במטבעות לפני ההמשך.",
     "removeCurrencyWarning_other": "אתה עומד להסיר {{count}} מטבעות מהחנות שלך. ודא שהסרת את כל המחירים המשתמשים במטבעות לפני ההמשך.",
     "currencyAlreadyAdded": "המטבע כבר נוסף לחנות שלך.",
     "edit": {
@@ -3090,6 +3124,7 @@
     "countriesHint": "הוסף את המדינות הכלולות באזור זה.",
     "deleteRegionWarning": "אתה עומד למחוק את האזור {{name}}. פעולה זו אינה ניתנת לביטול.",
     "removeCountriesWarning_one": "אתה עומד להסיר {{count}} מדינה מהאזור. פעולה זו אינה ניתנת לביטול.",
+    "removeCountriesWarning_two": "אתה עומד להסיר {{count}} מדינות מהאזור. פעולה זו אינה ניתנת לביטול.",
     "removeCountriesWarning_other": "אתה עומד להסיר {{count}} מדינות מהאזור. פעולה זו אינה ניתנת לביטול.",
     "removeCountryWarning": "אתה עומד להסיר את המדינה {{name}} מהאזור. פעולה זו אינה ניתנת לביטול.",
     "automaticTaxesHint": "כאשר מופעל, מסים יחושבו רק בעת התשלום על בסיס כתובת המשלוח.",
@@ -3190,6 +3225,7 @@
     "selectLocations": "בחר מיקומים שמחזיקים את הפריט במלאי.",
     "deleteLocationWarning": "אתה עומד למחוק את המיקום {{name}}. פעולה זו אינה ניתנת לביטול.",
     "removeSalesChannelsWarning_one": "אתה עומד להסיר {{count}} ערוץ מכירה מהמיקום.",
+    "removeSalesChannelsWarning_two": "אתה עומד להסיר {{count}} ערוצי מכירה מהמיקום.",
     "removeSalesChannelsWarning_other": "אתה עומד להסיר {{count}} ערוצי מכירה מהמיקום.",
     "toast": {
       "create": "המיקום נוצר בהצלחה",
@@ -3219,6 +3255,7 @@
     "createSalesChannelHint": "צור ערוץ מכירה חדש למכור בו את המוצרים שלך.",
     "enabledHint": "ציין אם ערוץ המכירה מופעל.",
     "removeProductsWarning_one": "אתה עומד להסיר {{count}} מוצר מ-{{sales_channel}}.",
+    "removeProductsWarning_two": "אתה עומד להסיר {{count}} מוצרים מ-{{sales_channel}}.",
     "removeProductsWarning_other": "אתה עומד להסיר {{count}} מוצרים מ-{{sales_channel}}.",
     "addProducts": "הוסף מוצרים",
     "editSalesChannel": "ערוך ערוץ מכירה",
@@ -3264,7 +3301,8 @@
       "createPublishableHeader": "צור מפתח API לפרסום",
       "createPublishableHint": "צור מפתח API חדש לפרסום כדי להגביל את היקף הבקשות לערוצי מכירה ספציפיים.",
       "createSecretHeader": "צור מפתח API סודי",
-      "createSecretHint": "צור מפתח API סודי חדש לגישה ל-Kayı.com API כמשתמש מנהל מאומת.",      "secretKeyCreatedHeader": "מפתח סודי נוצר",
+      "createSecretHint": "צור מפתח API סודי חדש לגישה ל-Kayı.com API כמשתמש מנהל מאומת.",
+      "secretKeyCreatedHeader": "מפתח סודי נוצר",
       "secretKeyCreatedHint": "המפתח הסודי החדש שלך נוצר. העתק ואחסן אותו בצורה מאובטחת עכשיו. זו הפעם היחידה שהוא יוצג.",
       "copySecretTokenSuccess": "המפתח הסודי הועתק ללוח.",
       "copySecretTokenFailure": "נכשל בהעתקת המפתח הסודי ללוח.",
@@ -3279,6 +3317,7 @@
       "title": "הוסף ערוצי מכירה",
       "description": "הוסף את ערוצי המכירה שאליהם צריך להיות מוגבל מפתח ה-API.",
       "successToast_one": "{{count}} ערוץ מכירה נוסף בהצלחה למפתח ה-API.",
+      "successToast_two": "{{count}} ערוצי מכירה נוספו בהצלחה למפתח ה-API.",
       "successToast_other": "{{count}} ערוצי מכירה נוספו בהצלחה למפתח ה-API.",
       "alreadyAddedTooltip": "ערוץ המכירה כבר נוסף למפתח ה-API.",
       "list": {
@@ -3301,9 +3340,11 @@
     "removeSalesChannel": {
       "warning": "אתה עומד להסיר את ערוץ המכירה {{name}} ממפתח ה-API. פעולה זו אינה ניתנת לביטול.",
       "warningBatch_one": "אתה עומד להסיר {{count}} ערוץ מכירה ממפתח ה-API. פעולה זו אינה ניתנת לביטול.",
+      "warningBatch_two": "אתה עומד להסיר {{count}} ערוצי מכירה ממפתח ה-API. פעולה זו אינה ניתנת לביטול.",
       "warningBatch_other": "אתה עומד להסיר {{count}} ערוצי מכירה ממפתח ה-API. פעולה זו אינה ניתנת לביטול.",
       "successToast": "ערוץ המכירה הוסר בהצלחה ממפתח ה-API.",
       "successToastBatch_one": "{{count}} ערוץ מכירה הוסר בהצלחה ממפתח ה-API.",
+      "successToastBatch_two": "{{count}} ערוצי מכירה הוסרו בהצלחה ממפתח ה-API.",
       "successToastBatch_other": "{{count}} ערוצי מכירה הוסרו בהצלחה ממפתח ה-API."
     },
     "actions": {
@@ -3361,11 +3402,13 @@
   },
   "login": {
     "forgotPassword": "שכחת סיסמה? - <0>איפוס</0>",
-    "title": "ברוכים הבאים ל-Kayı.com",    "hint": "התחבר כדי לגשת לאזור החשבון",
+    "title": "ברוכים הבאים ל-Kayı.com",
+    "hint": "התחבר כדי לגשת לאזור החשבון",
     "sessionExpired": "הסשן פג"
   },
   "invite": {
-    "title": "ברוכים הבאים ל-Kayı.com",    "hint": "צור את החשבון שלך למטה",
+    "title": "ברוכים הבאים ל-Kayı.com",
+    "hint": "צור את החשבון שלך למטה",
     "backToLogin": "חזרה להתחברות",
     "createAccount": "צור חשבון",
     "alreadyHaveAccount": "כבר יש לך חשבון? - <0>התחבר</0>",
@@ -3373,7 +3416,8 @@
     "invalidInvite": "ההזמנה אינה חוקית או פג תוקפה.",
     "successTitle": "החשבון שלך נרשם",
     "successHint": "התחל להשתמש ב-Kayı.com Admin מיד.",
-    "successAction": "התחל עם Kayı.com Admin",    "invalidTokenTitle": "אסימון ההזמנה שלך אינו תקף",
+    "successAction": "התחל עם Kayı.com Admin",
+    "invalidTokenTitle": "אסימון ההזמנה שלך אינו תקף",
     "invalidTokenHint": "נסה לבקש קישור הזמנה חדש.",
     "passwordMismatch": "הסיסמאות אינן תואמות",
     "toast": {
@@ -3405,10 +3449,12 @@
   },
   "workflowExecutions": {
     "domain": "תהליכי עבודה",
-    "subtitle": "צפה ועקוב אחר ביצועי תהליך העבודה באפליקציית Kayı.com שלך.",    "transactionIdLabel": "מזהה עסקה",
+    "subtitle": "צפה ועקוב אחר ביצועי תהליך העבודה באפליקציית Kayı.com שלך.",
+    "transactionIdLabel": "מזהה עסקה",
     "workflowIdLabel": "מזהה תהליך עבודה",
     "progressLabel": "התקדמות",
     "stepsCompletedLabel_one": "{{completed}} מתוך {{count}} שלב",
+    "stepsCompletedLabel_two": "{{completed}} מתוך {{count}} שלבים",
     "stepsCompletedLabel_other": "{{completed}} מתוך {{count}} שלבים",
     "list": {
       "noRecordsMessage": "טרם בוצעו תהליכי עבודה."
@@ -3497,7 +3543,8 @@
     "accessibility": {
       "description": "התראות על פעילויות Kayı.com יוצגו כאן."
     }
-  },  "errors": {
+  },
+  "errors": {
     "serverError": "שגיאת שרת - נסה שוב מאוחר יותר.",
     "invalidCredentials": "אימייל או סיסמה שגויים"
   },
@@ -3724,18 +3771,25 @@
   },
   "dateTime": {
     "years_one": "שנה",
+    "years_two": "שנים",
     "years_other": "שנים",
     "months_one": "חודש",
+    "months_two": "חודשים",
     "months_other": "חודשים",
     "weeks_one": "שבוע",
+    "weeks_two": "שבועות",
     "weeks_other": "שבועות",
     "days_one": "יום",
+    "days_two": "ימים",
     "days_other": "ימים",
     "hours_one": "שעה",
+    "hours_two": "שעות",
     "hours_other": "שעות",
     "minutes_one": "דקה",
+    "minutes_two": "דקות",
     "minutes_other": "דקות",
     "seconds_one": "שנייה",
+    "seconds_two": "שניות",
     "seconds_other": "שניות"
   },
   "payouts": {
@@ -4175,6 +4229,7 @@
       "stockStatus": "סטטוס מלאי",
       "variants": "וריאנטים",
       "variantsCount_one": "{{count}} וריאנט",
+      "variantsCount_two": "{{count}} וריאנטים",
       "variantsCount_other": "{{count}} וריאנטים"
     },
     "detail": {

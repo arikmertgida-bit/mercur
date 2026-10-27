@@ -182,8 +182,12 @@
     "admin": "مسؤول",
     "store": "متجر",
     "details": "تفاصيل",
+    "items_zero": "{{count}} عناصر",
     "items_one": "{{count}} عنصر",
-    "items_other": "{{count}} عناصر",
+    "items_two": "عنصران",
+    "items_few": "{{count}} عناصر",
+    "items_many": "{{count}} عنصرًا",
+    "items_other": "{{count}} عنصر",
     "countSelected": "{{count}} محدد",
     "countOfTotalSelected": "{{count}} من {{total}} محدد",
     "plusCount": "+ {{count}}",
@@ -210,18 +214,30 @@
   },
   "json": {
     "header": "JSON",
+    "numberOfKeys_zero": "{{count}} مفاتيح",
     "numberOfKeys_one": "{{count}} مفتاح",
-    "numberOfKeys_other": "{{count}} مفاتيح",
+    "numberOfKeys_two": "مفتاحان",
+    "numberOfKeys_few": "{{count}} مفاتيح",
+    "numberOfKeys_many": "{{count}} مفتاحًا",
+    "numberOfKeys_other": "{{count}} مفتاح",
     "drawer": {
       "header_one": "JSON <0>· {{count}} مفتاح</0>",
-      "header_other": "JSON <0>· {{count}} مفاتيح</0>",
+      "header_zero": "JSON <0>· {{count}} مفاتيح</0>",
+      "header_two": "JSON <0>· مفتاحان</0>",
+      "header_few": "JSON <0>· {{count}} مفاتيح</0>",
+      "header_many": "JSON <0>· {{count}} مفتاحًا</0>",
+      "header_other": "JSON <0>· {{count}} مفتاح</0>",
       "description": "عرض بيانات JSON لهذا الكائن."
     }
   },
   "metadata": {
     "header": "البيانات الوصفية",
+    "numberOfKeys_zero": "{{count}} مفاتيح",
     "numberOfKeys_one": "{{count}} مفتاح",
-    "numberOfKeys_other": "{{count}} مفاتيح",
+    "numberOfKeys_two": "مفتاحان",
+    "numberOfKeys_few": "{{count}} مفاتيح",
+    "numberOfKeys_many": "{{count}} مفتاحًا",
+    "numberOfKeys_other": "{{count}} مفتاح",
     "edit": {
       "header": "تحرير البيانات الوصفية",
       "description": "تحرير البيانات الوصفية لهذا الكائن.",
@@ -455,8 +471,12 @@
     },
     "errors": {
       "fixError": "إصلاح الخطأ",
+      "count_zero": "{{count}} أخطاء",
       "count_one": "{{count}} خطأ",
-      "count_other": "{{count}} أخطاء"
+      "count_two": "خطآن",
+      "count_few": "{{count}} أخطاء",
+      "count_many": "{{count}} خطأً",
+      "count_other": "{{count}} خطأ"
     }
   },
   "filters": {
@@ -732,10 +752,18 @@
       "uploadImagesHint": "اسحب وأفلت الصور هنا أو انقر للتحميل.",
       "invalidFileType": "'{{name}}' ليس نوع ملف مدعوم. الأنواع المدعومة هي: {{types}}.",
       "failedToUpload": "فشل في تحميل الوسائط المضافة. يرجى المحاولة مرة أخرى.",
+      "deleteWarning_zero": "أنت على وشك حذف {{count}} صور. لا يمكن التراجع عن هذا الإجراء.",
       "deleteWarning_one": "أنت على وشك حذف {{count}} صورة. لا يمكن التراجع عن هذا الإجراء.",
-      "deleteWarning_other": "أنت على وشك حذف {{count}} صور. لا يمكن التراجع عن هذا الإجراء.",
+      "deleteWarning_two": "أنت على وشك حذف صورتين. لا يمكن التراجع عن هذا الإجراء.",
+      "deleteWarning_few": "أنت على وشك حذف {{count}} صور. لا يمكن التراجع عن هذا الإجراء.",
+      "deleteWarning_many": "أنت على وشك حذف {{count}} صورةً. لا يمكن التراجع عن هذا الإجراء.",
+      "deleteWarning_other": "أنت على وشك حذف {{count}} صورة. لا يمكن التراجع عن هذا الإجراء.",
+      "deleteWarningWithThumbnail_zero": "أنت على وشك حذف {{count}} صور بما في ذلك الصورة المصغرة. لا يمكن التراجع عن هذا الإجراء.",
       "deleteWarningWithThumbnail_one": "أنت على وشك حذف {{count}} صورة بما في ذلك الصورة المصغرة. لا يمكن التراجع عن هذا الإجراء.",
-      "deleteWarningWithThumbnail_other": "أنت على وشك حذف {{count}} صور بما في ذلك الصورة المصغرة. لا يمكن التراجع عن هذا الإجراء.",
+      "deleteWarningWithThumbnail_two": "أنت على وشك حذف صورتين بما في ذلك الصورة المصغرة. لا يمكن التراجع عن هذا الإجراء.",
+      "deleteWarningWithThumbnail_few": "أنت على وشك حذف {{count}} صور بما في ذلك الصورة المصغرة. لا يمكن التراجع عن هذا الإجراء.",
+      "deleteWarningWithThumbnail_many": "أنت على وشك حذف {{count}} صورةً بما في ذلك الصورة المصغرة. لا يمكن التراجع عن هذا الإجراء.",
+      "deleteWarningWithThumbnail_other": "أنت على وشك حذف {{count}} صورة بما في ذلك الصورة المصغرة. لا يمكن التراجع عن هذا الإجراء.",
       "thumbnailTooltip": "الصورة المصغرة",
       "galleryLabel": "المعرض",
       "downloadImageLabel": "تحميل الصورة الحالية",
@@ -750,8 +778,12 @@
     },
     "discountableHint": "عند عدم التحديد، لن يتم تطبيق الخصومات على هذا المنتج.",
     "noSalesChannels": "غير متاح في أي قنوات بيع",
+    "variantCount_zero": "{{count}} بدائل",
     "variantCount_one": "{{count}} بديل",
-    "variantCount_other": "{{count}} بدائل",
+    "variantCount_two": "بديلان",
+    "variantCount_few": "{{count}} بدائل",
+    "variantCount_many": "{{count}} بديلًا",
+    "variantCount_other": "{{count}} بديل",
     "deleteVariantWarning": "أنت على وشك حذف البديل {{title}}. لا يمكن التراجع عن هذا الإجراء.",
     "productStatus": {
       "draft": "مسودة",
@@ -861,8 +893,12 @@
       "deleteWarning": "هل أنت متأكد أنك تريد حذف هذا البديل؟",
       "pricesPagination": "1 - {{current}} من {{total}} أسعار",
       "tableItemAvailable": "{{availableCount}} متاح",
+      "tableItem_zero": "{{availableCount}} متاح في {{locationCount}} مواقع",
       "tableItem_one": "{{availableCount}} متاح في {{locationCount}} موقع",
-      "tableItem_other": "{{availableCount}} متاح في {{locationCount}} مواقع",
+      "tableItem_two": "{{availableCount}} متاح في {{locationCount}} موقع",
+      "tableItem_few": "{{availableCount}} متاح في {{locationCount}} مواقع",
+      "tableItem_many": "{{availableCount}} متاح في {{locationCount}} موقعًا",
+      "tableItem_other": "{{availableCount}} متاح في {{locationCount}} موقع",
       "inventory": {
         "notManaged": "غير مُدار",
         "manageItems": "إدارة عناصر المخزون",
@@ -930,14 +966,26 @@
       "title": "تعديل المنتجات بالجملة",
       "description": "تحديث الحالة وإعدادات الخصم للمنتجات المحددة.",
       "action": "تحرير",
+      "successToast_zero": "تم تحديث {{count}} منتجات بنجاح.",
       "successToast_one": "تم تحديث {{count}} منتج بنجاح.",
-      "successToast_other": "تم تحديث {{count}} منتجات بنجاح."
+      "successToast_two": "تم تحديث منتجين بنجاح.",
+      "successToast_few": "تم تحديث {{count}} منتجات بنجاح.",
+      "successToast_many": "تم تحديث {{count}} منتجًا بنجاح.",
+      "successToast_other": "تم تحديث {{count}} منتج بنجاح."
     },
     "bulkDelete": {
       "warning_one": "أنت على وشك حذف {{count}} منتج. لا يمكن التراجع عن هذا الإجراء.",
-      "warning_other": "أنت على وشك حذف {{count}} منتجات. لا يمكن التراجع عن هذا الإجراء.",
+      "warning_zero": "أنت على وشك حذف {{count}} منتجات. لا يمكن التراجع عن هذا الإجراء.",
+      "warning_two": "أنت على وشك حذف منتجين. لا يمكن التراجع عن هذا الإجراء.",
+      "warning_few": "أنت على وشك حذف {{count}} منتجات. لا يمكن التراجع عن هذا الإجراء.",
+      "warning_many": "أنت على وشك حذف {{count}} منتجًا. لا يمكن التراجع عن هذا الإجراء.",
+      "warning_other": "أنت على وشك حذف {{count}} منتج. لا يمكن التراجع عن هذا الإجراء.",
+      "successToast_zero": "تم حذف {{count}} منتجات بنجاح.",
       "successToast_one": "تم حذف {{count}} منتج بنجاح.",
-      "successToast_other": "تم حذف {{count}} منتجات بنجاح."
+      "successToast_two": "تم حذف منتجين بنجاح.",
+      "successToast_few": "تم حذف {{count}} منتجات بنجاح.",
+      "successToast_many": "تم حذف {{count}} منتجًا بنجاح.",
+      "successToast_other": "تم حذف {{count}} منتج بنجاح."
     },
     "attributeVariations": "المتغيرات",
     "attributeVariantsDescription": "السمات المستخدمة للمتغيرات",
@@ -1035,8 +1083,12 @@
     "handleTooltip": "يُنشأ تلقائيًا من عنوان المجموعة. أحرف صغيرة وأرقام وشرطات فقط — لا يمكن تعديل هذا الحقل مباشرة.",
     "deleteWarning": "أنت على وشك حذف المجموعة {{title}}. لا يمكن التراجع عن هذا الإجراء.",
     "removeSingleProductWarning": "أنت على وشك إزالة المنتج {{title}} من المجموعة. لا يمكن التراجع عن هذا الإجراء.",
+    "removeProductsWarning_zero": "أنت على وشك إزالة {{count}} منتجات من المجموعة. لا يمكن التراجع عن هذا الإجراء.",
     "removeProductsWarning_one": "أنت على وشك إزالة {{count}} منتج من المجموعة. لا يمكن التراجع عن هذا الإجراء.",
-    "removeProductsWarning_other": "أنت على وشك إزالة {{count}} منتجات من المجموعة. لا يمكن التراجع عن هذا الإجراء.",
+    "removeProductsWarning_two": "أنت على وشك إزالة منتجين من المجموعة. لا يمكن التراجع عن هذا الإجراء.",
+    "removeProductsWarning_few": "أنت على وشك إزالة {{count}} منتجات من المجموعة. لا يمكن التراجع عن هذا الإجراء.",
+    "removeProductsWarning_many": "أنت على وشك إزالة {{count}} منتجًا من المجموعة. لا يمكن التراجع عن هذا الإجراء.",
+    "removeProductsWarning_other": "أنت على وشك إزالة {{count}} منتج من المجموعة. لا يمكن التراجع عن هذا الإجراء.",
     "products": {
       "list": {
         "noRecordsMessage": "لا توجد منتجات في المجموعة.",
@@ -1044,10 +1096,18 @@
       },
       "add": {
         "successToast_one": "تمت إضافة المنتج إلى المجموعة بنجاح.",
+        "successToast_zero": "تمت إضافة المنتجات إلى المجموعة بنجاح.",
+        "successToast_two": "تمت إضافة المنتجين إلى المجموعة بنجاح.",
+        "successToast_few": "تمت إضافة المنتجات إلى المجموعة بنجاح.",
+        "successToast_many": "تمت إضافة المنتجات إلى المجموعة بنجاح.",
         "successToast_other": "تمت إضافة المنتجات إلى المجموعة بنجاح."
       },
       "remove": {
         "successToast_one": "تمت إزالة المنتج من المجموعة بنجاح.",
+        "successToast_zero": "تمت إزالة المنتجات من المجموعة بنجاح.",
+        "successToast_two": "تمت إزالة المنتجين من المجموعة بنجاح.",
+        "successToast_few": "تمت إزالة المنتجات من المجموعة بنجاح.",
+        "successToast_many": "تمت إزالة المنتجات من المجموعة بنجاح.",
         "successToast_other": "تمت إزالة المنتجات من المجموعة بنجاح."
       }
     },
@@ -1132,14 +1192,26 @@
     "products": {
       "add": {
         "disabledTooltip": "المنتج موجود بالفعل في هذه الفئة.",
+        "successToast_zero": "تمت إضافة {{count}} منتجات إلى الفئة.",
         "successToast_one": "تمت إضافة {{count}} منتج إلى الفئة.",
-        "successToast_other": "تمت إضافة {{count}} منتجات إلى الفئة."
+        "successToast_two": "تمت إضافة منتجين إلى الفئة.",
+        "successToast_few": "تمت إضافة {{count}} منتجات إلى الفئة.",
+        "successToast_many": "تمت إضافة {{count}} منتجًا إلى الفئة.",
+        "successToast_other": "تمت إضافة {{count}} منتج إلى الفئة."
       },
       "remove": {
         "confirmation_one": "أنت على وشك إزالة {{count}} منتج من الفئة. لا يمكن التراجع عن هذا الإجراء.",
-        "confirmation_other": "أنت على وشك إزالة {{count}} منتجات من الفئة. لا يمكن التراجع عن هذا الإجراء.",
+        "confirmation_zero": "أنت على وشك إزالة {{count}} منتجات من الفئة. لا يمكن التراجع عن هذا الإجراء.",
+        "confirmation_two": "أنت على وشك إزالة منتجين من الفئة. لا يمكن التراجع عن هذا الإجراء.",
+        "confirmation_few": "أنت على وشك إزالة {{count}} منتجات من الفئة. لا يمكن التراجع عن هذا الإجراء.",
+        "confirmation_many": "أنت على وشك إزالة {{count}} منتجًا من الفئة. لا يمكن التراجع عن هذا الإجراء.",
+        "confirmation_other": "أنت على وشك إزالة {{count}} منتج من الفئة. لا يمكن التراجع عن هذا الإجراء.",
+        "successToast_zero": "تمت إزالة {{count}} منتجات من الفئة.",
         "successToast_one": "تمت إزالة {{count}} منتج من الفئة.",
-        "successToast_other": "تمت إزالة {{count}} منتجات من الفئة."
+        "successToast_two": "تمت إزالة منتجين من الفئة.",
+        "successToast_few": "تمت إزالة {{count}} منتجات من الفئة.",
+        "successToast_many": "تمت إزالة {{count}} منتجًا من الفئة.",
+        "successToast_other": "تمت إزالة {{count}} منتج من الفئة."
       },
       "list": {
         "noRecordsMessage": "لا توجد منتجات في الفئة.",
@@ -1238,8 +1310,12 @@
       "action": "إضافة عناصر المخزون إلى مجموعة المخزون الخاصة بالبديل",
       "description": "إضافة عناصر المخزون إلى مجموعة المخزون الخاصة بالبديل.",
       "disabledToggleTooltip": "يجب أن يكون البديل مدار بالفعل لإضافة عناصر المخزون إلى مجموعة المخزون الخاصة بالبديل.",
-      "disablePrompt_one": "أنت على وشك إضافة {{count}} عنصر مخزون إلى مجموعة المخزون الخاصة بالبديل. لا يمكن التراجع عن هذا الإجراء.",
-      "disablePrompt_other": "أنت على وشك إضافة {{count}} عناصر مخزون إلى مجموعة المخزون الخاصة بالبديل. لا يمكن التراجع عن هذا الإجراء.",
+      "disablePrompt_zero": "أنت على وشك تعطيل {{count}} مستويات مواقع. لا يمكن التراجع عن هذا الإجراء.",
+      "disablePrompt_one": "أنت على وشك تعطيل {{count}} مستوى موقع. لا يمكن التراجع عن هذا الإجراء.",
+      "disablePrompt_two": "أنت على وشك تعطيل مستويي موقع. لا يمكن التراجع عن هذا الإجراء.",
+      "disablePrompt_few": "أنت على وشك تعطيل {{count}} مستويات مواقع. لا يمكن التراجع عن هذا الإجراء.",
+      "disablePrompt_many": "أنت على وشك تعطيل {{count}} مستوًى موقع. لا يمكن التراجع عن هذا الإجراء.",
+      "disablePrompt_other": "أنت على وشك تعطيل {{count}} مستوى موقع. لا يمكن التراجع عن هذا الإجراء.",
       "placeholder": "اختر عنصر المخزون",
       "successToast": "تم إضافة عناصر المخزون إلى مجموعة المخزون الخاصة بالبديل بنجاح.",
       "title": "مجموعات المخزون"
@@ -1441,6 +1517,10 @@
       "alreadyAddedTooltip": "تمت إضافة العميل بالفعل إلى المجموعة.",
       "add": {
         "successToast_one": "تمت إضافة العميل إلى المجموعة بنجاح.",
+        "successToast_zero": "تمت إضافة العملاء إلى المجموعة بنجاح.",
+        "successToast_two": "تمت إضافة العميلين إلى المجموعة بنجاح.",
+        "successToast_few": "تمت إضافة العملاء إلى المجموعة بنجاح.",
+        "successToast_many": "تمت إضافة العملاء إلى المجموعة بنجاح.",
         "successToast_other": "تمت إضافة العملاء إلى المجموعة بنجاح.",
         "list": {
           "noRecordsMessage": "أنشئ عميلًا أولاً."
@@ -1448,9 +1528,17 @@
       },
       "remove": {
         "title_one": "إزالة العميل",
+        "title_zero": "إزالة العملاء",
+        "title_two": "إزالة العميلين",
+        "title_few": "إزالة العملاء",
+        "title_many": "إزالة العملاء",
         "title_other": "إزالة العملاء",
+        "description_zero": "أنت على وشك إزالة {{count}} عملاء من مجموعة العملاء. لا يمكن التراجع عن هذا الإجراء.",
         "description_one": "أنت على وشك إزالة {{count}} عميل من مجموعة العملاء. لا يمكن التراجع عن هذا الإجراء.",
-        "description_other": "أنت على وشك إزالة {{count}} عملاء من مجموعة العملاء. لا يمكن التراجع عن هذا الإجراء."
+        "description_two": "أنت على وشك إزالة عميلين من مجموعة العملاء. لا يمكن التراجع عن هذا الإجراء.",
+        "description_few": "أنت على وشك إزالة {{count}} عملاء من مجموعة العملاء. لا يمكن التراجع عن هذا الإجراء.",
+        "description_many": "أنت على وشك إزالة {{count}} عميلًا من مجموعة العملاء. لا يمكن التراجع عن هذا الإجراء.",
+        "description_other": "أنت على وشك إزالة {{count}} عميل من مجموعة العملاء. لا يمكن التراجع عن هذا الإجراء."
       },
       "list": {
         "noRecordsMessage": "هذه المجموعة لا تحتوي على عملاء."
@@ -1659,7 +1747,7 @@
         "title": "تم بدء الإرجاع",
         "description": "هناك طلب إرجاع مفتوح ليتم إكماله"
       },
-      "restockPreview": "استلام {{quantity}} × {{offerSku}} → +{{delta}} إلى {{inventoryItem}} في {{location}}",
+      "restockPreview": "استلام {{quantity}} × {{variantSku}} → +{{delta}} إلى {{inventoryItem}} في {{location}}",
       "estDifference": "الفرق المقدر"
     },
     "claims": {
@@ -1783,6 +1871,10 @@
         "noLocation": "يجب أن يكون الموقع موجود.",
         "noShippingOption": "يجب أن يكون خيار الشحن موجود.",
         "wrongQuantity": "يتوفر عنصر واحد فقط للتنفيذ",
+        "wrongQuantity_zero": "يجب أن تكون الكمية رقمًا بين 1 و {{number}}",
+        "wrongQuantity_two": "يجب أن تكون الكمية رقمًا بين 1 و {{number}}",
+        "wrongQuantity_few": "يجب أن تكون الكمية رقمًا بين 1 و {{number}}",
+        "wrongQuantity_many": "يجب أن تكون الكمية رقمًا بين 1 و {{number}}",
         "wrongQuantity_other": "يجب أن تكون الكمية رقمًا بين 1 و {{number}}",
         "noItems": "لا توجد عناصر لتنفيذها."
       },
@@ -1819,7 +1911,8 @@
       "title": "إنشاء استرداد",
       "sendNotificationHint": "إخطار العملاء بالاسترداد المُنشأ.",
       "systemPayment": "الدفع بالنظام",
-      "systemPaymentDesc": "واحدة أو أكثر من دفعاتك هي دفعة نظام. كن على علم بأن الاستلام والاسترداد لا يتم التعامل معها بواسطة Kayı.com لمثل هذه الدفعات.",      "error": {
+      "systemPaymentDesc": "واحدة أو أكثر من دفعاتك هي دفعة نظام. كن على علم بأن الاستلام والاسترداد لا يتم التعامل معها بواسطة Kayı.com لمثل هذه الدفعات.",
+      "error": {
         "amountToLarge": "لا يمكن استرداد أكثر من المبلغ الأصلي للطلب.",
         "amountNegative": "يجب أن يكون مبلغ الاسترداد رقمًا موجبًا.",
         "reasonRequired": "يرجى اختيار سبب الاسترداد."
@@ -1834,8 +1927,12 @@
     },
     "activity": {
       "header": "النشاط",
+      "showMoreActivities_zero": "عرض {{count}} أنشطة أخرى",
       "showMoreActivities_one": "عرض {{count}} نشاط آخر",
-      "showMoreActivities_other": "عرض {{count}} أنشطة أخرى",
+      "showMoreActivities_two": "عرض نشاطين آخرين",
+      "showMoreActivities_few": "عرض {{count}} أنشطة أخرى",
+      "showMoreActivities_many": "عرض {{count}} نشاطًا آخر",
+      "showMoreActivities_other": "عرض {{count}} نشاط آخر",
       "comment": {
         "label": "تعليق",
         "placeholder": "اترك تعليقًا",
@@ -1867,15 +1964,23 @@
           "canceled": "تم إلغاء التنفيذ",
           "shipped": "تم شحن العناصر",
           "delivered": "تم تسليم العناصر",
+          "items_zero": "{{count}} عناصر",
           "items_one": "{{count}} عنصر",
-          "items_other": "{{count}} عناصر"
+          "items_two": "عنصران",
+          "items_few": "{{count}} عناصر",
+          "items_many": "{{count}} عنصرًا",
+          "items_other": "{{count}} عنصر"
         },
         "return": {
           "created": "تم طلب الإرجاع #{{returnId}}",
           "canceled": "تم إلغاء الإرجاع #{{returnId}}",
           "received": "تم استلام الإرجاع #{{returnId}}",
+          "items_zero": "{{count}} عناصر مُرجعة",
           "items_one": "{{count}} عنصر مُرجع",
-          "items_other": "{{count}} عناصر مُرجعة"
+          "items_two": "عنصران مُرجعان",
+          "items_few": "{{count}} عناصر مُرجعة",
+          "items_many": "{{count}} عنصرًا مُرجعًا",
+          "items_other": "{{count}} عنصر مُرجع"
         },
         "note": {
           "comment": "تعليق",
@@ -1916,8 +2021,12 @@
       "groupId": "معرّف المجموعة",
       "orderIds": "معرف الطلب",
       "vendor": "متجر",
+      "vendorsCount_zero": "{{count}} متاجر",
       "vendorsCount_one": "{{count}} متجر",
-      "vendorsCount_other": "{{count}} متاجر"
+      "vendorsCount_two": "متجران",
+      "vendorsCount_few": "{{count}} متاجر",
+      "vendorsCount_many": "{{count}} متجرًا",
+      "vendorsCount_other": "{{count}} متجر"
     },
     "group": {
       "heading": "الطلبات في المجموعة",
@@ -2143,11 +2252,23 @@
         "fulfillmentOption": "خيار التنفيذ",
         "count": {
           "shipping_one": "{{count}} خيار شحن",
-          "shipping_other": "{{count}} خيارات شحن",
+          "shipping_zero": "{{count}} خيارات شحن",
+          "shipping_two": "خيارا شحن",
+          "shipping_few": "{{count}} خيارات شحن",
+          "shipping_many": "{{count}} خيار شحن",
+          "shipping_other": "{{count}} خيار شحن",
+          "returns_zero": "{{count}} خيارات إرجاع",
           "returns_one": "{{count}} خيار إرجاع",
-          "returns_other": "{{count}} خيارات إرجاع",
+          "returns_two": "خيارا إرجاع",
+          "returns_few": "{{count}} خيارات إرجاع",
+          "returns_many": "{{count}} خيار إرجاع",
+          "returns_other": "{{count}} خيار إرجاع",
+          "pickup_zero": "{{count}} خيارات استلام",
           "pickup_one": "{{count}} خيار استلام",
-          "pickup_other": "{{count}} خيارات استلام"
+          "pickup_two": "خيارا استلام",
+          "pickup_few": "{{count}} خيارات استلام",
+          "pickup_many": "{{count}} خيار استلام",
+          "pickup_other": "{{count}} خيار استلام"
         },
         "priceType": {
           "label": "نوع السعر",
@@ -2406,12 +2527,24 @@
         "modal": {
           "header": "إضافة الأهداف"
         },
+        "values_zero": "{{count}} قيم",
         "values_one": "{{count}} قيمة",
-        "values_other": "{{count}} قيم",
+        "values_two": "قيمتان",
+        "values_few": "{{count}} قيم",
+        "values_many": "{{count}} قيمةً",
+        "values_other": "{{count}} قيمة",
+        "numberOfTargets_zero": "{{count}} أهداف",
         "numberOfTargets_one": "{{count}} هدف",
-        "numberOfTargets_other": "{{count}} أهداف",
+        "numberOfTargets_two": "هدفان",
+        "numberOfTargets_few": "{{count}} أهداف",
+        "numberOfTargets_many": "{{count}} هدفًا",
+        "numberOfTargets_other": "{{count}} هدف",
+        "additionalValues_zero": "و {{count}} قيم أخرى",
         "additionalValues_one": "و {{count}} قيمة أخرى",
-        "additionalValues_other": "و {{count}} قيم أخرى",
+        "additionalValues_two": "وقيمتان أخريان",
+        "additionalValues_few": "و {{count}} قيم أخرى",
+        "additionalValues_many": "و {{count}} قيمةً أخرى",
+        "additionalValues_other": "و {{count}} قيمة أخرى",
         "action": "إضافة هدف"
       },
       "sublevels": {
@@ -2490,10 +2623,6 @@
       "buyGet": {
         "title": "اشترِ X واحصل على Y",
         "description": "اشترِ X منتج (منتجات)، واحصل على Y منتج (منتجات)"
-      },
-      "freeShipping": {
-        "title": "شحن مجاني",
-        "description": "يطبّق خصمًا بنسبة 100% على رسوم الشحن"
       }
     },
     "domain": "العروض الترويجية",
@@ -2840,9 +2969,17 @@
       },
       "delete": {
         "confirmation_one": "أنت على وشك حذف الأسعار لـ {{count}} منتج في قائمة الأسعار. لا يمكن التراجع عن هذا الإجراء.",
-        "confirmation_other": "أنت على وشك حذف الأسعار لـ {{count}} منتجات في قائمة الأسعار. لا يمكن التراجع عن هذا الإجراء.",
+        "confirmation_zero": "أنت على وشك حذف الأسعار لـ {{count}} منتجات في قائمة الأسعار. لا يمكن التراجع عن هذا الإجراء.",
+        "confirmation_two": "أنت على وشك حذف الأسعار لمنتجين في قائمة الأسعار. لا يمكن التراجع عن هذا الإجراء.",
+        "confirmation_few": "أنت على وشك حذف الأسعار لـ {{count}} منتجات في قائمة الأسعار. لا يمكن التراجع عن هذا الإجراء.",
+        "confirmation_many": "أنت على وشك حذف الأسعار لـ {{count}} منتجًا في قائمة الأسعار. لا يمكن التراجع عن هذا الإجراء.",
+        "confirmation_other": "أنت على وشك حذف الأسعار لـ {{count}} منتج في قائمة الأسعار. لا يمكن التراجع عن هذا الإجراء.",
+        "successToast_zero": "تم حذف الأسعار لـ {{count}} منتجات بنجاح.",
         "successToast_one": "تم حذف الأسعار لـ {{count}} منتج بنجاح.",
-        "successToast_other": "تم حذف الأسعار لـ {{count}} منتجات بنجاح."
+        "successToast_two": "تم حذف الأسعار لمنتجين بنجاح.",
+        "successToast_few": "تم حذف الأسعار لـ {{count}} منتجات بنجاح.",
+        "successToast_many": "تم حذف الأسعار لـ {{count}} منتجًا بنجاح.",
+        "successToast_other": "تم حذف الأسعار لـ {{count}} منتج بنجاح."
       },
       "add": {
         "successToast": "تمت إضافة الأسعار إلى قائمة الأسعار بنجاح.",
@@ -2911,7 +3048,8 @@
       "header": "تحرير الملف الشخصي",
       "languageHint": "اللغة التي تريد استخدامها في لوحة الإدارة. هذا لا يغير لغة متجرك.",
       "languagePlaceholder": "اختر اللغة",
-      "usageInsightsHint": "شارك رؤى الاستخدام وساعدنا في تحسين Kayı.com. يمكنك قراءة المزيد حول ما نجمعه وكيف نستخدمه في <0>التوثيق</0>."    },
+      "usageInsightsHint": "شارك رؤى الاستخدام وساعدنا في تحسين Kayı.com. يمكنك قراءة المزيد حول ما نجمعه وكيف نستخدمه في <0>التوثيق</0>."
+    },
     "toast": {
       "edit": "تم حفظ تغييرات الملف الشخصي"
     }
@@ -2992,8 +3130,12 @@
     "addCurrencies": "إضافة عملات",
     "enableTaxInclusivePricing": "تمكين التسعير الشامل للضرائب",
     "disableTaxInclusivePricing": "تعطيل التسعير الشامل للضرائب",
+    "removeCurrencyWarning_zero": "أنت على وشك إزالة {{count}} عملات من متجرك. تأكد من إزالة جميع الأسعار التي تستخدم العملات قبل المتابعة.",
     "removeCurrencyWarning_one": "أنت على وشك إزالة {{count}} عملة من متجرك. تأكد من إزالة جميع الأسعار التي تستخدم العملة قبل المتابعة.",
-    "removeCurrencyWarning_other": "أنت على وشك إزالة {{count}} عملات من متجرك. تأكد من إزالة جميع الأسعار التي تستخدم العملات قبل المتابعة.",
+    "removeCurrencyWarning_two": "أنت على وشك إزالة عملتين من متجرك. تأكد من إزالة جميع الأسعار التي تستخدم هاتين العملتين قبل المتابعة.",
+    "removeCurrencyWarning_few": "أنت على وشك إزالة {{count}} عملات من متجرك. تأكد من إزالة جميع الأسعار التي تستخدم العملات قبل المتابعة.",
+    "removeCurrencyWarning_many": "أنت على وشك إزالة {{count}} عملةً من متجرك. تأكد من إزالة جميع الأسعار التي تستخدم هذه العملات قبل المتابعة.",
+    "removeCurrencyWarning_other": "أنت على وشك إزالة {{count}} عملة من متجرك. تأكد من إزالة جميع الأسعار التي تستخدم هذه العملات قبل المتابعة.",
     "currencyAlreadyAdded": "تمت إضافة العملة بالفعل إلى متجرك.",
     "edit": {
       "header": "تحرير المتجر"
@@ -3089,8 +3231,12 @@
     "editRegion": "تحرير المنطقة",
     "countriesHint": "أضف الدول المدرجة في هذه المنطقة.",
     "deleteRegionWarning": "أنت على وشك حذف المنطقة {{name}}. لا يمكن التراجع عن هذا الإجراء.",
+    "removeCountriesWarning_zero": "أنت على وشك إزالة {{count}} دول من المنطقة. لا يمكن التراجع عن هذا الإجراء.",
     "removeCountriesWarning_one": "أنت على وشك إزالة {{count}} دولة من المنطقة. لا يمكن التراجع عن هذا الإجراء.",
-    "removeCountriesWarning_other": "أنت على وشك إزالة {{count}} دول من المنطقة. لا يمكن التراجع عن هذا الإجراء.",
+    "removeCountriesWarning_two": "أنت على وشك إزالة دولتين من المنطقة. لا يمكن التراجع عن هذا الإجراء.",
+    "removeCountriesWarning_few": "أنت على وشك إزالة {{count}} دول من المنطقة. لا يمكن التراجع عن هذا الإجراء.",
+    "removeCountriesWarning_many": "أنت على وشك إزالة {{count}} دولةً من المنطقة. لا يمكن التراجع عن هذا الإجراء.",
+    "removeCountriesWarning_other": "أنت على وشك إزالة {{count}} دولة من المنطقة. لا يمكن التراجع عن هذا الإجراء.",
     "removeCountryWarning": "أنت على وشك إزالة الدولة {{name}} من المنطقة. لا يمكن التراجع عن هذا الإجراء.",
     "automaticTaxesHint": "عند التمكين، سيتم حساب الضرائب فقط عند الدفع بناءً على عنوان الشحن.",
     "taxInclusiveHint": "عند التمكين، ستكون الأسعار في المنطقة شاملة للضرائب.",
@@ -3189,8 +3335,12 @@
     "noLocationsFound": "لم يتم العثور على مواقع",
     "selectLocations": "اختر المواقع التي تخزن العنصر.",
     "deleteLocationWarning": "أنت على وشك حذف الموقع {{name}}. لا يمكن التراجع عن هذا الإجراء.",
+    "removeSalesChannelsWarning_zero": "أنت على وشك إزالة {{count}} قنوات بيع من الموقع.",
     "removeSalesChannelsWarning_one": "أنت على وشك إزالة {{count}} قناة بيع من الموقع.",
-    "removeSalesChannelsWarning_other": "أنت على وشك إزالة {{count}} قنوات بيع من الموقع.",
+    "removeSalesChannelsWarning_two": "أنت على وشك إزالة قناتي بيع من الموقع.",
+    "removeSalesChannelsWarning_few": "أنت على وشك إزالة {{count}} قنوات بيع من الموقع.",
+    "removeSalesChannelsWarning_many": "أنت على وشك إزالة {{count}} قناة بيع من الموقع.",
+    "removeSalesChannelsWarning_other": "أنت على وشك إزالة {{count}} قناة بيع من الموقع.",
     "toast": {
       "create": "تم إنشاء الموقع بنجاح",
       "update": "تم تحديث الموقع بنجاح",
@@ -3208,8 +3358,12 @@
     "createSalesChannel": "إنشاء قناة بيع",
     "createSalesChannelHint": "إنشاء قناة بيع جديدة لبيع منتجاتك عليها.",
     "enabledHint": "حدد ما إذا كانت قناة البيع مفعلة.",
+    "removeProductsWarning_zero": "أنت على وشك إزالة {{count}} منتجات من {{sales_channel}}.",
     "removeProductsWarning_one": "أنت على وشك إزالة {{count}} منتج من {{sales_channel}}.",
-    "removeProductsWarning_other": "أنت على وشك إزالة {{count}} منتجات من {{sales_channel}}.",
+    "removeProductsWarning_two": "أنت على وشك إزالة منتجين من {{sales_channel}}.",
+    "removeProductsWarning_few": "أنت على وشك إزالة {{count}} منتجات من {{sales_channel}}.",
+    "removeProductsWarning_many": "أنت على وشك إزالة {{count}} منتجًا من {{sales_channel}}.",
+    "removeProductsWarning_other": "أنت على وشك إزالة {{count}} منتج من {{sales_channel}}.",
     "addProducts": "إضافة منتجات",
     "editSalesChannel": "تحرير قناة البيع",
     "productAlreadyAdded": "تمت إضافة المنتج بالفعل إلى قناة البيع.",
@@ -3264,7 +3418,8 @@
       "createPublishableHeader": "إنشاء مفتاح API قابل للنشر",
       "createPublishableHint": "إنشاء مفتاح API قابل للنشر جديد لتحديد نطاق الطلبات إلى قنوات بيع محددة.",
       "createSecretHeader": "إنشاء مفتاح API سري",
-      "createSecretHint": "إنشاء مفتاح API سري جديد للوصول إلى API Kayı.com كمستخدم إداري مصادق.",      "secretKeyCreatedHeader": "تم إنشاء المفتاح السري",
+      "createSecretHint": "إنشاء مفتاح API سري جديد للوصول إلى API Kayı.com كمستخدم إداري مصادق.",
+      "secretKeyCreatedHeader": "تم إنشاء المفتاح السري",
       "secretKeyCreatedHint": "تم إنشاء مفتاحك السري الجديد. انسخه واحفظه بأمان الآن. هذه هي المرة الوحيدة التي سيتم عرضها.",
       "copySecretTokenSuccess": "تم نسخ المفتاح السري إلى الحافظة.",
       "copySecretTokenFailure": "فشل في نسخ المفتاح السري إلى الحافظة.",
@@ -3278,8 +3433,12 @@
     "salesChannels": {
       "title": "إضافة قنوات البيع",
       "description": "أضف قنوات البيع التي يجب أن يقتصر عليها مفتاح API.",
+      "successToast_zero": "تمت إضافة {{count}} قنوات بيع بنجاح إلى مفتاح API.",
       "successToast_one": "تمت إضافة قناة بيع واحدة بنجاح إلى مفتاح API.",
-      "successToast_other": "تمت إضافة {{count}} قنوات بيع بنجاح إلى مفتاح API.",
+      "successToast_two": "تمت إضافة قناتي بيع بنجاح إلى مفتاح API.",
+      "successToast_few": "تمت إضافة {{count}} قنوات بيع بنجاح إلى مفتاح API.",
+      "successToast_many": "تمت إضافة {{count}} قناة بيع بنجاح إلى مفتاح API.",
+      "successToast_other": "تمت إضافة {{count}} قناة بيع بنجاح إلى مفتاح API.",
       "alreadyAddedTooltip": "تمت إضافة قناة البيع بالفعل إلى مفتاح API.",
       "list": {
         "noRecordsMessage": "لا توجد قنوات بيع في نطاق مفتاح API القابل للنشر."
@@ -3300,11 +3459,19 @@
     },
     "removeSalesChannel": {
       "warning": "أنت على وشك إزالة قناة البيع {{name}} من مفتاح API. لا يمكن التراجع عن هذا الإجراء.",
+      "warningBatch_zero": "أنت على وشك إزالة {{count}} قنوات بيع من مفتاح API. لا يمكن التراجع عن هذا الإجراء.",
       "warningBatch_one": "أنت على وشك إزالة قناة بيع واحدة من مفتاح API. لا يمكن التراجع عن هذا الإجراء.",
-      "warningBatch_other": "أنت على وشك إزالة {{count}} قنوات بيع من مفتاح API. لا يمكن التراجع عن هذا الإجراء.",
+      "warningBatch_two": "أنت على وشك إزالة قناتي بيع من مفتاح API. لا يمكن التراجع عن هذا الإجراء.",
+      "warningBatch_few": "أنت على وشك إزالة {{count}} قنوات بيع من مفتاح API. لا يمكن التراجع عن هذا الإجراء.",
+      "warningBatch_many": "أنت على وشك إزالة {{count}} قناة بيع من مفتاح API. لا يمكن التراجع عن هذا الإجراء.",
+      "warningBatch_other": "أنت على وشك إزالة {{count}} قناة بيع من مفتاح API. لا يمكن التراجع عن هذا الإجراء.",
       "successToast": "تمت إزالة قناة البيع بنجاح من مفتاح API.",
+      "successToastBatch_zero": "تمت إزالة {{count}} قنوات بيع بنجاح من مفتاح API.",
       "successToastBatch_one": "تمت إزالة قناة بيع واحدة بنجاح من مفتاح API.",
-      "successToastBatch_other": "تمت إزالة {{count}} قنوات بيع بنجاح من مفتاح API."
+      "successToastBatch_two": "تمت إزالة قناتي بيع بنجاح من مفتاح API.",
+      "successToastBatch_few": "تمت إزالة {{count}} قنوات بيع بنجاح من مفتاح API.",
+      "successToastBatch_many": "تمت إزالة {{count}} قناة بيع بنجاح من مفتاح API.",
+      "successToastBatch_other": "تمت إزالة {{count}} قناة بيع بنجاح من مفتاح API."
     },
     "actions": {
       "revoke": "إلغاء مفتاح API",
@@ -3412,8 +3579,12 @@
     "transactionIdLabel": "معرف المعاملة",
     "workflowIdLabel": "معرف سير العمل",
     "progressLabel": "التقدم",
+    "stepsCompletedLabel_zero": "{{completed}} من {{count}} خطوات",
     "stepsCompletedLabel_one": "{{completed}} من {{count}} خطوة",
-    "stepsCompletedLabel_other": "{{completed}} من {{count}} خطوات",
+    "stepsCompletedLabel_two": "{{completed}} من خطوتين",
+    "stepsCompletedLabel_few": "{{completed}} من {{count}} خطوات",
+    "stepsCompletedLabel_many": "{{completed}} من {{count}} خطوة",
+    "stepsCompletedLabel_other": "{{completed}} من {{count}} خطوة",
     "list": {
       "noRecordsMessage": "لم يتم تنفيذ أي سير عمل حتى الآن."
     },
@@ -3501,7 +3672,8 @@
     "accessibility": {
       "description": "سيتم سرد الإشعارات حول أنشطة Kayı.com هنا."
     }
-  },  "errors": {
+  },
+  "errors": {
     "serverError": "خطأ في الخادم - حاول مرة أخرى لاحقًا.",
     "invalidCredentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة"
   },
@@ -3728,19 +3900,47 @@
   },
   "dateTime": {
     "years_one": "سنة",
-    "years_other": "سنوات",
+    "years_zero": "سنوات",
+    "years_two": "سنتان",
+    "years_few": "سنوات",
+    "years_many": "سنة",
+    "years_other": "سنة",
+    "months_zero": "أشهر",
     "months_one": "شهر",
-    "months_other": "أشهر",
+    "months_two": "شهران",
+    "months_few": "أشهر",
+    "months_many": "شهرًا",
+    "months_other": "شهر",
+    "weeks_zero": "أسابيع",
     "weeks_one": "أسبوع",
-    "weeks_other": "أسابيع",
+    "weeks_two": "أسبوعان",
+    "weeks_few": "أسابيع",
+    "weeks_many": "أسبوعًا",
+    "weeks_other": "أسبوع",
+    "days_zero": "أيام",
     "days_one": "يوم",
-    "days_other": "أيام",
+    "days_two": "يومان",
+    "days_few": "أيام",
+    "days_many": "يومًا",
+    "days_other": "يوم",
+    "hours_zero": "ساعات",
     "hours_one": "ساعة",
-    "hours_other": "ساعات",
+    "hours_two": "ساعتان",
+    "hours_few": "ساعات",
+    "hours_many": "ساعةً",
+    "hours_other": "ساعة",
+    "minutes_zero": "دقائق",
     "minutes_one": "دقيقة",
-    "minutes_other": "دقائق",
+    "minutes_two": "دقيقتان",
+    "minutes_few": "دقائق",
+    "minutes_many": "دقيقةً",
+    "minutes_other": "دقيقة",
+    "seconds_zero": "ثواني",
     "seconds_one": "ثانية",
-    "seconds_other": "ثواني"
+    "seconds_two": "ثانيتان",
+    "seconds_few": "ثواني",
+    "seconds_many": "ثانيةً",
+    "seconds_other": "ثانية"
   },
   "payouts": {
     "domain": "المدفوعات",
@@ -4178,8 +4378,12 @@
       "requiredQuantity": "الكمية المطلوبة",
       "stockStatus": "حالة المخزون",
       "variants": "البدائل",
+      "variantsCount_zero": "{{count}} بدائل",
       "variantsCount_one": "{{count}} بديل",
-      "variantsCount_other": "{{count}} بدائل"
+      "variantsCount_two": "بديلان",
+      "variantsCount_few": "{{count}} بدائل",
+      "variantsCount_many": "{{count}} بديلًا",
+      "variantsCount_other": "{{count}} بديل"
     },
     "detail": {
       "offerLabel": "العرض",

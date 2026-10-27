@@ -535,12 +535,18 @@
       "description": "Aktualizuj status i ustawienia rabatu dla wybranych produktów.",
       "action": "Edytuj",
       "successToast_one": "{{count}} produkt został zaktualizowany pomyślnie.",
+      "successToast_few": "{{count}} produkty zostały zaktualizowane pomyślnie.",
+      "successToast_many": "{{count}} produktów zostało zaktualizowanych pomyślnie.",
       "successToast_other": "{{count}} produkty zostały zaktualizowane pomyślnie."
     },
     "bulkDelete": {
       "warning_one": "Zamierzasz usunąć {{count}} produkt. Tej czynności nie można cofnąć.",
+      "warning_few": "Zamierzasz usunąć {{count}} produkty. Tej czynności nie można cofnąć.",
+      "warning_many": "Zamierzasz usunąć {{count}} produktów. Tej czynności nie można cofnąć.",
       "warning_other": "Zamierzasz usunąć {{count}} produktów. Tej czynności nie można cofnąć.",
       "successToast_one": "{{count}} produkt został usunięty pomyślnie.",
+      "successToast_few": "{{count}} produkty zostały usunięte pomyślnie.",
+      "successToast_many": "{{count}} produktów zostało usuniętych pomyślnie.",
       "successToast_other": "{{count}} produkty zostały usunięte pomyślnie."
     },
     "edit": {
@@ -1683,7 +1689,7 @@
         "title": "Inicjowany zwrot",
         "description": "Istnieje otwarty wniosek o zwrot do realizacji"
       },
-      "restockPreview": "Odbiór {{quantity}} × {{offerSku}} → +{{delta}} do {{inventoryItem}} w lokalizacji {{location}}"
+      "restockPreview": "Odbiór {{quantity}} × {{variantSku}} → +{{delta}} do {{inventoryItem}} w lokalizacji {{location}}"
     },
     "claims": {
       "create": "Utwórz reklamację",
@@ -1805,6 +1811,8 @@
       "methodDescription": "Wybierz inną metodę wysyłki niż wybrana przez klienta",
       "error": {
         "wrongQuantity": "Tylko jeden produkt jest dostępny do realizacji",
+        "wrongQuantity_few": "Ilość powinna być liczbą od 1 do {{number}}",
+        "wrongQuantity_many": "Ilość powinna być liczbą od 1 do {{number}}",
         "wrongQuantity_other": "Ilość powinna być liczbą od 1 do {{number}}",
         "noItems": "Brak produktów do realizacji.",
         "noShippingOption": "Opcja dostawy jest wymagana",
@@ -1947,6 +1955,8 @@
       "orderIds": "ID zamówień",
       "vendor": "Sprzedawca",
       "vendorsCount_one": "{{count}} sprzedawca",
+      "vendorsCount_few": "{{count}} sprzedawców",
+      "vendorsCount_many": "{{count}} sprzedawców",
       "vendorsCount_other": "{{count}} sprzedawców"
     },
     "group": {
@@ -2517,10 +2527,6 @@
       "buyGet": {
         "title": "Kup X Odbierz Y",
         "description": "Kup X produkt(ów), odbierz Y produkt(ów)"
-      },
-      "freeShipping": {
-        "title": "Darmowa wysyłka",
-        "description": "Nalicza 100% rabatu na koszty wysyłki"
       }
     },
     "domain": "Promocje",
@@ -4263,6 +4269,8 @@
       "stockStatus": "Status magazynu",
       "variants": "Warianty",
       "variantsCount_one": "{{count}} wariant",
+      "variantsCount_few": "{{count}} warianty",
+      "variantsCount_many": "{{count}} wariantów",
       "variantsCount_other": "{{count}} wariantów"
     },
     "detail": {

@@ -2442,7 +2442,7 @@
       "campaign": "Campaign",
       "method": "Method",
       "owner": "Owner",
-      "platformOwner": "Mercur",
+      "platformOwner": "Kayı.com",
       "coverage": "Coverage",
       "allocation": "Allocation",
       "usageLimit": "Usage limit",
@@ -2722,7 +2722,7 @@
       "budget_limit": "Budget limit",
       "type": "Type",
       "owner": "Owner",
-      "platformOwner": "Mercur",
+      "platformOwner": "Kayı.com",
       "budget_used": "Budget used",
       "campaign_id": {
         "hint": "Disabled campaigns have budget in a different currency than the promotion."
@@ -2885,7 +2885,7 @@
       },
       "owner": {
         "label": "Owner",
-        "marketplace": "Mercur"
+        "marketplace": "Kayı.com"
       },
       "status": {
         "label": "Status",

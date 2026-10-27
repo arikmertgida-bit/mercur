@@ -1659,7 +1659,7 @@
         "title": "Враќањето започна",
         "description": "Постои отворено барање за враќање што треба да се заврши"
       },
-      "restockPreview": "Примање {{quantity}} × {{offerSku}} → +{{delta}} на {{inventoryItem}} во {{location}}",
+      "restockPreview": "Примање {{quantity}} × {{variantSku}} → +{{delta}} на {{inventoryItem}} во {{location}}",
       "estDifference": "Проценета разлика"
     },
     "claims": {
@@ -2491,10 +2491,6 @@
       "buyGet": {
         "title": "Купи X, добиј Y",
         "description": "Купи X производ(и), добиј Y производ(и)"
-      },
-      "freeShipping": {
-        "title": "Бесплатна испорака",
-        "description": "Применува 100% попуст на трошоците за испорака"
       }
     },
     "domain": "Промоции",
@@ -3504,7 +3500,8 @@
     "accessibility": {
       "description": "известувањата за активностите на Kayı.com ќе бидат наведени овде."
     }
-  },  "errors": {
+  },
+  "errors": {
     "serverError": "Грешка на серверот - Обидете се повторно подоцна.",
     "invalidCredentials": "Погрешна е-пошта или лозинка"
   },

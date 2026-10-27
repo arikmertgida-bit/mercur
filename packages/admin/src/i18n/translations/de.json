@@ -1649,7 +1649,7 @@
         "title": "Rückkehr eingeleitet",
         "description": "Es muss ein offener Rückgabeantrag ausgefüllt werden"
       },
-      "restockPreview": "Eingang von {{quantity}} × {{offerSku}} → +{{delta}} zu {{inventoryItem}} bei {{location}}",
+      "restockPreview": "Eingang von {{quantity}} × {{variantSku}} → +{{delta}} zu {{inventoryItem}} bei {{location}}",
       "estDifference": "Geschätzter Unterschied"
     },
     "claims": {
@@ -1809,7 +1809,8 @@
       "title": "Rückerstattung erstellen",
       "sendNotificationHint": "Benachrichtigen Sie Kunden über die erstellte Rückerstattung.",
       "systemPayment": "Systemzahlung",
-      "systemPaymentDesc": "Eine oder mehrere Ihrer Zahlungen sind eine Systemzahlung. Beachten Sie, dass Kayı.com für solche Zahlungen keine Einziehungen und Rückerstattungen übernimmt.",      "error": {
+      "systemPaymentDesc": "Eine oder mehrere Ihrer Zahlungen sind eine Systemzahlung. Beachten Sie, dass Kayı.com für solche Zahlungen keine Einziehungen und Rückerstattungen übernimmt.",
+      "error": {
         "amountToLarge": "Es kann nicht mehr als der ursprüngliche Bestellbetrag erstattet werden.",
         "amountNegative": "Der Rückerstattungsbetrag muss eine positive Zahl sein.",
         "reasonRequired": "Bitte wählen Sie einen Rückerstattungsgrund aus."
@@ -2490,10 +2491,6 @@
       "buyGet": {
         "title": "Kaufe X, erhalte Y",
         "description": "Kaufe X Produkt(e), erhalte Y Produkt(e)"
-      },
-      "freeShipping": {
-        "title": "Kostenloser Versand",
-        "description": "Wendet einen Rabatt von 100% auf die Versandkosten an"
       }
     },
     "domain": "Werbeaktionen",
@@ -2911,7 +2908,8 @@
       "header": "Profil bearbeiten",
       "languageHint": "Die Sprache, die Sie im Admin-Dashboard verwenden möchten. Die Sprache Ihres Shops ändert sich dadurch nicht.",
       "languagePlaceholder": "Sprache auswählen",
-      "usageInsightsHint": "Teilen Sie Nutzungseinblicke und helfen Sie uns, Kayı.com zu verbessern. Weitere Informationen darüber, was wir sammeln und wie wir es verwenden, finden Sie in unserer <0>Dokumentation</0>."    },
+      "usageInsightsHint": "Teilen Sie Nutzungseinblicke und helfen Sie uns, Kayı.com zu verbessern. Weitere Informationen darüber, was wir sammeln und wie wir es verwenden, finden Sie in unserer <0>Dokumentation</0>."
+    },
     "toast": {
       "edit": "Profiländerungen gespeichert"
     }
@@ -3264,7 +3262,8 @@
       "createPublishableHeader": "Erstellen Sie einen veröffentlichbaren API-Schlüssel",
       "createPublishableHint": "Erstellen Sie einen neuen veröffentlichbaren API-Schlüssel, um den Umfang der Anfragen auf bestimmte Vertriebskanäle zu beschränken.",
       "createSecretHeader": "Erstellen Sie einen geheimen API-Schlüssel",
-      "createSecretHint": "Erstellen Sie einen neuen geheimen API-Schlüssel, um als authentifizierter Admin-Benutzer auf die Kayı.com-API zuzugreifen.",      "secretKeyCreatedHeader": "Geheimer Schlüssel erstellt",
+      "createSecretHint": "Erstellen Sie einen neuen geheimen API-Schlüssel, um als authentifizierter Admin-Benutzer auf die Kayı.com-API zuzugreifen.",
+      "secretKeyCreatedHeader": "Geheimer Schlüssel erstellt",
       "secretKeyCreatedHint": "Ihr neuer geheimer Schlüssel wurde generiert. Jetzt kopieren und sicher aufbewahren. Dies ist das einzige Mal, dass es angezeigt wird.",
       "copySecretTokenSuccess": "Der geheime Schlüssel wurde in die Zwischenablage kopiert.",
       "copySecretTokenFailure": "Der geheime Schlüssel konnte nicht in die Zwischenablage kopiert werden.",
@@ -3361,11 +3360,13 @@
   },
   "login": {
     "forgotPassword": "Passwort vergessen? - <0>Zurücksetzen</0>",
-    "title": "Willkommen bei Kayı.com",    "hint": "Melden Sie sich an, um auf ihr Konto zuzugreifen",
+    "title": "Willkommen bei Kayı.com",
+    "hint": "Melden Sie sich an, um auf ihr Konto zuzugreifen",
     "sessionExpired": "Sitzung abgelaufen"
   },
   "invite": {
-    "title": "Willkommen bei Kayı.com",    "hint": "Erstellen Sie unten Ihr Konto",
+    "title": "Willkommen bei Kayı.com",
+    "hint": "Erstellen Sie unten Ihr Konto",
     "backToLogin": "Zurück zum Login",
     "createAccount": "Benutzerkonto erstellen",
     "alreadyHaveAccount": "Sie haben bereits ein Konto? - <0>Anmelden</0>",
@@ -3373,7 +3374,8 @@
     "invalidInvite": "Die Einladung ist ungültig oder abgelaufen.",
     "successTitle": "Ihr Konto wurde registriert",
     "successHint": "Beginnen Sie sofort mit Kayı.com Admin.",
-    "successAction": "Starten Sie Kayı.com Admin",    "invalidTokenTitle": "Ihr Einladungstoken ist ungültig",
+    "successAction": "Starten Sie Kayı.com Admin",
+    "invalidTokenTitle": "Ihr Einladungstoken ist ungültig",
     "invalidTokenHint": "Versuchen Sie, einen neuen Einladungslink anzufordern.",
     "passwordMismatch": "Passwörter stimmen nicht überein",
     "toast": {
@@ -3405,7 +3407,8 @@
   },
   "workflowExecutions": {
     "domain": "Workflows",
-    "subtitle": "Sehen Sie sich Workflow-Ausführungen in Ihrer Kayı.com-Anwendung an und verfolgen Sie sie.",    "transactionIdLabel": "Transaktions-ID",
+    "subtitle": "Sehen Sie sich Workflow-Ausführungen in Ihrer Kayı.com-Anwendung an und verfolgen Sie sie.",
+    "transactionIdLabel": "Transaktions-ID",
     "workflowIdLabel": "Workflow-ID",
     "progressLabel": "Fortschritt",
     "stepsCompletedLabel_one": "Schritt {{completed}} von {{count}}",
@@ -3497,7 +3500,8 @@
     "accessibility": {
       "description": "Benachrichtigungen über Kayı.com-Aktivitäten werden hier aufgelistet."
     }
-  },  "errors": {
+  },
+  "errors": {
     "serverError": "Serverfehler – Versuchen Sie es später noch einmal.",
     "invalidCredentials": "Falsche E-Mail oder Passwort"
   },

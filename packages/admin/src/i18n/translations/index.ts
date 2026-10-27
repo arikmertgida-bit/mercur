@@ -70,7 +70,7 @@ const translations: TranslationResources = {
   "pt-BR": {
     translation: ptBR,
   },
-  ptPT: {
+  "pt-PT": {
     translation: ptPT,
   },
   th: {
@@ -121,7 +121,7 @@ const translations: TranslationResources = {
   id: {
     translation: id,
   },
-  zhTW: {
+  "zh-TW": {
     translation: zhTW,
   },
 }

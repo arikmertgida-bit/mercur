@@ -113,7 +113,7 @@ export const languages: Language[] = [
     date_locale: ptBR,
   },
   {
-    code: "ptPT",
+    code: "pt-PT",
     display_name: "Português (Portugal)",
     ltr: true,
     date_locale: pt,
@@ -215,7 +215,7 @@ export const languages: Language[] = [
     date_locale: nl,
   },
   {
-    code: "zhTW",
+    code: "zh-TW",
     display_name: "繁體中文(臺灣)",
     ltr: true,
     date_locale: zhTW,

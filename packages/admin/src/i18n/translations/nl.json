@@ -1660,7 +1660,7 @@
         "title": "Retour geïnitieerd",
         "description": "Er is een open retourverzoek dat moet worden voltooid"
       },
-      "restockPreview": "Ontvangst van {{quantity}} × {{offerSku}} → +{{delta}} naar {{inventoryItem}} bij {{location}}"
+      "restockPreview": "Ontvangst van {{quantity}} × {{variantSku}} → +{{delta}} naar {{inventoryItem}} bij {{location}}"
     },
     "claims": {
       "create": "Claim aanmaken",
@@ -1819,7 +1819,8 @@
       "title": "Terugbetaling aanmaken",
       "sendNotificationHint": "Informeer klanten over de aangemaakte terugbetaling.",
       "systemPayment": "Systeembetaling",
-      "systemPaymentDesc": "Een of meer van uw betalingen is een systeembetaling. Houd er rekening mee dat incasso's en terugbetalingen niet door Kayı.com worden afgehandeld voor dergelijke betalingen.",      "error": {
+      "systemPaymentDesc": "Een of meer van uw betalingen is een systeembetaling. Houd er rekening mee dat incasso's en terugbetalingen niet door Kayı.com worden afgehandeld voor dergelijke betalingen.",
+      "error": {
         "amountToLarge": "Kan niet meer terugbetalen dan het oorspronkelijke bestelbedrag.",
         "amountNegative": "Terug te betalen bedrag moet een positief getal zijn.",
         "reasonRequired": "Selecteer een reden voor terugbetaling."
@@ -2490,10 +2491,6 @@
       "buyGet": {
         "title": "Koop X, krijg Y",
         "description": "Koop X product(en), krijg Y product(en)"
-      },
-      "freeShipping": {
-        "title": "Gratis verzending",
-        "description": "Past 100% korting toe op verzendkosten"
       }
     },
     "domain": "Promoties",
@@ -2911,7 +2908,8 @@
       "header": "Profiel bewerken",
       "languageHint": "De taal die u wilt gebruiken in het admin dashboard. Dit verandert niet de taal van uw winkel.",
       "languagePlaceholder": "Selecteer taal",
-      "usageInsightsHint": "Deel gebruiksstatistieken en help ons Kayı.com te verbeteren. U kunt meer lezen over wat we verzamelen en hoe we het gebruiken in onze <0>documentatie</0>."    },
+      "usageInsightsHint": "Deel gebruiksstatistieken en help ons Kayı.com te verbeteren. U kunt meer lezen over wat we verzamelen en hoe we het gebruiken in onze <0>documentatie</0>."
+    },
     "toast": {
       "edit": "Profielwijzigingen opgeslagen"
     }
@@ -3264,7 +3262,8 @@
       "createPublishableHeader": "Publiceerbare API-sleutel aanmaken",
       "createPublishableHint": "Maak een nieuwe publiceerbare API-sleutel aan om het bereik van verzoeken te beperken tot specifieke verkoopkanalen.",
       "createSecretHeader": "Geheime API-sleutel aanmaken",
-      "createSecretHint": "Maak een nieuwe geheime API-sleutel aan om toegang te krijgen tot de Kayı.com API als een geauthenticeerde admin gebruiker.",      "secretKeyCreatedHeader": "Geheime sleutel aangemaakt",
+      "createSecretHint": "Maak een nieuwe geheime API-sleutel aan om toegang te krijgen tot de Kayı.com API als een geauthenticeerde admin gebruiker.",
+      "secretKeyCreatedHeader": "Geheime sleutel aangemaakt",
       "secretKeyCreatedHint": "Uw nieuwe geheime sleutel is gegenereerd. Kopieer en bewaar deze nu veilig. Dit is de enige keer dat deze wordt weergegeven.",
       "copySecretTokenSuccess": "Geheime sleutel is gekopieerd naar het klembord.",
       "copySecretTokenFailure": "Kopiëren van geheime sleutel naar klembord mislukt.",
@@ -3361,11 +3360,13 @@
   },
   "login": {
     "forgotPassword": "Wachtwoord vergeten? - <0>Resetten</0>",
-    "title": "Welkom bij Kayı.com",    "hint": "Log in om toegang te krijgen tot het accountgebied",
+    "title": "Welkom bij Kayı.com",
+    "hint": "Log in om toegang te krijgen tot het accountgebied",
     "sessionExpired": "Sessie verlopen"
   },
   "invite": {
-    "title": "Welkom bij Kayı.com",    "hint": "Maak hieronder uw account aan",
+    "title": "Welkom bij Kayı.com",
+    "hint": "Maak hieronder uw account aan",
     "backToLogin": "Terug naar inloggen",
     "createAccount": "Account aanmaken",
     "alreadyHaveAccount": "Heeft u al een account? - <0>Log in</0>",
@@ -3373,7 +3374,8 @@
     "invalidInvite": "De uitnodiging is ongeldig of verlopen.",
     "successTitle": "Uw account is geregistreerd",
     "successHint": "Begin meteen met Kayı.com Admin.",
-    "successAction": "Start Kayı.com Admin",    "invalidTokenTitle": "Uw uitnodigingstoken is ongeldig",
+    "successAction": "Start Kayı.com Admin",
+    "invalidTokenTitle": "Uw uitnodigingstoken is ongeldig",
     "invalidTokenHint": "Probeer een nieuwe uitnodigingslink aan te vragen.",
     "passwordMismatch": "Wachtwoorden komen niet overeen",
     "toast": {
@@ -3405,7 +3407,8 @@
   },
   "workflowExecutions": {
     "domain": "Workflows",
-    "subtitle": "Bekijk en houd workflow-uitvoeringen in uw Kayı.com-applicatie bij.",    "transactionIdLabel": "Transactie-ID",
+    "subtitle": "Bekijk en houd workflow-uitvoeringen in uw Kayı.com-applicatie bij.",
+    "transactionIdLabel": "Transactie-ID",
     "workflowIdLabel": "Workflow-ID",
     "progressLabel": "Voortgang",
     "stepsCompletedLabel_one": "{{completed}} van {{count}} stap",
@@ -3497,7 +3500,8 @@
     "accessibility": {
       "description": "Notificaties over Kayı.com-activiteiten worden hier vermeld."
     }
-  },  "errors": {
+  },
+  "errors": {
     "serverError": "Serverfout - Probeer het later opnieuw.",
     "invalidCredentials": "Onjuiste e-mail of wachtwoord"
   },

@@ -1660,7 +1660,7 @@
         "title": "Visszaküldés kezdeményezve",
         "description": "Van egy nyitott visszaküldési kérelme, amelyet be kell fejezni"
       },
-      "restockPreview": "{{quantity}} × {{offerSku}} átvétele → +{{delta}} ehhez: {{inventoryItem}}, itt: {{location}}"
+      "restockPreview": "{{quantity}} × {{variantSku}} átvétele → +{{delta}} ehhez: {{inventoryItem}}, itt: {{location}}"
     },
     "claims": {
       "create": "Igénylés létrehozása",
@@ -1819,7 +1819,8 @@
       "title": "Visszatérítés létrehozása",
       "sendNotificationHint": "Értesítse a vásárlókat a létrehozott visszatérítésről.",
       "systemPayment": "Rendszerfizetés",
-      "systemPaymentDesc": "Az Ön fizetései közül egy vagy több rendszerfizetés. Vegye figyelembe, hogy a beszedéseket és visszatérítéseket a Kayı.com nem kezeli az ilyen fizetések esetében.",      "error": {
+      "systemPaymentDesc": "Az Ön fizetései közül egy vagy több rendszerfizetés. Vegye figyelembe, hogy a beszedéseket és visszatérítéseket a Kayı.com nem kezeli az ilyen fizetések esetében.",
+      "error": {
         "amountToLarge": "Nem lehet többet visszatéríteni, mint az eredeti rendelési összeg.",
         "amountNegative": "A visszatérítési összegnek pozitív számnak kell lennie.",
         "reasonRequired": "Kérjük, válasszon egy visszatérítési okot."
@@ -2490,10 +2491,6 @@
       "buyGet": {
         "title": "Vegyél X-et, kapsz Y-t",
         "description": "Vegyél X terméket, kapsz Y terméket"
-      },
-      "freeShipping": {
-        "title": "Ingyenes szállítás",
-        "description": "100%-os kedvezményt alkalmaz a szállítási díjra"
       }
     },
     "domain": "Promóciók",
@@ -3265,7 +3262,8 @@
       "createPublishableHeader": "Publikus API Kulcs Létrehozása",
       "createPublishableHint": "Hozzon létre egy új publikus API kulcsot, hogy korlátozza a kérések hatókörét meghatározott értékesítési csatornákra.",
       "createSecretHeader": "Titkos API Kulcs Létrehozása",
-      "createSecretHint": "Hozzon létre egy új titkos API kulcsot, hogy hozzáférjen a Kayı.com API-hoz hitelesített adminisztrátorként.",      "secretKeyCreatedHeader": "Titkos Kulcs Létrehozva",
+      "createSecretHint": "Hozzon létre egy új titkos API kulcsot, hogy hozzáférjen a Kayı.com API-hoz hitelesített adminisztrátorként.",
+      "secretKeyCreatedHeader": "Titkos Kulcs Létrehozva",
       "secretKeyCreatedHint": "Az új titkos kulcs létrehozva. Másolja és tárolja biztonságosan most. Ez az egyetlen alkalom, amikor megjelenik.",
       "copySecretTokenSuccess": "A titkos kulcs sikeresen másolva a vágólapra.",
       "copySecretTokenFailure": "A titkos kulcs másolása a vágólapra sikertelen.",
@@ -3376,7 +3374,8 @@
     "invalidInvite": "A meghívó érvénytelen vagy lejárt.",
     "successTitle": "Fiókja regisztrálva lett",
     "successHint": "Kezdje el azonnal használni a Kayı.com Admin-t.",
-    "successAction": "Kayı.com Admin indítása",    "invalidTokenTitle": "Meghívó tokenje érvénytelen",
+    "successAction": "Kayı.com Admin indítása",
+    "invalidTokenTitle": "Meghívó tokenje érvénytelen",
     "invalidTokenHint": "Próbáljon új meghívó linket kérni.",
     "passwordMismatch": "A jelszavak nem egyeznek",
     "toast": {
@@ -3408,7 +3407,8 @@
   },
   "workflowExecutions": {
     "domain": "Munkafolyamatok",
-    "subtitle": "Tekintse meg és kövesse nyomon a munkafolyamat végrehajtásokat a Kayı.com alkalmazásában.",    "transactionIdLabel": "Tranzakció Azonosító",
+    "subtitle": "Tekintse meg és kövesse nyomon a munkafolyamat végrehajtásokat a Kayı.com alkalmazásában.",
+    "transactionIdLabel": "Tranzakció Azonosító",
     "workflowIdLabel": "Munkafolyamat Azonosító",
     "progressLabel": "Haladás",
     "stepsCompletedLabel_one": "{{completed}} a(z) {{count}} lépésből",
@@ -3500,7 +3500,8 @@
     "accessibility": {
       "description": "értesítések a Kayı.com tevékenységeiről itt lesznek felsorolva."
     }
-  },  "errors": {
+  },
+  "errors": {
     "serverError": "Szerver hiba - Próbálja újra később.",
     "invalidCredentials": "Helytelen email vagy jelszó"
   },

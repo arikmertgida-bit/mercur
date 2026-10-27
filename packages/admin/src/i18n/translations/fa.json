@@ -1659,7 +1659,7 @@
         "title": "مرجوعی آغاز شد",
         "description": "یک درخواست مرجوعی باز برای تکمیل وجود دارد"
       },
-      "restockPreview": "دریافت {{quantity}} × {{offerSku}} ← +{{delta}} به {{inventoryItem}} در {{location}}",
+      "restockPreview": "دریافت {{quantity}} × {{variantSku}} ← +{{delta}} به {{inventoryItem}} در {{location}}",
       "estDifference": "تفاوت تخمینی"
     },
     "claims": {
@@ -2491,10 +2491,6 @@
       "buyGet": {
         "title": "X بخر Y بگیر",
         "description": "X محصول بخرید، Y محصول بگیرید"
-      },
-      "freeShipping": {
-        "title": "ارسال رایگان",
-        "description": "تخفیف ۱۰۰٪ روی هزینه ارسال اعمال می‌کند"
       }
     },
     "domain": "تبلیغات",
@@ -3504,7 +3500,8 @@
     "accessibility": {
       "description": "اعلان‌های مربوط به فعالیت‌های Kayı.com در اینجا فهرست می‌شوند."
     }
-  },  "errors": {
+  },
+  "errors": {
     "serverError": "خطای سرور - بعداً دوباره تلاش کنید.",
     "invalidCredentials": "ایمیل یا رمز عبور اشتباه است"
   },

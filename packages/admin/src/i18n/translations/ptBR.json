@@ -183,6 +183,7 @@
     "store": "Loja",
     "details": "Detalhes",
     "items_one": "{{count}} item",
+    "items_many": "{{count}} itens",
     "items_other": "{{count}} itens",
     "countSelected": "{{count}} selecionado(s)",
     "countOfTotalSelected": "{{count}} de {{total}} selecionado(s)",
@@ -211,9 +212,11 @@
   "json": {
     "header": "JSON",
     "numberOfKeys_one": "{{count}} chave",
+    "numberOfKeys_many": "{{count}} chaves",
     "numberOfKeys_other": "{{count}} chaves",
     "drawer": {
       "header_one": "JSON <0>· {{count}} chave</0>",
+      "header_many": "JSON <0>· {{count}} chaves</0>",
       "header_other": "JSON <0>· {{count}} chaves</0>",
       "description": "Visualizar os dados JSON deste objeto."
     }
@@ -221,6 +224,7 @@
   "metadata": {
     "header": "Metadados",
     "numberOfKeys_one": "{{count}} chave",
+    "numberOfKeys_many": "{{count}} chaves",
     "numberOfKeys_other": "{{count}} chaves",
     "edit": {
       "header": "Editar Metadados",
@@ -456,6 +460,7 @@
     "errors": {
       "fixError": "Corrigir erro",
       "count_one": "{{count}} erro",
+      "count_many": "{{count}} erros",
       "count_other": "{{count}} erros"
     }
   },
@@ -710,8 +715,10 @@
       "invalidFileType": "'{{name}}' não é um tipo de arquivo suportado. Os tipos de arquivos suportados são: {{types}}.",
       "failedToUpload": "Falha ao enviar a mídia adicionada. Tente novamente.",
       "deleteWarning_one": "Você está prestes a excluir {{count}} imagem. Esta ação não pode ser desfeita.",
+      "deleteWarning_many": "Você está prestes a excluir {{count}} imagens. Esta ação não pode ser desfeita.",
       "deleteWarning_other": "Você está prestes a excluir {{count}} imagens. Esta ação não pode ser desfeita.",
       "deleteWarningWithThumbnail_one": "Você está prestes a excluir {{count}} imagem, incluindo a miniatura. Esta ação não pode ser desfeita.",
+      "deleteWarningWithThumbnail_many": "Você está prestes a excluir {{count}} imagens, incluindo a miniatura. Esta ação não pode ser desfeita.",
       "deleteWarningWithThumbnail_other": "Você está prestes a excluir {{count}} imagens, incluindo a miniatura. Esta ação não pode ser desfeita.",
       "thumbnailTooltip": "Miniatura",
       "galleryLabel": "Galeria",
@@ -728,6 +735,7 @@
     "discountableHint": "Quando desmarcado, os descontos não serão aplicados a este produto.",
     "noSalesChannels": "Não disponível em nenhum canal de vendas",
     "variantCount_one": "{{count}} variante",
+    "variantCount_many": "{{count}} variantes",
     "variantCount_other": "{{count}} variantes",
     "deleteVariantWarning": "Você está prestes a excluir a variante {{title}}. Esta ação não pode ser desfeita.",
     "productStatus": {
@@ -839,6 +847,7 @@
       "pricesPagination": "1 - {{current}} de {{total}} preços",
       "tableItemAvailable": "{{availableCount}} disponível",
       "tableItem_one": "{{availableCount}} disponível em {{locationCount}} local",
+      "tableItem_many": "{{availableCount}} disponível em {{locationCount}} locais",
       "tableItem_other": "{{availableCount}} disponível em {{locationCount}} locais",
       "inventory": {
         "notManaged": "Não gerenciado",
@@ -908,12 +917,15 @@
       "description": "Atualize o status e as configurações de desconto dos produtos selecionados.",
       "action": "Editar",
       "successToast_one": "{{count}} produto atualizado com sucesso.",
+      "successToast_many": "{{count}} produtos atualizados com sucesso.",
       "successToast_other": "{{count}} produtos atualizados com sucesso."
     },
     "bulkDelete": {
       "warning_one": "Você está prestes a excluir {{count}} produto. Esta ação não pode ser desfeita.",
+      "warning_many": "Você está prestes a excluir {{count}} produtos. Esta ação não pode ser desfeita.",
       "warning_other": "Você está prestes a excluir {{count}} produtos. Esta ação não pode ser desfeita.",
       "successToast_one": "{{count}} produto excluído com sucesso.",
+      "successToast_many": "{{count}} produtos excluídos com sucesso.",
       "successToast_other": "{{count}} produtos excluídos com sucesso."
     },
     "attributeVariations": "Variações",
@@ -1036,6 +1048,7 @@
     "deleteWarning": "Você está prestes a excluir a coleção {{title}}. Esta ação não pode ser desfeita.",
     "removeSingleProductWarning": "Você está prestes a remover o produto {{title}} da coleção. Esta ação não pode ser desfeita.",
     "removeProductsWarning_one": "Você está prestes a remover {{count}} produto da coleção. Esta ação não pode ser desfeita.",
+    "removeProductsWarning_many": "Você está prestes a remover {{count}} produtos da coleção. Esta ação não pode ser desfeita.",
     "removeProductsWarning_other": "Você está prestes a remover {{count}} produtos da coleção. Esta ação não pode ser desfeita.",
     "products": {
       "list": {
@@ -1044,10 +1057,12 @@
       },
       "add": {
         "successToast_one": "Produto adicionado com sucesso à coleção.",
+        "successToast_many": "Produtos adicionados com sucesso à coleção.",
         "successToast_other": "Produtos adicionados com sucesso à coleção."
       },
       "remove": {
         "successToast_one": "Produto removido com sucesso da coleção.",
+        "successToast_many": "Produtos removidos com sucesso da coleção.",
         "successToast_other": "Produtos removidos com sucesso da coleção."
       }
     },
@@ -1133,12 +1148,15 @@
       "add": {
         "disabledTooltip": "O produto já está nesta categoria.",
         "successToast_one": "Adicionado {{count}} produto à categoria.",
+        "successToast_many": "Adicionados {{count}} produtos à categoria.",
         "successToast_other": "Adicionados {{count}} produtos à categoria."
       },
       "remove": {
         "confirmation_one": "Você está prestes a remover {{count}} produto da categoria. Esta ação não pode ser desfeita.",
+        "confirmation_many": "Você está prestes a remover {{count}} produtos da categoria. Esta ação não pode ser desfeita.",
         "confirmation_other": "Você está prestes a remover {{count}} produtos da categoria. Esta ação não pode ser desfeita.",
         "successToast_one": "Removido {{count}} produto da categoria.",
+        "successToast_many": "Removidos {{count}} produtos da categoria.",
         "successToast_other": "Removidos {{count}} produtos da categoria."
       },
       "list": {
@@ -1297,6 +1315,7 @@
       "action": "Editar níveis de estoque",
       "placeholder": "Não habilitado",
       "disablePrompt_one": "Você está prestes a desabilitar {{count}} nível de localização. Esta ação não pode ser desfeita.",
+      "disablePrompt_many": "Você está prestes a desabilitar {{count}} níveis de localização. Esta ação não pode ser desfeita.",
       "disablePrompt_other": "Você está prestes a desabilitar {{count}} níveis de localização. Esta ação não pode ser desfeita.",
       "disabledToggleTooltip": "Não é possível desabilitar: zere a quantidade a receber e/ou reservada antes de desabilitar.",
       "successToast": "Níveis de estoque atualizados com sucesso."
@@ -1431,6 +1450,7 @@
       "alreadyAddedTooltip": "O cliente já foi adicionado ao grupo.",
       "add": {
         "successToast_one": "Cliente adicionado com sucesso ao grupo.",
+        "successToast_many": "Clientes adicionados com sucesso ao grupo.",
         "successToast_other": "Clientes adicionados com sucesso ao grupo.",
         "list": {
           "noRecordsMessage": "Crie um cliente primeiro."
@@ -1438,8 +1458,10 @@
       },
       "remove": {
         "title_one": "Remover cliente",
+        "title_many": "Remover clientes",
         "title_other": "Remover clientes",
         "description_one": "Você está prestes a remover {{count}} cliente do grupo de clientes. Esta ação não pode ser desfeita.",
+        "description_many": "Você está prestes a remover {{count}} clientes do grupo de clientes. Esta ação não pode ser desfeita.",
         "description_other": "Você está prestes a remover {{count}} clientes do grupo de clientes. Esta ação não pode ser desfeita."
       },
       "list": {
@@ -1649,7 +1671,7 @@
         "title": "Devolução iniciada",
         "description": "Há uma solicitação de devolução aberta a ser concluída"
       },
-      "restockPreview": "Recebendo {{quantity}} × {{offerSku}} → +{{delta}} para {{inventoryItem}} em {{location}}",
+      "restockPreview": "Recebendo {{quantity}} × {{variantSku}} → +{{delta}} para {{inventoryItem}} em {{location}}",
       "estDifference": "Diferença estimada"
     },
     "claims": {
@@ -1769,6 +1791,7 @@
       "methodDescription": "Escolha um método de envio diferente do selecionado pelo cliente",
       "error": {
         "wrongQuantity": "Apenas um item está disponível para atendimento",
+        "wrongQuantity_many": "A quantidade deve ser um número entre 1 e {{number}}",
         "wrongQuantity_other": "A quantidade deve ser um número entre 1 e {{number}}",
         "noItems": "Sem itens para atender.",
         "noShippingOption": "A opção de envio é obrigatória",
@@ -1809,7 +1832,8 @@
       "title": "Criar Reembolso",
       "sendNotificationHint": "Notificar os clientes sobre o reembolso criado.",
       "systemPayment": "Pagamento do sistema",
-      "systemPaymentDesc": "Um ou mais dos seus pagamentos é um pagamento do sistema. Observe que capturas e reembolsos não são tratados pela Kayı.com para esses pagamentos.",      "error": {
+      "systemPaymentDesc": "Um ou mais dos seus pagamentos é um pagamento do sistema. Observe que capturas e reembolsos não são tratados pela Kayı.com para esses pagamentos.",
+      "error": {
         "amountToLarge": "Não é possível reembolsar mais do que o valor original do pedido.",
         "amountNegative": "O valor do reembolso deve ser um número positivo.",
         "reasonRequired": "Por favor, selecione um motivo para o reembolso."
@@ -1825,6 +1849,7 @@
     "activity": {
       "header": "Atividade",
       "showMoreActivities_one": "Mostrar mais {{count}} atividade",
+      "showMoreActivities_many": "Mostrar mais {{count}} atividades",
       "showMoreActivities_other": "Mostrar mais {{count}} atividades",
       "comment": {
         "label": "Comentário",
@@ -1858,6 +1883,7 @@
           "shipped": "Itens enviados",
           "delivered": "Itens entregues",
           "items_one": "{{count}} item",
+          "items_many": "{{count}} itens",
           "items_other": "{{count}} itens"
         },
         "return": {
@@ -1865,6 +1891,7 @@
           "canceled": "Devolução #{{returnId}} cancelada",
           "received": "Devolução #{{returnId}} recebida",
           "items_one": "{{count}} item devolvido",
+          "items_many": "{{count}} itens devolvidos",
           "items_other": "{{count}} itens devolvidos"
         },
         "note": {
@@ -1907,6 +1934,7 @@
       "orderIds": "ID do pedido",
       "vendor": "Loja",
       "vendorsCount_one": "{{count}} loja",
+      "vendorsCount_many": "{{count}} lojas",
       "vendorsCount_other": "{{count}} lojas"
     },
     "group": {
@@ -2107,10 +2135,13 @@
       "fields": {
         "count": {
           "shipping_one": "{{count}} opção de envio",
+          "shipping_many": "{{count}} opções de envio",
           "shipping_other": "{{count}} opções de envio",
           "returns_one": "{{count}} opção de devolução",
+          "returns_many": "{{count}} opções de devolução",
           "returns_other": "{{count}} opções de devolução",
           "pickup_one": "{{count}} opção de retirada",
+          "pickup_many": "{{count}} opções de retirada",
           "pickup_other": "{{count}} opções de retirada"
         },
         "priceType": {
@@ -2407,10 +2438,13 @@
           "header": "Adicionar alvos"
         },
         "values_one": "{{count}} valor",
+        "values_many": "{{count}} valores",
         "values_other": "{{count}} valores",
         "numberOfTargets_one": "{{count}} alvo",
+        "numberOfTargets_many": "{{count}} alvos",
         "numberOfTargets_other": "{{count}} alvos",
         "additionalValues_one": "e mais {{count}} valor",
+        "additionalValues_many": "e mais {{count}} valores",
         "additionalValues_other": "e mais {{count}} valores",
         "action": "Adicionar alvo"
       },
@@ -2490,10 +2524,6 @@
       "buyGet": {
         "title": "Compre X Ganhe Y",
         "description": "Compre X produto(s), ganhe Y produto(s)"
-      },
-      "freeShipping": {
-        "title": "Frete grátis",
-        "description": "Aplica 100% de desconto nas taxas de envio"
       }
     },
     "domain": "Promoções",
@@ -2840,8 +2870,10 @@
       },
       "delete": {
         "confirmation_one": "Você está prestes a excluir os preços de {{count}} produto na lista de preços. Esta ação não pode ser desfeita.",
+        "confirmation_many": "Você está prestes a excluir os preços de {{count}} produtos na lista de preços. Esta ação não pode ser desfeita.",
         "confirmation_other": "Você está prestes a excluir os preços de {{count}} produtos na lista de preços. Esta ação não pode ser desfeita.",
         "successToast_one": "Preços de {{count}} produto excluídos com sucesso.",
+        "successToast_many": "Preços de {{count}} produtos excluídos com sucesso.",
         "successToast_other": "Preços de {{count}} produtos excluídos com sucesso."
       },
       "add": {
@@ -2911,7 +2943,8 @@
       "header": "Editar Perfil",
       "languageHint": "O idioma que você deseja usar no painel de administração. Isso não altera o idioma da sua loja.",
       "languagePlaceholder": "Selecione o idioma",
-      "usageInsightsHint": "Compartilhe informações de uso e nos ajude a melhorar o Kayı.com. Você pode ler mais sobre o que coletamos e como usamos na nossa <0>documentação</0>."    },
+      "usageInsightsHint": "Compartilhe informações de uso e nos ajude a melhorar o Kayı.com. Você pode ler mais sobre o que coletamos e como usamos na nossa <0>documentação</0>."
+    },
     "toast": {
       "edit": "Alterações no perfil salvas"
     }
@@ -2993,6 +3026,7 @@
     "enableTaxInclusivePricing": "Ativar preços com impostos inclusos",
     "disableTaxInclusivePricing": "Desativar preços com impostos inclusos",
     "removeCurrencyWarning_one": "Você está prestes a remover {{count}} moeda da sua loja. Certifique-se de remover todos os preços que usam essa moeda antes de continuar.",
+    "removeCurrencyWarning_many": "Você está prestes a remover {{count}} moedas da sua loja. Certifique-se de remover todos os preços que usam essas moedas antes de continuar.",
     "removeCurrencyWarning_other": "Você está prestes a remover {{count}} moedas da sua loja. Certifique-se de remover todos os preços que usam essas moedas antes de continuar.",
     "currencyAlreadyAdded": "A moeda já foi adicionada à sua loja.",
     "edit": {
@@ -3090,6 +3124,7 @@
     "countriesHint": "Adicione os países incluídos nesta região.",
     "deleteRegionWarning": "Você está prestes a excluir a região {{name}}. Esta ação não pode ser desfeita.",
     "removeCountriesWarning_one": "Você está prestes a remover {{count}} país da região. Esta ação não pode ser desfeita.",
+    "removeCountriesWarning_many": "Você está prestes a remover {{count}} países da região. Esta ação não pode ser desfeita.",
     "removeCountriesWarning_other": "Você está prestes a remover {{count}} países da região. Esta ação não pode ser desfeita.",
     "removeCountryWarning": "Você está prestes a remover o país {{name}} da região. Esta ação não pode ser desfeita.",
     "automaticTaxesHint": "Quando ativado, os impostos serão calculados apenas no checkout com base no endereço de entrega.",
@@ -3190,6 +3225,7 @@
     "selectLocations": "Selecione os locais que possuem o item em estoque.",
     "deleteLocationWarning": "Você está prestes a excluir o local {{name}}. Esta ação não pode ser desfeita.",
     "removeSalesChannelsWarning_one": "Você está prestes a remover {{count}} canal de venda do local.",
+    "removeSalesChannelsWarning_many": "Você está prestes a remover {{count}} canais de venda do local.",
     "removeSalesChannelsWarning_other": "Você está prestes a remover {{count}} canais de venda do local.",
     "toast": {
       "create": "Local criado com sucesso",
@@ -3209,6 +3245,7 @@
     "createSalesChannelHint": "Crie um novo canal de vendas para comercializar seus produtos.",
     "enabledHint": "Especifique se o canal de vendas está habilitado.",
     "removeProductsWarning_one": "Você está prestes a remover {{count}} produto do {{sales_channel}}.",
+    "removeProductsWarning_many": "Você está prestes a remover {{count}} produtos do {{sales_channel}}.",
     "removeProductsWarning_other": "Você está prestes a remover {{count}} produtos do {{sales_channel}}.",
     "addProducts": "Adicionar Produtos",
     "editSalesChannel": "Editar canal de vendas",
@@ -3264,7 +3301,8 @@
       "createPublishableHeader": "Criar Chave de API Publicável",
       "createPublishableHint": "Crie uma nova chave de API publicável para limitar o escopo das solicitações a canais de vendas específicos.",
       "createSecretHeader": "Criar Chave de API Secreta",
-      "createSecretHint": "Crie uma nova chave de API secreta para acessar a API Kayı.com como um usuário administrativo autenticado.",      "secretKeyCreatedHeader": "Chave Secreta Criada",
+      "createSecretHint": "Crie uma nova chave de API secreta para acessar a API Kayı.com como um usuário administrativo autenticado.",
+      "secretKeyCreatedHeader": "Chave Secreta Criada",
       "secretKeyCreatedHint": "Sua nova chave secreta foi gerada. Copie e armazene-a com segurança agora. Este é o único momento em que ela será exibida.",
       "copySecretTokenSuccess": "Chave secreta copiada para a área de transferência.",
       "copySecretTokenFailure": "Falha ao copiar a chave secreta para a área de transferência.",
@@ -3279,6 +3317,7 @@
       "title": "Adicionar Canais de Vendas",
       "description": "Adicione os canais de vendas que a chave de API deve ter como escopo.",
       "successToast_one": "{{count}} canal de vendas foi adicionado com sucesso à chave de API.",
+      "successToast_many": "{{count}} canais de vendas foram adicionados com sucesso à chave de API.",
       "successToast_other": "{{count}} canais de vendas foram adicionados com sucesso à chave de API.",
       "alreadyAddedTooltip": "O canal de vendas já foi adicionado à chave de API.",
       "list": {
@@ -3301,9 +3340,11 @@
     "removeSalesChannel": {
       "warning": "Você está prestes a remover o canal de vendas {{name}} da chave de API. Esta ação não pode ser desfeita.",
       "warningBatch_one": "Você está prestes a remover {{count}} canal de vendas da chave de API. Esta ação não pode ser desfeita.",
+      "warningBatch_many": "Você está prestes a remover {{count}} canais de vendas da chave de API. Esta ação não pode ser desfeita.",
       "warningBatch_other": "Você está prestes a remover {{count}} canais de vendas da chave de API. Esta ação não pode ser desfeita.",
       "successToast": "Canal de vendas removido com sucesso da chave de API.",
       "successToastBatch_one": "{{count}} canal de vendas removido com sucesso da chave de API.",
+      "successToastBatch_many": "{{count}} canais de vendas removidos com sucesso da chave de API.",
       "successToastBatch_other": "{{count}} canais de vendas removidos com sucesso da chave de API."
     },
     "actions": {
@@ -3361,11 +3402,13 @@
   },
   "login": {
     "forgotPassword": "Esqueceu a senha? - <0>Redefinir</0>",
-    "title": "Bem-vindo ao Kayı.com",    "hint": "Faça login para acessar a área da conta",
+    "title": "Bem-vindo ao Kayı.com",
+    "hint": "Faça login para acessar a área da conta",
     "sessionExpired": "Sessão expirada"
   },
   "invite": {
-    "title": "Bem-vindo ao Kayı.com",    "hint": "Crie sua conta abaixo",
+    "title": "Bem-vindo ao Kayı.com",
+    "hint": "Crie sua conta abaixo",
     "backToLogin": "Voltar para o login",
     "createAccount": "Criar conta",
     "alreadyHaveAccount": "Já tem uma conta? - <0>Fazer login</0>",
@@ -3373,7 +3416,8 @@
     "invalidInvite": "O convite é inválido ou expirou.",
     "successTitle": "Sua conta foi registrada",
     "successHint": "Comece a usar o Kayı.com Admin imediatamente.",
-    "successAction": "Iniciar Kayı.com Admin",    "invalidTokenTitle": "Seu token de convite é inválido",
+    "successAction": "Iniciar Kayı.com Admin",
+    "invalidTokenTitle": "Seu token de convite é inválido",
     "invalidTokenHint": "Tente solicitar um novo link de convite.",
     "passwordMismatch": "As senhas não correspondem",
     "toast": {
@@ -3405,10 +3449,12 @@
   },
   "workflowExecutions": {
     "domain": "Fluxos de Trabalho",
-    "subtitle": "Visualize e acompanhe as execuções de fluxos de trabalho em sua aplicação Kayı.com.",    "transactionIdLabel": "ID da Transação",
+    "subtitle": "Visualize e acompanhe as execuções de fluxos de trabalho em sua aplicação Kayı.com.",
+    "transactionIdLabel": "ID da Transação",
     "workflowIdLabel": "ID do Fluxo de Trabalho",
     "progressLabel": "Progresso",
     "stepsCompletedLabel_one": "{{completed}} de {{count}} etapa",
+    "stepsCompletedLabel_many": "{{completed}} de {{count}} etapas",
     "stepsCompletedLabel_other": "{{completed}} de {{count}} etapas",
     "list": {
       "noRecordsMessage": "Nenhum fluxo de trabalho foi executado ainda."
@@ -3497,7 +3543,8 @@
     "accessibility": {
       "description": "Notificações sobre atividades do Kayı.com serão listadas aqui."
     }
-  },  "errors": {
+  },
+  "errors": {
     "serverError": "Erro no servidor - Tente novamente mais tarde.",
     "invalidCredentials": "Email ou senha incorretos"
   },
@@ -3724,18 +3771,25 @@
   },
   "dateTime": {
     "years_one": "Ano",
+    "years_many": "Anos",
     "years_other": "Anos",
     "months_one": "Mês",
+    "months_many": "Meses",
     "months_other": "Meses",
     "weeks_one": "Semana",
+    "weeks_many": "Semanas",
     "weeks_other": "Semanas",
     "days_one": "Dia",
+    "days_many": "Dias",
     "days_other": "Dias",
     "hours_one": "Hora",
+    "hours_many": "Horas",
     "hours_other": "Horas",
     "minutes_one": "Minuto",
+    "minutes_many": "Minutos",
     "minutes_other": "Minutos",
     "seconds_one": "Segundo",
+    "seconds_many": "Segundos",
     "seconds_other": "Segundos"
   },
   "payouts": {
@@ -4175,6 +4229,7 @@
       "stockStatus": "Status do estoque",
       "variants": "Variantes",
       "variantsCount_one": "{{count}} variante",
+      "variantsCount_many": "{{count}} variantes",
       "variantsCount_other": "{{count}} variantes"
     },
     "detail": {

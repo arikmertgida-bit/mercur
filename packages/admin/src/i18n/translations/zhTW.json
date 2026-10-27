@@ -1660,7 +1660,7 @@
         "title": "退貨已啟動",
         "description": "有一個未完成的退貨請求"
       },
-      "restockPreview": "收貨 {{quantity}} × {{offerSku}} → 於 {{location}} 為 {{inventoryItem}} 增加 +{{delta}}"
+      "restockPreview": "收貨 {{quantity}} × {{variantSku}} → 於 {{location}} 為 {{inventoryItem}} 增加 +{{delta}}"
     },
     "claims": {
       "create": "建立索賞",
@@ -2491,10 +2491,6 @@
       "buyGet": {
         "title": "買 X 送 Y",
         "description": "購買 X 件商品，贈送 Y 件商品"
-      },
-      "freeShipping": {
-        "title": "免運費",
-        "description": "對運費套用 100% 折扣"
       }
     },
     "domain": "促銷",

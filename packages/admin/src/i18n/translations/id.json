@@ -1660,7 +1660,7 @@
         "title": "Pengembalian dimulai",
         "description": "Ada permintaan pengembalian terbuka yang harus diselesaikan"
       },
-      "restockPreview": "Menerima {{quantity}} × {{offerSku}} → +{{delta}} untuk {{inventoryItem}} di {{location}}"
+      "restockPreview": "Menerima {{quantity}} × {{variantSku}} → +{{delta}} untuk {{inventoryItem}} di {{location}}"
     },
     "claims": {
       "create": "Buat Klaim",
@@ -1819,7 +1819,8 @@
       "title": "Buat Pengembalian Dana",
       "sendNotificationHint": "Beritahu pelanggan tentang pengembalian dana yang dibuat.",
       "systemPayment": "Pembayaran sistem",
-      "systemPaymentDesc": "Satu atau lebih pembayaran Anda adalah pembayaran sistem. Perlu diketahui, pengambilan dan pengembalian dana tidak ditangani oleh Kayı.com untuk pembayaran tersebut.",      "error": {
+      "systemPaymentDesc": "Satu atau lebih pembayaran Anda adalah pembayaran sistem. Perlu diketahui, pengambilan dan pengembalian dana tidak ditangani oleh Kayı.com untuk pembayaran tersebut.",
+      "error": {
         "amountToLarge": "Tidak dapat mengembalikan dana lebih dari jumlah pesanan awal.",
         "amountNegative": "Jumlah pengembalian dana harus berupa angka positif.",
         "reasonRequired": "Pilih alasan pengembalian dana."
@@ -2490,10 +2491,6 @@
       "buyGet": {
         "title": "Beli X Dapat Y",
         "description": "Beli X produk, dapat Y produk"
-      },
-      "freeShipping": {
-        "title": "Gratis ongkos kirim",
-        "description": "Menerapkan diskon 100% untuk biaya pengiriman"
       }
     },
     "domain": "Promosi",
@@ -2911,7 +2908,8 @@
       "header": "Edit Profil",
       "languageHint": "Bahasa yang ingin Anda gunakan di dasbor admin. Ini tidak mengubah bahasa toko Anda.",
       "languagePlaceholder": "Pilih bahasa",
-      "usageInsightsHint": "Bagikan wawasan penggunaan dan bantu kami meningkatkan Kayı.com. Anda dapat membaca lebih lanjut tentang apa yang kami kumpulkan dan bagaimana kami menggunakannya di <0>dokumentasi</0> kami."    },
+      "usageInsightsHint": "Bagikan wawasan penggunaan dan bantu kami meningkatkan Kayı.com. Anda dapat membaca lebih lanjut tentang apa yang kami kumpulkan dan bagaimana kami menggunakannya di <0>dokumentasi</0> kami."
+    },
     "toast": {
       "edit": "Perubahan profil tersimpan"
     }
@@ -3264,7 +3262,8 @@
       "createPublishableHeader": "Buat Kunci API yang Dapat Dipublikasikan",
       "createPublishableHint": "Buat kunci API yang dapat dipublikasikan baru untuk membatasi cakupan permintaan ke saluran penjualan tertentu.",
       "createSecretHeader": "Buat Kunci API Rahasia",
-      "createSecretHint": "Buat kunci API rahasia baru untuk mengakses Kayı.com API sebagai pengguna admin terautentikasi.",      "secretKeyCreatedHeader": "Kunci Rahasia Dibuat",
+      "createSecretHint": "Buat kunci API rahasia baru untuk mengakses Kayı.com API sebagai pengguna admin terautentikasi.",
+      "secretKeyCreatedHeader": "Kunci Rahasia Dibuat",
       "secretKeyCreatedHint": "Kunci rahasia baru Anda telah dibuat. Salin dan simpan dengan aman sekarang. Ini adalah satu-satunya saat akan ditampilkan.",
       "copySecretTokenSuccess": "Kunci rahasia berhasil disalin ke papan klip.",
       "copySecretTokenFailure": "Gagal menyalin kunci rahasia ke papan klip.",
@@ -3361,11 +3360,13 @@
   },
   "login": {
     "forgotPassword": "Lupa kata sandi? - <0>Setel ulang</0>",
-    "title": "Selamat datang di Kayı.com",    "hint": "Masuk untuk mengakses area akun",
+    "title": "Selamat datang di Kayı.com",
+    "hint": "Masuk untuk mengakses area akun",
     "sessionExpired": "Sesi berakhir"
   },
   "invite": {
-    "title": "Selamat datang di Kayı.com",    "hint": "Buat akun Anda di bawah",
+    "title": "Selamat datang di Kayı.com",
+    "hint": "Buat akun Anda di bawah",
     "backToLogin": "Kembali ke login",
     "createAccount": "Buat akun",
     "alreadyHaveAccount": "Sudah punya akun? - <0>Masuk</0>",
@@ -3373,7 +3374,8 @@
     "invalidInvite": "Undangan tidak valid atau sudah kedaluwarsa.",
     "successTitle": "Akun Anda telah terdaftar",
     "successHint": "Mulai gunakan Kayı.com Admin sekarang juga.",
-    "successAction": "Mulai Kayı.com Admin",    "invalidTokenTitle": "Token undangan Anda tidak valid",
+    "successAction": "Mulai Kayı.com Admin",
+    "invalidTokenTitle": "Token undangan Anda tidak valid",
     "invalidTokenHint": "Coba minta tautan undangan baru.",
     "passwordMismatch": "Kata sandi tidak cocok",
     "toast": {
@@ -3405,7 +3407,8 @@
   },
   "workflowExecutions": {
     "domain": "Alur Kerja",
-    "subtitle": "Lihat dan pantau eksekusi alur kerja di aplikasi Kayı.com Anda.",    "transactionIdLabel": "ID Transaksi",
+    "subtitle": "Lihat dan pantau eksekusi alur kerja di aplikasi Kayı.com Anda.",
+    "transactionIdLabel": "ID Transaksi",
     "workflowIdLabel": "ID Alur Kerja",
     "progressLabel": "Kemajuan",
     "stepsCompletedLabel_one": "{{completed}} dari {{count}} langkah",
@@ -3497,7 +3500,8 @@
     "accessibility": {
       "description": "Notifikasi tentang aktivitas Kayı.com akan dicantumkan di sini."
     }
-  },  "errors": {
+  },
+  "errors": {
     "serverError": "Kesalahan server - Coba lagi nanti.",
     "invalidCredentials": "Email atau kata sandi salah"
   },

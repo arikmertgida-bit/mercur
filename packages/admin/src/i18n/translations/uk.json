@@ -183,6 +183,8 @@
     "store": "Магазин",
     "details": "Деталі",
     "items_one": "{{count}} товар",
+    "items_few": "{{count}} товари",
+    "items_many": "{{count}} товарів",
     "items_other": "{{count}} товари",
     "countSelected": "{{count}} вибрано",
     "countOfTotalSelected": "{{count}} з {{total}} вибрано",
@@ -211,9 +213,13 @@
   "json": {
     "header": "JSON",
     "numberOfKeys_one": "{{count}} ключ",
+    "numberOfKeys_few": "{{count}} ключі",
+    "numberOfKeys_many": "{{count}} ключів",
     "numberOfKeys_other": "{{count}} ключів",
     "drawer": {
       "header_one": "JSON <0>· {{count}} ключ</0>",
+      "header_few": "JSON <0>· {{count}} ключі</0>",
+      "header_many": "JSON <0>· {{count}} ключів</0>",
       "header_other": "JSON <0>· {{count}} ключів</0>",
       "description": "Перегляньте JSON дані для цього об'єкта."
     }
@@ -221,6 +227,8 @@
   "metadata": {
     "header": "Метадані",
     "numberOfKeys_one": "{{count}} ключ",
+    "numberOfKeys_few": "{{count}} ключі",
+    "numberOfKeys_many": "{{count}} ключів",
     "numberOfKeys_other": "{{count}} ключів",
     "edit": {
       "header": "Редагувати метадані",
@@ -456,6 +464,8 @@
     "errors": {
       "fixError": "Виправити помилку",
       "count_one": "{{count}} помилка",
+      "count_few": "{{count}} помилки",
+      "count_many": "{{count}} помилок",
       "count_other": "{{count}} помилок"
     }
   },
@@ -710,8 +720,12 @@
       "invalidFileType": "'{{name}}' не підтримується. Підтримувані типи файлів: {{types}}.",
       "failedToUpload": "Не вдалося завантажити додане медіа. Спробуйте ще раз.",
       "deleteWarning_one": "Ви збираєтеся видалити {{count}} зображення. Цю дію не можна скасувати.",
+      "deleteWarning_few": "Ви збираєтеся видалити {{count}} зображення. Цю дію не можна скасувати.",
+      "deleteWarning_many": "Ви збираєтеся видалити {{count}} зображень. Цю дію не можна скасувати.",
       "deleteWarning_other": "Ви збираєтеся видалити {{count}} зображень. Цю дію не можна скасувати.",
       "deleteWarningWithThumbnail_one": "Ви збираєтеся видалити {{count}} зображення, включаючи мініатюру. Цю дію не можна скасувати.",
+      "deleteWarningWithThumbnail_few": "Ви збираєтеся видалити {{count}} зображення, включаючи мініатюру. Цю дію не можна скасувати.",
+      "deleteWarningWithThumbnail_many": "Ви збираєтеся видалити {{count}} зображень, включаючи мініатюру. Цю дію не можна скасувати.",
       "deleteWarningWithThumbnail_other": "Ви збираєтеся видалити {{count}} зображень, включаючи мініатюри. Цю дію не можна скасувати.",
       "thumbnailTooltip": "Мініатюра",
       "galleryLabel": "Галерея",
@@ -728,6 +742,8 @@
     "discountableHint": "Коли не вибрано, знижки не будуть застосовуватися до цього продукту.",
     "noSalesChannels": "Не доступний у жодному каналі продажу",
     "variantCount_one": "{{count}} варіант",
+    "variantCount_few": "{{count}} варіанти",
+    "variantCount_many": "{{count}} варіантів",
     "variantCount_other": "{{count}} варіанти",
     "deleteVariantWarning": "Ви збираєтеся видалити варіант {{title}}. Цю дію не можна скасувати.",
     "productStatus": {
@@ -839,6 +855,8 @@
       "pricesPagination": "1 - {{current}} із {{total}} цін",
       "tableItemAvailable": "{{availableCount}} доступно",
       "tableItem_one": "{{availableCount}} доступно на {{locationCount}} локації",
+      "tableItem_few": "{{availableCount}} доступно на {{locationCount}} локаціях",
+      "tableItem_many": "{{availableCount}} доступно на {{locationCount}} локаціях",
       "tableItem_other": "{{availableCount}} доступно на {{locationCount}} локаціях",
       "inventory": {
         "notManaged": "Не керується",
@@ -908,12 +926,18 @@
       "description": "Оновіть статус і налаштування знижок для вибраних товарів.",
       "action": "Редагувати",
       "successToast_one": "{{count}} товар успішно оновлено.",
+      "successToast_few": "{{count}} товари успішно оновлено.",
+      "successToast_many": "{{count}} товарів успішно оновлено.",
       "successToast_other": "{{count}} товарів успішно оновлено."
     },
     "bulkDelete": {
       "warning_one": "Ви збираєтеся видалити {{count}} товар. Цю дію неможливо скасувати.",
+      "warning_few": "Ви збираєтеся видалити {{count}} товари. Цю дію неможливо скасувати.",
+      "warning_many": "Ви збираєтеся видалити {{count}} товарів. Цю дію неможливо скасувати.",
       "warning_other": "Ви збираєтеся видалити {{count}} товарів. Цю дію неможливо скасувати.",
       "successToast_one": "{{count}} товар успішно видалено.",
+      "successToast_few": "{{count}} товари успішно видалено.",
+      "successToast_many": "{{count}} товарів успішно видалено.",
       "successToast_other": "{{count}} товарів успішно видалено."
     },
     "attributeVariations": "Варіації",
@@ -1036,6 +1060,8 @@
     "deleteWarning": "Ви збираєтесь видалити колекцію {{title}}. Цю дію не можна скасувати.",
     "removeSingleProductWarning": "Ви збираєтесь видалити продукт {{title}} з колекції. Цю дію не можна скасувати.",
     "removeProductsWarning_one": "Ви збираєтесь видалити {{count}} продукт з колекції. Цю дію не можна скасувати.",
+    "removeProductsWarning_few": "Ви збираєтесь видалити {{count}} продукти з колекції. Цю дію не можна скасувати.",
+    "removeProductsWarning_many": "Ви збираєтесь видалити {{count}} продуктів з колекції. Цю дію не можна скасувати.",
     "removeProductsWarning_other": "Ви збираєтесь видалити {{count}} продукти з колекції. Цю дію не можна скасувати.",
     "products": {
       "list": {
@@ -1044,10 +1070,14 @@
       },
       "add": {
         "successToast_one": "Продукт успішно додано до колекції.",
+        "successToast_few": "Продукти успішно додано до колекції.",
+        "successToast_many": "Продукти успішно додано до колекції.",
         "successToast_other": "Продукти успішно додано до колекції."
       },
       "remove": {
         "successToast_one": "Продукт успішно видалено з колекції.",
+        "successToast_few": "Продукти успішно видалено з колекції.",
+        "successToast_many": "Продукти успішно видалено з колекції.",
         "successToast_other": "Продукти успішно видалено з колекції."
       }
     },
@@ -1133,12 +1163,18 @@
       "add": {
         "disabledTooltip": "Продукт вже є в цій категорії.",
         "successToast_one": "Додано {{count}} продукт до категорії.",
+        "successToast_few": "Додано {{count}} продукти до категорії.",
+        "successToast_many": "Додано {{count}} продуктів до категорії.",
         "successToast_other": "Додано {{count}} продукти до категорії."
       },
       "remove": {
         "confirmation_one": "Ви збираєтесь видалити {{count}} продукт з категорії. Цю дію не можна скасувати.",
+        "confirmation_few": "Ви збираєтесь видалити {{count}} продукти з категорії. Цю дію не можна скасувати.",
+        "confirmation_many": "Ви збираєтесь видалити {{count}} продуктів з категорії. Цю дію не можна скасувати.",
         "confirmation_other": "Ви збираєтесь видалити {{count}} продукти з категорії. Цю дію не можна скасувати.",
         "successToast_one": "Видалено {{count}} продукт з категорії.",
+        "successToast_few": "Видалено {{count}} продукти з категорії.",
+        "successToast_many": "Видалено {{count}} продуктів з категорії.",
         "successToast_other": "Видалено {{count}} продукти з категорії."
       },
       "list": {
@@ -1297,6 +1333,8 @@
       "action": "Редагувати рівні запасів",
       "placeholder": "Не увімкнено",
       "disablePrompt_one": "Ви збираєтеся вимкнути {{count}} рівень локації. Цю дію неможливо скасувати.",
+      "disablePrompt_few": "Ви збираєтеся вимкнути {{count}} рівні локацій. Цю дію неможливо скасувати.",
+      "disablePrompt_many": "Ви збираєтеся вимкнути {{count}} рівнів локацій. Цю дію неможливо скасувати.",
       "disablePrompt_other": "Ви збираєтеся вимкнути {{count}} рівнів локацій. Цю дію неможливо скасувати.",
       "disabledToggleTooltip": "Неможливо вимкнути: спочатку очистіть кількість, що надходить, та/або зарезервовану кількість.",
       "successToast": "Рівні запасів успішно оновлено."
@@ -1431,6 +1469,8 @@
       "alreadyAddedTooltip": "Клієнт вже доданий до групи.",
       "add": {
         "successToast_one": "Клієнта успішно додано до групи.",
+        "successToast_few": "Клієнтів успішно додано до групи.",
+        "successToast_many": "Клієнтів успішно додано до групи.",
         "successToast_other": "Клієнтів успішно додано до групи.",
         "list": {
           "noRecordsMessage": "Спочатку створіть групу клієнтів."
@@ -1438,8 +1478,12 @@
       },
       "remove": {
         "title_one": "Видалити клієнта",
+        "title_few": "Видалити клієнтів",
+        "title_many": "Видалити клієнтів",
         "title_other": "Видалити клієнтів",
         "description_one": "Ви збираєтеся видалити {{count}} клієнта з групи. Цю дію не можна скасувати.",
+        "description_few": "Ви збираєтеся видалити {{count}} клієнти з групи. Цю дію не можна скасувати.",
+        "description_many": "Ви збираєтеся видалити {{count}} клієнтів з групи. Цю дію не можна скасувати.",
         "description_other": "Ви збираєтеся видалити {{count}} клієнтів з групи. Цю дію не можна скасувати."
       },
       "list": {
@@ -1649,7 +1693,7 @@
         "title": "Повернення ініційоване",
         "description": "Є відкритий запит на повернення для цього товару."
       },
-      "restockPreview": "Отримання {{quantity}} × {{offerSku}} → +{{delta}} до {{inventoryItem}} у {{location}}",
+      "restockPreview": "Отримання {{quantity}} × {{variantSku}} → +{{delta}} до {{inventoryItem}} у {{location}}",
       "estDifference": "Оціночна різниця"
     },
     "claims": {
@@ -1769,6 +1813,8 @@
       "methodDescription": "Оберіть інший метод відправки, ніж той, який обрав клієнт",
       "error": {
         "wrongQuantity": "Доступний тільки один товар для виконання",
+        "wrongQuantity_few": "Кількість повинна бути числом між 1 і {{number}}",
+        "wrongQuantity_many": "Кількість повинна бути числом між 1 і {{number}}",
         "wrongQuantity_other": "Кількість повинна бути числом між 1 і {{number}}",
         "noItems": "Немає товарів для виконання.",
         "noShippingOption": "Спосіб доставки є обов'язковим",
@@ -1809,7 +1855,8 @@
       "title": "Створити повернення коштів",
       "sendNotificationHint": "Сповістіть клієнтів про створене повернення коштів.",
       "systemPayment": "Системний платіж",
-      "systemPaymentDesc": "Один або кілька ваших платежів є системним платежем. Будь ласка, зверніть увагу, що системи Kayı.com не обробляють повернення коштів для таких платежів.",      "error": {
+      "systemPaymentDesc": "Один або кілька ваших платежів є системним платежем. Будь ласка, зверніть увагу, що системи Kayı.com не обробляють повернення коштів для таких платежів.",
+      "error": {
         "amountToLarge": "Неможливо повернути більше, ніж оригінальна сума замовлення.",
         "amountNegative": "Сума повернення повинна бути позитивною.",
         "reasonRequired": "Будь ласка, виберіть причину повернення коштів."
@@ -1825,6 +1872,8 @@
     "activity": {
       "header": "Активність",
       "showMoreActivities_one": "Показати ще {{count}} активність",
+      "showMoreActivities_few": "Показати ще {{count}} активності",
+      "showMoreActivities_many": "Показати ще {{count}} активностей",
       "showMoreActivities_other": "Показати ще {{count}} активностей",
       "comment": {
         "label": "Коментар",
@@ -1858,6 +1907,8 @@
           "shipped": "Товари відправлено",
           "delivered": "Товари доставлено",
           "items_one": "{{count}} товар",
+          "items_few": "{{count}} товари",
+          "items_many": "{{count}} товарів",
           "items_other": "{{count}} товари"
         },
         "return": {
@@ -1865,6 +1916,8 @@
           "canceled": "Повернення #{{returnId}} скасовано",
           "received": "Повернення #{{returnId}} отримано",
           "items_one": "{{count}} товар повернуто",
+          "items_few": "{{count}} товари повернуто",
+          "items_many": "{{count}} товарів повернуто",
           "items_other": "{{count}} товари повернуто"
         },
         "note": {
@@ -1907,6 +1960,8 @@
       "orderIds": "ID замовлення",
       "vendor": "Магазин",
       "vendorsCount_one": "{{count}} магазин",
+      "vendorsCount_few": "{{count}} магазини",
+      "vendorsCount_many": "{{count}} магазинів",
       "vendorsCount_other": "{{count}} магазинів"
     },
     "group": {
@@ -2142,10 +2197,16 @@
       "fields": {
         "count": {
           "shipping_one": "{{count}} варіант доставки",
+          "shipping_few": "{{count}} варіанти доставки",
+          "shipping_many": "{{count}} варіантів доставки",
           "shipping_other": "{{count}} варіанти доставки",
           "returns_one": "{{count}} варіант повернення",
+          "returns_few": "{{count}} варіанти повернення",
+          "returns_many": "{{count}} варіантів повернення",
           "returns_other": "{{count}} варіанти повернення",
           "pickup_one": "{{count}} спосіб самовивозу",
+          "pickup_few": "{{count}} способи самовивозу",
+          "pickup_many": "{{count}} способів самовивозу",
           "pickup_other": "{{count}} способів самовивозу"
         },
         "priceType": {
@@ -2407,10 +2468,16 @@
           "header": "Додати цілі"
         },
         "values_one": "{{count}} значення",
+        "values_few": "{{count}} значення",
+        "values_many": "{{count}} значень",
         "values_other": "{{count}} значень",
         "numberOfTargets_one": "{{count}} ціль",
+        "numberOfTargets_few": "{{count}} цілі",
+        "numberOfTargets_many": "{{count}} цілей",
         "numberOfTargets_other": "{{count}} цілей",
         "additionalValues_one": "і {{count}} додаткове значення",
+        "additionalValues_few": "і {{count}} додаткові значення",
+        "additionalValues_many": "і {{count}} додаткових значень",
         "additionalValues_other": "і {{count}} додаткових значень",
         "action": "Додати ціль"
       },
@@ -2490,10 +2557,6 @@
       "buyGet": {
         "title": "Купи X — отримай Y",
         "description": "Купи X товар(ів), отримай Y товар(ів)"
-      },
-      "freeShipping": {
-        "title": "Безкоштовна доставка",
-        "description": "Застосовує 100% знижку на вартість доставки"
       }
     },
     "domain": "Акції",
@@ -2840,8 +2903,12 @@
       },
       "delete": {
         "confirmation_one": "Ви збираєтесь видалити ціни для {{count}} продукту в ціновому списку. Цю дію неможливо скасувати.",
+        "confirmation_few": "Ви збираєтесь видалити ціни для {{count}} продуктів у ціновому списку. Цю дію неможливо скасувати.",
+        "confirmation_many": "Ви збираєтесь видалити ціни для {{count}} продуктів у ціновому списку. Цю дію неможливо скасувати.",
         "confirmation_other": "Ви збираєтесь видалити ціни для {{count}} продуктів у ціновому списку. Цю дію неможливо скасувати.",
         "successToast_one": "Успішно видалено ціни для {{count}} продукту.",
+        "successToast_few": "Успішно видалено ціни для {{count}} продуктів.",
+        "successToast_many": "Успішно видалено ціни для {{count}} продуктів.",
         "successToast_other": "Успішно видалено ціни для {{count}} продуктів."
       },
       "add": {
@@ -2911,7 +2978,8 @@
       "header": "Редагувати профіль",
       "languageHint": "Мова, яку ви хочете використовувати в адміністративній панелі. Це не змінює мову вашого магазину.",
       "languagePlaceholder": "Виберіть мову",
-      "usageInsightsHint": "Поділіться аналізом використання і допоможіть нам покращити Kayı.com. Ви можете дізнатися більше про те, що ми збираємо і як ми це використовуємо в нашій <0>документації</0>."    },
+      "usageInsightsHint": "Поділіться аналізом використання і допоможіть нам покращити Kayı.com. Ви можете дізнатися більше про те, що ми збираємо і як ми це використовуємо в нашій <0>документації</0>."
+    },
     "toast": {
       "edit": "Зміни профілю збережено"
     }
@@ -2993,6 +3061,8 @@
     "enableTaxInclusivePricing": "Увімкнути ціноутворення з урахуванням податків",
     "disableTaxInclusivePricing": "Вимкнути ціноутворення з урахуванням податків",
     "removeCurrencyWarning_one": "Ви збираєтесь видалити {{count}} валюту з вашого магазину. Переконайтеся, що ви видалили всі ціни, що використовують цю валюту, перед тим як продовжити.",
+    "removeCurrencyWarning_few": "Ви збираєтесь видалити {{count}} валюти з вашого магазину. Переконайтеся, що ви видалили всі ціни, що використовують ці валюти, перед тим як продовжити.",
+    "removeCurrencyWarning_many": "Ви збираєтесь видалити {{count}} валют з вашого магазину. Переконайтеся, що ви видалили всі ціни, що використовують ці валюти, перед тим як продовжити.",
     "removeCurrencyWarning_other": "Ви збираєтесь видалити {{count}} валют з вашого магазину. Переконайтеся, що ви видалили всі ціни, що використовують ці валюти, перед тим як продовжити.",
     "currencyAlreadyAdded": "Валюта вже додана до вашого магазину.",
     "edit": {
@@ -3090,6 +3160,8 @@
     "countriesHint": "Додайте країни, що входять до цього регіону.",
     "deleteRegionWarning": "Ви збираєтесь видалити регіон {{name}}. Цю дію неможливо скасувати.",
     "removeCountriesWarning_one": "Ви збираєтесь видалити {{count}} країну з регіону. Цю дію неможливо скасувати.",
+    "removeCountriesWarning_few": "Ви збираєтесь видалити {{count}} країни з регіону. Цю дію неможливо скасувати.",
+    "removeCountriesWarning_many": "Ви збираєтесь видалити {{count}} країн з регіону. Цю дію неможливо скасувати.",
     "removeCountriesWarning_other": "Ви збираєтесь видалити {{count}} країн з регіону. Цю дію неможливо скасувати.",
     "removeCountryWarning": "Ви збираєтесь видалити країну {{name}} з регіону. Цю дію неможливо скасувати.",
     "automaticTaxesHint": "Коли увімкнено, податки обчислюються тільки на основі адреси доставки під час оформлення замовлення.",
@@ -3190,6 +3262,8 @@
     "selectLocations": "Виберіть локації, де є товар.",
     "deleteLocationWarning": "Ви збираєтесь видалити локацію {{name}}. Цю дію не можна скасувати.",
     "removeSalesChannelsWarning_one": "Ви збираєтесь видалити {{count}} канал продажу з локації.",
+    "removeSalesChannelsWarning_few": "Ви збираєтесь видалити {{count}} канали продажу з локації.",
+    "removeSalesChannelsWarning_many": "Ви збираєтесь видалити {{count}} каналів продажу з локації.",
     "removeSalesChannelsWarning_other": "Ви збираєтесь видалити {{count}} канали продажу з локації.",
     "toast": {
       "create": "Локацію створено успішно",
@@ -3209,6 +3283,8 @@
     "createSalesChannelHint": "Створіть новий канал продажу для продажу ваших товарів.",
     "enabledHint": "Вкажіть, чи активований канал продажу.",
     "removeProductsWarning_one": "Ви збираєтесь видалити {{count}} товар з {{sales_channel}}.",
+    "removeProductsWarning_few": "Ви збираєтесь видалити {{count}} товари з {{sales_channel}}.",
+    "removeProductsWarning_many": "Ви збираєтесь видалити {{count}} товарів з {{sales_channel}}.",
     "removeProductsWarning_other": "Ви збираєтесь видалити {{count}} товари з {{sales_channel}}.",
     "addProducts": "Додати товари",
     "editSalesChannel": "Редагувати канал продажу",
@@ -3264,7 +3340,8 @@
       "createPublishableHeader": "Створити публічний API ключ",
       "createPublishableHint": "Створіть новий публічний API ключ для обмеження запитів до конкретних каналів продажу.",
       "createSecretHeader": "Створити секретний API ключ",
-      "createSecretHint": "Створіть новий секретний API ключ для доступу до Kayı.com API як автентифікований адміністратор.",      "secretKeyCreatedHeader": "Секретний ключ створено",
+      "createSecretHint": "Створіть новий секретний API ключ для доступу до Kayı.com API як автентифікований адміністратор.",
+      "secretKeyCreatedHeader": "Секретний ключ створено",
       "secretKeyCreatedHint": "Ваш новий секретний ключ створено. Скопіюйте та збережіть його зараз. Це єдиний раз, коли він буде показаний.",
       "copySecretTokenSuccess": "Секретний ключ скопійовано в буфер обміну.",
       "copySecretTokenFailure": "Не вдалося скопіювати секретний ключ в буфер обміну.",
@@ -3279,6 +3356,8 @@
       "title": "Додати канали продажу",
       "description": "Додайте канали продажу, до яких буде обмежено доступ для API ключа.",
       "successToast_one": "{{count}} канал продажу успішно додано до API ключа.",
+      "successToast_few": "{{count}} канали продажу успішно додано до API ключа.",
+      "successToast_many": "{{count}} каналів продажу успішно додано до API ключа.",
       "successToast_other": "{{count}} канали продажу успішно додано до API ключа.",
       "alreadyAddedTooltip": "Канал продажу вже додано до API ключа.",
       "list": {
@@ -3301,9 +3380,13 @@
     "removeSalesChannel": {
       "warning": "Ви збираєтесь видалити канал продажу {{name}} з API ключа. Цю дію неможливо скасувати.",
       "warningBatch_one": "Ви збираєтесь видалити {{count}} канал продажу з API ключа. Цю дію неможливо скасувати.",
+      "warningBatch_few": "Ви збираєтесь видалити {{count}} канали продажу з API ключа. Цю дію неможливо скасувати.",
+      "warningBatch_many": "Ви збираєтесь видалити {{count}} каналів продажу з API ключа. Цю дію неможливо скасувати.",
       "warningBatch_other": "Ви збираєтесь видалити {{count}} канали продажу з API ключа. Цю дію неможливо скасувати.",
       "successToast": "Канал продажу успішно видалено з API ключа.",
       "successToastBatch_one": "{{count}} канал продажу успішно видалено з API ключа.",
+      "successToastBatch_few": "{{count}} канали продажу успішно видалено з API ключа.",
+      "successToastBatch_many": "{{count}} каналів продажу успішно видалено з API ключа.",
       "successToastBatch_other": "{{count}} канали продажу успішно видалено з API ключа."
     },
     "actions": {
@@ -3361,11 +3444,13 @@
   },
   "login": {
     "forgotPassword": "Забули пароль? - <0>Скинути</0>",
-    "title": "Ласкаво просимо до Kayı.com",    "hint": "Увійдіть, щоб отримати доступ до особистого кабінету",
+    "title": "Ласкаво просимо до Kayı.com",
+    "hint": "Увійдіть, щоб отримати доступ до особистого кабінету",
     "sessionExpired": "Сесію завершено"
   },
   "invite": {
-    "title": "Ласкаво просимо до Kayı.com",    "hint": "Створіть акаунт нижче",
+    "title": "Ласкаво просимо до Kayı.com",
+    "hint": "Створіть акаунт нижче",
     "backToLogin": "Повернутися до входу",
     "createAccount": "Створити акаунт",
     "alreadyHaveAccount": "Вже маєте акаунт? - <0>Увійти</0>",
@@ -3373,7 +3458,8 @@
     "invalidInvite": "Запрошення недійсне або сплив термін.",
     "successTitle": "Ваш акаунт зареєстровано",
     "successHint": "Розпочніть роботу з Kayı.com Admin прямо зараз.",
-    "successAction": "Почати роботу з Kayı.com Admin",    "invalidTokenTitle": "Ваш токен запрошення недійсний",
+    "successAction": "Почати роботу з Kayı.com Admin",
+    "invalidTokenTitle": "Ваш токен запрошення недійсний",
     "invalidTokenHint": "Спробуйте запросити нове посилання для запрошення.",
     "passwordMismatch": "Паролі не збігаються",
     "toast": {
@@ -3405,10 +3491,13 @@
   },
   "workflowExecutions": {
     "domain": "Процеси роботи",
-    "subtitle": "Переглядайте та відстежуйте виконання процесів роботи у вашій Kayı.com аплікації.",    "transactionIdLabel": "ID транзакції",
+    "subtitle": "Переглядайте та відстежуйте виконання процесів роботи у вашій Kayı.com аплікації.",
+    "transactionIdLabel": "ID транзакції",
     "workflowIdLabel": "ID процесу роботи",
     "progressLabel": "Прогрес",
     "stepsCompletedLabel_one": "{{completed}} з {{count}} кроку",
+    "stepsCompletedLabel_few": "{{completed}} з {{count}} кроків",
+    "stepsCompletedLabel_many": "{{completed}} з {{count}} кроків",
     "stepsCompletedLabel_other": "{{completed}} з {{count}} кроків",
     "list": {
       "noRecordsMessage": "Немає виконаних процесів роботи."
@@ -3497,7 +3586,8 @@
     "accessibility": {
       "description": "Сповіщення про активність Kayı.com будуть відображатися тут."
     }
-  },  "errors": {
+  },
+  "errors": {
     "serverError": "Помилка сервера - Спробуйте ще раз пізніше.",
     "invalidCredentials": "Невірний email або пароль"
   },
@@ -3724,18 +3814,32 @@
   },
   "dateTime": {
     "years_one": "Рік",
+    "years_few": "Роки",
+    "years_many": "Років",
     "years_other": "Роки",
     "months_one": "Місяць",
+    "months_few": "Місяці",
+    "months_many": "Місяців",
     "months_other": "Місяці",
     "weeks_one": "Тиждень",
+    "weeks_few": "Тижні",
+    "weeks_many": "Тижнів",
     "weeks_other": "Тижні",
     "days_one": "День",
+    "days_few": "Дні",
+    "days_many": "Днів",
     "days_other": "Дні",
     "hours_one": "Година",
+    "hours_few": "Години",
+    "hours_many": "Годин",
     "hours_other": "Години",
     "minutes_one": "Хвилина",
+    "minutes_few": "Хвилини",
+    "minutes_many": "Хвилин",
     "minutes_other": "Хвилини",
     "seconds_one": "Секунда",
+    "seconds_few": "Секунди",
+    "seconds_many": "Секунд",
     "seconds_other": "Секунди"
   },
   "payouts": {
@@ -4175,6 +4279,8 @@
       "stockStatus": "Статус запасів",
       "variants": "Варіанти",
       "variantsCount_one": "{{count}} варіант",
+      "variantsCount_few": "{{count}} варіанти",
+      "variantsCount_many": "{{count}} варіантів",
       "variantsCount_other": "{{count}} варіанти"
     },
     "detail": {
