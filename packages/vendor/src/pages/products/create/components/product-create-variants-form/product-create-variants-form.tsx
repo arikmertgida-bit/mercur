@@ -112,7 +112,7 @@ const Root = () => {
         })
       }
     })
-  }, [stock_locations, variants.length, form])
+  }, [stock_locations, variants.length, form.getValues, form.setValue])
 
   const productTitle = useWatch({
     control: form.control,
@@ -145,7 +145,7 @@ const Root = () => {
         shouldDirty: false,
       })
     })
-  }, [productTitle, variants.length, form])
+  }, [productTitle, variants.length, form.getValues, form.setValue])
 
   // SKU is store-only, generated once per row, and read-only in the grid —
   // there is nothing for the seller to edit, so this only ever fills in a
@@ -168,7 +168,7 @@ const Root = () => {
         shouldDirty: false,
       })
     })
-  }, [seller, variants.length, form])
+  }, [seller, variants.length, form.getValues, form.setValue])
 
   const watchedMedia = useWatch({
     control: form.control,
@@ -203,7 +203,7 @@ const Root = () => {
         shouldDirty: false,
       })
     })
-  }, [watchedMedia, form])
+  }, [watchedMedia, form.getValues, form.setValue])
 
   const watchedAttributes = useWatch({
     control: form.control,

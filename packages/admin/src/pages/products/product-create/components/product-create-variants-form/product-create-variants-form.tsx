@@ -72,7 +72,7 @@ const Root = () => {
     if (changed) {
       form.setValue("variants", next, { shouldDirty: false });
     }
-  }, [stock_locations, variants.length, form]);
+  }, [stock_locations, variants.length, form.getValues, form.setValue]);
 
   const watchedAttributes = useWatch({
     control: form.control,

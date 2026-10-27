@@ -36,7 +36,7 @@ export const ProductCreateVariantMediaDrawer = ({
         .map((media) => media.id)
         .filter((id): id is string => !!id)
     )
-  }, [open, activeIndex, form])
+  }, [open, activeIndex, form.getValues])
 
   const toggleSelected = (mediaId: string, checked: boolean) => {
     setSelectedIds((prev) =>

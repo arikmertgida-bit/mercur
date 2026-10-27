@@ -516,7 +516,7 @@ const RequiredAttributes = () => {
     })
 
     form.setValue("attributes", [...otherAttributes, ...requiredAttributes])
-  }, [product_attributes, form])
+  }, [product_attributes, form.getValues, form.setValue])
 
   if (!categoryId || !product_attributes?.length) return null
 

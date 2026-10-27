@@ -22,7 +22,7 @@ export const ProductCreateGeneralSection = () => {
       shouldValidate: true,
       shouldDirty: false,
     })
-  }, [titleValue, form])
+  }, [titleValue, form.setValue])
 
   return (
     <div id="general" className="flex flex-col gap-y-6" data-testid="product-create-general-section">

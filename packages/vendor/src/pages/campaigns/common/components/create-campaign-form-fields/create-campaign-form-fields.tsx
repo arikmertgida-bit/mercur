@@ -55,7 +55,7 @@ export const CreateCampaignFormFields = ({
       shouldValidate: true,
       shouldDirty: false,
     })
-  }, [watchNameValue, form])
+  }, [watchNameValue, form.setValue])
 
   const watchValueType = useWatch({
     control: form.control,
@@ -85,7 +85,7 @@ export const CreateCampaignFormFields = ({
         isTypeSpend ? promotionCurrencyValue : null
       )
     }
-  }, [watchValueType, syncPromotionCurrency, form, isTypeSpend, promotionCurrencyValue])
+  }, [watchValueType, syncPromotionCurrency, form.resetField, form.setValue, isTypeSpend, promotionCurrencyValue])
 
   if (promotionCurrencyValue && syncPromotionCurrency) {
     const budget = form.getValues().campaign?.budget

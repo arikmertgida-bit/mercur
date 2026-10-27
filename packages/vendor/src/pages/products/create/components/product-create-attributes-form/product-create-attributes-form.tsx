@@ -659,7 +659,7 @@ const RequiredAttributes = ({
     // whole-array mutator and keeps every subscriber of this field name in
     // sync.
     replace(nextAttributes)
-  }, [product_attributes, form, replace])
+  }, [product_attributes, form.getValues, replace])
 
   if (!categoryId || !product_attributes?.length) return null
 
