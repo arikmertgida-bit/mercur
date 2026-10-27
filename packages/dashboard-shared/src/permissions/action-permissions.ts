@@ -69,7 +69,7 @@ export const filterCommandsByPermission = <TCommand>(
  * @example
  * ```tsx
  * const commands = usePermittedCommands([
- *   { label: t("actions.delete"), shortcut: "d", action, permission: "offers:manage" },
+ *   { label: t("actions.delete"), shortcut: "d", action, permission: "products:manage" },
  * ])
  * ```
  */

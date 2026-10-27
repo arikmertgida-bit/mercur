@@ -963,7 +963,7 @@
       },
       "confirmPrompt": {
         "title": "Talebi onayla",
-        "description": "Bu ürün güncelleme talebini onaylamak üzeresiniz. Onaylandığında, bu ürün için oluşturulan teklifler mağaza vitrininde görünecektir. Yalnızca stok seviyesi ve fiyatı ayarlanmış teklifler görünür olacaktır.",
+        "description": "Bu ürün güncelleme talebini onaylamak üzeresiniz. Onaylandığında ürün mağaza vitrininde görünecektir. Yalnızca stok seviyesi ve fiyatı ayarlanmış varyantlar görünür olacaktır.",
         "noteLabel": "Mağaza için not",
         "notePlaceholder": "Yaptığınız değişiklikleri veya ek talepleri belirtin"
       },
@@ -1239,7 +1239,6 @@
     "domain": "Envanter",
     "subtitle": "Envanter öğelerinizi yönetin",
     "store": "Mağaza",
-    "associatedOffers": "İlişkili teklifler",
     "reserved": "Rezerve Edildi",
     "available": "Mevcut",
     "locationLevels": "Konumlar",
@@ -2733,8 +2732,8 @@
         "description": "Bu promosyonun tüm siparişlerde kullanılabileceği maksimum sayı. Sınırsız kullanım için boş bırakın."
       },
       "storeOffers": {
-        "title": "Promosyon hangi mağazanın tekliflerine uygulanacak?",
-        "description": "Bu promosyonun tekliflerine uygulanacağı mağazayı seçin.",
+        "title": "Promosyon hangi mağazanın ürünlerine uygulanacak?",
+        "description": "Bu promosyonun ürünlerine uygulanacağı mağazayı seçin.",
         "label": "Mağaza",
         "placeholder": "Seçin",
         "required": "Lütfen bir mağaza seçin"
@@ -2955,7 +2954,7 @@
       },
       "products": {
         "list": {
-          "noRecordsMessage": "Önce bir teklif oluşturun."
+          "noRecordsMessage": "Önce bir ürün oluşturun."
         }
       }
     },
@@ -3009,7 +3008,6 @@
       }
     },
     "fields": {
-      "offerVariant": "Teklif/Varyant",
       "priceOverrides": {
         "label": "Fiyat geçersiz kılmaları",
         "header": "Fiyat Geçersiz Kılmaları"
@@ -4399,73 +4397,6 @@
     "toggle": {
       "enabledToast": "Komisyon oranı başarıyla etkinleştirildi",
       "disabledToast": "Komisyon oranı başarıyla devre dışı bırakıldı"
-    }
-  },
-  "offers": {
-    "domain": "Teklifler",
-    "empty": {
-      "heading": "Henüz teklif yok",
-      "description": "Mağazalar bu pazar yerinde henüz herhangi bir teklif yayınlamadı.",
-      "storeDescription": "Bu mağazanın herhangi bir teklifi yok"
-    },
-    "filtered": {
-      "heading": "Eşleşen teklif yok",
-      "description": "Filtreleri veya arama terimlerini ayarlayın."
-    },
-    "actions": {
-      "openStore": "Mağazayı aç",
-      "bulkDelete": "Seçilenleri sil"
-    },
-    "fields": {
-      "store": "Mağaza",
-      "sku": "SKU",
-      "variant": "Ana varyant",
-      "ean": "EAN",
-      "upc": "UPC",
-      "shippingProfile": "Kargo profili",
-      "requiredQuantity": "Gerekli miktar",
-      "stockStatus": "Stok durumu",
-      "variants": "Varyantlar",
-      "variantsCount_one": "{{count}} varyant",
-      "variantsCount_other": "{{count}} varyant"
-    },
-    "detail": {
-      "offerLabel": "Teklif",
-      "productVariant": "Ürün varyantı",
-      "store": "Mağaza",
-      "inventoryItems": "Envanter öğeleri",
-      "goToInventoryItem": "Envanter öğesine git",
-      "manageKit": "Envanter kiti",
-      "noInventoryItems": "Bu teklife bağlı envanter kalemi yok.",
-      "associatedProduct": "İlişkili ürün",
-      "offerVariant": "Teklif Varyantı",
-      "shippingConfiguration": "Kargo yapılandırması"
-    },
-    "delete": {
-      "description": "{{sku}} teklifini silmek üzeresiniz. Bu işlem geri alınamaz.",
-      "successToast": "Teklif başarıyla silindi."
-    },
-    "bulkDelete": {
-      "description": "{{storeName}} mağazasından {{count}} teklif silmek üzeresiniz. Bu işlem geri alınamaz.",
-      "successToast": "{{count}} teklif silindi",
-      "errorToast": "Toplu silme başarısız oldu: {{message}}",
-      "crossStoreWarning": "Aynı anda tek bir mağazadan teklif seçin. Toplu silme mağaza bazında kapsamlıdır.",
-      "crossStoreTooltip": "Toplu silme yalnızca tek bir mağaza içinde çalışır."
-    },
-    "bulkDeleteAll": {
-      "description": "{{storeName}} için tüm teklifleri silmek üzeresiniz. Bu işlem geri alınamaz.",
-      "actionLabel": "Kataloğu sil"
-    },
-    "sellerSection": {
-      "heading": "Teklifler",
-      "viewAll": "Tümünü görüntüle",
-      "bulkDeleteAll": "Kataloğu sil",
-      "empty": "Bu mağazanın henüz teklifi yok."
-    },
-    "stockStatus": {
-      "in_stock": "Stokta",
-      "low_stock": "Düşük stok",
-      "out_of_stock": "Stokta yok"
     }
   },
   "permissions": {

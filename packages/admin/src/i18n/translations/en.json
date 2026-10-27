@@ -632,7 +632,7 @@
       },
       "confirmPrompt": {
         "title": "Confirm request",
-        "description": "You are about to confirm this product update request. Once confirmed, any offers created for this product will appear on the storefront. Only offers with stock levels and prices set will be visible.",
+        "description": "You are about to confirm this product update request. Once confirmed, the product will appear on the storefront. Only variants with stock levels and prices set will be visible.",
         "noteLabel": "Note for store",
         "notePlaceholder": "Specify changes you made or additional requests"
       },
@@ -1095,7 +1095,6 @@
     "domain": "Inventory",
     "subtitle": "Manage inventory items.",
     "store": "Store",
-    "associatedOffers": "Associated offers",
     "reserved": "Reserved",
     "available": "Available",
     "locationLevels": "Locations",
@@ -2558,8 +2557,8 @@
         "description": "Maximum number of times this promotion can be used across all orders. Leave empty for unlimited usage."
       },
       "storeOffers": {
-        "title": "Which store offers will the promotion be applied to?",
-        "description": "Choose the store whose offers this promotion applies to.",
+        "title": "Which store's products will the promotion be applied to?",
+        "description": "Choose the store whose products this promotion applies to.",
         "label": "Store",
         "placeholder": "Select",
         "required": "Please select a store"
@@ -2811,10 +2810,10 @@
     },
     "create": {
       "header": "Create Price List",
-      "subheader": "Create a new price list to manage the prices of your offers.",
+      "subheader": "Create a new price list to manage the prices of your products.",
       "tabs": {
         "details": "Details",
-        "products": "Offers",
+        "products": "Products",
         "prices": "Prices"
       },
       "successToast": "Price list {{title}} was successfully created.",
@@ -2824,7 +2823,7 @@
       },
       "products": {
         "list": {
-          "noRecordsMessage": "Create an offer first."
+          "noRecordsMessage": "Create a product first."
         }
       }
     },
@@ -2854,31 +2853,30 @@
       }
     },
     "products": {
-      "header": "Offers",
+      "header": "Products",
       "actions": {
-        "addProducts": "Add offers",
+        "addProducts": "Add products",
         "editPrices": "Edit prices",
-        "editPricesDisabled": "Add offers before editing prices"
+        "editPricesDisabled": "Add products before editing prices"
       },
       "delete": {
-        "confirmation_one": "You are about to remove {{count}} offer from the price list. This action cannot be undone.",
-        "confirmation_other": "You are about to remove {{count}} offers from the price list. This action cannot be undone.",
-        "successToast_one": "Successfully removed {{count}} offer from the price list.",
-        "successToast_other": "Successfully removed {{count}} offers from the price list."
+        "confirmation_one": "You are about to remove {{count}} product from the price list. This action cannot be undone.",
+        "confirmation_other": "You are about to remove {{count}} products from the price list. This action cannot be undone.",
+        "successToast_one": "Successfully removed {{count}} product from the price list.",
+        "successToast_other": "Successfully removed {{count}} products from the price list."
       },
       "add": {
         "successToast": "Prices were successfully added to the price list.",
-        "alreadyInPriceList": "This offer is already in the price list",
-        "noVariants": "This offer has no variants"
+        "alreadyInPriceList": "This product is already in the price list",
+        "noVariants": "This product has no variants"
       },
       "edit": {
         "successToast": "Prices were successfully updated.",
         "header": "Edit prices for {{title}}",
-        "description": "Update the prices of the offers in this price list."
+        "description": "Update the prices of the products in this price list."
       }
     },
     "fields": {
-      "offerVariant": "Offer/Variant",
       "priceOverrides": {
         "label": "Price overrides",
         "header": "Price Overrides"
@@ -2906,7 +2904,7 @@
         "options": {
           "sale": {
             "label": "Sale",
-            "description": "Sale prices are temporary price changes for offers."
+            "description": "Sale prices are temporary price changes for products."
           },
           "override": {
             "label": "Override",
@@ -4399,73 +4397,6 @@
     "toggle": {
       "enabledToast": "Commission rate enabled successfully",
       "disabledToast": "Commission rate disabled successfully"
-    }
-  },
-  "offers": {
-    "domain": "Offers",
-    "empty": {
-      "heading": "No offers yet",
-      "description": "Stores haven't published any offers on this marketplace yet.",
-      "storeDescription": "This store doesn't have any offers"
-    },
-    "filtered": {
-      "heading": "No matching offers",
-      "description": "Adjust filters or search terms."
-    },
-    "actions": {
-      "openStore": "Open store",
-      "bulkDelete": "Delete selected"
-    },
-    "fields": {
-      "store": "Store",
-      "sku": "SKU",
-      "variant": "Master variant",
-      "ean": "EAN",
-      "upc": "UPC",
-      "shippingProfile": "Shipping profile",
-      "requiredQuantity": "Required quantity",
-      "stockStatus": "Stock status",
-      "variants": "Variants",
-      "variantsCount_one": "{{count}} variant",
-      "variantsCount_other": "{{count}} variants"
-    },
-    "detail": {
-      "offerLabel": "Offer",
-      "productVariant": "Product variant",
-      "store": "Store",
-      "inventoryItems": "Inventory items",
-      "goToInventoryItem": "Go to inventory item",
-      "manageKit": "Inventory kit",
-      "noInventoryItems": "This offer has no inventory items linked.",
-      "associatedProduct": "Associated product",
-      "offerVariant": "Offer Variant",
-      "shippingConfiguration": "Shipping Configuration"
-    },
-    "delete": {
-      "description": "You are about to delete offer {{sku}}. This cannot be undone.",
-      "successToast": "Offer was successfully deleted."
-    },
-    "bulkDelete": {
-      "description": "You are about to delete {{count}} offer(s) from {{storeName}}. This cannot be undone.",
-      "successToast": "Deleted {{count}} offer(s)",
-      "errorToast": "Bulk delete failed: {{message}}",
-      "crossStoreWarning": "Select offers from one store at a time. Bulk delete is scoped per store.",
-      "crossStoreTooltip": "Bulk delete only works within one store."
-    },
-    "bulkDeleteAll": {
-      "description": "You are about to delete every offer for {{storeName}}. This cannot be undone.",
-      "actionLabel": "Delete catalog"
-    },
-    "sellerSection": {
-      "heading": "Offers",
-      "viewAll": "View all",
-      "bulkDeleteAll": "Delete catalog",
-      "empty": "This store has no offers yet."
-    },
-    "stockStatus": {
-      "in_stock": "In stock",
-      "low_stock": "Low stock",
-      "out_of_stock": "Out of stock"
     }
   },
   "permissions": {

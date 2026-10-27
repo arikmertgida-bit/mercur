@@ -1011,7 +1011,7 @@
       },
       "confirmPrompt": {
         "title": "تأكيد الطلب",
-        "description": "أنت على وشك تأكيد طلب تحديث هذا المنتج. بمجرد التأكيد، ستظهر أي عروض تم إنشاؤها لهذا المنتج على واجهة المتجر. لن تكون مرئية سوى العروض التي تم تحديد مستويات مخزونها وأسعارها.",
+        "description": "أنت على وشك تأكيد طلب تحديث هذا المنتج. بمجرد التأكيد، سيظهر المنتج على واجهة المتجر. لن تكون مرئية سوى المتغيرات التي تم تحديد مستويات مخزونها وأسعارها.",
         "noteLabel": "ملاحظة للمتجر",
         "notePlaceholder": "حدد التغييرات التي أجريتها أو الطلبات الإضافية"
       },
@@ -1341,7 +1341,6 @@
     "domain": "المخزون",
     "subtitle": "إدارة عناصر المخزون الخاصة بك",
     "store": "المتجر",
-    "associatedOffers": "العروض المرتبطة",
     "reserved": "محجوز",
     "available": "متاح",
     "locationLevels": "المواقع",
@@ -2061,7 +2060,7 @@
       }
     },
     "fields": {
-      "displayId": "معرف العرض",
+      "displayId": "معرف الطلب",
       "refundableAmount": "المبلغ القابل للاسترداد",
       "returnableQuantity": "الكمية القابلة للإرجاع",
       "groupId": "معرّف المجموعة",
@@ -2807,8 +2806,8 @@
         "description": "الحد الأقصى لعدد المرات التي يمكن فيها استخدام هذا العرض الترويجي عبر جميع الطلبات. اتركه فارغًا للاستخدام غير المحدود."
       },
       "storeOffers": {
-        "title": "على عروض أي متجر سيتم تطبيق العرض الترويجي؟",
-        "description": "اختر المتجر الذي سيُطبَّق هذا العرض الترويجي على عروضه.",
+        "title": "على منتجات أي متجر سيتم تطبيق العرض الترويجي؟",
+        "description": "اختر المتجر الذي سيُطبَّق هذا العرض الترويجي على منتجاته.",
         "label": "المتجر",
         "placeholder": "اختر",
         "required": "يرجى اختيار متجر"
@@ -3091,7 +3090,7 @@
       },
       "products": {
         "list": {
-          "noRecordsMessage": "أنشئ عرضًا أولاً."
+          "noRecordsMessage": "أنشئ منتجًا أولاً."
         }
       }
     },
@@ -3153,7 +3152,6 @@
       }
     },
     "fields": {
-      "offerVariant": "العرض/البديل",
       "priceOverrides": {
         "label": "تجاوزات الأسعار",
         "header": "تجاوزات الأسعار"
@@ -4607,77 +4605,6 @@
     "toggle": {
       "enabledToast": "تم تفعيل معدل العمولة بنجاح",
       "disabledToast": "تم تعطيل معدل العمولة بنجاح"
-    }
-  },
-  "offers": {
-    "domain": "العروض",
-    "empty": {
-      "heading": "لا توجد عروض بعد",
-      "description": "لم تنشر المتاجر أي عروض في هذا السوق بعد.",
-      "storeDescription": "لا يملك هذا المتجر أي عروض"
-    },
-    "filtered": {
-      "heading": "لا توجد عروض مطابقة",
-      "description": "اضبط الفلاتر أو مصطلحات البحث."
-    },
-    "actions": {
-      "openStore": "فتح المتجر",
-      "bulkDelete": "حذف المحدد"
-    },
-    "fields": {
-      "store": "متجر",
-      "sku": "SKU",
-      "variant": "المتغير الرئيسي",
-      "ean": "EAN",
-      "upc": "UPC",
-      "shippingProfile": "عنوان الشحن",
-      "requiredQuantity": "الكمية المطلوبة",
-      "stockStatus": "حالة المخزون",
-      "variants": "البدائل",
-      "variantsCount_zero": "{{count}} بدائل",
-      "variantsCount_one": "{{count}} بديل",
-      "variantsCount_two": "بديلان",
-      "variantsCount_few": "{{count}} بدائل",
-      "variantsCount_many": "{{count}} بديلًا",
-      "variantsCount_other": "{{count}} بديل"
-    },
-    "detail": {
-      "offerLabel": "العرض",
-      "productVariant": "متغير المنتج",
-      "store": "متجر",
-      "inventoryItems": "عناصر المخزون",
-      "goToInventoryItem": "الانتقال إلى عنصر المخزون",
-      "manageKit": "مجموعة المخزون",
-      "noInventoryItems": "لا يحتوي هذا العرض على عناصر مخزون مرتبطة.",
-      "associatedProduct": "المنتج المرتبط",
-      "offerVariant": "متغير العرض",
-      "shippingConfiguration": "تحرير عنوان الشحن"
-    },
-    "delete": {
-      "description": "أنت على وشك حذف العرض {{sku}}. لا يمكن التراجع عن هذا الإجراء.",
-      "successToast": "تم حذف العرض بنجاح."
-    },
-    "bulkDelete": {
-      "description": "أنت على وشك حذف {{count}} عرض (عروض) من {{storeName}}. لا يمكن التراجع عن هذا الإجراء.",
-      "successToast": "تم حذف {{count}} عرض (عروض)",
-      "errorToast": "فشل الحذف بالجملة: {{message}}",
-      "crossStoreWarning": "اختر عروضًا من متجر واحد في كل مرة. الحذف بالجملة محدد النطاق لكل متجر.",
-      "crossStoreTooltip": "يعمل الحذف بالجملة ضمن متجر واحد فقط."
-    },
-    "bulkDeleteAll": {
-      "description": "أنت على وشك حذف جميع عروض {{storeName}}. لا يمكن التراجع عن هذا الإجراء.",
-      "actionLabel": "حذف الكتالوج"
-    },
-    "sellerSection": {
-      "heading": "العروض",
-      "viewAll": "عرض الكل",
-      "bulkDeleteAll": "حذف الكتالوج",
-      "empty": "لا يملك هذا المتجر أي عروض بعد."
-    },
-    "stockStatus": {
-      "in_stock": "في المخزون",
-      "low_stock": "مخزون منخفض",
-      "out_of_stock": "نفد المخزون"
     }
   },
   "permissions": {

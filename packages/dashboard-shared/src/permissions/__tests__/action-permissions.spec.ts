@@ -84,7 +84,7 @@ describe("applyActionPermissions", () => {
 describe("filterCommandsByPermission", () => {
   const commands = [
     { label: "Edit", shortcut: "e" },
-    { label: "Delete", shortcut: "d", permission: "offers:manage" as const },
+    { label: "Delete", shortcut: "d", permission: "products:manage" as const },
   ]
 
   test("drops commands the actor lacks and strips the permission keys", () => {
@@ -110,7 +110,10 @@ describe("permission checks", () => {
     expect(permissionMapAllows({ orders: "view" }, "orders:edit")).toBe(false)
     expect(permissionMapAllows(null, "orders:edit")).toBe(true)
     expect(
-      permissionMapAllows({ offers: "view" }, ["offers:view", "products:view"])
+      permissionMapAllows({ inventory_items: "view" }, [
+        "inventory_items:view",
+        "products:view",
+      ])
     ).toBe(false)
   })
 

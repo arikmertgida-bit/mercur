@@ -555,7 +555,7 @@
         "requiredAttributesHint": "Bu öznitelikler pazar yeri tarafından zorunlu tutulmaktadır. Devam etmeden önce bunları seçin.",
         "selectValues": "Değerleri seç",
         "tip": "İpucu",
-        "useForVariants": "Use for Variations",
+        "useForVariants": "Varyantlar için kullan",
         "useForVariantsDescription": "İşaretlenirse, bu özniteliği kullanarak varyantlar oluşturabilirsiniz. İşaretlenmezse öznitelik yalnızca bilgilendirme amacıyla kullanılır.",
         "variantAxisTip": "Bu öznitelik varyant oluşturacaktır. Bunları bir sonraki adımda tanımlayabilirsiniz.",
         "titlePlaceholder": "örn. Renk",
@@ -587,7 +587,7 @@
         "optionValue": "Varsayılan seçenek değeri",
         "variantTitle": "Varsayılan varyant"
       },
-      "requestSuccessToast": "Ürün başarıyla talep edildi. Artık bu ürün için teklifler oluşturabilirsiniz. Ürün yönetici tarafından onaylandığında, teklifleriniz mağaza vitrininde görünecektir. Yalnızca stok seviyesi ve fiyatı ayarlanmış teklifler görünür olacaktır."
+      "requestSuccessToast": "Ürün başarıyla talep edildi. Yönetici onayladığında ürün mağaza vitrininde görünecektir. Yalnızca stok seviyesi ve fiyatı ayarlanmış varyantlar görünür olacaktır."
     },
     "export": {
       "header": "Ürün Listesini Dışa Aktar",
@@ -697,7 +697,7 @@
       "draft": "Taslak",
       "published": "Yayınlandı",
       "proposed": "Önerildi",
-      "requires_action": "Changes required",
+      "requires_action": "İşlem gerekiyor",
       "rejected": "Reddedildi"
     },
     "fields": {
@@ -1179,7 +1179,6 @@
       "disabledToggleTooltip": "Devre dışı bırakılamaz: devre dışı bırakmadan önce gelen ve/veya rezerve edilmiş miktarı temizleyin.",
       "successToast": "Stok seviyeleri başarıyla güncellendi."
     },
-    "associatedOffers": "İlişkili teklifler",
     "attributes": {
       "tip": "Bunlar kalemi tanımlamak için kullanılan varsayılan değerlerdir. Pazar yeri tarafından yönetilmezler."
     },
@@ -2486,7 +2485,7 @@
     "list": {
       "noRecords": {
         "title": "Henüz promosyon yok",
-        "message": "Teklif indirimleri için promosyonlar oluşturun"
+        "message": "İndirim sunmak için promosyonlar oluşturun"
       }
     },
     "fields": {
@@ -2975,8 +2974,7 @@
         "hint": "Fiyat listesinin hangi müşteri gruplarına uygulanacağını seçin.",
         "placeholder": "Müşteri gruplarını arayın",
         "attribute": "Müşteri grupları"
-      },
-      "offerVariant": "Teklif/Varyant"
+      }
     },
     "list": {
       "noRecords": {
@@ -4006,7 +4004,6 @@
       "invite": "Davet",
       "member_invite": "Üye Daveti",
       "notification": "Bildirim",
-      "offer": "Teklif",
       "order": "Sipariş",
       "order_change": "Sipariş Değişikliği",
       "order_claim": "Sipariş Talebi",
@@ -4090,157 +4087,6 @@
   },
   "seller": {
     "domain": "Mağaza"
-  },
-  "offers": {
-    "domain": "Teklifler",
-    "subtitle": "Katalog listelerinizi yönetin",
-    "create": {
-      "header": "Teklif oluştur",
-      "description": "Teklif oluşturmak için varyantları seçin ve stok seviyelerini ve fiyatları yapılandırın.",
-      "successToast": "Teklif başarıyla yayınlandı. Yalnızca stok seviyesi ve fiyatı ayarlanmış teklifler mağaza vitrininde görünür olacaktır.",
-      "publish": "Yayınla",
-      "tipLabel": "İpucu:",
-      "tip": "Envanterinizle eşleşen tüm ilgili ürünleri seçin, ardından stok seviyelerinizi ve fiyatlarınızı ekleyerek onlar için kolayca teklif oluşturun.",
-      "addPrice": "Fiyat ekle",
-      "addInventoryItem": "Envanter kalemi ekle",
-      "stockLevelsWarning": "Teklifler oluşturuldu, ancak bazı stok seviyeleri kaydedilemedi: {{message}}",
-      "tabs": {
-        "catalogue": "Ürünler",
-        "stockLevelsAndPrices": "Stok Seviyeleri ve Fiyatlar"
-      }
-    },
-    "detail": {
-      "offerLabel": "Teklif",
-      "productVariant": "Ürün Varyantı",
-      "offerVariant": "Teklif Varyantı",
-      "associatedProduct": "İlişkili ürün",
-      "shippingConfiguration": "Kargo yapılandırması",
-      "inventoryItems": "Envanter kalemleri",
-      "manageKit": "Envanter kitini yönet",
-      "noInventoryItems": "Bağlı envanter kalemi yok. Bir tane eklemek için envanter çekmecesini açın.",
-      "goToInventoryItem": "Envanter kalemine git"
-    },
-    "edit": {
-      "header": "Teklifi düzenle",
-      "description": "Teklifin kimliğini, kargo profilini veya meta verilerini güncelleyin.",
-      "successToast": "Teklif güncellendi"
-    },
-    "variant": {
-      "edit": {
-        "successToast": "Teklif varyantı başarıyla güncellendi."
-      },
-      "shipping": {
-        "successToast": "Kargo yapılandırması başarıyla güncellendi."
-      },
-      "inventory": {
-        "manageInventoryHint": "Etkinleştirildiğinde, siparişler ve iadeler oluşturulduğunda envanter miktarını sizin için değiştireceğiz.",
-        "allowBackordersHint": "Etkinleştirildiğinde, müşteriler mevcut miktar olmasa bile varyantı satın alabilir."
-      }
-    },
-    "pricing": {
-      "header": "Fiyatları yönet",
-      "description": "Bu teklifin fiyat kademesinde fiyat ekleyin, değiştirin veya kaldırın.",
-      "successToast": "Fiyatlar başarıyla güncellendi.",
-      "empty": "Yapılandırılmış fiyat yok"
-    },
-    "inventory": {
-      "header": "Envanter kalemlerini yönet",
-      "description": "Ürün başına gerekli miktarı ekleyin, çıkarın veya değiştirin.",
-      "successToast": "Stok seviyeleri başarıyla güncellendi.",
-      "empty": "Bağlı envanter kalemi yok",
-      "itemsHeading": "Envanter kalemleri",
-      "kitHeading": "Envanter kiti",
-      "defineHint": "Bu varyant için gereken envanter kalemlerini tanımlayın. Bir envanter kiti oluşturmak için birden fazla kalem ekleyin.",
-      "itemPlaceholder": "Envanter kalemi seçin",
-      "quantityPlaceholder": "Gereken miktarı girin",
-      "manageItemsAction": "Envanter kalemlerini yönet",
-      "manageItemsButton": "Envanter kalemlerini yönet",
-      "notManagedTitle": "Envanter yönetilmiyor",
-      "notManagedDesc": "Varyantın envanterini takip etmek için \"Envanteri yönet\" seçeneğini açın.",
-      "editVariant": "Varyantı düzenle",
-      "noItemsTitle": "Henüz envanter kalemi yok",
-      "noItemsDesc": "Bu varyant için gereken envanter kalemlerini yönetin",
-      "itemsManageSuccessToast": "Envanter kalemleri başarıyla güncellendi.",
-      "validation": {
-        "itemId": "Lütfen bir envanter kalemi seçin",
-        "quantity": "Lütfen gereken miktarı girin"
-      }
-    },
-    "delete": {
-      "description": "{{sku}} teklifini silmek üzeresiniz. Bu işlem geri alınamaz.",
-      "successToast": "Teklif başarıyla silindi."
-    },
-    "bulkDelete": {
-      "description_one": "{{count}} teklifi silmek üzeresiniz. Bu işlem geri alınamaz.",
-      "description_other": "{{count}} teklifi silmek üzeresiniz. Bu işlem geri alınamaz.",
-      "successToast_one": "{{count}} teklif silindi",
-      "successToast_other": "{{count}} teklif silindi",
-      "partialToast": "{{total}} teklifin {{succeeded}} tanesi silindi; {{failed}} tanesi başarısız oldu"
-    },
-    "actions": {
-      "create": "Oluştur",
-      "manage_prices": "Fiyatları yönet",
-      "manage_inventory": "Envanteri yönet",
-      "edit_prices": "Fiyatları düzenle",
-      "edit_stock_levels": "Stok seviyelerini düzenle",
-      "bulkDelete": "Seçilenleri sil"
-    },
-    "fields": {
-      "sku": "SKU",
-      "variant": "Ana varyant",
-      "shippingProfile": "Kargo Profili",
-      "ean": "EAN",
-      "upc": "UPC",
-      "requiredQuantity": "Gerekli miktar",
-      "stockStatus": "Stok durumu",
-      "category": "Kategori",
-      "collection": "Koleksiyon",
-      "variants": "Varyantlar",
-      "status": "Durum",
-      "offer": "Teklif",
-      "minQuantity": "Min. adet",
-      "maxQuantity": "Maks. adet",
-      "stockLocation": "{{name}} Stok Lokasyonu",
-      "priceCurrency": "{{code}} Fiyatı",
-      "notEnabled": "Etkin değil",
-      "enabled": "Etkin",
-      "variantsCount_one": "{{count}} varyant",
-      "variantsCount_other": "{{count}} varyant",
-      "manageInventory": "Envanteri yönet",
-      "allowBackorders": "Ön siparişe izin ver",
-      "store": "Mağaza"
-    },
-    "status": {
-      "published": "Yayınlandı",
-      "draft": "Taslak",
-      "proposed": "Önerildi",
-      "rejected": "Reddedildi"
-    },
-    "stockStatus": {
-      "in_stock": "Stokta",
-      "low_stock": "Düşük stok",
-      "out_of_stock": "Stokta yok"
-    },
-    "empty": {
-      "heading": "Henüz teklif yok",
-      "description": "Pazar yerinde satışa başlamak için teklif oluşturun"
-    },
-    "filtered": {
-      "heading": "Eşleşen teklif yok",
-      "description": "Filtreleri veya arama terimlerini ayarlayın."
-    },
-    "validation": {
-      "skuRequired": "Bu satırı yayınlamak için SKU zorunludur.",
-      "shippingProfileRequired": "Bu satırı yayınlamak için bir kargo profili seçin.",
-      "duplicateSku": "Bu gönderimdeki başka bir satır zaten bu SKU'yu kullanıyor.",
-      "duplicatePriceRule": "Başka bir fiyat satırı zaten bu para birimi, bölge, müşteri grubu ve miktar sınırları kombinasyonuna sahip.",
-      "duplicateInventoryItem": "Bu envanter kalemi zaten eklenmiş.",
-      "selectAtLeastOneVariant": "Devam etmek için en az bir varyant seçin.",
-      "noPublishableRows": "Yayınlamak için bir SKU ekleyin, bir stok lokasyonu etkinleştirin veya bir fiyat belirleyin.",
-      "priceRequired": "Bu satırı yayınlamak için bir fiyat girin ya da atlamak için stokunu ve kargo profilini temizleyin.",
-      "noPricedRows": "En az bir varyant için fiyat girin. Fiyatı olmayan varyantlar atlanır.",
-      "duplicateBatchEntry": "Bir envanter kalemi yalnızca bir grupta yer alabilir (oluştur, güncelle veya sil)."
-    }
   },
   "returns": {
     "domain": "İadeler",

@@ -42,7 +42,6 @@ export interface PermissionKeys {
     "product_types": true
     "product_tags": true
     "product_attributes": true
-    "offers": true
     "inventory_items": true
     "reservations": true
     "stock_locations": true
