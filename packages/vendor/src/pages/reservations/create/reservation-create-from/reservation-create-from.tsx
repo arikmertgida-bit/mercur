@@ -10,7 +10,6 @@ import {
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { HttpTypes } from "@medusajs/types"
-import { OfferDTO } from "@mercurjs/types"
 import React from "react"
 import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
@@ -20,6 +19,7 @@ import { KeyboundForm } from "@components/utilities/keybound-form"
 import { useInventoryItems } from "@hooks/api/inventory"
 import { useCreateReservationItem } from "@hooks/api/reservations"
 import { useStockLocations } from "@hooks/api/stock-locations"
+import { z } from "zod"
 
 const AttributeGridRow = ({
   title,
@@ -40,14 +40,26 @@ const AttributeGridRow = ({
   )
 }
 
-// Inventory is offer-scoped in Mercur, so the product shown as a badge next to
-// each variant title is reached through the offer: inventory_item -> offers ->
-// product.
+// The product is reached through Medusa's own inventory_item -> variants ->
+// product relation (requested as `variants.product.title`), which the HTTP
+// types don't declare — so it is read through this schema instead of a cast.
+const InventoryItemProductSchema = z.object({
+  variants: z
+    .array(
+      z.object({
+        product: z.object({ title: z.string() }).nullish(),
+      })
+    )
+    .nullish(),
+})
+
 const getProductTitle = (
   inventoryItem: HttpTypes.AdminInventoryItem
 ): string | undefined => {
-  const item = inventoryItem as { offers?: OfferDTO[] | null }
-  return item.offers?.[0]?.product?.title ?? undefined
+  const parsed = InventoryItemProductSchema.safeParse(inventoryItem)
+  return parsed.success
+    ? parsed.data.variants?.[0]?.product?.title ?? undefined
+    : undefined
 }
 
 const buildCreateReservationSchema = (t: (key: string) => string) =>
@@ -88,7 +100,7 @@ export const ReservationCreateForm = (props: { inventoryItemId?: string }) => {
 
   const { inventory_items: searchedItems } = useInventoryItems(
     {
-      fields: "id,sku,title,*location_levels,offers.product.title",
+      fields: "id,sku,title,*location_levels,variants.product.title",
       // Only send `q` when there is an actual search term. Passing `undefined`
       // serializes to the literal `q=undefined`, which the backend treats as a
       // search for "undefined" and returns nothing.
@@ -102,7 +114,7 @@ export const ReservationCreateForm = (props: { inventoryItemId?: string }) => {
   const { inventory_items: presetItems } = useInventoryItems(
     {
       id: props.inventoryItemId ? [props.inventoryItemId] : undefined,
-      fields: "id,sku,title,*location_levels,offers.product.title",
+      fields: "id,sku,title,*location_levels,variants.product.title",
     },
     { enabled: !!props.inventoryItemId && itemsGate.allowed }
   )
@@ -118,7 +130,7 @@ export const ReservationCreateForm = (props: { inventoryItemId?: string }) => {
   const inventoryItemId = form.watch("inventory_item_id")
   const selectedInventoryItem = inventory_items?.find(
     (it) => it.id === inventoryItemId
-  ) as HttpTypes.AdminInventoryItemResponse["inventory_item"] | undefined
+  )
 
   const locationId = form.watch("location_id")
   const selectedLocationLevel = selectedInventoryItem?.location_levels?.find(
@@ -224,7 +236,8 @@ export const ReservationCreateForm = (props: { inventoryItemId?: string }) => {
                               disabled={!!props.inventoryItemId || itemsGate.denied}
                               options={(inventory_items ?? []).map(
                                 (inventoryItem) => ({
-                                  label: inventoryItem.title ?? inventoryItem.sku!,
+                                  label:
+                                    inventoryItem.title ?? inventoryItem.sku ?? inventoryItem.id,
                                   secondaryLabel: getProductTitle(inventoryItem),
                                   value: inventoryItem.id,
                                 })

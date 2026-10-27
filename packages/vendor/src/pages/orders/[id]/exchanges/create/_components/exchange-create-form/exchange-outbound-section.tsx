@@ -5,7 +5,7 @@ import { useFieldArray, UseFormReturn } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
 import { Form } from "@components/common/form"
-import { Combobox } from "@components/inputs/combobox"
+import { Combobox, getSingleComboboxValue } from "@components/inputs/combobox"
 import {
   RouteFocusModal,
   StackedFocusModal,
@@ -23,37 +23,7 @@ import { ItemPlaceholder } from "../../../../claims/create/_components/claim-cre
 import { ExchangeOutboundItem } from "./exchange-outbound-item"
 import { CreateExchangeSchemaType } from "./schema"
 
-// See `exchange-inbound-section.tsx` for the rationale on the inlined
-// preview shape. We only describe the fields we read.
-type ExchangePreview = {
-  items?: Array<{
-    id: string
-    variant_id?: string | null
-    detail?: { quantity?: number }
-    actions?: Array<{
-      id?: string
-      action?: string
-      exchange_id?: string | null
-      return_id?: string | null
-    }>
-    title?: string | null
-    product_title?: string | null
-    variant_title?: string | null
-    variant_sku?: string | null
-    subtitle?: string | null
-    thumbnail?: string | null
-    total?: number | null
-    adjustments?: Array<{ code?: string | null }>
-  }>
-  shipping_methods?: Array<{
-    shipping_option_id?: string | null
-    actions?: Array<{
-      id?: string
-      action?: string
-      return_id?: string | null
-    }>
-  }>
-}
+type ExchangePreview = HttpTypes.AdminOrderPreview
 
 type ExchangeOutboundSectionProps = {
   order: HttpTypes.AdminOrder
@@ -234,7 +204,7 @@ export const ExchangeOutboundSection = ({
   ) => {
     if (selectedOptionId) {
       await addOutboundShipping(
-        { shipping_option_id: selectedOptionId } as never,
+        { shipping_option_id: selectedOptionId },
         {
           onError: (error) => {
             toast.error(error.message)
@@ -338,7 +308,7 @@ export const ExchangeOutboundSection = ({
 
               if (actionId) {
                 updateOutboundItem(
-                  { $actionId: actionId, ...payload } as never,
+                  { $actionId: actionId, ...payload },
                   {
                     onError: (error) => {
                       toast.error(error.message)
@@ -373,7 +343,8 @@ export const ExchangeOutboundSection = ({
                       <Combobox
                         allowClear
                         value={value ?? undefined}
-                        onChange={(val) => {
+                        onChange={(next) => {
+                          const val = getSingleComboboxValue(next)
                           onChange(val)
                           onShippingOptionChange(val)
                         }}

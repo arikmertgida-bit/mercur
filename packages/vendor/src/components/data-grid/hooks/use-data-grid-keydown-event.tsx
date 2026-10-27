@@ -1,22 +1,24 @@
+import type { JsonValue } from "@mercurjs/types"
 import React, { useCallback } from "react"
-import type {
-  FieldValues,
-  Path,
-  PathValue,
-  UseFormGetValues,
-  UseFormSetValue,
-} from "react-hook-form"
+
+import { isJsonObject } from "@mercurjs/dashboard-shared"
 import {
   DataGridBulkUpdateCommand,
   DataGridMatrix,
   DataGridQueryTool,
   DataGridUpdateCommand,
 } from "../models"
-import { DataGridCoordinates } from "../types"
+import {
+  DataGridCoordinates,
+  DataGridForm,
+  DataGridToggleableNumberSchema,
+} from "../types"
 
-type UseDataGridKeydownEventOptions<TData, TFieldValues extends FieldValues> = {
+const ToggleableNumberStateSchema = DataGridToggleableNumberSchema.partial()
+
+type UseDataGridKeydownEventOptions<TData> = {
   containerRef: React.RefObject<HTMLDivElement>
-  matrix: DataGridMatrix<TData, TFieldValues>
+  matrix: DataGridMatrix<TData>
   anchor: DataGridCoordinates | null
   rangeEnd: DataGridCoordinates | null
   isEditing: boolean
@@ -28,16 +30,14 @@ type UseDataGridKeydownEventOptions<TData, TFieldValues extends FieldValues> = {
   setSingleRange: (coordinates: DataGridCoordinates | null) => void
   setRangeEnd: (coordinates: DataGridCoordinates | null) => void
   onEditingChangeHandler: (value: boolean) => void
-  getValues: UseFormGetValues<TFieldValues>
-  setValue: UseFormSetValue<TFieldValues>
+  getValues: DataGridForm["getValues"]
+  setValue: DataGridForm["setValue"]
   execute: (command: DataGridUpdateCommand | DataGridBulkUpdateCommand) => void
   undo: () => void
   redo: () => void
   queryTool: DataGridQueryTool | null
-  getSelectionValues: (
-    fields: string[]
-  ) => PathValue<TFieldValues, Path<TFieldValues>>[]
-  setSelectionValues: (fields: string[], values: string[]) => void
+  getSelectionValues: (fields: string[]) => JsonValue[]
+  setSelectionValues: (fields: string[], values: JsonValue[]) => void
   restoreSnapshot: () => void
   createSnapshot: (coords: DataGridCoordinates) => void
 }
@@ -45,10 +45,7 @@ type UseDataGridKeydownEventOptions<TData, TFieldValues extends FieldValues> = {
 const ARROW_KEYS = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"]
 const VERTICAL_KEYS = ["ArrowUp", "ArrowDown"]
 
-export const useDataGridKeydownEvent = <
-  TData,
-  TFieldValues extends FieldValues
->({
+export const useDataGridKeydownEvent = <TData,>({
   containerRef,
   matrix,
   anchor,
@@ -69,7 +66,7 @@ export const useDataGridKeydownEvent = <
   setSelectionValues,
   restoreSnapshot,
   createSnapshot,
-}: UseDataGridKeydownEventOptions<TData, TFieldValues>) => {
+}: UseDataGridKeydownEventOptions<TData>) => {
   const handleKeyboardNavigation = useCallback(
     (e: KeyboardEvent) => {
       if (!anchor) {
@@ -194,7 +191,7 @@ export const useDataGridKeydownEvent = <
 
       const fields = matrix.getFieldsInSelection(anchor, end)
 
-      const prev = getSelectionValues(fields) as boolean[]
+      const prev = getSelectionValues(fields)
 
       const allChecked = prev.every((value) => value === true)
       const next = Array.from({ length: prev.length }, () => !allChecked)
@@ -237,14 +234,14 @@ export const useDataGridKeydownEvent = <
 
       createSnapshot(anchor)
 
-      const current = getValues(field as Path<TFieldValues>)
+      const current = getValues(field)
       const next = ""
 
       const command = new DataGridUpdateCommand({
         next,
         prev: current,
         setter: (value) => {
-          setValue(field as Path<TFieldValues>, value, {
+          setValue(field, value, {
             shouldDirty: true,
             shouldTouch: true,
           })
@@ -269,21 +266,29 @@ export const useDataGridKeydownEvent = <
 
       createSnapshot(anchor)
 
-      const current = getValues(field as Path<TFieldValues>)
-      let checked = current.checked
+      const current = getValues(field)
+      const state = ToggleableNumberStateSchema.safeParse(current)
+      const { checked: currentChecked, disabledToggle } = state.success
+        ? state.data
+        : {}
+      let checked = currentChecked ?? false
 
       // If the toggle is not disabled, then we want to uncheck the toggle.
-      if (!current.disabledToggle) {
+      if (!disabledToggle) {
         checked = false
       }
 
-      const next = { ...current, quantity: "", checked }
+      const next: JsonValue = {
+        ...(isJsonObject(current) ? current : {}),
+        quantity: "",
+        checked,
+      }
 
       const command = new DataGridUpdateCommand({
         next,
         prev: current,
         setter: (value) => {
-          setValue(field as Path<TFieldValues>, value, {
+          setValue(field, value, {
             shouldDirty: true,
             shouldTouch: true,
           })
@@ -443,7 +448,7 @@ export const useDataGridKeydownEvent = <
         return
       }
 
-      const current = getValues(field as Path<TFieldValues>)
+      const current = getValues(field)
       let next: boolean
 
       if (typeof current === "boolean") {
@@ -456,7 +461,7 @@ export const useDataGridKeydownEvent = <
         next,
         prev: current,
         setter: (value) => {
-          setValue(field as Path<TFieldValues>, value, {
+          setValue(field, value, {
             shouldDirty: true,
             shouldTouch: true,
           })
@@ -513,11 +518,16 @@ export const useDataGridKeydownEvent = <
       const fields = matrix.getFieldsInSelection(anchor, rangeEnd)
       const prev = getSelectionValues(fields)
 
-      const next = prev.map((value) => ({
-        ...value,
-        quantity: "",
-        checked: value.disableToggle ? value.checked : false,
-      }))
+      const next = prev.map((value): JsonValue => {
+        const state = ToggleableNumberStateSchema.safeParse(value)
+        const { checked, disabledToggle } = state.success ? state.data : {}
+
+        return {
+          ...(isJsonObject(value) ? value : {}),
+          quantity: "",
+          checked: disabledToggle ? (checked ?? false) : false,
+        }
+      })
 
       const command = new DataGridBulkUpdateCommand({
         fields,
@@ -715,14 +725,20 @@ function getFocusableElements(ref: React.RefObject<HTMLDivElement>) {
     )
   )
 
-  const currentElementIndex = focusableElements.indexOf(ref.current!)
+  const container = ref.current
+
+  if (!container) {
+    return { shortcuts: null, cancel: null }
+  }
+
+  const currentElementIndex = focusableElements.indexOf(container)
 
   const shortcuts =
     currentElementIndex > 0 ? focusableElements[currentElementIndex - 1] : null
 
   let cancel = null
   for (let i = currentElementIndex + 1; i < focusableElements.length; i++) {
-    if (!ref.current!.contains(focusableElements[i])) {
+    if (!container.contains(focusableElements[i])) {
       cancel = focusableElements[i]
       break
     }

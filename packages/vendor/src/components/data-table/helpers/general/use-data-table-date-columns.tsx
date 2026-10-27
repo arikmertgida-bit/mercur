@@ -1,7 +1,7 @@
 import {
   createDataTableColumnHelper,
-  DataTableColumnDef,
   Tooltip,
+  useDataTable,
 } from "@medusajs/ui"
 import { useMemo } from "react"
 import { useTranslation } from "react-i18next"
@@ -12,15 +12,18 @@ type EntityWithDates = {
   updated_at: string
 }
 
-const columnHelper = createDataTableColumnHelper<EntityWithDates>()
-
-export const useDataTableDateColumns = <TData extends EntityWithDates>() => {
+export const useDataTableDateColumns = <
+  TData extends EntityWithDates,
+>(): Parameters<typeof useDataTable<TData>>[0]["columns"] => {
   const { t } = useTranslation()
   const { getFullDate } = useDate()
 
   return useMemo(() => {
+    const columnHelper = createDataTableColumnHelper<TData>()
+
     return [
-      columnHelper.accessor("created_at", {
+      columnHelper.accessor((row) => row.created_at, {
+        id: "created_at",
         header: t("fields.createdAt"),
         cell: ({ row }) => {
           return (
@@ -38,7 +41,8 @@ export const useDataTableDateColumns = <TData extends EntityWithDates>() => {
         sortAscLabel: t("filters.sorting.dateAsc"),
         sortDescLabel: t("filters.sorting.dateDesc"),
       }),
-      columnHelper.accessor("updated_at", {
+      columnHelper.accessor((row) => row.updated_at, {
+        id: "updated_at",
         header: t("fields.updatedAt"),
         cell: ({ row }) => {
           return (
@@ -56,6 +60,6 @@ export const useDataTableDateColumns = <TData extends EntityWithDates>() => {
         sortAscLabel: t("filters.sorting.dateAsc"),
         sortDescLabel: t("filters.sorting.dateDesc"),
       }),
-    ] as DataTableColumnDef<TData>[]
+    ]
   }, [t, getFullDate])
 }

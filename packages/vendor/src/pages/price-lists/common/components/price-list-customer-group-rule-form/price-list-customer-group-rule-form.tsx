@@ -8,7 +8,6 @@ import {
 } from "@tanstack/react-table"
 import { useEffect, useMemo, useState } from "react"
 import { useTranslation } from "react-i18next"
-import { SectionNoAccess, isForbidden, useCan } from "@mercurjs/dashboard-shared"
 import { StackedDrawer } from "@components/modals/stacked-drawer"
 import { StackedFocusModal } from "@components/modals/stacked-focus-modal"
 import { _DataTable } from "@components/table/data-table"
@@ -29,10 +28,10 @@ type PriceListCustomerGroupRuleFormProps = {
 }
 
 const initRowSelection = (state: PriceListCustomerGroup[]) => {
-  return state.reduce((acc, group) => {
+  return state.reduce<RowSelectionState>((acc, group) => {
     acc[group.id] = true
     return acc
-  }, {} as RowSelectionState)
+  }, {})
 }
 
 export const PriceListCustomerGroupRuleForm = ({
@@ -67,18 +66,17 @@ export const PriceListCustomerGroupRuleForm = ({
       : raw.order
     : undefined
 
-  const canViewCustomerGroups = useCan("customer_groups")
   const { customer_groups: customerGroupsData, count, isLoading, isError, error } =
     useCustomerGroups(
       { ...searchParams, fields: "id,name,customers.id" },
       {
         placeholderData: keepPreviousData,
-        enabled: canViewCustomerGroups,
       },
       sortParam ? { sort: sortParam } : undefined
     )
 
   const customerGroups = customerGroupsData
+    ?.map((item) => item.customer_group)
 
   const updater: OnChangeFn<RowSelectionState> = (value) => {
     const state = typeof value === "function" ? value(rowSelection) : value
@@ -94,7 +92,7 @@ export const PriceListCustomerGroupRuleForm = ({
         ?.filter((cg) => newIds.includes(cg.id))
         .map((cg) => ({
           id: cg.id,
-          name: cg.name!,
+          name: cg.name ?? "",
         })) || []
 
     const filteredIntermediate = intermediate.filter(
@@ -129,37 +127,31 @@ export const PriceListCustomerGroupRuleForm = ({
 
   const Component = type === "focus" ? StackedFocusModal : StackedDrawer
 
-  const isNoAccess = !canViewCustomerGroups || isForbidden(error)
-
-  if (isError && !isNoAccess) {
+  if (isError) {
     throw error
   }
 
   return (
     <div className="flex size-full flex-col overflow-hidden">
       <Component.Body className="min-h-0 p-0">
-        {isNoAccess ? (
-          <SectionNoAccess />
-        ) : (
-          <_DataTable
-            table={table}
-            columns={columns}
-            pageSize={PAGE_SIZE}
-            count={count}
-            isLoading={isLoading}
-            filters={filters}
-            layout="fill"
-            pagination
-            search
-            prefix={PREFIX}
-            queryObject={raw}
-            orderBy={[
-              { key: "name", label: t("fields.name") },
-              { key: "created_at", label: t("fields.createdAt") },
-              { key: "updated_at", label: t("fields.updatedAt") },
-            ]}
-          />
-        )}
+        <_DataTable
+          table={table}
+          columns={columns}
+          pageSize={PAGE_SIZE}
+          count={count}
+          isLoading={isLoading}
+          filters={filters}
+          layout="fill"
+          pagination
+          search
+          prefix={PREFIX}
+          queryObject={raw}
+          orderBy={[
+            { key: "name", label: t("fields.name") },
+            { key: "created_at", label: t("fields.createdAt") },
+            { key: "updated_at", label: t("fields.updatedAt") },
+          ]}
+        />
       </Component.Body>
       <Component.Footer>
         <Component.Close asChild>

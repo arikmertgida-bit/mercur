@@ -17,13 +17,10 @@ type OrderActiveEditSectionProps = {
   order: HttpTypes.AdminOrder
 }
 
-type PreviewItem = {
-  id: string
-  quantity: number
-  title?: string
-  variant_sku?: string | null
-  thumbnail?: string | null
-}
+type PreviewItem = Pick<
+  HttpTypes.AdminOrderLineItem,
+  "id" | "quantity" | "title" | "variant_sku" | "thumbnail"
+>
 
 function EditItem({
   item,
@@ -69,17 +66,14 @@ export const OrderActiveEditSection = ({
   const { mutateAsync: cancelOrderEdit } = useCancelOrderEdit(order.id)
   const { mutateAsync: confirmOrderEdit } = useConfirmOrderEdit(order.id)
 
-  const isPending =
-    (orderPreview as { order_change?: { status?: string } } | undefined)
-      ?.order_change?.status === "pending"
+  const isPending = orderPreview?.order_change?.status === "pending"
 
   const [addedItems, removedItems] = useMemo(() => {
     const added: { item: PreviewItem; quantity: number }[] = []
     const removed: { item: PreviewItem; quantity: number }[] = []
 
-    const originals = (order.items ?? []) as PreviewItem[]
-    const previewItems =
-      ((orderPreview as { items?: PreviewItem[] } | undefined)?.items ?? []) as PreviewItem[]
+    const originals: PreviewItem[] = order.items ?? []
+    const previewItems: PreviewItem[] = orderPreview?.items ?? []
 
     const orderLookupMap = new Map(originals.map((i) => [i.id, i]))
 
@@ -131,7 +125,7 @@ export const OrderActiveEditSection = ({
     }
   }
 
-  const change = (orderPreview as { order_change?: { change_type?: string } } | undefined)?.order_change
+  const change = orderPreview?.order_change
 
   if (!orderPreview || change?.change_type !== "edit") {
     return null

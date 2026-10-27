@@ -22,7 +22,7 @@ export const useRegion = (
   query?: Omit<InferClientInput<typeof sdk.vendor.regions.$id.query>, "$id">,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.regions.$id.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.regions.$id.query>
     >,
@@ -42,7 +42,7 @@ export const useRegions = (
   query?: InferClientInput<typeof sdk.vendor.regions.query>,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.regions.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.regions.query>
     >,

@@ -4,7 +4,8 @@
 // add/update/remove vendor mutations.
 import { useMemo, useState } from "react"
 import { HeartBroken } from "@medusajs/icons"
-import type { FieldValues, Control } from "react-hook-form"
+import type { UseFormReturn } from "react-hook-form"
+import { HttpTypes } from "@medusajs/types"
 import { useTranslation } from "react-i18next"
 
 import { Button, Input, Popover, toast } from "@medusajs/ui"
@@ -15,33 +16,13 @@ import {
   useRemoveDismissItem,
   useUpdateDismissItem,
 } from "@hooks/api/returns"
+import { getOrderChangeActionDetails } from "@lib/order-change-action"
 
-// Simpler type than full `UseFormReturn` (admin notes the latter slows
-// type-checking enough to be worth dropping for this leaf component).
-export type DismissedQuantityForm = {
-  control: Control<FieldValues>
-  setValue: (
-    name: `items.${number}.dismissed_quantity`,
-    value: number | null | undefined,
-    options?: {
-      shouldTouch?: boolean
-      shouldDirty?: boolean
-    }
-  ) => void
-}
+import { ReceiveReturnSchemaType } from "./constants"
 
-type PreviewAction = {
-  id: string
-  action: string
-  details?: { quantity?: number } | null
-}
+export type DismissedQuantityForm = UseFormReturn<ReceiveReturnSchemaType>
 
-type PreviewItem = {
-  id: string
-  quantity: number
-  detail: { return_received_quantity: number }
-  actions?: PreviewAction[]
-}
+type PreviewItem = HttpTypes.AdminOrderLinePreview
 
 type DismissedQuantityProps = {
   returnId: string
@@ -78,7 +59,7 @@ function DismissedQuantity({
     const dismissedAction = item.actions?.find(
       (a) => a.action === "RECEIVE_DAMAGED_RETURN_ITEM"
     )
-    return [dismissedAction?.details?.quantity as number | undefined]
+    return [getOrderChangeActionDetails(dismissedAction).quantity ?? undefined]
   }, [item])
 
   const onDismissedQuantityChanged = async (value: number | null) => {
@@ -151,7 +132,7 @@ function DismissedQuantity({
                     min={0}
                     max={item.quantity}
                     type="number"
-                    value={value}
+                    value={value ?? undefined}
                     className="bg-ui-bg-field-component text-right [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                     onChange={(e) => {
                       const parsed =

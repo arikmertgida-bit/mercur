@@ -14,7 +14,7 @@ export const ExchangeBody = ({
   const { t } = useTranslation()
 
   const outboundItems = (exchange.additional_items || []).reduce(
-    (acc, item) => (acc + item.quantity) as number,
+    (acc, item) => acc + item.quantity,
     0
   )
 

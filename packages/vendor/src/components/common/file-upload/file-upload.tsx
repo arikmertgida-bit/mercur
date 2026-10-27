@@ -60,7 +60,8 @@ export const FileUpload = ({
 
     if (
       !dropZoneRef.current ||
-      dropZoneRef.current.contains(event.relatedTarget as Node)
+      (event.relatedTarget instanceof Node &&
+        dropZoneRef.current.contains(event.relatedTarget))
     ) {
       return;
     }

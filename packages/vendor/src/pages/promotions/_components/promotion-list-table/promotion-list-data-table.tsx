@@ -48,7 +48,7 @@ export const PromotionListDataTable = () => {
   );
 
   const { table } = useDataTable({
-    data: (promotions ?? []) as HttpTypes.AdminPromotion[],
+    data: promotions ?? [],
     columns,
     count,
     enablePagination: true,
@@ -111,7 +111,7 @@ const PromotionActions = ({
     const res = await prompt({
       title: t("general.areYouSure"),
       description: t("promotions.deleteWarning", {
-        code: promotion.code!,
+        code: promotion.code ?? "",
       }),
       confirmText: t("actions.delete"),
       cancelText: t("actions.cancel"),

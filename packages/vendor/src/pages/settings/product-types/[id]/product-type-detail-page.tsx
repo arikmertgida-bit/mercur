@@ -1,9 +1,9 @@
 import { Children, ReactNode } from "react";
-import { useLoaderData, useParams } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 
 import { SingleColumnPageSkeleton } from "@components/common/skeleton";
 import { SingleColumnPage } from "@components/layout/pages";
-import { PermissionGuard, WidgetZone } from "@mercurjs/dashboard-shared";
+import { PermissionGuard, WidgetZone, useRequiredParam } from "@mercurjs/dashboard-shared";
 import { useProductType } from "@hooks/api/product-types";
 
 import { ProductTypeGeneralSection } from "./_components/product-type-general-section";
@@ -12,14 +12,12 @@ import { ProductTypeProductSection } from "./_components/product-type-product-se
 import type { productTypeLoader } from "./loader";
 
 const Root = ({ children }: { children?: ReactNode }) => {
-  const { id } = useParams();
+  const id = useRequiredParam("id");
 
-  const initialData = useLoaderData() as Awaited<
-    ReturnType<typeof productTypeLoader>
-  >;
+  const initialData = useLoaderData<typeof productTypeLoader>();
 
   const { product_type, isPending, isError, error } = useProductType(
-    id!,
+    id,
     undefined,
     {
       initialData,

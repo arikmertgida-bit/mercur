@@ -13,6 +13,7 @@ import {
   usePrompt
 } from '@medusajs/ui';
 import { useTranslation } from 'react-i18next';
+import type { HttpTypes } from '@mercurjs/types';
 import { Link } from 'react-router-dom';
 
 import {
@@ -28,7 +29,7 @@ export const ProductMediaSection = ({
   product,
   readOnly = false,
 }: {
-  product: Record<string, any>;
+  product: HttpTypes.VendorProduct;
   /** Display media only — no edit kebab, selection, or delete. */
   readOnly?: boolean;
 }) => {

@@ -9,6 +9,7 @@ import {
   useSyncExternalStore,
 } from "react"
 import { z } from "zod"
+import type { JsonRecord } from "../../lib/json-record"
 import { client } from "../../lib/client"
 import {
   connectSocket,
@@ -589,7 +590,7 @@ export function MessengerProvider({
       subject?: string
       productId?: string
       orderId?: string
-      metadata?: Record<string, unknown>
+      metadata?: JsonRecord
     }): Promise<string> => {
       try {
         const { conversation } = await findOrCreateConversation(params)

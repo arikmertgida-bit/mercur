@@ -14,15 +14,12 @@ import {
 } from "@components/modals"
 import { KeyboundForm } from "@components/utilities/keybound-form"
 import { useCreateOrderShipment } from "@hooks/api"
-import {
-  ExtendedAdminOrder,
-  ExtendedAdminOrderFulfillment,
-} from "@custom-types/order"
+import { HttpTypes } from "@mercurjs/types"
 import { CreateShipmentSchema } from "./constants"
 
 type OrderCreateFulfillmentFormProps = {
-  order: ExtendedAdminOrder
-  fulfillment: ExtendedAdminOrderFulfillment
+  order: HttpTypes.VendorOrder
+  fulfillment: HttpTypes.VendorOrderFulfillment
 }
 
 export function OrderCreateShipmentForm({
@@ -52,9 +49,9 @@ export function OrderCreateShipmentForm({
     await createShipment(
       {
         items:
-          fulfillment?.items
-            ?.map((i) => ({ id: i?.line_item_id, quantity: i.quantity }))
-            .filter((item) => !!item.id) ?? [],
+          fulfillment.items?.flatMap((i) =>
+            i.line_item_id ? [{ id: i.line_item_id, quantity: i.quantity }] : []
+          ) ?? [],
         labels: data.labels
           .filter((l) => !!l.tracking_number)
           .map((l) => ({

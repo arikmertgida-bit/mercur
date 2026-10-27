@@ -32,6 +32,8 @@ const NotificationSettingsSchema = z.object({
 
 type NotificationSettingsFormValues = z.infer<typeof NotificationSettingsSchema>;
 
+const CATEGORY_TYPES = NotificationSettingsSchema.keyof().options;
+
 const CATEGORY_LABEL_KEYS: Record<NotificationCategoryType, string> = {
   [NotificationCategory.ORDER]: "store.notificationSettings.categories.order",
   [NotificationCategory.PAYOUT]: "store.notificationSettings.categories.payout",
@@ -78,12 +80,12 @@ export const StoreNotificationSettingsForm = ({
   const { mutateAsync, isPending } = useUpdateNotificationPreferences();
 
   const handleSubmit = form.handleSubmit(async (values) => {
-    const nextPreferences: NotificationPreferenceEntry[] = (
-      Object.keys(values) as NotificationCategoryType[]
-    ).map((notificationType) => ({
+    const nextPreferences: NotificationPreferenceEntry[] = CATEGORY_TYPES.map(
+      (notificationType) => ({
       notificationType,
       enabled: values[notificationType],
-    }));
+      })
+    );
 
     await mutateAsync(nextPreferences, {
       onSuccess: () => {
@@ -102,7 +104,7 @@ export const StoreNotificationSettingsForm = ({
       <KeyboundForm onSubmit={handleSubmit} className="flex flex-1 flex-col">
         <RouteDrawer.Body>
           <div className="flex flex-col gap-y-4">
-            {(Object.keys(CATEGORY_LABEL_KEYS) as NotificationCategoryType[]).map(
+            {CATEGORY_TYPES.map(
               (notificationType) => (
                 <SwitchBox
                   key={notificationType}

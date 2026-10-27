@@ -3,7 +3,7 @@ import { Button, ProgressStatus, ProgressTabs, toast } from "@medusajs/ui"
 import { FieldPath, useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
-import { HttpTypes, PriceListStatus, PriceListType } from "@medusajs/types"
+import { HttpTypes } from "@medusajs/types"
 import { useState } from "react"
 import { z } from "zod"
 import {
@@ -12,7 +12,7 @@ import {
 } from "@components/modals"
 import { KeyboundForm } from "@components/utilities/keybound-form"
 import { useCreatePriceList } from "@hooks/api/price-lists"
-import { extractPricesFromOffers } from "@pages/price-lists/common/utils"
+import { exctractPricesFromProducts } from "@pages/price-lists/common/utils"
 import { PriceListDetailsForm } from "./price-list-details-form"
 import { PriceListPricesForm } from "./price-list-prices-form"
 import { PriceListProductsForm } from "./price-list-products-form"
@@ -25,12 +25,17 @@ import {
   PricingProductsFields,
   PricingProductsSchema,
 } from "./schema"
+import { validateFormFields } from "../../common/validate-form-fields"
 
-enum Tab {
-  DETAIL = "detail",
-  PRODUCT = "product",
-  PRICE = "price",
-}
+const Tab = {
+  DETAIL: "detail",
+  PRODUCT: "product",
+  PRICE: "price",
+} as const
+
+type Tab = (typeof Tab)[keyof typeof Tab]
+
+const TabSchema = z.enum(Tab)
 
 const tabOrder = [Tab.DETAIL, Tab.PRODUCT, Tab.PRICE] as const
 
@@ -62,14 +67,13 @@ export const PriceListCreateForm = ({
   const form = useForm<PricingCreateSchemaType>({
     defaultValues: {
       type: "sale",
-      status: "draft",
+      status: "active",
       title: "",
       description: "",
       starts_at: null,
       ends_at: null,
       product_ids: [],
-      offer_ids: [],
-      offers: {},
+      products: {},
       rules: {
         customer_group_id: [],
       },
@@ -80,19 +84,19 @@ export const PriceListCreateForm = ({
   const { mutateAsync, isPending } = useCreatePriceList()
 
   const handleSubmit = form.handleSubmit(async (data) => {
-    const { rules, offers } = data
+    const { rules, products } = data
 
     const rulesPayload = rules?.customer_group_id?.length
       ? { "customer.groups.id": rules.customer_group_id.map((cg) => cg.id) }
       : undefined
 
-    const prices = extractPricesFromOffers(offers, regions)
+    const prices = exctractPricesFromProducts(products, regions)
 
     await mutateAsync(
       {
         title: data.title,
-        type: data.type as PriceListType,
-        status: data.status as PriceListStatus,
+        type: data.type,
+        status: data.status,
         description: data.description,
         starts_at: data.starts_at ? data.starts_at.toISOString() : null,
         ends_at: data.ends_at ? data.ends_at.toISOString() : null,
@@ -117,33 +121,8 @@ export const PriceListCreateForm = ({
 
   const partialFormValidation = (
     fields: FieldPath<PricingCreateSchemaType>[],
-    schema: z.ZodSchema<any>
-  ) => {
-    form.clearErrors(fields)
-
-    const values = fields.reduce(
-      (acc, key) => {
-        acc[key] = form.getValues(key)
-        return acc
-      },
-      {} as Record<string, unknown>
-    )
-
-    const validationResult = schema.safeParse(values)
-
-    if (!validationResult.success) {
-      validationResult.error.errors.forEach(({ path, message, code }) => {
-        form.setError(path.join(".") as keyof PricingCreateSchemaType, {
-          type: code,
-          message,
-        })
-      })
-
-      return false
-    }
-
-    return true
-  }
+    schema: z.ZodType
+  ) => validateFormFields(form, fields, schema)
 
   const isTabDirty = (tab: Tab) => {
     switch (tab) {
@@ -252,7 +231,13 @@ export const PriceListCreateForm = ({
     <RouteFocusModal.Form form={form}>
       <ProgressTabs
         value={tab}
-        onValueChange={(tab) => handleChangeTab(tab as Tab)}
+        onValueChange={(tab) => {
+            const next = TabSchema.safeParse(tab)
+
+            if (next.success) {
+              handleChangeTab(next.data)
+            }
+          }}
         className="flex h-full flex-col overflow-hidden"
       >
         <KeyboundForm onSubmit={handleSubmit} className="flex h-full flex-col">

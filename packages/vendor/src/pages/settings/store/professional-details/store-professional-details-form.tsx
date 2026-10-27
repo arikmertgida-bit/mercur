@@ -120,7 +120,6 @@ export const StoreProfessionalDetailsForm = ({
           <FormExtensionZone
             model="seller"
             zone="professional-details"
-            control={form.control}
             data={seller}
           />
         </RouteDrawer.Body>

@@ -1,9 +1,9 @@
 import { Children, ReactNode } from "react";
-import { useLoaderData, useParams } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 
 import { TwoColumnPageSkeleton } from "@components/common/skeleton";
 import { TwoColumnPage } from "@components/layout/pages";
-import { WidgetZone, useLinkQuery } from "@mercurjs/dashboard-shared";
+import { WidgetZone, useLinkQuery, useRequiredParam } from "@mercurjs/dashboard-shared";
 import { useProduct } from "@hooks/api";
 
 import { PRODUCT_DETAIL_QUERY } from "../common/constants";
@@ -20,11 +20,11 @@ import { ProductShippingProfileSection } from "./_components/product-shipping-pr
 import { ProductSalesChannelSection } from "./_components/product-sales-channel-section";
 
 const Root = ({ children }: { children?: ReactNode }) => {
-  const initialData = useLoaderData() as Awaited<ReturnType<typeof loader>>;
+  const initialData = useLoaderData<typeof loader>();
 
-  const { id } = useParams();
+  const id = useRequiredParam("id");
   const query = useLinkQuery("product", PRODUCT_DETAIL_QUERY.fields);
-  const { product, isLoading, isError, error } = useProduct(id!, query, {
+  const { product, isLoading, isError, error } = useProduct(id, query, {
     initialData,
   });
 

@@ -1,5 +1,5 @@
 import { ChangeEvent, useRef, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Photo, XMarkMini } from "@medusajs/icons";
 import {
@@ -19,6 +19,7 @@ import {
   Thumbnail,
   TwoColumnPageSkeleton,
   TwoColumnPage,
+  useRequiredParam,
 } from "@mercurjs/dashboard-shared";
 import { client } from "../../../lib/client";
 import {
@@ -461,9 +462,9 @@ const ReviewReportSection = ({ review }: { review: ReviewDTO }) => {
 };
 
 export const ReviewDetailPage = () => {
-  const { id } = useParams();
+  const id = useRequiredParam("id");
 
-  const { review, isLoading, isError, error } = useReview(id!);
+  const { review, isLoading, isError, error } = useReview(id);
 
   if (isLoading || !review) {
     return <TwoColumnPageSkeleton mainSections={3} sidebarSections={1} showMetadata />;

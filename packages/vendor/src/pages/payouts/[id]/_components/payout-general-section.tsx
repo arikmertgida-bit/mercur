@@ -1,5 +1,5 @@
 import { Container, Heading, StatusBadge, Text } from "@medusajs/ui";
-import { PayoutDTO } from "@mercurjs/types";
+import type { HttpTypes } from "@mercurjs/types";
 import { DisplayExtensionZone, DisplayField } from "@mercurjs/dashboard-shared";
 import { useTranslation } from "react-i18next";
 import { getStylizedAmount } from "@lib/money-amount-helpers";
@@ -29,7 +29,7 @@ const payoutStatusColor = (status: string) => {
   }
 };
 
-export const PayoutGeneralSection = ({ payout }: { payout: PayoutDTO }) => {
+export const PayoutGeneralSection = ({ payout }: { payout: HttpTypes.VendorPayout }) => {
   const { t } = useTranslation();
   const { getFullDate } = useDate();
 
@@ -58,7 +58,7 @@ export const PayoutGeneralSection = ({ payout }: { payout: PayoutDTO }) => {
             {t("fields.amount")}
           </Text>
           <Text size="small" leading="compact">
-            {getStylizedAmount(payout.amount as number, payout.currency_code)}
+            {getStylizedAmount(payout.amount, payout.currency_code)}
           </Text>
         </div>
       </DisplayField>

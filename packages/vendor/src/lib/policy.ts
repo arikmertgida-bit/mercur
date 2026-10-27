@@ -26,7 +26,7 @@ export const getOrderDeliveredAt = (
   }
   let latest: Date | null = null
   for (const f of order.fulfillments) {
-    const delivered = (f as { delivered_at?: string | null }).delivered_at
+    const delivered = f.delivered_at
     if (!delivered) continue
     const d = new Date(delivered)
     if (!latest || d > latest) {

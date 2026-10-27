@@ -1,9 +1,13 @@
 import { Children, ReactNode } from "react";
-import { useLoaderData, useParams } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 
 import { TwoColumnPageSkeleton } from "@components/common/skeleton";
 import { TwoColumnPage } from "@components/layout/pages";
-import { useLinkQuery, WidgetZone } from "@mercurjs/dashboard-shared";
+import {
+  useLinkQuery,
+  useRequiredParam,
+  WidgetZone,
+} from "@mercurjs/dashboard-shared";
 import { useOrder, useOrderPreview } from "@hooks/api/orders";
 
 import { ActiveOrderClaimSection } from "./_components/active-order-claim-section";
@@ -21,13 +25,13 @@ import { DEFAULT_FIELDS } from "./constants";
 import type { loader } from "./loader";
 
 const Root = ({ children }: { children?: ReactNode }) => {
-  const initialData = useLoaderData() as Awaited<ReturnType<typeof loader>>;
-  const { id } = useParams();
+  const initialData = useLoaderData<typeof loader>();
+  const id = useRequiredParam("id");
 
   const query = useLinkQuery("order", DEFAULT_FIELDS);
 
   const { order, isLoading, isError, error } = useOrder(
-    id!,
+    id,
     query,
     {
       initialData,
@@ -35,7 +39,7 @@ const Root = ({ children }: { children?: ReactNode }) => {
   );
 
   const { order: orderPreview, isLoading: isPreviewLoading } = useOrderPreview(
-    id!,
+    id,
   );
 
   if (order) {

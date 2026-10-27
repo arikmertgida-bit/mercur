@@ -3,8 +3,8 @@ import { AdminProductCategoryResponse } from "@medusajs/types"
 import { Text, clx } from "@medusajs/ui"
 import { Select } from "radix-ui"
 import { useCan } from "@mercurjs/dashboard-shared"
+import { tagWidthStyle } from "./tag-width-style"
 import {
-  CSSProperties,
   ComponentPropsWithoutRef,
   forwardRef,
   useCallback,
@@ -199,11 +199,7 @@ export const CategorySelect = forwardRef<
           },
           className
         )}
-        style={
-          {
-            "--tag-width": `${tagWidth}px`,
-          } as CSSProperties
-        }
+        style={tagWidthStyle(tagWidth)}
       >
         <Select.Value aria-label={value[0]} />
         <Select.Icon className="ml-auto">

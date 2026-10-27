@@ -17,11 +17,9 @@ import {
   AdminOrderLineItem,
   AdminOrderPreview,
   AdminReservation,
-  AdminReturn,
-  AdminReturnItem,
-  AdminReturnReason,
   HttpTypes,
 } from "@medusajs/types"
+import { HttpTypes as MercurHttpTypes } from "@mercurjs/types"
 import {
   Badge,
   Button,
@@ -56,7 +54,6 @@ import {
   isAmountLessThenRoundingError,
 } from "@lib/money-amount-helpers"
 import { getTotalCaptured } from "@lib/payment"
-import { VariantInventoryLinkRow } from "@lib/inventory-preview"
 import { getReservationsLimitCount } from "../../../../../lib/orders"
 import {
   CLAIM_POLICY_DAYS,
@@ -70,9 +67,7 @@ import ReturnInfoPopover from "./return-info-popover"
 import ShippingInfoPopover from "./shipping-info-popover"
 import { Thumbnail } from "@components/common/thumbnail"
 
-type ReturnWithReason = Omit<AdminReturn, "items"> & {
-  items: (AdminReturnItem & { reason?: AdminReturnReason })[]
-}
+type ReturnWithReason = MercurHttpTypes.VendorReturn
 
 type OrderSummarySectionProps = {
   order: HttpTypes.AdminOrder
@@ -95,7 +90,7 @@ export const OrderSummarySection = ({
   const { order: orderPreview } = useOrderPreview(order.id)
 
   const reservationList = useMemo(
-    () => (reservations ?? []) as AdminReservation[],
+    () => reservations ?? [],
     [reservations]
   )
 
@@ -110,7 +105,7 @@ export const OrderSummarySection = ({
 
   const receivableReturns = useMemo(
     () =>
-      (receivableReturnsList as AdminReturn[]).filter((r) => !r.canceled_at),
+      receivableReturnsList.filter((r) => !r.canceled_at),
     [receivableReturnsList]
   )
 
@@ -126,9 +121,7 @@ export const OrderSummarySection = ({
     )
 
     return order.items?.some((item) => {
-      const variantLinks = (item as AdminOrderLineItem & {
-        variant?: { inventory_items?: VariantInventoryLinkRow[] | null }
-      }).variant?.inventory_items
+      const variantLinks = item.variant?.inventory_items
       if (!variantLinks?.length) {
         return false
       }
@@ -419,10 +412,7 @@ const Item = ({
       ?.amount || 0
   const price = item.unit_price
 
-  const variantInventoryLinks =
-    (item as AdminOrderLineItem & {
-      variant?: { inventory_items?: VariantInventoryLinkRow[] | null }
-    }).variant?.inventory_items ?? []
+  const variantInventoryLinks = item.variant?.inventory_items ?? []
   const isInventoryManaged = !!variantInventoryLinks.length
   const hasUnfulfilledItems =
     item.quantity - (item.detail?.fulfilled_quantity ?? 0) > 0
@@ -526,7 +516,7 @@ const ItemBreakdown = ({
 
   const returns = useMemo<ReturnWithReason[]>(
     () =>
-      (returnsList as ReturnWithReason[]).filter((r) => !r.canceled_at),
+      returnsList.filter((r) => !r.canceled_at),
     [returnsList]
   )
 
@@ -832,7 +822,7 @@ const CostBreakdown = ({
         <div className="flex flex-col gap-1 pl-5">
           {(order.shipping_methods || [])
             .sort((m1, m2) =>
-              (m1.created_at as string).localeCompare(m2.created_at as string)
+              String(m1.created_at).localeCompare(String(m2.created_at))
             )
             .map((sm) => {
               return (
@@ -925,7 +915,7 @@ const CostBreakdown = ({
                     <div className="bottom-[calc(50% - 2px)] absolute h-[1px] w-full border-b border-dashed" />
                   </div>
                   <span className="txt-small text-ui-fg-muted">
-                    {getLocaleAmount(total as number, order.currency_code)}
+                    {getLocaleAmount(total, order.currency_code)}
                   </span>
                 </div>
               )

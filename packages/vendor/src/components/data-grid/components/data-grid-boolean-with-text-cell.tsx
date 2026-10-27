@@ -1,12 +1,13 @@
+import type { JsonValue } from "@mercurjs/types"
 import { Switch } from "@medusajs/ui"
 import { Controller, ControllerRenderProps } from "react-hook-form"
 
 import { useCombinedRefs } from "../../../hooks/use-combined-refs"
 import { useDataGridCell, useDataGridCellError } from "../hooks"
-import { DataGridCellProps, InputProps } from "../types"
+import { DataGridCellProps, DataGridFormValues, InputProps } from "../types"
 import { DataGridCellContainer } from "./data-grid-cell-container"
 
-export const DataGridBooleanWithTextCell = <TData, TValue = any>({
+export const DataGridBooleanWithTextCell = <TData, TValue = JsonValue>({
   context,
   trueLabel = "True",
   falseLabel = "False",
@@ -47,7 +48,7 @@ const Inner = ({
   trueLabel,
   falseLabel,
 }: {
-  field: ControllerRenderProps<any, string>
+  field: ControllerRenderProps<DataGridFormValues, string>
   inputProps: InputProps
   trueLabel: string
   falseLabel: string
@@ -68,7 +69,7 @@ const Inner = ({
       <Switch
         ref={combinedRefs}
         size="small"
-        checked={value}
+        checked={value === true}
         onCheckedChange={(newValue) => {
           onChange(newValue === true, value)
         }}

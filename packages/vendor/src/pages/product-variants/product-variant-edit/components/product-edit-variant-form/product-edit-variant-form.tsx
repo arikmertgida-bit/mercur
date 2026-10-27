@@ -18,13 +18,13 @@ import { KeyboundForm } from "@components/utilities/keybound-form"
 import { useFeatureFlags, useRegions } from "@hooks/api"
 import { useUpdateProductVariant } from "@hooks/api/products"
 import {
-  transformNullableFormData,
+  transformNullableFormValue,
   transformNullableFormNumber,
 } from "@lib/form-helpers"
 import { optionalFloat } from "@lib/validation"
 
 type ProductEditVariantFormProps = {
-  product: HttpTypes.AdminProduct
+  product: ProductDTO
   variant: HttpTypes.AdminProductVariant
 }
 
@@ -83,8 +83,7 @@ export const ProductEditVariantForm = ({
   )
 
   const variantAttributes =
-    (product as HttpTypes.AdminProduct & Pick<ProductDTO, "attributes">)
-      .attributes?.filter((a) => a.is_variant_axis) ?? []
+    product.attributes?.filter((a) => a.is_variant_axis) ?? []
 
   // Form fields are keyed by attribute handle/id; the submit payload
   // translates them to option titles (= attribute names) — the shape
@@ -133,7 +132,7 @@ export const ProductEditVariantForm = ({
   }, [defaultPrices, form])
 
   const { mutateAsync, isPending } = useUpdateProductVariant(
-    variant.product_id!,
+    variant.product_id ?? "",
     variant.id,
   )
 
@@ -154,11 +153,11 @@ export const ProductEditVariantForm = ({
     // SKU/EAN/UPC/Barcode are read-only in this form (see the disabled
     // inputs below) and are intentionally never sent — the backend no
     // longer even accepts them on this route once set at creation.
-    const nullableData = transformNullableFormData({
-      mid_code,
-      hs_code,
-      origin_country,
-    })
+    const nullableData = {
+      mid_code: transformNullableFormValue(mid_code),
+      hs_code: transformNullableFormValue(hs_code),
+      origin_country: transformNullableFormValue(origin_country),
+    }
 
     // Backend keys options by option title (= attribute name). Form
     // keys by handle/id; remap and drop empties.

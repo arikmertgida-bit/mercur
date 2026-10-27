@@ -48,11 +48,14 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
 
     useEffect(() => {
       const handleClickOutside = (event: MouseEvent) => {
+        const target = event.target
+
         if (
+          target instanceof Node &&
           dropdownRef.current &&
-          !dropdownRef.current.contains(event.target as Node) &&
+          !dropdownRef.current.contains(target) &&
           triggerRef.current &&
-          !triggerRef.current.contains(event.target as Node)
+          !triggerRef.current.contains(target)
         ) {
           setIsOpen(false)
         }

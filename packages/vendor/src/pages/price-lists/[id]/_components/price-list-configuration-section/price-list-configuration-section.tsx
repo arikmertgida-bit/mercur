@@ -2,9 +2,7 @@ import { PencilSquare } from "@medusajs/icons"
 import { HttpTypes } from "@medusajs/types"
 import { Container, Heading } from "@medusajs/ui"
 import { useTranslation } from "react-i18next"
-
 import { DisplayExtensionZone } from "@mercurjs/dashboard-shared"
-
 import { ActionMenu } from "@components/common/action-menu"
 import { DateRangeDisplay } from "@components/common/date-range-display"
 import { ListSummary } from "@components/common/list-summary"
@@ -21,10 +19,10 @@ export const PriceListConfigurationSection = ({
   const { t } = useTranslation()
 
   return (
-    <Container className="flex flex-col gap-y-4" data-testid="price-list-configuration-section-container">
-      <div className="flex items-center justify-between" data-testid="price-list-configuration-section-header">
+    <Container className="flex flex-col gap-y-4">
+      <div className="flex items-center justify-between">
         <div>
-          <Heading level="h2" data-testid="price-list-configuration-section-heading">{t("priceLists.configuration.header")}</Heading>
+          <Heading level="h2">{t("priceLists.configuration.header")}</Heading>
           {/* TODO: Customer group availability - vendor API does not support customer groups yet */}
         </div>
         <ActionMenu
@@ -32,7 +30,6 @@ export const PriceListConfigurationSection = ({
             {
               actions: [
                 {
-                  permission: "price_lists:edit",
                   label: t("actions.edit"),
                   to: "configuration",
                   icon: <PencilSquare />,
@@ -42,13 +39,11 @@ export const PriceListConfigurationSection = ({
           ]}
         />
       </div>
-
       <DateRangeDisplay
         endsAt={priceList.ends_at}
         startsAt={priceList.starts_at}
         showTime
       />
-
       <DisplayExtensionZone
         model="price_list"
         zone="configuration"
@@ -67,10 +62,14 @@ const _CustomerGroupDisplay = ({
 }) => {
   const { t } = useTranslation()
 
-  const customerGroupIds =
-    priceList.price_list_rules?.find(
-      (rule) => rule.attribute === "customer.groups.id"
-    )?.value || ([] as string[])
+  const ruleValue = priceList.price_list_rules?.find(
+    (rule) => rule.attribute === "customer.groups.id"
+  )?.value
+  const customerGroupIds = Array.isArray(ruleValue)
+    ? ruleValue
+    : ruleValue
+      ? [ruleValue]
+      : []
 
   const { customer_groups: customerGroupsData, isPending, isError, error } = useCustomerGroups(
     undefined,
@@ -103,7 +102,7 @@ const _CustomerGroupDisplay = ({
       </span>
       <span>·</span>
       <ListSummary
-        list={filteredCustomerGroups.map((group) => group.name!)}
+        list={filteredCustomerGroups.map((group) => group.name ?? "")}
         n={1}
         className="txt-small-plus text-ui-fg-muted"
       />

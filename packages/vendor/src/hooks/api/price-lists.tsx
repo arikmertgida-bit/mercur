@@ -31,7 +31,7 @@ export const usePriceList = (
   >,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.priceLists.$id.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.priceLists.$id.query>
     >,
@@ -51,7 +51,7 @@ export const usePriceLists = (
   query?: InferClientInput<typeof sdk.vendor.priceLists.query>,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.priceLists.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.priceLists.query>
     >,
@@ -139,7 +139,7 @@ export const usePriceListPrices = (
   >,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.priceLists.$id.prices.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.priceLists.$id.prices.query>
     >,
@@ -216,7 +216,7 @@ export const usePriceListProducts = (
   query?: InferClientInput<typeof sdk.vendor.priceLists.$id.products.query>,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.priceLists.$id.products.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.priceLists.$id.products.query>
     >,

@@ -159,7 +159,6 @@ export const EditCampaignForm = ({ campaign }: EditCampaignFormProps) => {
             <FormExtensionZone
               model="campaign"
               zone="edit"
-              control={form.control}
               data={campaign}
             />
           </div>

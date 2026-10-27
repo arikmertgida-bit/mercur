@@ -1,6 +1,10 @@
-import { HttpTypes } from "@medusajs/types"
+import {
+  RangeNumberFilterValueSchema,
+  parseJsonQueryParam,
+} from "@mercurjs/dashboard-shared"
 
 import { useQueryParams } from "@hooks/use-query-params"
+import { toNumberFilterValue } from "@lib/number-filter"
 
 export const useInventoryTableQuery = ({
   pageSize = 20,
@@ -28,11 +32,16 @@ export const useInventoryTableQuery = ({
 
   const { offset, width, height, ...params } = raw
 
-  const searchParams: HttpTypes.AdminInventoryItemParams = {
+  const searchParams = {
     limit: pageSize,
     offset: offset ? parseInt(offset) : undefined,
-    width: width ? JSON.parse(width) : undefined,
-    height: height ? JSON.parse(height) : undefined,
+    // The table's number filter chips write `{ gt, lt }` (see NumberFilter).
+    width: toNumberFilterValue(
+      parseJsonQueryParam(width, RangeNumberFilterValueSchema)
+    ),
+    height: toNumberFilterValue(
+      parseJsonQueryParam(height, RangeNumberFilterValueSchema)
+    ),
     q: params.q,
     sku: params.sku,
     order: params.order || "title",

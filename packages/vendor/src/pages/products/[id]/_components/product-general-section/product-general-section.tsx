@@ -1,6 +1,7 @@
 import { PencilSquare, Trash } from "@medusajs/icons";
 import { Container, Heading, StatusBadge, usePrompt } from "@medusajs/ui";
 import { useTranslation } from "react-i18next";
+import type { HttpTypes } from "@mercurjs/types";
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -42,7 +43,7 @@ export const productStatusColor = (status: string) => {
 export const ProductGeneralSection = ({
   product,
 }: {
-  product: Record<string, any>;
+  product: HttpTypes.VendorProduct;
 }) => {
   const { t } = useTranslation();
   const prompt = usePrompt();

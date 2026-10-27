@@ -14,7 +14,7 @@ export const useFollowers = (
   query?: InferClientInput<typeof client.vendor.followers.query>,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof client.vendor.followers.query>,
       ClientError,
       InferClientOutput<typeof client.vendor.followers.query>
     >,

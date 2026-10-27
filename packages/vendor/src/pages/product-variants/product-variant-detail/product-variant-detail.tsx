@@ -1,5 +1,5 @@
 import { ReactNode, Children } from "react"
-import { useLoaderData, useParams } from "react-router-dom"
+import { useLoaderData } from "react-router-dom"
 
 import { WidgetZone } from "@mercurjs/dashboard-shared"
 
@@ -10,18 +10,16 @@ import { SingleColumnPage } from "@components/layout/pages"
 import { VariantGeneralSection } from "./components/variant-general-section"
 import { VariantMediaSection } from "./components/variant-media-section"
 import { VariantStockSection } from "./components/variant-stock-section"
+import { useVariantRouteParams } from "../common/route-params"
 import { variantLoader, VARIANT_DETAIL_FIELDS } from "./loader"
 
 const Root = ({ children }: { children?: ReactNode }) => {
-  const initialData = useLoaderData() as Awaited<
-    ReturnType<typeof variantLoader>
-  >
+  const initialData = useLoaderData<typeof variantLoader>()
 
-  const { id, product_id, variant_id } = useParams()
-  const productId = id || product_id
+  const { productId, variantId } = useVariantRouteParams()
   const { variant, isLoading, isError, error } = useProductVariant(
-    productId!,
-    variant_id!,
+    productId,
+    variantId,
     { fields: VARIANT_DETAIL_FIELDS },
     {
       initialData,

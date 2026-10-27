@@ -3,6 +3,7 @@ import { LoaderFunctionArgs } from "react-router-dom"
 import { variantsQueryKeys } from "@hooks/api/products"
 import { sdk } from "@lib/client"
 import { queryClient } from "@lib/query-client"
+import { getVariantRouteParams } from "../common/route-params"
 
 const VARIANT_EDIT_FIELDS = "*options,*options.option,*prices"
 
@@ -22,18 +23,13 @@ const editProductVariantQuery = (id: string, variantId: string) => ({
 export const editProductVariantLoader = async ({
   params,
   request,
-}: LoaderFunctionArgs): Promise<any> => {
-  const id = params.product_id || params.id
+}: LoaderFunctionArgs) => {
+  const { productId, variantId } = getVariantRouteParams(
+    params,
+    new URL(request.url).searchParams
+  )
 
-  const searchParams = new URL(request.url).searchParams
-  const searchVariantId = searchParams.get("variant_id")
-
-  const variantId = params.variant_id || searchVariantId
-
-  const query = editProductVariantQuery(id!, variantId || searchVariantId!)
-
-  return (
-    queryClient.getQueryData<ReturnType<typeof queryFn>>(query.queryKey) ??
-    (await queryClient.fetchQuery(query))
+  return queryClient.ensureQueryData(
+    editProductVariantQuery(productId, variantId)
   )
 }

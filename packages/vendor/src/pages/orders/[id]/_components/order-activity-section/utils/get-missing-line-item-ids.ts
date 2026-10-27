@@ -1,5 +1,7 @@
 import { AdminOrder, AdminOrderChange } from "@medusajs/types"
 
+import { getOrderChangeActionDetails } from "@lib/order-change-action"
+
 export function getMissingLineItemIds(order: AdminOrder, changes: AdminOrderChange[]) {
   if (!changes?.length) {
     return []
@@ -10,15 +12,14 @@ export function getMissingLineItemIds(order: AdminOrder, changes: AdminOrderChan
 
   changes.forEach((change) => {
     change.actions.forEach((action) => {
-      if (!action.details?.reference_id) {
+      const referenceId = getOrderChangeActionDetails(action).reference_id
+
+      if (!referenceId) {
         return
       }
 
-      if (
-        (action.details.reference_id as string).startsWith("ordli_") &&
-        !existingItemsMap.has(action.details.reference_id as string)
-      ) {
-        retIds.add(action.details.reference_id as string)
+      if (referenceId.startsWith("ordli_") && !existingItemsMap.has(referenceId)) {
+        retIds.add(referenceId)
       }
     })
   })

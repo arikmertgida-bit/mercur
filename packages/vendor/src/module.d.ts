@@ -18,7 +18,7 @@ declare module "virtual:mercur/menu-items" {
 }
 
 declare module "virtual:mercur/i18n" {
-    const i18nResources: Record<string, { translation: Record<string, any> }>
+    const i18nResources: import("./i18n/types").TranslationResources
     export default i18nResources
 }
 

@@ -1,25 +1,38 @@
 import { QueryKey, UseQueryOptions } from "@tanstack/react-query"
 
-export type TQueryKey<TKey, TListQuery = any, TDetailQuery = string> = {
+/** A list query embedded in a key: any segment TanStack Query accepts. */
+type QueryKeySegment = QueryKey[number]
+
+export type TQueryKey<
+  TKey,
+  TListQuery = QueryKeySegment,
+  TDetailQuery = string,
+> = {
   all: readonly [TKey]
   lists: () => readonly [...TQueryKey<TKey>["all"], "list"]
+  // The `{ query }` segment is only appended when a query is passed, so the
+  // key is one of two tuple shapes rather than always the longer one.
   list: (
     query?: TListQuery
-  ) => readonly [...ReturnType<TQueryKey<TKey>["lists"]>, { query: TListQuery }]
+  ) =>
+    | readonly [...ReturnType<TQueryKey<TKey>["lists"]>, { query: TListQuery }]
+    | ReturnType<TQueryKey<TKey>["lists"]>
   details: () => readonly [...TQueryKey<TKey>["all"], "detail"]
   detail: (
     id: TDetailQuery,
     query?: TListQuery
-  ) => readonly [
-    ...ReturnType<TQueryKey<TKey>["details"]>,
-    TDetailQuery,
-    { query: TListQuery }
-  ]
+  ) =>
+    | readonly [
+        ...ReturnType<TQueryKey<TKey>["details"]>,
+        TDetailQuery,
+        { query: TListQuery }
+      ]
+    | readonly [...ReturnType<TQueryKey<TKey>["details"]>, TDetailQuery]
 }
 
 export type UseQueryOptionsWrapper<
   // Return type of queryFn
-  TQueryFn = unknown,
+  TQueryFn,
   // Type thrown in case the queryFn rejects
   E = Error,
   // Query key type
@@ -31,24 +44,23 @@ export type UseQueryOptionsWrapper<
 
 export const queryKeysFactory = <
   T,
-  TListQueryType = any,
+  TListQueryType = QueryKeySegment,
   TDetailQueryType = string
 >(
   globalKey: T
 ) => {
-  type Keys = TQueryKey<T, TListQueryType, TDetailQueryType>
-  const queryKeyFactory: Keys = {
+  const queryKeyFactory: TQueryKey<T, TListQueryType, TDetailQueryType> = {
     all: [globalKey],
     lists: () => [...queryKeyFactory.all, "list"],
     list: (query?: TListQueryType) =>
-      [...queryKeyFactory.lists(), query ? { query } : undefined].filter(
-        (k) => !!k
-      ) as unknown as ReturnType<Keys["list"]>,
+      query
+        ? [...queryKeyFactory.lists(), { query }]
+        : queryKeyFactory.lists(),
     details: () => [...queryKeyFactory.all, "detail"],
     detail: (id: TDetailQueryType, query?: TListQueryType) =>
-      [...queryKeyFactory.details(), id, query ? { query } : undefined].filter(
-        (k) => !!k
-      ) as unknown as ReturnType<Keys["detail"]>,
+      query
+        ? [...queryKeyFactory.details(), id, { query }]
+        : [...queryKeyFactory.details(), id],
   }
   return queryKeyFactory
 }

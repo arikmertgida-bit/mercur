@@ -2,22 +2,20 @@ import { getLinkQuery } from "@mercurjs/dashboard-shared";
 import { LoaderFunctionArgs } from "react-router-dom";
 
 import { promotionsQueryKeys } from "@hooks/api/promotions";
-import { fetchQuery } from "@lib/client";
+import { sdk } from "@lib/client";
 import { queryClient } from "@lib/query-client";
+import { getRequiredParam } from "@lib/route-params";
 
 const promotionDetailQuery = (id: string) => {
   const query = getLinkQuery("promotion", "+status");
   return {
     queryKey: promotionsQueryKeys.detail(id, query),
-    queryFn: async () =>
-      fetchQuery(`/vendor/promotions/${id}`, {
-        method: "GET",
-        query,
-      }),
+    queryFn: async () => sdk.vendor.promotions.$id.query({ $id: id, ...query }),
   };
 };
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
-  const id = params.id;
-  return queryClient.ensureQueryData(promotionDetailQuery(id!));
+  return queryClient.ensureQueryData(
+    promotionDetailQuery(getRequiredParam(params, "id"))
+  );
 };

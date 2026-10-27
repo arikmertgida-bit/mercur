@@ -5,6 +5,7 @@ import { getLinkQuery } from "@mercurjs/dashboard-shared";
 import { collectionsQueryKeys } from "@hooks/api/collections";
 import { sdk } from "@lib/client";
 import { queryClient } from "@lib/query-client";
+import { getRequiredParam } from "@lib/route-params";
 
 const collectionDetailQuery = (id: string) => {
   const query = getLinkQuery("collection");
@@ -16,7 +17,6 @@ const collectionDetailQuery = (id: string) => {
 };
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
-  const id = params.id;
-  const query = collectionDetailQuery(id!);
+  const query = collectionDetailQuery(getRequiredParam(params, "id"));
   return queryClient.ensureQueryData(query);
 };

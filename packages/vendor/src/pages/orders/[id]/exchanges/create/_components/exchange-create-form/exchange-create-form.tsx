@@ -25,54 +25,12 @@ import {
   useRequestExchange,
 } from "@hooks/api/exchanges"
 import { getStylizedAmount } from "@lib/money-amount-helpers"
+import { getOrderChangeActionDetails } from "@lib/order-change-action"
 import { EXCHANGE_POLICY_DAYS } from "@lib/policy"
 
 import { ExchangeInboundSection } from "./exchange-inbound-section"
 import { ExchangeOutboundSection } from "./exchange-outbound-section"
 import { ExchangeCreateSchema, type CreateExchangeSchemaType } from "./schema"
-
-// Discriminator workaround: `preview.order_change.exchange_id` is present
-// when `change_type === "exchange"` but `HttpTypes.AdminOrderChange` doesn't
-// expose a discriminated union. Read it via a narrow cast.
-type UnknownValue = unknown
-
-const readExchangeId = (change: UnknownValue): string | undefined => {
-  if (
-    change &&
-    typeof change === "object" &&
-    "exchange_id" in change &&
-    typeof (change as { exchange_id?: UnknownValue }).exchange_id === "string"
-  ) {
-    return (change as { exchange_id: string }).exchange_id
-  }
-  return undefined
-}
-
-type PreviewItem = {
-  id: string
-  quantity?: number
-  total?: number | null
-  detail?: {
-    return_requested_quantity?: number
-    quantity?: number
-  }
-  actions?: Array<{
-    id?: string
-    action?: string
-    exchange_id?: string | null
-    return_id?: string | null
-    details?: { quantity?: number } | null
-  }>
-}
-
-type PreviewShippingMethod = {
-  total?: number | null
-  actions?: Array<{
-    id?: string
-    action?: string
-    return_id?: string | null
-  }>
-}
 
 let IS_REQUEST_RUNNING = false
 
@@ -128,7 +86,7 @@ export const ExchangeCreateForm = () => {
           toast.error(t("orders.exchanges.activeChangeError"))
           return
         }
-        const existingExchangeId = readExchangeId(preview.order_change)
+        const existingExchangeId = preview.order_change.exchange_id
         if (existingExchangeId) {
           setExchangeId(existingExchangeId)
         }
@@ -165,9 +123,9 @@ export const ExchangeCreateForm = () => {
   )
 
   // Mirror admin's totals math, scoped to this exchange.
-  const previewItems = useMemo<PreviewItem[]>(() => {
+  const previewItems = useMemo(() => {
     if (!exchangeId) return []
-    return ((preview?.items as PreviewItem[] | undefined) ?? []).filter(
+    return (preview?.items ?? []).filter(
       (i) => !!i.actions?.find((a) => a.exchange_id === exchangeId)
     )
   }, [preview, exchangeId])
@@ -193,7 +151,7 @@ export const ExchangeCreateForm = () => {
   const inboundTotal = useMemo(() => {
     return inboundPreviewItems.reduce((acc, item) => {
       const action = item.actions?.find((a) => a.action === "RETURN_ITEM")
-      const requested = Number(action?.details?.quantity || 0)
+      const requested = getOrderChangeActionDetails(action).quantity || 0
       const itemQty = item.quantity ?? 0
       const itemTotal = item.total ?? 0
       if (!itemQty) return acc
@@ -209,9 +167,7 @@ export const ExchangeCreateForm = () => {
   }, [outboundPreviewItems])
 
   const inboundShippingTotal = useMemo(() => {
-    const methods = (preview?.shipping_methods as
-      | PreviewShippingMethod[]
-      | undefined) ?? []
+    const methods = preview?.shipping_methods ?? []
     const method = methods.find(
       (sm) =>
         !!sm.actions?.find((a) => a.action === "SHIPPING_ADD" && !!a.return_id)
@@ -220,9 +176,7 @@ export const ExchangeCreateForm = () => {
   }, [preview])
 
   const outboundShippingTotal = useMemo(() => {
-    const methods = (preview?.shipping_methods as
-      | PreviewShippingMethod[]
-      | undefined) ?? []
+    const methods = preview?.shipping_methods ?? []
     const method = methods.find(
       (sm) =>
         !!sm.actions?.find((a) => a.action === "SHIPPING_ADD" && !a.return_id)
@@ -231,8 +185,7 @@ export const ExchangeCreateForm = () => {
   }, [preview])
 
   const estimatedDifference = useMemo(() => {
-    const summary = (preview?.summary as { pending_difference?: number } | undefined)
-    return (summary?.pending_difference ?? 0) - inboundTotal
+    return (preview?.summary?.pending_difference ?? 0) - inboundTotal
   }, [preview, inboundTotal])
 
   const prompt = usePrompt()
@@ -240,7 +193,7 @@ export const ExchangeCreateForm = () => {
   /**
    * HANDLERS
    */
-  const handleSubmit = form.handleSubmit(async (data) => {
+  const handleSubmit = form.handleSubmit(async () => {
     if (!exchangeId) {
       return
     }
@@ -262,9 +215,9 @@ export const ExchangeCreateForm = () => {
       // Vendor mutations are fired by the sub-sections as the user edits;
       // confirm just calls request. Admin parity: `no_notification` is
       // derived from the toggle.
-      await requestExchange(
-        { no_notification: !data.send_notification } as never
-      )
+      // The exchange request route takes no body: like Medusa's own, the
+      // confirm step does not read `no_notification`.
+      await requestExchange()
       toast.success(t("orders.exchanges.toast.confirmedSuccessfully"))
       handleSuccess(`/orders/${orderId}`)
     } catch (e) {
@@ -294,7 +247,6 @@ export const ExchangeCreateForm = () => {
     }
   }
 
-  const ready = !!order && !!preview && !!exchangeId
 
   return (
     <RouteFocusModal.Form form={form}>
@@ -312,19 +264,19 @@ export const ExchangeCreateForm = () => {
               })}
             </Text>
 
-            {ready && (
+            {order && preview && exchangeId && (
               <>
                 <ExchangeInboundSection
                   form={form}
-                  preview={preview as never}
-                  order={order!}
+                  preview={preview}
+                  order={order}
                   exchange={{ id: exchangeId }}
                 />
 
                 <ExchangeOutboundSection
                   form={form}
-                  preview={preview as never}
-                  order={order!}
+                  preview={preview}
+                  order={order}
                   exchange={{ id: exchangeId }}
                 />
 

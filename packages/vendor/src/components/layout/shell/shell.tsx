@@ -4,6 +4,7 @@ import { AnimatePresence } from "motion/react"
 import { Dialog as RadixDialog } from "radix-ui"
 import { PropsWithChildren, ReactNode, useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
+import { z } from "zod"
 import {
   Link,
   Outlet,
@@ -103,23 +104,28 @@ const Gutter = ({ children }: PropsWithChildren) => {
   )
 }
 
+// Route handles are untyped in React Router; a crumb is any route whose
+// handle carries a `breadcrumb` renderer.
+const BreadcrumbHandleSchema = z.object({
+  breadcrumb: z.custom<(match: UIMatch) => string | ReactNode>(
+    (value) => typeof value === "function"
+  ),
+})
+
 const Breadcrumbs = () => {
-  const matches = useMatches() as UIMatch<
-    unknown,
-    {
-      breadcrumb?: (match?: UIMatch) => string | ReactNode
-    }
-  >[]
+  const matches = useMatches()
 
   const crumbs = matches
-    .filter((match) => match.handle?.breadcrumb)
     .map((match) => {
-      const handle = match.handle
+      const handle = BreadcrumbHandleSchema.safeParse(match.handle)
+      if (!handle.success) {
+        return null
+      }
 
       let label: string | ReactNode | undefined = undefined
 
       try {
-        label = handle.breadcrumb?.(match)
+        label = handle.data.breadcrumb(match)
       } catch  {
         // noop
       }
@@ -133,7 +139,7 @@ const Breadcrumbs = () => {
         path: match.pathname,
       }
     })
-    .filter(Boolean) as { label: string | ReactNode; path: string }[]
+    .filter((crumb) => crumb !== null)
 
   return (
     <ol

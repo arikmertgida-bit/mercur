@@ -10,7 +10,7 @@ import { z } from "zod";
 import { RouteFocusModal, useRouteModal } from "@components/modals";
 import { KeyboundForm } from "@components/utilities/keybound-form";
 import { useBatchPriceListPrices } from "@hooks/api/price-lists";
-import { extractPricesFromOffers } from "../../../../common/utils";
+import { exctractPricesFromProducts } from "../../../../common/utils";
 import { PriceListPricesAddPricesForm } from "./price-list-prices-add-prices-form";
 import { PriceListPricesAddProductIdsForm } from "./price-list-prices-add-product-ids-form";
 import {
@@ -19,6 +19,7 @@ import {
   PriceListPricesAddProductsIdsFields,
   PriceListPricesAddSchema,
 } from "./schema";
+import { validateFormFields } from "../../../../common/validate-form-fields";
 
 type PriceListPricesAddFormProps = {
   priceList: HttpTypes.AdminPriceList;
@@ -27,10 +28,14 @@ type PriceListPricesAddFormProps = {
   pricePreferences: HttpTypes.AdminPricePreference[];
 };
 
-enum Tab {
-  PRODUCT = "product",
-  PRICE = "price",
-}
+const Tab = {
+  PRODUCT: "product",
+  PRICE: "price",
+} as const;
+
+type Tab = (typeof Tab)[keyof typeof Tab];
+
+const TabSchema = z.enum(Tab);
 
 const tabOrder = [Tab.PRODUCT, Tab.PRICE] as const;
 
@@ -55,9 +60,8 @@ export const PriceListPricesAddForm = ({
 
   const form = useForm<PriceListPricesAddSchema>({
     defaultValues: {
-      offers: {},
+      products: {},
       product_ids: [],
-      offer_ids: [],
     },
     resolver: zodResolver(PriceListPricesAddSchema),
   });
@@ -66,9 +70,9 @@ export const PriceListPricesAddForm = ({
 
   const handleSubmit = form.handleSubmit(
     async (values) => {
-      const { offers } = values;
+      const { products } = values;
 
-      const prices = extractPricesFromOffers(offers, regions);
+      const prices = exctractPricesFromProducts(products, regions);
 
       await mutateAsync(
         {
@@ -84,7 +88,7 @@ export const PriceListPricesAddForm = ({
       );
     },
     (errors) => {
-      if (errors.offers) {
+      if (errors.products) {
         toast.error(t("priceLists.products.add.atLeastOnePrice"));
       }
     },
@@ -92,33 +96,8 @@ export const PriceListPricesAddForm = ({
 
   const partialFormValidation = (
     fields: FieldPath<PriceListPricesAddSchema>[],
-    schema: z.ZodSchema<any>,
-  ) => {
-    form.clearErrors(fields);
-
-    const values = fields.reduce(
-      (acc, key) => {
-        acc[key] = form.getValues(key);
-        return acc;
-      },
-      {} as Record<string, unknown>,
-    );
-
-    const validationResult = schema.safeParse(values);
-
-    if (!validationResult.success) {
-      validationResult.error.errors.forEach(({ path, message, code }) => {
-        form.setError(path.join(".") as keyof PriceListPricesAddSchema, {
-          type: code,
-          message,
-        });
-      });
-
-      return false;
-    }
-
-    return true;
-  };
+    schema: z.ZodType,
+  ) => validateFormFields(form, fields, schema);
 
   const isTabDirty = (tab: Tab) => {
     switch (tab) {
@@ -206,7 +185,13 @@ export const PriceListPricesAddForm = ({
     <RouteFocusModal.Form form={form}>
       <ProgressTabs
         value={tab}
-        onValueChange={(tab) => handleChangeTab(tab as Tab)}
+        onValueChange={(tab) => {
+          const next = TabSchema.safeParse(tab);
+
+          if (next.success) {
+            handleChangeTab(next.data);
+          }
+        }}
         className="flex h-full flex-col overflow-hidden"
       >
         <KeyboundForm onSubmit={handleSubmit} className="flex h-full flex-col">

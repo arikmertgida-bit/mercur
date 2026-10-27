@@ -6,12 +6,15 @@ import { IconButton, Input, Text } from "@medusajs/ui"
 import { UseFormReturn } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
-import { Action, ActionMenu } from "@components/common/action-menu"
+import { ActionMenu } from "@components/common/action-menu"
+import { isTruthy } from "@lib/is-truthy"
 import { Form } from "@components/common/form"
 import { Thumbnail } from "@components/common/thumbnail"
-import { Combobox } from "@components/inputs/combobox"
+import { Combobox, getSingleComboboxValue } from "@components/inputs/combobox"
 import { MoneyAmountCell } from "@components/table/table-cells/common/money-amount-cell"
 import { useReturnReasons } from "@hooks/api/return-reasons"
+
+import { CreateClaimSchemaType } from "./schema"
 
 type OrderEditItemProps = {
   item: AdminOrderLineItem
@@ -22,9 +25,9 @@ type OrderEditItemProps = {
   index: number
 
   onRemove: () => void
-  onUpdate: (payload: HttpTypes.AdminUpdateReturnItems) => void
+  onUpdate: (payload: Omit<HttpTypes.AdminUpdateReturnItems, "metadata">) => void
 
-  form: UseFormReturn<any>
+  form: UseFormReturn<CreateClaimSchemaType>
 }
 
 function ClaimInboundItem({
@@ -132,7 +135,7 @@ function ClaimInboundItem({
                     onClick: onRemove,
                     icon: <XCircle />,
                   },
-                ].filter(Boolean) as Action[],
+                ].filter(isTruthy),
               },
             ]}
           />
@@ -165,8 +168,9 @@ function ClaimInboundItem({
                             <Form.Control>
                               <Combobox
                                 className="bg-ui-bg-field-component hover:bg-ui-bg-field-component-hover"
-                                value={value}
-                                onChange={(v) => {
+                                value={value ?? undefined}
+                                onChange={(next) => {
+                                  const v = getSingleComboboxValue(next)
                                   onUpdate({ reason_id: v })
                                   onChange(v)
                                 }}

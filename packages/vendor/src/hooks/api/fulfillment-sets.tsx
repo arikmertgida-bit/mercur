@@ -61,7 +61,7 @@ export const useFulfillmentSetServiceZone = (
   >,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.fulfillmentSets.$id.serviceZones.$zoneId.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.fulfillmentSets.$id.serviceZones.$zoneId.query>
     >,

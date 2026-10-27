@@ -22,7 +22,7 @@ const ORDERS_REFETCH_INTERVAL_MS = 30_000
 
 export const useVendorDashboard = (
   options?: Omit<
-    UseQueryOptions<unknown, ClientError, VendorDashboardData>,
+    UseQueryOptions<VendorDashboardData, ClientError, VendorDashboardData>,
     "queryKey" | "queryFn"
   >,
 ) => {

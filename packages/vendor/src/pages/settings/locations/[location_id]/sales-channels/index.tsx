@@ -1,13 +1,13 @@
-import { useParams } from "react-router-dom"
+import { useRequiredParam } from "@mercurjs/dashboard-shared"
 
 import { RouteFocusModal } from "@components/modals"
 import { useStockLocation } from "@hooks/api/stock-locations"
 import { LocationEditSalesChannelsForm } from "./_components/edit-sales-channels-form"
 
 const LocationSalesChannels = () => {
-  const { location_id } = useParams()
+  const location_id = useRequiredParam("location_id")
   const { stock_location, isPending, isError, error } = useStockLocation(
-    location_id!,
+    location_id,
     {
       fields: "id,*sales_channels",
     }

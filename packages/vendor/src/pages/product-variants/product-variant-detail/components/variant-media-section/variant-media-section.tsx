@@ -62,7 +62,7 @@ export const VariantMediaSection = ({
   const media = getMedia(variant)
 
   const { mutateAsync } = useUpdateProductVariant(
-    variant.product_id!,
+    variant.product_id ?? "",
     variant.id
   )
 

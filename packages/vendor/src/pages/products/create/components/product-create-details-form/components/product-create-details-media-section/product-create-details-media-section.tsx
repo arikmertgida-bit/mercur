@@ -126,6 +126,10 @@ export const ProductCreateMediaSection = () => {
     }
   }
 
+  const activeField = activeId
+    ? fields.find((m) => m.field_id === activeId)
+    : undefined
+
   return (
     <div id="media" className="flex flex-col gap-y-2" data-testid="product-create-media-section">
       <ProductMediaLimitModal
@@ -133,7 +137,6 @@ export const ProductCreateMediaSection = () => {
         onOpenChange={setLimitModalOpen}
       />
       <UploadMediaFormItem
-        form={form}
         append={append}
         showHint={false}
         maxCount={MAX_PRODUCT_MEDIA_COUNT}
@@ -148,11 +151,7 @@ export const ProductCreateMediaSection = () => {
         onDragCancel={handleDragCancel}
       >
         <DragOverlay dropAnimation={dropAnimationConfig}>
-          {activeId ? (
-            <MediaGridItemOverlay
-              field={fields.find((m) => m.field_id === activeId)!}
-            />
-          ) : null}
+          {activeField ? <MediaGridItemOverlay field={activeField} /> : null}
         </DragOverlay>
         <ul className="flex flex-col gap-y-2" data-testid="product-create-media-section-list">
           <SortableContext items={fields.map((field) => field.field_id)}>

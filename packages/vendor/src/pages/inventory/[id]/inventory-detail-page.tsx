@@ -1,10 +1,9 @@
 import { Children, ReactNode } from "react";
-import { useLoaderData, useParams } from "react-router-dom";
-import { InventoryTypes, ProductVariantDTO } from "@medusajs/types";
+import { useLoaderData } from "react-router-dom";
 
 import { TwoColumnPageSkeleton } from "@components/common/skeleton";
 import { TwoColumnPage } from "@components/layout/pages";
-import { useLinkQuery, WidgetZone } from "@mercurjs/dashboard-shared";
+import { useLinkQuery, WidgetZone, useRequiredParam } from "@mercurjs/dashboard-shared";
 import { useInventoryItem } from "@hooks/api/inventory";
 
 import { InventoryItemAttributeSection } from "./_components/inventory-item-attributes/attributes-section";
@@ -16,20 +15,16 @@ import { INVENTORY_DETAIL_FIELDS } from "./constants";
 
 import { loader } from "./loader";
 
-type DetailInventoryItem = InventoryTypes.InventoryItemDTO & {
-  variants?: ProductVariantDTO[] | null;
-};
-
 const Root = ({ children }: { children?: ReactNode }) => {
-  const { id } = useParams();
-  const initialData = useLoaderData() as Awaited<ReturnType<typeof loader>>;
+  const id = useRequiredParam("id");
+  const initialData = useLoaderData<typeof loader>();
   const {
     inventory_item,
     isPending: isLoading,
     isError,
     error,
   } = useInventoryItem(
-    id!,
+    id,
     useLinkQuery("inventory_item", INVENTORY_DETAIL_FIELDS),
     { initialData },
   );
@@ -69,10 +64,10 @@ const Root = ({ children }: { children?: ReactNode }) => {
           <TwoColumnPage.Sidebar>
             <WidgetZone id="inventory.detail.side" data={inventory_item}>
               <InventoryItemVariantsSection
-                variants={(inventory_item as DetailInventoryItem).variants ?? []}
+                variants={inventory_item.variants ?? []}
               />
               <InventoryItemAttributeSection
-                inventoryItem={inventory_item as DetailInventoryItem}
+                inventoryItem={inventory_item}
               />
             </WidgetZone>
           </TwoColumnPage.Sidebar>

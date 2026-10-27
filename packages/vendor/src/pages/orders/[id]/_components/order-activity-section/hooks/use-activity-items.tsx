@@ -1,7 +1,13 @@
 import { useMemo } from "react"
 import { useTranslation } from "react-i18next"
 import { useCan, useExtensionActivity } from "@mercurjs/dashboard-shared"
-import { AdminClaim, AdminExchange, AdminReturn } from "@medusajs/types"
+import {
+  AdminClaim,
+  AdminExchange,
+  AdminOrderLineItem,
+  AdminReturn,
+} from "@medusajs/types"
+import { HttpTypes } from "@mercurjs/types"
 import { Text } from "@medusajs/ui"
 import { ReactNode } from "react"
 import { By } from "@components/common/user-link"
@@ -11,11 +17,13 @@ import {
 import { useClaims } from "@hooks/api/claims"
 import { useExchanges } from "@hooks/api/exchanges"
 import { useReturns } from "@hooks/api/returns"
-import { ExtendedAdminOrderLineItemWithInventory } from "@custom-types/order"
-import { ExtendedAdminOrder, ExtendedAdminOrderChange } from "@custom-types/order"
 import { getStylizedAmount } from "@lib/money-amount-helpers"
 import { getFormattedAddress } from "@lib/addresses"
-import { AdminOrderAddress, AdminStockLocationAddress } from "@medusajs/types"
+import {
+  getChangedAddress,
+  getChangedText,
+  getOrderUpdateDetails,
+} from "@lib/order-change-action"
 import ChangeDetailsTooltip from "../change-details-tooltip"
 import { FulfillmentCreatedBody } from "../components"
 import { ReturnBody } from "../components"
@@ -35,10 +43,10 @@ export type Activity = {
   children?: ReactNode
   itemsToSend?: AdminClaim["additional_items"] | AdminExchange["additional_items"]
   itemsToReturn?: AdminReturn["items"]
-  itemsMap?: Map<string, ExtendedAdminOrderLineItemWithInventory>
+  itemsMap?: Map<string, AdminOrderLineItem>
 }
 
-export const useActivityItems = (order: ExtendedAdminOrder): Activity[] => {
+export const useActivityItems = (order: HttpTypes.VendorOrder): Activity[] => {
   const { t, i18n } = useTranslation()
   const extensionActivity = useExtensionActivity("order", order)
 
@@ -47,38 +55,34 @@ export const useActivityItems = (order: ExtendedAdminOrder): Activity[] => {
   
 
   const itemsMap = useMemo(() => {
-    return new Map<string, ExtendedAdminOrderLineItemWithInventory>(
+    return new Map<string, AdminOrderLineItem>(
       order?.items?.map((i) => [i.id, i])
     )
   }, [order.items])
 
   const canViewReturns = useCan("orders.returns")
 
-  const { returns: returnsList = [] } = useReturns(
+  const { returns = [] } = useReturns(
     {
       order_id: order.id,
       fields: "+received_at,*items",
     },
     { enabled: canViewReturns }
   )
-  const { claims: claimsList = [] } = useClaims(
+  const { claims = [] } = useClaims(
     {
       order_id: order.id,
       fields: "*additional_items",
     },
     { enabled: canViewReturns }
   )
-  const { exchanges: exchangesList = [] } = useExchanges(
+  const { exchanges = [] } = useExchanges(
     {
       order_id: order.id,
       fields: "*additional_items",
     },
     { enabled: canViewReturns }
   )
-
-  const returns = returnsList as AdminReturn[]
-  const claims = claimsList as AdminClaim[]
-  const exchanges = exchangesList as AdminExchange[]
 
   const isLoading = false
 
@@ -142,10 +146,7 @@ export const useActivityItems = (order: ExtendedAdminOrder): Activity[] => {
           timestamp: refund.created_at,
           children: (
             <Text size="small" className="text-ui-fg-subtle">
-              {getStylizedAmount(
-                refund.amount as number,
-                payment.currency_code
-              )}
+              {getStylizedAmount(refund.amount, payment.currency_code)}
             </Text>
           ),
         })
@@ -228,7 +229,9 @@ export const useActivityItems = (order: ExtendedAdminOrder): Activity[] => {
     }
 
     for (const claim of claims) {
-      const claimReturn = returnMap.get(claim.return_id!)
+      const claimReturn = claim.return_id
+        ? returnMap.get(claim.return_id)
+        : undefined
 
       items.push({
         title: t(
@@ -248,7 +251,9 @@ export const useActivityItems = (order: ExtendedAdminOrder): Activity[] => {
     }
 
     for (const exchange of exchanges) {
-      const exchangeReturn = returnMap.get(exchange.return_id!)
+      const exchangeReturn = exchange.return_id
+        ? returnMap.get(exchange.return_id)
+        : undefined
 
       items.push({
         title: t(
@@ -327,15 +332,18 @@ export const useActivityItems = (order: ExtendedAdminOrder): Activity[] => {
       }
     }
 
-    for (const update of (orderChanges as ExtendedAdminOrderChange[]).filter(
-      (oc) => oc.change_type === "edit"
+    // Address/email updates are `update_order` changes (as in Medusa's own
+    // order timeline); each one carries a single action describing the field.
+    for (const update of orderChanges.filter(
+      (oc) => oc.change_type === "update_order"
     )) {
-      const updateType = update.actions[0]?.details?.type
+      const details = getOrderUpdateDetails(update.actions[0])
+      const updateType = details.type
 
       if (updateType === "shipping_address") {
-        const oldAddress = update?.actions[0]?.details?.old as AdminOrderAddress | AdminStockLocationAddress | null | undefined
-        const newAddress = update?.actions[0]?.details?.new as AdminOrderAddress | AdminStockLocationAddress | null | undefined
-        
+        const oldAddress = getChangedAddress(details.old)
+        const newAddress = getChangedAddress(details.new)
+
         items.push({
           title: (
             <ChangeDetailsTooltip
@@ -360,8 +368,8 @@ export const useActivityItems = (order: ExtendedAdminOrder): Activity[] => {
       }
 
       if (updateType === "billing_address") {
-        const oldAddress = update?.actions[0]?.details?.old as AdminOrderAddress | AdminStockLocationAddress | null | undefined
-        const newAddress = update?.actions[0]?.details?.new as AdminOrderAddress | AdminStockLocationAddress | null | undefined
+        const oldAddress = getChangedAddress(details.old)
+        const newAddress = getChangedAddress(details.new)
 
         items.push({
           title: (
@@ -387,15 +395,15 @@ export const useActivityItems = (order: ExtendedAdminOrder): Activity[] => {
       }
 
       if (updateType === "email") {
-        const oldEmail = update.actions[0]?.details?.old
-        const newEmail = update.actions[0]?.details?.new
-        
+        const oldEmail = getChangedText(details.old)
+        const newEmail = getChangedText(details.new)
+
         items.push({
           title: (
             <ChangeDetailsTooltip
               title={t(`orders.activity.events.update_order.email`)}
-              previous={oldEmail as ReactNode}
-              next={newEmail as ReactNode}
+              previous={oldEmail}
+              next={newEmail}
             />
           ),
           timestamp: update.created_at,
@@ -426,7 +434,10 @@ export const useActivityItems = (order: ExtendedAdminOrder): Activity[] => {
     items.push(...extensionActivity)
 
     const sortedActivities = items.sort((a, b) => {
-      return new Date(b.timestamp!).getTime() - new Date(a.timestamp!).getTime()
+      return (
+        new Date(b.timestamp ?? 0).getTime() -
+        new Date(a.timestamp ?? 0).getTime()
+      )
     })
 
     const createdAt = {

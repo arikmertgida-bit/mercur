@@ -1,4 +1,4 @@
-import type { JsonRecord, JsonValue } from "@mercurjs/types"
+import type { JsonValue } from "@mercurjs/types"
 import { clx, Textarea } from "@medusajs/ui"
 import { Popover as RadixPopover } from "radix-ui"
 import { useCallback, useEffect, useRef, useState } from "react"
@@ -7,8 +7,16 @@ import { Controller, ControllerRenderProps } from "react-hook-form"
 import { useCombinedRefs } from "../../../hooks/use-combined-refs"
 import { useDataGridCell, useDataGridCellError } from "../hooks"
 import { useDataGridContext } from "../context"
-import { DataGridCellProps, DataGridCellContainerProps, InputProps } from "../types"
+import {
+  DataGridCellProps,
+  DataGridCellContainerProps,
+  DataGridFormValues,
+  InputProps,
+} from "../types"
 import { DataGridCellContainer } from "./data-grid-cell-container"
+
+const toTextValue = (value: JsonValue | undefined): string =>
+  typeof value === "string" ? value : value == null ? "" : String(value)
 
 type DataGridExpandableTextCellProps<TData, TValue = JsonValue> = DataGridCellProps<
   TData,
@@ -60,7 +68,7 @@ const Inner = ({
   container,
   errorProps,
 }: {
-  field: ControllerRenderProps<JsonRecord, string>
+  field: ControllerRenderProps<DataGridFormValues, string>
   inputProps: InputProps
   fieldLabel?: string
   container: DataGridCellContainerProps
@@ -71,31 +79,35 @@ const Inner = ({
   const { setSingleRange, anchor } = useDataGridContext()
   const { row, col } = anchor || { row: 0, col: 0 }
 
-  const [localValue, setLocalValue] = useState(value || "")
+  const textValue = toTextValue(value)
+  const [localValue, setLocalValue] = useState(textValue)
   const [isPopoverOpen, setIsPopoverOpen] = useState(false)
-  const [popoverValue, setPopoverValue] = useState(value || "")
+  const [popoverValue, setPopoverValue] = useState(textValue)
   const popoverContentRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    setLocalValue(value || "")
+    setLocalValue(toTextValue(value))
   }, [value])
 
   useEffect(() => {
     if (isPopoverOpen) {
-      setPopoverValue(value || "")
+      setPopoverValue(toTextValue(value))
     }
   }, [isPopoverOpen, value])
 
+  // Prevent DataGrid keyboard handlers from intercepting keys when popover is open
   useEffect(() => {
     if (!isPopoverOpen || !popoverContentRef.current) {
       return
     }
 
     const handleKeyDownCapture = (e: KeyboardEvent) => {
-      const target = e.target as HTMLElement
-      const isTextarea = target.tagName === "TEXTAREA"
+      const target = e.target
+      const isTextarea = target instanceof HTMLTextAreaElement
       const isInPopover =
-        popoverContentRef.current && popoverContentRef.current.contains(target)
+        target instanceof Node &&
+        popoverContentRef.current &&
+        popoverContentRef.current.contains(target)
 
       if (isTextarea || isInPopover) {
         const dataGridKeys = [
@@ -110,6 +122,7 @@ const Inner = ({
           " ",
         ]
 
+        // Stop the keys from reaching DataGrid, so the textarea can handle them
         if (dataGridKeys.includes(e.key) && e.key !== "Escape") {
           e.stopImmediatePropagation()
         }
@@ -126,7 +139,7 @@ const Inner = ({
   const combinedRefs = useCombinedRefs(inputRef, ref)
 
   const handleOverlayMouseDown = useCallback(
-    (e: React.MouseEvent) => {
+    (e: React.MouseEvent<HTMLElement>) => {
       if (e.detail === 2) {
         e.preventDefault()
         e.stopPropagation()
@@ -134,6 +147,7 @@ const Inner = ({
         setIsPopoverOpen(true)
         return
       }
+      // For single clicks, use the normal handler which sets anchor and focuses container
       container.overlayProps.onMouseDown?.(e)
     },
     [container.overlayProps, setSingleRange, row, col],
@@ -148,7 +162,7 @@ const Inner = ({
   }
 
   const handlePopoverSave = () => {
-    onChange(popoverValue, value)
+    onChange(popoverValue, textValue)
     setLocalValue(popoverValue)
     setIsPopoverOpen(false)
     onBlur()
@@ -201,7 +215,7 @@ const Inner = ({
           onBlur={() => {
             onBlur()
             onInputBlur()
-            onChange(localValue, value)
+            onChange(localValue, textValue)
           }}
           {...input}
           {...rest}

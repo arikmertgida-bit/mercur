@@ -7,7 +7,7 @@ import { isForbidden, SectionNoAccess } from "@mercurjs/dashboard-shared"
 import * as zod from "zod"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { ExtendedAdminProduct } from "@custom-types/products"
+import type { HttpTypes as VendorHttpTypes } from "@mercurjs/types"
 import { keepPreviousData } from "@tanstack/react-query"
 import { useForm } from "react-hook-form"
 import { DataTable } from "@components/data-table"
@@ -20,7 +20,7 @@ import { useUpdateProduct } from "@hooks/api/products"
 import { useSalesChannels } from "@hooks/api/sales-channels"
 
 type EditSalesChannelsFormProps = {
-  product: ExtendedAdminProduct
+  product: VendorHttpTypes.VendorProduct
 }
 
 const EditSalesChannelsSchema = zod.object({
@@ -46,10 +46,10 @@ export const EditSalesChannelsForm = ({
   const { setValue } = form
 
   const initialState =
-    product.sales_channels?.reduce((acc, curr) => {
+    product.sales_channels?.reduce<RowSelectionState>((acc, curr) => {
       acc[curr.id] = true
       return acc
-    }, {} as RowSelectionState) ?? {}
+    }, {}) ?? {}
 
   const [rowSelection, setRowSelection] =
     useState<RowSelectionState>(initialState)

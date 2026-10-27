@@ -18,7 +18,7 @@ import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import * as zod from "zod"
 
-import { Combobox } from "@components/inputs/combobox"
+import { Combobox, getSingleComboboxValue } from "@components/inputs/combobox"
 import { Form } from "@components/common/form"
 import { Thumbnail } from "@components/common/thumbnail"
 import { RouteDrawer, useRouteModal } from "@components/modals"
@@ -33,26 +33,10 @@ import {
   useUpdateReturn,
 } from "@hooks/api/returns"
 import { getStylizedAmount } from "@lib/money-amount-helpers"
+import { getOrderChangeActionDetails } from "@lib/order-change-action"
 
 import { ReceiveReturnSchema } from "./constants"
-import DismissedQuantity, { DismissedQuantityForm } from "./dismissed-quantity"
-
-type PreviewAction = {
-  id: string
-  action: string
-  details?: { quantity?: number } | null
-}
-
-type PreviewItem = {
-  id: string
-  title?: string
-  thumbnail?: string | null
-  quantity: number
-  detail: {
-    return_received_quantity: number
-  }
-  actions?: PreviewAction[]
-}
+import DismissedQuantity from "./dismissed-quantity"
 
 type OrderReceiveReturnFormProps = {
   order: AdminOrder
@@ -69,10 +53,10 @@ export function OrderReceiveReturnForm({
   const { handleSuccess } = useRouteModal()
 
   // Only consider preview items that belong to the return we're receiving.
-  const previewItems = useMemo<PreviewItem[]>(() => {
+  const previewItems = useMemo(() => {
     const idsMap: Record<string, boolean> = {}
     orderReturn.items.forEach((i) => (idsMap[i.item_id] = true))
-    return (preview.items as PreviewItem[]).filter((i) => idsMap[i.id])
+    return preview.items.filter((i) => idsMap[i.id])
   }, [preview.items, orderReturn])
 
   const { mutateAsync: confirmReturnReceive, isPending: isConfirming } =
@@ -146,12 +130,12 @@ export function OrderReceiveReturnForm({
         )
         form.setValue(
           `items.${index}.quantity`,
-          receivedAction?.details?.quantity as number,
+          getOrderChangeActionDetails(receivedAction).quantity,
           { shouldTouch: true, shouldDirty: true }
         )
         form.setValue(
           `items.${index}.dismissed_quantity`,
-          dismissedAction?.details?.quantity as number,
+          getOrderChangeActionDetails(dismissedAction).quantity,
           { shouldTouch: true, shouldDirty: true }
         )
       })
@@ -262,7 +246,8 @@ export function OrderReceiveReturnForm({
                       <Form.Control>
                         <Combobox
                           value={value ?? undefined}
-                          onChange={(v) => {
+                          onChange={(next) => {
+                            const v = getSingleComboboxValue(next)
                             onChange(v ?? "")
                             if (v) {
                               handleLocationChange(v)
@@ -319,7 +304,7 @@ export function OrderReceiveReturnForm({
 
                   <div className="flex flex-1 flex-row items-center gap-2">
                     <DismissedQuantity
-                      form={form as DismissedQuantityForm}
+                      form={form}
                       item={item}
                       index={ind}
                       returnId={orderReturn.id}
@@ -380,7 +365,7 @@ export function OrderReceiveReturnForm({
               </span>
               <span className="txt-small font-medium">
                 {getStylizedAmount(
-                  (preview.summary?.pending_difference as number) || 0,
+                  preview.summary?.pending_difference || 0,
                   order.currency_code
                 )}
               </span>

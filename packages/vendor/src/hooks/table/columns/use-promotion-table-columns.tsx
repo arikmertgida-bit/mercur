@@ -24,7 +24,7 @@ export const usePromotionTableColumns = () => {
       columnHelper.display({
         id: "code",
         header: () => <CodeHeader text={t("fields.code")} />,
-        cell: ({ row }) => <CodeCell code={row.original.code!} />,
+        cell: ({ row }) => <CodeCell code={row.original.code ?? ""} />,
       }),
 
       columnHelper.display({

@@ -1,6 +1,7 @@
 import { PencilSquare, ShoppingBag } from "@medusajs/icons"
 import { Container, Heading } from "@medusajs/ui"
 import { useTranslation } from "react-i18next"
+import type { HttpTypes } from "@mercurjs/types"
 
 import { DisplayExtensionZone } from "@mercurjs/dashboard-shared"
 
@@ -10,7 +11,7 @@ import { ActionMenu } from "@components/common/action-menu"
 export const ProductShippingProfileSection = ({
   product,
 }: {
-  product: Record<string, any>
+  product: HttpTypes.VendorProduct
 }) => {
   const { t } = useTranslation()
 

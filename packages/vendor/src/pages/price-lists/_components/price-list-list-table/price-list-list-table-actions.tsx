@@ -24,7 +24,6 @@ export const PriceListListTableActions = ({
         {
           actions: [
             {
-              permission: "price_lists:edit",
               label: t("actions.edit"),
               to: `${priceList.id}/edit`,
               icon: <PencilSquare />,
@@ -34,7 +33,6 @@ export const PriceListListTableActions = ({
         {
           actions: [
             {
-              permission: "price_lists:manage",
               label: t("actions.delete"),
               onClick: handleDelete,
               icon: <Trash />,

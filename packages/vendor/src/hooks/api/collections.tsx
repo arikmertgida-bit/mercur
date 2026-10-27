@@ -30,7 +30,7 @@ export const useCollection = (
   >,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.collections.$id.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.collections.$id.query>
     >,
@@ -50,7 +50,7 @@ export const useCollections = (
   query?: InferClientInput<typeof sdk.vendor.collections.query>,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.collections.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.collections.query>
     >,

@@ -1,13 +1,12 @@
 // Route: /price-lists/create
 import { useTranslation } from "react-i18next"
-import { SectionNoAccess } from "@mercurjs/dashboard-shared"
 import { RouteFocusModal } from "@components/modals"
 import { usePriceListCurrencyData } from "../common/hooks/use-price-list-currency-data"
 import { PriceListCreateForm } from "./price-list-create-form"
 
 export const Component = () => {
   const { t } = useTranslation()
-  const { isReady, isNoAccess, regions, currencies, pricePreferences } =
+  const { isReady, regions, currencies, pricePreferences } =
     usePriceListCurrencyData()
 
   return (
@@ -18,7 +17,6 @@ export const Component = () => {
       <RouteFocusModal.Description className="sr-only">
         {t("priceLists.create.subheader")}
       </RouteFocusModal.Description>
-      {isNoAccess && <SectionNoAccess />}
       {isReady && (
         <PriceListCreateForm
           regions={regions}

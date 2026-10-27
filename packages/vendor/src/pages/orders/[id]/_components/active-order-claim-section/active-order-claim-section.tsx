@@ -18,27 +18,13 @@ type ActiveOrderClaimSectionProps = {
   orderPreview: HttpTypes.AdminOrderPreview
 }
 
-type UnknownValue = unknown
-
-const readClaimId = (change: UnknownValue): string | undefined => {
-  if (
-    change &&
-    typeof change === "object" &&
-    "claim_id" in change &&
-    typeof (change as { claim_id?: UnknownValue }).claim_id === "string"
-  ) {
-    return (change as { claim_id: string }).claim_id
-  }
-  return undefined
-}
-
 export const ActiveOrderClaimSection = ({
   orderPreview,
 }: ActiveOrderClaimSectionProps) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
 
-  const claimId = readClaimId(orderPreview?.order_change)
+  const claimId = orderPreview?.order_change?.claim_id || undefined
 
   const { mutateAsync: cancelClaim } = useCancelClaimBegin(
     claimId ?? "",

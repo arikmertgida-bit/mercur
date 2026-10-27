@@ -21,23 +21,14 @@ import { getTotalCaptured, getTotalPending } from "@lib/payment"
 import { isOrderActionable } from "@mercurjs/dashboard-shared"
 import { useDate } from "@hooks/use-date"
 
-type PaymentRefund = {
-  id: string
-  amount?: number
-  created_at?: string | null
-  note?: string | null
-  refund_reason?: { label?: string | null } | null
-}
-
 type OrderPaymentSectionProps = {
   order: HttpTypes.AdminOrder
 }
 
 export const getPaymentsFromOrder = (order: HttpTypes.AdminOrder) => {
-  return order.payment_collections
-    ?.map((collection: HttpTypes.AdminPaymentCollection) => collection.payments)
-    .flat(1)
-    .filter(Boolean) as HttpTypes.AdminPayment[]
+  return order.payment_collections?.flatMap(
+    (collection) => collection.payments ?? []
+  )
 }
 
 export const OrderPaymentSection = ({ order }: OrderPaymentSectionProps) => {
@@ -139,10 +130,10 @@ const PaymentRow = ({
   const { getFullDate } = useDate()
 
   const status = getPaymentStatus(payment)
-  const refunds = (payment.refunds ?? []) as PaymentRefund[]
+  const refunds = payment.refunds ?? []
   const refundedAmount = refunds.reduce((acc, r) => acc + (r.amount ?? 0), 0)
   const isFullyRefunded =
-    refundedAmount > 0 && refundedAmount >= (payment.amount as number)
+    refundedAmount > 0 && refundedAmount >= payment.amount
   const canRefund =
     isOrderActionable(order) &&
     !!payment.captured_at && !payment.canceled_at && !isFullyRefunded
@@ -175,7 +166,7 @@ const PaymentRow = ({
 
         <div className="flex items-center justify-end">
           <Text size="small" leading="compact">
-            {getLocaleAmount(payment.amount as number, order.currency_code)}
+            {getLocaleAmount(payment.amount, order.currency_code)}
           </Text>
         </div>
 
@@ -211,7 +202,7 @@ const RefundRow = ({
   refund,
   currencyCode,
 }: {
-  refund: PaymentRefund
+  refund: HttpTypes.AdminRefund
   currencyCode: string
 }) => {
   const { t } = useTranslation()

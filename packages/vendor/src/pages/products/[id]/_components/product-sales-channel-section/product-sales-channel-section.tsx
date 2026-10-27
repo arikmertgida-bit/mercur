@@ -1,6 +1,7 @@
 import { Channels, PencilSquare } from "@medusajs/icons"
 import { Container, Heading, Text, Tooltip } from "@medusajs/ui"
 import { Trans, useTranslation } from "react-i18next"
+import type { HttpTypes } from "@mercurjs/types"
 import { DisplayExtensionZone } from "@mercurjs/dashboard-shared"
 import { ActionMenu } from "@components/common/action-menu"
 import { useSalesChannels } from "@hooks/api/sales-channels"
@@ -8,7 +9,7 @@ import { useSalesChannels } from "@hooks/api/sales-channels"
 export const ProductSalesChannelSection = ({
   product,
 }: {
-  product: Record<string, any>
+  product: HttpTypes.VendorProduct
 }) => {
   const { count } = useSalesChannels()
   const { t } = useTranslation()

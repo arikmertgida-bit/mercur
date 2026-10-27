@@ -1,19 +1,22 @@
-import { Command } from "../../../hooks/use-command-history"
-import { DataGridCellValue } from "../types"
+import type { JsonValue } from "@mercurjs/types"
 
-export type DataGridUpdateCommandArgs = {
-  prev: DataGridCellValue
-  next: DataGridCellValue
-  setter: (value: DataGridCellValue) => void
+import { Command } from "../../../hooks/use-command-history"
+
+export type DataGridUpdateCommandArgs<T extends JsonValue = JsonValue> = {
+  prev: T
+  next: T
+  setter: (value: T) => void
 }
 
-export class DataGridUpdateCommand implements Command {
-  private _prev: DataGridCellValue
-  private _next: DataGridCellValue
+export class DataGridUpdateCommand<T extends JsonValue = JsonValue>
+  implements Command
+{
+  private _prev: T
+  private _next: T
 
-  private _setter: (value: DataGridCellValue) => void
+  private _setter: (value: T) => void
 
-  constructor({ prev, next, setter }: DataGridUpdateCommandArgs) {
+  constructor({ prev, next, setter }: DataGridUpdateCommandArgs<T>) {
     this._prev = prev
     this._next = next
 

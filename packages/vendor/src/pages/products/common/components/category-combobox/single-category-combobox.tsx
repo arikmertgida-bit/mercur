@@ -346,9 +346,10 @@ export const SingleCategoryCombobox = forwardRef<
         onInteractOutside={(e) => {
           e.preventDefault()
 
-          const target = e.target as HTMLElement
-
-          if (target.closest("[data-anchor]")) {
+          if (
+            e.target instanceof Element &&
+            e.target.closest("[data-anchor]")
+          ) {
             return
           }
 

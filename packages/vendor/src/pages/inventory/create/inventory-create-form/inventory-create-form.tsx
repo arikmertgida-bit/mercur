@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod"
+import { z } from "zod"
 import {
   Button,
   clx,
@@ -31,9 +32,8 @@ import {
 } from "@hooks/api/inventory"
 import { fetchQuery } from "@lib/client"
 import {
-  transformNullableFormData,
   transformNullableFormNumber,
-  transformNullableFormNumbers,
+  transformNullableFormValue,
 } from "@lib/form-helpers"
 import { generateVariantSku } from "@lib/generate-sku"
 import { queryClient } from "@lib/query-client"
@@ -43,10 +43,14 @@ import {
   CreateInventoryItemSchema,
 } from "./schema"
 
-enum Tab {
-  DETAILS = "details",
-  AVAILABILITY = "availability",
-}
+const Tab = {
+  DETAILS: "details",
+  AVAILABILITY: "availability",
+} as const
+
+type Tab = (typeof Tab)[keyof typeof Tab]
+
+const TabSchema = z.enum(Tab)
 
 type StepStatus = {
   [key in Tab]: ProgressStatus
@@ -105,16 +109,23 @@ export function InventoryCreateForm({ locations }: InventoryCreateFormProps) {
   const handleSubmit = form.handleSubmit(async (data) => {
     const { locations, weight, length, height, width, ...payload } = data
 
-    const cleanData = transformNullableFormData(payload, false)
-    const cleanNumbers = transformNullableFormNumbers(
-      {
-        weight,
-        length,
-        height,
-        width,
-      },
-      false
-    )
+    const cleanData = {
+      title: payload.title,
+      description: transformNullableFormValue(payload.description, false),
+      sku: transformNullableFormValue(payload.sku, false),
+      hs_code: transformNullableFormValue(payload.hs_code, false),
+      origin_country: transformNullableFormValue(payload.origin_country, false),
+      mid_code: transformNullableFormValue(payload.mid_code, false),
+      material: transformNullableFormValue(payload.material, false),
+      requires_shipping: payload.requires_shipping,
+      thumbnail: transformNullableFormValue(payload.thumbnail, false),
+    }
+    const cleanNumbers = {
+      weight: transformNullableFormNumber(weight, false),
+      length: transformNullableFormNumber(length, false),
+      height: transformNullableFormNumber(height, false),
+      width: transformNullableFormNumber(width, false),
+    }
 
     const { inventory_item } = await createInventoryItem(
       {
@@ -222,7 +233,13 @@ export function InventoryCreateForm({ locations }: InventoryCreateFormProps) {
       <ProgressTabs
         value={tab}
         className="h-full"
-        onValueChange={(tab) => onTabChange(tab as Tab)}
+        onValueChange={(tab) => {
+          const next = TabSchema.safeParse(tab)
+
+          if (next.success) {
+            onTabChange(next.data)
+          }
+        }}
       >
         <KeyboundForm
           className="flex h-full flex-col overflow-hidden"

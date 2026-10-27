@@ -1,8 +1,7 @@
-import { ExtendedAdminProduct } from "@custom-types/products"
+import type { HttpTypes as VendorHttpTypes } from "@mercurjs/types"
 import { usePermissionGate } from "@mercurjs/dashboard-shared"
 import { ConditionalTooltip } from "@components/common/conditional-tooltip"
 import { Button, toast } from "@medusajs/ui"
-import { HttpTypes } from "@medusajs/types"
 import { useTranslation } from "react-i18next"
 import * as zod from "zod"
 
@@ -18,9 +17,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useEffect } from "react"
 
 type ProductShippingProfileFormProps = {
-  product: ExtendedAdminProduct & {
-    shipping_profile?: HttpTypes.AdminShippingProfile
-  }
+  product: VendorHttpTypes.VendorProduct
 }
 
 const ProductShippingProfileSchema = zod.object({

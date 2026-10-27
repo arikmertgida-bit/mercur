@@ -1,5 +1,5 @@
 import { Children, ReactNode } from "react";
-import { useLoaderData, useParams } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 
 import { TwoColumnPageSkeleton } from "@components/common/skeleton";
 import { TwoColumnPage } from "@components/layout/pages";
@@ -7,6 +7,7 @@ import {
   PermissionGuard,
   WidgetZone,
   useLinkQuery,
+  useRequiredParam,
 } from "@mercurjs/dashboard-shared";
 import { useCampaign } from "@hooks/api/campaigns";
 
@@ -19,11 +20,11 @@ import { CAMPAIGN_DETAIL_FIELDS } from "./constants";
 import type { loader } from "./loader";
 
 const Root = ({ children }: { children?: ReactNode }) => {
-  const initialData = useLoaderData() as Awaited<ReturnType<typeof loader>>;
-  const { id } = useParams();
+  const initialData = useLoaderData<typeof loader>();
+  const id = useRequiredParam("id");
   const linkQuery = useLinkQuery("campaign", CAMPAIGN_DETAIL_FIELDS);
   const { campaign, isLoading, isError, error } = useCampaign(
-    id!,
+    id,
     { ...linkQuery },
     {
       placeholderData: initialData,

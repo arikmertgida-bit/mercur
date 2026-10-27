@@ -32,7 +32,7 @@ export const TeamListDataTable = () => {
 
   const { searchParams, raw } = useMemberTableQuery({ pageSize: PAGE_SIZE });
   const { seller_members, count, isPending, isError, error } = useSellerMembers(
-    sellerId!,
+    sellerId ?? "",
     searchParams,
     {
       placeholderData: keepPreviousData,
@@ -40,10 +40,10 @@ export const TeamListDataTable = () => {
     },
   );
 
-  const columns = useColumns(sellerId!);
+  const columns = useColumns(sellerId ?? "");
 
   const { table } = useDataTable({
-    data: (seller_members as SellerMember[]) ?? [],
+    data: seller_members ?? [],
     columns,
     enablePagination: true,
     count,
@@ -162,7 +162,7 @@ const MemberActions = ({
         }),
       );
     } catch (e) {
-      toast.error((e as Error).message);
+      toast.error(e instanceof Error ? e.message : String(e));
     }
   };
 

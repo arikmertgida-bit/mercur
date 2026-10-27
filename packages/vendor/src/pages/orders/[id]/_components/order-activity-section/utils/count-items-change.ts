@@ -1,15 +1,18 @@
 import { AdminOrderChange } from "@medusajs/types"
 
+import { getOrderChangeActionDetails } from "@lib/order-change-action"
+
 export function countItemsChange(actions: AdminOrderChange["actions"]) {
   let added = 0
   let removed = 0
 
   actions.forEach((action) => {
     if (action.action === "ITEM_ADD") {
-      added += action.details!.quantity as number
+      added += getOrderChangeActionDetails(action).quantity ?? 0
     }
     if (action.action === "ITEM_UPDATE") {
-      const quantityDiff = action.details!.quantity_diff as number
+      const quantityDiff =
+        getOrderChangeActionDetails(action).quantity_diff ?? 0
 
       if (quantityDiff > 0) {
         added += quantityDiff

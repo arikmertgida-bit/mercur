@@ -1,6 +1,4 @@
-import { HttpTypes } from "@medusajs/types"
 import { keepPreviousData } from "@tanstack/react-query"
-import { TFunction } from "i18next"
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { useTranslation } from "react-i18next"
 import {
@@ -20,7 +18,11 @@ import {
 import { Shortcut, ShortcutType } from "../../providers/keybind-provider"
 import { useGlobalShortcuts } from "../../providers/keybind-provider/hooks"
 import { useSearch } from "../../providers/search-provider"
-import { DynamicSearchResult, SearchArea } from "./types"
+import {
+  DynamicSearchResult,
+  DynamicSearchResultItem,
+  SearchArea,
+} from "./types"
 import { useSearchAreaAccess } from "./use-search-area-access"
 
 type UseSearchProps = {
@@ -246,21 +248,150 @@ const useDynamicSearchResults = (
     }
   )
 
-  const responseMap = useMemo(
-    () => ({
-      order: orderResponse,
-      product: productResponse,
-      collection: collectionResponse,
-      category: categoryResponse,
-      inventory: inventoryResponse,
-      customer: customerResponse,
-      promotion: promotionResponse,
-      campaign: campaignResponse,
-      priceList: priceListResponse,
-      productType: productTypeResponse,
-      productTag: productTagResponse,
-      location: locationResponse,
-    }),
+  const areaResults = useMemo<AreaSearchResults[]>(
+    () => [
+      {
+        area: "order",
+        isFetching: orderResponse.isFetching,
+        count: orderResponse.count,
+        items: orderResponse.orders?.map((order) => ({
+          id: order.id,
+          title: `#${order.display_id}`,
+          subtitle: order.email ?? undefined,
+          to: `/orders/${order.id}`,
+          value: `order:${order.id}`,
+        })),
+      },
+      {
+        area: "product",
+        isFetching: productResponse.isFetching,
+        count: productResponse.count,
+        items: productResponse.products?.map((product) => ({
+          id: product.id,
+          title: product.title,
+          to: `/products/${product.id}`,
+          thumbnail: product.thumbnail ?? undefined,
+          value: `product:${product.id}`,
+        })),
+      },
+      {
+        area: "collection",
+        isFetching: collectionResponse.isFetching,
+        count: collectionResponse.count,
+        items: collectionResponse.collections?.map((collection) => ({
+          id: collection.id,
+          title: collection.title ?? "",
+          to: `/collections/${collection.id}`,
+          value: `collection:${collection.id}`,
+        })),
+      },
+      {
+        area: "category",
+        isFetching: categoryResponse.isFetching,
+        count: categoryResponse.count,
+        items: categoryResponse.product_categories?.map((category) => ({
+          id: category.id,
+          title: category.name,
+          to: `/categories/${category.id}`,
+          value: `category:${category.id}`,
+        })),
+      },
+      {
+        area: "inventory",
+        isFetching: inventoryResponse.isFetching,
+        count: inventoryResponse.count,
+        items: inventoryResponse.inventory_items?.map((inventory) => ({
+          id: inventory.id,
+          title: inventory.title ?? "",
+          subtitle: inventory.sku ?? undefined,
+          to: `/inventory/${inventory.id}`,
+          value: `inventory:${inventory.id}`,
+        })),
+      },
+      {
+        area: "customer",
+        isFetching: customerResponse.isFetching,
+        count: customerResponse.count,
+        items: customerResponse.customers?.map((customer) => {
+          const name = [customer.first_name, customer.last_name]
+            .filter(Boolean)
+            .join(" ")
+          return {
+            id: customer.id,
+            title: name || customer.email,
+            subtitle: name ? customer.email : undefined,
+            to: `/customers/${customer.id}`,
+            value: `customer:${customer.id}`,
+          }
+        }),
+      },
+      {
+        area: "promotion",
+        isFetching: promotionResponse.isFetching,
+        count: promotionResponse.count,
+        items: promotionResponse.promotions?.map((promotion) => ({
+          id: promotion.id,
+          title: promotion.code ?? "",
+          to: `/promotions/${promotion.id}`,
+          value: `promotion:${promotion.id}`,
+        })),
+      },
+      {
+        area: "campaign",
+        isFetching: campaignResponse.isFetching,
+        count: campaignResponse.count,
+        items: campaignResponse.campaigns?.map((campaign) => ({
+          id: campaign.id,
+          title: campaign.name ?? "",
+          to: `/campaigns/${campaign.id}`,
+          value: `campaign:${campaign.id}`,
+        })),
+      },
+      {
+        area: "priceList",
+        isFetching: priceListResponse.isFetching,
+        count: priceListResponse.count,
+        items: priceListResponse.price_lists?.map((priceList) => ({
+          id: priceList.id,
+          title: priceList.title ?? "",
+          to: `/price-lists/${priceList.id}`,
+          value: `priceList:${priceList.id}`,
+        })),
+      },
+      {
+        area: "productType",
+        isFetching: productTypeResponse.isFetching,
+        count: productTypeResponse.count,
+        items: productTypeResponse.product_types?.map((productType) => ({
+          id: productType.id,
+          title: productType.value,
+          to: `/product-types/${productType.id}`,
+          value: `productType:${productType.id}`,
+        })),
+      },
+      {
+        area: "productTag",
+        isFetching: productTagResponse.isFetching,
+        count: productTagResponse.count,
+        items: productTagResponse.product_tags?.map((productTag) => ({
+          id: productTag.id,
+          title: productTag.value,
+          to: `/product-tags/${productTag.id}`,
+          value: `productTag:${productTag.id}`,
+        })),
+      },
+      {
+        area: "location",
+        isFetching: locationResponse.isFetching,
+        count: locationResponse.count,
+        items: locationResponse.stock_locations?.map((location) => ({
+          id: location.id,
+          title: location.name,
+          to: `/locations/${location.id}`,
+          value: `location:${location.id}`,
+        })),
+      },
+    ],
     [
       orderResponse,
       productResponse,
@@ -277,37 +408,46 @@ const useDynamicSearchResults = (
     ]
   )
 
-  const results = useMemo(() => {
-    const groups = Object.entries(responseMap)
-      .map(([key, response]) => {
-        const area = key as SearchArea
+  const results = useMemo(
+    () =>
+      areaResults.flatMap(({ area, count, items }): DynamicSearchResult[] => {
         if (
-          canSearchArea(area) &&
-          (isAreaEnabled(currentArea, area) || currentArea === "all")
+          !items ||
+          !canSearchArea(area) ||
+          !(isAreaEnabled(currentArea, area) || currentArea === "all")
         ) {
-          return transformDynamicSearchResults(area, limit, t, response)
+          return []
         }
-        return null
-      })
-      .filter(Boolean) // Remove null values
 
-    return groups
-  }, [responseMap, currentArea, limit, t, canSearchArea])
+        const total = count ?? 0
+
+        return [
+          {
+            title: t(`app.search.groups.${area}`),
+            area,
+            hasMore: total > limit,
+            count: total,
+            items,
+          },
+        ]
+      }),
+    [areaResults, currentArea, limit, t, canSearchArea]
+  )
 
   const isAreaFetching = useCallback(
     (area: SearchArea): boolean => {
       if (area === "all") {
-        return Object.values(responseMap).some(
-          (response) => response.isFetching
-        )
+        return areaResults.some((result) => result.isFetching)
       }
 
       return (
         isAreaEnabled(currentArea, area) &&
-        responseMap[area as keyof typeof responseMap]?.isFetching
+        areaResults.some(
+          (result) => result.area === area && result.isFetching
+        )
       )
     },
-    [currentArea, responseMap]
+    [currentArea, areaResults]
   )
 
   const isFetching = useMemo(() => {
@@ -315,9 +455,7 @@ const useDynamicSearchResults = (
   }, [currentArea, isAreaFetching])
 
   const dynamicResults = q
-    ? (results.filter(
-        (group) => !!group && group.items.length > 0
-      ) as DynamicSearchResult[])
+    ? results.filter((group) => group.items.length > 0)
     : []
 
   return {
@@ -352,172 +490,13 @@ function isAreaEnabled(area: SearchArea, currentArea: SearchArea) {
   return false
 }
 
-type SearchResultItem =
-  | HttpTypes.AdminOrder
-  | HttpTypes.AdminProduct
-  | HttpTypes.AdminProductCategory
-  | HttpTypes.AdminInventoryItem
-  | HttpTypes.AdminCustomer
-  | HttpTypes.AdminCollection
-  | HttpTypes.AdminPromotion
-  | HttpTypes.AdminCampaign
-
-type TransformMap = {
-  [K in SearchArea]?: {
-    dataKey: string
-    transform: (item: SearchResultItem) => {
-      id: string
-      title: string
-      subtitle?: string
-      to: string
-      value: string
-      thumbnail?: string
-    }
-  }
-}
-
-const transformMap: TransformMap = {
-  order: {
-    dataKey: "orders",
-    transform: (order: HttpTypes.AdminOrder) => ({
-      id: order.id,
-      title: `#${order.display_id}`,
-      subtitle: order.email ?? undefined,
-      to: `/orders/${order.id}`,
-      value: `order:${order.id}`,
-    }),
-  },
-  product: {
-    dataKey: "products",
-    transform: (product: HttpTypes.AdminProduct) => ({
-      id: product.id,
-      title: product.title,
-      to: `/products/${product.id}`,
-      thumbnail: product.thumbnail ?? undefined,
-      value: `product:${product.id}`,
-    }),
-  },
-  category: {
-    dataKey: "product_categories",
-    transform: (category: HttpTypes.AdminProductCategory) => ({
-      id: category.id,
-      title: category.name,
-      to: `/categories/${category.id}`,
-      value: `category:${category.id}`,
-    }),
-  },
-  inventory: {
-    dataKey: "inventory_items",
-    transform: (inventory: HttpTypes.AdminInventoryItem) => ({
-      id: inventory.id,
-      title: inventory.title ?? "",
-      subtitle: inventory.sku ?? undefined,
-      to: `/inventory/${inventory.id}`,
-      value: `inventory:${inventory.id}`,
-    }),
-  },
-  customer: {
-    dataKey: "customers",
-    transform: (customer: HttpTypes.AdminCustomer) => {
-      const name = [customer.first_name, customer.last_name]
-        .filter(Boolean)
-        .join(" ")
-      return {
-        id: customer.id,
-        title: name || customer.email,
-        subtitle: name ? customer.email : undefined,
-        to: `/customers/${customer.id}`,
-        value: `customer:${customer.id}`,
-      }
-    },
-  },
-  collection: {
-    dataKey: "collections",
-    transform: (collection: HttpTypes.AdminCollection) => ({
-      id: collection.id,
-      title: collection.title,
-      to: `/collections/${collection.id}`,
-      value: `collection:${collection.id}`,
-    }),
-  },
-  promotion: {
-    dataKey: "promotions",
-    transform: (promotion: HttpTypes.AdminPromotion) => ({
-      id: promotion.id,
-      title: promotion.code!,
-      to: `/promotions/${promotion.id}`,
-      value: `promotion:${promotion.id}`,
-    }),
-  },
-  campaign: {
-    dataKey: "campaigns",
-    transform: (campaign: HttpTypes.AdminCampaign) => ({
-      id: campaign.id,
-      title: campaign.name,
-      to: `/campaigns/${campaign.id}`,
-      value: `campaign:${campaign.id}`,
-    }),
-  },
-  priceList: {
-    dataKey: "price_lists",
-    transform: (priceList: HttpTypes.AdminPriceList) => ({
-      id: priceList.id,
-      title: priceList.title,
-      to: `/price-lists/${priceList.id}`,
-      value: `priceList:${priceList.id}`,
-    }),
-  },
-  productType: {
-    dataKey: "product_types",
-    transform: (productType: HttpTypes.AdminProductType) => ({
-      id: productType.id,
-      title: productType.value,
-      to: `/product-types/${productType.id}`,
-      value: `productType:${productType.id}`,
-    }),
-  },
-  productTag: {
-    dataKey: "product_tags",
-    transform: (productTag: HttpTypes.AdminProductTag) => ({
-      id: productTag.id,
-      title: productTag.value,
-      to: `/product-tags/${productTag.id}`,
-      value: `productTag:${productTag.id}`,
-    }),
-  },
-  location: {
-    dataKey: "stock_locations",
-    transform: (location: HttpTypes.AdminStockLocation) => ({
-      id: location.id,
-      title: location.name,
-      to: `/locations/${location.id}`,
-      value: `location:${location.id}`,
-    }),
-  },
-}
-
-function transformDynamicSearchResults<T extends { count: number }>(
-  type: SearchArea,
-  limit: number,
-  t: TFunction,
-  response?: T
-): DynamicSearchResult | undefined {
-  if (!response || !transformMap[type]) {
-    return undefined
-  }
-
-  const { dataKey, transform } = transformMap[type]!
-  const data = response[dataKey as keyof T]
-
-  if (!data || !Array.isArray(data)) {
-    return undefined
-  }
-
-  return {
-    title: t(`app.search.groups.${type}`),
-    area: type,
-    hasMore: response.count > limit,
-    count: response.count,
-    items: data.map(transform),
-  }
+/**
+ * One searchable area's response, reduced to the list items it renders.
+ * `items` is undefined until the area's query has returned data.
+ */
+type AreaSearchResults = {
+  area: SearchArea
+  isFetching: boolean
+  count?: number
+  items?: DynamicSearchResultItem[]
 }

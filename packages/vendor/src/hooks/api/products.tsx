@@ -36,6 +36,10 @@ export const productChangeQueryKeys = queryKeysFactory(
 
 type ProductChangeResponse = { product_change: ProductChangeDTO };
 
+type ProductChangePreviewResponse = InferClientOutput<
+  typeof sdk.vendor.products.$id.preview.query
+>;
+
 // --- Product queries ---
 
 export const useProduct = (
@@ -46,7 +50,7 @@ export const useProduct = (
   >,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.products.$id.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.products.$id.query>
     >,
@@ -66,7 +70,7 @@ export const useProducts = (
   query?: InferClientInput<typeof sdk.vendor.products.query>,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.products.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.products.query>
     >,
@@ -115,15 +119,17 @@ export const useInfiniteProducts = (
 export const useProductChange = (
   productId: string,
   options?: Omit<
-    UseQueryOptions<ProductChangeResponse, ClientError, ProductChangeResponse>,
+    UseQueryOptions<
+      ProductChangePreviewResponse,
+      ClientError,
+      ProductChangePreviewResponse
+    >,
     "queryFn" | "queryKey"
   >
 ) => {
   const { data, ...rest } = useQuery({
     queryFn: () =>
-      sdk.vendor.products.$id.preview.query({ $id: productId }) as Promise<
-        ProductChangeResponse
-      >,
+      sdk.vendor.products.$id.preview.query({ $id: productId }),
     queryKey: productChangeQueryKeys.detail(productId),
     ...options,
   });
@@ -167,7 +173,7 @@ export const useUpdateProduct = (
       sdk.vendor.products.$id.mutate({
         $id: id,
         ...payload,
-      }) as Promise<ProductChangeResponse>,
+      }),
     onSuccess: async (data, variables, context) => {
       await queryClient.invalidateQueries({
         queryKey: productChangeQueryKeys.detail(id),
@@ -195,9 +201,7 @@ export const useDeleteProduct = (
 ) => {
   return useMutation({
     mutationFn: () =>
-      sdk.vendor.products.$id.delete({ $id: id }) as Promise<
-        ProductChangeResponse
-      >,
+      sdk.vendor.products.$id.delete({ $id: id }),
     // Optimistic removal: the delete applies inline on the server (draft, or
     // any status once MEDUSA_FF_PRODUCT_REQUEST is off), so the row should
     // disappear the moment the vendor confirms — not after the next refetch.
@@ -255,7 +259,7 @@ export const useCancelProductEdit = (
       sdk.vendor.products.$id.cancel.mutate({
         $id: id,
         ...(payload ?? {}),
-      }) as Promise<ProductChangeResponse>,
+      }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: productChangeQueryKeys.detail(id),
@@ -280,7 +284,9 @@ export const useProductVariant = (
   >,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<
+        typeof sdk.vendor.products.$id.variants.$variantId.query
+      >,
       ClientError,
       InferClientOutput<
         typeof sdk.vendor.products.$id.variants.$variantId.query
@@ -311,7 +317,7 @@ export const useProductVariants = (
   >,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.products.$id.variants.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.products.$id.variants.query>
     >,
@@ -348,7 +354,7 @@ export const useCreateProductVariant = (
       sdk.vendor.products.$id.variants.mutate({
         $id: productId,
         ...payload,
-      }) as Promise<ProductChangeResponse>,
+      }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: productChangeQueryKeys.detail(productId),
@@ -382,7 +388,7 @@ export const useUpdateProductVariant = (
         $id: productId,
         $variantId: variantId,
         ...payload,
-      }) as Promise<ProductChangeResponse>,
+      }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: productChangeQueryKeys.detail(productId),
@@ -417,7 +423,7 @@ export const useDeleteVariant = (
       sdk.vendor.products.$id.variants.$variantId.delete({
         $id: productId,
         $variantId: variantId,
-      }) as Promise<ProductChangeResponse>,
+      }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: productChangeQueryKeys.detail(productId),
@@ -445,7 +451,7 @@ export const useDeleteVariantLazy = (
       sdk.vendor.products.$id.variants.$variantId.delete({
         $id: productId,
         $variantId: variantId,
-      }) as Promise<ProductChangeResponse>,
+      }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: productChangeQueryKeys.detail(productId),
@@ -483,7 +489,7 @@ export const useBatchProductAttributes = (
       sdk.vendor.products.$id.attributes.batch.mutate({
         $id: productId,
         ...payload,
-      }) as Promise<ProductChangeResponse>,
+      }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: productAttributesQueryKeys.lists(),
@@ -510,7 +516,7 @@ export const useRemoveAttributeFromProduct = (
       sdk.vendor.products.$id.attributes.batch.mutate({
         $id: productId,
         remove: [attributeId],
-      }) as Promise<ProductChangeResponse>,
+      }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
         queryKey: productAttributesQueryKeys.lists(),

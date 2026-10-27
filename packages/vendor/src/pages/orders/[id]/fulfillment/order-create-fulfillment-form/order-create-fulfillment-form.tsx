@@ -51,12 +51,8 @@ export function OrderCreateFulfillmentForm({
 
   const form = useForm<zod.infer<typeof CreateFulfillmentSchema>>({
     defaultValues: {
-      quantity: fulfillableItems.reduce(
-        (acc, item) => {
-          acc[item.id] = getFulfillableQuantity(item)
-          return acc
-        },
-        {} as Record<string, number>
+      quantity: Object.fromEntries(
+        fulfillableItems.map((item) => [item.id, getFulfillableQuantity(item)])
       ),
       send_notification: true,
     },
@@ -96,7 +92,7 @@ export function OrderCreateFulfillmentForm({
   const handleToggleSelected = useCallback(
     (itemId: string, checked: boolean) => {
       form.setValue(
-        `selection.${itemId}` as `selection.${string}`,
+        `selection.${itemId}`,
         checked
       )
     },
@@ -147,13 +143,13 @@ export function OrderCreateFulfillmentForm({
     const selectedShippingProfileId =
       selectedShippingOption?.shipping_profile_id
 
-    const itemShippingProfileMap = order.items.reduce(
-      (acc, item) => {
-        acc[item.id] = item.variant?.product?.shipping_profile?.id ?? null
-        return acc
-      },
-      {} as Record<string, string | null>
-    )
+    const itemShippingProfileMap: Record<string, string | null> =
+      Object.fromEntries(
+        order.items.map((item) => [
+          item.id,
+          item.variant?.product?.shipping_profile?.id ?? null,
+        ])
+      )
 
     const payload: HttpTypes.AdminCreateOrderFulfillment & {
       requires_shipping: boolean
@@ -252,12 +248,8 @@ export function OrderCreateFulfillmentForm({
       })
     }
 
-    const quantityMap = itemsToFulfill.reduce(
-      (acc, item) => {
-        acc[item.id] = getFulfillableQuantity(item)
-        return acc
-      },
-      {} as Record<string, number>
+    const quantityMap: Record<string, number> = Object.fromEntries(
+      itemsToFulfill.map((item) => [item.id, getFulfillableQuantity(item)])
     )
 
     form.setValue("quantity", quantityMap)

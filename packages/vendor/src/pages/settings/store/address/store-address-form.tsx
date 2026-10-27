@@ -181,7 +181,6 @@ export const StoreAddressForm = ({ seller }: StoreAddressFormProps) => {
           <FormExtensionZone
             model="seller"
             zone="address"
-            control={form.control}
             data={seller}
           />
         </RouteDrawer.Body>

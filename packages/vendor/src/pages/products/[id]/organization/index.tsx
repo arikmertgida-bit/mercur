@@ -1,17 +1,17 @@
+import { useRequiredParam } from "@mercurjs/dashboard-shared"
 // Route: /products/:id/organization
 import { Heading } from "@medusajs/ui"
 import { useTranslation } from "react-i18next"
-import { useParams } from "react-router-dom"
 
 import { RouteDrawer } from "@components/modals"
 import { useProduct } from "@hooks/api/products"
 import { ProductOrganizationForm } from "./product-organization-form"
 
 export const Component = () => {
-  const { id } = useParams()
+  const id = useRequiredParam("id")
   const { t } = useTranslation()
 
-  const { product, isLoading, isError, error } = useProduct(id!, {
+  const { product, isLoading, isError, error } = useProduct(id, {
     fields: "*categories",
   })
 

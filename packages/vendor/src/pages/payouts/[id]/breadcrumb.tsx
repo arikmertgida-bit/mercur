@@ -5,7 +5,7 @@ import { usePayout } from "@hooks/api/payouts";
 export const Breadcrumb = (props: UIMatch) => {
   const { id } = props.params || {};
 
-  const { payout } = usePayout(id!, undefined, {
+  const { payout } = usePayout(id ?? "", undefined, {
     enabled: Boolean(id),
   });
 

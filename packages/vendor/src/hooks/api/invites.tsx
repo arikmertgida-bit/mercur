@@ -18,9 +18,16 @@ export const invitesQueryKeys = queryKeysFactory(INVITES_QUERY_KEY);
 
 export const useInvites = (
   sellerId: string,
-  query?: Record<string, any>,
+  query?: Omit<
+    InferClientInput<typeof sdk.vendor.sellers.$id.members.invites.query>,
+    "$id"
+  >,
   options?: Omit<
-    UseQueryOptions<any, ClientError>,
+    UseQueryOptions<
+      InferClientOutput<typeof sdk.vendor.sellers.$id.members.invites.query>,
+      ClientError,
+      InferClientOutput<typeof sdk.vendor.sellers.$id.members.invites.query>
+    >,
     "queryKey" | "queryFn"
   >,
 ) => {
@@ -37,16 +44,20 @@ export const useInvites = (
   return { ...data, ...rest };
 };
 
+type AcceptInviteInput = InferClientInput<
+  typeof sdk.vendor.members.invites.accept.mutate
+>;
+
 export const useAcceptInvite = (
   options?: UseMutationOptions<
-    any,
+    InferClientOutput<typeof sdk.vendor.members.invites.accept.mutate>,
     ClientError,
     {
       invite_token: string;
       auth_token: string;
       first_name?: string;
       last_name?: string;
-      additional_data?: Record<string, unknown>;
+      additional_data?: AcceptInviteInput["additional_data"];
     }
   >,
 ) => {

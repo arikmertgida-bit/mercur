@@ -28,7 +28,7 @@ export const useProductTag = (
   >,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.productTags.$id.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.productTags.$id.query>
     >,
@@ -48,7 +48,7 @@ export const useProductTags = (
   query?: InferClientInput<typeof sdk.vendor.productTags.query>,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.productTags.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.productTags.query>
     >,

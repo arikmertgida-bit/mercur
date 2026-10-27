@@ -8,7 +8,8 @@
 import { toast } from "@medusajs/ui"
 import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
+import { useRequiredParam } from "@mercurjs/dashboard-shared"
 
 import { RouteFocusModal } from "@components/modals"
 import { useClaim, useCreateClaim } from "@hooks/api/claims"
@@ -21,22 +22,22 @@ import { ClaimCreateForm } from "./_components/claim-create-form"
 let IS_REQUEST_RUNNING = false
 
 export const Component = () => {
-  const { id } = useParams()
+  const id = useRequiredParam("id")
   const navigate = useNavigate()
   const { t } = useTranslation()
 
-  const { order } = useOrder(id!, {
+  const { order } = useOrder(id, {
     fields: DEFAULT_FIELDS,
   })
 
-  const { order: preview } = useOrderPreview(id!)
+  const { order: preview } = useOrderPreview(id)
   const [activeClaimId, setActiveClaimId] = useState<string>()
   const { mutateAsync: createClaim } = useCreateClaim(order?.id ?? "")
 
-  const { claim } = useClaim(activeClaimId!, undefined, {
+  const { claim } = useClaim(activeClaimId ?? "", undefined, {
     enabled: !!activeClaimId,
   })
-  const { return: orderReturn } = useReturn(claim?.return_id!, undefined, {
+  const { return: orderReturn } = useReturn(claim?.return_id ?? "", undefined, {
     enabled: !!claim?.return_id,
   })
 

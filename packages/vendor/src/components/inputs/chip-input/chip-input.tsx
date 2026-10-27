@@ -54,7 +54,7 @@ export const ChipInput = forwardRef<HTMLInputElement, ChipInputProps>(
 
     const [duplicateIndex, setDuplicateIndex] = useState<number | null>(null)
 
-    const chips = isControlled ? (value as string[]) : uncontrolledValue
+    const chips = isControlled ? (value ?? []) : uncontrolledValue
 
     // Stable per-occurrence key so removing one chip (by value) doesn't
     // shift the identity of unrelated chips that share the same position.

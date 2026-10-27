@@ -13,7 +13,7 @@ export async function retrieveActiveStore(
 ): Promise<HttpTypes.AdminStoreResponse> {
   const response = await sdk.vendor.stores.query({ ...query });
 
-  const activeStore = response.stores?.[0] as HttpTypes.AdminStore;
+  const activeStore = response.stores?.[0];
 
   if (!activeStore) {
     throw new ClientError("No active store found", "Not Found", 404);

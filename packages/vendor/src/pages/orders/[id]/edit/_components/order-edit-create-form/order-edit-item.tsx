@@ -1,7 +1,6 @@
 import { ArrowUturnLeft, ReceiptPercent, XCircle } from "@medusajs/icons"
 import {
   AdminOrderChangeAction,
-  AdminOrderLineItem,
   AdminOrderPreview,
 } from "@medusajs/types"
 import { Badge, Input, Text, toast, Tooltip } from "@medusajs/ui"
@@ -18,19 +17,9 @@ import {
 } from "@hooks/api/order-edits"
 
 /**
- * Preview line item shape returned by `GET /vendor/orders/:id/preview`.
- * Medusa 2.13.4 doesn't export an `AdminOrderLinePreview` type, so we derive
- * it from `AdminOrderPreview["items"][number]`.
+ * Preview line item returned by `GET /vendor/orders/:id/preview`.
  */
-type OrderEditPreviewLine = AdminOrderPreview["items"][number] & {
-  detail?: {
-    fulfilled_quantity?: number
-    returned_quantity?: number
-  }
-  subtitle?: string | null
-  total?: number
-  adjustments?: { code?: string | null }[] | null
-} & Pick<AdminOrderLineItem, "id" | "title" | "variant_sku" | "variant_id">
+type OrderEditPreviewLine = AdminOrderPreview["items"][number]
 
 type OrderEditItemProps = {
   item: OrderEditPreviewLine
@@ -47,7 +36,7 @@ function OrderEditItem({ item, currencyCode, orderId }: OrderEditItemProps) {
   const { mutateAsync: undoAction } = useRemoveOrderEditAddedItem(orderId)
 
   const actions = useMemo(
-    () => (item.actions ?? []) as AdminOrderChangeAction[],
+    (): AdminOrderChangeAction[] => item.actions ?? [],
     [item.actions]
   )
 
@@ -61,11 +50,10 @@ function OrderEditItem({ item, currencyCode, orderId }: OrderEditItemProps) {
     [actions]
   )
 
-  // MVP rule: when current quantity has been pulled down to fulfilled +
-  // returned, the line is effectively "removed" — it can't go any lower.
-  const fulfilledQty = item.detail?.fulfilled_quantity ?? 0
-  const returnedQty = item.detail?.returned_quantity ?? 0
-  const floor = fulfilledQty + returnedQty
+  // When the current quantity has been pulled down to the fulfilled
+  // quantity, the line is effectively "removed" — it can't go any lower
+  // (returned items stay counted in `fulfilled_quantity`).
+  const floor = item.detail?.fulfilled_quantity ?? 0
 
   const isItemRemoved = useMemo(() => {
     const updateAction = actions.find((a) => a.action === "ITEM_UPDATE")

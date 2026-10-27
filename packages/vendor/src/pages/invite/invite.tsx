@@ -108,9 +108,9 @@ export const Invite = () => {
             >
               <AvatarBox />
               <div className="mt-8 w-full">
-                {isValidInvite ? (
+                {isValidInvite && token ? (
                   <CreateView
-                    token={token!}
+                    token={token}
                     invite={invite}
                     onSuccess={() => setSuccess(true)}
                   />
@@ -229,8 +229,7 @@ const CreateView = ({
   const isExistingMember = invite.existing_member;
 
   const form = useExtendableForm({
-    // Refined schemas are merged by intersection inside useExtendableForm.
-    schema: CreateAccountSchema as unknown as typeof CreateAccountBaseSchema,
+    schema: CreateAccountSchema,
     model: "member",
     zone: "invite",
     defaultValues: {
@@ -397,7 +396,6 @@ const CreateView = ({
             <FormExtensionZone
               model="member"
               zone="invite"
-              control={form.control}
             />
             {validationError && (
               <Hint className="inline-flex" variant="error">

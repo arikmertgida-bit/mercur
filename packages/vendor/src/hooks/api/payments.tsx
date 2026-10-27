@@ -1,4 +1,8 @@
-import { ClientError } from "@mercurjs/client"
+import {
+  ClientError,
+  InferClientInput,
+  InferClientOutput,
+} from "@mercurjs/client"
 import { HttpTypes } from "@medusajs/types";
 import {
   useMutation,
@@ -22,7 +26,7 @@ export const paymentProvidersQueryKeys = queryKeysFactory(
 export const usePaymentProviders = (
   query: HttpTypes.AdminPaymentProviderListParams,
   options?: Omit<
-    UseQueryOptions<unknown, ClientError, HttpTypes.AdminPaymentProviderListResponse>,
+    UseQueryOptions<HttpTypes.AdminPaymentProviderListResponse, ClientError, HttpTypes.AdminPaymentProviderListResponse>,
     "queryKey" | "queryFn"
   >
 ) => {
@@ -38,9 +42,13 @@ export const usePaymentProviders = (
 
 export const usePayment = (
   id: string,
-  query?: Record<string, unknown>,
+  query?: Omit<InferClientInput<typeof sdk.vendor.payments.$id.query>, "$id">,
   options?: Omit<
-    UseQueryOptions<unknown, ClientError, HttpTypes.AdminPaymentCollectionResponse>,
+    UseQueryOptions<
+      InferClientOutput<typeof sdk.vendor.payments.$id.query>,
+      ClientError,
+      InferClientOutput<typeof sdk.vendor.payments.$id.query>
+    >,
     "queryKey" | "queryFn"
   >
 ) => {

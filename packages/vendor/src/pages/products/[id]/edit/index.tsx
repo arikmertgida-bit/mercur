@@ -1,20 +1,19 @@
 // Route: /products/:id/edit
 import { Heading } from "@medusajs/ui";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
 
-import { useLinkQuery } from "@mercurjs/dashboard-shared";
+import { useLinkQuery, useRequiredParam } from "@mercurjs/dashboard-shared";
 
 import { RouteDrawer } from "@components/modals";
 import { useProduct } from "@hooks/api/products";
 import { EditProductForm } from "./edit-product-form";
 
 export const Component = () => {
-  const { id } = useParams();
+  const id = useRequiredParam("id");
   const { t } = useTranslation();
 
   const query = useLinkQuery("product");
-  const { product, isLoading, isError, error } = useProduct(id!, query);
+  const { product, isLoading, isError, error } = useProduct(id, query);
 
   if (isError) {
     throw error;

@@ -79,19 +79,19 @@ export function OrderAllocateItemsItem({
   const isSelected =
     useWatch({
       control: form.control,
-      name: `selected.${item.id}` as `selected.${string}`,
+      name: `selected.${item.id}`,
     }) !== false
 
   const hasInventoryKit = inventoryLinks.length > 1
   const firstLink = inventoryLinks[0]
   const firstLinkId = firstLink ? resolveInventoryItemId(firstLink) : null
 
-  const { availableQuantity, inStockQuantity } = useMemo(() => {
+  const { availableQuantity, inStockQuantity } = useMemo<{
+    availableQuantity?: number | null
+    inStockQuantity?: number | null
+  }>(() => {
     if (!firstLink || !locationId) {
-      return {} as {
-        availableQuantity?: number | null
-        inStockQuantity?: number | null
-      }
+      return {}
     }
 
     const locationInventory = firstLink.inventory?.location_levels?.find(
@@ -222,7 +222,7 @@ export function OrderAllocateItemsItem({
                 name={
                   hasInventoryKit && firstLinkId
                     ? (`quantity.${item.id}-`)
-                    : (`quantity.${item.id}-${firstLinkId ?? ""}`) as `quantity.${string}`
+                    : `quantity.${item.id}-${firstLinkId ?? ""}`
                 }
                 rules={{
                   required: !hasInventoryKit,
@@ -363,7 +363,7 @@ export function OrderAllocateItemsItem({
                   <div className="text-ui-fg-subtle txt-small mr-1 flex flex-row items-center gap-2">
                     <Form.Field
                       control={form.control}
-                      name={`quantity.${item.id}-${inventoryItemId ?? ""}` as `quantity.${string}`}
+                      name={`quantity.${item.id}-${inventoryItemId ?? ""}`}
                       rules={{
                         required: true,
                         min: 0,

@@ -1,7 +1,6 @@
 import { keepPreviousData } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { useLoaderData } from "react-router-dom";
 
 import { _DataTable } from "@components/table/data-table";
 import { useProductTags } from "@hooks/api";
@@ -9,7 +8,6 @@ import { useProductTagTableColumns } from "@hooks/table/columns";
 import { useProductTagTableFilters } from "@hooks/table/filters";
 import { useProductTagTableQuery } from "@hooks/table/query";
 import { useDataTable } from "@hooks/use-data-table";
-import { productTagListLoader } from "../../loader";
 
 const PAGE_SIZE = 20;
 
@@ -19,14 +17,9 @@ export const ProductTagListDataTable = () => {
     pageSize: PAGE_SIZE,
   });
 
-  const initialData = useLoaderData() as Awaited<
-    ReturnType<typeof productTagListLoader>
-  >;
-
   const { product_tags, count, isPending, isError, error } = useProductTags(
     searchParams,
     {
-      initialData,
       placeholderData: keepPreviousData,
     },
   );

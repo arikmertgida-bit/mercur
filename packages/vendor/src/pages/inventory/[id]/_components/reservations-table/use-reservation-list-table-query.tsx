@@ -1,3 +1,8 @@
+import {
+  NumberFilterValueSchema,
+  parseJsonQueryParam,
+} from "@mercurjs/dashboard-shared"
+
 import { useQueryParams } from "@hooks/use-query-params"
 
 export const useReservationsTableQuery = ({
@@ -24,7 +29,7 @@ export const useReservationsTableQuery = ({
 
   const searchParams = {
     limit: pageSize,
-    quantity: quantity ? JSON.parse(quantity) : undefined,
+    quantity: parseJsonQueryParam(quantity, NumberFilterValueSchema),
     ...params,
   }
 

@@ -1,6 +1,7 @@
 import i18next from "i18next"
 import { z } from "zod"
 import type { Conversation, Message, NotificationPreferenceEntry } from "./types"
+import type { JsonRecord } from "../json-record"
 import { getMessengerAuthToken } from "./auth-token"
 
 declare const __MESSENGER_URL__: string
@@ -105,7 +106,7 @@ export async function findOrCreateConversation(payload: {
   productId?: string
   orderId?: string
   contextType?: string
-  metadata?: Record<string, unknown>
+  metadata?: JsonRecord
 }): Promise<{ conversation: Conversation }> {
   return request("/api/conversations", {
     method: "POST",

@@ -22,8 +22,9 @@ const PAGE_SIZE = 50
  * reject with `items with ids offer_… does not exist in order with id …`.
  *
  * "Remaining quantity" = `fulfilled_quantity - return_requested_quantity -
- * returned_quantity`. Items with 0 remaining are filtered out so the
- * seller can't pick something already in the return draft.
+ * return_received_quantity - return_dismissed_quantity` (the order item's
+ * return counters). Items with 0 remaining are filtered out so the seller
+ * can't pick something already in the return draft or already returned.
  */
 type AddReturnItemsTableProps = {
   /**
@@ -43,20 +44,12 @@ type AddReturnItemsTableProps = {
   selectedItems?: string[]
 }
 
-type OrderLineItem = HttpTypes.AdminOrder["items"][number] & {
-  detail?: {
-    fulfilled_quantity?: number
-    return_requested_quantity?: number
-    returned_quantity?: number
-  } | null
-}
-
-const getRemainingQuantity = (item: OrderLineItem): number => {
-  const detail = item.detail ?? {}
-  const fulfilled = detail.fulfilled_quantity ?? 0
-  const requested = detail.return_requested_quantity ?? 0
-  const returned = detail.returned_quantity ?? 0
-  return fulfilled - requested - returned
+const getRemainingQuantity = (item: HttpTypes.AdminOrderLineItem): number => {
+  const fulfilled = item.detail?.fulfilled_quantity ?? 0
+  const requested = item.detail?.return_requested_quantity ?? 0
+  const received = item.detail?.return_received_quantity ?? 0
+  const dismissed = item.detail?.return_dismissed_quantity ?? 0
+  return fulfilled - requested - received - dismissed
 }
 
 const EMPTY_SELECTED_ITEMS: string[] = []
@@ -69,10 +62,10 @@ export const AddReturnItemsTable = ({
   const { t } = useTranslation()
 
   const [rowSelection, setRowSelection] = useState<RowSelectionState>(
-    selectedItems.reduce((acc, id) => {
+    selectedItems.reduce<RowSelectionState>((acc, id) => {
       acc[id] = true
       return acc
-    }, {} as RowSelectionState)
+    }, {})
   )
 
   const updater: OnChangeFn<RowSelectionState> = (fn) => {
@@ -84,13 +77,13 @@ export const AddReturnItemsTable = ({
   }
 
   const rows = useMemo<ReturnItemPickerRow[]>(() => {
-    return (order.items ?? [])
-      .map((item) => {
-        const remainingQuantity = getRemainingQuantity(item as OrderLineItem)
-        if (remainingQuantity <= 0) {
-          return null
-        }
-        return {
+    return (order.items ?? []).flatMap((item) => {
+      const remainingQuantity = getRemainingQuantity(item)
+      if (remainingQuantity <= 0) {
+        return []
+      }
+      return [
+        {
           id: item.id,
           title: item.title,
           product_title: item.product_title,
@@ -98,9 +91,9 @@ export const AddReturnItemsTable = ({
           variant_title: item.variant_title,
           thumbnail: item.thumbnail,
           remainingQuantity,
-        }
-      })
-      .filter((r): r is ReturnItemPickerRow => r !== null)
+        },
+      ]
+    })
   }, [order.items])
 
   const count = rows.length

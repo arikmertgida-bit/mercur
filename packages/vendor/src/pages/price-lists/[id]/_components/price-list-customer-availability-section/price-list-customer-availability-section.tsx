@@ -9,6 +9,7 @@ import { BadgeListSummary } from "@components/common/badge-list-summary"
 import { NoRecords } from "@components/common/empty-table-content"
 import { Skeleton } from "@components/common/skeleton"
 import { useCustomerGroups } from "@hooks/api/customer-groups"
+import { getPriceListCustomerGroupIds } from "../../../common/utils"
 
 type PriceListCustomerAvailabilitySectionProps = {
   priceList: HttpTypes.AdminPriceList
@@ -19,9 +20,7 @@ export const PriceListCustomerAvailabilitySection = ({
 }: PriceListCustomerAvailabilitySectionProps) => {
   const { t } = useTranslation()
 
-  const customerGroupIds = priceList.rules?.["customer.groups.id"] as
-    | string[]
-    | undefined
+  const customerGroupIds = getPriceListCustomerGroupIds(priceList.rules)
 
   const canViewCustomerGroups = useCan("customer_groups")
 
@@ -89,7 +88,7 @@ export const PriceListCustomerAvailabilitySection = ({
               <BadgeListSummary
                 inline
                 className="!txt-compact-small-plus"
-                list={customer_groups.map((group) => group.name!)}
+                list={customer_groups.map((group) => group.name ?? "")}
               />
             </div>
           </div>

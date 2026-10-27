@@ -1,12 +1,14 @@
 import { clx } from "@medusajs/ui"
 import { useEffect, useState } from "react"
+import type { JsonValue } from "@mercurjs/types"
 import { Controller, ControllerRenderProps } from "react-hook-form"
 import { useCombinedRefs } from "../../../hooks/use-combined-refs"
 import { useDataGridCell, useDataGridCellError } from "../hooks"
-import { DataGridCellProps, InputProps } from "../types"
+import { DataGridCellProps, DataGridFormValues, InputProps } from "../types"
+import { toInputValue } from "../utils"
 import { DataGridCellContainer } from "./data-grid-cell-container"
 
-export const DataGridNumberCell = <TData, TValue = any>({
+export const DataGridNumberCell = <TData, TValue = JsonValue>({
   context,
   ...rest
 }: DataGridCellProps<TData, TValue> & {
@@ -41,7 +43,7 @@ const Inner = ({
   inputProps,
   ...props
 }: {
-  field: ControllerRenderProps<any, string>
+  field: ControllerRenderProps<DataGridFormValues, string>
   inputProps: InputProps
   min?: number
   max?: number
@@ -56,7 +58,7 @@ const Inner = ({
     ...attributes
   } = inputProps
 
-  const [localValue, setLocalValue] = useState(value)
+  const [localValue, setLocalValue] = useState<JsonValue>(value)
 
   useEffect(() => {
     setLocalValue(value)
@@ -68,7 +70,7 @@ const Inner = ({
     <div className="size-full">
       <input
         ref={combinedRefs}
-        value={localValue}
+        value={toInputValue(localValue)}
         onChange={(e) => setLocalValue(e.target.value)}
         onBlur={() => {
           onBlur()

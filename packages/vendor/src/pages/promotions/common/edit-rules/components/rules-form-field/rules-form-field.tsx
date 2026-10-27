@@ -1,11 +1,18 @@
 import { XMarkMini } from "@medusajs/icons";
 import { HttpTypes } from "@medusajs/types";
 import { Badge, Button, Heading, IconButton, Select, Text } from "@medusajs/ui";
-import { forwardRef, Fragment, useEffect, useRef } from "react";
+import {
+  Dispatch,
+  forwardRef,
+  Fragment,
+  SetStateAction,
+  useEffect,
+  useRef,
+} from "react";
 import {
   ControllerRenderProps,
   useFieldArray,
-  UseFormReturn,
+  useFormContext,
   useWatch,
 } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -14,7 +21,10 @@ import {
   usePromotionRuleAttributes,
   usePromotionRules,
 } from "../../../../../../hooks/api";
-import { CreatePromotionSchemaType } from "../../../../create/create-promotion-form/form-schema";
+import {
+  PromotionRuleRow,
+  PromotionRulesFormValues,
+} from "../../form-values";
 import {
   generateRuleAttributes,
   translateRuleAttributeLabel,
@@ -28,19 +38,20 @@ import {
   requiredProductRule,
 } from "./constants";
 
+// `id` is absent for rules that only exist in the form (disguised
+// application-method fields and unsaved rows).
 export type RuleToRemove = {
-  id: string;
+  id?: string;
   disguised: boolean;
   attribute: string;
 };
 
-type PromotionRuleField = CreatePromotionSchemaType["rules"][number];
+type PromotionRuleField = PromotionRuleRow;
 
 type RulesFormFieldType = {
   promotion?: HttpTypes.AdminPromotion;
-  form: UseFormReturn<CreatePromotionSchemaType>;
   ruleType: "rules" | "target-rules" | "buy-rules";
-  setRulesToRemove?: (rules: RuleToRemove[]) => void;
+  setRulesToRemove?: Dispatch<SetStateAction<RuleToRemove[]>>;
   rulesToRemove?: RuleToRemove[];
   scope?:
     | "application_method.buy_rules"
@@ -49,13 +60,13 @@ type RulesFormFieldType = {
 };
 
 export const RulesFormField = ({
-  form,
   ruleType,
   setRulesToRemove,
   scope = "rules",
   promotion,
 }: RulesFormFieldType) => {
   const { t } = useTranslation();
+  const form = useFormContext<PromotionRulesFormValues>();
   const formData = form.getValues();
   const { attributes } = usePromotionRuleAttributes(
     ruleType,
@@ -87,7 +98,9 @@ export const RulesFormField = ({
   const query: Record<string, string> = promotionType
     ? {
         promotion_type: promotionType,
-        application_method_type: applicationMethodType,
+        ...(applicationMethodType && {
+          application_method_type: applicationMethodType,
+        }),
       }
     : {};
 
@@ -180,7 +193,7 @@ export const RulesFormField = ({
     }
 
     const currentRules =
-      (form.getValues(scope) as { attribute?: string }[]) || [];
+      form.getValues(scope) || [];
     const currencyIndex = currentRules.findIndex(
       (rule) => rule.attribute === "currency_code",
     );
@@ -418,30 +431,24 @@ export const RulesFormField = ({
                     onClick={() => {
                       if (!fieldRule.required) {
                         if (setRulesToRemove) {
-                          setRulesToRemove(
-                            (
-                              prev: {
-                                id: string;
-                                disguised?: boolean;
-                                attribute: string;
-                              }[],
-                            ) => {
-                              if (
-                                fieldRule.id &&
-                                !prev.find((r) => r.id === fieldRule.id)
-                              ) {
-                                return [
-                                  ...(prev || []),
-                                  fieldRule as {
-                                    id: string;
-                                    disguised?: boolean;
-                                    attribute: string;
-                                  },
-                                ];
-                              }
-                              return prev || [];
-                            },
-                          );
+                          setRulesToRemove((prev) => {
+                            const ruleId = fieldRule.id;
+
+                            if (
+                              ruleId &&
+                              !prev.find((r) => r.id === ruleId)
+                            ) {
+                              return [
+                                ...prev,
+                                {
+                                  id: ruleId,
+                                  disguised: !!fieldRule.disguised,
+                                  attribute: fieldRule.attribute,
+                                },
+                              ];
+                            }
+                            return prev;
+                          });
                         }
 
                         remove(index);
@@ -497,7 +504,13 @@ export const RulesFormField = ({
 
               if (setRulesToRemove) {
                 setRulesToRemove(
-                  fields.filter((field) => !field.required) as RuleToRemove[],
+                  fields
+                    .filter((field) => !field.required)
+                    .map((field) => ({
+                      id: field.id,
+                      disguised: !!field.disguised,
+                      attribute: field.attribute,
+                    })),
                 );
               }
               remove(indicesToRemove);
@@ -515,27 +528,27 @@ type DisabledAttributeProps = {
   label: string;
   field:
     | ControllerRenderProps<
-        CreatePromotionSchemaType,
+        PromotionRulesFormValues,
         `rules.${number}.attribute`
       >
     | ControllerRenderProps<
-        CreatePromotionSchemaType,
+        PromotionRulesFormValues,
         `rules.${number}.operator`
       >
     | ControllerRenderProps<
-        CreatePromotionSchemaType,
+        PromotionRulesFormValues,
         `application_method.buy_rules.${number}.attribute`
       >
     | ControllerRenderProps<
-        CreatePromotionSchemaType,
+        PromotionRulesFormValues,
         `application_method.buy_rules.${number}.operator`
       >
     | ControllerRenderProps<
-        CreatePromotionSchemaType,
+        PromotionRulesFormValues,
         `application_method.target_rules.${number}.attribute`
       >
     | ControllerRenderProps<
-        CreatePromotionSchemaType,
+        PromotionRulesFormValues,
         `application_method.target_rules.${number}.operator`
       >;
 };

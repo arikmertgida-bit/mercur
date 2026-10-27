@@ -18,8 +18,8 @@ export const Component = () => {
 
   const { inventory_items, isPending, isError, error } = useInventoryItems({
     fields:
-      "id,sku,title,*stock_locations,*location_levels,offers.product_variant.product.title",
-    id: inventoryItemIds!,
+      "id,sku,title,*stock_locations,*location_levels,variants.product.title",
+    id: inventoryItemIds,
   });
 
   const {

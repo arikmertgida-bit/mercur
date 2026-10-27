@@ -74,9 +74,8 @@ export const AddOrderEditItemsTable = ({
     },
     { enabled: canViewProducts }
   );
-  const rawProducts = productsResponse.products as
-    | ProductPickerRow[]
-    | undefined;
+  const rawProducts: ProductPickerRow[] | undefined =
+    productsResponse.products;
   const rawCount = productsResponse.count ?? 0;
 
   const variants = useMemo<VariantPickerRow[]>(() => {

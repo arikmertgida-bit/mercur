@@ -60,7 +60,7 @@ export function OrderCreateFulfillmentItem({
   const isSelected =
     useWatch({
       control: form.control,
-      name: `selection.${item.id}` as `selection.${string}`,
+      name: `selection.${item.id}`,
     }) !== false
 
   const { availableQuantity, inStockQuantity, missingLevel } = useMemo(() => {

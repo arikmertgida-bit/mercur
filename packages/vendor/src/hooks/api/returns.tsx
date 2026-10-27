@@ -79,7 +79,7 @@ export const useReturn = (
   query?: Omit<InferClientInput<typeof sdk.vendor.returns.$id.query>, "$id">,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.returns.$id.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.returns.$id.query>
     >,
@@ -99,7 +99,7 @@ export const useReturns = (
   query?: InferClientInput<typeof sdk.vendor.returns.query>,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.returns.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.returns.query>
     >,
@@ -286,7 +286,7 @@ export const useUpdateReturnItem = (
         typeof sdk.vendor.returns.$id.requestItems.$actionId.mutate
       >,
       "$id" | "$actionId"
-    >
+    > & { actionId: string }
   >
 ) => {
   return useMutation({
@@ -416,7 +416,7 @@ export const useUpdateReturnShipping = (
         typeof sdk.vendor.returns.$id.shippingMethod.$actionId.mutate
       >,
       "$id" | "$actionId"
-    >
+    > & { actionId: string }
   >
 ) => {
   return useMutation({
@@ -551,7 +551,7 @@ export const useUpdateReceiveItem = (
         typeof sdk.vendor.returns.$id.receiveItems.$actionId.mutate
       >,
       "$id" | "$actionId"
-    >
+    > & { actionId: string }
   >
 ) => {
   return useMutation({
@@ -653,7 +653,7 @@ export const useUpdateDismissItem = (
         typeof sdk.vendor.returns.$id.dismissItems.$actionId.mutate
       >,
       "$id" | "$actionId"
-    >
+    > & { actionId: string }
   >
 ) => {
   return useMutation({

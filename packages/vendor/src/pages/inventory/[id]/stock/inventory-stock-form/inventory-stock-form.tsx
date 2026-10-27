@@ -136,9 +136,9 @@ function getDefaultValues(
   locations: HttpTypes.AdminStockLocation[]
 ): DefaultValues<InventoryStockSchema> {
   return {
-    inventory_items: items.reduce(
+    inventory_items: items.reduce<Record<string, InventoryItemSchema>>(
       (acc, item) => {
-        const locationsMap = locations.reduce((locationAcc, location) => {
+        const locationsMap = locations.reduce<InventoryLocationsSchema>((locationAcc, location) => {
           const level = item.location_levels?.find(
             (level) => level.location_id === location.id
           )
@@ -155,12 +155,12 @@ function getDefaultValues(
               (level?.reserved_quantity || 0) > 0,
           }
           return locationAcc
-        }, {} as InventoryLocationsSchema)
+        }, {})
 
         acc[item.id] = { locations: locationsMap }
         return acc
       },
-      {} as Record<string, InventoryItemSchema>
+      {}
     ),
   }
 }

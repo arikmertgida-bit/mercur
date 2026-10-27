@@ -27,7 +27,7 @@ export const useCustomerGroup = (
   >,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.customerGroups.$id.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.customerGroups.$id.query>
     >,
@@ -47,7 +47,7 @@ export const useCustomerGroups = (
   query?: InferClientInput<typeof sdk.vendor.customerGroups.query>,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.customerGroups.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.customerGroups.query>
     >,

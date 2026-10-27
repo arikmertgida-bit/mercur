@@ -38,7 +38,7 @@ import { useCombinedRefs } from "@hooks/use-combined-refs"
 import { castNumber } from "@lib/cast-number"
 import { CurrencyInfo } from "@lib/data/currencies"
 import { getLocaleAmount } from "@lib/money-amount-helpers"
-import { CreateShippingOptionSchemaType } from "../../../location-service-zone-shipping-option-create/components/create-shipping-options-form/schema"
+import { CreateShippingOptionSchemaType } from "@pages/settings/locations/[location_id]/fulfillment-set/[fset_id]/service-zone/[zone_id]/shipping-option/create/_components/schema"
 import {
   CondtionalPriceRuleSchema,
   CondtionalPriceRuleSchemaType,

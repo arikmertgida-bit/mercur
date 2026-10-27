@@ -29,7 +29,7 @@ export const useStockLocation = (
   >,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.stockLocations.$id.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.stockLocations.$id.query>
     >,
@@ -49,7 +49,7 @@ export const useStockLocations = (
   query?: InferClientInput<typeof sdk.vendor.stockLocations.query>,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      HttpTypes.VendorStockLocationListResponse,
       ClientError,
       HttpTypes.VendorStockLocationListResponse
     >,

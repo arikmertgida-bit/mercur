@@ -1,41 +1,40 @@
 import { MagnifyingGlass, XMarkMini } from "@medusajs/icons"
 import { Button, Divider, IconButton, Text, clx } from "@medusajs/ui"
-import { Control, FieldValues, Path, useFieldArray } from "react-hook-form"
+import { Control, useFieldArray } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
 import { StackedFocusModal, useStackedModal } from "@components/modals"
+import { PriceListCustomerGroup } from "../../schemas"
 import { PriceListCustomerGroupRuleForm } from "../price-list-customer-group-rule-form"
 
-type CustomerGroup = { id: string; name: string }
+/** Form shape the selector binds to: an array of `{ id, name }` customer groups. */
+export type PriceListCustomerAvailabilityFieldValues = {
+  customer_group_id: PriceListCustomerGroup[]
+}
 
-type PriceListCustomerAvailabilitySelectorProps<T extends FieldValues> = {
-  control: Control<T>
-  name: Path<T>
+type PriceListCustomerAvailabilitySelectorProps = {
+  control: Control<PriceListCustomerAvailabilityFieldValues>
   stackedId?: string
 }
 
 /**
  * Reusable "Customer availability" builder (attribute · in · Browse · chips)
- * shared by the create wizard and the detail edit drawer. The bound field is
- * an array of `{ id, name }` customer groups.
+ * bound to the form's `customer_group_id` field array.
  */
-export const PriceListCustomerAvailabilitySelector = <T extends FieldValues>({
+export const PriceListCustomerAvailabilitySelector = ({
   control,
-  name,
   stackedId = "cg",
-}: PriceListCustomerAvailabilitySelectorProps<T>) => {
+}: PriceListCustomerAvailabilitySelectorProps) => {
   const { t } = useTranslation()
   const { setIsOpen } = useStackedModal()
 
-  const { fields, append, remove } = useFieldArray({
+  const { fields: selected, append, remove } = useFieldArray({
     control,
-    name: name as never,
+    name: "customer_group_id",
     keyName: "cg_id",
   })
 
-  const selected = fields as unknown as (CustomerGroup & { cg_id: string })[]
-
-  const handleAdd = (groups: CustomerGroup[]) => {
+  const handleAdd = (groups: PriceListCustomerGroup[]) => {
     const newIds = groups.map((group) => group.id)
 
     const fieldsToAdd = groups.filter(
@@ -48,7 +47,7 @@ export const PriceListCustomerAvailabilitySelector = <T extends FieldValues>({
       }
     }
 
-    append(fieldsToAdd as never)
+    append(fieldsToAdd)
     setIsOpen(stackedId, false)
   }
 

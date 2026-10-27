@@ -58,8 +58,8 @@ export function OrderAllocateItemsForm({ order }: OrderAllocateItemsFormProps) {
 
   const itemsToAllocate = useMemo(
     () =>
-      getAllocatableItems(
-        order.items as OrderLineItemWithVariant[],
+      getAllocatableItems<OrderLineItemWithVariant>(
+        order.items,
         reservations ?? []
       ),
     [order.items, reservations]
@@ -150,7 +150,7 @@ export function OrderAllocateItemsForm({ order }: OrderAllocateItemsFormProps) {
   })
 
   const onToggleSelected = (itemId: string, checked: boolean) => {
-    form.setValue(`selected.${itemId}` as `selected.${string}`, checked)
+    form.setValue(`selected.${itemId}`, checked)
     form.clearErrors("root.quantityNotAllocated")
   }
 
@@ -165,12 +165,12 @@ export function OrderAllocateItemsForm({ order }: OrderAllocateItemsFormProps) {
 
     const inventoryItemId = resolveInventoryItemId(link)
 
-    const key =
+    const key: `quantity.${string}` =
       isRoot && hasInventoryKit
         ? `quantity.${lineItem.id}-`
         : `quantity.${lineItem.id}-${inventoryItemId ?? ""}`
 
-    form.setValue(key as `quantity.${string}`, value ?? "")
+    form.setValue(key, value ?? "")
 
     const levels = link.inventory?.location_levels
     if (value && levels) {
@@ -181,7 +181,7 @@ export function OrderAllocateItemsForm({ order }: OrderAllocateItemsFormProps) {
     }
 
     if (hasInventoryKit && !isRoot) {
-      form.resetField(`quantity.${lineItem.id}-` as `quantity.${string}`, { defaultValue: "" })
+      form.resetField(`quantity.${lineItem.id}-`, { defaultValue: "" })
     }
 
     if (hasInventoryKit && isRoot) {
@@ -197,7 +197,7 @@ export function OrderAllocateItemsForm({ order }: OrderAllocateItemsFormProps) {
         const required = childLink.required_quantity ?? 1
 
         form.setValue(
-          `quantity.${lineItem.id}-${childInventoryItemId}` as `quantity.${string}`,
+          `quantity.${lineItem.id}-${childInventoryItemId}`,
           num * required
         )
 

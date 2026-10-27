@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { HttpTypes } from "@medusajs/types"
-import { VendorExtendedAdminStockLocation } from "@custom-types/stock-location"
+import type { HttpTypes as VendorHttpTypes } from "@mercurjs/types"
 import {
   Button,
   createDataTableColumnHelper,
@@ -26,7 +26,7 @@ import { useSalesChannels } from "@hooks/api/sales-channels"
 import { useUpdateStockLocationSalesChannels } from "@hooks/api/stock-locations"
 
 type EditSalesChannelsFormProps = {
-  location: VendorExtendedAdminStockLocation
+  location: VendorHttpTypes.VendorStockLocation
 }
 
 const EditSalesChannelsSchema = zod.object({
@@ -177,11 +177,11 @@ const useColumns = () => {
   return useMemo(() => [columnHelper.select(), ...base], [base])
 }
 
-function getInitialState(location: VendorExtendedAdminStockLocation) {
+function getInitialState(location: VendorHttpTypes.VendorStockLocation) {
   return (
-    location.sales_channels?.reduce((acc, curr) => {
+    location.sales_channels?.reduce<DataTableRowSelectionState>((acc, curr) => {
       acc[curr.id] = true
       return acc
-    }, {} as DataTableRowSelectionState) ?? {}
+    }, {}) ?? {}
   )
 }

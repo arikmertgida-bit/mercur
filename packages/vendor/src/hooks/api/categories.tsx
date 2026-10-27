@@ -31,7 +31,7 @@ export const useProductCategory = (
   >,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.productCategories.$id.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.productCategories.$id.query>
     >,
@@ -52,7 +52,7 @@ export const useProductCategories = (
   query?: InferClientInput<typeof sdk.vendor.productCategories.query>,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.productCategories.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.productCategories.query>
     >,

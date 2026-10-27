@@ -9,7 +9,7 @@ export const useDataGridErrorHighlighting = <
   TData,
   TFieldValues extends FieldValues
 >(
-  matrix: DataGridMatrix<TData, TFieldValues>,
+  matrix: DataGridMatrix<TData>,
   grid: Table<TData>,
   errors: FieldErrors<TFieldValues>
 ) => {

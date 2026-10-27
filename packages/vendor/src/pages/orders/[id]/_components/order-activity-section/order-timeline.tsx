@@ -1,9 +1,9 @@
-import { ExtendedAdminOrder } from "@custom-types/order"
+import { HttpTypes } from "@mercurjs/types"
 import { useActivityItems } from "./hooks"
 import { OrderActivityItem, OrderActivityCollapsible } from "./components"
 
 type OrderTimelineProps = {
-  order: ExtendedAdminOrder
+  order: HttpTypes.VendorOrder
 }
 
 export const OrderTimeline = ({ order }: OrderTimelineProps) => {

@@ -141,7 +141,6 @@ const RegisterForm = () => {
           <FormExtensionZone
             model="member"
             zone="register"
-            control={form.control}
           />
           {serverError && (
             <Hint className="inline-flex" variant="error">

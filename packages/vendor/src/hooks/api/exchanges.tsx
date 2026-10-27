@@ -28,7 +28,7 @@ export const useExchanges = (
   query?: InferClientInput<typeof sdk.vendor.exchanges.query>,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.exchanges.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.exchanges.query>
     >,

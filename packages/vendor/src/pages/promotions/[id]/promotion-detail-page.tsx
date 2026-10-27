@@ -1,9 +1,9 @@
 import { Children, ReactNode } from "react";
-import { useLoaderData, useParams } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 
 import { TwoColumnPageSkeleton } from "@components/common/skeleton";
 import { TwoColumnPage } from "@components/layout/pages";
-import { useLinkQuery, WidgetZone } from "@mercurjs/dashboard-shared";
+import { useLinkQuery, WidgetZone, useRequiredParam } from "@mercurjs/dashboard-shared";
 import { usePromotion, usePromotionRules } from "@hooks/api/promotions";
 
 import { CampaignSection } from "./_components/campaign-section";
@@ -13,18 +13,18 @@ import { PromotionGeneralSection } from "./_components/promotion-general-section
 import type { loader } from "./loader";
 
 const Root = ({ children }: { children?: ReactNode }) => {
-  const initialData = useLoaderData() as Awaited<ReturnType<typeof loader>>;
-  const { id } = useParams();
+  const initialData = useLoaderData<typeof loader>();
+  const id = useRequiredParam("id");
   const linkQuery = useLinkQuery("promotion", "+status");
-  const { promotion, isLoading } = usePromotion(id!, linkQuery, {
+  const { promotion, isLoading } = usePromotion(id, linkQuery, {
     initialData,
   });
   const query: Record<string, string> = {};
   if (promotion?.type === "buyget") query.promotion_type = promotion.type;
 
-  const { rules } = usePromotionRules(id!, "rules", query);
-  const { rules: targetRules } = usePromotionRules(id!, "target-rules", query);
-  const { rules: buyRules } = usePromotionRules(id!, "buy-rules", query);
+  const { rules } = usePromotionRules(id, "rules", query);
+  const { rules: targetRules } = usePromotionRules(id, "target-rules", query);
+  const { rules: buyRules } = usePromotionRules(id, "buy-rules", query);
 
   if (isLoading || !promotion)
     return (
@@ -56,7 +56,7 @@ const Root = ({ children }: { children?: ReactNode }) => {
           <TwoColumnPage.Sidebar>
             <WidgetZone id="promotions.detail.side" data={promotion}>
               <CampaignSection
-                campaign={promotion.campaign!}
+                campaign={promotion.campaign ?? null}
                 promotion={promotion}
               />
             </WidgetZone>

@@ -1,4 +1,10 @@
-export type KeybindContextState = {}
+export type KeybindContextState = {
+  shortcuts: Shortcut[]
+  registerShortcut: (shortcut: Shortcut) => void
+  getKeysByPlatform: (
+    command: Shortcut
+  ) => { platform: Platform; keys: string[] } | null
+}
 
 export type Platform = "Mac" | "Windows" | "Linux"
 

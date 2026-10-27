@@ -26,7 +26,6 @@ export const OnboardingWizard = ({ memberEmail }: OnboardingWizardProps) => {
 
   const {
     currentStep,
-    sellerId,
     isPending,
     goBack,
     submitStoreStep,
@@ -85,7 +84,6 @@ export const OnboardingWizard = ({ memberEmail }: OnboardingWizardProps) => {
         return (
           <WizardStep key="payment">
             <PaymentStep
-              sellerId={sellerId!}
               onSubmit={submitPaymentStep}
               onSkip={skipPaymentStep}
               isPending={isPending}

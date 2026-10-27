@@ -3,7 +3,6 @@ import { usePermissionGate } from "@mercurjs/dashboard-shared";
 import { ConditionalTooltip } from "@components/common/conditional-tooltip";
 import { ClientError, InferClientInput, InferClientOutput } from "@mercurjs/client";
 import { MercurFeatureFlags } from "@mercurjs/types";
-import { Button, toast } from "@medusajs/ui";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,10 +17,10 @@ import { useUpdateProduct } from "@hooks/api/products";
 import { useComboboxData } from "@hooks/use-combobox-data";
 import { sdk } from "@lib/client";
 import { SingleCategoryCombobox } from "@pages/products/common/components/category-combobox";
-import { ExtendedAdminProduct } from "@custom-types/products";
+import type { HttpTypes } from "@mercurjs/types"
 
 type ProductOrganizationFormProps = {
-  product: ExtendedAdminProduct;
+  product: HttpTypes.VendorProduct;
 };
 
 const ProductOrganizationSchema = zod.object({
@@ -51,8 +50,8 @@ export const ProductOrganizationForm = ({
       sdk.vendor.collections.query(params),
     getOptions: (data: InferClientOutput<typeof sdk.vendor.collections.query>) =>
       data.collections.map((collection) => ({
-        label: collection.title!,
-        value: collection.id!,
+        label: collection.title,
+        value: collection.id,
       })),
     enabled: collectionsGate.allowed,
   });
@@ -174,6 +173,7 @@ export const ProductOrganizationForm = ({
                         <Form.Control data-testid="product-organization-form-collection-control">
                           <Combobox
                             {...field}
+                            value={field.value ?? ""}
                             multiple={false}
                             disabled={collectionsGate.denied}
                             options={collections.options}
@@ -244,6 +244,7 @@ export const ProductOrganizationForm = ({
                         <Form.Control data-testid="product-organization-form-type-control">
                           <Combobox
                             {...field}
+                            value={field.value ?? ""}
                             disabled={typesGate.denied}
                             options={types.options}
                             searchValue={types.searchValue}

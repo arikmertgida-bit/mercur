@@ -1,7 +1,7 @@
 import type { UniqueIdentifier } from "@dnd-kit/core"
 import { arrayMove } from "@dnd-kit/sortable"
 
-import type { FlattenedItem, TreeItem } from "./types"
+import type { FlattenedItem, TreeChildrenAccessor, TreeItem } from "./types"
 
 export const iOS = /iPad|iPhone|iPod/.test(navigator.platform)
 
@@ -76,28 +76,41 @@ function getMinDepth({ nextItem }: { nextItem: FlattenedItem }) {
   return 0
 }
 
+function getChildrenOf<T extends TreeItem>(
+  item: T,
+  accessor: TreeChildrenAccessor<T>
+): readonly T[] {
+  return accessor.getChildren(item) ?? []
+}
+
 function flatten<T extends TreeItem>(
-  items: T[],
-  parentId: UniqueIdentifier | null = null,
-  depth = 0,
-  childrenProp: string
-): (T & FlattenedItem)[] {
-  return items.reduce<(T & FlattenedItem)[]>((acc, item, index) => {
-    const children = (item[childrenProp] || []) as T[]
+  items: readonly T[],
+  parentId: UniqueIdentifier | null,
+  depth: number,
+  accessor: TreeChildrenAccessor<T>
+): FlattenedItem<T>[] {
+  return items.flatMap((item, index) => {
+    const children = getChildrenOf(item, accessor)
 
     return [
-      ...acc,
-      { ...item, parentId, depth, index },
-      ...flatten(children, item.id, depth + 1, childrenProp),
+      {
+        id: item.id,
+        parentId,
+        depth,
+        index,
+        childCount: children.length,
+        item,
+      },
+      ...flatten(children, item.id, depth + 1, accessor),
     ]
-  }, [])
+  })
 }
 
 export function flattenTree<T extends TreeItem>(
-  items: T[],
-  childrenProp: string
-): (T & FlattenedItem)[] {
-  return flatten(items, undefined, undefined, childrenProp)
+  items: readonly T[],
+  accessor: TreeChildrenAccessor<T>
+): FlattenedItem<T>[] {
+  return flatten(items, null, 0, accessor)
 }
 
 type ItemUpdate = {
@@ -106,107 +119,88 @@ type ItemUpdate = {
   index: number
 }
 
+/**
+ * Rebuilds the nested tree from a (re-ordered) flat list. Children keep the
+ * order in which they appear in `flattenedItems`.
+ */
 export function buildTree<T extends TreeItem>(
-  flattenedItems: FlattenedItem[],
+  flattenedItems: FlattenedItem<T>[],
   newIndex: number,
-  childrenProp: string
+  accessor: TreeChildrenAccessor<T>
 ): { items: T[]; update: ItemUpdate } {
-  const root = { id: "root", [childrenProp]: [] } as T
-  const nodes: Record<string, T> = { [root.id]: root }
-  const items = flattenedItems.map((item) => ({ ...item, [childrenProp]: [] }))
+  const knownIds = new Set(flattenedItems.map(({ id }) => id))
+  const childrenOf = new Map<UniqueIdentifier | null, FlattenedItem<T>[]>()
+  let update: ItemUpdate | undefined
 
-  let update: {
-    id: UniqueIdentifier | null
-    parentId: UniqueIdentifier | null
-    index: number
-  } = {
-    id: null,
-    parentId: null,
-    index: 0,
-  }
+  flattenedItems.forEach((node, index) => {
+    if (node.parentId !== null && !knownIds.has(node.parentId)) {
+      throw new Error(`Could not find parent ${node.parentId}`)
+    }
 
-  items.forEach((item, index) => {
-    const {
-      id,
-      index: _index,
-      depth: _depth,
-      parentId: _parentId,
-      ...rest
-    } = item
-    const children = (item[childrenProp] || []) as T[]
-
-    const parentId = _parentId ?? root.id
-    const parent = nodes[parentId] ?? findItem(items, parentId)
-
-    nodes[id] = { id, [childrenProp]: children } as T
-    ;(parent[childrenProp] as T[]).push({
-      id,
-      ...rest,
-      [childrenProp]: children,
-    } as T)
+    const siblings = childrenOf.get(node.parentId) ?? []
+    siblings.push(node)
+    childrenOf.set(node.parentId, siblings)
 
     /**
      * Get the information for them item that was moved to the `newIndex`.
      */
     if (index === newIndex) {
-      const parentChildren = parent[childrenProp] as FlattenedItem[]
-
       update = {
-        id: item.id,
-        parentId: parent.id === "root" ? null : parent.id,
-        index: parentChildren.length - 1,
+        id: node.id,
+        parentId: node.parentId,
+        index: siblings.length - 1,
       }
     }
   })
 
-  if (!update.id) {
+  if (!update) {
     throw new Error("Could not find item")
   }
 
+  const build = (parentId: UniqueIdentifier | null): T[] =>
+    (childrenOf.get(parentId) ?? []).map((node) =>
+      accessor.setChildren(node.item, build(node.id))
+    )
+
   return {
-    items: root[childrenProp] as T[],
-    update: update as ItemUpdate,
+    items: build(null),
+    update,
   }
 }
 
 export function findItem<T extends TreeItem>(
-  items: T[],
+  items: readonly T[],
   itemId: UniqueIdentifier
 ) {
   return items.find(({ id }) => id === itemId)
 }
 
 export function findItemDeep<T extends TreeItem>(
-  items: T[],
+  items: readonly T[],
   itemId: UniqueIdentifier,
-  childrenProp: string
-): TreeItem | undefined {
+  accessor: TreeChildrenAccessor<T>
+): T | undefined {
   for (const item of items) {
-    const { id } = item
-    const children = (item[childrenProp] || []) as T[]
-
-    if (id === itemId) {
+    if (item.id === itemId) {
       return item
     }
 
-    if (children.length) {
-      const child = findItemDeep(children, itemId, childrenProp)
+    const child = findItemDeep(getChildrenOf(item, accessor), itemId, accessor)
 
-      if (child) {
-        return child
-      }
+    if (child) {
+      return child
     }
   }
 
   return undefined
 }
 
-export function setProperty<TItem extends TreeItem, T extends keyof TItem>(
-  items: TItem[],
+export function setProperty<TItem extends TreeItem, K extends keyof TItem>(
+  items: readonly TItem[],
   id: UniqueIdentifier,
-  property: T,
-  childrenProp: keyof TItem, // Make childrenProp a key of TItem
-  setter: (value: TItem[T]) => TItem[T]
+  property: K,
+  accessor: TreeChildrenAccessor<TItem>,
+  setter: (value: TItem[K]) => TItem[K]
 ): TItem[] {
   return items.map((item) => {
     if (item.id === id) {
@@ -216,65 +210,49 @@ export function setProperty<TItem extends TreeItem, T extends keyof TItem>(
       }
     }
 
-    const children = item[childrenProp] as TItem[] | undefined
+    const children = getChildrenOf(item, accessor)
 
-    if (children && children.length) {
-      return {
-        ...item,
-        [childrenProp]: setProperty(
-          children,
-          id,
-          property,
-          childrenProp,
-          setter
-        ),
-      } as TItem // Explicitly cast to TItem
+    if (children.length) {
+      return accessor.setChildren(
+        item,
+        setProperty(children, id, property, accessor, setter)
+      )
     }
 
     return item
   })
 }
 
-function countChildren<T extends TreeItem>(
-  items: T[],
-  count = 0,
-  childrenProp: string
+function countDescendants<T extends TreeItem>(
+  items: readonly T[],
+  accessor: TreeChildrenAccessor<T>
 ): number {
-  return items.reduce((acc, item) => {
-    const children = (item[childrenProp] || []) as T[]
-
-    if (children.length) {
-      return countChildren(children, acc + 1, childrenProp)
-    }
-
-    return acc + 1
-  }, count)
+  return items.reduce(
+    (acc, item) =>
+      acc + 1 + countDescendants(getChildrenOf(item, accessor), accessor),
+    0
+  )
 }
 
 export function getChildCount<T extends TreeItem>(
-  items: T[],
+  items: readonly T[],
   id: UniqueIdentifier,
-  childrenProp: string
+  accessor: TreeChildrenAccessor<T>
 ) {
-  const item = findItemDeep(items, id, childrenProp)
+  const item = findItemDeep(items, id, accessor)
 
-  const children = (item?.[childrenProp] || []) as T[]
-
-  return item ? countChildren(children, 0, childrenProp) : 0
+  return item ? countDescendants(getChildrenOf(item, accessor), accessor) : 0
 }
 
-export function removeChildrenOf<T extends FlattenedItem>(
-  items: T[],
-  ids: UniqueIdentifier[],
-  childrenProp: string
+export function removeChildrenOf<T extends TreeItem>(
+  items: FlattenedItem<T>[],
+  ids: UniqueIdentifier[]
 ) {
   const excludeParentIds = [...ids]
 
   return items.filter((item) => {
     if (item.parentId && excludeParentIds.includes(item.parentId)) {
-      const children = (item[childrenProp] || []) as FlattenedItem[]
-
-      if (children.length) {
+      if (item.childCount) {
         excludeParentIds.push(item.id)
       }
       return false
@@ -285,15 +263,13 @@ export function removeChildrenOf<T extends FlattenedItem>(
 }
 
 export function listItemsWithChildren<T extends TreeItem>(
-  items: T[],
-  childrenProp: string
+  items: readonly T[],
+  accessor: TreeChildrenAccessor<T>
 ): T[] {
-  return items.map((item) => {
-    return {
-      ...item,
-      [childrenProp]: item[childrenProp]
-        ? listItemsWithChildren(item[childrenProp] as TreeItem[], childrenProp)
-        : [],
-    }
-  })
+  return items.map((item) =>
+    accessor.setChildren(
+      item,
+      listItemsWithChildren(getChildrenOf(item, accessor), accessor)
+    )
+  )
 }

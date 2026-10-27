@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useLoaderData } from "react-router-dom";
+import type { JsonRecord } from "@mercurjs/types";
 import * as z from "zod";
 
 import {
@@ -46,7 +47,7 @@ const StoreStepSchema = z.object({
 type StoreStepValues = z.infer<typeof StoreStepSchema>;
 
 type StoreStepSubmitValues = StoreStepValues & {
-  additional_data?: Record<string, unknown>;
+  additional_data?: JsonRecord;
 };
 
 type StoreStepProps = {
@@ -56,9 +57,7 @@ type StoreStepProps = {
 
 export const StoreStep = ({ onSubmit, isPending }: StoreStepProps) => {
   const { t } = useTranslation();
-  const initialData = useLoaderData() as Awaited<
-    ReturnType<typeof onboardingLoader>
-  >;
+  const initialData = useLoaderData<typeof onboardingLoader>();
   const { store } = useStore(undefined, { initialData });
 
   const form = useExtendableForm({
@@ -215,7 +214,6 @@ export const StoreStep = ({ onSubmit, isPending }: StoreStepProps) => {
               model="seller"
               zone="onboarding"
               tab="store"
-              control={form.control}
               data={store}
             />
           </div>

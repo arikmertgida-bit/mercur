@@ -62,14 +62,10 @@ export const CreateRefundForm = ({ order }: CreateRefundFormProps) => {
 
     return allPayments.find((p) => {
       const refunded = (p.refunds ?? []).reduce(
-        (acc: number, r: { amount?: number }) => acc + (r.amount ?? 0),
+        (acc, r) => acc + (r.amount ?? 0),
         0
       )
-      return (
-        !!p.captured_at &&
-        !p.canceled_at &&
-        refunded < (p.amount as number)
-      )
+      return !!p.captured_at && !p.canceled_at && refunded < p.amount
     })
   }, [order, requestedPaymentId])
 
@@ -78,14 +74,14 @@ export const CreateRefundForm = ({ order }: CreateRefundFormProps) => {
   const refundedAmount = useMemo(() => {
     if (!payment) return 0
     return (payment.refunds ?? []).reduce(
-      (acc: number, r: { amount?: number }) => acc + (r.amount ?? 0),
+      (acc, r) => acc + (r.amount ?? 0),
       0
     )
   }, [payment])
 
   const remaining = useMemo(() => {
     if (!payment) return 0
-    return Math.max(0, (payment.amount as number) - refundedAmount)
+    return Math.max(0, payment.amount - refundedAmount)
   }, [payment, refundedAmount])
 
   const currency = useMemo(
@@ -181,10 +177,7 @@ export const CreateRefundForm = ({ order }: CreateRefundFormProps) => {
           <div className="flex flex-col gap-y-4">
             <div className="text-ui-fg-base flex items-center gap-x-1 text-sm">
               <span>
-                {getLocaleAmount(
-                  payment.amount as number,
-                  order.currency_code
-                )}
+                {getLocaleAmount(payment.amount, order.currency_code)}
               </span>
               <span>-</span>
               <span>
@@ -249,10 +242,7 @@ export const CreateRefundForm = ({ order }: CreateRefundFormProps) => {
                             <Select.Value />
                           </Select.Trigger>
                           <Select.Content>
-                            {(refund_reasons as Array<{
-                              id: string
-                              label?: string | null
-                            }> | undefined ?? []).map((r) => (
+                            {(refund_reasons ?? []).map((r) => (
                               <Select.Item key={r.id} value={r.id}>
                                 {r.label}
                               </Select.Item>

@@ -13,7 +13,8 @@ import { useProductTableColumns } from "@hooks/table/columns/use-product-table-c
 import { useProductTableFilters } from "@hooks/table/filters/use-product-table-filters";
 import { useProductTableQuery } from "@hooks/table/query/use-product-table-query";
 import { useDataTable } from "@hooks/use-data-table";
-import { ExtendedAdminProduct } from "@custom-types/products";
+import { getTableMetaString } from "@lib/table-meta";
+import type { HttpTypes as VendorHttpTypes } from "@mercurjs/types"
 import { keepPreviousData } from "@tanstack/react-query";
 
 type CollectionProductSectionProps = {
@@ -33,7 +34,7 @@ export const CollectionProductSection = ({
   const { products, count, isLoading, isError, error } = useProducts(
     {
       ...searchParams,
-      collection_id: collection.id!,
+      collection_id: collection.id,
     },
     { placeholderData: keepPreviousData },
   );
@@ -56,7 +57,7 @@ export const CollectionProductSection = ({
 
   const prompt = usePrompt();
 
-  const { mutateAsync } = useUpdateCollectionProducts(collection.id!);
+  const { mutateAsync } = useUpdateCollectionProducts(collection.id);
 
   const handleRemove = async (selection: Record<string, boolean>) => {
     const ids = Object.keys(selection);
@@ -158,7 +159,7 @@ const ProductActions = ({
   product,
   collectionId,
 }: {
-  product: ExtendedAdminProduct;
+  product: VendorHttpTypes.VendorProduct;
   collectionId: string;
 }) => {
   const { t } = useTranslation();
@@ -226,7 +227,7 @@ const ProductActions = ({
   );
 };
 
-const columnHelper = createColumnHelper<ExtendedAdminProduct>();
+const columnHelper = createColumnHelper<VendorHttpTypes.VendorProduct>();
 
 const useColumns = () => {
   const columns = useProductTableColumns();
@@ -265,9 +266,14 @@ const useColumns = () => {
       columnHelper.display({
         id: "actions",
         cell: ({ row, table }) => {
-          const { collectionId } = table.options.meta as {
-            collectionId: string;
-          };
+          const collectionId = getTableMetaString(
+            table.options.meta,
+            "collectionId"
+          );
+
+          if (!collectionId) {
+            return null;
+          }
 
           return (
             <ProductActions

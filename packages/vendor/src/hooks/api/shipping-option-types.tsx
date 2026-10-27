@@ -26,7 +26,7 @@ export const useShippingOptionType = (
   >,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.shippingOptionTypes.$id.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.shippingOptionTypes.$id.query>
     >,
@@ -46,7 +46,7 @@ export const useShippingOptionTypes = (
   query?: InferClientInput<typeof sdk.vendor.shippingOptionTypes.query>,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.shippingOptionTypes.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.shippingOptionTypes.query>
     >,

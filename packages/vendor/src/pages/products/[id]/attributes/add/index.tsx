@@ -21,18 +21,22 @@ import {
 import { useEffect, useMemo, useState } from "react"
 import { useFieldArray, useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
-import { useParams } from "react-router-dom"
 import { keepPreviousData } from "@tanstack/react-query"
 import { zodResolver } from "@hookform/resolvers/zod"
 import i18n from "i18next"
 import * as zod from "zod"
-import { isForbidden, SectionNoAccess } from "@mercurjs/dashboard-shared"
+import {
+  isForbidden,
+  SectionNoAccess,
+  useRequiredParam,
+} from "@mercurjs/dashboard-shared"
 
 import { DataTable } from "@components/data-table"
 import { AttributeValueInput } from "@components/inputs/attribute-value-input"
 import { Form } from "@components/common/form"
 import { RouteFocusModal, useRouteModal } from "@components/modals"
 import { KeyboundForm } from "@components/utilities/keybound-form"
+import { isTruthy } from "@lib/is-truthy"
 import { useProductAttributes } from "@hooks/api/product-attributes"
 import { useFeatureFlags } from "@hooks/api"
 import { useBatchProductAttributes, useProduct } from "@hooks/api/products"
@@ -77,13 +81,18 @@ const AddExistingAttributesSchema = zod.object({
 
 type AddExistingFormValues = zod.infer<typeof AddExistingAttributesSchema>
 
+// Multi-select rows start with no chosen values, every other row with an
+// empty scalar (the schema then requires the seller to fill it in).
+const getInitialValues = (type: string): string | string[] =>
+  type === AttributeType.MULTI_SELECT ? [] : ""
+
 export const Component = () => {
-  const { id: productId } = useParams()
+  const productId = useRequiredParam("id")
 
   return (
     <RouteFocusModal>
       <RouteFocusModal.Header />
-      <Content productId={productId!} />
+      <Content productId={productId} />
     </RouteFocusModal>
   )
 }
@@ -114,18 +123,15 @@ const Content = ({ productId }: { productId: string }) => {
   const assignedIds = useMemo(
     () =>
       new Set(
-        (
-          (product as { attributes?: ProductAttributeDTO[] } | undefined)
-            ?.attributes ?? []
-        ).map((a) => a.id)
+        (product?.attributes ?? []).map((a) => a.id)
       ),
     [product]
   )
 
   const lockedIds = useMemo(() => {
-    const ids = new Set<string>(assignedIds as Set<string>)
+    const ids = new Set<string>(assignedIds)
     for (const attr of product_attributes ?? []) {
-      if ((attr as ProductAttributeDTO).is_required) ids.add(attr.id)
+      if (attr.is_required) ids.add(attr.id)
     }
     return ids
   }, [assignedIds, product_attributes])
@@ -181,21 +187,18 @@ const Content = ({ productId }: { productId: string }) => {
       .map((id) =>
         product_attributes?.find((a: ProductAttributeDTO) => a.id === id)
       )
-      .filter(Boolean)
+      .filter(isTruthy)
       .map((attr) => ({
-        attribute_id: attr!.id,
-        name: attr!.name,
-        type: attr!.type,
-        is_variant_axis: attr!.is_variant_axis,
+        attribute_id: attr.id,
+        name: attr.name,
+        type: attr.type,
+        is_variant_axis: attr.is_variant_axis,
         available_values:
-          attr!.values?.map((v: { id: string; name: string }) => ({
+          attr.values?.map((v: { id: string; name: string }) => ({
             id: v.id,
             name: v.name,
           })) ?? [],
-        values:
-          attr!.type === AttributeType.MULTI_SELECT
-            ? ([] as string[])
-            : "",
+        values: getInitialValues(attr.type),
       }))
 
     form.reset({ attributes: attrs })
@@ -234,7 +237,7 @@ const Content = ({ productId }: { productId: string }) => {
         )
         const valueIds = vals
           .map((name) => nameToId.get(name))
-          .filter(Boolean) as string[]
+          .filter(isTruthy)
         if (!valueIds.length) continue
         add.push({ id: attr.attribute_id, value_ids: valueIds })
       } else {

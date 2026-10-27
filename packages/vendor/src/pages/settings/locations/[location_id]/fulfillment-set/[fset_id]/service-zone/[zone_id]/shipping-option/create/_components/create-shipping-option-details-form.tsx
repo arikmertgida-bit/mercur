@@ -2,7 +2,7 @@ import { Heading, Input, RadioGroup, Text } from "@medusajs/ui"
 import { UseFormReturn } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
-import { VendorExtendedAdminServiceZone } from "@custom-types/stock-location"
+import type { HttpTypes } from "@mercurjs/types"
 
 import { usePermissionGate } from "@mercurjs/dashboard-shared"
 import { ConditionalTooltip } from "@components/common/conditional-tooltip"
@@ -20,7 +20,7 @@ import { CreateShippingOptionSchema } from "./schema"
 type CreateShippingOptionDetailsFormProps = {
   form: UseFormReturn<CreateShippingOptionSchema>
   isReturn?: boolean
-  zone: VendorExtendedAdminServiceZone
+  zone: HttpTypes.VendorServiceZone
   type: FulfillmentSetType
 }
 

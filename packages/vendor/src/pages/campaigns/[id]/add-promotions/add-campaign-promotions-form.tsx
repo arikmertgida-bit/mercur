@@ -21,6 +21,13 @@ import { usePromotionTableFilters } from "@hooks/table/filters/use-promotion-tab
 import { usePromotionTableQuery } from "@hooks/table/query/use-promotion-table-query"
 import { useDataTable } from "@hooks/use-data-table"
 
+// The table carries the campaign it adds promotions to in its `meta` (set below).
+const PromotionsTableMetaSchema = zod.object({
+  campaignId: zod.string(),
+  currencyCode: zod.string().nullish(),
+  budgetType: zod.string().nullish(),
+})
+
 type AddCampaignPromotionsFormProps = {
   campaign: AdminCampaign
 }
@@ -209,12 +216,13 @@ const useColumns = () => {
           )
         },
         cell: ({ row, table }) => {
-          const { campaignId, currencyCode, budgetType } = table.options
-            .meta as {
-            campaignId: string
-            currencyCode: string
-            budgetType: string
+          const meta = PromotionsTableMetaSchema.safeParse(table.options.meta)
+
+          if (!meta.success) {
+            return null
           }
+
+          const { campaignId, currencyCode, budgetType } = meta.data
 
           const isTypeSpend = budgetType === "spend"
           const isAdded = row.original.campaign_id === campaignId

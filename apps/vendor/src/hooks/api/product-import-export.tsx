@@ -4,6 +4,7 @@ import { z } from "zod"
 import i18next from "i18next"
 import { queryKeysFactory } from "@mercurjs/dashboard-shared"
 import { InferClientOutput } from "@mercurjs/client"
+import { getAuthHeaders } from "@mercurjs/vendor"
 import { client } from "../../lib/client"
 import { HttpFetchError } from "../../lib/fetchQuery"
 import { getCatchMessage } from "../../lib/errors"
@@ -30,8 +31,10 @@ const uploadProductImportCsv = async (
   const response = await fetch(`${__BACKEND_URL__}/vendor/products/import`, {
     method: "POST",
     body: formData,
-    credentials: "include",
-    headers: { "Accept-Language": i18next.language },
+    // Vendor auth is a bearer token (packages/vendor auth-token), not a
+    // session cookie — same headers the typed `client` sends.
+    credentials: "omit",
+    headers: { ...getAuthHeaders(), "Accept-Language": i18next.language },
   })
 
   if (!response.ok) {

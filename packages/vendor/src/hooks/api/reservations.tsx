@@ -30,7 +30,7 @@ export const useReservationItem = (
   >,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.reservations.$id.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.reservations.$id.query>
     >,
@@ -50,7 +50,7 @@ export const useReservationItems = (
   query?: InferClientInput<typeof sdk.vendor.reservations.query>,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.reservations.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.reservations.query>
     >,

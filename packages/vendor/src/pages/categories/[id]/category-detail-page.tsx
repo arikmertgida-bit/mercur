@@ -1,5 +1,4 @@
 import { Children, ReactNode } from "react";
-import { useParams } from "react-router-dom";
 
 import { TwoColumnPageSkeleton } from "@components/common/skeleton";
 import { TwoColumnPage } from "@components/layout/pages";
@@ -7,6 +6,7 @@ import {
   PermissionGuard,
   useLinkQuery,
   WidgetZone,
+  useRequiredParam,
 } from "@mercurjs/dashboard-shared";
 import { useProductCategory } from "@hooks/api";
 
@@ -17,7 +17,7 @@ import { CategoryOrganizeSection } from "./_components/category-organize-section
 import { CategoryProductSection } from "./_components/category-product-section";
 
 const Root = ({ children }: { children?: ReactNode }) => {
-  const { id } = useParams();
+  const id = useRequiredParam("id");
 
   const linkQuery = useLinkQuery("category", "+is_active,+is_internal");
 
@@ -26,7 +26,7 @@ const Root = ({ children }: { children?: ReactNode }) => {
     isLoading: categoryLoading,
     isError: categoryError,
     error,
-  } = useProductCategory(id!, linkQuery);
+  } = useProductCategory(id, linkQuery);
 
   if (categoryLoading || !product_category) {
     return (

@@ -24,10 +24,12 @@ export const useUnseenReturnsCount = (
   return useQuery({
     queryKey: returnsQueryKeys.detail("unseen-count"),
     queryFn: async () => {
-      const raw = await fetchQuery<unknown>("/vendor/returns/unseen-count", {
-        method: "GET",
-      })
-      return ReturnsUnseenCountResponseSchema.parse(raw).count
+      const { count } = await fetchQuery(
+        "/vendor/returns/unseen-count",
+        { method: "GET" },
+        ReturnsUnseenCountResponseSchema
+      )
+      return count
     },
     refetchInterval: 30_000,
     refetchOnWindowFocus: true,

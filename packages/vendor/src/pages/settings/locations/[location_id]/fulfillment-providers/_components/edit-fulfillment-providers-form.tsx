@@ -1,5 +1,5 @@
 import { HttpTypes } from "@medusajs/types"
-import { VendorExtendedAdminStockLocation } from "@custom-types/stock-location"
+import type { HttpTypes as VendorHttpTypes } from "@mercurjs/types"
 import { Button, Checkbox, toast } from "@medusajs/ui"
 import { keepPreviousData } from "@tanstack/react-query"
 import {
@@ -28,7 +28,7 @@ import { useFulfillmentProvidersTableQuery } from "@hooks/table/query/use-fulfil
 import { useDataTable } from "@hooks/use-data-table"
 
 type LocationEditFulfillmentProvidersFormProps = {
-  location: VendorExtendedAdminStockLocation
+  location: VendorHttpTypes.VendorStockLocation
 }
 
 const EditFulfillmentProvidersFormSchema = zod.object({
@@ -54,10 +54,10 @@ export const LocationEditFulfillmentProvidersForm = ({
   const { setValue } = form
 
   const initialState =
-    location.fulfillment_providers?.reduce((acc, curr) => {
+    location.fulfillment_providers?.reduce<RowSelectionState>((acc, curr) => {
       acc[curr.id] = true
       return acc
-    }, {} as RowSelectionState) ?? {}
+    }, {}) ?? {}
 
   const [rowSelection, setRowSelection] =
     useState<RowSelectionState>(initialState)

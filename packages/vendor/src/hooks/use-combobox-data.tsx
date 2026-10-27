@@ -13,16 +13,17 @@ type ComboboxExternalData = {
 }
 
 type ComboboxQueryParams = {
-  id?: string
+  id?: string | string[]
+  value?: string | string[]
   q?: string
   offset?: number
   limit?: number
 }
 
-export const useComboboxData = <
-  TResponse extends ComboboxExternalData,
-  TParams extends ComboboxQueryParams,
->({
+/** The param the already-selected value(s) are looked up by. */
+type ComboboxDefaultValueKey = "id" | "value"
+
+export const useComboboxData = <TResponse extends ComboboxExternalData>({
   queryKey,
   queryFn,
   getOptions,
@@ -33,9 +34,9 @@ export const useComboboxData = <
   enabled = true,
 }: {
   queryKey: QueryKey
-  queryFn: (params: TParams) => Promise<TResponse>
+  queryFn: (params: ComboboxQueryParams) => Promise<TResponse>
   getOptions: (data: TResponse) => { label: string; value: string }[]
-  defaultValueKey?: keyof TParams
+  defaultValueKey?: ComboboxDefaultValueKey
   defaultValue?: string | string[]
   selectedValue?: string
   pageSize?: number
@@ -45,37 +46,40 @@ export const useComboboxData = <
 
   const queryInitialDataBy = defaultValueKey || "id"
   const { data: initialData } = useQuery({
-    queryKey: [...queryKey, defaultValue].filter(Boolean) as QueryKey,
+    queryKey: [...queryKey, defaultValue].filter(Boolean),
     queryFn: async () => {
-      return queryFn({
-        [queryInitialDataBy]: defaultValue,
-        limit: Array.isArray(defaultValue) ? defaultValue.length : 1,
-      } as TParams)
+      const limit = Array.isArray(defaultValue) ? defaultValue.length : 1
+
+      return queryFn(
+        queryInitialDataBy === "value"
+          ? { value: defaultValue, limit }
+          : { id: defaultValue, limit }
+      )
     },
     enabled: !!defaultValue && enabled,
   })
 
   // always load selected value in case current data dosn't contain the value
   const { data: selectedData } = useQuery({
-    queryKey: [...queryKey, selectedValue].filter(Boolean) as QueryKey,
+    queryKey: [...queryKey, selectedValue].filter(Boolean),
     queryFn: async () => {
       return queryFn({
         id: selectedValue,
         limit: 1,
-      } as TParams)
+      })
     },
     enabled: !!selectedValue && enabled,
   })
 
   const { data, ...rest } = useInfiniteQuery({
     // prevent infinite query response shape beeing stored under regualr list reponse QKs
-    queryKey: [...queryKey, "_cbx_", query].filter(Boolean) as QueryKey,
+    queryKey: [...queryKey, "_cbx_", query].filter(Boolean),
     queryFn: async ({ pageParam = 0 }) => {
       return await queryFn({
         q: query,
         limit: pageSize,
         offset: pageParam,
-      } as TParams)
+      })
     },
     initialPageParam: 0,
     getNextPageParam: (lastPage) => {

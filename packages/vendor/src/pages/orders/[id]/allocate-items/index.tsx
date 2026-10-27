@@ -1,14 +1,14 @@
 // Route: /orders/:id/allocate-items
-import { useParams } from "react-router-dom"
+import { useRequiredParam } from "@mercurjs/dashboard-shared"
 
 import { useOrder } from "@hooks/api/orders"
 import { RouteFocusModal } from "@components/modals"
 import { OrderAllocateItemsForm } from "./order-create-fulfillment-form"
 
 export const Component = () => {
-  const { id } = useParams()
+  const id = useRequiredParam("id")
 
-  const { order, isLoading, isError, error } = useOrder(id!, {
+  const { order, isLoading, isError, error } = useOrder(id, {
     // `*foo,*foo.bar` or `+foo.bar.baz` makes Medusa's query parser try
     // to look up a literal property `*items` / `+items` on Order and
     // 500. Use `<rel>.*` plus bare scalar names.

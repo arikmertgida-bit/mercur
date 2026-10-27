@@ -5,7 +5,7 @@ import {
   createColumnHelper,
 } from "@tanstack/react-table"
 import { useEffect, useMemo, useState } from "react"
-import { UseFormReturn, useFieldArray } from "react-hook-form"
+import { UseFormReturn, useFieldArray, useFormContext } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { z } from "zod"
 
@@ -33,19 +33,20 @@ const GeoZoneSchema = z.object({
   ),
 })
 
-type GeoZoneFormImplProps<TForm extends UseFormReturn<any>> = {
-  form: TForm
-}
+type GeoZoneValues = z.infer<typeof GeoZoneSchema>
 
-const GeoZoneFormImpl = <TForm extends UseFormReturn<any>>({
-  form,
-}: GeoZoneFormImplProps<TForm>) => {
-  const castForm = form as UseFormReturn<z.infer<typeof GeoZoneSchema>>
+/**
+ * Both parts render inside the host form's RHF provider (RouteFocusModal.Form)
+ * and only touch its `countries` field, so they read that slice of the form
+ * through the provider instead of taking the host's whole form as a prop.
+ */
+const GeoZoneFormImpl = () => {
+  const form = useFormContext<GeoZoneValues>()
 
   const { t } = useTranslation()
 
   const { fields, remove, replace } = useFieldArray({
-    control: castForm.control,
+    control: form.control,
     name: "countries",
     keyName: "iso_2",
   })
@@ -101,20 +102,14 @@ const GeoZoneFormImpl = <TForm extends UseFormReturn<any>>({
   )
 }
 
-type AreasStackedModalProps<TForm extends UseFormReturn<any>> = {
-  form: TForm
-}
-
 const PREFIX = "ac"
 const PAGE_SIZE = 50
 
-const AreaStackedModal = <TForm extends UseFormReturn<any>>({
-  form,
-}: AreasStackedModalProps<TForm>) => {
-  const castForm = form as UseFormReturn<z.infer<typeof GeoZoneSchema>>
+const AreaStackedModal = () => {
+  const form = useFormContext<GeoZoneValues>()
 
   const { t, i18n } = useTranslation()
-  const { getValues, setValue } = castForm
+  const { getValues, setValue } = form
   const { setIsOpen, getIsOpen } = useStackedModal()
 
   const open = getIsOpen(GEO_ZONE_STACKED_MODAL_ID)
@@ -155,7 +150,7 @@ const AreaStackedModal = <TForm extends UseFormReturn<any>>({
       )
 
       setSelection(
-        countries.reduce(
+        countries.reduce<RowSelectionState>(
           (acc, country) => ({
             ...acc,
             [country.iso_2]: true,
@@ -176,12 +171,12 @@ const AreaStackedModal = <TForm extends UseFormReturn<any>>({
 
     if (addedIdsSet.size > 0) {
       const countriesToAdd =
-        countries?.filter((country) => addedIdsSet.has(country.iso_2!)) ?? []
+        countries?.filter((country) => addedIdsSet.has(country.iso_2)) ?? []
 
       for (const country of countriesToAdd) {
         addedCountries.push({
-          iso_2: country.iso_2!,
-          display_name: country.display_name!,
+          iso_2: country.iso_2,
+          display_name: country.display_name,
         })
       }
     }
@@ -209,7 +204,7 @@ const AreaStackedModal = <TForm extends UseFormReturn<any>>({
     count,
     enablePagination: true,
     enableRowSelection: true,
-    getRowId: (row) => row.iso_2!,
+    getRowId: (row) => row.iso_2,
     pageSize: PAGE_SIZE,
     rowSelection: {
       state: selection,
@@ -311,7 +306,7 @@ const useColumns = () => {
   )
 }
 
-function validateForm(form: UseFormReturn) {
+function validateForm(form: UseFormReturn<GeoZoneValues>): void {
   if (form.getValues("countries") === undefined) {
     throw new Error(
       "The form does not have a field named 'countries'. This field is required to use the GeoZoneForm component."

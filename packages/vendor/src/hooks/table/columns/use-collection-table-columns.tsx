@@ -4,10 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Thumbnail } from "../../../components/common/thumbnail";
 import { TextCell } from "../../../components/table/table-cells/common/text-cell";
 import { HttpTypes } from "@mercurjs/types";
-import {
-  CollectionWithImages,
-  getCollectionGallery,
-} from "../../../pages/collections/common/components/collection-image-fields";
+import { getCollectionGallery } from "../../../pages/collections/common/components/collection-image-fields";
 
 const columnHelper =
   createColumnHelper<HttpTypes.VendorCollectionResponse["collection"]>();
@@ -21,7 +18,7 @@ export const useCollectionTableColumns = () => {
         header: t("fields.title"),
         cell: ({ getValue, row }) => {
           const gallery = getCollectionGallery(
-            (row.original as CollectionWithImages).media_images,
+            row.original.media_images,
           );
           const thumbnailSrc =
             gallery.find((image) => image.is_thumbnail)?.url ??

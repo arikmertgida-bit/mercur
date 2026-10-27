@@ -16,16 +16,13 @@ import { customerGroupsQueryKeys } from "./customer-groups";
 
 const CUSTOMERS_QUERY_KEY = "customers" as const;
 export const customersQueryKeys = queryKeysFactory(CUSTOMERS_QUERY_KEY);
-export const customerAddressesQueryKeys = queryKeysFactory(
-  `${CUSTOMERS_QUERY_KEY}-addresses`,
-);
 
 export const useCustomer = (
   id: string,
   query?: Omit<InferClientInput<typeof sdk.vendor.customers.$id.query>, "$id">,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.customers.$id.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.customers.$id.query>
     >,
@@ -45,7 +42,7 @@ export const useCustomers = (
   query?: InferClientInput<typeof sdk.vendor.customers.query>,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.customers.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.customers.query>
     >,
@@ -156,154 +153,4 @@ export const useBatchCustomerCustomerGroups = (
     },
     ...options,
   });
-};
-
-export const useCreateCustomerAddress = (
-  id: string,
-  options?: UseMutationOptions<
-    InferClientOutput<typeof sdk.vendor.customers.$id.addresses.mutate>,
-    ClientError,
-    Omit<
-      InferClientInput<typeof sdk.vendor.customers.$id.addresses.mutate>,
-      "$id"
-    >
-  >,
-) => {
-  return useMutation({
-    mutationFn: (payload) =>
-      sdk.vendor.customers.$id.addresses.mutate({ $id: id, ...payload }),
-    onSuccess: (data, variables, context) => {
-      queryClient.invalidateQueries({ queryKey: customersQueryKeys.lists() });
-      queryClient.invalidateQueries({
-        queryKey: customersQueryKeys.detail(id),
-      });
-      queryClient.invalidateQueries({
-        queryKey: customerAddressesQueryKeys.list(id),
-      });
-
-      options?.onSuccess?.(data, variables, context);
-    },
-    ...options,
-  });
-};
-
-export const useUpdateCustomerAddress = (
-  id: string,
-  addressId: string,
-  options?: UseMutationOptions<
-    InferClientOutput<
-      typeof sdk.vendor.customers.$id.addresses.$addressId.mutate
-    >,
-    ClientError,
-    Omit<
-      InferClientInput<
-        typeof sdk.vendor.customers.$id.addresses.$addressId.mutate
-      >,
-      "$id" | "$addressId"
-    >
-  >,
-) => {
-  return useMutation({
-    mutationFn: (payload) =>
-      sdk.vendor.customers.$id.addresses.$addressId.mutate({
-        $id: id,
-        $addressId: addressId,
-        ...payload,
-      }),
-    onSuccess: (data, variables, context) => {
-      queryClient.invalidateQueries({ queryKey: customersQueryKeys.lists() });
-      queryClient.invalidateQueries({
-        queryKey: customersQueryKeys.detail(id),
-      });
-      queryClient.invalidateQueries({
-        queryKey: customerAddressesQueryKeys.list(id),
-      });
-
-      options?.onSuccess?.(data, variables, context);
-    },
-    ...options,
-  });
-};
-
-export const useDeleteCustomerAddress = (
-  id: string,
-  options?: UseMutationOptions<
-    InferClientOutput<
-      typeof sdk.vendor.customers.$id.addresses.$addressId.delete
-    >,
-    ClientError,
-    string
-  >,
-) => {
-  return useMutation({
-    mutationFn: (addressId: string) =>
-      sdk.vendor.customers.$id.addresses.$addressId.delete({
-        $id: id,
-        $addressId: addressId,
-      }),
-    onSuccess: (data, variables, context) => {
-      queryClient.invalidateQueries({ queryKey: customersQueryKeys.lists() });
-      queryClient.invalidateQueries({
-        queryKey: customersQueryKeys.detail(id),
-      });
-      queryClient.invalidateQueries({
-        queryKey: customerAddressesQueryKeys.list(id),
-      });
-
-      options?.onSuccess?.(data, variables, context);
-    },
-    ...options,
-  });
-};
-
-export const useListCustomerAddresses = (
-  id: string,
-  query?: Omit<
-    InferClientInput<typeof sdk.vendor.customers.$id.addresses.query>,
-    "$id"
-  >,
-  options?: Omit<
-    UseQueryOptions<
-      unknown,
-      ClientError,
-      InferClientOutput<typeof sdk.vendor.customers.$id.addresses.query>
-    >,
-    "queryKey" | "queryFn"
-  >,
-) => {
-  const { data, ...rest } = useQuery({
-    queryFn: () =>
-      sdk.vendor.customers.$id.addresses.query({ $id: id, ...query }),
-    queryKey: customerAddressesQueryKeys.list(id),
-    ...options,
-  });
-
-  return { ...data, ...rest };
-};
-
-export const useCustomerAddress = (
-  id: string,
-  addressId: string,
-  options?: Omit<
-    UseQueryOptions<
-      unknown,
-      ClientError,
-      InferClientOutput<
-        typeof sdk.vendor.customers.$id.addresses.$addressId.query
-      >
-    >,
-    "queryKey" | "queryFn"
-  >,
-) => {
-  const { data, ...rest } = useQuery({
-    queryFn: () =>
-      sdk.vendor.customers.$id.addresses.$addressId.query({
-        $id: id,
-        $addressId: addressId,
-      }),
-    queryKey: customerAddressesQueryKeys.detail(id),
-    ...options,
-  });
-
-  return { ...data, ...rest };
 };

@@ -207,7 +207,6 @@ export const StorePaymentDetailsForm = ({
           <FormExtensionZone
             model="seller"
             zone="payment-details"
-            control={form.control}
             data={seller}
           />
         </RouteDrawer.Body>

@@ -7,7 +7,7 @@ import { useFieldArray, UseFormReturn } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
 import { Form } from "@components/common/form"
-import { Combobox } from "@components/inputs/combobox"
+import { Combobox, getSingleComboboxValue } from "@components/inputs/combobox"
 import {
   RouteFocusModal,
   StackedFocusModal,
@@ -24,40 +24,14 @@ import { useStockLocations } from "@hooks/api/stock-locations"
 
 import { AddExchangeInboundItemsTable } from "../add-exchange-inbound-items-table"
 import { ItemPlaceholder } from "../../../../claims/create/_components/claim-create-form/item-placeholder"
-import { ExchangeInboundItem } from "./exchange-inbound-item"
+import {
+  ExchangeInboundItem,
+  type ExchangeInboundItemUpdate,
+} from "./exchange-inbound-item"
 import { CreateExchangeSchemaType } from "./schema"
+import { getOrderChangeActionDetails } from "@lib/order-change-action"
 
-// `AdminOrderPreview` isn't exported as a named type from the Mercur
-// `@medusajs/types` build (2.13.4). Inline the shape we read here.
-type ExchangePreview = {
-  order_change?: { return_id?: string | null } | null
-  items?: Array<{
-    id: string
-    variant_id?: string | null
-    detail?: {
-      return_requested_quantity?: number
-      quantity?: number
-    }
-    actions?: Array<{
-      id?: string
-      action?: string
-      exchange_id?: string | null
-      return_id?: string | null
-      internal_note?: string | null
-      details?: { reason_id?: string; quantity?: number } | null
-    }>
-    return_requested_total?: number
-    adjustments?: Array<{ code?: string | null }>
-  }>
-  shipping_methods?: Array<{
-    shipping_option_id?: string | null
-    actions?: Array<{
-      id?: string
-      action?: string
-      return_id?: string | null
-    }>
-  }>
-}
+type ExchangePreview = HttpTypes.AdminOrderPreview
 
 type ExchangeInboundSectionProps = {
   order: HttpTypes.AdminOrder
@@ -154,7 +128,7 @@ export const ExchangeInboundSection = ({
   const { stock_locations = [] } = useStockLocations(
     {
       limit: 999,
-    } as never,
+    },
     { enabled: locationsGate.allowed }
   )
   // Vendor's typed `useShippingOptions` overload requires a `queryKey` in
@@ -164,19 +138,13 @@ export const ExchangeInboundSection = ({
     {
       limit: 999,
       stock_location_id: locationId,
-    } as never,
+    },
     {
       enabled: !!locationId && shippingOptionsGate.allowed,
-    } as unknown as Parameters<
-      typeof useShippingOptions
-    >[1]
+    }
   )
 
-  const inboundShippingOptions = (shipping_options as Array<{
-    id: string
-    name: string
-    rules?: Array<{ attribute: string; value: string }>
-  }>).filter(
+  const inboundShippingOptions = shipping_options.filter(
     (shippingOption) =>
       !!shippingOption.rules?.find(
         (r) => r.attribute === "is_return" && r.value === "true"
@@ -219,7 +187,9 @@ export const ExchangeInboundSection = ({
             ...inboundItems[ind],
             quantity: requested,
             note: returnItemAction?.internal_note ?? undefined,
-            reason_id: returnItemAction?.details?.reason_id,
+            reason_id:
+              getOrderChangeActionDetails(returnItemAction).reason_id ??
+              undefined,
           })
         }
       } else {
@@ -268,7 +238,7 @@ export const ExchangeInboundSection = ({
             id,
             quantity: 1,
           })),
-        } as never,
+        },
         {
           onError: (error) => {
             toast.error(error.message)
@@ -311,7 +281,7 @@ export const ExchangeInboundSection = ({
   ) => {
     if (selectedOptionId) {
       await addInboundShipping(
-        { shipping_option_id: selectedOptionId } as never,
+        { shipping_option_id: selectedOptionId },
         {
           onError: (error) => {
             toast.error(error.message)
@@ -390,7 +360,7 @@ export const ExchangeInboundSection = ({
           return null
         }
         const locationName =
-          (stock_locations as Array<{ id: string; name: string }>).find(
+          stock_locations.find(
             (l) => l.id === locationId
           )?.name ?? null
 
@@ -415,21 +385,20 @@ export const ExchangeInboundSection = ({
                 })
               }
             }}
-            onUpdate={(payload: HttpTypes.AdminUpdateReturnItems) => {
+            onUpdate={(payload: ExchangeInboundItemUpdate) => {
               const action = previewInboundItems
                 .find((i) => i.id === item.item_id)
                 ?.actions?.find((a) => a.action === "RETURN_ITEM")
 
               if (action?.id) {
                 updateInboundItem(
-                  { $actionId: action.id, ...payload } as never,
+                  { $actionId: action.id, ...payload },
                   {
                     onError: (error) => {
-                      if (action.details?.quantity && payload.quantity) {
-                        form.setValue(
-                          `inbound_items.${index}.quantity`,
-                          action.details.quantity
-                        )
+                      const { quantity } = getOrderChangeActionDetails(action)
+
+                      if (quantity && payload.quantity) {
+                        form.setValue(`inbound_items.${index}.quantity`, quantity)
                       }
                       toast.error(error.message)
                     },
@@ -468,14 +437,13 @@ export const ExchangeInboundSection = ({
                           <Combobox
                             {...field}
                             value={value ?? undefined}
-                            onChange={(v) => {
+                            onChange={(next) => {
+                              const v = getSingleComboboxValue(next)
                               onChange(v)
                               onLocationChange(v)
                             }}
                             disabled={locationsGate.denied}
-                            options={(
-                              stock_locations as Array<{ id: string; name: string }>
-                            ).map((stockLocation) => ({
+                            options={stock_locations.map((stockLocation) => ({
                               label: stockLocation.name,
                               value: stockLocation.id,
                             }))}
@@ -523,7 +491,8 @@ export const ExchangeInboundSection = ({
                           <Combobox
                             allowClear
                             value={value ?? undefined}
-                            onChange={(val) => {
+                            onChange={(next) => {
+                              const val = getSingleComboboxValue(next)
                               onChange(val)
                               onShippingOptionChange(val)
                             }}

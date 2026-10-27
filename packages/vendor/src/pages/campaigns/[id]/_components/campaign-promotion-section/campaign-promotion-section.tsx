@@ -63,7 +63,7 @@ export const CampaignPromotionSection = ({
   )
 
   const { table } = useDataTable({
-    data: (promotions ?? []) as unknown as AdminPromotion[],
+    data: promotions ?? [],
     columns,
     count: count ?? 0,
     getRowId: (row) => row.id,

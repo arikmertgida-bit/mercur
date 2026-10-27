@@ -29,7 +29,7 @@ export const ProductTagProductSection = ({
     {
       ...searchParams,
       fields: "*tags",
-      tag_id: productTag.id!,
+      tag_id: productTag.id,
     }
   )
 

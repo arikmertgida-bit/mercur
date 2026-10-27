@@ -15,19 +15,7 @@ import { useCreateCampaign } from "@hooks/api/campaigns"
 import { CreateCampaignFormFields } from "../../common/components/create-campaign-form-fields"
 import { DEFAULT_CAMPAIGN_VALUES } from "../../common/constants"
 
-export const CreateCampaignSchema = zod.object({
-  name: zod.string().min(1),
-  description: zod.string().optional(),
-  campaign_identifier: zod.string().min(1),
-  starts_at: zod.date().nullable(),
-  ends_at: zod.date().nullable(),
-  budget: zod.object({
-    attribute: zod.string().nullish(),
-    limit: zod.number().min(0).nullish(),
-    type: zod.enum(["spend", "usage", "use_by_attribute"]),
-    currency_code: zod.string().nullish(),
-  }),
-})
+export { CreateCampaignSchema } from "../../common/schema"
 
 export const CreateCampaignForm = () => {
   const { t } = useTranslation()
@@ -36,7 +24,8 @@ export const CreateCampaignForm = () => {
 
   const schema = useMemo(
     () =>
-      zod
+      zod.object({
+        campaign: zod
         .object({
           name: zod.string().min(1, t("campaigns.validation.name_required")),
           description: zod.string().optional(),
@@ -59,15 +48,18 @@ export const CreateCampaignForm = () => {
             path: ["budget", "currency_code"],
           }
         ),
+      }),
     [t]
   )
 
-  const form = useForm<zod.infer<typeof CreateCampaignSchema>>({
-    defaultValues: DEFAULT_CAMPAIGN_VALUES,
+  // The campaign sits under `campaign`, the shape CreateCampaignFormFields
+  // shares with the promotion flow.
+  const form = useForm({
+    defaultValues: { campaign: DEFAULT_CAMPAIGN_VALUES },
     resolver: zodResolver(schema),
   })
 
-  const handleSubmit = form.handleSubmit(async (data) => {
+  const handleSubmit = form.handleSubmit(async ({ campaign: data }) => {
     const attribute = data.budget.attribute || null
     const type = attribute ? "use_by_attribute" : data.budget.type
 
@@ -116,7 +108,7 @@ export const CreateCampaignForm = () => {
           </RouteFocusModal.Description>
         </RouteFocusModal.Header>
         <RouteFocusModal.Body className="flex size-full flex-col items-center overflow-auto py-16">
-          <CreateCampaignFormFields form={form} />
+          <CreateCampaignFormFields />
         </RouteFocusModal.Body>
         <RouteFocusModal.Footer>
           <div className="flex items-center justify-end gap-x-2">

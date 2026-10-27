@@ -1,4 +1,5 @@
 import i18next from "i18next"
+import { getAuthHeaders } from "@mercurjs/vendor"
 import { z } from "zod"
 import { getCatchMessage } from "./errors"
 import { logger } from "./logger"
@@ -18,7 +19,7 @@ export class HttpFetchError extends Error {
 
 const DEFAULT_ERROR_MESSAGE = "An unexpected server error occurred."
 
-export const fetchQuery = async <T>(
+export const fetchQuery = async <TOutput>(
   url: string,
   {
     method,
@@ -30,8 +31,9 @@ export const fetchQuery = async <T>(
     body?: JsonRecord
     query?: Record<string, string | number | boolean | undefined | null>
     headers?: Record<string, string>
-  }
-): Promise<T> => {
+  },
+  schema: z.ZodType<TOutput>
+): Promise<TOutput> => {
   let params = ""
   if (query) {
     const filtered = Object.entries(query).filter(
@@ -46,6 +48,7 @@ export const fetchQuery = async <T>(
   const reqHeaders: Record<string, string> = {
     "Content-Type": "application/json",
     "Accept-Language": i18next.language,
+    ...getAuthHeaders(),
     ...headers,
   }
 
@@ -53,7 +56,8 @@ export const fetchQuery = async <T>(
     method,
     headers: reqHeaders,
     body: body ? JSON.stringify(body) : undefined,
-    credentials: "include",
+    // Bearer-token auth (see getAuthHeaders above), not a session cookie.
+    credentials: "omit",
   })
 
   if (!response.ok) {
@@ -72,6 +76,5 @@ export const fetchQuery = async <T>(
     throw new HttpFetchError(message, response.status)
   }
 
-  const result: T = await response.json()
-  return result
+  return schema.parse(await response.json())
 }

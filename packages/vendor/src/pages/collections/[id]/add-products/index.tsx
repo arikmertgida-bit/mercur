@@ -1,12 +1,12 @@
+import { useRequiredParam } from "@mercurjs/dashboard-shared"
 // Route: /collections/:id/add-products
-import { useParams } from "react-router-dom"
 import { RouteFocusModal } from "@components/modals"
 import { useCollection } from "@hooks/api/collections"
 import { AddProductsToCollectionForm } from "./add-products-to-collection-form"
 
 export const Component = () => {
-  const { id } = useParams()
-  const { product_collection, isLoading, isError, error } = useCollection(id!)
+  const id = useRequiredParam("id")
+  const { product_collection, isLoading, isError, error } = useCollection(id)
 
   if (isError) throw error
 

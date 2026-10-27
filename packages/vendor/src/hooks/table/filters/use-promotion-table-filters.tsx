@@ -51,7 +51,7 @@ export const usePromotionTableFilters = (): Filter[] => {
       type: "select",
       searchable: true,
       options: (campaigns ?? []).map((campaign) => ({
-        label: campaign.name!,
+        label: campaign.name ?? campaign.id,
         value: campaign.id,
       })),
     }

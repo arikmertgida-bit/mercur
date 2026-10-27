@@ -13,12 +13,23 @@ import { sdk, fetchQuery } from "../../lib/client";
 import { queryClient } from "../../lib/query-client";
 import { queryKeysFactory } from "../../lib/query-key-factory";
 import { campaignsQueryKeys } from "./campaigns";
-import {
-  ApplicationMethodTargetTypeValues,
-  ApplicationMethodTypeValues,
-  PromotionTypeValues,
-} from "@medusajs/types";
 import { HttpTypes } from "@mercurjs/types";
+
+type PromotionRulesQuery = Omit<
+  InferClientInput<typeof sdk.vendor.promotions.$id.$ruleType.query>,
+  "$id" | "$ruleType"
+>;
+
+type RuleAttributeOptionsQuery = InferClientInput<
+  typeof sdk.vendor.promotions.ruleAttributeOptions.$ruleType.query
+>;
+
+type RuleValueOptionsQuery = Omit<
+  InferClientInput<
+    typeof sdk.vendor.promotions.ruleValueOptions.$ruleType.$ruleAttributeId.query
+  >,
+  "ruleType" | "ruleAttributeId"
+>;
 
 const PROMOTIONS_QUERY_KEY = "promotions" as const;
 export const promotionsQueryKeys = {
@@ -26,7 +37,7 @@ export const promotionsQueryKeys = {
   listRules: (
     id: string | null,
     ruleType: string,
-    query?: Record<string, unknown>,
+    query?: PromotionRulesQuery,
   ) => [PROMOTIONS_QUERY_KEY, id, ruleType, query],
   listRuleAttributes: (
     ruleType: string,
@@ -43,7 +54,7 @@ export const promotionsQueryKeys = {
   listRuleValues: (
     ruleType: string,
     ruleValue: string,
-    query?: Record<string, unknown>,
+    query?: RuleValueOptionsQuery,
   ) => [PROMOTIONS_QUERY_KEY, ruleType, ruleValue, query],
 };
 
@@ -55,7 +66,7 @@ export const usePromotion = (
   >,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.promotions.$id.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.promotions.$id.query>
     >,
@@ -80,7 +91,7 @@ export const usePromotionRules = (
   >,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.promotions.$id.$ruleType.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.promotions.$id.$ruleType.query>
     >,
@@ -89,12 +100,19 @@ export const usePromotionRules = (
 ) => {
   const { data, ...rest } = useQuery({
     queryKey: promotionsQueryKeys.listRules(id, ruleType, query),
-    queryFn: async () =>
-      sdk.vendor.promotions.$id.$ruleType.query({
-        $id: id!,
+    queryFn: async () => {
+      // A promotion that is still being created has no rules to load; the
+      // callers disable the query until the id exists.
+      if (id === null) {
+        throw new Error("usePromotionRules requires a promotion id");
+      }
+
+      return sdk.vendor.promotions.$id.$ruleType.query({
+        $id: id,
         $ruleType: ruleType,
         ...query,
-      }),
+      });
+    },
     ...options,
   });
 
@@ -105,7 +123,7 @@ export const usePromotions = (
   query?: InferClientInput<typeof sdk.vendor.promotions.query>,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.promotions.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.promotions.query>
     >,
@@ -123,12 +141,14 @@ export const usePromotions = (
 
 export const usePromotionRuleAttributes = (
   ruleType: string,
-  promotionType?: string,
-  applicationMethodTargetType?: string,
-  applicationMethodType?: string,
+  promotionType?: RuleAttributeOptionsQuery["promotion_type"],
+  applicationMethodTargetType?: RuleAttributeOptionsQuery["application_method_target_type"],
+  applicationMethodType?: RuleAttributeOptionsQuery["application_method_type"],
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<
+        typeof sdk.vendor.promotions.ruleAttributeOptions.$ruleType.query
+      >,
       ClientError,
       InferClientOutput<
         typeof sdk.vendor.promotions.ruleAttributeOptions.$ruleType.query
@@ -147,11 +167,9 @@ export const usePromotionRuleAttributes = (
     queryFn: async () =>
       sdk.vendor.promotions.ruleAttributeOptions.$ruleType.query({
         $ruleType: ruleType,
-        promotion_type: promotionType as PromotionTypeValues,
-        application_method_target_type:
-          applicationMethodTargetType as ApplicationMethodTargetTypeValues,
-        application_method_type:
-          applicationMethodType as ApplicationMethodTypeValues,
+        promotion_type: promotionType,
+        application_method_target_type: applicationMethodTargetType,
+        application_method_type: applicationMethodType,
       }),
     ...options,
   });
@@ -170,7 +188,9 @@ export const usePromotionRuleValues = (
   >,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<
+        typeof sdk.vendor.promotions.ruleValueOptions.$ruleType.$ruleAttributeId.query
+      >,
       ClientError,
       InferClientOutput<
         typeof sdk.vendor.promotions.ruleValueOptions.$ruleType.$ruleAttributeId.query

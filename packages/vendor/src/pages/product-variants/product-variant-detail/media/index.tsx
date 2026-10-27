@@ -1,21 +1,20 @@
 // Route: /products/:id/variants/:variant_id/media
 import { useTranslation } from "react-i18next"
-import { useParams } from "react-router-dom"
 
 import { RouteFocusModal } from "@components/modals"
 import { useProductVariant } from "@hooks/api/products"
+import { useVariantRouteParams } from "../../common/route-params"
 
 import { VARIANT_DETAIL_FIELDS } from "../loader"
 import { EditVariantMediaForm } from "./edit-variant-media-form"
 
 export const Component = () => {
   const { t } = useTranslation()
-  const { id, product_id, variant_id } = useParams()
-  const productId = id || product_id
+  const { productId, variantId } = useVariantRouteParams()
 
   const { variant, isLoading, isError, error } = useProductVariant(
-    productId!,
-    variant_id!,
+    productId,
+    variantId,
     { fields: VARIANT_DETAIL_FIELDS }
   )
 

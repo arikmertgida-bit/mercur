@@ -1,5 +1,6 @@
 import i18next from "i18next"
 import { z } from "zod"
+import { JsonValueSchema } from "@mercurjs/dashboard-shared"
 import { castNumber } from "./cast-number"
 
 /**
@@ -58,7 +59,7 @@ export const optionalFloat = z
 export const metadataFormSchema = z.array(
   z.object({
     key: z.string(),
-    value: z.unknown(),
+    value: JsonValueSchema,
     isInitial: z.boolean().optional(),
     isDeleted: z.boolean().optional(),
     isIgnored: z.boolean().optional(),

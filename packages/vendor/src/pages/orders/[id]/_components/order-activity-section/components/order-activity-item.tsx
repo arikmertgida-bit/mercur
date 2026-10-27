@@ -44,7 +44,7 @@ export const OrderActivityItem = ({
         <div className="flex items-center justify-between">
           {itemsToSend?.length || itemsToReturn?.length ? (
             <ActivityItems
-              title={title as string}
+              title={title}
               itemsToSend={itemsToSend}
               itemsToReturn={itemsToReturn}
               itemsMap={itemsMap}

@@ -129,7 +129,7 @@ export const ProductCreateAddAttributesModal = ({
     }
 
     if (product_attributes) {
-      for (const attr of product_attributes as ProductAttributeDTO[]) {
+      for (const attr of product_attributes) {
         if (attr.is_required && !selection[attr.id]) {
           selection[attr.id] = true
           entries.push({
@@ -155,7 +155,7 @@ export const ProductCreateAddAttributesModal = ({
 
     // Required attributes can never be deselected.
     if (product_attributes) {
-      for (const attr of product_attributes as ProductAttributeDTO[]) {
+      for (const attr of product_attributes) {
         if (attr.is_required) {
           next[attr.id] = true
         }

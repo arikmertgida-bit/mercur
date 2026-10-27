@@ -1,14 +1,15 @@
+import type { JsonValue } from "@mercurjs/types"
 import { ReactNode } from "react"
 import { useDataGridDuplicateCell } from "../hooks"
 
-interface DataGridDuplicateCellProps<TValue> {
+interface DataGridDuplicateCellProps {
   duplicateOf: string
-  children?: ReactNode | ((props: { value: TValue }) => ReactNode)
+  children?: ReactNode | ((props: { value: JsonValue }) => ReactNode)
 }
-export const DataGridDuplicateCell = <TValue,>({
+export const DataGridDuplicateCell = ({
   duplicateOf,
   children,
-}: DataGridDuplicateCellProps<TValue>) => {
+}: DataGridDuplicateCellProps) => {
   const { watchedValue } = useDataGridDuplicateCell({ duplicateOf })
 
   return (

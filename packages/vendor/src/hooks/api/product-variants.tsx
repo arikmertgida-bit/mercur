@@ -23,7 +23,7 @@ export const useVariants = (
   query?: InferClientInput<typeof sdk.vendor.productVariants.query>,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.productVariants.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.productVariants.query>
     >,

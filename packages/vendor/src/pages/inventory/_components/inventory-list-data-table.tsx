@@ -1,8 +1,8 @@
-import { InventoryTypes } from "@medusajs/types";
+import type { HttpTypes } from "@mercurjs/types";
 import { Buildings } from "@medusajs/icons";
 
 import { useExtendableTable, useLinkQuery, mergeListFilters } from "@mercurjs/dashboard-shared";
-import { ColumnDef, RowSelectionState } from "@tanstack/react-table";
+import { RowSelectionState } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
@@ -36,10 +36,7 @@ export const InventoryListDataTable = () => {
   } = useInventoryItems(
     {
       ...searchParams,
-      ...useLinkQuery(
-        "inventory_item",
-        "+offers.product_variant.product.title",
-      ),
+      ...useLinkQuery("inventory_item"),
     },
     {
       placeholderData: keepPreviousData,
@@ -50,12 +47,9 @@ export const InventoryListDataTable = () => {
   const baseColumns = useInventoryTableColumns();
   const actionsColumn = baseColumns[baseColumns.length - 1];
   const { columns: extended, filters: extFilters } =
-    useExtendableTable<InventoryTypes.InventoryItemDTO>({
+    useExtendableTable<HttpTypes.VendorInventoryItem>({
       model: "inventory_item",
-      columns: baseColumns.slice(0, -1) as ColumnDef<
-        InventoryTypes.InventoryItemDTO,
-        unknown
-      >[],
+      columns: baseColumns.slice(0, -1),
     });
   const columns = useMemo(
     () => [...extended, actionsColumn],
@@ -67,7 +61,7 @@ export const InventoryListDataTable = () => {
   );
 
   const { table } = useDataTable({
-    data: (inventory_items ?? []) as InventoryTypes.InventoryItemDTO[],
+    data: inventory_items ?? [],
     columns,
     count,
     enablePagination: true,

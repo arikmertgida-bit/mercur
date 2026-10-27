@@ -1,3 +1,7 @@
+import {
+  DateComparisonFilterSchema,
+  parseJsonQueryParam,
+} from "@mercurjs/dashboard-shared";
 import { InferClientInput } from "@mercurjs/client";
 import { sdk } from "../../../lib/client";
 import { useQueryParams } from "../../use-query-params";
@@ -23,8 +27,8 @@ export const useReturnTableQuery = ({
     offset: offset ? Number(offset) : 0,
     status: status?.split(","),
     order: order ?? "-created_at",
-    created_at: created_at ? JSON.parse(created_at) : undefined,
-    updated_at: updated_at ? JSON.parse(updated_at) : undefined,
+    created_at: parseJsonQueryParam(created_at, DateComparisonFilterSchema),
+    updated_at: parseJsonQueryParam(updated_at, DateComparisonFilterSchema),
     fields: "+order.display_id,+order.email,+items.id",
   };
 

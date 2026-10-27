@@ -297,6 +297,17 @@ const findRuleValue = (
   )
 }
 
+// `gt`/`lt`/`eq` rules can only be created through the API; the form keeps
+// them numeric (as its schema expects) so saving other prices still validates.
+const findNumericRuleValue = (
+  rules: HttpTypes.AdminShippingOptionPriceRule[],
+  operator: "gt" | "lt" | "eq"
+): number | undefined => {
+  const value = findRuleValue(rules, operator)
+
+  return value === null || value === undefined ? undefined : castNumber(value)
+}
+
 const mapToConditionalPrice = (
   price: HttpTypes.AdminShippingOptionPrice
 ): UpdateConditionalPrice => {
@@ -307,9 +318,9 @@ const mapToConditionalPrice = (
     amount: price.amount,
     gte: findRuleValue(rules, "gte"),
     lte: findRuleValue(rules, "lte"),
-    gt: findRuleValue(rules, "gt") as undefined | null,
-    lt: findRuleValue(rules, "lt") as undefined | null,
-    eq: findRuleValue(rules, "eq") as undefined | null,
+    gt: findNumericRuleValue(rules, "gt"),
+    lt: findNumericRuleValue(rules, "lt"),
+    eq: findNumericRuleValue(rules, "eq"),
   }
 }
 
@@ -334,7 +345,9 @@ const getDefaultValues = (prices: HttpTypes.AdminShippingOptionPrice[]) => {
 
   prices.forEach((price) => {
     if (!price.price_rules?.length) {
-      currency_prices[price.currency_code!] = price.amount
+      if (price.currency_code) {
+        currency_prices[price.currency_code] = price.amount
+      }
       return
     }
 
@@ -348,7 +361,10 @@ const getDefaultValues = (prices: HttpTypes.AdminShippingOptionPrice[]) => {
     }
 
     if (hasAttributes(price, [ITEM_TOTAL_ATTRIBUTE], [REGION_ID_ATTRIBUTE])) {
-      const code = price.currency_code!
+      const code = price.currency_code
+      if (!code) {
+        return
+      }
       if (!conditional_currency_prices[code]) {
         conditional_currency_prices[code] = []
       }

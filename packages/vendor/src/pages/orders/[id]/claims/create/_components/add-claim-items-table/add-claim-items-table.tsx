@@ -1,15 +1,16 @@
 import {
   AdminOrderLineItem,
-  DateComparisonOperator,
-  NumericalComparisonOperator,
 } from "@medusajs/types"
+import type {
+  DateComparisonFilter,
+  RangeNumberFilterValue,
+} from "@mercurjs/dashboard-shared"
 import { OnChangeFn, RowSelectionState } from "@tanstack/react-table"
 import { useMemo, useState } from "react"
 import { useTranslation } from "react-i18next"
 
 import { _DataTable } from "@components/table/data-table"
 import { useDataTable } from "@hooks/use-data-table"
-import { getStylizedAmount } from "@lib/money-amount-helpers"
 import { getReturnableQuantity } from "@lib/rma"
 
 import { useClaimItemTableColumns } from "./use-claim-item-table-columns"
@@ -101,21 +102,11 @@ export const AddClaimItemsTable = ({
     }
 
     if (returnable_quantity) {
-      results = filterByNumber(
-        results,
-        returnable_quantity,
-        "returnable_quantity",
-        currencyCode
-      )
+      results = filterByNumber(results, returnable_quantity, "returnable_quantity")
     }
 
     if (refundable_amount) {
-      results = filterByNumber(
-        results,
-        refundable_amount,
-        "refundable_amount",
-        currencyCode
-      )
+      results = filterByNumber(results, refundable_amount, "refundable_amount")
     }
 
     return results.slice(offset, offset + limit)
@@ -198,12 +189,8 @@ const sortItems = (
       aValue = getReturnableQuantity(a)
       bValue = getReturnableQuantity(b)
     } else if (field === "refundable_amount") {
-      aValue =
-        (a as AdminOrderLineItem & { refundable_total?: number })
-          .refundable_total ?? 0
-      bValue =
-        (b as AdminOrderLineItem & { refundable_total?: number })
-          .refundable_total ?? 0
+      aValue = a.refundable_total ?? 0
+      bValue = b.refundable_total ?? 0
     }
 
     if (aValue === undefined || aValue === null) return 1
@@ -221,10 +208,11 @@ const sortItems = (
 
 const filterByDate = (
   items: AdminOrderLineItem[],
-  date: DateComparisonOperator,
+  date: DateComparisonFilter,
   field: "created_at" | "updated_at"
 ) => {
-  const { gt, gte, lt, lte } = date
+  // The date filter writes Medusa's `$gt/$gte/$lt/$lte` operators to the URL.
+  const { $gt: gt, $gte: gte, $lt: lt, $lte: lte } = date
 
   return items.filter((i) => {
     const itemDate = new Date(i[field])
@@ -250,35 +238,27 @@ const filterByDate = (
   })
 }
 
-const defaultOperators: NumericalComparisonOperator = {
-  eq: undefined,
-  gt: undefined,
-  gte: undefined,
-  lt: undefined,
-  lte: undefined,
-}
+const toBound = (value?: string | number): number | undefined =>
+  value === undefined || value === "" ? undefined : Number(value)
 
+/**
+ * The table's number filter chip writes an exact number, or a `gt`/`lt`
+ * range holding the typed text.
+ */
 const filterByNumber = (
   items: AdminOrderLineItem[],
-  value: NumericalComparisonOperator | number,
-  field: "returnable_quantity" | "refundable_amount",
-  currency_code: string
+  value: RangeNumberFilterValue,
+  field: "returnable_quantity" | "refundable_amount"
 ) => {
-  const { eq, gt, lt, gte, lte } =
-    typeof value === "object"
-      ? { ...defaultOperators, ...value }
-      : { ...defaultOperators, eq: value }
+  const eq = typeof value === "number" ? value : undefined
+  const gt = typeof value === "object" ? toBound(value.gt) : undefined
+  const lt = typeof value === "object" ? toBound(value.lt) : undefined
 
   return items.filter((i) => {
-    const returnableQuantity = getReturnableQuantity(i)
-    const refundableAmount = getStylizedAmount(
-      (i as AdminOrderLineItem & { refundable_total?: number })
-        .refundable_total ?? 0,
-      currency_code
-    )
-
     const itemValue =
-      field === "returnable_quantity" ? returnableQuantity : refundableAmount
+      field === "returnable_quantity"
+        ? getReturnableQuantity(i)
+        : (i.refundable_total ?? 0)
 
     if (eq !== undefined) {
       return itemValue === eq
@@ -287,19 +267,11 @@ const filterByNumber = (
     let isValid = true
 
     if (gt !== undefined) {
-      isValid = isValid && Number(itemValue) > gt
-    }
-
-    if (gte !== undefined) {
-      isValid = isValid && Number(itemValue) >= gte
+      isValid = isValid && itemValue > gt
     }
 
     if (lt !== undefined) {
-      isValid = isValid && Number(itemValue) < lt
-    }
-
-    if (lte !== undefined) {
-      isValid = isValid && Number(itemValue) <= lte
+      isValid = isValid && itemValue < lt
     }
 
     return isValid

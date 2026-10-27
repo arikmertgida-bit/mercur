@@ -16,9 +16,7 @@ type PriceListCustomerAvailabilityFormProps = {
 }
 
 const PriceListCustomerAvailabilitySchema = z.object({
-  customer_group_id: z
-    .array(z.object({ id: z.string(), name: z.string() }))
-    .default([]),
+  customer_group_id: z.array(z.object({ id: z.string(), name: z.string() })),
 })
 
 export const PriceListCustomerAvailabilityForm = ({
@@ -80,7 +78,6 @@ export const PriceListCustomerAvailabilityForm = ({
           </div>
           <PriceListCustomerAvailabilitySelector
             control={form.control}
-            name="customer_group_id"
           />
         </RouteDrawer.Body>
         <RouteDrawer.Footer className="shrink-0" data-testid="price-list-customer-availability-form-footer">

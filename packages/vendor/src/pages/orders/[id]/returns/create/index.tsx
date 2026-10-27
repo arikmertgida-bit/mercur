@@ -65,10 +65,7 @@ const ReturnCreateContent = () => {
       isInitiatingRef.current = true
       try {
         const res = await initiateReturn({ order_id: orderId })
-        const r = (res as { return?: AdminReturn })?.return
-        if (r) {
-          setActiveReturn(r)
-        }
+        setActiveReturn(res.return)
       } catch (e) {
         toast.error(
           e instanceof Error ? e.message : t("errorBoundary.defaultTitle")

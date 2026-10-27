@@ -1,7 +1,7 @@
 import { keepPreviousData } from "@tanstack/react-query";
 import { useExtendableTable, useLinkQuery } from "@mercurjs/dashboard-shared";
 import { useMemo } from "react";
-import { AdminProductCategoryResponse } from "@medusajs/types";
+import type { HttpTypes } from "@mercurjs/types";
 
 import { _DataTable } from "@components/table/data-table";
 import { useProductCategories } from "@hooks/api/categories";
@@ -87,7 +87,7 @@ export const CategoryListDataTable = () => {
   );
 };
 
-type CategoryRow = AdminProductCategoryResponse["product_category"];
+type CategoryRow = HttpTypes.VendorProductCategory;
 
 const useColumns = () => {
   const base = useCategoryTableColumns();

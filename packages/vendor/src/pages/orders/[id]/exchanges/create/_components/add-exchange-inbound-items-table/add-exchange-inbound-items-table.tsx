@@ -1,5 +1,5 @@
 import { HttpTypes } from "@medusajs/types"
-import { DateComparisonOperator } from "@medusajs/types"
+import type { DateComparisonFilter } from "@mercurjs/dashboard-shared"
 import { OnChangeFn, RowSelectionState } from "@tanstack/react-table"
 import { useMemo, useState } from "react"
 import { useTranslation } from "react-i18next"
@@ -74,19 +74,11 @@ export const AddExchangeInboundItemsTable = ({
     }
 
     if (created_at) {
-      results = filterByDate(
-        results,
-        created_at as DateComparisonOperator,
-        "created_at"
-      )
+      results = filterByDate(results, created_at, "created_at")
     }
 
     if (updated_at) {
-      results = filterByDate(
-        results,
-        updated_at as DateComparisonOperator,
-        "updated_at"
-      )
+      results = filterByDate(results, updated_at, "updated_at")
     }
 
     return results.slice(offset, offset + limit)
@@ -169,10 +161,11 @@ const sortItems = (
 
 const filterByDate = (
   items: HttpTypes.AdminOrderLineItem[],
-  date: DateComparisonOperator,
+  date: DateComparisonFilter,
   field: "created_at" | "updated_at"
 ) => {
-  const { gt, gte, lt, lte } = date
+  // The date filter writes Medusa's `$gt/$gte/$lt/$lte` operators to the URL.
+  const { $gt: gt, $gte: gte, $lt: lt, $lte: lte } = date
 
   return items.filter((i) => {
     const itemDate = new Date(i[field])

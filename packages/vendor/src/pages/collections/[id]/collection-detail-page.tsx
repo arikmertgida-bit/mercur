@@ -1,5 +1,5 @@
 import { Children, ReactNode } from "react";
-import { useLoaderData, useParams } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 
 import { SingleColumnPageSkeleton } from "@components/common/skeleton";
 import { SingleColumnPage } from "@components/layout/pages";
@@ -7,6 +7,7 @@ import {
   PermissionGuard,
   WidgetZone,
   useLinkQuery,
+  useRequiredParam,
 } from "@mercurjs/dashboard-shared";
 import { useCollection } from "@hooks/api/collections";
 
@@ -18,10 +19,10 @@ import { CollectionProductSection } from "./_components/collection-product-secti
 import type { loader } from "./loader";
 
 const Root = ({ children }: { children?: ReactNode }) => {
-  const initialData = useLoaderData() as Awaited<ReturnType<typeof loader>>;
-  const { id } = useParams();
+  const initialData = useLoaderData<typeof loader>();
+  const id = useRequiredParam("id");
   const { collection, isLoading, isError, error } = useCollection(
-    id!,
+    id,
     useLinkQuery("collection"),
     {
       initialData,

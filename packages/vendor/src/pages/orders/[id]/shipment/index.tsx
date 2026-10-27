@@ -1,14 +1,15 @@
 // Route: /orders/:id/:f_id/create-shipment
-import { useParams } from "react-router-dom"
+import { useRequiredParam } from "@mercurjs/dashboard-shared"
 
 import { RouteFocusModal } from "@components/modals"
 import { useOrder } from "@hooks/api/orders"
 import { OrderCreateShipmentForm } from "./order-create-shipment-form"
 
 export const Component = () => {
-  const { id, f_id } = useParams()
+  const id = useRequiredParam("id")
+  const fulfillmentId = useRequiredParam("f_id")
 
-  const { order, isLoading, isError, error } = useOrder(id!, {
+  const { order, isLoading, isError, error } = useOrder(id, {
     // Use `fulfillments.*` + `fulfillments.<rel>.*` rather than stacking
     // multiple `*fulfillments…` segments — the query parser reads
     // `*fulfillments.items` as a literal property on Order and 500s.
@@ -21,7 +22,7 @@ export const Component = () => {
 
   const ready = !isLoading && order
 
-  const fulfillment = order?.fulfillments?.find((f) => f.id === f_id)
+  const fulfillment = order?.fulfillments?.find((f) => f.id === fulfillmentId)
 
   return (
     <RouteFocusModal>

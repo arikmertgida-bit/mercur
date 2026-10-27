@@ -11,7 +11,7 @@ export const Breadcrumb = (props: OrderDetailBreadcrumbProps) => {
   const { id } = props.params || {};
 
   const { order } = useOrder(
-    id!,
+    id ?? "",
     {
       fields: DEFAULT_FIELDS,
     },

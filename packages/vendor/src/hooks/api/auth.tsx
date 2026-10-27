@@ -4,6 +4,7 @@ import {
   InferClientOutput,
 } from "@mercurjs/client";
 import { UseMutationOptions, useMutation } from "@tanstack/react-query";
+import { z } from "zod";
 import {
   clearAuthToken,
   clearSellerId,
@@ -11,9 +12,15 @@ import {
   setAuthToken,
 } from "../../lib/client";
 
+// The emailpass login/register routes answer with the session token; the
+// payload comes off the wire, so it is validated before the token is stored.
+const AuthTokenResponseSchema = z.object({ token: z.string() });
+
+type AuthTokenResponse = z.infer<typeof AuthTokenResponseSchema>;
+
 export const useSignInWithEmailPass = (
   options?: UseMutationOptions<
-    InferClientOutput<typeof sdk.auth.$actorType.$authProvider.mutate>,
+    AuthTokenResponse,
     ClientError,
     Omit<
       InferClientInput<typeof sdk.auth.$actorType.$authProvider.mutate>,
@@ -23,11 +30,13 @@ export const useSignInWithEmailPass = (
 ) => {
   return useMutation({
     mutationFn: async (payload) => {
-      const data = (await sdk.auth.$actorType.$authProvider.mutate({
-        $actorType: "member",
-        $authProvider: "emailpass",
-        ...payload,
-      })) as { token: string };
+      const data = AuthTokenResponseSchema.parse(
+        await sdk.auth.$actorType.$authProvider.mutate({
+          $actorType: "member",
+          $authProvider: "emailpass",
+          ...payload,
+        }),
+      );
 
       clearSellerId();
       setAuthToken(data.token);
@@ -43,7 +52,7 @@ export const useSignInWithEmailPass = (
 
 export const useSignUpWithEmailPass = (
   options?: UseMutationOptions<
-    InferClientOutput<typeof sdk.auth.$actorType.$authProvider.register.mutate>,
+    AuthTokenResponse,
     ClientError,
     Omit<
       InferClientInput<
@@ -54,15 +63,17 @@ export const useSignUpWithEmailPass = (
   >,
 ) => {
   return useMutation({
-    mutationFn: (payload) =>
-      sdk.auth.$actorType.$authProvider.register.mutate({
-        $actorType: "member",
-        $authProvider: "emailpass",
-        ...payload,
-      }),
+    mutationFn: async (payload) =>
+      AuthTokenResponseSchema.parse(
+        await sdk.auth.$actorType.$authProvider.register.mutate({
+          $actorType: "member",
+          $authProvider: "emailpass",
+          ...payload,
+        }),
+      ),
     onSuccess: async (data, variables, context) => {
       clearSellerId();
-      setAuthToken((data as { token: string }).token);
+      setAuthToken(data.token);
 
       options?.onSuccess?.(data, variables, context);
     },
@@ -72,7 +83,7 @@ export const useSignUpWithEmailPass = (
 
 export const useSignUpForInvite = (
   options?: UseMutationOptions<
-    { token: string },
+    AuthTokenResponse,
     ClientError,
     Omit<
       InferClientInput<
@@ -90,7 +101,7 @@ export const useSignUpForInvite = (
         ...payload,
       });
 
-      return result as { token: string };
+      return AuthTokenResponseSchema.parse(result);
     },
     ...options,
   });
@@ -98,7 +109,7 @@ export const useSignUpForInvite = (
 
 export const useSignInForInvite = (
   options?: UseMutationOptions<
-    { token: string },
+    AuthTokenResponse,
     ClientError,
     Omit<
       InferClientInput<typeof sdk.auth.$actorType.$authProvider.mutate>,
@@ -114,7 +125,7 @@ export const useSignInForInvite = (
         ...payload,
       });
 
-      return result as { token: string };
+      return AuthTokenResponseSchema.parse(result);
     },
     ...options,
   });

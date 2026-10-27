@@ -1,11 +1,11 @@
 import { zodResolver } from "@hookform/resolvers/zod"
-import { JsonRecord } from "@mercurjs/types"
-import { VendorExtendedAdminServiceZone } from "@custom-types/stock-location"
+import type { HttpTypes } from "@mercurjs/types"
 import { Button, ProgressStatus, ProgressTabs, toast } from "@medusajs/ui"
 import { useForm, useWatch } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
 import { useState } from "react"
+import { z } from "zod"
 import {
   RouteFocusModal,
   useRouteModal,
@@ -24,15 +24,25 @@ import {
   CreateShippingOptionSchema,
 } from "./schema"
 import { useFulfillmentProviderOptions } from "@hooks/api"
-import { useCan } from "@mercurjs/dashboard-shared"
+import { JsonRecordSchema, useCan } from "@mercurjs/dashboard-shared"
 
-enum Tab {
-  DETAILS = "details",
-  PRICING = "pricing",
-}
+const Tab = {
+  DETAILS: "details",
+  PRICING: "pricing",
+} as const
+
+type Tab = (typeof Tab)[keyof typeof Tab]
+
+const TabSchema = z.enum(Tab)
+
+// Provider options are provider-defined objects; the chosen one is sent back
+// verbatim as the shipping option's `data`.
+const FulfillmentOptionListSchema = z.array(JsonRecordSchema)
+
+const DetailsFieldSchema = CreateShippingOptionDetailsSchema.keyof()
 
 type CreateShippingOptionFormProps = {
-  zone: VendorExtendedAdminServiceZone
+  zone: HttpTypes.VendorServiceZone
   locationId: string
   isReturn?: boolean
   type: FulfillmentSetType
@@ -110,9 +120,14 @@ export function CreateShippingOptionsForm({
       })
       .filter((p): p is { region_id: string; amount: number } => !!p)
 
-    const fulfillmentOptionData = fulfillmentProviderOptions?.find(
-      (fo) => fo.id === data.fulfillment_option_id
+    const fulfillmentOptions = FulfillmentOptionListSchema.safeParse(
+      fulfillmentProviderOptions
     )
+    const fulfillmentOptionData = fulfillmentOptions.success
+      ? fulfillmentOptions.data.find(
+          (fo) => fo.id === data.fulfillment_option_id
+        )
+      : undefined
 
     await mutateAsync(
       {
@@ -122,7 +137,7 @@ export function CreateShippingOptionsForm({
         provider_id: data.provider_id,
         price_type: data.price_type,
         prices: [...currencyPrices, ...regionPrices],
-        data: fulfillmentOptionData as JsonRecord,
+        data: fulfillmentOptionData,
         rules: [
           {
             value: isReturn ? "true" : "false",
@@ -170,28 +185,36 @@ export function CreateShippingOptionsForm({
       })
 
       if (!result.success) {
-        const [firstError, ...rest] = result.error.errors
+        const [firstError, ...rest] = result.error.issues
 
         for (const error of rest) {
-          const _path = error.path.join(".") as keyof CreateShippingOptionSchema
+          const field = DetailsFieldSchema.safeParse(error.path.join("."))
 
-          form.setError(_path, {
-            message: error.message,
-            type: error.code,
-          })
+          if (field.success) {
+            form.setError(field.data, {
+              message: error.message,
+              type: error.code,
+            })
+          }
         }
 
         // Focus the first error
-        form.setError(
-          firstError.path.join(".") as keyof CreateShippingOptionSchema,
-          {
-            message: firstError.message,
-            type: firstError.code,
-          },
-          {
-            shouldFocus: true,
-          }
+        const firstField = DetailsFieldSchema.safeParse(
+          firstError.path.join(".")
         )
+
+        if (firstField.success) {
+          form.setError(
+            firstField.data,
+            {
+              message: firstError.message,
+              type: firstError.code,
+            },
+            {
+              shouldFocus: true,
+            }
+          )
+        }
 
         setValidDetails(false)
         return
@@ -246,7 +269,13 @@ export function CreateShippingOptionsForm({
         <ProgressTabs
           value={activeTab}
           className="flex h-full flex-col overflow-hidden"
-          onValueChange={(tab) => onTabChange(tab as Tab)}
+          onValueChange={(tab) => {
+            const next = TabSchema.safeParse(tab)
+
+            if (next.success) {
+              onTabChange(next.data)
+            }
+          }}
         >
           <RouteFocusModal.Header>
             <ProgressTabs.List className="border-ui-border-base -my-2 ml-2 min-w-0 flex-1 border-l">

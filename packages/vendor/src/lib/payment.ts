@@ -6,8 +6,8 @@ export const getTotalCaptured = (
   paymentCollections.reduce((acc, paymentCollection) => {
     acc =
       acc +
-      ((paymentCollection.captured_amount as number) -
-        (paymentCollection.refunded_amount as number))
+      ((paymentCollection.captured_amount ?? 0) -
+        (paymentCollection.refunded_amount ?? 0))
     return acc
   }, 0)
 
@@ -16,8 +16,7 @@ export const getTotalPending = (paymentCollections: AdminPaymentCollection[]) =>
     .filter((pc) => pc.status !== "canceled")
     .reduce((acc, paymentCollection) => {
       acc +=
-        (paymentCollection.amount as number) -
-        (paymentCollection.captured_amount as number)
+        paymentCollection.amount - (paymentCollection.captured_amount ?? 0)
 
       return acc
     }, 0)

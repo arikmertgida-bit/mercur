@@ -1,17 +1,16 @@
 // Route: /promotions/:id/add-to-campaign
 import { Heading } from "@medusajs/ui"
 import { useTranslation } from "react-i18next"
-import { useParams } from "react-router-dom"
-import { SectionNoAccess, isForbidden, useCan } from "@mercurjs/dashboard-shared"
+import { SectionNoAccess, isForbidden, useCan, useRequiredParam } from "@mercurjs/dashboard-shared"
 import { RouteDrawer } from "@components/modals"
 import { useCampaigns } from "@hooks/api/campaigns"
 import { usePromotion } from "@hooks/api/promotions"
 import { AddCampaignPromotionForm } from "./add-campaign-promotion-form"
 
 export const Component = () => {
-  const { id } = useParams()
+  const id = useRequiredParam("id")
   const { t } = useTranslation()
-  const { promotion, isPending, isError, error } = usePromotion(id!)
+  const { promotion, isPending, isError, error } = usePromotion(id)
 
   const canViewCampaigns = useCan("campaigns")
 

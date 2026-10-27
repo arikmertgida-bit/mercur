@@ -3,6 +3,7 @@ import { LoaderFunctionArgs } from "react-router-dom"
 import { variantsQueryKeys } from "@hooks/api/products"
 import { sdk } from "@lib/client"
 import { queryClient } from "@lib/query-client"
+import { getVariantRouteParams } from "../common/route-params"
 
 // Prefix bare fields with `+` so they're additive — otherwise Medusa's
 // FieldParser treats them as "replace defaults" and strips title/sku/etc.
@@ -22,13 +23,10 @@ const variantDetailQuery = (productId: string, variantId: string) => ({
     }),
 })
 
-export const variantLoader = async ({
-  params,
-}: LoaderFunctionArgs): Promise<any> => {
-  const productId = params.id || params.product_id
-  const variantId = params.variant_id
+export const variantLoader = async ({ params }: LoaderFunctionArgs) => {
+  const { productId, variantId } = getVariantRouteParams(params)
 
-  const query = variantDetailQuery(productId!, variantId!)
+  const query = variantDetailQuery(productId, variantId)
 
   return queryClient.ensureQueryData(query)
 }

@@ -32,7 +32,7 @@ export const useProductCollectionRequests = (
   query?: InferClientInput<typeof client.vendor.requests.productCollections.query>,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof client.vendor.requests.productCollections.query>,
       ClientError,
       InferClientOutput<typeof client.vendor.requests.productCollections.query>
     >,
@@ -72,7 +72,7 @@ export const useProductCategoryRequests = (
   query?: InferClientInput<typeof client.vendor.requests.productCategories.query>,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof client.vendor.requests.productCategories.query>,
       ClientError,
       InferClientOutput<typeof client.vendor.requests.productCategories.query>
     >,
@@ -112,7 +112,7 @@ export const useProductTypeRequests = (
   query?: InferClientInput<typeof client.vendor.requests.productTypes.query>,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof client.vendor.requests.productTypes.query>,
       ClientError,
       InferClientOutput<typeof client.vendor.requests.productTypes.query>
     >,
@@ -152,7 +152,7 @@ export const useReturnReasonRequests = (
   query?: InferClientInput<typeof client.vendor.requests.returnReasons.query>,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof client.vendor.requests.returnReasons.query>,
       ClientError,
       InferClientOutput<typeof client.vendor.requests.returnReasons.query>
     >,
@@ -192,7 +192,7 @@ export const useProductTagRequests = (
   query?: InferClientInput<typeof client.vendor.requests.productTags.query>,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof client.vendor.requests.productTags.query>,
       ClientError,
       InferClientOutput<typeof client.vendor.requests.productTags.query>
     >,

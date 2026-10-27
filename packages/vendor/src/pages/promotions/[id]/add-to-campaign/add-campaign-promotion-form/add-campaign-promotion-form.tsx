@@ -172,7 +172,7 @@ export const AddCampaignPromotionFields = <T extends CampaignFieldValues>({
       )}
 
       {watchCampaignChoice === "new" && (
-        <CreateCampaignFormFields form={form} fieldScope="campaign." />
+        <CreateCampaignFormFields syncPromotionCurrency />
       )}
 
       <CampaignDetails campaign={selectedCampaign} />

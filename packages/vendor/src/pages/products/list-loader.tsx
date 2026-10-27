@@ -16,5 +16,5 @@ export const productListLoader = async () => {
     limit: PAGE_SIZE,
     offset: 0,
     fields,
-  } as Parameters<typeof sdk.vendor.products.query>[0]);
+  });
 };

@@ -24,7 +24,7 @@ export const useReviewReports = (
   query?: InferClientInput<typeof client.vendor.reviewReports.query>,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof client.vendor.reviewReports.query>,
       ClientError,
       InferClientOutput<typeof client.vendor.reviewReports.query>
     >,

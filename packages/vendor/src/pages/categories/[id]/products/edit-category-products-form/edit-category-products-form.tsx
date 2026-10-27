@@ -23,11 +23,11 @@ import { useProductTableColumns } from "@hooks/table/columns/use-product-table-c
 import { useProductTableFilters } from "@hooks/table/filters/use-product-table-filters"
 import { useProductTableQuery } from "@hooks/table/query/use-product-table-query"
 import { useDataTable } from "@hooks/use-data-table"
-import { ExtendedAdminProduct } from "@custom-types/products"
+import type { HttpTypes } from "@mercurjs/types"
 
 type EditCategoryProductsFormProps = {
   categoryId: string
-  products?: Pick<ExtendedAdminProduct, "id">[]
+  products?: Pick<HttpTypes.VendorProduct, "id">[]
 }
 
 const EditCategoryProductsSchema = z.object({
@@ -37,7 +37,7 @@ const EditCategoryProductsSchema = z.object({
 const PAGE_SIZE = 50
 const PREFIX = "p"
 
-const EMPTY_PRODUCTS: Pick<ExtendedAdminProduct, "id">[] = []
+const EMPTY_PRODUCTS: Pick<HttpTypes.VendorProduct, "id">[] = []
 
 export const EditCategoryProductsForm = ({
   categoryId,
@@ -47,10 +47,10 @@ export const EditCategoryProductsForm = ({
   const { handleSuccess } = useRouteModal()
 
   const [selection, setSelection] = useState<RowSelectionState>(
-    products.reduce((acc, p) => {
-      acc[p.id!] = true
+    products.reduce<RowSelectionState>((acc, p) => {
+      acc[p.id] = true
       return acc
-    }, {} as RowSelectionState)
+    }, {})
   )
 
   const form = useForm<z.infer<typeof EditCategoryProductsSchema>>({
@@ -196,7 +196,7 @@ export const EditCategoryProductsForm = ({
   )
 }
 
-const columnHelper = createColumnHelper<ExtendedAdminProduct>()
+const columnHelper = createColumnHelper<HttpTypes.VendorProduct>()
 
 const useColumns = () => {
   const { t } = useTranslation()

@@ -29,30 +29,21 @@ export const PriceListGeneralSection = ({
       ? t("priceLists.fields.type.options.sale.label")
       : t("priceLists.fields.type.options.override.label")
 
-  const GENERAL_FIELD_IDS = [
-    "title",
-    "status",
-    "type",
-    "description",
-    "price_overrides",
-  ]
-
   return (
-    <Container className="divide-y p-0" data-testid="price-list-general-section-container">
-      <div className="flex items-center justify-between px-6 py-4" data-testid="price-list-general-section-header">
+    <Container className="divide-y p-0">
+      <div className="flex items-center justify-between px-6 py-4">
         <DisplayField model="price_list" zone="general" id="title" data={priceList}>
-          <Heading data-testid="price-list-general-section-title">{priceList.title}</Heading>
+          <Heading>{priceList.title}</Heading>
         </DisplayField>
         <div className="flex items-center gap-x-4">
           <DisplayField model="price_list" zone="general" id="status" data={priceList}>
-            <StatusBadge color={color} data-testid="price-list-general-section-status">{text}</StatusBadge>
+            <StatusBadge color={color}>{text}</StatusBadge>
           </DisplayField>
           <ActionMenu
             groups={[
               {
                 actions: [
                   {
-                    permission: "price_lists:edit",
                     label: t("actions.edit"),
                     to: "edit",
                     icon: <PencilSquare />,
@@ -62,7 +53,6 @@ export const PriceListGeneralSection = ({
               {
                 actions: [
                   {
-                    permission: "price_lists:manage",
                     label: t("actions.delete"),
                     onClick: handleDelete,
                     icon: <Trash />,
@@ -74,36 +64,47 @@ export const PriceListGeneralSection = ({
         </div>
       </div>
       <DisplayField model="price_list" zone="general" id="type" data={priceList}>
-        <div className="text-ui-fg-subtle grid grid-cols-2 items-center px-6 py-4" data-testid="price-list-general-section-type">
-          <Text leading="compact" size="small" weight="plus" data-testid="price-list-general-section-type-label">
+        <div className="text-ui-fg-subtle grid grid-cols-2 items-center px-6 py-4">
+          <Text leading="compact" size="small" weight="plus">
             {t("fields.type")}
           </Text>
-          <Text size="small" className="text-pretty" data-testid="price-list-general-section-type-value">
+          <Text size="small" className="text-pretty">
             {type}
           </Text>
         </div>
       </DisplayField>
       <DisplayField model="price_list" zone="general" id="description" data={priceList}>
-        <div className="text-ui-fg-subtle grid grid-cols-2 items-center px-6 py-4" data-testid="price-list-general-section-description">
-          <Text leading="compact" size="small" weight="plus" data-testid="price-list-general-section-description-label">
+        <div className="text-ui-fg-subtle grid grid-cols-2 items-center px-6 py-4">
+          <Text leading="compact" size="small" weight="plus">
             {t("fields.description")}
           </Text>
-          <Text size="small" className="text-pretty" data-testid="price-list-general-section-description-value">
+          <Text size="small" className="text-pretty">
             {priceList.description}
           </Text>
         </div>
       </DisplayField>
       <DisplayField model="price_list" zone="general" id="price_overrides" data={priceList}>
-        <div className="text-ui-fg-subtle grid grid-cols-2 items-center px-6 py-4" data-testid="price-list-general-section-price-overrides">
-          <Text leading="compact" size="small" weight="plus" data-testid="price-list-general-section-price-overrides-label">
+        <div className="text-ui-fg-subtle grid grid-cols-2 items-center px-6 py-4">
+          <Text leading="compact" size="small" weight="plus">
             {t("priceLists.fields.priceOverrides.label")}
           </Text>
-          <Text size="small" className="text-pretty" data-testid="price-list-general-section-price-overrides-value">
+          <Text size="small" className="text-pretty">
             {overrideCount || "-"}
           </Text>
         </div>
       </DisplayField>
-      <DisplayExtensionZone model="price_list" zone="general" data={priceList} builtInFieldIds={GENERAL_FIELD_IDS} />
+      <DisplayExtensionZone
+        model="price_list"
+        zone="general"
+        data={priceList}
+        builtInFieldIds={[
+          "title",
+          "status",
+          "type",
+          "description",
+          "price_overrides",
+        ]}
+      />
     </Container>
   )
 }

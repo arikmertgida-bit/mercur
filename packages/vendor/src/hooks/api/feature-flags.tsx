@@ -11,7 +11,7 @@ export const featureFlagsQueryKeys =
 export const useFeatureFlags = (
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.featureFlags.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.featureFlags.query>
     >,

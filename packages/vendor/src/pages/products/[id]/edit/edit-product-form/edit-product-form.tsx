@@ -6,7 +6,7 @@ import { useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import * as zod from "zod";
 
-import { ExtendedAdminProduct } from "@custom-types/products";
+import type { HttpTypes } from "@mercurjs/types"
 import { Form } from "@components/common/form";
 import { HandleInput } from "@components/inputs/handle-input";
 import { SwitchBox } from "@components/common/switch-box";
@@ -26,7 +26,7 @@ import {
 } from "@mercurjs/dashboard-shared";
 
 type EditProductFormProps = {
-  product: ExtendedAdminProduct;
+  product: HttpTypes.VendorProduct;
 };
 
 const EditProductSchema = zod.object({
@@ -57,7 +57,8 @@ export const EditProductForm = ({ product }: EditProductFormProps) => {
       title: product.title,
       handle: product.handle || "",
       description: plainTextToHtml(product.description),
-      discountable: product.discountable,
+      // Medusa creates products discountable unless told otherwise.
+      discountable: product.discountable ?? true,
     },
   });
 
@@ -87,7 +88,7 @@ export const EditProductForm = ({ product }: EditProductFormProps) => {
     const { description, discountable, handle, title } = data;
     const additional_data = data.additional_data;
 
-    const payload = {
+    const payload: Parameters<typeof mutateAsync>[0] = {
       description,
       discountable,
       handle,
@@ -95,7 +96,7 @@ export const EditProductForm = ({ product }: EditProductFormProps) => {
       ...(additional_data && Object.keys(additional_data).length
         ? { additional_data }
         : {}),
-    } as Parameters<typeof mutateAsync>[0];
+    };
 
     await mutateAsync(
       payload,
@@ -243,7 +244,6 @@ export const EditProductForm = ({ product }: EditProductFormProps) => {
             <FormExtensionZone
               model="product"
               zone="edit"
-              control={form.control}
               data={product}
             />
           </div>

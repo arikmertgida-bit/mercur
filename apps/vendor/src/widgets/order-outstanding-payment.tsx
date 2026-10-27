@@ -2,6 +2,7 @@ import { defineWidgetConfig } from "@mercurjs/dashboard-sdk"
 import type { HttpTypes } from "@medusajs/types"
 import { Button, toast } from "@medusajs/ui"
 import { useTranslation } from "react-i18next"
+import { z } from "zod"
 
 export const config = defineWidgetConfig({
   zone: "orders.detail.summary.after",
@@ -16,12 +17,15 @@ type PaymentSession = NonNullable<
  * the panel stays provider-agnostic and never assumes a shape for `session.data`.
  * Branch on `provider_id` for the providers your marketplace actually uses.
  */
+const PaymentLinkDataSchema = z.object({ url: z.string().optional() })
+
 const resolvePaymentLink = (session?: PaymentSession): string | null => {
   if (!session) {
     return null
   }
 
-  const data = session.data as { url?: string } | undefined
+  const parsed = PaymentLinkDataSchema.safeParse(session.data)
+  const data = parsed.success ? parsed.data : undefined
 
   switch (session.provider_id) {
     case "pp_stripe_stripe":

@@ -17,7 +17,7 @@ type ClaimOutboundItemProps = {
   index: number
 
   onRemove: () => void
-  onUpdate: (payload: HttpTypes.AdminUpdateReturnItems) => void
+  onUpdate: (payload: Omit<HttpTypes.AdminUpdateReturnItems, "metadata">) => void
 
   form: UseFormReturn<CreateClaimSchemaType>
 }

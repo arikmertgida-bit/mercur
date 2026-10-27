@@ -1,6 +1,6 @@
 import { ProgressStatus } from "@medusajs/ui"
 import { useCallback, useEffect, useMemo, useState } from "react"
-import { FieldPath, FieldValues, UseFormReturn } from "react-hook-form"
+import { FieldValues, UseFormReturn } from "react-hook-form"
 
 import { TabDefinition } from "./types"
 
@@ -15,7 +15,7 @@ const validateTab = async <T extends FieldValues>(
   tab: TabDefinition<T>
 ): Promise<boolean> => {
   if (tab.validationFields?.length) {
-    return form.trigger(tab.validationFields as FieldPath<T>[])
+    return form.trigger(tab.validationFields)
   }
   return form.trigger()
 }

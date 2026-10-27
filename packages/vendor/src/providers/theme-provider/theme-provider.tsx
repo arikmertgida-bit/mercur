@@ -1,13 +1,17 @@
 import { PropsWithChildren, useCallback, useEffect, useMemo, useState } from "react"
+import { z } from "zod"
 import { ThemeContext, ThemeOption, ThemeValue } from "./theme-context"
 
 const THEME_KEY = "medusa_admin_theme"
 
-function getDefaultValue(): ThemeOption {
-  const persisted = localStorage?.getItem(THEME_KEY) as ThemeOption
+// The persisted choice comes from localStorage, so anything else falls back.
+const ThemeOptionSchema = z.enum(["light", "dark", "system"])
 
-  if (persisted) {
-    return persisted
+function getDefaultValue(): ThemeOption {
+  const persisted = ThemeOptionSchema.safeParse(localStorage?.getItem(THEME_KEY))
+
+  if (persisted.success) {
+    return persisted.data
   }
 
   return "system"

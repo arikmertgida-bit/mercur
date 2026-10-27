@@ -1,4 +1,5 @@
 import { ArrowsPointingOut, CircleSliders } from "@medusajs/icons"
+import type { JsonValue } from "@mercurjs/types"
 import { clx } from "@medusajs/ui"
 import { useCallback, useEffect, useRef, useState } from "react"
 import CurrencyInput, {
@@ -18,21 +19,23 @@ import {
 } from "@components/data-grid/hooks"
 import {
   DataGridCellProps,
+  DataGridFormValues,
   InputProps,
 } from "@components/data-grid/types"
+import { toInputValue } from "@components/data-grid/utils"
 import { useCombinedRefs } from "@hooks/use-combined-refs"
 import { currencies, CurrencyInfo } from "@lib/data/currencies"
 import { getCustomShippingOptionPriceFieldName } from "../utils/get-custom-shipping-option-price-field-info"
 import { useShippingOptionPrice } from "./shipping-option-price-provider"
 
-interface ShippingOptionPriceCellProps<TData, TValue = any>
+interface ShippingOptionPriceCellProps<TData, TValue = JsonValue>
   extends DataGridCellProps<TData, TValue> {
   code: string
   header: string
   type: "currency" | "region"
 }
 
-export const ShippingOptionPriceCell = <TData, TValue = any>({
+export const ShippingOptionPriceCell = <TData, TValue = JsonValue>({
   context,
   code,
   header,
@@ -104,7 +107,7 @@ const OuterComponent = ({
   isAnchor: boolean
   header: string
   field: string
-  control: Control<any>
+  control: Control<DataGridFormValues>
   symbolWidth: number
   type: "currency" | "region"
   currency: CurrencyInfo
@@ -135,7 +138,7 @@ const OuterComponent = ({
         left: symbolWidth ? `${symbolWidth + 16 + 4}px` : undefined,
       }}
     >
-      {price?.length > 0 && !isAnchor && (
+      {Array.isArray(price) && price.length > 0 && !isAnchor && (
         <div className="flex size-[15px] items-center justify-center group-hover/container:hidden">
           <CircleSliders className="text-ui-fg-interactive" />
         </div>
@@ -168,7 +171,7 @@ const Inner = ({
   inputProps,
   currencyInfo,
 }: {
-  field: ControllerRenderProps<any, string>
+  field: ControllerRenderProps<DataGridFormValues, string>
   onMeasureSymbol: (node: HTMLSpanElement) => void
   inputProps: InputProps
   currencyInfo: CurrencyInfo
@@ -197,7 +200,9 @@ const Inner = ({
     [currencyInfo]
   )
 
-  const [localValue, setLocalValue] = useState<string | number>(value || "")
+  const [localValue, setLocalValue] = useState<string | number>(
+    toInputValue(value) || ""
+  )
 
   const handleValueChange: CurrencyInputProps["onValueChange"] = (
     value,
@@ -213,16 +218,12 @@ const Inner = ({
   }
 
   useEffect(() => {
-    let update = value
+    const update = toInputValue(value)
 
     // The component we use is a bit fidly when the value is updated externally
     // so we need to ensure a format that will result in the cell being formatted correctly
     // according to the users locale on the next render.
-    if (!isNaN(Number(value))) {
-      update = formatter(update)
-    }
-
-    setLocalValue(update)
+    setLocalValue(isNaN(Number(update)) ? update : formatter(update))
   }, [value, formatter])
 
   const combinedRed = useCombinedRefs(inputRef, ref)

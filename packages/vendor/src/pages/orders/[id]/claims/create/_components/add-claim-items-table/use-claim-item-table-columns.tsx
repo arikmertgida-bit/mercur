@@ -87,7 +87,7 @@ export const useClaimItemTableColumns = (currencyCode: string) => {
           </div>
         ),
         cell: ({ getValue }) => {
-          const amount = (getValue() as number | null | undefined) || 0
+          const amount = getValue() || 0
           const stylized = getStylizedAmount(amount, currencyCode)
 
           return (

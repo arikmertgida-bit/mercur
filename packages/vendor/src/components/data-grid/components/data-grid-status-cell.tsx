@@ -1,13 +1,14 @@
+import type { JsonValue } from "@mercurjs/types"
 import { clx, Select } from "@medusajs/ui"
 import { Controller, ControllerRenderProps } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
 import { useCombinedRefs } from "../../../hooks/use-combined-refs"
 import { useDataGridCell, useDataGridCellError } from "../hooks"
-import { DataGridCellProps, InputProps } from "../types"
+import { DataGridCellProps, DataGridFormValues, InputProps } from "../types"
 import { DataGridCellContainer } from "./data-grid-cell-container"
 
-export const DataGridStatusCell = <TData, TValue = any>({
+export const DataGridStatusCell = <TData, TValue = JsonValue>({
   context,
 }: DataGridCellProps<TData, TValue>) => {
   const { field, control, renderProps } = useDataGridCell({
@@ -41,7 +42,7 @@ const Inner = ({
   inputProps,
   isAnchor,
 }: {
-  field: ControllerRenderProps<any, string>
+  field: ControllerRenderProps<DataGridFormValues, string>
   inputProps: InputProps
   isAnchor: boolean
 }) => {
@@ -70,7 +71,7 @@ const Inner = ({
 
   return (
     <Select
-      value={value}
+      value={typeof value === "string" ? value : undefined}
       onValueChange={(newValue) => {
         onChange(newValue)
       }}

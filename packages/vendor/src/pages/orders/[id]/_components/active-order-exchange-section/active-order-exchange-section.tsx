@@ -18,27 +18,13 @@ type ActiveOrderExchangeSectionProps = {
   orderPreview: HttpTypes.AdminOrderPreview
 }
 
-type UnknownValue = unknown
-
-const readExchangeId = (change: UnknownValue): string | undefined => {
-  if (
-    change &&
-    typeof change === "object" &&
-    "exchange_id" in change &&
-    typeof (change as { exchange_id?: UnknownValue }).exchange_id === "string"
-  ) {
-    return (change as { exchange_id: string }).exchange_id
-  }
-  return undefined
-}
-
 export const ActiveOrderExchangeSection = ({
   orderPreview,
 }: ActiveOrderExchangeSectionProps) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
 
-  const exchangeId = readExchangeId(orderPreview?.order_change)
+  const exchangeId = orderPreview?.order_change?.exchange_id || undefined
 
   const { mutateAsync: cancelExchange } = useCancelExchangeBegin(
     exchangeId ?? "",

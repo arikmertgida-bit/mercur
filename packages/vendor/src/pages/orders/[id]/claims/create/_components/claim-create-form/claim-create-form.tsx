@@ -33,7 +33,7 @@ import { useFieldArray, useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
 import { Form } from "@components/common/form"
-import { Combobox } from "@components/inputs/combobox"
+import { Combobox, getSingleComboboxValue } from "@components/inputs/combobox"
 import {
   RouteFocusModal,
   StackedFocusModal,
@@ -55,6 +55,10 @@ import { useShippingOptions } from "@hooks/api/shipping-options"
 import { useStockLocations } from "@hooks/api/stock-locations"
 import { useUpdateReturn } from "@hooks/api/returns"
 import { getStylizedAmount } from "@lib/money-amount-helpers"
+import {
+  getOrderChangeActionAmount,
+  getOrderChangeActionDetails,
+} from "@lib/order-change-action"
 
 import { ReturnShippingPlaceholder } from "../../../../../common/placeholders"
 import { AddClaimItemsTable } from "../add-claim-items-table"
@@ -183,7 +187,8 @@ export const ClaimCreateForm = ({
             variant_id: i.variant_id,
             quantity: i.detail?.return_requested_quantity ?? 1,
             note: inboundAction?.internal_note,
-            reason_id: inboundAction?.details?.reason_id as string | undefined,
+            reason_id:
+              getOrderChangeActionDetails(inboundAction).reason_id ?? undefined,
           }
         }),
         outbound_items: [],
@@ -214,17 +219,17 @@ export const ClaimCreateForm = ({
   )
   const { shipping_options: shippingOptions = [] } = useShippingOptions(
     locationId
-      ? ({
+      ? {
           limit: 999,
           fields: "*prices,+service_zone.fulfillment_set.location.id",
           stock_location_id: locationId,
-        } as never)
+        }
       : undefined,
-    { enabled: !!locationId && shippingOptionsGate.allowed } as never
+    { enabled: !!locationId && shippingOptionsGate.allowed }
   )
 
   const inboundShippingOptions = (shippingOptions ?? []).filter(
-    (so: { rules?: Array<{ attribute: string; value: string }> }) =>
+    (so) =>
       !!so.rules?.find(
         (r) => r.attribute === "is_return" && r.value === "true"
       )
@@ -264,7 +269,9 @@ export const ClaimCreateForm = ({
             ...inboundItems[ind],
             quantity: requested,
             note: returnItemAction?.internal_note,
-            reason_id: returnItemAction?.details?.reason_id as string,
+            reason_id:
+              getOrderChangeActionDetails(returnItemAction).reason_id ??
+              undefined,
           })
         }
       } else {
@@ -309,7 +316,7 @@ export const ClaimCreateForm = ({
 
   const prompt = usePrompt()
 
-  const handleSubmit = form.handleSubmit(async (data) => {
+  const handleSubmit = form.handleSubmit(async () => {
     const res = await prompt({
       title: t("general.areYouSure"),
       description: t("orders.claims.confirmText"),
@@ -322,9 +329,9 @@ export const ClaimCreateForm = ({
       return
     }
 
-    await confirmClaimRequest(
-      { no_notification: !data.send_notification } as never,
-      {
+    // The claim request route takes no body: like Medusa's own, the
+    // confirm step does not read `no_notification`.
+    await confirmClaimRequest(undefined, {
         onSuccess: () => {
           toast.success(t("orders.claims.toast.confirmedSuccessfully"))
           handleSuccess()
@@ -332,8 +339,7 @@ export const ClaimCreateForm = ({
         onError: (error) => {
           toast.error(error.message)
         },
-      }
-    )
+      })
   })
 
   const onItemsSelected = async () => {
@@ -344,7 +350,7 @@ export const ClaimCreateForm = ({
             id,
             quantity: 1,
           })),
-        } as never,
+        },
         {
           onError: (error) => {
             toast.error(error.message)
@@ -371,9 +377,9 @@ export const ClaimCreateForm = ({
     setIsOpen("inbound-items", false)
   }
 
-  const onLocationChange = async (selectedLocationId?: string | null) => {
-    if (!preview?.order_change?.return_id) return
-    await updateReturn({ location_id: selectedLocationId ?? null } as never)
+  const onLocationChange = async (selectedLocationId?: string) => {
+    if (!preview?.order_change?.return_id || !selectedLocationId) return
+    await updateReturn({ location_id: selectedLocationId })
   }
 
   const onShippingOptionChange = async (
@@ -405,7 +411,7 @@ export const ClaimCreateForm = ({
 
     if (selectedOptionId) {
       await addInboundShipping(
-        { shipping_option_id: selectedOptionId } as never,
+        { shipping_option_id: selectedOptionId },
         {
           onError: (error) => {
             toast.error(error.message)
@@ -481,7 +487,7 @@ export const ClaimCreateForm = ({
                   <StackedFocusModal.Header />
 
                   <AddClaimItemsTable
-                    items={order.items!}
+                    items={order.items ?? []}
                     selectedItems={inboundItems.map((i) => i.item_id)}
                     currencyCode={currencyCode}
                     onSelectionChange={(finalSelection) => {
@@ -527,14 +533,17 @@ export const ClaimCreateForm = ({
               </StackedFocusModal>
             </div>
             {showInboundItemsPlaceholder && <ItemPlaceholder />}
-            {inboundItems.map(
-              (item, index) =>
-                previewItemsMap.get(item.item_id) &&
-                itemsMap.get(item.item_id)! && (
+            {inboundItems.map((item, index) => {
+              const orderItem = itemsMap.get(item.item_id)
+              const previewItem = previewItemsMap.get(item.item_id)
+
+              return (
+                orderItem &&
+                previewItem && (
                   <ClaimInboundItem
                     key={item.id}
-                    item={itemsMap.get(item.item_id)!}
-                    previewItem={previewItemsMap.get(item.item_id)! as never}
+                    item={orderItem}
+                    previewItem={previewItem}
                     currencyCode={currencyCode}
                     form={form}
                     onRemove={() => {
@@ -550,23 +559,23 @@ export const ClaimCreateForm = ({
                         })
                       }
                     }}
-                    onUpdate={(payload: HttpTypes.AdminUpdateReturnItems) => {
+                    onUpdate={(payload: Omit<HttpTypes.AdminUpdateReturnItems, "metadata">) => {
                       const action = previewItems
                         .find((i) => i.id === item.item_id)
                         ?.actions?.find((a) => a.action === "RETURN_ITEM")
 
                       if (action) {
                         updateInboundItem(
-                          { ...payload, actionId: action.id } as never,
+                          { ...payload, actionId: action.id },
                           {
                             onError: (error) => {
-                              if (
-                                action.details?.quantity &&
-                                payload.quantity
-                              ) {
+                              const { quantity } =
+                                getOrderChangeActionDetails(action)
+
+                              if (quantity && payload.quantity) {
                                 form.setValue(
                                   `inbound_items.${index}.quantity`,
-                                  action.details?.quantity as number
+                                  quantity
                                 )
                               }
                               toast.error(error.message)
@@ -578,7 +587,8 @@ export const ClaimCreateForm = ({
                     index={index}
                   />
                 )
-            )}
+              )
+            })}
             {!showInboundItemsPlaceholder && (
               <div className="mt-8 flex flex-col gap-y-4">
                 {/* LOCATION */}
@@ -605,7 +615,8 @@ export const ClaimCreateForm = ({
                                 <Combobox
                                   {...field}
                                   value={value ?? undefined}
-                                  onChange={(v) => {
+                                  onChange={(next) => {
+                                    const v = getSingleComboboxValue(next)
                                     onChange(v)
                                     onLocationChange(v)
                                   }}
@@ -663,7 +674,8 @@ export const ClaimCreateForm = ({
                                 <Combobox
                                   allowClear
                                   value={value ?? undefined}
-                                  onChange={(val) => {
+                                  onChange={(next) => {
+                                    const val = getSingleComboboxValue(next)
                                     onChange(val)
                                     onShippingOptionChange(val)
                                   }}
@@ -710,9 +722,7 @@ export const ClaimCreateForm = ({
                       const action = item.actions?.find(
                         (act) => act.action === "RETURN_ITEM"
                       )
-                      return (
-                        acc + Number((action as { amount?: number })?.amount || 0)
-                      )
+                      return acc + getOrderChangeActionAmount(action)
                     }, 0) * -1,
                     currencyCode
                   )}

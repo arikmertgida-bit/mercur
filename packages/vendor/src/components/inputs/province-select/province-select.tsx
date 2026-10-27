@@ -1,9 +1,8 @@
 import {
   ComponentPropsWithoutRef,
-  ComponentType,
   forwardRef,
-  useImperativeHandle,
-  useRef,
+  ForwardRefExoticComponent,
+  RefAttributes,
 } from "react";
 import { Select } from "@medusajs/ui";
 import { useTranslation } from "react-i18next";
@@ -17,7 +16,9 @@ type ProvinceSelectProps = ComponentPropsWithoutRef<typeof Select> & {
   onChange?: (value: string) => void;
 };
 
-export const ProvinceSelect: ComponentType<ProvinceSelectProps> = forwardRef<
+export const ProvinceSelect: ForwardRefExoticComponent<
+  ProvinceSelectProps & RefAttributes<HTMLButtonElement>
+> = forwardRef<
   HTMLButtonElement,
   ProvinceSelectProps
 >(
@@ -34,9 +35,6 @@ export const ProvinceSelect: ComponentType<ProvinceSelectProps> = forwardRef<
     ref
   ) => {
     const { t } = useTranslation();
-    const innerRef = useRef<HTMLButtonElement>(null);
-
-    useImperativeHandle(ref, () => innerRef.current as HTMLButtonElement);
 
     const provinceObject = getCountryProvinceObjectByIso2(country_code);
 
@@ -82,7 +80,7 @@ export const ProvinceSelect: ComponentType<ProvinceSelectProps> = forwardRef<
           onValueChange={onChange}
           disabled={disabled}
         >
-          <Select.Trigger ref={innerRef} className="w-full">
+          <Select.Trigger ref={ref} className="w-full">
             <Select.Value placeholder={placeholder || placeholderText} />
           </Select.Trigger>
           <Select.Content>{options}</Select.Content>

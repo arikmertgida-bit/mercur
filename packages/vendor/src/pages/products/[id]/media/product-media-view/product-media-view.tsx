@@ -3,10 +3,10 @@ import { useSearchParams } from "react-router-dom"
 import { EditProductMediaForm } from "../edit-product-media-form"
 import { ProductMediaGallery } from "../product-media-gallery"
 import { ProductMediaViewContext } from "./product-media-view-context"
-import { ExtendedAdminProduct } from "@custom-types/products"
+import type { HttpTypes } from "@mercurjs/types"
 
 type ProductMediaViewProps = {
-  product: ExtendedAdminProduct
+  product: HttpTypes.VendorProduct
 }
 
 enum View {
@@ -47,7 +47,7 @@ export const ProductMediaView = ({ product }: ProductMediaViewProps) => {
   )
 }
 
-const renderView = (view: View, product: ExtendedAdminProduct) => {
+const renderView = (view: View, product: HttpTypes.VendorProduct) => {
   switch (view) {
     case View.GALLERY:
       return <ProductMediaGallery product={product} />

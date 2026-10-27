@@ -1,5 +1,4 @@
 import { ClientError } from "@mercurjs/client"
-import { PaginatedResponse } from "@medusajs/types"
 import {
   QueryKey,
   UseInfiniteQueryOptions,
@@ -11,9 +10,8 @@ import {
  * Generic hook for infinite queries with pagination support.
  *
  * @template TResponse - The response type that must include count, offset, and limit
- * @template TParams - The query parameters type (offset and limit will be handled internally)
+ * @template TQuery - The query parameters type (offset and limit will be handled internally)
  * @template TError - The error type (defaults to ClientError)
- * @template TQueryKey - The query key type (defaults to QueryKey)
  *
  * @param config - Configuration object
  * @param config.queryKey - Function or array that generates the query key
@@ -30,57 +28,68 @@ import {
  * })
  * ```
  */
+type PagedQuery = { offset?: number; limit?: number }
+
+type PageParams = { offset: number; limit: number }
+
+type PageInfo = { count: number; offset: number; limit: number }
+
+/** The caller's query without its paging params, which the hook drives itself. */
+type BaseQuery<TQuery extends PagedQuery> = Partial<Omit<TQuery, keyof PagedQuery>>
+
+const withoutPaging = <TQuery extends PagedQuery>(
+  query: TQuery
+): Omit<TQuery, keyof PagedQuery> => {
+  const { limit: _limit, offset: _offset, ...rest } = query
+  return rest
+}
+
 export const useInfiniteList = <
-  TResponse extends PaginatedResponse<unknown>,
-  TParams extends { offset?: number; limit?: number } = {
-    offset?: number
-    limit?: number
-  },
-  TError = ClientError,
-  TQueryKey extends QueryKey = QueryKey
+  TResponse extends PageInfo,
+  TQuery extends PagedQuery = PagedQuery,
+  TError = ClientError
 >({
   queryKey,
   queryFn,
   query,
   options,
 }: {
-  queryKey: ((params: Omit<TParams, "limit">) => TQueryKey) | TQueryKey
-  queryFn: (params: TParams) => Promise<TResponse>
-  query?: TParams
+  queryKey: ((params: BaseQuery<TQuery>) => QueryKey) | QueryKey
+  queryFn: (params: BaseQuery<TQuery> & PageParams) => Promise<TResponse>
+  query?: TQuery
   options?: Omit<
     UseInfiniteQueryOptions<
       TResponse,
       TError,
       InfiniteData<TResponse, number>,
       TResponse,
-      TQueryKey,
+      QueryKey,
       number
     >,
     "queryKey" | "queryFn" | "initialPageParam" | "getNextPageParam"
   >
 }) => {
-  const { limit = 50, offset: _, ..._query } = query ?? {}
+  const limit = query?.limit ?? 50
+  const baseQuery: BaseQuery<TQuery> = query ? withoutPaging(query) : {}
   const resolvedQueryKey =
-    typeof queryKey === "function"
-      ? queryKey(_query as Omit<TParams, "limit">)
-      : queryKey
+    typeof queryKey === "function" ? queryKey(baseQuery) : queryKey
   const infiniteQueryKey =
     resolvedQueryKey[resolvedQueryKey.length - 1] === "__infinite"
       ? resolvedQueryKey
-      : ([...resolvedQueryKey, "__infinite"] as TQueryKey)
+      : [...resolvedQueryKey, "__infinite"]
 
   return useInfiniteQuery<
     TResponse,
     TError,
     InfiniteData<TResponse, number>,
-    TQueryKey,
+    QueryKey,
     number
   >({
     // Infinite queries must not share the exact same queryKey as non-infinite queries,
     // since the cached data shape differs (InfiniteData<T> vs T).
     queryKey: infiniteQueryKey,
     queryFn: ({ pageParam = 0 }) => {
-      return queryFn({ ..._query, limit, offset: pageParam } as TParams)
+      return queryFn({ ...baseQuery, limit, offset: pageParam })
     },
     initialPageParam: 0,
     getNextPageParam: (lastPage) => {

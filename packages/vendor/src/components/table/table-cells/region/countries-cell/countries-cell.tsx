@@ -17,14 +17,14 @@ export const CountriesCell = ({ countries }: CountriesCellProps) => {
     return <PlaceholderCell />
   }
 
-  const list = countries
-    .map((country) =>
-      getLocalizedCountryName(
-        COUNTRIES.find((c) => c.iso_2 === country.iso_2),
-        i18n.language,
-      )
+  const list = countries.flatMap((country) => {
+    const name = getLocalizedCountryName(
+      COUNTRIES.find((c) => c.iso_2 === country.iso_2),
+      i18n.language,
     )
-    .filter(Boolean) as string[]
+
+    return name ? [name] : []
+  })
 
   return (
     <div className="flex size-full items-center overflow-hidden">

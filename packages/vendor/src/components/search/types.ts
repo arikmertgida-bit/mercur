@@ -1,6 +1,10 @@
+import { z } from "zod"
+
 import { SEARCH_AREAS } from "./constants"
 
-export type SearchArea = (typeof SEARCH_AREAS)[number]
+export const SearchAreaSchema = z.enum(SEARCH_AREAS)
+
+export type SearchArea = z.infer<typeof SearchAreaSchema>
 
 export type DynamicSearchResultItem = {
   id: string

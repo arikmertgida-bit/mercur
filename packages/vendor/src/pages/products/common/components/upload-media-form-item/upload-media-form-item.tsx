@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 
-import { UseFormReturn } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 import config from 'virtual:mercur/config';
@@ -8,18 +8,21 @@ import config from 'virtual:mercur/config';
 import { FileType, FileUpload } from "@components/common/file-upload"
 import { Form } from "@components/common/form"
 import { formatFileSize } from '../../../../../lib/format-file-size';
-import { EditStoreSchema } from '../../../../store/store-edit/components/edit-store-form/edit-store-form';
 import { MediaSchema } from '../../../create/constants'
-import { EditProductMediaSchemaType, ProductCreateSchemaType } from '../../../create/types'
 
 type Media = z.infer<typeof MediaSchema>;
+
+/**
+ * The slice of the host form this item works on. Both hosts (product create
+ * and product media edit) render it inside their RHF provider.
+ */
+type MediaFieldValues = { media: Media[] };
 
 const SUPPORTED_FORMATS = ['image/jpeg', 'image/png', 'image/webp', 'image/heic', 'image/svg+xml'];
 
 const SUPPORTED_FORMATS_FILE_EXTENSIONS = ['.jpeg', '.png', '.webp', '.heic', '.svg'];
 
 export const UploadMediaFormItem = ({
-  form,
   append,
   showHint = true,
   maxCount,
@@ -27,10 +30,6 @@ export const UploadMediaFormItem = ({
   onLimitExceeded,
   onFilesAppended
 }: {
-  form:
-    | UseFormReturn<ProductCreateSchemaType>
-    | UseFormReturn<EditProductMediaSchemaType>
-    | UseFormReturn<z.infer<typeof EditStoreSchema>>;
   append: (value: Media) => void;
   showHint?: boolean;
   /** When set, caps how many files `onUploaded` will append in total
@@ -46,6 +45,7 @@ export const UploadMediaFormItem = ({
   onFilesAppended?: (files: { id: string; file: File }[]) => void;
 }) => {
   const { t } = useTranslation();
+  const form = useFormContext<MediaFieldValues>();
 
   const hasInvalidFiles = useCallback(
     (fileList: FileType[]) => {
@@ -115,7 +115,7 @@ export const UploadMediaFormItem = ({
 
   return (
     <Form.Field
-      control={form.control as UseFormReturn<EditProductMediaSchemaType>['control']}
+      control={form.control}
       name="media"
       render={() => {
         return (

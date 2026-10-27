@@ -1,8 +1,6 @@
-import { InventoryTypes } from "@medusajs/types"
 import { Heading } from "@medusajs/ui"
 import { useTranslation } from "react-i18next"
-import { useParams } from "react-router-dom"
-import { useLinkQuery, SectionNoAccess, usePermissions } from "@mercurjs/dashboard-shared"
+import { useLinkQuery, SectionNoAccess, usePermissions, useRequiredParam } from "@mercurjs/dashboard-shared"
 import { RouteDrawer } from "@components/modals"
 import {
   useInventoryItem,
@@ -13,11 +11,11 @@ import { useStockLocations } from "@hooks/api/stock-locations"
 import { EditReservationForm } from "./components/edit-reservation-form"
 
 export const ReservationEdit = () => {
-  const { id } = useParams()
+  const id = useRequiredParam("id")
   const { t } = useTranslation()
 
   const { reservation, isPending, isError, error } = useReservationItem(
-    id!,
+    id,
     useLinkQuery("reservation")
   )
   const { can } = usePermissions()
@@ -25,26 +23,21 @@ export const ReservationEdit = () => {
   const canViewLocations = can("stock_locations")
 
   const { inventory_item: inventoryItem } = useInventoryItem(
-    reservation?.inventory_item_id,
+    reservation?.inventory_item_id ?? "",
     undefined,
     {
       enabled: !!reservation?.inventory_item_id && canViewItem,
     }
   )
 
-  const { inventory_levels } = useInventoryItemLevels(inventoryItem?.id, undefined, {
+  const { inventory_levels } = useInventoryItemLevels(inventoryItem?.id ?? "", undefined, {
     enabled: !!inventoryItem?.id && canViewItem,
   })
 
   const { stock_locations } = useStockLocations(
-    undefined,
+    { id: inventory_levels?.map((l) => l.location_id) },
     {
       enabled: !!inventory_levels && canViewLocations,
-    },
-    {
-      id: inventory_levels?.map(
-        (l: InventoryTypes.InventoryLevelDTO) => l.location_id
-      ),
     }
   )
 

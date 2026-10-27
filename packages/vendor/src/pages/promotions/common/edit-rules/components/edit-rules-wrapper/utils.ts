@@ -1,7 +1,7 @@
-import { PromotionRuleResponse } from "@medusajs/types"
+import { EditRulesType } from "../edit-rules-form/form-schema"
 
 export const getRuleValue = (
-  rule: PromotionRuleResponse
+  rule: EditRulesType["rules"][number]
 ): string | number | string[] => {
   if (rule.field_type === "number") {
     const rawValue = Array.isArray(rule.values) ? rule.values[0] : rule.values

@@ -1,17 +1,9 @@
 import { Text } from "@medusajs/ui"
+import { HttpTypes } from "@mercurjs/types"
 import { useTranslation } from "react-i18next"
 
-// `AdminOrderFulfillment` (the order module's embedded fulfillment shape)
-// doesn't declare `items`, but the order detail query expands it at
-// runtime — accept the minimal shape this component actually reads instead
-// of the fulfillment module's own `AdminFulfillment`, which doesn't
-// structurally match what callers have on hand here.
-type FulfillmentWithItems = {
-  items?: { quantity?: number | null }[] | null
-}
-
 type FulfillmentCreatedBodyProps = {
-  fulfillment: FulfillmentWithItems
+  fulfillment: HttpTypes.VendorOrderFulfillment
   isShipment?: boolean
 }
 

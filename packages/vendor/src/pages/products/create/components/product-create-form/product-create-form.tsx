@@ -121,7 +121,7 @@ const ProductCreateFormContent = ({
     defaultValues: {
       ...PRODUCT_CREATE_FORM_DEFAULTS,
       ...extraDefaults,
-    } as ProductCreateSchemaType,
+    },
     resolver: zodResolver(schema ?? ProductCreateSchema),
   })
 
@@ -169,7 +169,7 @@ const ProductCreateFormContent = ({
       return
     }
 
-    const submittedStatus = isDraftSubmission
+    const submittedStatus: HttpTypes.AdminProductStatus = isDraftSubmission
       ? "draft"
       : productRequestEnabled
         ? "proposed"
@@ -180,7 +180,7 @@ const ProductCreateFormContent = ({
         {
           ...payload,
           media: uploadedMedia,
-          status: submittedStatus as HttpTypes.AdminProductStatus,
+          status: submittedStatus,
         },
         currencies,
       ),

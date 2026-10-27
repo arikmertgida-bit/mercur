@@ -1,11 +1,23 @@
 import { HttpTypes } from "@medusajs/types";
-import { useLinkQuery } from "@mercurjs/dashboard-shared";
+import { useLinkQuery, DateComparisonFilterSchema, parseJsonQueryParam } from "@mercurjs/dashboard-shared";
+import { z } from "zod";
 import { useQueryParams } from "../../use-query-params";
 
 type UseProductTableQueryProps = {
   prefix?: string;
   pageSize?: number;
 };
+
+// The status filter comes from the URL, so unknown values are dropped.
+const ProductStatusSchema = z.enum(["draft", "proposed", "published", "rejected"]);
+
+const parseProductStatuses = (
+  value: string | undefined,
+): HttpTypes.AdminProductStatus[] | undefined =>
+  value?.split(",").flatMap((entry) => {
+    const parsed = ProductStatusSchema.safeParse(entry);
+    return parsed.success ? [parsed.data] : [];
+  });
 
 export const DEFAULT_FIELDS =
   // TODO: Remove exclusion once we avoid including unnecessary relations by default in the query config
@@ -54,15 +66,15 @@ export const useProductTableQuery = ({
     limit: pageSize,
     offset: offset ? Number(offset) : 0,
     sales_channel_id: sales_channel_id?.split(","),
-    created_at: created_at ? JSON.parse(created_at) : undefined,
-    updated_at: updated_at ? JSON.parse(updated_at) : undefined,
+    created_at: parseJsonQueryParam(created_at, DateComparisonFilterSchema),
+    updated_at: parseJsonQueryParam(updated_at, DateComparisonFilterSchema),
     category_id: category_id?.split(","),
     collection_id: collection_id?.split(","),
     is_giftcard: is_giftcard ? is_giftcard === "true" : undefined,
     order: order || "-created_at",
     tag_id: tag_id ? tag_id.split(",") : undefined,
     type_id: type_id?.split(","),
-    status: status?.split(",") as HttpTypes.AdminProductStatus[],
+    status: parseProductStatuses(status),
     q,
     fields: linkQuery.fields,
   };

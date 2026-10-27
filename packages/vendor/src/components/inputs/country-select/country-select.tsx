@@ -1,10 +1,9 @@
 import {
   ComponentPropsWithoutRef,
-  ComponentType,
   forwardRef,
-  useImperativeHandle,
+  ForwardRefExoticComponent,
+  RefAttributes,
   useMemo,
-  useRef,
 } from "react";
 import { useTranslation } from "react-i18next";
 import { countries } from "../../../lib/data/countries";
@@ -18,14 +17,13 @@ type CountrySelectProps = ComponentPropsWithoutRef<typeof Select> & {
   onChange?: (value: string) => void;
 };
 
-export const CountrySelect: ComponentType<CountrySelectProps> = forwardRef<
+export const CountrySelect: ForwardRefExoticComponent<
+  CountrySelectProps & RefAttributes<HTMLButtonElement>
+> = forwardRef<
   HTMLButtonElement,
   CountrySelectProps
 >(({ disabled, placeholder, defaultValue, onChange, ...field }, ref) => {
   const { t, i18n } = useTranslation();
-  const innerRef = useRef<HTMLButtonElement>(null);
-
-  useImperativeHandle(ref, () => innerRef.current as HTMLButtonElement);
 
   const localizedCountries = useMemo(() => {
     const collator = new Intl.Collator(toIntlLocale(i18n.language), { sensitivity: "base" });
@@ -48,7 +46,7 @@ export const CountrySelect: ComponentType<CountrySelectProps> = forwardRef<
         defaultValue={defaultValue ? defaultValue.toLowerCase() : undefined}
         disabled={disabled}
       >
-        <Select.Trigger ref={innerRef} className="w-full">
+        <Select.Trigger ref={ref} className="w-full">
           <Select.Value
             placeholder={placeholder || t("fields.selectCountry")}
           />

@@ -1,9 +1,9 @@
-import { HttpTypes } from "@medusajs/types"
+import { HttpTypes } from "@mercurjs/types"
 import { UIMatch } from "react-router-dom"
 import { useProductVariant } from "@hooks/api"
 
 type ProductVariantDetailBreadcrumbProps =
-  UIMatch<HttpTypes.AdminProductVariantResponse>
+  UIMatch<HttpTypes.VendorProductVariantResponse>
 
 export const ProductVariantDetailBreadcrumb = (
   props: ProductVariantDetailBreadcrumbProps
@@ -12,8 +12,8 @@ export const ProductVariantDetailBreadcrumb = (
   const productId = id || product_id
 
   const { variant } = useProductVariant(
-    productId!,
-    variant_id!,
+    productId ?? "",
+    variant_id ?? "",
     {},
     {
       initialData: props.data,

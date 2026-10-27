@@ -7,12 +7,12 @@ import { ActionMenu } from "@components/common/action-menu"
 import { NoRecords } from "@components/common/empty-table-content"
 import { IconAvatar } from "@components/common/icon-avatar"
 import { formatProvider } from "@lib/format-provider"
-import { VendorExtendedAdminStockLocation } from "@custom-types/stock-location"
+import type { HttpTypes } from "@mercurjs/types"
 
 function LocationsFulfillmentProvidersSection({
   location,
 }: {
-  location: VendorExtendedAdminStockLocation
+  location: HttpTypes.VendorStockLocation
 }) {
   const { t } = useTranslation()
 

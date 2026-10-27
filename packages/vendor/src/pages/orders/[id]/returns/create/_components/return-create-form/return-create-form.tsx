@@ -24,7 +24,7 @@ import { useFieldArray, useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
 import { Form } from "@components/common/form"
-import { Combobox } from "@components/inputs/combobox"
+import { Combobox, getSingleComboboxValue } from "@components/inputs/combobox"
 import {
   RouteFocusModal,
   StackedFocusModal,
@@ -47,6 +47,7 @@ import { useShippingOptions } from "@hooks/api/shipping-options"
 import { useStockLocations } from "@hooks/api/stock-locations"
 import { currencies } from "@lib/data/currencies"
 import { getStylizedAmount } from "@lib/money-amount-helpers"
+import { getOrderChangeActionDetails } from "@lib/order-change-action"
 import { RETURN_POLICY_DAYS } from "@lib/policy"
 
 import { ReturnShippingPlaceholder } from "../../../../../common/placeholders"
@@ -65,35 +66,6 @@ type ReturnCreateFormProps = {
 // pattern. Values are order line item ids (the `i.id` field on
 // `order.items[]`) — the vendor `add-return-items` route accepts those.
 let selectedLineItemIds: string[] = []
-
-// Shipping option row shape returned by `sdk.vendor.shippingOptions.query`.
-type ShippingOptionRow = {
-  id: string
-  name: string
-  service_zone?: {
-    fulfillment_set?: {
-      location?: { id?: string } | null
-    } | null
-  } | null
-  rules?: Array<{ attribute: string; value: string }>
-}
-
-// Stock location row returned by `sdk.vendor.stockLocations.query`.
-type StockLocationRow = {
-  id: string
-  name: string
-}
-
-// Preview line item action shape (admin's `AdminOrderChangeAction` lives
-// under preview items). Kept narrow to avoid pulling Medusa types we
-// don't strictly need.
-type PreviewAction = {
-  id: string
-  action: string
-  return_id?: string | null
-  internal_note?: string | null
-  details?: { reason_id?: string; quantity?: number } | null
-}
 
 export const ReturnCreateForm = ({
   order,
@@ -115,7 +87,7 @@ export const ReturnCreateForm = ({
     () =>
       preview.items.filter(
         (i) =>
-          !!(i.actions as PreviewAction[] | undefined)?.find(
+          !!i.actions?.find(
             (a) => a.return_id === activeReturn.id
           )
       ),
@@ -152,14 +124,14 @@ export const ReturnCreateForm = ({
       limit: 999,
     },
     { enabled: locationsGate.allowed }
-  ) as { stock_locations?: StockLocationRow[] }
+  )
   const { shipping_options: shippingOptions = [] } = useShippingOptions(
     {
       limit: 999,
       fields: "*prices,+service_zone.fulfillment_set.location.id",
     },
     { enabled: shippingOptionsGate.allowed }
-  ) as { shipping_options?: ShippingOptionRow[] }
+  )
 
   /**
    * MUTATIONS
@@ -212,20 +184,21 @@ export const ReturnCreateForm = ({
     defaultValues: () => {
       const method = preview.shipping_methods.find(
         (s) =>
-          !!(s.actions as PreviewAction[] | undefined)?.find(
+          !!s.actions?.find(
             (a) => a.action === "SHIPPING_ADD"
           )
       )
 
       return Promise.resolve({
         items: previewItems.map((i) => {
-          const actions = (i.actions as PreviewAction[] | undefined) ?? []
+          const actions = i.actions ?? []
           const returnAction = actions.find((a) => a.action === "RETURN_ITEM")
           return {
             item_id: i.id,
             quantity: i.detail.return_requested_quantity,
             note: returnAction?.internal_note ?? undefined,
-            reason_id: returnAction?.details?.reason_id,
+            reason_id:
+              getOrderChangeActionDetails(returnAction).reason_id ?? undefined,
           }
         }),
         option_id: method ? method.shipping_option_id ?? "" : "",
@@ -264,7 +237,7 @@ export const ReturnCreateForm = ({
 
       if (ind > -1) {
         if (items[ind].quantity !== i.detail.return_requested_quantity) {
-          const actions = (i.actions as PreviewAction[] | undefined) ?? []
+          const actions = i.actions ?? []
           const returnItemAction = actions.find(
             (a) => a.action === "RETURN_ITEM"
           )
@@ -273,7 +246,9 @@ export const ReturnCreateForm = ({
             ...items[ind],
             quantity: i.detail.return_requested_quantity,
             note: returnItemAction?.internal_note ?? undefined,
-            reason_id: returnItemAction?.details?.reason_id,
+            reason_id:
+              getOrderChangeActionDetails(returnItemAction).reason_id ??
+              undefined,
           })
         }
       } else {
@@ -295,7 +270,7 @@ export const ReturnCreateForm = ({
   useEffect(() => {
     const method = preview.shipping_methods?.find(
       (s) =>
-        !!(s.actions as PreviewAction[] | undefined)?.find(
+        !!s.actions?.find(
           (a) => a.action === "SHIPPING_ADD"
         )
     )
@@ -339,18 +314,17 @@ export const ReturnCreateForm = ({
     return stockLocations.find((l) => l.id === locationId)?.name ?? null
   }, [locationId, stockLocations])
 
-  const returnTotal = (preview as { return_requested_total?: number })
-    .return_requested_total
+  const returnTotal = preview.return_requested_total
 
   const shippingTotal = useMemo(() => {
     const method = preview.shipping_methods.find(
       (sm) =>
-        !!(sm.actions as PreviewAction[] | undefined)?.find(
+        !!sm.actions?.find(
           (a) => a.action === "SHIPPING_ADD"
         )
     )
 
-    return (method as { total?: number } | undefined)?.total || 0
+    return method?.total || 0
   }, [preview.shipping_methods])
 
   /**
@@ -361,11 +335,8 @@ export const ReturnCreateForm = ({
    * flow is completed. Mirrors admin.
    */
   const estimatedDifference =
-    ((preview.summary?.pending_difference as number) || 0) -
-    previewItems.reduce(
-      (acc, item) => acc + ((item as { total?: number }).total ?? 0),
-      0
-    )
+    (preview.summary?.pending_difference || 0) -
+    previewItems.reduce((acc, item) => acc + (item.total ?? 0), 0)
 
   const handleSubmit = form.handleSubmit(async (data) => {
     if (!items.length) {
@@ -442,7 +413,7 @@ export const ReturnCreateForm = ({
     const promises = preview.shipping_methods
       .map(
         (s) =>
-          (s.actions as PreviewAction[] | undefined)?.find(
+          s.actions?.find(
             (a) => a.action === "SHIPPING_ADD"
           )?.id
       )
@@ -590,8 +561,8 @@ export const ReturnCreateForm = ({
                     locationName={locationName}
                     onRemove={() => {
                       const actions =
-                        (previewItems.find((i) => i.id === item.item_id)
-                          ?.actions as PreviewAction[] | undefined) ?? []
+                        previewItems.find((i) => i.id === item.item_id)
+                          ?.actions ?? []
                       const actionId = actions.find(
                         (a) => a.action === "RETURN_ITEM"
                       )?.id
@@ -602,8 +573,8 @@ export const ReturnCreateForm = ({
                     }}
                     onUpdate={(payload) => {
                       const actions =
-                        (previewItems.find((i) => i.id === item.item_id)
-                          ?.actions as PreviewAction[] | undefined) ?? []
+                        previewItems.find((i) => i.id === item.item_id)
+                          ?.actions ?? []
                       const action = actions.find(
                         (a) => a.action === "RETURN_ITEM"
                       )
@@ -613,14 +584,11 @@ export const ReturnCreateForm = ({
                           { actionId: action.id, ...payload },
                           {
                             onError: (error) => {
-                              if (
-                                action.details?.quantity &&
-                                payload.quantity
-                              ) {
-                                form.setValue(
-                                  `items.${index}.quantity`,
-                                  action.details.quantity
-                                )
+                              const { quantity } =
+                                getOrderChangeActionDetails(action)
+
+                              if (quantity && payload.quantity) {
+                                form.setValue(`items.${index}.quantity`, quantity)
                               }
                               toast.error(error.message)
                             },
@@ -658,7 +626,8 @@ export const ReturnCreateForm = ({
                               <Form.Control>
                                 <Combobox
                                   value={value ?? undefined}
-                                  onChange={(v) => {
+                                  onChange={(next) => {
+                                    const v = getSingleComboboxValue(next)
                                     onChange(v)
                                     onLocationChange(v ?? "")
                                   }}
@@ -715,7 +684,8 @@ export const ReturnCreateForm = ({
                                 <Combobox
                                   allowClear
                                   value={value}
-                                  onChange={(v) => {
+                                  onChange={(next) => {
+                                    const v = getSingleComboboxValue(next)
                                     onChange(v ?? "")
                                     onShippingOptionChange(v)
                                   }}
@@ -790,9 +760,7 @@ export const ReturnCreateForm = ({
                         let actionId: string | undefined
 
                         preview.shipping_methods.forEach((s) => {
-                          const actions = s.actions as
-                            | PreviewAction[]
-                            | undefined
+                          const actions = s.actions
                           if (actions) {
                             for (const a of actions) {
                               if (a.action === "SHIPPING_ADD") {

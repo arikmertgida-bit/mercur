@@ -36,9 +36,7 @@ const LinksSection = () => {
 };
 
 const Root = ({ children }: { children?: ReactNode }) => {
-  const initialData = useLoaderData() as Awaited<
-    ReturnType<typeof shippingListLoader>
-  >;
+  const initialData = useLoaderData<typeof shippingListLoader>();
 
   const {
     stock_locations: stockLocations = [],

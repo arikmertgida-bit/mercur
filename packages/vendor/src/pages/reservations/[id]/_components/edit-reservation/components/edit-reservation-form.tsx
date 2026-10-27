@@ -76,8 +76,8 @@ export const EditReservationForm = ({
   const reservedQuantity = form.watch("quantity")
   const locationId = form.watch("location_id")
 
-  const level = item.location_levels!.find(
-    (level: HttpTypes.AdminInventoryLevel) => level.location_id === locationId
+  const level = item.location_levels?.find(
+    (level) => level.location_id === locationId
   )
 
   // The reservation's own quantity is already counted in the level's reserved
@@ -114,9 +114,7 @@ export const EditReservationForm = ({
       return
     }
 
-    const { additional_data: _additionalData, ...payload } = values as z.infer<
-      typeof EditReservationSchema
-    > & { additional_data?: Record<string, unknown> }
+    const { additional_data: _additionalData, ...payload } = values
 
     mutateAsync(
       { ...payload, quantity: values.quantity },
@@ -174,18 +172,18 @@ export const EditReservationForm = ({
           <div className="text-ui-fg-subtle shadow-elevation-card-rest grid grid-rows-4 divide-y rounded-lg border">
             <AttributeGridRow
               title={t("fields.title")}
-              value={item.title ?? item.sku!}
+              value={item.title ?? item.sku ?? "-"}
             />
-            <AttributeGridRow title={t("fields.sku")} value={item.sku!} />
+            <AttributeGridRow title={t("fields.sku")} value={item.sku ?? "-"} />
             <AttributeGridRow
               title={t("fields.inStock")}
-              value={level!.stocked_quantity}
+              value={level?.stocked_quantity ?? 0}
             />
             <AttributeGridRow
               title={t("inventory.available")}
               value={
-                level!.stocked_quantity -
-                (level!.reserved_quantity - reservation.quantity) -
+                (level?.stocked_quantity ?? 0) -
+                ((level?.reserved_quantity ?? 0) - reservation.quantity) -
                 (reservedQuantity ?? 0)
               }
             />
@@ -240,7 +238,6 @@ export const EditReservationForm = ({
           <FormExtensionZone
             model="reservation"
             zone="edit"
-            control={form.control}
             data={reservation}
           />
         </RouteDrawer.Body>

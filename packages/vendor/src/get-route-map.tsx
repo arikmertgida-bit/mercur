@@ -1,5 +1,6 @@
 import { t } from "i18next";
-import { Outlet, RouteObject, UIMatch } from "react-router-dom";
+import { ComponentProps } from "react";
+import { Outlet, RouteObject } from "react-router-dom";
 import { Spinner } from "@medusajs/icons";
 import { ProtectedRoute } from "./components/authentication/protected-route";
 import { MainLayout } from "./components/layout/main-layout";
@@ -42,14 +43,20 @@ function mergeRoutes(
 
     if (existingIndex !== -1) {
       const { children: customChildren, ...customRest } = customRoute;
-      result[existingIndex] = {
-        ...result[existingIndex],
-        ...customRest,
-        path: result[existingIndex].path,
-        children: customChildren
-          ? mergeRoutes(result[existingIndex].children ?? [], customChildren)
-          : result[existingIndex].children,
-      } as RouteObject;
+      const baseRoute = result[existingIndex];
+
+      result[existingIndex] = baseRoute.index
+        ? // Index routes never carry children, so there is nothing to merge below.
+          { ...baseRoute, ...customRest, index: true, path: baseRoute.path }
+        : {
+            ...baseRoute,
+            ...customRest,
+            index: false,
+            path: baseRoute.path,
+            children: customChildren
+              ? mergeRoutes(baseRoute.children ?? [], customChildren)
+              : baseRoute.children,
+          };
     } else {
       result.push(customRoute);
     }
@@ -128,7 +135,7 @@ export function getRouteMap({
                         Component: Outlet,
                         loader: withPermission(loader, "products:view"),
                         handle: {
-                          breadcrumb: (match: UIMatch<any>) => (
+                          breadcrumb: (match: ComponentProps<typeof Breadcrumb>) => (
                             <Breadcrumb {...match} />
                           ),
                         },
@@ -230,7 +237,7 @@ export function getRouteMap({
                             Component: Outlet,
                             loader: withPermission(loader, "products:view"),
                             handle: {
-                              breadcrumb: (match: UIMatch<any>) => (
+                              breadcrumb: (match: ComponentProps<typeof Breadcrumb>) => (
                                 <Breadcrumb {...match} />
                               ),
                             },
@@ -291,7 +298,7 @@ export function getRouteMap({
                         Component: Outlet,
                         loader: withPermission(loader, "orders:view"),
                         handle: {
-                          breadcrumb: (match: UIMatch<any>) => (
+                          breadcrumb: (match: ComponentProps<typeof Breadcrumb>) => (
                             <Breadcrumb {...match} />
                           ),
                         },
@@ -386,7 +393,7 @@ export function getRouteMap({
                       return {
                         Component: Outlet,
                         handle: {
-                          breadcrumb: (match: UIMatch<any>) => (
+                          breadcrumb: (match: ComponentProps<typeof Breadcrumb>) => (
                             <Breadcrumb {...match} />
                           ),
                         },
@@ -453,7 +460,7 @@ export function getRouteMap({
                         Component: Outlet,
                         loader: withPermission(loader, "product_categories:view"),
                         handle: {
-                          breadcrumb: (match: UIMatch<any>) => (
+                          breadcrumb: (match: ComponentProps<typeof Breadcrumb>) => (
                             <Breadcrumb {...match} />
                           ),
                         },
@@ -522,7 +529,7 @@ export function getRouteMap({
                         Component: Outlet,
                         loader: withPermission(loader, "product_collections:view"),
                         handle: {
-                          breadcrumb: (match: UIMatch<any>) => (
+                          breadcrumb: (match: ComponentProps<typeof Breadcrumb>) => (
                             <Breadcrumb {...match} />
                           ),
                         },
@@ -584,7 +591,7 @@ export function getRouteMap({
                         Component: Outlet,
                         loader: withPermission(loader, "customers:view"),
                         handle: {
-                          breadcrumb: (match: UIMatch<any>) => (
+                          breadcrumb: (match: ComponentProps<typeof Breadcrumb>) => (
                             <Breadcrumb {...match} />
                           ),
                         },
@@ -649,7 +656,7 @@ export function getRouteMap({
                         Component: Outlet,
                         loader: withPermission(loader, "customer_groups:view"),
                         handle: {
-                          breadcrumb: (match: UIMatch<any>) => (
+                          breadcrumb: (match: ComponentProps<typeof Breadcrumb>) => (
                             <Breadcrumb {...match} />
                           ),
                         },
@@ -723,7 +730,7 @@ export function getRouteMap({
                         Component: Outlet,
                         loader: withPermission(loader, "inventory_items:view"),
                         handle: {
-                          breadcrumb: (match: UIMatch<any>) => (
+                          breadcrumb: (match: ComponentProps<typeof Breadcrumb>) => (
                             <Breadcrumb {...match} />
                           ),
                         },
@@ -811,7 +818,7 @@ export function getRouteMap({
                         Component: Outlet,
                         loader: withPermission(loader, "promotions:view"),
                         handle: {
-                          breadcrumb: (match: UIMatch<any>) => (
+                          breadcrumb: (match: ComponentProps<typeof Breadcrumb>) => (
                             <Breadcrumb {...match} />
                           ),
                         },
@@ -885,7 +892,7 @@ export function getRouteMap({
                         Component: Outlet,
                         loader: withPermission(loader, "campaigns:view"),
                         handle: {
-                          breadcrumb: (match: UIMatch<any>) => (
+                          breadcrumb: (match: ComponentProps<typeof Breadcrumb>) => (
                             <Breadcrumb {...match} />
                           ),
                         },
@@ -969,7 +976,7 @@ export function getRouteMap({
                         Component: Outlet,
                         loader: withPermission(loader, "price_lists:view"),
                         handle: {
-                          breadcrumb: (match: UIMatch<any>) => (
+                          breadcrumb: (match: ComponentProps<typeof Breadcrumb>) => (
                             <Breadcrumb {...match} />
                           ),
                         },
@@ -1028,62 +1035,6 @@ export function getRouteMap({
                 ],
               },
 
-              // REVIEWS
-              {
-                path: "/reviews",
-                errorElement: <ErrorBoundary />,
-                handle: { breadcrumb: () => t("reviews.domain"), permissions: "reviews:view" },
-                children: [
-                  {
-                    path: "",
-                    lazy: async () => {
-                      const { ReviewListPage } = await import("./pages/reviews");
-                      return {
-                        Component: ReviewListPage,
-                      };
-                    },
-                  },
-                  {
-                    path: ":id",
-                    lazy: async () => {
-                      const { loader } = await import("./pages/reviews/[id]");
-                      const { Breadcrumb } = await import(
-                        "./pages/reviews/[id]/breadcrumb"
-                      );
-                      return {
-                        Component: Outlet,
-                        loader: withPermission(loader, "reviews:view"),
-                        handle: {
-                          breadcrumb: (match: UIMatch<any>) => (
-                            <Breadcrumb {...match} />
-                          ),
-                        },
-                      };
-                    },
-                    children: [
-                      {
-                        path: "",
-                        lazy: async () => {
-                          const { ReviewDetailPage } = await import(
-                            "./pages/reviews/[id]"
-                          );
-                          return {
-                            Component: ReviewDetailPage,
-                          };
-                        },
-                        children: [
-                          {
-                            path: "respond",
-                            handle: { permissions: "reviews:edit" },
-                            lazy: () => import("./pages/reviews/[id]/respond"),
-                          },
-                        ],
-                      },
-                    ],
-                  },
-                ],
-              },
-
               // RESERVATIONS
               {
                 path: "/reservations",
@@ -1110,7 +1061,7 @@ export function getRouteMap({
                       return {
                         Component: Outlet,
                         handle: {
-                          breadcrumb: (match: UIMatch<any>) => (
+                          breadcrumb: (match: ComponentProps<typeof Breadcrumb>) => (
                             <Breadcrumb {...match} />
                           ),
                         },
@@ -1305,7 +1256,7 @@ export function getRouteMap({
                             Component: Outlet,
                             loader: withPermission(loader, "shipping_profiles:view"),
                             handle: {
-                              breadcrumb: (match: UIMatch<any>) => (
+                              breadcrumb: (match: ComponentProps<typeof Breadcrumb>) => (
                                 <Breadcrumb {...match} />
                               ),
                             },
@@ -1337,7 +1288,7 @@ export function getRouteMap({
                         Component: Outlet,
                         loader: withPermission(loader, "stock_locations:view"),
                         handle: {
-                          breadcrumb: (match: UIMatch<any>) => (
+                          breadcrumb: (match: ComponentProps<typeof Breadcrumb>) => (
                             <Breadcrumb {...match} />
                           ),
                         },
@@ -1440,7 +1391,7 @@ export function getRouteMap({
                         Component: Outlet,
                         loader: withPermission(loader, "product_tags:view"),
                         handle: {
-                          breadcrumb: (match: UIMatch<any>) => (
+                          breadcrumb: (match: ComponentProps<typeof Breadcrumb>) => (
                             <Breadcrumb {...match} />
                           ),
                         },
@@ -1524,7 +1475,7 @@ export function getRouteMap({
                         Component: Outlet,
                         loader: withPermission(loader, "product_types:view"),
                         handle: {
-                          breadcrumb: (match: UIMatch<any>) => (
+                          breadcrumb: (match: ComponentProps<typeof Breadcrumb>) => (
                             <Breadcrumb {...match} />
                           ),
                         },

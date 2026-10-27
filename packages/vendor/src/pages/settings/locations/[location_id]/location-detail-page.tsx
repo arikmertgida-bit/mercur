@@ -1,9 +1,9 @@
 import { Children, ReactNode } from "react";
-import { useLoaderData, useParams } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 
 import { TwoColumnPageSkeleton } from "@components/common/skeleton";
 import { TwoColumnPage } from "@components/layout/pages";
-import { WidgetZone } from "@mercurjs/dashboard-shared";
+import { WidgetZone, useRequiredParam } from "@mercurjs/dashboard-shared";
 import { useStockLocation } from "@hooks/api/stock-locations";
 
 import { LocationGeneralSection } from "./_components/location-general-section";
@@ -13,18 +13,16 @@ import { LOCATION_DETAILS_FIELD } from "./constants";
 import type { locationLoader } from "./loader";
 
 const Root = ({ children }: { children?: ReactNode }) => {
-  const initialData = useLoaderData() as Awaited<
-    ReturnType<typeof locationLoader>
-  >;
+  const initialData = useLoaderData<typeof locationLoader>();
 
-  const { location_id } = useParams();
+  const location_id = useRequiredParam("location_id");
   const {
     stock_location: location,
     isPending: isLoading,
     isError,
     error,
   } = useStockLocation(
-    location_id!,
+    location_id,
     { fields: LOCATION_DETAILS_FIELD },
     { initialData },
   );

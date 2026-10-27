@@ -1,14 +1,16 @@
 import { Children, ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { PermissionGuard } from "@mercurjs/dashboard-shared"
-import { Button, Heading } from "@medusajs/ui";
+import { Button, Heading, Text } from "@medusajs/ui";
 
 export const PriceListListTitle = () => {
   const { t } = useTranslation();
   return (
     <div>
       <Heading>{t("priceLists.domain")}</Heading>
+      <Text className="text-ui-fg-subtle" size="small">
+        {t("priceLists.subtitle")}
+      </Text>
     </div>
   );
 };
@@ -16,11 +18,9 @@ export const PriceListListTitle = () => {
 export const PriceListListCreateButton = () => {
   const { t } = useTranslation();
   return (
-    <PermissionGuard permission="price_lists:edit">
-      <Button size="small" variant="secondary" asChild>
-        <Link to="create">{t("actions.create")}</Link>
-      </Button>
-    </PermissionGuard>
+    <Button size="small" variant="secondary" asChild>
+      <Link to="create">{t("actions.create")}</Link>
+    </Button>
   );
 };
 

@@ -2,14 +2,6 @@ import { useEffect, useMemo, useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
-  ApplicationMethodAllocationValues,
-  ApplicationMethodTargetTypeValues,
-  ApplicationMethodTypeValues,
-  PromotionRuleOperatorValues,
-  PromotionStatusValues,
-  PromotionTypeValues
-} from '@medusajs/types';
-import {
   Alert,
   Badge,
   Button,
@@ -25,7 +17,7 @@ import {
   Text,
   toast
 } from '@medusajs/ui';
-import { useForm, useWatch } from 'react-hook-form';
+import { DefaultValues, useForm, useWatch } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
@@ -41,24 +33,25 @@ import { getCurrencySymbol } from "@lib/data/currencies"
 import { DEFAULT_CAMPAIGN_VALUES } from "@pages/campaigns/common/constants"
 import { RulesFormField } from "../../common/edit-rules/components/rules-form-field"
 import { AddCampaignPromotionFields } from "@pages/promotions/[id]/add-to-campaign/add-campaign-promotion-form"
-import { Tab } from './constants';
-import { CreatePromotionSchema } from './form-schema';
+import { toPromotionRuleOperator, toRuleValues } from '../../common/edit-rules/rule-payload';
+import { Tab, TabSchema } from './constants';
+import { CreatePromotionSchema, CreatePromotionSchemaType } from './form-schema';
 import { templates } from './templates';
 
-const defaultValues = {
+const defaultValues: DefaultValues<CreatePromotionSchemaType> = {
   campaign_id: undefined,
-  template_id: templates[0].id!,
-  campaign_choice: 'none' as const,
+  template_id: templates[0].id,
+  campaign_choice: 'none',
   is_automatic: 'false',
-  type: 'standard' as PromotionTypeValues,
-  status: 'draft' as PromotionStatusValues,
+  type: 'standard',
+  status: 'draft',
   is_tax_inclusive: false,
   limit: null,
   rules: [],
   application_method: {
-    allocation: 'each' as ApplicationMethodAllocationValues,
-    type: 'percentage' as ApplicationMethodTypeValues,
-    target_type: 'items' as ApplicationMethodTargetTypeValues,
+    allocation: 'each',
+    type: 'percentage',
+    target_type: 'items',
     max_quantity: 1,
     target_rules: [],
     buy_rules: []
@@ -198,11 +191,13 @@ export const CreatePromotionForm = () => {
       ) => {
         return rules
           .filter(r => !r.disguised)
-          .map(rule => ({
-            operator: rule.operator as PromotionRuleOperatorValues,
-            attribute: rule.attribute,
-            values: rule.values
-          }));
+          .flatMap(rule => {
+            const operator = toPromotionRuleOperator(rule.operator);
+
+            return operator
+              ? [{ operator, attribute: rule.attribute, values: toRuleValues(rule.values) }]
+              : [];
+          });
       };
 
       // Buyget promotions require both quantities and a max_quantity >=
@@ -364,14 +359,25 @@ export const CreatePromotionForm = () => {
       template_id: watchTemplateId
     });
 
-    for (const [key, value] of Object.entries(currentTemplate.defaults)) {
-      if (typeof value === 'object') {
-        for (const [subKey, subValue] of Object.entries(value)) {
-          setValue(`application_method.${subKey}` as keyof typeof defaultValues, subValue);
-        }
-      } else {
-        setValue(key as keyof typeof defaultValues, value);
-      }
+    const { is_automatic, type, application_method } = currentTemplate.defaults;
+
+    setValue('is_automatic', is_automatic);
+    setValue('type', type);
+
+    if (application_method.allocation !== undefined) {
+      setValue('application_method.allocation', application_method.allocation);
+    }
+    if (application_method.target_type !== undefined) {
+      setValue('application_method.target_type', application_method.target_type);
+    }
+    if (application_method.type !== undefined) {
+      setValue('application_method.type', application_method.type);
+    }
+    if (application_method.value !== undefined) {
+      setValue('application_method.value', application_method.value);
+    }
+    if (application_method.max_quantity !== undefined) {
+      setValue('application_method.max_quantity', application_method.max_quantity);
     }
 
     return currentTemplate;
@@ -413,15 +419,11 @@ export const CreatePromotionForm = () => {
   const isTargetTypeOrder = targetType === 'order';
 
   const formData = form.getValues();
-  let campaignQuery: object = {};
-
-  if (isFixedValueType && formData.application_method.currency_code) {
-    campaignQuery = {
-      budget: {
-        currency_code: formData.application_method.currency_code
-      }
-    };
-  }
+  const promotionCurrencyCode = formData.application_method.currency_code;
+  const campaignQuery =
+    isFixedValueType && promotionCurrencyCode
+      ? { budget: { currency_code: promotionCurrencyCode } }
+      : {};
 
   const canViewCampaigns = useCan("campaigns");
   const { campaigns } = useCampaigns(campaignQuery, {
@@ -540,7 +542,13 @@ export const CreatePromotionForm = () => {
         <>
         <ProgressTabs
           value={tab}
-          onValueChange={tab => handleTabChange(tab as Tab)}
+          onValueChange={tab => {
+            const next = TabSchema.safeParse(tab);
+
+            if (next.success) {
+              handleTabChange(next.data);
+            }
+          }}
           className="flex h-full flex-col overflow-hidden"
         >
           <RouteFocusModal.Header>
@@ -808,7 +816,6 @@ export const CreatePromotionForm = () => {
                   <Divider />
 
                   <RulesFormField
-                    form={form}
                     ruleType={'rules'}
                   />
 
@@ -1004,7 +1011,6 @@ export const CreatePromotionForm = () => {
                   {!isTypeStandard && (
                     <>
                       <RulesFormField
-                        form={form}
                         ruleType={'buy-rules'}
                         scope="application_method.buy_rules"
                       />
@@ -1015,7 +1021,6 @@ export const CreatePromotionForm = () => {
                     <>
                       <Divider />
                       <RulesFormField
-                        form={form}
                         ruleType={'target-rules'}
                         scope="application_method.target_rules"
                       />

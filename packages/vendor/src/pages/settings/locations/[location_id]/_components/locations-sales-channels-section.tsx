@@ -1,5 +1,5 @@
 import { Channels, PencilSquare } from "@medusajs/icons"
-import { VendorExtendedAdminStockLocation } from "@custom-types/stock-location"
+import type { HttpTypes } from "@mercurjs/types"
 import { Container, Heading, Text } from "@medusajs/ui"
 import { useTranslation } from "react-i18next"
 
@@ -11,7 +11,7 @@ import { ListSummary } from "@components/common/list-summary"
 import { useSalesChannels } from "@hooks/api/sales-channels"
 
 type LocationsSalesChannelsSectionProps = {
-  location: VendorExtendedAdminStockLocation
+  location: HttpTypes.VendorStockLocation
 }
 
 function LocationsSalesChannelsSection({

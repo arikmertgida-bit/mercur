@@ -20,10 +20,7 @@ export const OrderListDataTable = () => {
   const { columns, filters: extFilters } =
     useExtendableTable<HttpTypes.AdminOrder>({
       model: "order",
-      columns: baseColumns as unknown as ColumnDef<
-        HttpTypes.AdminOrder,
-        unknown
-      >[],
+      columns: baseColumns,
     });
 
   const filters = useMemo(
@@ -33,7 +30,7 @@ export const OrderListDataTable = () => {
 
   const { raw, searchParams } = useOrderTableQuery({
     pageSize: PAGE_SIZE,
-    extraFilters: extFilters as typeof baseFilters,
+    extraFilters: extFilters,
   });
 
   const linkQuery = useLinkQuery(

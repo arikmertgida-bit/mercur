@@ -8,7 +8,7 @@ export type CreateShippingOptionSchema = z.infer<
 
 export const CreateShippingOptionDetailsSchema = z.object({
   name: z.string().min(1),
-  price_type: z.nativeEnum(ShippingOptionPriceType),
+  price_type: z.enum(ShippingOptionPriceType),
   enabled_in_store: z.boolean(),
   shipping_profile_id: z.string().min(1),
   provider_id: z.string().min(1),

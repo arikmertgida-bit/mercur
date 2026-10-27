@@ -52,9 +52,7 @@ const Root = () => {
 
   const { regions } = useRegions({ limit: 9999 })
   const { stock_locations } = useStockLocations({ limit: 100 })
-  const { shipping_profiles } = useShippingProfiles({ limit: 100 }) as {
-    shipping_profiles?: ShippingProfileLite[]
-  }
+  const { shipping_profiles } = useShippingProfiles({ limit: 100 })
   const { price_preferences: pricePreferences } = usePricePreferences({})
   const { seller } = useCurrentSeller()
 
@@ -227,9 +225,7 @@ const Root = () => {
     variantAxes,
     showMediaColumn,
     currencies,
-    stockLocations: stock_locations as
-      | HttpTypes.AdminStockLocation[]
-      | undefined,
+    stockLocations: stock_locations,
     shippingProfiles: shipping_profiles ?? [],
     pricePreferences,
     onOpenMediaPicker: openMediaPicker,

@@ -24,7 +24,8 @@ import { useProductTableColumns } from "@hooks/table/columns/use-product-table-c
 import { useProductTableFilters } from "@hooks/table/filters/use-product-table-filters.tsx"
 import { useProductTableQuery } from "@hooks/table/query/use-product-table-query.tsx"
 import { useDataTable } from "@hooks/use-data-table.tsx"
-import { ExtendedAdminProduct } from "@custom-types/products.ts"
+import { getTableMetaString } from "@lib/table-meta"
+import type { HttpTypes as VendorHttpTypes } from "@mercurjs/types"
 
 type AddProductsToCollectionFormProps = {
   collection: HttpTypes.AdminCollection
@@ -53,7 +54,7 @@ export const AddProductsToCollectionForm = ({
   const { setValue } = form
 
   const { mutateAsync, isPending: isMutating } = useUpdateCollectionProducts(
-    collection.id!
+    collection.id
   )
 
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({})
@@ -203,7 +204,7 @@ export const AddProductsToCollectionForm = ({
   )
 }
 
-const columnHelper = createColumnHelper<ExtendedAdminProduct>()
+const columnHelper = createColumnHelper<VendorHttpTypes.VendorProduct>()
 
 const useColumns = () => {
   const { t } = useTranslation()
@@ -228,9 +229,10 @@ const useColumns = () => {
           )
         },
         cell: ({ row, table }) => {
-          const { collectionId } = table.options.meta as {
-            collectionId: string
-          }
+          const collectionId = getTableMetaString(
+            table.options.meta,
+            "collectionId"
+          )
 
           const isAdded = row.original.collection_id === collectionId
 

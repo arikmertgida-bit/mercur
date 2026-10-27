@@ -7,17 +7,16 @@ import {
   TriangleRightMini,
 } from "@medusajs/icons"
 import { Button, IconButton, Text, Tooltip, clx, usePrompt } from "@medusajs/ui"
-import { HttpTypes } from "@medusajs/types"
 import { useCallback, useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { Link, useLocation } from "react-router-dom"
 
-import { ExtendedAdminProduct } from "@custom-types/products"
+import type { HttpTypes as VendorHttpTypes } from "@mercurjs/types"
 import { RouteFocusModal } from "@components/modals"
 import { useUpdateProduct } from "@hooks/api/products"
 
 type ProductMediaGalleryProps = {
-  product: ExtendedAdminProduct
+  product: VendorHttpTypes.VendorProduct
 }
 
 export const ProductMediaGallery = ({ product }: ProductMediaGalleryProps) => {
@@ -62,9 +61,7 @@ export const ProductMediaGallery = ({ product }: ProductMediaGalleryProps) => {
       return
     }
 
-    const a = document.createElement("a") as HTMLAnchorElement & {
-      download: string
-    }
+    const a = document.createElement("a")
 
     a.href = media[curr].url
     a.download = "image"
@@ -337,7 +334,7 @@ type Media = {
 }
 
 const getMedia = (
-  images: HttpTypes.AdminProductImage[] | null,
+  images: { id: string; url: string }[] | null | undefined,
   thumbnail: string | null
 ) => {
   const media: Media[] =

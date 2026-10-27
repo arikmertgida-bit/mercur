@@ -82,10 +82,7 @@ export const createDataGridPriceColumns = <
   pricePreferences,
   getFieldName,
   t,
-}: CreateDataGridPriceColumnsProps<TData, TFieldValues>): ColumnDef<
-  TData,
-  unknown
->[] => {
+}: CreateDataGridPriceColumnsProps<TData, TFieldValues>): ColumnDef<TData>[] => {
   const columnHelper = createDataGridHelper<TData, TFieldValues>()
 
   return [

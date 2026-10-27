@@ -37,9 +37,10 @@ export const SelectFilter = ({
   const selectedParams = useSelectedParams({ param: key, prefix, multiple })
   const currentValue = selectedParams.get()
 
-  const labelValues = currentValue
-    .map((v) => options.find((o) => o.value === v)?.label)
-    .filter(Boolean) as string[]
+  const labelValues = currentValue.flatMap((v) => {
+    const label = options.find((o) => o.value === v)?.label
+    return label ? [label] : []
+  })
 
   const [previousValue, setPreviousValue] = useState<
     string | string[] | undefined

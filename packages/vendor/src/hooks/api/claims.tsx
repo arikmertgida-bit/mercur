@@ -30,7 +30,7 @@ export const useClaim = (
   query?: Omit<InferClientInput<typeof sdk.vendor.claims.$id.query>, "$id">,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.claims.$id.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.claims.$id.query>
     >,
@@ -50,7 +50,7 @@ export const useClaims = (
   query?: InferClientInput<typeof sdk.vendor.claims.query>,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.claims.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.claims.query>
     >,
@@ -285,12 +285,12 @@ export const useUpdateClaimOutboundItem = (
       InferClientInput<
         typeof sdk.vendor.claims.$id.outbound.items.$actionId.mutate
       >,
-      "$id"
+      "$id" | "$actionId"
     > & { actionId: string }
   >
 ) => {
   return useMutation({
-    mutationFn: ({ actionId, $actionId: _ignored, ...payload }) =>
+    mutationFn: ({ actionId, ...payload }) =>
       sdk.vendor.claims.$id.outbound.items.$actionId.mutate({
         $id: claimId,
         $actionId: actionId,
@@ -371,12 +371,12 @@ export const useUpdateClaimInboundItem = (
       InferClientInput<
         typeof sdk.vendor.claims.$id.inbound.items.$actionId.mutate
       >,
-      "$id"
+      "$id" | "$actionId"
     > & { actionId: string }
   >
 ) => {
   return useMutation({
-    mutationFn: ({ actionId, $actionId: _ignored, ...payload }) =>
+    mutationFn: ({ actionId, ...payload }) =>
       sdk.vendor.claims.$id.inbound.items.$actionId.mutate({
         $id: claimId,
         $actionId: actionId,
@@ -428,12 +428,12 @@ export const useUpdateClaimInboundShipping = (
       InferClientInput<
         typeof sdk.vendor.claims.$id.inbound.shippingMethod.$actionId.mutate
       >,
-      "$id"
+      "$id" | "$actionId"
     > & { actionId: string }
   >
 ) => {
   return useMutation({
-    mutationFn: ({ actionId, $actionId: _ignored, ...payload }) =>
+    mutationFn: ({ actionId, ...payload }) =>
       sdk.vendor.claims.$id.inbound.shippingMethod.$actionId.mutate({
         $id: claimId,
         $actionId: actionId,
@@ -484,12 +484,12 @@ export const useUpdateClaimOutboundShipping = (
       InferClientInput<
         typeof sdk.vendor.claims.$id.outbound.shippingMethod.$actionId.mutate
       >,
-      "$id"
+      "$id" | "$actionId"
     > & { actionId: string }
   >
 ) => {
   return useMutation({
-    mutationFn: ({ actionId, $actionId: _ignored, ...payload }) =>
+    mutationFn: ({ actionId, ...payload }) =>
       sdk.vendor.claims.$id.outbound.shippingMethod.$actionId.mutate({
         $id: claimId,
         $actionId: actionId,

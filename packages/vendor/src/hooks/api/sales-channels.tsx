@@ -27,7 +27,7 @@ export const useSalesChannel = (
   >,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.salesChannels.$id.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.salesChannels.$id.query>
     >,
@@ -47,7 +47,7 @@ export const useSalesChannels = (
   query?: InferClientInput<typeof sdk.vendor.salesChannels.query>,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.salesChannels.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.salesChannels.query>
     >,

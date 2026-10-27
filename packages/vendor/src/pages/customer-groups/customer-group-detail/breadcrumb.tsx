@@ -1,11 +1,11 @@
-import { HttpTypes } from "@medusajs/types";
+import { HttpTypes } from "@mercurjs/types";
 import { UIMatch } from "react-router-dom";
 
 import { useCustomerGroup } from "@hooks/api/customer-groups";
 import { CUSTOMER_GROUP_DETAIL_FIELDS } from "./constants";
 
 type CustomerGroupDetailBreadcrumbProps =
-  UIMatch<HttpTypes.AdminCustomerGroupResponse>;
+  UIMatch<HttpTypes.VendorCustomerGroupResponse>;
 
 export const CustomerGroupDetailBreadcrumb = (
   props: CustomerGroupDetailBreadcrumbProps,
@@ -13,7 +13,7 @@ export const CustomerGroupDetailBreadcrumb = (
   const { id } = props.params || {};
 
   const { customer_group } = useCustomerGroup(
-    id!,
+    id ?? "",
     {
       fields: CUSTOMER_GROUP_DETAIL_FIELDS,
     },

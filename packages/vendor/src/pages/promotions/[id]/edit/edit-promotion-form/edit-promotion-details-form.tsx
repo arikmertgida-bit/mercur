@@ -57,19 +57,15 @@ export const EditPromotionDetailsForm = ({ promotion }: EditPromotionFormProps) 
     zone: "edit",
     data: promotion,
     defaultValues: {
-      is_automatic: promotion.is_automatic!.toString(),
+      is_automatic: String(promotion.is_automatic ?? false),
       is_tax_inclusive: promotion.is_tax_inclusive ?? false,
-      status: promotion.status as 'active' | 'inactive' | 'draft',
-      value: promotion.application_method!.value as number,
-      value_type: promotion.application_method!.type as 'fixed' | 'percentage',
-      allocation: promotion.application_method!.allocation as
-        | 'each'
-        | 'across'
-        | 'once',
-      target_type: promotion.application_method!.target_type as
-        | 'order'
-        | 'shipping_methods'
-        | 'items',
+      // A stored promotion always has these; the fallbacks are the create
+      // form's defaults (an empty value makes the seller enter one).
+      status: promotion.status ?? "draft",
+      value: promotion.application_method?.value ?? "",
+      value_type: promotion.application_method?.type ?? "percentage",
+      allocation: promotion.application_method?.allocation ?? "each",
+      target_type: promotion.application_method?.target_type ?? "items",
       max_quantity: promotion.application_method?.max_quantity ?? 1,
       limit: promotion.limit ?? null
     }
@@ -447,7 +443,6 @@ export const EditPromotionDetailsForm = ({ promotion }: EditPromotionFormProps) 
             <FormExtensionZone
               model="promotion"
               zone="edit"
-              control={form.control}
               data={promotion}
             />
           </div>

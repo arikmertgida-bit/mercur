@@ -21,9 +21,8 @@ import {
 import { CSS } from "@dnd-kit/utilities"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { ExclamationCircleSolid, Spinner, ThumbnailBadge } from "@medusajs/icons"
-import { HttpTypes } from "@medusajs/types"
 import { MercurFeatureFlags } from "@mercurjs/types"
-import { ExtendedAdminProduct } from "@custom-types/products"
+import type { HttpTypes as VendorHttpTypes } from "@mercurjs/types"
 import { Button, Checkbox, clx, CommandBar, toast, Tooltip } from "@medusajs/ui"
 import { Fragment, useCallback, useState } from "react"
 import { useFieldArray, useForm } from "react-hook-form"
@@ -52,7 +51,7 @@ import {
 import { EditProductMediaSchemaType } from "../../../create/types"
 
 type ProductMediaViewProps = {
-  product: ExtendedAdminProduct
+  product: VendorHttpTypes.VendorProduct
 }
 
 type Media = z.infer<typeof MediaSchema>
@@ -131,7 +130,7 @@ const EditProductMediaFormContent = ({ product }: ProductMediaViewProps) => {
     setActiveId(null)
   }
 
-  const { mutateAsync, isPending } = useUpdateProduct(product.id!)
+  const { mutateAsync, isPending } = useUpdateProduct(product.id)
 
   const handleSubmit = form.handleSubmit(async ({ media }) => {
     // Every freshly picked file was already uploaded in the background as
@@ -193,7 +192,9 @@ const EditProductMediaFormContent = ({ product }: ProductMediaViewProps) => {
 
   const handleDelete = () => {
     const ids = Object.keys(selection)
-    const indices = ids.map((id) => fields.findIndex((m) => m.id === id))
+    const indices = ids.map((id) =>
+      fields.findIndex((m) => getSelectionKey(m) === id)
+    )
 
     ids.forEach((id) => removeEntry(id))
     remove(indices)
@@ -216,7 +217,7 @@ const EditProductMediaFormContent = ({ product }: ProductMediaViewProps) => {
       })
     }
 
-    const index = fields.findIndex((m) => m.id === ids[0])
+    const index = fields.findIndex((m) => getSelectionKey(m) === ids[0])
 
     update(index, {
       ...fields[index],
@@ -227,6 +228,10 @@ const EditProductMediaFormContent = ({ product }: ProductMediaViewProps) => {
   }
 
   const selectionCount = Object.keys(selection).length
+
+  const activeMedia = activeId
+    ? fields.find((m) => m.field_id === activeId)
+    : undefined
 
   return (
     <RouteFocusModal.Form blockSearchParams form={form}>
@@ -260,8 +265,10 @@ const EditProductMediaFormContent = ({ product }: ProductMediaViewProps) => {
                     {fields.map((m) => {
                       return (
                         <MediaGridItem
-                          onCheckedChange={handleCheckedChange(m.id!)}
-                          checked={!!selection[m.id!]}
+                          onCheckedChange={handleCheckedChange(
+                            getSelectionKey(m)
+                          )}
+                          checked={!!selection[getSelectionKey(m)]}
                           key={m.field_id}
                           media={m}
                           status={m.id ? getEntryStatus(m.id) : undefined}
@@ -270,14 +277,10 @@ const EditProductMediaFormContent = ({ product }: ProductMediaViewProps) => {
                     })}
                   </SortableContext>
                   <DragOverlay dropAnimation={dropAnimationConfig}>
-                    {activeId ? (
+                    {activeMedia ? (
                       <MediaGridItemOverlay
-                        media={fields.find((m) => m.field_id === activeId)!}
-                        checked={
-                          !!selection[
-                            fields.find((m) => m.field_id === activeId)!.id!
-                          ]
-                        }
+                        media={activeMedia}
+                        checked={!!selection[getSelectionKey(activeMedia)]}
                       />
                     ) : null}
                   </DragOverlay>
@@ -290,7 +293,6 @@ const EditProductMediaFormContent = ({ product }: ProductMediaViewProps) => {
                 onOpenChange={setLimitModalOpen}
               />
               <UploadMediaFormItem
-                form={form}
                 append={append}
                 maxCount={MAX_PRODUCT_MEDIA_COUNT}
                 existingCount={fields.length}
@@ -346,14 +348,20 @@ const EditProductMediaFormContent = ({ product }: ProductMediaViewProps) => {
   )
 }
 
+// Every entry carries an id in practice (existing images, the generated
+// thumbnail id, and `FileUpload`'s client id for new files); the field array
+// key is the fallback the schema's optional `id` still requires.
+const getSelectionKey = (media: { id?: string; field_id: string }): string =>
+  media.id ?? media.field_id
+
 const getDefaultValues = (
-  images: HttpTypes.AdminProductImage[] | null | undefined,
+  images: { id: string; url: string }[] | null | undefined,
   thumbnail: string | null | undefined
 ) => {
   const media: Media[] =
     images?.map((image) => ({
-      id: image.id!,
-      url: image.url!,
+      id: image.id,
+      url: image.url,
       isThumbnail: image.url === thumbnail,
       file: null,
     })) || []

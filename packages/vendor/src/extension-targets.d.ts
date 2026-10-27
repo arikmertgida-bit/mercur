@@ -94,10 +94,6 @@ declare module "@mercurjs/dashboard-sdk" {
     "promotions.detail.side.before": true
     "promotions.list.after": true
     "promotions.list.before": true
-    "regions.detail.main.after": true
-    "regions.detail.main.before": true
-    "regions.list.after": true
-    "regions.list.before": true
     "reservations.detail.main.after": true
     "reservations.detail.main.before": true
     "reservations.detail.side.after": true
@@ -114,12 +110,6 @@ declare module "@mercurjs/dashboard-sdk" {
     "shipping-profiles.detail.main.before": true
     "shipping-profiles.list.after": true
     "shipping-profiles.list.before": true
-    "tax-regions.detail.main.after": true
-    "tax-regions.detail.main.before": true
-    "tax-regions.list.after": true
-    "tax-regions.list.before": true
-    "tax-regions.province.detail.main.after": true
-    "tax-regions.province.detail.main.before": true
     "team.list.after": true
     "team.list.before": true
     "topbar.after": true
@@ -140,7 +130,6 @@ declare module "@mercurjs/dashboard-sdk" {
     "promotions": true
     "reservations": true
     "returns": true
-    "reviews": true
     "settings/locations": true
     "settings/product-tags": true
     "settings/product-types": true
@@ -158,7 +147,6 @@ declare module "@mercurjs/dashboard-sdk" {
     "products": true
     "promotions": true
     "returns": true
-    "reviews": true
   }
 
   interface NavGroupRegistry {

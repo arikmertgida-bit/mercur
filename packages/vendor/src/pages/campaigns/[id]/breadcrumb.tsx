@@ -1,17 +1,17 @@
-import { HttpTypes } from "@medusajs/types";
+import { HttpTypes } from "@mercurjs/types";
 import { UIMatch } from "react-router-dom";
 
 import { useCampaign } from "@hooks/api/campaigns";
 
 import { CAMPAIGN_DETAIL_FIELDS } from "./constants";
 
-type CampaignDetailBreadcrumbProps = UIMatch<HttpTypes.AdminCampaignResponse>;
+type CampaignDetailBreadcrumbProps = UIMatch<HttpTypes.VendorCampaignResponse>;
 
 export const Breadcrumb = (props: CampaignDetailBreadcrumbProps) => {
   const { id } = props.params || {};
 
   const { campaign } = useCampaign(
-    id!,
+    id ?? "",
     {
       fields: CAMPAIGN_DETAIL_FIELDS,
     },

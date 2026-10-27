@@ -1,11 +1,11 @@
 import { Container, Heading } from "@medusajs/ui"
 import { useTranslation } from "react-i18next"
 import { DisplayExtensionZone } from "@mercurjs/dashboard-shared"
-import { ExtendedAdminOrder } from "@custom-types/order"
+import { HttpTypes } from "@mercurjs/types"
 import { OrderTimeline } from "./order-timeline"
 
 type OrderActivityProps = {
-  order: ExtendedAdminOrder
+  order: HttpTypes.VendorOrder
 }
 
 export const OrderActivitySection = ({ order }: OrderActivityProps) => {

@@ -1,15 +1,14 @@
-import { InventoryTypes } from "@medusajs/types";
-import { SectionNoAccess, useCan } from "@mercurjs/dashboard-shared";
+import { SectionNoAccess, useCan, useRequiredParam } from "@mercurjs/dashboard-shared";
 import { Heading } from "@medusajs/ui";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
 import { RouteDrawer } from "@components/modals";
 import { useInventoryItem, useInventoryItemLevels } from "@hooks/api/inventory";
 import { useStockLocation } from "@hooks/api/stock-locations";
 import { AdjustInventoryForm } from "./components/adjust-inventory-form";
 
 export const AdjustInventoryDrawer = () => {
-  const { id, location_id } = useParams();
+  const id = useRequiredParam("id");
+  const location_id = useRequiredParam("location_id");
   const { t } = useTranslation();
 
   const {
@@ -17,21 +16,20 @@ export const AdjustInventoryDrawer = () => {
     isPending: isLoading,
     isError,
     error,
-  } = useInventoryItem(id!, undefined, { refetchOnMount: "always" });
+  } = useInventoryItem(id, undefined, { refetchOnMount: "always" });
 
-  const { inventory_levels } = useInventoryItemLevels(id!, undefined, {
+  const { inventory_levels } = useInventoryItemLevels(id, undefined, {
     refetchOnMount: "always",
   });
 
   const inventoryLevel = inventory_levels?.find(
-    (level: InventoryTypes.InventoryLevelDTO) =>
-      level.location_id === location_id,
+    (level) => level.location_id === location_id,
   );
 
   const canViewLocation = useCan("stock_locations");
 
   const { stock_location, isLoading: isLoadingLocation } = useStockLocation(
-    location_id!,
+    location_id,
     undefined,
     { enabled: canViewLocation },
   );

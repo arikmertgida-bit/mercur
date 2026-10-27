@@ -1,31 +1,23 @@
+import type { JsonValue } from "@mercurjs/types"
 import { useCallback } from "react"
-import { FieldValues, Path, PathValue } from "react-hook-form"
 import { DataGridBulkUpdateCommand, DataGridMatrix } from "../models"
 import { DataGridCoordinates } from "../types"
 
-type UseDataGridMouseUpEventOptions<TData, TFieldValues extends FieldValues> = {
-  matrix: DataGridMatrix<TData, TFieldValues>
+type UseDataGridMouseUpEventOptions<TData> = {
+  matrix: DataGridMatrix<TData>
   anchor: DataGridCoordinates | null
   dragEnd: DataGridCoordinates | null
   setDragEnd: (coords: DataGridCoordinates | null) => void
   setRangeEnd: (coords: DataGridCoordinates | null) => void
   setIsSelecting: (isSelecting: boolean) => void
   setIsDragging: (isDragging: boolean) => void
-  getSelectionValues: (
-    fields: string[]
-  ) => PathValue<TFieldValues, Path<TFieldValues>>[]
-  setSelectionValues: (
-    fields: string[],
-    values: PathValue<TFieldValues, Path<TFieldValues>>[]
-  ) => void
+  getSelectionValues: (fields: string[]) => JsonValue[]
+  setSelectionValues: (fields: string[], values: JsonValue[]) => void
   execute: (command: DataGridBulkUpdateCommand) => void
   isDragging: boolean
 }
 
-export const useDataGridMouseUpEvent = <
-  TData,
-  TFieldValues extends FieldValues
->({
+export const useDataGridMouseUpEvent = <TData,>({
   matrix,
   anchor,
   dragEnd,
@@ -37,7 +29,7 @@ export const useDataGridMouseUpEvent = <
   getSelectionValues,
   setSelectionValues,
   execute,
-}: UseDataGridMouseUpEventOptions<TData, TFieldValues>) => {
+}: UseDataGridMouseUpEventOptions<TData>) => {
   const handleDragEnd = useCallback(() => {
     if (!isDragging) {
       return

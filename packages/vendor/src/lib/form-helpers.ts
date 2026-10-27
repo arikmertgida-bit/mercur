@@ -1,5 +1,15 @@
 import { castNumber } from "./cast-number"
 
+/**
+ * Normalizes an empty form value (blank string or empty array) to `null`
+ * (the default, for fields the backend should clear) or to `undefined`
+ * (`nullify: false`, for fields the backend should leave out).
+ */
+export function transformNullableFormValue<T>(value: T, nullify?: true): T | null
+export function transformNullableFormValue<T>(
+  value: T,
+  nullify: false
+): T | undefined
 export function transformNullableFormValue<T>(
   value: T,
   nullify = true
@@ -15,32 +25,27 @@ export function transformNullableFormValue<T>(
   return value
 }
 
-type Nullable<T> = { [K in keyof T]: T[K] | null }
-type Optional<T> = { [K in keyof T]: T[K] | undefined }
-
-export function transformNullableFormData<
-  T extends Record<string, unknown>,
-  K extends boolean = true
->(data: T, nullify: K = true as K): K extends true ? Nullable<T> : Optional<T> {
-  return Object.entries(data).reduce((acc, [key, value]) => {
-    return {
-      ...acc,
-      [key]: transformNullableFormValue(value, nullify),
-    }
-  }, {} as K extends true ? Nullable<T> : Optional<T>)
-}
-
-export function transformNullableFormNumber<K extends boolean = true>(
+/**
+ * Casts a numeric form value, normalizing an empty one to `null` (the
+ * default) or to `undefined` (`nullify: false`).
+ */
+export function transformNullableFormNumber(
   value?: string | number,
-  nullify: K = true as K
-): K extends true ? number | null : number | undefined {
+  nullify?: true
+): number | null
+export function transformNullableFormNumber(
+  value: string | number | undefined,
+  nullify: false
+): number | undefined
+export function transformNullableFormNumber(
+  value?: string | number,
+  nullify = true
+): number | null | undefined {
   if (
     typeof value === "undefined" ||
     (typeof value === "string" && value.trim() === "")
   ) {
-    return (nullify ? null : undefined) as K extends true
-      ? number | null
-      : number | undefined
+    return nullify ? null : undefined
   }
 
   if (typeof value === "string") {
@@ -48,22 +53,4 @@ export function transformNullableFormNumber<K extends boolean = true>(
   }
 
   return value
-}
-
-type NullableNumbers = Record<string, number | null>
-type OptionalNumbers = Record<string, number | undefined>
-
-export function transformNullableFormNumbers<
-  T extends Record<string, string | number | undefined>,
-  K extends boolean = true
->(
-  data: T,
-  nullify: K = true as K
-): K extends true ? NullableNumbers : OptionalNumbers {
-  return Object.entries(data).reduce((acc, [key, value]) => {
-    return {
-      ...acc,
-      [key]: transformNullableFormNumber(value, nullify),
-    }
-  }, {} as K extends true ? NullableNumbers : OptionalNumbers)
 }

@@ -1,5 +1,5 @@
 import { ChartPie, CurrencyDollar, PencilSquare } from "@medusajs/icons"
-import { AdminCampaign } from "@medusajs/types"
+import type { HttpTypes } from "@mercurjs/types"
 import { Container, Heading, Text } from "@medusajs/ui"
 import { ReactNode } from "react"
 import { useTranslation } from "react-i18next"
@@ -7,7 +7,7 @@ import { DisplayExtensionZone } from "@mercurjs/dashboard-shared"
 import { ActionMenu } from "@components/common/action-menu"
 
 type CampaignBudgetProps = {
-  campaign: AdminCampaign
+  campaign: HttpTypes.VendorCampaign
 }
 
 const BudgetRow = ({
@@ -43,9 +43,7 @@ const BudgetRow = ({
 export const CampaignBudget = ({ campaign }: CampaignBudgetProps) => {
   const { t } = useTranslation()
 
-  const budget = campaign.budget as
-    | (typeof campaign.budget & { attribute?: string | null })
-    | undefined
+  const budget = campaign.budget
   const isSpend = budget?.type === "spend"
   const currency = budget?.currency_code?.toUpperCase()
 

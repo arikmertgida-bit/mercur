@@ -32,13 +32,10 @@ import { useDate } from "@hooks/use-date"
 import { formatProvider } from "@lib/format-provider"
 import { getLocaleAmount } from "@lib/money-amount-helpers"
 import { FulfillmentSetType } from "@pages/settings/locations/_common/constants"
-import {
-  ExtendedAdminOrder,
-  ExtendedAdminOrderFulfillment,
-} from "@custom-types/order"
+import { HttpTypes as MercurHttpTypes } from "@mercurjs/types"
 
 type OrderFulfillmentSectionProps = {
-  order: ExtendedAdminOrder
+  order: MercurHttpTypes.VendorOrder
 }
 
 export const OrderFulfillmentSection = ({
@@ -115,9 +112,9 @@ const UnfulfilledItem = ({
   )
 }
 
-const UnfulfilledItemBreakdown = ({ order }: { order: ExtendedAdminOrder }) => {
+const UnfulfilledItemBreakdown = ({ order }: { order: MercurHttpTypes.VendorOrder }) => {
   // Create an array of order items that haven't been fulfilled or at least not fully fulfilled
-  const unfulfilledItemsWithShipping = order.items!.filter(
+  const unfulfilledItemsWithShipping = order.items.filter(
     (i) =>
       i.requires_shipping &&
       i.detail &&
@@ -125,7 +122,7 @@ const UnfulfilledItemBreakdown = ({ order }: { order: ExtendedAdminOrder }) => {
       i.detail.fulfilled_quantity < i.quantity
   )
 
-  const unfulfilledItemsWithoutShipping = order.items!.filter(
+  const unfulfilledItemsWithoutShipping = order.items.filter(
     (i) =>
       !i.requires_shipping &&
       i.detail &&
@@ -159,7 +156,7 @@ const UnfulfilledItemDisplay = ({
   unfulfilledItems,
   requiresShipping = false,
 }: {
-  order: ExtendedAdminOrder
+  order: MercurHttpTypes.VendorOrder
   unfulfilledItems: AdminOrderLineItem[]
   requiresShipping: boolean
 }) => {
@@ -223,8 +220,8 @@ const Fulfillment = ({
   order,
   index,
 }: {
-  fulfillment: ExtendedAdminOrderFulfillment
-  order: ExtendedAdminOrder
+  fulfillment: MercurHttpTypes.VendorOrderFulfillment
+  order: MercurHttpTypes.VendorOrder
   index: number
 }) => {
   const { t } = useTranslation()
@@ -236,11 +233,11 @@ const Fulfillment = ({
   const showLocation = !!fulfillment.location_id && canViewLocation
 
   const isPickUpFulfillment =
-    fulfillment.shipping_option?.service_zone.fulfillment_set.type ===
+    fulfillment.shipping_option?.service_zone?.fulfillment_set?.type ===
     FulfillmentSetType.Pickup
 
   const { stock_location, isError, error } = useStockLocation(
-    fulfillment.location_id!,
+    fulfillment.location_id,
     undefined,
     {
       enabled: showLocation,

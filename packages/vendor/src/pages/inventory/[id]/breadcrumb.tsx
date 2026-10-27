@@ -1,4 +1,4 @@
-import { HttpTypes } from "@medusajs/types";
+import { HttpTypes } from "@mercurjs/types";
 import { UIMatch } from "react-router-dom";
 
 import { useInventoryItem } from "@hooks/api/inventory";
@@ -6,12 +6,12 @@ import { useInventoryItem } from "@hooks/api/inventory";
 import { INVENTORY_DETAIL_FIELDS } from "./constants";
 
 type InventoryDetailBreadcrumbProps =
-  UIMatch<HttpTypes.AdminInventoryItemResponse>;
+  UIMatch<HttpTypes.VendorInventoryItemResponse>;
 
 export const Breadcrumb = (props: InventoryDetailBreadcrumbProps) => {
   const { id } = props.params || {};
   const { inventory_item } = useInventoryItem(
-    id!,
+    id ?? "",
     { fields: INVENTORY_DETAIL_FIELDS },
     { initialData: props.data, enabled: Boolean(id) },
   );

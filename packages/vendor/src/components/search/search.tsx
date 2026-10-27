@@ -43,7 +43,7 @@ import {
   SEARCH_AREAS,
   SEARCH_LIMIT_INCREMENT,
 } from "./constants";
-import { SearchArea } from "./types";
+import { SearchArea, SearchAreaSchema } from "./types";
 import { useSearchAreaAccess } from "./use-search-area-access";
 import { useSearchResults } from "./use-search-results";
 import { useDocumentDirection } from "../../hooks/use-document-direction";
@@ -403,7 +403,13 @@ const CommandInput = forwardRef<
             >
               <DropdownMenu.RadioGroup
                 value={area}
-                onValueChange={(v) => setArea(v as SearchArea)}
+                onValueChange={(v) => {
+                  const parsed = SearchAreaSchema.safeParse(v);
+
+                  if (parsed.success) {
+                    setArea(parsed.data);
+                  }
+                }}
               >
                 {SEARCH_AREAS.filter(canSearchArea).map((area) => (
                   <Fragment key={area}>

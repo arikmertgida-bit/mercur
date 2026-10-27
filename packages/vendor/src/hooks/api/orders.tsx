@@ -1,4 +1,8 @@
-import { ClientError, InferClientOutput } from "@mercurjs/client"
+import {
+  ClientError,
+  InferClientInput,
+  InferClientOutput,
+} from "@mercurjs/client"
 
 import { HttpTypes } from "@medusajs/types";
 import {
@@ -11,34 +15,27 @@ import {
 } from "@tanstack/react-query";
 import { sdk, fetchQuery } from "../../lib/client";
 import { queryClient } from "../../lib/query-client";
-import { queryKeysFactory, TQueryKey } from "../../lib/query-key-factory";
+import { queryKeysFactory } from "../../lib/query-key-factory";
 import { inventoryItemsQueryKeys } from "./inventory";
 import { reservationItemsQueryKeys } from "./reservations";
 
 const ORDERS_QUERY_KEY = "orders" as const;
-const _orderKeys = queryKeysFactory(ORDERS_QUERY_KEY) as TQueryKey<"orders"> & {
-  preview: (orderId: string) => any;
-  changes: (orderId: string) => any;
-};
+const baseOrdersQueryKeys = queryKeysFactory(ORDERS_QUERY_KEY);
 
-_orderKeys.preview = function (id: string) {
-  return [this.detail(id), "preview"];
+export const ordersQueryKeys = {
+  ...baseOrdersQueryKeys,
+  preview: (id: string) => [baseOrdersQueryKeys.detail(id), "preview"] as const,
+  changes: (id: string) => [baseOrdersQueryKeys.detail(id), "changes"] as const,
 };
-
-_orderKeys.changes = function (id: string) {
-  return [this.detail(id), "changes"];
-};
-
-export const ordersQueryKeys = _orderKeys;
 
 export const useOrder = (
   id: string,
   query?: HttpTypes.AdminOrderFilters,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.orders.$id.query>,
       ClientError,
-      HttpTypes.AdminOrderResponse
+      InferClientOutput<typeof sdk.vendor.orders.$id.query>
     >,
     "queryKey" | "queryFn"
   >
@@ -83,7 +80,7 @@ export const useOrderPreview = (
   query?: HttpTypes.AdminOrderFilters,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      HttpTypes.AdminOrderPreviewResponse,
       ClientError,
       HttpTypes.AdminOrderPreviewResponse
     >,
@@ -104,9 +101,9 @@ export const useOrders = (
   query?: HttpTypes.AdminOrderListParams,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.orders.query>,
       ClientError,
-      HttpTypes.AdminOrderListResponse
+      InferClientOutput<typeof sdk.vendor.orders.query>
     >,
     "queryKey" | "queryFn"
   >
@@ -122,10 +119,13 @@ export const useOrders = (
 
 export const useOrderChanges = (
   id: string,
-  query?: Record<string, unknown>,
+  query?: Omit<
+    InferClientInput<typeof sdk.vendor.orders.$id.changes.query>,
+    "$id"
+  >,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      HttpTypes.AdminOrderChangesResponse,
       ClientError,
       HttpTypes.AdminOrderChangesResponse
     >,
@@ -145,7 +145,7 @@ export const useOrderChanges = (
 export const useCreateOrderFulfillment = (
   orderId: string,
   options?: UseMutationOptions<
-    HttpTypes.AdminOrderResponse,
+    InferClientOutput<typeof sdk.vendor.orders.$id.fulfillments.mutate>,
     ClientError,
     HttpTypes.AdminCreateOrderFulfillment
   >
@@ -176,17 +176,26 @@ export const useCreateOrderFulfillment = (
   });
 };
 
+type CancelOrderFulfillmentPayload = Omit<
+  InferClientInput<
+    typeof sdk.vendor.orders.$id.fulfillments.$fulfillmentId.cancel.mutate
+  >,
+  "$id" | "$fulfillmentId"
+>;
+
 export const useCancelOrderFulfillment = (
   orderId: string,
   fulfillmentId: string,
   options?: UseMutationOptions<
-    HttpTypes.AdminOrderResponse,
+    InferClientOutput<
+      typeof sdk.vendor.orders.$id.fulfillments.$fulfillmentId.cancel.mutate
+    >,
     ClientError,
-    Record<string, unknown>
+    CancelOrderFulfillmentPayload
   >
 ) => {
   return useMutation({
-    mutationFn: (payload: Record<string, unknown>) =>
+    mutationFn: (payload: CancelOrderFulfillmentPayload) =>
       sdk.vendor.orders.$id.fulfillments.$fulfillmentId.cancel.mutate({
         $id: orderId,
         $fulfillmentId: fulfillmentId,

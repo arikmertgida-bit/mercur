@@ -18,20 +18,6 @@ type ActiveOrderReturnSectionProps = {
   orderPreview: HttpTypes.AdminOrderPreview
 }
 
-type UnknownValue = unknown
-
-const readReturnId = (change: UnknownValue): string | undefined => {
-  if (
-    change &&
-    typeof change === "object" &&
-    "return_id" in change &&
-    typeof (change as { return_id?: UnknownValue }).return_id === "string"
-  ) {
-    return (change as { return_id: string }).return_id
-  }
-  return undefined
-}
-
 export const ActiveOrderReturnSection = ({
   orderPreview,
 }: ActiveOrderReturnSectionProps) => {
@@ -39,7 +25,7 @@ export const ActiveOrderReturnSection = ({
   const navigate = useNavigate()
 
   const orderChange = orderPreview?.order_change
-  const returnId = readReturnId(orderChange)
+  const returnId = orderChange?.return_id || undefined
   const isReturnRequest =
     orderChange?.change_type === "return_request" && !!returnId
 

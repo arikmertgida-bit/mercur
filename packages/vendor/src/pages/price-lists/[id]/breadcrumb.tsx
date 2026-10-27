@@ -1,14 +1,14 @@
-import { HttpTypes } from "@medusajs/types";
+import { HttpTypes } from "@mercurjs/types";
 import { UIMatch } from "react-router-dom";
 
 import { usePriceList } from "@hooks/api/price-lists";
 
-type PriceListDetailBreadcrumbProps = UIMatch<HttpTypes.AdminPriceListResponse>;
+type PriceListDetailBreadcrumbProps = UIMatch<HttpTypes.VendorPriceListResponse>;
 
 export const Breadcrumb = (props: PriceListDetailBreadcrumbProps) => {
   const { id } = props.params || {};
 
-  const { price_list } = usePriceList(id!, undefined, {
+  const { price_list } = usePriceList(id ?? "", undefined, {
     initialData: props.data,
     enabled: Boolean(id),
   });

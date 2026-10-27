@@ -1,10 +1,10 @@
 import { createColumnHelper } from "@tanstack/react-table"
 import { useMemo } from "react"
 import { useTranslation } from "react-i18next"
-import { OfferDTO } from "@mercurjs/types"
 import { DateCell } from "@components/table/table-cells/common/date-cell"
 import { PlaceholderCell } from "@components/table/table-cells/common/placeholder-cell"
 import { ExtendedReservationItem } from "../../../inventory/[id]/_components/reservations-table/use-reservation-list-table-columns"
+import { z } from "zod"
 
 const columnHelper = createColumnHelper<ExtendedReservationItem>()
 
@@ -20,14 +20,25 @@ const TruncatedTextCell = ({ value }: { value?: string | null }) => {
   )
 }
 
-// Inventory is offer-scoped in Mercur, so the product is reached through the
-// offer: inventory_item -> offers -> product. Read defensively and fall back
+// The product is reached through Medusa's own inventory_item -> variants ->
+// product relation (requested as `variants.product.title`), which the HTTP
+// types don't declare — so it is read through this schema instead of a cast.
+const InventoryItemProductSchema = z.object({
+  variants: z
+    .array(
+      z.object({
+        product: z.object({ title: z.string() }).nullish(),
+      })
+    )
+    .nullish(),
+})
+
 // to a placeholder when the link isn't populated.
 const getProductTitle = (reservation: ExtendedReservationItem) => {
-  const item = reservation.inventory_item as
-    | { offers?: OfferDTO[] | null }
-    | undefined
-  return item?.offers?.[0]?.product?.title ?? undefined
+  const parsed = InventoryItemProductSchema.safeParse(reservation.inventory_item)
+  return parsed.success
+    ? parsed.data.variants?.[0]?.product?.title ?? undefined
+    : undefined
 }
 
 export const useReservationTableColumns = () => {

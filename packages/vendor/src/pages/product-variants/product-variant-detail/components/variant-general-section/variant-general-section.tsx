@@ -20,7 +20,10 @@ export function VariantGeneralSection({
 
   const hasInventoryKit = (variant.inventory_items?.length ?? 0) > 1
 
-  const { mutateAsync } = useDeleteVariant(variant.product_id!, variant.id)
+  const { mutateAsync } = useDeleteVariant(
+    variant.product_id ?? "",
+    variant.id
+  )
 
   const handleDelete = async () => {
     const res = await prompt({

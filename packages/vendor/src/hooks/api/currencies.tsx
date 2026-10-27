@@ -15,7 +15,7 @@ export const useCurrencies = (
   query?: InferClientInput<typeof sdk.vendor.currencies.query>,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.currencies.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.currencies.query>
     >,
@@ -39,7 +39,7 @@ export const useCurrency = (
   >,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.currencies.$code.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.currencies.$code.query>
     >,

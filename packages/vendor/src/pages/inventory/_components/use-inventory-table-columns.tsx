@@ -1,21 +1,15 @@
-import { InventoryTypes, ProductVariantDTO } from "@medusajs/types"
+import type { HttpTypes } from "@mercurjs/types"
 
 import { Checkbox } from "@medusajs/ui"
-import { createColumnHelper } from "@tanstack/react-table"
+import { TableOptions, createColumnHelper } from "@tanstack/react-table"
 import { useMemo } from "react"
 import { useTranslation } from "react-i18next"
 import { PlaceholderCell } from "@components/table/table-cells/common/placeholder-cell"
 import { InventoryActions } from "./inventory-actions"
 
-interface ExtendedInventoryItem extends InventoryTypes.InventoryItemDTO {
-  variants?: ProductVariantDTO[] | null
-  stocked_quantity?: number
-  reserved_quantity?: number
-}
+const columnHelper = createColumnHelper<HttpTypes.VendorInventoryItem>()
 
-const columnHelper = createColumnHelper<ExtendedInventoryItem>()
-
-export const useInventoryTableColumns = () => {
+export const useInventoryTableColumns = (): TableOptions<HttpTypes.VendorInventoryItem>["columns"] => {
   const { t } = useTranslation()
 
   return useMemo(
@@ -92,7 +86,7 @@ export const useInventoryTableColumns = () => {
           </div>
         ),
         cell: ({ getValue, row }) => {
-          const sku = getValue() as string
+          const sku = getValue()
 
           if (!sku) {
             return <PlaceholderCell />
@@ -122,7 +116,7 @@ export const useInventoryTableColumns = () => {
           </div>
         ),
         cell: ({ getValue, row }) => {
-          const locations = getValue() ?? []
+          const locations: HttpTypes.AdminInventoryLevel[] = getValue() ?? []
 
           const totalReserved = locations.reduce(
             (sum, level) => sum + level.reserved_quantity,

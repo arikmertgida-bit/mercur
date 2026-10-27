@@ -26,7 +26,7 @@ export const usePricePreference = (
   >,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.pricePreferences.$id.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.pricePreferences.$id.query>
     >,
@@ -46,7 +46,7 @@ export const usePricePreferences = (
   query?: InferClientInput<typeof sdk.vendor.pricePreferences.query>,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.pricePreferences.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.pricePreferences.query>
     >,

@@ -1,7 +1,7 @@
 import { createColumnHelper } from "@tanstack/react-table"
 import { useMemo } from "react"
 import { useTranslation } from "react-i18next"
-import { PayoutDTO } from "@mercurjs/types"
+import { HttpTypes } from "@mercurjs/types"
 import { StatusBadge } from "@medusajs/ui"
 import {
   DateCell,
@@ -12,7 +12,7 @@ import {
 } from "../../../components/table/table-cells/order/display-id-cell"
 import { getStylizedAmount } from "../../../lib/money-amount-helpers"
 
-const columnHelper = createColumnHelper<PayoutDTO>()
+const columnHelper = createColumnHelper<HttpTypes.VendorPayout>()
 
 const payoutStatusColor = (status: string) => {
   switch (status) {
@@ -77,7 +77,7 @@ export const usePayoutTableColumns = () => {
           </div>
         ),
         cell: ({ getValue, row }) => {
-          const amount = getValue() as number
+          const amount = getValue()
           const currencyCode = row.original.currency_code
           return (
             <div className="text-ui-fg-subtle txt-compact-small flex h-full w-full items-center overflow-hidden">

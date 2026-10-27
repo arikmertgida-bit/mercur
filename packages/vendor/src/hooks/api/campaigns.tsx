@@ -25,7 +25,7 @@ export const useCampaign = (
   >,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.campaigns.$id.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.campaigns.$id.query>
     >,
@@ -45,7 +45,7 @@ export const useCampaigns = (
   query?: InferClientInput<typeof sdk.vendor.campaigns.query>,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.campaigns.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.campaigns.query>
     >,

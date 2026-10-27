@@ -20,7 +20,6 @@ const PaymentStepSchema = z.object({
 type PaymentStepValues = z.infer<typeof PaymentStepSchema>;
 
 type PaymentStepProps = {
-  sellerId: string;
   onSubmit: (data: PaymentStepValues) => Promise<void>;
   onSkip: () => void;
   isPending?: boolean;

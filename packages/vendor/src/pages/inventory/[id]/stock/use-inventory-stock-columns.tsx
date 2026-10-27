@@ -1,10 +1,25 @@
 import { HttpTypes } from "@medusajs/types"
 import { useMemo } from "react"
 import { useTranslation } from "react-i18next"
+import { z } from "zod"
 import { createDataGridHelper } from "@components/data-grid"
 import { DataGridReadOnlyCell } from "@components/data-grid/components"
 import { DataGridTogglableNumberCell } from "@components/data-grid/components/data-grid-toggleable-number-cell"
 import { InventoryStockSchema } from "../schema"
+
+// The product title is reached through Medusa's own inventory_item ->
+// variants -> product relation (requested as `variants.product.title`),
+// which `HttpTypes.AdminInventoryItem` does not declare — so it is read
+// through this schema instead of a cast.
+const InventoryItemProductSchema = z.object({
+  variants: z
+    .array(
+      z.object({
+        product: z.object({ title: z.string() }).nullish(),
+      })
+    )
+    .nullish(),
+})
 
 const helper = createDataGridHelper<
   HttpTypes.AdminInventoryItem,
@@ -52,13 +67,12 @@ export const useInventoryStockColumns = (
         name: t("fields.product"),
         header: t("fields.product"),
         cell: (context) => {
-          const item = context.row.original as HttpTypes.AdminInventoryItem & {
-            offers?: {
-              product_variant?: { product?: { title?: string } }
-            }[]
-          }
-          const productTitle =
-            item.offers?.[0]?.product_variant?.product?.title
+          const parsed = InventoryItemProductSchema.safeParse(
+            context.row.original
+          )
+          const productTitle = parsed.success
+            ? parsed.data.variants?.[0]?.product?.title
+            : undefined
 
           return (
             <DataGridReadOnlyCell context={context} color="normal">

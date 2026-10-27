@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod"
-import { VendorExtendedAdminStockLocation, VendorExtendedAdminFulfillmentSet } from "@custom-types/stock-location"
+import type { HttpTypes } from "@mercurjs/types"
 import { Button, Heading, InlineTip, Input, toast } from "@medusajs/ui"
 import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
@@ -27,9 +27,9 @@ const CreateServiceZoneSchema = z.object({
 })
 
 type CreateServiceZoneFormProps = {
-  fulfillmentSet: VendorExtendedAdminFulfillmentSet
+  fulfillmentSet: HttpTypes.VendorFulfillmentSet
   type: FulfillmentSetType
-  location: VendorExtendedAdminStockLocation
+  location: HttpTypes.VendorStockLocation
 }
 
 export function CreateServiceZoneForm({
@@ -121,10 +121,10 @@ export function CreateServiceZoneForm({
                   {t("stockLocations.serviceZones.fields.tip")}
                 </InlineTip>
 
-                <GeoZoneForm form={form} />
+                <GeoZoneForm />
               </div>
             </div>
-            <GeoZoneForm.AreaDrawer form={form} />
+            <GeoZoneForm.AreaDrawer />
           </StackedFocusModal>
         </RouteFocusModal.Body>
 

@@ -1,16 +1,15 @@
 // Route: /products/:id/attributes/:attribute_id/edit
 import { Heading, toast } from "@medusajs/ui";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
 
 import {
-  EditAttributeAttribute,
   EditAttributeForm,
   isForbidden,
   ProductAttributeBatchPayload,
   RouteDrawer,
   SectionNoAccess,
   useLinkQuery,
+  useRequiredParam,
 } from "@mercurjs/dashboard-shared";
 import { MercurFeatureFlags } from "@mercurjs/types";
 
@@ -20,11 +19,12 @@ import { useProductAttribute } from "@hooks/api/product-attributes";
 import { PRODUCT_DETAIL_QUERY } from "../../../../common/constants";
 
 export const Component = () => {
-  const { id, attribute_id } = useParams();
+  const id = useRequiredParam("id");
+  const attribute_id = useRequiredParam("attribute_id");
   const { t } = useTranslation();
 
   const query = useLinkQuery("product", PRODUCT_DETAIL_QUERY.fields);
-  const { product, isLoading, isError, error } = useProduct(id!, query);
+  const { product, isLoading, isError, error } = useProduct(id, query);
 
   const attached = product?.attributes?.find((a) => a.id === attribute_id);
 
@@ -33,7 +33,7 @@ export const Component = () => {
     isLoading: isCatalogLoading,
     isError: isCatalogError,
     error: catalogError,
-  } = useProductAttribute(attribute_id!, undefined, {
+  } = useProductAttribute(attribute_id, undefined, {
     enabled: !!attribute_id && !isLoading && !attached,
   });
 
@@ -41,7 +41,7 @@ export const Component = () => {
   const isProductRequestEnabled =
     !!feature_flags?.[MercurFeatureFlags.PRODUCT_REQUEST];
 
-  const { mutateAsync, isPending } = useBatchProductAttributes(id!);
+  const { mutateAsync, isPending } = useBatchProductAttributes(id);
 
   const forbidden = isForbidden(error) || isForbidden(catalogError);
 
@@ -56,12 +56,10 @@ export const Component = () => {
     ? {
         id: catalogAttribute.id,
         name: catalogAttribute.name,
-        handle: (catalogAttribute as { handle?: string | null }).handle ?? null,
+        handle: catalogAttribute.handle ?? null,
         type: catalogAttribute.type,
-        is_variant_axis: !!(catalogAttribute as { is_variant_axis?: boolean })
-          .is_variant_axis,
-        is_required: !!(catalogAttribute as { is_required?: boolean })
-          .is_required,
+        is_variant_axis: !!catalogAttribute.is_variant_axis,
+        is_required: !!catalogAttribute.is_required,
         is_scoped: false,
         values: [],
         all_values: (catalogAttribute.values ?? []).map(
@@ -109,7 +107,7 @@ export const Component = () => {
       ) : (
         ready && (
           <EditAttributeForm
-            attribute={attribute as unknown as EditAttributeAttribute}
+            attribute={attribute}
             isAttached={isAttached}
             isPending={isPending}
             onSubmit={onSubmit}

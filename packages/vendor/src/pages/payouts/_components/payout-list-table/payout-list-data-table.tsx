@@ -21,7 +21,7 @@ export const PayoutListDataTable = () => {
   const { payouts, count, isError, error, isLoading } = usePayouts(
     searchParams,
     {
-      initialData: keepPreviousData,
+      placeholderData: keepPreviousData,
     },
   );
 

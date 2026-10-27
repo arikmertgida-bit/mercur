@@ -1,4 +1,4 @@
-import { ReturnDTO } from "@medusajs/types"
+import { HttpTypes } from "@mercurjs/types"
 import { Container, Heading, StatusBadge, Text } from "@medusajs/ui"
 import { keepPreviousData } from "@tanstack/react-query"
 import { createColumnHelper } from "@tanstack/react-table"
@@ -73,7 +73,7 @@ export const ReturnListTable = () => {
   )
 }
 
-const columnHelper = createColumnHelper<ReturnDTO>()
+const columnHelper = createColumnHelper<HttpTypes.VendorReturn>()
 
 const useColumns = () => {
   const { t } = useTranslation()
@@ -113,7 +113,7 @@ const useColumns = () => {
         cell: ({ getValue }) => {
           const status = getValue()
           return (
-            <StatusBadge color={STATUS_COLOR[status] ?? "grey"}>
+            <StatusBadge color={(status && STATUS_COLOR[status]) || "grey"}>
               {t(`returns.status.${status}`)}
             </StatusBadge>
           )

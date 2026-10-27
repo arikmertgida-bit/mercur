@@ -40,10 +40,10 @@ import {
 } from "@hooks/api/stock-locations"
 import { getFormattedAddress } from "@lib/addresses"
 import {
-  StaticCountry,
   countries as staticCountries,
 } from "@lib/data/countries"
 import { getLocalizedCountryName } from "@lib/format-country-name"
+import { isTruthy } from "@lib/is-truthy"
 import { formatProvider } from "@lib/format-provider"
 import {
   getShippingProfileName,
@@ -53,10 +53,10 @@ import {
   FulfillmentSetType,
   ShippingOptionPriceType,
 } from "@pages/settings/locations/_common/constants"
-import { VendorExtendedAdminStockLocation, VendorExtendedAdminFulfillmentSet, VendorExtendedAdminServiceZone } from "@custom-types/stock-location"
+import type { HttpTypes as VendorHttpTypes } from "@mercurjs/types"
 
 type LocationGeneralSectionProps = {
-  location: VendorExtendedAdminStockLocation
+  location: VendorHttpTypes.VendorStockLocation
 }
 
 export const LocationGeneralSection = ({
@@ -214,7 +214,7 @@ const CreateShippingOptionLink = ({ to }: { to: string }) => {
 }
 
 type ServiceZoneOptionsProps = {
-  zone: VendorExtendedAdminServiceZone
+  zone: VendorHttpTypes.VendorServiceZone
   locationId: string
   fulfillmentSetId: string
   type: FulfillmentSetType
@@ -291,7 +291,7 @@ function ServiceZoneOptions({
 }
 
 type ServiceZoneProps = {
-  zone: VendorExtendedAdminServiceZone
+  zone: VendorHttpTypes.VendorServiceZone
   locationId: string
   fulfillmentSetId: string
   type: FulfillmentSetType
@@ -347,7 +347,7 @@ function ServiceZone({
       .map(({ country_code }) =>
         staticCountries.find((c) => c.iso_2 === country_code)
       )
-      .filter((c) => !!c) as StaticCountry[]
+      .filter(isTruthy)
 
     return countries.sort((c1, c2) => c1.name.localeCompare(c2.name))
   }, [zone.geo_zones])
@@ -455,7 +455,7 @@ function ServiceZone({
 }
 
 type FulfillmentSetProps = {
-  fulfillmentSet?: VendorExtendedAdminFulfillmentSet
+  fulfillmentSet?: VendorHttpTypes.VendorFulfillmentSet
   locationName: string
   locationId: string
   type: FulfillmentSetType
@@ -475,7 +475,7 @@ function FulfillmentSet(props: FulfillmentSetProps) {
     useCreateStockLocationFulfillmentSet(locationId)
 
   const { mutateAsync: deleteFulfillmentSet } = useDeleteFulfillmentSet(
-    fulfillmentSet?.id
+    fulfillmentSet?.id ?? ""
   )
 
   const handleCreate = async () => {
@@ -607,7 +607,7 @@ function FulfillmentSet(props: FulfillmentSetProps) {
   )
 }
 
-const Actions = ({ location }: { location: VendorExtendedAdminStockLocation }) => {
+const Actions = ({ location }: { location: VendorHttpTypes.VendorStockLocation }) => {
   const navigate = useNavigate()
   const { t } = useTranslation()
   const { mutateAsync } = useDeleteStockLocation(location.id)

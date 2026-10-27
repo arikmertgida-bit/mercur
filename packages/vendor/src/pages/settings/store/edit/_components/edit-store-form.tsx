@@ -566,7 +566,6 @@ export const EditStoreForm = ({ seller }: EditStoreFormProps) => {
           <FormExtensionZone
             model="seller"
             zone="edit"
-            control={form.control}
             data={seller}
           />
         </RouteDrawer.Body>

@@ -15,7 +15,7 @@ export const usePayouts = (
   query?: InferClientInput<typeof sdk.vendor.payouts.query>,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.payouts.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.payouts.query>
     >,
@@ -33,10 +33,10 @@ export const usePayouts = (
 
 export const usePayout = (
   id: string,
-  query?: Record<string, any>,
+  query?: Omit<InferClientInput<typeof sdk.vendor.payouts.$id.query>, "$id">,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.payouts.$id.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.payouts.$id.query>
     >,

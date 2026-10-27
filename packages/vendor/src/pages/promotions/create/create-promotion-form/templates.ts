@@ -1,6 +1,31 @@
+import { CreatePromotionSchemaType } from "./form-schema"
+
+type ApplicationMethodValues = CreatePromotionSchemaType["application_method"]
+
+/** The form values a template presets when it is picked. */
+type PromotionTemplateDefaults = {
+  is_automatic: string
+  type: CreatePromotionSchemaType["type"]
+  application_method: Partial<
+    Pick<
+      ApplicationMethodValues,
+      "allocation" | "target_type" | "type" | "value" | "max_quantity"
+    >
+  >
+}
+
+export type PromotionTemplate = {
+  id: string
+  type: CreatePromotionSchemaType["type"]
+  titleKey: string
+  descriptionKey: string
+  hiddenFields: string[]
+  defaults: PromotionTemplateDefaults
+}
+
 const commonHiddenFields = ["type", "application_method.type"]
 
-export const templates = [
+export const templates: PromotionTemplate[] = [
   {
     id: "amount_off_offers",
     type: "standard",
@@ -82,7 +107,6 @@ export const templates = [
       application_method: {
         type: "percentage",
         value: 100,
-        apply_to_quantity: 1,
         max_quantity: 1,
       },
     },

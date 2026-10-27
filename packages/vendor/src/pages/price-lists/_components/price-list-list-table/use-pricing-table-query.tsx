@@ -1,5 +1,10 @@
-import { HttpTypes, PriceListStatus } from "@medusajs/types"
+import { HttpTypes } from "@medusajs/types"
+import { z } from "zod"
+
 import { useQueryParams } from "@hooks/use-query-params"
+import { PriceListStatus } from "../../common/constants"
+
+const StatusListSchema = z.array(z.enum(PriceListStatus))
 
 export const usePricingTableQuery = ({
   pageSize = 20,
@@ -8,23 +13,15 @@ export const usePricingTableQuery = ({
   pageSize?: number
   prefix?: string
 }) => {
-  const raw = useQueryParams(
-    ["offset", "q", "order", "type", "status", "created_at", "updated_at"],
-    prefix
-  )
+  const raw = useQueryParams(["offset", "q", "order", "status"], prefix)
 
-  const searchParams: HttpTypes.AdminPriceListListParams & {
-    type?: string[]
-    created_at?: Record<string, string>
-    updated_at?: Record<string, string>
-  } = {
+  const status = StatusListSchema.safeParse(raw.status?.split(","))
+
+  const searchParams: HttpTypes.AdminPriceListListParams = {
     limit: pageSize,
     offset: raw.offset ? Number(raw.offset) : 0,
     order: raw.order,
-    type: raw.type?.split(","),
-    status: raw.status?.split(",") as PriceListStatus[],
-    created_at: raw.created_at ? JSON.parse(raw.created_at) : undefined,
-    updated_at: raw.updated_at ? JSON.parse(raw.updated_at) : undefined,
+    status: status.success ? status.data : undefined,
     q: raw.q,
   }
 

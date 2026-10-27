@@ -193,7 +193,7 @@ export const PromotionGeneralSection = ({
           </Text>
 
           <Copy
-            content={promotion.code!}
+            content={promotion.code ?? ""}
             className="text-ui-tag-neutral-text"
             asChild
           >

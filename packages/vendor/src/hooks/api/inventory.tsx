@@ -30,7 +30,7 @@ export const useInventoryItems = (
   query?: InferClientInput<typeof sdk.vendor.inventoryItems.query>,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.inventoryItems.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.inventoryItems.query>
     >,
@@ -54,7 +54,7 @@ export const useInventoryItem = (
   >,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.inventoryItems.$id.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.inventoryItems.$id.query>
     >,
@@ -177,7 +177,7 @@ export const useInventoryItemLevels = (
   >,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.inventoryItems.$id.locationLevels.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.inventoryItems.$id.locationLevels.query>
     >,
@@ -351,7 +351,7 @@ export const useMultipleInventoryItemLevels = (
       if (query.data?.inventory_levels) {
         return {
           inventory_item_id: inventoryItemIds[index],
-          location_levels: query.data.inventory_levels as InventoryItemLocationLevel[],
+          location_levels: query.data.inventory_levels,
         }
       }
       return null

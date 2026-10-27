@@ -1,18 +1,21 @@
-import { useParams, useSearchParams } from "react-router-dom"
+import { useRequiredParam } from "@mercurjs/dashboard-shared"
+import { useSearchParams } from "react-router-dom"
 
 import { RouteFocusModal } from "@components/modals"
 import { useStockLocation } from "@hooks/api/stock-locations"
 import { CreateShippingOptionsForm } from "./_components/create-shipping-options-form"
 import { LOC_CREATE_SHIPPING_OPTION_FIELDS } from "./constants"
-import { FulfillmentSetType } from "@pages/settings/locations/_common/constants"
+import { toFulfillmentSetType } from "@pages/settings/locations/_common/constants"
 
 function LocationServiceZoneShippingOptionCreate() {
-  const { location_id, fset_id, zone_id } = useParams()
+  const location_id = useRequiredParam("location_id")
+  const fset_id = useRequiredParam("fset_id")
+  const zone_id = useRequiredParam("zone_id")
   const [searchParams] = useSearchParams()
   const isReturn = searchParams.has("is_return")
 
   const { stock_location, isPending, isFetching, isError, error } =
-    useStockLocation(location_id!, {
+    useStockLocation(location_id, {
       fields: LOC_CREATE_SHIPPING_OPTION_FIELDS,
     })
 
@@ -46,12 +49,12 @@ function LocationServiceZoneShippingOptionCreate() {
 
   return (
     <RouteFocusModal prev={`/settings/locations/${location_id}`}>
-      {zone && (
+      {zone && fulfillmentSet && (
         <CreateShippingOptionsForm
           zone={zone}
           isReturn={isReturn}
-          locationId={location_id!}
-          type={fulfillmentSet!.type as FulfillmentSetType}
+          locationId={location_id}
+          type={toFulfillmentSetType(fulfillmentSet.type)}
         />
       )}
     </RouteFocusModal>

@@ -54,7 +54,10 @@ export const Component = () => {
       }
 
       if (preview.order_change) {
-        if ((preview.order_change.change_type as string) !== "return_receive") {
+        // Medusa's `change_type` union predates the "return_receive" change
+        // its receive workflow creates, so it is compared as plain text.
+        const changeType: string | undefined = preview.order_change.change_type
+        if (changeType !== "return_receive") {
           navigate(`/orders/${orderId}`, { replace: true })
           toast.error(t("orders.returns.activeChangeError"))
         }

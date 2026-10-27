@@ -7,7 +7,6 @@ import {
   type ProductChangeAttribute,
   type ProductChangeProduct,
   type ProductChangeResolvers,
-  type ProductChangeVariant,
 } from "@mercurjs/dashboard-shared"
 import { useTranslation } from "react-i18next"
 
@@ -81,7 +80,7 @@ const resolversFor = (
       $variantId: variantId,
       fields: VARIANT_LOOKUP_FIELDS,
     })
-    return (variant as ProductChangeVariant) ?? null
+    return variant ?? null
   },
 })
 
@@ -121,7 +120,7 @@ export const ProductActiveEditSection = ({
       await cancelEdit()
       toast.success(t("products.edits.toast.canceledSuccessfully"))
     } catch (e) {
-      toast.error((e as Error).message)
+      toast.error(e instanceof Error ? e.message : String(e))
     }
   }
 
@@ -129,7 +128,7 @@ export const ProductActiveEditSection = ({
     id: product.id,
     title: product.title,
     thumbnail: product.thumbnail,
-    variants: product.variants as ProductChangeVariant[] | undefined,
+    variants: product.variants,
     attributes: product.attributes,
   }
 

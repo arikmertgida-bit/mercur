@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import { useLoaderData } from "react-router-dom";
 import { PencilSquare, Tag, Trash } from "@medusajs/icons";
 
-import { ExtendedAdminProduct } from "@custom-types/products";
+import type { HttpTypes } from "@mercurjs/types"
 import type { productListLoader } from "../../list-loader";
 import { ActionMenu } from "@components/common/action-menu";
 import { _DataTable } from "@components/table/data-table";
@@ -29,9 +29,7 @@ export const ProductListDataTable = () => {
     pageSize: PAGE_SIZE,
   });
 
-  const loaderData = useLoaderData() as
-    | Awaited<ReturnType<typeof productListLoader>>
-    | undefined;
+  const loaderData = useLoaderData<typeof productListLoader>();
 
   const initialData = searchParams.offset ? undefined : loaderData;
 
@@ -106,7 +104,7 @@ export const ProductListDataTable = () => {
   );
 };
 
-const ProductActions = ({ product }: { product: ExtendedAdminProduct }) => {
+const ProductActions = ({ product }: { product: HttpTypes.VendorProduct }) => {
   const { t } = useTranslation();
   const prompt = usePrompt();
   const isSellerActive = useIsSellerActive();
@@ -175,11 +173,11 @@ const ProductActions = ({ product }: { product: ExtendedAdminProduct }) => {
   );
 };
 
-const columnHelper = createColumnHelper<ExtendedAdminProduct>();
+const columnHelper = createColumnHelper<HttpTypes.VendorProduct>();
 
 const useColumns = () => {
   const base = useProductTableColumns();
-  const { columns: extended, filters } = useExtendableTable<ExtendedAdminProduct>(
+  const { columns: extended, filters } = useExtendableTable<HttpTypes.VendorProduct>(
     {
       model: "product",
       columns: base,

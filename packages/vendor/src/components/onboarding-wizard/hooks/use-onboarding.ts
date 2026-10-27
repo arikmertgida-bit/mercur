@@ -2,6 +2,9 @@ import { useState, useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "@medusajs/ui";
 import { useTranslation } from "react-i18next";
+import { z } from "zod";
+import { JsonRecordSchema } from "@mercurjs/dashboard-shared";
+import type { JsonRecord } from "@mercurjs/types";
 
 import { useCreateSellerAccount, useLogout } from "@hooks/api";
 import { queryClient } from "@lib/query-client";
@@ -14,8 +17,18 @@ type StoreData = {
   currency_code: string;
   description?: string;
   handle?: string;
-  additional_data?: Record<string, unknown>;
+  additional_data?: JsonRecord;
 };
+
+/**
+ * The draft the register page leaves in sessionStorage; it is read back as
+ * untrusted text, so it is validated before use.
+ */
+const RegisterDraftSchema = z.object({
+  first_name: z.string().nullish(),
+  last_name: z.string().nullish(),
+  additional_data: JsonRecordSchema.nullish(),
+});
 
 type AddressData = {
   address_1?: string;
@@ -115,17 +128,19 @@ export const useOnboarding = (memberEmail: string) => {
       let registerDraft: {
         first_name?: string;
         last_name?: string;
-        additional_data?: Record<string, unknown>;
+        additional_data?: JsonRecord;
       } = {};
       try {
         const raw = sessionStorage.getItem("mercur_register_draft");
         if (raw) {
-          const parsed = JSON.parse(raw);
-          registerDraft = {
-            first_name: parsed.first_name || undefined,
-            last_name: parsed.last_name || undefined,
-            additional_data: parsed.additional_data || undefined,
-          };
+          const parsed = RegisterDraftSchema.safeParse(JSON.parse(raw));
+          if (parsed.success) {
+            registerDraft = {
+              first_name: parsed.data.first_name || undefined,
+              last_name: parsed.data.last_name || undefined,
+              additional_data: parsed.data.additional_data || undefined,
+            };
+          }
         }
       } catch {
         // Ignore malformed draft
@@ -161,14 +176,15 @@ export const useOnboarding = (memberEmail: string) => {
                 country_code: addressData.country_code,
               }
             : undefined,
-          professional_details: hasCompanyData
-            ? {
-                corporate_name: companyData!.corporate_name || undefined,
-                registration_number:
-                  companyData!.registration_number || undefined,
-                tax_id: companyData!.tax_id || undefined,
-              }
-            : undefined,
+          professional_details:
+            companyData && hasCompanyData
+              ? {
+                  corporate_name: companyData.corporate_name || undefined,
+                  registration_number:
+                    companyData.registration_number || undefined,
+                  tax_id: companyData.tax_id || undefined,
+                }
+              : undefined,
           payment_details: paymentData
             ? {
                 country_code: paymentData.country_code,

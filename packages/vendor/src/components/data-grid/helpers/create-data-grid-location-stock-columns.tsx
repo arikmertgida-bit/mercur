@@ -28,10 +28,7 @@ export const createDataGridLocationStockColumns = <
   isReadyOnly,
   getFieldName,
   t,
-}: CreateDataGridLocationStockColumnsProps<TData, TFieldValues>): ColumnDef<
-  TData,
-  unknown
->[] => {
+}: CreateDataGridLocationStockColumnsProps<TData, TFieldValues>): ColumnDef<TData>[] => {
   const columnHelper = createDataGridHelper<TData, TFieldValues>()
 
   return [

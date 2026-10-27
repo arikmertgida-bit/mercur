@@ -33,8 +33,8 @@ export const SingleColumnPage = <TData,>({
   return (
     <div className="flex flex-col gap-y-3">
       {children}
-      {showMetadata && <MetadataSection data={data!} />}
-      {showJSON && <JsonViewSection data={data!} />}
+      {showMetadata && data && <MetadataSection data={data} />}
+      {showJSON && data && <JsonViewSection data={data} />}
       {hasOutlet && <Outlet />}
     </div>
   )

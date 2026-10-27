@@ -1,3 +1,4 @@
+import { ComponentProps } from "react";
 import { useTranslation } from "react-i18next";
 
 import { StatusCell } from "../../common/status-cell";
@@ -10,12 +11,17 @@ type ProductStatusCellProps = {
 export const ProductStatusCell = ({ status }: ProductStatusCellProps) => {
   const { t } = useTranslation();
 
-  const [color, text] = {
+  const statusConfig: Record<
+    `${ProductStatus}`,
+    [ComponentProps<typeof StatusCell>["color"], string]
+  > = {
     [ProductStatus.DRAFT]: ["grey", t("products.productStatus.draft")],
     [ProductStatus.PROPOSED]: ["orange", t("products.productStatus.proposed")],
     [ProductStatus.PUBLISHED]: ["green", t("products.productStatus.published")],
     [ProductStatus.REJECTED]: ["red", t("products.productStatus.rejected")],
-  }[status] as ["grey" | "orange" | "green" | "red", string];
+  };
+
+  const [color, text] = statusConfig[status];
 
   return <StatusCell color={color}>{text}</StatusCell>;
 };

@@ -28,7 +28,7 @@ export const useReviews = (
   query?: InferClientInput<typeof client.vendor.reviews.query>,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof client.vendor.reviews.query>,
       ClientError,
       InferClientOutput<typeof client.vendor.reviews.query>
     >,
@@ -52,7 +52,7 @@ export const useReview = (
   query?: InferClientInput<typeof client.vendor.reviews.$id.query>,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof client.vendor.reviews.$id.query>,
       ClientError,
       InferClientOutput<typeof client.vendor.reviews.$id.query>
     >,
@@ -83,7 +83,7 @@ export const useReview = (
 export const useReviewStats = (
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof client.vendor.reviews.stats.query>,
       ClientError,
       InferClientOutput<typeof client.vendor.reviews.stats.query>
     >,
@@ -105,7 +105,7 @@ export const useReviewReplies = (
   reviewId: string,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof client.vendor.reviews.$id.replies.query>,
       ClientError,
       InferClientOutput<typeof client.vendor.reviews.$id.replies.query>
     >,

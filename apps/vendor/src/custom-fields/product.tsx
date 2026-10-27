@@ -50,7 +50,7 @@ export default defineCustomFieldsConfig({
           id: "handle",
           component: ({ data }) => (
             <Text size="small" className="text-ui-fg-subtle px-6 py-4">
-              /{(data as { handle?: string })?.handle}
+              /{typeof data?.handle === "string" ? data.handle : null}
             </Text>
           ),
         },

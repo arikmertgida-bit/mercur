@@ -1,9 +1,9 @@
-import { HttpTypes } from "@medusajs/types"
+import { HttpTypes } from "@mercurjs/types"
 import { UIMatch } from "react-router-dom"
 import { useShippingProfile } from "@hooks/api/shipping-profiles"
 
 type ShippingProfileDetailBreadcrumbProps =
-  UIMatch<HttpTypes.AdminShippingProfileResponse>
+  UIMatch<HttpTypes.VendorShippingProfileResponse>
 
 export const ShippingProfileDetailBreadcrumb = (
   props: ShippingProfileDetailBreadcrumbProps
@@ -11,7 +11,7 @@ export const ShippingProfileDetailBreadcrumb = (
   const { shipping_profile_id } = props.params || {}
 
   const { shipping_profile } = useShippingProfile(
-    shipping_profile_id!,
+    shipping_profile_id ?? "",
     undefined,
     {
       initialData: props.data,

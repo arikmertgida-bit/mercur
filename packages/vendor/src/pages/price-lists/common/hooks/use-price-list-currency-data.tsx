@@ -1,4 +1,4 @@
-import { isForbidden, usePermissions } from "@mercurjs/dashboard-shared"
+import type { HttpTypes } from "@mercurjs/types"
 
 import { useRegions } from "../../../../hooks/api/regions"
 import { useStore } from "../../../../hooks/api/store"
@@ -16,11 +16,21 @@ import { usePricePreferences } from "../../../../hooks/api/price-preferences"
  * `currencies: string[]` prop chain through `PriceListCreateForm` →
  * `PriceListPricesForm` → `usePriceListGridColumns`.
  */
-export const usePriceListCurrencyData = () => {
-  const { can } = usePermissions()
-  const canViewRegions = can("regions")
-  const canViewPreferences = can("price_preferences")
+type PriceListCurrencyData =
+  | {
+      isReady: false
+      regions: undefined
+      currencies: undefined
+      pricePreferences: undefined
+    }
+  | {
+      isReady: true
+      regions: HttpTypes.AdminRegion[]
+      currencies: string[]
+      pricePreferences: HttpTypes.VendorPricePreference[]
+    }
 
+export const usePriceListCurrencyData = (): PriceListCurrencyData => {
   const {
     store,
     isPending: isStorePending,
@@ -37,36 +47,21 @@ export const usePriceListCurrencyData = () => {
     isPending: isRegionsPending,
     isError: isRegionsError,
     error: regionsError,
-  } = useRegions(
-    {
-      fields: "id,name,currency_code",
-      limit: 999,
-    },
-    { enabled: canViewRegions }
-  )
+  } = useRegions({
+    fields: "id,name,currency_code",
+    limit: 999,
+  })
 
   const {
     price_preferences: pricePreferences,
     isPending: isPreferencesPending,
     isError: isPreferencesError,
     error: preferencesError,
-  } = usePricePreferences({}, { enabled: canViewPreferences })
+  } = usePricePreferences({})
 
-  const isReady =
-    !!currencies &&
-    !!regions &&
-    !!pricePreferences &&
-    !isStorePending &&
-    !isRegionsPending &&
-    !isPreferencesPending
+  const isLoading = isStorePending || isRegionsPending || isPreferencesPending
 
-  const isNoAccess =
-    !canViewRegions ||
-    !canViewPreferences ||
-    isForbidden(regionsError) ||
-    isForbidden(preferencesError)
-
-  if (isRegionsError && !isForbidden(regionsError)) {
+  if (isRegionsError) {
     throw regionsError
   }
 
@@ -74,19 +69,18 @@ export const usePriceListCurrencyData = () => {
     throw storeError
   }
 
-  if (isPreferencesError && !isForbidden(preferencesError)) {
+  if (isPreferencesError) {
     throw preferencesError
   }
 
-  if (!isReady || isNoAccess) {
+  if (isLoading || !currencies || !regions || !pricePreferences) {
     return {
       regions: undefined,
       currencies: undefined,
       pricePreferences: undefined,
       isReady: false,
-      isNoAccess,
     }
   }
 
-  return { regions, currencies, pricePreferences, isReady, isNoAccess }
+  return { regions, currencies, pricePreferences, isReady: true }
 }

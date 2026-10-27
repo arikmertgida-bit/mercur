@@ -22,7 +22,7 @@ export const useRefundReasons = (
   query?: InferClientInput<typeof sdk.vendor.refundReasons.query>,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.refundReasons.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.refundReasons.query>
     >,
@@ -46,7 +46,7 @@ export const useRefundReason = (
   >,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.refundReasons.$id.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.refundReasons.$id.query>
     >,

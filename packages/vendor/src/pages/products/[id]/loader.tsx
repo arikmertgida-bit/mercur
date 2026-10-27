@@ -4,6 +4,7 @@ import { getLinkQuery } from "@mercurjs/dashboard-shared";
 import { productsQueryKeys } from "@hooks/api/products";
 import { sdk } from "@lib/client";
 import { queryClient } from "@lib/query-client";
+import { getRequiredParam } from "@lib/route-params";
 import { PRODUCT_DETAIL_QUERY } from "../common/constants";
 
 /** Custom-fields `link` relations merged into the detail query (`+link.*`). */
@@ -23,8 +24,7 @@ const productDetailQuery = (id: string) => {
 };
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
-  const id = params.id;
-  const query = productDetailQuery(id!);
+  const query = productDetailQuery(getRequiredParam(params, "id"));
 
   const response = await queryClient.ensureQueryData({
     ...query,

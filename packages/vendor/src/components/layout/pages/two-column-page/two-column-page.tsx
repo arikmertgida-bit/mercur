@@ -53,8 +53,8 @@ const Root = <TData,>({
           {main}
           {showExtraData && (
             <div className="hidden flex-col gap-y-3 xl:flex">
-              {showMetadata && <MetadataSection data={data!} />}
-              {showJSON && <JsonViewSection data={data!} />}
+              {showMetadata && data && <MetadataSection data={data} />}
+              {showJSON && data && <JsonViewSection data={data} />}
             </div>
           )}
         </div>
@@ -62,8 +62,8 @@ const Root = <TData,>({
           {sidebar}
           {showExtraData && (
             <div className="flex flex-col gap-y-3 xl:hidden">
-              {showMetadata && <MetadataSection data={data!} />}
-              {showJSON && <JsonViewSection data={data!} />}
+              {showMetadata && data && <MetadataSection data={data} />}
+              {showJSON && data && <JsonViewSection data={data} />}
             </div>
           )}
         </div>

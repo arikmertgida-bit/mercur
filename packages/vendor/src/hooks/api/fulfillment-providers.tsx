@@ -4,7 +4,7 @@ import {
   InferClientOutput,
 } from "@mercurjs/client";
 import { useQuery, UseQueryOptions } from "@tanstack/react-query";
-import { sdk, fetchQuery } from "../../lib/client";
+import { sdk } from "../../lib/client";
 import { queryKeysFactory } from "../../lib/query-key-factory";
 
 const FULFILLMENT_PROVIDERS_QUERY_KEY = "fulfillment_providers" as const;
@@ -22,7 +22,7 @@ export const useFulfillmentProviders = (
   query?: InferClientInput<typeof sdk.vendor.fulfillmentProviders.query>,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.fulfillmentProviders.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.fulfillmentProviders.query>
     >,
@@ -42,7 +42,7 @@ export const useFulfillmentProviderOptions = (
   providerId: string,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.fulfillmentProviders.$id.options.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.fulfillmentProviders.$id.options.query>
     >,
@@ -54,8 +54,8 @@ export const useFulfillmentProviderOptions = (
       if (!providerId) {
         throw new Error("providerId is required for useFulfillmentProviderOptions")
       }
-      return fetchQuery(`/vendor/fulfillment-providers/${providerId}/options`, {
-        method: "GET",
+      return sdk.vendor.fulfillmentProviders.$id.options.query({
+        $id: providerId,
       })
     },
     queryKey: fulfillmentProviderOptionsQueryKeys.list(providerId),

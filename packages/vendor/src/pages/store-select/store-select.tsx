@@ -2,13 +2,14 @@ import { Children, ReactNode } from "react";
 import { ChevronRight, Plus, Spinner } from "@medusajs/icons";
 import { Avatar, Heading, StatusBadge, Text } from "@medusajs/ui";
 import { useTranslation } from "react-i18next";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { DisplayExtensionZone, DisplayField } from "@mercurjs/dashboard-shared";
 
 import AvatarBox from "@components/common/logo-box/avatar-box";
 import { AuthLayout } from "@components/layout/auth-layout";
 import { useSelectSeller, useSellers } from "@hooks/api";
+import { useLocationStateEmail } from "@lib/location-state";
 import { SellerMemberDTO, SellerStatus } from "@mercurjs/types";
 
 const getSellerStatusBadge = (
@@ -137,8 +138,7 @@ const StoreSelectFooter = () => {
 };
 
 const Root = ({ children }: { children?: ReactNode }) => {
-  const location = useLocation();
-  const email = (location.state as { email?: string })?.email ?? "";
+  const email = useLocationStateEmail() ?? "";
   const { seller_members, isLoading } = useSellers();
 
   if (isLoading) {

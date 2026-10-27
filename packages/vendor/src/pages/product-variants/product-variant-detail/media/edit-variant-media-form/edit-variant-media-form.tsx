@@ -76,7 +76,7 @@ export const EditVariantMediaForm = ({
   )
 
   const { mutateAsync, isPending } = useUpdateProductVariant(
-    variant.product_id!,
+    variant.product_id ?? "",
     variant.id
   )
 

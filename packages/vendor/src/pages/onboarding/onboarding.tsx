@@ -1,13 +1,13 @@
 import { useEffect } from "react";
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 import { OnboardingWizard } from "@components/onboarding-wizard";
+import { useLocationStateEmail } from "@lib/location-state";
 
 const ONBOARDING_EMAIL_KEY = "mercur_onboarding_email";
 
 export const Onboarding = () => {
-  const location = useLocation();
-  const stateEmail = (location.state as { email?: string })?.email;
+  const stateEmail = useLocationStateEmail();
 
   // Persist email to sessionStorage for refresh resilience
   useEffect(() => {

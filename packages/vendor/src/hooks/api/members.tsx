@@ -3,7 +3,6 @@ import {
   InferClientInput,
   InferClientOutput,
 } from "@mercurjs/client";
-import { HttpTypes } from "@mercurjs/types";
 import {
   UseMutationOptions,
   UseQueryOptions,
@@ -22,29 +21,26 @@ export const membersQueryKeys = {
 
 // Rides along on every `me` fetch so the panel gets the actor's rights in the
 // same request instead of a follow-up one.
-const withPermissionsField = (fields: unknown) =>
-  [typeof fields === "string" ? fields : undefined, "+permissions"]
-    .filter(Boolean)
-    .join(",");
+const withPermissionsField = (fields?: string): string =>
+  [fields, "+permissions"].filter(Boolean).join(",");
+
+type MeQuery = InferClientInput<typeof sdk.vendor.members.me.query>
+type MeResponse = InferClientOutput<typeof sdk.vendor.members.me.query>
 
 // Shared by `useMe` and route loaders so every entry under the `me` key holds
 // the same shape, including `permissions`.
-export const meQueryOptions = (query?: Record<string, unknown>) => ({
+export const meQueryOptions = (query?: MeQuery) => ({
   queryFn: () =>
     sdk.vendor.members.me.query({
       ...query,
       fields: withPermissionsField(query?.fields),
-    } as Parameters<typeof sdk.vendor.members.me.query>[0]),
+    }),
   queryKey: query ? [...membersQueryKeys.me(), query] : membersQueryKeys.me(),
 });
 
 export const useMe = (
-  query?: Record<string, unknown>,
-  options?: UseQueryOptions<
-    any,
-    ClientError,
-    InferClientOutput<typeof sdk.vendor.members.me.query>
-  >,
+  query?: MeQuery,
+  options?: UseQueryOptions<MeResponse, ClientError, MeResponse>,
 ) => {
   const { data, ...rest } = useQuery({
     ...meQueryOptions(query),
@@ -80,13 +76,13 @@ export const useSellerMembers = (
     InferClientInput<typeof sdk.vendor.sellers.$id.members.query>,
     "$id"
   >,
-  // `InferClientOutput` resolves to `unknown` for this route due to a
-  // pre-existing dual-package hazard (see README §14) splitting the SDK's
-  // type resolution — use the real backend response shape directly instead.
-  options?: UseQueryOptions<
-    unknown,
-    ClientError,
-    HttpTypes.VendorSellerMemberListResponse
+  options?: Omit<
+    UseQueryOptions<
+      InferClientOutput<typeof sdk.vendor.sellers.$id.members.query>,
+      ClientError,
+      InferClientOutput<typeof sdk.vendor.sellers.$id.members.query>
+    >,
+    "queryKey" | "queryFn"
   >,
 ) => {
   const { data, ...rest } = useQuery({
@@ -102,17 +98,15 @@ export const useSellerMembers = (
   };
 };
 
-type MeResponse = InferClientOutput<typeof sdk.vendor.members.me.query>
-
 export const useMember = (id: string) => {
-  const meResult = useMe() as MeResponse
+  const meResult = useMe()
   const sellerId = meResult.seller_member?.seller_id ?? ""
 
   const membersResult = useSellerMembers(
     sellerId,
     {},
     { enabled: !!sellerId && !!id }
-  ) as HttpTypes.VendorSellerMemberListResponse
+  )
 
   const sellerMember = (membersResult.seller_members ?? []).find(
     (m) => m.member_id === id

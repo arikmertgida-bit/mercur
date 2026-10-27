@@ -1,9 +1,5 @@
 import { HttpTypes } from "@medusajs/types"
-import {
-  ColumnDef,
-  ColumnDefBase,
-  createColumnHelper,
-} from "@tanstack/react-table"
+import { TableOptions, createColumnHelper } from "@tanstack/react-table"
 import { useMemo } from "react"
 import {
   DateCell,
@@ -30,8 +26,9 @@ import {
   TotalHeader,
 } from "../../../components/table/table-cells/order/total-cell"
 
-// We have to use any here, as the type of Order is so complex that it lags the TS server
 const columnHelper = createColumnHelper<HttpTypes.AdminOrder>()
+
+type OrderColumn = TableOptions<HttpTypes.AdminOrder>["columns"][number]
 
 type UseOrderTableColumnsProps = {
   exclude?: string[]
@@ -40,14 +37,14 @@ type UseOrderTableColumnsProps = {
 export const useOrderTableColumns = (props: UseOrderTableColumnsProps) => {
   const { exclude = [] } = props ?? {}
 
-  const columns = useMemo(
+  const columns = useMemo<TableOptions<HttpTypes.AdminOrder>["columns"]>(
     () => [
       columnHelper.accessor("display_id", {
         header: () => <DisplayIdHeader />,
         cell: ({ getValue }) => {
           const id = getValue()
 
-          return <DisplayIdCell displayId={id!} />
+          return <DisplayIdCell displayId={id} />
         },
       }),
       columnHelper.accessor("created_at", {
@@ -109,31 +106,13 @@ export const useOrderTableColumns = (props: UseOrderTableColumnsProps) => {
     []
   )
 
-  const isAccessorColumnDef = (
-    c: ColumnDefBase<HttpTypes.AdminOrder, never>
-  ): c is ColumnDef<HttpTypes.AdminOrder> & { accessorKey: string } => {
-    return (c as { accessorKey?: string }).accessorKey !== undefined
-  }
-
-  const isDisplayColumnDef = (
-    c: ColumnDefBase<HttpTypes.AdminOrder, never>
-  ): c is ColumnDef<HttpTypes.AdminOrder> & { id: string } => {
-    return (c as { id?: string }).id !== undefined
-  }
-
-  const shouldExclude = <TDef extends ColumnDefBase<HttpTypes.AdminOrder, never>>(
-    c: TDef
-  ) => {
-    if (isAccessorColumnDef(c)) {
+  const shouldExclude = (c: OrderColumn) => {
+    if ("accessorKey" in c && typeof c.accessorKey === "string") {
       return exclude.includes(c.accessorKey)
-    } else if (isDisplayColumnDef(c)) {
-      return exclude.includes(c.id)
     }
 
-    return false
+    return c.id !== undefined && exclude.includes(c.id)
   }
 
-  return columns.filter(
-    (c) => !shouldExclude(c)
-  ) as ColumnDef<HttpTypes.AdminOrder>[]
+  return columns.filter((c) => !shouldExclude(c))
 }

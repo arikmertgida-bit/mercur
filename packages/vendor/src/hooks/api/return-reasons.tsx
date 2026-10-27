@@ -20,7 +20,7 @@ export const useReturnReasons = (
   query?: InferClientInput<typeof sdk.vendor.returnReasons.query>,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.returnReasons.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.returnReasons.query>
     >,

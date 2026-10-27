@@ -2,8 +2,9 @@ import { getLinkQuery } from "@mercurjs/dashboard-shared";
 import { LoaderFunctionArgs } from "react-router-dom";
 
 import { categoriesQueryKeys } from "@hooks/api/categories";
-import { fetchQuery } from "@lib/client";
+import { sdk } from "@lib/client";
 import { queryClient } from "@lib/query-client";
+import { getRequiredParam } from "@lib/route-params";
 
 const categoryDetailQuery = (id: string) => {
   const query = getLinkQuery("category");
@@ -11,16 +12,12 @@ const categoryDetailQuery = (id: string) => {
   return {
     queryKey: categoriesQueryKeys.detail(id, query),
     queryFn: async () =>
-      fetchQuery(`/vendor/product-categories/${id}`, {
-        method: "GET",
-        query,
-      }),
+      sdk.vendor.productCategories.$id.query({ $id: id, ...query }),
   };
 };
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
-  const id = params.id;
-  const query = categoryDetailQuery(id!);
+  const query = categoryDetailQuery(getRequiredParam(params, "id"));
 
   return queryClient.ensureQueryData(query);
 };

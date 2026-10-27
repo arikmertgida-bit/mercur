@@ -1,20 +1,21 @@
+import { useRequiredParam } from "@mercurjs/dashboard-shared"
 // Route: /inventory/:id/metadata
-import { useParams } from "react-router-dom"
 import { useInventoryItem, useUpdateInventoryItem } from "@hooks/api"
 import { MetadataForm } from "@components/forms/metadata-form"
 import { RouteDrawer } from "@components/modals"
-type FetchError = Error & { status?: number }
+import type { ClientError } from "@mercurjs/client"
+import type { JsonRecord } from "@mercurjs/types"
 
 export const Component = () => {
-  const { id } = useParams()
-  const { inventory_item, isPending, isError, error } = useInventoryItem(id!)
-  const { mutateAsync, isPending: isMutating } = useUpdateInventoryItem(id!)
+  const id = useRequiredParam("id")
+  const { inventory_item, isPending, isError, error } = useInventoryItem(id)
+  const { mutateAsync, isPending: isMutating } = useUpdateInventoryItem(id)
 
   if (isError) throw error
 
   const handleUpdate = async (
-    params: { metadata?: Record<string, any> | null },
-    callbacks: { onSuccess: () => void; onError: (error: FetchError) => void }
+    params: { metadata?: JsonRecord | null },
+    callbacks: { onSuccess: () => void; onError: (error: ClientError) => void }
   ) => {
     return mutateAsync({ metadata: params.metadata ?? undefined }, callbacks)
   }

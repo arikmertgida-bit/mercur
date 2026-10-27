@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod"
-import { HttpTypes, InventoryLevelDTO } from "@medusajs/types"
+import { HttpTypes } from "@medusajs/types"
 import { Button, Input, Text, toast } from "@medusajs/ui"
 import { useForm, useWatch } from "react-hook-form"
 import { useTranslation } from "react-i18next"
@@ -10,13 +10,13 @@ import { RouteDrawer, useRouteModal } from "@components/modals"
 import { KeyboundForm } from "@components/utilities/keybound-form"
 import { useUpdateInventoryLevel } from "@hooks/api/inventory"
 import { castNumber } from "@lib/cast-number"
-import { VendorExtendedAdminStockLocation } from "@custom-types/stock-location"
+import type { HttpTypes as VendorHttpTypes } from "@mercurjs/types"
 import { sanitizeNumberInput } from "@lib/sanitize-number-input"
 
 type AdjustInventoryFormProps = {
   item: HttpTypes.AdminInventoryItem
-  level: InventoryLevelDTO
-  location: VendorExtendedAdminStockLocation
+  level: HttpTypes.AdminInventoryLevel
+  location: VendorHttpTypes.VendorStockLocation
 }
 
 const AttributeGridRow = ({
@@ -126,7 +126,7 @@ export const AdjustInventoryForm = ({
               title={t("fields.title")}
               value={item.title ?? "-"}
             />
-            <AttributeGridRow title={t("fields.sku")} value={item.sku!} />
+            <AttributeGridRow title={t("fields.sku")} value={item.sku ?? "-"} />
             <AttributeGridRow
               title={t("locations.domain")}
               value={location.name}

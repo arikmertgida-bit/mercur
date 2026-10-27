@@ -6,10 +6,11 @@ import { IconButton, Input, Text } from "@medusajs/ui"
 import { UseFormReturn } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
-import { Action, ActionMenu } from "@components/common/action-menu"
+import { ActionMenu } from "@components/common/action-menu"
+import { isTruthy } from "@lib/is-truthy"
 import { Form } from "@components/common/form"
 import { Thumbnail } from "@components/common/thumbnail"
-import { Combobox } from "@components/inputs/combobox"
+import { Combobox, getSingleComboboxValue } from "@components/inputs/combobox"
 import { MoneyAmountCell } from "@components/table/table-cells/common/money-amount-cell"
 import { useReturnReasons } from "@hooks/api/return-reasons"
 import {
@@ -19,20 +20,12 @@ import {
 
 import { CreateExchangeSchemaType } from "./schema"
 
-type ReturnReason = {
-  id: string
-  label?: string | null
-  value?: string | null
-}
+type ExchangePreviewItem = HttpTypes.AdminOrderLinePreview
 
-// The admin's `AdminOrderLinePreview` is the change-preview shape that
-// carries `return_requested_total` and `adjustments` (applied promotions).
-// Mercur's `@medusajs/types@2.13.4` doesn't expose that as a named export
-// so we describe the few fields we actually read locally.
-type ExchangePreviewItem = {
-  return_requested_total?: number
-  adjustments?: Array<{ code?: string | null }>
-}
+export type ExchangeInboundItemUpdate = Pick<
+  HttpTypes.AdminUpdateReturnItems,
+  "quantity" | "reason_id" | "internal_note"
+>
 
 type ExchangeInboundItemProps = {
   item: AdminOrderLineItem
@@ -47,7 +40,7 @@ type ExchangeInboundItemProps = {
   locationName?: string | null
 
   onRemove: () => void
-  onUpdate: (payload: HttpTypes.AdminUpdateReturnItems) => void
+  onUpdate: (payload: ExchangeInboundItemUpdate) => void
 
   form: UseFormReturn<CreateExchangeSchemaType>
 }
@@ -81,7 +74,7 @@ function ExchangeInboundItem({
     { fields: "+label" },
     { enabled: reasonsGate.allowed }
   )
-  const returnReasons = return_reasons as ReturnReason[]
+  const returnReasons = return_reasons
 
   const formItem = form.watch(`inbound_items.${index}`)
   const showReturnReason = typeof formItem?.reason_id === "string"
@@ -187,7 +180,7 @@ function ExchangeInboundItem({
                     onClick: onRemove,
                     icon: <XCircle />,
                   },
-                ].filter(Boolean) as Action[],
+                ].filter(isTruthy),
               },
             ]}
           />
@@ -196,7 +189,7 @@ function ExchangeInboundItem({
 
       {locationName && quantity > 0 && (
         <ExchangeRestockPreview
-          item={item as LineItemShape}
+          item={item}
           quantity={quantity}
           locationName={locationName}
         />
@@ -229,7 +222,8 @@ function ExchangeInboundItem({
                             <Combobox
                               className="bg-ui-bg-field-component hover:bg-ui-bg-field-component-hover"
                               value={value ?? undefined}
-                              onChange={(v) => {
+                              onChange={(next) => {
+                                const v = getSingleComboboxValue(next)
                                 onUpdate({ reason_id: v ?? null })
                                 onChange(v)
                               }}

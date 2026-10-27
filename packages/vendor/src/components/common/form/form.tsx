@@ -21,6 +21,7 @@ import {
   FieldPath,
   FieldValues,
   FormProvider,
+  UseFormGetFieldState,
   useFormContext,
   useFormState,
 } from "react-hook-form"
@@ -35,9 +36,7 @@ type FormFieldContextValue<
   name: TName
 }
 
-const FormFieldContext = createContext<FormFieldContextValue>(
-  {} as FormFieldContextValue
-)
+const FormFieldContext = createContext<FormFieldContextValue | null>(null)
 
 const Field = <
   TFieldValues extends FieldValues = FieldValues,
@@ -58,27 +57,32 @@ type FormItemContextValue = {
   id: string
 }
 
-const FormItemContext = createContext<FormItemContextValue>(
-  {} as FormItemContextValue
-)
+const FormItemContext = createContext<FormItemContextValue | null>(null)
+
+/** The state of a field that is not registered (outside a `Form.Field`). */
+const EMPTY_FIELD_STATE: ReturnType<UseFormGetFieldState<FieldValues>> = {
+  invalid: false,
+  isDirty: false,
+  isTouched: false,
+  isValidating: false,
+  error: undefined,
+}
 
 const useFormField = () => {
   const fieldContext = useContext(FormFieldContext)
   const itemContext = useContext(FormItemContext)
   const { getFieldState } = useFormContext()
 
-  const formState = useFormState({ name: fieldContext.name })
-  const fieldState = getFieldState(fieldContext.name, formState)
+  const formState = useFormState({ name: fieldContext?.name })
+  const fieldState = fieldContext
+    ? getFieldState(fieldContext.name, formState)
+    : EMPTY_FIELD_STATE
 
-  if (!fieldContext) {
-    throw new Error("useFormField should be used within a FormField")
-  }
-
-  const { id } = itemContext
+  const id = itemContext?.id
 
   return {
     id,
-    name: fieldContext.name,
+    name: fieldContext?.name,
     formItemId: `${id}-form-item`,
     formLabelId: `${id}-form-item-label`,
     formDescriptionId: `${id}-form-item-description`,

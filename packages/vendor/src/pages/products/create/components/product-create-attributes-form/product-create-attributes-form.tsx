@@ -15,6 +15,7 @@ import {
   Textarea,
 } from "@medusajs/ui"
 import { AttributeType, ProductAttributeDTO } from "@mercurjs/types"
+import { getEmptyAttributeValue } from "../../../common/utils/attribute-type"
 import { useEffect } from "react"
 import {
   Controller,
@@ -407,7 +408,7 @@ const SelectedAttributes = ({
       data-testid="product-create-selected-attributes-list"
     >
       {entries.map(({ field, index }) => {
-        const attrType = field.type as AttributeType | undefined
+        const attrType = field.type
         const availableValues = field.available_values ?? []
 
         return (
@@ -625,12 +626,7 @@ const RequiredAttributes = ({
       return {
         attribute_id: attr.id,
         title: attr.name,
-        values:
-          attr.type === AttributeType.MULTI_SELECT
-            ? ([] as string[])
-            : attr.type === AttributeType.TOGGLE
-              ? "false"
-              : "",
+        values: getEmptyAttributeValue(attr.type),
         is_custom: false,
         is_required: true,
         use_for_variants: attr.is_variant_axis,
@@ -780,7 +776,7 @@ const RequiredAttributeField = ({
               <Switch
                 {...field}
                 className="rtl:rotate-180"
-                checked={value === "true" || (value as unknown) === true}
+                checked={value === "true"}
                 onCheckedChange={(checked) => onChange(String(checked))}
               />
             ) : (

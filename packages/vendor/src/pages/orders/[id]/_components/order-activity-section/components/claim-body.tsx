@@ -14,7 +14,7 @@ export const ClaimBody = ({
   const { t } = useTranslation()
 
   const outboundItems = (claim.additional_items || []).reduce(
-    (acc, item) => (acc + item.quantity) as number,
+    (acc, item) => acc + item.quantity,
     0
   )
 

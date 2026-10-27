@@ -11,3 +11,5 @@ export const ReceiveReturnSchema = z.object({
   ),
   send_notification: z.boolean().optional(),
 })
+
+export type ReceiveReturnSchemaType = z.infer<typeof ReceiveReturnSchema>

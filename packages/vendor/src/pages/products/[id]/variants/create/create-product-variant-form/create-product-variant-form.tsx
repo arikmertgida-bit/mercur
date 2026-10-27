@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { z } from "zod"
 
-import { HttpTypes } from "@medusajs/types"
 import { AttributeType, MercurFeatureFlags, ProductDTO } from "@mercurjs/types"
 
 import { Form } from "@components/common/form"
@@ -22,7 +21,7 @@ export type CreateProductVariantSchemaType = z.infer<
 >
 
 type CreateProductVariantFormProps = {
-  product: HttpTypes.AdminProduct
+  product: ProductDTO
 }
 
 export const CreateProductVariantForm = ({
@@ -37,9 +36,7 @@ export const CreateProductVariantForm = ({
     !!feature_flags?.[MercurFeatureFlags.PRODUCT_REQUEST]
 
   const variantAttributes =
-    (
-      product as HttpTypes.AdminProduct & Pick<ProductDTO, "attributes">
-    ).attributes?.filter((a) => a.is_variant_axis) ?? []
+    product.attributes?.filter((a) => a.is_variant_axis) ?? []
 
   // Seed every variant-axis option with an empty value so the required
   // validation fires for untouched selects (an empty record would pass).

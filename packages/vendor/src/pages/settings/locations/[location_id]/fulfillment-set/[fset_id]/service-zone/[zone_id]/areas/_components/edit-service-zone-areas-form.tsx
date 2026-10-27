@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod"
-import { VendorExtendedAdminServiceZone } from "@custom-types/stock-location"
+import type { HttpTypes } from "@mercurjs/types"
 import { Button, Heading, toast } from "@medusajs/ui"
 import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
@@ -26,7 +26,7 @@ const EditeServiceZoneSchema = z.object({
 type EditServiceZoneAreasFormProps = {
   fulfillmentSetId: string
   locationId: string
-  zone: VendorExtendedAdminServiceZone
+  zone: HttpTypes.VendorServiceZone
 }
 
 export function EditServiceZoneAreasForm({
@@ -98,11 +98,11 @@ export function EditServiceZoneAreasForm({
                     name: zone.name,
                   })}
                 </Heading>
-                <GeoZoneForm form={form} />
+                <GeoZoneForm />
               </div>
             </div>
 
-            <GeoZoneForm.AreaDrawer form={form} />
+            <GeoZoneForm.AreaDrawer />
           </StackedFocusModal>
         </RouteFocusModal.Body>
         <RouteFocusModal.Footer>

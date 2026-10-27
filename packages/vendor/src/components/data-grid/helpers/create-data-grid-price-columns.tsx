@@ -1,4 +1,4 @@
-import { HttpTypes } from "@medusajs/types"
+import { HttpTypes } from "@mercurjs/types"
 import { ColumnDef } from "@tanstack/react-table"
 import { TFunction } from "i18next"
 import { FieldPath, FieldValues } from "react-hook-form"
@@ -10,7 +10,7 @@ import { createDataGridHelper } from "./create-data-grid-column-helper"
 
 type CreateDataGridPriceColumnsProps<
   TData,
-  TFieldValues extends FieldValues
+  TFieldValues extends FieldValues,
 > = {
   currencies?: string[]
   regions?: HttpTypes.AdminRegion[]
@@ -18,14 +18,14 @@ type CreateDataGridPriceColumnsProps<
   isReadyOnly?: (context: FieldContext<TData>) => boolean
   getFieldName: (
     context: FieldContext<TData>,
-    value: string
+    value: string,
   ) => FieldPath<TFieldValues> | null
   t: TFunction
 }
 
 export const createDataGridPriceColumns = <
   TData,
-  TFieldValues extends FieldValues
+  TFieldValues extends FieldValues,
 >({
   currencies,
   regions,
@@ -33,16 +33,13 @@ export const createDataGridPriceColumns = <
   isReadyOnly,
   getFieldName,
   t,
-}: CreateDataGridPriceColumnsProps<TData, TFieldValues>): ColumnDef<
-  TData,
-  unknown
->[] => {
+}: CreateDataGridPriceColumnsProps<TData, TFieldValues>): ColumnDef<TData>[] => {
   const columnHelper = createDataGridHelper<TData, TFieldValues>()
 
   return [
     ...(currencies?.map((currency) => {
       const preference = pricePreferences?.find(
-        (p) => p.attribute === "currency_code" && p.value === currency
+        (p) => p.attribute === "currency_code" && p.value === currency,
       )
 
       const translatedCurrencyName = t("fields.priceTemplate", {
@@ -83,7 +80,7 @@ export const createDataGridPriceColumns = <
     }) ?? []),
     ...(regions?.map((region) => {
       const preference = pricePreferences?.find(
-        (p) => p.attribute === "region_id" && p.value === region.id
+        (p) => p.attribute === "region_id" && p.value === region.id,
       )
 
       const translatedRegionName = t("fields.priceTemplate", {

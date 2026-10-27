@@ -1,16 +1,44 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef } from "react"
 
 import { Plus } from "@medusajs/icons"
+import type { JsonValue } from "@mercurjs/types"
 import { Controller, ControllerRenderProps } from "react-hook-form"
+import { z } from "zod"
 
+import { useCombinedRefs } from "../../../hooks/use-combined-refs"
 import { Thumbnail } from "../../common/thumbnail"
 import { useDataGridCell, useDataGridCellError } from "../hooks"
-import { DataGridCellProps, InputProps, MediaData } from "../types"
+import {
+  DataGridCellProps,
+  DataGridFormValues,
+  InputProps,
+  MediaData,
+} from "../types"
 import { DataGridCellContainer } from "./data-grid-cell-container"
 
 export type { MediaData }
 
-export const DataGridMediaCell = <TData, TValue = MediaData[]>({
+/**
+ * The grid exposes form values as JSON, but a media cell's form value is the
+ * product form's media list, whose entries may still carry the selected
+ * `File` before upload — so the value is validated against that shape.
+ */
+const MediaListSchema: z.ZodType<MediaData[]> = z.array(
+  z.object({
+    id: z.string().optional(),
+    url: z.string(),
+    isThumbnail: z.boolean(),
+    file: z.instanceof(File).nullish(),
+  })
+)
+
+const toMediaList = (value: JsonValue): MediaData[] => {
+  const parsed = MediaListSchema.safeParse(value)
+
+  return parsed.success ? parsed.data : []
+}
+
+export const DataGridMediaCell = <TData, TValue = JsonValue>({
   context,
   onOpenMediaModal,
   disabled,
@@ -106,7 +134,7 @@ const Inner = ({
   inputProps,
   disabled,
 }: {
-  field: ControllerRenderProps<any, string>
+  field: ControllerRenderProps<DataGridFormValues, string>
   inputProps: InputProps
   disabled?: boolean
 }) => {
@@ -118,16 +146,14 @@ const Inner = ({
     onFocus,
   } = inputProps
 
-  const [localValue, setLocalValue] = useState<MediaData[]>(value || [])
-
-  useEffect(() => {
-    setLocalValue(value || [])
-  }, [value])
+  const localValue = toMediaList(value)
 
   const combinedRef = useCombinedRefs(inputRef, ref)
 
+  // The cell never edits the list itself (the media modal writes the form
+  // directly), so blurring commits the current value unchanged.
   const handleOnChange = () => {
-    onChange(localValue, value)
+    onChange(value, value)
   }
 
   const hasMedia = localValue && localValue.length > 0
@@ -185,18 +211,4 @@ const Inner = ({
       </div>
     </div>
   )
-}
-
-function useCombinedRefs<T extends HTMLElement>(
-  ...refs: React.Ref<T>[]
-): React.Ref<T> {
-  return (value: T | null) => {
-    refs.forEach((ref) => {
-      if (typeof ref === "function") {
-        ref(value)
-      } else if (ref) {
-        ;(ref as React.MutableRefObject<T | null>).current = value
-      }
-    })
-  }
 }

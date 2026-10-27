@@ -1,16 +1,15 @@
 import { ColumnDef, Row } from "@tanstack/react-table"
-import { FieldValues } from "react-hook-form"
 import {
+  createDataGridColumnMetaSchema,
   DataGridColumnType,
   DataGridCoordinates,
   Grid,
   GridCell,
-  InternalColumnMeta,
 } from "../types"
 
-export class DataGridMatrix<TData, TFieldValues extends FieldValues> {
+export class DataGridMatrix<TData> {
   private multiColumnSelection: boolean
-  private cells: Grid<TFieldValues>
+  private cells: Grid
   public rowAccessors: (string | null)[] = []
   public columnAccessors: (string | null)[] = []
 
@@ -93,8 +92,12 @@ export class DataGridMatrix<TData, TFieldValues extends FieldValues> {
 
     for (let row = startRow; row <= endRow; row++) {
       for (let col = startCol; col <= endCol; col++) {
-        if (this._isValidPosition(row, col) && this.cells[row][col] !== null) {
-          keys.push(this.cells[row][col]?.field as string)
+        const cell = this._isValidPosition(row, col)
+          ? this.cells[row][col]
+          : null
+
+        if (cell) {
+          keys.push(cell.field)
         }
       }
     }
@@ -230,7 +233,7 @@ export class DataGridMatrix<TData, TFieldValues extends FieldValues> {
     const cells = this.cells[row]
 
     const nonNullFields = cells
-      .filter((cell): cell is GridCell<TFieldValues> => cell !== null)
+      .filter((cell): cell is GridCell => cell !== null)
       .map((cell) => cell.field.split("."))
 
     if (nonNullFields.length === 0) {
@@ -326,7 +329,7 @@ export class DataGridMatrix<TData, TFieldValues extends FieldValues> {
   private _isValidPosition(
     row: number,
     col: number,
-    cells?: Grid<TFieldValues>
+    cells?: Grid
   ): boolean {
     if (!cells) {
       cells = this.cells
@@ -377,9 +380,10 @@ export class DataGridMatrix<TData, TFieldValues extends FieldValues> {
   }
 
   private _populateCells(rows: Row<TData>[], columns: ColumnDef<TData>[]) {
-    const cells = Array.from({ length: rows.length }, () =>
-      Array(columns.length).fill(null)
-    ) as Grid<TFieldValues>
+    const cells: Grid = Array.from({ length: rows.length }, () =>
+      Array.from({ length: columns.length }, () => null)
+    )
+    const metaSchema = createDataGridColumnMetaSchema<TData>()
 
     rows.forEach((row, rowIndex) => {
       columns.forEach((column, colIndex) => {
@@ -387,24 +391,17 @@ export class DataGridMatrix<TData, TFieldValues extends FieldValues> {
           return
         }
 
-        const {
-          name: _,
-          field,
-          type,
-          ...rest
-        } = column.meta as InternalColumnMeta<TData, TFieldValues>
+        const meta = metaSchema.safeParse(column.meta ?? {})
 
-        const context = {
-          row,
-          column: {
-            ...column,
-            meta: rest,
-          },
+        if (!meta.success) {
+          return
         }
 
-        const fieldValue = field ? field(context) : null
+        const { field, type } = meta.data
 
-        if (!fieldValue || !type) {
+        const fieldValue = field ? field({ row, column }) : null
+
+        if (typeof fieldValue !== "string" || !fieldValue || !type) {
           return
         }
 

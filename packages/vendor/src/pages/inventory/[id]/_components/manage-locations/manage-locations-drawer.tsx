@@ -1,8 +1,7 @@
 import { Heading } from "@medusajs/ui";
-import { SectionNoAccess, useCan } from "@mercurjs/dashboard-shared";
+import { SectionNoAccess, useCan, useRequiredParam } from "@mercurjs/dashboard-shared";
 import { useTranslation } from "react-i18next";
 
-import { useParams } from "react-router-dom";
 import { RouteDrawer } from "@components/modals";
 import { useInventoryItem } from "@hooks/api/inventory";
 import { useStockLocations } from "@hooks/api/stock-locations";
@@ -10,7 +9,7 @@ import { ManageLocationsForm } from "./components/manage-locations-form";
 import { INVENTORY_DETAIL_FIELDS } from "../../constants";
 
 export const ManageLocationsDrawer = () => {
-  const { id } = useParams();
+  const id = useRequiredParam("id");
   const { t } = useTranslation();
 
   const {
@@ -18,7 +17,7 @@ export const ManageLocationsDrawer = () => {
     isPending: isLoading,
     isError,
     error,
-  } = useInventoryItem(id!, {
+  } = useInventoryItem(id, {
     fields: INVENTORY_DETAIL_FIELDS,
   });
 

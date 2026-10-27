@@ -9,7 +9,7 @@ type PromotionDetailBreadcrumbProps = UIMatch<HttpTypes.AdminPromotionResponse>;
 export const Breadcrumb = (props: PromotionDetailBreadcrumbProps) => {
   const { id } = props.params || {};
   const linkQuery = useLinkQuery("promotion", "+status");
-  const { promotion } = usePromotion(id!, linkQuery, {
+  const { promotion } = usePromotion(id ?? "", linkQuery, {
     initialData: props.data,
     enabled: Boolean(id),
   });

@@ -74,7 +74,7 @@ const createBranchRoute = (segment: string): RouteObject => ({
 const createLeafRoute = (
     Component: ComponentType,
     loader?: LoaderFunction,
-    handle?: object,
+    handle?: RouteHandle,
     path: string = "",
     withErrorBoundary: boolean = true
 ): RouteObject => ({
@@ -84,7 +84,7 @@ const createLeafRoute = (
         const result: {
             Component: ComponentType
             loader?: LoaderFunction
-            handle?: object
+            handle?: RouteHandle
         } = { Component }
 
         if (loader) {
@@ -108,14 +108,14 @@ const createParallelRoute = (
     path: string,
     Component: ComponentType,
     loader?: LoaderFunction,
-    handle?: object
-) => ({
+    handle?: RouteHandle
+): RouteObject => ({
     path,
     async lazy() {
         const result: {
             Component: ComponentType
             loader?: LoaderFunction
-            handle?: object
+            handle?: RouteHandle
         } = { Component }
 
         if (loader) {
@@ -147,7 +147,7 @@ const processParallelRoutes = (
             }
             return createParallelRoute(childPath, Component, loader, handle)
         })
-        .filter(Boolean) as RouteObject[]
+        .filter((route) => route !== null)
 }
 
 /**
@@ -163,7 +163,7 @@ const addRoute = (
     Component: ComponentType,
     currentLevel: RouteObject[],
     loader?: LoaderFunction,
-    handle?: object,
+    handle?: RouteHandle,
     parallelRoutes?: Route[],
     fullPath?: string,
     componentPath?: string

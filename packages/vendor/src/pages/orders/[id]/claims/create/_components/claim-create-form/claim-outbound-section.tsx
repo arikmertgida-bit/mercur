@@ -254,14 +254,14 @@ export const ClaimOutboundSection = ({
                 })
               }
             }}
-            onUpdate={(payload: HttpTypes.AdminUpdateReturnItems) => {
+            onUpdate={(payload: Omit<HttpTypes.AdminUpdateReturnItems, "metadata">) => {
               const actionId = previewOutboundItems
                 .find((i) => i.id === item.item_id)
                 ?.actions?.find((a) => a.action === "ITEM_ADD")?.id
 
               if (actionId) {
                 updateOutboundItem(
-                  { actionId, ...payload } as never,
+                  { actionId, ...payload },
                   {
                     onError: (error) => {
                       toast.error(error.message)

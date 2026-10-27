@@ -1,19 +1,59 @@
 import { HttpTypes } from "@medusajs/types";
+import type { JsonValue } from "@mercurjs/types";
+import { z } from "zod";
 
-import type { Filter } from "../../../components/table/data-table";
 import { useQueryParams } from "../../use-query-params";
+
+// The parts of a table filter (built-in or contributed by a custom-fields
+// config) that decide how its query param is read.
+type ExtraFilter = {
+  key: string;
+  type?: string;
+  multiple?: boolean;
+};
 
 type UseOrderTableQueryProps = {
   prefix?: string;
   pageSize?: number;
-  extraFilters?: Filter[];
+  extraFilters?: ExtraFilter[];
 };
 
 type VendorOrderFilters = HttpTypes.AdminOrderFilters & {
   status?: string[];
   customer_id?: string[];
   request?: string[];
-  [key: string]: unknown;
+};
+
+// Query params a custom-fields filter writes, keyed by the filter's `key`.
+type ExtraFilterParams = Record<string, JsonValue>;
+
+// Date and number filters are stored as JSON in the URL; a hand-edited or
+// truncated value is ignored instead of crashing the page.
+const parseJsonParam = (value: string): JsonValue | undefined => {
+  try {
+    const parsed: JsonValue = JSON.parse(value);
+    return parsed;
+  } catch {
+    return undefined;
+  }
+};
+
+// The comparisons the date filter writes.
+const DateComparisonSchema = z.object({
+  $gte: z.string().optional(),
+  $lte: z.string().optional(),
+  $gt: z.string().optional(),
+  $lt: z.string().optional(),
+});
+
+const parseDateParam = (
+  value: string | undefined
+): z.infer<typeof DateComparisonSchema> | undefined => {
+  if (!value) {
+    return undefined;
+  }
+  const parsed = DateComparisonSchema.safeParse(parseJsonParam(value));
+  return parsed.success ? parsed.data : undefined;
 };
 
 const BASE_KEYS = [
@@ -61,27 +101,32 @@ export const useOrderTableQuery = ({
     customer_id: customer_id?.split(","),
     status: status?.split(","),
     request: request?.split(","),
-    created_at: created_at ? JSON.parse(created_at) : undefined,
-    updated_at: updated_at ? JSON.parse(updated_at) : undefined,
+    created_at: parseDateParam(created_at),
+    updated_at: parseDateParam(updated_at),
     order: order ? order : "-display_id",
     q,
   };
+
+  const extraParams: ExtraFilterParams = {};
 
   for (const filter of extraFilters) {
     const value = queryObject[filter.key];
     if (!value || BASE_KEYS.includes(filter.key)) {
       continue;
     }
-    searchParams[filter.key] =
+    const parsed =
       filter.type === "date" || filter.type === "number"
-        ? JSON.parse(value)
+        ? parseJsonParam(value)
         : filter.type === "select" && filter.multiple
           ? value.split(",")
           : value;
+    if (parsed !== undefined) {
+      extraParams[filter.key] = parsed;
+    }
   }
 
   return {
-    searchParams,
+    searchParams: { ...extraParams, ...searchParams },
     raw: queryObject,
   };
 };

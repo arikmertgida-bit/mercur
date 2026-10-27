@@ -98,12 +98,15 @@ export const getFormattedAddress = ({
   }
 
   if (country) {
-    formattedAddress.push(
+    const countryName =
       getLocalizedCountryName(
         { iso_2: country_code, display_name: country.display_name },
         locale,
-      ) ?? country.display_name!,
-    )
+      ) ?? country.display_name
+
+    if (countryName) {
+      formattedAddress.push(countryName)
+    }
   } else if (country_code) {
     const country = getCountryByIso2(country_code)
 

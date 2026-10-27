@@ -1,4 +1,4 @@
-import { VendorExtendedAdminServiceZone } from "@custom-types/stock-location"
+import type { HttpTypes } from "@mercurjs/types"
 import { Button, InlineTip, Input, toast } from "@medusajs/ui"
 import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
@@ -10,7 +10,7 @@ import { KeyboundForm } from "@components/utilities/keybound-form"
 import { useUpdateFulfillmentSetServiceZone } from "@hooks/api/fulfillment-sets"
 
 type EditServiceZoneFormProps = {
-  zone: VendorExtendedAdminServiceZone
+  zone: HttpTypes.VendorServiceZone
   fulfillmentSetId: string
   locationId: string
 }

@@ -1,11 +1,11 @@
-import { HttpTypes } from "@medusajs/types"
+import { HttpTypes } from "@mercurjs/types"
 import { UIMatch } from "react-router-dom"
 
 import { useStockLocation } from "@hooks/api/stock-locations"
 import { LOCATION_DETAILS_FIELD } from "./constants"
 
 type LocationDetailBreadcrumbProps =
-  UIMatch<HttpTypes.AdminStockLocationResponse>
+  UIMatch<HttpTypes.VendorStockLocationResponse>
 
 export const LocationDetailBreadcrumb = (
   props: LocationDetailBreadcrumbProps
@@ -13,7 +13,7 @@ export const LocationDetailBreadcrumb = (
   const { location_id } = props.params || {}
 
   const { stock_location } = useStockLocation(
-    location_id!,
+    location_id ?? "",
     {
       fields: LOCATION_DETAILS_FIELD,
     },

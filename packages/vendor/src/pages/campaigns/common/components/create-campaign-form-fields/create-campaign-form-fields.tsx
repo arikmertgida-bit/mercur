@@ -10,13 +10,13 @@ import {
   Textarea,
 } from "@medusajs/ui"
 import { useEffect } from "react"
-import { Path, PathValue, UseFormReturn, useWatch } from "react-hook-form"
+import { useFormContext, useWatch } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
 import { toHandle } from "@mercurjs/dashboard-shared"
 
 import { Form } from "@components/common/form"
-import { Combobox } from "@components/inputs/combobox"
+import { Combobox, getSingleComboboxValue } from "@components/inputs/combobox"
 import { HandleInput } from "@components/inputs/handle-input"
 import { useCurrentSeller } from "@hooks/api/sellers"
 import {
@@ -24,87 +24,77 @@ import {
   getCurrencySymbol,
 } from "@lib/data/currencies"
 import { getLocalizedCurrencyName } from "@lib/format-currency-name"
-import { CampaignFormFields, WithNestedCampaign } from "@custom-types/campaign"
+import { CampaignFieldsFormValues } from "../../schema"
 
-
-type CreateCampaignFormFieldsProps<T extends CampaignFormFields | WithNestedCampaign> = {
-  form: UseFormReturn<T>
-  fieldScope?: string
+type CreateCampaignFormFieldsProps = {
+  /**
+   * Set when the campaign is created from the promotion flow: the budget
+   * currency then follows the promotion's currency instead of being picked.
+   */
+  syncPromotionCurrency?: boolean
 }
 
-export const CreateCampaignFormFields = <T extends CampaignFormFields | WithNestedCampaign>({ 
-  form, 
-  fieldScope = ""
-}: CreateCampaignFormFieldsProps<T>) => {
-  
+/**
+ * Renders inside the host form's RHF provider; the host keeps the campaign
+ * under `campaign` (see `CampaignFieldsFormValues`).
+ */
+export const CreateCampaignFormFields = ({
+  syncPromotionCurrency = false,
+}: CreateCampaignFormFieldsProps) => {
+  const form = useFormContext<CampaignFieldsFormValues>()
   const { t, i18n } = useTranslation()
   const { currency_code: sellerCurrencyCode } = useCurrentSeller()
 
-  const namePath = `${fieldScope}name` as Path<T>
-  const identifierPath = `${fieldScope}campaign_identifier` as Path<T>
-
   const watchNameValue = useWatch({
     control: form.control,
-    name: namePath,
+    name: "campaign.name",
   })
 
   useEffect(() => {
-    const handleValue = toHandle(
-      (watchNameValue as string | undefined) ?? ""
-    ) as PathValue<T, typeof identifierPath>
-
-    form.setValue(identifierPath, handleValue, {
+    form.setValue("campaign.campaign_identifier", toHandle(watchNameValue ?? ""), {
       shouldValidate: true,
       shouldDirty: false,
     })
-  }, [watchNameValue, identifierPath, form])
+  }, [watchNameValue, form])
 
   const watchValueType = useWatch({
     control: form.control,
-    name: `${fieldScope}budget.type` as Path<T>,
+    name: "campaign.budget.type",
   })
 
   const isTypeSpend = watchValueType === "spend"
 
   const currencyValue = useWatch({
     control: form.control,
-    name: `${fieldScope}budget.currency_code` as Path<T>,
+    name: "campaign.budget.currency_code",
   })
 
   const promotionCurrencyValue = useWatch({
     control: form.control,
-    name: `application_method.currency_code` as Path<T>,
+    name: "application_method.currency_code",
   })
 
   const currency = currencyValue || promotionCurrencyValue
 
   useEffect(() => {
-    form.resetField(`${fieldScope}budget.limit` as Path<T>)
+    form.resetField("campaign.budget.limit")
 
-    if (fieldScope) {
-      const currencyPath = `campaign.budget.currency_code` as Path<T>
-
-      if (isTypeSpend) {
-        form.setValue(
-          currencyPath,
-          promotionCurrencyValue as PathValue<T, typeof currencyPath>
-        )
-      } else {
-        form.setValue(currencyPath, null as PathValue<T, typeof currencyPath>)
-      }
+    if (syncPromotionCurrency) {
+      form.setValue(
+        "campaign.budget.currency_code",
+        isTypeSpend ? promotionCurrencyValue : null
+      )
     }
-  }, [watchValueType, fieldScope, form, isTypeSpend, promotionCurrencyValue])
+  }, [watchValueType, syncPromotionCurrency, form, isTypeSpend, promotionCurrencyValue])
 
-  if (promotionCurrencyValue && fieldScope) {
-    const formValues = form.getValues()
-    const budget = (formValues as WithNestedCampaign)?.campaign?.budget
+  if (promotionCurrencyValue && syncPromotionCurrency) {
+    const budget = form.getValues().campaign?.budget
 
     if (
       budget?.type === "spend" &&
       budget?.currency_code !== promotionCurrencyValue
     ) {
-      const currencyPath = "campaign.budget.currency_code" as Path<T>
-      form.setValue(currencyPath, promotionCurrencyValue)
+      form.setValue("campaign.budget.currency_code", promotionCurrencyValue)
     }
   }
 
@@ -122,14 +112,14 @@ export const CreateCampaignFormFields = <T extends CampaignFormFields | WithNest
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <Form.Field
             control={form.control}
-            name={namePath}
+            name="campaign.name"
             render={({ field }) => {
               return (
                 <Form.Item>
                   <Form.Label>{t("fields.name")}</Form.Label>
 
                   <Form.Control>
-                    <Input {...field} value={(field.value as string) ?? ""} />
+                    <Input {...field} value={field.value ?? ""} />
                   </Form.Control>
 
                   <Form.ErrorMessage />
@@ -140,7 +130,7 @@ export const CreateCampaignFormFields = <T extends CampaignFormFields | WithNest
 
           <Form.Field
             control={form.control}
-            name={identifierPath}
+            name="campaign.campaign_identifier"
             render={({ field }) => {
               return (
                 <Form.Item>
@@ -151,7 +141,7 @@ export const CreateCampaignFormFields = <T extends CampaignFormFields | WithNest
                   <Form.Control>
                     <HandleInput
                       {...field}
-                      value={(field.value as string) ?? ""}
+                      value={field.value ?? ""}
                       disabled
                       placeholder={t("campaigns.fields.identifierPlaceholder")}
                     />
@@ -166,14 +156,14 @@ export const CreateCampaignFormFields = <T extends CampaignFormFields | WithNest
 
         <Form.Field
           control={form.control}
-          name={`${fieldScope}description` as Path<T>}
+          name="campaign.description"
           render={({ field }) => {
             return (
               <Form.Item>
                 <Form.Label optional>{t("fields.description")}</Form.Label>
 
                 <Form.Control>
-                  <Textarea {...field} value={(field.value as string) ?? ""} />
+                  <Textarea {...field} value={field.value ?? ""} />
                 </Form.Control>
 
                 <Form.ErrorMessage />
@@ -186,7 +176,7 @@ export const CreateCampaignFormFields = <T extends CampaignFormFields | WithNest
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <Form.Field
           control={form.control}
-          name={`${fieldScope}starts_at` as Path<T>}
+          name="campaign.starts_at"
           render={({ field }) => {
             return (
               <Form.Item>
@@ -199,7 +189,6 @@ export const CreateCampaignFormFields = <T extends CampaignFormFields | WithNest
                     granularity="minute"
                     shouldCloseOnSelect={false}
                     {...field}
-                    value={field.value as Date | null | undefined}
                   />
                 </Form.Control>
 
@@ -211,7 +200,7 @@ export const CreateCampaignFormFields = <T extends CampaignFormFields | WithNest
 
         <Form.Field
           control={form.control}
-          name={`${fieldScope}ends_at` as Path<T>}
+          name="campaign.ends_at"
           render={({ field }) => {
             return (
               <Form.Item>
@@ -224,7 +213,6 @@ export const CreateCampaignFormFields = <T extends CampaignFormFields | WithNest
                     granularity="minute"
                     shouldCloseOnSelect={false}
                     {...field}
-                    value={field.value as Date | null | undefined}
                   />
                 </Form.Control>
 
@@ -246,13 +234,13 @@ export const CreateCampaignFormFields = <T extends CampaignFormFields | WithNest
 
       <Form.Field
         control={form.control}
-        name={`${fieldScope}budget.type` as Path<T>}
+        name="campaign.budget.type"
         render={({ field }) => {
           return (
             <Form.Item>
               <Form.Label
                 tooltip={
-                  fieldScope?.length && !currency
+                  syncPromotionCurrency && !currency
                     ? t("promotions.tooltips.campaignType")
                     : undefined
                 }
@@ -264,7 +252,6 @@ export const CreateCampaignFormFields = <T extends CampaignFormFields | WithNest
                 <RadioGroup
                   className="grid grid-cols-2 gap-4"
                   {...field}
-                  value={field.value as string}
                   onValueChange={field.onChange}
                 >
                   <RadioGroup.ChoiceBox
@@ -277,7 +264,7 @@ export const CreateCampaignFormFields = <T extends CampaignFormFields | WithNest
                     value={"spend"}
                     label={t("campaigns.budget.type.spend.title")}
                     description={t("campaigns.budget.type.spend.description")}
-                    disabled={fieldScope?.length ? !currency : false}
+                    disabled={syncPromotionCurrency ? !currency : false}
                   />
                 </RadioGroup>
               </Form.Control>
@@ -291,13 +278,13 @@ export const CreateCampaignFormFields = <T extends CampaignFormFields | WithNest
         {isTypeSpend && (
           <Form.Field
             control={form.control}
-            name={`${fieldScope}budget.currency_code` as Path<T>}
+            name="campaign.budget.currency_code"
             render={({ field: { onChange, ref, ...field } }) => {
               return (
                 <Form.Item>
                   <Form.Label
                     tooltip={
-                      fieldScope?.length && !currency
+                      syncPromotionCurrency && !currency
                         ? t("promotions.campaign_currency.tooltip")
                         : undefined
                     }
@@ -307,9 +294,9 @@ export const CreateCampaignFormFields = <T extends CampaignFormFields | WithNest
                   <Form.Control>
                     <Select
                       {...field}
-                      value={field.value as string}
+                      value={field.value ?? ""}
                       onValueChange={onChange}
-                      disabled={!!fieldScope?.length}
+                      disabled={syncPromotionCurrency}
                     >
                       <Select.Trigger ref={ref} className="w-full">
                         <Select.Value
@@ -348,7 +335,7 @@ export const CreateCampaignFormFields = <T extends CampaignFormFields | WithNest
 
         <Form.Field
           control={form.control}
-          name={`${fieldScope}budget.limit` as Path<T>}
+          name="campaign.budget.limit"
           render={({ field: { onChange, value, ...field } }) => {
             return (
               <Form.Item>
@@ -370,12 +357,12 @@ export const CreateCampaignFormFields = <T extends CampaignFormFields | WithNest
                       onValueChange={(value) =>
                         onChange(value ? parseInt(value) : "")
                       }
-                      code={currencyValue as string}
+                      code={currencyValue ?? ""}
                       symbol={
-                        currencyValue ? getCurrencySymbol(currencyValue as string) : ""
+                        currencyValue ? getCurrencySymbol(currencyValue) : ""
                       }
                       {...field}
-                      value={value as string | number | undefined}
+                      value={value ?? undefined}
                       disabled={!currency && isTypeSpend}
                     />
                   ) : (
@@ -384,7 +371,7 @@ export const CreateCampaignFormFields = <T extends CampaignFormFields | WithNest
                       key="usage"
                       {...field}
                       min={0}
-                      value={value as string | number | undefined ?? ""}
+                      value={value ?? ""}
                       onChange={(e) => {
                         onChange(
                           e.target.value === ""
@@ -404,7 +391,7 @@ export const CreateCampaignFormFields = <T extends CampaignFormFields | WithNest
         {!isTypeSpend && (
           <Form.Field
             control={form.control}
-            name={`${fieldScope}budget.attribute` as Path<T>}
+            name="campaign.budget.attribute"
             render={({ field }) => {
               return (
                 <Form.Item>
@@ -420,9 +407,9 @@ export const CreateCampaignFormFields = <T extends CampaignFormFields | WithNest
                       className="w-full"
                       key="attribute"
                       {...field}
-                      value={(field.value as string | undefined) ?? undefined}
-                      onChange={(e) => {
-                        field.onChange(typeof e === "undefined" ? null : e)
+                      value={field.value ?? ""}
+                      onChange={(next) => {
+                        field.onChange(getSingleComboboxValue(next) ?? null)
                       }}
                       allowClear
                       options={[

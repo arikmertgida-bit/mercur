@@ -156,7 +156,6 @@ export const EditProfileForm = () => {
             <FormExtensionZone
               model="member"
               zone="edit"
-              control={form.control}
               data={member}
             />
           </div>

@@ -1,3 +1,5 @@
+import type { JsonRecord } from "../json-record"
+
 export type UserType = "CUSTOMER" | "SELLER" | "ADMIN"
 export type MessageType = "TEXT" | "IMAGE" | "NOTIFICATION"
 export type ConversationType = "DIRECT" | "ADMIN_SUPPORT"
@@ -180,7 +182,7 @@ export interface MessengerContextValue {
     subject?: string
     productId?: string
     orderId?: string
-    metadata?: Record<string, unknown>
+    metadata?: JsonRecord
   }) => Promise<string>
   sendMessage: (content: string) => Promise<void>
   uploadImage: (file: File) => Promise<void>

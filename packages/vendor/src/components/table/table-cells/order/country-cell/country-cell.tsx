@@ -16,7 +16,9 @@ export const CountryCell = ({
 }) => {
   const { i18n } = useTranslation()
 
-  if (!country) {
+  const iso2 = country?.iso_2
+
+  if (!country || !iso2) {
     return <PlaceholderCell />
   }
 
@@ -27,7 +29,7 @@ export const CountryCell = ({
       <Tooltip content={localizedName}>
         <div className="flex size-4 items-center justify-center overflow-hidden rounded-sm">
           <ReactCountryFlag
-            countryCode={country.iso_2!.toUpperCase()}
+            countryCode={iso2.toUpperCase()}
             svg
             style={{
               width: "16px",

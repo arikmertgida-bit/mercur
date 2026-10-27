@@ -20,7 +20,7 @@ export const useShippingProfile = (
   >,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.shippingProfiles.$id.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.shippingProfiles.$id.query>
     >,
@@ -40,7 +40,7 @@ export const useShippingProfiles = (
   query?: InferClientInput<typeof sdk.vendor.shippingProfiles.query>,
   options?: Omit<
     UseQueryOptions<
-      unknown,
+      InferClientOutput<typeof sdk.vendor.shippingProfiles.query>,
       ClientError,
       InferClientOutput<typeof sdk.vendor.shippingProfiles.query>
     >,

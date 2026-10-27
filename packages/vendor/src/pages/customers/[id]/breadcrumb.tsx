@@ -1,13 +1,13 @@
-import { HttpTypes } from "@medusajs/types";
+import { HttpTypes } from "@mercurjs/types";
 import { UIMatch } from "react-router-dom";
 
 import { useCustomer } from "@hooks/api/customers";
 
-type CustomerDetailBreadcrumbProps = UIMatch<HttpTypes.AdminCustomerResponse>;
+type CustomerDetailBreadcrumbProps = UIMatch<HttpTypes.VendorCustomerResponse>;
 
 export const Breadcrumb = (props: CustomerDetailBreadcrumbProps) => {
   const { id } = props.params || {};
-  const { customer } = useCustomer(id!, undefined, {
+  const { customer } = useCustomer(id ?? "", undefined, {
     initialData: props.data,
     enabled: Boolean(id),
   });
