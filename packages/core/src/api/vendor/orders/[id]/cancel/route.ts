@@ -10,9 +10,16 @@ import { InventoryWorkflowEvents } from "../../../../../workflows"
 
 import { validateSellerOrder } from "../../helpers"
 import { getSellerId } from "../../../../utils/seller-context"
-import { parseGraphRows } from "../../../../../utils/graph-rows"
+import { parseGraphRow, parseGraphRows } from "../../../../../utils/graph-rows"
 
 const ReservationItemRowSchema = z.object({ inventory_item_id: z.string() })
+
+// Line items are reached through the order's own `items` relation: Medusa's
+// OrderLineItem has no `order_id` column (it belongs to an order via
+// OrderItem), so filtering `order_line_item` by `order_id` throws.
+const OrderItemsRowSchema = z.object({
+  items: z.array(z.object({ id: z.string() })).nullish(),
+})
 
 export const POST = async (
   req: AuthenticatedMedusaRequest,
@@ -25,12 +32,16 @@ export const POST = async (
 
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
 
-  const { data: orderItems } = await query.graph({
-    entity: "order_line_item",
-    fields: ["id"],
-    filters: { order_id: id },
+  const {
+    data: [orderRow],
+  } = await query.graph({
+    entity: "order",
+    fields: ["items.id"],
+    filters: { id },
   })
-  const lineItemIds = orderItems.map((item) => item.id)
+  const lineItemIds = (
+    parseGraphRow(OrderItemsRowSchema, orderRow).items ?? []
+  ).map((item) => item.id)
   const affectedReservations = lineItemIds.length
     ? parseGraphRows(
         ReservationItemRowSchema,
