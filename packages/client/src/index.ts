@@ -1,7 +1,7 @@
 import qs from "qs";
 import { createRecursiveProxy } from "./create-proxy";
-import { ActionType, ClientOptions } from "./types";
-import type { InferClient } from "./types";
+import { ClientOptions } from "./types";
+import type { FetchOptionsInput, InferClient, StripFetchOptions } from "./types";
 export type { InferClient } from "./types";
 import { kebabCase } from "./utils";
 
@@ -12,16 +12,12 @@ type JsonValue = JsonPrimitive | JsonObject | JsonArray
 type JsonRecord = Record<string, JsonValue>
 type ClientPayloadEntry = JsonValue | Blob | (JsonValue | Blob)[]
 type ClientPayload = Record<string, ClientPayloadEntry>
-type ClientRequestInput = ClientPayload & {
-    fetchOptions?: RequestInit
-}
-
-type DistributiveOmit<T, K extends PropertyKey> = T extends object ? Omit<T, K> : never;
+type ClientRequestInput = ClientPayload & FetchOptionsInput
 
 export type InferClientInput<T> = T extends (input: infer I) => infer _R
-    ? DistributiveOmit<I, 'fetchOptions'>
+    ? StripFetchOptions<I>
     : T extends (input?: infer I) => infer _R
-    ? DistributiveOmit<NonNullable<I>, 'fetchOptions'>
+    ? StripFetchOptions<NonNullable<I>>
     : never;
 
 export type InferClientOutput<T> = T extends (...args: infer _A) => Promise<infer O>
@@ -54,6 +50,24 @@ const payloadHasFiles = (payload: ClientPayload): boolean =>
         (value) =>
             isFileLike(value) || (Array.isArray(value) && value.some(isFileLike))
     );
+
+const readErrorBody = async (
+    response: Response
+): Promise<{ message?: string; code?: string }> => {
+    let body: JsonValue = null;
+    try {
+        body = await response.json();
+    } catch {
+        return {};
+    }
+    if (typeof body !== "object" || body === null || Array.isArray(body)) {
+        return {};
+    }
+    return {
+        message: typeof body.message === "string" ? body.message : undefined,
+        code: typeof body.code === "string" ? body.code : undefined,
+    };
+};
 
 const toFormData = (payload: ClientPayload): FormData => {
     const formData = new FormData();
@@ -95,9 +109,9 @@ const toFormData = (payload: ClientPayload): FormData => {
 export function createClient<TRoutes>(options: ClientOptions): InferClient<TRoutes> {
     const { baseUrl, fetchOptions: defaultFetchOptions, headers: resolveHeaders } = options;
 
-    const proxy = createRecursiveProxy((path, args) => {
-        const action = path.pop() as ActionType;
-        const input: ClientRequestInput = (args[0] ?? {}) as ClientRequestInput;
+    const proxy = createRecursiveProxy((path, args: [ClientRequestInput?]) => {
+        const action = path.pop();
+        const input: ClientRequestInput = args[0] ?? {};
 
         const method =
             action === "query" ? "GET" : action === "mutate" ? "POST" : action === "delete" ? "DELETE" : null;
@@ -123,14 +137,16 @@ export function createClient<TRoutes>(options: ClientOptions): InferClient<TRout
         const fullPath = `${base.pathname.replace(/\/$/, "")}/${urlPath.replace(/^\//, "")}`;
         const url = new URL(fullPath, base.origin);
 
-        const hasExplicitFormData = inputFetchOptions?.body instanceof FormData;
+        const explicitFormData =
+            inputFetchOptions?.body instanceof FormData ? inputFetchOptions.body : undefined;
+        const hasExplicitFormData = explicitFormData !== undefined;
         const hasFilePayload = method !== "GET" && payloadHasFiles(rest);
         const isMultipart = hasExplicitFormData || hasFilePayload;
 
         let body: string | FormData | undefined;
 
-        if (hasExplicitFormData) {
-            body = inputFetchOptions!.body as FormData;
+        if (explicitFormData) {
+            body = explicitFormData;
         } else if (hasFilePayload) {
             body = toFormData(rest);
         } else if (method === "GET" && Object.keys(rest).length > 0) {
@@ -167,15 +183,12 @@ export function createClient<TRoutes>(options: ClientOptions): InferClient<TRout
             headers,
         }).then(async (response) => {
             if (response.status >= 300) {
-                const jsonError = (await response.json().catch(() => ({}))) as {
-                    message?: string;
-                    code?: string;
-                };
+                const jsonError = await readErrorBody(response);
                 throw new ClientError(
                     jsonError.message ?? response.statusText,
                     response.statusText,
                     response.status,
-                    typeof jsonError.code === "string" ? jsonError.code : undefined
+                    jsonError.code
                 );
             }
 
@@ -193,7 +206,7 @@ export function createClient<TRoutes>(options: ClientOptions): InferClient<TRout
         });
     })
 
-    // @ts-expect-error — RecursiveProxy is a runtime Proxy; its dynamically
+    // @ts-expect-error — the recursive proxy is a runtime Proxy; its dynamically
     // dispatched shape can never be structurally verified against an
     // arbitrary generated Routes type by the type checker. This is the sole,
     // deliberate bridge between the proxy's real runtime shape and the

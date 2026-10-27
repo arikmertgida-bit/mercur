@@ -50,10 +50,12 @@ function buildRouteTree(routeMap: Map<string, string>): RouteNode {
 
         for (const segment of segments) {
             const key = toNestedKey(segment);
-            if (!current.children.has(key)) {
-                current.children.set(key, createRouteNode());
+            let child = current.children.get(key);
+            if (!child) {
+                child = createRouteNode();
+                current.children.set(key, child);
             }
-            current = current.children.get(key)!;
+            current = child;
         }
 
         current.importType = importType;

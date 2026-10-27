@@ -4,6 +4,7 @@ import { rm, writeFile } from "node:fs/promises";
 import path from "path";
 import fs from "fs";
 import { generatePluginEntryModule } from "@mercurjs/dashboard-sdk/vite";
+import { logger } from "./logger";
 
 const VALID_FILE_EXTENSIONS = [".tsx", ".ts", ".jsx", ".js"];
 
@@ -160,7 +161,10 @@ export async function buildDashboardExtensions(
 
     return true;
   } catch (error) {
-    console.error(error);
+    // The stack is kept: a failed extension build is only debuggable with it.
+    logger.error(
+      error instanceof Error ? (error.stack ?? error.message) : String(error)
+    );
     return false;
   } finally {
     if (!authoredEntry) {

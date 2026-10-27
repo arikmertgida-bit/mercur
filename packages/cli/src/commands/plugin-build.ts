@@ -20,7 +20,11 @@ export const pluginBuild = new Command()
 
       const { Compiler } = await import("@medusajs/framework/build-tools");
 
-      // @ts-expect-error
+      // Medusa's Compiler declares the full framework `Logger` (panic,
+      // activity, setLogLevel, …) but only ever calls info/warn/error, which
+      // the CLI logger implements — a declared-vs-used mismatch at the
+      // @medusajs/framework boundary.
+      // @ts-expect-error — CLI logger is not the full Medusa `Logger` type
       const compiler = new Compiler(cwd, logger);
 
       const tsConfig = await compiler.loadTSConfigFile();

@@ -1,17 +1,21 @@
-import { FulfillmentSetDTO, ServiceZoneDTO } from "@medusajs/types"
+import { HttpTypes } from "@medusajs/types"
+
+// Serialized like the admin fulfillment set routes: Medusa's HTTP shapes.
+export type VendorFulfillmentSet = HttpTypes.AdminFulfillmentSet
+export type VendorServiceZone = HttpTypes.AdminServiceZone
 
 export interface VendorFulfillmentSetResponse {
   /**
    * The fulfillment set's details.
    */
-  fulfillment_set: FulfillmentSetDTO
+  fulfillment_set: VendorFulfillmentSet
 }
 
 export interface VendorServiceZoneResponse {
   /**
    * The service zone's details.
    */
-  service_zone: ServiceZoneDTO
+  service_zone: VendorServiceZone
 }
 
 export interface VendorServiceZoneDeleteResponse {

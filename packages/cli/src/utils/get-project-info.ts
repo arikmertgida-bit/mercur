@@ -2,11 +2,14 @@ import fs from "fs-extra";
 import path from "path";
 import { loadConfig } from "tsconfig-paths";
 import fg from "fast-glob"
+import { z } from "zod";
 
-export interface PackageJson {
-  name?: string;
-  dependencies?: Record<string, string>;
-}
+const PackageJsonSchema = z.object({
+  name: z.string().optional(),
+  dependencies: z.record(z.string(), z.string()).optional(),
+});
+
+export type PackageJson = z.infer<typeof PackageJsonSchema>;
 
 export type ProjectInfo = {
   isSrcDir: boolean;
@@ -71,9 +74,21 @@ export function getPackageInfo(
 ): PackageJson | null {
   const packageJsonPath = path.join(cwd, "package.json")
 
-  return fs.readJSONSync(packageJsonPath, {
+  const raw = fs.readJSONSync(packageJsonPath, {
     throws: shouldThrow,
-  }) as PackageJson
+  })
+  if (raw === null) {
+    return null
+  }
+
+  const parsed = PackageJsonSchema.safeParse(raw)
+  if (!parsed.success) {
+    if (shouldThrow) {
+      throw parsed.error
+    }
+    return null
+  }
+  return parsed.data
 }
 
 export async function getMedusaConfigFile(cwd: string): Promise<{ file: string; dir: string } | null> {

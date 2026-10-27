@@ -47,7 +47,7 @@ export async function preFlightRegistryBuild(
 
     return {
       errors,
-      config: config!,
+      config,
       resolvePaths,
     };
   } catch  {

@@ -2,6 +2,21 @@ import * as path from "path";
 import { readFileSync } from "fs";
 import { packageDirectory } from "pkg-dir";
 import resolveCwd from "resolve-cwd";
+import { z } from "zod";
+
+const PackageBinSchema = z.object({
+  bin: z.union([z.string(), z.record(z.string(), z.string())]).optional(),
+});
+
+const readPackageBin = (pkgDir: string, pkg: string) => {
+  try {
+    return PackageBinSchema.parse(
+      JSON.parse(readFileSync(path.join(pkgDir, "package.json"), "utf-8"))
+    ).bin;
+  } catch (error) {
+    throw new Error(`Could not read package.json for '${pkg}'`, { cause: error });
+  }
+};
 
 export async function resolveBinAsync(pkg: string, executable = pkg) {
   const resolved = resolveCwd(pkg);
@@ -9,7 +24,7 @@ export async function resolveBinAsync(pkg: string, executable = pkg) {
 
   if (!pkgDir) throw new Error(`Could not find package.json for '${pkg}'`);
 
-  const { bin } = JSON.parse(readFileSync(path.join(pkgDir, "package.json"), "utf-8"));
+  const bin = readPackageBin(pkgDir, pkg);
   const binPath = typeof bin === "object" ? bin[executable] : bin;
 
   if (!binPath) throw new Error(`No bin '${executable}' in module '${pkg}'`);

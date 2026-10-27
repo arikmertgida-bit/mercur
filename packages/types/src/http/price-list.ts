@@ -1,27 +1,33 @@
-import { PaginatedResponse, PriceListDTO } from "@medusajs/types"
+// The vendor price-list routes flatten rules/prices exactly like Medusa's
+// admin routes (core `toHttpPriceList`), so the wire shape is the HTTP type.
+import { HttpTypes, PaginatedResponse } from "@medusajs/types"
 
 export interface VendorPriceListResponse {
   /**
    * The price list's details.
    */
-  price_list: PriceListDTO
+  price_list: HttpTypes.AdminPriceList
 }
 
 export type VendorPriceListListResponse = PaginatedResponse<{
   /**
    * The list of price lists.
    */
-  price_lists: PriceListDTO[]
+  price_lists: HttpTypes.AdminPriceList[]
 }>
 
 export type VendorPriceListPricesResponse = PaginatedResponse<{
-  prices: Record<string, unknown>[]
+  prices: HttpTypes.AdminPrice[]
 }>
 
 export interface VendorPriceListBatchResponse {
-  created: Record<string, unknown>[]
-  updated: Record<string, unknown>[]
-  deleted: Record<string, unknown>
+  created: HttpTypes.AdminPrice[]
+  updated: HttpTypes.AdminPrice[]
+  deleted: {
+    id: string[]
+    object: "price"
+    deleted: boolean
+  }
 }
 
 export type PriceListProductGroupDTO = {

@@ -2,11 +2,21 @@ import {
   DeleteResponse,
   PaginatedResponse,
   SalesChannelDTO,
+  ShippingProfileDTO,
 } from "@medusajs/types"
 import { ProductDTO, ProductVariantDTO } from "../product/common"
 
+/**
+ * A product as the admin product detail routes send it: Mercur's product plus
+ * the linked sales channels and shipping profile the admin queries can select.
+ */
+export type AdminProduct = ProductDTO & {
+  sales_channels?: SalesChannelDTO[]
+  shipping_profile?: ShippingProfileDTO | null
+}
+
 export interface AdminProductResponse {
-  product: ProductDTO
+  product: AdminProduct
 }
 
 export type AdminProductListResponse = PaginatedResponse<{
@@ -23,18 +33,27 @@ export type AdminProductVariantListResponse = PaginatedResponse<{
   variants: ProductVariantDTO[]
 }>
 
+/**
+ * A product as the vendor product routes send it: Mercur's product plus the
+ * linked sales channels and shipping profile the vendor queries can select.
+ */
+export type VendorProduct = ProductDTO & {
+  sales_channels?: SalesChannelDTO[]
+  shipping_profile?: ShippingProfileDTO | null
+}
+
 export interface VendorProductResponse {
   /**
    * The product's details.
    */
-  product: ProductDTO
+  product: VendorProduct
 }
 
 export type VendorProductListResponse = PaginatedResponse<{
   /**
    * The list of products.
    */
-  products: ProductDTO[]
+  products: VendorProduct[]
 }>
 
 export interface VendorProductVariantResponse {
@@ -64,8 +83,4 @@ export interface VendorDeleteResponse {
    * Whether the resource was deleted.
    */
   deleted: boolean
-}
-
-export interface VendorProduct extends ProductDTO {
-  sales_channels?: SalesChannelDTO[];
 }

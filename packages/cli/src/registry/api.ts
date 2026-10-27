@@ -10,6 +10,9 @@ import {
 import { fetchRegistry } from "./fetcher";
 import { fetchRegistryBlocks, resolveRegistryTree } from "./resolver";
 import { registrySchema } from "./schema";
+
+const isRegistryNamespace = (name: string): name is `@${string}` =>
+  name.startsWith("@");
 import { isUrl } from "./utils";
 
 export async function getRegistry(
@@ -29,17 +32,16 @@ export async function getRegistry(
     }
   }
 
-  if (!name.startsWith("@")) {
+  if (!isRegistryNamespace(name)) {
     throw new RegistryInvalidNamespaceError(name);
   }
 
-  let registryName = name;
-  if (!registryName.endsWith("/registry")) {
-    registryName = `${registryName}/registry`;
-  }
+  const registryName: `@${string}` = name.endsWith("/registry")
+    ? name
+    : `${name}/registry`;
 
   const urlAndHeaders = buildUrlAndHeadersForRegistryBlock(
-    registryName as `@${string}`,
+    registryName,
     configWithDefaults(config)
   );
 

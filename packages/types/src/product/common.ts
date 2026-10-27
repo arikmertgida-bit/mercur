@@ -1,3 +1,4 @@
+import type { JsonRecord } from "../json-value"
 import type {
   ProductDTO as UpstreamProductDTO,
   ProductVariantDTO as UpstreamProductVariantDTO,
@@ -20,6 +21,16 @@ export enum AttributeType {
   UNIT = "unit",
   TOGGLE = "toggle",
   TEXT = "text",
+}
+
+/**
+ * Machine-readable `MedusaError` codes for product attribute refusals, so a
+ * dashboard can branch on the reason without matching the (translated)
+ * message.
+ */
+export enum ProductAttributeErrorCode {
+  VALUE_IN_USE = "product_attribute_value_in_use",
+  ATTRIBUTE_IN_USE = "product_attribute_in_use",
 }
 
 /**
@@ -68,7 +79,7 @@ export interface ProductAttributeValueDTO {
   name: string
   rank: number
   is_active: boolean
-  metadata: Record<string, unknown> | null
+  metadata: JsonRecord | null
   product_option_value_id: string | null
   attribute?: ProductAttributeDTO
   attribute_id?: string
@@ -100,7 +111,7 @@ export interface ProductAttributeDTO {
    */
   product_id?: string | null
   product_option_id: string | null
-  metadata: Record<string, unknown> | null
+  metadata: JsonRecord | null
   values?: ProductAttributeValueDTO[]
   /**
    * Legacy entity-level M:N relations populated by the fused Mercur product
@@ -153,13 +164,10 @@ export interface ProductChangeActionDTO {
   ordering: number
   action: string
   /**
-   * Mirrors the MikroORM `model.json()` column on the ProductChangeAction
-   * entity (packages/core) — that field is inferred as `Record<string,
-   * unknown>` at the ORM layer, so this DTO must stay structurally
-   * compatible with it. Narrow to `JsonRecord` at the consumer boundary
-   * instead of tightening this type (see product-change-diff.ts).
+   * Mirrors the `model.json<JsonRecord>()` column on the ProductChangeAction
+   * entity (packages/core).
    */
-  details: Record<string, unknown>
+  details: JsonRecord
   reference: string | null
   reference_id: string | null
   internal_note: string | null
@@ -185,7 +193,7 @@ export interface ProductChangeDTO {
   declined_reason: string | null
   canceled_by: string | null
   canceled_at: string | Date | null
-  metadata: Record<string, unknown> | null
+  metadata: JsonRecord | null
   actions?: ProductChangeActionDTO[]
   created_at: string | Date
   updated_at: string | Date
@@ -195,12 +203,18 @@ export interface ProductChangeDTO {
 // --- Mercur-extended DTOs (Omit + intersection over upstream) ---
 
 /**
- * Mercur extends `ProductCategoryDTO` with `is_restricted`. Pure addition,
- * no field conflicts.
+ * Mercur extends `ProductCategoryDTO` with `is_restricted`. The tree relations
+ * are re-pointed at the Mercur DTO: `*parent_category` / `*category_children`
+ * select every column of the related categories, `is_restricted` included.
  */
-export type ProductCategoryDTO = UpstreamProductCategoryDTO & {
+export type ProductCategoryDTO = Omit<
+  UpstreamProductCategoryDTO,
+  "parent_category" | "category_children"
+> & {
   is_restricted: boolean
   attributes?: ProductAttributeDTO[]
+  parent_category: ProductCategoryDTO | null
+  category_children: ProductCategoryDTO[]
 }
 
 /**

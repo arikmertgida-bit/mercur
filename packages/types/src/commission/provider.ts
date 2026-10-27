@@ -1,3 +1,4 @@
+import type { JsonRecord } from "../json-value"
 import type { ModuleProviderExports } from "@medusajs/types"
 
 import type {
@@ -31,7 +32,7 @@ export interface CommissionModuleOptions {
     /**
      * Key value pair of the configuration to be passed to the provider constructor
      */
-    options?: Record<string, unknown>
+    options?: JsonRecord
     /**
      * Use this provider for every calculation. A single configured provider
      * is the default implicitly.

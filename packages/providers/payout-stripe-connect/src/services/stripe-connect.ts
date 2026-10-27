@@ -1,4 +1,5 @@
-import { isPresent, MedusaError } from "@medusajs/framework/utils"
+import type { Logger } from "@medusajs/framework/types"
+import { MedusaError } from "@medusajs/framework/utils"
 import {
     CreateOnboardingInput,
     CreateOnboardingResponse,
@@ -8,6 +9,7 @@ import {
     CreatePayoutResponse,
     IPayoutProvider,
     JsonRecord,
+    JsonValue,
     PayoutAccountStatus,
     PayoutStatus,
     PayoutWebhookActionInput,
@@ -39,8 +41,34 @@ const readJsonRecord = (record: JsonRecord, key: string): JsonRecord | undefined
     return value
 }
 
-const toJsonRecord = (value: object): JsonRecord =>
-    JSON.parse(JSON.stringify(value)) as JsonRecord
+const isJsonRecord = (value: JsonValue): value is JsonRecord =>
+    typeof value === "object" && value !== null && !Array.isArray(value)
+
+/**
+ * Stripe resources are plain JSON over the wire; a stringify/parse round trip
+ * yields exactly that JSON (dropping `undefined` fields) for storage in the
+ * payout's jsonb `data` column.
+ */
+const toJsonRecord = (
+    value: Stripe.Account | Stripe.Transfer | Stripe.AccountLink
+): JsonRecord => {
+    let json: JsonValue
+    try {
+        json = JSON.parse(JSON.stringify(value))
+    } catch (error) {
+        throw new MedusaError(
+            MedusaError.Types.UNEXPECTED_STATE,
+            `Stripe response could not be serialized: ${error instanceof Error ? error.message : String(error)}`
+        )
+    }
+    if (!isJsonRecord(json)) {
+        throw new MedusaError(
+            MedusaError.Types.UNEXPECTED_STATE,
+            "Stripe response is not a JSON object"
+        )
+    }
+    return json
+}
 
 const toStripeMetadata = (record: JsonRecord): Stripe.MetadataParam => {
     const metadata: Stripe.MetadataParam = {}
@@ -60,7 +88,7 @@ class StripeConnectProviderService implements IPayoutProvider {
     protected readonly config_: StripeConnectOptions
 
     constructor(
-        _cradle: Record<string, object>,
+        _dependencies: { logger: Logger },
         options: StripeConnectOptions
     ) {
         this.config_ = options
@@ -79,10 +107,9 @@ class StripeConnectProviderService implements IPayoutProvider {
             )
         }
 
+        const sellerId = readString(extra, "seller_id")
         const metadata: Stripe.MetadataParam = {
-            ...(readString(extra, "seller_id")
-                ? { seller_id: readString(extra, "seller_id")! }
-                : {}),
+            ...(sellerId ? { seller_id: sellerId } : {}),
             ...toStripeMetadata(readJsonRecord(extra, "metadata") ?? {}),
         }
 
@@ -112,7 +139,7 @@ class StripeConnectProviderService implements IPayoutProvider {
         )
         const requiredCapabilities = validation.requiredCapabilities ?? []
         const hasInactiveCapabilities = requiredCapabilities.some((capability) => {
-            return account.capabilities?.[capability as keyof Stripe.Account.Capabilities] !== "active"
+            return account.capabilities?.[capability] !== "active"
         })
 
         if (disabledReason?.startsWith("rejected.")) {
@@ -159,22 +186,21 @@ class StripeConnectProviderService implements IPayoutProvider {
     async createPayoutAccount(
         input: CreatePayoutAccountInput
     ): Promise<CreatePayoutAccountResponse> {
-        const { data } = input;
-        const country = data?.country as string
+        const data = input.data ?? {}
+        const country = readString(data, "country")
 
-        if (!isPresent(country)) {
+        if (!country) {
             throw new MedusaError(
                 MedusaError.Types.INVALID_DATA,
                 `"country" is required`
             );
         }
 
+        const accountId = readString(data, "account_id")
         const response = await this.stripe_.accounts.create({
             type: 'express',
             country,
-            metadata: {
-                account_id: data?.account_id as string,
-            },
+            metadata: accountId ? { account_id: accountId } : {},
         }, {
             idempotencyKey: input.context?.idempotency_key
         })
@@ -187,7 +213,7 @@ class StripeConnectProviderService implements IPayoutProvider {
     }
 
     async createPayout(input: CreatePayoutInput): Promise<CreatePayoutResponse> {
-        const normalizedInput = this.normalizePayoutParameters(input.data!)
+        const normalizedInput = this.normalizePayoutParameters(input.data ?? {})
         const transfer = await this.stripe_.transfers.create(
             {
                 currency: input.currency_code,
@@ -207,22 +233,25 @@ class StripeConnectProviderService implements IPayoutProvider {
     async createOnboarding(
         input: CreateOnboardingInput
     ): Promise<CreateOnboardingResponse> {
-        const id = input?.data?.id as string
-        if (!isPresent(id)) {
+        const data = input.data ?? {}
+        const id = readString(data, "id")
+        if (!id) {
             throw new MedusaError(
                 MedusaError.Types.INVALID_DATA,
                 `'id' is required`
             );
         }
 
-        if (!isPresent(input.data?.refresh_url)) {
+        const refreshUrl = readString(data, "refresh_url")
+        if (!refreshUrl) {
             throw new MedusaError(
                 MedusaError.Types.INVALID_DATA,
                 `'refresh_url' is required`
             );
         }
 
-        if (!isPresent(input.data?.return_url)) {
+        const returnUrl = readString(data, "return_url")
+        if (!returnUrl) {
             throw new MedusaError(
                 MedusaError.Types.INVALID_DATA,
                 `'return_url' is required`
@@ -231,8 +260,8 @@ class StripeConnectProviderService implements IPayoutProvider {
 
         const accountLink = await this.stripe_.accountLinks.create({
             account: id,
-            refresh_url: input.data?.refresh_url as string,
-            return_url: input.data?.return_url as string,
+            refresh_url: refreshUrl,
+            return_url: returnUrl,
             type: "account_onboarding",
         });
 
@@ -244,17 +273,23 @@ class StripeConnectProviderService implements IPayoutProvider {
     async getWebhookActionAndData(
         payload: PayoutWebhookActionInput
     ): Promise<PayoutWebhookResult> {
-        const signature = payload.headers["stripe-signature"] as string
+        const signature = readString(payload.headers, "stripe-signature")
+        if (!signature) {
+            throw new MedusaError(
+                MedusaError.Types.INVALID_DATA,
+                `'stripe-signature' header is required`
+            )
+        }
 
         const event = this.stripe_.webhooks.constructEvent(
-            payload.rawData as string | Buffer,
+            payload.rawData,
             signature,
             this.config_.webhookSecret
         )
 
         switch (event.type) {
             case "account.updated":
-                return this.getWebhookResultFromAccount_(event.data.object as Stripe.Account)
+                return this.getWebhookResultFromAccount_(event.data.object)
             default:
                 return { action: "not_supported" }
         }

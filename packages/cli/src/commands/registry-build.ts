@@ -56,7 +56,7 @@ async function buildRegistry(opts: z.infer<typeof buildOptionsSchema>) {
       getProjectInfo(options.cwd),
     ]);
 
-    if (errors[ERRORS.MISSING_CONFIG] || !projectInfo) {
+    if (errors[ERRORS.MISSING_CONFIG] || !config || !projectInfo) {
       logger.error(
         `A ${highlighter.info(
           "blocks.json"

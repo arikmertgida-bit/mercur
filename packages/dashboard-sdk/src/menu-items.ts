@@ -16,7 +16,6 @@ import {
     isObjectExpression,
     isBooleanLiteral,
     type ObjectExpressionProperty,
-    type TraverseRoot,
     type VariableDeclarator,
 } from "./babel"
 import type { Node } from "@babel/types"
@@ -245,7 +244,7 @@ function processConfigProperties(
 function getRouteConfig(file: string): MenuItemConfig | null {
     try {
         const code = fs.readFileSync(file, "utf-8")
-        const ast = parse(code, getParserOptions(file)) as TraverseRoot
+        const ast = parse(code, getParserOptions(file))
 
         let config: MenuItemConfig | null = null
         let configFound = false

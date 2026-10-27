@@ -98,22 +98,33 @@ export interface PermissionsContextValue {
     can: (key: PermissionKey, right?: PermissionRight) => boolean
 }
 
+const PERMISSION_RIGHTS: readonly string[] = Object.keys(PERMISSION_RIGHT_RANK)
+
+export function isPermissionRight(value: string): value is PermissionRight {
+    return PERMISSION_RIGHTS.includes(value)
+}
+
+/**
+ * Splits `key:right`. The key stays a plain string: `PermissionKeys` is an
+ * augmentable, type-only registry, so no runtime check can prove a key is in
+ * it — and `satisfiesPermission` only looks keys up in the effective map.
+ */
 export function parsePermission(
     permission: string
-): { key: PermissionKey; right: PermissionRight } | null {
+): { key: string; right: PermissionRight } | null {
     const index = permission.lastIndexOf(":")
     if (index <= 0) {
         return null
     }
 
     const right = permission.slice(index + 1)
-    if (!(right in PERMISSION_RIGHT_RANK)) {
+    if (!isPermissionRight(right)) {
         return null
     }
 
     return {
-        key: permission.slice(0, index) as PermissionKey,
-        right: right as PermissionRight,
+        key: permission.slice(0, index),
+        right,
     }
 }
 

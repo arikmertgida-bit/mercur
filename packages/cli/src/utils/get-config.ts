@@ -85,8 +85,12 @@ export async function getRawConfig(cwd: string): Promise<RawConfig | null> {
   }
 }
 
+type ConfigScalar = string | number | boolean | bigint | symbol | null | undefined;
+
 type DeepPartial<T> = {
-  [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
+  [P in keyof T]?: [Extract<T[P], ConfigScalar>] extends [never]
+    ? DeepPartial<T[P]>
+    : T[P];
 };
 
 export function createConfig(partial?: DeepPartial<Config>): Config {

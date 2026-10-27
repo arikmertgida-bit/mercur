@@ -10,11 +10,11 @@ import type { CustomFieldModel, CustomFieldsConfig } from "./custom-fields"
  * editing a config with an inline component hot-reloads instead of full-page
  * reloading. The `$$typeof` marker is stripped by the build-time crawl.
  */
-function createConfigHelper<TConfig extends object>(config: TConfig): TConfig {
+function createConfigHelper<TConfig>(config: TConfig): TConfig {
     return {
         ...config,
         $$typeof: Symbol.for("react.memo"),
-    } as TConfig
+    }
 }
 
 export function defineWidgetConfig(config: WidgetConfig): WidgetConfig {

@@ -76,7 +76,7 @@ export type RouteConfig = {
      * or, for a `/settings/*` route, a built-in settings group. Must be a
      * string literal.
      */
-    group?: NavGroupId | (string & {})
+    group?: NavGroupId | string
     translationNs?: string
     public?: boolean
     /**

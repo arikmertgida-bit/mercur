@@ -1,3 +1,4 @@
+import type { JsonRecord } from "../json-value"
 export type SellerModuleOptions = {
   invite_valid_duration?: number
   jwt_secret?: string
@@ -86,7 +87,7 @@ export interface SellerAddressDTO {
   province: string | null
   postal_code: string | null
   phone: string | null
-  metadata: Record<string, unknown> | null
+  metadata: JsonRecord | null
   created_at: Date
   updated_at: Date
 }
@@ -103,7 +104,7 @@ export interface CreateSellerAddressDTO {
   province?: string | null
   postal_code?: string | null
   phone?: string | null
-  metadata?: Record<string, unknown> | null
+  metadata?: JsonRecord | null
 }
 
 export interface UpdateSellerAddressDTO {
@@ -118,7 +119,7 @@ export interface UpdateSellerAddressDTO {
   province?: string | null
   postal_code?: string | null
   phone?: string | null
-  metadata?: Record<string, unknown> | null
+  metadata?: JsonRecord | null
 }
 
 export interface MemberDTO {
@@ -128,7 +129,7 @@ export interface MemberDTO {
   last_name: string | null
   locale: string | null
   is_active: boolean
-  metadata: Record<string, unknown> | null
+  metadata: JsonRecord | null
   created_at: Date
   updated_at: Date
   deleted_at: Date | null
@@ -138,14 +139,14 @@ export interface CreateMemberDTO {
   email: string
   locale?: string | null
   is_active?: boolean
-  metadata?: Record<string, unknown> | null
+  metadata?: JsonRecord | null
 }
 
 export interface UpdateMemberDTO {
   email?: string
   locale?: string | null
   is_active?: boolean
-  metadata?: Record<string, unknown> | null
+  metadata?: JsonRecord | null
 }
 
 export interface SellerMemberDTO {
@@ -155,7 +156,7 @@ export interface SellerMemberDTO {
   seller_id: string
   member_id: string
   is_owner: boolean
-  metadata: Record<string, unknown> | null
+  metadata: JsonRecord | null
   created_at: Date
   updated_at: Date
   role_id: string
@@ -169,7 +170,7 @@ export interface MemberInviteDTO {
   expires_at: Date
   role_id: string
   seller_id: string
-  metadata: Record<string, unknown> | null
+  metadata: JsonRecord | null
   created_at: Date
   updated_at: Date
 }
@@ -178,7 +179,7 @@ export interface CreateMemberInviteDTO {
   email: string
   role_id: string
   seller_id: string
-  metadata?: Record<string, unknown> | null
+  metadata?: JsonRecord | null
 }
 
 export interface SellerDTO {
@@ -206,7 +207,7 @@ export interface SellerDTO {
   address: SellerAddressDTO | null
   payment_details: PaymentDetailsDTO | null
   members: MemberDTO[]
-  metadata: Record<string, unknown> | null
+  metadata: JsonRecord | null
   created_at: Date
   updated_at: Date
   deleted_at: Date | null

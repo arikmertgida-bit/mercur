@@ -96,8 +96,7 @@ export type CustomFormEntry<TModel> =
  * from the model's generated `displayFieldIds`; any other string adds a new row.
  */
 export type CustomDisplayField<TModel extends CustomFieldModel = CustomFieldModel> = {
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  id: ModelShape<TModel>["displayFieldIds"] | (string & {})
+  id: ModelShape<TModel>["displayFieldIds"] | string
   component: ComponentType<{ data?: JsonRecord }> | null
 }
 
@@ -117,6 +116,14 @@ export type ExtendableTableRow = {
   id?: string
 }
 
+/**
+ * The entity handed to `actionLocks` and `activity`, as the page fetched it.
+ * Only `id` is guaranteed across models; validate anything else you read.
+ */
+export type ExtendableEntity = {
+  id?: string
+}
+
 export type CustomColumn = {
   id: string
   header?: string
@@ -125,7 +132,8 @@ export type CustomColumn = {
 
 export type CustomListFilterOption = {
   label: string
-  value: unknown
+  /** Written to the filter's query param, so it is a string. */
+  value: string
 }
 
 /**
@@ -184,10 +192,13 @@ export interface CustomFieldsConfig<TModel extends CustomFieldModel = CustomFiel
    * `link` data.
    */
   actionLocks?: Partial<
-    Record<CustomFieldAction<TModel>, (entity: unknown) => string | undefined>
+    Record<
+      CustomFieldAction<TModel>,
+      (entity: ExtendableEntity) => string | undefined
+    >
   >
   /** Extra timeline entries for the entity, merged and sorted with the built-ins. */
-  activity?: (entity: unknown) => ActivityEntry[]
+  activity?: (entity: ExtendableEntity) => ActivityEntry[]
   list?: CustomListExtension
   forms?: CustomFormEntry<TModel>[]
   displays?: CustomDisplayEntry<TModel>[]

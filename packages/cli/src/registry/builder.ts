@@ -1,5 +1,5 @@
 import type { z } from "zod";
-import type { Config } from "../schema";
+import type { RegistryResolutionConfig } from "./config";
 import { REGISTRY_URL } from "./constants";
 import { expandEnvVars } from "./env";
 import { RegistryNotConfiguredError } from "./errors";
@@ -28,7 +28,7 @@ function appendPlaceholdersIfNeeded(url: string): string {
 
 export function buildUrlAndHeadersForRegistryBlock(
   name: string,
-  config?: Config
+  config?: RegistryResolutionConfig
 ) {
   const { registry, item } = parseRegistryAndBlockFromString(name);
 
@@ -53,7 +53,7 @@ export function buildUrlAndHeadersForRegistryBlock(
 export function buildUrlFromRegistryConfig(
   item: string,
   registryConfig: z.infer<typeof registryConfigItemSchema>,
-  _config?: Config
+  _config?: RegistryResolutionConfig
 ) {
   if (typeof registryConfig === "string") {
     const urlWithPlaceholders = appendPlaceholdersIfNeeded(registryConfig);

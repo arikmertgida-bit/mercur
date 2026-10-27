@@ -2,12 +2,15 @@ export { HttpTypes as MedusaHttpTypes } from "@medusajs/types"
 
 export * from "@medusajs/types/dist/http"
 export * from "./campaign"
+export * from "./claim"
 export * from "./collection"
 export * from "./currency"
 export * from "./customer"
+export * from "./exchange"
 export * from "./fulfillment-set"
 export * from "./inventory-item"
 export * from "./seller"
+export * from "./media-image"
 export * from "./order"
 export * from "./order-group"
 export * from "./payment"
@@ -32,6 +35,7 @@ export * from "./commission"
 
 // Explicit re-exports to resolve ambiguity with @medusajs/types (Mercur overrides)
 export {
+  AdminProduct,
   AdminProductResponse,
   AdminProductListResponse,
   AdminProductDeleteResponse,
@@ -39,6 +43,12 @@ export {
   AdminProductVariantListResponse,
 } from "./product"
 export {
+  AdminCollection,
+  AdminCollectionResponse,
+  AdminCollectionListResponse,
+} from "./collection"
+export {
+  AdminProductCategory,
   AdminProductCategoryResponse,
   AdminProductCategoryListResponse,
   AdminProductCategoryDeleteResponse,

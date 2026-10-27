@@ -13,20 +13,26 @@ export interface VendorOnboardingResponse {
   onboarding: OnboardingDTO
 }
 
+// The payout's BigNumber `amount` serializes to a plain number on the wire.
+export type VendorPayout = Omit<PayoutDTO, "amount"> & { amount: number }
+
 export interface VendorPayoutResponse {
-  payout: PayoutDTO
+  payout: VendorPayout
 }
 
 export type VendorPayoutListResponse = PaginatedResponse<{
-  payouts: PayoutDTO[]
+  payouts: VendorPayout[]
 }>
 
+// Same wire shape as the vendor payout routes: `amount` is a plain number.
+export type AdminPayout = VendorPayout
+
 export interface AdminPayoutResponse {
-  payout: PayoutDTO
+  payout: AdminPayout
 }
 
 export type AdminPayoutListResponse = PaginatedResponse<{
-  payouts: PayoutDTO[]
+  payouts: AdminPayout[]
 }>
 
 export interface AdminPayoutAccountResponse {

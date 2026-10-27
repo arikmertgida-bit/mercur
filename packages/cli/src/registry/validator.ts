@@ -1,5 +1,5 @@
 import type { z } from "zod";
-import type { Config } from "../schema";
+import type { RegistryResolutionConfig } from "./config";
 import { buildUrlAndHeadersForRegistryBlock } from "./builder";
 import { configWithDefaults } from "./config";
 import { clearRegistryContext } from "./context";
@@ -55,7 +55,7 @@ export function validateRegistryConfig(
 
 export function validateRegistryConfigForBlocks(
   blocks: string[],
-  config?: Config
+  config?: RegistryResolutionConfig
 ): void {
   for (const item of blocks) {
     buildUrlAndHeadersForRegistryBlock(item, configWithDefaults(config));

@@ -1,17 +1,18 @@
+import type { JsonRecord } from "../json-value"
 import { PayoutAccountStatus, PayoutStatus, PayoutWebhookAction } from "./common"
 import { BigNumberInput } from "@medusajs/types"
 
-export interface PayoutProviderContext {
+export type PayoutProviderContext = {
   idempotency_key?: string
 }
 
 export interface PayoutProviderInput {
   context?: PayoutProviderContext
-  data?: Record<string, unknown>
+  data?: JsonRecord
 }
 
 export interface PayoutProviderOutput {
-  data: Record<string, unknown>
+  data: JsonRecord
 }
 
 export interface CreatePayoutAccountInput extends PayoutProviderInput {
@@ -39,9 +40,9 @@ export interface CreateOnboardingResponse extends PayoutProviderOutput {
 }
 
 export interface PayoutWebhookActionInput {
-  data: Record<string, unknown>
+  data: JsonRecord
   rawData: string | Buffer
-  headers: Record<string, unknown>
+  headers: JsonRecord
 }
 
 export type PayoutWebhookResult = {

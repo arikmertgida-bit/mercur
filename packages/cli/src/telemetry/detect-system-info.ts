@@ -1,12 +1,3 @@
-type DynamicImport = (moduleName: string) => Promise<object>;
-
-const dynamicImport = new Function(
-  "mm",
-  "return import(mm)"
-) as DynamicImport;
-
-export const importRuntime = <T>(m: string): Promise<T> =>
-  dynamicImport(m) as Promise<T>;
 
 function getVendor() {
     const hasAny = (...keys: string[]) =>
@@ -50,16 +41,17 @@ function getVendor() {
 
 export async function detectSystemInfo() {
     try {
-        const os = await importRuntime<typeof import("os")>("os");
+        const os = await import("os");
         const cpus = os.cpus();
+        const [firstCpu] = cpus;
         return {
             deploymentVendor: getVendor(),
             systemPlatform: os.platform(),
             systemRelease: os.release(),
             systemArchitecture: os.arch(),
             cpuCount: cpus.length,
-            cpuModel: cpus.length ? cpus[0]!.model : null,
-            cpuSpeed: cpus.length ? cpus[0]!.speed : null,
+            cpuModel: firstCpu ? firstCpu.model : null,
+            cpuSpeed: firstCpu ? firstCpu.speed : null,
             memory: os.totalmem(),
             isWSL: await isWsl(),
             isDocker: await isDocker(),
@@ -90,8 +82,8 @@ async function isWsl() {
         if (typeof process === "undefined" || process?.platform !== "linux") {
             return false;
         }
-        const fs = await importRuntime<typeof import("fs")>("fs");
-        const os = await importRuntime<typeof import("os")>("os");
+        const fs = await import("fs");
+        const os = await import("os");
         if (os.release().toLowerCase().includes("microsoft")) {
             if (await isInsideContainer()) {
                 return false;
@@ -112,7 +104,7 @@ async function isWsl() {
 }
 const hasContainerEnv = async () => {
     try {
-        const fs = await importRuntime<typeof import("fs")>("fs");
+        const fs = await import("fs");
         fs.statSync("/run/.containerenv");
         return true;
     } catch {
@@ -127,7 +119,7 @@ async function isDocker() {
 
 async function hasDockerEnv() {
     try {
-        const fs = await importRuntime<typeof import("fs")>("fs");
+        const fs = await import("fs");
         fs.statSync("/.dockerenv");
         return true;
     } catch {
@@ -137,7 +129,7 @@ async function hasDockerEnv() {
 
 async function hasDockerCGroup() {
     try {
-        const fs = await importRuntime<typeof import("fs")>("fs");
+        const fs = await import("fs");
         return fs.readFileSync("/proc/self/cgroup", "utf8").includes("docker");
     } catch {
         return false;

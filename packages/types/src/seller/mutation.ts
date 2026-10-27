@@ -1,3 +1,4 @@
+import type { JsonRecord } from "../json-value"
 export interface CreateSellerDTO {
   name: string
   handle?: string
@@ -14,7 +15,7 @@ export interface CreateSellerDTO {
   default_leadtime_to_ship?: number
   closed_from?: Date | null
   closed_to?: Date | null
-  metadata?: Record<string, unknown> | null
+  metadata?: JsonRecord | null
 }
 
 export interface UpdateSellerDTO {
@@ -32,5 +33,5 @@ export interface UpdateSellerDTO {
   default_leadtime_to_ship?: number
   closed_from?: Date | null
   closed_to?: Date | null
-  metadata?: Record<string, unknown> | null
+  metadata?: JsonRecord | null
 }

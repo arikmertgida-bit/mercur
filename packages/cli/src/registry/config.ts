@@ -1,7 +1,16 @@
 import type { Config, RawConfig } from "../schema";
+
+/**
+ * What registry resolution needs: the aliases and registries, with the
+ * project paths only present when a full config was passed in.
+ */
+export type RegistryResolutionConfig = Omit<Config, "resolvedPaths"> &
+  Partial<Pick<Config, "resolvedPaths">>;
 import { BUILTIN_REGISTRIES } from "./constants";
 
-export function configWithDefaults(config?: Partial<Config> | Config): Config {
+export function configWithDefaults(
+  config?: Partial<Config> | Config
+): RegistryResolutionConfig {
   const defaultConfig: RawConfig = {
     aliases: {
       api: "packages/api/src",
@@ -25,5 +34,5 @@ export function configWithDefaults(config?: Partial<Config> | Config): Config {
     },
   };
 
-  return merged as Config;
+  return merged;
 }

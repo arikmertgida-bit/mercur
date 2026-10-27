@@ -228,7 +228,7 @@ export function formatRoute(route: Route, indent: string = "    "): string {
 export function parseFile(file: string, routesDir: string, index: number): RouteResult | null {
     try {
         const code = fs.readFileSync(file, "utf-8")
-        const ast = parse(code, getParserOptions(file)) as TraverseRoot
+        const ast = parse(code, getParserOptions(file))
 
         if (!hasDefaultExport(ast)) {
             return null

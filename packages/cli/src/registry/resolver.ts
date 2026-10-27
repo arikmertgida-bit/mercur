@@ -2,7 +2,7 @@ import { createHash } from "crypto";
 import deepmerge from "deepmerge";
 import path from "path";
 import { z } from "zod";
-import type { Config } from "../schema";
+import type { RegistryResolutionConfig } from "./config";
 import { buildUrlAndHeadersForRegistryBlock } from "./builder";
 import { setRegistryHeaders } from "./context";
 import { RegistryNotConfiguredError, RegistryParseError } from "./errors";
@@ -22,7 +22,7 @@ const registryBlockWithSourceSchema = registryItemSchema.extend({
 
 export function resolveRegistryBlocksFromRegistries(
   blocks: string[],
-  config: Config
+  config: RegistryResolutionConfig
 ) {
   const registryHeaders: Record<string, Record<string, string>> = {};
   const resolvedBlocks = [...blocks];
@@ -52,7 +52,7 @@ export function resolveRegistryBlocksFromRegistries(
   return resolvedBlocks;
 }
 
-export async function fetchRegistryBlocks(blocks: string[], config: Config) {
+export async function fetchRegistryBlocks(blocks: string[], config: RegistryResolutionConfig) {
   const results = await Promise.all(
     blocks.map(async (block) => {
       if (isLocalFile(block)) {
@@ -92,7 +92,7 @@ export async function fetchRegistryBlocks(blocks: string[], config: Config) {
   return results;
 }
 
-export async function resolveRegistryTree(names: string[], config: Config) {
+export async function resolveRegistryTree(names: string[], config: RegistryResolutionConfig) {
   let payload: z.infer<typeof registryBlockWithSourceSchema>[] = [];
   const allDependencyItems: z.infer<typeof registryBlockWithSourceSchema>[] =
     [];
@@ -171,7 +171,7 @@ export async function resolveRegistryTree(names: string[], config: Config) {
 
 async function resolveDependenciesRecursively(
   dependencies: string[],
-  config: Config,
+  config: RegistryResolutionConfig,
   visited: Set<string> = new Set()
 ) {
   const blocks: z.infer<typeof registryBlockWithSourceSchema>[] = [];
@@ -280,16 +280,10 @@ function topologicalSortRegistryBlocks(
     const source = sourceMap.get(item) || item.name;
     const hash = computeItemHash(item, source);
 
-    if (!depToHashes.has(item.name)) {
-      depToHashes.set(item.name, []);
-    }
-    depToHashes.get(item.name)!.push(hash);
+    depToHashes.set(item.name, [...(depToHashes.get(item.name) ?? []), hash]);
 
     if (source !== item.name) {
-      if (!depToHashes.has(source)) {
-        depToHashes.set(source, []);
-      }
-      depToHashes.get(source)!.push(hash);
+      depToHashes.set(source, [...(depToHashes.get(source) ?? []), hash]);
     }
   }
 
@@ -314,9 +308,10 @@ function topologicalSortRegistryBlocks(
           }
         }
 
-        if (depHash && itemMap.has(depHash)) {
-          adjacencyList.get(depHash)!.push(itemHash);
-          inDegree.set(itemHash, inDegree.get(itemHash)! + 1);
+        const dependents = depHash ? adjacencyList.get(depHash) : undefined;
+        if (depHash && itemMap.has(depHash) && dependents) {
+          dependents.push(itemHash);
+          inDegree.set(itemHash, (inDegree.get(itemHash) ?? 0) + 1);
         }
       }
     }
@@ -331,13 +326,18 @@ function topologicalSortRegistryBlocks(
     }
   }
 
-  while (queue.length > 0) {
-    const currentHash = queue.shift()!;
-    const item = itemMap.get(currentHash)!;
-    sorted.push(item as z.infer<typeof registryBlockWithSourceSchema>);
+  for (
+    let currentHash = queue.shift();
+    currentHash !== undefined;
+    currentHash = queue.shift()
+  ) {
+    const item = itemMap.get(currentHash);
+    if (item) {
+      sorted.push(item);
+    }
 
-    for (const dependentHash of adjacencyList.get(currentHash)!) {
-      const newDegree = inDegree.get(dependentHash)! - 1;
+    for (const dependentHash of adjacencyList.get(currentHash) ?? []) {
+      const newDegree = (inDegree.get(dependentHash) ?? 0) - 1;
       inDegree.set(dependentHash, newDegree);
 
       if (newDegree === 0) {
@@ -360,7 +360,7 @@ function topologicalSortRegistryBlocks(
     // Add remaining items that couldn't be sorted due to circular dependencies
     for (const [hash, item] of itemMap.entries()) {
       if (!sorted.some((s) => computeItemHash(s, sourceMap.get(s)) === hash)) {
-        sorted.push(item as z.infer<typeof registryBlockWithSourceSchema>);
+        sorted.push(item);
       }
     }
   }

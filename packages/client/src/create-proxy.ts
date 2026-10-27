@@ -1,25 +1,23 @@
-type JsonPrimitive = string | number | boolean | null
-type JsonObject = { [key: string]: JsonValue }
-type JsonArray = JsonValue[]
-type JsonValue = JsonPrimitive | JsonObject | JsonArray
-type JsonRecord = Record<string, JsonValue>
+/**
+ * The function a `createRecursiveProxy` call returns. Every property read on
+ * it yields another one (one path segment deeper); calling it hands the path
+ * and arguments to the callback. Only the call signature is visible to the
+ * type checker — `createClient` bridges it to the inferred route contract.
+ */
+export type ProxyFunction<TInput, TResult> = (input?: TInput) => TResult
 
-type ProxyCallArgs = [JsonRecord?]
-
-export type ProxyCallback<TResult = JsonValue | Promise<JsonValue> | Response> = (
+export type ProxyCallback<TInput, TResult> = (
     path: string[],
-    args: ProxyCallArgs
+    args: [TInput?]
 ) => TResult
 
-export type RecursiveProxy = {
-    [key: string]: RecursiveProxy
-} & ((input?: JsonRecord) => ReturnType<ProxyCallback>)
-
-export function createRecursiveProxy(
-    callback: ProxyCallback,
+export function createRecursiveProxy<TInput, TResult>(
+    callback: ProxyCallback<TInput, TResult>,
     path: string[] = []
-): RecursiveProxy {
-    const proxyTarget = function () { } as RecursiveProxy
+): ProxyFunction<TInput, TResult> {
+    const proxyTarget: ProxyFunction<TInput, TResult> = () => {
+        throw new Error("createRecursiveProxy: the proxy target is never invoked directly")
+    }
 
     return new Proxy(proxyTarget, {
         get(_, prop) {
@@ -33,8 +31,8 @@ export function createRecursiveProxy(
 
             return createRecursiveProxy(callback, [...path, prop]);
         },
-        apply(_, __, args) {
-            return callback(path, args as ProxyCallArgs);
+        apply(_, __, [input]) {
+            return callback(path, [input]);
         },
-    }) as RecursiveProxy;
+    });
 }

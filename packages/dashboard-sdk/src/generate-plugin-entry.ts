@@ -51,12 +51,11 @@ export function generatePluginEntryModule(srcDir: string): string {
     const routeImports = routeTree.flatMap((r) => r.imports)
     const routes = routeTree.map((r) => formatRoute(r.route))
 
-    const menuItemImports = menuItemResults
-        .filter(Boolean)
-        .map((r) => r!.import)
-    const menuItems = menuItemResults
-        .filter(Boolean)
-        .map((r) => formatMenuItem(r!.menuItem))
+    const parsedMenuItems = menuItemResults.filter(
+        (r): r is NonNullable<typeof r> => r !== null,
+    )
+    const menuItemImports = parsedMenuItems.map((r) => r.import)
+    const menuItems = parsedMenuItems.map((r) => formatMenuItem(r.menuItem))
 
     // widgets (offset the index namespace so component names don't collide)
     const { imports: widgetImports, entries: widgetEntries } = collectWidgets(

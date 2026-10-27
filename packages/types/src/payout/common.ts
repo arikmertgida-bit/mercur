@@ -1,3 +1,4 @@
+import type { JsonRecord } from "../json-value"
 import { BigNumberInput, FulfillmentStatus, ModuleProviderExports } from "@medusajs/types"
 
 export enum PayoutAccountStatus {
@@ -54,7 +55,7 @@ export interface PayoutModuleOptions {
     /**
      * Key value pair of the configuration to be passed to the provider constructor
      */
-    options?: Record<string, unknown>
+    options?: JsonRecord
   }[]
 
   /**
@@ -118,8 +119,8 @@ export type PayoutWebhookAction =
 export interface PayoutAccountDTO {
   id: string
   status: PayoutAccountStatus
-  data: Record<string, unknown>
-  context: Record<string, unknown> | null
+  data: JsonRecord
+  context: JsonRecord | null
   created_at: Date
   updated_at: Date
 }
@@ -127,8 +128,8 @@ export interface PayoutAccountDTO {
 export interface OnboardingDTO {
   id: string
   account_id: string
-  data: Record<string, unknown> | null
-  context: Record<string, unknown> | null
+  data: JsonRecord | null
+  context: JsonRecord | null
   created_at: Date
   updated_at: Date
 }
@@ -140,7 +141,7 @@ export interface PayoutDTO {
   amount: BigNumberInput
   currency_code: string
   status: PayoutStatus
-  data: Record<string, unknown> | null
+  data: JsonRecord | null
   created_at: Date
   updated_at: Date
 }

@@ -3,6 +3,7 @@ import fs from "fs/promises";
 import os from "os";
 import path from "path";
 import { fileURLToPath } from "url";
+import { z } from "zod";
 
 const DEFAULT_MANIFEST_URL =
     "https://raw.githubusercontent.com/mercurjs/mercur/canary/packages/cli/routes-manifest.json";
@@ -10,7 +11,9 @@ const DEFAULT_MANIFEST_URL =
 const FETCH_TIMEOUT_MS = 15000;
 const FETCH_RETRIES = 2;
 
-export type RouteManifest = Record<string, string>;
+const RouteManifestSchema = z.record(z.string(), z.string());
+
+export type RouteManifest = z.infer<typeof RouteManifestSchema>;
 
 function cacheFilePath(url: string): string {
     const hash = crypto.createHash("sha256").update(url).digest("hex").slice(0, 16);
@@ -31,7 +34,7 @@ function bundledManifestPath(): string {
 
 async function readManifestFile(filePath: string): Promise<RouteManifest | null> {
     try {
-        return JSON.parse(await fs.readFile(filePath, "utf-8")) as RouteManifest;
+        return RouteManifestSchema.parse(JSON.parse(await fs.readFile(filePath, "utf-8")));
     } catch {
         return null;
     }
@@ -50,7 +53,7 @@ async function fetchManifest(url: string): Promise<RouteManifest> {
                 throw new Error(`Request failed with status ${res.status}`);
             }
 
-            return (await res.json()) as RouteManifest;
+            return RouteManifestSchema.parse(await res.json());
         } catch (error) {
             lastError = error instanceof Error ? error : lastError;
             if (attempt < FETCH_RETRIES) {

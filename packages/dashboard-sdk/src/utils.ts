@@ -1,11 +1,11 @@
 import fs from "fs"
 import path from "path"
-import type { ParserOptions } from "@babel/parser"
+import type { ParserOptions, ParserPlugin } from "@babel/parser"
 import { traverse, type TraverseRoot } from "./babel"
 import { VALID_FILE_EXTENSIONS } from "./constants"
 import type { MedusaConfigShape } from "./types"
 
-type NestedDefaultExport<T extends object> = T & {
+type NestedDefaultExport<T> = T & {
     default?: NestedDefaultExport<T>
 }
 
@@ -37,19 +37,19 @@ export function crawlModuleFiles(dir: string): string[] {
 }
 
 export function getParserOptions(file: string): ParserOptions {
-    const options: ParserOptions = {
-        sourceType: "module",
-        plugins: ["jsx"],
-    }
+    const plugins: ParserPlugin[] = ["jsx"]
 
     if (file.endsWith(".ts") || file.endsWith(".tsx")) {
-        options.plugins!.push("typescript")
+        plugins.push("typescript")
     }
 
-    return options
+    return {
+        sourceType: "module",
+        plugins,
+    }
 }
 
-export function resolveExports<T extends object>(
+export function resolveExports<T>(
     moduleExports: NestedDefaultExport<T>,
 ): T {
     if (

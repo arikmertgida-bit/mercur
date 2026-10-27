@@ -19,7 +19,6 @@ import {
     type Expression,
     type Node,
     type ObjectExpressionProperty,
-    type TraverseRoot,
 } from "./babel"
 import type { BuiltMercurConfig } from "./types"
 
@@ -87,7 +86,7 @@ function getConfigProperties(
 function getWidgetConfig(file: string): WidgetInfo | null {
     try {
         const code = fs.readFileSync(file, "utf-8")
-        const ast = parse(code, getParserOptions(file)) as TraverseRoot
+        const ast = parse(code, getParserOptions(file))
 
         if (!hasDefaultExport(ast)) return null
 

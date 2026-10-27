@@ -1,3 +1,4 @@
+import type { JsonRecord } from "../json-value"
 import { BigNumberInput } from "@medusajs/types"
 
 export enum CommissionRateType {
@@ -35,7 +36,7 @@ export type CommissionLineDTO = {
   rate: number
   amount: number
   description: string | null
-  data: Record<string, unknown> | null
+  data: JsonRecord | null
   created_at: Date
   updated_at: Date
   deleted_at: Date | null
@@ -142,7 +143,7 @@ export interface CommissionCalculationContext {
    * populated by the `setCommissionContext` hook of
    * `refreshOrderCommissionLinesWorkflow`.
    */
-  additional_context?: Record<string, unknown>
+  additional_context?: JsonRecord
 }
 
 export interface CreateCommissionLineDTO {
@@ -154,7 +155,7 @@ export interface CreateCommissionLineDTO {
   rate: number
   amount: number
   description?: string | null
-  data?: Record<string, unknown> | null
+  data?: JsonRecord | null
 }
 
 export interface UpdateCommissionLineDTO extends Partial<CreateCommissionLineDTO> {

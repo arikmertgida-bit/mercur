@@ -42,7 +42,7 @@ export async function preFlightRegistryCodegen(
 
     return {
       errors,
-      config: config!,
+      config,
       resolvePaths,
     };
   } catch  {

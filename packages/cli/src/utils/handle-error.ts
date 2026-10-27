@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { RegistryError } from "../registry/errors";
 import { highlighter } from "./highlighter";
+import type { JsonValue } from "./json";
 import { logger } from "./logger";
 
 type HandledError = string | Error | z.ZodError | RegistryError;
@@ -57,7 +58,9 @@ export function handleError(error: HandledError) {
   process.exit(1);
 }
 
-export function handleCaughtError(error: HandledError | object): void {
+export function handleCaughtError(
+  error: HandledError | JsonValue | undefined
+): void {
   if (typeof error === "string") {
     handleError(error);
     return;

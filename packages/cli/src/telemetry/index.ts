@@ -4,7 +4,7 @@ import { getConfig } from "../utils/get-config";
 import { detectSystemInfo } from "./detect-system-info";
 import { getPackageManager } from "../utils/get-package-manager";
 import { hashToBase64 } from "./hash";
-import { getProjectInfo, type PackageJson } from "../utils/get-project-info";
+import { getProjectInfo } from "../utils/get-project-info";
 import { highlighter } from "../utils/highlighter";
 
 const TELEMETRY_URL = process.env.MERCUR_TELEMETRY_PROXY_URL || 'https://telemetry.mercurjs.com/api/v1/events'
@@ -60,7 +60,7 @@ export const sendTelemetryEvent = async (event: TelemetryEvent, options: { cwd: 
 
         const projectInfo = await getProjectInfo(options.cwd)
 
-        const { projectId } = getProjectId(projectInfo.packageJson!)
+        const { projectId } = getProjectId()
 
         const baseEvent = {
             nodeEnv: detectEnvironment(),
@@ -105,9 +105,7 @@ const getGitID = () => {
     }
 }
 
-const getProjectId = (
-    _packageJson: PackageJson,
-): { projectId: string; } => {
+const getProjectId = (): { projectId: string; } => {
     const gitID = getGitID()
     if (gitID) {
         return { projectId: hashToBase64(gitID), }

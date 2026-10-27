@@ -14,10 +14,11 @@ import {
 } from "./errors";
 import { registryItemSchema } from "./schema";
 import { isLocalFile } from "./utils";
+import { type JsonValue, JsonValueSchema } from "../utils/json";
 
-const fetchCache = new Map<string, Promise<unknown>>();
+const fetchCache = new Map<string, Promise<JsonValue>>();
 
-async function fetchLocalJson(filePath: string) {
+async function fetchLocalJson(filePath: string): Promise<JsonValue> {
   let expandedPath = filePath;
 
   // Strip file:// protocol if present
@@ -33,7 +34,7 @@ async function fetchLocalJson(filePath: string) {
 
   try {
     const content = await fs.readFile(resolvedPath, "utf8");
-    return JSON.parse(content);
+    return JsonValueSchema.parse(JSON.parse(content));
   } catch (error) {
     if (
       error instanceof Error &&
@@ -62,7 +63,7 @@ export async function fetchRegistry(paths: string[]) {
         return fetchPromise;
       }
 
-      const fetchPromise = (async () => {
+      const fetchPromise = (async (): Promise<JsonValue> => {
         const headers = getRegistryHeadersFromContext(url);
 
         const response = await fetch(url, {
@@ -111,7 +112,7 @@ export async function fetchRegistry(paths: string[]) {
           throw new RegistryFetchError(url, response.status, messageFromServer);
         }
 
-        return response.json();
+        return JsonValueSchema.parse(await response.json());
       })();
 
       fetchCache.set(url, fetchPromise);

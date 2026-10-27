@@ -78,10 +78,15 @@ export const diff = new Command()
             continue;
           }
 
+          if (file.content === undefined) {
+            logger.info(`File ${file.path} has no content in the registry.`);
+            continue;
+          }
+
           const localContent = await fs.readFile(filePath, "utf-8");
           const transformedContent = await transformImports({
             filename: file.path,
-            raw: file.content!,
+            raw: file.content,
             config,
             isRemote: false,
           });

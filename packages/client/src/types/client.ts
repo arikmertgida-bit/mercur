@@ -1,4 +1,4 @@
-import { ChildKeys, InferInput, InferOutput, TypeError } from "./helpers";
+import { ChildKeys, HttpMethod, InferInput, InferOutput, TypeError } from "./helpers";
 
 export type ActionType = "query" | "mutate" | "delete";
 
@@ -22,46 +22,70 @@ export type ClientOptions = {
     headers?: () => Record<string, string>;
 };
 
-type AddParamsToFn<Fn, TParams> =
-    keyof TParams extends never
+export type FetchOptionsInput = { fetchOptions?: RequestInit };
+
+/**
+ * Distributes over a union input so every member keeps its own keys; the
+ * `undefined` member of an optional input drops out.
+ */
+export type StripFetchOptions<TInput> = TInput extends FetchOptionsInput
+    ? Omit<TInput, "fetchOptions">
+    : never;
+
+type PathParams<TParamKeys extends string> = { [P in TParamKeys]: string };
+
+type AddParamsToFn<Fn, TParamKeys extends string> =
+    [TParamKeys] extends [never]
     ? Fn
     : Fn extends (input?: infer TInput) => infer TOutput
-    ? (input: (TInput extends Record<string, any> ? Omit<TInput, 'fetchOptions'> : {}) & TParams & { fetchOptions?: RequestInit }) => TOutput
+    ? (input: StripFetchOptions<TInput> & PathParams<TParamKeys> & FetchOptionsInput) => TOutput
     : Fn extends (input: infer TInput) => infer TOutput
-    ? (input: (TInput extends Record<string, any> ? Omit<TInput, 'fetchOptions'> : {}) & TParams & { fetchOptions?: RequestInit }) => TOutput
+    ? (input: StripFetchOptions<TInput> & PathParams<TParamKeys> & FetchOptionsInput) => TOutput
     : Fn;
+
+/**
+ * A route without a body generic carries Medusa's `validatedBody` default (the
+ * top type, which also accepts `null`), a request-less one infers `void` —
+ * neither has a payload to send.
+ */
+type HasNoInput<TInput> = [TInput] extends [void]
+    ? true
+    : [null] extends [TInput]
+    ? true
+    : false;
 
 type InferFetchFn<
     TRequest,
     TResponse,
     TInput = InferInput<TRequest>,
     TOutput = InferOutput<TResponse>,
-> = [TInput] extends [Record<string, any>]
-    ? (input: TInput & { fetchOptions?: RequestInit }) => Promise<TOutput>
-    : (input?: { fetchOptions?: RequestInit }) => Promise<TOutput>;
+> = HasNoInput<TInput> extends true
+    ? (input?: FetchOptionsInput) => Promise<TOutput>
+    : (input: TInput & FetchOptionsInput) => Promise<TOutput>;
 
-type InferEndpointMethods<TRoutes, TParams> =
-    (TRoutes extends { GET: (req: infer TReq, res: infer TRes) => any }
-        ? { query: AddParamsToFn<InferFetchFn<TReq, TRes>, TParams> }
-        : {}) &
-    (TRoutes extends { POST: (req: infer TReq, res: infer TRes) => any }
-        ? { mutate: AddParamsToFn<InferFetchFn<TReq, TRes>, TParams> }
-        : {}) &
-    (TRoutes extends { DELETE: (req: infer TReq, res: infer TRes) => any }
-        ? { delete: AddParamsToFn<InferFetchFn<TReq, TRes>, TParams> }
-        : {});
+type MethodActions = { GET: "query"; POST: "mutate"; DELETE: "delete" };
 
-type ProcessRoutes<TRoutes, TParams = {}> =
-    InferEndpointMethods<TRoutes, TParams> &
+type InferEndpointMethods<TRoutes, TParamKeys extends string> = {
+    [M in keyof TRoutes & HttpMethod as MethodActions[M]]: TRoutes[M] extends (
+        req: infer TReq,
+        res: infer TRes
+    ) => void
+        ? AddParamsToFn<InferFetchFn<TReq, TRes>, TParamKeys>
+        : never;
+};
+
+type ProcessRoutes<TRoutes, TParamKeys extends string = never> =
+    InferEndpointMethods<TRoutes, TParamKeys> &
     {
         [K in ChildKeys<TRoutes>]: K extends `$${string}`
-        ? ProcessRoutes<TRoutes[K], TParams & { [P in K]: string }>
-        : ProcessRoutes<TRoutes[K], TParams>
+        ? ProcessRoutes<TRoutes[K], TParamKeys | (K & string)>
+        : ProcessRoutes<TRoutes[K], TParamKeys>
     };
 
-export type InferClient<TRoutes> = TRoutes extends Record<string, any>
-    ? ProcessRoutes<TRoutes>
-    : TypeError<`Looks like you forgot to pass the \`Routes\` generic type to the \`createClient\` function.`>;
-
-
-export type AnyClient = InferClient<any>;
+/**
+ * `TRoutes` falls back to the top type when the generic is not passed, which
+ * — unlike a route tree — accepts `null`.
+ */
+export type InferClient<TRoutes> = [null] extends [TRoutes]
+    ? TypeError<`Looks like you forgot to pass the \`Routes\` generic type to the \`createClient\` function.`>
+    : ProcessRoutes<TRoutes>;

@@ -1,3 +1,5 @@
+import type Stripe from "stripe"
+
 export interface StripeConnectAccountValidationOptions {
     /**
      * Require Stripe to mark onboarding details as submitted
@@ -18,7 +20,7 @@ export interface StripeConnectAccountValidationOptions {
     /**
      * Require specific Stripe capabilities to be active
      */
-    requiredCapabilities?: string[]
+    requiredCapabilities?: (keyof Stripe.Account.Capabilities)[]
 }
 
 export interface StripeConnectOptions {

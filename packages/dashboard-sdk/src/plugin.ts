@@ -161,9 +161,9 @@ function resolvePluginExtensions(plugins: MedusaPluginConfig[], configDir: strin
         if (!pluginRoot) {
             // Silently skipping leaves the dashboard missing whatever the plugin
             // contributes, with a build that still looks clean.
-            console.warn(
+            process.stderr.write(
                 `[@mercurjs/dashboard-sdk] Could not resolve plugin "${resolve}" from ${configDir}. ` +
-                    `Its ${appType} extensions will be missing from the build.`,
+                    `Its ${appType} extensions will be missing from the build.\n`,
             );
             continue;
         }

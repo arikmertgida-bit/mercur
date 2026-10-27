@@ -38,6 +38,7 @@ export * from "./review"
 export { ProductStatus } from "./product/status"
 export {
   AttributeType,
+  ProductAttributeErrorCode,
   ProductChangeStatus,
   ProductChangeActionType,
   type ProductDTO,

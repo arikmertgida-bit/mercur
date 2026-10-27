@@ -1,3 +1,4 @@
+import type { JsonRecord } from "../json-value"
 import type {
   CreateProductDTO as UpstreamCreateProductDTO,
 } from "@medusajs/types"
@@ -11,7 +12,7 @@ export interface CreateProductAttributeValueDTO {
   rank?: number
   is_active?: boolean
   product_option_value_id?: string | null
-  metadata?: Record<string, unknown> | null
+  metadata?: JsonRecord | null
 }
 
 export interface UpdateProductAttributeValueDTO {
@@ -20,7 +21,7 @@ export interface UpdateProductAttributeValueDTO {
   rank?: number
   is_active?: boolean
   product_option_value_id?: string | null
-  metadata?: Record<string, unknown> | null
+  metadata?: JsonRecord | null
 }
 
 export interface UpsertProductAttributeValueDTO
@@ -43,7 +44,7 @@ export interface CreateProductAttributeDTO {
   created_by?: string | null
   product_id?: string | null
   product_option_id?: string | null
-  metadata?: Record<string, unknown> | null
+  metadata?: JsonRecord | null
   values?: CreateProductAttributeValueDTO[]
 }
 
@@ -58,7 +59,7 @@ export interface UpdateProductAttributeDTO {
   rank?: number
   is_active?: boolean
   product_option_id?: string | null
-  metadata?: Record<string, unknown> | null
+  metadata?: JsonRecord | null
 }
 
 // --- Batch attribute attach/detach/update on a product (SPEC-014 §G) ---
@@ -118,7 +119,7 @@ export type ProductAttributeBatchAdd =
     is_filterable?: boolean
     is_required?: boolean
     description?: string | null
-    metadata?: Record<string, unknown> | null
+    metadata?: JsonRecord | null
   }
 
 /**
@@ -229,14 +230,14 @@ export interface CreateProductChangeDTO {
   status?: ProductChangeStatus
   confirmed_by?: string
   confirmed_at?: Date
-  metadata?: Record<string, unknown>
+  metadata?: JsonRecord
 }
 
 export interface CreateProductChangeActionDTO {
   product_change_id?: string
   product_id: string
   action: string
-  details?: Record<string, unknown>
+  details?: JsonRecord
   reference?: string | null
   reference_id?: string | null
   internal_note?: string

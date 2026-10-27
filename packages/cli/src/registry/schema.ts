@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { JsonValueSchema } from "../utils/json";
 
 export const registryItemTypeSchema = z.enum([
   "registry:api",
@@ -24,7 +25,7 @@ const registryItemBaseSchema = z.object({
   dependencies: z.array(z.string()).optional(),
   devDependencies: z.array(z.string()).optional(),
   registryDependencies: z.array(z.string()).optional(),
-  meta: z.record(z.string(), z.any()).optional(),
+  meta: z.record(z.string(), JsonValueSchema).optional(),
   docs: z.string().optional(),
   categories: z.array(z.string()).optional(),
 });
