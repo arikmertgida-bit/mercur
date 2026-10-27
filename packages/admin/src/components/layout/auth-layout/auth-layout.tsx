@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 
 import { assetUrl } from "../../../utils/asset-url";
+import { AUTH_ILLUSTRATION_PATH } from "../../../utils/asset-paths";
 
 type AuthLayoutProps = {
   children: ReactNode;
@@ -14,11 +15,11 @@ export const AuthLayout = ({ children }: AuthLayoutProps) => {
           {children}
         </div>
       </div>
-      <div className="relative hidden flex-1 overflow-hidden lg:flex">
+      <div className="bg-ui-bg-subtle hidden min-w-0 flex-1 items-center justify-center overflow-hidden lg:flex">
         <img
-          src={assetUrl("/onboarding/illustration.svg")}
+          src={assetUrl(AUTH_ILLUSTRATION_PATH)}
           alt=""
-          className="h-full w-full object-cover"
+          className="h-full max-h-[1024px] w-full max-w-[1024px] object-contain"
         />
       </div>
     </div>
