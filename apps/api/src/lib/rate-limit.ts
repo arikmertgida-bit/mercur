@@ -1,17 +1,20 @@
 import type { MedusaRequest } from '@medusajs/framework/http'
-import rateLimit from 'express-rate-limit'
+import rateLimit, { ipKeyGenerator } from 'express-rate-limit'
 
 // Requests normally arrive via kayi_nginx_gateway, which sets X-Forwarded-For
 // to the real client IP (see nginx/nginx.conf). Express's own req.ip would
 // otherwise resolve to the gateway container's IP for every request,
 // collapsing every real client into a single shared rate-limit bucket.
+// ipKeyGenerator groups IPv6 addresses by /56 subnet (express-rate-limit's
+// own default) — one client can otherwise rotate through its subnet to
+// bypass the limit.
 function resolveClientIp(req: MedusaRequest): string {
   const forwardedFor = req.headers['x-forwarded-for']
   if (typeof forwardedFor === 'string' && forwardedFor.length > 0) {
     const [clientIp = ''] = forwardedFor.split(',')
-    return clientIp.trim()
+    return ipKeyGenerator(clientIp.trim())
   }
-  return req.ip ?? 'unknown'
+  return req.ip ? ipKeyGenerator(req.ip) : 'unknown'
 }
 
 // In-memory store: correct for this deployment (a single backend

@@ -72,7 +72,7 @@ describe("jest transformer", () => {
         const { code } = transform(readFileSync(sourcePath, "utf8"), sourcePath)
 
         expect(code).toContain('fields: ["id", "code", "seller.id"]')
-        expect(code).toContain('fields: ["id", "offer.seller_id"]')
+        expect(code).toContain('fields: ["id", "variant.product.sellers.id"]')
     })
 
     it("leaves files it does not target untouched", () => {

@@ -36,10 +36,10 @@ index cf494cc..b2be9fc 100644
 +    if (lineItemAdjustmentsToCreate.length) {
 +        const { data: lineItems } = await query.graph({
 +            entity: "line_item",
-+            fields: ["id", "offer.seller_id"],
++            fields: ["id", "variant.product.sellers.id"],
 +            filters: { id: [...new Set(lineItemAdjustmentsToCreate.map((a) => a.item_id))] },
 +        }, { cache: { enable: true } });
-+        const sellerOfLineItem = new Map(lineItems.map((item) => [item.id, item.offer?.seller_id ?? null]));
++        const sellerOfLineItem = new Map(lineItems.map((item) => [item.id, item.variant?.product?.sellers?.[0]?.id ?? null]));
 +        lineItemAdjustmentsToCreate = lineItemAdjustmentsToCreate.filter((adjustment) => inSellerScope(adjustment.promotion_id, sellerOfLineItem.get(adjustment.item_id)));
 +    }
 +    if (shippingMethodAdjustmentsToCreate.length) {

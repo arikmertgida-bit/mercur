@@ -8,7 +8,9 @@ import { parseGraphRows } from "../../../utils/graph-rows"
 
 const AttributeValueProductsRowSchema = z.object({
   attribute_id: z.string().nullable(),
-  products: z.array(z.object({ id: z.string() })).nullish(),
+  // A link row whose product no longer resolves comes back as an empty
+  // entry; it still counts as a link, as upstream counts it.
+  products: z.array(z.object({ id: z.string() }).nullish()).nullish(),
 })
 
 export const validateProductAttributesNotLinkedStepId =

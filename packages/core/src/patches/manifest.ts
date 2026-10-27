@@ -47,7 +47,11 @@ export const PATCHES: PatchEntry[] = [
       "promotion module computes for the whole cart, and every cart refresh runs it " +
       "through updateCartPromotionsWorkflow. Without the seller scope applied in the " +
       "step itself, a seller's promotion lands on other sellers' line items and " +
-      "shipping methods as soon as the cart is touched. See GHSA-w4vq-6jvh-cfpg.",
+      "shipping methods as soon as the cart is touched. See GHSA-w4vq-6jvh-cfpg. " +
+      "Kayı sells through the product↔seller link (no offer module), so a line " +
+      "item's seller is read from variant.product.sellers, the same source as " +
+      "getLineItemSellerId — upstream's offer.seller_id is always empty here and " +
+      "would drop every seller promotion's line-item adjustments.",
   },
   {
     file: "@medusajs+core-flows@2.20.1-delivery-hook.patch",

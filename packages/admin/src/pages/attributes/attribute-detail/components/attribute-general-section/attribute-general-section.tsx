@@ -1,9 +1,11 @@
 import { PencilSquare, Trash } from "@medusajs/icons"
-import { Badge, Container, Heading, toast, usePrompt } from "@medusajs/ui"
+import { Badge, Container, Heading, Prompt, toast, usePrompt } from "@medusajs/ui"
+import { useState } from "react"
 import { useTranslation } from "react-i18next"
 import { useNavigate } from "react-router-dom"
 
-import { ProductAttributeDTO } from "@mercurjs/types"
+import { ClientError } from "@mercurjs/client"
+import { ProductAttributeDTO, ProductAttributeErrorCode } from "@mercurjs/types"
 import { ActionMenu } from "../../../../../components/common/action-menu"
 import { SectionRow } from "../../../../../components/common/section/section-row"
 import { useDeleteProductAttribute } from "../../../../../hooks/api"
@@ -19,6 +21,7 @@ export const AttributeGeneralSection = ({
   const navigate = useNavigate()
   const prompt = usePrompt()
   const { mutateAsync } = useDeleteProductAttribute(attribute.id)
+  const [inUseOpen, setInUseOpen] = useState(false)
 
   const handleDelete = async () => {
     const confirmed = await prompt({
@@ -34,17 +37,22 @@ export const AttributeGeneralSection = ({
       return
     }
 
-    await mutateAsync(undefined, {
-      onSuccess: () => {
-        toast.success(
-          t("attributes.delete.successToast", { name: attribute.name })
-        )
-        navigate("/settings/attributes", { replace: true })
-      },
-      onError: (error) => {
-        toast.error(error.message)
-      },
-    })
+    try {
+      await mutateAsync(undefined)
+      toast.success(
+        t("attributes.delete.successToast", { name: attribute.name })
+      )
+      navigate("/settings/attributes", { replace: true })
+    } catch (err) {
+      if (
+        err instanceof ClientError &&
+        err.code === ProductAttributeErrorCode.ATTRIBUTE_IN_USE
+      ) {
+        setInUseOpen(true)
+      } else {
+        toast.error(err instanceof Error ? err.message : t("general.unknownError"))
+      }
+    }
   }
 
   const ATTRIBUTE_TYPE_LABELS: Record<string, string> = {
@@ -159,6 +167,24 @@ export const AttributeGeneralSection = ({
         }
         data-testid="attribute-general-section-categories-row"
       />
+
+      <Prompt open={inUseOpen} variant="confirmation">
+        <Prompt.Content>
+          <Prompt.Header>
+            <Prompt.Title>{t("attributes.delete.title")}</Prompt.Title>
+            <Prompt.Description>
+              {t("attributes.delete.inUseMessage", {
+                name: attribute.name,
+              })}
+            </Prompt.Description>
+          </Prompt.Header>
+          <Prompt.Footer>
+            <Prompt.Action onClick={() => setInUseOpen(false)}>
+              {t("attributes.delete.gotIt")}
+            </Prompt.Action>
+          </Prompt.Footer>
+        </Prompt.Content>
+      </Prompt>
     </Container>
   )
 }

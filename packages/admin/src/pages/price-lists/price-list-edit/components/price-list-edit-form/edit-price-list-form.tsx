@@ -30,7 +30,7 @@ const PriceListEditSchema = z.object({
   status: z.enum(PriceListStatus),
   type: z.enum(PriceListType),
   title: z.string().min(1),
-  description: z.string().min(1),
+  description: z.string().optional(),
 })
 
 export const PriceListEditForm = ({ priceList }: PriceListEditFormProps) => {
@@ -53,7 +53,15 @@ export const PriceListEditForm = ({ priceList }: PriceListEditFormProps) => {
   const { mutateAsync, isPending } = useUpdatePriceList(priceList.id)
 
   const handleSubmit = form.handleSubmit(async (values) => {
-    await mutateAsync(values, {
+    // Medusa's update validator is strict: an empty additional_data from
+    // the extendable form must not be sent.
+    const { additional_data, ...rest } = values
+    const payload =
+      additional_data && Object.keys(additional_data).length
+        ? { ...rest, additional_data }
+        : rest
+
+    await mutateAsync(payload, {
       onSuccess: ({ price_list }) => {
         toast.success(
           t("priceLists.edit.successToast", {
