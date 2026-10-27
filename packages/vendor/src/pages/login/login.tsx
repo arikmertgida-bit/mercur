@@ -7,7 +7,7 @@ import { Trans, useTranslation } from "react-i18next";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import * as z from "zod";
 
-import { MercurFeatureFlags } from "@mercurjs/types";
+import { MercurFeatureFlags } from "@mercurjs/types/feature-flags";
 import { WidgetZone } from "@mercurjs/dashboard-shared";
 import { Form } from "@components/common/form";
 import AvatarBox from "@components/common/logo-box/avatar-box";

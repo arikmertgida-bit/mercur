@@ -10,7 +10,8 @@ import AvatarBox from "@components/common/logo-box/avatar-box";
 import { AuthLayout } from "@components/layout/auth-layout";
 import { useSelectSeller, useSellers } from "@hooks/api";
 import { useLocationStateEmail } from "@lib/location-state";
-import { SellerMemberDTO, SellerStatus } from "@mercurjs/types";
+import type { SellerMemberDTO } from "@mercurjs/types";
+import { SellerStatus } from "@mercurjs/types/seller";
 
 const getSellerStatusBadge = (
   status: string,

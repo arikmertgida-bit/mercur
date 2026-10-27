@@ -2,7 +2,7 @@ import { Heading, Select, Text } from "@medusajs/ui"
 import { useWatch } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
-import { AttributeType } from "@mercurjs/types"
+import { AttributeType } from "@mercurjs/types/product"
 import { Form } from "../../../../components/common/form"
 import { SwitchBox } from "../../../../components/common/switch-box"
 import { useTabbedForm } from "../../../../components/tabbed-form/tabbed-form"

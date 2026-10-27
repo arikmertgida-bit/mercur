@@ -6,7 +6,7 @@ import { WidgetTabContent, WidgetZone, useLinkQuery, usePermissions, useWidgetTa
 import { TwoColumnPageSkeleton } from "../../../../components/common/skeleton";
 import { TwoColumnPage } from "../../../../components/layout/pages";
 import { useSeller } from "@/hooks/api";
-import { SellerStatus } from "@mercurjs/types";
+import { SellerStatus } from "@mercurjs/types/seller";
 
 import { STORE_DETAIL_FIELDS } from "../loader";
 import { StoreGeneralSection } from "./store-general-section";

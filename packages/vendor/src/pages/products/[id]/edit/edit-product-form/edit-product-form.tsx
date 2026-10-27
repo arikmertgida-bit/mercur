@@ -1,5 +1,5 @@
 import { Button, Input, toast } from "@medusajs/ui";
-import { MercurFeatureFlags } from "@mercurjs/types";
+import { MercurFeatureFlags } from "@mercurjs/types/feature-flags";
 import i18n from "i18next";
 import { useEffect, useRef } from "react";
 import { useWatch } from "react-hook-form";

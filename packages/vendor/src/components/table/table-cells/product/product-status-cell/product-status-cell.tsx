@@ -2,7 +2,7 @@ import { ComponentProps } from "react";
 import { useTranslation } from "react-i18next";
 
 import { StatusCell } from "../../common/status-cell";
-import { ProductStatus } from "@mercurjs/types";
+import { ProductStatus } from "@mercurjs/types/product";
 
 type ProductStatusCellProps = {
   status: ProductStatus | `${ProductStatus}`;

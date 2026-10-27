@@ -1,5 +1,5 @@
 import { ClientError, InferClientOutput } from "@mercurjs/client"
-import { MercurFeatureFlags } from "@mercurjs/types"
+import { MercurFeatureFlags } from "@mercurjs/types/feature-flags"
 import { HttpTypes } from "@medusajs/types"
 import { Button, toast } from "@medusajs/ui"
 import { TFunction } from "i18next"

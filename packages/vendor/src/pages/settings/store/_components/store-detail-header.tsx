@@ -7,7 +7,7 @@ import { DisplayField } from "@mercurjs/dashboard-shared";
 
 import { ActionMenu } from "@components/common/action-menu";
 import { HttpTypes } from "@mercurjs/types";
-import { SellerStatus } from "@mercurjs/types";
+import { SellerStatus } from "@mercurjs/types/seller";
 import { TFunction } from "i18next";
 
 type StoreProps = {

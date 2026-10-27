@@ -1,4 +1,5 @@
-import { ProductChangeActionDTO, ProductChangeActionType } from "@mercurjs/types"
+import type { ProductChangeActionDTO } from "@mercurjs/types"
+import { ProductChangeActionType } from "@mercurjs/types/product"
 import { describe, expect, test } from "vitest"
 
 import { buildProductChangeView } from "./product-change-diff"

@@ -1,6 +1,6 @@
 import { usePermissions } from "@mercurjs/dashboard-shared";
 import { useTranslation } from "react-i18next";
-import { ProductStatus } from "@mercurjs/types";
+import { ProductStatus } from "@mercurjs/types/product";
 import { Filter } from "../../../components/table/data-table";
 import { useProductTags, useProductCategories, useCollections } from "../../api";
 import { useProductTypes } from "../../api/product-types";

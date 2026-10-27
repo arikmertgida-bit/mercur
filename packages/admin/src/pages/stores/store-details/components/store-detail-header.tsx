@@ -7,7 +7,7 @@ import { TFunction } from "i18next";
 import { ActionMenu } from "../../../../components/common/action-menu";
 import { InferClientOutput } from "@mercurjs/client";
 import { sdk } from "@lib/client";
-import { SellerStatus } from "@mercurjs/types";
+import { SellerStatus } from "@mercurjs/types/seller";
 
 type Seller = InferClientOutput<typeof sdk.admin.sellers.$id.query>["seller"];
 

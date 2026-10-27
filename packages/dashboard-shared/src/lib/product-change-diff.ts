@@ -1,9 +1,5 @@
-import {
-  JsonRecord,
-  JsonValue,
-  ProductChangeActionDTO,
-  ProductChangeActionType,
-} from "@mercurjs/types"
+import type { JsonRecord, JsonValue, ProductChangeActionDTO } from "@mercurjs/types"
+import { ProductChangeActionType } from "@mercurjs/types/product"
 
 export type ImageRef = { url: string }
 

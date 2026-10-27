@@ -8,7 +8,9 @@ import { z } from "zod"
 
 import { useEffect, useMemo } from "react"
 import { HttpTypes } from "@medusajs/types"
-import { ProductDTO, AttributeType, MercurFeatureFlags } from "@mercurjs/types"
+import type { ProductDTO } from "@mercurjs/types"
+import { AttributeType } from "@mercurjs/types/product"
+import { MercurFeatureFlags } from "@mercurjs/types/feature-flags"
 
 import { Form } from "@components/common/form"
 import { AttributeValueInput } from "@components/inputs/attribute-value-input"

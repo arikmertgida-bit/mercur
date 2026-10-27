@@ -1,6 +1,6 @@
 import i18n, { TFunction } from "i18next"
 import { z } from "zod"
-import { AttributeType } from "@mercurjs/types"
+import { AttributeType } from "@mercurjs/types/product"
 import { isValidHandleFormat } from "@mercurjs/dashboard-shared"
 
 export const ATTRIBUTE_TYPE_OPTIONS = [

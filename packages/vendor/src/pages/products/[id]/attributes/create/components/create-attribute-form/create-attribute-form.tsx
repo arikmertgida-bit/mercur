@@ -12,13 +12,13 @@ import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import * as zod from "zod"
 
-import { MercurFeatureFlags } from "@mercurjs/types"
+import { MercurFeatureFlags } from "@mercurjs/types/feature-flags"
 
 import { ChipInput } from "@components/inputs/chip-input"
 import { Form } from "@components/common/form"
 import { RouteDrawer, useRouteModal } from "@components/modals"
 import { KeyboundForm } from "@components/utilities/keybound-form"
-import { AttributeType } from "@mercurjs/types"
+import { AttributeType } from "@mercurjs/types/product"
 import { useFeatureFlags } from "@hooks/api"
 import { useBatchProductAttributes } from "@hooks/api/products"
 

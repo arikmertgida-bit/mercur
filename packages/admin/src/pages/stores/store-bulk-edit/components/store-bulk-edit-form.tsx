@@ -14,7 +14,8 @@ import { sdk } from "@lib/client";
 import { queryClient } from "@lib/query-client";
 import { parseSellerStatus } from "@lib/seller-status";
 import { sellersQueryKeys, useSellers } from "@hooks/api/sellers";
-import { SellerDTO, SellerStatus } from "@mercurjs/types";
+import type { SellerDTO } from "@mercurjs/types";
+import { SellerStatus } from "@mercurjs/types/seller";
 
 type FormValues = {
   statuses: Record<string, SellerStatus>;

@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { Button, Text, toast } from "@medusajs/ui"
-import { HttpTypes, ProductChangeStatus } from "@mercurjs/types"
+import type { HttpTypes } from "@mercurjs/types"
+import { ProductChangeStatus } from "@mercurjs/types/product"
 import {
   ProductChangePanel,
   type ProductChangeProduct,

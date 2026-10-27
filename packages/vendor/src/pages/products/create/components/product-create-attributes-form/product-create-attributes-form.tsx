@@ -14,7 +14,8 @@ import {
   Text,
   Textarea,
 } from "@medusajs/ui"
-import { AttributeType, ProductAttributeDTO } from "@mercurjs/types"
+import type { ProductAttributeDTO } from "@mercurjs/types"
+import { AttributeType } from "@mercurjs/types/product"
 import { getEmptyAttributeValue } from "../../../common/utils/attribute-type"
 import { useEffect } from "react"
 import {

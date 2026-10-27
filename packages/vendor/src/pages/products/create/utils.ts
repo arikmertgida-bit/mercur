@@ -1,5 +1,6 @@
 import { HttpTypes } from "@medusajs/types"
-import { AttributeType, ProductAttributeBatchAdd } from "@mercurjs/types"
+import type { ProductAttributeBatchAdd } from "@mercurjs/types"
+import { AttributeType } from "@mercurjs/types/product"
 import { UseFormReturn } from "react-hook-form"
 import { i18n } from "../../../components/utilities/i18n/i18n"
 import { castNumber } from "../../../lib/cast-number"

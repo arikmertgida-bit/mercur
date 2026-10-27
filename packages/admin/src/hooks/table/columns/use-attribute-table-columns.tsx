@@ -11,7 +11,8 @@ import {
 } from "@medusajs/ui"
 import { PencilSquare, Trash } from "@medusajs/icons"
 import { ClientError } from "@mercurjs/client"
-import { ProductAttributeDTO, ProductAttributeErrorCode } from "@mercurjs/types"
+import type { ProductAttributeDTO } from "@mercurjs/types"
+import { ProductAttributeErrorCode } from "@mercurjs/types/product"
 import { TextCell } from "../../../components/table/table-cells/common/text-cell"
 import { ActionMenu } from "../../../components/common/action-menu"
 import {

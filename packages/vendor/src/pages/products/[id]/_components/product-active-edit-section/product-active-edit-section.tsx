@@ -1,5 +1,5 @@
 import { Button, toast, usePrompt } from "@medusajs/ui"
-import { ProductChangeStatus } from "@mercurjs/types"
+import { ProductChangeStatus } from "@mercurjs/types/product"
 import {
   PermissionAction,
   ProductChangePanel,

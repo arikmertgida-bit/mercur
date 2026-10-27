@@ -1,5 +1,5 @@
 import { Input, Select, Textarea } from "@medusajs/ui";
-import { AttributeType } from "@mercurjs/types";
+import { AttributeType } from "@mercurjs/types/product";
 import { useTranslation } from "react-i18next";
 import { Combobox } from "../combobox";
 

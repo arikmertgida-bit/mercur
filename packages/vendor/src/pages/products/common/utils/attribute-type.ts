@@ -1,4 +1,4 @@
-import { AttributeType } from "@mercurjs/types"
+import { AttributeType } from "@mercurjs/types/product"
 import { z } from "zod"
 
 const AttributeTypeSchema = z.enum(AttributeType)

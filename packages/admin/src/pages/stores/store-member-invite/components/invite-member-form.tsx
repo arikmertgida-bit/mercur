@@ -17,7 +17,7 @@ import {
   useSellerInvites,
   useSellerMembers,
 } from "../../../../hooks/api/sellers";
-import { SellerRole } from "@mercurjs/types";
+import { SellerRole } from "@mercurjs/types/seller";
 
 const ROLE_OPTIONS = [
   {

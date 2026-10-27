@@ -5,7 +5,9 @@ import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { z } from "zod"
 
-import { AttributeType, MercurFeatureFlags, ProductDTO } from "@mercurjs/types"
+import type { ProductDTO } from "@mercurjs/types"
+import { AttributeType } from "@mercurjs/types/product"
+import { MercurFeatureFlags } from "@mercurjs/types/feature-flags"
 
 import { Form } from "@components/common/form"
 import { AttributeValueInput } from "@components/inputs/attribute-value-input"

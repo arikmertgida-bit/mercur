@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next"
 import { ComponentProps } from "react"
 
 import { StatusCell } from "../../common/status-cell"
-import { SellerStatus } from "@mercurjs/types"
+import { SellerStatus } from "@mercurjs/types/seller"
 
 import { parseSellerStatus } from "../../../../../lib/seller-status"
 

@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Plus, ThumbnailBadge } from "@medusajs/icons"
 import { HttpTypes } from "@medusajs/types"
-import { MercurFeatureFlags } from "@mercurjs/types"
+import { MercurFeatureFlags } from "@mercurjs/types/feature-flags"
 import { Button, Checkbox, clx, CommandBar, toast, Tooltip } from "@medusajs/ui"
 import { Fragment, useCallback, useState } from "react"
 import { useForm } from "react-hook-form"

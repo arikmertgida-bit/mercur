@@ -27,7 +27,8 @@ import { useUserInviteTableQuery } from "@hooks/table/query";
 import { useDataTable } from "@hooks/use-data-table";
 import { useDate } from "@hooks/use-date";
 import { isFetchError } from "@lib/is-fetch-error";
-import { MemberInviteDTO, SellerRole } from "@mercurjs/types";
+import type { MemberInviteDTO } from "@mercurjs/types";
+import { SellerRole } from "@mercurjs/types/seller";
 
 const ROLE_OPTIONS = [
   {

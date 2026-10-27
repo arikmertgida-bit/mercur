@@ -2,7 +2,8 @@ import { Heading, Input } from "@medusajs/ui"
 import { useTranslation } from "react-i18next"
 import { z } from "zod"
 
-import { ProductDTO, AttributeType } from "@mercurjs/types"
+import type { ProductDTO } from "@mercurjs/types"
+import { AttributeType } from "@mercurjs/types/product"
 
 import { Form } from "../../../../../components/common/form"
 import { AttributeValueInput } from "../../../../../components/inputs/attribute-value-input"

@@ -32,7 +32,7 @@ import { InferClientOutput } from "@mercurjs/client";
 import { sdk } from "@lib/client";
 import { useUpdateSeller } from "@hooks/api/sellers";
 import { currencies } from "@/lib/data/currencies";
-import { SellerStatus } from "@mercurjs/types";
+import { SellerStatus } from "@mercurjs/types/seller";
 
 type Seller = InferClientOutput<typeof sdk.admin.sellers.$id.query>["seller"];
 

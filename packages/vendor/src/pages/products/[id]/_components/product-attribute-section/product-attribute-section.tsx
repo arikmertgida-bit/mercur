@@ -3,7 +3,8 @@ import {
   ProductAttributeSection as SharedProductAttributeSection,
   useCan,
 } from "@mercurjs/dashboard-shared";
-import { MercurFeatureFlags, ProductAttributeDTO } from "@mercurjs/types";
+import type { ProductAttributeDTO } from "@mercurjs/types";
+import { MercurFeatureFlags } from "@mercurjs/types/feature-flags";
 import { useTranslation } from "react-i18next";
 
 import { useFeatureFlags, useProductAttributes } from "@hooks/api";

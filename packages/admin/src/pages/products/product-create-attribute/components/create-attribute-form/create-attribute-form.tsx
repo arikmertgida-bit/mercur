@@ -8,7 +8,7 @@ import { ChipInput } from "../../../../../components/inputs/chip-input";
 import { Form } from "../../../../../components/common/form";
 import { RouteDrawer, useRouteModal } from "../../../../../components/modals";
 import { KeyboundForm } from "../../../../../components/utilities/keybound-form";
-import { AttributeType } from "@mercurjs/types";
+import { AttributeType } from "@mercurjs/types/product";
 import { useBatchProductAttributes } from "../../../../../hooks/api/products";
 
 type CreateAttributeFormValues = {

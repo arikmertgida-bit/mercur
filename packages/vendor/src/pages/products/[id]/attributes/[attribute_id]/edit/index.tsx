@@ -11,7 +11,7 @@ import {
   useLinkQuery,
   useRequiredParam,
 } from "@mercurjs/dashboard-shared";
-import { MercurFeatureFlags } from "@mercurjs/types";
+import { MercurFeatureFlags } from "@mercurjs/types/feature-flags";
 
 import { useFeatureFlags } from "@hooks/api";
 import { useBatchProductAttributes, useProduct } from "@hooks/api/products";

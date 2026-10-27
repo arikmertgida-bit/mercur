@@ -19,7 +19,8 @@ import {
 } from "../../../../../hooks/api/sellers";
 import { useMemberTableQuery } from "../../../../../hooks/table/query";
 import { useDataTable } from "../../../../../hooks/use-data-table";
-import { SellerMemberDTO, SellerRole } from "@mercurjs/types";
+import type { SellerMemberDTO } from "@mercurjs/types";
+import { SellerRole } from "@mercurjs/types/seller";
 
 const PAGE_SIZE = 20;
 

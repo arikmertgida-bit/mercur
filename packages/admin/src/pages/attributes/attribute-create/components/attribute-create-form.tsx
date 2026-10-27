@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { AttributeType } from "@mercurjs/types";
+import { AttributeType } from "@mercurjs/types/product";
 
 import { RouteFocusModal, useRouteModal } from "../../../../components/modals";
 import { TabbedForm } from "../../../../components/tabbed-form/tabbed-form";

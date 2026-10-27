@@ -1,6 +1,6 @@
 import { useLinkQuery, DateComparisonFilterSchema, parseJsonQueryParam } from "@mercurjs/dashboard-shared";
 import { useQueryParams } from "@hooks/use-query-params";
-import { SellerStatus } from "@mercurjs/types";
+import { SellerStatus } from "@mercurjs/types/seller";
 
 type UseSellersTableQueryProps = {
   prefix?: string;

@@ -21,7 +21,7 @@ import {
 import { CSS } from "@dnd-kit/utilities"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { ExclamationCircleSolid, Spinner, ThumbnailBadge } from "@medusajs/icons"
-import { MercurFeatureFlags } from "@mercurjs/types"
+import { MercurFeatureFlags } from "@mercurjs/types/feature-flags"
 import type { HttpTypes as VendorHttpTypes } from "@mercurjs/types"
 import { Button, Checkbox, clx, CommandBar, toast, Tooltip } from "@medusajs/ui"
 import { Fragment, useCallback, useState } from "react"

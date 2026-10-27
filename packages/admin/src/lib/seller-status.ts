@@ -1,4 +1,4 @@
-import { SellerStatus } from "@mercurjs/types"
+import { SellerStatus } from "@mercurjs/types/seller"
 import { z } from "zod"
 
 /** `SellerDTO.status` is typed as a plain string; this narrows it to the known statuses. */

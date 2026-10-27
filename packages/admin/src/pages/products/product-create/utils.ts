@@ -1,6 +1,7 @@
 import { InferClientInput } from "@mercurjs/client"
 import { HttpTypes } from "@medusajs/types"
-import { AttributeType, ProductAttributeBatchAdd } from "@mercurjs/types"
+import type { ProductAttributeBatchAdd } from "@mercurjs/types"
+import { AttributeType } from "@mercurjs/types/product"
 import { UseFormReturn } from "react-hook-form"
 import { sdk } from "../../../lib/client"
 import { isTruthy } from "../../../lib/is-truthy"

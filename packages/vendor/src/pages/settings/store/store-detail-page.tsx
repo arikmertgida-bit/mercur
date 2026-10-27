@@ -6,7 +6,8 @@ import { TwoColumnPageSkeleton } from "@components/common/skeleton";
 import { TwoColumnPage } from "@components/layout/pages";
 import { WidgetZone, useLinkQuery } from "@mercurjs/dashboard-shared";
 import { useMe, useSeller } from "@/hooks/api";
-import { HttpTypes, SellerStatus } from "@mercurjs/types";
+import type { HttpTypes } from "@mercurjs/types";
+import { SellerStatus } from "@mercurjs/types/seller";
 
 import { StoreAddressSection } from "./_components/store-address-section";
 import { StoreTimeOffSection } from "./_components/store-time-off-section";

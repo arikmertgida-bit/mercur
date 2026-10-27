@@ -3,7 +3,8 @@ import { Button, Container, Heading, Text, toast } from "@medusajs/ui";
 import { ExclamationCircleSolid } from "@medusajs/icons";
 import { useTranslation } from "react-i18next";
 
-import { HttpTypes, ProductStatus } from "@mercurjs/types";
+import type { HttpTypes } from "@mercurjs/types";
+import { ProductStatus } from "@mercurjs/types/product";
 import { DisplayExtensionZone, PermissionAction } from "@mercurjs/dashboard-shared";
 import { ConfirmPrompt } from "../../../../../components/common/confirm-prompt";
 import {

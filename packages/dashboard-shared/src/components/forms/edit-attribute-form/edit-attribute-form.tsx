@@ -1,9 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Button, InlineTip, Input, Label } from "@medusajs/ui"
-import {
-  AttributeType,
-  ProductAttributeBatchInput,
-} from "@mercurjs/types"
+import type { ProductAttributeBatchInput } from "@mercurjs/types"
+import { AttributeType } from "@mercurjs/types/product"
 import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import * as zod from "zod"

@@ -50,6 +50,12 @@ export default defineConfig({
   format: ["esm"],
   outExtensions: () => ({ js: ".js" }),
   deps: {
+    // Nothing from node_modules may be inlined: runtime deps are externals
+    // (dependencies/peerDependencies) and resolved by the consuming app.
+    // Guards against the CJS `@mercurjs/types` root entry, which re-exports
+    // all of `@medusajs/types` at runtime — import its runtime enums from the
+    // `@mercurjs/types/{product,seller,feature-flags}` subpaths instead.
+    onlyBundle: [],
     neverBundle: ["react", "react-dom", "react-router-dom", "@mercurjs/dashboard-sdk", "vite", "esbuild", "postcss", "virtual:mercur/config", "virtual:mercur/routes", "virtual:mercur/menu-items", "virtual:mercur/i18n", "virtual:mercur/widgets", "virtual:mercur/navigation", "virtual:mercur/custom-fields"],
   },
   outputOptions: {

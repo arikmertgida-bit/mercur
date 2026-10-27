@@ -1,4 +1,4 @@
-import { ProductStatus } from "@mercurjs/types";
+import { ProductStatus } from "@mercurjs/types/product";
 import { z } from "zod";
 import { useLinkQuery, DateComparisonFilterSchema, parseJsonQueryParam } from "@mercurjs/dashboard-shared";
 import { useQueryParams } from "@hooks/use-query-params";

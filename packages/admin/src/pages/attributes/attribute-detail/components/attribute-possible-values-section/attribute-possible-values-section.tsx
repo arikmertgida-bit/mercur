@@ -14,12 +14,8 @@ import { Link } from "react-router-dom"
 import { PermissionAction } from "@mercurjs/dashboard-shared"
 
 import { ClientError } from "@mercurjs/client"
-import {
-  ProductAttributeDTO,
-  ProductAttributeValueDTO,
-  AttributeType,
-  ProductAttributeErrorCode,
-} from "@mercurjs/types"
+import type { ProductAttributeDTO, ProductAttributeValueDTO } from "@mercurjs/types"
+import { AttributeType, ProductAttributeErrorCode } from "@mercurjs/types/product"
 import { ActionMenu } from "../../../../../components/common/action-menu"
 import { NoRecords } from "../../../../../components/common/empty-table-content"
 import { _DataTable } from "../../../../../components/table/data-table"

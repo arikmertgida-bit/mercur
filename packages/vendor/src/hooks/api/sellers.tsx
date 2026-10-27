@@ -3,7 +3,7 @@ import {
   InferClientInput,
   InferClientOutput,
 } from "@mercurjs/client";
-import { SellerStatus } from "@mercurjs/types";
+import { SellerStatus } from "@mercurjs/types/seller";
 import {
   UseMutationOptions,
   UseQueryOptions,

@@ -4,7 +4,8 @@ import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { z } from "zod";
 
-import { ProductDTO, ProductVariantDTO, AttributeType } from "@mercurjs/types";
+import type { ProductDTO, ProductVariantDTO } from "@mercurjs/types";
+import { AttributeType } from "@mercurjs/types/product";
 import { Form } from "../../../../../components/common/form";
 import { AttributeValueInput } from "../../../../../components/inputs/attribute-value-input";
 import { CountrySelect } from "../../../../../components/inputs/country-select";
