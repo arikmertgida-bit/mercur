@@ -1319,8 +1319,8 @@
       }
     },
     "stock": {
-      "title": "Stok Yönetimi",
-      "description": "Ürün stok seviyelerini ve konumlarını yönetin",
+      "title": "Stok seviyelerini güncelle",
+      "description": "Seçili envanter kalemlerinin stok seviyelerini güncelleyin.",
       "action": "Stok seviyelerini düzenle",
       "placeholder": "Etkin değil",
       "disablePrompt_one": "{{count}} konum seviyesini devre dışı bırakmak üzeresiniz. Bu işlem geri alınamaz.",
@@ -2764,15 +2764,15 @@
         "label": "Durum",
         "draft": {
           "title": "Taslak",
-          "description": "Promosyon henüz tamamlanmamıştır."
+          "description": "Müşteriler kodu henüz kullanamaz"
         },
         "active": {
           "title": "Aktif",
-          "description": "Promosyon etkinleştirildi."
+          "description": "Müşteriler kodu kullanabilir"
         },
         "inactive": {
           "title": "Pasif",
-          "description": "Promosyon devre dışı bırakıldı."
+          "description": "Müşteriler kodu artık kullanamaz"
         }
       },
       "selectOperator": "Operatör Seç",
@@ -2810,7 +2810,7 @@
       "scheduled": "Planlanmış"
     },
     "delete": {
-      "title": "Emin misiniz?",
+      "title": "Kampanyayı sil",
       "description": "'{{name}}' kampanyasını silmek üzeresiniz. Bu işlem geri alınamaz.",
       "successToast": "Kampanya başarıyla silindi."
     },
@@ -2855,7 +2855,7 @@
       "platformOwner": "Kayı.com",
       "budget_used": "Kullanılan bütçe",
       "campaign_id": {
-        "hint": "Sadece promosyon ile aynı para birimine sahip kampanyalar bu listede gösterilir."
+        "hint": "Devre dışı görünen kampanyaların bütçesi, promosyondan farklı bir para birimindedir."
       },
       "totalUsedByAttribute": "Toplam kullanılan"
     },
@@ -2955,7 +2955,7 @@
       },
       "products": {
         "list": {
-          "noRecordsMessage": "Önce bir ürün oluşturun."
+          "noRecordsMessage": "Önce bir teklif oluşturun."
         }
       }
     },
@@ -3046,11 +3046,11 @@
         }
       },
       "startsAt": {
-        "label": "Fiyat listesi bir başlangıç tarihine sahip mi?",
+        "label": "Başlangıç tarihi",
         "hint": "Fiyat listesinin gelecekte aktif olmasını planlayın."
       },
       "endsAt": {
-        "label": "Fiyat listesi bir bitiş tarihine sahip mi?",
+        "label": "Bitiş tarihi",
         "hint": "Fiyat listesinin gelecekte devre dışı kalmasını planlayın."
       },
       "customerAvailability": {
@@ -4044,7 +4044,7 @@
       "isFilterableHint": "İşaretlenirse, müşteriler bu özelliği kullanarak ürünleri filtreleyebilir.",
       "isGlobal": "Genel özellik",
       "isGlobalHint": "İşaretlenirse, bu özellik tüm kategorilerdeki tüm ürünler için geçerlidir.",
-      "isVariantAxis": "Use for Variations",
+      "isVariantAxis": "Varyantlar için kullan",
       "isVariantAxisHint": "İşaretlenirse, bu özellik ürün varyantlarını tanımlayacaktır (ör. beden, renk)."
     },
     "type": {
