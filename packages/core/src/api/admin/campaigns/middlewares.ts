@@ -10,9 +10,9 @@ import { applyCampaignFilters } from "./helpers"
 
 const LIST_MATCHER = "/admin/campaigns"
 
-const capturedBase = (ORIGINAL_MIDDLEWARES[
+const capturedBase = ORIGINAL_MIDDLEWARES[
   "dist/api/admin/campaigns/middlewares.js"
-] ?? []) as MiddlewareRoute[]
+] ?? []
 
 const routeHasGet = (route: MiddlewareRoute) => {
   const methods = Array.isArray(route.method)

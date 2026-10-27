@@ -8,16 +8,26 @@ import {
 } from "@medusajs/framework/http"
 import { validateAndTransformQuery } from "@medusajs/framework"
 import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
+import { z } from "zod"
 
 import { ORIGINAL_MIDDLEWARES } from "../../../utils/disable-medusa-middlewares"
+import { parseGraphRows } from "../../../utils/graph-rows"
+import { QueryFilter } from "../../../utils/query-filter"
 import { listTransformQueryConfig } from "./query-config"
 import { AdminGetReservationsParams } from "./validators"
 
 const LIST_MATCHER = "/admin/reservations"
 
-const capturedBase = (ORIGINAL_MIDDLEWARES[
+type ReservationFilterFields = QueryFilter & {
+  sku?: string
+  inventory_item_id?: string | string[]
+}
+
+const IdRowSchema = z.object({ id: z.string() })
+
+const capturedBase = ORIGINAL_MIDDLEWARES[
   "dist/api/admin/reservations/middlewares.js"
-] ?? []) as MiddlewareRoute[]
+] ?? []
 
 const baseWithoutListGet = capturedBase.filter((route) => {
   if (route.matcher !== LIST_MATCHER) return true
@@ -35,12 +45,12 @@ const baseWithoutListGet = capturedBase.filter((route) => {
 // reservation query by `inventory_item_id` instead (dropping the flat `sku`
 // key, since the reservation entity has no `sku` column).
 const maybeApplyInventoryItemSkuFilter = async (
-  req: AuthenticatedMedusaRequest,
+  req: AuthenticatedMedusaRequest<never, ReservationFilterFields>,
   _res: MedusaResponse,
   next: MedusaNextFunction
 ) => {
   const filterableFields = req.filterableFields
-  const sku = filterableFields?.sku as string | undefined
+  const sku = filterableFields?.sku
 
   if (!sku) {
     return next()
@@ -55,13 +65,15 @@ const maybeApplyInventoryItemSkuFilter = async (
     filters: { sku },
   })
 
-  const matchedIds = inventoryItems.map((item) => item.id as string)
+  const matchedIds = parseGraphRows(IdRowSchema, inventoryItems).map(
+    (item) => item.id
+  )
   const existing = filterableFields.inventory_item_id
 
   if (existing) {
     const existingIds = Array.isArray(existing) ? existing : [existing]
     filterableFields.inventory_item_id = existingIds.filter((id) =>
-      matchedIds.includes(id as string)
+      matchedIds.includes(id)
     )
   } else {
     filterableFields.inventory_item_id = matchedIds

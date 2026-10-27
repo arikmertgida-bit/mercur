@@ -1,9 +1,12 @@
-import { MedusaContainer } from "@medusajs/framework/types"
+import { HttpTypes, MedusaContainer } from "@medusajs/framework/types"
 import {
   ContainerRegistrationKeys,
   MedusaError,
   Modules,
 } from "@medusajs/framework/utils"
+import { z } from "zod"
+
+import { parseGraphRows } from "../../../utils/graph-rows"
 
 export type AddItemInput = {
   variant_id: string
@@ -11,7 +14,8 @@ export type AddItemInput = {
   unit_price?: number | null
   internal_note?: string | null
   allow_backorder?: boolean
-  metadata?: Record<string, unknown> | null
+  // Free-form, as Medusa's add-item payloads declare it.
+  metadata?: HttpTypes.AdminAddOrderEditItems["items"][number]["metadata"] | null
 }
 
 type ResolvedAddItem = AddItemInput & {
@@ -19,11 +23,17 @@ type ResolvedAddItem = AddItemInput & {
   requires_shipping?: boolean
 }
 
-type VariantPricingRow = {
-  id: string
-  price_set?: { id?: string | null } | null
-  product?: { shipping_profile?: { id?: string | null } | null } | null
-}
+export const OrderCurrencyRowSchema = z.object({ currency_code: z.string() })
+
+const VariantPricingRowSchema = z.object({
+  id: z.string(),
+  price_set: z.object({ id: z.string().nullish() }).nullish(),
+  product: z
+    .object({
+      shipping_profile: z.object({ id: z.string().nullish() }).nullish(),
+    })
+    .nullish(),
+})
 
 export const resolveAddItems = async ({
   container,
@@ -46,7 +56,7 @@ export const resolveAddItems = async ({
   }
 
   const query = container.resolve(ContainerRegistrationKeys.QUERY)
-  const { data: variants } = await query.graph({
+  const { data: variantRows } = await query.graph({
     entity: "product_variant",
     fields: [
       "id",
@@ -55,14 +65,15 @@ export const resolveAddItems = async ({
     ],
     filters: { id: variantIds },
   })
+  const variants = parseGraphRows(VariantPricingRowSchema, variantRows)
 
   const variantsById = new Map(
-    (variants as VariantPricingRow[]).map((v) => [v.id, v])
+    variants.map((v) => [v.id, v])
   )
 
   const priceSetIds = Array.from(
     new Set(
-      (variants as VariantPricingRow[])
+      variants
         .map((v) => v.price_set?.id)
         .filter((id): id is string => !!id)
     )

@@ -1,5 +1,6 @@
 import { existsSync, realpathSync } from "fs"
 import { join } from "path"
+import { z } from "zod"
 
 import { logger as medusaLogger } from "@medusajs/framework/logger"
 
@@ -167,8 +168,15 @@ export function applyMercurPatches(options: ApplyPatchesOptions = {}): void {
 // `@mercurjs/core` — common under bun and pnpm — patch the process only once.
 const APPLIED = Symbol.for("@mercurjs/core/patches-applied")
 
-type GlobalWithPatchState = typeof globalThis & {
-  [APPLIED]?: { disabled: string[] }
+// Kept on `globalThis` so every installed copy of @mercurjs/core shares one
+// state; read back through a schema because any of those copies may write it.
+const PatchStateSchema = z.object({ disabled: z.array(z.string()) })
+
+type PatchState = z.infer<typeof PatchStateSchema>
+
+function readPatchState(): PatchState | undefined {
+  const parsed = PatchStateSchema.safeParse(Reflect.get(globalThis, APPLIED))
+  return parsed.success ? parsed.data : undefined
 }
 
 export const DISABLED_PATCHES_ENV = "MERCUR_DISABLED_PATCHES"
@@ -183,11 +191,11 @@ export function disabledPatchesFromEnv(
 }
 
 export function ensureMercurPatches(options: ApplyPatchesOptions = {}): void {
-  const state = globalThis as GlobalWithPatchState
-  if (state[APPLIED]) return
+  if (readPatchState()) return
 
   applyMercurPatches(options)
-  state[APPLIED] = { disabled: options.disabled ?? [] }
+  const state: PatchState = { disabled: options.disabled ?? [] }
+  Reflect.set(globalThis, APPLIED, state)
 }
 
 /**
@@ -196,7 +204,7 @@ export function ensureMercurPatches(options: ApplyPatchesOptions = {}): void {
  * therefore applied anyway; say so instead of letting the opt-out silently fail.
  */
 export function assertPatchesDisabled(requested: string[] = []): void {
-  const applied = (globalThis as GlobalWithPatchState)[APPLIED]
+  const applied = readPatchState()
   if (!applied) return
 
   const missed = requested.filter((name) => !applied.disabled.includes(name))

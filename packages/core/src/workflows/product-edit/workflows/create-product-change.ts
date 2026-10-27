@@ -21,14 +21,14 @@ export type CreateProductChangeWorkflowInput = {
 } & AdditionalData
 
 export type CreateProductChangeWorkflowHooks = [
-  Hook<"validate", { input: CreateProductChangeWorkflowInput }, unknown>,
+  Hook<"validate", { input: CreateProductChangeWorkflowInput }, void>,
   Hook<
     "productChangeCreated",
     {
       changes: ProductChangeDTO[]
-      additional_data: Record<string, unknown> | undefined
+      additional_data: AdditionalData["additional_data"]
     },
-    unknown
+    void
   >,
 ]
 
@@ -69,7 +69,7 @@ export const createProductChangeWorkflow: ReturnWorkflow<
       additional_data: input.additional_data,
     })
 
-    return new WorkflowResponse(changes as ProductChangeDTO[], {
+    return new WorkflowResponse(changes, {
       hooks: [validate, productChangeCreated],
     })
   },

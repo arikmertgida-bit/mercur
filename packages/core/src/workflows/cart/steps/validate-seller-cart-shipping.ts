@@ -1,20 +1,14 @@
-import {
-    CartLineItemDTO,
-    CartWorkflowDTO,
-    ShippingOptionDTO,
-} from "@medusajs/framework/types"
 import { MedusaError } from "@medusajs/framework/utils"
 import { createStep, StepResponse } from "@medusajs/framework/workflows-sdk"
-import { SellerDTO } from "@mercurjs/types"
-import { CartLineItemWithSeller, getLineItemSellerId } from "../utils"
+import {
+    CompleteCartRow,
+    getLineItemSellerId,
+    SellerShippingOptionRow,
+} from "../utils"
 
 type ValidateSellerCartShippingStepInput = {
-    cart: Omit<CartWorkflowDTO, "items"> & {
-        items: (CartLineItemDTO & Pick<CartLineItemWithSeller, "variant">)[]
-    }
-    shippingOptions: (ShippingOptionDTO & {
-        seller: SellerDTO
-    })[]
+    cart: Pick<CompleteCartRow, "items" | "shipping_methods">
+    shippingOptions: SellerShippingOptionRow[]
 }
 
 export const validateSellerCartShippingStep = createStep(
@@ -54,26 +48,22 @@ export const validateSellerCartShippingStep = createStep(
             )
         }
 
-        const optionProfileMap = new Map(
+        const optionProfileMap = new Map<string, string>(
             shippingOptions.map((so) => [so.id, so.shipping_profile_id])
         )
         const availableProfiles = new Set(
             shippingMethods.map((method) =>
-                optionProfileMap.get(method.shipping_option_id as string)
+                method.shipping_option_id
+                    ? optionProfileMap.get(method.shipping_option_id)
+                    : undefined
             )
         )
 
         // The product, not the variant, owns the shipping profile a seller
         // ships from — fetched via `items.variant.product.shipping_profile.id`
-        // (see `completeCartFields`), a relation the base `ProductDTO` type
-        // doesn't declare.
+        // (see `completeCartFields`).
         const missingProfiles = itemsRequiringShipping
-            .map((item) => {
-                const product = item.variant?.product as
-                    | { shipping_profile?: { id: string } | null }
-                    | undefined
-                return product?.shipping_profile?.id ?? undefined
-            })
+            .map((item) => item.variant?.product?.shipping_profile?.id ?? undefined)
             .filter((profileId) => !availableProfiles.has(profileId))
 
         if (missingProfiles.length > 0) {

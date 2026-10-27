@@ -8,13 +8,14 @@ import { HttpTypes } from "@mercurjs/types"
 import { validateSellerCustomer } from "../../../customers/helpers"
 import { refetchCustomerGroup, validateSellerCustomerGroup } from "../../helpers"
 import { VendorManageCustomerGroupCustomersType } from "../../validators"
+import { getSellerId } from "../../../../utils/seller-context"
 
 export const POST = async (
   req: AuthenticatedMedusaRequest<VendorManageCustomerGroupCustomersType>,
   res: MedusaResponse<HttpTypes.VendorCustomerGroupResponse>
 ) => {
   const { id } = req.params
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
 
   await validateSellerCustomerGroup(req.scope, sellerId, id)
 

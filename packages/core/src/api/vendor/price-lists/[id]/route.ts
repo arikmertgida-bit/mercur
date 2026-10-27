@@ -9,13 +9,20 @@ import {
 import { HttpTypes } from "@mercurjs/types"
 
 import { fetchPriceList, validateSellerPriceList } from "../helpers"
-import { VendorUpdatePriceListType } from "../validators"
+import {
+  VendorUpdatePriceListType,
+  VendorGetPriceListParamsType,
+} from "../validators"
+import { getSellerId } from "../../../utils/seller-context"
 
 export const GET = async (
-  req: AuthenticatedMedusaRequest,
+  req: AuthenticatedMedusaRequest<
+    Partial<VendorGetPriceListParamsType>,
+    VendorGetPriceListParamsType
+  >,
   res: MedusaResponse<HttpTypes.VendorPriceListResponse>
 ) => {
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
 
   await validateSellerPriceList(req.scope, sellerId, req.params.id)
 
@@ -33,7 +40,7 @@ export const POST = async (
   res: MedusaResponse<HttpTypes.VendorPriceListResponse>
 ) => {
   const id = req.params.id
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
 
   await validateSellerPriceList(req.scope, sellerId, id)
 
@@ -53,7 +60,7 @@ export const DELETE = async (
   res: MedusaResponse<HttpTypes.VendorDeleteResponse>
 ) => {
   const id = req.params.id
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
 
   await validateSellerPriceList(req.scope, sellerId, id)
 

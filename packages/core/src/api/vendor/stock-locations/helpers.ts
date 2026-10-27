@@ -3,6 +3,13 @@ import {
   ContainerRegistrationKeys,
   MedusaError,
 } from "@medusajs/framework/utils"
+import { z } from "zod"
+
+import { parseGraphRows } from "../../../utils/graph-rows"
+
+const StockLocationLinkRowSchema = z.object({
+  stock_location_id: z.string().optional(),
+})
 
 export const validateSellerStockLocations = async (
   scope: MedusaContainer,
@@ -26,8 +33,8 @@ export const validateSellerStockLocations = async (
   })
 
   const owned = new Set(
-    links.map(
-      (link) => (link as { stock_location_id?: string }).stock_location_id
+    parseGraphRows(StockLocationLinkRowSchema, links).map(
+      (link) => link.stock_location_id
     )
   )
   const missing = ids.find((id) => !owned.has(id))

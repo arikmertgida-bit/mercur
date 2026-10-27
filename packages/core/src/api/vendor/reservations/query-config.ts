@@ -27,11 +27,11 @@ export const defaultVendorReservationFields = [
   "created_at",
   "updated_at",
   ...defaultVendorInventoryItemFields.map((f) => `inventory_item.${f}`),
-  // Product column: inventory is offer-scoped in Mercur, so the product is
-  // reached through the offer (offer-product-link alias `product`).
-  "inventory_item.offers.id",
-  "inventory_item.offers.product.id",
-  "inventory_item.offers.product.title",
+  // Product column: reached through Medusa's own inventory_item -> variants
+  // -> product relation.
+  "inventory_item.variants.id",
+  "inventory_item.variants.product.id",
+  "inventory_item.variants.product.title",
 ]
 
 export const retrieveTransformQueryConfig = {

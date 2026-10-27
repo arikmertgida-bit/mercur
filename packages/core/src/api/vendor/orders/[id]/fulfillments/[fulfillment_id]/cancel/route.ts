@@ -8,13 +8,14 @@ import { HttpTypes } from "@mercurjs/types"
 import { cancelOrderFulfillmentWorkflow } from "../../../../../../../workflows/order/workflows/cancel-order-fulfillment"
 import { validateSellerOrder } from "../../../../helpers"
 import { VendorCancelFulfillmentType } from "../../../../validators"
+import { getSellerId } from "../../../../../../utils/seller-context"
 
 export const POST = async (
   req: AuthenticatedMedusaRequest<VendorCancelFulfillmentType>,
   res: MedusaResponse<HttpTypes.VendorOrderResponse>
 ) => {
   const { id, fulfillment_id } = req.params
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
 
   await validateSellerOrder(req.scope, sellerId, id)
 

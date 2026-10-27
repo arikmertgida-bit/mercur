@@ -93,7 +93,7 @@ async function loadEligibleVariants(
       pagination: { skip, take: BATCH_LIMIT },
     })
 
-    const products = parseRows(SnapshotEligibilityRowSchema, rows as object[])
+    const products = parseRows(SnapshotEligibilityRowSchema, rows)
 
     for (const product of products) {
       const seller = (product.sellers ?? [])[0]
@@ -143,7 +143,7 @@ async function loadCalculatedPrices(
       },
     })
 
-    for (const row of parseRows(VariantCalculatedPriceRowSchema, rows as object[])) {
+    for (const row of parseRows(VariantCalculatedPriceRowSchema, rows)) {
       const amount =
         row.calculated_price?.calculated_amount_with_tax ??
         row.calculated_price?.calculated_amount
@@ -171,7 +171,7 @@ async function loadAlreadySnapshottedVariantIds(
       currency_code: currencyCode,
       captured_date: capturedDate,
     })
-    for (const row of parseRows(ExistingSnapshotRowSchema, rows as object[])) {
+    for (const row of parseRows(ExistingSnapshotRowSchema, rows)) {
       already.add(row.variant_id)
     }
   }

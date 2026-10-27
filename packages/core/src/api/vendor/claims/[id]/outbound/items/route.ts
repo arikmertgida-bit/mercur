@@ -9,8 +9,10 @@ import {
   MedusaError,
 } from "@medusajs/framework/utils"
 
-import { resolveAddItems } from "../../../../orders/resolve-add-items"
+import { OrderCurrencyRowSchema, resolveAddItems } from "../../../../orders/resolve-add-items"
 import { VendorPostClaimsAddItemsReqType } from "../../../validators"
+import { parseGraphRows } from "../../../../../../utils/graph-rows"
+import { toHttpOrderPreview } from "../../../../../../utils/http-order"
 
 export const POST = async (
   req: AuthenticatedMedusaRequest<VendorPostClaimsAddItemsReqType>,
@@ -42,9 +44,8 @@ export const POST = async (
     filters: { id: claim.order_id },
   })
 
-  const currencyCode = (
-    orders?.[0] as { currency_code?: string } | undefined
-  )?.currency_code
+  const currencyCode = parseGraphRows(OrderCurrencyRowSchema, orders)[0]
+    ?.currency_code
 
   if (!currencyCode) {
     throw new MedusaError(
@@ -64,12 +65,6 @@ export const POST = async (
   })
 
   res.json({
-    // @ts-expect-error — Medusa's own module-layer DTO (OrderPreviewDTO/
-    // OrderChangeDTO/etc.) and its HTTP-response DTO (AdminOrderPreview/
-    // AdminOrderChange/etc.) are two parallel type hierarchies that don't
-    // structurally unify, even though the real workflow data includes every
-    // field the HTTP type expects (confirmed against Medusa's own core route,
-    // which passes the same shape through with zero cast/transform).
-    order_preview: result,
+    order_preview: toHttpOrderPreview(result),
   })
 }

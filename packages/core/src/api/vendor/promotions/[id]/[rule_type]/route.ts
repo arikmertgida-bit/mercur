@@ -3,12 +3,6 @@ import {
   MedusaResponse,
 } from "@medusajs/framework/http"
 import {
-  ApplicationMethodTargetTypeValues,
-  ApplicationMethodTypeValues,
-  PromotionRuleOperatorValues,
-  PromotionTypeValues,
-} from "@medusajs/types"
-import {
   ContainerRegistrationKeys,
   RuleOperator,
   RuleType,
@@ -19,33 +13,21 @@ import { validateSellerPromotion } from "../../helpers"
 import {
   getRuleAttributesMap,
   operatorsMap,
+  RuleAttributeDefinition,
   ruleQueryConfigurations,
   validateRuleType,
 } from "../../utils"
 import { VendorGetPromotionRuleTypeParamsType } from "../../validators"
+import { getSellerId } from "../../../../utils/seller-context"
+import {
+  getDisguisedRuleValue,
+  PromotionShapeQuerySchema,
+} from "../../../../utils/promotion-rules"
 
-type RuleAttribute = {
-  id: string
-  value: string
-  label: string
-  required: boolean
-  field_type: string
-  operators: { id: RuleOperator; value: RuleOperator; label: string }[]
-  disguised?: boolean
-  hydrate?: boolean
-}
+type PromotionRule = HttpTypes.VendorPromotionRuleDetail
 
-type PromotionRuleValue = { id: string; value: string; label?: string }
-
-type PromotionRule = {
-  id: string
-  attribute?: string
-  attribute_label?: string
-  operator?: PromotionRuleOperatorValues
-  operator_label?: string
-  value?: string | undefined
-  values: PromotionRuleValue[]
-}
+const getOperatorLabel = (operator?: string): string | undefined =>
+  Object.values(operatorsMap).find((entry) => entry.value === operator)?.label
 
 export const GET = async (
   req: AuthenticatedMedusaRequest<VendorGetPromotionRuleTypeParamsType>,
@@ -53,7 +35,7 @@ export const GET = async (
 ) => {
   const { id, rule_type: ruleType } = req.params
 
-  await validateSellerPromotion(req.scope, req.seller_context!.seller_id, id)
+  await validateSellerPromotion(req.scope, getSellerId(req), id)
 
   validateRuleType(ruleType)
 
@@ -69,17 +51,16 @@ export const GET = async (
     fields: req.queryConfig.fields,
   })
 
-  const ruleAttributes: RuleAttribute[] = getRuleAttributesMap({
-    promotionType:
-      promotion?.type || (req.query.promotion_type as PromotionTypeValues | undefined),
+  const shapeQuery = PromotionShapeQuerySchema.parse(req.query)
+
+  const ruleAttributes: RuleAttributeDefinition[] = getRuleAttributesMap({
+    promotionType: promotion?.type || shapeQuery.promotion_type,
     applicationMethodType:
       promotion?.application_method?.type ||
-      (req.query.application_method_type as ApplicationMethodTypeValues | undefined),
+      shapeQuery.application_method_type,
     applicationMethodTargetType:
       promotion?.application_method?.target_type ||
-      (req.query.application_method_target_type as
-        | ApplicationMethodTargetTypeValues
-        | undefined),
+      shapeQuery.application_method_target_type,
   })[ruleType]
 
   const promotionRules: PromotionRule[] = []
@@ -96,18 +77,20 @@ export const GET = async (
   const disguisedRules = ruleAttributes.filter((attr) => !!attr.disguised)
 
   for (const disguisedRule of disguisedRules) {
-    const getValues = (): PromotionRuleValue[] | string | undefined => {
-      const value = (
-        promotion?.application_method as
-          | Record<string, string | undefined>
-          | undefined
-      )?.[disguisedRule.id]
+    const recordValue = getDisguisedRuleValue(
+      promotion?.application_method,
+      disguisedRule.id
+    )
 
+    const getValues = (): PromotionRule["values"] => {
+      // Only the quantity columns are number-typed, so a string never
+      // reaches this branch.
       if (disguisedRule.field_type === "number") {
-        return value
+        return typeof recordValue === "string" ? undefined : recordValue
       }
 
-      if (value) {
+      if (recordValue) {
+        const value = String(recordValue)
         return [{ id: value, label: value, value }]
       }
 
@@ -115,33 +98,26 @@ export const GET = async (
     }
 
     const required = disguisedRule.required ?? true
-    const applicationMethod = promotion?.application_method as
-      | Record<string, string | undefined>
-      | undefined
-    const recordValue = applicationMethod?.[disguisedRule.id]
 
     if (required || recordValue) {
       transformedRules.push({
         ...disguisedRule,
-        // The real Medusa PromotionRuleDTO contract requires a real `id`;
-        // this rule is synthetic (not a materialized DB row), so the
-        // disguised-rule's own stable id (e.g. "currency_code") stands in.
+        // The rule is synthetic (not a materialized DB row), so the
+        // disguised rule's own stable id (e.g. "currency_code") stands in.
         id: disguisedRule.id,
         attribute: disguisedRule.id,
         attribute_label: disguisedRule.label,
         operator: RuleOperator.EQ,
         operator_label: operatorsMap[RuleOperator.EQ].label,
         value: undefined,
-        values: getValues() as PromotionRuleValue[],
+        values: getValues(),
       })
     }
   }
 
   for (const promotionRule of [...promotionRules, ...transformedRules]) {
     const currentRuleAttribute = ruleAttributes.find(
-      (attr) =>
-        attr.value === promotionRule.attribute ||
-        attr.value === promotionRule.attribute
+      (attr) => attr.value === promotionRule.attribute
     )
 
     if (!currentRuleAttribute) {
@@ -154,10 +130,14 @@ export const GET = async (
       continue
     }
 
+    const ruleValues = Array.isArray(promotionRule.values)
+      ? promotionRule.values
+      : undefined
+
     const { data: rows } = await query.graph({
       entity: queryConfig.entryPoint,
       filters: {
-        [queryConfig.valueAttr]: promotionRule.values?.map((v) => v.value),
+        [queryConfig.valueAttr]: ruleValues?.map((v) => v.value),
       },
       fields: [queryConfig.labelAttr, queryConfig.valueAttr],
     })
@@ -170,7 +150,7 @@ export const GET = async (
     )
 
     promotionRule.values =
-      promotionRule.values?.map((value) => ({
+      ruleValues?.map((value) => ({
         id: value.id,
         value: value.value,
         label: valueLabelMap.get(value.value) || value.value,
@@ -182,8 +162,7 @@ export const GET = async (
         ...promotionRule,
         attribute_label: currentRuleAttribute.label,
         operator_label:
-          operatorsMap[promotionRule.operator as keyof typeof operatorsMap]?.label ||
-          promotionRule.operator,
+          getOperatorLabel(promotionRule.operator) || promotionRule.operator,
       })
     }
   }

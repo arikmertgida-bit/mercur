@@ -1,14 +1,9 @@
 import {
     BigNumberInput,
     CreateOrderAdjustmentDTO,
-    CreateOrderLineItemTaxLineDTO,
-    InventoryItemDTO,
-    LineItemAdjustmentDTO,
-    LineItemTaxLineDTO,
-    ProductDTO,
-    ProductVariantDTO,
+    CreateOrderLineItemDTO,
+    CreateOrderTaxLineDTO,
 } from "@medusajs/framework/types"
-import { JsonRecord, JsonValue } from "@mercurjs/types"
 import {
     generateEntityId,
     isDefined,
@@ -17,105 +12,46 @@ import {
     MedusaError,
     PriceListType,
 } from "@medusajs/framework/utils"
+import type {
+    AdjustmentRow,
+    CartLineItemRow,
+    CartLineItemVariantRow,
+    TaxLineRow,
+} from "./cart-rows"
 
-interface PrepareItemLineItemInput {
-    id?: string
-    title?: string
-    subtitle?: string
-    thumbnail?: string
-    quantity: BigNumberInput
-
-    product_id?: string
-    product_title?: string
-    product_description?: string
-    product_subtitle?: string
-    product_type?: string
-    product_type_id?: string
-    product_collection?: string
-    product_handle?: string
-
-    variant_id?: string
-    variant_sku?: string
-    variant_barcode?: string
-    variant_title?: string
-    variant_option_values?: Record<string, JsonValue>
-
-    requires_shipping?: boolean
-
-    is_discountable?: boolean
-    is_tax_inclusive?: boolean
-
-    raw_compare_at_unit_price?: BigNumberInput
-    compare_at_unit_price?: BigNumberInput
-    unit_price?: BigNumberInput
-
-    tax_lines?: LineItemTaxLineDTO[]
-    adjustments?: LineItemAdjustmentDTO[]
-    cart_id?: string
-    metadata?: JsonRecord | null
-}
-
-type AddItemProductDTO = ProductDTO & {
-    shipping_profile: { id: string }
-}
-
-export interface PrepareVariantLineItemInput extends ProductVariantDTO {
-    thumbnail: string
-    inventory_items: { inventory: InventoryItemDTO }[]
-    calculated_price: {
-        calculated_price: {
-            price_list_type: string
-        }
-        is_calculated_price_tax_inclusive: boolean
+export type PrepareVariantLineItemInput = CartLineItemVariantRow & {
+    calculated_price?: {
+        calculated_price?: {
+            price_list_type?: string | null
+        } | null
+        is_calculated_price_tax_inclusive?: boolean
         original_amount: BigNumberInput
         calculated_amount: BigNumberInput
-    }
+    } | null
 }
 
 export interface PrepareLineItemDataInput {
-    item?: PrepareItemLineItemInput
+    item: CartLineItemRow
     isCustomPrice?: boolean
-    variant?: PrepareVariantLineItemInput
-    taxLines?: CreateOrderLineItemTaxLineDTO[]
-    adjustments?: CreateOrderAdjustmentDTO[]
+    variant?: PrepareVariantLineItemInput | null
+    taxLines?: TaxLineRow[]
+    adjustments?: AdjustmentRow[]
     cartId?: string
-    unitPrice?: BigNumberInput
+    unitPrice: BigNumberInput
     isTaxInclusive: boolean
 }
 
-type PreparedLineItem = {
+// The order module persists these line item columns although
+// `CreateOrderLineItemDTO` does not declare them.
+export type PreparedLineItem = CreateOrderLineItemDTO & {
     id: string
-    quantity: BigNumberInput | undefined
-    title: string | undefined
-    subtitle: string | undefined
-    thumbnail: string | null | undefined
-    product_id: string | undefined
-    product_title: string | undefined
-    product_description: string | null | undefined
-    product_subtitle: string | null | undefined
-    product_type: string | null
-    product_type_id: string | null
-    product_collection: string | null
-    product_handle: string | undefined
-    variant_id: string | undefined
-    variant_sku: string | null | undefined
-    variant_barcode: string | null | undefined
-    variant_title: string | undefined
-    variant_option_values: Record<string, JsonValue> | undefined
-    is_discountable: boolean | undefined
+    product_type_id?: string
     is_giftcard: boolean
-    requires_shipping: boolean
-    unit_price: BigNumberInput | undefined
-    compare_at_unit_price: BigNumberInput | undefined
-    is_tax_inclusive: boolean
-    metadata: JsonRecord | null
     is_custom_price?: boolean
-    tax_lines?: ReturnType<typeof prepareTaxLinesData>
-    adjustments?: ReturnType<typeof prepareAdjustmentsData>
     cart_id?: string
 }
 
-export function prepareLineItemData(data: PrepareLineItemDataInput) {
+export function prepareLineItemData(data: PrepareLineItemDataInput): PreparedLineItem {
     const {
         item,
         variant,
@@ -134,77 +70,90 @@ export function prepareLineItemData(data: PrepareLineItemDataInput) {
         )
     }
 
-    if (item && MathBN.lte(item.quantity, 0)) {
+    if (MathBN.lte(item.quantity, 0)) {
         throw new MedusaError(
             MedusaError.Types.INVALID_DATA,
             "Item quantity must be greater than 0"
         )
     }
 
-    let compareAtUnitPrice = item?.compare_at_unit_price
+    let compareAtUnitPrice = item.compare_at_unit_price
 
+    const calculatedPrice = variant?.calculated_price
     const isSalePrice =
-        variant?.calculated_price?.calculated_price?.price_list_type ===
+        calculatedPrice?.calculated_price?.price_list_type ===
         PriceListType.SALE
 
     if (
         !isPresent(compareAtUnitPrice) &&
+        calculatedPrice &&
         isSalePrice &&
         !MathBN.eq(
-            variant.calculated_price?.original_amount,
-            variant.calculated_price?.calculated_amount
+            calculatedPrice.original_amount,
+            calculatedPrice.calculated_amount
         )
     ) {
-        compareAtUnitPrice = variant.calculated_price.original_amount
+        compareAtUnitPrice = calculatedPrice.original_amount
     }
 
     const hasShippingProfile = isDefined(
-        (variant?.product as AddItemProductDTO)?.shipping_profile?.id
+        variant?.product?.shipping_profile?.id
     )
 
     const someInventoryRequiresShipping = !!variant?.inventory_items?.some(
-        (inventoryItem) => !!inventoryItem.inventory.requires_shipping
+        (inventoryItem) => !!inventoryItem.inventory?.requires_shipping
     )
 
-    const requiresShipping = isDefined(item?.requires_shipping)
+    const requiresShipping = isDefined(item.requires_shipping)
         ? item.requires_shipping
         : hasShippingProfile || someInventoryRequiresShipping
 
-    let lineItem: PreparedLineItem = {
+    const lineItem: PreparedLineItem = {
         id: generateEntityId(undefined, 'ordli'),
-        quantity: item?.quantity,
-        title: item?.title ?? variant?.product?.title,
-        subtitle: item?.subtitle ?? variant?.title,
+        quantity: item.quantity,
+        title: item.title,
+        subtitle: item.subtitle ?? variant?.title ?? undefined,
         thumbnail:
-            item?.thumbnail ?? variant?.thumbnail ?? variant?.product?.thumbnail,
+            item.thumbnail ??
+            variant?.thumbnail ??
+            variant?.product?.thumbnail ??
+            undefined,
 
-        product_id: variant?.product?.id ?? item?.product_id,
-        product_title: item?.product_title ?? variant?.product?.title,
+        product_id: variant?.product?.id ?? item.product_id ?? undefined,
+        product_title:
+            item.product_title ?? variant?.product?.title ?? undefined,
         product_description:
-            item?.product_description ?? variant?.product?.description,
-        product_subtitle: item?.product_subtitle ?? variant?.product?.subtitle,
-        product_type: item?.product_type ?? variant?.product?.type?.value ?? null,
+            item.product_description ??
+            variant?.product?.description ??
+            undefined,
+        product_subtitle:
+            item.product_subtitle ?? variant?.product?.subtitle ?? undefined,
+        product_type:
+            item.product_type ?? variant?.product?.type?.value ?? undefined,
         product_type_id:
-            item?.product_type_id ?? variant?.product?.type?.id ?? null,
+            item.product_type_id ?? variant?.product?.type?.id ?? undefined,
         product_collection:
-            item?.product_collection ?? variant?.product?.collection?.title ?? null,
-        product_handle: item?.product_handle ?? variant?.product?.handle,
+            item.product_collection ??
+            variant?.product?.collection?.title ??
+            undefined,
+        product_handle:
+            item.product_handle ?? variant?.product?.handle ?? undefined,
 
         variant_id: variant?.id,
-        variant_sku: item?.variant_sku ?? variant?.sku,
-        variant_barcode: item?.variant_barcode ?? variant?.barcode,
-        variant_title: item?.variant_title ?? variant?.title,
-        variant_option_values: item?.variant_option_values,
+        variant_sku: item.variant_sku ?? variant?.sku ?? undefined,
+        variant_barcode: item.variant_barcode ?? variant?.barcode ?? undefined,
+        variant_title: item.variant_title ?? variant?.title ?? undefined,
+        variant_option_values: item.variant_option_values ?? undefined,
 
-        is_discountable: item?.is_discountable ?? variant?.product?.discountable,
+        is_discountable: item.is_discountable,
         is_giftcard: variant?.product?.is_giftcard ?? false,
         requires_shipping: requiresShipping,
 
         unit_price: unitPrice,
-        compare_at_unit_price: compareAtUnitPrice,
+        compare_at_unit_price: compareAtUnitPrice ?? undefined,
         is_tax_inclusive: !!isTaxInclusive,
 
-        metadata: item?.metadata ?? null,
+        metadata: item.metadata ?? null,
     }
 
     if (isCustomPrice) {
@@ -226,23 +175,23 @@ export function prepareLineItemData(data: PrepareLineItemDataInput) {
     return lineItem
 }
 
-export function prepareTaxLinesData(data: CreateOrderLineItemTaxLineDTO[]) {
+export function prepareTaxLinesData(data: TaxLineRow[]): CreateOrderTaxLineDTO[] {
     return data.map((d) => ({
-        description: d.description,
-        tax_rate_id: d.tax_rate_id,
+        description: d.description ?? undefined,
+        tax_rate_id: d.tax_rate_id ?? undefined,
         code: d.code,
         rate: d.rate,
-        provider_id: d.provider_id,
+        provider_id: d.provider_id ?? undefined,
     }))
 }
 
-export function prepareAdjustmentsData(data: CreateOrderAdjustmentDTO[]) {
+export function prepareAdjustmentsData(data: AdjustmentRow[]): CreateOrderAdjustmentDTO[] {
     return data.map((d) => ({
-        code: d.code,
+        code: d.code ?? undefined,
         amount: d.amount,
-        description: d.description,
-        promotion_id: d.promotion_id,
-        provider_id: d.provider_id,
-        is_tax_inclusive: d.is_tax_inclusive,
+        description: d.description ?? undefined,
+        promotion_id: d.promotion_id ?? undefined,
+        provider_id: d.provider_id ?? undefined,
+        is_tax_inclusive: d.is_tax_inclusive ?? undefined,
     }))
 }

@@ -12,9 +12,15 @@ import {
   wrapProductVariantsWithCalculatedPrice,
   wrapProductVariantsWithInventoryQuantity,
 } from "../../../utils"
-import { splitComputedVariantFields } from "../helpers"
+import {
+  splitComputedVariantFields,
+  StoreProductFilterFields,
+} from "../helpers"
 
-export const GET = async (req: MedusaStoreRequest, res: MedusaResponse) => {
+export const GET = async (
+  req: MedusaStoreRequest<never, StoreProductFilterFields>,
+  res: MedusaResponse
+) => {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
 
   const visibleIds = req.filterableFields.id
@@ -39,7 +45,7 @@ export const GET = async (req: MedusaStoreRequest, res: MedusaResponse) => {
     region_id: _r,
     currency_code: _c,
     ...productFilters
-  } = (req.filterableFields ?? {}) as Record<string, unknown>
+  } = req.filterableFields ?? {}
 
   const {
     data: [product],

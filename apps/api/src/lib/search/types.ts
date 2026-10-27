@@ -1,3 +1,5 @@
+import type { MeilisearchProviderFilters } from './meilisearch-types'
+
 export interface SearchDoc {
   id: string
   type: 'product'
@@ -64,8 +66,8 @@ export interface SearchQueryBase {
   q?: string
   limit?: number
   offset?: number
-  context?: Record<string, unknown>
-  filters?: Record<string, unknown>
+  context?: { region_id?: string }
+  filters?: MeilisearchProviderFilters
 }
 
 export interface SearchFacetValue {

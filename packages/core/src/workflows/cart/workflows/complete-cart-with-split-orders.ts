@@ -1,10 +1,8 @@
 import {
-    CartWorkflowDTO,
+    CreateOrderAddressDTO,
     CreateOrderDTO,
-    CreateOrderLineItemDTO,
+    CreateOrderShippingMethodDTO,
     LinkDefinition,
-    PromotionDTO,
-    ShippingOptionDTO,
     UsageComputedActions,
 } from "@medusajs/framework/types"
 import {
@@ -33,7 +31,8 @@ import {
     useQueryGraphStep,
     validateCartPaymentsStep,
 } from "@medusajs/medusa/core-flows"
-import { CreateOrderGroupDTO, MercurModules, SellerDTO } from "@mercurjs/types"
+import { CreateOrderGroupDTO, JsonRecord, MercurModules } from "@mercurjs/types"
+import { z } from "zod"
 import { createOrderGroupStep } from "../../order-group"
 import { OrderGroupWorkflowEvents } from "../../events"
 import {
@@ -43,33 +42,60 @@ import {
 } from "../steps"
 import {
     completeCartFields,
+    CompleteCartRowSchema,
     isAdjustmentInSellerScope,
-    CartLineItemWithSeller,
     getLineItemSellerId,
     prepareAdjustmentsData,
     PrepareLineItemDataInput,
     prepareLineItemData,
     prepareTaxLinesData,
-    PromotionSellerIds,
     prepareVariantInventoryInput,
     requiredVariantFieldsForInventoryConfirmation,
+    SellerShippingOptionRow,
+    SellerShippingOptionRowSchema,
+    VariantInventoryShapeSchema,
 } from "../utils"
 import { registerUsageStep } from "../../promotion"
 import { splitCapturedCartPaymentWorkflow } from "../../payment/workflows/split-order-payments"
 import { refreshOrderCommissionLinesWorkflow } from "../../commission/workflows/refresh-order-commission-lines"
 import { InventoryWorkflowEvents } from "../../events"
+import { AddressRow } from "../../../utils/address-row"
+import { parseGraphRow, parseGraphRows } from "../../../utils/graph-rows"
 
 type CompleteCartWithSplitOrdersWorkflowInput = {
     cart_id: string
 }
 
-export type SetOrderStatusHookResult =
-    | {
-          status?: OrderStatus
-          /** Keyed by seller id; takes precedence over `status`. */
-          status_by_seller_id?: Record<string, OrderStatus>
-      }
-    | undefined
+const SetOrderStatusHookResultSchema = z
+    .object({
+        status: z.enum(OrderStatus).optional(),
+        /** Keyed by seller id; takes precedence over `status`. */
+        status_by_seller_id: z.record(z.string(), z.enum(OrderStatus)).optional(),
+    })
+    .optional()
+
+export type SetOrderStatusHookResult = z.infer<typeof SetOrderStatusHookResultSchema>
+
+const OrderGroupRowSchema = z.object({ id: z.string() })
+
+const SellerCustomerLinkRowSchema = z.object({ seller_id: z.string() })
+
+// The cart address columns copied onto the order address, including the
+// timestamps the order module accepts beyond `CreateOrderAddressDTO`.
+type OrderAddressInput = CreateOrderAddressDTO &
+    Pick<AddressRow, "created_at" | "updated_at" | "deleted_at">
+
+const toOrderAddress = (address: AddressRow): OrderAddressInput => {
+    const { id: _id, customer_id, ...columns } = address
+    return { ...columns, customer_id: customer_id ?? undefined }
+}
+
+// The order module persists a shipping method's `description` and
+// `metadata` although `CreateOrderShippingMethodDTO` does not declare them.
+type OrderShippingMethodInput = Omit<CreateOrderShippingMethodDTO, "order_id"> & {
+    description?: string
+    metadata?: JsonRecord | null
+}
 
 // Workflow `retentionTime` and lock `timeout`/`ttl` are measured in PLAIN
 // SECONDS by their respective Medusa APIs (confirmed against
@@ -119,8 +145,14 @@ export const completeCartWithSplitOrdersWorkflow = createWorkflow(
         )
 
         const orderGroupId = transform({ orderGroup }, ({ orderGroup }) => {
-            return orderGroup?.data?.id
+            return parseGraphRow(OrderGroupRowSchema.nullish(), orderGroup.data)?.id
         })
+
+        // The raw row goes to the hooks and Medusa's payment validation
+        // unchanged; the order split reads the validated fields.
+        const cart = transform({ cartData }, ({ cartData }) =>
+            parseGraphRow(CompleteCartRowSchema, cartData.data)
+        )
 
         const paymentSessions = validateCartPaymentsStep({ cart: cartData.data })
 
@@ -134,9 +166,15 @@ export const completeCartWithSplitOrdersWorkflow = createWorkflow(
          * `REQUIRES_ACTION` when a seller must accept an order before fulfilment.
          * Returning nothing keeps `PENDING`.
          */
-        const setOrderStatus = createHook("setOrderStatus", {
-            cart: cartData.data,
-        })
+        const setOrderStatus = createHook(
+            "setOrderStatus",
+            {
+                cart: cartData.data,
+            },
+            {
+                resultValidator: SetOrderStatusHookResultSchema,
+            }
+        )
 
         // PHASE 1 — validate the cart and create (or, under a lost
         // concurrency race, gracefully recover) the order group. Skipped
@@ -145,8 +183,10 @@ export const completeCartWithSplitOrdersWorkflow = createWorkflow(
         const preparedOrderGroup = when("prepare-order-group", { orderGroupId }, ({ orderGroupId }) => {
             return !orderGroupId
         }).then(() => {
-            const cartOptionIds = transform({ cart: cartData.data }, ({ cart }) => {
-                return cart.shipping_methods?.map((sm) => sm.shipping_option_id)
+            const cartOptionIds = transform({ cart }, ({ cart }) => {
+                return (cart.shipping_methods ?? []).flatMap((sm) =>
+                    sm.shipping_option_id ? [sm.shipping_option_id] : []
+                )
             })
             const shippingOptionsData = useQueryGraphStep({
                 entity: "shipping_option",
@@ -160,15 +200,20 @@ export const completeCartWithSplitOrdersWorkflow = createWorkflow(
             }).config({
                 name: "shipping-options-query",
             })
+            const shippingOptions = transform(
+                { shippingOptionsData },
+                ({ shippingOptionsData }) =>
+                    parseGraphRows(SellerShippingOptionRowSchema, shippingOptionsData.data)
+            )
             validateSellerCartItemsStep({
-                cart: cartData.data,
+                cart,
             })
             validateSellerCartShippingStep({
-                cart: cartData.data,
-                shippingOptions: shippingOptionsData.data as (ShippingOptionDTO & { seller: SellerDTO })[],
+                cart,
+                shippingOptions,
             })
             const { sales_channel_id } = transform(
-                { cart: cartData.data },
+                { cart },
                 (data) => {
                     return {
                         sales_channel_id: data.cart.sales_channel_id,
@@ -178,7 +223,7 @@ export const completeCartWithSplitOrdersWorkflow = createWorkflow(
 
             const orderStatusResult = setOrderStatus.getResult()
 
-            const cartPromotionIds = transform({ cart: cartData.data }, ({ cart }) => {
+            const cartPromotionIds = transform({ cart }, ({ cart }) => {
                 const adjustments = [
                     ...(cart.items ?? []).flatMap((item) => item.adjustments ?? []),
                     ...(cart.shipping_methods ?? []).flatMap((sm) => sm.adjustments ?? []),
@@ -188,10 +233,10 @@ export const completeCartWithSplitOrdersWorkflow = createWorkflow(
 
             const promotionSellerIds = getPromotionSellerIdsStep(cartPromotionIds)
 
-            const { ordersToCreate, sellerOrdersMap, variantIdsByOrderId } = transform({ cart: cartData.data, shippingOptionsData: shippingOptionsData.data, orderStatusResult, promotionSellerIds }, ({ cart, shippingOptionsData, orderStatusResult, promotionSellerIds }) => {
-                const statusResult = orderStatusResult as SetOrderStatusHookResult
+            const { ordersToCreate, sellerOrdersMap, variantIdsByOrderId } = transform({ cart, shippingOptions, orderStatusResult, promotionSellerIds }, ({ cart, shippingOptions, orderStatusResult, promotionSellerIds }) => {
+                const statusResult = orderStatusResult
                 const sellerIdOfPromotion = (promotionId?: string | null) =>
-                    promotionId ? ((promotionSellerIds as PromotionSellerIds)[promotionId] ?? null) : null
+                    promotionId ? (promotionSellerIds[promotionId] ?? null) : null
                 const sellerAdjustments = <T extends { promotion_id?: string | null }>(
                     adjustments: T[],
                     sellerId: string
@@ -200,12 +245,12 @@ export const completeCartWithSplitOrdersWorkflow = createWorkflow(
                         isAdjustmentInSellerScope(sellerIdOfPromotion(adjustment.promotion_id), sellerId)
                     )
                 const cartSellerIds = new Set<string>(
-                    ((cart.items ?? []) as CartLineItemWithSeller[])
+                    (cart.items ?? [])
                         .map((item) => getLineItemSellerId(item))
                         .filter((id): id is string => typeof id === "string")
                 )
-                const sellerShippingOptionsMap = new Map()
-                shippingOptionsData.forEach((so) => {
+                const sellerShippingOptionsMap = new Map<string, SellerShippingOptionRow[]>()
+                shippingOptions.forEach((so) => {
                     const sellerId = so.seller.id
                     const previous = sellerShippingOptionsMap.get(sellerId) ?? []
                     sellerShippingOptionsMap.set(sellerId, [...previous, so])
@@ -216,7 +261,7 @@ export const completeCartWithSplitOrdersWorkflow = createWorkflow(
                 const variantIdsByOrderId: Record<string, (string | null)[]> = {}
 
                 Array.from(cartSellerIds).map((sellerId) => {
-                    const sellerCartItems = ((cart.items ?? []) as CartLineItemWithSeller[]).filter(
+                    const sellerCartItems = (cart.items ?? []).filter(
                         (item) => getLineItemSellerId(item) === sellerId
                     )
                     const sellerShippingOptions = sellerShippingOptionsMap.get(sellerId) ?? []
@@ -225,7 +270,7 @@ export const completeCartWithSplitOrdersWorkflow = createWorkflow(
                     const allItems = sellerCartItems.map((item) => {
                         const input: PrepareLineItemDataInput = {
                             item,
-                            variant: item.variant as PrepareLineItemDataInput["variant"],
+                            variant: item.variant,
                             cartId: cart.id,
                             unitPrice: item.unit_price,
                             isTaxInclusive: item.is_tax_inclusive ?? false,
@@ -235,14 +280,14 @@ export const completeCartWithSplitOrdersWorkflow = createWorkflow(
                         return prepareLineItemData(input)
                     })
 
-                    const shippingMethods = sellerCartShippingMethods.map((sm) => {
+                    const shippingMethods = sellerCartShippingMethods.map((sm): OrderShippingMethodInput => {
                         return {
                             name: sm.name,
-                            description: sm.description,
+                            description: sm.description ?? undefined,
                             amount: sm.raw_amount ?? sm.amount,
                             is_tax_inclusive: sm.is_tax_inclusive,
-                            shipping_option_id: sm.shipping_option_id,
-                            data: sm.data,
+                            shipping_option_id: sm.shipping_option_id ?? undefined,
+                            data: sm.data ?? undefined,
                             metadata: sm.metadata,
                             tax_lines: prepareTaxLinesData(sm.tax_lines ?? []),
                             adjustments: prepareAdjustmentsData(
@@ -273,22 +318,14 @@ export const completeCartWithSplitOrdersWorkflow = createWorkflow(
 
                     const promoCodes = [...itemAdjustments, ...shippingAdjustments]
                         .map((adjustment) => adjustment.code)
-                        .filter(Boolean)
+                        .filter((code): code is string => !!code)
 
                     const shippingAddress = cart.shipping_address
-                        ? { ...cart.shipping_address }
-                        : null
+                        ? toOrderAddress(cart.shipping_address)
+                        : undefined
                     const billingAddress = cart.billing_address
-                        ? { ...cart.billing_address }
-                        : null
-
-                    if (shippingAddress) {
-                        delete shippingAddress.id
-                    }
-
-                    if (billingAddress) {
-                        delete billingAddress.id
-                    }
+                        ? toOrderAddress(cart.billing_address)
+                        : undefined
 
                     const orderId = generateEntityId(undefined, 'order')
                     const status =
@@ -300,15 +337,15 @@ export const completeCartWithSplitOrdersWorkflow = createWorkflow(
                         id: orderId,
                         region_id: cart.region?.id,
                         customer_id: cart.customer?.id,
-                        sales_channel_id: cart.sales_channel_id,
+                        sales_channel_id: cart.sales_channel_id ?? undefined,
                         status,
-                        email: cart.email,
+                        email: cart.email ?? undefined,
                         currency_code: cart.currency_code,
                         locale: cart.locale,
                         shipping_address: shippingAddress,
                         billing_address: billingAddress,
                         no_notification: false,
-                        items: allItems as CreateOrderLineItemDTO[],
+                        items: allItems,
                         shipping_methods: shippingMethods,
                         metadata: cart.metadata,
                         promo_codes: promoCodes,
@@ -330,7 +367,7 @@ export const completeCartWithSplitOrdersWorkflow = createWorkflow(
             })
 
             const orderGroupData = transform(
-                { cart: cartData.data },
+                { cart },
                 ({ cart }) => {
                     return {
                         customer_id: cart.customer?.id,
@@ -341,7 +378,7 @@ export const completeCartWithSplitOrdersWorkflow = createWorkflow(
 
 
             const sellerCustomerQueryFilters = transform(
-                { cart: cartData.data, sellerOrdersMap },
+                { cart, sellerOrdersMap },
                 ({ cart, sellerOrdersMap }) => {
                     if (!cart.customer_id) {
                         return { seller_id: [], customer_id: "" }
@@ -457,28 +494,22 @@ export const completeCartWithSplitOrdersWorkflow = createWorkflow(
 
             const formatedInventoryItems = transform(
                 {
-                    input: {
-                        sales_channel_id: preparedOrderGroup.sales_channel_id,
-                        items: orderLineVariantItems,
-                        variants: variantsWithInventory,
-                    },
+                    salesChannelId: preparedOrderGroup.sales_channel_id,
+                    items: orderLineVariantItems,
+                    variants: variantsWithInventory,
                 },
-                prepareVariantInventoryInput
-            )
-
-            // Native reserveInventoryStep rejects the extra `manage_inventory`
-            // key, so strip it and drop unmanaged offers before reserving.
-            const reservableInventoryItems = transform(
-                { formatedInventoryItems },
-                ({ formatedInventoryItems }) => ({
-                    items: formatedInventoryItems.items
-                        .filter((item) => item.manage_inventory)
-                        .map(({ manage_inventory: _manage_inventory, ...item }) => item),
-                })
+                ({ salesChannelId, items, variants }) =>
+                    prepareVariantInventoryInput({
+                        input: {
+                            sales_channel_id: salesChannelId ?? undefined,
+                            items,
+                            variants: parseGraphRows(VariantInventoryShapeSchema, variants),
+                        },
+                    })
             )
 
             const updateCompletedAt = transform(
-                { cart: cartData.data },
+                { cart },
                 ({ cart }) => {
                     return {
                         id: cart.id,
@@ -488,8 +519,8 @@ export const completeCartWithSplitOrdersWorkflow = createWorkflow(
             )
 
             const promotionUsage = transform(
-                { cart: cartData.data },
-                ({ cart }: { cart: CartWorkflowDTO }) => {
+                { cart },
+                ({ cart }) => {
                     const promotionUsage: UsageComputedActions[] = []
 
                     const itemAdjustments = (cart.items ?? [])
@@ -500,17 +531,15 @@ export const completeCartWithSplitOrdersWorkflow = createWorkflow(
                         .map((item) => item.adjustments ?? [])
                         .flat(1)
 
-                    for (const adjustment of itemAdjustments) {
+                    // The promotion module registers usage by code and skips
+                    // actions without one.
+                    for (const adjustment of [...itemAdjustments, ...shippingAdjustments]) {
+                        if (!adjustment.code) {
+                            continue
+                        }
                         promotionUsage.push({
                             amount: adjustment.amount,
-                            code: adjustment.code!,
-                        })
-                    }
-
-                    for (const adjustment of shippingAdjustments) {
-                        promotionUsage.push({
-                            amount: adjustment.amount,
-                            code: adjustment.code!,
+                            code: adjustment.code,
                         })
                     }
 
@@ -526,7 +555,7 @@ export const completeCartWithSplitOrdersWorkflow = createWorkflow(
 
             const linksToCreate = transform(
                 {
-                    cart: cartData.data,
+                    cart,
                     createdOrders,
                     orderGroupId: preparedOrderGroup.orderGroupResult.orderGroup.id,
                     sellerOrdersMap: preparedOrderGroup.sellerOrdersMap,
@@ -548,7 +577,7 @@ export const completeCartWithSplitOrdersWorkflow = createWorkflow(
                     // item/shipping adjustments) covers both without
                     // assuming every promotion carries a `.seller`.
                     if (cart.promotions?.length) {
-                        cart.promotions.forEach((promotion: PromotionDTO) => {
+                        cart.promotions.forEach((promotion) => {
                             const promotionCode = promotion.code
                             if (!promotionCode) {
                                 return
@@ -581,7 +610,10 @@ export const completeCartWithSplitOrdersWorkflow = createWorkflow(
 
                     if (cart.customer?.id) {
                         const existingSellerIds = new Set(
-                            (existingSellerCustomerLinks?.data ?? []).map((link) => link.seller_id)
+                            parseGraphRows(
+                                SellerCustomerLinkRowSchema,
+                                existingSellerCustomerLinks?.data
+                            ).map((link) => link.seller_id)
                         )
 
                         Object.keys(sellerOrdersMap).forEach((sellerId) => {
@@ -622,7 +654,7 @@ export const completeCartWithSplitOrdersWorkflow = createWorkflow(
 
             parallelize(
                 updateCartsStep([updateCompletedAt]),
-                reserveInventoryStep(reservableInventoryItems),
+                reserveInventoryStep(formatedInventoryItems),
                 registerUsageStep(promotionUsage),
                 emitEventStep({
                     eventName: OrderWorkflowEvents.PLACED,
@@ -654,7 +686,7 @@ export const completeCartWithSplitOrdersWorkflow = createWorkflow(
             })
 
             const payment = authorizePaymentSessionStep({
-                id: paymentSessions![0].id,
+                id: paymentSessions[0].id,
             })
 
             const orderIds = transform({ createdOrders }, ({ createdOrders }) => {
@@ -664,7 +696,7 @@ export const completeCartWithSplitOrdersWorkflow = createWorkflow(
             // A provider that captures on authorization leaves the payment
             // captured here; one captured later is split from the
             // `payment.captured` subscriber.
-            const splitPaymentInput = transform({ payment, cart: cartData.data }, ({ cart }) => {
+            const splitPaymentInput = transform({ payment, cart }, ({ cart }) => {
                 return { cart_id: cart.id }
             })
 
@@ -680,7 +712,7 @@ export const completeCartWithSplitOrdersWorkflow = createWorkflow(
 
             createHook("orderGroupCreated", {
                 order_group_id: preparedOrderGroup.orderGroupResult.orderGroup.id,
-                cart_id: cartData.data.id,
+                cart_id: cart.id,
             })
         })
 

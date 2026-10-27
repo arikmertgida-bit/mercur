@@ -3,6 +3,24 @@ import {
   ContainerRegistrationKeys,
   MedusaError,
 } from "@medusajs/framework/utils"
+import { z } from "zod"
+
+import { parseGraphRows } from "../../../utils/graph-rows"
+
+const PaymentOwnerRowSchema = z.object({
+  payment_collection: z
+    .object({
+      order: z.object({ id: z.string().optional() }).nullish(),
+      cart: z.object({ id: z.string().optional() }).nullish(),
+    })
+    .nullish(),
+})
+
+const OrderCartLinkRowSchema = z.object({ order_id: z.string().optional() })
+
+const OrderSellerLinkRowSchema = z.object({
+  seller_id: z.string().optional(),
+})
 
 export const refetchPayment = async (
   scope: MedusaContainer,
@@ -32,9 +50,7 @@ export const validateSellerPayment = async (
 
   // A payment is either an order's own, or the cart payment its orders share
   // until it is captured, which is reachable only through the cart.
-  const {
-    data: [payment],
-  } = await query.graph({
+  const { data: payments } = await query.graph({
     entity: "payment",
     filters: { id: paymentId },
     fields: [
@@ -44,16 +60,8 @@ export const validateSellerPayment = async (
     ],
   })
 
-  const paymentCollection = (
-    payment as
-      | {
-          payment_collection?: {
-            order?: { id?: string } | null
-            cart?: { id?: string } | null
-          } | null
-        }
-      | undefined
-  )?.payment_collection
+  const paymentCollection = parseGraphRows(PaymentOwnerRowSchema, payments)[0]
+    ?.payment_collection
 
   let orderIds: string[] = []
 
@@ -66,8 +74,8 @@ export const validateSellerPayment = async (
       fields: ["order_id"],
     })
 
-    orderIds = orderCartLinks
-      .map((link) => (link as { order_id?: string }).order_id)
+    orderIds = parseGraphRows(OrderCartLinkRowSchema, orderCartLinks)
+      .map((link) => link.order_id)
       .filter((id): id is string => Boolean(id))
   }
 
@@ -84,8 +92,8 @@ export const validateSellerPayment = async (
     fields: ["order_id", "seller_id"],
   })
 
-  const sellerIds = orderSellers.map(
-    (link) => (link as { seller_id?: string }).seller_id
+  const sellerIds = parseGraphRows(OrderSellerLinkRowSchema, orderSellers).map(
+    (link) => link.seller_id
   )
 
   if (!sellerIds.includes(sellerId)) {

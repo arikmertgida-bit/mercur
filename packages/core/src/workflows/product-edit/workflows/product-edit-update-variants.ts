@@ -8,10 +8,18 @@ import {
 import { useQueryGraphStep } from "@medusajs/medusa/core-flows"
 import {
   CreateProductChangeActionDTO,
+  type JsonRecord,
   ProductChangeActionType,
   ProductChangeDTO,
   JsonValue,
 } from "@mercurjs/types"
+
+import {
+  isJsonObject,
+  type JsonSnapshot,
+  JsonSnapshotSchema,
+  toJsonRecord,
+} from "../../../utils/json-schema"
 
 import {
   validateNoPendingProductChangeStep,
@@ -21,13 +29,13 @@ import { stageProductChangeWorkflow } from "./stage-product-change"
 
 export type ProductEditVariantAddOperation = {
   type: "add"
-  variant: Record<string, unknown>
+  variant: JsonSnapshot
 }
 
 export type ProductEditVariantUpdateOperation = {
   type: "update"
   variant_id: string
-  fields: Record<string, unknown>
+  fields: JsonSnapshot
 }
 
 export type ProductEditVariantRemoveOperation = {
@@ -70,13 +78,8 @@ export const productEditUpdateVariantsWorkflow: ReturnWorkflow<
         new Set(
           (input.operations ?? [])
             .filter(
-              (
-                op,
-              ): op is {
-                type: "update"
-                variant_id: string
-                fields: Record<string, unknown>
-              } => op.type === "update",
+              (op): op is ProductEditVariantUpdateOperation =>
+                op.type === "update",
             )
             .map((op) => op.variant_id),
         ),
@@ -91,12 +94,8 @@ export const productEditUpdateVariantsWorkflow: ReturnWorkflow<
               (
                 op,
               ): op is
-                | {
-                    type: "update"
-                    variant_id: string
-                    fields: Record<string, unknown>
-                  }
-                | { type: "remove"; variant_id: string } =>
+                | ProductEditVariantUpdateOperation
+                | ProductEditVariantRemoveOperation =>
                 op.type === "update" || op.type === "remove",
             )
             .map((op) => op.variant_id),
@@ -146,25 +145,23 @@ export const productEditUpdateVariantsWorkflow: ReturnWorkflow<
           Omit<CreateProductChangeActionDTO, "product_change_id">
         > = []
 
-        const currentVariantsById = new Map<
-          string,
-          Record<string, JsonValue | undefined>
-        >()
-        for (const v of (currentVariants ?? []) as Array<
-          Record<string, JsonValue | undefined> & { id: string }
-        >) {
-          currentVariantsById.set(v.id, v)
+        const currentVariantsById = new Map<string, JsonSnapshot>()
+        for (const variant of currentVariants ?? []) {
+          currentVariantsById.set(
+            variant.id,
+            JsonSnapshotSchema.parse(variant),
+          )
         }
 
-        const normalize = (value: JsonValue | JsonValue[] | undefined): JsonValue | JsonValue[] | null => {
+        const normalize = (value: JsonValue | undefined): JsonValue => {
           if (Array.isArray(value)) {
             return value
-              .map((item) => {
-                if (item && typeof item === "object" && "id" in item) {
-                  return (item as { id: string }).id
+              .map((item): JsonValue => {
+                if (isJsonObject(item) && "id" in item) {
+                  return item.id
                 }
-                if (item && typeof item === "object" && "url" in item) {
-                  return (item as { url: string }).url
+                if (isJsonObject(item) && "url" in item) {
+                  return item.url
                 }
                 return item
               })
@@ -173,25 +170,22 @@ export const productEditUpdateVariantsWorkflow: ReturnWorkflow<
           return value ?? null
         }
 
-        const isEqual = (a: JsonValue | JsonValue[] | undefined, b: JsonValue | JsonValue[] | undefined): boolean =>
+        const isEqual = (a: JsonValue | undefined, b: JsonValue | undefined): boolean =>
           JSON.stringify(normalize(a)) === JSON.stringify(normalize(b))
 
-        const toOptionsMap = (value: JsonValue | JsonValue[] | undefined): Record<string, string> => {
+        const toOptionsMap = (value: JsonValue | undefined): Record<string, string> => {
           const out: Record<string, string> = {}
           if (Array.isArray(value)) {
             for (const entry of value) {
-              const title = (entry as { option?: { title?: string } })?.option
-                ?.title
+              if (!isJsonObject(entry)) continue
+              const option = entry.option
+              const title = isJsonObject(option) ? option.title : undefined
               if (title) {
-                out[title] = String(
-                  (entry as { value?: JsonValue })?.value ?? "",
-                )
+                out[String(title)] = String(entry.value ?? "")
               }
             }
-          } else if (value && typeof value === "object") {
-            for (const [k, v] of Object.entries(
-              value as Record<string, JsonValue>,
-            )) {
+          } else if (isJsonObject(value)) {
+            for (const [k, v] of Object.entries(value)) {
               out[k] = String(v ?? "")
             }
           }
@@ -217,13 +211,13 @@ export const productEditUpdateVariantsWorkflow: ReturnWorkflow<
               acts.push({
                 product_id: input.product_id,
                 action: ProductChangeActionType.VARIANT_ADD,
-                details: { variant: op.variant },
+                details: { variant: toJsonRecord(op.variant) },
               })
               break
             case "update": {
               const current = currentVariantsById.get(op.variant_id) ?? {}
-              const changedFields: Record<string, unknown> = {}
-              const previousFields: Record<string, unknown> = {}
+              const changedFields: JsonSnapshot = {}
+              const previousFields: JsonRecord = {}
               for (const [field, proposedValue] of Object.entries(
                 op.fields ?? {},
               )) {
@@ -232,7 +226,7 @@ export const productEditUpdateVariantsWorkflow: ReturnWorkflow<
                 if (field === "options") {
                   if (proposedValue === undefined) continue
                   const currentOptions = toOptionsMap(current.options)
-                  if (optionsEqual(currentOptions, toOptionsMap(proposedValue as JsonValue)))
+                  if (optionsEqual(currentOptions, toOptionsMap(proposedValue)))
                     continue
                   changedFields.options = proposedValue
                   previousFields.options = currentOptions
@@ -246,7 +240,7 @@ export const productEditUpdateVariantsWorkflow: ReturnWorkflow<
                   continue
                 }
 
-                if (isEqual(current[field], proposedValue as JsonValue | undefined)) continue
+                if (isEqual(current[field], proposedValue)) continue
 
                 changedFields[field] = proposedValue
                 previousFields[field] = current[field] ?? null
@@ -259,7 +253,7 @@ export const productEditUpdateVariantsWorkflow: ReturnWorkflow<
                 action: ProductChangeActionType.VARIANT_UPDATE,
                 details: {
                   variant_id: op.variant_id,
-                  fields: changedFields,
+                  fields: toJsonRecord(changedFields),
                   previous_fields: previousFields,
                 },
               })

@@ -20,7 +20,14 @@ export const GET = async (
     },
   })
 
-  normalizeOrderPaymentCollections(result as never)
+  normalizeOrderPaymentCollections(result)
 
-  res.json({ order: result as HttpTypes.StoreOrderResponse["order"] })
+  res.json({
+    // @ts-expect-error -- Medusa boundary: getOrderDetailWorkflow is typed as
+    // returning the module `OrderDetailDTO` while the route contract is the
+    // HTTP `StoreOrder`. They differ only in serialization (BigNumber ->
+    // number, optional -> nullable); Medusa's stock route returns the same
+    // object.
+    order: result,
+  })
 }

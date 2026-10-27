@@ -1,3 +1,4 @@
+import type { UpdateProductCollectionDTO } from "@medusajs/framework/types"
 import {
   createWorkflow,
   transform,
@@ -9,7 +10,7 @@ import { setCollectionImagesWorkflow } from "./set-collection-images"
 
 export type UpdateProductCollectionWithImagesWorkflowInput = {
   id: string
-  update: Record<string, unknown>
+  update: UpdateProductCollectionDTO
   media?: CollectionMediaInput[]
   icon?: string | null
 }

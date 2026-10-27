@@ -84,7 +84,7 @@ export const fetchReviewReplyActivity = async (
     filters: { review_id: reviewIds },
   })
 
-  return replies as ReviewReplyActivityRow[]
+  return replies
 }
 
 const ReplyCustomerRowSchema = z.object({

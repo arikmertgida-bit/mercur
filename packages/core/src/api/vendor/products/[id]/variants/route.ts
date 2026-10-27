@@ -6,10 +6,17 @@ import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
 import { HttpTypes, ProductChangeDTO } from "@mercurjs/types"
 
 import { productEditUpdateVariantsWorkflow } from "../../../../../workflows/product-edit/workflows/product-edit-update-variants"
-import { VendorAddProductVariantType } from "../../validators"
+import {
+  VendorAddProductVariantType,
+  VendorGetProductVariantsParamsType,
+} from "../../validators"
+import { getSellerId } from "../../../../utils/seller-context"
 
 export const GET = async (
-  req: AuthenticatedMedusaRequest,
+  req: AuthenticatedMedusaRequest<
+    Partial<VendorGetProductVariantsParamsType>,
+    VendorGetProductVariantsParamsType
+  >,
   res: MedusaResponse<HttpTypes.VendorProductVariantListResponse>
 ) => {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
@@ -35,7 +42,7 @@ export const POST = async (
   res: MedusaResponse<{ product_change: ProductChangeDTO }>
 ) => {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
   const productId = req.params.id
 
   const variant = req.validatedBody
@@ -48,7 +55,7 @@ export const POST = async (
         {
           type: "add",
           variant: {
-            ...(variant as Record<string, unknown>),
+            ...variant,
             manage_inventory: false,
           },
         },

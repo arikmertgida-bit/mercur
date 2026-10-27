@@ -1,10 +1,15 @@
-import { PriceListStatus, PriceListType } from "@medusajs/framework/utils"
 import { z } from "zod"
 import {
   createFindParams,
   createOperatorMap,
   createSelectParams,
 } from "@medusajs/medusa/api/utils/validators"
+
+// The values of Medusa's `PriceListStatus` / `PriceListType`, listed as
+// literals so the typed client accepts plain strings (`z.nativeEnum` would
+// make the request types the nominal enums).
+const PriceListStatusSchema = z.enum(["active", "draft"])
+const PriceListTypeSchema = z.enum(["sale", "override"])
 
 export type VendorGetPriceListParamsType = z.infer<
   typeof VendorGetPriceListParams
@@ -21,12 +26,12 @@ export const VendorGetPriceListsParams = createFindParams({
   z.object({
     q: z.string().optional(),
     id: z.union([z.string(), z.array(z.string())]).optional(),
-    type: z.array(z.nativeEnum(PriceListType)).optional(),
+    type: z.array(PriceListTypeSchema).optional(),
     starts_at: createOperatorMap().optional(),
     ends_at: createOperatorMap().optional(),
     created_at: createOperatorMap().optional(),
     updated_at: createOperatorMap().optional(),
-    status: z.array(z.nativeEnum(PriceListStatus)).optional(),
+    status: z.array(PriceListStatusSchema).optional(),
   })
 )
 
@@ -82,8 +87,8 @@ export const VendorCreatePriceList = z.object({
   description: z.string(),
   starts_at: z.string().nullish(),
   ends_at: z.string().nullish(),
-  status: z.nativeEnum(PriceListStatus).optional(),
-  type: z.nativeEnum(PriceListType).optional(),
+  status: PriceListStatusSchema.optional(),
+  type: PriceListTypeSchema.optional(),
   rules: z.record(z.string(), z.array(z.string())).optional(),
   prices: z.array(VendorCreatePriceListPrice).optional(),
 })
@@ -94,7 +99,7 @@ export const VendorUpdatePriceList = z.object({
   description: z.string().nullish(),
   starts_at: z.string().nullish(),
   ends_at: z.string().nullish(),
-  status: z.nativeEnum(PriceListStatus).optional(),
-  type: z.nativeEnum(PriceListType).optional(),
+  status: PriceListStatusSchema.optional(),
+  type: PriceListTypeSchema.optional(),
   rules: z.record(z.string(), z.array(z.string())).optional(),
 })

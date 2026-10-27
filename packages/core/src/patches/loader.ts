@@ -1,15 +1,26 @@
+import type {
+  OrchestratorBuilder,
+  TransactionModelOptions,
+  TransactionStepsDefinition,
+  WorkflowHandler,
+} from "@medusajs/framework/orchestration"
 import Module from "module"
 import { join } from "path"
 
 import type { PatchedFile } from "./apply-patch"
 
-type CompilableModule = { _compile(source: string, filename: string): unknown }
-type LoaderExtension = (module: CompilableModule, filename: string) => void
-type ModuleInternals = {
-  _extensions: Record<string, LoaderExtension>
+// `module._compile` is how Node's own `.js` loader evaluates a file; it is not
+// part of the public typings, so its presence is checked at runtime.
+type CompilableModule = NodeJS.Module & {
+  _compile(source: string, filename: string): void
 }
 
-const internals = Module as unknown as ModuleInternals
+function isCompilable(module: NodeJS.Module): module is CompilableModule {
+  return "_compile" in module && typeof module._compile === "function"
+}
+
+type ModuleExports = NodeJS.Module["exports"]
+type ExportsObject = Record<string, ModuleExports>
 
 /** Absolute file path -> patched source, consulted on every `.js` load. */
 const overrides = new Map<string, string>()
@@ -26,11 +37,18 @@ let installed = false
 function install(): void {
   if (installed) return
 
-  const original = internals._extensions[".js"]
+  // `require.extensions` is the same object as Node's internal
+  // `Module._extensions`, and the typed handle on it.
+  const original = require.extensions[".js"]
 
-  internals._extensions[".js"] = function (module, filename) {
+  require.extensions[".js"] = function (module, filename) {
     const patched = overrides.get(filename)
     if (patched !== undefined) {
+      if (!isCompilable(module)) {
+        throw new Error(
+          `Cannot apply the patch to ${filename}: the Node module loader does not expose _compile`
+        )
+      }
       module._compile(patched, filename)
       compiled.add(filename)
       return
@@ -89,15 +107,33 @@ export function purgeFiles(absolutePaths: string[]): void {
     // Parents keep `children` arrays pointing at the evicted module; leaving it
     // there keeps the stale exports reachable through the module graph.
     for (const parent of Object.values(require.cache)) {
-      const index = parent?.children?.indexOf(cached) ?? -1
-      if (index !== -1) parent!.children.splice(index, 1)
+      const children = parent?.children
+      if (!children) continue
+      const index = children.indexOf(cached)
+      if (index !== -1) children.splice(index, 1)
     }
   }
 }
 
+// `@medusajs/orchestration` exports `WorkflowManager` untyped; these are the
+// two static methods used here, with the signatures of its implementation.
 type WorkflowManagerLike = {
-  register: (workflowId: string, ...rest: unknown[]) => unknown
-  unregister: (workflowId: string) => unknown
+  register: (
+    workflowId: string,
+    flow: TransactionStepsDefinition | OrchestratorBuilder | undefined,
+    handlers: WorkflowHandler,
+    options?: TransactionModelOptions,
+    requiredModules?: Set<string>,
+    optionalModules?: Set<string>
+  ) => void
+  unregister: (workflowId: string) => void
+}
+
+function isWorkflowManager(value: ModuleExports): value is WorkflowManagerLike {
+  return (
+    typeof value?.register === "function" &&
+    typeof value?.unregister === "function"
+  )
 }
 
 /**
@@ -116,7 +152,7 @@ export function reload(packageDir: string, absolutePaths: string[]): void {
   if (manager && original) {
     manager.register = function register(workflowId, ...rest) {
       manager.unregister(workflowId)
-      return original.call(this, workflowId, ...rest)
+      return original.call(manager, workflowId, ...rest)
     }
   }
 
@@ -139,7 +175,7 @@ export function reload(packageDir: string, absolutePaths: string[]): void {
  * is what makes the patch visible through the whole re-export chain.
  */
 export function replaceLoaded(packageDir: string, absolutePaths: string[]): void {
-  const previous = new Map<string, unknown>()
+  const previous = new Map<string, ModuleExports>()
   for (const filename of absolutePaths) {
     previous.set(filename, require.cache[filename]?.exports)
   }
@@ -148,21 +184,18 @@ export function replaceLoaded(packageDir: string, absolutePaths: string[]): void
   reload(packageDir, absolutePaths)
 
   for (const [filename, stale] of previous) {
-    const fresh: unknown = require.cache[filename]?.exports
+    const fresh: ModuleExports = require.cache[filename]?.exports
     if (isObject(stale) && isObject(fresh) && stale !== fresh) {
       adoptExports(stale, fresh)
     }
   }
 }
 
-function isObject(value: unknown): value is Record<string, unknown> {
+function isObject(value: ModuleExports): value is ExportsObject {
   return typeof value === "object" && value !== null
 }
 
-function adoptExports(
-  stale: Record<string, unknown>,
-  fresh: Record<string, unknown>
-): void {
+function adoptExports(stale: ExportsObject, fresh: ExportsObject): void {
   for (const key of Object.keys(fresh)) {
     const descriptor = Object.getOwnPropertyDescriptor(stale, key)
 
@@ -185,11 +218,9 @@ function adoptExports(
 function loadWorkflowManager(packageDir: string): WorkflowManagerLike | null {
   try {
     const requireFrom = Module.createRequire(join(packageDir, "index.js"))
-    return (
-      requireFrom("@medusajs/orchestration") as {
-        WorkflowManager: WorkflowManagerLike
-      }
-    ).WorkflowManager
+    const orchestration: ModuleExports = requireFrom("@medusajs/orchestration")
+    const manager: ModuleExports = orchestration?.WorkflowManager
+    return isWorkflowManager(manager) ? manager : null
   } catch {
     return null
   }

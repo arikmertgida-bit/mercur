@@ -1,6 +1,7 @@
 import {
   createHook,
   createWorkflow,
+  type Hook,
   type ReturnWorkflow,
   transform,
   when,
@@ -33,6 +34,28 @@ import {
   associateSellersWithProductStep,
 } from "../steps"
 import { ProductWorkflowEvents } from "../events"
+import { parseGraphRows } from "../../../utils/graph-rows"
+import { AttributeRowSchema } from "../../product-attribute/utils/graph-rows"
+import { z } from "zod"
+
+const VariantInventoryItemRowSchema = z.object({
+  product_id: z.string().nullable(),
+  variant_rank: z.number().nullable(),
+  inventory_items: z
+    .array(z.object({ inventory_item_id: z.string() }))
+    .nullish(),
+})
+
+const AttachedAttributesRowSchema = z.object({
+  id: z.string(),
+  product_attribute_values: z
+    .array(
+      z.object({
+        attribute: z.object({ id: z.string().optional() }).nullish(),
+      }),
+    )
+    .nullish(),
+})
 
 
 
@@ -54,10 +77,29 @@ export type CreateProductsWorkflowInput = {
 
 export const createProductsWorkflowId = "mercur-create-products"
 
+export type CreateProductsWorkflowHooks = [
+  Hook<
+    "validate",
+    {
+      input: CreateProductsWorkflowInput
+      products: CreateProductsWorkflowInput["products"]
+    },
+    void
+  >,
+  Hook<
+    "productsCreated",
+    {
+      products: ProductTypes.ProductDTO[]
+      additional_data: AdditionalData["additional_data"]
+    },
+    void
+  >,
+]
+
 export const createProductsWorkflow: ReturnWorkflow<
   CreateProductsWorkflowInput,
   ProductTypes.ProductDTO[],
-  unknown[]
+  CreateProductsWorkflowHooks
 > = createWorkflow(
   createProductsWorkflowId,
   function (input: CreateProductsWorkflowInput) {
@@ -129,11 +171,7 @@ export const createProductsWorkflow: ReturnWorkflow<
       { input, referencedAttrs },
       ({ input, referencedAttrs }) => {
         const axisIds = new Set<string>(
-          ((referencedAttrs.data ?? []) as {
-            id: string
-            type: AttributeType
-            is_variant_axis: boolean
-          }[])
+          parseGraphRows(AttributeRowSchema, referencedAttrs.data)
             .filter(
               (a) =>
                 a.type === AttributeType.MULTI_SELECT && !!a.is_variant_axis,
@@ -145,7 +183,7 @@ export const createProductsWorkflow: ReturnWorkflow<
           (p.attributes ?? []).some((r) =>
             "id" in r
               ? axisIds.has(r.id)
-              : (r as { is_variant_axis?: boolean }).is_variant_axis === true,
+              : r.is_variant_axis === true,
           ),
         )
       },
@@ -163,7 +201,7 @@ export const createProductsWorkflow: ReturnWorkflow<
       ({ input, createdProducts }) =>
         input.products
           .map((p, idx) => ({
-            product_id: createdProducts[idx]?.id as string,
+            product_id: createdProducts[idx]?.id,
             add: p.attributes ?? [],
           }))
           .filter((item) => item.product_id && item.add.length > 0),
@@ -182,12 +220,7 @@ export const createProductsWorkflow: ReturnWorkflow<
       { hasAxisByIndex, createdProducts },
       ({ hasAxisByIndex, createdProducts }) => {
         const pairs: { product_id: string; product_option_id: string }[] = []
-        ;(
-          createdProducts as {
-            id: string
-            options?: { id: string; title: string }[]
-          }[]
-        ).forEach((p, i) => {
+        createdProducts.forEach((p, i) => {
           if (!hasAxisByIndex[i]) {
             return
           }
@@ -211,7 +244,7 @@ export const createProductsWorkflow: ReturnWorkflow<
       { input, createdProducts, hasAxisByIndex },
       ({ input, createdProducts, hasAxisByIndex }) =>
         input.products.flatMap((p, idx) => {
-          const product_id = createdProducts[idx]?.id as string
+          const product_id = createdProducts[idx]?.id
           const formOptions = (v: { options?: Record<string, string> }) =>
             v.options ?? {}
           return (p.variants ?? []).map((v, variantIdx) => ({
@@ -256,8 +289,7 @@ export const createProductsWorkflow: ReturnWorkflow<
     ).then(() =>
       createProductVariantsWorkflow.runAsStep({
         input: {
-          product_variants:
-            variantsForCreation as ProductTypes.CreateProductVariantDTO[],
+          product_variants: variantsForCreation,
           additional_data: input.additional_data,
         },
       }),
@@ -265,7 +297,7 @@ export const createProductsWorkflow: ReturnWorkflow<
 
     const createdProductIds = transform(
       { createdProducts },
-      ({ createdProducts }) => createdProducts.map((p) => p.id as string),
+      ({ createdProducts }) => createdProducts.map((p) => p.id),
     )
 
     const variantInventoryItems = useQueryGraphStep({
@@ -283,11 +315,10 @@ export const createProductsWorkflow: ReturnWorkflow<
       { productVariants, variantInventoryItems },
       ({ productVariants, variantInventoryItems }) => {
         const inventoryItemIdByKey = new Map<string, string>()
-        for (const row of variantInventoryItems.data as {
-          product_id: string | null
-          variant_rank: number | null
-          inventory_items?: { inventory_item_id: string }[]
-        }[]) {
+        for (const row of parseGraphRows(
+          VariantInventoryItemRowSchema,
+          variantInventoryItems.data,
+        )) {
           const inventoryItemId = row.inventory_items?.[0]?.inventory_item_id
           if (inventoryItemId && row.product_id !== null && row.variant_rank !== null) {
             inventoryItemIdByKey.set(`${row.product_id}:${row.variant_rank}`, inventoryItemId)
@@ -336,10 +367,10 @@ export const createProductsWorkflow: ReturnWorkflow<
       { input, createdProducts, variantInventoryItems },
       ({ input, createdProducts, variantInventoryItems }) => {
         const inventoryItemIdsByProductId = new Map<string, string[]>()
-        for (const row of variantInventoryItems.data as {
-          product_id: string | null
-          inventory_items?: { inventory_item_id: string }[]
-        }[]) {
+        for (const row of parseGraphRows(
+          VariantInventoryItemRowSchema,
+          variantInventoryItems.data,
+        )) {
           const inventoryItemId = row.inventory_items?.[0]?.inventory_item_id
           if (!inventoryItemId || !row.product_id) continue
 
@@ -399,7 +430,7 @@ export const createProductsWorkflow: ReturnWorkflow<
       entity: "product",
       fields: ["id", "product_attribute_values.attribute.id"],
       filters: transform({ createdProducts }, ({ createdProducts }) => ({
-        id: createdProducts.map((product) => product.id as string),
+        id: createdProducts.map((product) => product.id),
       })),
     }).config({ name: "mercur-create-products-attached-attributes" })
 
@@ -408,10 +439,10 @@ export const createProductsWorkflow: ReturnWorkflow<
         { createdProducts, input, attachedAttributes },
         ({ createdProducts, input, attachedAttributes }) => {
           const attributeIdsByProduct = new Map<string, string[]>()
-          for (const product of (attachedAttributes ?? []) as Array<{
-            id: string
-            product_attribute_values?: Array<{ attribute?: { id?: string } }>
-          }>) {
+          for (const product of parseGraphRows(
+            AttachedAttributesRowSchema,
+            attachedAttributes,
+          )) {
             const ids = new Set(
               (product.product_attribute_values ?? [])
                 .map((value) => value.attribute?.id)
@@ -423,15 +454,14 @@ export const createProductsWorkflow: ReturnWorkflow<
           return {
             actor_id: input.created_by,
             changes: createdProducts.map((product) => ({
-              product_id: product.id as string,
+              product_id: product.id,
               actions: [
                 {
-                  product_id: product.id as string,
+                  product_id: product.id,
                   action: ProductChangeActionType.PRODUCT_ADD,
                   details: {
-                    status: product.status as string,
-                    attribute_ids:
-                      attributeIdsByProduct.get(product.id as string) ?? [],
+                    status: product.status,
+                    attribute_ids: attributeIdsByProduct.get(product.id) ?? [],
                   },
                 },
               ],

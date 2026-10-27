@@ -18,6 +18,7 @@ import { AttributeType } from "@mercurjs/types"
 import { ProductAttributeValueWorkflowEvents } from "../events"
 import {
   deleteProductAttributeValuesStep,
+  validateProductAttributeValuesNotLinkedStep,
 } from "../steps"
 
 export type DeleteProductAttributeValuesWorkflowInput = {
@@ -28,15 +29,15 @@ export type DeleteProductAttributeValuesWorkflowHooks = [
   Hook<
     "validate",
     { input: DeleteProductAttributeValuesWorkflowInput },
-    unknown
+    void
   >,
   Hook<
     "productAttributeValuesDeleted",
     {
       ids: string[]
-      additional_data: Record<string, unknown> | undefined
+      additional_data: AdditionalData["additional_data"]
     },
-    unknown
+    void
   >,
 ]
 
@@ -51,6 +52,8 @@ export const deleteProductAttributeValuesWorkflow: ReturnWorkflow<
   deleteProductAttributeValuesWorkflowId,
   function (input: DeleteProductAttributeValuesWorkflowInput) {
     const validate = createHook("validate", { input })
+
+    validateProductAttributeValuesNotLinkedStep(input.ids)
 
     const valuesQuery = useQueryGraphStep({
       entity: "product_attribute_value",

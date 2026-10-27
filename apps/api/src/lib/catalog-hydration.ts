@@ -3,6 +3,7 @@ import { QueryContext } from '@medusajs/framework/utils'
 import { z } from 'zod'
 
 import { parseRows } from './graph-schemas'
+import { JsonRecordSchema } from "./graph-schemas"
 
 type PricingContext = ReturnType<typeof QueryContext>
 
@@ -92,7 +93,7 @@ const CatalogProductRowSchema = z.object({
         // +18 flag) never reached the storefront's Meilisearch-backed
         // catalog/seller-products responses despite being requested. Same
         // bug class as the `sellers.is_premium` fix above.
-        metadata: z.record(z.unknown()).nullable().optional(),
+        metadata: JsonRecordSchema.nullable().optional(),
       })
     )
     .nullable()
@@ -185,15 +186,15 @@ export async function hydrateOrderedProducts(
   ])
 
   const variantsById = new Map(
-    parseRows(ProductVariantsOnlyRowSchema, variantRows as object[]).map(
+    parseRows(ProductVariantsOnlyRowSchema, variantRows).map(
       (row) => [row.id, row.variants] as const
     )
   )
 
-  const mergedRows = (decorationRows as object[]).map((row) => {
-    const { id } = row as { id: string }
-    return { ...row, variants: variantsById.get(id) ?? [] }
-  })
+  const mergedRows = decorationRows.map((row) => ({
+    ...row,
+    variants: variantsById.get(row.id) ?? [],
+  }))
 
   const validRows = parseRows(CatalogProductRowSchema, mergedRows)
   const rowsById = new Map(validRows.map((row) => [row.id, row] as const))

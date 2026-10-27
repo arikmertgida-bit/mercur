@@ -2,12 +2,13 @@ import {
   AuthenticatedMedusaRequest,
   MedusaResponse,
 } from "@medusajs/framework/http"
+import { HttpTypes } from "@mercurjs/types"
 
 import { resendMemberInviteWorkflow } from "../../../../../../../../workflows/seller"
 
 export const POST = async (
   req: AuthenticatedMedusaRequest,
-  res: MedusaResponse
+  res: MedusaResponse<HttpTypes.AdminMemberInviteResponse>
 ) => {
   const { result } = await resendMemberInviteWorkflow(req.scope).run({
     input: {

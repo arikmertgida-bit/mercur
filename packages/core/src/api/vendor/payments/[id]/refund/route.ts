@@ -7,12 +7,13 @@ import { HttpTypes } from "@mercurjs/types"
 
 import { refetchPayment, validateSellerPayment } from "../../helpers"
 import { VendorCreatePaymentRefundType } from "../../validators"
+import { getSellerId } from "../../../../utils/seller-context"
 
 export const POST = async (
   req: AuthenticatedMedusaRequest<VendorCreatePaymentRefundType>,
   res: MedusaResponse<HttpTypes.VendorPaymentResponse>
 ) => {
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
   const { id } = req.params
 
   await validateSellerPayment(req.scope, sellerId, id)

@@ -26,14 +26,14 @@ export type CreateSellersWorkflowInput = {
 } & AdditionalData
 
 export type CreateSellersWorkflowHooks = [
-  Hook<"validate", { input: CreateSellersWorkflowInput }, unknown>,
+  Hook<"validate", { input: CreateSellersWorkflowInput }, void>,
   Hook<
     "sellersCreated",
     {
       sellers: SellerDTO[]
-      additional_data: Record<string, unknown> | undefined
+      additional_data: AdditionalData["additional_data"]
     },
-    unknown
+    void
   >,
 ]
 

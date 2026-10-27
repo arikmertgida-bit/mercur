@@ -3,6 +3,7 @@ import {
   MedusaRequest,
   MedusaResponse,
 } from "@medusajs/framework"
+import { getSellerId } from "./seller-context"
 
 export function filterBySellerId() {
   return (
@@ -10,7 +11,7 @@ export function filterBySellerId() {
     _res: MedusaResponse,
     next: MedusaNextFunction
   ) => {
-    req.filterableFields.seller_id = req.seller_context!.seller_id
+    req.filterableFields.seller_id = getSellerId(req)
     next()
   }
 }

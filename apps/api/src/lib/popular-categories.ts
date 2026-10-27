@@ -1,14 +1,21 @@
 import type { Query } from '@medusajs/framework'
+import { z } from 'zod'
+
+import { presentItems } from "./graph-list"
+import { parseRows } from "./graph-schemas"
+
+const ProductCategorySampleRowSchema = z.object({
+  categories: z
+    .array(z.object({ id: z.string(), name: z.string() }).nullable())
+    .nullable()
+    .optional(),
+})
 
 // Sampling heuristic, not an exact popularity ranking: tallies category
 // frequency across a bounded sample of published products. An exact global
 // count across the full catalog isn't worth the scan cost for a low-stakes
 // navbar suggestion list.
 const SAMPLE_SIZE = 500
-
-type ProductCategorySampleRow = {
-  categories?: Array<{ id: string; name: string }> | null
-}
 
 export type PopularCategory = {
   id: string
@@ -27,8 +34,8 @@ export async function getPopularCategories(
   })
 
   const counts = new Map<string, { name: string; count: number }>()
-  for (const product of products as ProductCategorySampleRow[]) {
-    for (const category of product.categories ?? []) {
+  for (const product of parseRows(ProductCategorySampleRowSchema, products)) {
+    for (const category of presentItems(product.categories)) {
       const existing = counts.get(category.id)
       if (existing) {
         existing.count += 1

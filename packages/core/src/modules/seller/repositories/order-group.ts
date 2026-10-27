@@ -16,6 +16,11 @@ const OPERATOR_MAP = {
   $ilike: "ILIKE",
 }
 
+type FilterOperator = keyof typeof OPERATOR_MAP
+
+const isFilterOperator = (key: string): key is FilterOperator =>
+  Object.prototype.hasOwnProperty.call(OPERATOR_MAP, key)
+
 const SORTABLE_COLUMNS = ["display_id", "created_at", "updated_at"] as const
 
 // SQL twin of `getLastPaymentStatus` in workflows/order-group/utils, applied
@@ -107,8 +112,9 @@ const parseDisplayIdSearch = (search: string): number | undefined => {
   return match ? Number(match[1]) : undefined
 }
 
-const normalizeDirection = (value: unknown): "ASC" | "DESC" | undefined => {
-  if (typeof value !== "string") {
+// Typed as "ASC" | "DESC", but callers may still pass any casing.
+const normalizeDirection = (value?: string): "ASC" | "DESC" | undefined => {
+  if (!value) {
     return undefined
   }
   const upper = value.toUpperCase()
@@ -127,6 +133,7 @@ export type OrderGroupFilters = {
   customer_id?: string | string[]
   seller_id?: string | string[]
   status?: string | string[]
+  payment_status?: string | string[]
   sales_channel_id?: string | string[]
   created_at?: OperatorFilter
   updated_at?: OperatorFilter
@@ -171,10 +178,10 @@ export class OrderGroupRepository extends DALUtils.mikroOrmBaseRepositoryFactory
     }
 
     for (const [operator, operand] of Object.entries(value)) {
-      const sqlOperator = OPERATOR_MAP[operator as keyof typeof OPERATOR_MAP]
-      if (!sqlOperator) {
+      if (!isFilterOperator(operator)) {
         continue
       }
+      const sqlOperator = OPERATOR_MAP[operator]
 
       if (sqlOperator === "IN" || sqlOperator === "NOT IN") {
         const values = Array.isArray(operand) ? operand : [operand]
@@ -204,7 +211,7 @@ export class OrderGroupRepository extends DALUtils.mikroOrmBaseRepositoryFactory
 
     const params: FilterOperand[] = []
     const whereClauses: string[] = ["og.deleted_at IS NULL"]
-    const orderParams: any[] = []
+    const orderParams: FilterOperand[] = []
     const orderClauses: string[] = []
 
     if (filters.id) {
@@ -230,15 +237,6 @@ export class OrderGroupRepository extends DALUtils.mikroOrmBaseRepositoryFactory
       const placeholders = customerIds.map(() => "?").join(",")
       whereClauses.push(`og.customer_id IN (${placeholders})`)
       params.push(...customerIds)
-    }
-
-    if (filters.cart_id) {
-      const cartIds = Array.isArray(filters.cart_id)
-        ? filters.cart_id
-        : [filters.cart_id]
-      const placeholders = cartIds.map(() => "?").join(",")
-      whereClauses.push(`og.cart_id IN (${placeholders})`)
-      params.push(...cartIds)
     }
 
     if (filters.seller_id) {

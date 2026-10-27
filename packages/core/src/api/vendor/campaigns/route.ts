@@ -11,6 +11,7 @@ import {
   VendorCreateCampaignType,
   VendorGetCampaignsParamsType,
 } from "./validators"
+import { getSellerId } from "../../utils/seller-context"
 
 export const GET = async (
   req: AuthenticatedMedusaRequest<VendorGetCampaignsParamsType>,
@@ -39,7 +40,7 @@ export const POST = async (
   req: AuthenticatedMedusaRequest<VendorCreateCampaignType>,
   res: MedusaResponse<HttpTypes.VendorCampaignResponse>
 ) => {
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
 
   const { result } = await createSellerCampaignsWorkflow(req.scope).run({
     input: {

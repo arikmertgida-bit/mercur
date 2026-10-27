@@ -1,3 +1,5 @@
+import { z } from "zod"
+
 // Mirrors `workflows/cart/utils/prepare-variant-inventory-input.ts`'s field
 // convention: a `product_variant`'s own `inventory_items` link (not a
 // per-seller/offer indirection) is the single source of truth for which
@@ -13,21 +15,28 @@ export type VariantInventoryLink = {
   } | null
 }
 
-type VariantInventoryItemRow = {
-  inventory_item_id?: string | null
-  required_quantity?: number | null
-  inventory?: {
-    id: string
-    title?: string | null
-    sku?: string | null
-    location_levels?: { location_id: string }[] | null
-  } | null
-}
+const VariantInventoryItemRowSchema = z.object({
+  inventory_item_id: z.string().nullish(),
+  required_quantity: z.number().nullish(),
+  inventory: z
+    .object({
+      id: z.string(),
+      title: z.string().nullish(),
+      sku: z.string().nullish(),
+      location_levels: z
+        .array(z.object({ location_id: z.string() }))
+        .nullish(),
+    })
+    .nullish(),
+})
 
-export type VariantInventoryRow = {
-  id: string
-  inventory_items?: VariantInventoryItemRow[] | null
-}
+/** A `product_variant` row with its `inventory_items` link selected. */
+export const VariantInventoryRowSchema = z.object({
+  id: z.string(),
+  inventory_items: z.array(VariantInventoryItemRowSchema).nullish(),
+})
+
+export type VariantInventoryRow = z.infer<typeof VariantInventoryRowSchema>
 
 export const buildVariantInventoryLinkMap = (
   variants: VariantInventoryRow[]

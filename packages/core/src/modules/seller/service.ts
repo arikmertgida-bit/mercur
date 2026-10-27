@@ -10,8 +10,9 @@ import {
   toHandle,
   InjectTransactionManager,
 } from "@medusajs/framework/utils"
-import jwt, { JwtPayload } from "jsonwebtoken"
+import jwt from "jsonwebtoken"
 import crypto from "node:crypto"
+import { z } from "zod"
 import {
   Seller,
   ProfessionalDetails,
@@ -47,6 +48,20 @@ type CreateMemberInviteInput = CreateMemberInviteDTO & {
 
 const DEFAULT_INVITE_VALID_DURATION_SECONDS = 60 * 60 * 24 * 7 // 7 days
 
+const SellerModuleOptionsSchema = z.object({
+  invite_valid_duration: z.number().optional(),
+  jwt_secret: z.string().optional(),
+  vendor_url: z.string().optional(),
+})
+
+type ResolvedSellerModuleOptions = Omit<SellerModuleOptions, "jwt_secret"> & {
+  // Medusa's project secret may also be a key buffer.
+  jwt_secret: jwt.Secret
+  vendor_url: string
+}
+
+const InviteTokenPayloadSchema = z.object({ id: z.string() })
+
 type InjectedDependencies = {
   orderGroupRepository: OrderGroupRepository
   baseRepository: DAL.RepositoryService
@@ -77,7 +92,7 @@ class SellerModuleService extends MedusaService({
 }) {
   protected readonly orderGroupRepository_: OrderGroupRepository
   protected readonly baseRepository_: DAL.RepositoryService
-  protected readonly options_: SellerModuleOptions
+  protected readonly options_: ResolvedSellerModuleOptions
 
   constructor(
     { orderGroupRepository, baseRepository }: InjectedDependencies,
@@ -88,12 +103,22 @@ class SellerModuleService extends MedusaService({
     this.orderGroupRepository_ = orderGroupRepository
     this.baseRepository_ = baseRepository
 
-    const opts = (moduleDeclaration?.options as SellerModuleOptions) ?? {}
+    const opts = SellerModuleOptionsSchema.parse(moduleDeclaration?.options ?? {})
+    const jwtSecret =
+      opts.jwt_secret ?? configManager.config.projectConfig.http.jwtSecret
+
+    // Invite tokens are signed with it; Medusa's config loader always sets a
+    // project JWT secret, so this only fails on a broken configuration.
+    if (!jwtSecret) {
+      throw new MedusaError(
+        MedusaError.Types.INVALID_DATA,
+        "Seller module requires a JWT secret to sign member invites"
+      )
+    }
+
     this.options_ = {
       ...opts,
-      jwt_secret:
-        opts.jwt_secret ??
-        (configManager.config.projectConfig.http.jwtSecret as string),
+      jwt_secret: jwtSecret,
       vendor_url: opts.vendor_url ?? process.env.MERCUR_VENDOR_URL ?? "",
     }
   }
@@ -169,9 +194,11 @@ class SellerModuleService extends MedusaService({
     )
 
     const toUpdate = data
-      .filter((d) => existingMap.has(d.email))
       .map((d) => {
-        const existingMember = existingMap.get(d.email)!
+        const existingMember = existingMap.get(d.email)
+        if (!existingMember) {
+          return null
+        }
         const update: { id: string; first_name?: string; last_name?: string } = {
           id: existingMember.id,
         }
@@ -189,9 +216,16 @@ class SellerModuleService extends MedusaService({
       await this.updateMembers(toUpdate, sharedContext)
     }
 
-    return data.map(
-      (d) => existingMap.get(d.email) ?? createdMap.get(d.email)!
-    )
+    return data.map((d) => {
+      const member = existingMap.get(d.email) ?? createdMap.get(d.email)
+      if (!member) {
+        throw new MedusaError(
+          MedusaError.Types.UNEXPECTED_STATE,
+          `Member ${d.email} was neither found nor created`
+        )
+      }
+      return member
+    })
   }
 
   @InjectTransactionManager()
@@ -276,11 +310,12 @@ class SellerModuleService extends MedusaService({
     token: string,
     @MedusaContext() sharedContext: Context = {},
   ): Promise<MemberInviteDTO> {
-    let decoded: JwtPayload
+    let inviteId: string
     try {
-      decoded = jwt.verify(token, this.options_.jwt_secret, {
+      const decoded = jwt.verify(token, this.options_.jwt_secret, {
         complete: true,
-      }) as JwtPayload
+      })
+      inviteId = InviteTokenPayloadSchema.parse(decoded.payload).id
     } catch {
       throw new MedusaError(
         MedusaError.Types.INVALID_DATA,
@@ -289,10 +324,10 @@ class SellerModuleService extends MedusaService({
     }
 
     const invite = await this.retrieveMemberInvite(
-      decoded.payload.id,
+      inviteId,
       {},
       sharedContext,
-    ) as MemberInviteDTO
+    )
 
     if (invite.accepted) {
       throw new MedusaError(

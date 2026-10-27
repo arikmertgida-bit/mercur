@@ -10,6 +10,7 @@ import {
   normalizeOrderPaymentCollections,
   withCartPaymentCollectionFields,
 } from "./helpers"
+import { toHttpOrder } from "../../../utils/http-order"
 
 export const GET = async (
   req: AuthenticatedMedusaRequest,
@@ -39,10 +40,10 @@ export const GET = async (
   }
   const { rows, metadata } = result
 
-  rows.forEach((order) => normalizeOrderPaymentCollections(order as never))
+  rows.forEach((order) => normalizeOrderPaymentCollections(order))
 
   res.json({
-    orders: rows,
+    orders: rows.map(toHttpOrder),
     count: metadata.count,
     offset: metadata.skip,
     limit: metadata.take,

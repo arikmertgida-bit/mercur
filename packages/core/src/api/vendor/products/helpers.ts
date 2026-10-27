@@ -4,6 +4,13 @@ import {
 } from "@medusajs/framework/utils"
 import type { MedusaContainer } from "@medusajs/framework/types"
 import { ProductChangeActionType } from "@mercurjs/types"
+import { z } from "zod"
+
+import { parseGraphRows } from "../../../utils/graph-rows"
+
+const ProductSellerLinkRowSchema = z.object({
+  product_id: z.string().nullable(),
+})
 
 export const getSellerOwnedProductIds = async (
   scope: MedusaContainer,
@@ -46,7 +53,7 @@ export const getSellerVisibleProductIds = async (
   ])
 
   const productIds = new Set<string>(ownedFromAudit)
-  for (const link of links as { product_id: string | null }[]) {
+  for (const link of parseGraphRows(ProductSellerLinkRowSchema, links)) {
     if (link.product_id) {
       productIds.add(link.product_id)
     }

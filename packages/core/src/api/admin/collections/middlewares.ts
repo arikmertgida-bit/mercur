@@ -16,9 +16,9 @@ import {
 
 const OVERRIDDEN_MATCHERS = new Set(["/admin/collections", "/admin/collections/:id"])
 
-const capturedBase = (ORIGINAL_MIDDLEWARES[
+const capturedBase = ORIGINAL_MIDDLEWARES[
   "dist/api/admin/collections/middlewares.js"
-] ?? []) as MiddlewareRoute[]
+] ?? []
 
 const baseRetained = capturedBase.filter(
   (route) => !OVERRIDDEN_MATCHERS.has(String(route.matcher))

@@ -1,12 +1,8 @@
 import {
   BigNumberInput,
   IOrderModuleService,
-  OrderChangeActionDTO,
   OrderChangeDTO,
-  OrderDTO,
   OrderPreviewDTO,
-  OrderReturnItemDTO,
-  ReturnDTO,
 } from "@medusajs/framework/types"
 import {
   ChangeActionType,
@@ -36,13 +32,78 @@ import {
   updateReturnsStep,
   useRemoteQueryStep,
 } from "@medusajs/medusa/core-flows"
-import { buildVariantInventoryLinkMap, VariantInventoryRow } from "../utils"
+import { z } from "zod"
+import { buildVariantInventoryLinkMap, VariantInventoryRow, VariantInventoryRowSchema } from "../utils"
 import { InventoryWorkflowEvents } from "../../events"
+import { GraphBigNumberSchema, parseGraphRow } from "../../../utils/graph-rows"
+import { JsonRecordSchema } from "../../../utils/json-schema"
+
+const ReturnRowSchema = z.object({
+  id: z.string(),
+  order_id: z.string(),
+  location_id: z.string().nullish(),
+  items: z
+    .array(
+      z.object({
+        id: z.string(),
+        item_id: z.string(),
+        quantity: GraphBigNumberSchema,
+        received_quantity: GraphBigNumberSchema.nullish(),
+        item: z
+          .object({
+            id: z.string(),
+            variant_id: z.string().nullish(),
+            variant: VariantInventoryRowSchema.nullish(),
+          })
+          .nullish(),
+      }),
+    )
+    .nullish(),
+})
+
+type ReturnRow = z.infer<typeof ReturnRowSchema>
+
+const OrderRowSchema = z.object({
+  id: z.string(),
+  seller: z.object({ id: z.string() }).nullish(),
+})
+
+const OrderChangeRowSchema = z.object({
+  id: z.string(),
+  status: z.enum(OrderChangeStatus),
+  actions: z.array(
+    z.object({
+      action: z.enum(ChangeActionType),
+      details: JsonRecordSchema.nullish(),
+    }),
+  ),
+})
+
+// A receive action's `details.reference_id` is the returned order line item.
+const ReceiveActionDetailsSchema = z.object({
+  reference_id: z.string(),
+  quantity: GraphBigNumberSchema,
+})
+
+type ReceiveAction = {
+  action: ChangeActionType
+  details: z.infer<typeof ReceiveActionDetailsSchema>
+}
+
+const RECEIVE_ACTIONS: ChangeActionType[] = [
+  ChangeActionType.RECEIVE_RETURN_ITEM,
+  ChangeActionType.RECEIVE_DAMAGED_RETURN_ITEM,
+]
 
 type ConfirmOrderChangesInput = {
   orderId: string
-  changes: OrderChangeDTO[]
+  changes: Pick<OrderChangeDTO, "id" | "status">[]
   confirmed_by?: string
+}
+
+type ConfirmedOrderChange = {
+  orderId: string
+  lastChange: Partial<OrderChangeDTO>
 }
 
 const confirmOrderChangesStep = createStep(
@@ -61,45 +122,38 @@ const confirmOrderChangesStep = createStep(
         return update
       }),
     )
-    return new StepResponse(orderChanges, currentChanges)
+    const [lastChange] = currentChanges
+    const compensation: ConfirmedOrderChange | undefined = lastChange
+      ? { orderId: input.orderId, lastChange }
+      : undefined
+    return new StepResponse(orderChanges, compensation)
   },
-  async (currentChanges, { container }) => {
-    if (!currentChanges?.length) return
+  async (compensation, { container }) => {
+    if (!compensation) return
     const orderModuleService = container.resolve<IOrderModuleService>(Modules.ORDER)
     await orderModuleService.undoLastChange(
-      currentChanges[0].order_id!,
-      currentChanges[0],
+      compensation.orderId,
+      compensation.lastChange,
     )
   },
 )
 
-type ReturnItemWithVariant = OrderReturnItemDTO & {
-  item_id: string
-  item?: {
-    id?: string
-    variant_id?: string
-    variant?: VariantInventoryRow | null
-  } | null
-}
-
-type ReturnWithVariantItems = ReturnDTO & {
-  items: ReturnItemWithVariant[]
+type InventoryAdjustment = {
+  inventory_item_id: string
+  location_id: string
+  adjustment: BigNumberInput
 }
 
 function prepareInventoryUpdate({
   orderReturn,
   returnedQuantityByVariant,
 }: {
-  orderReturn: ReturnWithVariantItems
+  orderReturn: ReturnRow
   returnedQuantityByVariant: Record<string, BigNumberInput>
-}) {
-  const inventoryAdjustment: {
-    inventory_item_id: string
-    location_id: string
-    adjustment: BigNumberInput
-  }[] = []
+}): InventoryAdjustment[] {
+  const inventoryAdjustment: InventoryAdjustment[] = []
 
-  const returnItems: ReturnItemWithVariant[] = orderReturn.items ?? []
+  const returnItems = orderReturn.items ?? []
   const variants = returnItems
     .map((retItem) => retItem.item?.variant)
     .filter((v): v is VariantInventoryRow => !!v)
@@ -124,14 +178,18 @@ function prepareInventoryUpdate({
     }
   }
 
-  if (hasManagedInventory && !hasStockLocation) {
+  // No returned variant manages inventory, so there is nothing to restock.
+  if (!hasManagedInventory) {
+    return inventoryAdjustment
+  }
+
+  const locationId = orderReturn.location_id
+  if (!locationId || !hasStockLocation) {
     throw new MedusaError(
       MedusaError.Types.NOT_ALLOWED,
       `Cannot receive the return at location ${orderReturn.location_id}: none of the returned items' inventory is stocked at this location.`,
     )
   }
-
-  const locationId = orderReturn.location_id as string
 
   for (const [variantId, quantity] of Object.entries(returnedQuantityByVariant)) {
     const links = Object.values(variantInventoryByVariantId[variantId] ?? {})
@@ -139,10 +197,7 @@ function prepareInventoryUpdate({
       inventoryAdjustment.push({
         inventory_item_id: link.inventory_item_id,
         location_id: locationId,
-        adjustment: MathBN.mult(
-          quantity as BigNumberInput,
-          link.required_quantity,
-        ),
+        adjustment: MathBN.mult(quantity, link.required_quantity),
       })
     }
   }
@@ -171,7 +226,7 @@ export type ConfirmReturnReceiveWorkflowHooks = [
         damaged_quantity: BigNumberInput
       }[]
     },
-    unknown
+    void
   >,
 ]
 
@@ -180,7 +235,7 @@ export const confirmReturnReceiveWorkflow = createWorkflow(
   function (
     input: ConfirmReceiveReturnRequestWorkflowInput,
   ): WorkflowResponse<OrderPreviewDTO, ConfirmReturnReceiveWorkflowHooks> {
-    const orderReturn = useRemoteQueryStep({
+    const orderReturnRow = useRemoteQueryStep({
       entry_point: "return",
       fields: [
         "id",
@@ -200,9 +255,13 @@ export const confirmReturnReceiveWorkflow = createWorkflow(
       variables: { id: input.return_id },
       list: false,
       throw_if_key_not_found: true,
-    }).config({ name: "return-query" }) as ReturnWithVariantItems
+    }).config({ name: "return-query" })
 
-    const order: OrderDTO = useRemoteQueryStep({
+    const orderReturn = transform({ orderReturnRow }, ({ orderReturnRow }) =>
+      parseGraphRow(ReturnRowSchema, orderReturnRow),
+    )
+
+    const orderRow = useRemoteQueryStep({
       entry_point: "orders",
       fields: ["id", "version", "canceled_at", "seller.id"],
       variables: { id: orderReturn.order_id },
@@ -210,7 +269,11 @@ export const confirmReturnReceiveWorkflow = createWorkflow(
       throw_if_key_not_found: true,
     }).config({ name: "order-query" })
 
-    const orderChange: OrderChangeDTO = useRemoteQueryStep({
+    const order = transform({ orderRow }, ({ orderRow }) =>
+      parseGraphRow(OrderRowSchema, orderRow),
+    )
+
+    const orderChangeRow = useRemoteQueryStep({
       entry_point: "order_change",
       fields: [
         "id",
@@ -232,12 +295,16 @@ export const confirmReturnReceiveWorkflow = createWorkflow(
       list: false,
     }).config({ name: "order-change-query" })
 
+    const orderChange = transform({ orderChangeRow }, ({ orderChangeRow }) =>
+      parseGraphRow(OrderChangeRowSchema, orderChangeRow),
+    )
+
     const { updateReturnItem, returnedQuantityByVariant, updateReturn } =
       transform({ orderChange, orderReturn }, (data) => {
         const returnedQuantityByVariant: Record<string, BigNumberInput> = {}
 
-        const retItems: ReturnItemWithVariant[] = data.orderReturn.items ?? []
-        const received: OrderChangeActionDTO[] = []
+        const retItems = data.orderReturn.items ?? []
+        const received: ReceiveAction[] = []
 
         const variantByLineItemId = new Map<string, string>()
         for (const ri of retItems) {
@@ -249,36 +316,30 @@ export const confirmReturnReceiveWorkflow = createWorkflow(
         }
 
         data.orderChange.actions.forEach((act) => {
-          if (
-            [
-              ChangeActionType.RECEIVE_RETURN_ITEM,
-              ChangeActionType.RECEIVE_DAMAGED_RETURN_ITEM,
-            ].includes(act.action as ChangeActionType)
-          ) {
-            received.push(act)
+          if (!RECEIVE_ACTIONS.includes(act.action)) {
+            return
+          }
 
-            if (act.action === ChangeActionType.RECEIVE_RETURN_ITEM) {
-              const lineItemId = act.details!.reference_id as string
-              const variantId = variantByLineItemId.get(lineItemId)
-              if (!variantId) {
-                return
-              }
-              const current = returnedQuantityByVariant[variantId] ?? 0
-              returnedQuantityByVariant[variantId] = MathBN.add(
-                current,
-                act.details!.quantity as number,
-              ) as BigNumberInput
+          const details = parseGraphRow(ReceiveActionDetailsSchema, act.details)
+          received.push({ action: act.action, details })
+
+          if (act.action === ChangeActionType.RECEIVE_RETURN_ITEM) {
+            const variantId = variantByLineItemId.get(details.reference_id)
+            if (!variantId) {
+              return
             }
+            const current = returnedQuantityByVariant[variantId] ?? 0
+            returnedQuantityByVariant[variantId] = MathBN.add(
+              current,
+              details.quantity,
+            )
           }
         })
 
-        const itemMap = retItems.reduce(
-          (acc, item) => {
-            acc[item.item_id] = item.id
-            return acc
-          },
-          {} as Record<string, string>,
-        )
+        const itemMap: Record<string, string> = {}
+        for (const item of retItems) {
+          itemMap[item.item_id] = item.id
+        }
 
         const itemUpdates: Record<
           string,
@@ -288,30 +349,31 @@ export const confirmReturnReceiveWorkflow = createWorkflow(
             damaged_quantity: BigNumberInput
           }
         > = {}
-        received.forEach((act) => {
-          const itemId = act.details!.reference_id as string
-          if (itemUpdates[itemId]) {
-            itemUpdates[itemId].received_quantity = MathBN.add(
-              itemUpdates[itemId].received_quantity,
-              act.details!.quantity as BigNumberInput,
-            ) as BigNumberInput
+        received.forEach(({ action, details }) => {
+          const itemId = details.reference_id
+          const existing = itemUpdates[itemId]
+          if (existing) {
+            existing.received_quantity = MathBN.add(
+              existing.received_quantity,
+              details.quantity,
+            )
 
-            if (act.action === ChangeActionType.RECEIVE_DAMAGED_RETURN_ITEM) {
-              itemUpdates[itemId].damaged_quantity = MathBN.add(
-                itemUpdates[itemId].damaged_quantity,
-                act.details!.quantity as BigNumberInput,
-              ) as BigNumberInput
+            if (action === ChangeActionType.RECEIVE_DAMAGED_RETURN_ITEM) {
+              existing.damaged_quantity = MathBN.add(
+                existing.damaged_quantity,
+                details.quantity,
+              )
             }
             return
           }
 
           itemUpdates[itemId] = {
             id: itemMap[itemId],
-            received_quantity: act.details!.quantity as BigNumberInput,
+            received_quantity: details.quantity,
             damaged_quantity:
-              act.action === ChangeActionType.RECEIVE_DAMAGED_RETURN_ITEM
-                ? (act.details!.quantity as BigNumberInput)
-                : (0 as BigNumberInput),
+              action === ChangeActionType.RECEIVE_DAMAGED_RETURN_ITEM
+                ? details.quantity
+                : 0,
           }
         })
 
@@ -319,7 +381,7 @@ export const confirmReturnReceiveWorkflow = createWorkflow(
           const itemId = item.item_id
           const received: BigNumberInput = itemUpdates[itemId]
             ? itemUpdates[itemId].received_quantity
-            : (item.received_quantity ?? (0 as BigNumberInput))
+            : (item.received_quantity ?? 0)
           return MathBN.eq(received, item.quantity)
         })
         const updateReturnData = hasReceivedAllItems
@@ -345,7 +407,7 @@ export const confirmReturnReceiveWorkflow = createWorkflow(
 
     parallelize(
       updateReturnsStep([updateReturn]),
-      updateReturnItemsStep(updateReturnItem as never),
+      updateReturnItemsStep(updateReturnItem),
       confirmOrderChangesStep({
         changes: [orderChange],
         orderId: order.id,
@@ -388,16 +450,17 @@ export const confirmReturnReceiveWorkflow = createWorkflow(
       }),
     )
 
-    const sellerId = transform({ order }, ({ order }) => {
-      return (order as OrderDTO & { seller?: { id: string } | null }).seller?.id ?? null
-    })
+    const sellerId = transform({ order }, ({ order }) => order.seller?.id ?? null)
 
-    const returnReceived = createHook("returnReceived", {
-      order_id: order.id,
-      return_id: orderReturn.id,
-      seller_id: sellerId,
-      items: updateReturnItem,
-    })
+    const returnReceived: ConfirmReturnReceiveWorkflowHooks[0] = createHook(
+      "returnReceived",
+      {
+        order_id: order.id,
+        return_id: orderReturn.id,
+        seller_id: sellerId,
+        items: updateReturnItem,
+      }
+    )
 
     return new WorkflowResponse(previewOrderChangeStep(order.id), {
       hooks: [returnReceived],

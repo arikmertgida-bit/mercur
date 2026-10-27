@@ -8,6 +8,8 @@ import { HttpTypes } from "@mercurjs/types"
 
 import { validateSellerReturn } from "../helpers"
 import { VendorPostReturnsReturnReqType } from "../validators"
+import { getSellerId } from "../../../utils/seller-context"
+import { toHttpOrderPreview } from "../../../../utils/http-order"
 
 export const GET = async (
   req: AuthenticatedMedusaRequest,
@@ -15,7 +17,7 @@ export const GET = async (
 ) => {
   const { id } = req.params
 
-  await validateSellerReturn(req.scope, req.seller_context!.seller_id, id)
+  await validateSellerReturn(req.scope, getSellerId(req), id)
 
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
 
@@ -41,7 +43,7 @@ export const POST = async (
 ) => {
   const { id } = req.params
 
-  await validateSellerReturn(req.scope, req.seller_context!.seller_id, id)
+  await validateSellerReturn(req.scope, getSellerId(req), id)
 
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
 
@@ -61,7 +63,7 @@ export const POST = async (
   })
 
   res.json({
-    order_preview: result,
+    order_preview: toHttpOrderPreview(result),
     return: orderReturn,
   })
 }

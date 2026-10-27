@@ -1,3 +1,4 @@
+import type { JsonRecord } from "@mercurjs/types"
 import { model } from '@medusajs/framework/utils'
 
 import { PayoutAccount } from './payout-account'
@@ -8,7 +9,7 @@ export const Payout = model.define('payout', {
   display_id: model.autoincrement(),
   currency_code: model.text(),
   amount: model.bigNumber(),
-  data: model.json().nullable(),
+  data: model.json<JsonRecord>().nullable(),
   account: model.belongsTo(() => PayoutAccount, {
     mappedBy: 'payouts'
   }),

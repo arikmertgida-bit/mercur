@@ -4,27 +4,36 @@ import {
   MedusaResponse,
 } from "@medusajs/framework/http"
 import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
+import { z } from "zod"
+
+import { parseGraphRows } from "../../../utils/graph-rows"
+import { QueryFilter } from "../../../utils/query-filter"
 
 const respondEmpty = (req: AuthenticatedMedusaRequest, res: MedusaResponse) => {
-  const pagination = (req.queryConfig?.pagination ?? {}) as {
-    skip?: number
-    take?: number
-  }
+  const pagination = req.queryConfig?.pagination
   res.json({
     order_groups: [],
     count: 0,
-    offset: pagination.skip ?? 0,
-    limit: pagination.take ?? 0,
+    offset: pagination?.skip ?? 0,
+    limit: pagination?.take ?? 0,
   })
 }
 
+const OrderIdRowSchema = z.object({ order_id: z.string() })
+const OrderGroupIdRowSchema = z.object({ order_group_id: z.string() })
+
+type OrderGroupFilterFields = QueryFilter & {
+  seller_id?: string | string[]
+  id?: string | string[]
+}
+
 export const applyOrderGroupSellerFilter = async (
-  req: AuthenticatedMedusaRequest,
+  req: AuthenticatedMedusaRequest<never, OrderGroupFilterFields>,
   res: MedusaResponse,
   next: MedusaNextFunction
 ) => {
   const filterableFields = req.filterableFields ?? {}
-  const sellerId = filterableFields.seller_id as string | string[] | undefined
+  const sellerId = filterableFields.seller_id
   if (!sellerId) {
     return next()
   }
@@ -36,8 +45,8 @@ export const applyOrderGroupSellerFilter = async (
     fields: ["order_id"],
     filters: { seller_id: sellerId },
   })
-  const sellerOrderIds = sellerLinks.map(
-    (l: { order_id: string }) => l.order_id
+  const sellerOrderIds = parseGraphRows(OrderIdRowSchema, sellerLinks).map(
+    (l) => l.order_id
   )
   if (sellerOrderIds.length === 0) {
     return respondEmpty(req, res)
@@ -50,7 +59,7 @@ export const applyOrderGroupSellerFilter = async (
   })
   const matchingOrderGroupIds = Array.from(
     new Set<string>(
-      links.map((l: { order_group_id: string }) => l.order_group_id)
+      parseGraphRows(OrderGroupIdRowSchema, links).map((l) => l.order_group_id)
     )
   )
   if (matchingOrderGroupIds.length === 0) {
@@ -59,7 +68,7 @@ export const applyOrderGroupSellerFilter = async (
 
   // The order-group repository only reads top-level filter keys, so the two
   // id constraints have to be intersected here rather than combined via $and.
-  const existingId = filterableFields.id as string | string[] | undefined
+  const existingId = filterableFields.id
   if (existingId !== undefined) {
     const requestedIds = new Set(
       Array.isArray(existingId) ? existingId : [existingId]

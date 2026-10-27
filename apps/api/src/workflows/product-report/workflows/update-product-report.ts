@@ -4,10 +4,11 @@ import {
 } from "@medusajs/framework/workflows-sdk"
 
 import { updateProductReportStep } from "../steps/update-product-report"
+import { ProductReportStatus } from "../../../modules/product-reports/constants"
 
 type UpdateProductReportInput = {
   id: string
-  status: "pending" | "resolved" | "dismissed"
+  status: ProductReportStatus
 }
 
 export const updateProductReportWorkflow = createWorkflow(

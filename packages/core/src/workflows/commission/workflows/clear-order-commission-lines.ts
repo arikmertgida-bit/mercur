@@ -6,16 +6,19 @@ import {
 } from "@medusajs/framework/workflows-sdk"
 import { useQueryGraphStep } from "@medusajs/medusa/core-flows"
 
+import { z } from "zod"
+
 import { deleteOrderCommissionLinesStep } from "../steps/delete-order-commission-lines"
+import { parseGraphRows } from "../../../utils/graph-rows"
 
 export type ClearOrderCommissionLinesWorkflowInput = {
   order_ids: string[]
 }
 
-type OrderForCommissionClear = {
-  items?: Array<{ id: string }>
-  shipping_methods?: Array<{ id: string }>
-}
+const OrderForCommissionClearSchema = z.object({
+  items: z.array(z.object({ id: z.string() })).nullish(),
+  shipping_methods: z.array(z.object({ id: z.string() })).nullish(),
+})
 
 export const clearOrderCommissionLinesWorkflowId = "clear-order-commission-lines"
 
@@ -37,7 +40,7 @@ export const clearOrderCommissionLinesWorkflow = createWorkflow(
     }).config({ name: "fetch-orders" })
 
     const anchorIds = transform({ orders }, ({ orders }) => {
-      const items = orders as OrderForCommissionClear[]
+      const items = parseGraphRows(OrderForCommissionClearSchema, orders)
       return {
         item_ids: items.flatMap((order) =>
           (order.items ?? []).map((item) => item.id)

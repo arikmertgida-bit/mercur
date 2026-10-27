@@ -4,6 +4,7 @@ import {
   createOperatorMap,
   createSelectParams,
 } from "@medusajs/medusa/api/utils/validators"
+import { JsonRecordSchema } from "../../../utils/json-schema"
 
 export type VendorGetCustomerGroupParamsType = z.infer<
   typeof VendorGetCustomerGroupParams
@@ -32,7 +33,7 @@ export type VendorCreateCustomerGroupType = z.infer<
 export const VendorCreateCustomerGroup = z
   .object({
     name: z.string(),
-    metadata: z.record(z.string(), z.unknown()).nullish(),
+    metadata: JsonRecordSchema.nullish(),
   })
   .strict()
 
@@ -42,7 +43,7 @@ export type VendorUpdateCustomerGroupType = z.infer<
 export const VendorUpdateCustomerGroup = z
   .object({
     name: z.string().optional(),
-    metadata: z.record(z.string(), z.unknown()).nullish(),
+    metadata: JsonRecordSchema.nullish(),
   })
   .strict()
 

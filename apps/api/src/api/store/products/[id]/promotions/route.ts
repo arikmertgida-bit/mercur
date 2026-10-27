@@ -46,7 +46,7 @@ export const GET = async (
     filters: { id },
   })
 
-  const product = parseRows(ProductMatchRowSchema, productRows as object[])[0]
+  const product = parseRows(ProductMatchRowSchema, productRows)[0]
   if (!product) {
     res.status(404).json({ message: "Product not found" })
     return

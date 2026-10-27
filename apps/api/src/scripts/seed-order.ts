@@ -145,9 +145,7 @@ export default async function seedOrderForSeller({ container }: ExecArgs) {
     ],
     filters: { id: SHIPPING_OPTION_ID },
   })
-  const shippingMeta = shipProfileRows[0] as
-    | { service_zone?: { fulfillment_set_id?: string } | null }
-    | undefined
+  const [shippingMeta] = shipProfileRows
   const shippingOptionFulfillmentSetId =
     shippingMeta?.service_zone?.fulfillment_set_id
 
@@ -158,27 +156,14 @@ export default async function seedOrderForSeller({ container }: ExecArgs) {
       `Shipping option ${SHIPPING_OPTION_ID} has no service zone`
     )
   }
-  // listGeoZones caps at 50 per page; paginate so we see the full set
-  const [, totalGeoZones] = await fulfillmentModule.listAndCountGeoZones(
-    { type: "country" }
+  // A relation loaded through the module service is not paginated.
+  const serviceZone = await fulfillmentModule.retrieveServiceZone(
+    shippingOption.service_zone.id,
+    { relations: ["geo_zones"] }
   )
-  const optionCountries: string[] = []
-  const PAGE = 50
-  for (let skip = 0; skip < totalGeoZones; skip += PAGE) {
-    const page = await fulfillmentModule.listGeoZones(
-      { type: "country" },
-      { take: PAGE, skip, relations: ["service_zone"] }
-    )
-    if (!page.length) break
-    for (const g of page) {
-      const zoneId =
-        (g as { service_zone_id?: string }).service_zone_id ??
-        (g as { service_zone?: { id?: string } }).service_zone?.id
-      if (zoneId === shippingOption.service_zone.id && g.country_code) {
-        optionCountries.push(g.country_code.toLowerCase())
-      }
-    }
-  }
+  const optionCountries = serviceZone.geo_zones
+    .filter((zone) => zone.type === "country" && zone.country_code)
+    .map((zone) => zone.country_code.toLowerCase())
   if (!optionCountries.length) {
     throw new Error(
       `Shipping option ${SHIPPING_OPTION_ID} has no country geo zone to deliver to`
@@ -199,12 +184,12 @@ export default async function seedOrderForSeller({ container }: ExecArgs) {
   let region: (typeof regions)[number] | undefined
   let optionCountry: string | undefined
   for (const r of regions) {
-    const hit = r.countries?.find(
-      (c) => c.iso_2 && optionCountrySet.has(c.iso_2.toLowerCase())
-    )
-    if (hit) {
+    const hitCountry = (r.countries ?? [])
+      .map((c) => c.iso_2?.toLowerCase())
+      .find((iso2) => iso2 !== undefined && optionCountrySet.has(iso2))
+    if (hitCountry) {
       region = r
-      optionCountry = hit.iso_2!.toLowerCase()
+      optionCountry = hitCountry
       break
     }
   }
@@ -264,12 +249,7 @@ export default async function seedOrderForSeller({ container }: ExecArgs) {
       fields: ["id", "fulfillment_sets.id"],
       filters: {},
     })
-    const sellerStockLocationId = (
-      slRows as Array<{
-        id: string
-        fulfillment_sets?: Array<{ id: string }> | null
-      }>
-    ).find((sl) =>
+    const sellerStockLocationId = slRows.find((sl) =>
       (sl.fulfillment_sets ?? []).some(
         (fs) => fs?.id === shippingOptionFulfillmentSetId
       )

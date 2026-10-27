@@ -8,23 +8,21 @@ import {
   listRuleValueTransformQueryConfig,
   listTransformQueryConfig,
 } from "@medusajs/medusa/api/admin/promotions/query-config"
-import {
-  AdminGetPromotionsParams,
-  AdminGetPromotionsRuleValueParams,
-} from "@medusajs/medusa/api/admin/promotions/validators"
+import { AdminGetPromotionsParams } from "@medusajs/medusa/api/admin/promotions/validators"
 import { z } from "zod"
 
 import { ORIGINAL_MIDDLEWARES } from "../../../utils/disable-medusa-middlewares"
 import { AdminUpsertPromotionCost } from "./[id]/cost/validators"
 import { applyPromotionSellerFilter } from "./helpers"
+import { AdminGetPromotionsRuleValueWithSeller } from "./validators"
 
 const RULE_VALUE_MATCHER =
   "/admin/promotions/rule-value-options/:rule_type/:rule_attribute_id"
 const LIST_MATCHER = "/admin/promotions"
 
-const capturedBase = (ORIGINAL_MIDDLEWARES[
+const capturedBase = ORIGINAL_MIDDLEWARES[
   "dist/api/admin/promotions/middlewares.js"
-] ?? []) as MiddlewareRoute[]
+] ?? []
 
 const routeHasGet = (route: MiddlewareRoute) => {
   const methods = Array.isArray(route.method)
@@ -44,11 +42,6 @@ const baseWithoutOverrides = capturedBase.filter((route) => {
   }
   return true
 })
-
-const AdminGetPromotionsRuleValueWithSeller =
-  AdminGetPromotionsRuleValueParams.merge(
-    z.object({ seller_id: z.string().optional() })
-  )
 
 const AdminGetPromotionsWithSeller = AdminGetPromotionsParams.merge(
   z.object({

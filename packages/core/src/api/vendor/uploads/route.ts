@@ -12,7 +12,8 @@ export const POST = async (
   req: AuthenticatedMedusaRequest<HttpTypes.AdminUploadFile>,
   res: MedusaResponse<{ files: FileDTO[] }>
 ) => {
-  const input = req.files as Express.Multer.File[]
+  // `req.files` is an array for a multer `.array()` field, a map otherwise.
+  const input = Array.isArray(req.files) ? req.files : undefined
 
   if (!input?.length) {
     throw new MedusaError(

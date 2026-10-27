@@ -2,10 +2,11 @@ import { StepResponse, createStep } from "@medusajs/framework/workflows-sdk"
 
 import { PRODUCT_REPORT_MODULE } from "../../../modules/product-reports"
 import ProductReportService from "../../../modules/product-reports/service"
+import { ProductReportStatus } from "../../../modules/product-reports/constants"
 
 type UpdateProductReportInput = {
   id: string
-  status: "pending" | "resolved" | "dismissed"
+  status: ProductReportStatus
 }
 
 export const updateProductReportStep = createStep(

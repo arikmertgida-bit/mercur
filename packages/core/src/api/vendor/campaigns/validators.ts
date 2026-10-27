@@ -5,6 +5,7 @@ import {
   createSelectParams,
 } from "@medusajs/medusa/api/utils/validators"
 
+export type VendorGetCampaignParamsType = z.infer<typeof VendorGetCampaignParams>
 export const VendorGetCampaignParams = createSelectParams()
 
 export const VendorGetCampaignsParamsFields = z

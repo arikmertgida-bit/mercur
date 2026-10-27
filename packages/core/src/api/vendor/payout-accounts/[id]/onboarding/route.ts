@@ -8,13 +8,14 @@ import { HttpTypes } from "@mercurjs/types"
 import { createOnboardingWorkflow } from "../../../../../workflows/payout"
 import { validateSellerPayoutAccount } from "../../helpers"
 import { VendorCreateOnboardingType } from "../../validators"
+import { getSellerId } from "../../../../utils/seller-context"
 
 export const POST = async (
   req: AuthenticatedMedusaRequest<VendorCreateOnboardingType>,
   res: MedusaResponse<HttpTypes.VendorOnboardingResponse>
 ) => {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
 
   await validateSellerPayoutAccount(req.scope, sellerId, req.params.id)
 

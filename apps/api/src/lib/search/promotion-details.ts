@@ -97,7 +97,7 @@ export async function loadPromotionDetails(
     filters: { id: promotionIds },
   })
 
-  return parseRows(PromotionDetailRowSchema, promotionRows as object[]).map((promotion) => ({
+  return parseRows(PromotionDetailRowSchema, promotionRows).map((promotion) => ({
     id: promotion.id,
     display_code: promotion.code ?? promotion.campaign?.name ?? promotion.id,
     type: promotion.type,

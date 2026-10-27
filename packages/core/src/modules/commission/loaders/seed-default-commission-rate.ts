@@ -44,7 +44,8 @@ export default async function seedDefaultCommissionRateLoader({
     })
   } catch (error) {
     logger?.warn(
-      `Failed to seed the default commission rate: ${(error as Error)?.message ?? error
+      `Failed to seed the default commission rate: ${
+        error instanceof Error ? error.message : String(error)
       }`
     )
   }

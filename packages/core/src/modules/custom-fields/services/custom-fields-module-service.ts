@@ -8,6 +8,15 @@ import {
 } from "@medusajs/framework/utils";
 import { MedusaModule } from "@medusajs/framework/modules-sdk";
 import type { Knex } from "@medusajs/framework/mikro-orm/knex";
+import { z } from "zod";
+
+// The overloads below share one implementation signature that can't tell the
+// filters and the config apart, so both are read back through their schema.
+const ListFiltersSchema = z.record(
+    z.string(),
+    z.union([z.string(), z.array(z.string())]),
+);
+const ListConfigSchema = z.object({ select: z.array(z.string()).optional() });
 
 /** A custom-field value can only be a JSON scalar — the columns are dynamically
  *  defined per alias (see CustomFieldsModuleOptions) with no fixed schema. */
@@ -44,7 +53,9 @@ export default class CustomFieldsModuleService {
         for (const joinerConfig of joinerConfigs) {
             const joinerConfigAliases = Array.isArray(joinerConfig.alias)
                 ? joinerConfig.alias
-                : [joinerConfig.alias!];
+                : joinerConfig.alias
+                  ? [joinerConfig.alias]
+                  : [];
 
             for (const entityName of entityNames) {
                 const entityAlias = joinerConfigAliases.find(
@@ -85,18 +96,18 @@ export default class CustomFieldsModuleService {
     ): Promise<CustomFieldRow[]> {
         let alias: string;
         let filters: Record<string, string | string[]>;
-        let config: FindConfig<CustomFieldRow>;
+        let select: string[] | undefined;
 
         if (typeof filterOrAlias === "string") {
             alias = filterOrAlias;
-            filters = filtersOrConfig as Record<string, string | string[]>;
+            filters = ListFiltersSchema.parse(filtersOrConfig);
             if (!maybeConfig) {
                 throw new MedusaError(
                     MedusaError.Types.INVALID_ARGUMENT,
                     "config is required when calling list(alias, filters, config)",
                 );
             }
-            config = maybeConfig;
+            select = ListConfigSchema.parse(maybeConfig).select;
         } else {
             const filter = filterOrAlias;
             if (Object.keys(filter).length !== 1) {
@@ -108,7 +119,7 @@ export default class CustomFieldsModuleService {
             const filterKey = Object.keys(filter)[0];
             alias = filterKey.split("_").slice(0, -1).join("_");
             filters = filter;
-            config = filtersOrConfig as FindConfig<CustomFieldRow>;
+            select = ListConfigSchema.parse(filtersOrConfig).select;
         }
 
         const snakeEntity = this.resolveAlias_(alias);
@@ -125,8 +136,8 @@ export default class CustomFieldsModuleService {
             }
         }
 
-        if (config.select) {
-            query.select(config.select as string[]);
+        if (select) {
+            query.select(select);
         }
 
         return await query;

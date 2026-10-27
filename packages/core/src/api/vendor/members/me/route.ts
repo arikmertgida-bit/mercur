@@ -9,16 +9,18 @@ import {
 import { HttpTypes } from "@mercurjs/types"
 
 import { updateMemberWorkflow } from "../../../../workflows/seller/workflows"
+import { VendorGetSellerParamsType } from "../../sellers/validators"
 import { VendorUpdateMemberType } from "../validators"
 import { attachPermissions, takePermissionsField } from "../../../utils"
+import { getSellerId } from "../../../utils/seller-context"
 
 export const GET = async (
-  req: AuthenticatedMedusaRequest,
+  req: AuthenticatedMedusaRequest<VendorGetSellerParamsType>,
   res: MedusaResponse<HttpTypes.VendorSellerMemberResponse>
 ) => {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
   const memberId = req.auth_context.actor_id
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
   const withPermissions = takePermissionsField(req)
 
   const { data: sellerMembers } = await query.graph({
@@ -48,7 +50,7 @@ export const POST = async (
 ) => {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
   const memberId = req.auth_context.actor_id
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
 
   if (!memberId) {
     throw new MedusaError(

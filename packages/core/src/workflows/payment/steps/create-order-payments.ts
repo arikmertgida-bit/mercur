@@ -1,4 +1,5 @@
 import { BigNumberInput } from "@medusajs/framework/types"
+import type { JsonRecord } from "@mercurjs/types"
 import { Modules, PaymentSessionStatus } from "@medusajs/framework/utils"
 import { createStep, StepResponse } from "@medusajs/framework/workflows-sdk"
 
@@ -25,7 +26,7 @@ export type CreateOrderPaymentsStepInput = {
   /**
    * The provider data of the charge the payment points at.
    */
-  data: Record<string, unknown>
+  data: JsonRecord
 }[]
 
 type SessionRow = CreateOrderPaymentsStepInput[number] & {
@@ -72,9 +73,7 @@ export const createOrderPaymentsStep = createStep(
       return new StepResponse([], { payment_ids: [], session_ids: [] })
     }
 
-    const service = container.resolve(
-      Modules.PAYMENT
-    ) as unknown as PaymentRowService
+    const service = container.resolve<PaymentRowService>(Modules.PAYMENT)
 
     const authorizedAt = new Date()
     const sessions = await service.createPaymentSessions(
@@ -103,9 +102,7 @@ export const createOrderPaymentsStep = createStep(
       return
     }
 
-    const service = container.resolve(
-      Modules.PAYMENT
-    ) as unknown as PaymentRowService
+    const service = container.resolve<PaymentRowService>(Modules.PAYMENT)
 
     await service.deletePayments(created.payment_ids)
     await service.deletePaymentSessions(created.session_ids)

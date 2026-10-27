@@ -8,6 +8,11 @@ import {
   MedusaError,
   promiseAll,
 } from "@medusajs/framework/utils"
+import { z } from "zod"
+
+import { parseGraphRows } from "../../../utils/graph-rows"
+
+const PromotionIdRowSchema = z.object({ promotion_id: z.string() })
 
 export const refetchPromotion = async (
   promotionId: string,
@@ -56,7 +61,7 @@ export const validateSellerPromotions = async (
   })
 
   const foundIds = new Set(
-    (sellerPromotions as Array<{ promotion_id: string }>).map(
+    parseGraphRows(PromotionIdRowSchema, sellerPromotions).map(
       (sp) => sp.promotion_id,
     ),
   )

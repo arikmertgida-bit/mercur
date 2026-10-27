@@ -1,3 +1,17 @@
+import { QueryFilter } from "../../../utils/query-filter"
+
+/**
+ * `filterableFields` of the store product routes. `region_id` and
+ * `currency_code` only feed the pricing context; `attributes` is rewritten
+ * into variant-option clauses by the products middleware.
+ */
+export type StoreProductFilterFields = QueryFilter & {
+  region_id?: string
+  currency_code?: string
+  attributes?: Record<string, string | string[]>
+  $and?: QueryFilter[]
+}
+
 /**
  * Splits the virtual `variants.calculated_price[.*]` and
  * `variants.inventory_quantity` fields out of a store-product field set.

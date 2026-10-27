@@ -25,14 +25,14 @@ export type DeleteProductAttributesWorkflowInput = {
 } & AdditionalData
 
 export type DeleteProductAttributesWorkflowHooks = [
-  Hook<"validate", { input: DeleteProductAttributesWorkflowInput }, unknown>,
+  Hook<"validate", { input: DeleteProductAttributesWorkflowInput }, void>,
   Hook<
     "productAttributesDeleted",
     {
       ids: string[]
-      additional_data: Record<string, unknown> | undefined
+      additional_data: AdditionalData["additional_data"]
     },
-    unknown
+    void
   >,
 ]
 

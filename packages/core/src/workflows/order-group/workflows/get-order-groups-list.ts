@@ -1,4 +1,3 @@
-import type { OrderDetailDTO } from "@medusajs/framework/types"
 import { deduplicate } from "@medusajs/framework/utils"
 import {
   createWorkflow,
@@ -13,6 +12,7 @@ import { resolveOrderPaymentCollections } from "../../payment/utils/split-order-
 import {
   getLastFulfillmentStatus,
   getLastPaymentStatus,
+  OrderGroupOrderRow,
 } from "../utils/aggregate-status"
 
 
@@ -90,45 +90,34 @@ export const getOrderGroupsListWorkflow = createWorkflow(
           : undefined
 
         for (const group of orderGroups) {
-          if (!group.orders) continue
+          const groupOrders: OrderGroupOrderRow[] | undefined = group.orders
+          if (!groupOrders) continue
+
+          const orders = sellerIds
+            ? groupOrders.filter((order) =>
+                order.seller?.id ? sellerIds.has(order.seller.id) : false
+              )
+            : groupOrders
 
           if (sellerIds) {
-            group.orders = (group.orders as Array<OrderDetailDTO & { seller?: { id: string } }>).filter(
-              (order) =>
-              order.seller?.id ? sellerIds.has(order.seller.id) : false
-            )
+            group.orders = orders
           }
 
-          for (const order of group.orders) {
-            const order_ = order as OrderDetailDTO & {
-              cart?: {
-                payment_collection?: {
-                  metadata?: Record<string, unknown> | null
-                } | null
-              }
-            }
+          for (const order_ of orders) {
+            order_.payment_collections = resolveOrderPaymentCollections(order_)
 
-            order_.payment_collections = resolveOrderPaymentCollections(
-              order_
-            ) as OrderDetailDTO["payment_collections"]
-
-            order_.payment_status = getLastPaymentStatus(
-              order_
-            ) as OrderDetailDTO["payment_status"]
-            order_.fulfillment_status = getLastFulfillmentStatus(
-              order_
-            ) as OrderDetailDTO["fulfillment_status"]
+            order_.payment_status = getLastPaymentStatus(order_)
+            order_.fulfillment_status = getLastFulfillmentStatus(order_)
 
             if (!input.fields.some((f) => f.startsWith("orders.cart"))) {
-              // @ts-ignore
               delete order_.cart
             }
 
             if (!requiredPaymentFields) {
-              Reflect.deleteProperty(order_ as object, "payment_collections")
+              Reflect.deleteProperty(order_, "payment_collections")
             }
             if (!requiredFulfillmentFields) {
-              Reflect.deleteProperty(order_ as object, "fulfillments")
+              Reflect.deleteProperty(order_, "fulfillments")
             }
           }
         }

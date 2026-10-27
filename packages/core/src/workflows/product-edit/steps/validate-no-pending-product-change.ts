@@ -6,6 +6,11 @@ import {
 } from "@medusajs/framework/utils"
 import { createStep, StepResponse } from "@medusajs/framework/workflows-sdk"
 import { ProductChangeStatus } from "@mercurjs/types"
+import { z } from "zod"
+
+import { parseGraphRows } from "../../../utils/graph-rows"
+
+const PendingChangeRowSchema = z.object({ product_id: z.string().nullish() })
 
 export const validateNoPendingProductChangeStepId =
   "pc-validate-no-pending-product-change"
@@ -42,9 +47,9 @@ export const validateNoPendingProductChangeStep = createStep(
     })
 
     const conflicts = new Set(
-      (changes as Array<{ product_id?: string }>)
-        .map((change) => change.product_id)
-        .filter(Boolean) as string[],
+      parseGraphRows(PendingChangeRowSchema, changes).flatMap((change) =>
+        change.product_id ? [change.product_id] : [],
+      ),
     )
 
     if (conflicts.size) {

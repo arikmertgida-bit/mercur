@@ -10,15 +10,22 @@ import {
 import { HttpTypes } from "@mercurjs/types"
 
 import { refetchCampaign, validateSellerCampaign } from "../helpers"
-import { VendorUpdateCampaignType } from "../validators"
+import {
+  VendorUpdateCampaignType,
+  VendorGetCampaignParamsType,
+} from "../validators"
+import { getSellerId } from "../../../utils/seller-context"
 
 export const GET = async (
-  req: AuthenticatedMedusaRequest,
+  req: AuthenticatedMedusaRequest<
+    Partial<VendorGetCampaignParamsType>,
+    VendorGetCampaignParamsType
+  >,
   res: MedusaResponse<HttpTypes.VendorCampaignResponse>
 ) => {
   const { id } = req.params
 
-  await validateSellerCampaign(req.scope, req.seller_context!.seller_id, id)
+  await validateSellerCampaign(req.scope, getSellerId(req), id)
 
   const campaign = await refetchCampaign(
     id,
@@ -42,7 +49,7 @@ export const POST = async (
 ) => {
   const { id } = req.params
 
-  await validateSellerCampaign(req.scope, req.seller_context!.seller_id, id)
+  await validateSellerCampaign(req.scope, getSellerId(req), id)
 
   await updateCampaignsWorkflow(req.scope).run({
     input: {
@@ -65,7 +72,7 @@ export const DELETE = async (
 ) => {
   const { id } = req.params
 
-  await validateSellerCampaign(req.scope, req.seller_context!.seller_id, id)
+  await validateSellerCampaign(req.scope, getSellerId(req), id)
 
   await deleteCampaignsWorkflow(req.scope).run({
     input: { ids: [id] },

@@ -48,7 +48,7 @@ const upsertProductAttributeValuesStep = createStep(
 
     const previousValues = toUpdate.length
       ? await service.listProductAttributeValues({
-          id: toUpdate.map((v) => v.id as string),
+          id: toUpdate.flatMap((v) => (v.id ? [v.id] : [])),
         })
       : []
 
@@ -169,6 +169,6 @@ export const upsertProductAttributeValuesWorkflow = createWorkflow(
 
     const values = upsertProductAttributeValuesStep(rows)
 
-    return new WorkflowResponse(values as ProductAttributeValueDTO[])
+    return new WorkflowResponse(values)
   },
 )

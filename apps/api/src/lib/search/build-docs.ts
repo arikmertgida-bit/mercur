@@ -10,12 +10,13 @@ import {
   PromotionMatchableProduct,
 } from './promotion-index'
 import { SearchDoc, SearchDocAttribute, SearchDocPrice } from './types'
+import { type GraphList, presentItems } from '../graph-list'
 
 export type SearchRegion = {
   id: string
   currency_code: string
   automatic_taxes?: boolean
-  countries?: { iso_2?: string | null }[] | null
+  countries?: GraphList<{ iso_2?: string | null }>
 }
 
 type ProductVariantRow = {
@@ -47,16 +48,14 @@ type ProductSellerRow = {
 export type InventoryLocationLevelRow = {
   stocked_quantity?: number | null
   reserved_quantity?: number | null
-  stock_locations?: { sales_channels?: { id: string }[] | null }[] | null
+  stock_locations?: GraphList<{ sales_channels?: GraphList<{ id: string }> }>
 }
 
 export type ProductVariantInventoryRow = ProductVariantRow & {
   manage_inventory?: boolean | null
-  inventory_items?:
-    | {
-        inventory?: { location_levels?: InventoryLocationLevelRow[] | null } | null
-      }[]
-    | null
+  inventory_items?: GraphList<{
+    inventory?: { location_levels?: GraphList<InventoryLocationLevelRow> } | null
+  }>
 }
 
 export type SearchProductRow = {
@@ -69,13 +68,13 @@ export type SearchProductRow = {
   created_at?: string | Date | null
   collection_id?: string | null
   collection?: { id?: string; title?: string | null } | null
-  categories?: { id: string; name?: string | null }[] | null
+  categories?: GraphList<{ id: string; name?: string | null }>
   type_id?: string | null
   type?: { id?: string; value?: string | null } | null
-  tags?: { id: string }[] | null
-  variants?: ProductVariantInventoryRow[] | null
-  product_attribute_values?: ProductAttributeValueRow[] | null
-  sellers?: ProductSellerRow[] | null
+  tags?: GraphList<{ id: string }>
+  variants?: GraphList<ProductVariantInventoryRow>
+  product_attribute_values?: GraphList<ProductAttributeValueRow>
+  sellers?: GraphList<ProductSellerRow>
 }
 
 // Curated list — never `+`-prefixed on a default product list, which 500s
@@ -138,7 +137,7 @@ const buildRegionTaxContext = (region: SearchRegion) => {
   if (!region.automatic_taxes) {
     return { taxInclusivityContext: { automaticTaxes: false } }
   }
-  const countryCode = (region.countries ?? [])
+  const countryCode = presentItems(region.countries)
     .map((c) => c?.iso_2)
     .find((iso): iso is string => Boolean(iso))
   return {
@@ -178,7 +177,7 @@ const cheapestVariantPrice = (
   product: SearchProductRow
 ): SearchDocPrice | undefined => {
   let best: SearchDocPrice | undefined
-  for (const variant of product.variants ?? []) {
+  for (const variant of presentItems(product.variants)) {
     if (!variant.calculated_price) {
       continue
     }
@@ -196,7 +195,7 @@ const buildAttributes = (
   const byAttribute = new Map<string, SearchDocAttribute>()
   const tokens: string[] = []
 
-  for (const pav of product.product_attribute_values ?? []) {
+  for (const pav of presentItems(product.product_attribute_values)) {
     const attribute = pav.attribute
     if (!attribute?.is_filterable) {
       continue
@@ -235,11 +234,11 @@ const isVariantInStock = (
     return true
   }
 
-  return (variant.inventory_items ?? []).some((item) =>
-    (item.inventory?.location_levels ?? []).some((level) => {
-      const isLinkedToDefaultChannel = (level.stock_locations ?? []).some(
+  return presentItems(variant.inventory_items).some((item) =>
+    presentItems(item.inventory?.location_levels).some((level) => {
+      const isLinkedToDefaultChannel = presentItems(level.stock_locations).some(
         (location) =>
-          (location.sales_channels ?? []).some(
+          presentItems(location.sales_channels).some(
             (channel) => channel.id === defaultSalesChannelId
           )
       )
@@ -256,7 +255,7 @@ const resolveInStock = (
   product: SearchProductRow,
   defaultSalesChannelId: string | null
 ): boolean =>
-  (product.variants ?? []).some((variant) =>
+  presentItems(product.variants).some((variant) =>
     isVariantInStock(variant, defaultSalesChannelId)
   )
 
@@ -300,14 +299,14 @@ export const buildProductDocs = async (
   const docs: SearchDoc[] = products.map((product) => {
     const attrs = buildAttributes(product)
     attributesByProduct.set(product.id, attrs)
-    const seller = (product.sellers ?? [])[0]
+    const seller = presentItems(product.sellers)[0]
 
     const matchableProduct: PromotionMatchableProduct = {
       id: product.id,
-      category_ids: (product.categories ?? []).map((c) => c.id),
+      category_ids: presentItems(product.categories).map((c) => c.id),
       collection_id: product.collection?.id ?? product.collection_id ?? null,
       type_id: product.type_id ?? null,
-      tag_ids: (product.tags ?? []).map((t) => t.id),
+      tag_ids: presentItems(product.tags).map((t) => t.id),
     }
     const { promotion_types, campaign_ids } = matchProductPromotions(
       matchableProduct,
@@ -335,12 +334,12 @@ export const buildProductDocs = async (
       seller_is_premium: seller?.is_premium ?? false,
       collection_id: product.collection?.id ?? product.collection_id ?? undefined,
       collection: product.collection?.title ?? undefined,
-      category_ids: (product.categories ?? []).map((c) => c.id),
+      category_ids: presentItems(product.categories).map((c) => c.id),
       // Kept index-aligned with `category_ids` so the route can join id → label.
-      categories: (product.categories ?? []).map((c) => c.name ?? c.id),
+      categories: presentItems(product.categories).map((c) => c.name ?? c.id),
       type_id: product.type_id ?? undefined,
       type_title: product.type?.value ?? undefined,
-      tag_ids: (product.tags ?? []).map((t) => t.id),
+      tag_ids: presentItems(product.tags).map((t) => t.id),
       attribute_tokens: attrs.tokens,
       attributes: attrs.attributes,
       prices: pricesByProduct.get(product.id) ?? {},

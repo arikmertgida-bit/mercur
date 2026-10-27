@@ -1,14 +1,20 @@
-import type { OrderDetailDTO } from "@medusajs/framework/types"
+import type {
+  PaymentCollectionDTO,
+  PaymentStatus,
+} from "@medusajs/framework/types"
 import { deduplicate } from "@medusajs/framework/utils"
 
 import { getLastPaymentStatus } from "../../workflows/order-group/utils/aggregate-status"
 
 import { resolveOrderPaymentCollections } from "../../workflows/payment/utils/split-order-payment-group"
 
+// `cart` is the `order_cart` link the routes request through
+// `withCartPaymentCollectionFields`; the module DTOs do not declare it.
 type OrderWithCartPaymentCollection = {
-  cart?: { payment_collection?: { metadata?: Record<string, unknown> | null } | null } | null
-  payment_collections?: unknown[]
-  payment_status?: string
+  currency_code: string
+  cart?: { payment_collection?: PaymentCollectionDTO | null } | null
+  payment_collections?: PaymentCollectionDTO[]
+  payment_status?: PaymentStatus
 }
 
 // An order is paid through the cart's shared payment collection until that
@@ -50,9 +56,10 @@ export const normalizeOrderPaymentCollections = <
   }
 
   order.payment_collections = paymentCollections
-  order.payment_status = getLastPaymentStatus(
-    order as unknown as OrderDetailDTO
-  )
+  order.payment_status = getLastPaymentStatus({
+    currency_code: order.currency_code,
+    payment_collections: paymentCollections,
+  })
 
   return order
 }

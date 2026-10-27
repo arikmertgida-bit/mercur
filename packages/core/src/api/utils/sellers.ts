@@ -2,6 +2,8 @@ import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
 import type { MedusaContainer } from "@medusajs/framework/types"
 import { SellerStatus } from "@mercurjs/types"
 
+import { QueryFilter } from "../../utils/query-filter"
+
 /**
  * A seller is outside an active closure window when: it has never scheduled
  * one, the scheduled window hasn't started yet, or the window has already
@@ -13,7 +15,7 @@ import { SellerStatus } from "@mercurjs/types"
  */
 export const buildSellerOutsideClosureWindowFilter = (
   now: Date
-): { $or: object[] } => ({
+): { $or: QueryFilter[] } => ({
   $or: [
     { closed_from: null },
     { closed_from: { $gt: now } },

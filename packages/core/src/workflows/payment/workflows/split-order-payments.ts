@@ -26,9 +26,10 @@ import {
   cartPaymentCollectionFields,
   planCartPaymentSplit,
   planCartPaymentVoid,
-  SplitOrderGroupCollection,
-  SplitOrderGroupOrder,
+  toCartOrders,
+  toCartPaymentCollection,
 } from "../utils"
+import { ensureDefined } from "../../../utils/ensure-defined"
 
 /**
  * The cart whose payment to split.
@@ -42,15 +43,6 @@ export type SplitCapturedCartPaymentWorkflowInput = {
 
 const LOCK_TIMEOUT_SECONDS = 30
 const LOCK_TTL_SECONDS = 120
-
-type CartPaymentCollectionLink = {
-  payment_collection?: SplitOrderGroupCollection | null
-}
-
-type CartOrderLink = { order?: SplitOrderGroupOrder | null }
-
-const toOrders = (links: CartOrderLink[]) =>
-  links.flatMap((link) => link.order ?? [])
 
 export const splitCapturedCartPaymentWorkflowId = "split-captured-cart-payment"
 /**
@@ -108,9 +100,8 @@ export const splitCapturedCartPaymentWorkflow = createWorkflow(
       { cartPaymentQuery, cartOrdersQuery },
       ({ cartPaymentQuery, cartOrdersQuery }) =>
         planCartPaymentSplit(
-          (cartPaymentQuery.data[0] as CartPaymentCollectionLink | undefined)
-            ?.payment_collection,
-          toOrders(cartOrdersQuery.data as CartOrderLink[])
+          toCartPaymentCollection(cartPaymentQuery.data),
+          toCartOrders(cartOrdersQuery.data)
         )
     )
 
@@ -138,7 +129,7 @@ export const splitCapturedCartPaymentWorkflow = createWorkflow(
           ...payment,
           payment_collection_id:
             payment.payment_collection_id ??
-            (createdByOrder.get(order_id) as string),
+            ensureDefined(createdByOrder.get(order_id), "payment_collection_id"),
         }))
       }
     )
@@ -158,7 +149,7 @@ export const splitCapturedCartPaymentWorkflow = createWorkflow(
         return plan.captures.map((capture) => ({
           payment_id:
             capture.payment_id ??
-            (createdByOrder.get(capture.order_id) as string),
+            ensureDefined(createdByOrder.get(capture.order_id), "payment_id"),
           amount: capture.amount,
         }))
       }
@@ -193,9 +184,12 @@ export const splitCapturedCartPaymentWorkflow = createWorkflow(
     when("flag-cart-payment-collection", { plan }, ({ plan }) => {
       return !!plan.cart_payment_collection
     }).then(() => {
+      const cartPaymentCollection = transform({ plan }, ({ plan }) =>
+        ensureDefined(plan.cart_payment_collection, "cart_payment_collection")
+      )
       updatePaymentCollectionStep({
-        selector: { id: plan.cart_payment_collection!.id },
-        update: { metadata: plan.cart_payment_collection!.metadata },
+        selector: { id: cartPaymentCollection.id },
+        update: { metadata: cartPaymentCollection.metadata },
       })
     })
 
@@ -266,9 +260,8 @@ export const voidCanceledCartPaymentWorkflow = createWorkflow(
       { cartPaymentQuery, cartOrdersQuery },
       ({ cartPaymentQuery, cartOrdersQuery }) =>
         planCartPaymentVoid(
-          (cartPaymentQuery.data[0] as CartPaymentCollectionLink | undefined)
-            ?.payment_collection,
-          toOrders(cartOrdersQuery.data as CartOrderLink[])
+          toCartPaymentCollection(cartPaymentQuery.data),
+          toCartOrders(cartOrdersQuery.data)
         )
     )
 

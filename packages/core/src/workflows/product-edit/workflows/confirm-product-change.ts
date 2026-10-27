@@ -27,14 +27,14 @@ export type ConfirmProductChangeWorkflowInput = {
 } & AdditionalData
 
 export type ConfirmProductChangeWorkflowHooks = [
-  Hook<"validate", { input: ConfirmProductChangeWorkflowInput }, unknown>,
+  Hook<"validate", { input: ConfirmProductChangeWorkflowInput }, void>,
   Hook<
     "productChangeConfirmed",
     {
       ids: string[]
-      additional_data: Record<string, unknown> | undefined
+      additional_data: AdditionalData["additional_data"]
     },
-    unknown
+    void
   >,
 ]
 

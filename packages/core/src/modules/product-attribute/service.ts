@@ -23,6 +23,7 @@ import {
 
 import { joinerConfig } from "./joiner-config"
 import { ProductAttribute, ProductAttributeValue } from "./models"
+import { QueryFilter } from "../../utils/query-filter"
 
 type UpdateProductAttributeInput = UpdateProductAttributeDTO & { id: string }
 type UpsertProductAttributeValueInput = UpsertProductAttributeValueDTO & {
@@ -144,7 +145,7 @@ class ProductAttributeModuleService extends MedusaService({
     if (relations.some((r) => r === "values" || r.startsWith("values."))) {
       return true
     }
-    const select = (config?.select as string[] | undefined) ?? []
+    const select = config?.select ?? []
     return select.some((s) => s === "values" || s.startsWith("values."))
   }
 
@@ -166,13 +167,13 @@ class ProductAttributeModuleService extends MedusaService({
     if (Array.isArray(next.select)) {
       next.select = Array.from(
         new Set([
-          ...(next.select as string[]).filter(
+          ...next.select.filter(
             (s) => s !== "values" && !s.startsWith("values."),
           ),
           "id",
           "type",
         ]),
-      ) as (keyof ProductAttributeDTO)[]
+      )
     }
 
     return next
@@ -184,7 +185,7 @@ class ProductAttributeModuleService extends MedusaService({
     const relations = (config?.relations ?? [])
       .filter((r) => r.startsWith("values."))
       .map((r) => r.slice("values.".length))
-    const selectPaths = ((config?.select as string[] | undefined) ?? [])
+    const selectPaths = (config?.select ?? [])
       .filter((s) => s.startsWith("values."))
       .map((s) => s.slice("values.".length))
 
@@ -195,7 +196,7 @@ class ProductAttributeModuleService extends MedusaService({
     if (selectPaths.length) {
       valueConfig.select = Array.from(
         new Set([...selectPaths, "attribute_id"]),
-      ) as (keyof ProductAttributeValueDTO)[]
+      )
     }
 
     return valueConfig
@@ -242,7 +243,7 @@ class ProductAttributeModuleService extends MedusaService({
   @InjectManager()
   // @ts-expect-error — see class-level comment on the base/override signature gap.
   async listProductAttributes(
-    filters?: Record<string, unknown>,
+    filters?: QueryFilter,
     config?: FindConfig<ProductAttributeDTO>,
     @MedusaContext() sharedContext?: Context,
   ): Promise<ProductAttributeDTO[]> {
@@ -264,7 +265,7 @@ class ProductAttributeModuleService extends MedusaService({
   @InjectManager()
   // @ts-expect-error — see class-level comment on the base/override signature gap.
   async listAndCountProductAttributes(
-    filters?: Record<string, unknown>,
+    filters?: QueryFilter,
     config?: FindConfig<ProductAttributeDTO>,
     @MedusaContext() sharedContext?: Context,
   ): Promise<[ProductAttributeDTO[], number]> {

@@ -8,6 +8,7 @@ import { HttpTypes as VendorHttpTypes } from "@mercurjs/types"
 import { Modules } from "@medusajs/framework/utils"
 
 import { refetchStockLocation, validateSellerStockLocation } from "../../helpers"
+import { getSellerId } from "../../../../utils/seller-context"
 
 const buildLinks = (id: string, fulfillmentProviderIds: string[]) => {
   return fulfillmentProviderIds.map((fulfillmentProviderId) => ({
@@ -23,7 +24,7 @@ export const POST = async (
   res: MedusaResponse<VendorHttpTypes.VendorStockLocationResponse>
 ) => {
   const { id } = req.params
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
   const { add = [], remove = [] } = req.validatedBody
 
   await validateSellerStockLocation(req.scope, sellerId, id)

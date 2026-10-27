@@ -43,6 +43,12 @@ export const sanitizeRichText = (value: string): string =>
     ? sanitizeHtml(value, RICH_TEXT_OPTIONS).trim()
     : value
 
-export const sanitizeNullableRichText = <T extends string | null | undefined>(
-  value: T
-): T => (typeof value === "string" ? (sanitizeRichText(value) as T) : value)
+export const sanitizeOptionalRichText = (
+  value: string | undefined
+): string | undefined =>
+  typeof value === "string" ? sanitizeRichText(value) : value
+
+export const sanitizeNullableRichText = (
+  value: string | null | undefined
+): string | null | undefined =>
+  typeof value === "string" ? sanitizeRichText(value) : value

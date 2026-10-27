@@ -16,6 +16,10 @@ import { AdditionalData } from "@medusajs/framework/types"
 import { ProductWorkflowEvents } from "../events"
 import { validateProductsStatusStep } from "../steps/validate-products-status"
 import { recordProductAuditChangeWorkflow } from "../../product-edit/workflows/record-product-audit-change"
+import { parseGraphRows } from "../../../utils/graph-rows"
+import { z } from "zod"
+
+const ProductIdRowSchema = z.object({ id: z.string() })
 
 export const confirmProductsWorkflowId = "mercur-confirm-products"
 
@@ -43,12 +47,12 @@ export const confirmProductsWorkflow = createWorkflow(
     recordProductAuditChangeWorkflow.runAsStep({
       input: transform({ products, input }, ({ products, input }) => ({
         actor_id: input.actor_id,
-        changes: products.map((product) => ({
-          product_id: product.id as string,
+        changes: parseGraphRows(ProductIdRowSchema, products).map((product) => ({
+          product_id: product.id,
           internal_note: input.internal_note,
           actions: [
             {
-              product_id: product.id as string,
+              product_id: product.id,
               action: ProductChangeActionType.STATUS_CHANGE,
               details: { status: ProductStatus.PUBLISHED },
             },

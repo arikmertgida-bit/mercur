@@ -30,6 +30,7 @@ import {
 import CommissionProviderService, {
   CommissionDefaultProvider,
 } from "./services/provider-service"
+import { QueryFilter } from "../../utils/query-filter"
 
 type InjectedDependencies = {
   commissionLineService: ModulesSdkTypes.IMedusaInternalService<
@@ -107,7 +108,7 @@ class CommissionModuleService extends MedusaService({
       .map((line) => line.shipping_method_id)
       .filter((id): id is string => !!id)
 
-    const filters: Record<string, unknown>[] = []
+    const filters: QueryFilter[] = []
     if (itemIds.length) {
       filters.push({ item_id: itemIds })
     }
@@ -198,8 +199,8 @@ class CommissionModuleService extends MedusaService({
    * not in the route handler.
    */
   private applyScopeTypeFilter_(
-    filters: Record<string, unknown> = {}
-  ): Record<string, unknown> {
+    filters: QueryFilter = {}
+  ): QueryFilter {
     const { scope_type, ...rest } = filters ?? {}
 
     if (scope_type === undefined || scope_type === null) {
@@ -213,7 +214,7 @@ class CommissionModuleService extends MedusaService({
       .map((value) => value.trim())
       .filter(Boolean)
     const predicate = this.buildScopeTypeWhere_(scopeTypes)
-    const where: Record<string, unknown> = { ...rest }
+    const where: QueryFilter = { ...rest }
 
     // No recognised scope type → match nothing rather than ignore the filter.
     where[raw((alias: string) => (predicate ? predicate(alias) : "(1 = 0)"))] =
@@ -249,7 +250,7 @@ class CommissionModuleService extends MedusaService({
   @InjectManager()
   // @ts-expect-error — see createCommissionRates: base/override signature gap.
   async listCommissionRates(
-    filters: Record<string, unknown> = {},
+    filters: QueryFilter = {},
     config: FindConfig<CommissionRateDTO> = {},
     @MedusaContext() sharedContext: Context = {}
   ): Promise<CommissionRateDTO[]> {
@@ -263,7 +264,7 @@ class CommissionModuleService extends MedusaService({
   @InjectManager()
   // @ts-expect-error — see createCommissionRates: base/override signature gap.
   async listAndCountCommissionRates(
-    filters: Record<string, unknown> = {},
+    filters: QueryFilter = {},
     config: FindConfig<CommissionRateDTO> = {},
     @MedusaContext() sharedContext: Context = {}
   ): Promise<[CommissionRateDTO[], number]> {

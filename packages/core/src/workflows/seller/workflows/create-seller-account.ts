@@ -28,6 +28,7 @@ import { SellerWorkflowEvents } from "../../events"
 import { updateSellerAddressWorkflow } from "./update-seller-address"
 import { updateSellerProfessionalDetailsWorkflow } from "./update-seller-professional-details"
 import { updateSellerPaymentDetailsWorkflow } from "./update-seller-payment-details"
+import { ensureDefined } from "../../../utils/ensure-defined"
 
 export const createSellerAccountWorkflowId = "create-seller-account"
 
@@ -61,7 +62,7 @@ export const createSellerAccountWorkflow = createWorkflow(
       const members = upsertMembersStep(
         transform(input, ({ member_email, first_name, last_name }) => [
           {
-            email: member_email!,
+            email: ensureDefined(member_email, "member_email"),
             first_name: first_name ?? null,
             last_name: last_name ?? null,
           },
@@ -80,7 +81,8 @@ export const createSellerAccountWorkflow = createWorkflow(
 
     const memberId = transform(
       { input, newMember },
-      ({ input, newMember }) => input.member_id || newMember?.id as string
+      ({ input, newMember }) =>
+        ensureDefined(input.member_id || newMember?.id, "member_id")
     )
 
     createSellerMembersStep(
@@ -101,7 +103,7 @@ export const createSellerAccountWorkflow = createWorkflow(
       updateSellerAddressWorkflow.runAsStep({
         input: transform({ seller, input }, ({ seller, input }) => ({
           seller_id: seller.id,
-          data: input.address!,
+          data: ensureDefined(input.address, "address"),
         })),
       })
     })
@@ -111,7 +113,10 @@ export const createSellerAccountWorkflow = createWorkflow(
         updateSellerProfessionalDetailsWorkflow.runAsStep({
           input: transform({ seller, input }, ({ seller, input }) => ({
             seller_id: seller.id,
-            data: input.professional_details!,
+            data: ensureDefined(
+              input.professional_details,
+              "professional_details"
+            ),
           })),
         })
       }
@@ -121,7 +126,7 @@ export const createSellerAccountWorkflow = createWorkflow(
       updateSellerPaymentDetailsWorkflow.runAsStep({
         input: transform({ seller, input }, ({ seller, input }) => ({
           seller_id: seller.id,
-          data: input.payment_details!,
+          data: ensureDefined(input.payment_details, "payment_details"),
         })),
       })
     })

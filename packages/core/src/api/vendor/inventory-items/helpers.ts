@@ -3,6 +3,13 @@ import {
   ContainerRegistrationKeys,
   MedusaError,
 } from "@medusajs/framework/utils"
+import { z } from "zod"
+
+import { parseGraphRows } from "../../../utils/graph-rows"
+
+const InventoryItemLinkRowSchema = z.object({
+  inventory_item_id: z.string().optional(),
+})
 
 export const refetchInventoryItem = async (
   inventoryItemId: string,
@@ -44,8 +51,8 @@ export const validateSellerInventoryItems = async (
   })
 
   const owned = new Set(
-    links.map(
-      (link) => (link as { inventory_item_id?: string }).inventory_item_id
+    parseGraphRows(InventoryItemLinkRowSchema, links).map(
+      (link) => link.inventory_item_id
     )
   )
   const missing = ids.find((id) => !owned.has(id))

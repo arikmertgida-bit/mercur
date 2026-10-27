@@ -9,6 +9,7 @@ import {
 } from "@medusajs/framework/http"
 
 import { VendorPostOrderEditsItemsActionReqType } from "../../../validators"
+import { toHttpOrderPreview } from "../../../../../../utils/http-order"
 
 export const POST = async (
   req: AuthenticatedMedusaRequest<VendorPostOrderEditsItemsActionReqType>,
@@ -25,13 +26,7 @@ export const POST = async (
   })
 
   res.json({
-    // @ts-expect-error — Medusa's own module-layer DTO (OrderPreviewDTO/
-    // OrderChangeDTO/etc.) and its HTTP-response DTO (AdminOrderPreview/
-    // AdminOrderChange/etc.) are two parallel type hierarchies that don't
-    // structurally unify, even though the real workflow data includes every
-    // field the HTTP type expects (confirmed against Medusa's own core route,
-    // which passes the same shape through with zero cast/transform).
-    order_preview: result,
+    order_preview: toHttpOrderPreview(result),
   })
 }
 
@@ -51,12 +46,6 @@ export const DELETE = async (
   })
 
   res.json({
-    // @ts-expect-error — Medusa's own module-layer DTO (OrderPreviewDTO/
-    // OrderChangeDTO/etc.) and its HTTP-response DTO (AdminOrderPreview/
-    // AdminOrderChange/etc.) are two parallel type hierarchies that don't
-    // structurally unify, even though the real workflow data includes every
-    // field the HTTP type expects (confirmed against Medusa's own core route,
-    // which passes the same shape through with zero cast/transform).
-    order_preview: orderPreview,
+    order_preview: toHttpOrderPreview(orderPreview),
   })
 }

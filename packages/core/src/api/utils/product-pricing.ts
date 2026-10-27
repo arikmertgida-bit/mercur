@@ -29,11 +29,6 @@ type StoreRequestWithContext = {
   }
 }
 
-type VariantPriceSetRow = {
-  id: string
-  price_set?: { id?: string } | null
-}
-
 // `calculateAmountsWithTax` results are bolted onto the price set after the fact
 // for the storefront — Medusa's own `CalculatedPriceSet` DTO has no tax-adjusted
 // amount fields, since tax calculation isn't part of the pricing module.
@@ -49,10 +44,17 @@ type PriceableVariant = {
   calculated_price?: CalculatedPriceWithTax | null
 }
 
+// query.graph types related lists as `Maybe<T>[]`, so variants may hold null
+// items; they are skipped.
 type PriceableProduct = {
   id?: string
-  variants?: PriceableVariant[] | null
+  variants?: ReadonlyArray<PriceableVariant | null> | null
 }
+
+const variantsOf = (product: PriceableProduct): PriceableVariant[] =>
+  (product.variants ?? []).filter(
+    (variant): variant is PriceableVariant => variant !== null
+  )
 
 /**
  * Sets each variant's `calculated_price` in place from its own price set,
@@ -62,14 +64,14 @@ type PriceableProduct = {
  */
 export const wrapProductVariantsWithCalculatedPrice = async (
   req: StoreRequestWithContext,
-  products: PriceableProduct[]
+  products: readonly PriceableProduct[]
 ): Promise<void> => {
   if (!req.pricingContext) {
     return
   }
 
   const variantIds = Array.from(
-    new Set(products.flatMap((p) => (p.variants ?? []).map((v) => v.id)))
+    new Set(products.flatMap((p) => variantsOf(p).map((v) => v.id)))
   )
   if (!variantIds.length) {
     return
@@ -84,7 +86,7 @@ export const wrapProductVariantsWithCalculatedPrice = async (
 
   const priceSetToVariant = new Map<string, string>()
   const priceSetIds = new Set<string>()
-  for (const variant of variants as VariantPriceSetRow[]) {
+  for (const variant of variants) {
     const priceSetId = variant.price_set?.id
     if (!priceSetId) {
       continue
@@ -99,7 +101,12 @@ export const wrapProductVariantsWithCalculatedPrice = async (
   const pricingModule = req.scope.resolve(Modules.PRICING)
   const calculated = await pricingModule.calculatePrices(
     { id: Array.from(priceSetIds) },
-    { context: req.pricingContext as Record<string, string | number> }
+    // The pricing module flattens the context with
+    // `flattenObjectToKeyValuePairs` before rule matching, so the nested
+    // `customer.groups` of a MedusaPricingContext is supported at runtime;
+    // @medusajs/types declares the context as a flat value record only.
+    // @ts-expect-error — nested pricing context vs. flat declared type
+    { context: req.pricingContext }
   )
 
   const byVariant = new Map<string, CalculatedPriceSet>()
@@ -112,7 +119,7 @@ export const wrapProductVariantsWithCalculatedPrice = async (
   }
 
   for (const product of products) {
-    for (const variant of product.variants ?? []) {
+    for (const variant of variantsOf(product)) {
       variant.calculated_price = byVariant.get(variant.id) ?? null
     }
   }
@@ -126,7 +133,7 @@ export const wrapProductVariantsWithCalculatedPrice = async (
  */
 const wrapVariantsWithTaxPrices = async (
   req: StoreRequestWithContext,
-  products: PriceableProduct[]
+  products: readonly PriceableProduct[]
 ): Promise<void> => {
   if (
     !req.taxContext?.taxInclusivityContext ||
@@ -138,7 +145,7 @@ const wrapVariantsWithTaxPrices = async (
 
   const items: TaxableItemDTO[] = []
   for (const product of products) {
-    for (const variant of product.variants ?? []) {
+    for (const variant of variantsOf(product)) {
       const price = variant.calculated_price
       if (!price || !product.id || price.calculated_amount == null) {
         continue
@@ -148,8 +155,8 @@ const wrapVariantsWithTaxPrices = async (
         product_id: product.id,
         quantity: 1,
         unit_price: Number(price.calculated_amount),
-        currency_code: price.currency_code,
-      } as TaxableItemDTO)
+        currency_code: price.currency_code ?? undefined,
+      })
     }
   }
   if (!items.length) {
@@ -173,7 +180,7 @@ const wrapVariantsWithTaxPrices = async (
   }
 
   for (const product of products) {
-    for (const variant of product.variants ?? []) {
+    for (const variant of variantsOf(product)) {
       const price = variant.calculated_price
       if (!price || price.calculated_amount == null) {
         continue

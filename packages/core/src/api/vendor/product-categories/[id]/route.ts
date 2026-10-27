@@ -7,9 +7,13 @@ import {
   MedusaError,
 } from "@medusajs/framework/utils"
 import { HttpTypes } from "@mercurjs/types"
+import { VendorProductCategoryParamsType } from "../validators"
 
 export const GET = async (
-  req: AuthenticatedMedusaRequest,
+  req: AuthenticatedMedusaRequest<
+    Partial<VendorProductCategoryParamsType>,
+    VendorProductCategoryParamsType
+  >,
   res: MedusaResponse<HttpTypes.VendorProductCategoryResponse>
 ) => {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)

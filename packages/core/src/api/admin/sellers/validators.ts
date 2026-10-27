@@ -7,6 +7,7 @@ import {
 } from "@medusajs/medusa/api/utils/validators"
 import { booleanString } from "@medusajs/medusa/api/utils/common-validators/common"
 import { AdditionalData } from "@medusajs/framework/types"
+import { JsonRecordSchema } from "../../../utils/json-schema"
 
 export type AdminGetSellerParamsType = z.infer<typeof AdminGetSellerParams>
 export const AdminGetSellerParams = createSelectParams()
@@ -68,7 +69,7 @@ export const CreateSeller = z.object({
   closed_from: z.coerce.date().nullable().optional(),
   closed_to: z.coerce.date().nullable().optional(),
   closure_note: z.string().nullable().optional(),
-  metadata: z.record(z.string(), z.unknown()).nullable().optional(),
+  metadata: JsonRecordSchema.nullable().optional(),
   member: z.object({
     email: z.string().email(),
   }),
@@ -93,7 +94,7 @@ export const UpdateSeller = z.object({
   closed_from: z.coerce.date().nullable().optional(),
   closed_to: z.coerce.date().nullable().optional(),
   closure_note: z.string().nullable().optional(),
-  metadata: z.record(z.string(), z.unknown()).nullable().optional(),
+  metadata: JsonRecordSchema.nullable().optional(),
 })
 export const AdminUpdateSeller = WithAdditionalData(UpdateSeller)
 
@@ -149,7 +150,7 @@ export const UpsertSellerAddress = z.object({
   province: z.string().nullable().optional(),
   postal_code: z.string().nullable().optional(),
   phone: z.string().nullable().optional(),
-  metadata: z.record(z.string(), z.unknown()).nullable().optional(),
+  metadata: JsonRecordSchema.nullable().optional(),
 })
 export const AdminUpsertSellerAddress = WithAdditionalData(UpsertSellerAddress)
 

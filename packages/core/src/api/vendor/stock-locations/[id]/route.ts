@@ -10,13 +10,20 @@ import { MedusaError } from "@medusajs/framework/utils"
 import { HttpTypes } from "@mercurjs/types"
 
 import { refetchStockLocation, validateSellerStockLocation } from "../helpers"
-import { VendorUpdateStockLocationType } from "../validators"
+import {
+  VendorGetStockLocationParamsType,
+  VendorUpdateStockLocationType,
+} from "../validators"
+import { getSellerId } from "../../../utils/seller-context"
 
 export const GET = async (
-  req: AuthenticatedMedusaRequest,
+  req: AuthenticatedMedusaRequest<
+    Partial<VendorGetStockLocationParamsType>,
+    VendorGetStockLocationParamsType
+  >,
   res: MedusaResponse<HttpTypes.VendorStockLocationResponse>
 ) => {
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
 
   await validateSellerStockLocation(req.scope, sellerId, req.params.id)
 
@@ -40,7 +47,7 @@ export const POST = async (
   req: AuthenticatedMedusaRequest<VendorUpdateStockLocationType>,
   res: MedusaResponse<HttpTypes.VendorStockLocationResponse>
 ) => {
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
 
   await validateSellerStockLocation(req.scope, sellerId, req.params.id)
 
@@ -64,7 +71,7 @@ export const DELETE = async (
   req: AuthenticatedMedusaRequest,
   res: MedusaResponse<HttpTypes.VendorDeleteResponse>
 ) => {
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
 
   await validateSellerStockLocation(req.scope, sellerId, req.params.id)
 

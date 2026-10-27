@@ -11,16 +11,18 @@ export type MarkOrderFulfillmentAsDeliveredWorkflowHooks = [
       order_id: string
       fulfillment_id: string
     },
-    unknown
+    void
   >,
 ]
 
 // The hook comes from the core-flows delivery-hook patch, which is applied in
-// memory and cannot reach Medusa's shipped typings, so the patched shape is
-// asserted here. Keep in sync with patches/@medusajs+core-flows@*-delivery-hook.patch.
-export const markOrderFulfillmentAsDeliveredWorkflow =
-  medusaMarkOrderFulfillmentAsDeliveredWorkflow as unknown as ReturnWorkflow<
-    MarkOrderFulfillmentAsDeliveredWorkflowInput,
-    undefined,
-    MarkOrderFulfillmentAsDeliveredWorkflowHooks
-  >
+// memory and cannot reach Medusa's shipped typings (they declare no hooks).
+// Keep the hook type in sync with
+// patches/@medusajs+core-flows@*-delivery-hook.patch; if Medusa ever types the
+// hook itself, the directive below fails the build and can be removed.
+// @ts-expect-error -- Medusa core-flows boundary, see above.
+export const markOrderFulfillmentAsDeliveredWorkflow: ReturnWorkflow<
+  MarkOrderFulfillmentAsDeliveredWorkflowInput,
+  undefined,
+  MarkOrderFulfillmentAsDeliveredWorkflowHooks
+> = medusaMarkOrderFulfillmentAsDeliveredWorkflow

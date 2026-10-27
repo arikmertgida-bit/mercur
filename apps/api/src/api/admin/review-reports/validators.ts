@@ -5,9 +5,11 @@ const AdminReviewReportsParamsFields = z.object({
   status: z.enum(["pending", "resolved_deleted", "resolved_kept"]).optional(),
 });
 
-export type AdminGetReviewReportsParamsType = z.infer<
-  typeof AdminGetReviewReportsParams
->;
+// Client-facing contract for this list endpoint (the route itself reads
+// `req.queryConfig` / `req.filterableFields`). Every query param is optional
+// on the wire — `createFindParams` defaults offset/limit server-side — while
+// zod 4 marks defaulted keys as required in the parsed output type.
+export type AdminGetReviewReportsParamsType = Partial<z.infer<typeof AdminGetReviewReportsParams>>;
 export const AdminGetReviewReportsParams = createFindParams({
   offset: 0,
   limit: 20,

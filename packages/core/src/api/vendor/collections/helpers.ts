@@ -1,6 +1,7 @@
 import { AuthenticatedMedusaRequest, MedusaContainer } from "@medusajs/framework"
 import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
 import { ProductCollectionDTO } from "@medusajs/types"
+import { getSellerId } from "../../utils/seller-context"
 
 export const refetchCollection = async (
   id: string,
@@ -27,7 +28,7 @@ export const wrapCollectionsWithProducts = async (collections: ProductCollection
   const { data: sellerProducts } = await query.graph({
     entity: "product_seller",
     filters: {
-      seller_id: req.seller_context!.seller_id,
+      seller_id: getSellerId(req),
     },
     fields: ["product.*"],
   })

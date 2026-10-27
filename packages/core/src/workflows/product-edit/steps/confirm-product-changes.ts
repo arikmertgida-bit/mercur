@@ -1,7 +1,9 @@
+import type { InferEntityType } from "@medusajs/framework/types"
 import { createStep, StepResponse } from "@medusajs/framework/workflows-sdk"
 import { MercurModules, ProductChangeStatus } from "@mercurjs/types"
 
 import type ProductChangeModuleService from "../../../modules/product-edit/service"
+import { ProductChange } from "../../../modules/product-edit/models"
 
 export const confirmProductChangesStepId = "pc-confirm-product-changes"
 
@@ -12,6 +14,8 @@ type ConfirmProductChangesStepInput = Array<{
   external_note?: string
 }>
 
+type ProductChangeEntity = InferEntityType<typeof ProductChange>
+
 type PrevChangeScalar = {
   id: string
   status: ProductChangeStatus
@@ -21,15 +25,13 @@ type PrevChangeScalar = {
   external_note: string | null
 }
 
-const pickPrev = (
-  c: Record<string, unknown> & { id: string },
-): PrevChangeScalar => ({
+const pickPrev = (c: ProductChangeEntity): PrevChangeScalar => ({
   id: c.id,
-  status: c.status as ProductChangeStatus,
-  confirmed_by: (c.confirmed_by as string | null) ?? null,
-  confirmed_at: (c.confirmed_at as Date | null) ?? null,
-  internal_note: (c.internal_note as string | null) ?? null,
-  external_note: (c.external_note as string | null) ?? null,
+  status: c.status,
+  confirmed_by: c.confirmed_by ?? null,
+  confirmed_at: c.confirmed_at ?? null,
+  internal_note: c.internal_note ?? null,
+  external_note: c.external_note ?? null,
 })
 
 export const confirmProductChangesStep = createStep(
@@ -40,9 +42,7 @@ export const confirmProductChangesStep = createStep(
     )
 
     const ids = input.map((i) => i.id)
-    const prev = (await service.listProductChanges({ id: ids })) as Array<
-      Record<string, unknown> & { id: string }
-    >
+    const prev = await service.listProductChanges({ id: ids })
     const prevScalars = prev.map(pickPrev)
 
     const now = new Date()

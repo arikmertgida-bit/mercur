@@ -7,22 +7,23 @@ import { HttpTypes } from "@mercurjs/types"
 
 import { validateSellerReturn } from "../../helpers"
 import { VendorPostCancelReturnReqType } from "../../validators"
+import { getSellerId } from "../../../../utils/seller-context"
 
 export const POST = async (
   req: AuthenticatedMedusaRequest<VendorPostCancelReturnReqType>,
-  res: MedusaResponse<HttpTypes.VendorReturnResponse>
+  res: MedusaResponse<HttpTypes.VendorCancelReturnResponse>
 ) => {
   const { id } = req.params
 
-  await validateSellerReturn(req.scope, req.seller_context!.seller_id, id)
+  await validateSellerReturn(req.scope, getSellerId(req), id)
 
   const workflow = cancelReturnWorkflow(req.scope)
-  const { result } = await workflow.run({
+  await workflow.run({
     input: {
       ...req.validatedBody,
       return_id: id,
     },
   })
 
-  res.status(200).json({ return: result } as HttpTypes.VendorReturnResponse)
+  res.status(200).json({})
 }

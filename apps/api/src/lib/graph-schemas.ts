@@ -1,5 +1,11 @@
 import { z } from "zod"
 
+import { PRODUCT_REPORT_STATUSES } from "../modules/product-reports/constants"
+import {
+  REVIEW_IMAGE_REPORT_ACTIONS,
+  REVIEW_IMAGE_REPORT_STATUSES,
+} from "../modules/review-image-reports/constants"
+
 export const JsonPrimitiveSchema = z.union([
   z.string(),
   z.number(),
@@ -80,7 +86,7 @@ export const ProductReportRowSchema = z.object({
   customer_id: z.string(),
   reason: z.string(),
   comment: z.string().nullable().optional(),
-  status: z.string(),
+  status: z.enum(PRODUCT_REPORT_STATUSES),
   created_at: z.union([z.string(), z.date()]),
   updated_at: z.union([z.string(), z.date()]),
 })
@@ -170,8 +176,8 @@ export const ReviewImageReportRowSchema = z.object({
   review_image_id: z.string(),
   customer_id: z.string(),
   reason: z.string(),
-  status: z.string(),
-  action_taken: z.string().nullable().optional(),
+  status: z.enum(REVIEW_IMAGE_REPORT_STATUSES),
+  action_taken: z.enum(REVIEW_IMAGE_REPORT_ACTIONS).nullable().optional(),
   created_at: z.union([z.string(), z.date()]),
   updated_at: z.union([z.string(), z.date()]),
 })
@@ -330,9 +336,9 @@ export function buildCustomerDisplayName(
   return fullName || customer.email || customer.id
 }
 
-export function parseRows<T>(
+export function parseRows<T, TRow>(
   schema: z.ZodType<T>,
-  rows: object[] | null | undefined
+  rows: readonly TRow[] | null | undefined
 ): T[] {
   if (!rows) {
     return []
@@ -343,9 +349,9 @@ export function parseRows<T>(
   })
 }
 
-export function parseFirstRow<T>(
+export function parseFirstRow<T, TRow>(
   schema: z.ZodType<T>,
-  rows: object[] | null | undefined
+  rows: readonly TRow[] | null | undefined
 ): T | null {
   if (!rows || rows.length === 0) {
     return null

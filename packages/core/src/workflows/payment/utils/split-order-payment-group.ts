@@ -2,7 +2,10 @@ import {
   BigNumberInput,
   LinkDefinition,
   MedusaContainer,
+  PaymentCollectionDTO,
 } from "@medusajs/framework/types"
+import type { JsonRecord } from "@mercurjs/types"
+import { z } from "zod"
 import {
   ContainerRegistrationKeys,
   MathBN,
@@ -14,6 +17,12 @@ import {
   allocateProportionally,
   getCurrencyDecimalDigits,
 } from "./split-order-payment"
+import {
+  GraphBigNumberSchema,
+  GraphDateSchema,
+  parseGraphRows,
+} from "../../../utils/graph-rows"
+import { JsonRecordSchema } from "../../../utils/json-schema"
 
 /** Set on a cart's payment collection once it is split into its orders'. */
 export const SPLIT_ORDER_COLLECTIONS_FLAG = "split_order_collections"
@@ -21,39 +30,79 @@ export const SPLIT_ORDER_COLLECTIONS_FLAG = "split_order_collections"
 /** Set on an order's payment collection, pointing at the cart's. */
 export const CART_PAYMENT_COLLECTION_KEY = "cart_payment_collection_id"
 
-type PaymentMovement = {
-  id: string
-  amount: BigNumberInput
-  raw_amount?: BigNumberInput | null
-}
+const PaymentMovementSchema = z.object({
+  id: z.string(),
+  amount: GraphBigNumberSchema,
+  raw_amount: GraphBigNumberSchema.nullish(),
+})
 
-export type SplitOrderGroupPayment = {
-  id: string
-  provider_id: string
-  currency_code: string
-  amount: BigNumberInput
-  raw_amount?: BigNumberInput | null
-  data?: Record<string, unknown> | null
-  captured_at?: Date | string | null
-  canceled_at?: Date | string | null
-  captures?: PaymentMovement[] | null
-  refunds?: PaymentMovement[] | null
-}
+type PaymentMovement = z.infer<typeof PaymentMovementSchema>
 
-export type SplitOrderGroupCollection = {
-  id: string
-  currency_code: string
-  metadata?: Record<string, unknown> | null
-  payments?: SplitOrderGroupPayment[] | null
-}
+const SplitOrderGroupPaymentSchema = z.object({
+  id: z.string(),
+  provider_id: z.string(),
+  currency_code: z.string(),
+  amount: GraphBigNumberSchema,
+  raw_amount: GraphBigNumberSchema.nullish(),
+  data: JsonRecordSchema.nullish(),
+  captured_at: GraphDateSchema.nullish(),
+  canceled_at: GraphDateSchema.nullish(),
+  captures: z.array(PaymentMovementSchema).nullish(),
+  refunds: z.array(PaymentMovementSchema).nullish(),
+})
 
-export type SplitOrderGroupOrder = {
-  id: string
-  status: string
-  canceled_at?: Date | string | null
-  total: BigNumberInput
-  payment_collections?: SplitOrderGroupCollection[] | null
-}
+export type SplitOrderGroupPayment = z.infer<
+  typeof SplitOrderGroupPaymentSchema
+>
+
+const SplitOrderGroupCollectionSchema = z.object({
+  id: z.string(),
+  currency_code: z.string(),
+  metadata: JsonRecordSchema.nullish(),
+  payments: z.array(SplitOrderGroupPaymentSchema).nullish(),
+})
+
+export type SplitOrderGroupCollection = z.infer<
+  typeof SplitOrderGroupCollectionSchema
+>
+
+const SplitOrderGroupOrderSchema = z.object({
+  id: z.string(),
+  status: z.string(),
+  canceled_at: GraphDateSchema.nullish(),
+  total: GraphBigNumberSchema,
+  payment_collections: z.array(SplitOrderGroupCollectionSchema).nullish(),
+})
+
+export type SplitOrderGroupOrder = z.infer<typeof SplitOrderGroupOrderSchema>
+
+const CartPaymentCollectionLinkSchema = z.object({
+  payment_collection: SplitOrderGroupCollectionSchema.nullish(),
+})
+
+const CartOrderLinkSchema = z.object({
+  order: SplitOrderGroupOrderSchema.nullish(),
+})
+
+/** The cart's payment collection, from a `cart_payment_collection` query. */
+export const toCartPaymentCollection = <TRow>(
+  rows: readonly TRow[] | null | undefined
+): SplitOrderGroupCollection | null | undefined =>
+  parseGraphRows(CartPaymentCollectionLinkSchema, rows)[0]?.payment_collection
+
+/** The cart's orders, from an `order_cart` query. */
+export const toCartOrders = <TRow>(
+  rows: readonly TRow[] | null | undefined
+): SplitOrderGroupOrder[] =>
+  parseGraphRows(CartOrderLinkSchema, rows).flatMap((link) => link.order ?? [])
+
+const PaymentCollectionRefRowSchema = z.object({
+  payment_collection: z
+    .object({ id: z.string(), metadata: JsonRecordSchema.nullish() })
+    .nullish(),
+})
+
+const CartIdRowSchema = z.object({ cart_id: z.string() })
 
 const PAYMENT_FIELDS = [
   "id",
@@ -113,7 +162,7 @@ export const isOrderCanceled = (order: {
 }) => order.status === OrderStatus.CANCELED || !!order.canceled_at
 
 export const hasSplitOrderCollections = (
-  paymentCollection?: { metadata?: Record<string, unknown> | null } | null
+  paymentCollection?: { metadata?: PaymentCollectionDTO["metadata"] | null } | null
 ) => paymentCollection?.metadata?.[SPLIT_ORDER_COLLECTIONS_FLAG] === true
 
 /**
@@ -122,12 +171,12 @@ export const hasSplitOrderCollections = (
  * own. An order canceled before the capture never gets one and keeps showing
  * the cart's.
  */
-export const resolveOrderPaymentCollections = (order: {
-  cart?: {
-    payment_collection?: { metadata?: Record<string, unknown> | null } | null
-  } | null
-  payment_collections?: unknown[]
-}): unknown[] => {
+export const resolveOrderPaymentCollections = <
+  TCollection extends { metadata?: PaymentCollectionDTO["metadata"] | null },
+>(order: {
+  cart?: { payment_collection?: TCollection | null } | null
+  payment_collections?: TCollection[] | null
+}): TCollection[] => {
   const own = order.payment_collections ?? []
   const cartPaymentCollection = order.cart?.payment_collection
 
@@ -151,46 +200,39 @@ export const resolveSplitOrderCartId = async (
   const query = container.resolve(ContainerRegistrationKeys.QUERY)
 
   if ("order_id" in input) {
-    const {
-      data: [orderCart],
-    } = await query.graph({
+    const { data: orderCarts } = await query.graph({
       entity: "order_cart",
       fields: ["cart_id"],
       filters: { order_id: input.order_id },
     })
-    return orderCart?.cart_id
+    return parseGraphRows(CartIdRowSchema, orderCarts)[0]?.cart_id
   }
 
-  const {
-    data: [payment],
-  } = await query.graph({
+  const { data: payments } = await query.graph({
     entity: "payment",
     fields: ["id", "payment_collection.id", "payment_collection.metadata"],
     filters: { id: input.payment_id },
   })
 
-  const collection = payment?.payment_collection as
-    | { id: string; metadata?: Record<string, unknown> | null }
-    | undefined
+  const collection = parseGraphRows(PaymentCollectionRefRowSchema, payments)[0]
+    ?.payment_collection
 
   if (!collection) {
     return undefined
   }
 
-  const {
-    data: [cartLink],
-  } = await query.graph({
+  const cartCollectionId = collection.metadata?.[CART_PAYMENT_COLLECTION_KEY]
+
+  const { data: cartLinks } = await query.graph({
     entity: "cart_payment_collection",
     fields: ["cart_id"],
     filters: {
       payment_collection_id:
-        (collection.metadata?.[CART_PAYMENT_COLLECTION_KEY] as
-          | string
-          | undefined) ?? collection.id,
+        typeof cartCollectionId === "string" ? cartCollectionId : collection.id,
     },
   })
 
-  return cartLink?.cart_id
+  return parseGraphRows(CartIdRowSchema, cartLinks)[0]?.cart_id
 }
 
 const getCartPayment = (collection?: SplitOrderGroupCollection | null) =>
@@ -211,7 +253,7 @@ export type CartPaymentSplitPlan = {
     order_id: string
     currency_code: string
     amount: BigNumberInput
-    metadata: Record<string, unknown>
+    metadata: JsonRecord
   }[]
   /**
    * Payments to create. `payment_collection_id` is unset for an order whose
@@ -223,7 +265,7 @@ export type CartPaymentSplitPlan = {
     provider_id: string
     currency_code: string
     amount: BigNumberInput
-    data: Record<string, unknown>
+    data: JsonRecord
   }[]
   /**
    * Captures to record. `payment_id` is unset for an order whose payment is
@@ -250,7 +292,7 @@ export type CartPaymentSplitPlan = {
   /** Set when the cart collection still has to be flagged as split. */
   cart_payment_collection?: {
     id: string
-    metadata: Record<string, unknown>
+    metadata: JsonRecord
   }
 }
 

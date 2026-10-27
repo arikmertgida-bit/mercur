@@ -6,35 +6,6 @@ import { isSellerVisible } from "@mercurjs/core/api/utils/sellers"
 import { computeCampaignStatus } from "../../../../lib/campaign-status"
 import { StoreGetCampaignParamsType } from "../validators"
 
-type CampaignBudgetRow = {
-  id: string
-  type: string
-  limit: number | null
-  used: number
-  currency_code: string | null
-}
-
-type CampaignSellerRow = {
-  id: string
-  status: string
-  closed_from: string | null
-  closed_to: string | null
-  name: string
-  handle: string
-  logo: string | null
-}
-
-type CampaignRow = {
-  id: string
-  name: string
-  description: string | null
-  campaign_identifier: string
-  starts_at: string | null
-  ends_at: string | null
-  budget: CampaignBudgetRow | null
-  seller: CampaignSellerRow | null
-}
-
 export const GET = async (
   req: MedusaRequest<never, StoreGetCampaignParamsType>,
   res: MedusaResponse
@@ -50,7 +21,7 @@ export const GET = async (
     fields: req.queryConfig.fields,
   })
 
-  const row = campaign as CampaignRow | undefined
+  const row = campaign
 
   if (!row || (row.seller && !isSellerVisible(row.seller, new Date()))) {
     throw new MedusaError(MedusaError.Types.NOT_FOUND, "Campaign not found")

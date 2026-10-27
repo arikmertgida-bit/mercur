@@ -2,13 +2,14 @@ import {
   AuthenticatedMedusaRequest,
   MedusaResponse,
 } from "@medusajs/framework/http"
+import { HttpTypes } from "@mercurjs/types"
 
 import { upsertPromotionCostsWorkflow } from "../../../../../workflows/promotion-cost"
 import { AdminUpsertPromotionCostType } from "./validators"
 
 export const POST = async (
   req: AuthenticatedMedusaRequest<AdminUpsertPromotionCostType>,
-  res: MedusaResponse
+  res: MedusaResponse<HttpTypes.AdminPromotionCostResponse>
 ) => {
   const { id } = req.params
   const { cost_bearer, shared_marketplace_percentage } = req.validatedBody

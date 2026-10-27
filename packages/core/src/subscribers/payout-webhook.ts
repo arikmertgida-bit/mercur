@@ -71,7 +71,10 @@ export default async function payoutWebhookHandler({
   } catch (error) {
     // Log only, do not rethrow: an uncaught subscriber error loses the event,
     // and a payout webhook failure must never vanish silently.
-    logger.error("Payout webhook processing failed:", error as Error)
+    logger.error(
+      "Payout webhook processing failed:",
+      error instanceof Error ? error : new Error(String(error))
+    )
   }
 }
 

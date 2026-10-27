@@ -16,8 +16,9 @@ export const getCommissionLinesStep = createStep(
     input: CommissionCalculationContext[],
     { container }
   ): Promise<StepResponse<CreateCommissionLineDTO[]>> => {
-    const service =
-      container.resolve(MercurModules.COMMISSION) as CommissionModuleService
+    const service = container.resolve<CommissionModuleService>(
+      MercurModules.COMMISSION
+    )
 
 
     const commissionLines = await promiseAll(

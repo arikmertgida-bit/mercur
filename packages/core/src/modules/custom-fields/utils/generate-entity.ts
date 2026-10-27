@@ -5,8 +5,16 @@ import {
     SoftDeletableFilterKey,
 } from "@medusajs/framework/utils"
 
-import { EntitySchema } from "@medusajs/framework/mikro-orm/core"
+import {
+    EntitySchema,
+    EntitySchemaMetadata,
+    EntitySchemaProperty,
+} from "@medusajs/framework/mikro-orm/core"
 import { Field } from "@mercurjs/types"
+
+import type { CustomFieldRow, CustomFieldValue } from "../services/custom-fields-module-service"
+
+type CustomFieldProperty = EntitySchemaProperty<CustomFieldValue, CustomFieldRow>
 
 function getClass(className: string, ...properties: string[]) {
     const cls = {
@@ -52,8 +60,9 @@ export function generateEntity(
         datetime: "timestamptz",
     }
 
-    const properties = fields.reduce((acc, field) => {
-        const prop: Record<string, any> = {
+    const properties: Record<string, CustomFieldProperty> = {}
+    for (const field of fields) {
+        const prop = {
             type: typeMap[field.type] ?? field.type,
             nullable: field.nullable ?? true,
             ...(columnTypeOverrides[field.type]
@@ -68,23 +77,18 @@ export function generateEntity(
                 : {}),
         }
 
-        if (field.type === "enum" && "enum" in field) {
-            prop.items = () => field.enum
-            prop.enum = true
-        }
-
-        acc[field.name] = prop
-        return acc
-    }, {} as Record<string, any>)
+        properties[field.name] =
+            field.type === "enum"
+                ? { ...prop, items: () => field.enum, enum: true }
+                : prop
+    }
 
     const hashTableName = simpleHash(tableName)
     const compressed = compressName(tableName)
 
-    // MikroORM's `EntitySchema` generic infers its entity shape from this literal,
-    // which would otherwise over-constrain `indexes[].properties` below to just
-    // this table's dynamic custom-field names. Typed loosely on purpose — these
-    // tables are defined entirely at runtime from caller-supplied field lists.
-    const entityProperties: Record<string, any> = {
+    // These tables are defined entirely at runtime from caller-supplied field
+    // lists, so the entity is a row keyed by any column name.
+    const entityProperties: EntitySchemaMetadata<CustomFieldRow>["properties"] = {
         id: {
             type: "string",
             nullable: false,
@@ -114,11 +118,11 @@ export function generateEntity(
         },
     }
 
-    return new EntitySchema<Record<string, unknown>>({
+    return new EntitySchema<CustomFieldRow>({
         // @ts-expect-error — `getClass` builds a genuinely dynamic, runtime-named
         // class from a caller-supplied field list, assigned via `this[name] =`
         // rather than static property declarations, so it can never structurally
-        // satisfy MikroORM's `EntityClass<Record<string, unknown>>` at the type
+        // satisfy MikroORM's `EntityClass<CustomFieldRow>` at the type
         // level. Real third-party (MikroORM) type boundary, not a shortcut.
         class: getClass(
             tableName,

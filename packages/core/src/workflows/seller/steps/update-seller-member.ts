@@ -1,11 +1,16 @@
 import { StepResponse, createStep } from "@medusajs/framework/workflows-sdk"
-import { MercurModules } from "@mercurjs/types"
+import { JsonRecord, MercurModules } from "@mercurjs/types"
 
 import SellerModuleService from "../../../modules/seller/service"
+import { QueryFilter } from "../../../utils/query-filter"
 
 type UpdateSellerMembersStepInput = {
-  selector: Record<string, unknown>
-  update: Record<string, unknown>
+  selector: QueryFilter
+  update: {
+    role_id?: string | null
+    is_owner?: boolean
+    metadata?: JsonRecord | null
+  }
 }
 
 export const updateSellerMembersStep = createStep(
@@ -26,7 +31,13 @@ export const updateSellerMembersStep = createStep(
     }
 
     const service = container.resolve<SellerModuleService>(MercurModules.SELLER)
-    // @ts-expect-error
-    await service.updateSellerMembers(prev)
+    await service.updateSellerMembers(
+      prev.map((sm) => ({
+        id: sm.id,
+        role_id: sm.role_id,
+        is_owner: sm.is_owner,
+        metadata: sm.metadata,
+      }))
+    )
   }
 )

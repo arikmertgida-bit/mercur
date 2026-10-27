@@ -1,6 +1,11 @@
 import { Query } from "@medusajs/framework"
 import { ContainerRegistrationKeys, MedusaError } from "@medusajs/framework/utils"
 import { createStep, StepResponse } from "@medusajs/framework/workflows-sdk"
+import { z } from "zod"
+
+import { parseGraphRows } from "../../../utils/graph-rows"
+
+const VariantIdRowSchema = z.object({ id: z.string() })
 
 export const validateVariantsBelongToProductStepId =
   "pc-validate-variants-belong-to-product"
@@ -37,7 +42,7 @@ export const validateVariantsBelongToProductStep = createStep(
     })
 
     const foundIds = new Set(
-      (variants as Array<{ id: string }>).map((variant) => variant.id),
+      parseGraphRows(VariantIdRowSchema, variants).map((variant) => variant.id),
     )
     const missingId = variant_ids.find((id) => !foundIds.has(id))
 

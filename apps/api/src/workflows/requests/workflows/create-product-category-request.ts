@@ -4,6 +4,7 @@ import { MedusaError } from "@medusajs/framework/utils"
 import { upsertCustomFieldsStep } from "@mercurjs/core/workflows"
 
 import { RequestStatus } from "../../../types/requests"
+import { type JsonRecord } from "../../../lib/graph-schemas"
 
 type CreateProductCategoryRequestWorkflowInput = {
   product_category: {
@@ -13,7 +14,7 @@ type CreateProductCategoryRequestWorkflowInput = {
     is_active?: boolean
     is_internal?: boolean
     parent_category_id?: string | null
-    metadata?: Record<string, unknown>
+    metadata?: JsonRecord
   }
   submitter_id: string
 }

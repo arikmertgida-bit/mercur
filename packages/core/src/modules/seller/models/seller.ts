@@ -1,3 +1,4 @@
+import type { JsonRecord } from "@mercurjs/types"
 import { model } from "@medusajs/framework/utils"
 import { SellerStatus } from "@mercurjs/types"
 import ProfessionalDetails from "./professional-details"
@@ -45,7 +46,7 @@ const Seller = model
     member_invites: model.hasMany(() => MemberInvite, {
       mappedBy: "seller",
     }),
-    metadata: model.json().nullable(),
+    metadata: model.json<JsonRecord>().nullable(),
   })
   .cascades({
     delete: ["professional_details", "address", "payment_details", "member_invites"],

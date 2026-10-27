@@ -33,11 +33,6 @@ const BATCH_LIMIT = 1000
 // gap), but wasteful and not what the cursor was for.
 const CURSOR_TTL_SECONDS = 24 * 60 * 60
 
-type ChangedInventoryLevel = {
-  inventory_item_id: string
-  updated_at: string
-}
-
 export default async function searchSyncStockChangedJob(
   container: MedusaContainer
 ): Promise<void> {
@@ -57,7 +52,7 @@ export default async function searchSyncStockChangedJob(
       filters: { updated_at: { $gt: since } },
       pagination: { skip: 0, take: BATCH_LIMIT },
     })
-    const levels = changedLevels as ChangedInventoryLevel[]
+    const levels = changedLevels
 
     if (!levels.length) {
       return

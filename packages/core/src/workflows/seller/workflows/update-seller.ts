@@ -12,11 +12,12 @@ import { AdditionalData } from "@medusajs/framework/types"
 
 import { updateSellersStep } from "../steps"
 import { SellerWorkflowEvents } from "../../events"
+import { QueryFilter } from "../../../utils/query-filter"
 
 export const updateSellersWorkflowId = "update-sellers"
 
 export type UpdateSellersWorkflowInput = {
-  selector: Record<string, unknown>
+  selector: QueryFilter
   update: UpdateSellerDTO
 } & AdditionalData
 
@@ -25,9 +26,9 @@ export type UpdateSellersWorkflowHooks = [
     "sellersUpdated",
     {
       sellers: SellerDTO[]
-      additional_data: Record<string, unknown> | undefined
+      additional_data: AdditionalData["additional_data"]
     },
-    unknown
+    void
   >,
 ]
 

@@ -7,13 +7,14 @@ import { HttpTypes } from "@mercurjs/types"
 
 import { VendorUpdateSellerType } from "../validators"
 import { updateSellersWorkflow } from "../../../../workflows/seller"
+import { getSellerId } from "../../../utils/seller-context"
 
 export const GET = async (
   req: AuthenticatedMedusaRequest,
   res: MedusaResponse<HttpTypes.VendorSellerResponse>
 ) => {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
 
   const {
     data: [seller],
@@ -31,7 +32,7 @@ export const POST = async (
   res: MedusaResponse<HttpTypes.VendorSellerResponse>
 ) => {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
 
   const { additional_data, ...update } = req.validatedBody
 

@@ -9,10 +9,17 @@ import {
 import { HttpTypes, ProductChangeDTO } from "@mercurjs/types"
 
 import { productEditUpdateVariantsWorkflow } from "../../../../../../workflows/product-edit/workflows/product-edit-update-variants"
-import { VendorUpdateProductVariantType } from "../../../validators"
+import {
+  VendorUpdateProductVariantType,
+  VendorGetProductVariantParamsType,
+} from "../../../validators"
+import { getSellerId } from "../../../../../utils/seller-context"
 
 export const GET = async (
-  req: AuthenticatedMedusaRequest,
+  req: AuthenticatedMedusaRequest<
+    Partial<VendorGetProductVariantParamsType>,
+    VendorGetProductVariantParamsType
+  >,
   res: MedusaResponse<HttpTypes.VendorProductVariantResponse>
 ) => {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
@@ -40,7 +47,7 @@ export const POST = async (
   res: MedusaResponse<{ product_change: ProductChangeDTO }>
 ) => {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
   const productId = req.params.id
   const variantId = req.params.variant_id
 
@@ -76,7 +83,7 @@ export const DELETE = async (
   res: MedusaResponse<{ product_change: ProductChangeDTO }>
 ) => {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
   const productId = req.params.id
   const variantId = req.params.variant_id
 

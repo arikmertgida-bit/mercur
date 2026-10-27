@@ -11,6 +11,7 @@ import {
   VendorCreateShippingOptionRuleType,
   VendorUpdateShippingOptionRuleType,
 } from "../../../validators"
+import { getSellerId } from "../../../../../utils/seller-context"
 
 export const POST = async (
   req: AuthenticatedMedusaRequest<
@@ -21,7 +22,7 @@ export const POST = async (
   >,
   res: MedusaResponse<HttpTypes.VendorUpdateShippingOptionRulesResponse>
 ) => {
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
   const id = req.params.id
 
   await validateSellerShippingOption(req.scope, sellerId, id)

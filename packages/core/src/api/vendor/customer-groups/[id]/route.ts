@@ -10,17 +10,24 @@ import { MedusaError } from "@medusajs/framework/utils"
 import { HttpTypes } from "@mercurjs/types"
 
 import { refetchCustomerGroup, validateSellerCustomerGroup } from "../helpers"
-import { VendorUpdateCustomerGroupType } from "../validators"
+import {
+  VendorUpdateCustomerGroupType,
+  VendorGetCustomerGroupParamsType,
+} from "../validators"
+import { getSellerId } from "../../../utils/seller-context"
 
 export const GET = async (
-  req: AuthenticatedMedusaRequest,
+  req: AuthenticatedMedusaRequest<
+    Partial<VendorGetCustomerGroupParamsType>,
+    VendorGetCustomerGroupParamsType
+  >,
   res: MedusaResponse<HttpTypes.VendorCustomerGroupResponse>
 ) => {
   const { id } = req.params
 
   await validateSellerCustomerGroup(
     req.scope,
-    req.seller_context!.seller_id,
+    getSellerId(req),
     id
   )
 
@@ -48,7 +55,7 @@ export const POST = async (
 
   await validateSellerCustomerGroup(
     req.scope,
-    req.seller_context!.seller_id,
+    getSellerId(req),
     id
   )
 
@@ -76,7 +83,7 @@ export const DELETE = async (
 
   await validateSellerCustomerGroup(
     req.scope,
-    req.seller_context!.seller_id,
+    getSellerId(req),
     id
   )
 

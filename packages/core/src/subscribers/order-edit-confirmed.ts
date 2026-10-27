@@ -34,7 +34,7 @@ export default async function orderCommissionRefreshHandler({
     // Log only, do not rethrow: an uncaught subscriber error loses the event.
     logger.error(
       `Commission refresh failed for order ${orderId}:`,
-      error as Error
+      error instanceof Error ? error : new Error(String(error))
     )
   }
 }

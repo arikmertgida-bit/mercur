@@ -2,9 +2,10 @@ import { StepResponse, createStep } from "@medusajs/framework/workflows-sdk"
 import { MercurModules, SellerDTO, UpdateSellerDTO } from "@mercurjs/types"
 
 import SellerModuleService from "../../../modules/seller/service"
+import { QueryFilter } from "../../../utils/query-filter"
 
 type UpdateSellersStepInput = {
-  selector: Record<string, unknown>
+  selector: QueryFilter
   update: UpdateSellerDTO
 }
 

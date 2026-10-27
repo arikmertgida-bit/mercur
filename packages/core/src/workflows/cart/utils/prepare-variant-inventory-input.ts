@@ -1,5 +1,7 @@
 import { BigNumberInput } from "@medusajs/framework/types"
 import { BigNumber, MathBN, MedusaError } from "@medusajs/framework/utils"
+import { z } from "zod"
+import { GraphBigNumberSchema } from "../../../utils/graph-rows"
 
 // Mirrors vanilla Medusa's own (internal, non-exported)
 // `prepareConfirmInventoryInput` from `@medusajs/core-flows` — ported here so
@@ -20,30 +22,43 @@ export const requiredVariantFieldsForInventoryConfirmation = [
   "inventory_items.inventory.location_levels.stock_locations.sales_channels.id",
 ]
 
-type VariantInventoryItemLinkRow = {
-  inventory_item_id?: string | null
-  required_quantity?: number | null
-  inventory?: {
-    location_levels?: Array<{
-      location_id: string
-      stocked_quantity?: BigNumberInput
-      reserved_quantity?: BigNumberInput
-      raw_stocked_quantity?: BigNumberInput
-      raw_reserved_quantity?: BigNumberInput
-      stock_locations?: Array<{
-        id: string
-        sales_channels?: Array<{ id: string }>
-      }> | null
-    }> | null
-  } | null
-}
+const InventoryLocationLevelRowSchema = z.object({
+  location_id: z.string(),
+  stocked_quantity: GraphBigNumberSchema.nullish(),
+  reserved_quantity: GraphBigNumberSchema.nullish(),
+  raw_stocked_quantity: GraphBigNumberSchema.nullish(),
+  raw_reserved_quantity: GraphBigNumberSchema.nullish(),
+  stock_locations: z
+    .array(
+      z.object({
+        id: z.string(),
+        sales_channels: z.array(z.object({ id: z.string() })).nullish(),
+      })
+    )
+    .nullish(),
+})
 
-export type VariantInventoryShape = {
-  id: string
-  manage_inventory?: boolean | null
-  allow_backorder?: boolean | null
-  inventory_items?: VariantInventoryItemLinkRow[] | null
-}
+/** A `product_variant` row of the `requiredVariantFieldsForInventoryConfirmation` selection. */
+export const VariantInventoryShapeSchema = z.object({
+  id: z.string(),
+  manage_inventory: z.boolean().nullish(),
+  allow_backorder: z.boolean().nullish(),
+  inventory_items: z
+    .array(
+      z.object({
+        inventory_item_id: z.string().nullish(),
+        required_quantity: z.number().nullish(),
+        inventory: z
+          .object({
+            location_levels: z.array(InventoryLocationLevelRowSchema).nullish(),
+          })
+          .nullish(),
+      })
+    )
+    .nullish(),
+})
+
+export type VariantInventoryShape = z.infer<typeof VariantInventoryShapeSchema>
 
 export type PrepareVariantInventoryInputData = {
   input: {
@@ -117,12 +132,12 @@ export const prepareVariantInventoryInput = (
           level.raw_reserved_quantity ?? level.reserved_quantity ?? 0
         )
 
-        if (!mapLocationAvailability.has(level.location_id)) {
-          mapLocationAvailability.set(level.location_id, new Map())
+        let locationAvailability = mapLocationAvailability.get(level.location_id)
+        if (!locationAvailability) {
+          locationAvailability = new Map()
+          mapLocationAvailability.set(level.location_id, locationAvailability)
         }
-        mapLocationAvailability
-          .get(level.location_id)!
-          .set(inventoryItemId, new BigNumber(availability))
+        locationAvailability.set(inventoryItemId, new BigNumber(availability))
 
         for (const stockLocation of level.stock_locations ?? []) {
           if (

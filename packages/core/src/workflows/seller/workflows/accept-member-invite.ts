@@ -37,7 +37,7 @@ export const acceptMemberInviteWorkflow = createWorkflow(
     const invite = validateMemberInviteTokenStep(input.invite_token)
     const inviteDTO = transform(
       { invite },
-      ({ invite }) => invite as unknown as MemberInviteDTO
+      ({ invite }): MemberInviteDTO => invite
     )
 
     const validate = createHook("validate", {

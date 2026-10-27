@@ -31,7 +31,7 @@ export default async function orderCanceledCommissionClearHandler({
     // Log only, do not rethrow: an uncaught subscriber error loses the event.
     logger.error(
       `Commission clear failed for canceled order ${orderId}:`,
-      error as Error
+      error instanceof Error ? error : new Error(String(error))
     )
   }
 }

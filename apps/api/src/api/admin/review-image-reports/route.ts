@@ -12,14 +12,18 @@ import {
   parseRows,
 } from "../../../lib/graph-schemas"
 import { AdminGetReviewImageReportsParamsType } from "./validators"
+import type {
+  ReviewImageReportAction,
+  ReviewImageReportStatus,
+} from "../../../modules/review-image-reports/constants"
 
 export type AdminReviewImageReportRow = {
   id: string
   review_image_id: string
   customer_id: string
   reason: string
-  status: string
-  action_taken?: string | null | undefined
+  status: ReviewImageReportStatus
+  action_taken?: ReviewImageReportAction | null | undefined
   created_at: string | Date
   updated_at: string | Date
   customer_name: string

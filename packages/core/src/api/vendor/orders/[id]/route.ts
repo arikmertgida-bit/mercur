@@ -10,12 +10,18 @@ import {
   validateSellerOrder,
   withCartPaymentCollectionFields,
 } from "../helpers"
+import { getSellerId } from "../../../utils/seller-context"
+import { VendorGetOrderParamsType } from "../validators"
+import { toHttpOrder } from "../../../../utils/http-order"
 
 export const GET = async (
-  req: AuthenticatedMedusaRequest,
+  req: AuthenticatedMedusaRequest<
+    Partial<VendorGetOrderParamsType>,
+    VendorGetOrderParamsType
+  >,
   res: MedusaResponse<HttpTypes.VendorOrderResponse>
 ) => {
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
 
   await validateSellerOrder(req.scope, sellerId, req.params.id)
 
@@ -27,7 +33,7 @@ export const GET = async (
     },
   })
 
-  normalizeOrderPaymentCollections(result as never)
+  normalizeOrderPaymentCollections(result)
 
-  res.json({ order: result as HttpTypes.VendorOrderResponse["order"] })
+  res.json({ order: toHttpOrder(result) })
 }

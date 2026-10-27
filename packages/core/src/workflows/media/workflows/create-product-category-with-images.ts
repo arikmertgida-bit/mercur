@@ -1,3 +1,4 @@
+import type { CreateProductCategoryDTO } from "@medusajs/framework/types"
 import {
   createWorkflow,
   transform,
@@ -9,7 +10,7 @@ import type { CategoryMediaInput } from "./set-category-images"
 import { setCategoryImagesWorkflow } from "./set-category-images"
 
 export type CreateProductCategoryWithImagesWorkflowInput = {
-  product_category: Record<string, unknown>
+  product_category: CreateProductCategoryDTO
   media?: CategoryMediaInput[]
   icon?: string | null
 }
@@ -22,10 +23,6 @@ export const createProductCategoryWithImagesWorkflow = createWorkflow(
   (input: CreateProductCategoryWithImagesWorkflowInput) => {
     const created = createProductCategoriesWorkflow.runAsStep({
       input: {
-        // @ts-expect-error — `product_category` is intentionally a caller-provided
-        // `Record<string, unknown>` (arbitrary category payload), so it can't
-        // structurally match Medusa's concrete `CreateProductCategoryDTO` at the
-        // type level. Real third-party (Medusa) type boundary.
         product_categories: [input.product_category],
       },
     })

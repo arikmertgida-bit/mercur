@@ -1,7 +1,6 @@
 import {
   ApplicationMethodTargetType,
   ApplicationMethodType,
-  PromotionRuleOperator,
   PromotionStatus,
   PromotionType,
 } from "@medusajs/framework/utils"
@@ -12,6 +11,7 @@ import {
   createSelectParams,
 } from "@medusajs/medusa/api/utils/validators"
 import { VendorCreateCampaign } from "../campaigns/validators"
+import { JsonRecordSchema } from "../../../utils/json-schema"
 
 export type VendorGetPromotionParamsType = z.infer<
   typeof VendorGetPromotionParams
@@ -84,12 +84,25 @@ export const VendorGetPromotionsRuleValueParams = createFindParams({
   })
 )
 
+// The values of Medusa's `PromotionRuleOperator`, listed as literals so the
+// typed client accepts plain operator strings (`z.nativeEnum` would make the
+// request type the nominal enum).
+const PromotionRuleOperatorSchema = z.enum([
+  "gte",
+  "lte",
+  "gt",
+  "lt",
+  "eq",
+  "ne",
+  "in",
+])
+
 export type VendorCreatePromotionRuleType = z.infer<
   typeof VendorCreatePromotionRule
 >
 export const VendorCreatePromotionRule = z
   .object({
-    operator: z.nativeEnum(PromotionRuleOperator),
+    operator: PromotionRuleOperatorSchema,
     description: z.string().nullish(),
     attribute: z.string(),
     values: z.union([z.string(), z.array(z.string())]),
@@ -102,7 +115,7 @@ export type VendorUpdatePromotionRuleType = z.infer<
 export const VendorUpdatePromotionRule = z
   .object({
     id: z.string(),
-    operator: z.nativeEnum(PromotionRuleOperator).optional(),
+    operator: PromotionRuleOperatorSchema.optional(),
     description: z.string().nullish(),
     attribute: z.string().optional(),
     values: z.union([z.string(), z.array(z.string())]),
@@ -146,7 +159,7 @@ export const VendorUpdateApplicationMethod = z
   .strict()
 
 const buygetRefinement = (promo: {
-  campaign?: { id: string } | null
+  campaign?: z.infer<typeof VendorCreateCampaign> | null
   campaign_id?: string | null
   type?: PromotionType
   application_method?: {
@@ -171,7 +184,10 @@ const buygetRefinement = (promo: {
   return true
 }
 
-const automaticLimitRefinement = (promo: any) => {
+const automaticLimitRefinement = (promo: {
+  is_automatic?: boolean
+  limit?: number | null
+}): boolean => {
   return !(promo.is_automatic && promo.limit !== undefined && promo.limit !== null)
 }
 
@@ -187,7 +203,7 @@ export const VendorCreatePromotion = z
     limit: z.number().int().min(1).nullish(),
     application_method: VendorCreateApplicationMethod,
     rules: z.array(VendorCreatePromotionRule).optional(),
-    additional_data: z.record(z.string(), z.unknown()).nullish(),
+    additional_data: JsonRecordSchema.nullish(),
     // Opaque, server-signed reference to a code this same server already
     // generated and showed the vendor as a live preview (see the
     // generate-code route) — never a literal code the vendor can set.
@@ -213,7 +229,7 @@ export const VendorUpdatePromotion = z
     campaign_id: z.string().nullish(),
     limit: z.number().int().min(1).nullish(),
     application_method: VendorUpdateApplicationMethod.optional(),
-    additional_data: z.record(z.string(), z.unknown()).nullish(),
+    additional_data: JsonRecordSchema.nullish(),
   })
   .strict()
   .refine(automaticLimitRefinement, {

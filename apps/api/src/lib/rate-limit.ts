@@ -8,7 +8,8 @@ import rateLimit from 'express-rate-limit'
 function resolveClientIp(req: MedusaRequest): string {
   const forwardedFor = req.headers['x-forwarded-for']
   if (typeof forwardedFor === 'string' && forwardedFor.length > 0) {
-    return forwardedFor.split(',')[0]!.trim()
+    const [clientIp = ''] = forwardedFor.split(',')
+    return clientIp.trim()
   }
   return req.ip ?? 'unknown'
 }

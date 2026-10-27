@@ -12,6 +12,7 @@ import {
   VendorCreatePromotionType,
   VendorGetPromotionsParamsType,
 } from "./validators"
+import { getSellerId } from "../../utils/seller-context"
 
 export const GET = async (
   req: AuthenticatedMedusaRequest<VendorGetPromotionsParamsType>,
@@ -38,7 +39,7 @@ export const POST = async (
   req: AuthenticatedMedusaRequest<VendorCreatePromotionType>,
   res: MedusaResponse<HttpTypes.VendorPromotionResponse>
 ) => {
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
   const { code_reservation_token, ...promotionData } = req.validatedBody
 
   const preferredCode = code_reservation_token

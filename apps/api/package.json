@@ -51,7 +51,7 @@
     "meilisearch": "^0.59.0",
     "multer": "^2.0.2",
     "ts-node": "^10.9.2",
-    "zod": "3.25.76"
+    "zod": "4.6.5"
   },
   "devDependencies": {
     "@medusajs/test-utils": "2.21.2",

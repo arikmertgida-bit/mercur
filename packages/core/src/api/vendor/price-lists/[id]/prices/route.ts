@@ -6,12 +6,13 @@ import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
 import { HttpTypes } from "@mercurjs/types"
 
 import { validateSellerPriceList } from "../../helpers"
+import { getSellerId } from "../../../../utils/seller-context"
 
 export const GET = async (
   req: AuthenticatedMedusaRequest,
   res: MedusaResponse<HttpTypes.VendorPriceListPricesResponse>
 ) => {
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
 
   await validateSellerPriceList(req.scope, sellerId, req.params.id)
 

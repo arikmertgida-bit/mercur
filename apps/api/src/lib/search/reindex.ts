@@ -14,7 +14,7 @@ export const loadRegions = async (
     entity: 'region',
     fields: ['id', 'currency_code', 'automatic_taxes', 'countries.iso_2'],
   })
-  return data as SearchRegion[]
+  return data
 }
 
 // Same store -> default_sales_channel_id lookup already used to scope

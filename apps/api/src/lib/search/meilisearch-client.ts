@@ -1,7 +1,7 @@
 import type {
   FacetHit,
+  Index,
   Meilisearch as MeilisearchClient,
-  SearchForFacetValuesResponse,
 } from 'meilisearch' with { 'resolution-mode': 'import' }
 
 import {
@@ -113,12 +113,12 @@ function mapSort(sort: MeilisearchSort | undefined): string[] | undefined {
 
 class MeilisearchProductIndex {
   private readonly client_: MeilisearchClient
-  private readonly productIndex_: ReturnType<MeilisearchClient['index']>
+  private readonly productIndex_: Index<MeilisearchIndexedDoc>
   private settingsApplied_ = false
 
   private constructor(client: MeilisearchClient) {
     this.client_ = client
-    this.productIndex_ = this.client_.index(PRODUCT_INDEX)
+    this.productIndex_ = this.client_.index<MeilisearchIndexedDoc>(PRODUCT_INDEX)
   }
 
   // `meilisearch` ships pure ESM (>=0.5x) while apps/api is a CommonJS
@@ -310,8 +310,8 @@ class MeilisearchProductIndex {
   async search(query: SearchQueryBase): Promise<SearchResults> {
     await this.ensureSettings()
 
-    const filters = (query.filters ?? {}) as MeilisearchProviderFilters
-    const context = (query.context ?? {}) as { region_id?: string }
+    const filters = query.filters ?? {}
+    const context = query.context ?? {}
     const q = query.q ?? ''
 
     const [result, ...disjunctiveFacetResults] = await Promise.all([
@@ -332,17 +332,10 @@ class MeilisearchProductIndex {
     ])
 
     const [sizeFacet, colorFacet, conditionFacet, promotionFacet, collectionFacet, typeFacet] =
-      disjunctiveFacetResults as [
-        SearchForFacetValuesResponse,
-        SearchForFacetValuesResponse,
-        SearchForFacetValuesResponse,
-        SearchForFacetValuesResponse,
-        SearchForFacetValuesResponse,
-        SearchForFacetValuesResponse,
-      ]
+      disjunctiveFacetResults
 
     const regionId = context.region_id
-    const hits: SearchDoc[] = (result.hits as MeilisearchIndexedDoc[]).map((doc) => {
+    const hits: SearchDoc[] = result.hits.map((doc) => {
       const {
         default_price_amount: _defaultPriceAmount,
         collection_facet: _collectionFacet,
@@ -358,11 +351,10 @@ class MeilisearchProductIndex {
       return { ...searchDoc, calculated_price: price }
     })
 
-    const resultWithEstimate = result as { estimatedTotalHits?: number }
 
     return {
       hits,
-      count: resultWithEstimate.estimatedTotalHits ?? hits.length,
+      count: result.estimatedTotalHits ?? hits.length,
       facets: this.buildFacets(result.facetDistribution, {
         sizes: sizeFacet.facetHits,
         colors: colorFacet.facetHits,

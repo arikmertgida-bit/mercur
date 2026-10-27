@@ -7,7 +7,11 @@ import {
   ContainerRegistrationKeys,
   MedusaError,
 } from "@medusajs/framework/utils"
-import { SellerContext } from "../../types/seller-context"
+import {
+  SellerContextMember,
+  SellerContextMemberSchema,
+} from "../../types/seller-context"
+import { parseGraphRow } from "../../utils/graph-rows"
 
 const SELLER_ID_HEADER = "x-seller-id"
 
@@ -33,7 +37,15 @@ export async function ensureSellerMiddleware(
   const { data: sellerMembers } = await query.graph(
     {
       entity: "seller_member",
-      fields: ["id", "seller_id", "member_id", "role_id", "seller.*"],
+      fields: [
+        "id",
+        "seller_id",
+        "member_id",
+        "role_id",
+        "seller.id",
+        "seller.currency_code",
+        "seller.status",
+      ],
       filters: {
         seller_id: sellerId,
         member_id: memberId,
@@ -51,13 +63,18 @@ export async function ensureSellerMiddleware(
     )
   }
 
-  const sellerMember = sellerMembers[0]
+  let sellerMember: SellerContextMember
+  try {
+    sellerMember = parseGraphRow(SellerContextMemberSchema, sellerMembers[0])
+  } catch (error) {
+    return next(error)
+  }
 
   req.seller_context = {
     seller_id: sellerId,
     seller_member: sellerMember,
     currency_code: sellerMember.seller.currency_code,
-  } as SellerContext
+  }
 
   next()
 }

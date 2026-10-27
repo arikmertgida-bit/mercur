@@ -8,7 +8,39 @@ import {
 import { DatabaseSchema } from "@medusajs/framework/mikro-orm/knex";
 import { CustomFieldsModuleOptions } from "@mercurjs/types";
 import { MedusaModule } from "@medusajs/framework/modules-sdk";
+import { z } from "zod";
+
+import { JsonValueSchema } from "../../utils/json-schema";
 import { generateEntity } from "./utils/generate-entity";
+
+const FieldBaseSchema = z.object({
+  nullable: z.boolean().optional(),
+  defaultValue: JsonValueSchema.optional(),
+});
+
+const FieldSchema = z.union([
+  FieldBaseSchema.extend({
+    type: z.enum([
+      "string",
+      "text",
+      "integer",
+      "boolean",
+      "date",
+      "time",
+      "datetime",
+      "json",
+      "array",
+      "float",
+    ]),
+  }),
+  FieldBaseSchema.extend({ type: z.literal("enum"), enum: z.array(z.string()) }),
+]);
+
+const CustomFieldsModuleOptionsSchema = z.object({
+  customFields: z
+    .record(z.string(), z.record(z.string(), FieldSchema).optional())
+    .optional(),
+});
 
 function pickTableRelatedCommands(tableNames: string[], sqlCommand: string) {
   const ignoreColumns = ["created_at", "updated_at", "deleted_at"];
@@ -104,7 +136,8 @@ export default async function customFieldsLoader({
   logger,
   options,
 }: LoaderOptions) {
-  const { customFields = {} } = (options ?? {}) as CustomFieldsModuleOptions;
+  const { customFields = {} }: CustomFieldsModuleOptions =
+    CustomFieldsModuleOptionsSchema.parse(options ?? {});
 
   const isMigration = process.argv.some((arg) => arg.includes("db:migrate"));
 
@@ -152,7 +185,7 @@ export default async function customFieldsLoader({
       const relationshipAlias = `${snakeEntity}_custom_fields_link`;
 
       extendsConfig.push({
-        serviceName: joinerConfig.serviceName!,
+        serviceName: joinerConfig.serviceName,
         entity: entityName,
         fieldAlias: {
           custom_fields: {

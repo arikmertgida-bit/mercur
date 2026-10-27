@@ -10,15 +10,22 @@ import {
 import { HttpTypes } from "@mercurjs/types"
 
 import { refetchInventoryItem, validateSellerInventoryItem } from "../helpers"
-import { VendorUpdateInventoryItemType } from "../validators"
+import {
+  VendorUpdateInventoryItemType,
+  VendorGetInventoryItemParamsType,
+} from "../validators"
+import { getSellerId } from "../../../utils/seller-context"
 
 export const GET = async (
-  req: AuthenticatedMedusaRequest,
+  req: AuthenticatedMedusaRequest<
+    Partial<VendorGetInventoryItemParamsType>,
+    VendorGetInventoryItemParamsType
+  >,
   res: MedusaResponse<HttpTypes.VendorInventoryItemResponse>
 ) => {
   const { id } = req.params
 
-  await validateSellerInventoryItem(req.scope,  req.seller_context!.seller_id, id)
+  await validateSellerInventoryItem(req.scope,  getSellerId(req), id)
 
   const inventoryItem = await refetchInventoryItem(
     id,
@@ -42,7 +49,7 @@ export const POST = async (
 ) => {
   const { id } = req.params
 
-  await validateSellerInventoryItem(req.scope,  req.seller_context!.seller_id, id)
+  await validateSellerInventoryItem(req.scope,  getSellerId(req), id)
 
   await updateInventoryItemsWorkflow(req.scope).run({
     input: {
@@ -65,7 +72,7 @@ export const DELETE = async (
 ) => {
   const { id } = req.params
 
-  await validateSellerInventoryItem(req.scope,  req.seller_context!.seller_id, id)
+  await validateSellerInventoryItem(req.scope,  getSellerId(req), id)
 
   await deleteInventoryItemWorkflow(req.scope).run({
     input: [id],

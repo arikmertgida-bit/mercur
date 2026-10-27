@@ -12,6 +12,7 @@ import {
   parseRows,
 } from "../../../lib/graph-schemas"
 import { AdminGetProductReportsParamsType } from "./validators"
+import type { ProductReportStatus } from "../../../modules/product-reports/constants"
 
 export type AdminProductReportRow = {
   id: string
@@ -19,7 +20,7 @@ export type AdminProductReportRow = {
   customer_id: string
   reason: string
   comment?: string | null | undefined
-  status: string
+  status: ProductReportStatus
   created_at: string | Date
   updated_at: string | Date
   customer_name: string

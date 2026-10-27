@@ -7,6 +7,7 @@ import {
 } from "@medusajs/medusa/api/utils/validators"
 import { AdditionalData } from "@medusajs/framework/types"
 import { isValidHandle } from "@medusajs/framework/utils"
+import { JsonRecordSchema } from "../../../utils/json-schema"
 
 const handleField = z
   .string()
@@ -46,7 +47,7 @@ export type AdminCreateCollectionType = z.infer<typeof CreateCollection> &
 const CreateCollection = z.object({
   title: z.string(),
   handle: handleField,
-  metadata: z.record(z.string(), z.unknown()).nullish(),
+  metadata: JsonRecordSchema.nullish(),
   media: z.array(CollectionMedia).optional(),
   icon: z.string().nullish(),
 })
@@ -57,7 +58,7 @@ export type AdminUpdateCollectionType = z.infer<typeof UpdateCollection> &
 const UpdateCollection = z.object({
   title: z.string().optional(),
   handle: handleField,
-  metadata: z.record(z.string(), z.unknown()).nullish(),
+  metadata: JsonRecordSchema.nullish(),
   media: z.array(CollectionMedia).optional(),
   icon: z.string().nullish(),
 })

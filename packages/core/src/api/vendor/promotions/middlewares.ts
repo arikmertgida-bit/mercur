@@ -24,13 +24,14 @@ import {
   VendorUpdatePromotionRule,
 } from "./validators"
 import { createBatchBody } from "@medusajs/medusa/api/utils/validators"
+import { getSellerId } from "../../utils/seller-context"
 
 const applySellerPromotionLinkFilter = (
   req: AuthenticatedMedusaRequest,
   res: MedusaResponse,
   next: MedusaNextFunction
 ) => {
-  req.filterableFields.seller_id = req.seller_context!.seller_id
+  req.filterableFields.seller_id = getSellerId(req)
 
   return maybeApplyLinkFilter({
     entryPoint: "promotion_seller",

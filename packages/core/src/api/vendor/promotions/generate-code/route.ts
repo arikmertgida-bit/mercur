@@ -10,6 +10,7 @@ import {
   issueCodeReservationToken,
   resolveSellerCodePrefix,
 } from "../../../../workflows/promotion/utils"
+import { getSellerId } from "../../../utils/seller-context"
 
 type GenerateVendorPromotionCodeResponse = {
   code: string
@@ -27,7 +28,7 @@ export const GET = async (
   req: AuthenticatedMedusaRequest,
   res: MedusaResponse<GenerateVendorPromotionCodeResponse>
 ) => {
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
 
   const promotionModule = req.scope.resolve<IPromotionModuleService>(
     Modules.PROMOTION

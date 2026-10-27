@@ -9,7 +9,6 @@ export * from "./order-group"
 export * from "./price-list"
 export * from "./promotion"
 export * from "./promotion-cost"
-export * from "./review"
 export * from "./seller"
 export * from "./shipping-option"
 export * from "./stock-location"
@@ -21,5 +20,4 @@ export * from './product-attribute'
 export * from './product-edit'
 export * from './media'
 export * from './order'
-export * from './review'
 export * from './payment'

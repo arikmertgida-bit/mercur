@@ -60,7 +60,7 @@ export async function loadSellerOrderIds(query: Query, sellerId: string): Promis
     fields: ["order_id", "seller_id"],
     filters: { seller_id: sellerId },
   })
-  return parseRows(SellerScopedOrderLinkRowSchema, sellerLinkRows as object[]).map(
+  return parseRows(SellerScopedOrderLinkRowSchema, sellerLinkRows).map(
     (link) => link.order_id
   )
 }
@@ -91,7 +91,7 @@ export async function resolveLiveOrderCounts(
     fields: ["id", "created_at"],
     filters: { id: orderIds, created_at: { $gte: startOfMonthIso } },
   })
-  const orders = parseRows(OrderLiveCountRowSchema, orderRows as object[])
+  const orders = parseRows(OrderLiveCountRowSchema, orderRows)
 
   let today = 0
   let thisWeek = 0
@@ -143,7 +143,7 @@ export async function resolveLiveTodayEarnings(
       fields: ["id", "currency_code", "summary.accounting_total", "created_at", "items.id"],
       filters: { id: orderIdChunk, created_at: { $gte: startOfTodayIso } },
     })
-    todaysOrders.push(...parseRows(OrderAnalyticsRowSchema, rows as object[]))
+    todaysOrders.push(...parseRows(OrderAnalyticsRowSchema, rows))
   }
 
   if (todaysOrders.length === 0) {

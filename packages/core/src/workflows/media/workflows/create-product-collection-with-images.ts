@@ -1,3 +1,4 @@
+import type { CreateProductCollectionDTO } from "@medusajs/framework/types"
 import {
   createWorkflow,
   transform,
@@ -9,7 +10,7 @@ import type { CollectionMediaInput } from "./set-collection-images"
 import { setCollectionImagesWorkflow } from "./set-collection-images"
 
 export type CreateProductCollectionWithImagesWorkflowInput = {
-  collection: Record<string, unknown>
+  collection: CreateProductCollectionDTO
   media?: CollectionMediaInput[]
   icon?: string | null
 }
@@ -22,10 +23,6 @@ export const createProductCollectionWithImagesWorkflow = createWorkflow(
   (input: CreateProductCollectionWithImagesWorkflowInput) => {
     const created = createCollectionsWorkflow.runAsStep({
       input: {
-        // @ts-expect-error — `collection` is intentionally a caller-provided
-        // `Record<string, unknown>` (arbitrary collection payload), so it can't
-        // structurally match Medusa's concrete collection DTO at the type level.
-        // Real third-party (Medusa) type boundary.
         collections: [input.collection],
       },
     })

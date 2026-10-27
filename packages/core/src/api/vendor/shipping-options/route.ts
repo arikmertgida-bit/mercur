@@ -8,6 +8,7 @@ import { HttpTypes } from "@mercurjs/types"
 import { createSellerShippingOptionsWorkflow } from "../../../workflows/shipping-option"
 import { refetchShippingOption } from "./helpers"
 import { VendorCreateShippingOptionType } from "./validators"
+import { getSellerId } from "../../utils/seller-context"
 
 export const GET = async (
   req: AuthenticatedMedusaRequest,
@@ -34,7 +35,7 @@ export const POST = async (
   req: AuthenticatedMedusaRequest<VendorCreateShippingOptionType>,
   res: MedusaResponse<HttpTypes.VendorShippingOptionResponse>
 ) => {
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
 
   const { result } = await createSellerShippingOptionsWorkflow(req.scope).run({
     input: {

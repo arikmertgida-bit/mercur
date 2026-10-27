@@ -8,13 +8,14 @@ import { HttpTypes } from "@mercurjs/types"
 
 import { refetchCampaign, validateSellerCampaign } from "../../helpers"
 import { validateSellerPromotions } from "../../../promotions/helpers"
+import { getSellerId } from "../../../../utils/seller-context"
 
 export const POST = async (
   req: AuthenticatedMedusaRequest<LinkMethodRequest>,
   res: MedusaResponse<HttpTypes.VendorCampaignResponse>
 ) => {
   const { id } = req.params
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
 
   await validateSellerCampaign(req.scope, sellerId, id)
 

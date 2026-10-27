@@ -9,10 +9,11 @@ import ProductReportService from "../../../../modules/product-reports/service"
 import { deleteProductReportWorkflow } from "../../../../workflows/product-report/workflows/delete-product-report"
 import { updateProductReportWorkflow } from "../../../../workflows/product-report/workflows/update-product-report"
 import { AdminUpdateProductReportType } from "../validators"
+import { ProductReportStatus } from "../../../../modules/product-reports/constants"
 
 export type AdminUpdateProductReportResponse = {
   success: boolean
-  status: "pending" | "resolved" | "dismissed"
+  status: ProductReportStatus
 }
 
 export type AdminDeleteProductReportResponse = {

@@ -1,4 +1,3 @@
-import type { OrderDetailDTO } from "@medusajs/framework/types"
 import { deduplicate } from "@medusajs/framework/utils"
 import {
   createWorkflow,
@@ -13,6 +12,7 @@ import { resolveOrderPaymentCollections } from "../../payment/utils/split-order-
 import {
   getLastFulfillmentStatus,
   getLastPaymentStatus,
+  OrderGroupOrderRow,
 } from "../utils/aggregate-status"
 
 export type GetOrderGroupDetailWorkflowInput = {
@@ -72,37 +72,23 @@ export const getOrderGroupDetailWorkflow = createWorkflow(
           f.includes("fulfillments")
         )
 
-        if (orderGroup.orders) {
-          for (const order of orderGroup.orders) {
-            const order_ = order as OrderDetailDTO & {
-              cart?: {
-                payment_collection?: {
-                  metadata?: Record<string, unknown> | null
-                } | null
-              }
-            }
+        const orders: OrderGroupOrderRow[] | undefined = orderGroup.orders
+        if (orders) {
+          for (const order_ of orders) {
+            order_.payment_collections = resolveOrderPaymentCollections(order_)
 
-            order_.payment_collections = resolveOrderPaymentCollections(
-              order_
-            ) as OrderDetailDTO["payment_collections"]
-
-            order_.payment_status = getLastPaymentStatus(
-              order_
-            ) as OrderDetailDTO["payment_status"]
-            order_.fulfillment_status = getLastFulfillmentStatus(
-              order_
-            ) as OrderDetailDTO["fulfillment_status"]
+            order_.payment_status = getLastPaymentStatus(order_)
+            order_.fulfillment_status = getLastFulfillmentStatus(order_)
 
             if (!input.fields.some((f) => f.startsWith("orders.cart"))) {
-              // @ts-ignore
               delete order_.cart
             }
 
             if (!requiredPaymentFields) {
-              Reflect.deleteProperty(order_ as object, "payment_collections")
+              Reflect.deleteProperty(order_, "payment_collections")
             }
             if (!requiredFulfillmentFields) {
-              Reflect.deleteProperty(order_ as object, "fulfillments")
+              Reflect.deleteProperty(order_, "fulfillments")
             }
           }
         }

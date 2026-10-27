@@ -12,12 +12,13 @@ import { HttpTypes } from "@mercurjs/types"
 
 import { refetchShippingOption, validateSellerShippingOption } from "../helpers"
 import { VendorUpdateShippingOptionType } from "../validators"
+import { getSellerId } from "../../../utils/seller-context"
 
 export const GET = async (
   req: AuthenticatedMedusaRequest,
   res: MedusaResponse<HttpTypes.VendorShippingOptionResponse>
 ) => {
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
 
   await validateSellerShippingOption(req.scope, sellerId, req.params.id)
 
@@ -41,7 +42,7 @@ export const POST = async (
   req: AuthenticatedMedusaRequest<VendorUpdateShippingOptionType>,
   res: MedusaResponse<HttpTypes.VendorShippingOptionResponse>
 ) => {
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
 
   await validateSellerShippingOption(req.scope, sellerId, req.params.id)
 
@@ -72,7 +73,7 @@ export const DELETE = async (
   req: AuthenticatedMedusaRequest,
   res: MedusaResponse<HttpTypes.VendorShippingOptionDeleteResponse>
 ) => {
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
   const shippingOptionId = req.params.id
 
   await validateSellerShippingOption(req.scope, sellerId, shippingOptionId)

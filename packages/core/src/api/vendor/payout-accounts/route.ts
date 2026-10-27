@@ -7,6 +7,7 @@ import { HttpTypes } from "@mercurjs/types"
 
 import { createPayoutAccountWorkflow } from "../../../workflows/payout"
 import { VendorCreatePayoutAccountType } from "./validators"
+import { getSellerId } from "../../utils/seller-context"
 
 export const GET = async (
   req: AuthenticatedMedusaRequest,
@@ -34,7 +35,7 @@ export const POST = async (
   res: MedusaResponse<HttpTypes.VendorPayoutAccountResponse>
 ) => {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
 
   const { result } = await createPayoutAccountWorkflow(req.scope).run({
     input: {

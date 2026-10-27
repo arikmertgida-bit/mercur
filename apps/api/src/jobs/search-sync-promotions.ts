@@ -10,6 +10,7 @@ import {
   ProductPromotionKind,
 } from '../lib/search/promotion-index'
 import { getProductIdsForSeller, reindexProductsById } from '../lib/search/sync'
+import { presentItems } from "../lib/graph-list"
 
 // Medusa's promotion/campaign workflows (create/update/delete, in this
 // framework version) never emit a domain event — same situation as
@@ -30,14 +31,6 @@ const SNAPSHOT_TTL_SECONDS = 900
 type ProductCoverage = { kinds: ProductPromotionKind[]; campaigns: string[] }
 type SellerSnapshot = Record<string, ProductCoverage>
 type CoverageSnapshot = Record<string, SellerSnapshot>
-
-type ProductRow = {
-  id: string
-  categories?: { id: string }[] | null
-  collection_id?: string | null
-  type_id?: string | null
-  tags?: { id: string }[] | null
-}
 
 function coverageEqual(a: ProductCoverage | undefined, b: ProductCoverage): boolean {
   if (!a) {
@@ -79,10 +72,10 @@ async function computeSellerCoverage(
   })
 
   const snapshot: SellerSnapshot = {}
-  for (const product of products as ProductRow[]) {
+  for (const product of products) {
     const matchable: PromotionMatchableProduct = {
       id: product.id,
-      category_ids: (product.categories ?? []).map((c) => c.id),
+      category_ids: presentItems(product.categories).map((c) => c.id),
       collection_id: product.collection_id ?? null,
       type_id: product.type_id ?? null,
       tag_ids: (product.tags ?? []).map((t) => t.id),

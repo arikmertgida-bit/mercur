@@ -7,14 +7,15 @@ import {
   type Hook,
   type ReturnWorkflow,
 } from "@medusajs/framework/workflows-sdk"
-import { BigNumberInput } from "@medusajs/framework/types"
 import { useQueryGraphStep } from "@medusajs/medusa/core-flows"
 import {
   CommissionCalculationContext,
   CommissionLineDTO,
 } from "@mercurjs/types"
+import { z } from "zod"
 
 import { getCommissionLinesStep, upsertCommissionLinesStep } from "../steps"
+import { GraphBigNumberSchema, parseGraphRows } from "../../../utils/graph-rows"
 
 const orderFields = [
   "id",
@@ -51,30 +52,42 @@ const orderFields = [
   "shipping_address.*",
 ]
 
-type OrderForCommissionRefresh = {
-  id: string
-  currency_code: string
-  seller?: { id: string } | null
-  items?: Array<{
-    id: string
-    subtotal: BigNumberInput
-    tax_total?: BigNumberInput
-    total?: BigNumberInput
-    product?: {
-      id: string
-      collection_id?: string
-      categories?: { id: string }[]
-      tags?: { id: string }[]
-      type_id?: string
-      attribute_values?: { id: string }[]
-    }
-  }>
-  shipping_methods?: Array<{
-    id: string
-    subtotal: BigNumberInput
-    tax_total?: BigNumberInput
-  }>
-}
+const IdRefSchema = z.object({ id: z.string() })
+
+const OrderForCommissionRefreshSchema = z.object({
+  id: z.string(),
+  currency_code: z.string(),
+  seller: IdRefSchema.nullish(),
+  items: z
+    .array(
+      z.object({
+        id: z.string(),
+        subtotal: GraphBigNumberSchema,
+        tax_total: GraphBigNumberSchema.nullish(),
+        total: GraphBigNumberSchema.nullish(),
+        product: z
+          .object({
+            id: z.string(),
+            collection_id: z.string().nullish(),
+            categories: z.array(IdRefSchema).nullish(),
+            tags: z.array(IdRefSchema).nullish(),
+            type_id: z.string().nullish(),
+            attribute_values: z.array(IdRefSchema).nullish(),
+          })
+          .nullish(),
+      })
+    )
+    .nullish(),
+  shipping_methods: z
+    .array(
+      z.object({
+        id: z.string(),
+        subtotal: GraphBigNumberSchema,
+        tax_total: GraphBigNumberSchema.nullish(),
+      })
+    )
+    .nullish(),
+})
 
 export type RefreshOrderCommissionLinesWorkflowInput = {
   order_ids: string[]
@@ -94,12 +107,12 @@ export type RefreshOrderCommissionLinesWorkflowHooks = [
   Hook<
     "setCommissionContext",
     { contexts: CommissionCalculationContext[] },
-    CommissionCalculationContext[] | void
+    CommissionCalculationContext[] | undefined
   >,
   Hook<
     "commissionLinesUpserted",
     { order_ids: string[]; commission_lines: CommissionLineDTO[] },
-    unknown
+    void
   >,
 ]
 
@@ -122,7 +135,7 @@ export const refreshOrderCommissionLinesWorkflow: ReturnWorkflow<
     }).config({ name: "fetch-orders" })
 
     const commissionContexts = transform({ orders }, ({ orders }) => {
-      return (orders as OrderForCommissionRefresh[]).map((order): CommissionCalculationContext => {
+      return parseGraphRows(OrderForCommissionRefreshSchema, orders).map((order): CommissionCalculationContext => {
         // The order's own seller link (order-seller-link.ts) is 1:1 by
         // design — Order Splitting guarantees a single order never spans
         // more than one seller. `product.sellers` on the other hand is the
@@ -141,39 +154,39 @@ export const refreshOrderCommissionLinesWorkflow: ReturnWorkflow<
           items: (order.items ?? []).map((item) => ({
             id: item.id,
             subtotal: item.subtotal,
-            tax_total: item.tax_total,
-            total: item.total,
+            tax_total: item.tax_total ?? undefined,
+            total: item.total ?? undefined,
             product: item.product
               ? {
                 id: item.product.id,
-                collection_id: item.product.collection_id,
-                categories: item.product.categories,
-                tags: item.product.tags,
-                type_id: item.product.type_id,
+                collection_id: item.product.collection_id ?? undefined,
+                categories: item.product.categories ?? undefined,
+                tags: item.product.tags ?? undefined,
+                type_id: item.product.type_id ?? undefined,
                 seller: orderSellerId ? { id: orderSellerId } : undefined,
                 attribute_value_ids: (item.product.attribute_values ?? [])
-                  .map((value: { id: string }) => value.id),
+                  .map((value) => value.id),
               }
               : undefined,
           })),
           shipping_methods: (order.shipping_methods ?? []).map((method) => ({
             id: method.id,
             subtotal: method.subtotal,
-            tax_total: method.tax_total,
+            tax_total: method.tax_total ?? undefined,
           })),
         }
       })
     })
 
-    const setCommissionContext = createHook("setCommissionContext", {
-      contexts: commissionContexts,
-    })
+    const setCommissionContext: RefreshOrderCommissionLinesWorkflowHooks[0] =
+      createHook("setCommissionContext", {
+        contexts: commissionContexts,
+      })
 
     const contexts = transform(
       { commissionContexts, hookResult: setCommissionContext.getResult() },
       ({ commissionContexts, hookResult }): CommissionCalculationContext[] =>
-        (hookResult as CommissionCalculationContext[] | undefined) ??
-        commissionContexts
+        hookResult ?? commissionContexts
     )
 
     const commissionLines = getCommissionLinesStep(contexts)

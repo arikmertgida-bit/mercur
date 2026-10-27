@@ -1,11 +1,31 @@
-import { MedusaContainer, PriceDTO, PriceListRuleDTO } from "@medusajs/framework/types"
+import {
+  MedusaContainer,
+  PriceListDTO,
+  PriceListRuleDTO,
+} from "@medusajs/framework/types"
 import {
   buildPriceListRules,
-  buildPriceSetPricesForCore,
+  buildPriceSetRules,
   ContainerRegistrationKeys,
   MedusaError,
 } from "@medusajs/framework/utils"
-import { PriceListProductGroupDTO } from "@mercurjs/types"
+import { HttpTypes } from "@mercurjs/types"
+import { z } from "zod"
+
+import { parseGraphRow, parseGraphRows } from "../../../utils/graph-rows"
+import {
+  PriceListCorePrice,
+  PriceListGraphPrice,
+  TransformedPriceList,
+  toHttpPriceList,
+} from "../../../utils/http-price-list"
+
+const PriceSetIdRowSchema = z.object({ price_set_id: z.string() })
+const PriceIdRowSchema = z.object({ id: z.string() })
+const VariantProductRefSchema = z.object({ product_id: z.string() })
+const VariantPriceSetRowSchema = z.object({
+  price_set: z.object({ id: z.string() }).nullish(),
+})
 
 export const validateSellerPriceList = async (
   scope: MedusaContainer,
@@ -40,13 +60,13 @@ export const fetchPriceList = async (
 ) => {
   const query = scope.resolve(ContainerRegistrationKeys.QUERY)
 
-  const {
-    data: [priceList],
-  } = await query.graph({
+  const { data } = await query.graph({
     entity: "price_list",
     fields,
     filters: { id },
   })
+  // Passed through with the requested fields.
+  const priceList: PriceListDTO | undefined = data[0]
 
   if (!priceList) {
     throw new MedusaError(
@@ -55,39 +75,36 @@ export const fetchPriceList = async (
     )
   }
 
-  return transformPriceList(priceList)
+  return toHttpPriceList(transformPriceList(priceList))
 }
 
 type PriceListWithGraphRules = {
   price_list_rules?: PriceListRuleDTO[]
-  prices?: PriceDTO[]
-  rules?: ReturnType<typeof buildPriceListRules>
+  prices?: PriceListGraphPrice[]
 }
 
-type ProductVariantWithPriceSet = {
-  price_set?: { id: string }
-}
+// Same shape as Medusa's `buildPriceSetPricesForCore`, which is typed as
+// returning untyped records.
+const toCorePrices = (prices: PriceListGraphPrice[]): PriceListCorePrice[] =>
+  prices.map(({ price_rules, price_set, ...price }) => ({
+    ...price,
+    variant_id: price_set?.variant?.id ?? undefined,
+    rules:
+      typeof price_rules === "undefined"
+        ? undefined
+        : buildPriceSetRules(price_rules || []),
+  }))
 
 export const transformPriceList = <T extends PriceListWithGraphRules>(
   priceList: T,
-): T => {
-  if (priceList.price_list_rules) {
-    priceList.rules = buildPriceListRules(priceList.price_list_rules)
-    Reflect.deleteProperty(priceList as object, "price_list_rules")
+): TransformedPriceList<T> => {
+  const { price_list_rules, prices, ...rest } = priceList
+
+  return {
+    ...rest,
+    ...(price_list_rules && { rules: buildPriceListRules(price_list_rules) }),
+    ...(prices && { prices: toCorePrices(prices) }),
   }
-
-  if (priceList.prices) {
-    priceList.prices = buildPriceSetPricesForCore(
-      priceList.prices,
-    ) as PriceDTO[]
-  }
-
-  return priceList
-}
-
-type VariantWithProduct = {
-  product_id: string
-  product: PriceListProductGroupDTO["product"]
 }
 
 /**
@@ -101,7 +118,7 @@ type VariantWithProduct = {
 export const fetchPriceListProductGroups = async (
   priceListId: string,
   scope: MedusaContainer
-): Promise<PriceListProductGroupDTO[]> => {
+): Promise<HttpTypes.PriceListProductGroupDTO[]> => {
   const query = scope.resolve(ContainerRegistrationKeys.QUERY)
 
   const { data: prices } = await query.graph({
@@ -112,7 +129,7 @@ export const fetchPriceListProductGroups = async (
 
   const priceSetIds = Array.from(
     new Set(
-      (prices as Array<{ price_set_id: string }>).map((p) => p.price_set_id)
+      parseGraphRows(PriceSetIdRowSchema, prices).map((p) => p.price_set_id)
     )
   )
 
@@ -137,17 +154,17 @@ export const fetchPriceListProductGroups = async (
     ],
   })
 
-  const groups = new Map<string, PriceListProductGroupDTO>()
-  for (const variant of variants as VariantWithProduct[]) {
-    const existing = groups.get(variant.product_id)
+  const groups = new Map<string, HttpTypes.PriceListProductGroupDTO>()
+  for (const variant of variants) {
+    const { product_id } = parseGraphRow(VariantProductRefSchema, variant)
+    // Passed through to the response as selected above.
+    const product: HttpTypes.PriceListProductGroupDTO["product"] =
+      variant.product
+    const existing = groups.get(product_id)
     if (existing) {
       existing.variant_count += 1
     } else {
-      groups.set(variant.product_id, {
-        product_id: variant.product_id,
-        variant_count: 1,
-        product: variant.product,
-      })
+      groups.set(product_id, { product_id, variant_count: 1, product })
     }
   }
 
@@ -168,7 +185,7 @@ export const fetchPriceListPriceIdsForProduct = async (
   })
 
   const priceSetIds: string[] = []
-  for (const variant of variants as ProductVariantWithPriceSet[]) {
+  for (const variant of parseGraphRows(VariantPriceSetRowSchema, variants)) {
     if (variant.price_set?.id) {
       priceSetIds.push(variant.price_set.id)
     }
@@ -187,5 +204,7 @@ export const fetchPriceListPriceIdsForProduct = async (
     fields: ["id"],
   })
 
-  return (productPrices as Array<{ id: string }>).map((price) => price.id)
+  return parseGraphRows(PriceIdRowSchema, productPrices).map(
+    (price) => price.id
+  )
 }

@@ -3,13 +3,14 @@ import {
   MedusaResponse,
 } from "@medusajs/framework"
 import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
+import { HttpTypes } from "@mercurjs/types"
 
 import { VendorInviteMemberType } from "../../validators"
 import { createMemberInvitesWorkflow } from "../../../../../workflows/seller"
 
 export const GET = async (
   req: AuthenticatedMedusaRequest,
-  res: MedusaResponse
+  res: MedusaResponse<HttpTypes.VendorSellerMemberListResponse>
 ) => {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
 
@@ -24,9 +25,9 @@ export const GET = async (
 
   res.json({
     seller_members: sellerMembers,
-    count: metadata!.count,
-    offset: metadata!.skip,
-    limit: metadata!.take,
+    count: metadata?.count ?? 0,
+    offset: metadata?.skip ?? 0,
+    limit: metadata?.take ?? 0,
   })
 }
 

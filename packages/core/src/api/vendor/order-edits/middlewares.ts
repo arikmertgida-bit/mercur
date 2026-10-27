@@ -16,14 +16,15 @@ import {
   VendorPostOrderEditsShippingReq,
   VendorPostOrderEditsUpdateItemQuantityReq,
 } from "./validators"
+import { getSellerId } from "../../utils/seller-context"
 
 const assertSellerOwnsOrderInBody = async (
   req: AuthenticatedMedusaRequest<{ order_id: string }>,
   _res: MedusaResponse,
   next: MedusaNextFunction
 ) => {
-  const sellerId = req.seller_context!.seller_id
-  const orderId = req.validatedBody!.order_id
+  const sellerId = getSellerId(req)
+  const orderId = req.validatedBody.order_id
   await validateSellerOrder(req.scope, sellerId, orderId)
   return next()
 }
@@ -33,7 +34,7 @@ const assertSellerOwnsOrderInParam = async (
   _res: MedusaResponse,
   next: MedusaNextFunction
 ) => {
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
   const { id } = req.params
   await validateSellerOrder(req.scope, sellerId, id)
   return next()

@@ -6,13 +6,14 @@ import {
 import { HttpTypes } from "@mercurjs/types"
 
 import { validateSellerFulfillmentSet } from "../helpers"
+import { getSellerId } from "../../../utils/seller-context"
 
 export const DELETE = async (
   req: AuthenticatedMedusaRequest,
   res: MedusaResponse<HttpTypes.VendorDeleteResponse>
 ) => {
   const { id } = req.params
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
 
   await validateSellerFulfillmentSet(req.scope, sellerId, id)
 

@@ -1,3 +1,4 @@
+import type { JsonRecord } from "@mercurjs/types"
 import { model } from "@medusajs/framework/utils"
 
 const CommissionLine = model.define("commission_line", {
@@ -10,7 +11,7 @@ const CommissionLine = model.define("commission_line", {
   rate: model.float(),
   amount: model.bigNumber(),
   description: model.text().nullable(),
-  data: model.json().nullable(),
+  data: model.json<JsonRecord>().nullable(),
 })
 
 export default CommissionLine

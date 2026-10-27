@@ -102,7 +102,7 @@ export abstract class DashboardBase {
 
     private createApp_(): express.Express {
         const app = express()
-        const route = this.options_.path!
+        const route = this.options_.path
 
         const proxyMiddleware = createProxyMiddleware({
             target: this.getViteDevServerUrl(),

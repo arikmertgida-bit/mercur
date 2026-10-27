@@ -1,3 +1,4 @@
+import type { JsonRecord } from "@mercurjs/types"
 import { model } from "@medusajs/framework/utils"
 import Seller from "./seller"
 import Member from "./member"
@@ -12,7 +13,7 @@ const SellerMember = model.define("SellerMember", {
   }),
   role_id: model.text().nullable(),
   is_owner: model.boolean().default(false),
-  metadata: model.json().nullable(),
+  metadata: model.json<JsonRecord>().nullable(),
 })
   .indexes([
     {

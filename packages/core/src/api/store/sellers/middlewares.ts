@@ -7,6 +7,7 @@ import {
 import { MiddlewareRoute } from "@medusajs/medusa"
 import { SellerStatus } from "@mercurjs/types"
 
+import { QueryFilter } from "../../../utils/query-filter"
 import { buildSellerOutsideClosureWindowFilter } from "../../utils/sellers"
 import * as QueryConfig from "./query-config"
 import { StoreGetSellersParams, StoreGetSellerParams } from "./validators"
@@ -21,8 +22,14 @@ import { StoreGetSellersParams, StoreGetSellerParams } from "./validators"
  * (no handle filter — homepage, search, category pages) keeps hiding
  * anything that isn't open and outside its closure window.
  */
+type SellerListFilterFields = QueryFilter & {
+  handle?: string
+  status?: string | string[]
+  $and?: QueryFilter[]
+}
+
 function applySellerOpenFilters(
-  req: MedusaRequest,
+  req: MedusaRequest<never, SellerListFilterFields>,
   _res: MedusaResponse,
   next: MedusaNextFunction
 ) {
@@ -35,7 +42,7 @@ function applySellerOpenFilters(
 
   req.filterableFields.status ??= SellerStatus.OPEN
 
-  const and = (req.filterableFields.$and as object[] | undefined) ?? []
+  const and = req.filterableFields.$and ?? []
   and.push(buildSellerOutsideClosureWindowFilter(now))
   req.filterableFields.$and = and
 

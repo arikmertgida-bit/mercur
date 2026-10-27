@@ -14,9 +14,9 @@ import { AdminGetOrdersParams } from "./validators"
 
 const LIST_MATCHER = "/admin/orders"
 
-const capturedBase = (ORIGINAL_MIDDLEWARES[
+const capturedBase = ORIGINAL_MIDDLEWARES[
   "dist/api/admin/orders/middlewares.js"
-] ?? []) as MiddlewareRoute[]
+] ?? []
 
 const baseWithoutListGet = capturedBase.filter((route) => {
   if (route.matcher !== LIST_MATCHER) return true

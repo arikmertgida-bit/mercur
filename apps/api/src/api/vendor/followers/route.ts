@@ -47,20 +47,22 @@ export const GET = async (
     pagination: req.queryConfig.pagination,
   })
 
-  const followerRows = parseRows(SellerFollowerLinkRowSchema, linkRows).filter(
-    (row) => row.seller_follower?.customer
+  const follows = parseRows(SellerFollowerLinkRowSchema, linkRows).flatMap(
+    (row) => {
+      const follow = row.seller_follower
+      const customer = follow?.customer
+      return follow && customer ? [{ follow, customer }] : []
+    }
   )
 
-  const customerIds = followerRows.map((row) => row.seller_follower!.customer!.id)
+  const customerIds = follows.map(({ customer }) => customer.id)
 
   const [ordersCountByCustomer, reviewStatsByCustomer] = await Promise.all([
     resolveOrderCountsByCustomer(query, sellerId, customerIds),
     resolveReviewStatsByCustomer(query, sellerId, customerIds),
   ])
 
-  const followers: VendorFollowerListItem[] = followerRows.map((row) => {
-    const follow = row.seller_follower!
-    const customer = follow.customer!
+  const followers: VendorFollowerListItem[] = follows.map(({ follow, customer }) => {
     const stats = reviewStatsByCustomer[customer.id]
 
     return {

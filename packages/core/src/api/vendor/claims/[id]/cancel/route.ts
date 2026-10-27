@@ -1,25 +1,26 @@
 import { cancelOrderClaimWorkflow } from "@medusajs/core-flows"
-import { HttpTypes } from "@medusajs/framework/types"
 import {
   AuthenticatedMedusaRequest,
   MedusaResponse,
 } from "@medusajs/framework/http"
+import { HttpTypes } from "@mercurjs/types"
 
 import { VendorPostCancelClaimReqType } from "../../validators"
+import { getSellerId } from "../../../../utils/seller-context"
 
 export const POST = async (
   req: AuthenticatedMedusaRequest<VendorPostCancelClaimReqType>,
-  res: MedusaResponse<HttpTypes.AdminClaimResponse>
+  res: MedusaResponse<HttpTypes.VendorCancelClaimResponse>
 ) => {
   const { id } = req.params
 
-  const { result } = await cancelOrderClaimWorkflow(req.scope).run({
+  await cancelOrderClaimWorkflow(req.scope).run({
     input: {
       ...req.validatedBody,
       claim_id: id,
-      canceled_by: req.seller_context!.seller_id,
+      canceled_by: getSellerId(req),
     },
   })
 
-  res.status(200).json({ claim: result as HttpTypes.AdminClaim })
+  res.status(200).json({})
 }

@@ -21,21 +21,22 @@ import { ProductAttributeWorkflowEvents } from "../events"
 import {
   updateProductAttributesStep,
 } from "../steps"
+import { QueryFilter } from "../../../utils/query-filter"
 
 export type UpdateProductAttributesWorkflowInput = {
-  selector: Record<string, unknown>
+  selector: QueryFilter
   update: UpdateProductAttributeDTO
 } & AdditionalData
 
 export type UpdateProductAttributesWorkflowHooks = [
-  Hook<"validate", { input: UpdateProductAttributesWorkflowInput }, unknown>,
+  Hook<"validate", { input: UpdateProductAttributesWorkflowInput }, void>,
   Hook<
     "productAttributesUpdated",
     {
       attributes: ProductAttributeDTO[]
-      additional_data: Record<string, unknown> | undefined
+      additional_data: AdditionalData["additional_data"]
     },
-    unknown
+    void
   >,
 ]
 
@@ -58,9 +59,9 @@ export const updateProductAttributesWorkflow: ReturnWorkflow<
     const optionTitleSync = transform(
       { input, attributes },
       ({ input, attributes }) => {
-        const optionIds = attributes
-          .filter((a) => !!a.product_option_id)
-          .map((a) => a.product_option_id as string)
+        const optionIds = attributes.flatMap((a) =>
+          a.product_option_id ? [a.product_option_id] : [],
+        )
         return {
           should: input.update.name !== undefined && optionIds.length > 0,
           stepInput: {
@@ -86,7 +87,7 @@ export const updateProductAttributesWorkflow: ReturnWorkflow<
       additional_data: input.additional_data,
     })
 
-    return new WorkflowResponse(attributes as ProductAttributeDTO[], {
+    return new WorkflowResponse(attributes, {
       hooks: [validate, productAttributesUpdated],
     })
   },

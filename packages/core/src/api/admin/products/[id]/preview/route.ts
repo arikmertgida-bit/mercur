@@ -21,5 +21,5 @@ export const GET = async (
     },
   })
 
-  res.json({ product_change: (changes[0] as ProductChangeDTO) ?? null })
+  res.json({ product_change: changes[0] ?? null })
 }

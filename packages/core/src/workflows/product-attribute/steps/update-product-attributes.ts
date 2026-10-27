@@ -6,11 +6,12 @@ import {
 } from "@mercurjs/types"
 
 import type ProductAttributeModuleService from "../../../modules/product-attribute/service"
+import { QueryFilter } from "../../../utils/query-filter"
 
 export const updateProductAttributesStepId = "pa-update-product-attributes"
 
 type UpdateProductAttributesStepInput = {
-  selector: Record<string, unknown>
+  selector: QueryFilter
   update: UpdateProductAttributeDTO
 }
 

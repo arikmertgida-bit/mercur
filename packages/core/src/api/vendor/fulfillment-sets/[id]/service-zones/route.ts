@@ -7,13 +7,14 @@ import { HttpTypes } from "@mercurjs/types"
 
 import { refetchFulfillmentSet, validateSellerFulfillmentSet } from "../../helpers"
 import { VendorCreateServiceZoneType } from "../../validators"
+import { getSellerId } from "../../../../utils/seller-context"
 
 export const POST = async (
   req: AuthenticatedMedusaRequest<VendorCreateServiceZoneType>,
   res: MedusaResponse<HttpTypes.VendorFulfillmentSetResponse>
 ) => {
   const { id } = req.params
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
 
   await validateSellerFulfillmentSet(req.scope, sellerId, id)
 

@@ -20,7 +20,7 @@ export const GET = async (
         ...filterableFields,
         skip: req.queryConfig.pagination?.skip,
         take: req.queryConfig.pagination?.take,
-        order: req.queryConfig.pagination?.order as Record<string, string>,
+        order: req.queryConfig.pagination?.order,
       },
     },
   })

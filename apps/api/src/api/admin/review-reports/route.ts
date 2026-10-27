@@ -7,6 +7,7 @@ import {
   SellerSummarySchema,
   parseRows,
 } from "../../../lib/graph-schemas";
+import type { AdminGetReviewReportsParamsType } from "./validators";
 
 export type AdminReviewReportRow = {
   id: string;
@@ -28,7 +29,7 @@ export type AdminReviewReportsListResponse = {
 };
 
 export const GET = async (
-  req: AuthenticatedMedusaRequest,
+  req: AuthenticatedMedusaRequest<AdminGetReviewReportsParamsType>,
   res: MedusaResponse<AdminReviewReportsListResponse>
 ): Promise<void> => {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY);

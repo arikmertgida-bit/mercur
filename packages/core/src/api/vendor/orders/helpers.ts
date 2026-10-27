@@ -4,10 +4,22 @@ import {
   MedusaError,
 } from "@medusajs/framework/utils"
 
+import { QueryFilter } from "../../../utils/query-filter"
+
 export {
   normalizeOrderPaymentCollections,
   withCartPaymentCollectionFields,
 } from "../../utils/split-order-payment-status"
+
+/**
+ * `filterableFields` of the vendor order-child lists (claims, exchanges,
+ * returns): an explicit `order_id` is ownership-checked, otherwise the list
+ * is scoped through the seller's order link.
+ */
+export type OrderScopedFilterFields = QueryFilter & {
+  order_id?: string | string[]
+  seller_id?: string
+}
 
 export const validateSellerOrder = async (
   scope: MedusaContainer,

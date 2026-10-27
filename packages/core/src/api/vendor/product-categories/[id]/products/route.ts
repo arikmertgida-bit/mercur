@@ -11,13 +11,14 @@ import { HttpTypes } from "@mercurjs/types"
 import { ensureSellerOwnsProduct } from "../../../products/helpers"
 import { VendorBatchLinkProductsToCategoryType } from "../../validators"
 import { assignProductsToCategoryWorkflow } from "../../../../../workflows/product/workflows/assign-products-to-category"
+import { getSellerId } from "../../../../utils/seller-context"
 
 export const POST = async (
   req: AuthenticatedMedusaRequest<VendorBatchLinkProductsToCategoryType>,
   res: MedusaResponse<HttpTypes.VendorProductCategoryResponse>
 ) => {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
   const { add, remove } = req.validatedBody
 
   const {

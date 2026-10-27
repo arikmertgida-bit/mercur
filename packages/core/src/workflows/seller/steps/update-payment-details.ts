@@ -3,10 +3,15 @@ import { MercurModules, PaymentDetailsDTO, UpdatePaymentDetailsDTO } from "@merc
 
 import SellerModuleService from "../../../modules/seller/service"
 
+type UpdatePaymentDetailsCompensation = {
+  existing: PaymentDetailsDTO | null
+  seller_id: string
+}
+
 export const updatePaymentDetailsStep = createStep<
   { seller_id: string; data: UpdatePaymentDetailsDTO },
   PaymentDetailsDTO,
-  any
+  UpdatePaymentDetailsCompensation
 >(
   "update-payment-details",
   async (
@@ -41,11 +46,15 @@ export const updatePaymentDetailsStep = createStep<
     })
     return new StepResponse(created, { existing: null, seller_id })
   },
-  async ({ existing, seller_id }, { container }) => {
+  async (compensation, { container }) => {
+    if (!compensation) {
+      return
+    }
+    const { existing, seller_id } = compensation
     const service =
       container.resolve<SellerModuleService>(MercurModules.SELLER)
     if (existing) {
-      await service.updatePaymentDetails(existing.id, existing)
+      await service.updatePaymentDetails(existing)
     } else {
       const current = await service.listPaymentDetails({ seller_id })
       if (current.length > 0) {

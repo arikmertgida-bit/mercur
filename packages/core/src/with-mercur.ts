@@ -1,15 +1,19 @@
 import "./patches/register"
 
-import type { InputConfigWithArrayModules } from "@medusajs/framework/types"
+import type { ConfigModule, InputConfigWithArrayModules } from "@medusajs/framework/types"
 import { defineConfig } from '@medusajs/framework/utils'
 import { assertPatchesDisabled } from "./patches"
 import { disableMedusaMiddlewares } from "./utils/disable-medusa-middlewares"
 
-type HttpConfig = NonNullable<NonNullable<InputConfigWithArrayModules["projectConfig"]>["http"]>
+type ProjectConfig = NonNullable<InputConfigWithArrayModules["projectConfig"]>
 
+// Same contract as Medusa's own `defineConfig` input: `projectConfig` itself
+// is optional (defineConfig fills in every default when it's absent), but
+// once given, its `http` block — with the required store/admin/auth CORS
+// strings — is too. Mercur only adds `vendorCors` and the `mercur` block.
 export type MercurInputConfig = Omit<InputConfigWithArrayModules, "projectConfig"> & {
-  projectConfig?: Omit<NonNullable<InputConfigWithArrayModules["projectConfig"]>, "http"> & {
-    http?: HttpConfig & {
+  projectConfig?: Omit<ProjectConfig, "http"> & {
+    http: ProjectConfig["http"] & {
       vendorCors?: string
     }
     mercur?: {
@@ -24,16 +28,9 @@ export type MercurInputConfig = Omit<InputConfigWithArrayModules, "projectConfig
   }
 }
 
-export function withMercur(config: MercurInputConfig = {}): InputConfigWithArrayModules {
+export function withMercur(config: MercurInputConfig = {}): ConfigModule {
   assertPatchesDisabled(config.projectConfig?.mercur?.disabledPatches)
   disableMedusaMiddlewares()
-
-  const projectConfig = {
-    ...config.projectConfig,
-    http: {
-      ...config.projectConfig?.http,
-    },
-  }
 
   const admin = {
     ...config.admin,
@@ -58,10 +55,9 @@ export function withMercur(config: MercurInputConfig = {}): InputConfigWithArray
 
   return defineConfig({
     ...config,
-    projectConfig,
     admin,
     featureFlags,
     modules,
     plugins,
-  } as InputConfigWithArrayModules)
+  })
 }

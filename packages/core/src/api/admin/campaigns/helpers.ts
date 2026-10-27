@@ -4,10 +4,23 @@ import {
   MedusaResponse,
 } from "@medusajs/framework/http"
 import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
+import { z } from "zod"
+
+import { parseGraphRows } from "../../../utils/graph-rows"
+import { QueryFilter } from "../../../utils/query-filter"
 
 const PLATFORM_OWNER = "platform"
 
-type Filter = Record<string, unknown>
+type Filter = QueryFilter
+
+type CampaignFilterFields = QueryFilter & {
+  seller_id?: string | string[]
+  budget_type?: string
+  status?: string
+  $and?: QueryFilter[]
+}
+
+const CampaignIdRowSchema = z.object({ campaign_id: z.string() })
 
 const buildStatusFilter = (status: string, now: Date): Filter | undefined => {
   switch (status) {
@@ -31,15 +44,15 @@ const buildStatusFilter = (status: string, now: Date): Filter | undefined => {
 }
 
 export const applyCampaignFilters = async (
-  req: AuthenticatedMedusaRequest,
+  req: AuthenticatedMedusaRequest<never, CampaignFilterFields>,
   _res: MedusaResponse,
   next: MedusaNextFunction
 ) => {
   const filterableFields = req.filterableFields ?? {}
 
-  const sellerId = filterableFields.seller_id as string | string[] | undefined
-  const budgetType = filterableFields.budget_type as string | undefined
-  const status = filterableFields.status as string | undefined
+  const sellerId = filterableFields.seller_id
+  const budgetType = filterableFields.budget_type
+  const status = filterableFields.status
 
   delete filterableFields.seller_id
   delete filterableFields.budget_type
@@ -61,7 +74,9 @@ export const applyCampaignFilters = async (
       fields: ["campaign_id"],
       filters: { type: budgetType },
     })
-    budgetIds = data.map((b: { campaign_id: string }) => b.campaign_id)
+    budgetIds = parseGraphRows(CampaignIdRowSchema, data).map(
+      (b) => b.campaign_id
+    )
     if (!budgetIds.length) {
       noMatch = true
     }
@@ -81,7 +96,9 @@ export const applyCampaignFilters = async (
         fields: ["campaign_id"],
         filters: { seller_id: requestedSellers },
       })
-      sellerIds = data.map((l: { campaign_id: string }) => l.campaign_id)
+      sellerIds = parseGraphRows(CampaignIdRowSchema, data).map(
+        (l) => l.campaign_id
+      )
     }
 
     let platformFilter: Filter | undefined
@@ -90,7 +107,9 @@ export const applyCampaignFilters = async (
         entity: "campaign_seller",
         fields: ["campaign_id"],
       })
-      const allLinkedIds = data.map((l: { campaign_id: string }) => l.campaign_id)
+      const allLinkedIds = parseGraphRows(CampaignIdRowSchema, data).map(
+        (l) => l.campaign_id
+      )
       platformFilter = allLinkedIds.length
         ? { id: { $nin: allLinkedIds } }
         : {}
@@ -119,13 +138,12 @@ export const applyCampaignFilters = async (
 
   // Intersect the two plain id allowlists (budget + real sellers) when possible
   // to keep the common path a single `id: { $in }` constraint.
-  if (
-    !noMatch &&
-    budgetIds &&
-    sellerConstraint &&
-    isPlainInFilter(sellerConstraint)
-  ) {
-    const sellerIds = (sellerConstraint.id as { $in: string[] }).$in
+  const plainSellerIds = sellerConstraint
+    ? getPlainInFilterIds(sellerConstraint)
+    : undefined
+
+  if (!noMatch && budgetIds && plainSellerIds) {
+    const sellerIds = plainSellerIds
     const budgetSet = new Set(budgetIds)
     const intersection = sellerIds.filter((id) => budgetSet.has(id))
     if (!intersection.length) {
@@ -158,22 +176,19 @@ export const applyCampaignFilters = async (
   }
 
   if (constraints.length) {
-    const existingAnd = Array.isArray(filterableFields.$and)
-      ? (filterableFields.$and as Filter[])
-      : []
+    const existingAnd = filterableFields.$and ?? []
     filterableFields.$and = [...existingAnd, ...constraints]
   }
 
   return next()
 }
 
-const isPlainInFilter = (
-  filter: Filter
-): filter is { id: { $in: string[] } } => {
-  const id = filter.id as { $in?: unknown } | undefined
-  return (
-    Object.keys(filter).length === 1 &&
-    !!id &&
-    Array.isArray((id as { $in?: unknown }).$in)
-  )
+// A filter that is nothing but `{ id: { $in: [...] } }`.
+const PlainInFilterSchema = z
+  .object({ id: z.object({ $in: z.array(z.string()) }) })
+  .strict()
+
+const getPlainInFilterIds = (filter: Filter): string[] | undefined => {
+  const parsed = PlainInFilterSchema.safeParse(filter)
+  return parsed.success ? parsed.data.id.$in : undefined
 }

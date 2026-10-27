@@ -21,6 +21,9 @@ import {
 } from "./validators"
 import { ProductStatus } from "@mercurjs/types"
 
+import { QueryFilter } from "../../../utils/query-filter"
+import { StoreProductFilterFields } from "./helpers"
+
 /**
  * Apply the store-facing defaults that vanilla Medusa applies on its own
  * `/store/products` route. Besides forcing the `published` status, this
@@ -31,7 +34,7 @@ import { ProductStatus } from "@mercurjs/types"
  */
 const applyProductFilters = applyDefaultFilters({
   status: ProductStatus.PUBLISHED,
-  categories: (filters: Record<string, unknown>) => {
+  categories: (filters: QueryFilter) => {
     const categoryIds = filters.category_id
     delete filters.category_id
 
@@ -51,14 +54,12 @@ const applyProductFilters = applyDefaultFilters({
  * (AND across attributes), while multiple values within one attribute are OR'd.
  */
 function transformAttributeFilters(
-  req: MedusaRequest,
+  req: MedusaRequest<never, StoreProductFilterFields>,
   _res: MedusaResponse,
   next: MedusaNextFunction
 ) {
-  const filters = (req.filterableFields ??= {}) as Record<string, unknown>
-  const attributes = filters.attributes as
-    | Record<string, string | string[]>
-    | undefined
+  const filters = (req.filterableFields ??= {})
+  const attributes = filters.attributes
   delete filters.attributes
 
   if (!attributes) {
@@ -75,9 +76,7 @@ function transformAttributeFilters(
     .map((values) => ({ variants: { options: { value: values } } }))
 
   if (clauses.length > 0) {
-    const existing = Array.isArray(filters.$and)
-      ? (filters.$and as unknown[])
-      : []
+    const existing = filters.$and ?? []
     filters.$and = [...existing, ...clauses]
   }
 

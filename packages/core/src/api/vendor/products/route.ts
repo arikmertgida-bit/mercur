@@ -12,9 +12,13 @@ import {
 } from "../../../workflows/product/workflows/create-products"
 import { enrichProductAttributes } from "../../utils"
 import { VendorCreateProductType, VendorGetProductsParamsType } from "./validators"
+import { getSellerId } from "../../utils/seller-context"
 
 export const GET = async (
-  req: AuthenticatedMedusaRequest<VendorGetProductsParamsType>,
+  req: AuthenticatedMedusaRequest<
+    Partial<VendorGetProductsParamsType>,
+    VendorGetProductsParamsType
+  >,
   res: MedusaResponse<HttpTypes.VendorProductListResponse>
 ) => {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
@@ -41,16 +45,12 @@ export const POST = async (
   res: MedusaResponse<HttpTypes.VendorProductResponse>
 ) => {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
 
   const { additional_data, ...payload } = req.validatedBody
 
   const productInput: CreateProductsWorkflowInput["products"][number] = {
     ...payload,
-    // @ts-expect-error — TypeScript's `Omit` over the `VendorCreateProductType &
-    // AdditionalData` intersection degrades `payload.status` to `{}` once
-    // `additional_data` is destructured out (confirmed via tsc); a TS/Zod-typing
-    // boundary, not a shortcut — `payload.status` is really `ProductStatus | undefined`.
     status: payload.status ?? ProductStatus.PROPOSED,
     seller_ids: [sellerId],
   }

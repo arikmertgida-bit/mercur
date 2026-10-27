@@ -1,3 +1,4 @@
+import type { JsonRecord } from "@mercurjs/types"
 import { model } from "@medusajs/framework/utils"
 
 import ProductChange from "./product-change"
@@ -8,7 +9,7 @@ const ProductChangeAction = model
     product_id: model.text(),
     ordering: model.autoincrement(),
     action: model.text(),
-    details: model.json().default({}),
+    details: model.json<JsonRecord>().default({}),
     reference: model.text().nullable(),
     reference_id: model.text().nullable(),
     internal_note: model.text().nullable(),

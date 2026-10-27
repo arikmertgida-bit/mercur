@@ -17,25 +17,41 @@ import {
   ProductAttributeBatchAdd,
   ProductAttributeBatchUpdate,
   ProductChangeActionType,
-  JsonValue,
 } from "@mercurjs/types"
+import { z } from "zod"
 
 import {
   applyVariantImageLinksStep,
   updateProductChangeActionsStep,
   type VariantImageLinks,
 } from "../steps"
-import { deleteOffersWorkflow } from "../../offer/workflows/delete-offers"
 import { applyProductAttributeChangeActionsWorkflow } from "./apply-product-attribute-change-actions"
+import { parseGraphRow, parseGraphRows } from "../../../utils/graph-rows"
+import { JsonSnapshot } from "../../../utils/json-schema"
+import {
+  AttributeAddDetailsSchema,
+  AttributeRemoveDetailsSchema,
+  AttributeUpdateDetailsSchema,
+  ChangeActionRowSchema,
+  FieldUpdateDetailsSchema,
+  StagedProductUpdateSchema,
+  StagedVariantCreateSchema,
+  StagedVariantUpdateSchema,
+  StatusChangeDetailsSchema,
+  VariantAddDetailsSchema,
+  VariantImagesSchema,
+  VariantRemoveDetailsSchema,
+  VariantUpdateDetailsSchema,
+} from "../utils/action-details"
 
 export type ApplyProductChangeActionsWorkflowInput = {
   change_ids: string[]
 }
 
 type BucketedActions = {
-  productUpdates: Array<Record<string, unknown> & { id: string }>
-  variantCreates: Array<Record<string, unknown> & { product_id: string }>
-  variantUpdates: Array<Record<string, unknown> & { id: string }>
+  productUpdates: z.infer<typeof StagedProductUpdateSchema>[]
+  variantCreates: z.infer<typeof StagedVariantCreateSchema>[]
+  variantUpdates: z.infer<typeof StagedVariantUpdateSchema>[]
   variantImageLinks: VariantImageLinks[]
   variantDeletes: string[]
   attributeBatch: {
@@ -80,14 +96,9 @@ export const applyProductChangeActionsWorkflow: ReturnWorkflow<
     }).config({ name: "pc-load-pending-actions" })
 
     const buckets = transform({ actions }, ({ actions }): BucketedActions => {
-      const productUpdatesById = new Map<
-        string,
-        Record<string, unknown> & { id: string }
-      >()
-      const variantCreates: Array<
-        Record<string, unknown> & { product_id: string }
-      > = []
-      const variantUpdates: Array<Record<string, unknown> & { id: string }> = []
+      const productUpdatesById = new Map<string, JsonSnapshot & { id: string }>()
+      const variantCreates: BucketedActions["variantCreates"] = []
+      const variantUpdates: BucketedActions["variantUpdates"] = []
       const variantImageLinks: VariantImageLinks[] = []
       const variantDeletes: string[] = []
       let attributeBatch: BucketedActions["attributeBatch"] = null
@@ -103,19 +114,19 @@ export const applyProductChangeActionsWorkflow: ReturnWorkflow<
       const productsToDelete = new Set<string>()
       const pendingActionIds: string[] = []
 
-      for (const action of actions ?? []) {
-        if (!action || action.applied) continue
+      for (const action of parseGraphRows(ChangeActionRowSchema, actions)) {
+        if (action.applied) continue
         // Types this workflow cannot act on keep `applied: false` — stamping
         // them would assert an application that never happened.
-        if (!HANDLED_ACTION_TYPES.has(action.action as string)) continue
-        pendingActionIds.push(action.id as string)
+        if (!HANDLED_ACTION_TYPES.has(action.action)) continue
+        pendingActionIds.push(action.id)
 
-        const productId = action.product_id as string
-        const details = (action.details ?? {}) as Record<string, unknown>
+        const productId = action.product_id
+        const details = action.details ?? {}
 
         switch (action.action) {
           case ProductChangeActionType.STATUS_CHANGE: {
-            const status = (details as { status?: string }).status
+            const { status } = StatusChangeDetailsSchema.parse(details)
             if (status === undefined) break
             const u = productUpdatesById.get(productId) ?? { id: productId }
             u.status = status
@@ -123,10 +134,7 @@ export const applyProductChangeActionsWorkflow: ReturnWorkflow<
             break
           }
           case ProductChangeActionType.UPDATE: {
-            const { field, value } = details as {
-              field?: string
-              value?: JsonValue
-            }
+            const { field, value } = FieldUpdateDetailsSchema.parse(details)
             if (!field) break
             const u = productUpdatesById.get(productId) ?? { id: productId }
             u[field] = value
@@ -134,61 +142,58 @@ export const applyProductChangeActionsWorkflow: ReturnWorkflow<
             break
           }
           case ProductChangeActionType.VARIANT_ADD: {
-            const variant = (
-              details as { variant?: Record<string, unknown> }
-            ).variant
+            const { variant } = VariantAddDetailsSchema.parse(details)
             if (!variant) break
-            variantCreates.push({ ...variant, product_id: productId })
+            variantCreates.push(
+              parseGraphRow(StagedVariantCreateSchema, {
+                ...variant,
+                product_id: productId,
+              }),
+            )
             break
           }
           case ProductChangeActionType.VARIANT_UPDATE: {
-            const { variant_id, fields } = details as {
-              variant_id?: string
-              fields?: Record<string, unknown>
-            }
-            if (
-              !variant_id ||
-              !fields ||
-              !Object.keys(fields as object).length
-            )
-              break
-            const { images, ...scalarFields } = fields as {
-              images?: { add?: string[]; remove?: string[] }
-            } & Record<string, unknown>
+            const { variant_id, fields } =
+              VariantUpdateDetailsSchema.parse(details)
+            if (!variant_id || !fields || !Object.keys(fields).length) break
+            const { images: rawImages, ...scalarFields } = fields
+            const images = VariantImagesSchema.optional().parse(rawImages)
             const add = images?.add ?? []
             const remove = images?.remove ?? []
             if (add.length || remove.length) {
               variantImageLinks.push({ variant_id, add, remove })
             }
             if (Object.keys(scalarFields).length) {
-              variantUpdates.push({ id: variant_id, ...scalarFields })
+              variantUpdates.push(
+                parseGraphRow(StagedVariantUpdateSchema, {
+                  ...scalarFields,
+                  id: variant_id,
+                }),
+              )
             }
             break
           }
           case ProductChangeActionType.VARIANT_REMOVE: {
-            const variantId = (details as { variant_id?: string }).variant_id
+            const { variant_id: variantId } =
+              VariantRemoveDetailsSchema.parse(details)
             if (variantId) variantDeletes.push(variantId)
             break
           }
           case ProductChangeActionType.ATTRIBUTE_ADD: {
-            const attribute = (
-              details as { attribute?: ProductAttributeBatchAdd }
-            ).attribute
+            const { attribute } = AttributeAddDetailsSchema.parse(details)
             if (!attribute) break
             ensureAttributeBatch(productId).add.push(attribute)
             break
           }
           case ProductChangeActionType.ATTRIBUTE_REMOVE: {
-            const attributeId = (details as { attribute_id?: string })
-              .attribute_id
+            const { attribute_id: attributeId } =
+              AttributeRemoveDetailsSchema.parse(details)
             if (!attributeId) break
             ensureAttributeBatch(productId).remove.push(attributeId)
             break
           }
           case ProductChangeActionType.ATTRIBUTE_UPDATE: {
-            const update = (
-              details as { update?: ProductAttributeBatchUpdate }
-            ).update
+            const { update } = AttributeUpdateDetailsSchema.parse(details)
             if (!update) break
             ensureAttributeBatch(productId).update.push(update)
             break
@@ -201,9 +206,9 @@ export const applyProductChangeActionsWorkflow: ReturnWorkflow<
       }
 
       return {
-        productUpdates: Array.from(productUpdatesById.values()).filter(
-          (u) => Object.keys(u).length > 1,
-        ),
+        productUpdates: Array.from(productUpdatesById.values())
+          .filter((u) => Object.keys(u).length > 1)
+          .map((u) => parseGraphRow(StagedProductUpdateSchema, u)),
         variantCreates,
         variantUpdates,
         variantImageLinks,
@@ -218,7 +223,7 @@ export const applyProductChangeActionsWorkflow: ReturnWorkflow<
       () => {
         updateProductsWorkflow.runAsStep({
           input: transform({ buckets }, ({ buckets }) => ({
-            products: buckets.productUpdates as never,
+            products: buckets.productUpdates,
           })),
         })
       },
@@ -238,7 +243,7 @@ export const applyProductChangeActionsWorkflow: ReturnWorkflow<
       () => {
         createProductVariantsWorkflow.runAsStep({
           input: transform({ buckets }, ({ buckets }) => ({
-            product_variants: buckets.variantCreates as never,
+            product_variants: buckets.variantCreates,
           })),
         })
       },
@@ -248,7 +253,7 @@ export const applyProductChangeActionsWorkflow: ReturnWorkflow<
       () => {
         updateProductVariantsWorkflow.runAsStep({
           input: transform({ buckets }, ({ buckets }) => ({
-            product_variants: buckets.variantUpdates as never,
+            product_variants: buckets.variantUpdates,
           })),
         })
       },
@@ -275,38 +280,14 @@ export const applyProductChangeActionsWorkflow: ReturnWorkflow<
       })),
     })
 
-    const deletedProductOffers = when(
+    when(
       { buckets },
       ({ buckets }) => buckets.productsToDelete.length > 0,
     ).then(() => {
-      const { data: productOffers } = useQueryGraphStep({
-        entity: "offer",
-        fields: ["id"],
-        filters: transform({ buckets }, ({ buckets }) => ({
-          product_id: buckets.productsToDelete,
-        })),
-      }).config({ name: "load-deleted-products-offers" })
-
       deleteProductsWorkflow.runAsStep({
         input: transform({ buckets }, ({ buckets }) => ({
           ids: buckets.productsToDelete,
         })),
-      })
-
-      return productOffers
-    })
-
-    when(
-      { deletedProductOffers },
-      ({ deletedProductOffers }) => (deletedProductOffers?.length ?? 0) > 0,
-    ).then(() => {
-      deleteOffersWorkflow.runAsStep({
-        input: transform(
-          { deletedProductOffers },
-          ({ deletedProductOffers }) => ({
-            ids: (deletedProductOffers ?? []).map((o) => o.id),
-          }),
-        ),
       })
     })
 

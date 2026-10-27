@@ -1,5 +1,5 @@
 import { z } from "zod"
-import { ProductStatus } from "@mercurjs/types"
+import { AttributeType, ProductStatus } from "@mercurjs/types"
 import {
   createFindParams,
   createOperatorMap,
@@ -10,19 +10,14 @@ import {
   applyAndAndOrOperators,
   booleanString,
 } from "@medusajs/medusa/api/utils/common-validators/common"
-import { AdditionalData, OperatorMap } from "@medusajs/framework/types"
+import { AdditionalData } from "@medusajs/framework/types"
 import { isPresent } from "@medusajs/framework/utils"
 import { sanitizeNullableRichText } from "../../../utils/sanitize-rich-text"
+import { JsonRecordSchema } from "../../../utils/json-schema"
 
 const statusEnum = z.nativeEnum(ProductStatus)
 
-// `metadata` is genuinely open-ended, consumer-defined JSON — Medusa's own
-// module types accept any value. We still refuse `unknown`/`any` at this
-// HTTP boundary: values must be JSON scalars, which is what every metadata
-// consumer in this codebase (JsonViewSection, MetadataSection) actually
-// renders.
-const MetadataValue = z.union([z.string(), z.number(), z.boolean(), z.null()])
-const MetadataSchema = z.record(z.string(), MetadataValue)
+const IdFilterSchema = z.union([z.string(), z.array(z.string())])
 
 const AdminGetProductsParamsFields = z.object({
   q: z.string().optional(),
@@ -33,8 +28,8 @@ const AdminGetProductsParamsFields = z.object({
   status: statusEnum.array().optional(),
   collection_id: z.union([z.string(), z.array(z.string())]).optional(),
   type_id: z.union([z.string(), z.array(z.string())]).optional(),
-  category_id: z.union([z.string(), z.array(z.string())]).optional(),
-  tag_id: z.union([z.string(), z.array(z.string())]).optional(),
+  category_id: IdFilterSchema.optional(),
+  tag_id: IdFilterSchema.optional(),
   sku: z.string().optional(),
   ean: z.string().optional(),
   upc: z.string().optional(),
@@ -53,17 +48,21 @@ export const AdminGetProductsParams = createFindParams({
   .merge(applyAndAndOrOperators(AdminGetProductsParamsFields))
   .transform((data) => {
     const res: typeof data & {
-      tags?: { id: string[] }
-      categories?: { id: OperatorMap<string> }
+      tags?: { id: string | string[] }
+      categories?: { id: string | string[] }
     } = { ...data }
 
-    if (isPresent(data.tag_id)) {
-      res.tags = { id: data.tag_id as string[] }
+    // `data` loses its field types through Medusa's operator merge, so the
+    // already-validated id filters are re-read through their own schema.
+    const tagId = IdFilterSchema.safeParse(data.tag_id)
+    if (isPresent(data.tag_id) && tagId.success) {
+      res.tags = { id: tagId.data }
       delete res.tag_id
     }
 
-    if (isPresent(data.category_id)) {
-      res.categories = { id: data.category_id as OperatorMap<string> }
+    const categoryId = IdFilterSchema.safeParse(data.category_id)
+    if (isPresent(data.category_id) && categoryId.success) {
+      res.categories = { id: categoryId.data }
       delete res.category_id
     }
 
@@ -98,7 +97,7 @@ const CreateProductVariant = z
     width: z.number().nullish(),
     origin_country: z.string().nullish(),
     material: z.string().nullish(),
-    metadata: MetadataSchema.nullish(),
+    metadata: JsonRecordSchema.nullish(),
     options: z.record(z.string(), z.string()).optional(),
     prices: z
       .array(z.object({ amount: z.number(), currency_code: z.string() }))
@@ -130,7 +129,7 @@ const UpdateProductVariant = z
     width: z.number().nullish(),
     origin_country: z.string().nullish(),
     material: z.string().nullish(),
-    metadata: MetadataSchema.nullish(),
+    metadata: JsonRecordSchema.nullish(),
     prices: z
       .array(
         z.object({
@@ -147,13 +146,7 @@ const UpdateProductVariant = z
   })
   .strict()
 
-const AttributeTypeEnum = z.enum([
-  "single_select",
-  "multi_select",
-  "text",
-  "toggle",
-  "unit",
-])
+const AttributeTypeEnum = z.enum(AttributeType)
 
 const AttributeScalar = z.union([z.string(), z.number(), z.boolean()])
 const UnifiedProductAttributeInput = z.union([
@@ -174,7 +167,7 @@ const UnifiedProductAttributeInput = z.union([
       is_filterable: z.boolean().optional(),
       is_required: z.boolean().optional(),
       description: z.string().nullish(),
-      metadata: MetadataSchema.nullish(),
+      metadata: JsonRecordSchema.nullish(),
     })
     .strict(),
 ])
@@ -223,7 +216,14 @@ const CreateProduct = z
   .object({
     title: z.string(),
     subtitle: z.string().nullish(),
-    description: z.string().nullish().transform(sanitizeNullableRichText),
+    // `.optional()` after the transform keeps the key optional in the
+    // inferred type (a bare transform makes it required); undefined is
+    // passed through unchanged either way.
+    description: z
+      .string()
+      .nullish()
+      .transform(sanitizeNullableRichText)
+      .optional(),
     is_giftcard: booleanString().optional().default(false),
     discountable: booleanString().optional().default(true),
     images: z.array(z.object({ url: z.string() })).optional(),
@@ -250,7 +250,7 @@ const CreateProduct = z
     origin_country: z.string().nullish(),
     material: z.string().nullish(),
     shipping_profile_id: z.string().nullish(),
-    metadata: MetadataSchema.nullish(),
+    metadata: JsonRecordSchema.nullish(),
   })
   .strict()
 export const AdminCreateProduct = WithAdditionalData(CreateProduct)
@@ -261,14 +261,23 @@ export const UpdateProduct = z
   .object({
     title: z.string().optional(),
     subtitle: z.string().nullish(),
-    description: z.string().nullish().transform(sanitizeNullableRichText),
+    // `.optional()` after the transform keeps the key optional in the
+    // inferred type (a bare transform makes it required); undefined is
+    // passed through unchanged either way.
+    description: z
+      .string()
+      .nullish()
+      .transform(sanitizeNullableRichText)
+      .optional(),
     discountable: booleanString().optional(),
     is_giftcard: booleanString().optional(),
     images: z
       .array(z.object({ id: z.string().optional(), url: z.string() }))
       .optional(),
     thumbnail: z.string().nullish(),
-    handle: z.string().nullish(),
+    // The product handle column is required: unlike the other fields it can
+    // be changed but never cleared (Medusa's own validator is the same).
+    handle: z.string().optional(),
     status: statusEnum.optional(),
     external_id: z.string().nullish(),
     type_id: z.string().nullish(),
@@ -288,7 +297,10 @@ export const UpdateProduct = z
     origin_country: z.string().nullish(),
     material: z.string().nullish(),
     shipping_profile_id: z.string().nullish(),
-    metadata: MetadataSchema.nullish(),
+    // The admin product sales-channels form sends the full assignment (same
+    // field as Medusa's own update validator).
+    sales_channels: z.array(IdAssociation).optional(),
+    metadata: JsonRecordSchema.nullish(),
   })
   .strict()
 export const AdminUpdateProduct = WithAdditionalData(UpdateProduct)
@@ -394,7 +406,7 @@ const BatchAttributeAdd = z.union([
       is_filterable: z.boolean().optional(),
       is_required: z.boolean().optional(),
       description: z.string().nullish(),
-      metadata: MetadataSchema.nullish(),
+      metadata: JsonRecordSchema.nullish(),
     })
     .strict()
     .refine((v) => !v.is_variant_axis || (v.type ?? "multi_select") === "multi_select", {

@@ -14,13 +14,14 @@ import {
   validateSellerPriceList,
 } from "../../helpers"
 import { VendorGetPriceListProductsParamsType } from "../../validators"
+import { getSellerId } from "../../../../utils/seller-context"
 
 export const GET = async (
-  req: AuthenticatedMedusaRequest<VendorGetPriceListProductsParamsType>,
+  req: AuthenticatedMedusaRequest<never, VendorGetPriceListProductsParamsType>,
   res: MedusaResponse<VendorHttpTypes.VendorPriceListProductsListResponse>
 ) => {
   const id = req.params.id
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
   const { q, order, offset = 0, limit = 10 } = req.validatedQuery
 
   await validateSellerPriceList(req.scope, sellerId, id)
@@ -33,7 +34,7 @@ export const GET = async (
       )
     : allGroups
 
-  const sortKey = order?.replace(/^-/, "") as "created_at" | "updated_at" | undefined
+  const sortKey = order?.replace(/^-/, "")
   if (sortKey === "created_at" || sortKey === "updated_at") {
     const direction = order?.startsWith("-") ? -1 : 1
     filtered.sort(
@@ -59,7 +60,7 @@ export const POST = async (
   res: MedusaResponse<VendorHttpTypes.VendorPriceListResponse>
 ) => {
   const id = req.params.id
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
   const { remove = [] } = req.validatedBody
 
   await validateSellerPriceList(req.scope, sellerId, id)

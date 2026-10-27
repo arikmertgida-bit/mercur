@@ -31,11 +31,10 @@ export const defaultAdminReservationFields = [
   ),
   "inventory_item.seller.id",
   "inventory_item.seller.name",
-  "inventory_item.offers.id",
-  "inventory_item.offers.product_variant.id",
-  "inventory_item.offers.product_variant.title",
-  "inventory_item.offers.product.id",
-  "inventory_item.offers.product.title",
+  "inventory_item.variants.id",
+  "inventory_item.variants.title",
+  "inventory_item.variants.product.id",
+  "inventory_item.variants.product.title",
 ]
 
 export const retrieveTransformQueryConfig = {

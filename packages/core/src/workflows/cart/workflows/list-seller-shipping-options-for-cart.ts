@@ -12,28 +12,75 @@ import {
     validatePresenceOfStep,
 } from "@medusajs/medusa/core-flows"
 import { deduplicate, filterObjectByKeys, isDefined, MathBN } from "@medusajs/framework/utils"
-import { BigNumberInput } from "@medusajs/framework/types"
-import { cartFieldsForPricingContext, CartLineItemWithSeller, getLineItemSellerId, pricingContextResult, shippingOptionsContextResult } from "../utils"
-import { SellerDTO } from "@mercurjs/types"
+import { z } from "zod"
+import { cartFieldsForPricingContext, getLineItemSellerId, pricingContextResult, shippingOptionsContextResult } from "../utils"
+import { GraphBigNumberSchema, parseGraphRow, parseGraphRows } from "../../../utils/graph-rows"
 
-type CartItemVariantInventoryLevel = {
-    location_id: string
-    stocked_quantity?: BigNumberInput
-    reserved_quantity?: BigNumberInput
-    raw_stocked_quantity?: BigNumberInput
-    raw_reserved_quantity?: BigNumberInput
-}
+const IdRowSchema = z.object({ id: z.string() })
 
-type CartItemWithInventory = Omit<CartLineItemWithSeller, "variant"> & {
-    variant?: (Omit<NonNullable<CartLineItemWithSeller["variant"]>, "inventory_items"> & {
-        inventory_items?: Array<{
-            inventory?: {
-                requires_shipping?: boolean
-                location_levels?: CartItemVariantInventoryLevel[]
-            } | null
-        }> | null
-    }) | null
-}
+// The cart, stock location and shipping option rows go to the hooks, the
+// pricing context and the response unchanged; these are the fields this
+// workflow itself reads from them.
+const CartItemRowSchema = z.object({
+    quantity: GraphBigNumberSchema,
+    variant: z
+        .object({
+            product: z
+                .object({ sellers: z.array(IdRowSchema).nullish() })
+                .nullish(),
+            inventory_items: z
+                .array(
+                    z.object({
+                        inventory: z
+                            .object({
+                                requires_shipping: z.boolean().nullish(),
+                                location_levels: z
+                                    .array(
+                                        z.object({
+                                            location_id: z.string(),
+                                            stocked_quantity: GraphBigNumberSchema.nullish(),
+                                            reserved_quantity: GraphBigNumberSchema.nullish(),
+                                            raw_stocked_quantity: GraphBigNumberSchema.nullish(),
+                                            raw_reserved_quantity: GraphBigNumberSchema.nullish(),
+                                        })
+                                    )
+                                    .nullish(),
+                            })
+                            .nullish(),
+                    })
+                )
+                .nullish(),
+        })
+        .nullish(),
+})
+
+const SellerStockLocationRowSchema = z.object({
+    stock_location: z.object({
+        id: z.string(),
+        fulfillment_sets: z.array(IdRowSchema).nullish(),
+    }),
+})
+
+const SalesChannelLocationRowSchema = z.object({
+    stock_location_id: z.string(),
+})
+
+const PricedShippingOptionRowSchema = z.object({
+    seller: IdRowSchema.nullish(),
+    calculated_price: z
+        .object({
+            calculated_amount: GraphBigNumberSchema.nullish(),
+            is_calculated_price_tax_inclusive: z.boolean().nullish(),
+        })
+        .nullish(),
+    service_zone: z.object({
+        fulfillment_set: z.object({ location: IdRowSchema }),
+    }),
+})
+
+const ShippingOptionSellerRowSchema = z.object({
+    seller: IdRowSchema.nullish(),
+})
 
 export type ListSellerShippingOptionsForCartWorkflowInput = {
     cart_id: string
@@ -65,8 +112,11 @@ export const listSellerShippingOptionsForCartWorkflow = createWorkflow(
         }).config({ name: "get-cart" })
 
         const cart = transform({ cartQuery }, ({ cartQuery }) => cartQuery.data[0])
-        const cartSellers = transform({ cart }, ({ cart }) =>
-            (cart.items as CartLineItemWithSeller[])
+        const cartItems = transform({ cart }, ({ cart }) =>
+            parseGraphRows(CartItemRowSchema, cart.items)
+        )
+        const cartSellers = transform({ cartItems }, ({ cartItems }) =>
+            cartItems
                 .map((item) => getLineItemSellerId(item))
                 .filter((id): id is string => typeof id === "string")
         )
@@ -92,10 +142,16 @@ export const listSellerShippingOptionsForCartWorkflow = createWorkflow(
             },
         }).config({ name: "seller-stock-locations-query" })
 
-        const stockLocationIds = transform(
+        const sellerStockLocations = transform(
             { sellerStockLocationsQuery },
-            ({ sellerStockLocationsQuery }) => {
-                return sellerStockLocationsQuery.data.map((sl) => sl.stock_location.id)
+            ({ sellerStockLocationsQuery }) =>
+                parseGraphRows(SellerStockLocationRowSchema, sellerStockLocationsQuery.data)
+        )
+
+        const stockLocationIds = transform(
+            { sellerStockLocations },
+            ({ sellerStockLocations }) => {
+                return sellerStockLocations.map((sl) => sl.stock_location.id)
             }
         )
 
@@ -116,11 +172,16 @@ export const listSellerShippingOptionsForCartWorkflow = createWorkflow(
         }).config({ name: "sales-channel-stock-locations-query" })
 
         const validStockLocations = transform(
-            { salesChannelStockLocationsQuery, sellerStockLocationsQuery },
-            ({ salesChannelStockLocationsQuery, sellerStockLocationsQuery }) => {
-                const validIds = new Set<string>(salesChannelStockLocationsQuery.data.map((sl) => sl.stock_location_id))
+            { salesChannelStockLocationsQuery, sellerStockLocations },
+            ({ salesChannelStockLocationsQuery, sellerStockLocations }) => {
+                const validIds = new Set<string>(
+                    parseGraphRows(
+                        SalesChannelLocationRowSchema,
+                        salesChannelStockLocationsQuery.data
+                    ).map((sl) => sl.stock_location_id)
+                )
 
-                return sellerStockLocationsQuery.data.filter((sl) => validIds.has(sl.stock_location.id))
+                return sellerStockLocations.filter((sl) => validIds.has(sl.stock_location.id))
             }
         )
 
@@ -263,20 +324,20 @@ export const listSellerShippingOptionsForCartWorkflow = createWorkflow(
         }).config({ name: "shipping-options-query" })
 
         const shippingOptionsWithPrice = transform(
-            { shippingOptions, cart },
-            ({ shippingOptions, cart }) =>
-                shippingOptions.map((shippingOption) => {
-                    const price = shippingOption.calculated_price
+            { shippingOptions, cartItems },
+            ({ shippingOptions, cartItems }) =>
+                shippingOptions.map((shippingOption: ShippingOptionDTO) => {
+                    const pricedOption = parseGraphRow(
+                        PricedShippingOptionRowSchema,
+                        shippingOption
+                    )
+                    const price = pricedOption.calculated_price
 
                     const locationId =
-                        shippingOption.service_zone.fulfillment_set.location.id
-                    const optionSellerId = (
-                        shippingOption as ShippingOptionDTO & { seller?: SellerDTO }
-                    ).seller?.id
+                        pricedOption.service_zone.fulfillment_set.location.id
+                    const optionSellerId = pricedOption.seller?.id
 
-                    const itemsAtLocationWithoutAvailableQuantity = (
-                        cart.items as CartItemWithInventory[]
-                    ).filter((item) => {
+                    const itemsAtLocationWithoutAvailableQuantity = cartItems.filter((item) => {
                             const itemSellerId = item.variant?.product?.sellers?.[0]?.id
                             if (itemSellerId !== optionSellerId) {
                                 return false
@@ -332,9 +393,8 @@ export const listSellerShippingOptionsForCartWorkflow = createWorkflow(
             ({ translatedShippingOptions }) => {
                 const result: Record<string, ShippingOptionDTO[]> = {}
 
-                translatedShippingOptions.forEach((option_) => {
-                    const option = option_ as ShippingOptionDTO & { seller: SellerDTO }
-                    const sellerId = option.seller?.id
+                translatedShippingOptions.forEach((option) => {
+                    const sellerId = parseGraphRow(ShippingOptionSellerRowSchema, option).seller?.id
                     if (!sellerId) return
 
                     if (!result[sellerId]) {

@@ -8,9 +8,13 @@ import {
 } from "@medusajs/framework/utils"
 import { HttpTypes } from "@mercurjs/types"
 import { wrapCollectionsWithProducts } from "../helpers"
+import { VendorGetCollectionParamsType } from "../validators"
 
 export const GET = async (
-  req: AuthenticatedMedusaRequest,
+  req: AuthenticatedMedusaRequest<
+    Partial<VendorGetCollectionParamsType>,
+    VendorGetCollectionParamsType
+  >,
   res: MedusaResponse<HttpTypes.VendorCollectionResponse>
 ) => {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)

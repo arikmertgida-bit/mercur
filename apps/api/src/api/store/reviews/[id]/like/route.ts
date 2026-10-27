@@ -31,7 +31,7 @@ export const POST = async (
   )
 
   const { liked, likesCount } = await reviewSocialService.toggleReviewLike(
-    id!,
+    id,
     customerId
   )
 

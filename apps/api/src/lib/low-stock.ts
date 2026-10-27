@@ -94,7 +94,7 @@ export async function evaluateLowStockForInventoryItems(
     filters: { inventory_item_id: inventoryItemIds },
   })
 
-  const links = parseRows(InventoryItemSellerLinkRowSchema, rows as object[])
+  const links = parseRows(InventoryItemSellerLinkRowSchema, rows)
 
   return links.flatMap((link) => {
     const item = link.inventory_item

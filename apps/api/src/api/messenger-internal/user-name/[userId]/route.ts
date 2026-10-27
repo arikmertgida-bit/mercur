@@ -68,7 +68,10 @@ async function resolveGraphPersonName(
       filters: { id: userId },
       fields: ["id", "first_name", "last_name"],
     })
-    const row = parseFirstRow(PersonNameRowSchema, data)
+    // `entity` is a union, so query.graph returns `User[] | Member[]`;
+    // widen to their common row shape before validating.
+    const rows: ReadonlyArray<{ id: string }> = data
+    const row = parseFirstRow(PersonNameRowSchema, rows)
     if (!row) {
       return null
     }

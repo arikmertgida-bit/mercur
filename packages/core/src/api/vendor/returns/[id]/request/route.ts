@@ -11,6 +11,8 @@ import { HttpTypes } from "@mercurjs/types"
 
 import { validateSellerReturn } from "../../helpers"
 import { VendorPostReturnsConfirmRequestReqType } from "../../validators"
+import { getSellerId } from "../../../../utils/seller-context"
+import { toHttpOrderPreview } from "../../../../../utils/http-order"
 
 export const POST = async (
   req: AuthenticatedMedusaRequest<VendorPostReturnsConfirmRequestReqType>,
@@ -18,14 +20,14 @@ export const POST = async (
 ) => {
   const { id } = req.params
 
-  await validateSellerReturn(req.scope, req.seller_context!.seller_id, id)
+  await validateSellerReturn(req.scope, getSellerId(req), id)
 
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
 
   const { result } = await confirmReturnRequestWorkflow(req.scope).run({
     input: {
       return_id: id,
-      confirmed_by: req.seller_context!.seller_id,
+      confirmed_by: getSellerId(req),
     },
   })
 
@@ -41,7 +43,7 @@ export const POST = async (
   })
 
   res.json({
-    order_preview: result,
+    order_preview: toHttpOrderPreview(result),
     return: orderReturn,
   })
 }
@@ -52,7 +54,7 @@ export const DELETE = async (
 ) => {
   const { id } = req.params
 
-  await validateSellerReturn(req.scope, req.seller_context!.seller_id, id)
+  await validateSellerReturn(req.scope, getSellerId(req), id)
 
   await cancelReturnRequestWorkflow(req.scope).run({
     input: {

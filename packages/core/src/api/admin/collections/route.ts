@@ -4,13 +4,16 @@ import {
 } from "@medusajs/framework/http"
 import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
 import { AdditionalData } from "@medusajs/framework/types"
-import { HttpTypes } from "@medusajs/types"
+import { HttpTypes } from "@mercurjs/types"
 
-import { AdminCreateCollectionType } from "./validators"
+import {
+  AdminCollectionsParamsType,
+  AdminCreateCollectionType,
+} from "./validators"
 import { createProductCollectionWithImagesWorkflow } from "../../../workflows/media/workflows/create-product-collection-with-images"
 
 export const GET = async (
-  req: AuthenticatedMedusaRequest,
+  req: AuthenticatedMedusaRequest<Partial<AdminCollectionsParamsType>>,
   res: MedusaResponse<HttpTypes.AdminCollectionListResponse>
 ) => {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)

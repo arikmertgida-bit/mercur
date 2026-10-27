@@ -1,3 +1,4 @@
+import type { JsonRecord } from "@mercurjs/types"
 import { model } from "@medusajs/framework/utils"
 import Seller from "./seller"
 
@@ -12,7 +13,7 @@ const MemberInvite = model
     seller: model.belongsTo(() => Seller, {
       mappedBy: "member_invites",
     }),
-    metadata: model.json().nullable(),
+    metadata: model.json<JsonRecord>().nullable(),
   })
   .indexes([
     {

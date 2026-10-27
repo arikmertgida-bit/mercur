@@ -31,18 +31,20 @@ import {
   ContainerRegistrationKeys,
   MedusaError,
 } from "@medusajs/framework/utils"
+import { getSellerId } from "../../utils/seller-context"
+import { AndQueryFilter } from "../../../utils/query-filter"
 
 const applySellerProductLinkFilter = async (
-  req: AuthenticatedMedusaRequest,
+  req: AuthenticatedMedusaRequest<never, AndQueryFilter>,
   _res: MedusaResponse,
   next: MedusaNextFunction
 ) => {
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
 
   const visibleProductIds = await getSellerVisibleProductIds(req.scope, sellerId)
 
   req.filterableFields ??= {}
-  const existingAnd = (req.filterableFields.$and as object[] | undefined) ?? []
+  const existingAnd = req.filterableFields.$and ?? []
   req.filterableFields.$and = [...existingAnd, { id: visibleProductIds }]
 
   return next()
@@ -53,7 +55,7 @@ const ensureProductVisibleToSeller = async (
   _res: MedusaResponse,
   next: MedusaNextFunction
 ) => {
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
   const productId = req.params.id
 
   const visibleProductIds = await getSellerVisibleProductIds(req.scope, sellerId)

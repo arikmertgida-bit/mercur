@@ -8,13 +8,14 @@ import {
 } from "@mercurjs/types"
 
 import type ProductAttributeModuleService from "../../../modules/product-attribute/service"
+import { QueryFilter } from "../../../utils/query-filter"
 
 export const updateProductAttributeValuesStepId =
   "pa-update-product-attribute-values"
 
 export type UpdateProductAttributeValuesStepInput =
   | {
-      selector: Record<string, unknown>
+      selector: QueryFilter
       update: UpdateProductAttributeValueDTO
     }
   | {
@@ -39,7 +40,7 @@ export const updateProductAttributeValuesStep = createStep(
         )
       }
       const prevValues = await service.listProductAttributeValues({
-        id: data.values.map((v) => v.id) as string[],
+        id: data.values.flatMap((v) => (v.id ? [v.id] : [])),
       })
       const result = await service.updateProductAttributeValues(data.values)
       return new StepResponse(result, prevValues)

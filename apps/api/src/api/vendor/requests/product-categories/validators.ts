@@ -1,6 +1,7 @@
 import { z } from "zod"
 import { createFindParams, createOperatorMap } from "@medusajs/medusa/api/utils/validators"
 import { RequestStatus } from "../../../../types/requests"
+import { JsonRecordSchema } from "../../../../lib/graph-schemas"
 
 export type VendorCreateProductCategoryRequestType = z.infer<typeof VendorCreateProductCategoryRequest>
 export const VendorCreateProductCategoryRequest = z.object({
@@ -10,10 +11,14 @@ export const VendorCreateProductCategoryRequest = z.object({
   is_active: z.boolean().optional(),
   is_internal: z.boolean().optional(),
   parent_category_id: z.string().nullish(),
-  metadata: z.record(z.unknown()).optional(),
+  metadata: JsonRecordSchema.optional(),
 })
 
-export type VendorGetProductCategoryRequestsParamsType = z.infer<typeof VendorGetProductCategoryRequestsParams>
+// Client-facing contract for this list endpoint (the route itself reads
+// `req.queryConfig` / `req.filterableFields`). Every query param is optional
+// on the wire — `createFindParams` defaults offset/limit server-side — while
+// zod 4 marks defaulted keys as required in the parsed output type.
+export type VendorGetProductCategoryRequestsParamsType = Partial<z.infer<typeof VendorGetProductCategoryRequestsParams>>
 export const VendorGetProductCategoryRequestsParams = createFindParams({
   offset: 0,
   limit: 50,

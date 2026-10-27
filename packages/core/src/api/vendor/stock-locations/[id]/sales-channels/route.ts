@@ -7,13 +7,14 @@ import { HttpTypes } from "@medusajs/framework/types"
 import { HttpTypes as VendorHttpTypes } from "@mercurjs/types"
 
 import { refetchStockLocation, validateSellerStockLocation } from "../../helpers"
+import { getSellerId } from "../../../../utils/seller-context"
 
 export const POST = async (
   req: AuthenticatedMedusaRequest<HttpTypes.AdminBatchLink>,
   res: MedusaResponse<VendorHttpTypes.VendorStockLocationResponse>
 ) => {
   const { id } = req.params
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
   const { add, remove } = req.validatedBody
 
   await validateSellerStockLocation(req.scope, sellerId, id)

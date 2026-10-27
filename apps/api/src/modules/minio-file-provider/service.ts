@@ -298,7 +298,14 @@ export class MinioFileProviderService
       new GetObjectCommand({ Key: file.fileKey, Bucket: this.config_.bucket })
     )
 
-    return response.Body as Readable
+    // In Node the SDK hands back the HTTP response stream (an IncomingMessage).
+    if (!(response.Body instanceof Readable)) {
+      throw new MedusaError(
+        MedusaError.Types.UNEXPECTED_STATE,
+        `No readable body returned for file ${file.fileKey}`
+      )
+    }
+    return response.Body
   }
 
   async getAsBuffer(file: FileTypes.ProviderGetFileDTO): Promise<Buffer> {

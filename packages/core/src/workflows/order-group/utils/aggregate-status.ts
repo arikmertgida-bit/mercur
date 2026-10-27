@@ -1,4 +1,9 @@
-import type { OrderDetailDTO } from "@medusajs/framework/types"
+import type {
+  FulfillmentStatus as OrderFulfillmentStatus,
+  OrderDetailDTO,
+  PaymentCollectionDTO,
+  PaymentStatus as OrderPaymentStatus,
+} from "@medusajs/framework/types"
 import {
   defaultCurrencies,
   getEpsilonFromDecimalPrecision,
@@ -6,7 +11,17 @@ import {
   MathBN,
 } from "@medusajs/framework/utils"
 
-export const getLastPaymentStatus = (order: OrderDetailDTO) => {
+/** An order row of an order group, as the order-group queries select it. */
+export type OrderGroupOrderRow = OrderDetailDTO & {
+  seller?: { id: string } | null
+  cart?: {
+    payment_collection?: PaymentCollectionDTO | null
+  }
+}
+
+export const getLastPaymentStatus = (
+  order: Pick<OrderDetailDTO, "currency_code" | "payment_collections">
+): OrderPaymentStatus => {
   const PaymentStatus = {
     NOT_PAID: "not_paid",
     AWAITING: "awaiting",
@@ -18,9 +33,9 @@ export const getLastPaymentStatus = (order: OrderDetailDTO) => {
     REQUIRES_ACTION: "requires_action",
     AUTHORIZED: "authorized",
     PARTIALLY_AUTHORIZED: "partially_authorized",
-  }
+  } satisfies Record<string, OrderPaymentStatus>
 
-  const upperCurCode = order.currency_code?.toUpperCase() as string
+  const upperCurCode = order.currency_code?.toUpperCase() ?? ""
   const currencyEpsilon = getEpsilonFromDecimalPrecision(
     defaultCurrencies[upperCurCode]?.decimal_digits
   )
@@ -40,7 +55,7 @@ export const getLastPaymentStatus = (order: OrderDetailDTO) => {
       const isGte = MathBN.lte(
         MathBN.sub(
           paymentCollection.amount,
-          paymentCollection.captured_amount as number
+          paymentCollection.captured_amount ?? 0
         ),
         currencyEpsilon
       )
@@ -56,18 +71,20 @@ export const getLastPaymentStatus = (order: OrderDetailDTO) => {
       const isGte = MathBN.lte(
         MathBN.sub(
           paymentCollection.amount,
-          paymentCollection.refunded_amount as number
+          paymentCollection.refunded_amount ?? 0
         ),
         currencyEpsilon
       )
       paymentStatus[PaymentStatus.REFUNDED] += isGte ? 1 : 0.5
     }
 
+    // Compared as a plain string: `PaymentCollectionStatus` does not declare
+    // the captured/refunded states, but they are still guarded against.
+    const collectionStatus: string = paymentCollection.status
     const statusIsAmountDerived =
-      (paymentCollection.status === PaymentStatus.CAPTURED &&
+      (collectionStatus === PaymentStatus.CAPTURED &&
         captureIsAmountDerived) ||
-      (paymentCollection.status === PaymentStatus.REFUNDED &&
-        refundIsAmountDerived)
+      (collectionStatus === PaymentStatus.REFUNDED && refundIsAmountDerived)
 
     if (!statusIsAmountDerived) {
       paymentStatus[paymentCollection.status] += 1
@@ -125,7 +142,9 @@ export const getLastPaymentStatus = (order: OrderDetailDTO) => {
   return PaymentStatus.NOT_PAID
 }
 
-export const getLastFulfillmentStatus = (order: OrderDetailDTO) => {
+export const getLastFulfillmentStatus = (
+  order: OrderDetailDTO
+): OrderFulfillmentStatus => {
   const FulfillmentStatus = {
     NOT_FULFILLED: "not_fulfilled",
     PARTIALLY_FULFILLED: "partially_fulfilled",
@@ -135,7 +154,7 @@ export const getLastFulfillmentStatus = (order: OrderDetailDTO) => {
     DELIVERED: "delivered",
     PARTIALLY_DELIVERED: "partially_delivered",
     CANCELED: "canceled",
-  }
+  } satisfies Record<string, OrderFulfillmentStatus>
 
   let fulfillmentStatus = {}
 

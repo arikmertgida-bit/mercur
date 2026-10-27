@@ -85,7 +85,8 @@ const applySellerReviewIdFilter = async (
   );
 
   req.filterableFields ??= {};
-  const existingAnd = (req.filterableFields.$and as object[] | undefined) ?? [];
+  const currentAnd = req.filterableFields.$and;
+  const existingAnd = Array.isArray(currentAnd) ? currentAnd : [];
   req.filterableFields.$and = [...existingAnd, { id: reviewIds }];
 
   return next();

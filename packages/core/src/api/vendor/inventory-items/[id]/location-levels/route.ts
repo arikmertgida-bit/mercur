@@ -13,14 +13,18 @@ import {
   VendorCreateInventoryLocationLevelType,
   VendorGetInventoryLocationLevelsParamsType,
 } from "../../validators"
+import { getSellerId } from "../../../../utils/seller-context"
 
 export const GET = async (
-  req: AuthenticatedMedusaRequest<VendorGetInventoryLocationLevelsParamsType>,
+  req: AuthenticatedMedusaRequest<
+    Partial<VendorGetInventoryLocationLevelsParamsType>,
+    VendorGetInventoryLocationLevelsParamsType
+  >,
   res: MedusaResponse<HttpTypes.VendorInventoryLevelListResponse>
 ) => {
   const { id } = req.params
 
-  await validateSellerInventoryItem(req.scope,  req.seller_context!.seller_id, id)
+  await validateSellerInventoryItem(req.scope,  getSellerId(req), id)
 
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
 
@@ -45,8 +49,8 @@ export const POST = async (
 ) => {
   const { id } = req.params
 
-  await validateSellerInventoryItem(req.scope, req.seller_context!.seller_id, id)
-  await validateSellerStockLocations(req.scope, req.seller_context!.seller_id, [
+  await validateSellerInventoryItem(req.scope, getSellerId(req), id)
+  await validateSellerStockLocations(req.scope, getSellerId(req), [
     req.validatedBody.location_id,
   ])
 

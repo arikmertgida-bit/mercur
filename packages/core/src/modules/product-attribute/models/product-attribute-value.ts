@@ -1,3 +1,4 @@
+import type { JsonRecord } from "@mercurjs/types"
 import { model } from "@medusajs/framework/utils"
 
 import ProductAttribute from "./product-attribute"
@@ -9,7 +10,7 @@ const ProductAttributeValue = model
     name: model.text(),
     rank: model.number().default(0),
     is_active: model.boolean().default(true),
-    metadata: model.json().nullable(),
+    metadata: model.json<JsonRecord>().nullable(),
     product_option_value_id: model.text().nullable(),
 
     attribute: model.belongsTo(() => ProductAttribute, {

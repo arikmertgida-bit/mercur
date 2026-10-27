@@ -25,14 +25,14 @@ export type RejectProductChangeWorkflowInput = {
 } & AdditionalData
 
 export type RejectProductChangeWorkflowHooks = [
-  Hook<"validate", { input: RejectProductChangeWorkflowInput }, unknown>,
+  Hook<"validate", { input: RejectProductChangeWorkflowInput }, void>,
   Hook<
     "productChangeRejected",
     {
       id: string
-      additional_data: Record<string, unknown> | undefined
+      additional_data: AdditionalData["additional_data"]
     },
-    unknown
+    void
   >,
 ]
 

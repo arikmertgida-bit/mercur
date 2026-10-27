@@ -43,14 +43,7 @@ export const POST = async (
 
   const { result } = await createProductsWorkflow(req.scope).run({
     input: {
-      // @ts-expect-error — Medusa's own `WithAdditionalData` validator helper is typed
-      // to return `ZodObject<any, any>` (confirmed in its .d.ts), which collapses
-      // `req.validatedBody`'s inferred field types once spread here. Real third-party
-      // (Medusa) type-system boundary, not a shortcut — `productData`'s runtime shape
-      // is the concrete, Zod-validated `AdminCreateProductType`.
-      products: [{
-        ...productData,
-      }],
+      products: [productData],
       created_by: req.auth_context.actor_id,
       additional_data,
     },

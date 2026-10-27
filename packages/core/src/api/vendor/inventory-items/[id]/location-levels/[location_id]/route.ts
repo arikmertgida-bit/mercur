@@ -17,6 +17,7 @@ import { InventoryWorkflowEvents } from "../../../../../../workflows"
 import { validateSellerStockLocations } from "../../../../stock-locations/helpers"
 import { refetchInventoryItem, validateSellerInventoryItem } from "../../../helpers"
 import { VendorUpdateInventoryLocationLevelType } from "../../../validators"
+import { getSellerId } from "../../../../../utils/seller-context"
 
 export const POST = async (
   req: AuthenticatedMedusaRequest<VendorUpdateInventoryLocationLevelType>,
@@ -24,8 +25,8 @@ export const POST = async (
 ) => {
   const { id, location_id } = req.params
 
-  await validateSellerInventoryItem(req.scope, req.seller_context!.seller_id, id)
-  await validateSellerStockLocations(req.scope, req.seller_context!.seller_id, [
+  await validateSellerInventoryItem(req.scope, getSellerId(req), id)
+  await validateSellerStockLocations(req.scope, getSellerId(req), [
     location_id,
   ])
 
@@ -55,7 +56,7 @@ export const DELETE = async (
 ) => {
   const { id, location_id } = req.params
 
-  await validateSellerInventoryItem(req.scope,  req.seller_context!.seller_id, id)
+  await validateSellerInventoryItem(req.scope,  getSellerId(req), id)
 
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
 

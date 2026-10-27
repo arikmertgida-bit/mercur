@@ -4,7 +4,7 @@ import { ContainerRegistrationKeys } from '@medusajs/framework/utils'
 
 import { removeDocs } from './meilisearch-client'
 import { indexProductPage, loadDefaultSalesChannelId, loadRegions } from './reindex'
-import { searchProductFields, SearchProductRow } from './build-docs'
+import { searchProductFields } from './build-docs'
 
 const uniq = (ids: (string | undefined | null)[]): string[] =>
   Array.from(new Set(ids.filter((id): id is string => Boolean(id))))
@@ -45,7 +45,7 @@ export const reindexProductsById = async (
     ])
     await indexProductPage(
       container,
-      products as SearchProductRow[],
+      products,
       regions,
       defaultSalesChannelId
     )

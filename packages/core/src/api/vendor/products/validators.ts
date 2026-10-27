@@ -1,5 +1,5 @@
 import { z } from "zod"
-import { MercurFeatureFlags, ProductStatus } from "@mercurjs/types"
+import { AttributeType, MercurFeatureFlags, ProductStatus } from "@mercurjs/types"
 import {
   createFindParams,
   createOperatorMap,
@@ -10,11 +10,17 @@ import {
   applyAndAndOrOperators,
   booleanString,
 } from "@medusajs/medusa/api/utils/common-validators/common"
-import { AdditionalData, OperatorMap } from "@medusajs/framework/types"
+import { AdditionalData } from "@medusajs/framework/types"
 import { FeatureFlag, isPresent } from "@medusajs/framework/utils"
-import { sanitizeNullableRichText } from "../../../utils/sanitize-rich-text"
+import {
+  sanitizeNullableRichText,
+  sanitizeOptionalRichText,
+} from "../../../utils/sanitize-rich-text"
+import { JsonRecordSchema } from "../../../utils/json-schema"
 
 const statusEnum = z.nativeEnum(ProductStatus)
+
+const IdFilterSchema = z.union([z.string(), z.array(z.string())])
 
 const VendorGetProductsParamsFields = z.object({
   q: z.string().optional(),
@@ -24,8 +30,8 @@ const VendorGetProductsParamsFields = z.object({
   status: statusEnum.array().optional(),
   collection_id: z.union([z.string(), z.array(z.string())]).optional(),
   type_id: z.union([z.string(), z.array(z.string())]).optional(),
-  category_id: z.union([z.string(), z.array(z.string())]).optional(),
-  tag_id: z.union([z.string(), z.array(z.string())]).optional(),
+  category_id: IdFilterSchema.optional(),
+  tag_id: IdFilterSchema.optional(),
   sku: z.string().optional(),
   ean: z.string().optional(),
   upc: z.string().optional(),
@@ -43,15 +49,22 @@ export const VendorGetProductsParams = createFindParams({
   .merge(VendorGetProductsParamsFields)
   .merge(applyAndAndOrOperators(VendorGetProductsParamsFields))
   .transform((data) => {
-    const res = { ...data } as Record<string, unknown>
+    const res: typeof data & {
+      tags?: { id: string | string[] }
+      categories?: { id: string | string[] }
+    } = { ...data }
 
-    if (isPresent(data.tag_id)) {
-      res.tags = { id: data.tag_id as string[] }
+    // `data` loses its field types through Medusa's operator merge, so the
+    // already-validated id filters are re-read through their own schema.
+    const tagId = IdFilterSchema.safeParse(data.tag_id)
+    if (isPresent(data.tag_id) && tagId.success) {
+      res.tags = { id: tagId.data }
       delete res.tag_id
     }
 
-    if (isPresent(data.category_id)) {
-      res.categories = { id: data.category_id as OperatorMap<string> }
+    const categoryId = IdFilterSchema.safeParse(data.category_id)
+    if (isPresent(data.category_id) && categoryId.success) {
+      res.categories = { id: categoryId.data }
       delete res.category_id
     }
 
@@ -82,7 +95,7 @@ const CreateProductVariant = z
     width: z.number().optional(),
     origin_country: z.string().optional(),
     material: z.string().optional(),
-    metadata: z.record(z.string(), z.unknown()).optional(),
+    metadata: JsonRecordSchema.optional(),
     options: z.record(z.string(), z.string()).optional(),
     prices: z
       .array(z.object({ amount: z.number(), currency_code: z.string() }))
@@ -119,18 +132,12 @@ const UpdateProductVariant = z
     width: z.number().nullish(),
     origin_country: z.string().nullish(),
     material: z.string().nullish(),
-    metadata: z.record(z.string(), z.unknown()).nullish(),
+    metadata: JsonRecordSchema.nullish(),
     options: z.record(z.string(), z.string()).optional(),
   })
   .strict()
 
-const AttributeTypeEnum = z.enum([
-  "single_select",
-  "multi_select",
-  "text",
-  "toggle",
-  "unit",
-])
+const AttributeTypeEnum = z.nativeEnum(AttributeType)
 
 const AttributeScalar = z.union([z.string(), z.number(), z.boolean()])
 const UnifiedProductAttributeInput = z.union([
@@ -151,7 +158,7 @@ const UnifiedProductAttributeInput = z.union([
       is_filterable: z.boolean().optional(),
       is_required: z.boolean().optional(),
       description: z.string().nullish(),
-      metadata: z.record(z.string(), z.unknown()).nullish(),
+      metadata: JsonRecordSchema.nullish(),
     })
     .strict(),
 ])
@@ -162,7 +169,7 @@ const CreateProduct = z
   .object({
     title: z.string(),
     subtitle: z.string().optional(),
-    description: z.string().optional().transform(sanitizeNullableRichText),
+    description: z.string().optional().transform(sanitizeOptionalRichText),
     status: statusEnum.optional(),
     is_giftcard: booleanString().optional().default(false),
     discountable: booleanString().optional().default(true),
@@ -188,12 +195,11 @@ const CreateProduct = z
     origin_country: z.string().optional(),
     material: z.string().optional(),
     shipping_profile_id: z.string().nullish(),
-    metadata: z.record(z.string(), z.unknown()).optional(),
+    metadata: JsonRecordSchema.optional(),
   })
   .strict()
 export const VendorCreateProduct = WithAdditionalData(
   CreateProduct,
-  // @ts-expect-error superRefine yields ZodEffects; WithAdditionalData expects ZodObject (Medusa framework zod v3/v4 bridge).
   (schema) =>
     schema.superRefine((data, ctx) => {
       if (
@@ -224,7 +230,9 @@ const UpdateProduct = z
       .array(z.object({ id: z.string().optional(), url: z.string() }))
       .optional(),
     thumbnail: z.string().nullish(),
-    handle: z.string().nullish(),
+    // The product handle column is required: unlike the other fields it can
+    // be changed but never cleared (Medusa's own validator is the same).
+    handle: z.string().optional(),
     external_id: z.string().nullish(),
     type_id: z.string().nullish(),
     collection_id: z.string().nullish(),
@@ -243,10 +251,13 @@ const UpdateProduct = z
     origin_country: z.string().nullish(),
     material: z.string().nullish(),
     shipping_profile_id: z.string().nullish(),
-    metadata: z.record(z.string(), z.unknown()).nullish(),
+    metadata: JsonRecordSchema.nullish(),
   })
   .strict()
 export const VendorUpdateProduct = WithAdditionalData(UpdateProduct)
+
+/** The product fields a staged product change may update. */
+export const VendorProductUpdateFields = UpdateProduct
 
 const VendorGetProductVariantsParamsFields = z.object({
   q: z.string().optional(),
@@ -294,7 +305,7 @@ export const VendorAddProductVariant = z
     allow_backorder: z.boolean().optional(),
     manage_inventory: z.boolean().optional(),
     thumbnail: z.string().optional(),
-    metadata: z.record(z.string(), z.unknown()).optional(),
+    metadata: JsonRecordSchema.optional(),
     options: z.record(z.string(), z.string()).optional(),
   })
   .strict()
@@ -324,7 +335,7 @@ export const VendorUpdateProductVariant = z
     material: z.string().nullish(),
     allow_backorder: z.boolean().optional(),
     manage_inventory: z.boolean().optional(),
-    metadata: z.record(z.string(), z.unknown()).nullish(),
+    metadata: JsonRecordSchema.nullish(),
     options: z.record(z.string(), z.string()).optional(),
     prices: z
       .array(
@@ -379,11 +390,11 @@ const VendorBatchAttributeAdd = z.union([
       is_filterable: z.boolean().optional(),
       is_required: z.boolean().optional(),
       description: z.string().nullish(),
-      metadata: z.record(z.string(), z.unknown()).nullish(),
+      metadata: JsonRecordSchema.nullish(),
     })
     .strict()
     .refine(
-      (v) => !v.is_variant_axis || (v.type ?? "multi_select") === "multi_select",
+      (v) => !v.is_variant_axis || (v.type ?? AttributeType.MULTI_SELECT) === AttributeType.MULTI_SELECT,
       {
         message: "vendor_error.variant_axis_multi_select_only",
         path: ["is_variant_axis"],

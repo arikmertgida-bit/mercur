@@ -3,7 +3,7 @@ import { ContainerRegistrationKeys, MedusaError } from '@medusajs/framework/util
 import type { Query } from '@medusajs/framework'
 import type {} from '@mercurjs/core/types/seller-context'
 
-import { enrichReplies, ReviewReplyDTO, ReviewReplyRow } from '../../../../../lib/review-reply-helpers'
+import { enrichReplies, ReviewReplyDTO } from '../../../../../lib/review-reply-helpers'
 import { validateSellerReview } from '../../helpers'
 
 /**
@@ -28,7 +28,7 @@ export const GET = async (
     )
   }
 
-  await validateSellerReview(req.scope, sellerId, id!)
+  await validateSellerReview(req.scope, sellerId, id)
 
   const query = req.scope.resolve<Query>(ContainerRegistrationKeys.QUERY)
   const { data: replies } = await query.graph({
@@ -45,7 +45,7 @@ export const GET = async (
     ],
   })
 
-  const enriched = await enrichReplies(req.scope, replies as ReviewReplyRow[])
+  const enriched = await enrichReplies(req.scope, replies)
 
   res.json({
     replies: enriched.sort((a, b) => (a.created_at < b.created_at ? -1 : 1)),

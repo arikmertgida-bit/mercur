@@ -10,13 +10,14 @@ import { ProductChangeDTO, ProductChangeStatus } from "@mercurjs/types"
 
 import { cancelProductChangeWorkflow } from "../../../../../workflows/product-edit/workflows/cancel-product-change"
 import { VendorCancelProductChangeType } from "../../validators"
+import { getSellerId } from "../../../../utils/seller-context"
 
 export const POST = async (
   req: AuthenticatedMedusaRequest<VendorCancelProductChangeType>,
   res: MedusaResponse<{ product_change: ProductChangeDTO }>
 ) => {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
   const productId = req.params.id
 
   const { data: changes } = await query.graph({

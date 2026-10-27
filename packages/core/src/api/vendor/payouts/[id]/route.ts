@@ -9,13 +9,14 @@ import {
 import { HttpTypes } from "@mercurjs/types"
 
 import { validateSellerPayout } from "../helpers"
+import { getSellerId } from "../../../utils/seller-context"
 
 export const GET = async (
   req: AuthenticatedMedusaRequest,
   res: MedusaResponse<HttpTypes.VendorPayoutResponse>
 ) => {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
 
   await validateSellerPayout(req.scope, sellerId, req.params.id)
 

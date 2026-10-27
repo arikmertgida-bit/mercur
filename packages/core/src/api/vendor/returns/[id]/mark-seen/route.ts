@@ -6,6 +6,7 @@ import { MercurModules } from "@mercurjs/types"
 import type { CustomFieldsModuleService } from "@mercurjs/core/modules/custom-fields"
 
 import { validateSellerReturn } from "../../helpers"
+import { getSellerId } from "../../../../utils/seller-context"
 
 type MarkReturnSeenResponse = { id: string; vendor_seen_at: string }
 
@@ -19,7 +20,7 @@ export const POST = async (
   res: MedusaResponse<MarkReturnSeenResponse>
 ): Promise<void> => {
   const { id } = req.params
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
 
   await validateSellerReturn(req.scope, sellerId, id)
 

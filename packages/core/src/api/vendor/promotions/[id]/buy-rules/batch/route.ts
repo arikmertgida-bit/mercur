@@ -12,6 +12,7 @@ import {
   VendorCreatePromotionRuleType,
   VendorUpdatePromotionRuleType,
 } from "../../../validators"
+import { getSellerId } from "../../../../../utils/seller-context"
 
 export const POST = async (
   req: AuthenticatedMedusaRequest<
@@ -21,7 +22,7 @@ export const POST = async (
 ) => {
   const { id } = req.params
 
-  await validateSellerPromotion(req.scope, req.seller_context!.seller_id, id)
+  await validateSellerPromotion(req.scope, getSellerId(req), id)
 
   const { result } = await batchPromotionRulesWorkflow(req.scope).run({
     input: {

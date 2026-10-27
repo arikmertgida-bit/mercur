@@ -8,13 +8,14 @@ import { HttpTypes } from "@mercurjs/types"
 
 import { validateSellerOrder } from "../../../../helpers"
 import { VendorCreateShipmentType } from "../../../../validators"
+import { getSellerId } from "../../../../../../utils/seller-context"
 
 export const POST = async (
   req: AuthenticatedMedusaRequest<VendorCreateShipmentType>,
   res: MedusaResponse<HttpTypes.VendorOrderResponse>
 ) => {
   const { id, fulfillment_id } = req.params
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
 
   await validateSellerOrder(req.scope, sellerId, id)
 

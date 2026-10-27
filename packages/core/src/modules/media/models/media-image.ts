@@ -1,3 +1,4 @@
+import type { JsonRecord } from "@mercurjs/types"
 import { model } from "@medusajs/framework/utils"
 
 /**
@@ -29,7 +30,7 @@ const MediaImage = model
       is_thumbnail: model.boolean().default(false),
       is_banner: model.boolean().default(false),
       rank: model.number().default(0),
-      metadata: model.json().nullable(),
+      metadata: model.json<JsonRecord>().nullable(),
     }
   )
   .indexes([

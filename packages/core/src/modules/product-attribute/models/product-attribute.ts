@@ -1,3 +1,4 @@
+import type { JsonRecord } from "@mercurjs/types"
 import { model } from "@medusajs/framework/utils"
 import { AttributeType } from "@mercurjs/types"
 
@@ -21,7 +22,7 @@ const ProductAttribute = model
     // /product-attributes catalogue). Null = global attribute.
     product_id: model.text().nullable(),
     product_option_id: model.text().nullable(),
-    metadata: model.json().nullable(),
+    metadata: model.json<JsonRecord>().nullable(),
 
     values: model.hasMany(() => ProductAttributeValue, {
       mappedBy: "attribute",

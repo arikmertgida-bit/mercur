@@ -1,4 +1,11 @@
 import { Query } from "@medusajs/framework"
+import { z } from "zod"
+import { parseGraphRows } from "../../../utils/graph-rows"
+
+const PromotionSellerRowSchema = z.object({
+    id: z.string(),
+    seller: z.object({ id: z.string() }).nullish(),
+})
 
 /**
  * Seller id per promotion id. A promotion without a seller link is a
@@ -30,10 +37,7 @@ export const loadPromotionSellerIds = async (
     )
 
     const result: PromotionSellerIds = {}
-    for (const promotion of promotions as Array<{
-        id: string
-        seller?: { id: string } | null
-    }>) {
+    for (const promotion of parseGraphRows(PromotionSellerRowSchema, promotions)) {
         result[promotion.id] = promotion.seller?.id ?? null
     }
     return result

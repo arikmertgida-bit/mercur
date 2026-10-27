@@ -7,12 +7,17 @@ import {
 import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
 
 import {
+  VendorGetClaimsParamsInput,
   VendorGetClaimsParamsType,
   VendorPostOrderClaimsReqType,
 } from "./validators"
+import { getSellerId } from "../../utils/seller-context"
 
 export const GET = async (
-  req: AuthenticatedMedusaRequest<VendorGetClaimsParamsType>,
+  req: AuthenticatedMedusaRequest<
+    VendorGetClaimsParamsInput,
+    VendorGetClaimsParamsType
+  >,
   res: MedusaResponse<HttpTypes.AdminClaimListResponse>
 ) => {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
@@ -26,19 +31,21 @@ export const GET = async (
 
   res.json({
     claims,
-    count: metadata!.count,
-    offset: metadata!.skip,
-    limit: metadata!.take,
-  } as HttpTypes.AdminClaimListResponse)
+    count: metadata?.count ?? 0,
+    offset: metadata?.skip ?? 0,
+    limit: metadata?.take ?? 0,
+  })
 }
 
 export const POST = async (
   req: AuthenticatedMedusaRequest<VendorPostOrderClaimsReqType>,
-  res: MedusaResponse<HttpTypes.AdminClaimOrderResponse>
+  // The begin workflow only reports the new claim's id; the dashboard fetches
+  // the claim itself afterwards.
+  res: MedusaResponse<{ claim: Pick<HttpTypes.AdminClaim, "id"> }>
 ) => {
   const input = {
     ...req.validatedBody,
-    created_by: req.seller_context!.seller_id,
+    created_by: getSellerId(req),
   }
 
   const { result } = await beginClaimOrderWorkflow(req.scope).run({
@@ -46,6 +53,6 @@ export const POST = async (
   })
 
   res.json({
-    claim: { id: result.claim_id } as HttpTypes.AdminClaim,
-  } as HttpTypes.AdminClaimOrderResponse)
+    claim: { id: result.claim_id },
+  })
 }

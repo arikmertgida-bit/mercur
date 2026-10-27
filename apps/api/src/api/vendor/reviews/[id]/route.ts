@@ -31,7 +31,7 @@ export const GET = async (
     )
   }
 
-  await validateSellerReview(req.scope, sellerId, id!)
+  await validateSellerReview(req.scope, sellerId, id)
 
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
 
@@ -79,7 +79,7 @@ export const POST = async (
     )
   }
 
-  await validateSellerReview(req.scope, sellerId, id!)
+  await validateSellerReview(req.scope, sellerId, id)
 
   const query = req.scope.resolve<Query>(ContainerRegistrationKeys.QUERY)
   const { seller_note, image_urls } = req.validatedBody
@@ -107,7 +107,7 @@ export const POST = async (
   const seller = parseFirstRow(SellerSummarySchema, sellers)
 
   await emitReviewSellerReplyEvent(req.scope, {
-    reviewId: id!,
+    reviewId: id,
     sellerId,
     sellerName: seller?.name ?? null
   })
@@ -115,7 +115,7 @@ export const POST = async (
   const reviewSocialService = req.scope.resolve<ReviewSocialModuleService>(
     REVIEW_SOCIAL_MODULE
   )
-  const replyId = await reviewSocialService.createSellerReply(id!, sellerId, seller_note)
+  const replyId = await reviewSocialService.createSellerReply(id, sellerId, seller_note)
 
   if (image_urls && image_urls.length > 0) {
     const reviewReplyImageService = req.scope.resolve<ReviewReplyImageService>(

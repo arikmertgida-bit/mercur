@@ -16,24 +16,31 @@ import {
   JsonValue,
 } from "@mercurjs/types"
 
+import {
+  isJsonObject,
+  type JsonSnapshot,
+  JsonSnapshotSchema,
+  toJsonRecord,
+} from "../../../utils/json-schema"
+
 import { validateNoPendingProductChangeStep } from "../steps"
 import { stageProductChangeWorkflow } from "./stage-product-change"
 
 export type ProductEditUpdateProductWorkflowInput = {
   product_id: string
   created_by?: string
-  update: Record<string, unknown>
+  update: JsonSnapshot
 } & AdditionalData
 
 export type ProductEditUpdateProductWorkflowHooks = [
-  Hook<"validate", { input: ProductEditUpdateProductWorkflowInput }, unknown>,
+  Hook<"validate", { input: ProductEditUpdateProductWorkflowInput }, void>,
   Hook<
     "productChangeCreated",
     {
       product_change: ProductChangeDTO
-      additional_data: Record<string, unknown> | undefined
+      additional_data: AdditionalData["additional_data"]
     },
-    unknown
+    void
   >,
 ]
 
@@ -115,21 +122,21 @@ export const productEditUpdateProductWorkflow: ReturnWorkflow<
     const actions = transform(
       { input, currentProducts },
       ({ input, currentProducts }) => {
-        const current = (currentProducts?.[0] ?? {}) as Record<string, JsonValue | undefined>
+        const current = JsonSnapshotSchema.parse(currentProducts?.[0] ?? {})
         const proposed = input.update ?? {}
 
         // Unwrap relation/image arrays to sorted scalar ids/urls so order-insensitive,
         // shape-insensitive values can be compared with deepEqualObj. Empty strings
         // collapse to null so clearing a text field reads as equal to an unset one.
-        const normalize = (value: JsonValue | JsonValue[] | undefined): JsonValue | JsonValue[] | null => {
+        const normalize = (value: JsonValue | undefined): JsonValue => {
           if (Array.isArray(value)) {
             return value
-              .map((item) => {
-                if (item && typeof item === "object" && "id" in item) {
-                  return (item as { id: string }).id
+              .map((item): JsonValue => {
+                if (isJsonObject(item) && "id" in item) {
+                  return item.id
                 }
-                if (item && typeof item === "object" && "url" in item) {
-                  return (item as { url: string }).url
+                if (isJsonObject(item) && "url" in item) {
+                  return item.url
                 }
                 return item
               })
@@ -138,7 +145,7 @@ export const productEditUpdateProductWorkflow: ReturnWorkflow<
           return value === "" ? null : (value ?? null)
         }
 
-        const isEqual = (a: JsonValue | JsonValue[] | undefined, b: JsonValue | JsonValue[] | undefined): boolean =>
+        const isEqual = (a: JsonValue | undefined, b: JsonValue | undefined): boolean =>
           deepEqualObj(normalize(a), normalize(b))
 
         const acts: Array<
@@ -147,36 +154,33 @@ export const productEditUpdateProductWorkflow: ReturnWorkflow<
 
         if (proposed.status !== undefined) {
           if (
-            !isEqual(
-              current.status as JsonValue | undefined,
-              proposed.status as JsonValue | undefined,
-            )
+            !isEqual(current.status, proposed.status)
           ) {
             acts.push({
               product_id: input.product_id,
               action: ProductChangeActionType.STATUS_CHANGE,
-              details: {
+              details: toJsonRecord({
                 status: proposed.status,
                 previous_status: current.status,
-              },
+              }),
             })
           }
         }
 
         for (const field of DIFFABLE_FIELDS) {
           if (!(field in proposed)) continue
-          const proposedValue = (proposed as Record<string, JsonValue | undefined>)[field]
+          const proposedValue = proposed[field]
           const currentValue = current[field]
           if (isEqual(currentValue, proposedValue)) continue
 
           acts.push({
             product_id: input.product_id,
             action: ProductChangeActionType.UPDATE,
-            details: {
+            details: toJsonRecord({
               field,
               value: proposedValue,
               previous_value: currentValue,
-            },
+            }),
           })
         }
 

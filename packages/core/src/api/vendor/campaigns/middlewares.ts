@@ -20,13 +20,14 @@ import {
   VendorGetCampaignsParams,
   VendorUpdateCampaign,
 } from "./validators"
+import { getSellerId } from "../../utils/seller-context"
 
 const applySellerCampaignLinkFilter = (
   req: AuthenticatedMedusaRequest,
   res: MedusaResponse,
   next: MedusaNextFunction
 ) => {
-  req.filterableFields.seller_id = req.seller_context!.seller_id
+  req.filterableFields.seller_id = getSellerId(req)
 
   return maybeApplyLinkFilter({
     entryPoint: "campaign_seller",

@@ -39,14 +39,14 @@ export type CreateProductAttributesWorkflowInput = {
 } & AdditionalData
 
 export type CreateProductAttributesWorkflowHooks = [
-  Hook<"validate", { input: CreateProductAttributesWorkflowInput }, unknown>,
+  Hook<"validate", { input: CreateProductAttributesWorkflowInput }, void>,
   Hook<
     "productAttributesCreated",
     {
       attributes: ProductAttributeDTO[]
-      additional_data: Record<string, unknown> | undefined
+      additional_data: AdditionalData["additional_data"]
     },
-    unknown
+    void
   >,
 ]
 
@@ -161,7 +161,7 @@ export const createProductAttributesWorkflow: ReturnWorkflow<
       additional_data: input.additional_data,
     })
 
-    return new WorkflowResponse(attributes as ProductAttributeDTO[], {
+    return new WorkflowResponse(attributes, {
       hooks: [validate, productAttributesCreated],
     })
   },

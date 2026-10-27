@@ -1,13 +1,10 @@
-import { CartLineItemDTO, CartWorkflowDTO } from "@medusajs/framework/types"
 import { ContainerRegistrationKeys, MedusaError } from "@medusajs/framework/utils"
 import { createStep, StepResponse } from "@medusajs/framework/workflows-sdk"
 import { Logger } from "@medusajs/medusa"
-import { CartLineItemWithSeller, getLineItemSellerId } from "../utils"
+import { CompleteCartRow, getLineItemSellerId } from "../utils"
 
 type ValidateSellerCartItemsStepInput = {
-    cart: Omit<CartWorkflowDTO, "items"> & {
-        items: (CartLineItemDTO & Pick<CartLineItemWithSeller, "variant">)[]
-    }
+    cart: Pick<CompleteCartRow, "items">
 }
 
 export const validateSellerCartItemsStep = createStep(

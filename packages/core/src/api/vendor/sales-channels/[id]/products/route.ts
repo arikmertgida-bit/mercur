@@ -7,6 +7,7 @@ import {
 import { HttpTypes as VendorHttpTypes } from "@mercurjs/types"
 
 import { ensureSellerOwnsProducts, refetchSalesChannel } from "../../helpers"
+import { getSellerId } from "../../../../utils/seller-context"
 
 export const POST = async (
   req: AuthenticatedMedusaRequest<HttpTypes.AdminBatchLink>,
@@ -17,7 +18,7 @@ export const POST = async (
 
   await ensureSellerOwnsProducts(
     req.scope,
-    req.seller_context!.seller_id,
+    getSellerId(req),
     add ?? []
   )
 

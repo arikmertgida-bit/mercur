@@ -11,9 +11,13 @@ import {
   VendorCreateInventoryItemType,
   VendorGetInventoryItemsParamsType,
 } from "./validators"
+import { getSellerId } from "../../utils/seller-context"
 
 export const GET = async (
-  req: AuthenticatedMedusaRequest<VendorGetInventoryItemsParamsType>,
+  req: AuthenticatedMedusaRequest<
+    Partial<VendorGetInventoryItemsParamsType>,
+    VendorGetInventoryItemsParamsType
+  >,
   res: MedusaResponse<HttpTypes.VendorInventoryItemListResponse>
 ) => {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
@@ -37,7 +41,7 @@ export const POST = async (
   req: AuthenticatedMedusaRequest<VendorCreateInventoryItemType>,
   res: MedusaResponse<HttpTypes.VendorInventoryItemResponse>
 ) => {
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
 
   const { result } = await createSellerInventoryItemsWorkflow(req.scope).run({
     input: {

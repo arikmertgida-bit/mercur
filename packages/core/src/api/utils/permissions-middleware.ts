@@ -32,8 +32,7 @@ declare module "express" {
 }
 
 export function isPermissionsModuleEnabled(config: ConfigModule): boolean {
-  const modules = config.modules as Record<string, unknown> | undefined
-  const entry = modules?.[PERMISSIONS_MODULE]
+  const entry = config.modules?.[PERMISSIONS_MODULE]
 
   if (!entry) {
     return false
@@ -127,7 +126,7 @@ export function requirePermission(key: string, right: PermissionRight) {
   }
 
   return Object.assign(middleware, {
-    [REQUIRED_PERMISSION]: { key, right } as PermissionRequirement,
+    [REQUIRED_PERMISSION]: { key, right },
   })
 }
 
@@ -191,13 +190,13 @@ export function takePermissionsField(req: AuthenticatedMedusaRequest): boolean {
   return requested
 }
 
-export function attachPermissions<T extends object>(
+export function attachPermissions<T>(
   req: AuthenticatedMedusaRequest,
   entity: T,
   requested: boolean
 ): T & { permissions?: PermissionMap } {
-  if (!requested || !req.permissions_enforced || !req.permissions) {
-    return entity
-  }
-  return { ...entity, permissions: req.permissions }
+  // An unset `permissions` key is dropped when the response is serialized.
+  const permissions =
+    requested && req.permissions_enforced ? req.permissions : undefined
+  return { ...entity, permissions }
 }

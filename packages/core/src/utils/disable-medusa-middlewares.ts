@@ -41,7 +41,16 @@ const OVERRIDES: string[] = [
   "dist/api/store/carts/middlewares.js",
 ]
 
-export const ORIGINAL_MIDDLEWARES: Record<string, unknown[]> = {}
+export const ORIGINAL_MIDDLEWARES: Record<string, MiddlewareRoute[]> = {}
+
+// The captured arrays come from `require`d Medusa JS; only entries that carry a
+// route matcher are middleware routes.
+const isMiddlewareRoute = (
+  entry: Partial<MiddlewareRoute> | null
+): entry is MiddlewareRoute =>
+  typeof entry === "object" &&
+  entry !== null &&
+  (typeof entry.matcher === "string" || entry.matcher instanceof RegExp)
 
 // Bun workspaces symlink each app's `node_modules` back to the monorepo
 // root (e.g. `apps/api/.medusa/server/node_modules -> <root>/node_modules`),
@@ -96,15 +105,14 @@ export function disableMedusaMiddlewares(): void {
       const filePath = join(medusaDir, file)
       if (!existsSync(filePath)) continue
 
-      let mod: Record<string, unknown>
+      let exported
       try {
-        mod = require(filePath)
+        exported = Object.values(require(filePath))
       } catch {
         continue
       }
 
-      for (const key of Object.keys(mod)) {
-        const value = mod[key]
+      for (const value of exported) {
         if (!Array.isArray(value)) continue
         // Defense in depth on top of the realpath dedupe above: never let a
         // revisit of an already-emptied array (length 0) overwrite a
@@ -113,7 +121,7 @@ export function disableMedusaMiddlewares(): void {
         // silently zero out `ORIGINAL_MIDDLEWARES[file]` again.
         if (value.length === 0) continue
         if (!(file in ORIGINAL_MIDDLEWARES)) {
-          ORIGINAL_MIDDLEWARES[file] = [...value]
+          ORIGINAL_MIDDLEWARES[file] = value.filter(isMiddlewareRoute)
         }
         value.length = 0
       }
@@ -141,7 +149,7 @@ export function withOriginalMiddlewares(
   file: string,
   overrides: MiddlewareRoute[]
 ): MiddlewareRoute[] {
-  const original = (ORIGINAL_MIDDLEWARES[file] ?? []) as MiddlewareRoute[]
+  const original = ORIGINAL_MIDDLEWARES[file] ?? []
   return [
     ...original.filter(
       (route) => !overrides.some((override) => collides(route, override))

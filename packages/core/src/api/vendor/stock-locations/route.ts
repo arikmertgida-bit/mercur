@@ -7,10 +7,17 @@ import { HttpTypes } from "@mercurjs/types"
 
 import { createSellerStockLocationsWorkflow } from "../../../workflows/stock-location"
 import { refetchStockLocation } from "./helpers"
-import { VendorCreateStockLocationType } from "./validators"
+import {
+  VendorCreateStockLocationType,
+  VendorGetStockLocationsParamsType,
+} from "./validators"
+import { getSellerId } from "../../utils/seller-context"
 
 export const GET = async (
-  req: AuthenticatedMedusaRequest,
+  req: AuthenticatedMedusaRequest<
+    Partial<VendorGetStockLocationsParamsType>,
+    VendorGetStockLocationsParamsType
+  >,
   res: MedusaResponse<HttpTypes.VendorStockLocationListResponse>
 ) => {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
@@ -34,7 +41,7 @@ export const POST = async (
   req: AuthenticatedMedusaRequest<VendorCreateStockLocationType>,
   res: MedusaResponse<HttpTypes.VendorStockLocationResponse>
 ) => {
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
 
   const { result } = await createSellerStockLocationsWorkflow(req.scope).run({
     input: {

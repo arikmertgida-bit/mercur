@@ -11,10 +11,13 @@ import { HttpTypes } from "@mercurjs/types"
 
 import { updateProductVariantsWorkflow } from "@medusajs/medusa/core-flows"
 import { deleteProductVariantsWorkflow } from "@medusajs/medusa/core-flows"
-import { AdminUpdateProductVariantType } from "../../../validators"
+import {
+  AdminGetProductVariantParamsType,
+  AdminUpdateProductVariantType,
+} from "../../../validators"
 
 export const GET = async (
-  req: AuthenticatedMedusaRequest,
+  req: AuthenticatedMedusaRequest<AdminGetProductVariantParamsType>,
   res: MedusaResponse<HttpTypes.AdminProductVariantResponse>
 ) => {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)

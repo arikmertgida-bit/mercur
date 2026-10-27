@@ -11,10 +11,19 @@ import {
 import { HttpTypes } from "@mercurjs/types"
 
 import { validateSellerOrder } from "../orders/helpers"
-import { VendorGetReturnsParamsType, VendorPostReturnsReqType } from "./validators"
+import {
+  VendorGetReturnsParamsInput,
+  VendorGetReturnsParamsType,
+  VendorPostReturnsReqType,
+} from "./validators"
+import { getSellerId } from "../../utils/seller-context"
+import { toHttpOrder } from "../../../utils/http-order"
 
 export const GET = async (
-  req: AuthenticatedMedusaRequest<VendorGetReturnsParamsType>,
+  req: AuthenticatedMedusaRequest<
+    VendorGetReturnsParamsInput,
+    VendorGetReturnsParamsType
+  >,
   res: MedusaResponse<HttpTypes.VendorReturnListResponse>
 ) => {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
@@ -40,13 +49,13 @@ export const POST = async (
 ) => {
   await validateSellerOrder(
     req.scope,
-    req.seller_context!.seller_id,
+    getSellerId(req),
     req.validatedBody.order_id
   )
 
   const input = {
     ...req.validatedBody,
-    created_by: req.seller_context!.seller_id,
+    created_by: getSellerId(req),
   }
 
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
@@ -70,7 +79,7 @@ export const POST = async (
   ])
 
   res.json({
-    order,
+    order: toHttpOrder(order),
     return: returnData[0],
   })
 }

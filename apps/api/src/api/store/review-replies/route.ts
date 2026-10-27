@@ -5,7 +5,7 @@ import type { Query } from "@medusajs/framework"
 
 import { REVIEW_SOCIAL_MODULE } from "../../../modules/review-social"
 import ReviewSocialModuleService from "../../../modules/review-social/service"
-import { enrichReplies, ReviewReplyDTO, ReviewReplyRow } from "./helpers"
+import { enrichReplies, ReviewReplyDTO } from "./helpers"
 import { StoreCreateReviewReplyType, StoreGetReviewRepliesParamsType } from "./validators"
 
 export const GET = async (
@@ -33,7 +33,7 @@ export const GET = async (
 
   const enriched = await enrichReplies(
     req.scope,
-    replies as ReviewReplyRow[],
+    replies,
     currentCustomerId
   )
 
@@ -73,7 +73,10 @@ export const POST = async (
     seller_id: null,
   })
 
-  const [enriched] = await enrichReplies(req.scope, [reply as ReviewReplyRow], customerId)
+  const [enriched] = await enrichReplies(req.scope, [reply], customerId)
+  if (!enriched) {
+    throw new MedusaError(MedusaError.Types.UNEXPECTED_STATE, "Review reply could not be loaded")
+  }
 
-  res.status(201).json({ reply: enriched! })
+  res.status(201).json({ reply: enriched })
 }

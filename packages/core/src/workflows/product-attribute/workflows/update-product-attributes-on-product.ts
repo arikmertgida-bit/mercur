@@ -21,7 +21,6 @@ import {
   CreateProductAttributeValueDTO,
   MercurModules,
   ProductAttributeBatchUpdate,
-  ProductAttributeDTO,
 } from "@mercurjs/types"
 
 import {
@@ -32,6 +31,11 @@ import {
 import { createProductAttributeValuesWorkflow } from "./create-product-attribute-values"
 import { deleteProductAttributeValuesWorkflow } from "./delete-product-attribute-values"
 import { updateProductAttributesWorkflow } from "./update-product-attributes"
+import {
+  AttributeRow,
+  attributesById,
+  linkedValueIdsByAttribute,
+} from "../utils/graph-rows"
 
 export type UpdateProductAttributesOnProductWorkflowInput = {
   product_id: string
@@ -41,10 +45,22 @@ export type UpdateProductAttributesOnProductWorkflowInput = {
 export const updateProductAttributesOnProductWorkflowId =
   "update-product-attributes-on-product"
 
-const isAxis = (attr?: ProductAttributeDTO) =>
+type AxisAttributeRow = AttributeRow & { product_option_id: string }
+
+const isAxis = (attr?: AttributeRow): attr is AxisAttributeRow =>
   attr?.type === AttributeType.MULTI_SELECT &&
   !!attr?.is_variant_axis &&
   !!attr?.product_option_id
+
+type ExclusivePlan = {
+  shouldAdd: boolean
+  shouldRemove: boolean
+  attribute_id: string
+  product_option_id: string
+  addValues: CreateProductAttributeValueDTO[]
+  removeIds: string[]
+  removeOptvalIds: string[]
+}
 
 export const updateProductAttributesOnProductWorkflow = createWorkflow(
   updateProductAttributesOnProductWorkflowId,
@@ -84,18 +100,7 @@ export const updateProductAttributesOnProductWorkflow = createWorkflow(
     const resolvedUpdate = transform(
       { input, productQuery },
       ({ input, productQuery }) => {
-        const linkedByAttr = new Map<string, string[]>()
-        for (const v of (productQuery.data?.product_attribute_values ?? []) as {
-          id: string
-          attribute?: { id: string }
-        }[]) {
-          if (!v.attribute) {
-            continue
-          }
-          const list = linkedByAttr.get(v.attribute.id) ?? []
-          list.push(v.id)
-          linkedByAttr.set(v.attribute.id, list)
-        }
+        const linkedByAttr = linkedValueIdsByAttribute(productQuery.data)
 
         return input.update.map((ref) => {
           if (!ref.value_ids) {
@@ -120,12 +125,7 @@ export const updateProductAttributesOnProductWorkflow = createWorkflow(
       { input, attributesQuery, resolvedUpdate },
       ({ input, attributesQuery, resolvedUpdate }) => {
         const product_id = input.product_id
-        const attrsById = new Map(
-          ((attributesQuery.data ?? []) as ProductAttributeDTO[]).map((a) => [
-            a.id,
-            a,
-          ]),
-        )
+        const attrsById = attributesById(attributesQuery.data)
         const updates: ProductTypes.ProductOptionProductValueUpdate[] = []
         const addLinks: LinkDefinition[] = []
         const dismissLinks: LinkDefinition[] = []
@@ -161,7 +161,7 @@ export const updateProductAttributesOnProductWorkflow = createWorkflow(
             if (add.length || remove.length) {
               updates.push({
                 product_id,
-                product_option_id: attr.product_option_id as string,
+                product_option_id: attr.product_option_id,
                 add,
                 remove,
               })
@@ -210,24 +210,8 @@ export const updateProductAttributesOnProductWorkflow = createWorkflow(
       { input, attributesQuery, productQuery, resolvedUpdate },
       ({ input, attributesQuery, productQuery, resolvedUpdate }) => {
         const product_id = input.product_id
-        const attrsById = new Map(
-          ((attributesQuery.data ?? []) as ProductAttributeDTO[]).map((a) => [
-            a.id,
-            a,
-          ]),
-        )
-        const linkedByAttr = new Map<string, string[]>()
-        for (const v of (productQuery.data?.product_attribute_values ?? []) as {
-          id: string
-          attribute?: { id: string }
-        }[]) {
-          if (!v.attribute) {
-            continue
-          }
-          const list = linkedByAttr.get(v.attribute.id) ?? []
-          list.push(v.id)
-          linkedByAttr.set(v.attribute.id, list)
-        }
+        const attrsById = attributesById(attributesQuery.data)
+        const linkedByAttr = linkedValueIdsByAttribute(productQuery.data)
 
         const newValueRows: (CreateProductAttributeValueDTO & {
           attribute_id: string
@@ -303,9 +287,7 @@ export const updateProductAttributesOnProductWorkflow = createWorkflow(
       { input, swapPlan, createdSwapValues },
       ({ input, swapPlan, createdSwapValues }) => {
         const product_id = input.product_id
-        const links: LinkDefinition[] = (
-          createdSwapValues as { id: string }[]
-        ).map((v) => ({
+        const links: LinkDefinition[] = createdSwapValues.map((v) => ({
           [Modules.PRODUCT]: { product_id },
           [MercurModules.PRODUCT_ATTRIBUTE]: {
             product_attribute_value_id: v.id,
@@ -330,30 +312,25 @@ export const updateProductAttributesOnProductWorkflow = createWorkflow(
 
     const exclusivePlan = transform(
       { attributesQuery, resolvedUpdate },
-      ({ attributesQuery, resolvedUpdate }) => {
-        const attrsById = new Map(
-          ((attributesQuery.data ?? []) as ProductAttributeDTO[]).map((a) => [
-            a.id,
-            a,
-          ]),
-        )
+      ({ attributesQuery, resolvedUpdate }): ExclusivePlan => {
+        const attrsById = attributesById(attributesQuery.data)
         const exclusive = resolvedUpdate.filter((ref) => {
           const attr = attrsById.get(ref.id)
           return !!attr && isAxis(attr) && !!attr.product_id
         })
         const target = exclusive.length === 1 ? exclusive[0] : undefined
-        if (!target) {
+        const attr = target ? attrsById.get(target.id) : undefined
+        if (!target || !isAxis(attr)) {
           return {
             shouldAdd: false,
             shouldRemove: false,
             attribute_id: "",
             product_option_id: "",
-            addValues: [] as CreateProductAttributeValueDTO[],
-            removeIds: [] as string[],
-            removeOptvalIds: [] as string[],
+            addValues: [],
+            removeIds: [],
+            removeOptvalIds: [],
           }
         }
-        const attr = attrsById.get(target.id) as ProductAttributeDTO
         const addValues = (target.add ?? [])
           .filter((a): a is { value: string } => typeof a !== "string")
           .map((a) => ({ name: a.value }))
@@ -370,7 +347,7 @@ export const updateProductAttributesOnProductWorkflow = createWorkflow(
           shouldAdd: addValues.length > 0,
           shouldRemove: removeIds.length > 0,
           attribute_id: target.id,
-          product_option_id: attr.product_option_id as string,
+          product_option_id: attr.product_option_id,
           addValues,
           removeIds,
           removeOptvalIds,
@@ -389,20 +366,6 @@ export const updateProductAttributesOnProductWorkflow = createWorkflow(
       }),
     )
 
-    const removeValueInput = transform(
-      { exclusivePlan, detached },
-      ({ exclusivePlan }) => ({ ids: exclusivePlan.removeIds }),
-    )
-
-    when(
-      { exclusivePlan },
-      ({ exclusivePlan }) => exclusivePlan.shouldRemove,
-    ).then(() =>
-      deleteProductAttributeValuesWorkflow.runAsStep({
-        input: removeValueInput,
-      }),
-    )
-
     const exclusiveDismissLinks = transform(
       { input, exclusivePlan },
       ({ input, exclusivePlan }) =>
@@ -414,12 +377,28 @@ export const updateProductAttributesOnProductWorkflow = createWorkflow(
         })),
     )
 
-    when(
+    // The product link is dismissed before the value is deleted: the value
+    // delete workflow refuses values still linked to a product.
+    const exclusiveDismissed = when(
       { exclusiveDismissLinks },
       ({ exclusiveDismissLinks }) => exclusiveDismissLinks.length > 0,
     ).then(() =>
       dismissRemoteLinkStep(exclusiveDismissLinks).config({
         name: "upd-pa-exclusive-dismiss-links",
+      }),
+    )
+
+    const removeValueInput = transform(
+      { exclusivePlan, detached, exclusiveDismissed },
+      ({ exclusivePlan }) => ({ ids: exclusivePlan.removeIds }),
+    )
+
+    when(
+      { exclusivePlan },
+      ({ exclusivePlan }) => exclusivePlan.shouldRemove,
+    ).then(() =>
+      deleteProductAttributeValuesWorkflow.runAsStep({
+        input: removeValueInput,
       }),
     )
 
@@ -439,11 +418,7 @@ export const updateProductAttributesOnProductWorkflow = createWorkflow(
       { input, subsetPlan, exclusivePlan, createdExclusiveValues },
       ({ input, subsetPlan, exclusivePlan, createdExclusiveValues }) => {
         const updates = [...subsetPlan.updates]
-        const add = (
-          (createdExclusiveValues ?? []) as {
-            product_option_value_id?: string | null
-          }[]
-        )
+        const add = (createdExclusiveValues ?? [])
           .map((v) => v.product_option_value_id)
           .filter((id): id is string => !!id)
         if (add.length) {
@@ -465,7 +440,7 @@ export const updateProductAttributesOnProductWorkflow = createWorkflow(
     const exclusiveAddLinks = transform(
       { input, createdExclusiveValues },
       ({ input, createdExclusiveValues }) =>
-        ((createdExclusiveValues ?? []) as { id: string }[]).map((v) => ({
+        (createdExclusiveValues ?? []).map((v) => ({
           [Modules.PRODUCT]: { product_id: input.product_id },
           [MercurModules.PRODUCT_ATTRIBUTE]: {
             product_attribute_value_id: v.id,
@@ -485,12 +460,7 @@ export const updateProductAttributesOnProductWorkflow = createWorkflow(
     const renamePlan = transform(
       { attributesQuery, resolvedUpdate },
       ({ attributesQuery, resolvedUpdate }) => {
-        const attrsById = new Map(
-          ((attributesQuery.data ?? []) as ProductAttributeDTO[]).map((a) => [
-            a.id,
-            a,
-          ]),
-        )
+        const attrsById = attributesById(attributesQuery.data)
         const renames = resolvedUpdate.filter((ref) => {
           const attr = attrsById.get(ref.id)
           return (

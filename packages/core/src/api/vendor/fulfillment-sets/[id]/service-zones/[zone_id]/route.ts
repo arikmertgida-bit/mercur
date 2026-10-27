@@ -16,13 +16,14 @@ import { HttpTypes } from "@mercurjs/types"
 
 import { refetchFulfillmentSet, validateSellerFulfillmentSet } from "../../../helpers"
 import { VendorUpdateServiceZoneType } from "../../../validators"
+import { getSellerId } from "../../../../../utils/seller-context"
 
 export const GET = async (
   req: AuthenticatedMedusaRequest,
   res: MedusaResponse<HttpTypes.VendorServiceZoneResponse>
 ) => {
   const { id, zone_id } = req.params
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
 
   await validateSellerFulfillmentSet(req.scope, sellerId, id)
@@ -50,7 +51,7 @@ export const POST = async (
   res: MedusaResponse<HttpTypes.VendorFulfillmentSetResponse>
 ) => {
   const { id, zone_id } = req.params
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
 
   await validateSellerFulfillmentSet(req.scope, sellerId, id)
 
@@ -90,7 +91,7 @@ export const DELETE = async (
   res: MedusaResponse<HttpTypes.VendorServiceZoneDeleteResponse>
 ) => {
   const { id, zone_id } = req.params
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
 
   await validateSellerFulfillmentSet(req.scope, sellerId, id)
 

@@ -1,4 +1,4 @@
-import { createWorkflow, when } from "@medusajs/framework/workflows-sdk"
+import { createWorkflow, transform, when } from "@medusajs/framework/workflows-sdk"
 import {
   PayoutWebhookResult,
   PayoutAccountStatus,
@@ -7,6 +7,7 @@ import {
 
 import { updatePayoutAccountStep } from "../steps/update-payout-account"
 import { updatePayoutStep } from "../steps/update-payout"
+import { ensureDefined } from "../../../utils/ensure-defined"
 
 export interface ProcessPayoutForWebhookWorkflowInput extends PayoutWebhookResult { }
 
@@ -19,7 +20,9 @@ export const processPayoutForWebhookWorkflow = createWorkflow(
       return input.action === "account.activated" && !!input.data?.id
     }).then(() => {
       updatePayoutAccountStep({
-        id: input.data!.id,
+        id: transform({ input }, ({ input }) =>
+          ensureDefined(input.data?.id, "data.id")
+        ),
         status: PayoutAccountStatus.ACTIVE,
       }).config({ name: "activate-payout-account" })
     })
@@ -28,7 +31,9 @@ export const processPayoutForWebhookWorkflow = createWorkflow(
       return input.action === "account.restricted" && !!input.data?.id
     }).then(() => {
       updatePayoutAccountStep({
-        id: input.data!.id,
+        id: transform({ input }, ({ input }) =>
+          ensureDefined(input.data?.id, "data.id")
+        ),
         status: PayoutAccountStatus.RESTRICTED,
       }).config({ name: "restrict-payout-account" })
     })
@@ -37,7 +42,9 @@ export const processPayoutForWebhookWorkflow = createWorkflow(
       return input.action === "account.rejected" && !!input.data?.id
     }).then(() => {
       updatePayoutAccountStep({
-        id: input.data!.id,
+        id: transform({ input }, ({ input }) =>
+          ensureDefined(input.data?.id, "data.id")
+        ),
         status: PayoutAccountStatus.REJECTED,
       }).config({ name: "reject-payout-account" })
     })
@@ -46,7 +53,9 @@ export const processPayoutForWebhookWorkflow = createWorkflow(
       return input.action === "payout.processing" && !!input.data?.id
     }).then(() => {
       updatePayoutStep({
-        id: input.data!.id,
+        id: transform({ input }, ({ input }) =>
+          ensureDefined(input.data?.id, "data.id")
+        ),
         status: PayoutStatus.PROCESSING,
       }).config({ name: "processing-payout" })
     })
@@ -55,7 +64,9 @@ export const processPayoutForWebhookWorkflow = createWorkflow(
       return input.action === "payout.paid" && !!input.data?.id
     }).then(() => {
       updatePayoutStep({
-        id: input.data!.id,
+        id: transform({ input }, ({ input }) =>
+          ensureDefined(input.data?.id, "data.id")
+        ),
         status: PayoutStatus.PAID,
       }).config({ name: "paid-payout" })
     })
@@ -64,7 +75,9 @@ export const processPayoutForWebhookWorkflow = createWorkflow(
       return input.action === "payout.failed" && !!input.data?.id
     }).then(() => {
       updatePayoutStep({
-        id: input.data!.id,
+        id: transform({ input }, ({ input }) =>
+          ensureDefined(input.data?.id, "data.id")
+        ),
         status: PayoutStatus.FAILED,
       }).config({ name: "failed-payout" })
     })
@@ -73,7 +86,9 @@ export const processPayoutForWebhookWorkflow = createWorkflow(
       return input.action === "payout.canceled" && !!input.data?.id
     }).then(() => {
       updatePayoutStep({
-        id: input.data!.id,
+        id: transform({ input }, ({ input }) =>
+          ensureDefined(input.data?.id, "data.id")
+        ),
         status: PayoutStatus.CANCELED,
       }).config({ name: "canceled-payout" })
     })

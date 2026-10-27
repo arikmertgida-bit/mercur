@@ -59,9 +59,7 @@ export const releaseCustomerAuthIdentityStep = createStep(
     const released: ReleasedAuthIdentity[] = []
 
     for (const identity of authIdentities) {
-      const appMetadata: Record<string, unknown> = {
-        ...(identity.app_metadata ?? {}),
-      }
+      const appMetadata = { ...(identity.app_metadata ?? {}) }
 
       if (!(CUSTOMER_APP_METADATA_KEY in appMetadata)) {
         continue
@@ -115,10 +113,10 @@ export const releaseCustomerAuthIdentityStep = createStep(
       const identity = await authModuleService.retrieveAuthIdentity(
         entry.authIdentityId
       )
-      const appMetadata: Record<string, unknown> = {
+      const appMetadata = {
         ...(identity.app_metadata ?? {}),
+        [CUSTOMER_APP_METADATA_KEY]: entry.previousValue,
       }
-      appMetadata[CUSTOMER_APP_METADATA_KEY] = entry.previousValue
 
       await authModuleService.updateAuthIdentities({
         id: identity.id,

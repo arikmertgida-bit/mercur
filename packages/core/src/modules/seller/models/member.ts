@@ -1,3 +1,4 @@
+import type { JsonRecord } from "@mercurjs/types"
 import { model } from "@medusajs/framework/utils"
 import Seller from "./seller"
 import SellerMember from "./seller-member"
@@ -14,7 +15,7 @@ const Member = model
       mappedBy: "members",
       pivotEntity: () => SellerMember,
     }),
-    metadata: model.json().nullable(),
+    metadata: model.json<JsonRecord>().nullable(),
   })
   .indexes([
     {

@@ -13,6 +13,7 @@ import {
   validateSellerInventoryLevels,
 } from "../../../helpers"
 import { VendorBatchInventoryItemLocationsLevelType } from "../../../validators"
+import { getSellerId } from "../../../../../utils/seller-context"
 
 export const POST = async (
   req: AuthenticatedMedusaRequest<VendorBatchInventoryItemLocationsLevelType>,
@@ -20,7 +21,7 @@ export const POST = async (
 ) => {
   const { id } = req.params
 
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
   await validateSellerInventoryItem(req.scope, sellerId, id)
   await validateSellerStockLocations(
     req.scope,

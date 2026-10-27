@@ -8,7 +8,7 @@ import {
 } from "@medusajs/framework/utils"
 
 import { AdditionalData } from "@medusajs/framework/types"
-import { HttpTypes } from "@medusajs/types"
+import { HttpTypes } from "@mercurjs/types"
 
 import { AdminUpdateCollectionType } from "../validators"
 import { updateProductCollectionWithImagesWorkflow } from "../../../../workflows/media/workflows/update-product-collection-with-images"

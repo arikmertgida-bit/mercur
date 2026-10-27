@@ -165,7 +165,7 @@ async function loadActiveSellerCurrencies(query: Query): Promise<Map<string, str
       pagination: { skip, take: SELLER_BATCH_LIMIT },
     })
 
-    const sellers = parseRows(SellerStatusRowSchema, rows as object[])
+    const sellers = parseRows(SellerStatusRowSchema, rows)
     for (const seller of sellers) {
       currencyBySeller.set(seller.id, seller.currency_code)
     }
@@ -192,7 +192,7 @@ async function loadOrderIdsBySeller(
       filters: { seller_id: sellerIdChunk },
     })
 
-    for (const link of parseRows(SellerScopedOrderLinkRowSchema, rows as object[])) {
+    for (const link of parseRows(SellerScopedOrderLinkRowSchema, rows)) {
       const list = orderIdsBySeller.get(link.seller_id) ?? []
       list.push(link.order_id)
       orderIdsBySeller.set(link.seller_id, list)
@@ -216,7 +216,7 @@ async function loadOrdersSince(
       filters: { id: orderIdChunk, created_at: { $gte: sinceIso } },
     })
 
-    orders.push(...parseRows(OrderAnalyticsRowSchema, rows as object[]))
+    orders.push(...parseRows(OrderAnalyticsRowSchema, rows))
   }
 
   return orders
@@ -282,7 +282,7 @@ async function loadLowStockForSeller(
   })
 
   const candidates: LowStockCandidate[] = []
-  for (const link of parseRows(InventoryItemSellerLinkRowSchema, rows as object[])) {
+  for (const link of parseRows(InventoryItemSellerLinkRowSchema, rows)) {
     const item = link.inventory_item
     if (!item || !hasPublishedListing(item.variants)) {
       continue

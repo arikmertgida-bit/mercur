@@ -12,9 +12,21 @@ import {
   useQueryGraphStep,
 } from "@medusajs/medusa/core-flows"
 import { AttributeType, MercurModules } from "@mercurjs/types"
+import { z } from "zod"
 
 import { validateProductAttributesNotRequiredStep } from "../steps"
+import { parseGraphRows } from "../../../utils/graph-rows"
+import {
+  AttributeRowSchema,
+  ProductAttributeValueLinkRowSchema,
+} from "../utils/graph-rows"
 import { deleteProductAttributesWorkflow } from "./delete-product-attributes"
+
+// This workflow also selects the name and the required flag.
+const RemovedAttributeRowSchema = AttributeRowSchema.extend({
+  name: z.string(),
+  is_required: z.boolean(),
+})
 
 export type RemoveProductAttributesFromProductWorkflowInput = {
   product_id: string
@@ -45,7 +57,7 @@ export const removeProductAttributesFromProductWorkflow = createWorkflow(
     validateProductAttributesNotRequiredStep(
       transform({ attributesQuery, input }, ({ attributesQuery, input }) => {
         const readd = new Set(input.readd ?? [])
-        return (attributesQuery.data ?? [])
+        return parseGraphRows(RemovedAttributeRowSchema, attributesQuery.data)
           .filter((a) => !readd.has(a.id))
           .map((a) => ({
             id: a.id,
@@ -76,24 +88,22 @@ export const removeProductAttributesFromProductWorkflow = createWorkflow(
         // links must be cleaned up alongside non-axis ones.
         const dismissAttrIds = new Set<string>()
 
-        for (const a of (attributesQuery.data ?? []) as {
-          id: string
-          type: AttributeType
-          is_variant_axis: boolean
-          product_id: string | null
-          product_option_id: string | null
-        }[]) {
+        for (const a of parseGraphRows(
+          RemovedAttributeRowSchema,
+          attributesQuery.data
+        )) {
+          const productOptionId = a.product_option_id
           const isAxis =
             a.type === AttributeType.MULTI_SELECT &&
             !!a.is_variant_axis &&
-            !!a.product_option_id
+            !!productOptionId
           const isScoped = !!a.product_id
 
           dismissAttrIds.add(a.id)
 
-          if (isAxis && !isScoped) {
+          if (isAxis && !isScoped && productOptionId) {
             optionPairs.push({
-              product_option_id: a.product_option_id as string,
+              product_option_id: productOptionId,
               product_id,
             })
           } else if (isScoped) {
@@ -101,11 +111,10 @@ export const removeProductAttributesFromProductWorkflow = createWorkflow(
           }
         }
 
-        const linkedValues = (productQuery.data?.product_attribute_values ??
-          []) as {
-            id: string
-            attribute?: { id: string }
-          }[]
+        const linkedValues = parseGraphRows(
+          ProductAttributeValueLinkRowSchema,
+          productQuery.data?.product_attribute_values
+        )
         const dismissLinks: LinkDefinition[] = linkedValues
           .filter((v) => v.attribute && dismissAttrIds.has(v.attribute.id))
           .map((v) => ({

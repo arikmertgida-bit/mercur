@@ -5,7 +5,6 @@ import {
 } from "@medusajs/framework/workflows-sdk"
 import {
   CreateProductChangeActionDTO,
-  ProductChangeDTO,
   ProductChangeStatus,
 } from "@mercurjs/types"
 
@@ -51,13 +50,13 @@ export const recordProductAuditChangeWorkflow = createWorkflow(
       ({ input, changes }) => {
         const out: CreateProductChangeActionDTO[] = []
         input.changes.forEach((c, idx) => {
-          const product_change_id = changes[idx]?.id as string
+          const product_change_id = changes[idx]?.id
           for (const action of c.actions) {
             out.push({
               ...action,
               product_change_id,
               applied: true,
-            } as CreateProductChangeActionDTO)
+            })
           }
         })
         return out
@@ -69,7 +68,7 @@ export const recordProductAuditChangeWorkflow = createWorkflow(
     return new WorkflowResponse(
       transform(
         { changes },
-        ({ changes }) => changes as ProductChangeDTO[],
+        ({ changes }) => changes,
       ),
     )
   },

@@ -10,15 +10,22 @@ import {
 import { HttpTypes } from "@mercurjs/types"
 
 import { refetchPromotion, validateSellerPromotion } from "../helpers"
-import { VendorUpdatePromotionType } from "../validators"
+import {
+  VendorUpdatePromotionType,
+  VendorGetPromotionParamsType,
+} from "../validators"
+import { getSellerId } from "../../../utils/seller-context"
 
 export const GET = async (
-  req: AuthenticatedMedusaRequest,
+  req: AuthenticatedMedusaRequest<
+    Partial<VendorGetPromotionParamsType>,
+    VendorGetPromotionParamsType
+  >,
   res: MedusaResponse<HttpTypes.VendorPromotionResponse>
 ) => {
   const { id } = req.params
 
-  await validateSellerPromotion(req.scope, req.seller_context!.seller_id, id)
+  await validateSellerPromotion(req.scope, getSellerId(req), id)
 
   const promotion = await refetchPromotion(
     id,
@@ -42,7 +49,7 @@ export const POST = async (
 ) => {
   const { id } = req.params
 
-  await validateSellerPromotion(req.scope, req.seller_context!.seller_id, id)
+  await validateSellerPromotion(req.scope, getSellerId(req), id)
 
   await updatePromotionsWorkflow(req.scope).run({
     input: {
@@ -65,7 +72,7 @@ export const DELETE = async (
 ) => {
   const { id } = req.params
 
-  await validateSellerPromotion(req.scope, req.seller_context!.seller_id, id)
+  await validateSellerPromotion(req.scope, getSellerId(req), id)
 
   await deletePromotionsWorkflow(req.scope).run({
     input: { ids: [id] },

@@ -13,8 +13,10 @@ import {
 // typed client to keep seeing it.
 export { POST } from "@medusajs/medusa/api/admin/orders/[id]/route"
 
+type AdminGetOrderQuery = { version?: number }
+
 export const GET = async (
-  req: AuthenticatedMedusaRequest,
+  req: AuthenticatedMedusaRequest<never, AdminGetOrderQuery>,
   res: MedusaResponse<HttpTypes.AdminOrderResponse>
 ) => {
   const workflow = getOrderDetailWorkflow(req.scope)
@@ -22,11 +24,18 @@ export const GET = async (
     input: {
       fields: withCartPaymentCollectionFields(req.queryConfig.fields),
       order_id: req.params.id,
-      version: (req.validatedQuery as { version?: number }).version,
+      version: req.validatedQuery.version,
     },
   })
 
-  normalizeOrderPaymentCollections(result as never)
+  normalizeOrderPaymentCollections(result)
 
-  res.json({ order: result as HttpTypes.AdminOrderResponse["order"] })
+  res.json({
+    // @ts-expect-error -- Medusa boundary: getOrderDetailWorkflow is typed as
+    // returning the module `OrderDetailDTO` while the route contract is the
+    // HTTP `AdminOrder`. They differ only in serialization (BigNumber ->
+    // number, optional -> nullable); Medusa's stock route returns the same
+    // object.
+    order: result,
+  })
 }

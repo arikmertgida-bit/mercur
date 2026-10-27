@@ -3,3 +3,11 @@
 # with a misleading "no such file or directory" error inside Linux containers.
 *.sh text eol=lf
 docker-entrypoint.sh text eol=lf
+
+# Mercur's in-memory core-flows patches (packages/core/src/patches/patches)
+# are unified diffs matched line-by-line against LF-only files in
+# node_modules — a CRLF checkout makes every context line carry a trailing
+# `\r`, so the patch is reported as "no longer applies" and the backend
+# refuses to boot (locally and in the Docker image, which COPYs the host
+# working tree).
+*.patch text eol=lf

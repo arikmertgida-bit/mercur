@@ -14,6 +14,7 @@ import {
 } from "@medusajs/medusa/core-flows"
 
 import { completeCartWithSplitOrdersWorkflow } from "../../cart/workflows/complete-cart-with-split-orders"
+import { ensureDefined } from "../../../utils/ensure-defined"
 
 export type ProcessPaymentWorkflowInput = {
     action: string
@@ -115,7 +116,9 @@ export const processPaymentWorkflow = createWorkflow(
             )
         }).then(() => {
             const payment = authorizePaymentSessionStep({
-                id: input.data!.session_id!,
+                id: transform({ input }, ({ input }) =>
+                    ensureDefined(input.data?.session_id, "data.session_id")
+                ),
                 context: {},
             }).config({ name: "authorize-payment-session-autocapture" })
 
@@ -142,7 +145,9 @@ export const processPaymentWorkflow = createWorkflow(
             }
         ).then(() => {
             authorizePaymentSessionStep({
-                id: input.data!.session_id!,
+                id: transform({ input }, ({ input }) =>
+                    ensureDefined(input.data?.session_id, "data.session_id")
+                ),
                 context: {},
             }).config({ name: "authorize-payment-session" })
         })
@@ -163,7 +168,9 @@ export const processPaymentWorkflow = createWorkflow(
             }
         ).then(() => {
             authorizePaymentSessionStep({
-                id: input.data!.session_id!,
+                id: transform({ input }, ({ input }) =>
+                    ensureDefined(input.data?.session_id, "data.session_id")
+                ),
                 context: {},
             }).config({ name: "authorize-payment-session-deferred" })
         })

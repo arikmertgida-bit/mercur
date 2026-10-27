@@ -1,10 +1,11 @@
-import { ClaimReason, ClaimType } from "@medusajs/framework/utils"
+import { ClaimReason } from "@medusajs/framework/utils"
 import { z } from "zod"
 import {
   createFindParams,
   createOperatorMap,
   createSelectParams,
 } from "@medusajs/medusa/api/utils/validators"
+import { JsonRecordSchema } from "../../../utils/json-schema"
 
 export type VendorGetClaimParamsType = z.infer<typeof VendorGetClaimParams>
 export const VendorGetClaimParams = createSelectParams()
@@ -22,14 +23,21 @@ export const VendorGetClaimsParams = createFindParams({
   })
 )
 export type VendorGetClaimsParamsType = z.infer<typeof VendorGetClaimsParams>
+/**
+ * The list query as clients send it: every field, including those with a
+ * default (`offset`, `limit`, ...), is optional on the wire.
+ */
+export type VendorGetClaimsParamsInput = Partial<VendorGetClaimsParamsType>
 
 export const VendorPostOrderClaimsReq = z.object({
-  type: z.nativeEnum(ClaimType),
+  // The values of Medusa's `OrderClaimType` ("refund" | "replace"), which is
+  // what the begin-claim workflow takes.
+  type: z.enum(["refund", "replace"]),
   order_id: z.string(),
   description: z.string().optional(),
   internal_note: z.string().optional(),
   reason_id: z.string().nullish(),
-  metadata: z.record(z.string(), z.unknown()).nullish(),
+  metadata: JsonRecordSchema.nullish(),
 })
 export type VendorPostOrderClaimsReqType = z.infer<
   typeof VendorPostOrderClaimsReq
@@ -50,7 +58,7 @@ export const VendorPostClaimItemsReq = z.object({
       reason: z.nativeEnum(ClaimReason).optional(),
       description: z.string().optional(),
       internal_note: z.string().optional(),
-      metadata: z.record(z.string(), z.unknown()).nullish(),
+      metadata: JsonRecordSchema.nullish(),
     })
   ),
 })
@@ -74,7 +82,7 @@ export const VendorPostClaimsRequestReturnItemsReq = z.object({
       description: z.string().optional(),
       internal_note: z.string().optional(),
       reason_id: z.string().optional(),
-      metadata: z.record(z.string(), z.unknown()).optional(),
+      metadata: JsonRecordSchema.optional(),
     })
   ),
 })
@@ -86,7 +94,7 @@ export const VendorPostClaimsRequestItemsReturnActionReq = z.object({
   quantity: z.number().optional(),
   internal_note: z.string().nullish().optional(),
   reason_id: z.string().nullish().optional(),
-  metadata: z.record(z.string(), z.unknown()).nullish().optional(),
+  metadata: JsonRecordSchema.nullish().optional(),
 })
 export type VendorPostClaimsRequestItemsReturnActionReqType = z.infer<
   typeof VendorPostClaimsRequestItemsReturnActionReq
@@ -99,7 +107,7 @@ export const VendorPostClaimsAddItemsReq = z.object({
       quantity: z.number(),
       unit_price: z.number().optional(),
       internal_note: z.string().optional(),
-      metadata: z.record(z.string(), z.unknown()).optional(),
+      metadata: JsonRecordSchema.optional(),
     })
   ),
 })
@@ -120,7 +128,7 @@ export const VendorPostClaimsShippingReq = z.object({
   custom_amount: z.number().optional(),
   description: z.string().optional(),
   internal_note: z.string().optional(),
-  metadata: z.record(z.string(), z.unknown()).optional(),
+  metadata: JsonRecordSchema.optional(),
 })
 export type VendorPostClaimsShippingReqType = z.infer<
   typeof VendorPostClaimsShippingReq
@@ -129,7 +137,7 @@ export type VendorPostClaimsShippingReqType = z.infer<
 export const VendorPostClaimsShippingActionReq = z.object({
   custom_amount: z.number().nullish().optional(),
   internal_note: z.string().nullish().optional(),
-  metadata: z.record(z.string(), z.unknown()).nullish().optional(),
+  metadata: JsonRecordSchema.nullish().optional(),
 })
 export type VendorPostClaimsShippingActionReqType = z.infer<
   typeof VendorPostClaimsShippingActionReq

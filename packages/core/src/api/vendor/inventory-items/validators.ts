@@ -5,6 +5,7 @@ import {
   createSelectParams,
 } from "@medusajs/medusa/api/utils/validators"
 import { booleanString } from "@medusajs/medusa/api/utils/common-validators/common"
+import { JsonRecordSchema } from "../../../utils/json-schema"
 
 export type VendorGetInventoryItemParamsType = z.infer<
   typeof VendorGetInventoryItemParams
@@ -138,7 +139,7 @@ export const VendorCreateInventoryItem = z
     description: z.string().nullish(),
     requires_shipping: z.boolean().optional(),
     thumbnail: z.string().nullish(),
-    metadata: z.record(z.string(), z.unknown()).nullish(),
+    metadata: JsonRecordSchema.nullish(),
     location_levels: z.array(VendorCreateInventoryLocationLevel).optional(),
   })
   .strict()
@@ -164,6 +165,6 @@ export const VendorUpdateInventoryItem = z
     description: z.string().nullish(),
     requires_shipping: z.boolean().optional(),
     thumbnail: z.string().nullish(),
-    metadata: z.record(z.string(), z.unknown()).nullish(),
+    metadata: JsonRecordSchema.nullish(),
   })
   .strict()

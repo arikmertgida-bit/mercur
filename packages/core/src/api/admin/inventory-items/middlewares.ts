@@ -15,9 +15,9 @@ import { ORIGINAL_MIDDLEWARES } from "../../../utils/disable-medusa-middlewares"
 
 const LIST_MATCHER = "/admin/inventory-items"
 
-const capturedBase = (ORIGINAL_MIDDLEWARES[
+const capturedBase = ORIGINAL_MIDDLEWARES[
   "dist/api/admin/inventory-items/middlewares.js"
-] ?? []) as MiddlewareRoute[]
+] ?? []
 
 const baseWithoutListGet = capturedBase.filter((route) => {
   if (route.matcher !== LIST_MATCHER) return true

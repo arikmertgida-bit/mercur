@@ -23,9 +23,10 @@ import { ProductAttributeValueWorkflowEvents } from "../events"
 import {
   updateProductAttributeValuesStep,
 } from "../steps"
+import { QueryFilter } from "../../../utils/query-filter"
 
 export type UpdateProductAttributeValuesWorkflowInput = {
-  selector: Record<string, unknown>
+  selector: QueryFilter
   update: UpdateProductAttributeValueDTO
 } & AdditionalData
 
@@ -33,15 +34,15 @@ export type UpdateProductAttributeValuesWorkflowHooks = [
   Hook<
     "validate",
     { input: UpdateProductAttributeValuesWorkflowInput },
-    unknown
+    void
   >,
   Hook<
     "productAttributeValuesUpdated",
     {
       values: ProductAttributeValueDTO[]
-      additional_data: Record<string, unknown> | undefined
+      additional_data: AdditionalData["additional_data"]
     },
-    unknown
+    void
   >,
 ]
 
@@ -125,7 +126,7 @@ export const updateProductAttributeValuesWorkflow: ReturnWorkflow<
       },
     )
 
-    return new WorkflowResponse(values as ProductAttributeValueDTO[], {
+    return new WorkflowResponse(values, {
       hooks: [validate, productAttributeValuesUpdated],
     })
   },

@@ -3,47 +3,64 @@ import {
   MedusaResponse,
 } from "@medusajs/framework/http"
 import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
+import { HttpTypes } from "@medusajs/types"
+import { z } from "zod"
+
+import { parseGraphRows } from "../../../../../../utils/graph-rows"
+import { QueryFilter } from "../../../../../../utils/query-filter"
 import {
-  ApplicationMethodTargetTypeValues,
-  HttpTypes,
-  RuleTypeValues,
-} from "@medusajs/types"
+  PromotionShapeQuerySchema,
+  RuleValueFilterFields,
+  toRuleValueOptions,
+} from "../../../../../utils/promotion-rules"
 
 import {
   ruleQueryConfigurations,
   validateRuleAttribute,
   validateRuleType,
 } from "../../../utils"
+import { AdminGetPromotionsRuleValueWithSellerType } from "../../../validators"
+
+// The store picker of a buyget promotion passes the seller it is scoped to.
+const SellerIdQuerySchema = z
+  .union([z.string(), z.array(z.string())])
+  .optional()
+  .catch(undefined)
+
+const ProductIdRowSchema = z.object({ product_id: z.string() })
 
 export const GET = async (
-  req: AuthenticatedMedusaRequest,
+  req: AuthenticatedMedusaRequest<
+    Partial<AdminGetPromotionsRuleValueWithSellerType>,
+    RuleValueFilterFields
+  >,
   res: MedusaResponse<HttpTypes.AdminRuleValueOptionsListResponse>
 ) => {
   const { rule_type: ruleType, rule_attribute_id: ruleAttributeId } = req.params
   const queryConfig = ruleQueryConfigurations[ruleAttributeId]
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
-  const filterableFields: Record<string, string | string[] | undefined> = {
-    ...(req.filterableFields as Record<string, string | string[] | undefined>),
-  }
+  const { value, application_method_target_type: targetType } =
+    req.filterableFields
+  const filterableFields: QueryFilter = { ...req.filterableFields }
 
-  if (filterableFields.value) {
-    filterableFields[queryConfig.valueAttr] = filterableFields.value
+  if (value) {
+    filterableFields[queryConfig.valueAttr] = value
     delete filterableFields.value
   }
 
   validateRuleType(ruleType)
   validateRuleAttribute({
-    ruleType: ruleType as RuleTypeValues,
+    ruleType,
     ruleAttributeId,
     promotionType: undefined,
     applicationMethodType: undefined,
     applicationMethodTargetType:
-      filterableFields.application_method_target_type as
-        | ApplicationMethodTargetTypeValues
-        | undefined,
+      PromotionShapeQuerySchema.shape.application_method_target_type.parse(
+        targetType
+      ),
   })
 
-  if (filterableFields.application_method_target_type) {
+  if (targetType) {
     delete filterableFields.application_method_target_type
   }
 
@@ -51,14 +68,17 @@ export const GET = async (
   // the create form); once that seller is chosen, restrict the product
   // picker to products actually belonging to them via the product_seller
   // link — products carry no `seller_id` column of their own.
-  if (queryConfig.entryPoint === "product" && req.query.seller_id) {
+  const sellerId = SellerIdQuerySchema.parse(req.query.seller_id)
+  if (queryConfig.entryPoint === "product" && sellerId) {
     const { data: sellerProducts } = await query.graph({
       entity: "product_seller",
       fields: ["product_id"],
-      filters: { seller_id: req.query.seller_id as string },
+      filters: { seller_id: sellerId },
     })
 
-    filterableFields.id = sellerProducts.map((r) => r.product_id)
+    filterableFields.id = parseGraphRows(ProductIdRowSchema, sellerProducts).map(
+      (r) => r.product_id
+    )
   }
 
   const { data: rows, metadata } = await query.graph({
@@ -68,10 +88,7 @@ export const GET = async (
     pagination: req.queryConfig.pagination,
   })
 
-  const values = (rows as Array<Record<string, string>>).map((r) => ({
-    label: r[queryConfig.labelAttr],
-    value: r[queryConfig.valueAttr],
-  }))
+  const values = toRuleValueOptions(rows, queryConfig)
 
   res.json({
     values,

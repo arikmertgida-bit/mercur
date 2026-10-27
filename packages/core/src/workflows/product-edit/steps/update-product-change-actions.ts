@@ -1,5 +1,5 @@
 import { createStep, StepResponse } from "@medusajs/framework/workflows-sdk"
-import { MercurModules } from "@mercurjs/types"
+import { type JsonRecord, MercurModules } from "@mercurjs/types"
 
 import type ProductChangeModuleService from "../../../modules/product-edit/service"
 
@@ -9,25 +9,16 @@ export const updateProductChangeActionsStepId =
 type UpdateProductChangeActionsStepInput = Array<{
   id: string
   applied?: boolean
-  details?: Record<string, unknown>
+  details?: JsonRecord
   internal_note?: string | null
 }>
 
 type PrevActionScalar = {
   id: string
   applied: boolean
-  details: Record<string, unknown>
+  details: JsonRecord
   internal_note: string | null
 }
-
-const pickPrev = (
-  a: Record<string, unknown> & { id: string },
-): PrevActionScalar => ({
-  id: a.id,
-  applied: (a.applied as boolean) ?? false,
-  details: (a.details as Record<string, unknown>) ?? {},
-  internal_note: (a.internal_note as string | null) ?? null,
-})
 
 export const updateProductChangeActionsStep = createStep(
   updateProductChangeActionsStepId,
@@ -37,10 +28,17 @@ export const updateProductChangeActionsStep = createStep(
     )
 
     const ids = input.map((i) => i.id)
-    const prev = (await service.listProductChangeActions({
+    const prev = await service.listProductChangeActions({
       id: ids,
-    })) as Array<Record<string, unknown> & { id: string }>
-    const prevScalars = prev.map(pickPrev)
+    })
+    const prevScalars = prev.map(
+      (action): PrevActionScalar => ({
+        id: action.id,
+        applied: action.applied,
+        details: action.details,
+        internal_note: action.internal_note,
+      }),
+    )
 
     const result = await service.updateProductChangeActions(input)
     return new StepResponse(result, prevScalars)

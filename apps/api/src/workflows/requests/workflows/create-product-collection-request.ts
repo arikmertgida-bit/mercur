@@ -4,12 +4,13 @@ import { MedusaError } from "@medusajs/framework/utils"
 import { upsertCustomFieldsStep } from "@mercurjs/core/workflows"
 
 import { RequestStatus } from "../../../types/requests"
+import { type JsonRecord } from "../../../lib/graph-schemas"
 
 type CreateProductCollectionRequestWorkflowInput = {
   product_collection: {
     title: string
     handle?: string
-    metadata?: Record<string, unknown>
+    metadata?: JsonRecord
   }
   submitter_id: string
 }

@@ -22,9 +22,9 @@ export type UpdateSellerAddressWorkflowHooks = [
     "addressUpdated",
     {
       address: SellerAddressDTO
-      additional_data: Record<string, unknown> | undefined
+      additional_data: AdditionalData["additional_data"]
     },
-    unknown
+    void
   >,
 ]
 

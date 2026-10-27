@@ -26,17 +26,14 @@ export const declineProductChangeStep = createStep(
       MercurModules.PRODUCT_EDIT,
     )
 
-    const prev = (await service.retrieveProductChange(input.id)) as Record<
-      string,
-      unknown
-    > & { id: string }
+    const prev = await service.retrieveProductChange(input.id)
 
     const prevScalar: PrevChangeScalar = {
       id: prev.id,
-      status: prev.status as ProductChangeStatus,
-      declined_by: (prev.declined_by as string | null) ?? null,
-      declined_at: (prev.declined_at as Date | null) ?? null,
-      declined_reason: (prev.declined_reason as string | null) ?? null,
+      status: prev.status,
+      declined_by: prev.declined_by ?? null,
+      declined_at: prev.declined_at ?? null,
+      declined_reason: prev.declined_reason ?? null,
     }
 
     const result = await service.updateProductChanges([

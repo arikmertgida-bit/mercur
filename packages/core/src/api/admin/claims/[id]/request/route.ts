@@ -1,3 +1,4 @@
+import { z } from "zod"
 import { cancelBeginOrderClaimWorkflow } from "@medusajs/core-flows"
 import {
   AuthenticatedMedusaRequest,
@@ -7,6 +8,10 @@ import { HttpTypes } from "@medusajs/framework/types"
 import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
 
 import { confirmClaimRequestWorkflow } from "../../../../../workflows/order/workflows/confirm-claim-request"
+import { parseGraphRow } from "../../../../../utils/graph-rows"
+import { toHttpOrderPreview } from "../../../../../utils/http-order"
+
+const ReturnRefRowSchema = z.object({ return_id: z.string().nullish() })
 
 const RETURN_FIELDS = [
   "id",
@@ -57,7 +62,9 @@ export const POST = async (
   })
 
   let orderReturn: HttpTypes.AdminReturn | undefined
-  const returnId = (orderClaim as { return_id?: string } | undefined)?.return_id
+  const returnId = orderClaim
+    ? parseGraphRow(ReturnRefRowSchema, orderClaim).return_id
+    : undefined
   if (returnId) {
     const { data: returns } = await query.graph({
       entity: "return",
@@ -68,15 +75,12 @@ export const POST = async (
   }
 
   res.json({
-    // @ts-expect-error — Medusa's own module-layer DTO (OrderPreviewDTO/
-    // OrderChangeDTO/etc.) and its HTTP-response DTO (AdminOrderPreview/
-    // AdminOrderChange/etc.) are two parallel type hierarchies that don't
-    // structurally unify, even though the real workflow data includes every
-    // field the HTTP type expects (confirmed against Medusa's own core route,
-    // which passes the same shape through with zero cast/transform).
-    order_preview: result,
+    order_preview: toHttpOrderPreview(result),
     claim: orderClaim,
-    return: orderReturn as HttpTypes.AdminReturn,
+    // @ts-expect-error — Medusa's HTTP type declares `return` as always
+    // present, but a claim without inbound items has no return; Medusa's own
+    // core route sends `undefined` here too.
+    return: orderReturn,
   })
 }
 

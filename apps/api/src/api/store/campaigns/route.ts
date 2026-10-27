@@ -6,20 +6,35 @@ import { isSellerVisible } from "@mercurjs/core/api/utils/sellers"
 import { computeCampaignStatus, CampaignComputedStatus } from "../../../lib/campaign-status"
 import { getCampaignIdsForCategory } from "../../../lib/search/meilisearch-client"
 import { StoreGetCampaignsParamsType } from "./validators"
+import { z } from "zod"
+import { parseRows } from "../../../lib/graph-schemas"
 
-type PromotionTargetRuleRow = {
-  attribute?: string | null
-  operator?: string | null
-  values?: { value?: string | null }[] | null
-}
+const NullableString = z.string().nullable().optional()
 
-type PromotionRow = {
-  campaign_id?: string | null
-  application_method?: {
-    target_type?: string | null
-    target_rules?: PromotionTargetRuleRow[] | null
-  } | null
-}
+const PromotionCategoryRuleRowSchema = z.object({
+  campaign_id: NullableString,
+  application_method: z
+    .object({
+      target_type: NullableString,
+      target_rules: z
+        .array(
+          z
+            .object({
+              attribute: NullableString,
+              operator: NullableString,
+              values: z
+                .array(z.object({ value: NullableString }).nullable())
+                .nullable()
+                .optional(),
+            })
+            .nullable()
+        )
+        .nullable()
+        .optional(),
+    })
+    .nullable()
+    .optional(),
+})
 
 const RESOLVABLE_OPERATORS = new Set(["in", "eq"])
 
@@ -54,49 +69,23 @@ async function resolveCampaignIdsByDirectCategoryRule(
   })
 
   const matched = new Set<string>()
-  for (const promotion of promotions as PromotionRow[]) {
+  for (const promotion of parseRows(PromotionCategoryRuleRowSchema, promotions)) {
     if (!promotion.campaign_id || promotion.application_method?.target_type !== "items") {
       continue
     }
     const rules = promotion.application_method?.target_rules ?? []
     const hasMatch = rules.some(
       (rule) =>
-        rule.attribute === "items.product.categories.id" &&
-        rule.operator &&
+        rule?.attribute === "items.product.categories.id" &&
+        !!rule.operator &&
         RESOLVABLE_OPERATORS.has(rule.operator) &&
-        (rule.values ?? []).some((value) => value.value === categoryId)
+        (rule.values ?? []).some((value) => value?.value === categoryId)
     )
     if (hasMatch) {
       matched.add(promotion.campaign_id)
     }
   }
   return matched
-}
-
-type CampaignBudgetRow = {
-  id: string
-  type: string
-  limit: number | null
-  used: number
-  currency_code: string | null
-}
-
-type CampaignSellerRow = {
-  id: string
-  status: string
-  closed_from: string | null
-  closed_to: string | null
-}
-
-type CampaignRow = {
-  id: string
-  name: string
-  description: string | null
-  campaign_identifier: string
-  starts_at: string | null
-  ends_at: string | null
-  budget: CampaignBudgetRow | null
-  seller: CampaignSellerRow | null
 }
 
 export const GET = async (
@@ -126,7 +115,7 @@ export const GET = async (
   const wantedStatus: CampaignComputedStatus = status === "upcoming" ? "scheduled" : "active"
   const now = new Date()
 
-  const rows = campaigns as CampaignRow[]
+  const rows = campaigns
 
   const statusFiltered = rows.filter((campaign) => {
     if (campaign.seller && !isSellerVisible(campaign.seller, now)) {

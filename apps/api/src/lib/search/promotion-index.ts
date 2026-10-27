@@ -1,6 +1,7 @@
 import type { Query } from '@medusajs/framework'
 import { ICacheService, MedusaContainer } from '@medusajs/framework/types'
 import { ContainerRegistrationKeys, Modules } from '@medusajs/framework/utils'
+import { type GraphList, presentItems } from "../graph-list"
 
 // The three vendor promotion templates (see
 // packages/vendor/src/pages/promotions/create/create-promotion-form/templates.ts)
@@ -48,7 +49,7 @@ export type PromotionMatchableProduct = {
 type TargetRuleRow = {
   attribute?: string | null
   operator?: string | null
-  values?: { value?: string | null }[] | null
+  values?: GraphList<{ value?: string | null }>
 }
 
 type PromotionRow = {
@@ -63,13 +64,8 @@ type PromotionRow = {
   application_method?: {
     type?: string | null
     target_type?: string | null
-    target_rules?: TargetRuleRow[] | null
+    target_rules?: GraphList<TargetRuleRow>
   } | null
-}
-
-type PromotionSellerRow = {
-  promotion_id: string
-  seller_id: string
 }
 
 // The rule-attribute values the vendor promotion builder can actually
@@ -127,17 +123,19 @@ function isCampaignCurrentlyActive(campaign: PromotionRow['campaign']): boolean 
 // promotion whose rules can't be fully understood must never be
 // under-matched (falsely shown as "on sale" for products it doesn't
 // actually cover) or over-matched, so it is excluded entirely.
-function resolveTargetRules(rows: TargetRuleRow[]): ProductTargetRule[] | null {
+function resolveTargetRules(
+  rows: GraphList<TargetRuleRow> | undefined
+): ProductTargetRule[] | null {
   const rules: ProductTargetRule[] = []
-  for (const row of rows) {
-    if (!row.attribute || !row.operator) {
+  for (const row of rows ?? []) {
+    if (!row?.attribute || !row.operator) {
       return null
     }
     const attribute = RULE_ATTRIBUTE_MAP[row.attribute]
     if (!attribute || !RESOLVABLE_OPERATORS.has(row.operator)) {
       return null
     }
-    const values = (row.values ?? [])
+    const values = presentItems(row.values)
       .map((value) => value.value)
       .filter((value): value is string => Boolean(value))
     if (!values.length) {
@@ -184,7 +182,7 @@ export async function loadActiveProductPromotions(
     filters: { status: 'active' },
   })
 
-  const rows = promotions as PromotionRow[]
+  const rows = promotions
   const candidates: { promotion: PromotionRow; kind: ProductPromotionKind; rules: ProductTargetRule[] }[] = []
 
   for (const promotion of rows) {
@@ -192,7 +190,7 @@ export async function loadActiveProductPromotions(
     if (!kind || !isCampaignCurrentlyActive(promotion.campaign)) {
       continue
     }
-    const rules = resolveTargetRules(promotion.application_method?.target_rules ?? [])
+    const rules = resolveTargetRules(promotion.application_method?.target_rules)
     if (rules === null) {
       continue
     }
@@ -207,7 +205,7 @@ export async function loadActiveProductPromotions(
       fields: ['promotion_id', 'seller_id'],
       filters: { promotion_id: promotionIds },
     })
-    for (const link of sellerLinks as PromotionSellerRow[]) {
+    for (const link of sellerLinks) {
       sellerByPromotionId.set(link.promotion_id, link.seller_id)
     }
   }

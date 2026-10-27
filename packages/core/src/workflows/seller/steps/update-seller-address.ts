@@ -3,10 +3,15 @@ import { MercurModules, SellerAddressDTO, UpdateSellerAddressDTO } from "@mercur
 
 import SellerModuleService from "../../../modules/seller/service"
 
+type UpdateSellerAddressCompensation = {
+  existing: SellerAddressDTO | null
+  seller_id: string
+}
+
 export const updateSellerAddressStep = createStep<
   { seller_id: string; data: UpdateSellerAddressDTO },
   SellerAddressDTO,
-  any
+  UpdateSellerAddressCompensation
 >(
   "update-seller-address",
   async (
@@ -41,11 +46,15 @@ export const updateSellerAddressStep = createStep<
     })
     return new StepResponse(created, { existing: null, seller_id })
   },
-  async ({ existing, seller_id }, { container }) => {
+  async (compensation, { container }) => {
+    if (!compensation) {
+      return
+    }
+    const { existing, seller_id } = compensation
     const service =
       container.resolve<SellerModuleService>(MercurModules.SELLER)
     if (existing) {
-      await service.updateSellerAddresses(existing.id, existing)
+      await service.updateSellerAddresses(existing)
     } else {
       const current = await service.listSellerAddresses({ seller_id })
       if (current.length > 0) {

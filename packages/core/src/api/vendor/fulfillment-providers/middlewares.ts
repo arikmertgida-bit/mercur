@@ -17,4 +17,9 @@ export const vendorFulfillmentProvidersMiddlewares: MiddlewareRoute[] = [
       ),
     ],
   },
+  {
+    method: ["GET"],
+    matcher: "/vendor/fulfillment-providers/:id/options",
+    middlewares: [requirePermission("fulfillment_sets", "view")],
+  },
 ]

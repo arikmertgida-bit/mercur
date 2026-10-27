@@ -6,6 +6,7 @@ import { MedusaError } from "@medusajs/framework/utils"
 import { CommissionLineDTO } from "@mercurjs/types"
 
 import { getOrderCommissionLines } from "../../../../utils/order-commission-lines"
+import { getSellerId } from "../../../../utils/seller-context"
 
 export type VendorOrderCommissionLinesResponse = {
   commission_lines: CommissionLineDTO[]
@@ -16,7 +17,7 @@ export const GET = async (
   req: AuthenticatedMedusaRequest,
   res: MedusaResponse<VendorOrderCommissionLinesResponse>
 ) => {
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
 
   const { found, commission_lines } = await getOrderCommissionLines(
     req.scope,

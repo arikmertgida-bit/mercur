@@ -25,13 +25,14 @@ import {
   VendorUpdateShippingOption,
   VendorUpdateShippingOptionRule,
 } from "./validators"
+import { getSellerId } from "../../utils/seller-context"
 
 const applySellerShippingOptionLinkFilter = (
   req: AuthenticatedMedusaRequest,
   res: MedusaResponse,
   next: MedusaNextFunction
 ) => {
-  req.filterableFields.seller_id = req.seller_context!.seller_id
+  req.filterableFields.seller_id = getSellerId(req)
 
   return maybeApplyLinkFilter({
     entryPoint: "shipping_option_seller",

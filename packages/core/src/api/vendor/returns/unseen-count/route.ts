@@ -4,6 +4,7 @@ import {
 } from "@medusajs/framework/http"
 import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
 import { z } from "zod"
+import { getSellerId } from "../../../utils/seller-context"
 
 const ReturnUnseenRowSchema = z.object({
   id: z.string(),
@@ -30,7 +31,7 @@ export const GET = async (
   req: AuthenticatedMedusaRequest,
   res: MedusaResponse<ReturnUnseenCountResponse>
 ): Promise<void> => {
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
 
   const { data: sellerOrders } = await query.graph({

@@ -13,14 +13,33 @@ import {
   ContainerRegistrationKeys,
   MedusaError,
 } from "@medusajs/framework/utils"
+import { z } from "zod"
 
+import { parseGraphRows } from "../../../utils/graph-rows"
+import { QueryFilter } from "../../../utils/query-filter"
 import { vendorReservationQueryConfig } from "./query-config"
 import {
   VendorCreateReservation,
+  VendorCreateReservationType,
   VendorGetReservationParams,
   VendorGetReservationsParams,
   VendorUpdateReservation,
 } from "./validators"
+import { getSellerId } from "../../utils/seller-context"
+
+type ReservationFilterFields = QueryFilter & {
+  sku?: string
+  inventory_item_id?: string | string[]
+}
+
+const IdRowSchema = z.object({ id: z.string() })
+
+const InventoryItemIdRowSchema = z.object({ inventory_item_id: z.string() })
+
+const ReservationRowSchema = z.object({
+  id: z.string(),
+  inventory_item_id: z.string(),
+})
 
 /**
  * Reservations have no direct reservation↔seller link — they belong to a seller
@@ -34,8 +53,8 @@ const getSellerInventoryItemIds = async (
   restrictTo?: string[]
 ): Promise<string[]> => {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
-  const filters: Record<string, unknown> = {
-    seller_id: req.seller_context!.seller_id,
+  const filters: QueryFilter = {
+    seller_id: getSellerId(req),
   }
   if (restrictTo?.length) {
     filters.inventory_item_id = restrictTo
@@ -51,7 +70,7 @@ const getSellerInventoryItemIds = async (
     },
   })
 
-  return (data as Array<{ inventory_item_id: string }>).map(
+  return parseGraphRows(InventoryItemIdRowSchema, data).map(
     (row) => row.inventory_item_id
   )
 }
@@ -62,11 +81,11 @@ const getSellerInventoryItemIds = async (
 // `inventory_item_id`. Runs before the seller scope so a sku query is
 // intersected with the seller's own items rather than replacing it.
 const maybeApplyInventoryItemSkuFilter = async (
-  req: AuthenticatedMedusaRequest,
+  req: AuthenticatedMedusaRequest<never, ReservationFilterFields>,
   _res: MedusaResponse,
   next: MedusaNextFunction
 ) => {
-  const sku = req.filterableFields?.sku as string | undefined
+  const sku = req.filterableFields?.sku
   if (!sku) {
     return next()
   }
@@ -80,13 +99,15 @@ const maybeApplyInventoryItemSkuFilter = async (
     filters: { sku },
   })
 
-  const matchedIds = inventoryItems.map((item) => item.id as string)
+  const matchedIds = parseGraphRows(IdRowSchema, inventoryItems).map(
+    (item) => item.id
+  )
   const existing = req.filterableFields.inventory_item_id
 
   if (existing) {
     const existingIds = Array.isArray(existing) ? existing : [existing]
     req.filterableFields.inventory_item_id = existingIds.filter((id) =>
-      matchedIds.includes(id as string)
+      matchedIds.includes(id)
     )
   } else {
     req.filterableFields.inventory_item_id = matchedIds
@@ -96,15 +117,12 @@ const maybeApplyInventoryItemSkuFilter = async (
 }
 
 const applySellerReservationsFilter = async (
-  req: AuthenticatedMedusaRequest,
+  req: AuthenticatedMedusaRequest<never, ReservationFilterFields>,
   _res: MedusaResponse,
   next: MedusaNextFunction
 ) => {
   try {
-    const requested = req.filterableFields.inventory_item_id as
-      | string
-      | string[]
-      | undefined
+    const requested = req.filterableFields.inventory_item_id
 
     let allowedIds: string[]
     if (requested !== undefined && requested !== null) {
@@ -139,9 +157,7 @@ const assertReservationOwnership = async (
       filters: { id: req.params.id },
     })
 
-    const reservation = data[0] as
-      | { id: string; inventory_item_id: string }
-      | undefined
+    const [reservation] = parseGraphRows(ReservationRowSchema, data)
 
     const owned = reservation
       ? await getSellerInventoryItemIds(req, [reservation.inventory_item_id])
@@ -161,13 +177,12 @@ const assertReservationOwnership = async (
 }
 
 const assertCreateReservationOwnership = async (
-  req: AuthenticatedMedusaRequest,
+  req: AuthenticatedMedusaRequest<VendorCreateReservationType>,
   _res: MedusaResponse,
   next: MedusaNextFunction
 ) => {
   try {
-    const itemId = (req.validatedBody as { inventory_item_id?: string })
-      ?.inventory_item_id
+    const itemId = req.validatedBody?.inventory_item_id
     const owned = itemId ? await getSellerInventoryItemIds(req, [itemId]) : []
 
     if (!owned.length) {

@@ -4,6 +4,8 @@ import {
   AuthenticatedMedusaRequest,
   MedusaResponse,
 } from "@medusajs/framework/http"
+import { getSellerId } from "../../../../utils/seller-context"
+import { toHttpOrderPreview } from "../../../../../utils/http-order"
 
 export const POST = async (
   req: AuthenticatedMedusaRequest,
@@ -14,17 +16,11 @@ export const POST = async (
   const { result } = await requestOrderEditRequestWorkflow(req.scope).run({
     input: {
       order_id: id,
-      requested_by: req.seller_context!.seller_id,
+      requested_by: getSellerId(req),
     },
   })
 
   res.json({
-    // @ts-expect-error — Medusa's own module-layer DTO (OrderPreviewDTO/
-    // OrderChangeDTO/etc.) and its HTTP-response DTO (AdminOrderPreview/
-    // AdminOrderChange/etc.) are two parallel type hierarchies that don't
-    // structurally unify, even though the real workflow data includes every
-    // field the HTTP type expects (confirmed against Medusa's own core route,
-    // which passes the same shape through with zero cast/transform).
-    order_preview: result,
+    order_preview: toHttpOrderPreview(result),
   })
 }

@@ -6,7 +6,6 @@ import { defaultCurrencies, MathBN } from "@medusajs/framework/utils"
 import {
   CommissionCalculationContext,
   CommissionCalculationItemLine,
-  CommissionCalculationShippingLine,
   CommissionRateType,
   CreateCommissionLineDTO,
   ICommissionProvider,
@@ -79,7 +78,7 @@ export class SystemCommissionProvider implements ICommissionProvider {
     rate: CommissionRateEntity,
     item: CommissionCalculationItemLine
   ): boolean {
-    const rules = (rate.rules ?? []) as CommissionRuleEntity[]
+    const rules = rate.rules ?? []
     if (rules.length === 0) {
       return true
     }
@@ -147,10 +146,10 @@ export class SystemCommissionProvider implements ICommissionProvider {
 
     // Load all enabled rates with their rules + per-currency values,
     // oldest first (created_at ASC) so it is the deterministic tie-break.
-    const commissionRates = (await this.commissionRateService_.list(
+    const commissionRates = await this.commissionRateService_.list(
       { is_enabled: true },
       { relations: ["rules", "values"], order: { created_at: "ASC" } }
-    )) as CommissionRateEntity[]
+    )
 
     // Legacy single-currency rates only apply to their currency; rates
     // without a currency_code apply to any currency.
@@ -211,7 +210,7 @@ export class SystemCommissionProvider implements ICommissionProvider {
     // rate, only when its include_shipping is on (resolved independently
     // of the items the method ships).
     if (defaultRate?.include_shipping) {
-      for (const shippingMethod of shipping_methods as CommissionCalculationShippingLine[]) {
+      for (const shippingMethod of shipping_methods) {
         let baseAmount = shippingMethod.subtotal
         if (defaultRate.include_tax && shippingMethod.tax_total) {
           baseAmount = MathBN.add(

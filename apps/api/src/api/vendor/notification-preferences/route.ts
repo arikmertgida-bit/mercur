@@ -111,7 +111,7 @@ export const POST = async (
   if (!parsedBody.success) {
     throw new MedusaError(
       MedusaError.Types.INVALID_DATA,
-      parsedBody.error.errors[0]?.message ?? "Invalid request"
+      parsedBody.error.issues[0]?.message ?? "Invalid request"
     )
   }
 

@@ -4,14 +4,21 @@ import {
   MedusaResponse,
 } from "@medusajs/framework/http"
 import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
+import { z } from "zod"
 
-type CategoryRef = { id?: string | null }
-type AttributeWithCategories = {
-  id: string
+import { parseGraphRows } from "../../utils/graph-rows"
+
+const CategoryRefSchema = z.object({ id: z.string().nullish() })
+type CategoryRef = z.infer<typeof CategoryRefSchema>
+
+const AttributeWithCategoriesSchema = z.object({
+  id: z.string(),
   // The remote joiner may return a single object instead of an array when an
   // attribute has exactly one category link, so accept both shapes.
-  categories?: CategoryRef | CategoryRef[] | null
-}
+  categories: z
+    .union([CategoryRefSchema, z.array(CategoryRefSchema.nullable())])
+    .nullish(),
+})
 
 export const filterAttributesByCategoryLinkOrGlobal = async (
   req: MedusaRequest,
@@ -42,9 +49,12 @@ export const filterAttributesByCategoryLinkOrGlobal = async (
   const linkedToCategoryIds: string[] = []
   const anyLinkedIds: string[] = []
 
-  for (const attribute of attributes as AttributeWithCategories[]) {
+  for (const attribute of parseGraphRows(
+    AttributeWithCategoriesSchema,
+    attributes
+  )) {
     const raw = attribute.categories
-    const categoryLinks: CategoryRef[] = Array.isArray(raw)
+    const categoryLinks: Array<CategoryRef | null> = Array.isArray(raw)
       ? raw
       : raw
         ? [raw]

@@ -3,11 +3,8 @@ import {
   MedusaResponse,
 } from "@medusajs/framework/http"
 import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
-import {
-  ApplicationMethodTargetTypeValues,
-  RuleTypeValues,
-} from "@medusajs/types"
 import { HttpTypes } from "@mercurjs/types"
+import { z } from "zod"
 
 import {
   ruleQueryConfigurations,
@@ -15,35 +12,49 @@ import {
   validateRuleType,
 } from "../../../utils"
 import { VendorGetPromotionsRuleValueParamsType } from "../../../validators"
+import { getSellerId } from "../../../../../utils/seller-context"
+import {
+  PromotionShapeQuerySchema,
+  RuleValueFilterFields,
+  toRuleValueOptions,
+} from "../../../../../utils/promotion-rules"
+import { parseGraphRow } from "../../../../../../utils/graph-rows"
+import { QueryFilter } from "../../../../../../utils/query-filter"
+
+const LinkedIdSchema = z.string()
 
 export const GET = async (
-  req: AuthenticatedMedusaRequest<VendorGetPromotionsRuleValueParamsType>,
+  req: AuthenticatedMedusaRequest<
+    VendorGetPromotionsRuleValueParamsType,
+    RuleValueFilterFields
+  >,
   res: MedusaResponse<HttpTypes.VendorRuleValueOptionsListResponse>
 ) => {
   const { rule_type: ruleType, rule_attribute_id: ruleAttributeId } = req.params
   const queryConfig = ruleQueryConfigurations[ruleAttributeId]
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
-  const filterableFields = {
-    ...(req.filterableFields as Record<string, string | string[] | undefined>),
-  }
+  const { value, application_method_target_type: targetType } =
+    req.filterableFields
+  const filterableFields: QueryFilter = { ...req.filterableFields }
 
-  if (filterableFields.value) {
-    filterableFields[queryConfig.valueAttr] = filterableFields.value
+  if (value) {
+    filterableFields[queryConfig.valueAttr] = value
     delete filterableFields.value
   }
 
   validateRuleType(ruleType)
   validateRuleAttribute({
-    ruleType: ruleType as RuleTypeValues,
+    ruleType,
     ruleAttributeId,
     promotionType: undefined,
     applicationMethodType: undefined,
-    applicationMethodTargetType: filterableFields.application_method_target_type as
-      | ApplicationMethodTargetTypeValues
-      | undefined,
+    applicationMethodTargetType:
+      PromotionShapeQuerySchema.shape.application_method_target_type.parse(
+        targetType
+      ),
   })
 
-  if (filterableFields.application_method_target_type) {
+  if (targetType) {
     delete filterableFields.application_method_target_type
   }
 
@@ -52,12 +63,12 @@ export const GET = async (
       entity: `${queryConfig.entryPoint}_seller`,
       fields: [`${queryConfig.entryPoint}_id`],
       filters: {
-        seller_id: req.seller_context!.seller_id,
+        seller_id: getSellerId(req),
       },
     })
 
-    filterableFields.id = sellerResources.map(
-      (r) => r[`${queryConfig.entryPoint}_id`]
+    filterableFields.id = sellerResources.map((r) =>
+      parseGraphRow(LinkedIdSchema, r[`${queryConfig.entryPoint}_id`])
     )
   }
 
@@ -68,10 +79,7 @@ export const GET = async (
     pagination: req.queryConfig.pagination,
   })
 
-  const values = (rows as Array<Record<string, string>>).map((r) => ({
-    label: r[queryConfig.labelAttr],
-    value: r[queryConfig.valueAttr],
-  }))
+  const values = toRuleValueOptions(rows, queryConfig)
 
   res.json({
     values,

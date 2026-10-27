@@ -18,9 +18,12 @@ import {
   ProductChangeActionType,
   ProductChangeDTO,
 } from "@mercurjs/types"
+import { z } from "zod"
 
 import { validateNoPendingProductChangeStep } from "../steps"
 import { stageProductChangeWorkflow } from "./stage-product-change"
+import { toJsonRecord } from "../../../utils/json-schema"
+import { parseGraphRows } from "../../../utils/graph-rows"
 
 export type ProductEditUpdateAttributesWorkflowInput = {
   product_id: string
@@ -31,25 +34,30 @@ export type ProductEditUpdateAttributesWorkflowInput = {
 } & AdditionalData
 
 export type ProductEditUpdateAttributesWorkflowHooks = [
-  Hook<"validate", { input: ProductEditUpdateAttributesWorkflowInput }, unknown>,
+  Hook<"validate", { input: ProductEditUpdateAttributesWorkflowInput }, void>,
   Hook<
     "productChangeCreated",
     {
       product_change: ProductChangeDTO
-      additional_data: Record<string, unknown> | undefined
+      additional_data: AdditionalData["additional_data"]
     },
-    unknown
+    void
   >,
 ]
 
 export const productEditUpdateAttributesWorkflowId =
   "product-edit-update-attributes"
 
-type LinkedValue = {
-  id: string
-  name?: string
-  attribute?: { id?: string; type?: AttributeType }
-}
+const LinkedValueRowSchema = z.object({
+  id: z.string(),
+  name: z.string().optional(),
+  attribute: z
+    .object({
+      id: z.string().optional(),
+      type: z.enum(AttributeType).optional(),
+    })
+    .nullish(),
+})
 
 const SCALAR_TYPES = [
   AttributeType.TEXT,
@@ -105,20 +113,25 @@ export const productEditUpdateAttributesWorkflow: ReturnWorkflow<
     const actions = transform(
       { input, currentProducts },
       ({ input, currentProducts }) => {
-        const linked = (
-          (currentProducts?.[0]?.product_attribute_values ?? []) as LinkedValue[]
-        ).filter((value) => value?.attribute?.id)
+        const linked = parseGraphRows(
+          LinkedValueRowSchema,
+          currentProducts?.[0]?.product_attribute_values,
+        )
 
         const snapshots = new Map<string, ProductAttributeValueSnapshot>()
         for (const value of linked) {
-          const attributeId = value.attribute!.id!
+          const attribute = value.attribute
+          const attributeId = attribute?.id
+          if (!attributeId) {
+            continue
+          }
           const snapshot = snapshots.get(attributeId) ?? {
             attribute_id: attributeId,
             value_ids: [],
             value: null,
           }
           snapshot.value_ids.push(value.id)
-          const scalar = readScalar(value.attribute!.type, value.name)
+          const scalar = readScalar(attribute.type, value.name)
           if (scalar !== null) {
             snapshot.value = scalar
           }
@@ -206,12 +219,12 @@ export const productEditUpdateAttributesWorkflow: ReturnWorkflow<
           acts.push({
             product_id: input.product_id,
             action: ProductChangeActionType.ATTRIBUTE_UPDATE,
-            details: {
+            details: toJsonRecord({
               update,
               attribute_id: update.id,
               value: update.value,
               previous_value: previous,
-            },
+            }),
           })
         }
 

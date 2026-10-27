@@ -22,13 +22,13 @@ import {
   CreateProductAttributeValueDTO,
   MercurModules,
   ProductAttributeBatchAdd,
-  ProductAttributeDTO,
 } from "@mercurjs/types"
 
 import {
   createProductAttributesStep,
   createProductAttributeValuesStep,
 } from "../steps"
+import { attributesById } from "../utils/graph-rows"
 
 export type AddProductAttributesToProductWorkflowInput = {
   product_id: string
@@ -147,12 +147,7 @@ export const addProductAttributesToProductWorkflow = createWorkflow(
     const valuePlan = transform(
       { items, attributesQuery, optionsPlan, inlineOptions, attrsPlan },
       ({ items, attributesQuery, optionsPlan, inlineOptions, attrsPlan }) => {
-        const attrsById = new Map(
-          ((attributesQuery.data ?? []) as ProductAttributeDTO[]).map((a) => [
-            a.id,
-            a,
-          ]),
-        )
+        const attrsById = attributesById(attributesQuery.data)
         const rows: (CreateProductAttributeValueDTO & {
           attribute_id: string
         })[] = []
@@ -210,22 +205,18 @@ export const addProductAttributesToProductWorkflow = createWorkflow(
     const optionPairs = transform(
       { items, attributesQuery, optionsPlan, inlineOptions },
       ({ items, attributesQuery, optionsPlan, inlineOptions }) => {
-        const attrsById = new Map(
-          ((attributesQuery.data ?? []) as ProductAttributeDTO[]).map((a) => [
-            a.id,
-            a,
-          ]),
-        )
+        const attrsById = attributesById(attributesQuery.data)
         const pairs: ProductTypes.ProductOptionProductPair[] = []
         items.forEach((it, i) => {
           it.add.forEach((ref, j) => {
             if (isExisting(ref)) {
               const attr = attrsById.get(ref.id)
+              const productOptionId = attr?.product_option_id
               const isAxis =
                 attr?.type === AttributeType.MULTI_SELECT &&
                 !!attr?.is_variant_axis &&
-                !!attr?.product_option_id
-              if (!attr || !isAxis) {
+                !!productOptionId
+              if (!attr || !isAxis || !productOptionId) {
                 return
               }
               const optValByValueId = new Map(
@@ -239,7 +230,7 @@ export const addProductAttributesToProductWorkflow = createWorkflow(
                 .filter((id): id is string => !!id)
               pairs.push({
                 product_id: it.product_id,
-                product_option_id: attr.product_option_id as string,
+                product_option_id: productOptionId,
                 product_option_value_ids,
               })
             } else if (ref.is_variant_axis) {
@@ -264,7 +255,7 @@ export const addProductAttributesToProductWorkflow = createWorkflow(
       ({ items, attributesQuery, valuePlan, createdValues }) => {
         const links: LinkDefinition[] = []
 
-        ;(createdValues as { id: string }[]).forEach((v, i) => {
+        createdValues.forEach((v, i) => {
           const product_id = valuePlan.linkProductId[i]
           if (product_id) {
             links.push({
@@ -276,12 +267,7 @@ export const addProductAttributesToProductWorkflow = createWorkflow(
           }
         })
 
-        const attrsById = new Map(
-          ((attributesQuery.data ?? []) as ProductAttributeDTO[]).map((a) => [
-            a.id,
-            a,
-          ]),
-        )
+        const attrsById = attributesById(attributesQuery.data)
         for (const it of items) {
           for (const ref of it.add) {
             if (!isExisting(ref)) {

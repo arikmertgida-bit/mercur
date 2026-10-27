@@ -4,12 +4,20 @@ import {
 } from "@medusajs/framework/http"
 import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
 
-import { AdminAddSellerMemberType } from "../../validators"
+import { HttpTypes } from "@mercurjs/types"
+
+import {
+  AdminAddSellerMemberType,
+  AdminGetSellersParamsType,
+} from "../../validators"
 import { addSellerMemberWorkflow } from "../../../../../workflows/seller"
 
 export const GET = async (
-  req: AuthenticatedMedusaRequest,
-  res: MedusaResponse
+  req: AuthenticatedMedusaRequest<
+    Partial<AdminGetSellersParamsType>,
+    AdminGetSellersParamsType
+  >,
+  res: MedusaResponse<HttpTypes.AdminSellerMemberListResponse>
 ) => {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
 
@@ -24,9 +32,9 @@ export const GET = async (
 
   res.json({
     seller_members: sellerMembers,
-    count: metadata!.count,
-    offset: metadata!.skip,
-    limit: metadata!.take,
+    count: metadata?.count ?? 0,
+    offset: metadata?.skip ?? 0,
+    limit: metadata?.take ?? 0,
   })
 }
 

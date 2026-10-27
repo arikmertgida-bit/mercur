@@ -3,10 +3,16 @@ import {
   MedusaResponse,
 } from "@medusajs/framework/http"
 import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
+import { HttpTypes } from "@mercurjs/types"
+
+import { AdminGetMembersParamsType } from "./validators"
 
 export const GET = async (
-  req: AuthenticatedMedusaRequest,
-  res: MedusaResponse
+  req: AuthenticatedMedusaRequest<
+    Partial<AdminGetMembersParamsType>,
+    AdminGetMembersParamsType
+  >,
+  res: MedusaResponse<HttpTypes.AdminMemberListResponse>
 ) => {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
 
@@ -19,8 +25,8 @@ export const GET = async (
 
   res.json({
     members,
-    count: metadata!.count,
-    offset: metadata!.skip,
-    limit: metadata!.take,
+    count: metadata?.count ?? 0,
+    offset: metadata?.skip ?? 0,
+    limit: metadata?.take ?? 0,
   })
 }

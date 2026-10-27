@@ -9,9 +9,9 @@ import { ORIGINAL_MIDDLEWARES } from "../../../utils/disable-medusa-middlewares"
 
 const LIST_MATCHER = "/admin/price-lists"
 
-const capturedBase = (ORIGINAL_MIDDLEWARES[
+const capturedBase = ORIGINAL_MIDDLEWARES[
   "dist/api/admin/price-lists/middlewares.js"
-] ?? []) as MiddlewareRoute[]
+] ?? []
 
 const routeHasGet = (route: MiddlewareRoute) => {
   const methods = Array.isArray(route.method)

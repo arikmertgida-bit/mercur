@@ -1,6 +1,15 @@
 import { Query } from "@medusajs/framework"
 import { createStep, StepResponse } from "@medusajs/framework/workflows-sdk"
 import { ContainerRegistrationKeys, MedusaError } from "@medusajs/framework/utils"
+import { ProductAttributeErrorCode } from "@mercurjs/types"
+import { z } from "zod"
+
+import { parseGraphRows } from "../../../utils/graph-rows"
+
+const AttributeValueProductsRowSchema = z.object({
+  attribute_id: z.string().nullable(),
+  products: z.array(z.object({ id: z.string() })).nullish(),
+})
 
 export const validateProductAttributesNotLinkedStepId =
   "pa-validate-attributes-not-linked"
@@ -20,10 +29,7 @@ export const validateProductAttributesNotLinkedStep = createStep(
     })
 
     const linkedAttributeIds = new Set<string>()
-    for (const value of (data ?? []) as {
-      attribute_id: string | null
-      products?: { id: string }[] | null
-    }[]) {
+    for (const value of parseGraphRows(AttributeValueProductsRowSchema, data)) {
       if (value.attribute_id && (value.products?.length ?? 0) > 0) {
         linkedAttributeIds.add(value.attribute_id)
       }
@@ -35,6 +41,7 @@ export const validateProductAttributesNotLinkedStep = createStep(
         `Cannot delete product attribute(s) ${[...linkedAttributeIds].join(
           ", ",
         )}: they are in use on one or more products.`,
+        ProductAttributeErrorCode.ATTRIBUTE_IN_USE,
       )
     }
 

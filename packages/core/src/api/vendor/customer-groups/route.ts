@@ -11,6 +11,7 @@ import {
   VendorCreateCustomerGroupType,
   VendorGetCustomerGroupsParamsType,
 } from "./validators"
+import { getSellerId } from "../../utils/seller-context"
 
 export const GET = async (
   req: AuthenticatedMedusaRequest<VendorGetCustomerGroupsParamsType>,
@@ -37,7 +38,7 @@ export const POST = async (
   req: AuthenticatedMedusaRequest<VendorCreateCustomerGroupType>,
   res: MedusaResponse<HttpTypes.VendorCustomerGroupResponse>
 ) => {
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
 
   const { result } = await createSellerCustomerGroupsWorkflow(req.scope).run({
     input: {

@@ -4,6 +4,7 @@ import {
   createOperatorMap,
   createSelectParams,
 } from "@medusajs/medusa/api/utils/validators"
+import { JsonRecordSchema } from "../../../utils/json-schema"
 
 export type VendorGetReservationParamsType = z.infer<
   typeof VendorGetReservationParams
@@ -42,7 +43,7 @@ export const VendorCreateReservation = z
     inventory_item_id: z.string(),
     quantity: z.number(),
     description: z.string().nullish(),
-    metadata: z.record(z.string(), z.unknown()).nullish(),
+    metadata: JsonRecordSchema.nullish(),
   })
   .strict()
 
@@ -52,6 +53,6 @@ export const VendorUpdateReservation = z
     location_id: z.string().optional(),
     quantity: z.number().optional(),
     description: z.string().nullish(),
-    metadata: z.record(z.string(), z.unknown()).nullish(),
+    metadata: JsonRecordSchema.nullish(),
   })
   .strict()

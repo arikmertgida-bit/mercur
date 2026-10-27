@@ -1,14 +1,17 @@
 import { SubscriberArgs, SubscriberConfig } from "@medusajs/framework"
 import { ProviderWebhookPayload } from "@medusajs/framework/types"
 import { Modules, PaymentActions } from "@medusajs/framework/utils"
+import { z } from "zod"
 
 import { PaymentWebhookEvents } from "../workflows/events"
 import { processPaymentWorkflowId } from "../workflows/payment"
 
-type SerializedBuffer = {
-  data: ArrayBuffer
-  type: "Buffer"
-}
+// A `Buffer` as it comes back from the event bus: JSON-serialized into its
+// byte array.
+const SerializedBufferSchema = z.object({
+  type: z.literal("Buffer"),
+  data: z.array(z.number().int().min(0).max(255)),
+})
 
 const IGNORED_ACTIONS: string[] = [
   PaymentActions.NOT_SUPPORTED,
@@ -29,10 +32,11 @@ export default async function paymentWebhookHandler({
 
   const input = event.data
 
-  if ((input.payload?.rawData as unknown as SerializedBuffer)?.type === "Buffer") {
-    input.payload.rawData = Buffer.from(
-      (input.payload.rawData as unknown as SerializedBuffer).data
-    )
+  const serializedRawData = SerializedBufferSchema.safeParse(
+    input.payload?.rawData
+  )
+  if (input.payload && serializedRawData.success) {
+    input.payload.rawData = Buffer.from(serializedRawData.data.data)
   }
 
   const processedEvent = await paymentService.getWebhookActionAndData(input)

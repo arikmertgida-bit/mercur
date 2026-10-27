@@ -9,8 +9,14 @@ import {
 import { BigNumberInput } from "@medusajs/framework/types"
 import { MathBN, MedusaError } from "@medusajs/framework/utils"
 import { MercurModules } from "@mercurjs/types"
+import { z } from "zod"
 
 import { createPayoutStep } from "../steps"
+import {
+  GraphBigNumberSchema,
+  parseGraphRow,
+  parseGraphRows,
+} from "../../../utils/graph-rows"
 
 type CreatePayoutWorkflowInput = {
   order_id: string
@@ -18,19 +24,23 @@ type CreatePayoutWorkflowInput = {
 
 export const createPayoutWorkflowId = "create-payout"
 
-type OrderForPayout = {
-  id: string
-  currency_code: string
-  total: BigNumberInput
-  items?: Array<{ id: string }>
-  shipping_methods?: Array<{ id: string }>
-  seller?: {
-    id: string
-    payout_account?: { id: string }
-  }
-}
+const OrderForPayoutSchema = z.object({
+  id: z.string(),
+  currency_code: z.string(),
+  total: GraphBigNumberSchema,
+  items: z.array(z.object({ id: z.string() })).nullish(),
+  shipping_methods: z.array(z.object({ id: z.string() })).nullish(),
+  seller: z
+    .object({
+      id: z.string(),
+      payout_account: z.object({ id: z.string() }).nullish(),
+    })
+    .nullish(),
+})
 
-type CommissionLineAmount = { amount?: BigNumberInput }
+const CommissionLineAmountSchema = z.object({
+  amount: GraphBigNumberSchema.nullish(),
+})
 
 export const createPayoutWorkflow = createWorkflow(
   createPayoutWorkflowId,
@@ -50,7 +60,9 @@ export const createPayoutWorkflow = createWorkflow(
       options: { throwIfKeyNotFound: true },
     }).config({ name: "fetch-order" })
 
-    const order = transform({ orders }, ({ orders }) => orders[0] as OrderForPayout)
+    const order = transform({ orders }, ({ orders }) =>
+      parseGraphRow(OrderForPayoutSchema, orders[0])
+    )
 
     const commissionFilters = transform({ order }, ({ order }) => ({
       $or: [
@@ -75,31 +87,34 @@ export const createPayoutWorkflow = createWorkflow(
     const payoutInput = transform(
       { order, commissionLines },
       ({ order, commissionLines }) => {
-        const payoutAccountId = order.seller?.payout_account?.id
-        const sellerId = order.seller?.id
+        const seller = order.seller
+        const payoutAccountId = seller?.payout_account?.id
 
-        if (!payoutAccountId) {
+        if (!seller || !payoutAccountId) {
           throw new MedusaError(
             MedusaError.Types.NOT_FOUND,
             `Seller does not have a payout account`
           )
         }
 
-        const totalCommission = (commissionLines as CommissionLineAmount[] ?? []).reduce(
-          (acc, line) => MathBN.add(acc, line?.amount ?? 0),
-          0 as BigNumberInput
+        const totalCommission = parseGraphRows(
+          CommissionLineAmountSchema,
+          commissionLines
+        ).reduce<BigNumberInput>(
+          (acc, line) => MathBN.add(acc, line.amount ?? 0),
+          0
         )
 
         const amount = Number(MathBN.sub(order.total, totalCommission))
 
         return {
           account_id: payoutAccountId,
-          seller_id: sellerId,
+          seller_id: seller.id,
           amount,
           currency_code: order.currency_code,
           data: {
             order_id: order.id,
-            seller_id: sellerId
+            seller_id: seller.id
           },
           context: {
             idempotency_key: order.id,

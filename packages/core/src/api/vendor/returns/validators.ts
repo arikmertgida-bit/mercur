@@ -4,11 +4,17 @@ import {
   createOperatorMap,
   createSelectParams,
 } from "@medusajs/medusa/api/utils/validators"
+import { JsonRecordSchema } from "../../../utils/json-schema"
 
 export type VendorGetReturnParamsType = z.infer<typeof VendorGetReturnParams>
 export const VendorGetReturnParams = createSelectParams()
 
 export type VendorGetReturnsParamsType = z.infer<typeof VendorGetReturnsParams>
+/**
+ * The list query as clients send it: every field, including those with a
+ * default (`offset`, `limit`, ...), is optional on the wire.
+ */
+export type VendorGetReturnsParamsInput = Partial<VendorGetReturnsParamsType>
 export const VendorGetReturnsParams = createFindParams({
   limit: 20,
   offset: 0,
@@ -41,7 +47,7 @@ export const VendorPostReturnsReq = z.object({
   description: z.string().optional(),
   internal_note: z.string().optional(),
   no_notification: z.boolean().optional(),
-  metadata: z.record(z.string(), z.unknown()).nullish(),
+  metadata: JsonRecordSchema.nullish(),
 })
 
 export type VendorPostReturnsReturnReqType = z.infer<
@@ -50,7 +56,7 @@ export type VendorPostReturnsReturnReqType = z.infer<
 export const VendorPostReturnsReturnReq = z.object({
   location_id: z.string().optional(),
   no_notification: z.boolean().optional(),
-  metadata: z.record(z.string(), z.unknown()).nullish(),
+  metadata: JsonRecordSchema.nullish(),
 })
 
 export type VendorPostCancelReturnReqType = z.infer<
@@ -71,7 +77,7 @@ export const VendorPostReturnsRequestItemsReq = z.object({
       description: z.string().optional(),
       internal_note: z.string().optional(),
       reason_id: z.string().optional(),
-      metadata: z.record(z.string(), z.unknown()).optional(),
+      metadata: JsonRecordSchema.optional(),
     })
   ),
 })
@@ -83,7 +89,7 @@ export const VendorPostReturnsRequestItemsActionReq = z.object({
   quantity: z.number().optional(),
   internal_note: z.string().nullish().optional(),
   reason_id: z.string().nullish().optional(),
-  metadata: z.record(z.string(), z.unknown()).nullish().optional(),
+  metadata: JsonRecordSchema.nullish().optional(),
 })
 
 export type VendorPostReturnsShippingReqType = z.infer<
@@ -94,7 +100,7 @@ export const VendorPostReturnsShippingReq = z.object({
   custom_amount: z.number().optional(),
   description: z.string().optional(),
   internal_note: z.string().optional(),
-  metadata: z.record(z.string(), z.unknown()).optional(),
+  metadata: JsonRecordSchema.optional(),
 })
 
 export type VendorPostReturnsShippingActionReqType = z.infer<
@@ -103,7 +109,7 @@ export type VendorPostReturnsShippingActionReqType = z.infer<
 export const VendorPostReturnsShippingActionReq = z.object({
   custom_amount: z.number().nullish().optional(),
   internal_note: z.string().nullish().optional(),
-  metadata: z.record(z.string(), z.unknown()).nullish().optional(),
+  metadata: JsonRecordSchema.nullish().optional(),
 })
 
 export type VendorPostReturnsConfirmRequestReqType = z.infer<
@@ -119,7 +125,7 @@ export type VendorPostReceiveReturnsReqType = z.infer<
 export const VendorPostReceiveReturnsReq = z.object({
   internal_note: z.string().optional(),
   description: z.string().optional(),
-  metadata: z.record(z.string(), z.unknown()).nullish(),
+  metadata: JsonRecordSchema.nullish(),
 })
 
 export type VendorPostReturnsReceiveItemsReqType = z.infer<

@@ -11,6 +11,7 @@ import {
   booleanString,
 } from "@medusajs/medusa/api/utils/common-validators/common"
 import { AdditionalData } from "@medusajs/framework/types"
+import { JsonRecordSchema } from "../../../utils/json-schema"
 
 const typeEnum = z.nativeEnum(AttributeType)
 
@@ -58,7 +59,7 @@ const CreateProductAttribute = z.object({
   is_variant_axis: z.boolean().optional(),
   rank: z.number().nonnegative().optional(),
   is_active: z.boolean().optional(),
-  metadata: z.record(z.string(), z.unknown()).nullish(),
+  metadata: JsonRecordSchema.nullish(),
 })
 export const VendorCreateProductAttribute =
   WithAdditionalData(CreateProductAttribute)
@@ -77,7 +78,7 @@ const UpdateProductAttribute = z.object({
   is_variant_axis: z.boolean().optional(),
   rank: z.number().nonnegative().optional(),
   is_active: z.boolean().optional(),
-  metadata: z.record(z.string(), z.unknown()).nullish(),
+  metadata: JsonRecordSchema.nullish(),
 })
 export const VendorUpdateProductAttribute =
   WithAdditionalData(UpdateProductAttribute)
@@ -91,7 +92,7 @@ const CreateProductAttributeValue = z.object({
   handle: z.string().optional(),
   rank: z.number().nonnegative().optional(),
   is_active: z.boolean().optional(),
-  metadata: z.record(z.string(), z.unknown()).nullish(),
+  metadata: JsonRecordSchema.nullish(),
 })
 export const VendorCreateProductAttributeValue = WithAdditionalData(
   CreateProductAttributeValue
@@ -106,7 +107,7 @@ const UpdateProductAttributeValue = z.object({
   handle: z.string().optional(),
   rank: z.number().nonnegative().optional(),
   is_active: z.boolean().optional(),
-  metadata: z.record(z.string(), z.unknown()).nullish(),
+  metadata: JsonRecordSchema.nullish(),
 })
 export const VendorUpdateProductAttributeValue = WithAdditionalData(
   UpdateProductAttributeValue

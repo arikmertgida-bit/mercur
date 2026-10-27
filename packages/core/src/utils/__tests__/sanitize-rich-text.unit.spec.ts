@@ -1,5 +1,6 @@
 import {
   sanitizeNullableRichText,
+  sanitizeOptionalRichText,
   sanitizeRichText,
 } from "../sanitize-rich-text"
 
@@ -45,5 +46,12 @@ describe("sanitizeRichText", () => {
   it("passes null and undefined through", () => {
     expect(sanitizeNullableRichText(null)).toBeNull()
     expect(sanitizeNullableRichText(undefined)).toBeUndefined()
+    expect(sanitizeOptionalRichText(undefined)).toBeUndefined()
+  })
+
+  it("sanitizes optional and nullable strings alike", () => {
+    const html = '<p onclick="x()">a</p><script>b</script>'
+    expect(sanitizeOptionalRichText(html)).toBe(sanitizeRichText(html))
+    expect(sanitizeNullableRichText(html)).toBe(sanitizeRichText(html))
   })
 })

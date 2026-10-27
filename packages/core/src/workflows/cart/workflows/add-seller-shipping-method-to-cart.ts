@@ -9,7 +9,25 @@ import {
 } from "@medusajs/framework/workflows-sdk"
 import { acquireLockStep, addShippingMethodToCartStep, AddShippingMethodToCartWorkflowInput, emitEventStep, listShippingOptionsForCartWithPricingWorkflow, refreshCartItemsWorkflow, releaseLockStep, removeShippingMethodFromCartStep, useQueryGraphStep, useRemoteQueryStep, validateAndReturnShippingMethodsDataStep, validateCartShippingOptionsPriceStep, validateCartShippingOptionsStep, validateCartStep } from "@medusajs/medusa/core-flows"
 import { AdditionalData } from "@medusajs/types"
+import { z } from "zod"
 import { cartFieldsForRefreshSteps } from "../utils"
+import { parseGraphRow, parseGraphRows } from "../../../utils/graph-rows"
+
+// The cart row goes to Medusa's steps unchanged; these are the fields the
+// seller-scoped replacement of shipping methods reads.
+const CartShippingMethodsRowSchema = z.object({
+    shipping_methods: z.array(
+        z.object({
+            id: z.string(),
+            shipping_option_id: z.string().nullish(),
+        })
+    ),
+})
+
+const ShippingOptionSellerRowSchema = z.object({
+    id: z.string(),
+    seller: z.object({ id: z.string() }).nullish(),
+})
 
 export const addSellerShippingMethodToCartWorkflow = createWorkflow(
     {
@@ -32,8 +50,12 @@ export const addSellerShippingMethodToCartWorkflow = createWorkflow(
             throw_if_key_not_found: true,
         })
 
-        const allShippingOptionsIds = transform({ input, cart }, (data) => {
-            return new Set([...data.input.options.map((option) => option.id), ...data.cart.shipping_methods.map((sm) => sm.shipping_option_id)])
+        const cartShippingMethods = transform({ cart }, ({ cart }) =>
+            parseGraphRow(CartShippingMethodsRowSchema, cart).shipping_methods
+        )
+
+        const allShippingOptionsIds = transform({ input, cartShippingMethods }, (data) => {
+            return new Set([...data.input.options.map((option) => option.id), ...data.cartShippingMethods.map((sm) => sm.shipping_option_id)])
         })
 
         validateCartStep({ cart })
@@ -108,12 +130,12 @@ export const addSellerShippingMethodToCartWorkflow = createWorkflow(
                 const options = (data.input.options ?? []).map((option) => {
                     const shippingOption = data.shippingOptions.find(
                         (so) => so.id === option.id
-                    )!
+                    )
 
                     if (!shippingOption?.calculated_price) {
                         throw new MedusaError(
                             MedusaError.Types.INVALID_DATA,
-                            `Shipping option with ID ${shippingOption.id} do not have a price`
+                            `Shipping option with ID ${option.id} do not have a price`
                         )
                     }
 
@@ -137,20 +159,25 @@ export const addSellerShippingMethodToCartWorkflow = createWorkflow(
             }
         )
 
-        const shippingMethodIdsToRemove = transform({ cart, allShippingOptions, input }, ({ cart, allShippingOptions, input }) => {
+        const shippingMethodIdsToRemove = transform({ cartShippingMethods, allShippingOptions, input }, ({ cartShippingMethods, allShippingOptions, input }) => {
             const shippingOptionIdsToAdd = input.options.map((option) => option.id)
-            const shippingOptionsMap = new Map(allShippingOptions.data.map(so => [so.id, so]))
+            const shippingOptionsMap = new Map(
+                parseGraphRows(ShippingOptionSellerRowSchema, allShippingOptions.data).map(so => [so.id, so])
+            )
 
             const sellerIdsBeingAdded = new Set<string>(
                 shippingOptionIdsToAdd
                     .map(id => shippingOptionsMap.get(id)?.seller?.id)
-                    .filter(Boolean) as string[]
+                    .filter((id): id is string => !!id)
             )
 
-            return cart.shipping_methods
+            return cartShippingMethods
                 .filter(sm => {
-                    const shippingOption = shippingOptionsMap.get(sm.shipping_option_id)
-                    return shippingOption && sellerIdsBeingAdded.has(shippingOption.seller?.id)
+                    const shippingOption = sm.shipping_option_id
+                        ? shippingOptionsMap.get(sm.shipping_option_id)
+                        : undefined
+                    const sellerId = shippingOption?.seller?.id
+                    return !!sellerId && sellerIdsBeingAdded.has(sellerId)
                 })
                 .map(sm => sm.id)
         })

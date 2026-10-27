@@ -4,12 +4,12 @@ import {
   ApplicationMethodTargetTypeValues,
   ApplicationMethodTypeValues,
   PromotionTypeValues,
-  RuleTypeValues,
 } from "@medusajs/types"
 
 export function validateRuleAttribute(attributes: {
   promotionType: PromotionTypeValues | undefined
-  ruleType: RuleTypeValues
+  // The dashed route param (e.g. "target-rules"), a key of the attributes map.
+  ruleType: string
   ruleAttributeId: string
   applicationMethodType?: ApplicationMethodTypeValues
   applicationMethodTargetType?: ApplicationMethodTargetTypeValues

@@ -11,6 +11,7 @@ import {
 } from "@medusajs/medusa/api/utils/common-validators/common"
 import { AdditionalData } from "@medusajs/framework/types"
 import { isValidHandle } from "@medusajs/framework/utils"
+import { JsonRecordSchema } from "../../../utils/json-schema"
 
 const handleField = z
   .string()
@@ -74,7 +75,7 @@ const CreateProductCategory = z.object({
   is_restricted: z.boolean().optional(),
   parent_category_id: z.string().nullish(),
   attribute_ids: z.array(z.string()).optional(),
-  metadata: z.record(z.string(), z.unknown()).nullish(),
+  metadata: JsonRecordSchema.nullish(),
   rank: z.number().nonnegative().optional(),
   media: z.array(ProductCategoryMedia).optional(),
   icon: z.string().nullish(),
@@ -96,7 +97,7 @@ const UpdateProductCategory = z.object({
   is_restricted: z.boolean().optional(),
   parent_category_id: z.string().nullish(),
   attribute_ids: z.array(z.string()).optional(),
-  metadata: z.record(z.string(), z.unknown()).nullish(),
+  metadata: JsonRecordSchema.nullish(),
   rank: z.number().nonnegative().optional(),
   media: z.array(ProductCategoryMedia).optional(),
   icon: z.string().nullish(),

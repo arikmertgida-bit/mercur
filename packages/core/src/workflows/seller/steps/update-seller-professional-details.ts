@@ -8,10 +8,15 @@ import {
 import SellerModuleService from "../../../modules/seller/service"
 
 
+type UpdateProfessionalDetailsCompensation = {
+  existing: ProfessionalDetailsDTO | null
+  seller_id: string
+}
+
 export const updateSellerProfessionalDetailsStep = createStep<
   { seller_id: string; data: UpdateProfessionalDetailsDTO },
   ProfessionalDetailsDTO,
-  any
+  UpdateProfessionalDetailsCompensation
 >(
   "update-seller-professional-details",
   async (
@@ -43,11 +48,15 @@ export const updateSellerProfessionalDetailsStep = createStep<
     })
     return new StepResponse(created, { existing: null, seller_id })
   },
-  async ({ existing, seller_id }, { container }) => {
+  async (compensation, { container }) => {
+    if (!compensation) {
+      return
+    }
+    const { existing, seller_id } = compensation
     const service =
       container.resolve<SellerModuleService>(MercurModules.SELLER)
     if (existing) {
-      await service.updateProfessionalDetails(existing.id, existing)
+      await service.updateProfessionalDetails(existing)
     } else {
       const current = await service.listProfessionalDetails({ seller_id })
       if (current.length > 0) {

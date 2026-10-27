@@ -6,7 +6,6 @@ import {
 import { emitEventStep } from "@medusajs/medusa/core-flows"
 import {
   CreateProductChangeActionDTO,
-  ProductChangeDTO,
   ProductChangeStatus,
 } from "@mercurjs/types"
 
@@ -48,13 +47,12 @@ export const stageProductChangeWorkflow = createWorkflow(
     const stampedActions = transform(
       { input, changes },
       ({ input, changes }) => {
-        const product_change_id = changes[0]?.id as string
+        const product_change_id = changes[0]?.id
         return input.actions.map(
-          (a) =>
-            ({
-              ...a,
-              product_change_id,
-            }) as CreateProductChangeActionDTO,
+          (a): CreateProductChangeActionDTO => ({
+            ...a,
+            product_change_id,
+          }),
         )
       },
     )
@@ -70,7 +68,7 @@ export const stageProductChangeWorkflow = createWorkflow(
 
     autoConfirmProductChangeWorkflow.runAsStep({
       input: transform({ changes, input }, ({ changes, input }) => ({
-        change_id: changes[0]?.id as string,
+        change_id: changes[0]?.id,
         confirmed_by: input.created_by,
         force: input.auto_confirm,
       })),
@@ -79,7 +77,7 @@ export const stageProductChangeWorkflow = createWorkflow(
     return new WorkflowResponse(
       transform(
         { changes },
-        ({ changes }) => changes[0] as ProductChangeDTO,
+        ({ changes }) => changes[0],
       ),
     )
   },

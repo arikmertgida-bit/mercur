@@ -1,3 +1,4 @@
+import type { JsonRecord } from "@mercurjs/types"
 import { model } from "@medusajs/framework/utils"
 
 const PromotionCost = model
@@ -6,7 +7,7 @@ const PromotionCost = model
     promotion_id: model.text(),
     cost_bearer: model.enum(["store", "marketplace", "shared"]).default("store"),
     shared_marketplace_percentage: model.number().nullable(),
-    metadata: model.json().nullable(),
+    metadata: model.json<JsonRecord>().nullable(),
   })
   .indexes([
     {

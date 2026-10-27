@@ -2,6 +2,8 @@ import { MedusaContainer } from "@medusajs/framework/types"
 import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
 import { CommissionLineDTO } from "@mercurjs/types"
 
+import { QueryFilter } from "../../utils/query-filter"
+
 const COMMISSION_LINE_FIELDS = [
   "id",
   "item_id",
@@ -60,7 +62,7 @@ export const getOrderCommissionLines = async (
     .map((method: { id: string }) => method.id)
     .filter(Boolean)
 
-  const filters: Record<string, unknown>[] = []
+  const filters: QueryFilter[] = []
   if (itemIds.length) {
     filters.push({ item_id: itemIds })
   }
@@ -80,6 +82,6 @@ export const getOrderCommissionLines = async (
 
   return {
     found: true,
-    commission_lines: commission_lines as CommissionLineDTO[],
+    commission_lines,
   }
 }

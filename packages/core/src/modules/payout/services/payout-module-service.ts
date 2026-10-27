@@ -68,7 +68,7 @@ export default class PayoutModuleService extends MedusaService({
 
         try {
             payoutAccount = await this.createPayoutAccounts(
-                { data: input.data, context: input.context as Record<string, unknown> },
+                { data: input.data, context: input.context },
                 sharedContext
             )
 
@@ -144,7 +144,7 @@ export default class PayoutModuleService extends MedusaService({
             ...(payoutAccount.onboarding ? { id: payoutAccount.onboarding.id } : {}),
             account: input.account_id,
             data: providerData.data,
-            context: input.context as Record<string, unknown>
+            context: input.context
         }
 
         let onboarding: InferEntityType<typeof Onboarding>

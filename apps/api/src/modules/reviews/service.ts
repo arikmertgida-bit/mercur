@@ -1,11 +1,24 @@
 import {
   InjectManager,
+  MedusaError,
   MedusaService,
 } from '@medusajs/framework/utils'
 import { Context } from '@medusajs/framework/types'
 import { EntityManager } from '@medusajs/framework/mikro-orm/knex'
 
 import { Review } from './models/review'
+
+// `@InjectManager()` fills `sharedContext.manager` before the method body runs.
+const knexOf = (sharedContext?: Context<EntityManager>) => {
+  const manager = sharedContext?.manager
+  if (!manager) {
+    throw new MedusaError(
+      MedusaError.Types.UNEXPECTED_STATE,
+      'Review module: no entity manager was injected'
+    )
+  }
+  return manager.getKnex()
+}
 
 class ReviewModuleService extends MedusaService({
   Review
@@ -16,7 +29,7 @@ class ReviewModuleService extends MedusaService({
     id: string,
     sharedContext?: Context<EntityManager>
   ): Promise<string | null> {
-    const knex = sharedContext!.manager!.getKnex()
+    const knex = knexOf(sharedContext)
 
     const joinField = type === 'product' ? 'product_id' : 'seller_id'
     const joinTable =
@@ -37,7 +50,7 @@ class ReviewModuleService extends MedusaService({
     fields: string[],
     sharedContext?: Context<EntityManager>
   ) {
-    const knex = sharedContext!.manager!.getKnex()
+    const knex = knexOf(sharedContext)
 
     const result = await knex
       .select(...fields.map((f) => `seller.${f}`))
@@ -59,7 +72,7 @@ class ReviewModuleService extends MedusaService({
     fields: string[],
     sharedContext?: Context<EntityManager>
   ) {
-    const knex = sharedContext!.manager!.getKnex()
+    const knex = knexOf(sharedContext)
 
     const result = await knex
       .select(...fields.map((f) => `product.${f}`))

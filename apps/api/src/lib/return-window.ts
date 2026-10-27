@@ -24,11 +24,11 @@ function toValidDate(value: Date | string | null): Date | null {
  * excluded so a stray/void record can't spuriously anchor the window.
  */
 export function getLatestDeliveryDate(
-  fulfillments: ReturnWindowFulfillment[]
+  fulfillments: (ReturnWindowFulfillment | null)[]
 ): Date | null {
   const deliveredDates: Date[] = []
   for (const fulfillment of fulfillments) {
-    if (fulfillment.canceled_at) {
+    if (!fulfillment || fulfillment.canceled_at) {
       continue
     }
     const date = toValidDate(fulfillment.delivered_at)
@@ -46,7 +46,7 @@ export function getLatestDeliveryDate(
 
 /** Whether a return may still be created for an order with these fulfillments. */
 export function isReturnWindowOpen(
-  fulfillments: ReturnWindowFulfillment[],
+  fulfillments: (ReturnWindowFulfillment | null)[],
   now: Date = new Date()
 ): boolean {
   const deliveredAt = getLatestDeliveryDate(fulfillments)

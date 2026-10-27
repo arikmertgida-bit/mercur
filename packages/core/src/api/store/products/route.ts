@@ -9,9 +9,15 @@ import {
   wrapProductVariantsWithCalculatedPrice,
   wrapProductVariantsWithInventoryQuantity,
 } from "../../utils"
-import { splitComputedVariantFields } from "./helpers"
+import {
+  splitComputedVariantFields,
+  StoreProductFilterFields,
+} from "./helpers"
 
-export const GET = async (req: MedusaStoreRequest, res: MedusaResponse) => {
+export const GET = async (
+  req: MedusaStoreRequest<never, StoreProductFilterFields>,
+  res: MedusaResponse
+) => {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
 
   // `variants.calculated_price` and `variants.inventory_quantity` are both
@@ -29,7 +35,7 @@ export const GET = async (req: MedusaStoreRequest, res: MedusaResponse) => {
     region_id: _r,
     currency_code: _c,
     ...productFilters
-  } = (req.filterableFields ?? {}) as Record<string, unknown>
+  } = req.filterableFields ?? {}
 
   const { data: products, metadata } = await query.graph({
     entity: "product",

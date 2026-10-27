@@ -15,7 +15,7 @@ export const POST = async (
 ) => {
   const { id } = req.params
 
-  await validateCustomerReview(req.scope, req.auth_context.actor_id, id!)
+  await validateCustomerReview(req.scope, req.auth_context.actor_id, id)
 
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
 
@@ -45,7 +45,7 @@ export const DELETE = async (
 ) => {
   const { id } = req.params
 
-  await validateCustomerReview(req.scope, req.auth_context.actor_id, id!)
+  await validateCustomerReview(req.scope, req.auth_context.actor_id, id)
 
   await deleteReviewWorkflow.run({
     container: req.scope,
@@ -53,7 +53,7 @@ export const DELETE = async (
   })
 
   res.json({
-    id: id!,
+    id: id,
     object: 'review',
     deleted: true
   })
@@ -65,7 +65,7 @@ export const GET = async (
 ) => {
   const { id } = req.params
 
-  await validateCustomerReview(req.scope, req.auth_context.actor_id, id!)
+  await validateCustomerReview(req.scope, req.auth_context.actor_id, id)
 
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
 

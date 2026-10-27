@@ -14,13 +14,14 @@ import {
   validateSellerInventoryLevels,
 } from "../../helpers"
 import { VendorBatchInventoryItemLevelsType } from "../../validators"
+import { getSellerId } from "../../../../utils/seller-context"
 
 export const POST = async (
   req: AuthenticatedMedusaRequest<VendorBatchInventoryItemLevelsType>,
   res: MedusaResponse<HttpTypes.VendorBatchInventoryItemLevelResponse>
 ) => {
   const body = req.validatedBody
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
   const levels = [...(body.create ?? []), ...(body.update ?? [])]
   const deleteIds = body.delete ?? []
 

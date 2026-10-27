@@ -5,16 +5,21 @@ import {
 import { cancelOrderWorkflow } from "@medusajs/medusa/core-flows"
 import { ContainerRegistrationKeys, Modules } from "@medusajs/framework/utils"
 import { HttpTypes } from "@mercurjs/types"
+import { z } from "zod"
 import { InventoryWorkflowEvents } from "../../../../../workflows"
 
 import { validateSellerOrder } from "../../helpers"
+import { getSellerId } from "../../../../utils/seller-context"
+import { parseGraphRows } from "../../../../../utils/graph-rows"
+
+const ReservationItemRowSchema = z.object({ inventory_item_id: z.string() })
 
 export const POST = async (
   req: AuthenticatedMedusaRequest,
   res: MedusaResponse<HttpTypes.VendorOrderResponse>
 ) => {
   const { id } = req.params
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
 
   await validateSellerOrder(req.scope, sellerId, id)
 
@@ -26,13 +31,18 @@ export const POST = async (
     filters: { order_id: id },
   })
   const lineItemIds = orderItems.map((item) => item.id)
-  const { data: affectedReservations } = lineItemIds.length
-    ? await query.graph({
-        entity: "reservation",
-        fields: ["inventory_item_id"],
-        filters: { line_item_id: lineItemIds },
-      })
-    : { data: [] as { inventory_item_id: string }[] }
+  const affectedReservations = lineItemIds.length
+    ? parseGraphRows(
+        ReservationItemRowSchema,
+        (
+          await query.graph({
+            entity: "reservation",
+            fields: ["inventory_item_id"],
+            filters: { line_item_id: lineItemIds },
+          })
+        ).data
+      )
+    : []
 
   await cancelOrderWorkflow(req.scope).run({
     input: {

@@ -3,6 +3,7 @@ import {
   createFindParams,
   createOperatorMap,
 } from "@medusajs/medusa/api/utils/validators"
+import { JsonRecordSchema } from "../../../utils/json-schema"
 
 export const VendorGetExchangesParams = createFindParams({
   limit: 20,
@@ -19,12 +20,17 @@ export const VendorGetExchangesParams = createFindParams({
 export type VendorGetExchangesParamsType = z.infer<
   typeof VendorGetExchangesParams
 >
+/**
+ * The list query as clients send it: every field, including those with a
+ * default (`offset`, `limit`, ...), is optional on the wire.
+ */
+export type VendorGetExchangesParamsInput = Partial<VendorGetExchangesParamsType>
 
 export const VendorPostOrderExchangesReq = z.object({
   order_id: z.string(),
   description: z.string().optional(),
   internal_note: z.string().optional(),
-  metadata: z.record(z.string(), z.unknown()).nullish(),
+  metadata: JsonRecordSchema.nullish(),
 })
 export type VendorPostOrderExchangesReqType = z.infer<
   typeof VendorPostOrderExchangesReq
@@ -46,7 +52,7 @@ export const VendorPostExchangesReturnRequestItemsReq = z.object({
       description: z.string().optional(),
       internal_note: z.string().optional(),
       reason_id: z.string().optional(),
-      metadata: z.record(z.string(), z.unknown()).optional(),
+      metadata: JsonRecordSchema.optional(),
     })
   ),
 })
@@ -58,7 +64,7 @@ export const VendorPostExchangesRequestItemsReturnActionReq = z.object({
   quantity: z.number().optional(),
   internal_note: z.string().nullish().optional(),
   reason_id: z.string().nullish().optional(),
-  metadata: z.record(z.string(), z.unknown()).nullish().optional(),
+  metadata: JsonRecordSchema.nullish().optional(),
 })
 export type VendorPostExchangesRequestItemsReturnActionReqType = z.infer<
   typeof VendorPostExchangesRequestItemsReturnActionReq
@@ -72,7 +78,7 @@ export const VendorPostExchangesAddItemsReq = z.object({
       unit_price: z.number().optional(),
       internal_note: z.string().optional(),
       allow_backorder: z.boolean().optional(),
-      metadata: z.record(z.string(), z.unknown()).optional(),
+      metadata: JsonRecordSchema.optional(),
     })
   ),
 })
@@ -93,7 +99,7 @@ export const VendorPostExchangesShippingReq = z.object({
   custom_amount: z.number().optional(),
   description: z.string().optional(),
   internal_note: z.string().optional(),
-  metadata: z.record(z.string(), z.unknown()).optional(),
+  metadata: JsonRecordSchema.optional(),
 })
 export type VendorPostExchangesShippingReqType = z.infer<
   typeof VendorPostExchangesShippingReq
@@ -102,7 +108,7 @@ export type VendorPostExchangesShippingReqType = z.infer<
 export const VendorPostExchangesShippingActionReq = z.object({
   custom_amount: z.number().nullish().optional(),
   internal_note: z.string().nullish().optional(),
-  metadata: z.record(z.string(), z.unknown()).nullish().optional(),
+  metadata: JsonRecordSchema.nullish().optional(),
 })
 export type VendorPostExchangesShippingActionReqType = z.infer<
   typeof VendorPostExchangesShippingActionReq

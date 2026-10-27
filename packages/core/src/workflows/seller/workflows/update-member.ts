@@ -9,11 +9,12 @@ import { AdditionalData } from "@medusajs/framework/types"
 import { MemberDTO } from "@mercurjs/types"
 
 import { updateMembersStep } from "../steps"
+import { QueryFilter } from "../../../utils/query-filter"
 
 export const updateMemberWorkflowId = "update-member"
 
 export type UpdateMemberWorkflowInput = {
-  selector: Record<string, unknown>
+  selector: QueryFilter
   update: {
     first_name?: string | null
     last_name?: string | null
@@ -26,9 +27,9 @@ export type UpdateMemberWorkflowHooks = [
     "membersUpdated",
     {
       members: MemberDTO[]
-      additional_data: Record<string, unknown> | undefined
+      additional_data: AdditionalData["additional_data"]
     },
-    unknown
+    void
   >,
 ]
 

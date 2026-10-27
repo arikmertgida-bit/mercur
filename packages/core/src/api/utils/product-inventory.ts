@@ -1,4 +1,3 @@
-import type { MedusaStoreRequest } from "@medusajs/framework/http"
 import { wrapVariantsWithInventoryQuantityForSalesChannel } from "@medusajs/medusa/api/utils/middlewares/index"
 
 type InventoryTrackedVariant = {
@@ -25,7 +24,7 @@ type InventoryTrackedProduct = {
  * computed quantity is copied back onto the original variant objects.
  */
 export const wrapProductVariantsWithInventoryQuantity = async (
-  req: MedusaStoreRequest<unknown>,
+  req: Parameters<typeof wrapVariantsWithInventoryQuantityForSalesChannel>[0],
   products: InventoryTrackedProduct[]
 ): Promise<void> => {
   const originalVariants = products.flatMap(

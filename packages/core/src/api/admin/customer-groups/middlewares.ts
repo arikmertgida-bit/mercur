@@ -14,9 +14,9 @@ import { AdminGetCustomerGroupsParams } from "./validators"
 
 const LIST_MATCHER = "/admin/customer-groups"
 
-const capturedBase = (ORIGINAL_MIDDLEWARES[
+const capturedBase = ORIGINAL_MIDDLEWARES[
   "dist/api/admin/customer-groups/middlewares.js"
-] ?? []) as MiddlewareRoute[]
+] ?? []
 
 const baseWithoutListGet = capturedBase.filter((route) => {
   if (route.matcher !== LIST_MATCHER) {

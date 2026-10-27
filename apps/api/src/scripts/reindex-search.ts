@@ -8,7 +8,7 @@ import {
   loadDefaultSalesChannelId,
   loadRegions,
 } from "../lib/search/reindex"
-import { searchProductFields, SearchProductRow } from "../lib/search/build-docs"
+import { searchProductFields } from "../lib/search/build-docs"
 
 /**
  * One-time full backfill for the Meilisearch product index. Needed whenever
@@ -53,7 +53,7 @@ export default async function reindexSearch({ container }: ExecArgs) {
 
     await indexProductPage(
       container,
-      products as SearchProductRow[],
+      products,
       regions,
       defaultSalesChannelId
     )

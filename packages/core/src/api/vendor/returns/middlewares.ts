@@ -11,7 +11,10 @@ import {
   validateAndTransformQuery,
 } from "@medusajs/framework"
 
-import { validateSellerOrder } from "../orders/helpers"
+import {
+  OrderScopedFilterFields,
+  validateSellerOrder,
+} from "../orders/helpers"
 import { vendorReturnQueryConfig } from "./query-config"
 import {
   VendorGetReturnParams,
@@ -28,22 +31,23 @@ import {
   VendorPostReturnsShippingActionReq,
   VendorPostReturnsShippingReq,
 } from "./validators"
+import { getSellerId } from "../../utils/seller-context"
 
 const applySellerOrderLinkFilter = async (
-  req: AuthenticatedMedusaRequest,
+  req: AuthenticatedMedusaRequest<never, OrderScopedFilterFields>,
   res: MedusaResponse,
   next: MedusaNextFunction
 ) => {
   if (req.filterableFields.order_id) {
     await validateSellerOrder(
       req.scope,
-      req.seller_context!.seller_id,
-      req.filterableFields.order_id as string | string[]
+      getSellerId(req),
+      req.filterableFields.order_id
     )
     return next()
   }
 
-  req.filterableFields.seller_id = req.seller_context!.seller_id
+  req.filterableFields.seller_id = getSellerId(req)
 
   return maybeApplyLinkFilter({
     entryPoint: "order_seller",

@@ -1,3 +1,5 @@
-import { z } from "@medusajs/framework/zod"
-export const pricingContextResult = z.record(z.string(), z.any()).optional()
-export const shippingOptionsContextResult = z.record(z.string(), z.any()).optional()
+import { JsonRecordSchema } from "../../../utils/json-schema"
+
+// Hook results merged into the shipping option pricing/query contexts.
+export const pricingContextResult = JsonRecordSchema.optional()
+export const shippingOptionsContextResult = JsonRecordSchema.optional()

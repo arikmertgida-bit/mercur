@@ -11,7 +11,10 @@ import {
   validateAndTransformQuery,
 } from "@medusajs/framework"
 
-import { validateSellerOrder } from "../orders/helpers"
+import {
+  OrderScopedFilterFields,
+  validateSellerOrder,
+} from "../orders/helpers"
 import { vendorExchangeQueryConfig } from "./query-config"
 import { validateSellerExchange } from "./helpers"
 import {
@@ -25,14 +28,15 @@ import {
   VendorPostExchangesShippingReq,
   VendorPostOrderExchangesReq,
 } from "./validators"
+import { getSellerId } from "../../utils/seller-context"
 
 const assertSellerOwnsOrderInBody = async (
   req: AuthenticatedMedusaRequest<{ order_id: string }>,
   _res: MedusaResponse,
   next: MedusaNextFunction
 ) => {
-  const sellerId = req.seller_context!.seller_id
-  const orderId = req.validatedBody!.order_id
+  const sellerId = getSellerId(req)
+  const orderId = req.validatedBody.order_id
   await validateSellerOrder(req.scope, sellerId, orderId)
   return next()
 }
@@ -42,27 +46,27 @@ const assertSellerOwnsExchangeInParam = async (
   _res: MedusaResponse,
   next: MedusaNextFunction
 ) => {
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
   const { id } = req.params
   await validateSellerExchange(req.scope, sellerId, id)
   return next()
 }
 
 const applySellerExchangesFilter = async (
-  req: AuthenticatedMedusaRequest,
+  req: AuthenticatedMedusaRequest<never, OrderScopedFilterFields>,
   res: MedusaResponse,
   next: MedusaNextFunction
 ) => {
   if (req.filterableFields.order_id) {
     await validateSellerOrder(
       req.scope,
-      req.seller_context!.seller_id,
-      req.filterableFields.order_id as string | string[]
+      getSellerId(req),
+      req.filterableFields.order_id
     )
     return next()
   }
 
-  req.filterableFields.seller_id = req.seller_context!.seller_id
+  req.filterableFields.seller_id = getSellerId(req)
 
   return maybeApplyLinkFilter({
     entryPoint: "order_seller",

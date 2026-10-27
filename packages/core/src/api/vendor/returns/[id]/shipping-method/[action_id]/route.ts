@@ -11,6 +11,8 @@ import { HttpTypes } from "@mercurjs/types"
 
 import { validateSellerReturn } from "../../../helpers"
 import { VendorPostReturnsShippingActionReqType } from "../../../validators"
+import { getSellerId } from "../../../../../utils/seller-context"
+import { toHttpOrderPreview } from "../../../../../../utils/http-order"
 
 export const POST = async (
   req: AuthenticatedMedusaRequest<VendorPostReturnsShippingActionReqType>,
@@ -18,7 +20,7 @@ export const POST = async (
 ) => {
   const { id, action_id } = req.params
 
-  await validateSellerReturn(req.scope, req.seller_context!.seller_id, id)
+  await validateSellerReturn(req.scope, getSellerId(req), id)
 
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
 
@@ -42,7 +44,7 @@ export const POST = async (
   })
 
   res.json({
-    order_preview: result,
+    order_preview: toHttpOrderPreview(result),
     return: orderReturn,
   })
 }
@@ -53,7 +55,7 @@ export const DELETE = async (
 ) => {
   const { id, action_id } = req.params
 
-  await validateSellerReturn(req.scope, req.seller_context!.seller_id, id)
+  await validateSellerReturn(req.scope, getSellerId(req), id)
 
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
 
@@ -78,7 +80,7 @@ export const DELETE = async (
   })
 
   res.json({
-    order_preview: orderPreview,
+    order_preview: toHttpOrderPreview(orderPreview),
     return: orderReturn,
   })
 }

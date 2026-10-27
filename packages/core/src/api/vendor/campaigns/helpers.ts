@@ -8,8 +8,20 @@ import {
   ContainerRegistrationKeys,
   MedusaError,
 } from "@medusajs/framework/utils"
+import { z } from "zod"
 
-type CampaignFilter = Record<string, unknown>
+import { parseGraphRows } from "../../../utils/graph-rows"
+import { QueryFilter } from "../../../utils/query-filter"
+
+type CampaignFilter = QueryFilter
+
+type CampaignFilterFields = QueryFilter & {
+  budget_type?: string
+  status?: string
+  $and?: QueryFilter[]
+}
+
+const CampaignIdRowSchema = z.object({ campaign_id: z.string() })
 
 const buildStatusFilter = (
   status: string,
@@ -43,14 +55,14 @@ const buildStatusFilter = (
  * Both are appended to `$and` so the seller link filter is preserved.
  */
 export const applyCampaignFilters = async (
-  req: AuthenticatedMedusaRequest,
+  req: AuthenticatedMedusaRequest<never, CampaignFilterFields>,
   _res: MedusaResponse,
   next: MedusaNextFunction
 ) => {
   const filterableFields = req.filterableFields ?? {}
 
-  const budgetType = filterableFields.budget_type as string | undefined
-  const status = filterableFields.status as string | undefined
+  const budgetType = filterableFields.budget_type
+  const status = filterableFields.status
 
   delete filterableFields.budget_type
   delete filterableFields.status
@@ -68,7 +80,9 @@ export const applyCampaignFilters = async (
       fields: ["campaign_id"],
       filters: { type: budgetType },
     })
-    const budgetIds = data.map((b: { campaign_id: string }) => b.campaign_id)
+    const budgetIds = parseGraphRows(CampaignIdRowSchema, data).map(
+      (b) => b.campaign_id
+    )
 
     if (!budgetIds.length) {
       filterableFields.id = ["__no_match__"]
@@ -86,9 +100,7 @@ export const applyCampaignFilters = async (
   }
 
   if (constraints.length) {
-    const existingAnd = Array.isArray(filterableFields.$and)
-      ? (filterableFields.$and as CampaignFilter[])
-      : []
+    const existingAnd = filterableFields.$and ?? []
     filterableFields.$and = [...existingAnd, ...constraints]
   }
 

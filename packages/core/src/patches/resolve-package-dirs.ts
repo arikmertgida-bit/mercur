@@ -2,6 +2,9 @@ import { existsSync, readdirSync, readFileSync, realpathSync } from "fs"
 import { dirname, join } from "path"
 import pkgDir from "pkg-dir"
 import resolveCwd from "resolve-cwd"
+import { z } from "zod"
+
+const PackageJsonVersionSchema = z.object({ version: z.string().optional() })
 
 // A dependency can be present many times in one install, and where the copies
 // live depends on the package manager: bun stores them under `node_modules/
@@ -24,7 +27,8 @@ export type PackageCopy = {
 function readVersion(dir: string): string | null {
   try {
     const raw = readFileSync(join(dir, "package.json"), "utf8")
-    return (JSON.parse(raw) as { version?: string }).version ?? null
+    const parsed = PackageJsonVersionSchema.safeParse(JSON.parse(raw))
+    return parsed.success ? (parsed.data.version ?? null) : null
   } catch {
     return null
   }

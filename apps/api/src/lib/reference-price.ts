@@ -62,7 +62,7 @@ export async function loadReferencePrices(
   })
 
   const byVariant = new Map<string, { amounts: number[]; dates: Set<string> }>()
-  for (const row of parseRows(SnapshotRowSchema, rows as object[])) {
+  for (const row of parseRows(SnapshotRowSchema, rows)) {
     const entry = byVariant.get(row.variant_id) ?? { amounts: [], dates: new Set<string>() }
     entry.amounts.push(row.amount)
     entry.dates.add(row.captured_date)

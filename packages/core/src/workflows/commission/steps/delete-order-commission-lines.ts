@@ -2,6 +2,7 @@ import { createStep, StepResponse } from "@medusajs/framework/workflows-sdk"
 import { CommissionLineDTO, CreateCommissionLineDTO, MercurModules } from "@mercurjs/types"
 
 import CommissionModuleService from "../../../modules/commission/service"
+import { QueryFilter } from "../../../utils/query-filter"
 
 export const deleteOrderCommissionLinesStepId = "delete-order-commission-lines"
 
@@ -20,7 +21,7 @@ export const deleteOrderCommissionLinesStep = createStep(
       MercurModules.COMMISSION
     )
 
-    const filters: Record<string, unknown>[] = []
+    const filters: QueryFilter[] = []
     if (input.item_ids.length) {
       filters.push({ item_id: input.item_ids })
     }

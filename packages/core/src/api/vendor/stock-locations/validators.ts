@@ -4,6 +4,7 @@ import {
   createOperatorMap,
   createSelectParams,
 } from "@medusajs/medusa/api/utils/validators"
+import { JsonRecordSchema } from "../../../utils/json-schema"
 
 export type VendorGetStockLocationParamsType = z.infer<
   typeof VendorGetStockLocationParams
@@ -44,7 +45,7 @@ export const VendorCreateStockLocation = z.object({
   name: z.preprocess((val) => (typeof val === "string" ? val.trim() : val), z.string().min(1)),
   address: VendorUpsertStockLocationAddress.optional(),
   address_id: z.string().nullish(),
-  metadata: z.record(z.string(), z.unknown()).nullish(),
+  metadata: JsonRecordSchema.nullish(),
 })
 
 export type VendorUpdateStockLocationType = z.infer<
@@ -56,7 +57,7 @@ export const VendorUpdateStockLocation = z.object({
     .optional(),
   address: VendorUpsertStockLocationAddress.optional(),
   address_id: z.string().nullish(),
-  metadata: z.record(z.string(), z.unknown()).nullish(),
+  metadata: JsonRecordSchema.nullish(),
 })
 
 export type VendorCreateStockLocationFulfillmentSetType = z.infer<

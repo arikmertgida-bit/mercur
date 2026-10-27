@@ -1,3 +1,4 @@
+import type { JsonRecord } from "@mercurjs/types"
 import { model } from "@medusajs/framework/utils"
 import { ProductChangeStatus } from "@mercurjs/types"
 
@@ -23,7 +24,7 @@ const ProductChange = model
     requires_action_by: model.text().nullable(),
     requires_action_at: model.dateTime().nullable(),
     requires_action_reason: model.text().nullable(),
-    metadata: model.json().nullable(),
+    metadata: model.json<JsonRecord>().nullable(),
 
     actions: model.hasMany(() => ProductChangeAction, {
       mappedBy: "product_change",

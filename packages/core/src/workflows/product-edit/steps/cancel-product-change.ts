@@ -24,16 +24,13 @@ export const cancelProductChangeStep = createStep(
       MercurModules.PRODUCT_EDIT,
     )
 
-    const prev = (await service.retrieveProductChange(input.id)) as Record<
-      string,
-      unknown
-    > & { id: string }
+    const prev = await service.retrieveProductChange(input.id)
 
     const prevScalar: PrevChangeScalar = {
       id: prev.id,
-      status: prev.status as ProductChangeStatus,
-      canceled_by: (prev.canceled_by as string | null) ?? null,
-      canceled_at: (prev.canceled_at as Date | null) ?? null,
+      status: prev.status,
+      canceled_by: prev.canceled_by ?? null,
+      canceled_at: prev.canceled_at ?? null,
     }
 
     const result = await service.updateProductChanges([

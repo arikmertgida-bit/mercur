@@ -1,11 +1,9 @@
 import {
   AdditionalData,
   BigNumberInput,
-  FulfillmentDTO,
-  OrderDTO,
   OrderWorkflow,
-  ReservationItemDTO,
 } from "@medusajs/framework/types"
+import { z } from "zod"
 import {
   arrayDifference,
   MathBN,
@@ -37,8 +35,60 @@ import {
   buildVariantInventoryLinkMap,
   VariantInventoryLink,
   VariantInventoryRow,
+  VariantInventoryRowSchema,
 } from "../utils"
 import { InventoryWorkflowEvents } from "../../events"
+import {
+  GraphBigNumberSchema,
+  GraphDateSchema,
+  parseGraphRow,
+  parseGraphRows,
+} from "../../../utils/graph-rows"
+import { ensureDefined } from "../../../utils/ensure-defined"
+
+const FulfillmentRowSchema = z.object({
+  id: z.string(),
+  canceled_at: GraphDateSchema.nullish(),
+  shipped_at: GraphDateSchema.nullish(),
+  location_id: z.string(),
+  items: z.array(
+    z.object({
+      id: z.string(),
+      quantity: GraphBigNumberSchema,
+      line_item_id: z.string().nullable(),
+      inventory_item_id: z.string().nullable(),
+    }),
+  ),
+})
+
+type FulfillmentRow = z.infer<typeof FulfillmentRowSchema>
+
+const OrderRowSchema = z.object({
+  id: z.string(),
+  status: z.string(),
+  items: z
+    .array(
+      z.object({
+        id: z.string(),
+        quantity: GraphBigNumberSchema,
+        variant: VariantInventoryRowSchema.nullish(),
+      }),
+    )
+    .nullish(),
+  fulfillments: z.array(FulfillmentRowSchema),
+})
+
+type OrderRow = z.infer<typeof OrderRowSchema>
+
+const ReservationRowSchema = z.object({
+  id: z.string(),
+  line_item_id: z.string().nullable(),
+  quantity: GraphBigNumberSchema,
+  inventory_item_id: z.string(),
+  location_id: z.string(),
+})
+
+type ReservationRow = z.infer<typeof ReservationRowSchema>
 
 export const cancelOrderFulfillmentValidateOrderStepId =
   "mercur-cancel-order-fulfillment-validate-order"
@@ -49,7 +99,7 @@ export const cancelOrderFulfillmentValidateOrderStep = createStep(
     order,
     input,
   }: {
-    order: OrderDTO & { fulfillments: FulfillmentDTO[] }
+    order: OrderRow
     input: OrderWorkflow.CancelOrderFulfillmentWorkflowInput
   }) => {
     if (order.status === OrderStatus.CANCELED) {
@@ -82,9 +132,7 @@ export const cancelOrderFulfillmentValidateOrderStep = createStep(
     }
 
     const orderItemIds = order.items?.map((i) => i.id) ?? []
-    const fulfillmentItemIds = fulfillment.items.map(
-      (i) => i.line_item_id as string,
-    )
+    const fulfillmentItemIds = fulfillment.items.map((i) => i.line_item_id)
     const missing = arrayDifference(fulfillmentItemIds, orderItemIds)
     if (missing.length) {
       throw new MedusaError(
@@ -100,34 +148,44 @@ function prepareCancelOrderFulfillmentData({
   fulfillment,
   inventoryByLineItem,
 }: {
-  order: OrderDTO
-  fulfillment: FulfillmentDTO
+  order: OrderRow
+  fulfillment: FulfillmentRow
   inventoryByLineItem: Record<string, Record<string, VariantInventoryLink>>
 }) {
+  // Every line item id was checked against the order by the validate step.
   const lineItemIds = Array.from(
-    new Set(fulfillment.items.map((i) => i.line_item_id as string)),
+    new Set(
+      fulfillment.items.flatMap((i) => (i.line_item_id ? [i.line_item_id] : [])),
+    ),
   )
 
   return {
     order_id: order.id,
     reference: Modules.FULFILLMENT,
     reference_id: fulfillment.id,
-    items: lineItemIds.map((lineItemId) => {
+    items: lineItemIds.flatMap((lineItemId) => {
       const fitem = fulfillment.items.find(
         (i) => i.line_item_id === lineItemId,
-      )!
+      )
+      if (!fitem) {
+        return []
+      }
       const linksByInventoryItem = inventoryByLineItem[lineItemId]
-      const link = linksByInventoryItem?.[fitem.inventory_item_id as string]
+      const link = fitem.inventory_item_id
+        ? linksByInventoryItem?.[fitem.inventory_item_id]
+        : undefined
 
       let quantity: BigNumberInput = fitem.quantity
       if (link?.required_quantity && link.required_quantity > 1) {
-        quantity = MathBN.div(quantity, link.required_quantity) as BigNumberInput
+        quantity = MathBN.div(quantity, link.required_quantity)
       }
 
-      return {
-        id: lineItemId,
-        quantity,
-      }
+      return [
+        {
+          id: lineItemId,
+          quantity,
+        },
+      ]
     }),
   }
 }
@@ -137,8 +195,8 @@ function prepareInventoryUpdate({
   reservations,
   inventoryByLineItem,
 }: {
-  fulfillment: FulfillmentDTO
-  reservations: ReservationItemDTO[]
+  fulfillment: FulfillmentRow
+  reservations: ReservationRow[]
   inventoryByLineItem: Record<string, Record<string, VariantInventoryLink>>
 }) {
   const inventoryAdjustment: {
@@ -159,13 +217,13 @@ function prepareInventoryUpdate({
   }[] = []
 
   for (const fitem of fulfillment.items) {
-    if (!fitem.inventory_item_id) {
+    const inventoryItemId = fitem.inventory_item_id
+    const lineItemId = fitem.line_item_id
+    if (!inventoryItemId || !lineItemId) {
       continue
     }
 
-    const linksByInventoryItem =
-      inventoryByLineItem[fitem.line_item_id as string]
-    const link = linksByInventoryItem?.[fitem.inventory_item_id as string]
+    const link = inventoryByLineItem[lineItemId]?.[inventoryItemId]
     if (!link) {
       continue
     }
@@ -181,21 +239,18 @@ function prepareInventoryUpdate({
         inventory_item_id: link.inventory_item_id,
         location_id: fulfillment.location_id,
         quantity: fitem.quantity,
-        line_item_id: fitem.line_item_id as string,
+        line_item_id: lineItemId,
         allow_backorder: false,
       })
     } else {
       toUpdate.push({
         id: reservation.id,
-        quantity: MathBN.add(
-          reservation.quantity,
-          fitem.quantity,
-        ) as BigNumberInput,
+        quantity: MathBN.add(reservation.quantity, fitem.quantity),
       })
     }
 
     inventoryAdjustment.push({
-      inventory_item_id: fitem.inventory_item_id as string,
+      inventory_item_id: inventoryItemId,
       location_id: fulfillment.location_id,
       adjustment: fitem.quantity,
     })
@@ -212,7 +267,7 @@ export const cancelOrderFulfillmentWorkflowId = "mercur-cancel-order-fulfillment
 export const cancelOrderFulfillmentWorkflow = createWorkflow(
   cancelOrderFulfillmentWorkflowId,
   (input: WorkflowData<CancelOrderFulfillmentWorkflowInput>) => {
-    const { data: order } = useQueryGraphStep({
+    const { data: orderRow } = useQueryGraphStep({
       entity: "order",
       filters: { id: input.order_id },
       fields: [
@@ -236,19 +291,30 @@ export const cancelOrderFulfillmentWorkflow = createWorkflow(
       options: { throwIfKeyNotFound: true, isList: false },
     }).config({ name: "get-order" })
 
+    const order = transform({ orderRow }, ({ orderRow }) =>
+      parseGraphRow(OrderRowSchema, orderRow),
+    )
+
     cancelOrderFulfillmentValidateOrderStep({ order, input })
 
-    const fulfillment = transform({ input, order }, ({ input, order }) => {
-      return order.fulfillments.find((f) => f.id === input.fulfillment_id)!
-    })
+    const fulfillment = transform({ input, order }, ({ input, order }) =>
+      ensureDefined(
+        order.fulfillments.find((f) => f.id === input.fulfillment_id),
+        "fulfillment",
+      ),
+    )
 
     const lineItemIds = transform({ fulfillment }, ({ fulfillment }) => {
       return Array.from(
-        new Set(fulfillment.items.map((i) => i.line_item_id as string)),
+        new Set(
+          fulfillment.items.flatMap((i) =>
+            i.line_item_id ? [i.line_item_id] : [],
+          ),
+        ),
       )
     })
 
-    const reservations = useRemoteQueryStep({
+    const reservationRows = useRemoteQueryStep({
       entry_point: "reservations",
       fields: [
         "id",
@@ -260,11 +326,12 @@ export const cancelOrderFulfillmentWorkflow = createWorkflow(
       variables: { filters: { line_item_id: lineItemIds } },
     }).config({ name: "get-reservations" })
 
+    const reservations = transform({ reservationRows }, ({ reservationRows }) =>
+      parseGraphRows(ReservationRowSchema, reservationRows),
+    )
+
     const inventoryByLineItem = transform({ order }, ({ order }) => {
-      const items = (order.items ?? []) as Array<{
-        id: string
-        variant?: VariantInventoryRow | null
-      }>
+      const items = order.items ?? []
       const variants = items
         .map((i) => i.variant)
         .filter((v): v is VariantInventoryRow => !!v)

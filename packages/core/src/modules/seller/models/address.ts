@@ -1,3 +1,4 @@
+import type { JsonRecord } from "@mercurjs/types"
 import { model } from "@medusajs/framework/utils"
 import Seller from "./seller"
 
@@ -14,7 +15,7 @@ const SellerAddress = model.define("SellerAddress", {
   province: model.text().searchable().nullable(),
   postal_code: model.text().searchable().nullable(),
   phone: model.text().nullable(),
-  metadata: model.json().nullable(),
+  metadata: model.json<JsonRecord>().nullable(),
   seller: model.belongsTo(() => Seller, {
     mappedBy: "address",
   }),

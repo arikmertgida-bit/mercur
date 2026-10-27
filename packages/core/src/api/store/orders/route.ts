@@ -1,6 +1,6 @@
 import { getOrdersListWorkflow } from "@medusajs/core-flows"
 import { AuthenticatedMedusaRequest, MedusaResponse } from "@medusajs/framework"
-import { OrderDTO } from "@medusajs/framework/types"
+import { MedusaError } from "@medusajs/framework/utils"
 import { HttpTypes } from "@medusajs/types"
 
 import {
@@ -31,12 +31,23 @@ export const GET = async (
     },
   })
 
-  const { rows, metadata } = result as { rows: OrderDTO[]; metadata: any }
+  if (!("rows" in result)) {
+    throw new MedusaError(
+      MedusaError.Types.UNEXPECTED_STATE,
+      "Expected paginated orders result"
+    )
+  }
+  const { rows, metadata } = result
 
-  rows.forEach((order) => normalizeOrderPaymentCollections(order as never))
+  rows.forEach((order) => normalizeOrderPaymentCollections(order))
 
   res.json({
-    orders: rows as unknown as HttpTypes.StoreOrderListResponse["orders"],
+    // @ts-expect-error -- Medusa boundary: getOrdersListWorkflow is typed as
+    // returning module `OrderDTO`s while the route contract is the HTTP
+    // `StoreOrder`. They differ only in serialization (BigNumber -> number,
+    // optional -> nullable) and in the aggregated status fields the workflow
+    // adds at runtime; Medusa's stock route returns the same rows.
+    orders: rows,
     count: metadata.count,
     offset: metadata.skip,
     limit: metadata.take,

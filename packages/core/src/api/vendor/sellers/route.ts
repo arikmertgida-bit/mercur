@@ -38,9 +38,9 @@ export const GET = async (
 
   res.json({
     seller_members: sellerMembers,
-    count: metadata!.count,
-    offset: metadata!.skip,
-    limit: metadata!.take,
+    count: metadata?.count ?? 0,
+    offset: metadata?.skip ?? 0,
+    limit: metadata?.take ?? 0,
   })
 }
 

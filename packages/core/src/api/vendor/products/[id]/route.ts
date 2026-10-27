@@ -12,10 +12,17 @@ import { HttpTypes, ProductChangeDTO } from "@mercurjs/types"
 import { productEditDeleteProductWorkflow } from "../../../../workflows/product-edit/workflows/product-edit-delete-product"
 import { productEditUpdateProductWorkflow } from "../../../../workflows/product-edit/workflows/product-edit-update-product"
 import { enrichProductAttributes } from "../../../utils"
-import { VendorUpdateProductType } from "../validators"
+import {
+  VendorUpdateProductType,
+  VendorGetProductParamsType,
+} from "../validators"
+import { getSellerId } from "../../../utils/seller-context"
 
 export const GET = async (
-  req: AuthenticatedMedusaRequest,
+  req: AuthenticatedMedusaRequest<
+    Partial<VendorGetProductParamsType>,
+    VendorGetProductParamsType
+  >,
   res: MedusaResponse<HttpTypes.VendorProductResponse>
 ) => {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
@@ -45,7 +52,7 @@ export const POST = async (
   res: MedusaResponse<{ product_change: ProductChangeDTO }>
 ) => {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
 
   const { additional_data, ...update } = req.validatedBody
 
@@ -53,7 +60,7 @@ export const POST = async (
     input: {
       product_id: req.params.id,
       created_by: sellerId,
-      update: update as Record<string, unknown>,
+      update,
       additional_data,
     },
   })
@@ -74,7 +81,7 @@ export const DELETE = async (
   res: MedusaResponse<{ product_change: ProductChangeDTO }>
 ) => {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
   const { result } = await productEditDeleteProductWorkflow(req.scope).run({
     input: {
       product_id: req.params.id,

@@ -16,6 +16,7 @@ import {
   VendorCreatePriceListPriceType,
   VendorUpdatePriceListPriceType,
 } from "../../../validators"
+import { getSellerId } from "../../../../../utils/seller-context"
 
 const listPrices = async (
   ids: string[],
@@ -41,7 +42,7 @@ export const POST = async (
   res: MedusaResponse<HttpTypes.VendorPriceListBatchResponse>
 ) => {
   const id = req.params.id
-  const sellerId = req.seller_context!.seller_id
+  const sellerId = getSellerId(req)
 
   await validateSellerPriceList(req.scope, sellerId, id)
 

@@ -7,6 +7,9 @@ import {
   type WrappedProductAttributeDTO,
   type WrappedProductAttributeValueDTO,
 } from "@mercurjs/types"
+import { z } from "zod"
+
+import { parseGraphRows } from "../../utils/graph-rows"
 
 const SELECT_TYPES = new Set<AttributeType>([
   AttributeType.SINGLE_SELECT,
@@ -19,8 +22,15 @@ const byRank = (
 ) => (a.rank ?? 0) - (b.rank ?? 0)
 
 const toValue = (
-  v: ProductAttributeValueDTO,
+  v: Pick<ProductAttributeValueDTO, "id" | "name" | "rank">,
 ): WrappedProductAttributeValueDTO => ({ id: v.id, name: v.name, rank: v.rank })
+
+const AttributeValuesRowSchema = z.object({
+  id: z.string(),
+  values: z
+    .array(z.object({ id: z.string(), name: z.string(), rank: z.number() }))
+    .nullish(),
+})
 
 // Callers pass admin/store/vendor product DTOs, each with many more fields than
 // these — only these attribute-related fields are ever read or written here.
@@ -116,9 +126,8 @@ export async function enrichProductAttributes(
 
   const missingIds = new Set<string>()
   for (const product of products) {
-    for (const attr of (product?.attributes ??
-      []) as WrappedProductAttributeDTO[]) {
-      if (SELECT_TYPES.has(attr.type as AttributeType) && !attr.all_values?.length) {
+    for (const attr of product?.attributes ?? []) {
+      if (attr.type && SELECT_TYPES.has(attr.type) && !attr.all_values?.length) {
         missingIds.add(attr.id)
       }
     }
@@ -133,15 +142,14 @@ export async function enrichProductAttributes(
   })
 
   const valuesById = new Map<string, WrappedProductAttributeValueDTO[]>(
-    ((data ?? []) as ProductAttributeDTO[]).map((a) => [
+    parseGraphRows(AttributeValuesRowSchema, data).map((a) => [
       a.id,
       (a.values ?? []).map(toValue).sort(byRank),
     ]),
   )
 
   for (const product of products) {
-    for (const attr of (product?.attributes ??
-      []) as WrappedProductAttributeDTO[]) {
+    for (const attr of product?.attributes ?? []) {
       if (!attr.all_values?.length) {
         const full = valuesById.get(attr.id)
         if (full?.length) {
