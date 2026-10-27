@@ -149,6 +149,7 @@
     "back": "Geri",
     "close": "Kapat",
     "showMore": "Daha Fazla Göster",
+    "showLess": "Daha Az Göster",
     "continue": "Devam Et",
     "continueWithEmail": "E-posta ile Devam Et",
     "idCopiedToClipboard": "ID panoya kopyalandı",
@@ -828,8 +829,8 @@
       },
       "deleteWarning": "Bu varyantı silmek istediğinizden emin misiniz?",
       "tableItemAvailable": "{{availableCount}} mevcut",
-      "tableItem_one": "{{availableCount}} öğesi {{locationCount}} konumda mevcut",
-      "tableItem_other": "{{availableCount}} öğesi {{locationCount}} konumda mevcut",
+      "tableItem_one": "{{locationCount}} konumda {{availableCount}} adet mevcut",
+      "tableItem_other": "{{locationCount}} konumda {{availableCount}} adet mevcut",
       "validation": {
         "titleRequired": "Lütfen bir başlık girin",
         "optionRequired": "Lütfen bir değer seçin"
@@ -920,6 +921,7 @@
     "attributeProductInformationDescription": "Bilgi amaçlı kullanılan özellikler",
     "attributeRequiredByMarketplace": "Bu özellik pazar yeri tarafından zorunlu kılınmıştır.",
     "attributeRequiredDeleteDisabledTooltip": "Zorunlu özellikler kaldırılamaz.",
+    "missingRequiredAttributesHint": "Lütfen gerekli bilgileri girin",
     "addAttribute": "Özellik Ekle",
     "deleteAttributeWarning": "\"{{title}}\" özelliğini silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.",
     "attributesSection": {
@@ -1096,29 +1098,33 @@
   },
   "inventory": {
     "domain": "Envanter",
-    "subtitle": "Envanter öğelerinizi yönetin",
+    "subtitle": "Envanter kalemlerinizi yönetin",
     "reserved": "Rezerve Edildi",
     "available": "Mevcut",
     "locationLevels": "Konumlar",
     "associatedVariants": "İlişkili varyantlar",
     "manageLocations": "Konumları yönet",
-    "deleteWarning": "Bir envanter öğesini silmek üzeresiniz. Bu işlem geri alınamaz.",
-    "editItemDetails": "Öğe detaylarını düzenle",
+    "deleteWarning": "Bir envanter kalemini silmek üzeresiniz. Bu işlem geri alınamaz.",
+    "editItemDetails": "Kalem detaylarını düzenle",
     "create": {
-      "title": "Envanter Öğesi Oluştur",
+      "title": "Envanter Kalemi Oluştur",
       "details": "Detaylar",
       "availability": "Mevcutluk",
       "locations": "Konumlar",
       "attributes": "Öznitelikler",
       "requiresShipping": "Kargo Gerektirir",
-      "requiresShippingHint": "Envanter öğesi kargo gerektiriyor mu?",
-      "successToast": "Envanter öğesi başarıyla oluşturuldu.",
+      "requiresShippingHint": "Envanter kalemi kargo gerektiriyor mu?",
+      "successToast": "Envanter kalemi başarıyla oluşturuldu.",
+      "errors": {
+        "titleRequired": "Lütfen bir başlık girin"
+      },
+      "attributesHint": "Bunlar kalemi tanımlamak için kullanılan varsayılan değerlerdir. Pazar yeri tarafından tanımlanmazlar.",
       "descriptionPlaceholder": "Ürün açıklaması"
     },
     "reservation": {
       "header": "{{itemName}} için Rezervasyon",
       "editItemDetails": "Rezervasyonu düzenle",
-      "lineItemId": "Satır öğesi ID",
+      "lineItemId": "Satır kalemi ID",
       "orderID": "Sipariş ID",
       "description": "Açıklama",
       "location": "Konum",
@@ -1127,7 +1133,7 @@
       "reservedAtLocation": "Bu konumda rezerve edildi",
       "reservedAmount": "Rezerve edilecek miktar",
       "create": "Rezervasyon Oluştur",
-      "itemToReserve": "Rezerve edilecek öğe",
+      "itemToReserve": "Rezerve edilecek kalem",
       "quantityPlaceholder": "Ne kadar rezerve etmek istiyorsunuz?",
       "descriptionPlaceholder": "Bu rezervasyon türü nedir?",
       "successToast": "Rezervasyon başarıyla oluşturuldu.",
@@ -1135,28 +1141,67 @@
       "deleteSuccessToast": "Rezervasyon başarıyla silindi.",
       "errors": {
         "noAvaliableQuantity": "Stok konumunda mevcut miktar yok.",
-        "quantityOutOfRange": "Minimum miktar 1 ve maksimum miktar {{max}}"
-      }
+        "quantityOutOfRange": "Minimum miktar 1 ve maksimum miktar {{max}}",
+        "idRequired": "Envanter kalemi zorunludur",
+        "selectLocation": "Lütfen bir konum seçin",
+        "enterQuantity": "Lütfen bir miktar girin",
+        "pleaseEnterQuantity": "Lütfen miktar girin"
+      },
+      "deleteTitle": "Rezervasyonu sil",
+      "deleteDescription": "Bir rezervasyonu silmek üzeresiniz. Bu işlem geri alınamaz.",
+      "deleteBlockedDescription": "Bu rezervasyon, karşılanmamış bir siparişe bağlı olduğu için silinemez.",
+      "gotIt": "Anladım",
+      "locationPlaceholder": "Konum seçin",
+      "itemId": "Kalem ID",
+      "goToInventoryItem": "Envanter kalemine git",
+      "reserved": "Rezerve Edildi",
+      "itemPlaceholder": "Kalem seçin"
     },
     "toast": {
       "updateLocations": "Konumlar başarıyla güncellendi.",
       "updateLevel": "Envanter seviyesi başarıyla güncellendi.",
-      "updateItem": "Envanter öğesi başarıyla güncellendi."
+      "updateItem": "Envanter kalemi başarıyla güncellendi.",
+      "deleteItem": "Envanter kalemi başarıyla silindi."
     },
     "adjustInventory": {
       "errors": {
-        "stockedQuantity": "Stok miktarı, rezerve edilen miktar olan {{quantity}}'den daha az olarak güncellenemez."
+        "stockedQuantity": "Stok miktarı, rezerve edilen miktar olan {{quantity}}'den daha az olarak güncellenemez.",
+        "enterQuantity": "Lütfen miktar girin"
       }
     },
     "stock": {
-      "title": "Stok Yönetimi",
-      "description": "Ürün stok seviyelerini ve konumlarını yönetin",
+      "title": "Stok seviyelerini güncelle",
+      "description": "Seçili envanter kalemlerinin stok seviyelerini güncelleyin.",
       "action": "Stok seviyelerini düzenle",
       "placeholder": "Etkin değil",
       "disablePrompt_one": "{{count}} konum seviyesini devre dışı bırakmak üzeresiniz. Bu işlem geri alınamaz.",
       "disablePrompt_other": "{{count}} konum seviyesini devre dışı bırakmak üzeresiniz. Bu işlem geri alınamaz.",
       "disabledToggleTooltip": "Devre dışı bırakılamaz: devre dışı bırakmadan önce gelen ve/veya rezerve edilmiş miktarı temizleyin.",
       "successToast": "Stok seviyeleri başarıyla güncellendi."
+    },
+    "associatedOffers": "İlişkili teklifler",
+    "attributes": {
+      "tip": "Bunlar kalemi tanımlamak için kullanılan varsayılan değerlerdir. Pazar yeri tarafından yönetilmezler."
+    },
+    "item": {
+      "deleteTitle": "Envanter kalemini sil",
+      "deleteDescription": "Bir envanter kalemini silmek üzeresiniz. Bu işlem geri alınamaz."
+    },
+    "level": {
+      "deleteTitle": "Envanter seviyesini sil",
+      "deleteDescription": "{{location}} konumundaki envanter seviyesini silmek üzeresiniz. Bu işlem, bu konumdaki stoku ve rezervasyonları siler ve geri alınamaz."
+    },
+    "list": {
+      "noRecordsTitle": "Henüz envanter kalemi yok",
+      "noRecordsMessage": "Envanteri yönetmek için envanter kalemleri oluşturun"
+    },
+    "locations": {
+      "noRecordsTitle": "Henüz konum yok",
+      "noRecordsMessage": "Stok seviyelerini yönetmeye başlamak için bir konum ekleyin"
+    },
+    "reservations": {
+      "noRecordsTitle": "Henüz rezervasyon yok",
+      "noRecordsMessage": "Gösterilecek rezervasyon yok"
     },
     "manageLocationQuantity": "Lokasyon miktarını yönet",
     "quantityAcrossLocations": "{{locations}} lokasyonda toplam {{quantity}}",
@@ -1327,7 +1372,7 @@
       "allocateItems": "Ürünleri tahsis et",
       "editOrder": "Siparişi düzenle",
       "editOrderContinue": "Sipariş düzenlemeye devam et",
-      "inventoryKit": "{{count}}x envanter öğesinden oluşur",
+      "inventoryKit": "{{count}}x envanter kaleminden oluşur",
       "itemTotal": "Ürün Toplamı",
       "shippingTotal": "Kargo Toplamı",
       "discountTotal": "İndirim Toplamı",
@@ -1627,7 +1672,7 @@
       "itemsToAllocate": "Tahsis edilecek ürünler",
       "itemsToAllocateDesc": "Tahsis etmek istediğiniz ürün sayısını seçin",
       "search": "Ürünleri ara",
-      "consistsOf": "{{num}}x envanter öğesinden oluşur",
+      "consistsOf": "{{num}}x envanter kaleminden oluşur",
       "requires": "Her bir varyant için {{num}} gerektirir",
       "toast": {
         "created": "Ürünler başarıyla tahsis edildi",
@@ -1835,6 +1880,9 @@
         "title": "Fatura adresini düzenle",
         "requestSuccess": "Sipariş fatura adresi güncellendi."
       }
+    },
+    "requiresAction": {
+      "actionUnavailable": "Bu sipariş kabul edilene kadar kullanılamaz"
     },
     "giftCardsStoreCreditLines": "Hediye kartları ve kredi hatları",
     "creditLines": {
@@ -2401,16 +2449,16 @@
   },
   "promotions": {
     "templates": {
-      "amountOffProducts": {
+      "amountOffOffers": {
         "title": "Ürünlerde tutar indirimi",
-        "description": "Belirli ürünlerde veya ürün koleksiyonunda indirim uygular"
+        "description": "Seçili ürünlerde indirim uygular"
       },
       "amountOffOrder": {
         "title": "Siparişte tutar indirimi",
         "description": "Toplam sipariş tutarında indirim uygular"
       },
       "percentageOffProduct": {
-        "title": "Üründe yüzde indirimi",
+        "title": "Ürünlerde yüzde indirimi",
         "description": "Seçili ürünlerde yüzde indirimi uygular"
       },
       "percentageOffOrder": {
@@ -2435,8 +2483,22 @@
       "details": "Detaylar",
       "campaign": "Kampanya"
     },
+    "list": {
+      "noRecords": {
+        "title": "Henüz promosyon yok",
+        "message": "Teklif indirimleri için promosyonlar oluşturun"
+      }
+    },
     "fields": {
       "type": "Tür",
+      "typeLabels": {
+        "percentageItems": "Ürünlerde yüzde indirimi",
+        "percentageShipping": "Kargoda yüzde indirimi",
+        "percentageOrder": "Siparişte yüzde indirimi",
+        "amountItems": "Ürünlerde tutar indirimi",
+        "amountShipping": "Kargoda tutar indirimi",
+        "amountOrder": "Siparişte tutar indirimi"
+      },
       "value_type": "Değer Türü",
       "value": "Değer",
       "campaign": "Kampanya",
@@ -2476,6 +2538,7 @@
       "allocationTooltip": "Her Biri, ürün başına miktar sınırını uygularken, Bir Kez sepetin tamamında miktar sınırını uygular",
       "taxInclusive": "Vergi Dahil",
       "usageLimit": "Kullanım Limiti",
+      "unlimited": "Sınırsız",
       "usage": "Kullanım"
     },
     "tooltips": {
@@ -2483,10 +2546,15 @@
     },
     "errors": {
       "requiredField": "Zorunlu alan",
-      "promotionTabError": "Devam etmeden önce Promosyon Sekmesindeki hataları düzeltin"
+      "promotionTabError": "Devam etmeden önce Promosyon Sekmesindeki hataları düzeltin",
+      "applyToQuantityRequired": "Promosyonun uygulanacağı ürün adedini belirleyin.",
+      "buyRulesMinQuantityRequired": "Satın alınması gereken minimum ürün adedini belirleyin.",
+      "maxQuantityLowerThanApplyTo": "Maksimum adet, promosyonun uygulandığı adetten büyük veya ona eşit olmalıdır."
     },
     "toasts": {
-      "promotionCreateSuccess": "Promosyon ({{code}}) başarıyla oluşturuldu."
+      "promotionCreateSuccess": "Promosyon ({{code}}) başarıyla oluşturuldu.",
+      "promotionUpdateSuccess": "Promosyon başarıyla güncellendi.",
+      "promotionDeleteSuccess": "Promosyon ({{code}}) başarıyla silindi."
     },
     "edit": {
       "title": "Promosyon Detaylarını Düzenle",
@@ -2550,6 +2618,10 @@
         "title": "Maksimum Miktar",
         "description": "Bu promosyonun uygulanacağı maksimum ürün miktarı."
       },
+      "usageLimit": {
+        "title": "Kullanım Limiti",
+        "description": "Bu promosyonun tüm siparişlerde kullanılabileceği maksimum sayı. Sınırsız kullanım için boş bırakın."
+      },
       "type": {
         "standard": {
           "title": "Standart",
@@ -2597,15 +2669,15 @@
         "label": "Durum",
         "draft": {
           "title": "Taslak",
-          "description": "Promosyon henüz tamamlanmamıştır."
+          "description": "Müşteriler kodu henüz kullanamaz"
         },
         "active": {
           "title": "Aktif",
-          "description": "Promosyon etkinleştirildi."
+          "description": "Müşteriler kodu kullanabilir"
         },
         "inactive": {
           "title": "Pasif",
-          "description": "Promosyon devre dışı bırakıldı."
+          "description": "Müşteriler kodu artık kullanamaz"
         }
       },
       "selectOperator": "Operatör Seç",
@@ -2630,7 +2702,11 @@
     "campaignSection": {
       "noRecordsTitle": "Bir kampanyanın parçası değil",
       "noRecordsMessage": "Bu promosyonu mevcut bir kampanyaya ekleyin",
-      "addToCampaign": "Kampanyaya Ekle"
+      "addToCampaign": "Kampanyaya Ekle",
+      "warnings": {
+        "promotionExpires": "Promosyon, kampanyanın süresi dolduğunda sona erer.",
+        "promotionMustBeActive": "Kampanyanın çalışması için promosyonun durumu Aktif olmalıdır."
+      }
     },
     "ruleAttributes": {
       "productCategory": "Ürün Kategorisi",
@@ -2653,9 +2729,9 @@
       "scheduled": "Planlanmış"
     },
     "delete": {
-      "title": "Emin misiniz?",
+      "title": "Kampanyayı sil",
       "description": "'{{name}}' kampanyasını silmek üzeresiniz. Bu işlem geri alınamaz.",
-      "successToast": "'{{name}}' kampanyası başarıyla oluşturuldu."
+      "successToast": "'{{name}}' kampanyası başarıyla silindi."
     },
     "edit": {
       "header": "Kampanyayı Düzenle",
@@ -2664,6 +2740,7 @@
     },
     "configuration": {
       "header": "Yapılandırma",
+      "expiryWarning": "Promosyon, kampanyanın süresi dolduğunda sona erer.",
       "edit": {
         "header": "Kampanya Yapılandırmasını Düzenle",
         "description": "Kampanyanın yapılandırmasını düzenleyin.",
@@ -2677,11 +2754,17 @@
       "header": "Kampanya Oluştur",
       "successToast": "'{{name}}' kampanyası başarıyla oluşturuldu."
     },
+    "validation": {
+      "name_required": "Lütfen bir ad girin",
+      "identifier_required": "Lütfen bir tanımlayıcı girin",
+      "currency_required": "Lütfen bir para birimi seçin"
+    },
     "fields": {
       "name": "Ad",
       "identifier": "Tanımlayıcı",
       "identifierTooltip": "Kampanya adından otomatik olarak oluşturulur. Yalnızca küçük harf, rakam ve tire içerir — bu alan doğrudan düzenlenemez.",
       "identifierPlaceholder": "yaz-indirimi",
+      "type": "Tür",
       "start_date": "Başlangıç tarihi",
       "end_date": "Bitiş tarihi",
       "total_spend": "Harcanan bütçe",
@@ -2697,10 +2780,12 @@
         "hint": "Kampanya için bir bütçe oluşturun.",
         "header": "Kampanya Bütçesi"
       },
+      "noLimitHint": "Herhangi bir limit belirlemezseniz kampanya bütçesi sınırsız olur.",
       "details": "Kampanya bütçesi",
       "fields": {
         "type": "Tür",
         "currency": "Para birimi",
+        "selectCurrency": "Para birimi seçin",
         "limit": "Limit",
         "used": "Kullanıldı",
         "budgetAttribute": "Şuna göre kullanımı sınırla",
@@ -2718,6 +2803,10 @@
           "title": "Kullanım",
           "description": "Promosyonun kaç kez kullanılabileceğine bir sınır koyun."
         },
+        "use_by_attribute": {
+          "title": "Kullanım",
+          "description": "Promosyonun kaç kez kullanılabileceğine bir sınır koyun."
+        },
         "useByAttribute": {
           "title": "Özelliğe göre kullanım (müşteri id'si, e-posta vb.)",
           "titleCustomerId": "Müşteri başına kullanım",
@@ -2730,7 +2819,8 @@
       },
       "attribute": {
         "customer_id": "müşteri",
-        "customer_email": "e-posta"
+        "customer_email": "e-posta",
+        "promotion_code": "promosyon kodu"
       }
     },
     "promotions": {
@@ -2742,14 +2832,19 @@
       "alreadyAddedDiffCampaign": "Bu promosyon zaten farklı bir kampanyaya eklenmiş ({{name}}).",
       "currencyMismatch": "Promosyon ve kampanyanın para birimi uyuşmuyor",
       "toast": {
-        "success": "{{count}} promosyon başarıyla kampanyaya eklendi"
+        "added_one": "Promosyon kampanyaya başarıyla eklendi.",
+        "added_other": "Promosyonlar kampanyaya başarıyla eklendi.",
+        "removed_one": "Promosyon kampanyadan başarıyla kaldırıldı.",
+        "removed_other": "Promosyonlar kampanyadan başarıyla kaldırıldı."
       },
       "add": {
+        "tip": "Yalnızca başka bir kampanyada bulunmayan promosyonları ekleyebilirsiniz.",
         "list": {
           "noRecordsMessage": "Önce bir promosyon oluşturun."
         }
       },
       "list": {
+        "noRecordsTitle": "Henüz promosyon yok",
         "noRecordsMessage": "Kampanyada promosyon bulunmamaktadır."
       }
     },
@@ -2776,6 +2871,10 @@
         "list": {
           "noRecordsMessage": "Önce bir ürün oluşturun."
         }
+      },
+      "validation": {
+        "title": "Lütfen bir başlık girin",
+        "description": "Lütfen bir açıklama girin"
       }
     },
     "edit": {
@@ -2790,11 +2889,25 @@
         "successToast": "Fiyat listesi yapılandırması başarıyla güncellendi."
       }
     },
+    "customerAvailability": {
+      "header": "Müşteri uygunluğu",
+      "add": "Müşteri grupları ekle",
+      "list": {
+        "noRecordsTitle": "Müşteri grubu yok",
+        "noRecordsMessage": "Bu fiyat listesinin hangi müşterilere uygulanacağını sınırlamak için müşteri grupları ekleyin."
+      },
+      "edit": {
+        "header": "Müşteri uygunluğu",
+        "description": "Fiyat listesinin hangi müşteri gruplarına uygulanacağını seçin.",
+        "successToast": "Fiyat listesi başarıyla güncellendi."
+      }
+    },
     "products": {
       "header": "Ürünler",
       "actions": {
         "addProducts": "Ürünleri ekle",
-        "editPrices": "Fiyatları düzenle"
+        "editPrices": "Fiyatları düzenle",
+        "editPricesDisabled": "Fiyatları düzenlemeden önce ürün ekleyin"
       },
       "delete": {
         "confirmation_one": "Fiyat listesindeki {{count}} ürün için fiyatları silmek üzeresiniz. Bu işlem geri alınamaz.",
@@ -2828,6 +2941,10 @@
           "draft": "Taslak",
           "expired": "Süresi dolmuş",
           "scheduled": "Planlanmış"
+        },
+        "descriptions": {
+          "draft": "Müşteriler fiyat listesini göremeyecek",
+          "active": "Müşteriler fiyat listesini görebilecek"
         }
       },
       "type": {
@@ -2845,11 +2962,11 @@
         }
       },
       "startsAt": {
-        "label": "Fiyat listesi bir başlangıç tarihine sahip mi?",
+        "label": "Başlangıç tarihi",
         "hint": "Fiyat listesinin gelecekte aktif olmasını planlayın."
       },
       "endsAt": {
-        "label": "Fiyat listesi bir bitiş tarihine sahip mi?",
+        "label": "Bitiş tarihi",
         "hint": "Fiyat listesinin gelecekte devre dışı kalmasını planlayın."
       },
       "customerAvailability": {
@@ -2858,6 +2975,13 @@
         "hint": "Fiyat listesinin hangi müşteri gruplarına uygulanacağını seçin.",
         "placeholder": "Müşteri gruplarını arayın",
         "attribute": "Müşteri grupları"
+      },
+      "offerVariant": "Teklif/Varyant"
+    },
+    "list": {
+      "noRecords": {
+        "title": "Henüz fiyat listesi yok",
+        "message": "İndirimler ve fiyat geçersiz kılmaları için fiyat listeleri oluşturun"
       }
     }
   },
@@ -3264,7 +3388,21 @@
   "reservations": {
     "domain": "Rezervasyonlar",
     "subtitle": "Envanter kalemlerinin ayrılan miktarını yönetin.",
-    "deleteWarning": "Bir rezervasyonu silmek üzeresiniz. Bu işlem geri alınamaz."
+    "deleteWarning": "Bir rezervasyonu silmek üzeresiniz. Bu işlem geri alınamaz.",
+    "list": {
+      "noRecordsTitle": "Henüz rezervasyon yok",
+      "noRecordsMessage": "Envanter kalemlerinin rezerve edilen miktarını yönetmek için rezervasyonlar oluşturun"
+    },
+    "delete": {
+      "title": "Rezervasyonu sil",
+      "description": "Bir rezervasyonu silmek üzeresiniz. Bu işlem geri alınamaz.",
+      "lockedTitle": "Rezervasyonu sil",
+      "lockedDescription": "Bu rezervasyon, karşılanmamış bir siparişe bağlı olduğu için silinemez."
+    },
+    "edit": {
+      "lockedTitle": "Rezervasyonu düzenle",
+      "lockedDescription": "Bu rezervasyon, karşılanmamış bir siparişe bağlı olduğu için düzenlenemez."
+    }
   },
   "salesChannels": {
     "domain": "Satış Kanalları",
@@ -3617,8 +3755,8 @@
     "customTitle": "Özel başlık",
     "manageInventory": "Envanteri yönet",
     "inventoryKit": "Envanter seti var",
-    "inventoryItems": "Envanter öğeleri",
-    "inventoryItem": "Envanter öğesi",
+    "inventoryItems": "Envanter kalemleri",
+    "inventoryItem": "Envanter kalemi",
     "requiredQuantity": "Gerekli miktar",
     "description": "Açıklama",
     "email": "E-posta",
@@ -3834,6 +3972,122 @@
       "text_area": "Metin Alanı"
     }
   },
+  "permissions": {
+    "noAccess": "Bunu görüntüleme yetkiniz yok.",
+    "accessDenied": {
+      "title": "Erişim Reddedildi",
+      "description": "Bu sayfaya erişim yetkiniz yok.",
+      "requiredPermission": "Gerekli yetki: {{permission}}",
+      "action": "Bu işlemi gerçekleştirme yetkiniz yok."
+    },
+    "requiredPermissions": {
+      "title": "Gerekli yetkiler",
+      "none": "Bu görünümde tanımlanmış yetki yok.",
+      "anyOf": "Herhangi biri",
+      "allOf": "Tümü",
+      "source": "Kaynak: {{source}}"
+    },
+    "resources": {
+      "api_key": "API Anahtarı",
+      "campaign": "Kampanya",
+      "commission_line": "Komisyon Satırı",
+      "commission_rate": "Komisyon Oranı",
+      "commission_rule": "Komisyon Kuralı",
+      "currency": "Para Birimi",
+      "customer": "Müşteri",
+      "customer_address": "Müşteri Adresi",
+      "customer_group": "Müşteri Grubu",
+      "file": "Dosya",
+      "fulfillment": "Tamamlama",
+      "fulfillment_provider": "Tamamlama Sağlayıcısı",
+      "fulfillment_set": "Tamamlama Seti",
+      "inventory_item": "Envanter Kalemi",
+      "inventory_level": "Envanter Seviyesi",
+      "invite": "Davet",
+      "member_invite": "Üye Daveti",
+      "notification": "Bildirim",
+      "offer": "Teklif",
+      "order": "Sipariş",
+      "order_change": "Sipariş Değişikliği",
+      "order_claim": "Sipariş Talebi",
+      "order_claim_item": "Sipariş Talebi Kalemi",
+      "order_exchange": "Sipariş Değişimi",
+      "order_group": "Sipariş Grubu",
+      "order_item": "Sipariş Kalemi",
+      "payment": "Ödeme",
+      "payment_collection": "Ödeme Tahsilatı",
+      "payment_method": "Ödeme Yöntemi",
+      "payment_session": "Ödeme Oturumu",
+      "payout": "Satıcı Ödemesi",
+      "payout_account": "Satıcı Ödeme Hesabı",
+      "price": "Fiyat",
+      "price_list": "Fiyat Listesi",
+      "price_preference": "Fiyat Tercihi",
+      "product": "Ürün",
+      "product_attribute": "Ürün Özniteliği",
+      "product_attribute_value": "Ürün Özniteliği Değeri",
+      "product_category": "Ürün Kategorisi",
+      "product_change": "Ürün Değişikliği",
+      "product_collection": "Ürün Koleksiyonu",
+      "product_option": "Ürün Seçeneği",
+      "product_option_value": "Ürün Seçeneği Değeri",
+      "product_tag": "Ürün Etiketi",
+      "product_type": "Ürün Türü",
+      "product_variant": "Ürün Varyantı",
+      "promotion": "Promosyon",
+      "rbac_policy": "Politika",
+      "rbac_role": "Rol",
+      "refund_reason": "Geri Ödeme Nedeni",
+      "region": "Bölge",
+      "reservation_item": "Rezervasyon Kalemi",
+      "return": "İade",
+      "return_reason": "İade Nedeni",
+      "review": "Değerlendirme",
+      "sales_channel": "Satış Kanalı",
+      "seller": "Satıcı",
+      "seller_member": "Satıcı Üyesi",
+      "service_zone": "Hizmet Bölgesi",
+      "shipping_option": "Kargo Seçeneği",
+      "shipping_option_type": "Kargo Seçeneği Türü",
+      "shipping_profile": "Kargo Profili",
+      "stock_location": "Stok Konumu",
+      "store": "Mağaza",
+      "store_locale": "Mağaza Dili",
+      "tax_provider": "Vergi Sağlayıcısı",
+      "tax_rate": "Vergi Oranı",
+      "tax_region": "Vergi Bölgesi",
+      "translation": "Çeviri",
+      "translation_setting": "Çeviri Ayarı",
+      "user": "Kullanıcı",
+      "workflow_execution": "İş Akışı Yürütmesi"
+    },
+    "actions": {
+      "read": "Görüntüle",
+      "create": "Oluştur",
+      "update": "Güncelle",
+      "delete": "Sil"
+    }
+  },
+  "richTextEditor": {
+    "bold": "Kalın",
+    "italic": "İtalik",
+    "underline": "Altı çizili",
+    "strike": "Üstü çizili",
+    "paragraph": "Paragraf",
+    "heading2": "Başlık",
+    "heading3": "Alt başlık",
+    "bulletList": "Madde işaretli liste",
+    "orderedList": "Numaralı liste",
+    "blockquote": "Alıntı",
+    "link": "Bağlantı",
+    "linkPlaceholder": "https://example.com",
+    "removeLink": "Bağlantıyı kaldır",
+    "image": "Görsel ekle",
+    "uploadingImage": "Görsel yükleniyor...",
+    "imageUploadFailed": "Görsel yüklenemedi",
+    "undo": "Geri Al",
+    "redo": "Yinele"
+  },
   "seller": {
     "domain": "Mağaza"
   },
@@ -3861,10 +4115,10 @@
       "offerVariant": "Teklif Varyantı",
       "associatedProduct": "İlişkili ürün",
       "shippingConfiguration": "Kargo yapılandırması",
-      "inventoryItems": "Envanter öğeleri",
+      "inventoryItems": "Envanter kalemleri",
       "manageKit": "Envanter kitini yönet",
       "noInventoryItems": "Bağlı envanter kalemi yok. Bir tane eklemek için envanter çekmecesini açın.",
-      "goToInventoryItem": "Envanter öğesine git"
+      "goToInventoryItem": "Envanter kalemine git"
     },
     "edit": {
       "header": "Teklifi düzenle",
@@ -3877,6 +4131,10 @@
       },
       "shipping": {
         "successToast": "Kargo yapılandırması başarıyla güncellendi."
+      },
+      "inventory": {
+        "manageInventoryHint": "Etkinleştirildiğinde, siparişler ve iadeler oluşturulduğunda envanter miktarını sizin için değiştireceğiz.",
+        "allowBackordersHint": "Etkinleştirildiğinde, müşteriler mevcut miktar olmasa bile varyantı satın alabilir."
       }
     },
     "pricing": {
@@ -3886,10 +4144,27 @@
       "empty": "Yapılandırılmış fiyat yok"
     },
     "inventory": {
-      "header": "Envanter öğelerini yönet",
+      "header": "Envanter kalemlerini yönet",
       "description": "Ürün başına gerekli miktarı ekleyin, çıkarın veya değiştirin.",
       "successToast": "Stok seviyeleri başarıyla güncellendi.",
-      "empty": "Bağlı envanter kalemi yok"
+      "empty": "Bağlı envanter kalemi yok",
+      "itemsHeading": "Envanter kalemleri",
+      "kitHeading": "Envanter kiti",
+      "defineHint": "Bu varyant için gereken envanter kalemlerini tanımlayın. Bir envanter kiti oluşturmak için birden fazla kalem ekleyin.",
+      "itemPlaceholder": "Envanter kalemi seçin",
+      "quantityPlaceholder": "Gereken miktarı girin",
+      "manageItemsAction": "Envanter kalemlerini yönet",
+      "manageItemsButton": "Envanter kalemlerini yönet",
+      "notManagedTitle": "Envanter yönetilmiyor",
+      "notManagedDesc": "Varyantın envanterini takip etmek için \"Envanteri yönet\" seçeneğini açın.",
+      "editVariant": "Varyantı düzenle",
+      "noItemsTitle": "Henüz envanter kalemi yok",
+      "noItemsDesc": "Bu varyant için gereken envanter kalemlerini yönetin",
+      "itemsManageSuccessToast": "Envanter kalemleri başarıyla güncellendi.",
+      "validation": {
+        "itemId": "Lütfen bir envanter kalemi seçin",
+        "quantity": "Lütfen gereken miktarı girin"
+      }
     },
     "delete": {
       "description": "{{sku}} teklifini silmek üzeresiniz. Bu işlem geri alınamaz.",
@@ -3930,7 +4205,10 @@
       "notEnabled": "Etkin değil",
       "enabled": "Etkin",
       "variantsCount_one": "{{count}} varyant",
-      "variantsCount_other": "{{count}} varyant"
+      "variantsCount_other": "{{count}} varyant",
+      "manageInventory": "Envanteri yönet",
+      "allowBackorders": "Ön siparişe izin ver",
+      "store": "Mağaza"
     },
     "status": {
       "published": "Yayınlandı",
@@ -3959,8 +4237,8 @@
       "duplicateInventoryItem": "Bu envanter kalemi zaten eklenmiş.",
       "selectAtLeastOneVariant": "Devam etmek için en az bir varyant seçin.",
       "noPublishableRows": "Yayınlamak için bir SKU ekleyin, bir stok lokasyonu etkinleştirin veya bir fiyat belirleyin.",
-      "priceRequired": "Enter a price to publish this row, or clear its stock and shipping profile to skip it.",
-      "noPricedRows": "Enter a price for at least one variant. Variants without a price are skipped.",
+      "priceRequired": "Bu satırı yayınlamak için bir fiyat girin ya da atlamak için stokunu ve kargo profilini temizleyin.",
+      "noPricedRows": "En az bir varyant için fiyat girin. Fiyatı olmayan varyantlar atlanır.",
       "duplicateBatchEntry": "Bir envanter kalemi yalnızca bir grupta yer alabilir (oluştur, güncelle veya sil)."
     }
   },
@@ -3985,6 +4263,51 @@
       "paid": "Ödendi",
       "failed": "Başarısız",
       "canceled": "İptal edildi"
+    }
+  },
+  "reviews": {
+    "domain": "Değerlendirmeler",
+    "status": {
+      "pending": "Beklemede",
+      "published": "Yayınlandı",
+      "rejected": "Reddedildi"
+    },
+    "fields": {
+      "rating": "Puan",
+      "content": "İçerik",
+      "response": "Yanıt"
+    },
+    "filters": {
+      "stars_one": "{{count}} yıldız",
+      "stars_other": "{{count}} yıldız"
+    },
+    "list": {
+      "columns": {
+        "reviewId": "Değerlendirme ID",
+        "rating": "Puan",
+        "content": "İçerik",
+        "customer": "Müşteri",
+        "date": "Tarih",
+        "status": "Durum",
+        "response": "Yanıt"
+      },
+      "noRecordsTitle": "Henüz değerlendirme yok",
+      "noRecordsMessage": "Müşteriler değerlendirme gönderdiğinde burada görünecek",
+      "noResultsTitle": "Sonuç yok",
+      "noResultsMessage": "Filtreleri veya arama sorgusunu değiştirmeyi deneyin"
+    },
+    "detail": {
+      "customer": "Müşteri",
+      "order": "Sipariş"
+    },
+    "respond": {
+      "action": "Yanıtla",
+      "header": "Değerlendirmeyi yanıtla",
+      "label": "Yanıt",
+      "confirmTitle": "Değerlendirmeyi yanıtla",
+      "confirmDescription": "Yanıtınız mağaza vitrininde yayınlanacak ve müşteriler tarafından görülebilecek. Kaydedildikten sonra düzenlenemez veya silinemez.",
+      "successToast": "Yanıt başarıyla gönderildi.",
+      "validation": "Lütfen bir yanıt yazın"
     }
   },
   "translations": {
@@ -4332,7 +4655,7 @@
       },
       "updateView": {
         "title": "Görünümü güncelle",
-        "description": "\"{{name}}\" öğesini güncellemek istediğinizden emin misiniz?",
+        "description": "\"{{name}}\" görünümünü güncellemek istediğinizden emin misiniz?",
         "confirmText": "Güncelle",
         "cancelText": "İptal"
       },
