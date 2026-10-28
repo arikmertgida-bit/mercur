@@ -22,7 +22,7 @@
     "status": {
       "pending": "In behandeling",
       "resolved": "Opgelost",
-      "dismissed": "Afgewezen"
+      "dismissed": "Genegeerd"
     },
     "reasons": {
       "inaccurate_product_details": "Onjuiste productgegevens",
@@ -37,15 +37,15 @@
     },
     "actions": {
       "resolve": "Markeren als opgelost",
-      "dismiss": "Afwijzen"
+      "dismiss": "Negeren"
     },
     "resolvePrompt": {
       "title": "Melding markeren als opgelost?",
       "description": "Deze melding wordt gemarkeerd als opgelost en verwijderd uit de wachtrij."
     },
     "dismissPrompt": {
-      "title": "Deze melding afwijzen?",
-      "description": "Deze melding wordt gemarkeerd als afgewezen en verwijderd uit de wachtrij."
+      "title": "Deze melding negeren?",
+      "description": "Deze melding wordt gemarkeerd als genegeerd en verwijderd uit de wachtrij."
     },
     "deletePrompt": {
       "title": "Deze melding verwijderen?",
@@ -89,14 +89,14 @@
     },
     "actions": {
       "remove": "Afbeelding verwijderen",
-      "dismiss": "Melding afwijzen"
+      "dismiss": "Melding negeren"
     },
     "removePrompt": {
       "title": "Deze afbeelding verwijderen?",
       "description": "De afbeelding wordt permanent uit de recensie verwijderd. Deze actie kan niet ongedaan worden gemaakt."
     },
     "dismissPrompt": {
-      "title": "Deze melding afwijzen?",
+      "title": "Deze melding negeren?",
       "description": "De afbeelding blijft gepubliceerd en de melding wordt gemarkeerd als opgelost."
     },
     "resolveSuccess": "Melding opgelost",
@@ -107,7 +107,7 @@
     "yesterday": "Gisteren",
     "newMessage": "Nieuw bericht",
     "sentImage": "Afbeelding verzonden",
-    "newMessageBody": "Je hebt een nieuw bericht",
+    "newMessageBody": "U hebt een nieuw bericht",
     "customer": "Klant",
     "seller": "Verkoper",
     "searchConversations": "Gesprekken zoeken...",
@@ -203,7 +203,7 @@
     },
     "fields": {
       "name": "Naam",
-      "handle": "Handle",
+      "handle": "Slug",
       "description": "Beschrijving",
       "active": "Actief",
       "internal": "Intern",
@@ -229,9 +229,9 @@
       "reviewer": "Beoordelaar"
     },
     "reviews": {
-      "navLabel": "Beoordelingen",
-      "heading": "Meldingen van beoordelingen",
-      "noRecords": "Geen meldingen van beoordelingen gevonden",
+      "navLabel": "Recensies",
+      "heading": "Meldingen van recensies",
+      "noRecords": "Geen meldingen van recensies gevonden",
       "columns": {
         "seller": "Verkoper",
         "reason": "Reden",
@@ -245,24 +245,24 @@
       },
       "detail": {
         "reportHeading": "Melding",
-        "reviewHeading": "Beoordeling",
+        "reviewHeading": "Recensie",
         "customerNote": "Klantnotitie",
         "resolveHeading": "Afhandelen",
         "rejectAction": "Afwijzen",
         "defaultRejectNote": "Beoordeeld, niet verwijderd. Als u het niet eens bent met onze beslissing, kunt u opnieuw een melding indienen.",
-        "defaultDeleteNote": "Deze beoordeling is beoordeeld en verwijderd door het beheerteam.",
+        "defaultDeleteNote": "Deze recensie is beoordeeld en verwijderd door het beheerteam.",
         "resolveSuccess": "Melding afgehandeld.",
         "resolveError": "Melding kon niet worden afgehandeld.",
         "deletePrompt": {
-          "title": "Beoordeling verwijderen",
-          "description": "Weet u zeker dat u deze beoordeling wilt verwijderen? Deze actie kan niet ongedaan worden gemaakt."
+          "title": "Recensie verwijderen",
+          "description": "Weet u zeker dat u deze recensie wilt verwijderen? Deze actie kan niet ongedaan worden gemaakt."
         }
       }
     }
   },
   "reviews": {
-    "domain": "Beoordelingen",
-    "noRecords": "Geen beoordelingen gevonden",
+    "domain": "Recensies",
+    "noRecords": "Geen recensies gevonden",
     "columns": {
       "rating": "Beoordeling",
       "reference": "Referentie",

@@ -18,19 +18,19 @@
     "prompts": {
       "updateDefault": {
         "title": "Standaardweergave bijwerken",
-        "description": "Dit werkt de standaardweergave voor alle gebruikers bij. Weet je het zeker?",
+        "description": "Dit werkt de standaardweergave voor alle gebruikers bij. Weet u het zeker?",
         "confirmText": "Bijwerken voor iedereen",
         "cancelText": "Annuleren"
       },
       "updateView": {
         "title": "Weergave bijwerken",
-        "description": "Weet je zeker dat je \"{{name}}\" wilt bijwerken?",
+        "description": "Weet u zeker dat u \"{{name}}\" wilt bijwerken?",
         "confirmText": "Bijwerken",
         "cancelText": "Annuleren"
       },
       "saveAsDefault": {
         "title": "Opslaan als systeemstandaard",
-        "description": "Dit slaat de huidige configuratie op als systeemstandaard. Alle gebruikers zien deze configuratie standaard, tenzij ze hun eigen persoonlijke weergaven hebben. Weet je het zeker?",
+        "description": "Dit slaat de huidige configuratie op als systeemstandaard. Alle gebruikers zien deze configuratie standaard, tenzij ze hun eigen persoonlijke weergaven hebben. Weet u het zeker?",
         "confirmText": "Opslaan als standaard",
         "cancelText": "Annuleren"
       },
@@ -65,7 +65,7 @@
     },
     "delete": {
       "title": "Commissieregel verwijderen",
-      "description": "Je staat op het punt commissieregel {{name}} te verwijderen. Deze actie kan niet ongedaan worden gemaakt.",
+      "description": "U staat op het punt commissieregel {{name}} te verwijderen. Deze actie kan niet ongedaan worden gemaakt.",
       "successToast": "Commissieregel is succesvol verwijderd."
     },
     "fields": {
@@ -120,7 +120,7 @@
       "title": "Commissieregels",
       "columns": {
         "rule": "Regel",
-        "scope": "Bereik",
+        "scope": "Toepassingsgebied",
         "type": "Type",
         "value": "Waarde",
         "status": "Status"
@@ -176,7 +176,7 @@
     "active": "Actief",
     "revoked": "Ingetrokken",
     "new": "Nieuw",
-    "modified": "Aangepast",
+    "modified": "Gewijzigd",
     "added": "Toegevoegd",
     "removed": "Verwijderd",
     "admin": "Beheerder",
@@ -188,8 +188,8 @@
     "countOfTotalSelected": "{{count}} van {{total}} geselecteerd",
     "plusCount": "+ {{count}}",
     "plusCountMore": "+ {{count}} meer",
-    "areYouSure": "Weet je het zeker?",
-    "areYouSureDescription": "Je staat op het punt om de {{entity}} {{title}} te verwijderen. Deze actie kan niet ongedaan worden gemaakt.",
+    "areYouSure": "Weet u het zeker?",
+    "areYouSureDescription": "U staat op het punt de {{entity}} {{title}} te verwijderen. Deze actie kan niet ongedaan worden gemaakt.",
     "noRecordsFound": "Geen gegevens gevonden",
     "typeToConfirm": "Typ {val} om te bevestigen:",
     "noResultsTitle": "Geen resultaten",
@@ -198,8 +198,8 @@
     "noSearchResultsFor": "Geen zoekresultaten voor <0>'{{query}}'</0>",
     "noRecordsTitle": "Geen gegevens",
     "noRecordsMessage": "Er zijn geen gegevens om weer te geven",
-    "unsavedChangesTitle": "Weet je zeker dat je dit formulier wilt verlaten?",
-    "unsavedChangesDescription": "Je hebt niet-opgeslagen wijzigingen die verloren gaan als je dit formulier verlaat.",
+    "unsavedChangesTitle": "Weet u zeker dat u dit formulier wilt verlaten?",
+    "unsavedChangesDescription": "U hebt niet-opgeslagen wijzigingen die verloren gaan als u dit formulier verlaat.",
     "includesTaxTooltip": "Prijzen in deze kolom zijn inclusief belasting.",
     "excludesTaxTooltip": "Prijzen in deze kolom zijn exclusief belasting.",
     "noMoreData": "Geen verdere gegevens",
@@ -272,6 +272,7 @@
     "back": "Terug",
     "close": "Sluiten",
     "showMore": "Meer tonen",
+    "showLess": "Minder tonen",
     "continue": "Doorgaan",
     "continueWithEmail": "Doorgaan met e-mail",
     "idCopiedToClipboard": "ID gekopieerd naar klembord",
@@ -302,14 +303,14 @@
     "search": {
       "label": "Zoeken",
       "title": "Zoeken",
-      "description": "Doorzoek je hele winkel, inclusief bestellingen, producten, klanten en meer.",
+      "description": "Doorzoek uw hele winkel, inclusief bestellingen, producten, klanten en meer.",
       "allAreas": "Alle gebieden",
       "navigation": "Navigatie",
       "openResult": "Resultaat openen",
       "showMore": "Meer tonen",
       "placeholder": "Spring naar of vind iets...",
       "noResultsTitle": "Geen resultaten gevonden",
-      "noResultsMessage": "We konden niets vinden dat overeenkomt met je zoekopdracht.",
+      "noResultsMessage": "We konden niets vinden dat overeenkomt met uw zoekopdracht.",
       "emptySearchTitle": "Typ om te zoeken",
       "emptySearchMessage": "Voer een trefwoord of zin in om te verkennen.",
       "loadMore": "Laad {{count}} meer",
@@ -589,8 +590,8 @@
         "requiredStore": "Selecteer ten minste één winkel",
         "requiredTitle": "Voer een titel in",
         "requiredCategory": "Selecteer een categorie",
-        "handleInvalidFormat": "De handle mag alleen kleine letters, cijfers en koppeltekens bevatten",
-        "handleMustContainLetter": "De handle moet ten minste één letter bevatten"
+        "handleInvalidFormat": "De slug mag alleen kleine letters, cijfers en koppeltekens bevatten",
+        "handleMustContainLetter": "De slug moet ten minste één letter bevatten"
       },
       "inventory": {
         "heading": "Voorraadsets",
@@ -623,7 +624,7 @@
       "successToast": "Product {{title}} is succesvol aangemaakt.",
       "attributes": {
         "header": "Kenmerken",
-        "description": "Beheer attributen en variaties voor je product, bijv. kleur, maat, merk enz.\nKies uit attributen gedefinieerd door de marketplace of maak je eigen attribuut.",
+        "description": "Beheer attributen en variaties voor uw product, bijv. kleur, maat, merk enz.\nKies uit attributen die door de marketplace zijn gedefinieerd of maak uw eigen attribuut.",
         "addExisting": "Bestaande toevoegen",
         "createNew": "Nieuwe aanmaken",
         "title": "Titel",
@@ -635,13 +636,13 @@
         "selectValuePlaceholder": "Waarde selecteren",
         "requiredAttributes": "Verplichte attributen",
         "requiredAttributesHint": "Deze attributen zijn verplicht gesteld door de marketplace. Selecteer ze voordat u doorgaat.",
-        "useForVariants": "Gebruiken voor variaties",
-        "useForVariantsDescription": "Indien aangevinkt, kun je varianten aanmaken met dit attribuut. Zo niet, dan wordt het attribuut alleen ter informatie gebruikt.",
+        "useForVariants": "Gebruiken voor varianten",
+        "useForVariantsDescription": "Indien aangevinkt, kunt u varianten aanmaken met dit attribuut. Zo niet, dan wordt het attribuut alleen ter informatie gebruikt.",
         "tip": "Tip",
-        "variantAxisTip": "Dit attribuut zal varianten aanmaken. Je kunt ze in de volgende stap definiëren.",
-        "editVariantAxisTip": "Je kunt varianten aanmaken met dit attribuut.",
+        "variantAxisTip": "Dit attribuut maakt varianten aan. U kunt ze in de volgende stap definiëren.",
+        "editVariantAxisTip": "U kunt varianten aanmaken met dit attribuut.",
         "warning": "Waarschuwing",
-        "editWarning": "Wijzigingen aan dit attribuut kunnen bestaande productvarianten of details beïnvloeden. Controleer je varianten en productdetails na het opslaan.",
+        "editWarning": "Wijzigingen aan dit attribuut kunnen bestaande productvarianten of details beïnvloeden. Controleer uw varianten en productdetails na het opslaan.",
         "errors": {
           "titleRequired": "Voer een titel in",
           "valuesRequired": "Voer ten minste één waarde in"
@@ -749,7 +750,7 @@
         "placeholder": "Warm en gezellig"
       },
       "handle": {
-        "label": "Handle",
+        "label": "Slug",
         "tooltip": "Wordt automatisch gegenereerd op basis van de producttitel. Alleen kleine letters, cijfers en koppeltekens — dit veld kan niet rechtstreeks worden bewerkt.",
         "placeholder": "winterjas"
       },
@@ -814,10 +815,10 @@
         "hint": "Varianten die niet zijn aangevinkt, worden niet aangemaakt. Deze rangschikking beïnvloedt hoe de varianten in uw winkel worden gerangschikt."
       },
       "mid_code": {
-        "label": "Mid code"
+        "label": "MID-code"
       },
       "hs_code": {
-        "label": "HS code"
+        "label": "HS-code"
       },
       "stores": {
         "label": "Winkels"
@@ -934,8 +935,8 @@
       "successToast_other": "{{count}} producten succesvol bijgewerkt."
     },
     "bulkDelete": {
-      "warning_one": "Je staat op het punt {{count}} product te verwijderen. Deze actie kan niet ongedaan worden gemaakt.",
-      "warning_other": "Je staat op het punt {{count}} producten te verwijderen. Deze actie kan niet ongedaan worden gemaakt.",
+      "warning_one": "U staat op het punt {{count}} product te verwijderen. Deze actie kan niet ongedaan worden gemaakt.",
+      "warning_other": "U staat op het punt {{count}} producten te verwijderen. Deze actie kan niet ongedaan worden gemaakt.",
       "successToast_one": "{{count}} product succesvol verwijderd.",
       "successToast_other": "{{count}} producten succesvol verwijderd."
     },
@@ -945,14 +946,15 @@
     "attributeProductInformationDescription": "Attributen gebruikt ter informatie",
     "attributeRequiredByMarketplace": "Dit attribuut is verplicht gesteld door de marketplace.",
     "attributeRequiredDeleteDisabledTooltip": "Verplichte attributen kunnen niet worden verwijderd.",
+    "missingRequiredAttributesHint": "Vul de vereiste gegevens in",
     "addAttribute": "Attribuut toevoegen",
-    "deleteAttributeWarning": "Weet je zeker dat je het attribuut \"{{title}}\" wilt verwijderen? Deze actie kan niet ongedaan worden gemaakt.",
+    "deleteAttributeWarning": "Weet u zeker dat u het attribuut \"{{title}}\" wilt verwijderen? Deze actie kan niet ongedaan worden gemaakt.",
     "editAttribute": "Attribuut bewerken",
     "editAttributeHint": "Werk de geselecteerde waarden voor dit attribuut op het product bij.",
     "request": {
       "panel": {
         "title": "Productaanvraag",
-        "description": "{{store}} heeft een productaanvraag ingediend. Bekijk de details, breng eventuele wijzigingen aan en kies of je het product wilt bevestigen en publiceren, de update wilt aanvragen of de aanvraag wilt afwijzen."
+        "description": "{{store}} heeft een productaanvraag ingediend. Bekijk de details, breng eventuele wijzigingen aan en kies of u het product wilt bevestigen en publiceren, een update wilt aanvragen of de aanvraag wilt afwijzen."
       },
       "fallbackStore": "De winkel",
       "actions": {
@@ -961,9 +963,9 @@
       },
       "confirmPrompt": {
         "title": "Aanvraag bevestigen",
-        "description": "Je staat op het punt deze productupdate-aanvraag te bevestigen. Zodra bevestigd, verschijnen alle aanbiedingen voor dit product op de winkelwebsite. Alleen aanbiedingen met ingestelde voorraadniveaus en prijzen zijn zichtbaar.",
+        "description": "U staat op het punt deze productupdate-aanvraag te bevestigen. Zodra deze is bevestigd, verschijnt het product op de winkelwebsite. Alleen varianten met ingestelde voorraadniveaus en prijzen zijn zichtbaar.",
         "noteLabel": "Notitie voor winkel",
-        "notePlaceholder": "Geef aan welke wijzigingen je hebt aangebracht of aanvullende verzoeken"
+        "notePlaceholder": "Geef aan welke wijzigingen u hebt aangebracht of vermeld aanvullende verzoeken"
       },
       "requestUpdatePrompt": {
         "title": "Update aanvragen",
@@ -974,9 +976,9 @@
       },
       "rejectPrompt": {
         "title": "Aanvraag afwijzen",
-        "description": "Je staat op het punt deze productaanvraag af te wijzen.",
+        "description": "U staat op het punt deze productaanvraag af te wijzen.",
         "noteLabel": "Notitie voor winkel",
-        "notePlaceholder": "Leg uit waarom je de aanvraag afwijst",
+        "notePlaceholder": "Leg uit waarom u de aanvraag afwijst",
         "confirm": "Afwijzen"
       },
       "toast": {
@@ -988,7 +990,7 @@
     "edits": {
       "panel": {
         "title": "Productupdate-aanvraag",
-        "description": "{{store}} heeft een productupdate-aanvraag ingediend. Bekijk de aangevraagde wijzigingen en kies of je de updates wilt bevestigen en publiceren of deze aanvraag wilt afwijzen.",
+        "description": "{{store}} heeft een productupdate-aanvraag ingediend. Bekijk de aangevraagde wijzigingen en kies of u de updates wilt bevestigen en publiceren of deze aanvraag wilt afwijzen.",
         "deleteRequested": "Verwijdering van product wacht op goedkeuring."
       },
       "actions": {
@@ -996,15 +998,15 @@
       },
       "confirmPrompt": {
         "title": "Aanvraag bevestigen",
-        "description": "Je staat op het punt deze productupdate-aanvraag te bevestigen. Zodra bevestigd, wordt het product bijgewerkt op de winkelwebsite.",
+        "description": "U staat op het punt deze productupdate-aanvraag te bevestigen. Zodra deze is bevestigd, wordt het product bijgewerkt op de winkelwebsite.",
         "noteLabel": "Notitie voor winkel",
-        "notePlaceholder": "Geef aan welke wijzigingen je hebt aangebracht of aanvullende verzoeken"
+        "notePlaceholder": "Geef aan welke wijzigingen u hebt aangebracht of vermeld aanvullende verzoeken"
       },
       "rejectPrompt": {
         "title": "Aanvraag afwijzen",
-        "description": "Je staat op het punt deze productaanvraag af te wijzen.",
+        "description": "U staat op het punt deze productaanvraag af te wijzen.",
         "noteLabel": "Notitie voor winkel",
-        "notePlaceholder": "Leg uit waarom je de aanvraag afwijst of stel wijzigingen voor",
+        "notePlaceholder": "Leg uit waarom u de aanvraag afwijst of stel wijzigingen voor",
         "confirm": "Afwijzen"
       },
       "toast": {
@@ -1020,7 +1022,7 @@
       "status": "Status",
       "thumbnail": "Miniatuur",
       "title": "Titel",
-      "handle": "Handle",
+      "handle": "Slug",
       "created_at": "Aangemaakt",
       "updated_at": "Bijgewerkt"
     }
@@ -1062,7 +1064,7 @@
       "banner": "Banner",
       "galleryLabel": "Galerij",
       "editHint": "Voeg media toe aan de collectie om deze op de winkelwebsite te presenteren.",
-      "deleteWarning": "Je staat op het punt deze afbeelding te verwijderen. Deze actie kan niet ongedaan worden gemaakt.",
+      "deleteWarning": "U staat op het punt deze afbeelding te verwijderen. Deze actie kan niet ongedaan worden gemaakt.",
       "empty": {
         "header": "Nog geen media",
         "description": "Voeg media toe om deze op de winkelwebsite te presenteren."
@@ -1118,7 +1120,7 @@
         "details": "Details",
         "organize": "Rangschikking beheren"
       },
-      "successToast": "Categorie {{name}} is succesvol aangemaakt."
+      "successToast": "Categorie is succesvol aangemaakt."
     },
     "edit": {
       "header": "Categorie bewerken",
@@ -1127,7 +1129,7 @@
     },
     "delete": {
       "confirmation": "U staat op het punt de categorie {{name}} te verwijderen. Deze actie kan niet ongedaan worden gemaakt.",
-      "successToast": "Categorie {{name}} is succesvol verwijderd."
+      "successToast": "Categorie is succesvol verwijderd."
     },
     "products": {
       "add": {
@@ -1187,7 +1189,7 @@
       "banner": "Banner",
       "galleryLabel": "Galerij",
       "editHint": "Voeg media toe aan de categorie om deze op de winkelwebsite te presenteren.",
-      "deleteWarning": "Je staat op het punt deze afbeelding te verwijderen. Deze actie kan niet ongedaan worden gemaakt.",
+      "deleteWarning": "U staat op het punt deze afbeelding te verwijderen. Deze actie kan niet ongedaan worden gemaakt.",
       "empty": {
         "header": "Nog geen media",
         "description": "Voeg media toe om deze op de winkelwebsite te presenteren."
@@ -1236,6 +1238,7 @@
   "inventory": {
     "domain": "Voorraad",
     "subtitle": "Beheer uw voorraaditems",
+    "store": "Winkel",
     "reserved": "Gereserveerd",
     "available": "Beschikbaar",
     "locationLevels": "Locaties",
@@ -1245,6 +1248,17 @@
     "deleteWarning": "U staat op het punt een voorraaditem te verwijderen. Deze actie kan niet ongedaan worden gemaakt.",
     "editItemDetails": "Itemdetails bewerken",
     "quantityAcrossLocations": "{{quantity}} over {{locations}} locaties",
+    "attributes": {
+      "tip": "Dit zijn standaardwaarden die het artikel beschrijven. Ze worden niet beheerd in Instellingen → Productattributen."
+    },
+    "item": {
+      "deleteTitle": "Voorraaditem verwijderen",
+      "deleteDescription": "U staat op het punt een voorraaditem te verwijderen. Dit kan gevolgen hebben voor de voorraadgegevens van de winkel. Zorg er voordat u doorgaat voor dat de verkoper deze wijziging heeft bevestigd om inconsistenties te voorkomen."
+    },
+    "level": {
+      "deleteTitle": "Voorraadniveau verwijderen",
+      "deleteDescription": "U staat op het punt het voorraadniveau van {{location}} te verwijderen. Hiermee worden de voorraad en reserveringen voor deze locatie verwijderd en dit kan niet ongedaan worden gemaakt. Zorg er voordat u doorgaat voor dat de verkoper deze wijziging heeft bevestigd om inconsistenties te voorkomen."
+    },
     "create": {
       "title": "Voorraaditem aanmaken",
       "details": "Details",
@@ -1260,24 +1274,38 @@
       "header": "Reservering van {{itemName}}",
       "editItemDetails": "Reservering bewerken",
       "lineItemId": "Orderregel ID",
-      "orderID": "Order ID",
+      "itemId": "Item-ID",
+      "orderID": "Bestelnummer",
       "description": "Beschrijving",
       "location": "Locatie",
+      "goToInventoryItem": "Ga naar voorraaditem",
       "inStockAtLocation": "Op voorraad op deze locatie",
       "availableAtLocation": "Beschikbaar op deze locatie",
       "reservedAtLocation": "Gereserveerd op deze locatie",
       "reservedAmount": "Gereserveerde hoeveelheid",
+      "reserved": "Gereserveerd",
+      "storeLocationWarningLabel": "Waarschuwing",
+      "storeLocationWarning": "U wijzigt een reservering op een locatie van een winkel. Bevestig dit met de verkoper om inconsistente gegevens te voorkomen.",
       "create": "Reservering aanmaken",
       "itemToReserve": "Te reserveren item",
+      "itemPlaceholder": "Selecteer item",
+      "locationPlaceholder": "Selecteer locatie",
       "quantityPlaceholder": "Hoeveel wilt u reserveren?",
       "descriptionPlaceholder": "Wat voor soort reservering is dit?",
       "successToast": "Reservering is succesvol aangemaakt.",
       "updateSuccessToast": "Reservering is succesvol bijgewerkt.",
       "deleteSuccessToast": "Reservering is succesvol verwijderd.",
+      "deleteTitle": "Reservering verwijderen",
+      "deleteDescription": "U staat op het punt een reservering te verwijderen. Dit kan gevolgen hebben voor de voorraadgegevens van de winkel. Zorg er voordat u doorgaat voor dat de verkoper deze wijziging heeft bevestigd om inconsistenties te voorkomen.",
+      "deleteBlockedDescription": "Deze reservering kan niet worden verwijderd omdat ze gekoppeld is aan een niet-afgehandelde bestelling.",
+      "gotIt": "Begrepen",
       "errors": {
         "noAvaliableQuantity": "De voorraadlocatie heeft geen beschikbare hoeveelheid.",
         "quantityOutOfRange": "Minimale hoeveelheid is 1 en maximale hoeveelheid is {{max}}",
-        "idRequired": "Voorraadartikel-ID is verplicht"
+        "pleaseEnterQuantity": "Voer een aantal in",
+        "idRequired": "Voorraadartikel-ID is verplicht",
+        "selectLocation": "Selecteer een locatie",
+        "enterQuantity": "Voer een aantal in"
       }
     },
     "adjustInventory": {
@@ -1288,7 +1316,8 @@
     "toast": {
       "updateLocations": "Locaties succesvol bijgewerkt.",
       "updateLevel": "Voorraadniveau succesvol bijgewerkt.",
-      "updateItem": "Voorraaditem succesvol bijgewerkt."
+      "updateItem": "Voorraaditem succesvol bijgewerkt.",
+      "deleteItem": "Voorraaditem is succesvol verwijderd."
     },
     "stock": {
       "title": "Voorraadniveaus bijwerken",
@@ -1298,7 +1327,23 @@
       "disablePrompt_one": "U staat op het punt {{count}} locatieniveau uit te schakelen. Deze actie kan niet ongedaan worden gemaakt.",
       "disablePrompt_other": "U staat op het punt {{count}} locatieniveaus uit te schakelen. Deze actie kan niet ongedaan worden gemaakt.",
       "disabledToggleTooltip": "Kan niet uitschakelen: maak inkomende en/of gereserveerde hoeveelheid leeg voordat u uitschakelt.",
-      "successToast": "Voorraadniveaus succesvol bijgewerkt."
+      "foreignStoreTooltip": "U kunt voorraad voor dit item op deze locatie niet inschakelen, omdat de locatie bij een andere winkel hoort.",
+      "successToast": "Voorraadniveaus succesvol bijgewerkt.",
+      "confirmTitle": "Voorraadniveaus bewerken",
+      "confirmDescription": "U staat op het punt voorraadniveaus op locaties van winkels te bewerken. Bevestig wijzigingen in voorraadniveaus eerst met de verkopers om inconsistente gegevens of misverstanden te voorkomen.",
+      "editQuantityWarning": "U bewerkt de hoeveelheid op een locatie van een winkel. Bevestig wijzigingen in voorraadniveaus eerst met de verkoper om inconsistente gegevens of misverstanden te voorkomen."
+    },
+    "list": {
+      "noRecordsTitle": "Nog geen voorraaditems",
+      "noRecordsMessage": "Voorraaditems van uw winkels verschijnen hier."
+    },
+    "locations": {
+      "noRecordsTitle": "Nog geen locaties",
+      "noRecordsMessage": "Voeg een locatie toe om voorraadniveaus te beheren"
+    },
+    "reservations": {
+      "noRecordsTitle": "Nog geen reserveringen",
+      "noRecordsMessage": "Er zijn geen reserveringen om te tonen"
     },
     "levelDeleted": "Voorraadniveau succesvol verwijderd."
   },
@@ -1460,7 +1505,7 @@
   "orders": {
     "domain": "Bestellingen",
     "claim": "Claim",
-    "exchange": "Omruilen",
+    "exchange": "Omruiling",
     "return": "Retourneren",
     "cancelWarning": "U staat op het punt de bestelling {{id}} te annuleren. Deze actie kan niet ongedaan worden gemaakt.",
     "orderCanceled": "Bestelling succesvol geannuleerd",
@@ -1595,12 +1640,12 @@
       "create": "Retour aanmaken",
       "confirm": "Retour bevestigen",
       "confirmText": "U staat op het punt een retour te bevestigen. Deze actie kan niet ongedaan worden gemaakt.",
-      "inbound": "Inkomend",
-      "outbound": "Uitgaand",
+      "inbound": "Terugkomende artikelen",
+      "outbound": "Te verzenden artikelen",
       "sendNotification": "Notificatie versturen",
       "sendNotificationHint": "Informeer de klant over de retour.",
       "returnTotal": "Retourtotaal",
-      "inboundTotal": "Inkomend totaal",
+      "inboundTotal": "Totaal terugkomende artikelen",
       "estDifference": "Geschat verschil",
       "outstandingAmount": "Openstaand bedrag",
       "reason": "Reden",
@@ -1632,8 +1677,8 @@
           "hint": "Er zijn geen retourverzendopties aangemaakt voor de locatie. U kunt er een aanmaken bij <LinkComponent>Locatie & Verzending</LinkComponent>."
         },
         "outboundShippingOptions": {
-          "title": "Geen uitgaande verzendopties gevonden",
-          "hint": "Er zijn geen uitgaande verzendopties aangemaakt voor de locatie. U kunt er een aanmaken bij <LinkComponent>Locatie & Verzending</LinkComponent>."
+          "title": "Geen verzendopties naar de klant gevonden",
+          "hint": "Er zijn geen verzendopties naar de klant aangemaakt voor de locatie. U kunt er een aanmaken bij <LinkComponent>Locatie & Verzending</LinkComponent>."
         }
       },
       "receive": {
@@ -1667,10 +1712,10 @@
       "confirm": "Claim bevestigen",
       "confirmText": "U staat op het punt een claim te bevestigen. Deze actie kan niet ongedaan worden gemaakt.",
       "manage": "Claim beheren",
-      "outbound": "Uitgaand",
+      "outbound": "Te verzenden artikelen",
       "outboundItemAdded": "{{itemsCount}}x toegevoegd via claim",
-      "outboundTotal": "Uitgaand totaal",
-      "outboundShipping": "Uitgaande verzending",
+      "outboundTotal": "Totaal te verzenden artikelen",
+      "outboundShipping": "Verzending naar klant",
       "outboundShippingHint": "Kies welke methode u wilt gebruiken.",
       "refundAmount": "Geschat verschil",
       "activeChangeError": "Er is een actieve bestellingswijziging voor deze bestelling. Voltooi of annuleer de vorige wijziging eerst.",
@@ -1700,10 +1745,10 @@
       "manage": "Omruiling beheren",
       "confirm": "Omruiling bevestigen",
       "confirmText": "U staat op het punt een omruiling te bevestigen. Deze actie kan niet ongedaan worden gemaakt.",
-      "outbound": "Uitgaand",
+      "outbound": "Te verzenden artikelen",
       "outboundItemAdded": "{{itemsCount}}x toegevoegd via omruiling",
-      "outboundTotal": "Uitgaand totaal",
-      "outboundShipping": "Uitgaande verzending",
+      "outboundTotal": "Totaal te verzenden artikelen",
+      "outboundShipping": "Verzending naar klant",
       "outboundShippingHint": "Kies welke methode u wilt gebruiken.",
       "refundAmount": "Geschat verschil",
       "activeChangeError": "Er is een actieve bestellingswijziging voor deze bestelling. Voltooi of annuleer de vorige wijziging eerst.",
@@ -1789,8 +1834,8 @@
       },
       "status": {
         "notFulfilled": "Niet verzonden",
-        "partiallyFulfilled": "Gedeeltelijk verzonden",
-        "fulfilled": "Verzonden",
+        "partiallyFulfilled": "Gedeeltelijk afgehandeld",
+        "fulfilled": "Afgehandeld",
         "partiallyShipped": "Gedeeltelijk verzonden",
         "shipped": "Verzonden",
         "delivered": "Afgeleverd",
@@ -1823,7 +1868,7 @@
       "error": {
         "amountToLarge": "Kan niet meer terugbetalen dan het oorspronkelijke bestelbedrag.",
         "amountNegative": "Terug te betalen bedrag moet een positief getal zijn.",
-        "reasonRequired": "Selecteer een reden voor terugbetaling."
+        "reasonRequired": "Selecteer een terugbetalingsreden."
       }
     },
     "customer": {
@@ -1864,7 +1909,7 @@
           "refunded": "Betaling terugbetaald"
         },
         "fulfillment": {
-          "created": "Items verzonden",
+          "created": "Items afgehandeld",
           "canceled": "Verzending geannuleerd",
           "shipped": "Items verzonden",
           "delivered": "Items afgeleverd",
@@ -1911,7 +1956,7 @@
       }
     },
     "fields": {
-      "displayId": "Weergave-ID",
+      "displayId": "Bestelnummer",
       "refundableAmount": "Terug te betalen bedrag",
       "returnableQuantity": "Retourneerbare hoeveelheid",
       "groupId": "Groep-ID",
@@ -1919,6 +1964,9 @@
       "vendor": "Winkel",
       "vendorsCount_one": "{{count}} winkel",
       "vendorsCount_other": "{{count}} winkels"
+    },
+    "requiresAction": {
+      "actionUnavailable": "Niet beschikbaar totdat deze bestelling is geaccepteerd"
     },
     "group": {
       "heading": "Bestellingen in groep",
@@ -2155,7 +2203,7 @@
           "returns_other": "{{count}} retouropties"
         },
         "priceType": {
-          "label": "Prijs type",
+          "label": "Prijstype",
           "options": {
             "fixed": {
               "label": "Vast",
@@ -2173,13 +2221,13 @@
         },
         "provider": "Verzendprovider",
         "profile": "Verzendprofiel",
-        "fulfillmentOption": "Verzendoptie",
+        "fulfillmentOption": "Afhandelingsoptie",
         "type": "Verzendoptietype"
       }
     },
     "serviceZones": {
       "create": {
-        "headerPickup": "Servicezone aanmaken voor Afhalen vanaf {{location}}",
+        "headerPickup": "Servicezone aanmaken voor afhalen vanaf {{location}}",
         "headerShipping": "Servicezone aanmaken voor Verzending vanaf {{location}}",
         "action": "Servicezone aanmaken",
         "successToast": "Servicezone {{name}} is succesvol aangemaakt."
@@ -2250,22 +2298,22 @@
     "state": {
       "header": "Staten",
       "create": {
-        "header": "Staat belastingregio aanmaken",
+        "header": "Belastingregio voor staat aanmaken",
         "hint": "Maak een nieuwe belastingregio aan om belastingtarieven voor een specifieke staat te definiëren."
       }
     },
     "stateOrTerritory": {
       "header": "Staten of territoria",
       "create": {
-        "header": "Staat/Territorium belastingregio aanmaken",
+        "header": "Belastingregio voor staat/territorium aanmaken",
         "hint": "Maak een nieuwe belastingregio aan om belastingtarieven voor een specifieke staat/territorium te definiëren."
       }
     },
     "county": {
-      "header": "Provincies",
+      "header": "Graafschappen",
       "create": {
-        "header": "Provinciale belastingregio aanmaken",
-        "hint": "Maak een nieuwe belastingregio aan om belastingtarieven voor een specifieke provincie te definiëren."
+        "header": "Belastingregio voor graafschap aanmaken",
+        "hint": "Maak een nieuwe belastingregio aan om belastingtarieven voor een specifiek graafschap te definiëren."
       }
     },
     "region": {
@@ -2299,7 +2347,7 @@
     "district": {
       "header": "Districten",
       "create": {
-        "header": "District belastingregio aanmaken",
+        "header": "Belastingregio voor district aanmaken",
         "hint": "Maak een nieuwe belastingregio aan om belastingtarieven voor een specifiek district te definiëren."
       }
     },
@@ -2320,14 +2368,14 @@
     "emirate": {
       "header": "Emiraten",
       "create": {
-        "header": "Emirate belastingregio aanmaken",
+        "header": "Belastingregio voor emiraat aanmaken",
         "hint": "Maak een nieuwe belastingregio aan om belastingtarieven voor een specifiek emiraat te definiëren."
       }
     },
     "sublevel": {
       "header": "Subniveaus",
       "create": {
-        "header": "Subniveau belastingregio aanmaken",
+        "header": "Belastingregio op subniveau aanmaken",
         "hint": "Maak een nieuwe belastingregio aan om belastingtarieven voor een specifiek subniveau te definiëren."
       }
     },
@@ -2335,11 +2383,11 @@
       "header": "Overschrijvingen",
       "create": {
         "header": "Overschrijving aanmaken",
-        "hint": "Maak een belastingtarief aan dat de standaard belastingtarieven overschrijft voor geselecteerde voorwaarden."
+        "hint": "Maak een belastingtarief aan dat de standaardbelastingtarieven overschrijft voor geselecteerde voorwaarden."
       },
       "edit": {
         "header": "Overschrijving bewerken",
-        "hint": "Bewerk het belastingtarief dat de standaard belastingtarieven overschrijft voor geselecteerde voorwaarden."
+        "hint": "Bewerk het belastingtarief dat de standaardbelastingtarieven overschrijft voor geselecteerde voorwaarden."
       }
     },
     "taxRates": {
@@ -2366,9 +2414,9 @@
         "false": "Niet combineerbaar"
       },
       "defaultTaxRate": {
-        "label": "Standaard belastingtarief",
-        "tooltip": "Het standaard belastingtarief voor deze regio. Een voorbeeld is het standaard BTW-tarief voor een land of regio.",
-        "action": "Standaard belastingtarief aanmaken"
+        "label": "Standaardbelastingtarief",
+        "tooltip": "Het standaardbelastingtarief voor deze regio. Een voorbeeld is het standaard BTW-tarief voor een land of regio.",
+        "action": "Standaardbelastingtarief aanmaken"
       },
       "taxRate": "Belastingtarief",
       "taxCode": "Belastingcode",
@@ -2422,14 +2470,14 @@
           "region": "Regio",
           "stateOrTerritory": "Staat/Territorium",
           "department": "Departement",
-          "county": "Provincie",
+          "county": "Graafschap",
           "territory": "Territorium",
           "prefecture": "Prefectuur",
           "district": "District",
           "governorate": "Gouvernement",
           "emirate": "Emiraat",
           "canton": "Kanton",
-          "sublevel": "Subniveau code"
+          "sublevel": "Subniveaucode"
         },
         "placeholders": {
           "province": "Selecteer provincie",
@@ -2437,7 +2485,7 @@
           "region": "Selecteer regio",
           "stateOrTerritory": "Selecteer staat/territorium",
           "department": "Selecteer departement",
-          "county": "Selecteer provincie",
+          "county": "Selecteer graafschap",
           "territory": "Selecteer territorium",
           "prefecture": "Selecteer prefectuur",
           "district": "Selecteer district",
@@ -2450,14 +2498,14 @@
           "notPartOfCountry": "{{province}} lijkt geen deel uit te maken van {{country}}. Controleer of dit correct is."
         },
         "alert": {
-          "header": "Subniveau regio's zijn uitgeschakeld voor deze belastingregio",
-          "description": "Subniveau regio's zijn standaard uitgeschakeld voor deze regio. U kunt ze inschakelen om subniveau regio's zoals provincies, staten of territoria aan te maken.",
-          "action": "Subniveau regio's inschakelen"
+          "header": "Subregio's zijn uitgeschakeld voor deze belastingregio",
+          "description": "Subregio's zijn standaard uitgeschakeld voor deze regio. U kunt ze inschakelen om subregio's zoals provincies, staten of territoria aan te maken.",
+          "action": "Subregio's inschakelen"
         }
       },
       "noDefaultRate": {
         "label": "Geen standaardtarief",
-        "tooltip": "Deze belastingregio heeft geen standaard belastingtarief. Als er een standaardtarief is, zoals het BTW-tarief van een land, voeg dit dan toe aan deze regio."
+        "tooltip": "Deze belastingregio heeft geen standaardbelastingtarief. Als er een standaardtarief is, zoals het BTW-tarief van een land, voeg dit dan toe aan deze regio."
       },
       "taxProvider": "Belastingprovider"
     },
@@ -2493,6 +2541,12 @@
         "description": "Koop X product(en), krijg Y product(en)"
       }
     },
+    "list": {
+      "noRecords": {
+        "title": "Nog geen promoties",
+        "message": "Maak promoties aan om kortingen te bieden"
+      }
+    },
     "domain": "Promoties",
     "sections": {
       "details": "Promotiedetails"
@@ -2504,11 +2558,25 @@
     },
     "fields": {
       "type": "Type",
+      "typeLabels": {
+        "percentageItems": "Percentage korting op artikelen",
+        "percentageShipping": "Percentage korting op verzending",
+        "percentageOrder": "Percentage korting op bestelling",
+        "amountItems": "Bedrag korting op artikelen",
+        "amountShipping": "Bedrag korting op verzending",
+        "amountOrder": "Bedrag korting op bestelling"
+      },
       "value_type": "Waardetype",
       "value": "Waarde",
+      "promotion_value": "Promotiewaarde",
       "campaign": "Campagne",
       "method": "Methode",
+      "owner": "Eigenaar",
+      "platformOwner": "Kayı.com",
+      "coverage": "Dekking",
       "allocation": "Toewijzing",
+      "usageLimit": "Gebruikslimiet",
+      "unlimited": "Onbeperkt",
       "addCondition": "Voorwaarde toevoegen",
       "clearAll": "Alles wissen",
       "amount": {
@@ -2548,7 +2616,9 @@
       "promotionTabError": "Los fouten op in het Promotie-tabblad voordat u doorgaat"
     },
     "toasts": {
-      "promotionCreateSuccess": "Promotie ({{code}}) is succesvol aangemaakt."
+      "promotionCreateSuccess": "Promotie ({{code}}) is succesvol aangemaakt.",
+      "promotionUpdateSuccess": "Promotie is succesvol bijgewerkt.",
+      "promotionDeleteSuccess": "Promotie is succesvol verwijderd."
     },
     "create": {},
     "edit": {
@@ -2599,6 +2669,38 @@
           "description": "Ga verder zonder de promotie aan een campagne te koppelen"
         }
       },
+      "limit": {
+        "title": "Gebruikslimiet",
+        "description": "Maximum aantal keer dat deze promotie kan worden gebruikt over alle bestellingen. Laat leeg voor onbeperkt gebruik."
+      },
+      "storeOffers": {
+        "title": "Op de producten van welke winkel wordt de promotie toegepast?",
+        "description": "Deze promotie wordt alleen toegepast op de producten van de winkel die u kiest.",
+        "label": "Winkel",
+        "placeholder": "Selecteer",
+        "required": "Selecteer een winkel"
+      },
+      "costBearer": {
+        "label": "Wie draagt de kosten van de promotie?",
+        "description": "Selecteer wie verantwoordelijk is voor de korting die deze promotie toepast.",
+        "tip": "Wijzigingen in een aangemaakte promotie hebben geen invloed op bestellingen die al in behandeling zijn.",
+        "store": {
+          "title": "Winkel",
+          "description": "De korting wordt afgetrokken van de inkomsten van de winkel"
+        },
+        "marketplace": {
+          "title": "Marketplace",
+          "description": "De korting wordt afgetrokken van de commissie"
+        },
+        "shared": {
+          "title": "Gedeeld",
+          "description": "De kosten worden verdeeld tussen de marketplace en de winkel"
+        },
+        "sharedPercentage": {
+          "title": "Aandeel marketplace",
+          "description": "Percentage van de korting dat de marketplace draagt. De winkel draagt de rest."
+        }
+      },
       "status": {
         "label": "Status",
         "draft": {
@@ -2635,8 +2737,8 @@
           "description": "Een standaard promotie"
         },
         "buyget": {
-          "title": "Koop Krijg",
-          "description": "Koop X krijg Y promotie"
+          "title": "Koop X, krijg Y",
+          "description": "Koop X, krijg Y-promotie"
         }
       },
       "allocation": {
@@ -2659,6 +2761,7 @@
       },
       "value": {
         "title": "Promotiewaarde",
+        "description": "Het bedrag dat wordt gekort. Bijv. 100",
         "invalid": "Ongeldige promotiewaarde"
       },
       "value_type": {
@@ -2679,17 +2782,22 @@
     },
     "deleteWarning": "U staat op het punt de promotie {{code}} te verwijderen. Deze actie kan niet ongedaan worden gemaakt.",
     "createPromotionTitle": "Promotie aanmaken",
-    "type": "Promotie type",
+    "type": "Promotietype",
     "conditions": {
       "add": "Voorwaarde toevoegen",
       "list": {
+        "noRecordsTitle": "Nog geen voorwaarden",
         "noRecordsMessage": "Voeg een voorwaarde toe om te beperken op welke items de promotie van toepassing is."
       }
     },
     "campaignSection": {
       "noRecordsTitle": "Geen onderdeel van een campagne",
       "noRecordsMessage": "Voeg deze promotie toe aan een bestaande campagne",
-      "addToCampaign": "Toevoegen aan campagne"
+      "addToCampaign": "Toevoegen aan campagne",
+      "warnings": {
+        "promotionMustBeActive": "Deze promotie maakt deel uit van een campagne maar is niet actief, dus wordt ze niet toegepast bij het afrekenen.",
+        "promotionExpires": "Deze campagne heeft een einddatum. De promotie wordt niet meer toegepast zodra de campagne afloopt."
+      }
     }
   },
   "campaigns": {
@@ -2703,15 +2811,17 @@
     "delete": {
       "title": "Weet u het zeker?",
       "description": "U staat op het punt de campagne '{{name}}' te verwijderen. Deze actie kan niet ongedaan worden gemaakt.",
-      "successToast": "Campagne '{{name}}' is succesvol aangemaakt."
+      "successToast": "Campagne is succesvol verwijderd."
     },
     "edit": {
       "header": "Campagne bewerken",
       "description": "Bewerk de details van de campagne.",
-      "successToast": "Campagne '{{name}}' is succesvol bijgewerkt."
+      "successToast": "Campagne is succesvol bijgewerkt."
     },
     "configuration": {
       "header": "Configuratie",
+      "expiryWarningLabel": "Waarschuwing",
+      "expiryWarning": "De promotie verloopt wanneer de campagne afloopt.",
       "edit": {
         "header": "Campagneconfiguratie bewerken",
         "description": "Bewerk de configuratie van de campagne.",
@@ -2723,25 +2833,37 @@
       "description": "Maak een promotionele campagne aan.",
       "hint": "Maak een promotionele campagne aan.",
       "header": "Campagne aanmaken",
-      "successToast": "Campagne '{{name}}' is succesvol aangemaakt."
+      "successToast": "Campagne is succesvol aangemaakt."
+    },
+    "validation": {
+      "nameRequired": "Voer een naam in",
+      "identifierRequired": "Voer een identificatiecode in",
+      "currencyRequired": "Selecteer een valuta"
     },
     "fields": {
       "name": "Naam",
       "identifier": "Identificatie",
+      "identifierTooltip": "De identificatiecode is uw zakelijke campagnecode die u gebruikt voor integraties, rapportages en om de campagne gemakkelijk te herkennen – het is niet de technische ID uit de database.",
       "start_date": "Startdatum",
       "end_date": "Einddatum",
       "total_spend": "Budget uitgegeven",
       "total_used": "Budget gebruikt",
       "budget_limit": "Budgetlimiet",
+      "type": "Type",
+      "owner": "Eigenaar",
+      "platformOwner": "Kayı.com",
+      "budget_used": "Budget gebruikt",
       "campaign_id": {
         "hint": "Alleen campagnes met dezelfde valutacode als de promotie worden in deze lijst weergegeven."
       },
       "totalUsedByAttribute": "Totaal gebruikt"
     },
     "budget": {
+      "title": "Budget",
       "create": {
         "hint": "Maak een budget aan voor de campagne.",
-        "header": "Campagnebudget"
+        "header": "Campagnebudget",
+        "noLimitHint": "Als u geen limieten instelt, heeft het campagnebudget geen limiet."
       },
       "details": "Campagnebudget",
       "fields": {
@@ -2751,6 +2873,7 @@
         "used": "Gebruikt",
         "budgetAttribute": "Gebruik beperken per",
         "budgetAttributeTooltip": "Bepaal hoe vaak de promotie kan worden gebruikt door een specifieke klant of e-mailadres.",
+        "noLimit": "Geen limiet",
         "totalUsedByAttribute": "Budgetlimiet per: {{attribute}}"
       },
       "type": {
@@ -2780,14 +2903,19 @@
       "alreadyAddedDiffCampaign": "Deze promotie is al toegevoegd aan een andere campagne ({{name}}).",
       "currencyMismatch": "Valuta van de promotie en campagne komen niet overeen",
       "toast": {
-        "success": "{{count}} promotie(s) succesvol aan campagne toegevoegd"
+        "success": "Promotie is succesvol aan de campagne toegevoegd.",
+        "removed_one": "Promotie is succesvol uit de campagne verwijderd.",
+        "removed_other": "Promoties zijn succesvol uit de campagne verwijderd."
       },
       "add": {
+        "tipLabel": "Tip:",
+        "tip": "U kunt alleen promoties toevoegen die nog niet aan een andere campagne zijn toegewezen.",
         "list": {
           "noRecordsMessage": "Maak eerst een promotie aan."
         }
       },
       "list": {
+        "noRecordsTitle": "Nog geen promoties",
         "noRecordsMessage": "Er zijn geen promoties in de campagne."
       }
     },
@@ -2796,10 +2924,20 @@
   },
   "priceLists": {
     "domain": "Prijslijsten",
-    "subtitle": "Maak aanbiedingen of overschrijf prijzen voor specifieke voorwaarden.",
+    "subtitle": "Maak uitverkoopprijzen aan of overschrijf prijzen voor specifieke voorwaarden.",
     "delete": {
       "confirmation": "U staat op het punt de prijslijst \"{{title}}\" te verwijderen. Deze actie kan niet ongedaan worden gemaakt.",
       "successToast": "Prijslijst \"{{title}}\" is succesvol verwijderd."
+    },
+    "list": {
+      "noRecords": {
+        "title": "Nog geen prijslijsten",
+        "message": "Maak prijslijsten aan voor uitverkoop en prijsoverschrijvingen"
+      },
+      "noResults": {
+        "title": "Geen resultaten",
+        "message": "Probeer de filters of zoekopdracht te wijzigen"
+      }
     },
     "create": {
       "header": "Prijslijst aanmaken",
@@ -2810,6 +2948,10 @@
         "prices": "Prijzen"
       },
       "successToast": "Prijslijst {{title}} is succesvol aangemaakt.",
+      "validation": {
+        "title": "Voer een titel in",
+        "description": "Voer een beschrijving in"
+      },
       "products": {
         "list": {
           "noRecordsMessage": "Maak eerst een product aan."
@@ -2826,6 +2968,19 @@
         "header": "Prijslijstconfiguratie bewerken",
         "description": "Bewerk de configuratie van de prijslijst.",
         "successToast": "Prijslijstconfiguratie is succesvol bijgewerkt."
+      }
+    },
+    "customerAvailability": {
+      "header": "Klantenbeschikbaarheid",
+      "add": "Klantengroepen toevoegen",
+      "list": {
+        "noRecordsTitle": "Geen klantengroepen",
+        "noRecordsMessage": "Voeg klantengroepen toe om te beperken op welke klanten deze prijslijst van toepassing is."
+      },
+      "edit": {
+        "header": "Klantenbeschikbaarheid",
+        "description": "Kies op welke klantengroepen de prijslijst van toepassing moet zijn.",
+        "successToast": "Klantenbeschikbaarheid is succesvol bijgewerkt."
       }
     },
     "products": {
@@ -2857,6 +3012,10 @@
         "label": "Prijsoverschrijvingen",
         "header": "Prijsoverschrijvingen"
       },
+      "owner": {
+        "label": "Eigenaar",
+        "marketplace": "Kayı.com"
+      },
       "status": {
         "label": "Status",
         "options": {
@@ -2864,6 +3023,10 @@
           "draft": "Concept",
           "expired": "Verlopen",
           "scheduled": "Gepland"
+        },
+        "descriptions": {
+          "draft": "Klanten kunnen de prijslijst niet zien",
+          "active": "Klanten kunnen de prijslijst zien"
         }
       },
       "type": {
@@ -2871,8 +3034,8 @@
         "hint": "Kies het type prijslijst dat u wilt aanmaken.",
         "options": {
           "sale": {
-            "label": "Aanbieding",
-            "description": "Aanbiedingsprijzen zijn tijdelijke prijswijzigingen voor producten."
+            "label": "Uitverkoop",
+            "description": "Uitverkoopprijzen zijn tijdelijke prijswijzigingen voor producten."
           },
           "override": {
             "label": "Overschrijving",
@@ -2906,7 +3069,7 @@
     },
     "edit": {
       "header": "Profiel bewerken",
-      "languageHint": "De taal die u wilt gebruiken in het admin dashboard. Dit verandert niet de taal van uw winkel.",
+      "languageHint": "De taal die u wilt gebruiken in het admin-dashboard. Dit verandert niet de taal van uw winkel.",
       "languagePlaceholder": "Selecteer taal",
       "usageInsightsHint": "Deel gebruiksstatistieken en help ons Kayı.com te verbeteren. U kunt meer lezen over wat we verzamelen en hoe we het gebruiken in onze <0>documentatie</0>."
     },
@@ -2955,10 +3118,14 @@
     "deleteUserWarning": "U staat op het punt de gebruiker {{name}} te verwijderen. Deze actie kan niet ongedaan worden gemaakt.",
     "deleteUserSuccess": "Gebruiker {{name}} succesvol verwijderd",
     "invite": "Uitnodigen",
+    "inviteRolesTooltip": "Als er geen rol is geselecteerd, wordt de gebruiker uitgenodigd met de rol superuser.",
     "status": {
       "active": "Actief",
       "pending": "In behandeling"
     }
+  },
+  "roles": {
+    "domain": "Rollen"
   },
   "store": {
     "scheduledClosure": {
@@ -2983,9 +3150,9 @@
     "editStore": "Winkel bewerken",
     "defaultCurrency": "Standaardvaluta",
     "defaultRegion": "Standaardregio",
-    "defaultSalesChannel": "Standaard verkoopkanaal",
+    "defaultSalesChannel": "Standaardverkoopkanaal",
     "defaultLocation": "Standaardlocatie",
-    "swapLinkTemplate": "Swap link sjabloon",
+    "swapLinkTemplate": "Sjabloon voor omruillink",
     "paymentLinkTemplate": "Betaallink sjabloon",
     "inviteLinkTemplate": "Uitnodigingslink sjabloon",
     "currencies": "Valuta's",
@@ -3096,8 +3263,8 @@
     "shippingOptions": "Verzendopties",
     "deleteShippingOptionWarning": "U staat op het punt de verzendoptie {{name}} te verwijderen. Deze actie kan niet ongedaan worden gemaakt.",
     "return": "Retour",
-    "outbound": "Uitgaand",
-    "priceType": "Prijs Type",
+    "outbound": "Verzending naar klant",
+    "priceType": "Prijstype",
     "flatRate": "Vast tarief",
     "calculated": "Berekend",
     "list": {
@@ -3113,15 +3280,15 @@
       "createShippingOption": "Verzendoptie aanmaken",
       "createShippingOptionHint": "Maak een nieuwe verzendoptie aan voor de regio.",
       "editShippingOption": "Verzendoptie bewerken",
-      "fulfillmentMethod": "Verzendmethode",
+      "fulfillmentMethod": "Afhandelingsmethode",
       "type": {
-        "outbound": "Uitgaand",
+        "outbound": "Verzending naar klant",
         "outboundHint": "Gebruik dit als u een verzendoptie aanmaakt voor het verzenden van producten naar de klant.",
         "return": "Retour",
         "returnHint": "Gebruik dit als u een verzendoptie aanmaakt voor het retourneren van producten door de klant."
       },
       "priceType": {
-        "label": "Prijs Type",
+        "label": "Prijstype",
         "flatRate": "Vast tarief",
         "calculated": "Berekend"
       },
@@ -3145,16 +3312,16 @@
     "settings": {
       "editTaxSettings": "Belastinginstellingen bewerken",
       "taxProviderLabel": "Belastingprovider",
-      "systemTaxProviderLabel": "Systeem Belastingprovider",
+      "systemTaxProviderLabel": "Systeembelastingprovider",
       "calculateTaxesAutomaticallyLabel": "Belastingen automatisch berekenen",
       "calculateTaxesAutomaticallyHint": "Wanneer ingeschakeld, worden belastingtarieven automatisch berekend en toegepast op winkelwagentjes. Wanneer uitgeschakeld, moeten belastingen handmatig worden berekend bij het afrekenen. Handmatige belastingen worden aanbevolen voor gebruik met externe belastingproviders.",
       "applyTaxesOnGiftCardsLabel": "Belasting toepassen op cadeaubonnen",
       "applyTaxesOnGiftCardsHint": "Wanneer ingeschakeld, worden belastingen toegepast op cadeaubonnen bij het afrekenen. In sommige landen vereisen belastingregelgeving de toepassing van belasting op cadeaubonnen bij aankoop.",
-      "defaultTaxRateLabel": "Standaard belastingtarief",
-      "defaultTaxCodeLabel": "Standaard belastingcode"
+      "defaultTaxRateLabel": "Standaardbelastingtarief",
+      "defaultTaxCodeLabel": "Standaardbelastingcode"
     },
     "defaultRate": {
-      "sectionTitle": "Standaard Belastingtarief"
+      "sectionTitle": "Standaardbelastingtarief"
     },
     "taxRate": {
       "sectionTitle": "Belastingtarieven",
@@ -3163,18 +3330,18 @@
       "deleteRateDescription": "U staat op het punt het belastingtarief {{name}} te verwijderen. Deze actie kan niet ongedaan worden gemaakt.",
       "editRateAction": "Tarief bewerken",
       "editOverridesAction": "Overschrijvingen bewerken",
-      "editOverridesTitle": "Belastingtarief Overschrijvingen bewerken",
+      "editOverridesTitle": "Overschrijvingen van belastingtarief bewerken",
       "editOverridesHint": "Specificeer de overschrijvingen voor het belastingtarief.",
       "deleteTaxRateWarning": "U staat op het punt het belastingtarief {{name}} te verwijderen. Deze actie kan niet ongedaan worden gemaakt.",
-      "productOverridesLabel": "Product overschrijvingen",
-      "productOverridesHint": "Specificeer de product overschrijvingen voor het belastingtarief.",
-      "addProductOverridesAction": "Product overschrijvingen toevoegen",
-      "productTypeOverridesLabel": "Producttype overschrijvingen",
-      "productTypeOverridesHint": "Specificeer de producttype overschrijvingen voor het belastingtarief.",
-      "addProductTypeOverridesAction": "Producttype overschrijvingen toevoegen",
-      "shippingOptionOverridesLabel": "Verzendoptie overschrijvingen",
+      "productOverridesLabel": "Productoverschrijvingen",
+      "productOverridesHint": "Specificeer de productoverschrijvingen voor het belastingtarief.",
+      "addProductOverridesAction": "Productoverschrijvingen toevoegen",
+      "productTypeOverridesLabel": "Producttype-overschrijvingen",
+      "productTypeOverridesHint": "Specificeer de producttype-overschrijvingen voor het belastingtarief.",
+      "addProductTypeOverridesAction": "Producttype-overschrijvingen toevoegen",
+      "shippingOptionOverridesLabel": "Verzendoptie-overschrijvingen",
       "shippingOptionOverridesHint": "Specificeer de verzendoptie overschrijvingen voor het belastingtarief.",
-      "addShippingOptionOverridesAction": "Verzendoptie overschrijvingen toevoegen",
+      "addShippingOptionOverridesAction": "Verzendoptie-overschrijvingen toevoegen",
       "productOverridesHeader": "Producten",
       "productTypeOverridesHeader": "Producttypen",
       "shippingOptionOverridesHeader": "Verzendopties"
@@ -3198,7 +3365,26 @@
   "reservations": {
     "domain": "Reserveringen",
     "subtitle": "Beheer de gereserveerde hoeveelheid van voorraaditems.",
-    "deleteWarning": "U staat op het punt een reservering te verwijderen. Deze actie kan niet ongedaan worden gemaakt."
+    "deleteWarning": "U staat op het punt een reservering te verwijderen. Deze actie kan niet ongedaan worden gemaakt.",
+    "fields": {
+      "date": "Datum",
+      "product": "Product",
+      "store": "Winkel"
+    },
+    "list": {
+      "noRecordsTitle": "Nog geen reserveringen",
+      "noRecordsMessage": "Maak reserveringen aan om de gereserveerde hoeveelheid van voorraaditems te beheren"
+    },
+    "delete": {
+      "title": "Reservering verwijderen",
+      "description": "U staat op het punt een reservering te verwijderen. Dit kan gevolgen hebben voor de voorraadgegevens van uw winkel. Zorg er voordat u doorgaat voor dat de verkoper deze wijziging heeft bevestigd om inconsistenties te voorkomen.",
+      "lockedTitle": "Reservering verwijderen",
+      "lockedDescription": "Deze reservering kan niet worden verwijderd omdat ze gekoppeld is aan een niet-afgehandelde bestelling."
+    },
+    "edit": {
+      "lockedTitle": "Reservering bewerken",
+      "lockedDescription": "Deze reservering kan niet worden bewerkt omdat ze gekoppeld is aan een niet-afgehandelde bestelling."
+    }
   },
   "salesChannels": {
     "domain": "Verkoopkanalen",
@@ -3360,9 +3546,18 @@
   },
   "login": {
     "forgotPassword": "Wachtwoord vergeten? - <0>Resetten</0>",
-    "title": "Welkom bij Kayı.com",
+    "title": "Welkom terug!",
     "hint": "Log in om toegang te krijgen tot het accountgebied",
-    "sessionExpired": "Sessie verlopen"
+    "submit": "Inloggen",
+    "sessionExpired": "Sessie verlopen",
+    "invalidCredentials": "Onjuist e-mailadres of wachtwoord. Probeer het opnieuw.",
+    "showPassword": "Wachtwoord tonen",
+    "hidePassword": "Wachtwoord verbergen",
+    "validation": {
+      "emailRequired": "Voer een e-mailadres in",
+      "emailInvalid": "Voer een geldig e-mailadres in",
+      "passwordRequired": "Voer een wachtwoord in"
+    }
   },
   "invite": {
     "title": "Welkom bij Kayı.com",
@@ -3374,7 +3569,7 @@
     "invalidInvite": "De uitnodiging is ongeldig of verlopen.",
     "successTitle": "Uw account is geregistreerd",
     "successHint": "Begin meteen met Kayı.com Admin.",
-    "successAction": "Start Kayı.com Admin",
+    "successAction": "Kayı.com Admin starten",
     "invalidTokenTitle": "Uw uitnodigingstoken is ongeldig",
     "invalidTokenHint": "Probeer een nieuwe uitnodigingslink aan te vragen.",
     "passwordMismatch": "Wachtwoorden komen niet overeen",
@@ -3392,7 +3587,7 @@
     "invalidTokenTitle": "Uw resettoken is ongeldig",
     "invalidTokenHint": "Probeer een nieuwe resetlink aan te vragen.",
     "expiredTokenTitle": "Uw resettoken is verlopen",
-    "goToResetPassword": "Ga naar Wachtwoord resetten",
+    "goToResetPassword": "Ga naar wachtwoord resetten",
     "resetPassword": "Wachtwoord resetten",
     "newPassword": "Nieuw wachtwoord",
     "repeatNewPassword": "Herhaal nieuw wachtwoord",
@@ -3446,7 +3641,7 @@
       "state": {
         "skipped": "Overgeslagen",
         "skippedFailure": "Overgeslagen (Fout)",
-        "dormant": "Inactief",
+        "dormant": "Sluimerend",
         "timeout": "Time-out"
       }
     }
@@ -3531,7 +3726,7 @@
   },
   "fields": {
     "amount": "Bedrag",
-    "refundAmount": "Terug te betalen bedrag",
+    "refundAmount": "Terugbetalingsbedrag",
     "name": "Naam",
     "default": "Standaard",
     "lastName": "Achternaam",
@@ -3546,10 +3741,10 @@
     "description": "Beschrijving",
     "email": "E-mail",
     "password": "Wachtwoord",
-    "repeatPassword": "Herhaal Wachtwoord",
-    "confirmPassword": "Bevestig Wachtwoord",
-    "newPassword": "Nieuw Wachtwoord",
-    "repeatNewPassword": "Herhaal Nieuw Wachtwoord",
+    "repeatPassword": "Herhaal wachtwoord",
+    "confirmPassword": "Bevestig wachtwoord",
+    "newPassword": "Nieuw wachtwoord",
+    "repeatNewPassword": "Herhaal nieuw wachtwoord",
     "categories": "Categorieën",
     "shippingMethod": "Verzendmethode",
     "configurations": "Configuraties",
@@ -3557,7 +3752,7 @@
     "category": "Categorie",
     "collection": "Collectie",
     "discountable": "Korting mogelijk",
-    "handle": "Handle",
+    "handle": "Slug",
     "subtitle": "Ondertitel",
     "by": "Door",
     "item": "Item",
@@ -3589,7 +3784,7 @@
     "totalRedemptions": "Totaal inwisselingen",
     "countries": "Landen",
     "paymentProviders": "Betalingsproviders",
-    "refundReason": "Reden terugbetaling",
+    "refundReason": "Terugbetalingsreden",
     "fulfillmentProviders": "Verzendproviders",
     "fulfillmentProvider": "Verzendprovider",
     "providers": "Providers",
@@ -3615,12 +3810,12 @@
     "variants": "Varianten",
     "orders": "Bestellingen",
     "account": "Account",
-    "total": "Bestelling totaal",
+    "total": "Totaal bestelling",
     "paidTotal": "Totaal geïncasseerd",
     "totalExclTax": "Totaal excl. belasting",
     "subtotal": "Subtotaal",
     "shipping": "Verzending",
-    "outboundShipping": "Uitgaande verzending",
+    "outboundShipping": "Verzending naar klant",
     "returnShipping": "Retourverzending",
     "tax": "Belasting",
     "created": "Aangemaakt",
@@ -3628,7 +3823,7 @@
     "customer": "Klant",
     "date": "Datum",
     "order": "Bestelling",
-    "fulfillment": "Verzending",
+    "fulfillment": "Afhandeling",
     "provider": "Provider",
     "payment": "Betaling",
     "items": "Items",
@@ -3655,8 +3850,8 @@
     "width": "Breedte",
     "length": "Lengte",
     "weight": "Gewicht",
-    "midCode": "MID code",
-    "hsCode": "HS code",
+    "midCode": "MID-code",
+    "hsCode": "HS-code",
     "ean": "EAN",
     "upc": "UPC",
     "inventoryQuantity": "Voorraadhoeveelheid",
@@ -3724,7 +3919,7 @@
     "type_id": "Type",
     "collection_id": "Collectie",
     "handleAutoGeneratedHint": "Wordt automatisch gegenereerd op basis van de naam. Alleen kleine letters, cijfers en koppeltekens — dit veld kan niet rechtstreeks worden bewerkt.",
-    "handleInvalidFormat": "De handle mag alleen kleine letters, cijfers en koppeltekens bevatten"
+    "handleInvalidFormat": "De slug mag alleen kleine letters, cijfers en koppeltekens bevatten"
   },
   "dateTime": {
     "years_one": "Jaar",
@@ -3757,7 +3952,7 @@
   },
   "marketplace": {
     "domain": "Marketplace",
-    "manageMarketplaceDetails": "Beheer de gegevens van je marketplace",
+    "manageMarketplaceDetails": "Beheer de gegevens van uw marketplace",
     "edit": {
       "header": "Marketplace bewerken",
       "namePlaceholder": "ACME"
@@ -3772,7 +3967,7 @@
     "possibleValues": {
       "editRanking": "Rangschikking bewerken",
       "noRecordsTitle": "Geen aangemaakte waarden",
-      "noRecordsMessage": "Maak een attribuut aan om je producten te organiseren"
+      "noRecordsMessage": "Maak een attribuut aan om uw producten te organiseren"
     },
     "list": {
       "title": "Productattributen",
@@ -3813,20 +4008,20 @@
     },
     "deletePossibleValue": {
       "title": "Waarde verwijderen",
-      "confirmation": "Je staat op het punt de mogelijke waarde \"{{value}}\" te verwijderen. Deze actie kan niet ongedaan worden gemaakt.",
+      "confirmation": "U staat op het punt de mogelijke waarde \"{{value}}\" te verwijderen. Deze actie kan niet ongedaan worden gemaakt.",
       "successToast": "Mogelijke waarde \"{{value}}\" is succesvol verwijderd.",
       "inUseMessage": "Waarde {{value}} kan niet worden verwijderd omdat deze momenteel wordt gebruikt door een of meer verkopers in hun productvarianten. Vraag de verkopers om eerst hun producten bij te werken om deze te kunnen bewerken."
     },
     "delete": {
       "title": "Attribuut verwijderen",
-      "confirmation": "Je staat op het punt het attribuut \"{{name}}\" te verwijderen. Deze actie kan niet ongedaan worden gemaakt.",
+      "confirmation": "U staat op het punt het attribuut \"{{name}}\" te verwijderen. Deze actie kan niet ongedaan worden gemaakt.",
       "successToast": "Attribuut \"{{name}}\" is succesvol verwijderd.",
       "inUseMessage": "Attribuut {{name}} kan niet worden verwijderd omdat het momenteel wordt gebruikt door een of meer verkopers in hun productvarianten. Vraag de verkopers om eerst hun producten bij te werken om het te kunnen verwijderen.",
       "gotIt": "Begrepen"
     },
     "fields": {
       "name": "Naam",
-      "handle": "Handle",
+      "handle": "Slug",
       "description": "Beschrijving",
       "type": "Type",
       "filterable": "Filterbaar",
@@ -3847,7 +4042,7 @@
       "isFilterableHint": "Indien aangevinkt, kunnen klanten producten filteren met dit attribuut.",
       "isGlobal": "Globaal attribuut",
       "isGlobalHint": "Indien aangevinkt, geldt dit attribuut voor alle producten in alle categorieën.",
-      "isVariantAxis": "Use for Variations",
+      "isVariantAxis": "Gebruiken voor varianten",
       "isVariantAxisHint": "Indien aangevinkt, bepaalt dit attribuut de productvarianten (bijv. maat, kleur)."
     },
     "type": {
@@ -3868,6 +4063,57 @@
     },
     "handleTooltip": "Wordt automatisch gegenereerd op basis van de attribuutnaam. Alleen kleine letters, cijfers en koppeltekens — dit veld kan niet rechtstreeks worden bewerkt."
   },
+  "reviews": {
+    "domain": "Recensies",
+    "subtitle": "Beheer recensies van klanten over uw winkels.",
+    "fields": {
+      "id": "Recensie-ID",
+      "rating": "Beoordeling",
+      "content": "Inhoud",
+      "store": "Winkel",
+      "customer": "Klant",
+      "date": "Datum",
+      "status": "Status",
+      "response": "Reactie"
+    },
+    "status": {
+      "pending": "In behandeling",
+      "published": "Gepubliceerd",
+      "rejected": "Afgewezen"
+    },
+    "filters": {
+      "stars_one": "{{count}} ster",
+      "stars_other": "{{count}} sterren"
+    },
+    "list": {
+      "noRecordsTitle": "Nog geen recensies",
+      "noRecordsMessage": "Zodra klanten recensies plaatsen, verschijnen ze hier"
+    },
+    "detail": {
+      "customer": "Klant",
+      "order": "Bestelling",
+      "store": "Winkel"
+    },
+    "edit": {
+      "header": "Recensie bewerken",
+      "description": "Bewerk de status en beoordeling van de recensie.",
+      "successToast": "Recensie is succesvol bijgewerkt."
+    },
+    "respond": {
+      "action": "Reageren",
+      "header": "Reageren op recensie",
+      "description": "Voeg een reactie toe aan deze recensie.",
+      "label": "Reactie",
+      "successToast": "Reactie is succesvol verzonden.",
+      "alreadyResponded": "Deze recensie heeft al een reactie.",
+      "validation": "Schrijf een reactie"
+    },
+    "delete": {
+      "confirmTitle": "Recensie verwijderen",
+      "confirmDescription": "U staat op het punt een recensie te verwijderen. Deze actie kan niet ongedaan worden gemaakt.",
+      "successToast": "Recensie is succesvol verwijderd."
+    }
+  },
   "refundReasons": {
     "domain": "Terugbetalingsredenen",
     "subtitle": "Beheer redenen voor het uitgeven van terugbetalingen.",
@@ -3885,7 +4131,7 @@
       "successToast": "Terugbetalingsreden {{label}} is succesvol bijgewerkt."
     },
     "delete": {
-      "confirmation": "Je staat op het punt de terugbetalingsreden \"{{label}}\" te verwijderen. Deze actie kan niet ongedaan worden gemaakt.",
+      "confirmation": "U staat op het punt de terugbetalingsreden \"{{label}}\" te verwijderen. Deze actie kan niet ongedaan worden gemaakt.",
       "successToast": "Terugbetalingsreden is succesvol verwijderd."
     },
     "fields": {
@@ -3905,10 +4151,10 @@
   },
   "shippingOptionTypes": {
     "domain": "Verzendoptietypen",
-    "subtitle": "Organiseer je verzendopties in typen.",
+    "subtitle": "Organiseer uw verzendopties in typen.",
     "create": {
       "header": "Verzendoptietype aanmaken",
-      "hint": "Maak een nieuw verzendoptietype aan om je verzendopties te categoriseren.",
+      "hint": "Maak een nieuw verzendoptietype aan om uw verzendopties te categoriseren.",
       "successToast": "Verzendoptietype {{label}} is succesvol aangemaakt."
     },
     "edit": {
@@ -3916,7 +4162,7 @@
       "successToast": "Verzendoptietype {{label}} is succesvol bijgewerkt."
     },
     "delete": {
-      "confirmation": "Je staat op het punt het verzendoptietype \"{{label}}\" te verwijderen. Deze actie kan niet ongedaan worden gemaakt.",
+      "confirmation": "U staat op het punt het verzendoptietype \"{{label}}\" te verwijderen. Deze actie kan niet ongedaan worden gemaakt.",
       "successToast": "Verzendoptietype \"{{label}}\" is succesvol verwijderd."
     },
     "fields": {
@@ -3956,7 +4202,7 @@
     },
     "fields": {
       "name": "Naam",
-      "handle": "Handle",
+      "handle": "Slug",
       "email": "E-mail",
       "phone": "Telefoon",
       "logo": "Logo",
@@ -3986,7 +4232,7 @@
     "invite": {
       "button": "Uitnodigen",
       "header": "Winkel uitnodigen",
-      "hint": "Nodig een nieuwe winkel uit voor je marketplace",
+      "hint": "Nodig een nieuwe winkel uit voor uw marketplace",
       "successToast": "Uitnodiging verzonden naar {{email}}",
       "errorToast": "Uitnodiging verzenden mislukt"
     },
@@ -3995,7 +4241,7 @@
       "addUser": {
         "header": "Gebruiker toevoegen",
         "action": "Toevoegen",
-        "hint": "Voeg een nieuwe gebruiker toe om deze winkel te beheren. Je kunt een bestaande gebruiker selecteren of een nieuwe uitnodigen.",
+        "hint": "Voeg een nieuwe gebruiker toe om deze winkel te beheren. U kunt een bestaande gebruiker selecteren of een nieuwe uitnodigen.",
         "addedToast": "Gebruiker is succesvol toegevoegd.",
         "invitedToast": "Gebruiker is succesvol uitgenodigd.",
         "validation": {
@@ -4016,9 +4262,9 @@
       "mediaTipLabel": "Tip:",
       "mediaTipBody": "Deze media zijn zichtbaar op de winkelwebsite.",
       "uploadLogoLabel": "Logo uploaden",
-      "uploadLogoHint": "Sleep je logo hierheen of klik om te uploaden.",
+      "uploadLogoHint": "Sleep uw logo hierheen of klik om te uploaden.",
       "uploadBannerLabel": "Banner uploaden",
-      "uploadBannerHint": "Sleep je banner hierheen of klik om te uploaden.",
+      "uploadBannerHint": "Sleep uw banner hierheen of klik om te uploaden.",
       "successToast": "Winkel {{name}} is succesvol bijgewerkt."
     },
     "create": {
@@ -4042,17 +4288,17 @@
     },
     "request": {
       "title": "Winkelaanvraag",
-      "description": "{{requester}} heeft een winkelaanvraag ingediend. Bekijk de details, breng eventuele wijzigingen aan en kies of je de winkel wilt bevestigen en publiceren of de aanvraag wilt afwijzen.",
+      "description": "{{requester}} heeft een winkelaanvraag ingediend. Bekijk de details, breng eventuele wijzigingen aan en kies of u de winkel wilt bevestigen en publiceren of de aanvraag wilt afwijzen.",
       "confirm": "Bevestigen",
       "reject": "Afwijzen",
       "confirmTitle": "Aanvraag bevestigen",
-      "confirmDescription": "Je staat op het punt deze winkelaanvraag te bevestigen.",
+      "confirmDescription": "U staat op het punt deze winkelaanvraag te bevestigen.",
       "rejectTitle": "Aanvraag afwijzen",
-      "rejectDescription": "Je staat op het punt deze winkelaanvraag af te wijzen.",
+      "rejectDescription": "U staat op het punt deze winkelaanvraag af te wijzen.",
       "noteLabel": "Notities voor verkoper",
-      "notePlaceholder": "Geef aan welke wijzigingen je hebt aangebracht of aanvullende verzoeken",
-      "confirmNotePlaceholder": "Geef aan welke wijzigingen je hebt aangebracht of aanvullende verzoeken",
-      "rejectNotePlaceholder": "Leg uit waarom je de aanvraag afwijst of stel wijzigingen voor",
+      "notePlaceholder": "Geef aan welke wijzigingen u hebt aangebracht of vermeld aanvullende verzoeken",
+      "confirmNotePlaceholder": "Geef aan welke wijzigingen u hebt aangebracht of vermeld aanvullende verzoeken",
+      "rejectNotePlaceholder": "Leg uit waarom u de aanvraag afwijst of stel wijzigingen voor",
       "confirmSuccess": "Winkelaanvraag is succesvol bevestigd.",
       "rejectSuccess": "Winkelaanvraag is succesvol afgewezen."
     },
@@ -4060,13 +4306,13 @@
       "approve": {
         "label": "Goedkeuren",
         "title": "Winkel goedkeuren",
-        "description": "Weet je zeker dat je deze winkel wilt goedkeuren?",
+        "description": "Weet u zeker dat u deze winkel wilt goedkeuren?",
         "success": "Winkel goedgekeurd"
       },
       "reject": {
         "label": "Afwijzen",
         "title": "Winkel afwijzen",
-        "description": "Weet je zeker dat je deze winkel wilt afwijzen?",
+        "description": "Weet u zeker dat u deze winkel wilt afwijzen?",
         "success": "Winkel afgewezen"
       },
       "edit": {
@@ -4075,7 +4321,7 @@
       "delete": {
         "label": "Verwijderen",
         "title": "Winkel verwijderen",
-        "description": "Weet je zeker dat je deze winkel wilt verwijderen? Deze actie kan niet ongedaan worden gemaakt.",
+        "description": "Weet u zeker dat u deze winkel wilt verwijderen? Deze actie kan niet ongedaan worden gemaakt.",
         "success": "Winkel verwijderd",
         "successToast": "{{count}} winkel(s) verwijderd",
         "errorToast": "Verwijderen van winkel(s) mislukt"
@@ -4100,14 +4346,14 @@
     "domain": "Commissie-instellingen"
   },
   "commissionLines": {
-    "domain": "Commissieregels"
+    "domain": "Commissieposten"
   },
   "commissionRates": {
     "domain": "Commissietarieven",
-    "description": "Beheer commissietarieven en -regels voor je marketplace.",
+    "description": "Beheer commissietarieven en -regels voor uw marketplace.",
     "create": {
       "header": "Commissietarief aanmaken",
-      "description": "Configureer een nieuw commissietarief voor je marketplace.",
+      "description": "Configureer een nieuw commissietarief voor uw marketplace.",
       "successToast": "Commissietarief succesvol aangemaakt"
     },
     "edit": {
@@ -4115,7 +4361,7 @@
       "successToast": "Commissietarief succesvol bijgewerkt"
     },
     "delete": {
-      "description": "Weet je zeker dat je het commissietarief \"{{name}}\" wilt verwijderen?",
+      "description": "Weet u zeker dat u het commissietarief \"{{name}}\" wilt verwijderen?",
       "successToast": "Commissietarief succesvol verwijderd"
     },
     "rules": {
@@ -4152,5 +4398,77 @@
       "enabledToast": "Commissietarief succesvol ingeschakeld",
       "disabledToast": "Commissietarief succesvol uitgeschakeld"
     }
+  },
+  "permissions": {
+    "noAccess": "U hebt geen toestemming om dit te bekijken.",
+    "accessDenied": {
+      "title": "Toegang geweigerd",
+      "description": "U hebt geen toestemming om deze pagina te openen.",
+      "requiredPermission": "Vereiste toestemming: {{permission}}",
+      "action": "U hebt geen toestemming om deze actie uit te voeren."
+    },
+    "requiredPermissions": {
+      "title": "Vereiste toestemmingen",
+      "none": "Er zijn geen toestemmingen opgegeven in deze weergave.",
+      "anyOf": "Een van",
+      "allOf": "Alle",
+      "source": "Bron: {{source}}"
+    },
+    "resources": {
+      "customer": "Klant",
+      "customer_group": "Klantengroep",
+      "order": "Bestelling",
+      "product": "Product",
+      "product_category": "Productcategorie",
+      "product_collection": "Productcollectie",
+      "product_tag": "Product-tag",
+      "product_type": "Producttype",
+      "inventory": "Voorraad",
+      "reservation": "Reservering",
+      "promotion": "Promotie",
+      "campaign": "Campagne",
+      "price_list": "Prijslijst",
+      "region": "Regio",
+      "store": "Winkel",
+      "user": "Gebruiker",
+      "rbac_role": "Rol",
+      "rbac_policy": "Beleid",
+      "sales_channel": "Verkoopkanaal",
+      "stock_location": "Voorraadlocatie",
+      "shipping_profile": "Verzendprofiel",
+      "shipping_option": "Verzendoptie",
+      "tax_region": "Belastingregio",
+      "api_key": "API-sleutel",
+      "return_reason": "Retourreden",
+      "refund_reason": "Terugbetalingsreden",
+      "workflow": "Workflow",
+      "translation": "Vertaling"
+    },
+    "actions": {
+      "read": "Lezen",
+      "create": "Aanmaken",
+      "update": "Bijwerken",
+      "delete": "Verwijderen"
+    }
+  },
+  "richTextEditor": {
+    "bold": "Vet",
+    "italic": "Cursief",
+    "underline": "Onderstrepen",
+    "strike": "Doorhalen",
+    "paragraph": "Alinea",
+    "heading2": "Kop",
+    "heading3": "Subkop",
+    "bulletList": "Lijst met opsommingstekens",
+    "orderedList": "Genummerde lijst",
+    "blockquote": "Citaat",
+    "link": "Link",
+    "linkPlaceholder": "https://example.com",
+    "removeLink": "Link verwijderen",
+    "image": "Afbeelding invoegen",
+    "uploadingImage": "Afbeelding uploaden...",
+    "imageUploadFailed": "Afbeelding uploaden mislukt",
+    "undo": "Ongedaan maken",
+    "redo": "Opnieuw uitvoeren"
   }
 }
