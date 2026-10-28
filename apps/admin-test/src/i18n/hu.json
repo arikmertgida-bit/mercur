@@ -12,12 +12,12 @@
   "productReports": {
     "domain": "Termékbejelentések",
     "subtitle": "Vásárlók által ellenőrzésre megjelölt termékek",
-    "filterAll": "Minden állapot",
+    "filterAll": "Minden státusz",
     "columns": {
       "product": "Termék",
       "reporter": "Bejelentette",
       "reason": "Ok",
-      "status": "Állapot"
+      "status": "Státusz"
     },
     "status": {
       "pending": "Függőben",
@@ -75,13 +75,13 @@
   "reportedImages": {
     "domain": "Bejelentett képek",
     "subtitle": "Tekintse át a vásárlók által nem megfelelőnek jelölt képeket",
-    "filterAll": "Minden állapot",
+    "filterAll": "Minden státusz",
     "imageRemoved": "Kép eltávolítva",
     "columns": {
       "image": "Kép",
       "reporter": "Bejelentette",
       "reason": "Ok",
-      "status": "Állapot"
+      "status": "Státusz"
     },
     "status": {
       "pending": "Függőben",
@@ -132,7 +132,7 @@
   "messages": {
     "domain": "Üzenetek",
     "product": "Termék",
-    "store": "Bolt",
+    "store": "Áruház",
     "delete": "Törlés",
     "deleteForEveryone": "Törlés mindenki számára",
     "close": "Bezárás",
@@ -141,11 +141,11 @@
     "deleteConfirmTitle": "Üzenet törlése",
     "deleteConfirmDesc": "Biztosan törli ezt az üzenetet?",
     "productQuestion": "Termékkel kapcsolatos kérdés",
-    "storeQuestion": "Bolttal kapcsolatos kérdés",
+    "storeQuestion": "Áruházzal kapcsolatos kérdés",
     "customerMessage": "Vásárlói üzenet",
     "sellerMessage": "Eladói üzenet",
     "directMessage": "Közvetlen üzenet",
-    "storeContext": "Bolttal kapcsolatos kérdés",
+    "storeContext": "Áruházzal kapcsolatos kérdés",
     "back": "Vissza",
     "failedToGetUserInfo": "Nem sikerült lekérni a felhasználói adatokat.",
     "send": "Üzenet küldése",
@@ -164,7 +164,7 @@
       "rejected": "Elutasítva"
     },
     "filters": {
-      "status": "Állapot"
+      "status": "Státusz"
     },
     "columns": {
       "name": "Név"
@@ -175,9 +175,9 @@
       "noRecords": "Nem található kategóriakérés"
     },
     "collections": {
-      "navLabel": "Kollekciók",
-      "heading": "Kollekciókérések",
-      "noRecords": "Nem található kollekciókérés"
+      "navLabel": "Gyűjtemények",
+      "heading": "Gyűjteménykérések",
+      "noRecords": "Nem található gyűjteménykérés"
     },
     "tags": {
       "navLabel": "Címkék",
@@ -191,19 +191,19 @@
     },
     "returnReasons": {
       "navLabel": "Visszaküldési Okok",
-      "heading": "Visszaküldési Ok kérések",
+      "heading": "Visszaküldésiok-kérések",
       "noRecords": "Nem található visszaküldési ok kérés"
     },
     "typeLabels": {
       "product_category": "Kategória",
-      "product_collection": "Kollekció",
+      "product_collection": "Gyűjtemény",
       "product_tag": "Címke",
       "product_type": "Típus",
-      "return_reason": "Visszaküldési Ok"
+      "return_reason": "Visszaküldési ok"
     },
     "fields": {
       "name": "Név",
-      "handle": "Handle",
+      "handle": "URL-azonosító",
       "description": "Leírás",
       "active": "Aktív",
       "internal": "Belső",
@@ -235,7 +235,7 @@
       "columns": {
         "seller": "Eladó",
         "reason": "Indok",
-        "status": "Állapot",
+        "status": "Státusz",
         "adminNote": "Adminisztrátori megjegyzés"
       },
       "status": {
