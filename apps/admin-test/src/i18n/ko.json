@@ -22,7 +22,7 @@
     "status": {
       "pending": "대기 중",
       "resolved": "해결됨",
-      "dismissed": "기각됨"
+      "dismissed": "무시됨"
     },
     "reasons": {
       "inaccurate_product_details": "부정확한 상품 정보",
@@ -37,15 +37,15 @@
     },
     "actions": {
       "resolve": "해결됨으로 표시",
-      "dismiss": "기각"
+      "dismiss": "무시"
     },
     "resolvePrompt": {
       "title": "신고를 해결됨으로 표시하시겠습니까?",
-      "description": "이 신고는 해결됨으로 표시되어 대기 대기열에서 제거됩니다."
+      "description": "이 신고는 해결됨으로 표시되어 대기 목록에서 제거됩니다."
     },
     "dismissPrompt": {
-      "title": "이 신고를 기각하시겠습니까?",
-      "description": "이 신고는 기각됨으로 표시되어 대기 대기열에서 제거됩니다."
+      "title": "이 신고를 무시하시겠습니까?",
+      "description": "이 신고는 무시됨으로 표시되어 대기 목록에서 제거됩니다."
     },
     "deletePrompt": {
       "title": "이 신고를 삭제하시겠습니까?",
@@ -89,14 +89,14 @@
     },
     "actions": {
       "remove": "이미지 제거",
-      "dismiss": "신고 기각"
+      "dismiss": "신고 무시"
     },
     "removePrompt": {
       "title": "이 이미지를 제거하시겠습니까?",
       "description": "이미지가 리뷰에서 영구적으로 삭제됩니다. 이 작업은 취소할 수 없습니다."
     },
     "dismissPrompt": {
-      "title": "이 신고를 기각하시겠습니까?",
+      "title": "이 신고를 무시하시겠습니까?",
       "description": "이미지는 게시된 상태로 유지되고 신고는 해결됨으로 표시됩니다."
     },
     "resolveSuccess": "신고가 해결되었습니다",
@@ -247,12 +247,12 @@
         "reportHeading": "신고",
         "reviewHeading": "리뷰",
         "customerNote": "고객 메모",
-        "resolveHeading": "처리",
-        "rejectAction": "거절",
+        "resolveHeading": "해결",
+        "rejectAction": "거부",
         "defaultRejectNote": "검토됨, 삭제되지 않음. 저희 결정에 동의하지 않으시면 다시 신고하실 수 있습니다.",
         "defaultDeleteNote": "이 리뷰는 관리자 팀에서 검토 후 삭제되었습니다.",
-        "resolveSuccess": "신고가 처리되었습니다.",
-        "resolveError": "신고를 처리할 수 없습니다.",
+        "resolveSuccess": "신고가 해결되었습니다.",
+        "resolveError": "신고를 해결할 수 없습니다.",
         "deletePrompt": {
           "title": "리뷰 삭제",
           "description": "이 리뷰를 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다."
