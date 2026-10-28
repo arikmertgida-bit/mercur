@@ -10,22 +10,22 @@
     "delete": "Ištrinti"
   },
   "productReports": {
-    "domain": "Produktų skundai",
-    "subtitle": "Pirkėjų pažymėti produktai, kuriuos reikia peržiūrėti",
+    "domain": "Prekių skundai",
+    "subtitle": "Klientų pažymėtos prekės, kurias reikia peržiūrėti",
     "filterAll": "Visos būsenos",
     "columns": {
-      "product": "Produktas",
+      "product": "Prekė",
       "reporter": "Pranešė",
       "reason": "Priežastis",
       "status": "Būsena"
     },
     "status": {
-      "pending": "Laukiama",
+      "pending": "Laukia",
       "resolved": "Išspręsta",
-      "dismissed": "Atmesta"
+      "dismissed": "Ignoruota"
     },
     "reasons": {
-      "inaccurate_product_details": "Netikslūs produkto duomenys",
+      "inaccurate_product_details": "Netikslūs prekės duomenys",
       "pricing_irregularities": "Kainodaros neatitikimai",
       "prohibited_item": "Draudžiama prekė",
       "counterfeit_trademark": "Falsifikatas / prekės ženklo pažeidimas",
@@ -37,15 +37,15 @@
     },
     "actions": {
       "resolve": "Pažymėti kaip išspręstą",
-      "dismiss": "Atmesti"
+      "dismiss": "Ignoruoti"
     },
     "resolvePrompt": {
       "title": "Pažymėti skundą kaip išspręstą?",
       "description": "Šis skundas bus pažymėtas kaip išspręstas ir pašalintas iš laukiančiųjų eilės."
     },
     "dismissPrompt": {
-      "title": "Atmesti šį skundą?",
-      "description": "Šis skundas bus pažymėtas kaip atmestas ir pašalintas iš laukiančiųjų eilės."
+      "title": "Ignoruoti šį skundą?",
+      "description": "Šis skundas bus pažymėtas kaip ignoruotas ir pašalintas iš laukiančiųjų eilės."
     },
     "deletePrompt": {
       "title": "Ištrinti šį skundą?",
@@ -58,23 +58,23 @@
   },
   "wishlistModeration": {
     "domain": "Norų sąrašai",
-    "subtitle": "Pirkėjų norų sąrašai, moderavimo tikslais",
-    "noProducts": "Nėra produktų",
+    "subtitle": "Klientų norų sąrašai, moderavimo tikslais",
+    "noProducts": "Nėra prekių",
     "columns": {
-      "customer": "Pirkėjas",
-      "products": "Produktai",
+      "customer": "Klientas",
+      "products": "Prekės",
       "created": "Sukurta"
     },
     "deletePrompt": {
       "title": "Ištrinti šį norų sąrašą?",
-      "description": "Tai negrįžtamai ištrins pirkėjo norų sąrašą ir visus jo įrašus. Šio veiksmo negalima anuliuoti."
+      "description": "Tai negrįžtamai ištrins kliento norų sąrašą ir visus jo įrašus. Šio veiksmo negalima anuliuoti."
     },
     "deleteSuccess": "Norų sąrašas ištrintas",
     "deleteError": "Nepavyko ištrinti norų sąrašo"
   },
   "reportedImages": {
     "domain": "Pažymėtos nuotraukos",
-    "subtitle": "Peržiūrėkite nuotraukas, kurias pirkėjai pažymėjo kaip netinkamas",
+    "subtitle": "Peržiūrėkite nuotraukas, kurias klientai pažymėjo kaip netinkamas",
     "filterAll": "Visos būsenos",
     "imageRemoved": "Nuotrauka pašalinta",
     "columns": {
@@ -84,19 +84,19 @@
       "status": "Būsena"
     },
     "status": {
-      "pending": "Laukiama",
+      "pending": "Laukia",
       "resolved": "Išspręsta"
     },
     "actions": {
       "remove": "Pašalinti nuotrauką",
-      "dismiss": "Atmesti skundą"
+      "dismiss": "Ignoruoti skundą"
     },
     "removePrompt": {
       "title": "Pašalinti šią nuotrauką?",
       "description": "Nuotrauka bus negrįžtamai ištrinta iš atsiliepimo. Šio veiksmo negalima anuliuoti."
     },
     "dismissPrompt": {
-      "title": "Atmesti šį skundą?",
+      "title": "Ignoruoti šį skundą?",
       "description": "Nuotrauka liks paskelbta, o skundas bus pažymėtas kaip išspręstas."
     },
     "resolveSuccess": "Skundas išspręstas",
@@ -121,17 +121,17 @@
     "notificationTitle": "{{senderName}} jums atsiuntė žinutę",
     "notificationBody": "{{preview}}",
     "image": "Nuotrauka",
-    "support": "Pagalba",
+    "support": "Palaikymas",
     "direct": "Tiesioginis",
     "unknown": "Nežinoma",
-    "supportTeam": "Pagalbos komanda",
+    "supportTeam": "Palaikymo komanda",
     "connected": "Prisijungta",
     "disconnected": "Atsijungta",
     "conversationOptions": "Pokalbio parinktys"
   },
   "messages": {
     "domain": "Žinutės",
-    "product": "Produktas",
+    "product": "Prekė",
     "store": "Parduotuvė",
     "delete": "Ištrinti",
     "deleteForEveryone": "Ištrinti visiems",
@@ -140,14 +140,14 @@
     "imageUploadFailed": "Nepavyko įkelti nuotraukos",
     "deleteConfirmTitle": "Ištrinti žinutę",
     "deleteConfirmDesc": "Ar tikrai norite ištrinti šią žinutę?",
-    "productQuestion": "Klausimas apie produktą",
+    "productQuestion": "Klausimas apie prekę",
     "storeQuestion": "Klausimas apie parduotuvę",
-    "customerMessage": "Pirkėjo žinutė",
+    "customerMessage": "Kliento žinutė",
     "sellerMessage": "Pardavėjo žinutė",
     "directMessage": "Tiesioginė žinutė",
     "storeContext": "Klausimas apie parduotuvę",
     "back": "Atgal",
-    "failedToGetUserInfo": "Nepavyko gauti vartotojo informacijos.",
+    "failedToGetUserInfo": "Nepavyko gauti naudotojo informacijos.",
     "send": "Siųsti žinutę",
     "attachImage": "Pridėti nuotrauką",
     "removeAttachment": "Pašalinti pridėtą nuotrauką",
@@ -159,7 +159,7 @@
     "domain": "Užklausos",
     "status": {
       "draft": "Juodraštis",
-      "pending": "Laukiama",
+      "pending": "Laukia",
       "accepted": "Priimta",
       "rejected": "Atmesta"
     },
@@ -203,7 +203,7 @@
     },
     "fields": {
       "name": "Pavadinimas",
-      "handle": "Identifikatorius",
+      "handle": "URL identifikatorius",
       "description": "Aprašymas",
       "active": "Aktyvus",
       "internal": "Vidinis",
@@ -216,7 +216,7 @@
       "no": "Ne"
     },
     "detail": {
-      "pendingReview": "Laukiama peržiūros",
+      "pendingReview": "Laukia peržiūros",
       "accept": "Priimti",
       "reject": "Atmesti",
       "acceptPromptTitle": "Priimti užklausą",
@@ -239,7 +239,7 @@
         "adminNote": "Administratoriaus pastaba"
       },
       "status": {
-        "pending": "Laukiama",
+        "pending": "Laukia",
         "resolved_deleted": "Pašalinta",
         "resolved_kept": "Peržiūrėta, nepašalinta"
       },
@@ -281,7 +281,7 @@
       "earningsToday": "Šiandienos pajamos"
     },
     "totals": {
-      "products": "Produktai",
+      "products": "Prekės",
       "sellers": "Pardavėjai",
       "customers": "Klientai",
       "lowStock": "Prekės su mažomis atsargomis"

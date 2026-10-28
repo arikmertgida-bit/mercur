@@ -30,16 +30,16 @@
     "disabled": "Išjungtas",
     "expired": "Pasibaigęs",
     "active": "Aktyvus",
-    "revoked": "Atšauktas",
+    "revoked": "Panaikintas",
     "new": "Naujas",
     "modified": "Pakeistas",
     "added": "Pridėtas",
     "removed": "Pašalintas",
     "admin": "Administratorius",
     "store": "Parduotuvė",
-    "details": "Aprašymas",
+    "details": "Informacija",
     "items_one": "{{count}} daiktas",
-    "items_other": "{{count}} daiktai",
+    "items_other": "{{count}} daiktų",
     "countSelected": "{{count}} pasirinkta",
     "countOfTotalSelected": "{{count}} iš {{total}} pasirinkta",
     "plusCount": "+ {{count}}",
@@ -75,7 +75,8 @@
     "false": "Netiesa",
     "decrement": "Sumažinti",
     "increment": "Padidinti",
-    "drawerAccessibleDescription": "Naudokite šį skydelį šio ištekliaus informacijai peržiūrėti arba redaguoti."
+    "drawerAccessibleDescription": "Naudokite šį skydelį šio ištekliaus informacijai peržiūrėti arba redaguoti.",
+    "items_few": "{{count}} daiktai"
   },
   "json": {
     "header": "JSON",
@@ -84,8 +85,10 @@
     "drawer": {
       "header_one": "JSON <0>· {{count}} įrašas</0>",
       "header_other": "JSON <0>· {{count}} įrašų</0>",
-      "description": "Peržiūrėkite šio objekto JSON duomenis"
-    }
+      "description": "Peržiūrėkite šio objekto JSON duomenis",
+      "header_few": "JSON <0>· {{count}} įrašai</0>"
+    },
+    "numberOfKeys_few": "{{count}} įrašai"
   },
   "metadata": {
     "header": "Metaduomenys",
@@ -109,7 +112,8 @@
         "description": "Šiame objekte yra neprimityvių metaduomenų, pvz., masyvų ar objektų, kurių čia redaguoti čia negalima. Norėdami pakeisti išjungtas eilutes, naudokite API tiesiogiai.",
         "tooltip": "Eilutė išjungta, nes joje yra neprimityvių duomenų."
       }
-    }
+    },
+    "numberOfKeys_few": "{{count}} įrašai"
   },
   "validation": {
     "requiredField": "Privalomas laukas",
@@ -137,20 +141,21 @@
     "create": "Sukurti",
     "delete": "Ištrinti",
     "remove": "Pašalinti",
-    "revoke": "Atšaukti",
+    "revoke": "Panaikinti",
     "cancel": "Atšaukti",
     "forceConfirm": "Priverstinai patvirtinti",
     "continueEdit": "Tęsti redagavimą",
     "enable": "Įjungti",
     "disable": "Išjungti",
-    "undo": "Atstatyti",
+    "undo": "Anuliuoti",
     "complete": "Baigtas",
     "viewDetails": "Peržiūrėti informaciją",
     "back": "Atgal",
     "close": "Uždaryti",
     "showMore": "Rodyti daugiau",
+    "showLess": "Rodyti mažiau",
     "continue": "Tęsti",
-    "continueWithEmail": "Tęstu su el. paštu",
+    "continueWithEmail": "Tęsti su el. paštu",
     "idCopiedToClipboard": "ID nukopijuotas į atmintį",
     "addReason": "Pridėti priežastį",
     "addNote": "Pridėti pastabą",
@@ -179,7 +184,7 @@
     "ok": "Gerai"
   },
   "operators": {
-    "in": "Iš",
+    "in": "Yra tarp",
     "eq": "Lygu",
     "notIn": "Ne iš"
   },
@@ -314,7 +319,7 @@
     "shortcuts": {
       "label": "Spartieji klavišai",
       "commands": {
-        "undo": "Atstatyti",
+        "undo": "Anuliuoti",
         "redo": "Perdaryti",
         "copy": "Kopijuoti",
         "paste": "Įklijuoti",
@@ -338,7 +343,8 @@
     "errors": {
       "fixError": "Pataisykite klaidą",
       "count_one": "{{count}} klaida",
-      "count_other": "{{count}} klaidos"
+      "count_other": "{{count}} klaidų",
+      "count_few": "{{count}} klaidos"
     },
     "toggle": {
       "enabled": "Įjungtas",
@@ -450,13 +456,13 @@
     "domain": "Prekės",
     "list": {
       "noRecordsMessage": "Sukurkite pirmą savo prekę, kad pradėtumėte parduoti.",
-      "noRecordsTitle": "Kol kas nėra produktų"
+      "noRecordsTitle": "Kol kas nėra prekių"
     },
     "edit": {
       "header": "Keisti prekę",
       "description": "Keikite prekės aprašymą",
-      "successToast": "Prekė {{title}} sėmingai pakeista.",
-      "requestSuccessToast": "Produkto atnaujinimo užklausa sėkmingai pateikta. Administratoriui patvirtinus, pakeitimai bus rodomi parduotuvės svetainėje.",
+      "successToast": "Prekė {{title}} sėkmingai pakeista.",
+      "requestSuccessToast": "Prekės atnaujinimo užklausa sėkmingai pateikta. Administratoriui patvirtinus, pakeitimai bus rodomi parduotuvės svetainėje.",
       "duplicateRequestErrorToast": "Jau turite aktyvią užklausą. Vienu metu galite turėti tik vieną.",
       "attributes": {
         "createSuccessToast": "Atributas sėkmingai sukurtas.",
@@ -469,13 +475,13 @@
         "valuesRequired": "Būtina bent viena reikšmė",
         "valuesPlaceholder": "Pasirinkite arba įveskite reikšmę",
         "useForVariations": "Naudoti variantams",
-        "useForVariationsDescription": "Konvertuokite šį atributą į produkto parinktį, kuri generuoja variantus.",
-        "conversionWarning": "Konvertavus šį atributą į variantą, bus paveikti esami produkto variantai. Šis veiksmas gali ištrinti arba pakeisti variantus.",
+        "useForVariationsDescription": "Konvertuokite šį atributą į prekės parinktį, kuri generuoja variantus.",
+        "conversionWarning": "Konvertavus šį atributą į variantą, bus paveikti esami prekės variantai. Šis veiksmas gali ištrinti arba pakeisti variantus.",
         "editCustomValueTitle": "Pasirinktinė reikšmė",
-        "editCustomValueDescription": "Pakeitus tai pasirinktine reikšme, bus paveikta, kaip jūsų produktas rodomas paieškoje ir filtruose. Pasirinktinės reikšmės nėra ieškomos ar filtruojamos."
+        "editCustomValueDescription": "Pakeitus tai pasirinktine reikšme, pasikeis, kaip jūsų prekė rodoma paieškoje ir filtruose. Pasirinktinės reikšmės nėra ieškomos ar filtruojamos."
       },
       "informationalAttributes": {
-        "header": "Produkto informacija",
+        "header": "Prekės informacija",
         "description": "Informaciniams tikslams naudojami atributai"
       }
     },
@@ -484,7 +490,7 @@
       "description": "Sukurkite naują prekę.",
       "header": "Bendra informacija",
       "tabs": {
-        "details": "Aprašymas",
+        "details": "Informacija",
         "organize": "Skirstymas",
         "variants": "Variantai",
         "attributes": "Požymiai"
@@ -497,8 +503,8 @@
         "primaryCategoryRequired": "Būtina pagrindinė kategorija",
         "categoryRequired": "Pasirinkite kategoriją",
         "titleRequired": "Būtinas pavadinimas",
-        "handleInvalidFormat": "Nuoroda turi būti sudaryta tik iš mažųjų raidžių, skaičių ir brūkšnelių",
-        "handleMustContainLetter": "Nuorodoje turi būti bent viena raidė",
+        "handleInvalidFormat": "URL identifikatorių gali sudaryti tik mažosios raidės, skaičiai ir brūkšneliai",
+        "handleMustContainLetter": "URL identifikatoriuje turi būti bent viena raidė",
         "requiredAttributeSelect": "Šį atributą reikalauja prekyvietė. Pasirinkite reikšmę.",
         "requiredAttributeEnter": "Šį atributą reikalauja prekyvietė. Įveskite reikšmę.",
         "requiredAttributeMultiSelect": "Šį atributą reikalauja prekyvietė. Pasirinkite bent vieną reikšmę.",
@@ -533,11 +539,11 @@
         },
         "optionsHeader": "Pasirinkimai",
         "mediaPicker": {
-          "description": "Pasirinkite, kurios produkto nuotraukos priklauso šiam variantui.",
+          "description": "Pasirinkite, kurios prekės nuotraukos priklauso šiam variantui.",
           "empty": "Pirmiausia įkelkite nuotraukas skirtuke „Informacija“.",
           "header": "Priskirti vaizdus",
           "image": "Vaizdas {{index}}",
-          "partialFailureToast": "Produktas sukurtas, tačiau nepavyko priskirti vaizdų: {{variants}}. Galite bandyti dar kartą produkto redagavimo puslapyje."
+          "partialFailureToast": "Prekė sukurta, tačiau nepavyko priskirti vaizdų: {{variants}}. Galite bandyti dar kartą prekės redagavimo puslapyje."
         }
       },
       "successToast": "Prekė {{title}} sėkmingai sukurta.",
@@ -546,30 +552,30 @@
         "addExisting": "Pridėti esamą",
         "createNew": "Sukurti naują",
         "requiredAttributes": "Privalomi atributai",
-        "requiredAttributesHint": "These attributes are required by the Marketplace. Select them before proceeding.",
+        "requiredAttributesHint": "Šiuos atributus reikalauja prekyvietė. Pasirinkite juos prieš tęsdami.",
         "selectValues": "Pasirinkti reikšmes",
         "tip": "Patarimas",
-        "useForVariants": "Use for Variations",
+        "useForVariants": "Naudoti variantams",
         "useForVariantsDescription": "Jei pažymėta, galėsite kurti variantus naudodami šį atributą. Jei ne, atributas bus naudojamas tik informaciniais tikslais.",
         "variantAxisTip": "Šis atributas sukurs variantus. Juos galėsite apibrėžti kitame žingsnyje.",
         "titlePlaceholder": "pvz., Spalva",
         "valuePlaceholder": "Įveskite reikšmes",
-        "description": "Tvarkykite savo produkto atributus ir variantus, pvz., spalvą, dydį, prekės ženklą ir kt. Pasirinkite iš prekyvietės apibrėžtų atributų arba susikurkite savų.",
+        "description": "Tvarkykite savo prekės atributus ir variantus, pvz., spalvą, dydį, prekės ženklą ir kt. Pasirinkite iš prekyvietės apibrėžtų atributų arba susikurkite savų.",
         "requiredHeading": "Privalomi atributai",
-        "requiredDescription": "Šie atributai privalomi šios kategorijos produktams.",
+        "requiredDescription": "Šie atributai privalomi šios kategorijos prekėms.",
         "buttonLabel": "Atributas",
         "loading": "Kraunami atributai...",
         "learnMore": {
           "label": "Sužinokite daugiau apie atributus",
-          "content": "Atributai padeda klientams rasti ir filtruoti jūsų produktus. Administratoriaus apibrėžti atributai rodomi paieškos rezultatuose."
+          "content": "Atributai padeda klientams rasti ir filtruoti jūsų prekes. Administratoriaus apibrėžti atributai rodomi paieškos rezultatuose."
         },
         "editVariantAxisTip": "Galėsite kurti variantus naudodami šį atributą.",
         "warning": "Įspėjimas",
-        "editWarning": "Šio atributo pakeitimai gali paveikti esamus produkto variantus ar informaciją. Išsaugoję peržiūrėkite variantus ir produkto informaciją.",
+        "editWarning": "Šio atributo pakeitimai gali paveikti esamus prekės variantus ar informaciją. Išsaugoję peržiūrėkite variantus ir prekės informaciją.",
         "enterValuePlaceholder": "Įveskite reikšmę",
         "selectValuePlaceholder": "Pasirinkite reikšmę",
         "requiredTooltip": "Šį atributą reikalauja prekyvietė, jo pasirinkimo atšaukti negalima.",
-        "noAttributesTitle": "Kol kas nėra produktų atributų",
+        "noAttributesTitle": "Kol kas nėra prekių atributų",
         "noAttributesDescription": "Prekyvietė nėra apibrėžusi jokių atributų.",
         "errors": {
           "titleRequired": "Įveskite pavadinimą",
@@ -581,7 +587,7 @@
         "optionValue": "Numatytosios parinkties reikšmė",
         "variantTitle": "Numatytasis variantas"
       },
-      "requestSuccessToast": "Produkto užklausa sėkmingai pateikta. Dabar galite kurti pasiūlymus šiam produktui. Administratoriui patvirtinus produktą, jūsų pasiūlymai bus rodomi parduotuvės svetainėje. Matomi bus tik pasiūlymai su nustatytu atsargų kiekiu ir kaina."
+      "requestSuccessToast": "Prekės užklausa sėkmingai pateikta. Administratoriui patvirtinus prekę, ji bus rodoma parduotuvės svetainėje. Matomi bus tik variantai su nustatytu atsargų kiekiu ir kaina."
     },
     "export": {
       "header": "Esportuoti prekių sąrašą",
@@ -603,14 +609,14 @@
       "header": "Importuoti prekių sąrašą",
       "uploadLabel": "Importuoti prekes",
       "uploadHint": "Atvilkite CSV bylą arba spustelėkite, kad įkeltumėte",
-      "description": "Importuokite produktus pateikdami CSV bylą iš anksto nustatytu formatu",
+      "description": "Importuokite prekes pateikdami CSV bylą iš anksto nustatytu formatu",
       "template": {
         "title": "Nežinote, kaip sutvarkyti sąrašą?",
         "description": "Atsisiųskite pateiktą šabloną, kad įsitikintumėte, jog laikotės tinkamo formato."
       },
       "upload": {
         "title": "Įkelti CSV bylą",
-        "description": "Importuodami galite pridėti arba atnaujinti produktus. Norėdami atnaujinti esamus produktus, turite naudoti esamą nuorodą ir ID, o esamiems variantams atnaujinti turite naudoti esamą ID. Prieš importuojant produktus, jūsų bus paprašyta patvirtinti.",
+        "description": "Importuodami galite pridėti arba atnaujinti prekes. Norėdami atnaujinti esamas prekes, turite naudoti esamą URL identifikatorių ir ID, o esamiems variantams atnaujinti turite naudoti esamą ID. Prieš importuojant prekes, jūsų bus paprašyta patvirtinti.",
         "preprocessing": "Apdorojame...",
         "productsToCreate": "Prekės, kurios bus sukurtos",
         "productsToUpdate": "Prekės, kurios bus atnaujintos"
@@ -659,7 +665,7 @@
       "deleteImageLabel": "Pašalinti nuotrauką",
       "emptyState": {
         "header": "Nuotraukų dar nėra",
-        "description": "Pridėkite prekės nuotraukas kad parodyti jas parduotuvėje",
+        "description": "Šiam variantui nepriskirta jokių nuotraukų.",
         "action": "Pridėti nuotraukas",
         "variantDescription": "Šis variantas neturi nuotraukų. Pridėkite nuotraukų prie varianto."
       },
@@ -669,29 +675,31 @@
       "variantImages": "Varianto nuotraukos",
       "showAvailableImages": "Rodyti galimas nuotraukas",
       "availableImages": "Pasirinkite nuotraukas",
-      "selectToAdd": "Pridėkite produkto nuotraukas prie varianto. Norėdami pridėti naujų nuotraukų, pirmiausia pridėkite jas prie produkto.",
+      "selectToAdd": "Pridėkite prekės nuotraukas prie varianto. Norėdami pridėti naujų nuotraukų, pirmiausia pridėkite jas prie prekės.",
       "removeSelected": "Pašalinti pasirinktas",
       "selectImages": "Pasirinkite nuotraukas",
       "selectImagesHint": "Spustelėkite nuotraukas, kad pridėtumėte jas prie šio varianto.",
       "editLabel": "Keisti",
       "limitExceeded": {
-        "description": "Vienam produktui galima įkelti ne daugiau kaip {{max}} nuotraukas.",
+        "description": "Vienai prekei galima įkelti ne daugiau kaip {{max}} nuotraukas.",
         "title": "Pasiektas vaizdų limitas",
         "confirm": "Supratau"
       },
       "uploading": "Įkeliama...",
-      "uploadError": "Įkelti nepavyko"
+      "uploadError": "Įkelti nepavyko",
+      "deleteWarning_few": "Ketinate pašalinti {{count}} nuotraukas. Šis veiksmas neatstatomas.",
+      "deleteWarningWithThumbnail_few": "Ketinate pašalinti {{count}} nuotraukas ir jų miniatiūras. Šis veiksmas neatstatomas."
     },
     "discountableHint": "Jei nepažymėta, nuolaidos prekei netaikomos.",
     "noSalesChannels": "Nėra nei vienam pardavimo kanale",
     "variantCount_one": "{{count}} variantas",
-    "variantCount_other": "{{count}} variantai",
+    "variantCount_other": "{{count}} variantų",
     "deleteVariantWarning": "Ketinate pašalinti prekės variantą {{title}}. Šis veiksmas neatstatomas.",
     "productStatus": {
       "draft": "Juodraštis",
       "published": "Publikuojama",
       "proposed": "Pasiūlyta",
-      "requires_action": "Changes required",
+      "requires_action": "Reikia veiksmų",
       "rejected": "Atmesta"
     },
     "fields": {
@@ -706,8 +714,8 @@
         "placeholder": "Šilta ir jauku"
       },
       "handle": {
-        "label": "Nuoroda",
-        "tooltip": "Nuoroda naudojama norint nurodyti prekės adresą jūsų parduotuvėje. Jei nenurodyta, nuoroda bus sugeneruota iš prekės pavadinimo.",
+        "label": "URL identifikatorius",
+        "tooltip": "Sugeneruojama automatiškai iš prekės pavadinimo. Tik mažosios raidės, skaičiai ir brūkšneliai — šio lauko tiesiogiai redaguoti negalima.",
         "placeholder": "žieminė-striukė"
       },
       "description": {
@@ -791,8 +799,8 @@
         },
         "useForVariants": {
           "label": "Naudoti variantams",
-          "description": "Įjunkite tai, kad sukurtumėte produkto variantus pagal šį atributą.",
-          "editDescription": "Pakeitus tai, bus paveikti esami produkto variantai."
+          "description": "Įjunkite tai, kad sukurtumėte prekės variantus pagal šį atributą.",
+          "editDescription": "Pakeitus tai, bus paveikti esami prekės variantai."
         },
         "validation": {
           "required": "Būtina „{{name}}“",
@@ -808,7 +816,7 @@
       },
       "primaryCategory": {
         "label": "Pagrindinė kategorija",
-        "tooltip": "Kategorija gali apibrėžti šiam produktui taikomus atributus. Atributus kuria administratorius, kai nustato prekyvietę."
+        "tooltip": "Kategorija gali apibrėžti šiai prekei taikomus atributus. Atributus kuria administratorius, kai nustato prekyvietę."
       }
     },
     "variant": {
@@ -828,7 +836,8 @@
       "validation": {
         "titleRequired": "Įveskite pavadinimą",
         "optionRequired": "Pasirinkite reikšmę"
-      }
+      },
+      "tableItem_few": "{{availableCount}} laisvų {{locationCount}} vietose"
     },
     "options": {
       "header": "Pasirinkimai",
@@ -843,7 +852,7 @@
       "deleteWarning": "Ketinate pašalinti prekės pasirinkimą: {{title}}. Šis veiksmas neatstatomas.",
       "variations": {
         "label": "Variantai",
-        "description": "Atributai, naudojami produkto variantams kurti."
+        "description": "Atributai, naudojami prekės variantams kurti."
       }
     },
     "organization": {
@@ -881,35 +890,36 @@
       }
     },
     "bulkDelete": {
-      "title": "Ištrinti produktus",
-      "description": "Ketinate ištrinti {{count}} produktus iš katalogo. Šio veiksmo anuliuoti negalėsite.",
-      "success": "Sėkmingai ištrinta produktų: {{count}}.",
-      "error": "Nepavyko ištrinti produktų."
+      "title": "Ištrinti prekes",
+      "description": "Ketinate ištrinti {{count}} prekes iš katalogo. Šio veiksmo anuliuoti negalėsite.",
+      "success": "Sėkmingai ištrinta prekių: {{count}}.",
+      "error": "Nepavyko ištrinti prekių."
     },
     "edits": {
       "panel": {
-        "title": "Produkto atnaujinimo užklausa",
-        "deleteRequested": "Produkto ištrynimas laukia patvirtinimo.",
+        "title": "Prekės atnaujinimo užklausa",
+        "deleteRequested": "Prekės ištrynimas laukia patvirtinimo.",
         "cancelTitle": "Atšaukti atnaujinimo užklausą",
-        "cancelDescription": "Ar tikrai norite atšaukti šią produkto atnaujinimo užklausą? Šio veiksmo anuliuoti negalėsite."
+        "cancelDescription": "Ar tikrai norite atšaukti šią prekės atnaujinimo užklausą? Šio veiksmo anuliuoti negalėsite."
       },
       "toast": {
-        "canceledSuccessfully": "Produkto atnaujinimo užklausa sėkmingai atšaukta."
+        "canceledSuccessfully": "Prekės atnaujinimo užklausa sėkmingai atšaukta."
       }
     },
     "attributeVariations": "Variantai",
     "attributeVariantsDescription": "Variantams naudojami atributai",
-    "attributeProductInformation": "Produkto informacija",
+    "attributeProductInformation": "Prekės informacija",
     "attributeProductInformationDescription": "Informaciniams tikslams naudojami atributai",
     "attributeRequiredByMarketplace": "Šį atributą reikalauja prekyvietė.",
     "attributeRequiredDeleteDisabledTooltip": "Privalomų atributų pašalinti negalima.",
+    "missingRequiredAttributesHint": "Pateikite privalomą informaciją",
     "addAttribute": "Pridėti atributą",
     "deleteAttributeWarning": "Ar tikrai norite ištrinti atributą „{{title}}“? Šio veiksmo anuliuoti negalėsite.",
     "attributesSection": {
-      "removeWarning": "Ketinate pašalinti šį atributą iš produkto. Šio veiksmo anuliuoti negalėsite."
+      "removeWarning": "Ketinate pašalinti šį atributą iš prekės. Šio veiksmo anuliuoti negalėsite."
     },
     "editAttribute": "Redaguoti atributą",
-    "editAttributeHint": "Atnaujinkite šiam produkto atributui pasirinktas reikšmes.",
+    "editAttributeHint": "Atnaujinkite šiam prekės atributui pasirinktas reikšmes.",
     "variantMedia": {
       "label": "Varianto medija",
       "manageVariants": "Tvarkyti variantus",
@@ -930,15 +940,15 @@
       "status": "Būsena",
       "thumbnail": "Miniatūra",
       "title": "Pavadinimas",
-      "handle": "Nuoroda",
+      "handle": "URL identifikatorius",
       "created_at": "Sukurtas",
       "updated_at": "Atnaujinta"
     },
     "bulkEdit": {
-      "title": "Masinis produktų redagavimas",
-      "description": "Redaguokite kelis produktus vienu metu.",
+      "title": "Masinis prekių redagavimas",
+      "description": "Redaguokite kelias prekes vienu metu.",
       "noChanges": "Nėra pakeitimų išsaugoti.",
-      "success": "Produktai sėkmingai atnaujinti."
+      "success": "Prekės sėkmingai atnaujintos."
     },
     "stock": {
       "available": "Prieinama",
@@ -951,12 +961,13 @@
       },
       "header": "Atsargų sekimas",
       "lowStock": "Mažos atsargos"
-    }
+    },
+    "variantCount_few": "{{count}} variantai"
   },
   "productDetailInfoWidget": {
     "title": "Plėtinys",
     "description": "„{{title}}“ ({{id}}) valdiklis.",
-    "fallbackTitle": "šį produktą"
+    "fallbackTitle": "šią prekę"
   },
   "providers": {
     "tokens": {
@@ -973,7 +984,7 @@
     "createCollectionHint": "Sukurkite naują kolekciją prekių skirstymui.",
     "createSuccess": "Kolekcija sėkmingai sukurta.",
     "editCollection": "Keisti kolekciją",
-    "handleTooltip": "Nuordoda naudojama norint nurodyti kolekcijos adresą parduotuvėje. Jei nenurodyta, nuoroda bus sugenruota iš kolekcijos pavadinimo.",
+    "handleTooltip": "Sugeneruojama automatiškai iš kolekcijos pavadinimo. Tik mažosios raidės, skaičiai ir brūkšneliai — šio lauko tiesiogiai redaguoti negalima.",
     "deleteWarning": "Ketinate pašalinti kolekciją {{title}}. Šis veiksmas neatstatomas.",
     "removeSingleProductWarning": "Ketinate pašalinti prekę {{title}} iš kolekcijos. Šis veiksmas neatstatomas.",
     "removeProductsWarning_one": "Ketinate pašalinti {{count}} prekę iš kolekcijos. Šis veiksmas neatstatomas.",
@@ -984,11 +995,13 @@
       },
       "add": {
         "successToast_one": "Prekė sėkmingai pridėta į kolekciją.",
-        "successToast_other": "Prekės sėmingai pridėtos į kolekciją."
+        "successToast_other": "Prekės sėkmingai pridėtos į kolekciją.",
+        "successToast_few": "Prekės sėkmingai pridėtos į kolekciją."
       },
       "remove": {
         "successToast_one": "Prekė sėkmingai pašalinta iš kolekcijos.",
-        "successToast_other": "Prekės sėkmingai pašalintos iš kolekcijos."
+        "successToast_other": "Prekės sėkmingai pašalintos iš kolekcijos.",
+        "successToast_few": "Prekės sėkmingai pašalintos iš kolekcijos."
       }
     },
     "requestSuccess": "Kolekcijos užklausa sėkmingai pateikta",
@@ -1007,7 +1020,8 @@
         "header": "Kol kas nėra piktogramos",
         "description": "Čia bus rodoma prekyvietės operatoriaus pridėta piktograma."
       }
-    }
+    },
+    "removeProductsWarning_few": "Ketinate pašalinti {{count}} prekes iš kolekcijos. Šis veiksmas neatstatomas."
   },
   "categories": {
     "domain": "Kategorijos",
@@ -1016,7 +1030,7 @@
       "header": "Sukurti kategoriją",
       "hint": "Sukurkite naują kategoriją prekių skirstymui.",
       "tabs": {
-        "details": "Nustatymai",
+        "details": "Informacija",
         "organize": "Tvarkyti eiliškumą"
       },
       "successToast": "Kategorija {{name}} sėkmingai sukurta."
@@ -1034,13 +1048,16 @@
       "add": {
         "disabledTooltip": "Prekė jau yra šioje kategorijoje.",
         "successToast_one": "Pridėta {{count}} prekė į kategoriją.",
-        "successToast_other": "Pridėta {{count}} prekių į kategoriją."
+        "successToast_other": "Pridėta {{count}} prekių į kategoriją.",
+        "successToast_few": "Pridėtos {{count}} prekės į kategoriją."
       },
       "remove": {
         "confirmation_one": "Ketinate pašalinti {{count}} prekę iš kategorijos. Šis veiksmas neatstatomas.",
         "confirmation_other": "Ketinate pašalinti {{count}} prekių iš kategorijos. Šis veiksmas neatstatomas.",
         "successToast_one": "Pašalinta {{count}} prekė iš kategorijos.",
-        "successToast_other": "Pašalinta {{count}} prekių iš kategorijos."
+        "successToast_other": "Pašalinta {{count}} prekių iš kategorijos.",
+        "confirmation_few": "Ketinate pašalinti {{count}} prekes iš kategorijos. Šis veiksmas neatstatomas.",
+        "successToast_few": "Pašalintos {{count}} prekės iš kategorijos."
       },
       "list": {
         "noRecordsMessage": "Kategorijoje prekių nėra."
@@ -1091,23 +1108,27 @@
   },
   "inventory": {
     "domain": "Atsargos",
-    "subtitle": "Tvarkykite savo turimas atsargas",
+    "subtitle": "Tvarkykite atsargų vienetus.",
     "reserved": "Rezervuota",
     "available": "Laisva",
     "locationLevels": "Vietos",
     "associatedVariants": "Susiję variantai",
     "manageLocations": "Tvarkyti vietas",
-    "deleteWarning": "Ketinate pašalinti atsargas. Šis veiksmas neatstatomas.",
+    "deleteWarning": "Ketinate pašalinti atsargų vienetą. Šis veiksmas neatstatomas.",
     "editItemDetails": "Keisti atsargas",
     "create": {
-      "title": "Sukurti atsargas",
-      "details": "Nustatymai",
+      "title": "Sukurti atsargų vienetą",
+      "details": "Informacija",
       "availability": "Prieinamumas",
       "locations": "Vietos",
       "attributes": "Požymiai",
       "requiresShipping": "Reikalingas siuntimas",
-      "requiresShippingHint": "Ar šioms atsargoms reikalingas siuntimas?",
-      "successToast": "Atsargos sėkmingai sukurtos.",
+      "requiresShippingHint": "Ar šiam atsargų vienetui reikalingas siuntimas?",
+      "successToast": "Atsargų vienetas sėkmingai sukurtas.",
+      "errors": {
+        "titleRequired": "Įveskite pavadinimą"
+      },
+      "attributesHint": "Tai numatytosios reikšmės, naudojamos vienetui aprašyti. Jų nenustato prekyvietė.",
       "descriptionPlaceholder": "Prekės aprašymas"
     },
     "reservation": {
@@ -1130,28 +1151,67 @@
       "deleteSuccessToast": "Rezervacija sėkmingai pašalinta.",
       "errors": {
         "noAvaliableQuantity": "Vietos sandėlyje nėra pakankamo laisvo kiekio.",
-        "quantityOutOfRange": "Mažiausias kiekis yra 1, o didžiausias kiekis yra {{max}}"
-      }
+        "quantityOutOfRange": "Mažiausias kiekis yra 1, o didžiausias kiekis yra {{max}}",
+        "idRequired": "Būtina pasirinkti atsargų vienetą",
+        "selectLocation": "Pasirinkite vietą",
+        "enterQuantity": "Įveskite kiekį",
+        "pleaseEnterQuantity": "Įveskite kiekį"
+      },
+      "deleteTitle": "Pašalinti rezervaciją",
+      "deleteDescription": "Ketinate pašalinti rezervaciją. Šis veiksmas neatstatomas.",
+      "deleteBlockedDescription": "Šios rezervacijos pašalinti negalima, nes ji susieta su neįvykdytu užsakymu.",
+      "gotIt": "Supratau",
+      "locationPlaceholder": "Pasirinkite vietą",
+      "itemId": "Vieneto ID",
+      "goToInventoryItem": "Eiti į atsargų vienetą",
+      "reserved": "Rezervuota",
+      "itemPlaceholder": "Pasirinkite vienetą"
     },
     "adjustInventory": {
       "errors": {
-        "stockedQuantity": "Kiekis sandėlyje negali būti mažesnis nei rezervuotas kiekis {{quantity}}."
+        "stockedQuantity": "Kiekis sandėlyje negali būti mažesnis nei rezervuotas kiekis {{quantity}}.",
+        "enterQuantity": "Įveskite kiekį"
       }
     },
     "toast": {
       "updateLocations": "Vietos sėkmingai atnaujintos.",
       "updateLevel": "Atsargų kiekis sėkmingai pakeistas.",
-      "updateItem": "Atsargos sėkmingai atnaujintos."
+      "updateItem": "Atsargų vienetas sėkmingai atnaujintas.",
+      "deleteItem": "Atsargų vienetas sėkmingai pašalintas."
     },
     "stock": {
-      "title": "Keisti atsargų likučius",
-      "description": "Pakeiskite pasirinktų atargų likučius.",
+      "title": "Atnaujinti atsargų lygius",
+      "description": "Atnaujinkite pasirinktų atsargų vienetų atsargų lygius.",
       "action": "Keisti likučius",
       "placeholder": "Išjungta",
       "disablePrompt_one": "Ketinate išjungti {{count}} vietos likutį. Šis veiksmas neatstatomas.",
-      "disablePrompt_other": "Ketinate išjungti {{count}} vietos likučius. Šis veiksmas neatstatomas.",
+      "disablePrompt_other": "Ketinate išjungti {{count}} vietos likučių. Šis veiksmas neatstatomas.",
       "disabledToggleTooltip": "Neina išjungti: išvalykite užsakytus ir/arba rezervuotus likučius prieš išjungiant.",
-      "successToast": "Atsargų likučiai sėkmingai atnaujinti."
+      "successToast": "Atsargų likučiai sėkmingai atnaujinti.",
+      "disablePrompt_few": "Ketinate išjungti {{count}} vietos likučius. Šis veiksmas neatstatomas."
+    },
+    "attributes": {
+      "tip": "Tai numatytosios reikšmės, naudojamos vienetui aprašyti. Jų netvarko prekyvietė."
+    },
+    "item": {
+      "deleteTitle": "Pašalinti atsargų vienetą",
+      "deleteDescription": "Ketinate pašalinti atsargų vienetą. Šis veiksmas neatstatomas."
+    },
+    "level": {
+      "deleteTitle": "Pašalinti atsargų lygį",
+      "deleteDescription": "Ketinate pašalinti atsargų lygį vietoje {{location}}. Bus pašalintos šios vietos atsargos ir rezervacijos, šis veiksmas neatstatomas."
+    },
+    "list": {
+      "noRecordsTitle": "Atsargų vienetų dar nėra",
+      "noRecordsMessage": "Sukurkite atsargų vienetus, kad galėtumėte tvarkyti atsargas"
+    },
+    "locations": {
+      "noRecordsTitle": "Vietų dar nėra",
+      "noRecordsMessage": "Pridėkite vietą, kad galėtumėte pradėti tvarkyti atsargų lygius"
+    },
+    "reservations": {
+      "noRecordsTitle": "Rezervacijų dar nėra",
+      "noRecordsMessage": "Nėra rodytinų rezervacijų"
     },
     "manageLocationQuantity": "Tvarkyti kiekį pagal vietą",
     "quantityAcrossLocations": "{{quantity}} {{locations}} vietose",
@@ -1167,7 +1227,7 @@
     "balanceHigherThanValue": "Likutis negali būti didesnis nei pradinė suma.",
     "balanceLowerThanZero": "Likutis negali būti neigiamas.",
     "expiryDateHint": "Šalyse galioja skirtingi įstatymai dėl dovanų kortelių galiojimo pabaigos. Prieš nustatydami galiojimo datą, peržiūrėkite vietines taisykles.",
-    "regionHint": "Pakeitus dovanų kortelės regioną, gali pasikeis ir jos valiuta, o tai gali turėti įtakos kortelės vertei.",
+    "regionHint": "Pakeitus dovanų kortelės regioną, gali pasikeisti ir jos valiuta, o tai gali turėti įtakos kortelės vertei.",
     "enabledHint": "Nurodykite, ar dovanų kortelė įjungta, ar išjungta.",
     "balance": "Likutis",
     "currentBalance": "Esamas likutis",
@@ -1287,15 +1347,19 @@
         "successToast_other": "Klientai sėkmingai priskirti prie grupės.",
         "list": {
           "noRecordsMessage": "Pirma sukurkite klientą."
-        }
+        },
+        "successToast_few": "Klientai sėkmingai priskirti prie grupės."
       },
       "remove": {
         "title_one": "Pašalinti klientą",
         "title_other": "Pašalinti klientus",
         "description_one": "Ketinate pašalinti {{count}} klientą iš klientų grupės. Šis veiksmas neatstatomas.",
-        "description_other": "Ketinate pašalinti {{count}} klientus iš klientų grupės. Šis veiksmas neatstatomas.",
+        "description_other": "Ketinate pašalinti {{count}} klientų iš klientų grupės. Šis veiksmas neatstatomas.",
         "successToast_one": "Klientas sėkmingai pašalintas iš grupės.",
-        "successToast_other": "Klientai sėkmingai pašalinti iš grupės."
+        "successToast_other": "Klientai sėkmingai pašalinti iš grupės.",
+        "title_few": "Pašalinti klientus",
+        "description_few": "Ketinate pašalinti {{count}} klientus iš klientų grupės. Šis veiksmas neatstatomas.",
+        "successToast_few": "Klientai sėkmingai pašalinti iš grupės."
       },
       "list": {
         "noRecordsMessage": "Ši grupė neturi klientų.",
@@ -1320,7 +1384,7 @@
     "status": {
       "not_paid": "Neapmokėtas",
       "pending": "Laukia",
-      "completed": "Įvykdytas",
+      "completed": "Užbaigtas",
       "draft": "Juodraštis",
       "archived": "Archyvuotas",
       "canceled": "Atšauktas",
@@ -1331,7 +1395,7 @@
       "allocateItems": "Priskirti atsargas",
       "editOrder": "Keisti užsakymą",
       "editOrderContinue": "Tęsti užsakymo keitimą",
-      "inventoryKit": "Susideda iš {{count}}x atsargų",
+      "inventoryKit": "Susideda iš {{count}}x atsargų vienetų",
       "itemTotal": "Prekės iš viso",
       "shippingTotal": "Siuntimas iš viso",
       "discountTotal": "Nuolaida iš viso",
@@ -1352,11 +1416,11 @@
     },
     "payment": {
       "title": "Apmokėjimas",
-      "isReadyToBeCaptured": "Mokėjimas <0/> paruoštas nuskaitymui.",
+      "isReadyToBeCaptured": "Mokėjimą <0/> galima nurašyti.",
       "totalPaidByCustomer": "Viso sumokėjo klientas",
-      "capture": "Nuskaityti mokėjimą",
-      "capture_short": "Nuskaityti",
-      "refund": "Grąžinti",
+      "capture": "Nurašyti mokėjimą",
+      "capture_short": "Nurašyti",
+      "refund": "Grąžinti pinigus",
       "statusLabel": "Apmokėjimo būsena",
       "statusTitle": "Apmokėjimo būsena",
       "status": {
@@ -1364,17 +1428,17 @@
         "authorized": "Patvirtintas",
         "partiallyAuthorized": "Dalinai patvirtintas",
         "awaiting": "Laukia",
-        "captured": "Nuskaitytas",
-        "partiallyRefunded": "Dalinai grąžintas",
-        "partiallyCaptured": "Dalinai captured",
+        "captured": "Nurašytas",
+        "partiallyRefunded": "Pinigai grąžinti iš dalies",
+        "partiallyCaptured": "Iš dalies nurašytas",
         "refunded": "Grąžintas",
         "canceled": "Atšauktas",
         "requiresAction": "Reikia veiksmų",
         "pending": "Laukia"
       },
-      "capturePayment": "Mokėjimas, kurio suma {{amount}}, bus nuskaitytas.",
-      "capturePaymentSuccess": "Mokėjimas, kurio suma {{amount}}, sėkmingai nuskaitytas",
-      "createRefund": "Sukurti grąžinimą",
+      "capturePayment": "Bus nurašytas {{amount}} mokėjimas.",
+      "capturePaymentSuccess": "Mokėjimas {{amount}} sėkmingai nurašytas",
+      "createRefund": "Grąžinti pinigus",
       "refundPaymentSuccess": "return, kurio suma {{amount}}, sėkmingas",
       "createRefundWrongQuantity": "Kiekis turi būti skaičius tarp 1 ir {{number}}",
       "refundAmount": "Grąžinti {{ amount }}",
@@ -1426,7 +1490,7 @@
     "edit": {
       "email": {
         "title": "Keisti el. paštą",
-        "requestSuccess": "Užsakymo el. paštas pakeitas į {{email}}."
+        "requestSuccess": "Užsakymo el. paštas pakeistas į {{email}}."
       },
       "shippingAddress": {
         "title": "Keisti pristatymo adresą",
@@ -1441,12 +1505,12 @@
       "create": "Sukurti grąžinimą",
       "confirm": "Patvirtinti grąžinimą",
       "confirmText": "Ketinate patvirtinti grąžinimą. Šis veiksmas neatstatomas.",
-      "inbound": "Įeinantis",
-      "outbound": "Išeinantis",
+      "inbound": "Grąžinamos prekės",
+      "outbound": "Siunčiamos prekės",
       "sendNotification": "Siųsti pranešimą",
       "sendNotificationHint": "Praneškite klientui apie grąžinimą.",
       "returnTotal": "Grąžinama viso",
-      "inboundTotal": "Įeinantis viso",
+      "inboundTotal": "Grąžinamų prekių suma",
       "outstandingAmount": "Likučio suma",
       "reason": "Priežastis",
       "reasonHint": "Pasirinkite kodėl klientas nori grąžinti prekes.",
@@ -1463,7 +1527,7 @@
       "returnRequestedInfo": "{{requestedItemsCount}}x prekių grąžinimas išsiųstas",
       "returnReceivedInfo": "{{requestedItemsCount}}x prekių grąžinimas gautas",
       "itemReceived": "Gautos prekės",
-      "returnRequested": "return išsiųstas",
+      "returnRequested": "Grąžinimo užklausa pateikta",
       "damagedItemReceived": "Gauta pažeista prekė",
       "damagedItemsReturned": "{{quantity}}x pažeistos prekės grąžintos",
       "activeChangeError": "Jau yra vykdomas užsakymo keitimas (grąžinimas, pretenzija, keitimas, kt.). Užbaikite arba atšaukite keitimą.",
@@ -1477,8 +1541,8 @@
           "hint": "Nėra sukurtų siuntimo variantų šiai vietovei. Galite sukurti jį <LinkComponent>Vietos ir siuntimas</LinkComponent>."
         },
         "outboundShippingOptions": {
-          "title": "Nėra išeinančio siuntimo variantų",
-          "hint": "Nėra sukurtų išeinančio siuntimo variantų šiai vietovei. Galite sukurti jį <LinkComponent>Vietos ir siuntimas</LinkComponent>."
+          "title": "Nerasta siuntimo klientui būdų",
+          "hint": "Šiai vietai nesukurta siuntimo klientui būdų. Juos galite sukurti skiltyje <LinkComponent>Vietos ir siuntimas</LinkComponent>."
         }
       },
       "receive": {
@@ -1498,11 +1562,11 @@
         }
       },
       "toast": {
-        "canceledSuccessfully": "return sekmingai atšauktas",
-        "confirmedSuccessfully": "return sekmingai patvirtintas"
+        "canceledSuccessfully": "Grąžinimas sėkmingai atšauktas",
+        "confirmedSuccessfully": "Grąžinimas sėkmingai patvirtintas"
       },
       "panel": {
-        "title": "return inicijuotas",
+        "title": "Grąžinimas inicijuotas",
         "description": "Yra pradėtas grąžinimas, kuris neužbaigtas"
       },
       "policyHint": "Grąžinimai priimami per {{days}} d. nuo pristatymo.",
@@ -1521,10 +1585,10 @@
       "confirm": "Patvirtinti pretenziją",
       "confirmText": "Ketinate patvirtinti pretenziją. Šis veiksmas neatstatomas.",
       "manage": "Tvarkyti pretenziją",
-      "outbound": "Tiekėjui",
+      "outbound": "Siunčiamos prekės",
       "outboundItemAdded": "{{itemsCount}}x pridėta prie pretenzijos",
-      "outboundTotal": "Tiekėjui viso",
-      "outboundShipping": "Siuntimas tiėkėjui",
+      "outboundTotal": "Siunčiamų prekių suma",
+      "outboundShipping": "Siuntimas klientui",
       "outboundShippingHint": "Pasirinkite norimą siuntimo būdą.",
       "refundAmount": "Numatomas skirtumas",
       "activeChangeError": "Jau yra vykdomas užsakymo keitimas (grąžinimas, pretenzija, keitimas, kt.). Užbaikite arba atšaukite keitimą.",
@@ -1541,8 +1605,8 @@
         "onlyReturnShippingOptions": "Šiame sąraše bus tik grąžinimo siuntimo pasirinkimai."
       },
       "toast": {
-        "canceledSuccessfully": "Pretenzija sekmingai atšaukta",
-        "confirmedSuccessfully": "Pretenzija sekmingai patvirtinta"
+        "canceledSuccessfully": "Pretenzija sėkmingai atšaukta",
+        "confirmedSuccessfully": "Pretenzija sėkmingai patvirtinta"
       },
       "panel": {
         "title": "Pretenzija inicijuota",
@@ -1582,10 +1646,10 @@
       "manage": "Tvarkyti keitimą",
       "confirm": "Patvirtinti keitimą",
       "confirmText": "Ketinate patvirtinti keitimą. Šis veiksmas neatstatomas.",
-      "outbound": "Tiekėjui",
+      "outbound": "Siunčiamos prekės",
       "outboundItemAdded": "{{itemsCount}}x pridėta keitimui",
-      "outboundTotal": "Tiekėjui viso",
-      "outboundShipping": "Siuntimas tiekėjui",
+      "outboundTotal": "Siunčiamų prekių suma",
+      "outboundShipping": "Siuntimas klientui",
       "outboundShippingHint": "Pasirinkite norimą siuntimo būdą.",
       "refundAmount": "Numatomas skirtumas",
       "activeChangeError": "Jau yra vykdomas užsakymo keitimas (grąžinimas, pretenzija, keitimas, kt.). Užbaikite arba atšaukite keitimą.",
@@ -1595,15 +1659,15 @@
         }
       },
       "cancel": {
-        "title": "Atšaukti keitimą",
+        "title": "Atšaukti mainus",
         "description": "Tikrai norite atšaukti keitimą?"
       },
       "tooltips": {
         "onlyReturnShippingOptions": "Šiame sąraše bus tik grąžinimo siuntimo pasirinkimai."
       },
       "toast": {
-        "canceledSuccessfully": "Keitimas sekmingai atšauktas",
-        "confirmedSuccessfully": "Keitimas sekmingai patvirtintas"
+        "canceledSuccessfully": "Keitimas sėkmingai atšauktas",
+        "confirmedSuccessfully": "Keitimas sėkmingai patvirtintas"
       },
       "panel": {
         "title": "Keitimas inicijuotas",
@@ -1623,7 +1687,7 @@
       "locationHint": "Pasirinkite vietą, į kurią norite siųsti grąžinamas prekes.",
       "locationPlaceholder": "Pasirinkite vietą",
       "inboundShipping": "Grąžinimo siuntimas (nebūtinas)",
-      "inboundShippingHint": "Pasirinkite būdą, naudojamą įeinančiai siuntai.",
+      "inboundShippingHint": "Pasirinkite grąžinimo siuntos būdą.",
       "inboundShippingPlaceholder": "Pasirinkite siuntimo parinktį",
       "inboundShippingLockedPlaceholder": "Pirmiausia pasirinkite vietą",
       "reasonPlaceholder": "Pasirinkite priežastį",
@@ -1645,7 +1709,7 @@
       "itemsToAllocate": "Prekių atidėjimui",
       "itemsToAllocateDesc": "Pasirinkite kiek prekių norite atidėti",
       "search": "Prekių paieška",
-      "consistsOf": "Susideda iš {{num}}x atsargų",
+      "consistsOf": "Susideda iš {{num}}x atsargų vienetų",
       "requires": "Reikalinga {{num}} kiekvienam variantui",
       "toast": {
         "created": "Prekė sėkmingai atidėta",
@@ -1670,34 +1734,35 @@
     },
     "fulfillment": {
       "cancelWarning": "Ketinate atšaukti užsakymo vykdymą. Šis veiksmas neatstatomas.",
-      "markAsDeliveredWarning": "Ketinate pažymėti kaip pristatytą. Šis veiksmas neatstatomas.",
+      "markAsDeliveredWarning": "Ketinate pažymėti vykdymą kaip pristatytą. Šis veiksmas neatstatomas.",
       "differentOptionSelected": "Pasirinktas siuntimo būdas nesutampa su kliento pasirinktu.",
       "disabledItemTooltip": "Pasirinktas siuntimo būdas neleidžia siųsti šios prekės",
-      "unfulfilledItems": "Neparuoštos prekės",
-      "statusLabel": "Būsena",
-      "statusTitle": "Būsena",
-      "fulfillItems": "Paruošti prekes",
-      "awaitingFulfillmentBadge": "Laukia paruošimo",
+      "unfulfilledItems": "Neįvykdytos prekės",
+      "statusLabel": "Vykdymo būsena",
+      "statusTitle": "Vykdymo būsena",
+      "fulfillItems": "Vykdyti prekes",
+      "awaitingFulfillmentBadge": "Laukia vykdymo",
       "requiresShipping": "Reikalingas siuntimas",
       "number": "Vykdymas #{{number}}",
-      "itemsToFulfill": "Prekės paruošimui",
+      "itemsToFulfill": "Vykdytinos prekės",
       "create": "Sukurti vykdymą",
       "available": "Yra",
       "inStock": "Sandėlyje",
       "markAsShipped": "Žymėti kaip išsiųstą",
       "markAsPickedUp": "Žymėti kaip paimtą",
       "markAsDelivered": "Žymėti kaip pristatytą",
-      "itemsToFulfillDesc": "Pasirinkite prekes ir kiekius paruošimui",
-      "locationDescription": "Pasirinkite vietą iš kurios norite paruošti prekes.",
-      "sendNotificationHint": "Praneškite klientui apie sukurtą prekių paruošimą.",
+      "itemsToFulfillDesc": "Pasirinkite vykdytinas prekes ir kiekius",
+      "locationDescription": "Pasirinkite vietą, iš kurios norite vykdyti prekes.",
+      "sendNotificationHint": "Praneškite klientams apie sukurtą vykdymą.",
       "methodDescription": "Pasirinkite kitą siuntimo būdą nei kliento pasirinkas",
       "error": {
-        "wrongQuantity": "Yra tik viena prekė paruošimui",
+        "wrongQuantity": "Vykdymui prieinama tik viena prekė",
         "wrongQuantity_other": "Kiekis turi būti skaičius tarp 1 ir {{number}}",
-        "noItems": "Nėra prekių paruošimui.",
+        "noItems": "Nėra vykdytinų prekių.",
         "noShippingOption": "Siuntimo būdas yra privalomas",
         "noLocation": "Vieta yra privaloma",
-        "exceedsReservedQuantity": "Kiekis, kurį norite įvykdyti, viršija rezervuotą prekių kiekį. Peržiūrėkite savo vykdymą."
+        "exceedsReservedQuantity": "Kiekis, kurį norite įvykdyti, viršija rezervuotą prekių kiekį. Peržiūrėkite savo vykdymą.",
+        "wrongQuantity_few": "Kiekis turi būti skaičius tarp 1 ir {{number}}"
       },
       "status": {
         "notFulfilled": "Neįvykdytas",
@@ -1716,11 +1781,11 @@
         "awaitingDelivery": "Laukiama pristatymo"
       },
       "toast": {
-        "created": "Sėkmingai paruoštas",
-        "canceled": "Paruošimas atšauktas",
-        "fulfillmentShipped": "Negalima atšaukti jau išsiųsto užsakymo",
-        "fulfillmentDelivered": "Sėkmingai pažymėtas kaip pristatytas",
-        "fulfillmentPickedUp": "Sėkmingai pažymėtas kaip paimtas"
+        "created": "Vykdymas sėkmingai sukurtas",
+        "canceled": "Vykdymas sėkmingai atšauktas",
+        "fulfillmentShipped": "Negalima atšaukti jau išsiųsto vykdymo",
+        "fulfillmentDelivered": "Vykdymas sėkmingai pažymėtas kaip pristatytas",
+        "fulfillmentPickedUp": "Vykdymas sėkmingai pažymėtas kaip atsiimtas"
       },
       "trackingLabel": "Sekimas",
       "shippingFromLabel": "Siunčiama iš",
@@ -1738,7 +1803,7 @@
       "error": {
         "amountToLarge": "Negalima grąžinti daugiau nei užsakymo suma.",
         "amountNegative": "Grąžinimo suma turi būti teigiamas skaičius.",
-        "reasonRequired": "Pasirinkite grąžinimo priežastį."
+        "reasonRequired": "Pasirinkite pinigų grąžinimo priežastį."
       }
     },
     "customer": {
@@ -1774,24 +1839,26 @@
         },
         "payment": {
           "awaiting": "Laukia apmokėjimo",
-          "captured": "Mokėjimas užfiksuotas",
+          "captured": "Mokėjimas nurašytas",
           "canceled": "Mokėjimas atšauktas",
           "refunded": "Mokėjimas grąžintas"
         },
         "fulfillment": {
-          "created": "Prekės paruoštos",
-          "canceled": "Paruošimas atšauktas",
+          "created": "Prekės įvykdytos",
+          "canceled": "Vykdymas atšauktas",
           "shipped": "Prekės išsiųstos",
           "delivered": "Prekės pristatytos",
           "items_one": "{{count}} prekė",
-          "items_other": "{{count}} prekės"
+          "items_other": "{{count}} prekių",
+          "items_few": "{{count}} prekės"
         },
         "return": {
           "created": "Grąžinimas #{{returnId}} sukurtas",
           "canceled": "Grąžinimas #{{returnId}} atšauktas",
           "received": "Grąžinimas #{{returnId}} gautas",
           "items_one": "{{count}} prekė grąžinta",
-          "items_other": "{{count}} prekių grąžinta"
+          "items_other": "{{count}} prekių grąžinta",
+          "items_few": "{{count}} prekės grąžintos"
         },
         "note": {
           "comment": "Komentaras",
@@ -1823,12 +1890,16 @@
           "billing_address": "Adresas sąskaitai pakeistas",
           "email": "El. paštas pakeistas"
         }
-      }
+      },
+      "showMoreActivities_few": "Rodyti dar {{count}} veiklas"
     },
     "fields": {
-      "displayId": "Rodyti ID",
+      "displayId": "Užsakymo ID",
       "refundableAmount": "Grąžinama suma",
       "returnableQuantity": "Grąžinamas kiekis"
+    },
+    "requiresAction": {
+      "actionUnavailable": "Nepasiekiama, kol šis užsakymas nepriimtas"
     },
     "giftCardsStoreCreditLines": "Dovanų kortelės ir kredito linijos",
     "creditLines": {
@@ -1884,7 +1955,7 @@
     },
     "status": {
       "open": "Atviras",
-      "completed": "Atliktas"
+      "completed": "Užbaigtas"
     },
     "create": {
       "createDraftOrder": "Sukurti užsakymo juodraštį",
@@ -1962,7 +2033,7 @@
         "header": "Siuntimas"
       },
       "disable": {
-        "confirmation": "Are you sure that you want to disable {{name}}? This will delete all associated service zones and shipping options, and cannot be undone.",
+        "confirmation": "Ar tikrai norite išjungti {{name}}? Bus pašalintos visos susijusios aptarnavimo zonos ir siuntimo būdai, šio veiksmo anuliuoti negalėsite.",
         "pickup": "Atsiėmimas sėkmingai išjungtas.",
         "shipping": "Siuntimas sėkmingai išjungtas."
       },
@@ -2017,7 +2088,7 @@
           "successToast": "Grąžinimo būdas {{name}} sėkmingai sukurtas."
         },
         "tabs": {
-          "details": "Nustatymai",
+          "details": "Informacija",
           "prices": "Kainos"
         },
         "action": "Sukurti būdą"
@@ -2072,11 +2143,14 @@
       "fields": {
         "count": {
           "shipping_one": "{{count}} siuntimo būdas",
-          "shipping_other": "{{count}} siuntimo būdai",
+          "shipping_other": "{{count}} siuntimo būdų",
           "pickup_one": "{{count}} atsiėmimo būdas",
-          "pickup_other": "{{count}} atsiėmimo būdai",
+          "pickup_other": "{{count}} atsiėmimo būdų",
           "returns_one": "{{count}} grąžinimo būdas",
-          "returns_other": "{{count}} grąžinimo būdai"
+          "returns_other": "{{count}} grąžinimo būdų",
+          "shipping_few": "{{count}} siuntimo būdai",
+          "pickup_few": "{{count}} atsiėmimo būdai",
+          "returns_few": "{{count}} grąžinimo būdai"
         },
         "priceType": {
           "label": "Kainos tipas",
@@ -2097,7 +2171,7 @@
         },
         "provider": "Vykdytojas",
         "profile": "Pristatymo eiga",
-        "fulfillmentOption": "Pristatymo būdas",
+        "fulfillmentOption": "Vykdymo parinktis",
         "type": "Siuntimo parinkties tipas"
       }
     },
@@ -2186,10 +2260,10 @@
       }
     },
     "county": {
-      "header": "Šalys",
+      "header": "Apskritys",
       "create": {
-        "header": "Sukurti šalies mokesčių regioną",
-        "hint": "Sukurkite šalies mokesčių regioną jos mokesčių tarifų nustatymui."
+        "header": "Sukurti apskrities mokesčių regioną",
+        "hint": "Sukurkite apskrities mokesčių regioną jos mokesčių tarifams nustatyti."
       }
     },
     "region": {
@@ -2200,10 +2274,10 @@
       }
     },
     "department": {
-      "header": "Skyriai",
+      "header": "Departamentai",
       "create": {
-        "header": "Sukurti skyriaus mokesčių regioną",
-        "hint": "Sukurkite skyriaus mokesčių regioną jo mokesčių tarifų nustatymui."
+        "header": "Sukurti departamento mokesčių regioną",
+        "hint": "Sukurkite departamento mokesčių regioną jo mokesčių tarifams nustatyti."
       }
     },
     "territory": {
@@ -2332,12 +2406,15 @@
           "header": "Pridėkite taikymus"
         },
         "values_one": "{{count}} reikšmė",
-        "values_other": "{{count}} reikšmės",
+        "values_other": "{{count}} reikšmių",
         "numberOfTargets_one": "{{count}} taikymas",
-        "numberOfTargets_other": "{{count}} taikymai",
+        "numberOfTargets_other": "{{count}} taikymų",
         "additionalValues_one": "ir dar {{count}} reikšmė",
         "additionalValues_other": "ir dar {{count}} reikšmių",
-        "action": "Pridėti taikymą"
+        "action": "Pridėti taikymą",
+        "values_few": "{{count}} reikšmės",
+        "numberOfTargets_few": "{{count}} taikymai",
+        "additionalValues_few": "ir dar {{count}} reikšmės"
       },
       "sublevels": {
         "labels": {
@@ -2345,8 +2422,8 @@
           "state": "Valstija",
           "region": "Regionas",
           "stateOrTerritory": "Valstija/Teritorija",
-          "department": "Skyrius",
-          "county": "Grafystė",
+          "department": "Departamentas",
+          "county": "Apskritis",
           "territory": "Teritorija",
           "prefecture": "Prefektūra",
           "district": "Rajonas",
@@ -2357,12 +2434,12 @@
         },
         "placeholders": {
           "province": "Pasirinkite provinciją",
-          "state": "Pasirinkite valstija",
+          "state": "Pasirinkite valstiją",
           "region": "Pasirinkite regioną",
-          "stateOrTerritory": "Pasirinkite valstiją/tertoriją",
-          "department": "Pasirinkite skyrių",
-          "county": "Pasirinkite šalį",
-          "territory": "Pasirinkite tertoriją",
+          "stateOrTerritory": "Pasirinkite valstiją/teritoriją",
+          "department": "Pasirinkite departamentą",
+          "county": "Pasirinkite apskritį",
+          "territory": "Pasirinkite teritoriją",
           "prefecture": "Pasirinkite prefektūrą",
           "district": "Pasirinkite rajoną",
           "governorate": "Pasirinkite guberniją",
@@ -2375,7 +2452,7 @@
         },
         "alert": {
           "header": "Polygio regionai išjungti šiam mokesčių regionui",
-          "description": "Polygio regionai išjungti šiam mokesčių regionui region pagal nutylėjimą. Galite juos įungti, kad galėtumėte kurti polygius, tokius kaip provincijos, valstijos ar teritorijos.",
+          "description": "Polygio regionai šiam mokesčių regionui išjungti pagal nutylėjimą. Galite juos įjungti, kad galėtumėte kurti polygius, tokius kaip provincijos, valstijos ar teritorijos.",
           "action": "Įjungti polygio regionus"
         }
       },
@@ -2396,17 +2473,17 @@
   },
   "promotions": {
     "templates": {
-      "amountOffProducts": {
-        "title": "Nuolaida produktams",
-        "description": "Nuolaida konkretiems produktams arba produktų grupei"
+      "amountOffOffers": {
+        "title": "Fiksuota nuolaida prekėms",
+        "description": "Nuolaida pasirinktoms prekėms"
       },
       "amountOffOrder": {
         "title": "Nuolaida užsakymui",
         "description": "Nuolaida nuo bendros užsakymo sumos"
       },
       "percentageOffProduct": {
-        "title": "Procentinė nuolaida produktui",
-        "description": "Procentinė nuolaida pasirinktiems produktams"
+        "title": "Procentinė nuolaida prekėms",
+        "description": "Procentinė nuolaida pasirinktoms prekėms"
       },
       "percentageOffOrder": {
         "title": "Procentinė nuolaida užsakymui",
@@ -2414,7 +2491,7 @@
       },
       "buyGet": {
         "title": "Pirk X, gauk Y",
-        "description": "Pirk X produktą (-ų), gauk Y produktą (-ų)"
+        "description": "Pirkite X prekių – gaukite Y prekių"
       },
       "freeShipping": {
         "title": "Nemokamas pristatymas",
@@ -2427,11 +2504,25 @@
     },
     "tabs": {
       "template": "Tipas",
-      "details": "Nustatymai",
+      "details": "Informacija",
       "campaign": "Kampanija"
+    },
+    "list": {
+      "noRecords": {
+        "title": "Akcijų dar nėra",
+        "message": "Sukurkite akcijas, kad galėtumėte siūlyti nuolaidas"
+      }
     },
     "fields": {
       "type": "Tipas",
+      "typeLabels": {
+        "percentageItems": "Procentinė nuolaida prekėms",
+        "percentageShipping": "Procentinė nuolaida siuntimui",
+        "percentageOrder": "Procentinė nuolaida užsakymui",
+        "amountItems": "Fiksuota nuolaida prekėms",
+        "amountShipping": "Fiksuota nuolaida siuntimui",
+        "amountOrder": "Fiksuota nuolaida užsakymui"
+      },
       "value_type": "Reikšmės tipas",
       "value": "Reikšmė",
       "campaign": "Kampanija",
@@ -2471,6 +2562,7 @@
       "allocationTooltip": "„Kiekviena“ taiko kiekio ribą kiekvienai prekei, o „Kartą“ taiko kiekio ribą visam krepšeliui",
       "taxInclusive": "Su mokesčiais",
       "usageLimit": "Naudojimo riba",
+      "unlimited": "Neribota",
       "usage": "Panaudojimas"
     },
     "tooltips": {
@@ -2478,10 +2570,15 @@
     },
     "errors": {
       "requiredField": "Laukelis privalomas",
-      "promotionTabError": "Prieš tęsdami ištaisykite klaidas skirtuke Akcija"
+      "promotionTabError": "Prieš tęsdami ištaisykite klaidas skirtuke Akcija",
+      "applyToQuantityRequired": "Nustatykite prekių kiekį, kuriam taikoma akcija.",
+      "buyRulesMinQuantityRequired": "Nustatykite mažiausią perkamų prekių kiekį.",
+      "maxQuantityLowerThanApplyTo": "Didžiausias kiekis turi būti didesnis arba lygus kiekiui, kuriam taikoma akcija."
     },
     "toasts": {
-      "promotionCreateSuccess": "Nuolaidos kodas ({{code}}) sėkmingai sukurtas."
+      "promotionCreateSuccess": "Nuolaidos kodas ({{code}}) sėkmingai sukurtas.",
+      "promotionUpdateSuccess": "Akcija sėkmingai atnaujinta.",
+      "promotionDeleteSuccess": "Akcija ({{code}}) sėkmingai pašalinta."
     },
     "edit": {
       "title": "Keisti akcijos nustatymus",
@@ -2538,11 +2635,11 @@
         },
         "active": {
           "title": "Taikoma",
-          "description": "Klientai gali naudotis šiuo kodu"
+          "description": "Klientai galės naudotis šiuo kodu"
         },
         "inactive": {
           "title": "Netaikoma",
-          "description": "Klientai daugiau negali naudotis šiuo kodu"
+          "description": "Klientai nebegalės naudotis šiuo kodu"
         }
       },
       "method": {
@@ -2559,6 +2656,10 @@
       "max_quantity": {
         "title": "Didžiausias kiekis",
         "description": "Didžiausias prekių kiekis, kuriam taikoma ši akcija."
+      },
+      "usageLimit": {
+        "title": "Naudojimo limitas",
+        "description": "Didžiausias kartų skaičius, kiek ši akcija gali būti panaudota visuose užsakymuose. Palikite tuščią, jei naudojimas neribotas."
       },
       "type": {
         "standard": {
@@ -2590,16 +2691,16 @@
         "autoGeneratedHint": "Sugeneruojama automatiškai iš jūsų parduotuvės pavadinimo. Unikalus visoje prekyvietėje — šio lauko negalima redaguoti tiesiogiai."
       },
       "value": {
-        "title": "Vertė",
+        "title": "Akcijos vertė",
         "invalid": "Neteisinga akcijos reikšmė"
       },
       "value_type": {
         "fixed": {
-          "title": "Vertė",
+          "title": "Fiksuota suma",
           "description": "Nuskaičiuojama suma, pvz., 100"
         },
         "percentage": {
-          "title": "Vertė",
+          "title": "Procentinė",
           "description": "Procentas, nuskaičiuoamas nuo sumos, pvz., 8%"
         }
       },
@@ -2625,7 +2726,11 @@
     "campaignSection": {
       "noRecordsTitle": "Nepriklauso jokiai kampanijai",
       "noRecordsMessage": "Pridėti šią akciją prie esamos kampanijos",
-      "addToCampaign": "Pridėti prie kampanijos"
+      "addToCampaign": "Pridėti prie kampanijos",
+      "warnings": {
+        "promotionExpires": "Akcija nustos galioti, kai baigsis kampanija.",
+        "promotionMustBeActive": "Kad kampanija veiktų, akcijos būsena turi būti „Aktyvi“."
+      }
     },
     "ruleAttributes": {
       "productCategory": "Prekės kategorija",
@@ -2648,17 +2753,18 @@
       "scheduled": "Suplanuota"
     },
     "delete": {
-      "title": "Jūs tikri?",
+      "title": "Pašalinti kampaniją",
       "description": "Ketinate pašalinti kampaniją '{{name}}'. Šis veiksmas neatstatomas.",
-      "successToast": "Kampanija '{{name}}' sėkmingai sukurta."
+      "successToast": "Kampanija „{{name}}“ sėkmingai pašalinta."
     },
     "edit": {
       "header": "Keisti kampanija",
       "description": "Keiskite kampanios nustatymus.",
-      "successToast": "Kampanija '{{name}}' sėkmingai pakeista."
+      "successToast": "Kampanija „{{name}}“ sėkmingai atnaujinta."
     },
     "configuration": {
       "header": "Konfigūracija",
+      "expiryWarning": "Akcija nustos galioti, kai baigsis kampanija.",
       "edit": {
         "header": "Keisti kampanijos konfigūraciją",
         "description": "Keiskite kompanijos konfigūraciją",
@@ -2670,20 +2776,26 @@
       "description": "Sukurkite reklaminę kampaniją.",
       "hint": "Sukurkite reklaminę kampaniją.",
       "header": "Sukurti kampaniją",
-      "successToast": "Kampanija '{{name}}' sėkmingai sukurta."
+      "successToast": "Kampanija „{{name}}“ sėkmingai sukurta."
+    },
+    "validation": {
+      "name_required": "Įveskite pavadinimą",
+      "identifier_required": "Įveskite identifikatorių",
+      "currency_required": "Pasirinkite valiutą"
     },
     "fields": {
       "name": "Pavadinimas",
       "identifier": "Identifikatorius",
       "identifierTooltip": "Sugeneruojama automatiškai iš kampanijos pavadinimo. Tik mažosios raidės, skaičiai ir brūkšneliai — šio lauko negalima redaguoti tiesiogiai.",
       "identifierPlaceholder": "vasaros-isspardavimas",
+      "type": "Tipas",
       "start_date": "Pradžios data",
       "end_date": "Pabaigos data",
       "total_spend": "Išleistas biudžetas",
       "total_used": "Panaudotas biudžetas",
       "budget_limit": "Biudžeto limitas",
       "campaign_id": {
-        "hint": "Šiame sąraše rodomos tik reklamos kampanijos, kurių valiutos kodas yra toks pat kaip akcijos."
+        "hint": "Šiame sąraše rodomos tik tos kampanijos, kurių biudžeto valiuta sutampa su akcijos valiuta."
       },
       "totalUsedByAttribute": "Iš viso panaudota"
     },
@@ -2692,10 +2804,12 @@
         "hint": "Sukurkite kampanijos biudžetą.",
         "header": "Kampanijos biudžetas"
       },
+      "noLimitHint": "Jei nenustatysite jokių limitų, kampanijos biudžetas bus neribotas.",
       "details": "Kampanijos biudžetas",
       "fields": {
         "type": "Tipas",
         "currency": "valiuta",
+        "selectCurrency": "Pasirinkite valiutą",
         "limit": "Limitas",
         "used": "Panaudota",
         "budgetAttribute": "Riboti naudojimą pagal",
@@ -2713,6 +2827,10 @@
           "title": "Panaudojimas",
           "description": "Nustatykite kiekį, kiek kartų gali būti pasinaudota šia akcija."
         },
+        "use_by_attribute": {
+          "title": "Panaudojimai",
+          "description": "Nustatykite, kiek kartų akcija gali būti panaudota."
+        },
         "useByAttribute": {
           "title": "Naudojimas pagal atributą (kliento ID, el. paštas ir kt.)",
           "titleCustomerId": "Naudojimas vienam klientui",
@@ -2725,7 +2843,8 @@
       },
       "attribute": {
         "customer_id": "klientas",
-        "customer_email": "el. paštas"
+        "customer_email": "el. paštas",
+        "promotion_code": "akcijos kodas"
       }
     },
     "promotions": {
@@ -2737,14 +2856,21 @@
       "alreadyAddedDiffCampaign": "Ši akcija jau pridėta prie kitos kampanijos ({{name}}).",
       "currencyMismatch": "Akcijos ir kampanijos valiuta nesutampa",
       "toast": {
-        "success": "{{count}} akciją(-ų) sėkmingai pridėta prie kampanijos"
+        "added_one": "Akcija sėkmingai pridėta prie kampanijos.",
+        "added_other": "Akcijos sėkmingai pridėtos prie kampanijos.",
+        "removed_one": "Akcija sėkmingai pašalinta iš kampanijos.",
+        "removed_other": "Akcijos sėkmingai pašalintos iš kampanijos.",
+        "added_few": "Akcijos sėkmingai pridėtos prie kampanijos.",
+        "removed_few": "Akcijos sėkmingai pašalintos iš kampanijos."
       },
       "add": {
+        "tip": "Galite pridėti tik tas akcijas, kurios dar nepriklauso kitai kampanijai.",
         "list": {
           "noRecordsMessage": "Pirmiausia sukurkite akciją."
         }
       },
       "list": {
+        "noRecordsTitle": "Akcijų dar nėra",
         "noRecordsMessage": "Kampanijoje akcijų nėra."
       }
     },
@@ -2762,7 +2888,7 @@
       "header": "Sukurti kainoraštį",
       "subheader": "Sukurkite kainoraštį jūsų prekių kainų valdymui.",
       "tabs": {
-        "details": "Nustatymai",
+        "details": "Informacija",
         "products": "Prekės",
         "prices": "Kainos"
       },
@@ -2771,11 +2897,15 @@
         "list": {
           "noRecordsMessage": "Pirmiausia sukurkite prekę."
         }
+      },
+      "validation": {
+        "title": "Įveskite pavadinimą",
+        "description": "Įveskite aprašymą"
       }
     },
     "edit": {
       "header": "Keisti kainoraštį",
-      "successToast": "Kainoraštis {{title}} sėkmingai pakeistas."
+      "successToast": "Kainoraštis „{{title}}“ sėkmingai atnaujintas."
     },
     "configuration": {
       "header": "Konfigūracija",
@@ -2785,30 +2915,46 @@
         "successToast": "Kainoraščio konfigūraciją sėkmingai pakeista."
       }
     },
+    "customerAvailability": {
+      "header": "Prieinamumas klientams",
+      "add": "Pridėti klientų grupes",
+      "list": {
+        "noRecordsTitle": "Klientų grupių nėra",
+        "noRecordsMessage": "Pridėkite klientų grupes, kad apribotumėte, kuriems klientams taikomas šis kainoraštis."
+      },
+      "edit": {
+        "header": "Prieinamumas klientams",
+        "description": "Pasirinkite, kurioms klientų grupėms turėtų būti taikomas šis kainoraštis.",
+        "successToast": "Kainoraštis sėkmingai atnaujintas."
+      }
+    },
     "products": {
       "header": "Prekės",
       "actions": {
         "addProducts": "Pridėti prekes",
-        "editPrices": "Keisti prices"
+        "editPrices": "Keisti kainas",
+        "editPricesDisabled": "Prieš keisdami kainas pridėkite prekių"
       },
       "delete": {
         "confirmation_one": "Ketinate pašalinti kainas {{count}} prekei kainoraštyje. Šis veiksmas neatstatomas.",
         "confirmation_other": "Ketinate pašalinti kainas {{count}} prekėms kainoraštyje. Šis veiksmas neatstatomas.",
         "successToast_one": "Kainos {{count}} prekei sėkmingai pašalintos.",
-        "successToast_other": "Kainos {{count}} prekėms sėkmingai pašalintoss."
+        "successToast_other": "Kainos {{count}} prekėms sėkmingai pašalintos.",
+        "confirmation_few": "Ketinate pašalinti kainas {{count}} prekėms kainoraštyje. Šis veiksmas neatstatomas.",
+        "successToast_few": "Kainos {{count}} prekėms sėkmingai pašalintos."
       },
       "add": {
         "successToast": "Kainos sėkmingai pridėtos prie kainorščio.",
         "atLeastOnePrice": "Būtina pridėti bent vieną kainą.",
-        "alreadyInPriceList": "Šis produktas jau yra kainoraštyje",
-        "noVariants": "Šis produktas neturi variantų",
-        "title": "Pridėti produktus į kainoraštį",
-        "description": "Pridėkite produktus ir nustatykite kainoraščio kainas"
+        "alreadyInPriceList": "Ši prekė jau yra kainoraštyje",
+        "noVariants": "Ši prekė neturi variantų",
+        "title": "Pridėti prekes į kainoraštį",
+        "description": "Pridėkite prekes ir nustatykite kainoraščio kainas"
       },
       "edit": {
         "successToast": "Kainos sėkmingai pakeistos.",
         "title": "Redaguoti kainas – {{title}}",
-        "description": "Atnaujinkite kainoraščio produktų kainas"
+        "description": "Atnaujinkite kainoraščio prekių kainas"
       }
     },
     "fields": {
@@ -2823,6 +2969,10 @@
           "draft": "Juodraštis",
           "expired": "Pasibaigęs",
           "scheduled": "Suplanuotas"
+        },
+        "descriptions": {
+          "draft": "Klientai nematys kainoraščio",
+          "active": "Klientai matys kainoraštį"
         }
       },
       "type": {
@@ -2830,21 +2980,21 @@
         "hint": "Pasirinkite kokio tipo kainoraštį norite sukurti.",
         "options": {
           "sale": {
-            "label": "Pardavimo",
-            "description": "Pardavimo kainos yra laikini prekių kainų pakeitimai."
+            "label": "Išpardavimas",
+            "description": "Išpardavimo kainos – tai laikini prekių kainų pakeitimai."
           },
           "override": {
-            "label": "Perrašymo",
-            "description": "Perrašymo kainos dažniausiai naudojamos norint sukurti specialias kainas klientams."
+            "label": "Perrašymas",
+            "description": "Perrašymai dažniausiai naudojami klientams skirtoms kainoms nustatyti."
           }
         }
       },
       "startsAt": {
-        "label": "Kainoraštis turi pradžios datą?",
+        "label": "Pradžios data",
         "hint": "Suplanuokite kainoraščio įjungimą."
       },
       "endsAt": {
-        "label": "Kainoraštis turi pabaigos datą?",
+        "label": "Galiojimo pabaigos data",
         "hint": "Suplanuokite kainoraščio išjungimą."
       },
       "customerAvailability": {
@@ -2853,6 +3003,12 @@
         "hint": "Pasirinkite kurioms klientų grupėms turėtų būti taikomas šis kainoraštis.",
         "placeholder": "Klientų grupių paieška",
         "attribute": "Klientų grupės"
+      }
+    },
+    "list": {
+      "noRecords": {
+        "title": "Kainoraščių dar nėra",
+        "message": "Sukurkite kainoraščius išpardavimams ir kainų perrašymams"
       }
     }
   },
@@ -2867,7 +3023,7 @@
     },
     "edit": {
       "header": "Keisti paskyrą",
-      "languageHint": "Kalba, kurią norite naudoti administravimo aplinkoje. Tai nekeičia jūsų parduotuvės kalbos.",
+      "languageHint": "Kalba, kurią norite naudoti pardavėjo skydelyje. Tai nekeičia jūsų parduotuvės kalbos.",
       "languagePlaceholder": "Pasirinkite kalbą",
       "usageInsightsHint": "Pasidalinkite naudojimo įžvalgomis ir padėkite mums tobulinti Kayı.com. Daugiau apie tai, ką renkame ir kaip tai naudojame, galite perskaityti mūsų <0>dokumentacijoje</0>."
     },
@@ -2901,12 +3057,12 @@
       "inventoryManagement": "Atsargų valdymas",
       "orderManagement": "Užsakymų valdymas",
       "accounting": "Apskaita",
-      "support": "Pagalba"
+      "support": "Palaikymas"
     },
     "list": {
       "empty": {
-        "heading": "Administratorių nėra",
-        "description": "Kai pakviesite, jie bus rodomi čia."
+        "heading": "Naudotojų nerasta",
+        "description": "Pakviesti naudotojai bus rodomi čia."
       },
       "filtered": {
         "heading": "Rezultatų nėra",
@@ -2939,8 +3095,8 @@
     "addCurrencies": "Pridėti valiutas",
     "enableTaxInclusivePricing": "Įjungti mokesčių įskaičiavimą kainodaroje",
     "disableTaxInclusivePricing": "Išjungti mokesčių įskaičiavimą kainodaroje",
-    "removeCurrencyWarning_one": "Ketinate pašalinti {{count}} parduotuvės valiutą. Įsitikinkite, kad pašalinote visas kainas šia valiuta preš tęsiant.",
-    "removeCurrencyWarning_other": "Ketinate pašalinti {{count}} parduotuvės valiutų. Įsitikinkite, kad pašalinote visas kainas šiomis valiutomis preš tęsiant.",
+    "removeCurrencyWarning_one": "Ketinate pašalinti {{count}} parduotuvės valiutą. Įsitikinkite, kad pašalinote visas kainas šia valiuta prieš tęsiant.",
+    "removeCurrencyWarning_other": "Ketinate pašalinti {{count}} parduotuvės valiutų. Įsitikinkite, kad pašalinote visas kainas šiomis valiutomis prieš tęsiant.",
     "currencyAlreadyAdded": "Valiuta parduotuvėje jau pridėta.",
     "edit": {
       "websiteHint": "Būtina nurodyti protokolą (pvz., https://)",
@@ -2964,10 +3120,10 @@
       "currenciesUpdated": "Valiutos sėkmingai pakeistos",
       "currenciesRemoved": "Valiutos sėkmingai pašalintos iš parduotuvės",
       "updatedTaxInclusivitySuccessfully": "Mokesčių įskaičiavimas kainodaroje sėkmingai pakeistas",
-      "localesUpdated": "Lokalės sėkmingai atnaujintos",
-      "localesRemoved": "Lokalės sėkmingai pašalintos iš parduotuvės"
+      "localesUpdated": "Kalbos sėkmingai atnaujintos",
+      "localesRemoved": "Kalbos sėkmingai pašalintos iš parduotuvės"
     },
-    "handleTooltip": "Nuoroda taps jūsų parduotuvės URL. Palikite tuščią, kad būtų sugeneruota automatiškai iš pavadinimo.",
+    "handleTooltip": "URL identifikatorius tampa jūsų parduotuvės URL dalimi. Palikite tuščią, kad jis būtų sugeneruotas automatiškai iš pavadinimo.",
     "validation": {
       "nameRequired": "Įveskite pavadinimą",
       "emailRequired": "Įveskite el. paštą",
@@ -3002,11 +3158,11 @@
         "description": "Jūsų parduotuvę visam laikui nutraukė platformos administratorius. Norėdami sužinoti daugiau, susisiekite su pagalbos tarnyba."
       }
     },
-    "defaultLocale": "Numatytoji lokalė",
-    "locales": "Lokalės",
-    "removeLocaleWarning_one": "Ketinate pašalinti {{count}} lokalę iš savo parduotuvės. Bus pašalinti visi šią lokalę naudojantys vertimai.",
-    "removeLocaleWarning_other": "Ketinate pašalinti {{count}} lokales iš savo parduotuvės. Bus pašalinti visi šias lokales naudojantys vertimai.",
-    "localeAlreadyAdded": "Ši lokalė jau pridėta prie jūsų parduotuvės.",
+    "defaultLocale": "Numatytoji kalba",
+    "locales": "Kalbos",
+    "removeLocaleWarning_one": "Ketinate pašalinti {{count}} kalbą iš savo parduotuvės. Bus pašalinti visi šią kalbą naudojantys vertimai.",
+    "removeLocaleWarning_other": "Ketinate pašalinti {{count}} kalbų iš savo parduotuvės. Bus pašalinti visi šias kalbas naudojantys vertimai.",
+    "localeAlreadyAdded": "Ši kalba jau pridėta prie jūsų parduotuvės.",
     "company": "Įmonė",
     "manageCompanyDetails": "Tvarkykite savo įmonės informaciją",
     "logo": "Logotipas",
@@ -3077,13 +3233,13 @@
         "request": "Užklausos",
         "requestDescription": "Jūsų pateiktų užklausų patvirtinimai ir atmetimai.",
         "review": "Atsiliepimai",
-        "reviewDescription": "Nauji atsiliepimai ir atsakymai apie jūsų produktus ir parduotuvę.",
+        "reviewDescription": "Nauji atsiliepimai ir atsakymai apie jūsų prekes ir parduotuvę.",
         "follower": "Sekėjai",
         "followerDescription": "Kai klientas pradeda sekti jūsų parduotuvę.",
         "return": "Grąžinimai",
         "returnDescription": "Kai klientas paprašo grąžinimo.",
         "messenger": "Žinutės",
-        "messengerDescription": "Push / toast įspėjimai apie naujas žinutes. Pačios žinutės niekada neblokuojamos."
+        "messengerDescription": "Tiesioginiai ir iššokantys pranešimai apie naujas žinutes. Pačios žinutės niekada neblokuojamos."
       }
     },
     "professionalDetails": {
@@ -3137,11 +3293,13 @@
         "description": "Ar tikrai norite pašalinti šį nedarbo laikotarpį?"
       },
       "deleteSuccess": "Nedarbo laikotarpis sėkmingai ištrintas."
-    }
+    },
+    "removeCurrencyWarning_few": "Ketinate pašalinti {{count}} parduotuvės valiutas. Įsitikinkite, kad pašalinote visas kainas šiomis valiutomis prieš tęsiant.",
+    "removeLocaleWarning_few": "Ketinate pašalinti {{count}} kalbas iš savo parduotuvės. Bus pašalinti visi šias kalbas naudojantys vertimai."
   },
   "regions": {
     "domain": "Regionai",
-    "subtitle": "Regionas yra sritis, kurioje parduodate produktus. Jis gali apimti kelias šalis ir turi skirtingus mokesčių tarifus, vykdytojus ir valiutą",
+    "subtitle": "Regionas yra sritis, kurioje parduodate prekes. Jis gali apimti kelias šalis ir turi skirtingus mokesčių tarifus, vykdytojus ir valiutą",
     "createRegion": "Sukurti regioną",
     "createRegionHint": "Tvarkykite mokesčių tarifus ir vykdytojus šalių rinkiniams.",
     "addCountries": "Pridėti šalis",
@@ -3149,7 +3307,7 @@
     "countriesHint": "Pridėkite šalis, priklausančias šiam regionui.",
     "deleteRegionWarning": "Ketinate pašalinti regioną {{name}}. Šis veiksmas neatstatomas.",
     "removeCountriesWarning_one": "Ketinate pašalinti {{count}} šalį iš regiono. Šis veiksmas neatstatomas.",
-    "removeCountriesWarning_other": "Ketinate pašalinti {{count}} šalis iš regiono. Šis veiksmas neatstatomas.",
+    "removeCountriesWarning_other": "Ketinate pašalinti {{count}} šalių iš regiono. Šis veiksmas neatstatomas.",
     "removeCountryWarning": "Ketinate pašalinti šalį {{name}} iš regiono. Šis veiksmas neatstatomas.",
     "automaticTaxesHint": "Kai įjungta, mokesčiai bus paskaičiuoti pagal pristatymo adresą pirkimo metu.",
     "taxInclusiveHint": "Kai įjungta, kainos regione bus rodomos su mokesčiais.",
@@ -3157,7 +3315,7 @@
     "shippingOptions": "Siuntimo būdai",
     "deleteShippingOptionWarning": "Ketinate pašalinti siuntimo būdą {{name}}. Šis veiksmas neatstatomas.",
     "return": "Grąžinimas",
-    "outbound": "Išvykstantis",
+    "outbound": "Siuntimas klientui",
     "priceType": "Kainos tipas",
     "flatRate": "Fiksuota",
     "calculated": "Apskaičiuojama",
@@ -3174,9 +3332,9 @@
       "createShippingOption": "Sukurti siuntimo būdą",
       "createShippingOptionHint": "Sukurkite siuntimo būdą regionui.",
       "editShippingOption": "Keisti siuntimo būdą",
-      "fulfillmentMethod": "Siuntimo tipas",
+      "fulfillmentMethod": "Vykdymo būdas",
       "type": {
-        "outbound": "Pristatymas",
+        "outbound": "Siuntimas klientui",
         "outboundHint": "Naudokite šį pasirinkimą, jei kuriate siuntimo būdą prekių pristatymui klientui.",
         "return": "Grąžinimas",
         "returnHint": "Naudokite šį pasirinkimą, jei kuriate siuntimo būdą prekių grąžinimui iš kliento."
@@ -3188,14 +3346,15 @@
       },
       "availability": {
         "adminOnly": "Tik administravimo aplinkoje",
-        "adminOnlyHint": "Kai įjungta, siuntimo būdas bus prieinamas tik administravimo apinkoje, o ne parduotuvėje."
+        "adminOnlyHint": "Kai įjungta, siuntimo būdas bus prieinamas tik administravimo aplinkoje, o ne parduotuvės svetainėje."
       },
       "taxInclusiveHint": "Kai įjungta, siuntimo kaina bus su įskaičiuotais mokesčiais.",
       "requirements": {
         "label": "Reikalavimai",
         "hint": "Nurodykite šio siuntimo būdo reikalavimus."
       }
-    }
+    },
+    "removeCountriesWarning_few": "Ketinate pašalinti {{count}} šalis iš regiono. Šis veiksmas neatstatomas."
   },
   "taxes": {
     "domain": "Mokesčių regionai",
@@ -3249,17 +3408,32 @@
     "selectLocations": "Pasirinkite prekės sandėliavimo vietas.",
     "deleteLocationWarning": "Ketinate pašalinti sandėliavimo vietą {{name}}. Šis veiksmas neatstatomas.",
     "removeSalesChannelsWarning_one": "Ketinate pašalinti {{count}} pardavimo kanalą iš sandėliavimo vietos.",
-    "removeSalesChannelsWarning_other": "Ketinate pašalinti {{count}} pardavimo kanalus iš sandėliavimo vietos.",
+    "removeSalesChannelsWarning_other": "Ketinate pašalinti {{count}} pardavimo kanalų iš sandėliavimo vietos.",
     "toast": {
       "create": "Sandėliavimo vieta sėkmingai sukurta",
       "update": "Sandėliavimo vieta sėkmingai pakeista",
       "removeChannel": "Pardavimų kanalas sėkmingai pašalintas"
-    }
+    },
+    "removeSalesChannelsWarning_few": "Ketinate pašalinti {{count}} pardavimo kanalus iš sandėliavimo vietos."
   },
   "reservations": {
     "domain": "Rezervacijos",
-    "subtitle": "Tvarkykite rezervuotų atsargų kiekius.",
-    "deleteWarning": "Ketinate pašalinti rezervaciją. Šis veiksmas neatstatomas."
+    "subtitle": "Tvarkykite rezervuotą atsargų vienetų kiekį.",
+    "deleteWarning": "Ketinate pašalinti rezervaciją. Šis veiksmas neatstatomas.",
+    "list": {
+      "noRecordsTitle": "Rezervacijų dar nėra",
+      "noRecordsMessage": "Sukurkite rezervacijas, kad galėtumėte tvarkyti rezervuotą atsargų vienetų kiekį"
+    },
+    "delete": {
+      "title": "Pašalinti rezervaciją",
+      "description": "Ketinate pašalinti rezervaciją. Šis veiksmas neatstatomas.",
+      "lockedTitle": "Pašalinti rezervaciją",
+      "lockedDescription": "Šios rezervacijos pašalinti negalima, nes ji susieta su neįvykdytu užsakymu."
+    },
+    "edit": {
+      "lockedTitle": "Keisti rezervaciją",
+      "lockedDescription": "Šios rezervacijos redaguoti negalima, nes ji susieta su neįvykdytu užsakymu."
+    }
   },
   "salesChannels": {
     "domain": "Pardavimo kanalai",
@@ -3278,7 +3452,7 @@
     "createSalesChannelHint": "Sukurkite pardavimo kanalą, kuriame prekiaujate.",
     "enabledHint": "Nurodykite, ar pardavimo kanalas įjungtas.",
     "removeProductsWarning_one": "Ketinate pašalinti {{count}} prekę iš {{sales_channel}}.",
-    "removeProductsWarning_other": "Ketinate pašalinti {{count}} prekes iš {{sales_channel}}.",
+    "removeProductsWarning_other": "Ketinate pašalinti {{count}} prekių iš {{sales_channel}}.",
     "addProducts": "Pridėti prekes",
     "editSalesChannel": "Keisti pardavimo kanalą",
     "productAlreadyAdded": "Prekė jau pridėta prekių kanale.",
@@ -3300,7 +3474,8 @@
           "noRecordsMessage": "Pirmiausia sukurkite prekę."
         }
       }
-    }
+    },
+    "removeProductsWarning_few": "Ketinate pašalinti {{count}} prekes iš {{sales_channel}}."
   },
   "apiKeyManagement": {
     "domain": {
@@ -3308,15 +3483,15 @@
       "secret": "Slapti API raktai"
     },
     "subtitle": {
-      "publishable": "Tvarkykite API raktus, naudojamus parduotuvėse siekiant apriboti užklausų apimtį iki konkrečių pardavimo kanalų.",
+      "publishable": "Tvarkykite API raktus, naudojamus parduotuvės svetainėje, kad užklausų apimtis būtų apribota konkrečiais pardavimo kanalais.",
       "secret": "Tvarkykite API raktus, naudojamus autentifikuoti administratorius administravimo programose."
     },
     "status": {
       "active": "Aktyvus",
-      "revoked": "Atšauktas"
+      "revoked": "Panaikintas"
     },
     "type": {
-      "publishable": "Viešas",
+      "publishable": "Publikuojamas",
       "secret": "Slaptas"
     },
     "create": {
@@ -3339,11 +3514,12 @@
       "title": "Pridėti pardavimo kanalus",
       "description": "Pridėkite pardavimo kanalus, kurie bus prieinami su šiuo API raktu.",
       "successToast_one": "{{count}} pardavimo kanalas sėkmingai pridėtas prie API rakto.",
-      "successToast_other": "{{count}} pardavimo kanalai sėkmingai pridėti prie API rakto.",
+      "successToast_other": "{{count}} pardavimo kanalų sėkmingai pridėta prie API rakto.",
       "alreadyAddedTooltip": "Pardavimo kanalas jau pridėtas prie API rakto.",
       "list": {
         "noRecordsMessage": "API raktas neturi priskirtų pardavimo kanalų."
-      }
+      },
+      "successToast_few": "{{count}} pardavimo kanalai sėkmingai pridėti prie API rakto."
     },
     "delete": {
       "warning": "Ketinate pašalinti API raktą {{title}}. Šis veiksmas neatstatomas.",
@@ -3361,24 +3537,26 @@
     "removeSalesChannel": {
       "warning": "Ketinate pašalinti pardavimo kanalą {{name}}, priskirtą API raktui. Šis veiksmas neatstatomas.",
       "warningBatch_one": "Ketinate pašalinti {{count}} pardavimo kanalą, priskirtą API raktui. Šis veiksmas neatstatomas.",
-      "warningBatch_other": "Ketinate pašalinti {{count}} pardavimo kanalus, priskirtus API raktui. Šis veiksmas neatstatomas.",
+      "warningBatch_other": "Ketinate pašalinti {{count}} pardavimo kanalų, priskirtų API raktui. Šis veiksmas neatstatomas.",
       "successToast": "Pardavimo kanalas sėkmingai pašalintas nuo API rakto.",
       "successToastBatch_one": "{{count}} pardavimo kanalas sėkmingai pašalintas nuo API rakto.",
-      "successToastBatch_other": "{{count}} pardavimo kanalass sėkmingai pašalintas nuo API rakto."
+      "successToastBatch_other": "{{count}} pardavimo kanalų sėkmingai pašalinta nuo API rakto.",
+      "warningBatch_few": "Ketinate pašalinti {{count}} pardavimo kanalus, priskirtus API raktui. Šis veiksmas neatstatomas.",
+      "successToastBatch_few": "{{count}} pardavimo kanalai sėkmingai pašalinti nuo API rakto."
     },
     "actions": {
-      "revoke": "Atšaukti API raktą",
+      "revoke": "Panaikinti API raktą",
       "copy": "Kopijuoti API raktą",
       "copySuccessToast": "API raktas nukopijuotas į atmintį."
     },
     "table": {
       "lastUsedAtHeader": "Paskutinį kartą naudotas",
-      "createdAtHeader": "Atšauktas"
+      "createdAtHeader": "Panaikinta"
     },
     "fields": {
       "lastUsedAtLabel": "Paskutinį kartą naudotas",
-      "revokedByLabel": "Atšaukė",
-      "revokedAtLabel": "Atšauktas",
+      "revokedByLabel": "Panaikino",
+      "revokedAtLabel": "Panaikinta",
       "createdByLabel": "Sukūrė"
     }
   },
@@ -3410,7 +3588,7 @@
         "tooltip": "Vertė turėtų būti unikalus grąžinimo priežasties identifikatorius."
       },
       "label": {
-        "label": "Antraštė",
+        "label": "Etiketė",
         "placeholder": "Klaidingas dydis"
       },
       "description": {
@@ -3421,8 +3599,8 @@
   },
   "login": {
     "forgotPassword": "Pamiršote slaptažodį? - <0>Atstatyti</0>",
-    "title": "Sveiki atvykę į Kayı.com",
-    "hint": "Prisijunkite, kad pasiektumėte paskyrą",
+    "title": "Sveiki sugrįžę",
+    "hint": "Prisijunkite prie pardavėjo paskyros.",
     "submit": "Prisijungti",
     "sessionExpired": "Sesijos galiojimas baigėsi",
     "notSellerYet": "Dar neturite parduotuvės? <0>Susikurkite paskyrą</0>",
@@ -3519,7 +3697,8 @@
         "dormant": "Neveikiantis",
         "timeout": "Nespėjo"
       }
-    }
+    },
+    "stepsCompletedLabel_few": "{{completed}} iš {{count}} žingsnių"
   },
   "productTypes": {
     "domain": "Prekių tipai",
@@ -3528,8 +3707,8 @@
       "header": "Sukurti prekių tipą",
       "hint": "Sukurkite prekių tipą prekių skirstymui.",
       "successToast": "Prekių tipas {{value}} sėkmingai sukurtas.",
-      "requestHeader": "Prašyti produkto tipo",
-      "requestSuccessToast": "Produkto tipo užklausa sėkmingai pateikta"
+      "requestHeader": "Prašyti prekės tipo",
+      "requestSuccessToast": "Prekės tipo užklausa sėkmingai pateikta"
     },
     "edit": {
       "header": "Keisti prekių tipą",
@@ -3612,8 +3791,8 @@
     "customTitle": "Pasirinktinis pavadinimas",
     "manageInventory": "Tvarkyti atsargas",
     "inventoryKit": "Turi atsargų rinkinį",
-    "inventoryItems": "Atsargos",
-    "inventoryItem": "Atsargos",
+    "inventoryItems": "Atsargų vienetai",
+    "inventoryItem": "Atsargų vienetas",
     "requiredQuantity": "Reikalingas kiekis",
     "description": "Aprašymas",
     "email": "El. paštas",
@@ -3629,7 +3808,7 @@
     "category": "Kategorija",
     "collection": "Kolekcija",
     "discountable": "Nukainuojama",
-    "handle": "Nuoroda",
+    "handle": "URL identifikatorius",
     "subtitle": "Paantraštė",
     "by": "",
     "item": "Prekė",
@@ -3688,11 +3867,11 @@
     "orders": "Užsakymai",
     "account": "Paskyra",
     "total": "Užsakymo viso",
-    "paidTotal": "Viso užfiksuota",
+    "paidTotal": "Iš viso sumokėta",
     "totalExclTax": "Viso be mokesčių",
     "subtotal": "Tarpinė suma",
     "shipping": "Siuntimas",
-    "outboundShipping": "Pristatymo siuntimas",
+    "outboundShipping": "Siuntimas klientui",
     "returnShipping": "Grąžinimo siuntimas",
     "tax": "Mokestis",
     "created": "Sukurtas",
@@ -3713,14 +3892,14 @@
     "product": "Prekė",
     "createdAt": "Sukurta",
     "updatedAt": "Atnaujinta",
-    "revokedAt": "Atšaukta",
+    "revokedAt": "Panaikinta",
     "true": "Taip",
     "false": "Ne",
     "giftCard": "Dovanų kortelė",
     "tag": "Žyma",
     "dateIssued": "Išdavimo data",
     "issuedDate": "Išdavimo data",
-    "expiryDate": "Galiojimo laikas",
+    "expiryDate": "Galiojimo pabaigos data",
     "price": "Kaina",
     "priceTemplate": "Kaina {{regionOrCurrency}}",
     "height": "Aukštis",
@@ -3749,8 +3928,8 @@
     "maxSubtotal": "Didžiausia tarpinė suma",
     "shippingProfile": "Siuntimo tipai",
     "summary": "Santrauka",
-    "details": "Nustatymai",
-    "label": "Antraštė",
+    "details": "Informacija",
+    "label": "Etiketė",
     "rate": "Tarifas",
     "requiresShipping": "Reikalingas siuntimas",
     "unitPrice": "Vieneto kaina",
@@ -3790,36 +3969,43 @@
     "inventory_quantity": "Atsargų likutis",
     "requires_shipping": "Reikalingas siuntimas",
     "variant_attributes": "Varianto atributai",
-    "product_attributes": "Produkto atributai",
+    "product_attributes": "Prekės atributai",
     "handleAutoGeneratedHint": "Sugeneruojama automatiškai iš pavadinimo. Tik mažosios raidės, skaičiai ir brūkšneliai — šio lauko tiesiogiai redaguoti negalima.",
-    "handleInvalidFormat": "Nuorodoje (handle) gali būti tik mažosios raidės, skaičiai ir brūkšneliai"
+    "handleInvalidFormat": "URL identifikatorių gali sudaryti tik mažosios raidės, skaičiai ir brūkšneliai"
   },
   "dateTime": {
     "years_one": "Metai",
-    "years_other": "Metai",
+    "years_other": "Metų",
     "months_one": "Mėnesis",
-    "months_other": "Mėnesiai",
+    "months_other": "Mėnesių",
     "weeks_one": "Savaitė",
-    "weeks_other": "Savaitės",
+    "weeks_other": "Savaičių",
     "days_one": "Diena",
-    "days_other": "Dienos",
+    "days_other": "Dienų",
     "hours_one": "Valanda",
-    "hours_other": "Valandos",
+    "hours_other": "Valandų",
     "minutes_one": "Minutė",
-    "minutes_other": "Minutės",
+    "minutes_other": "Minučių",
     "seconds_one": "Sekundė",
-    "seconds_other": "Sekundės"
+    "seconds_other": "Sekundžių",
+    "years_few": "Metai",
+    "months_few": "Mėnesiai",
+    "weeks_few": "Savaitės",
+    "days_few": "Dienos",
+    "hours_few": "Valandos",
+    "minutes_few": "Minutės",
+    "seconds_few": "Sekundės"
   },
   "attributes": {
     "fields": {
       "name": "Pavadinimas",
-      "handle": "Nuoroda",
+      "handle": "URL identifikatorius",
       "required": "Privaloma",
       "type": "Tipas",
       "values": "Reikšmės",
       "variantAxis": "Naudoti variantams",
       "filterable": "Filtruojamas",
-      "productAttribute": "Produkto atributas"
+      "productAttribute": "Prekės atributas"
     },
     "type": {
       "select": "Vienas pasirinkimas",
@@ -3828,6 +4014,121 @@
       "toggle": "Perjungiklis",
       "text_area": "Teksto laukas"
     }
+  },
+  "permissions": {
+    "noAccess": "Neturite teisės to peržiūrėti.",
+    "accessDenied": {
+      "title": "Prieiga uždrausta",
+      "description": "Neturite teisės pasiekti šio puslapio.",
+      "requiredPermission": "Reikalinga teisė: {{permission}}",
+      "action": "Neturite teisės atlikti šio veiksmo."
+    },
+    "requiredPermissions": {
+      "title": "Reikalingos teisės",
+      "none": "Šiame rodinyje teisės nenurodytos.",
+      "anyOf": "Bet kuri iš",
+      "allOf": "Visos iš",
+      "source": "Šaltinis: {{source}}"
+    },
+    "resources": {
+      "api_key": "API raktas",
+      "campaign": "Kampanija",
+      "commission_line": "Komisinio mokesčio eilutė",
+      "commission_rate": "Komisinio mokesčio tarifas",
+      "commission_rule": "Komisinio mokesčio taisyklė",
+      "currency": "Valiuta",
+      "customer": "Klientas",
+      "customer_address": "Kliento adresas",
+      "customer_group": "Klientų grupė",
+      "file": "Failas",
+      "fulfillment": "Vykdymas",
+      "fulfillment_provider": "Vykdytojas",
+      "fulfillment_set": "Vykdymo rinkinys",
+      "inventory_item": "Atsargų vienetas",
+      "inventory_level": "Atsargų lygis",
+      "invite": "Kvietimas",
+      "member_invite": "Nario kvietimas",
+      "notification": "Pranešimas",
+      "order": "Užsakymas",
+      "order_change": "Užsakymo pakeitimas",
+      "order_claim": "Užsakymo pretenzija",
+      "order_claim_item": "Užsakymo pretenzijos prekė",
+      "order_exchange": "Užsakymo mainai",
+      "order_group": "Užsakymų grupė",
+      "order_item": "Užsakymo prekė",
+      "payment": "Mokėjimas",
+      "payment_collection": "Mokėjimų rinkinys",
+      "payment_method": "Mokėjimo būdas",
+      "payment_session": "Mokėjimo sesija",
+      "payout": "Išmoka",
+      "payout_account": "Išmokų paskyra",
+      "price": "Kaina",
+      "price_list": "Kainoraštis",
+      "price_preference": "Kainų nuostata",
+      "product": "Prekė",
+      "product_attribute": "Prekės atributas",
+      "product_attribute_value": "Prekės atributo reikšmė",
+      "product_category": "Prekės kategorija",
+      "product_change": "Prekės pakeitimas",
+      "product_collection": "Prekės kolekcija",
+      "product_option": "Prekės parinktis",
+      "product_option_value": "Prekės parinkties reikšmė",
+      "product_tag": "Prekės žyma",
+      "product_type": "Prekės tipas",
+      "product_variant": "Prekės variantas",
+      "promotion": "Akcija",
+      "rbac_policy": "Prieigos politika",
+      "rbac_role": "Vaidmuo",
+      "refund_reason": "Pinigų grąžinimo priežastis",
+      "region": "Regionas",
+      "reservation_item": "Rezervacija",
+      "return": "Grąžinimas",
+      "return_reason": "Grąžinimo priežastis",
+      "review": "Atsiliepimas",
+      "sales_channel": "Pardavimo kanalas",
+      "seller": "Pardavėjas",
+      "seller_member": "Pardavėjo narys",
+      "service_zone": "Aptarnavimo zona",
+      "shipping_option": "Siuntimo būdas",
+      "shipping_option_type": "Siuntimo būdo tipas",
+      "shipping_profile": "Siuntimo tipas",
+      "stock_location": "Sandėliavimo vieta",
+      "store": "Parduotuvė",
+      "store_locale": "Parduotuvės kalba",
+      "tax_provider": "Mokesčių teikėjas",
+      "tax_rate": "Mokesčių tarifas",
+      "tax_region": "Mokesčių regionas",
+      "translation": "Vertimas",
+      "translation_setting": "Vertimo nustatymas",
+      "user": "Naudotojas",
+      "workflow_execution": "Darbo eigos vykdymas"
+    },
+    "actions": {
+      "read": "Skaityti",
+      "create": "Sukurti",
+      "update": "Atnaujinti",
+      "delete": "Ištrinti"
+    }
+  },
+  "richTextEditor": {
+    "bold": "Paryškintas",
+    "italic": "Kursyvas",
+    "underline": "Pabrauktas",
+    "strike": "Perbrauktas",
+    "paragraph": "Pastraipa",
+    "heading2": "Antraštė",
+    "heading3": "Paantraštė",
+    "bulletList": "Ženklinamasis sąrašas",
+    "orderedList": "Numeruotas sąrašas",
+    "blockquote": "Citata",
+    "link": "Nuoroda",
+    "linkPlaceholder": "https://example.com",
+    "removeLink": "Pašalinti nuorodą",
+    "image": "Įterpti paveikslėlį",
+    "uploadingImage": "Įkeliamas paveikslėlis...",
+    "imageUploadFailed": "Nepavyko įkelti paveikslėlio",
+    "undo": "Anuliuoti",
+    "redo": "Pakartoti"
   },
   "seller": {
     "domain": "Parduotuvė"
@@ -3850,9 +4151,55 @@
     "status": {
       "pending": "Laukia",
       "processing": "Apdorojama",
-      "paid": "Apmokėta",
+      "paid": "Išmokėta",
       "failed": "Nepavyko",
       "canceled": "Atšauktas"
+    }
+  },
+  "reviews": {
+    "domain": "Atsiliepimai",
+    "status": {
+      "pending": "Laukia",
+      "published": "Paskelbta",
+      "rejected": "Atmesta"
+    },
+    "fields": {
+      "rating": "Įvertinimas",
+      "content": "Turinys",
+      "response": "Atsakymas"
+    },
+    "filters": {
+      "stars_one": "{{count}} žvaigždutė",
+      "stars_other": "{{count}} žvaigždučių",
+      "stars_few": "{{count}} žvaigždutės"
+    },
+    "list": {
+      "columns": {
+        "reviewId": "Atsiliepimo ID",
+        "rating": "Įvertinimas",
+        "content": "Turinys",
+        "customer": "Klientas",
+        "date": "Data",
+        "status": "Būsena",
+        "response": "Atsakymas"
+      },
+      "noRecordsTitle": "Atsiliepimų dar nėra",
+      "noRecordsMessage": "Kai klientai pateiks atsiliepimų, jie bus rodomi čia",
+      "noResultsTitle": "Rezultatų nėra",
+      "noResultsMessage": "Pabandykite pakeisti filtrus arba paieškos užklausą"
+    },
+    "detail": {
+      "customer": "Klientas",
+      "order": "Užsakymas"
+    },
+    "respond": {
+      "action": "Atsakyti",
+      "header": "Atsakyti į atsiliepimą",
+      "label": "Atsakymas",
+      "confirmTitle": "Atsakyti į atsiliepimą",
+      "confirmDescription": "Jūsų atsakymas bus paskelbtas parduotuvės svetainėje ir matomas klientams. Išsaugoto atsakymo nebus galima redaguoti ar pašalinti.",
+      "successToast": "Atsakymas sėkmingai išsiųstas.",
+      "validation": "Parašykite atsakymą"
     }
   },
   "translations": {
@@ -3864,7 +4211,7 @@
     "actions": {
       "manage": "Tvarkyti vertimus",
       "manageEntities": "Tvarkyti objektus",
-      "manageLocales": "Tvarkyti lokales"
+      "manageLocales": "Tvarkyti kalbas"
     },
     "subtitle": "Tvarkykite savo duomenų vertimus „Kayı.com“ sistemoje",
     "list": {
@@ -3879,7 +4226,7 @@
     },
     "bulk": {
       "header": "Masinis vertimų redaktorius",
-      "mainColumn": "Lokalė"
+      "mainColumn": "Kalba"
     },
     "activeLocales": {
       "heading": "Kalbos",
@@ -3895,28 +4242,28 @@
     }
   },
   "refundReasons": {
-    "domain": "Grąžinimo priežastys",
-    "subtitle": "Tvarkykite grąžinimų išdavimo priežastis.",
-    "calloutHint": "Tvarkykite priežastis grąžinimams klasifikuoti.",
-    "editReason": "Redaguoti grąžinimo priežastį",
+    "domain": "Pinigų grąžinimo priežastys",
+    "subtitle": "Tvarkykite pinigų grąžinimo priežastis.",
+    "calloutHint": "Tvarkykite priežastis, pagal kurias klasifikuojami pinigų grąžinimai.",
+    "editReason": "Redaguoti pinigų grąžinimo priežastį",
     "create": {
-      "header": "Pridėti grąžinimo priežastį",
-      "subtitle": "Nurodykite dažniausiai pasitaikančias grąžinimo priežastis.",
-      "hint": "Sukurkite naują grąžinimo priežastį grąžinimams klasifikuoti.",
-      "successToast": "Grąžinimo priežastis {{label}} sėkmingai sukurta."
+      "header": "Pridėti pinigų grąžinimo priežastį",
+      "subtitle": "Nurodykite dažniausias pinigų grąžinimo priežastis.",
+      "hint": "Sukurkite naują pinigų grąžinimo priežastį pinigų grąžinimams klasifikuoti.",
+      "successToast": "Pinigų grąžinimo priežastis {{label}} sėkmingai sukurta."
     },
     "edit": {
-      "header": "Redaguoti grąžinimo priežastį",
-      "subtitle": "Redaguoti grąžinimo priežasties reikšmę.",
-      "successToast": "Grąžinimo priežastis {{label}} sėkmingai atnaujinta."
+      "header": "Redaguoti pinigų grąžinimo priežastį",
+      "subtitle": "Redaguokite pinigų grąžinimo priežasties reikšmę.",
+      "successToast": "Pinigų grąžinimo priežastis {{label}} sėkmingai atnaujinta."
     },
     "delete": {
-      "confirmation": "Ketinate ištrinti grąžinimo priežastį „{{label}}“. Šio veiksmo anuliuoti negalėsite.",
-      "successToast": "Grąžinimo priežastis sėkmingai ištrinta."
+      "confirmation": "Ketinate ištrinti pinigų grąžinimo priežastį „{{label}}“. Šio veiksmo anuliuoti negalėsite.",
+      "successToast": "Pinigų grąžinimo priežastis sėkmingai ištrinta."
     },
     "fields": {
       "label": {
-        "label": "Antraštė",
+        "label": "Etiketė",
         "placeholder": "Geros valios gestas"
       },
       "code": {
@@ -3983,7 +4330,7 @@
     "tabs": {
       "platformStatus": "Platformos statusas",
       "storeDocuments": "Parduotuvė ir dokumentai",
-      "productStandards": "Produktų standartai",
+      "productStandards": "Prekių standartai",
       "stockOperations": "Atsargos ir operacijos",
       "paymentSystem": "Mokėjimų sistema",
       "returnDispute": "Grąžinimas ir ginčai",
@@ -3995,13 +4342,13 @@
     },
     "sections": {
       "platformStatus": {
-        "content": "Kayı.com turi Tarpininkavimo paslaugų teikėjo statusą pagal Įstatymą Nr. 6563 dėl elektroninės prekybos reguliavimo. Platforma veikia kaip saugus tiltas tarp pardavėjų ir pirkėjų. Nuosavybės teisė į išvardytus produktus priklauso pardavėjui; visa teisinė, techninė ir komercinė atsakomybė tenka tiesiogiai atitinkamam pardavėjui."
+        "content": "Kayı.com turi Tarpininkavimo paslaugų teikėjo statusą pagal Įstatymą Nr. 6563 dėl elektroninės prekybos reguliavimo. Platforma veikia kaip saugus tiltas tarp pardavėjų ir pirkėjų. Nuosavybės teisė į išvardytas prekes priklauso pardavėjui; visa teisinė, techninė ir komercinė atsakomybė tenka tiesiogiai atitinkamam pardavėjui."
       },
       "storeDocuments": {
         "content": "Pardavėjai patvirtina, kad yra teisėti mokesčių mokėtojai pagal Turkijos Respublikos teisės aktus ir turi teisę vykdyti komercinę veiklą. Kayı.com pasilieka teisę reikalauti iš pardavėjų veiklos pažymėjimų, parašų kortelių, mokesčių pažymėjimų ir reikiamų įgaliojimo dokumentų."
       },
       "productStandards": {
-        "content": "Griežtai draudžiama parduoti suklastotus, imituotus, kontrabandinius arba reikalavimų neatitinkančius produktus. Nustačius produktus, pažeidžiančius intelektinės ir pramoninės nuosavybės teises, Kayı.com pasilieka teisę vienašališkai nutraukti parduotuvę, blokuoti pajamas ir imtis teisinių veiksmų."
+        "content": "Griežtai draudžiama parduoti suklastotas, imituotas, kontrabandines arba reikalavimų neatitinkančias prekes. Nustačius prekes, pažeidžiančias intelektinės ir pramoninės nuosavybės teises, Kayı.com pasilieka teisę vienašališkai nutraukti parduotuvę, blokuoti pajamas ir imtis teisinių veiksmų."
       },
       "stockOperations": {
         "subhead1": "Atsargų valdymas:",
@@ -4028,7 +4375,7 @@
         "content": "Kiekvienas pardavėjas, pradedantis parduotuvės registraciją Kayı.com ir pažymintis langelį „Sutinku su Pardavėjų partnerystės ir naudojimo sąlygomis“, laikomas perskaičiusiu, supratusiu ir be jokių apribojimų priėmusiu visas sąlygas. Šis patvirtinimas turi skaitmeninio parašo tarp šalių galią ir įsigalioja nuo registracijos momento."
       },
       "commissionTable": {
-        "description": "Toliau pateiktoje lentelėje nurodyti grynieji komisinių tarifai, taikomi kiekvienai produktų kategorijai, ir bendri tarifai su PVM. Komisinių sumos apskaičiuojamos nuo pardavimo kainos.",
+        "description": "Toliau pateiktoje lentelėje nurodyti grynieji komisinių tarifai, taikomi kiekvienai prekių kategorijai, ir bendri tarifai su PVM. Komisinių sumos apskaičiuojamos nuo pardavimo kainos.",
         "col": {
           "category": "Kategorija",
           "netCommission": "Grynieji komisiniai (%)",
@@ -4104,8 +4451,8 @@
         "title": "Įveskite savo parduotuvės informaciją",
         "name": "Parduotuvės pavadinimas",
         "email": "Parduotuvės el. paštas",
-        "handle": "Nuoroda",
-        "handleTooltip": "Nuoroda taps jūsų parduotuvės URL. Palikite tuščią, kad būtų sugeneruota automatiškai iš pavadinimo.",
+        "handle": "URL identifikatorius",
+        "handleTooltip": "Sugeneruojama automatiškai iš parduotuvės pavadinimo. Tik mažosios raidės, skaičiai ir brūkšneliai — šio lauko tiesiogiai redaguoti negalima.",
         "handlePlaceholder": "mano-parduotuve",
         "currency": "valiuta",
         "selectCurrency": "Pasirinkite",
@@ -4157,7 +4504,7 @@
       },
       "preview": {
         "title": "Sveiki atvykę į Kayı.com",
-        "description": "Jūsų visapusis pardavėjo portalas parduotuvei, produktams, užsakymams ir išmokoms valdyti.",
+        "description": "Jūsų visapusis pardavėjo portalas parduotuvei, prekėms, užsakymams ir išmokoms valdyti.",
         "placeholder": "Programos peržiūra"
       }
     }
@@ -4179,7 +4526,7 @@
       "successToast": "Siuntimo parinkties tipas „{{label}}“ sėkmingai ištrintas."
     },
     "fields": {
-      "label": "Antraštė",
+      "label": "Etiketė",
       "code": "Kodas",
       "description": "Aprašymas"
     }
@@ -4226,7 +4573,7 @@
     "backToStore": "Atgal į Kayı.com"
   },
   "sellerSuspension": {
-    "description": "Jūsų parduotuvė buvo laikinai sustabdyta administracijos. Negalėsite kurti naujų produktų, kol ji nebus vėl aktyvuota. Jei turite klausimų, mūsų palaikymo komanda pasiruošusi padėti.",
+    "description": "Jūsų parduotuvė buvo laikinai sustabdyta administracijos. Negalėsite kurti naujų prekių, kol ji nebus vėl aktyvuota. Jei turite klausimų, mūsų palaikymo komanda pasiruošusi padėti.",
     "help": "Pagalba",
     "title": "Parduotuvė sustabdyta"
   }
