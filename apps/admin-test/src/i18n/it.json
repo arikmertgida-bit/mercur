@@ -20,9 +20,9 @@
       "status": "Stato"
     },
     "status": {
-      "pending": "In sospeso",
-      "resolved": "Risolto",
-      "dismissed": "Respinto"
+      "pending": "In attesa",
+      "resolved": "Risolta",
+      "dismissed": "Ignorata"
     },
     "reasons": {
       "inaccurate_product_details": "Dettagli prodotto imprecisi",
@@ -37,15 +37,15 @@
     },
     "actions": {
       "resolve": "Segna come risolto",
-      "dismiss": "Respingi"
+      "dismiss": "Ignora"
     },
     "resolvePrompt": {
       "title": "Segnare la segnalazione come risolta?",
-      "description": "Questa segnalazione verrà contrassegnata come risolta e rimossa dalla coda in sospeso."
+      "description": "Questa segnalazione verrà contrassegnata come risolta e rimossa dalla coda in attesa."
     },
     "dismissPrompt": {
-      "title": "Respingere questa segnalazione?",
-      "description": "Questa segnalazione verrà contrassegnata come respinta e rimossa dalla coda in sospeso."
+      "title": "Ignorare questa segnalazione?",
+      "description": "Questa segnalazione verrà contrassegnata come ignorata e rimossa dalla coda in attesa."
     },
     "deletePrompt": {
       "title": "Eliminare questa segnalazione?",
@@ -84,19 +84,19 @@
       "status": "Stato"
     },
     "status": {
-      "pending": "In sospeso",
-      "resolved": "Risolto"
+      "pending": "In attesa",
+      "resolved": "Risolta"
     },
     "actions": {
       "remove": "Rimuovi immagine",
-      "dismiss": "Respingi segnalazione"
+      "dismiss": "Ignora segnalazione"
     },
     "removePrompt": {
       "title": "Rimuovere questa immagine?",
       "description": "L'immagine verrà eliminata definitivamente dalla recensione. Questa azione non può essere annullata."
     },
     "dismissPrompt": {
-      "title": "Respingere questa segnalazione?",
+      "title": "Ignorare questa segnalazione?",
       "description": "L'immagine rimarrà pubblicata e la segnalazione verrà contrassegnata come risolta."
     },
     "resolveSuccess": "Segnalazione risolta",
@@ -159,7 +159,7 @@
     "domain": "Richieste",
     "status": {
       "draft": "Bozza",
-      "pending": "In sospeso",
+      "pending": "In attesa",
       "accepted": "Accettata",
       "rejected": "Rifiutata"
     },
@@ -190,20 +190,20 @@
       "noRecords": "Nessuna richiesta di tipo trovata"
     },
     "returnReasons": {
-      "navLabel": "Motivi di Restituzione",
-      "heading": "Richieste di motivi di restituzione",
-      "noRecords": "Nessuna richiesta di motivo di restituzione trovata"
+      "navLabel": "Motivi di reso",
+      "heading": "Richieste di motivi di reso",
+      "noRecords": "Nessuna richiesta di motivo di reso trovata"
     },
     "typeLabels": {
       "product_category": "Categoria",
       "product_collection": "Collezione",
       "product_tag": "Tag",
       "product_type": "Tipo",
-      "return_reason": "Motivo di Restituzione"
+      "return_reason": "Motivo di reso"
     },
     "fields": {
       "name": "Nome",
-      "handle": "Handle",
+      "handle": "Slug URL",
       "description": "Descrizione",
       "active": "Attivo",
       "internal": "Interno",
