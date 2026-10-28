@@ -149,6 +149,7 @@
     "back": "Zurück",
     "close": "Schließen",
     "showMore": "Mehr anzeigen",
+    "showLess": "Weniger anzeigen",
     "continue": "Weiter",
     "continueWithEmail": "Mit E-Mail fortfahren",
     "idCopiedToClipboard": "ID in die Zwischenablage kopiert",
@@ -521,7 +522,7 @@
         },
         "productVariants": {
           "label": "Produktvarianten",
-          "hint": "Dieses Ranking wirkt sich auf die Reihenfolge der Varianten in Ihrem Store aus.",
+          "hint": "Dieses Ranking wirkt sich auf die Anzeigereihenfolge der Varianten aus.",
           "alert": "Fügen Sie Optionen hinzu, um Varianten zu erstellen.",
           "tip": "Varianten, die nicht aktiviert sind, werden nicht erstellt. Sie können nachträglich jederzeit Varianten erstellen und bearbeiten, diese Liste passt jedoch zu den Variationen in Ihren Produktoptionen.",
           "searchPlaceholder": "Suchen",
@@ -546,10 +547,10 @@
         "addExisting": "Vorhandenes hinzufügen",
         "createNew": "Neu erstellen",
         "requiredAttributes": "Erforderliche Attribute",
-        "requiredAttributesHint": "These attributes are required by the Marketplace. Select them before proceeding.",
+        "requiredAttributesHint": "Diese Attribute werden vom Marktplatz benötigt. Wählen Sie sie aus, bevor Sie fortfahren.",
         "selectValues": "Werte auswählen",
         "tip": "Tipp",
-        "useForVariants": "Use for Variations",
+        "useForVariants": "Für Varianten verwenden",
         "useForVariantsDescription": "Wenn aktiviert, können Sie mit diesem Attribut Varianten erstellen. Andernfalls wird das Attribut nur zu Informationszwecken verwendet.",
         "variantAxisTip": "Dieses Attribut erstellt Varianten. Sie können diese im nächsten Schritt definieren.",
         "titlePlaceholder": "z. B. Farbe",
@@ -581,7 +582,7 @@
         "optionValue": "Standardoptionswert",
         "variantTitle": "Standardvariante"
       },
-      "requestSuccessToast": "Das Produkt wurde erfolgreich angefragt. Sie können jetzt Angebote für dieses Produkt erstellen. Sobald das Produkt vom Admin genehmigt wurde, werden Ihre Angebote im Storefront angezeigt. Nur Angebote mit festgelegten Lagerbeständen und Preisen sind sichtbar."
+      "requestSuccessToast": "Das Produkt wurde erfolgreich angefragt. Sobald der Admin das Produkt genehmigt, wird es im Storefront angezeigt. Nur Varianten mit festgelegten Lagerbeständen und Preisen sind sichtbar."
     },
     "export": {
       "header": "Produktliste exportieren",
@@ -691,7 +692,7 @@
       "draft": "Entwurf",
       "published": "Veröffentlicht",
       "proposed": "Vorgeschlagen",
-      "requires_action": "Changes required",
+      "requires_action": "Erfordert Maßnahmen",
       "rejected": "Abgelehnt"
     },
     "fields": {
@@ -889,6 +890,7 @@
     "attributeProductInformationDescription": "Zu Informationszwecken verwendete Attribute",
     "attributeRequiredByMarketplace": "Dieses Attribut wird vom Marktplatz benötigt.",
     "attributeRequiredDeleteDisabledTooltip": "Erforderliche Attribute können nicht entfernt werden.",
+    "missingRequiredAttributesHint": "Bitte geben Sie die erforderlichen Informationen an",
     "addAttribute": "Attribut hinzufügen",
     "deleteAttributeWarning": "Möchten Sie das Attribut \"{{title}}\" wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
     "attributesSection": {
@@ -1091,7 +1093,7 @@
   },
   "inventory": {
     "domain": "Inventar",
-    "subtitle": "Verwalten Sie Ihre Inventargegenstände",
+    "subtitle": "Verwalten Sie Ihre Inventarartikel",
     "reserved": "Reserviert",
     "available": "Verfügbar",
     "locationLevels": "Standorte",
@@ -1106,8 +1108,12 @@
       "locations": "Standorte",
       "attributes": "Attribute",
       "requiresShipping": "Erfordert Versand",
-      "requiresShippingHint": "Ist für den Lagerartikel ein Versand erforderlich?",
+      "requiresShippingHint": "Ist für den Inventarartikel ein Versand erforderlich?",
       "successToast": "Der Inventarartikel wurde erfolgreich erstellt.",
+      "errors": {
+        "titleRequired": "Bitte geben Sie einen Titel ein"
+      },
+      "attributesHint": "Dies sind Standardwerte zur Beschreibung des Artikels. Sie werden nicht vom Marktplatz festgelegt.",
       "descriptionPlaceholder": "Die Artikelbeschreibung"
     },
     "reservation": {
@@ -1130,31 +1136,69 @@
       "deleteSuccessToast": "Die Reservierung wurde erfolgreich gelöscht.",
       "errors": {
         "noAvaliableQuantity": "Der Lagerort hat keine verfügbare Menge.",
-        "quantityOutOfRange": "Die Mindestmenge beträgt 1 und die Höchstmenge beträgt {{max}}."
-      }
+        "quantityOutOfRange": "Die Mindestmenge beträgt 1 und die Höchstmenge beträgt {{max}}.",
+        "idRequired": "Inventarartikel ist erforderlich",
+        "selectLocation": "Bitte wählen Sie einen Standort aus",
+        "enterQuantity": "Bitte geben Sie eine Menge ein",
+        "pleaseEnterQuantity": "Bitte geben Sie die Menge ein"
+      },
+      "deleteTitle": "Reservierung löschen",
+      "deleteDescription": "Sie sind dabei, eine Reservierung zu löschen. Dieser Vorgang kann nicht rückgängig gemacht werden.",
+      "deleteBlockedDescription": "Diese Reservierung kann nicht gelöscht werden, da sie mit einer noch nicht erfüllten Bestellung verknüpft ist.",
+      "gotIt": "Verstanden",
+      "locationPlaceholder": "Standort auswählen",
+      "itemId": "Artikel-ID",
+      "goToInventoryItem": "Zum Inventarartikel",
+      "reserved": "Reserviert",
+      "itemPlaceholder": "Artikel auswählen"
     },
     "toast": {
       "updateLocations": "Standorte erfolgreich aktualisiert.",
       "updateLevel": "Der Lagerbestand wurde erfolgreich aktualisiert.",
-      "updateItem": "Inventarartikel erfolgreich aktualisiert."
+      "updateItem": "Inventarartikel erfolgreich aktualisiert.",
+      "deleteItem": "Der Inventarartikel wurde erfolgreich gelöscht."
     },
     "manageLocationQuantity": "Standortmenge verwalten",
-    "quantityAcrossLocations": "{{quantity}} über {{locations}} Standorte verteilt",
+    "quantityAcrossLocations": "{{quantity}} (Standorte: {{locations}})",
     "levelDeleted": "Lagerbestand erfolgreich gelöscht.",
     "adjustInventory": {
       "errors": {
-        "stockedQuantity": "Die Lagermenge kann nicht auf weniger als die reservierte Menge von {{quantity}} aktualisiert werden."
+        "stockedQuantity": "Die Lagermenge kann nicht auf weniger als die reservierte Menge von {{quantity}} aktualisiert werden.",
+        "enterQuantity": "Bitte geben Sie die Menge ein"
       }
     },
     "stock": {
       "title": "Lagerbestände aktualisieren",
-      "description": "Aktualisieren Sie die Lagerbestände für die ausgewählten Lagerartikel.",
+      "description": "Aktualisieren Sie die Lagerbestände für die ausgewählten Inventarartikel.",
       "action": "Lagerbestände bearbeiten",
       "placeholder": "Nicht aktiviert",
       "disablePrompt_one": "Sie sind dabei, {{count}} Standortebene zu deaktivieren. Diese Aktion kann nicht rückgängig gemacht werden.",
       "disablePrompt_other": "Sie sind dabei, {{count}} Standortebenen zu deaktivieren. Diese Aktion kann nicht rückgängig gemacht werden.",
       "disabledToggleTooltip": "Deaktivierung nicht möglich: Löschen Sie eingehende und/oder reservierte Menge, bevor Sie deaktivieren.",
       "successToast": "Lagerbestände erfolgreich aktualisiert."
+    },
+    "attributes": {
+      "tip": "Dies sind Standardwerte zur Beschreibung des Artikels. Sie werden nicht vom Marktplatz verwaltet."
+    },
+    "item": {
+      "deleteTitle": "Inventarartikel löschen",
+      "deleteDescription": "Sie sind dabei, einen Inventarartikel zu löschen. Dieser Vorgang kann nicht rückgängig gemacht werden."
+    },
+    "level": {
+      "deleteTitle": "Lagerbestand löschen",
+      "deleteDescription": "Sie sind dabei, den Lagerbestand am Standort {{location}} zu löschen. Dadurch werden Bestand und Reservierungen für diesen Standort gelöscht; dieser Vorgang kann nicht rückgängig gemacht werden."
+    },
+    "list": {
+      "noRecordsTitle": "Noch keine Inventarartikel",
+      "noRecordsMessage": "Erstellen Sie Inventarartikel, um Ihr Inventar zu verwalten"
+    },
+    "locations": {
+      "noRecordsTitle": "Noch keine Standorte",
+      "noRecordsMessage": "Fügen Sie einen Standort hinzu, um Lagerbestände zu verwalten"
+    },
+    "reservations": {
+      "noRecordsTitle": "Noch keine Reservierungen",
+      "noRecordsMessage": "Es gibt keine Reservierungen zum Anzeigen"
     }
   },
   "giftCards": {
@@ -1321,7 +1365,7 @@
       "allocateItems": "Artikel zuordnen",
       "editOrder": "Bestellung bearbeiten",
       "editOrderContinue": "Bearbeiten Sie die Bestellung weiter",
-      "inventoryKit": "Besteht aus {{count}}x Inventargegenständen",
+      "inventoryKit": "Besteht aus {{count}}x Inventarartikeln",
       "itemTotal": "Artikelsumme",
       "shippingTotal": "Versand insgesamt",
       "discountTotal": "Rabatt insgesamt",
@@ -1367,14 +1411,14 @@
       "createRefund": "Rückerstattung erstellen",
       "refundPaymentSuccess": "Rückerstattung des Betrags {{amount}} erfolgreich",
       "createRefundWrongQuantity": "Die Menge sollte eine Zahl zwischen 1 und {{number}} sein.",
-      "refundAmount": "Rückerstattung von {{amount}}",
-      "paymentLink": "Zahlungslink für {{amount}} kopieren",
+      "refundAmount": "{{ amount }} erstatten",
+      "paymentLink": "Zahlungslink für {{ amount }} kopieren",
       "selectPaymentToRefund": "Wählen Sie die Zahlung zur Rückerstattung aus",
       "totalPending": "Gesamt ausstehend",
       "totalRefunded": "Erstattet",
-      "totalStoreCreditRefunds": "Gesamte Store-Guthaben-Erstattungen",
+      "totalStoreCreditRefunds": "Gesamte Erstattungen als Shop-Guthaben",
       "enterAmount": "Bitte geben Sie einen Betrag ein",
-      "copyPaymentLink": "Zahlungslink für {{amount}} kopieren",
+      "copyPaymentLink": "Zahlungslink für {{ amount }} kopieren",
       "copyLinkSuccess": "Zahlungslink in die Zwischenablage kopiert",
       "copyLinkError": "Zahlungslink konnte nicht kopiert werden",
       "outstandingAmount": "Ausstehender Betrag"
@@ -1621,7 +1665,7 @@
       "itemsToAllocate": "Zuzuordnende Elemente",
       "itemsToAllocateDesc": "Wählen Sie die Anzahl der Elemente aus, die Sie zuweisen möchten",
       "search": "Elemente suchen",
-      "consistsOf": "Besteht aus {{num}}x Inventargegenständen",
+      "consistsOf": "Besteht aus {{num}}x Inventarartikeln",
       "requires": "Benötigt {{num}} pro Variante",
       "toast": {
         "created": "Elemente erfolgreich zugewiesen",
@@ -1714,7 +1758,7 @@
       "error": {
         "amountToLarge": "Es kann nicht mehr als der ursprüngliche Bestellbetrag erstattet werden.",
         "amountNegative": "Der Rückerstattungsbetrag muss eine positive Zahl sein.",
-        "reasonRequired": "Bitte wählen Sie einen Rückerstattungsgrund aus."
+        "reasonRequired": "Bitte wählen Sie einen Erstattungsgrund aus."
       }
     },
     "customer": {
@@ -1802,9 +1846,12 @@
       }
     },
     "fields": {
-      "displayId": "Anzeige-ID",
+      "displayId": "Bestell-ID",
       "refundableAmount": "Rückerstattungsbetrag",
       "returnableQuantity": "Rückgabemenge"
+    },
+    "requiresAction": {
+      "actionUnavailable": "Nicht verfügbar, bis diese Bestellung angenommen wurde"
     },
     "giftCardsStoreCreditLines": "Geschenkkarten & Guthabenlinien",
     "creditLines": {
@@ -1827,8 +1874,8 @@
       "settlementTypes": {
         "paymentMethod": "Zahlungsmethode",
         "paymentMethodDescription": "Betrag auf die Zahlungsmethode erstatten",
-        "creditLine": "Store-Guthaben",
-        "creditLineDescription": "Betrag als Store-Guthaben erstatten"
+        "creditLine": "Shop-Guthaben",
+        "creditLineDescription": "Betrag als Shop-Guthaben erstatten"
       }
     },
     "actions": {
@@ -2052,7 +2099,7 @@
           }
         },
         "enableInStore": {
-          "label": "Im Store aktivieren",
+          "label": "Im Shop aktivieren",
           "hint": "Ob Kunden diese Option beim Bezahlvorgang nutzen können."
         },
         "provider": "Fulfillment-Anbieter",
@@ -2396,20 +2443,20 @@
   },
   "promotions": {
     "templates": {
-      "amountOffProducts": {
-        "title": "Betrag auf Produkte",
-        "description": "Bestimmte Produkte oder Produktkollektionen rabattieren"
+      "amountOffOffers": {
+        "title": "Betragsrabatt auf Artikel",
+        "description": "Rabattiert ausgewählte Artikel"
       },
       "amountOffOrder": {
-        "title": "Betrag auf Bestellung",
+        "title": "Betragsrabatt auf Bestellung",
         "description": "Rabattiert den Gesamtbetrag der Bestellung"
       },
       "percentageOffProduct": {
-        "title": "Prozentsatz auf Produkt",
+        "title": "Prozentrabatt auf Artikel",
         "description": "Rabattiert einen Prozentsatz auf ausgewählte Produkte"
       },
       "percentageOffOrder": {
-        "title": "Prozentsatz auf Bestellung",
+        "title": "Prozentrabatt auf Bestellung",
         "description": "Rabattiert einen Prozentsatz des Bestellgesamtbetrags"
       },
       "buyGet": {
@@ -2430,8 +2477,22 @@
       "details": "Einzelheiten",
       "campaign": "Kampagne"
     },
+    "list": {
+      "noRecords": {
+        "title": "Noch keine Aktionen",
+        "message": "Erstellen Sie Aktionen, um Rabatte anzubieten"
+      }
+    },
     "fields": {
       "type": "Typ",
+      "typeLabels": {
+        "percentageItems": "Prozentrabatt auf Artikel",
+        "percentageShipping": "Prozentrabatt auf Versand",
+        "percentageOrder": "Prozentrabatt auf Bestellung",
+        "amountItems": "Betragsrabatt auf Artikel",
+        "amountShipping": "Betragsrabatt auf Versand",
+        "amountOrder": "Betragsrabatt auf Bestellung"
+      },
       "value_type": "Werttyp",
       "value": "Wert",
       "campaign": "Kampagne",
@@ -2471,6 +2532,7 @@
       "allocationTooltip": "Jeder erzwingt das Mengenlimit pro Artikel, während Einmal das Mengenlimit über den gesamten Warenkorb erzwingt",
       "taxInclusive": "Inklusive Steuer",
       "usageLimit": "Nutzungslimit",
+      "unlimited": "Unbegrenzt",
       "usage": "Verwendung"
     },
     "tooltips": {
@@ -2478,10 +2540,15 @@
     },
     "errors": {
       "requiredField": "Erforderliches Feld",
-      "promotionTabError": "Beheben Sie Fehler im Tab „Werbung“, bevor Sie fortfahren"
+      "promotionTabError": "Beheben Sie Fehler im Tab „Werbung“, bevor Sie fortfahren",
+      "applyToQuantityRequired": "Legen Sie fest, für wie viele Artikel die Aktion gilt.",
+      "buyRulesMinQuantityRequired": "Legen Sie die Mindestanzahl der zu kaufenden Artikel fest.",
+      "maxQuantityLowerThanApplyTo": "Die Höchstmenge muss größer oder gleich der Menge sein, für die die Aktion gilt."
     },
     "toasts": {
-      "promotionCreateSuccess": "Aktion ({{code}}) wurde erfolgreich erstellt."
+      "promotionCreateSuccess": "Aktion ({{code}}) wurde erfolgreich erstellt.",
+      "promotionUpdateSuccess": "Die Aktion wurde erfolgreich aktualisiert.",
+      "promotionDeleteSuccess": "Die Aktion ({{code}}) wurde erfolgreich gelöscht."
     },
     "edit": {
       "title": "Aktionsdetails bearbeiten",
@@ -2560,6 +2627,10 @@
         "title": "Maximale Menge",
         "description": "Maximale Anzahl an Artikeln, für die diese Aktion gilt."
       },
+      "usageLimit": {
+        "title": "Nutzungslimit",
+        "description": "Maximale Anzahl, wie oft diese Aktion über alle Bestellungen hinweg verwendet werden kann. Leer lassen für unbegrenzte Nutzung."
+      },
       "type": {
         "standard": {
           "title": "Standard",
@@ -2567,7 +2638,7 @@
         },
         "buyget": {
           "title": "Kaufen Get",
-          "description": "Kaufen Sie X und erhalten Sie Y-Aktion"
+          "description": "Aktion „Kaufe X, erhalte Y“"
         }
       },
       "allocation": {
@@ -2613,7 +2684,7 @@
         "description": "Maximale Anzahl, wie oft diese Aktion über alle Bestellungen hinweg verwendet werden kann. Leer lassen für unbegrenzte Nutzung."
       }
     },
-    "deleteWarning": "Sie sind dabei, die Aktion {{code}} zu löschen. Diese Aktion kann nicht rückgängig gemacht werden.",
+    "deleteWarning": "Sie sind dabei, die Aktion {{code}} zu löschen. Dieser Vorgang kann nicht rückgängig gemacht werden.",
     "createPromotionTitle": "Werbeaktion erstellen",
     "type": "Werbetyp",
     "conditions": {
@@ -2625,7 +2696,11 @@
     "campaignSection": {
       "noRecordsTitle": "Nicht Teil einer Kampagne",
       "noRecordsMessage": "Diese Aktion einer bestehenden Kampagne hinzufügen",
-      "addToCampaign": "Zur Kampagne hinzufügen"
+      "addToCampaign": "Zur Kampagne hinzufügen",
+      "warnings": {
+        "promotionExpires": "Die Aktion läuft ab, wenn die Kampagne abläuft.",
+        "promotionMustBeActive": "Die Aktion muss den Status „Aktiv“ haben, damit die Kampagne funktioniert."
+      }
     },
     "ruleAttributes": {
       "productCategory": "Produktkategorie",
@@ -2648,17 +2723,18 @@
       "scheduled": "Geplant"
     },
     "delete": {
-      "title": "Bist du sicher?",
+      "title": "Kampagne löschen",
       "description": "Sie sind dabei, die Kampagne „{{name}}“ zu löschen. Diese Aktion kann nicht rückgängig gemacht werden.",
-      "successToast": "Die Kampagne „{{name}}“ wurde erfolgreich erstellt."
+      "successToast": "Die Kampagne „{{name}}“ wurde erfolgreich gelöscht."
     },
     "edit": {
       "header": "Kampagne bearbeiten",
       "description": "Bearbeiten Sie die Details der Kampagne.",
-      "successToast": "Kampagne „{{name}}“ wurde erfolgreich aktualisiert."
+      "successToast": "Die Kampagne „{{name}}“ wurde erfolgreich aktualisiert."
     },
     "configuration": {
       "header": "Konfiguration",
+      "expiryWarning": "Die Aktion läuft ab, wenn die Kampagne abläuft.",
       "edit": {
         "header": "Kampagnenkonfiguration bearbeiten",
         "description": "Bearbeiten Sie die Konfiguration der Kampagne.",
@@ -2672,11 +2748,17 @@
       "header": "Kampagne erstellen",
       "successToast": "Die Kampagne „{{name}}“ wurde erfolgreich erstellt."
     },
+    "validation": {
+      "name_required": "Bitte geben Sie einen Namen ein",
+      "identifier_required": "Bitte geben Sie einen Identifikator ein",
+      "currency_required": "Bitte wählen Sie eine Währung aus"
+    },
     "fields": {
       "name": "Name",
       "identifier": "Kennung",
       "identifierTooltip": "Wird automatisch aus dem Kampagnennamen generiert. Nur Kleinbuchstaben, Zahlen und Bindestriche — dieses Feld kann nicht direkt bearbeitet werden.",
       "identifierPlaceholder": "sommer-angebot",
+      "type": "Typ",
       "start_date": "Startdatum",
       "end_date": "Enddatum",
       "total_spend": "Budget ausgegeben",
@@ -2692,10 +2774,12 @@
         "hint": "Erstellen Sie ein Budget für die Kampagne.",
         "header": "Kampagnenbudget"
       },
+      "noLimitHint": "Wenn Sie keine Limits festlegen, ist das Kampagnenbudget unbegrenzt.",
       "details": "Kampagnenbudget",
       "fields": {
         "type": "Typ",
         "currency": "Währung",
+        "selectCurrency": "Währung auswählen",
         "limit": "Limit",
         "used": "Gebraucht",
         "budgetAttribute": "Nutzung begrenzen pro",
@@ -2713,6 +2797,10 @@
           "title": "Verwendung",
           "description": "Legen Sie ein Limit fest, wie oft die Aktion genutzt werden kann."
         },
+        "use_by_attribute": {
+          "title": "Nutzung",
+          "description": "Legen Sie ein Limit fest, wie oft die Aktion genutzt werden kann."
+        },
         "useByAttribute": {
           "title": "Nutzung nach Attribut (Kunden-ID, E-Mail usw.)",
           "titleCustomerId": "Nutzung pro Kunde",
@@ -2725,7 +2813,8 @@
       },
       "attribute": {
         "customer_id": "Kunde",
-        "customer_email": "E-Mail"
+        "customer_email": "E-Mail",
+        "promotion_code": "Aktionscode"
       }
     },
     "promotions": {
@@ -2737,14 +2826,19 @@
       "alreadyAddedDiffCampaign": "Diese Aktion wurde bereits einer anderen Kampagne ({{name}}) hinzugefügt.",
       "currencyMismatch": "Die Währung der Werbeaktion und der Kampagne stimmt nicht überein",
       "toast": {
-        "success": "{{count}} Werbeaktion(en) erfolgreich zur Kampagne hinzugefügt"
+        "added_one": "Die Aktion wurde erfolgreich zur Kampagne hinzugefügt.",
+        "added_other": "Die Aktionen wurden erfolgreich zur Kampagne hinzugefügt.",
+        "removed_one": "Die Aktion wurde erfolgreich aus der Kampagne entfernt.",
+        "removed_other": "Die Aktionen wurden erfolgreich aus der Kampagne entfernt."
       },
       "add": {
+        "tip": "Sie können nur Aktionen hinzufügen, die noch keiner anderen Kampagne zugeordnet sind.",
         "list": {
           "noRecordsMessage": "Erstellen Sie zunächst eine Werbeaktion."
         }
       },
       "list": {
+        "noRecordsTitle": "Noch keine Aktionen",
         "noRecordsMessage": "In der Kampagne gibt es keine Werbeaktionen."
       }
     },
@@ -2771,6 +2865,10 @@
         "list": {
           "noRecordsMessage": "Erstellen Sie zuerst ein Produkt."
         }
+      },
+      "validation": {
+        "title": "Bitte geben Sie einen Titel ein",
+        "description": "Bitte geben Sie eine Beschreibung ein"
       }
     },
     "edit": {
@@ -2785,11 +2883,25 @@
         "successToast": "Die Preislistenkonfiguration wurde erfolgreich aktualisiert."
       }
     },
+    "customerAvailability": {
+      "header": "Kundenverfügbarkeit",
+      "add": "Kundengruppen hinzufügen",
+      "list": {
+        "noRecordsTitle": "Keine Kundengruppen",
+        "noRecordsMessage": "Fügen Sie Kundengruppen hinzu, um festzulegen, für welche Kunden diese Preisliste gilt."
+      },
+      "edit": {
+        "header": "Kundenverfügbarkeit",
+        "description": "Wählen Sie aus, für welche Kundengruppen die Preisliste gelten soll.",
+        "successToast": "Die Preisliste wurde erfolgreich aktualisiert."
+      }
+    },
     "products": {
       "header": "Produkte",
       "actions": {
         "addProducts": "Produkte hinzufügen",
-        "editPrices": "Preise bearbeiten"
+        "editPrices": "Preise bearbeiten",
+        "editPricesDisabled": "Produkte hinzufügen, bevor Sie Preise bearbeiten"
       },
       "delete": {
         "confirmation_one": "Sie sind dabei, die Preise für {{count}} Produkt in der Preisliste zu löschen. Diese Aktion kann nicht rückgängig gemacht werden.",
@@ -2823,6 +2935,10 @@
           "draft": "Entwurf",
           "expired": "Abgelaufen",
           "scheduled": "Geplant"
+        },
+        "descriptions": {
+          "draft": "Kunden können die Preisliste nicht sehen",
+          "active": "Kunden können die Preisliste sehen"
         }
       },
       "type": {
@@ -2840,11 +2956,11 @@
         }
       },
       "startsAt": {
-        "label": "Preisliste hat ein Startdatum?",
+        "label": "Startdatum",
         "hint": "Planen Sie die zukünftige Aktivierung der Preisliste."
       },
       "endsAt": {
-        "label": "Preisliste hat ein Ablaufdatum?",
+        "label": "Ablaufdatum",
         "hint": "Planen Sie, die Preisliste in Zukunft zu deaktivieren."
       },
       "customerAvailability": {
@@ -2853,6 +2969,12 @@
         "hint": "Wählen Sie aus, für welche Kundengruppen die Preisliste gelten soll.",
         "placeholder": "Suche nach Kundengruppen",
         "attribute": "Kundengruppen"
+      }
+    },
+    "list": {
+      "noRecords": {
+        "title": "Noch keine Preislisten",
+        "message": "Erstellen Sie Preislisten für Sonderangebote und Preisüberschreibungen"
       }
     }
   },
@@ -3258,8 +3380,22 @@
   },
   "reservations": {
     "domain": "Reservierungen",
-    "subtitle": "Verwalten Sie die reservierte Menge an Lagerartikeln.",
-    "deleteWarning": "Sie sind dabei, eine Reservierung zu löschen. Diese Aktion kann nicht rückgängig gemacht werden."
+    "subtitle": "Verwalten Sie die reservierte Menge an Inventarartikeln.",
+    "deleteWarning": "Sie sind dabei, eine Reservierung zu löschen. Diese Aktion kann nicht rückgängig gemacht werden.",
+    "list": {
+      "noRecordsTitle": "Noch keine Reservierungen",
+      "noRecordsMessage": "Erstellen Sie Reservierungen, um die reservierte Menge von Inventarartikeln zu verwalten"
+    },
+    "delete": {
+      "title": "Reservierung löschen",
+      "description": "Sie sind dabei, eine Reservierung zu löschen. Dieser Vorgang kann nicht rückgängig gemacht werden.",
+      "lockedTitle": "Reservierung löschen",
+      "lockedDescription": "Diese Reservierung kann nicht gelöscht werden, da sie mit einer noch nicht erfüllten Bestellung verknüpft ist."
+    },
+    "edit": {
+      "lockedTitle": "Reservierung bearbeiten",
+      "lockedDescription": "Diese Reservierung kann nicht bearbeitet werden, da sie mit einer noch nicht erfüllten Bestellung verknüpft ist."
+    }
   },
   "salesChannels": {
     "domain": "Vertriebskanäle",
@@ -3612,8 +3748,8 @@
     "customTitle": "Benutzerdefinierter Titel",
     "manageInventory": "Inventar verwalten",
     "inventoryKit": "Mit Inventarset",
-    "inventoryItems": "Inventargegenstände",
-    "inventoryItem": "Inventargegenstand",
+    "inventoryItems": "Inventarartikel",
+    "inventoryItem": "Inventarartikel",
     "requiredQuantity": "Benötigte Menge",
     "description": "Beschreibung",
     "email": "E-Mail",
@@ -3660,7 +3796,7 @@
     "totalRedemptions": "Gesamteinlösungen",
     "countries": "Länder",
     "paymentProviders": "Zahlungsanbieter",
-    "refundReason": "Rückerstattungsgrund",
+    "refundReason": "Erstattungsgrund",
     "fulfillmentProviders": "Fulfillment-Anbieter",
     "fulfillmentProvider": "Fulfillment-Anbieter",
     "providers": "Anbieter",
@@ -3750,7 +3886,7 @@
     "summary": "Zusammenfassung",
     "details": "Einzelheiten",
     "label": "Etikett",
-    "rate": "Rate",
+    "rate": "Satz",
     "requiresShipping": "Erfordert Versand",
     "unitPrice": "Stückpreis",
     "startDate": "Startdatum",
@@ -3829,6 +3965,121 @@
       "text_area": "Textbereich"
     }
   },
+  "permissions": {
+    "noAccess": "Sie haben keine Berechtigung, dies anzuzeigen.",
+    "accessDenied": {
+      "title": "Zugriff verweigert",
+      "description": "Sie haben keine Berechtigung, auf diese Seite zuzugreifen.",
+      "requiredPermission": "Erforderliche Berechtigung: {{permission}}",
+      "action": "Sie haben keine Berechtigung, diesen Vorgang auszuführen."
+    },
+    "requiredPermissions": {
+      "title": "Erforderliche Berechtigungen",
+      "none": "In dieser Ansicht sind keine Berechtigungen angegeben.",
+      "anyOf": "Eine davon",
+      "allOf": "Alle davon",
+      "source": "Quelle: {{source}}"
+    },
+    "resources": {
+      "api_key": "API-Schlüssel",
+      "campaign": "Kampagne",
+      "commission_line": "Provisionsposition",
+      "commission_rate": "Provisionssatz",
+      "commission_rule": "Provisionsregel",
+      "currency": "Währung",
+      "customer": "Kunde",
+      "customer_address": "Kundenadresse",
+      "customer_group": "Kundengruppe",
+      "file": "Datei",
+      "fulfillment": "Fulfillment",
+      "fulfillment_provider": "Fulfillment-Anbieter",
+      "fulfillment_set": "Fulfillment-Set",
+      "inventory_item": "Inventarartikel",
+      "inventory_level": "Lagerbestand",
+      "invite": "Einladung",
+      "member_invite": "Mitgliedereinladung",
+      "notification": "Benachrichtigung",
+      "order": "Bestellung",
+      "order_change": "Bestelländerung",
+      "order_claim": "Reklamation",
+      "order_claim_item": "Reklamationsartikel",
+      "order_exchange": "Umtausch",
+      "order_group": "Bestellgruppe",
+      "order_item": "Bestellartikel",
+      "payment": "Zahlung",
+      "payment_collection": "Zahlungssammlung",
+      "payment_method": "Zahlungsmethode",
+      "payment_session": "Zahlungssitzung",
+      "payout": "Auszahlung",
+      "payout_account": "Auszahlungskonto",
+      "price": "Preis",
+      "price_list": "Preisliste",
+      "price_preference": "Preiseinstellung",
+      "product": "Produkt",
+      "product_attribute": "Produktattribut",
+      "product_attribute_value": "Produktattributwert",
+      "product_category": "Produktkategorie",
+      "product_change": "Produktänderung",
+      "product_collection": "Produktkollektion",
+      "product_option": "Produktoption",
+      "product_option_value": "Produktoptionswert",
+      "product_tag": "Produkt-Tag",
+      "product_type": "Produkttyp",
+      "product_variant": "Produktvariante",
+      "promotion": "Aktion",
+      "rbac_policy": "Richtlinie",
+      "rbac_role": "Rolle",
+      "refund_reason": "Erstattungsgrund",
+      "region": "Region",
+      "reservation_item": "Reservierung",
+      "return": "Rückgabe",
+      "return_reason": "Rückgabegrund",
+      "review": "Bewertung",
+      "sales_channel": "Vertriebskanal",
+      "seller": "Verkäufer",
+      "seller_member": "Verkäufermitglied",
+      "service_zone": "Servicezone",
+      "shipping_option": "Versandoption",
+      "shipping_option_type": "Versandoptionstyp",
+      "shipping_profile": "Versandprofil",
+      "stock_location": "Lagerstandort",
+      "store": "Shop",
+      "store_locale": "Shop-Sprache",
+      "tax_provider": "Steueranbieter",
+      "tax_rate": "Steuersatz",
+      "tax_region": "Steuerregion",
+      "translation": "Übersetzung",
+      "translation_setting": "Übersetzungseinstellung",
+      "user": "Benutzer",
+      "workflow_execution": "Workflow-Ausführung"
+    },
+    "actions": {
+      "read": "Lesen",
+      "create": "Erstellen",
+      "update": "Aktualisieren",
+      "delete": "Löschen"
+    }
+  },
+  "richTextEditor": {
+    "bold": "Fett",
+    "italic": "Kursiv",
+    "underline": "Unterstrichen",
+    "strike": "Durchgestrichen",
+    "paragraph": "Absatz",
+    "heading2": "Überschrift",
+    "heading3": "Unterüberschrift",
+    "bulletList": "Aufzählung",
+    "orderedList": "Nummerierte Liste",
+    "blockquote": "Zitat",
+    "link": "Link",
+    "linkPlaceholder": "https://example.com",
+    "removeLink": "Link entfernen",
+    "image": "Bild einfügen",
+    "uploadingImage": "Bild wird hochgeladen...",
+    "imageUploadFailed": "Bild konnte nicht hochgeladen werden",
+    "undo": "Rückgängig machen",
+    "redo": "Wiederholen"
+  },
   "seller": {
     "domain": "Shop"
   },
@@ -3853,6 +4104,51 @@
       "paid": "Bezahlt",
       "failed": "Fehlgeschlagen",
       "canceled": "Abgebrochen"
+    }
+  },
+  "reviews": {
+    "domain": "Bewertungen",
+    "status": {
+      "pending": "Ausstehend",
+      "published": "Veröffentlicht",
+      "rejected": "Abgelehnt"
+    },
+    "fields": {
+      "rating": "Sternebewertung",
+      "content": "Inhalt",
+      "response": "Antwort"
+    },
+    "filters": {
+      "stars_one": "{{count}} Stern",
+      "stars_other": "{{count}} Sterne"
+    },
+    "list": {
+      "columns": {
+        "reviewId": "Bewertungs-ID",
+        "rating": "Sternebewertung",
+        "content": "Inhalt",
+        "customer": "Kunde",
+        "date": "Datum",
+        "status": "Status",
+        "response": "Antwort"
+      },
+      "noRecordsTitle": "Noch keine Bewertungen",
+      "noRecordsMessage": "Sobald Kunden Bewertungen abgeben, werden sie hier angezeigt",
+      "noResultsTitle": "Keine Ergebnisse",
+      "noResultsMessage": "Versuchen Sie, die Filter oder die Suchabfrage zu ändern"
+    },
+    "detail": {
+      "customer": "Kunde",
+      "order": "Bestellung"
+    },
+    "respond": {
+      "action": "Antworten",
+      "header": "Auf Bewertung antworten",
+      "label": "Antwort",
+      "confirmTitle": "Auf Bewertung antworten",
+      "confirmDescription": "Ihre Antwort wird im Storefront veröffentlicht und ist für Kunden sichtbar. Nach dem Speichern kann sie weder bearbeitet noch gelöscht werden.",
+      "successToast": "Die Antwort wurde erfolgreich gesendet.",
+      "validation": "Bitte schreiben Sie eine Antwort"
     }
   },
   "translations": {
