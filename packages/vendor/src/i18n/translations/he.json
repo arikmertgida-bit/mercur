@@ -30,7 +30,7 @@
     "disabled": "מושבת",
     "expired": "פג תוקף",
     "active": "פעיל",
-    "revoked": "בוטל",
+    "revoked": "נשלל",
     "new": "חדש",
     "modified": "שונה",
     "added": "נוסף",
@@ -74,8 +74,9 @@
     "true": "נכון",
     "false": "שקר",
     "decrement": "הפחת",
-    "increment": "הוסף",
-    "drawerAccessibleDescription": "השתמש בלוח זה כדי להציג או לערוך את פרטי המשאב הזה."
+    "increment": "הגדל",
+    "drawerAccessibleDescription": "השתמש בלוח זה כדי להציג או לערוך את פרטי המשאב הזה.",
+    "items_two": "{{count}} פריטים"
   },
   "json": {
     "header": "JSON",
@@ -84,8 +85,10 @@
     "drawer": {
       "header_one": "JSON <0>· {{count}} מפתח</0>",
       "header_other": "JSON <0>· {{count}} מפתחות</0>",
-      "description": "צפה בנתוני ה-JSON עבור אובייקט זה."
-    }
+      "description": "צפה בנתוני ה-JSON עבור אובייקט זה.",
+      "header_two": "JSON <0>· {{count}} מפתחות</0>"
+    },
+    "numberOfKeys_two": "{{count}} מפתחות"
   },
   "metadata": {
     "header": "מטא-נתונים",
@@ -109,7 +112,8 @@
         "description": "אובייקט זה מכיל מטא-נתונים לא פרימיטיביים, כגון מערכים או אובייקטים, שלא ניתן לערוך כאן. כדי לערוך את השורות המושבתות, השתמש ב-API ישירות.",
         "tooltip": "שורה זו מושבתת מכיוון שהיא מכילה נתונים לא פרימיטיביים."
       }
-    }
+    },
+    "numberOfKeys_two": "{{count}} מפתחות"
   },
   "validation": {
     "requiredField": "שדה חובה",
@@ -137,7 +141,7 @@
     "create": "צור",
     "delete": "מחק",
     "remove": "הסר",
-    "revoke": "בטל",
+    "revoke": "שלול",
     "cancel": "בטל",
     "forceConfirm": "אשר בכוח",
     "continueEdit": "המשך עריכה",
@@ -149,6 +153,7 @@
     "back": "חזור",
     "close": "סגור",
     "showMore": "הצג עוד",
+    "showLess": "הצג פחות",
     "continue": "המשך",
     "continueWithEmail": "המשך עם אימייל",
     "idCopiedToClipboard": "מזהה הועתק ללוח",
@@ -206,7 +211,7 @@
         "product": "מוצרים",
         "productVariant": "וריאנטים של מוצר",
         "inventory": "מלאי",
-        "reservation": "הזמנות",
+        "reservation": "שריונים",
         "category": "קטגוריות",
         "collection": "קולקציות",
         "order": "הזמנות",
@@ -241,7 +246,7 @@
         "goToCustomers": "לקוחות",
         "goToCustomerGroups": "קבוצות לקוחות",
         "goToInventory": "מלאי",
-        "goToReservations": "הזמנות",
+        "goToReservations": "שריונים",
         "goToPriceLists": "רשימות מחירים",
         "goToPromotions": "מבצעים",
         "goToCampaigns": "קמפיינים"
@@ -300,7 +305,7 @@
       "settings": {
         "header": "הגדרות",
         "general": "כללי",
-        "developer": "מפתח",
+        "developer": "פיתוח",
         "myAccount": "החשבון שלי"
       }
     }
@@ -338,7 +343,8 @@
     "errors": {
       "fixError": "תקן שגיאה",
       "count_one": "{{count}} שגיאה",
-      "count_other": "{{count}} שגיאות"
+      "count_other": "{{count}} שגיאות",
+      "count_two": "{{count}} שגיאות"
     },
     "toggle": {
       "enabled": "מופעל",
@@ -497,8 +503,8 @@
         "primaryCategoryRequired": "נדרשת קטגוריה ראשית",
         "categoryRequired": "יש לבחור קטגוריה",
         "titleRequired": "נדרשת כותרת",
-        "handleInvalidFormat": "המזהה חייב להכיל רק אותיות קטנות, מספרים ומקפים",
-        "handleMustContainLetter": "המזהה חייב להכיל לפחות אות אחת",
+        "handleInvalidFormat": "מזהה ה-URL יכול להכיל רק אותיות קטנות, ספרות ומקפים",
+        "handleMustContainLetter": "מזהה ה-URL חייב להכיל לפחות אות אחת",
         "requiredAttributeSelect": "מאפיין זה נדרש על ידי השוק. יש לבחור ערך.",
         "requiredAttributeEnter": "מאפיין זה נדרש על ידי השוק. יש להזין ערך.",
         "requiredAttributeMultiSelect": "מאפיין זה נדרש על ידי השוק. יש לבחור לפחות ערך אחד.",
@@ -546,10 +552,10 @@
         "addExisting": "הוספת קיים",
         "createNew": "יצירת חדש",
         "requiredAttributes": "מאפיינים נדרשים",
-        "requiredAttributesHint": "These attributes are required by the Marketplace. Select them before proceeding.",
+        "requiredAttributesHint": "מאפיינים אלה נדרשים על ידי השוק. בחר אותם לפני שתמשיך.",
         "selectValues": "בחירת ערכים",
         "tip": "טיפ",
-        "useForVariants": "Use for Variations",
+        "useForVariants": "שימוש לווריאציות",
         "useForVariantsDescription": "אם מסומן, תוכל ליצור וריאנטים באמצעות מאפיין זה. אם לא, המאפיין ישמש למטרות מידע בלבד.",
         "variantAxisTip": "מאפיין זה ייצור וריאנטים. תוכל להגדיר אותם בשלב הבא.",
         "titlePlaceholder": "לדוגמה: צבע",
@@ -581,7 +587,7 @@
         "optionValue": "ערך אפשרות ברירת מחדל",
         "variantTitle": "וריאנט ברירת מחדל"
       },
-      "requestSuccessToast": "בקשת המוצר נשלחה בהצלחה. כעת תוכל ליצור הצעות עבור מוצר זה. לאחר אישור המוצר על ידי המנהל, ההצעות שלך יופיעו בחזית החנות. רק הצעות עם רמות מלאי ומחירים שהוגדרו יהיו גלויות."
+      "requestSuccessToast": "בקשת המוצר נשלחה בהצלחה. לאחר שהמנהל יאשר את המוצר, הוא יופיע בחזית החנות. רק וריאנטים עם רמות מלאי ומחירים שהוגדרו יהיו גלויים."
     },
     "export": {
       "header": "ייצא רשימת מוצרים",
@@ -653,13 +659,13 @@
       "deleteWarning_other": "אתה עומד למחוק {{count}} תמונות. פעולה זו אינה ניתנת לביטול.",
       "deleteWarningWithThumbnail_one": "אתה עומד למחוק {{count}} תמונה כולל התמונה הממוזערת. פעולה זו אינה ניתנת לביטול.",
       "deleteWarningWithThumbnail_other": "אתה עומד למחוק {{count}} תמונות כולל התמונה הממוזערת. פעולה זו אינה ניתנת לביטול.",
-      "thumbnailTooltip": "תמונה ממוזערת",
+      "thumbnailTooltip": "תמונה זו היא התמונה הממוזערת",
       "galleryLabel": "גלריה",
       "downloadImageLabel": "הורד תמונה נוכחית",
       "deleteImageLabel": "מחק תמונה נוכחית",
       "emptyState": {
         "header": "אין מדיה עדיין",
-        "description": "הוסף מדיה למוצר כדי להציג אותו בחנות שלך.",
+        "description": "לא הוקצו תמונות לווריאנט זה.",
         "action": "הוסף מדיה",
         "variantDescription": "לוריאנט זה אין תמונות. הוסף תמונות לוריאנט."
       },
@@ -680,7 +686,9 @@
         "confirm": "הבנתי"
       },
       "uploading": "מעלה...",
-      "uploadError": "ההעלאה נכשלה"
+      "uploadError": "ההעלאה נכשלה",
+      "deleteWarning_two": "אתה עומד למחוק {{count}} תמונות. פעולה זו אינה ניתנת לביטול.",
+      "deleteWarningWithThumbnail_two": "אתה עומד למחוק {{count}} תמונות כולל התמונה הממוזערת. פעולה זו אינה ניתנת לביטול."
     },
     "discountableHint": "כאשר לא מסומן, הנחות לא יחולו על מוצר זה.",
     "noSalesChannels": "לא זמין באף ערוץ מכירות",
@@ -691,7 +699,7 @@
       "draft": "טיוטה",
       "published": "פורסם",
       "proposed": "מוצע",
-      "requires_action": "Changes required",
+      "requires_action": "נדרשים שינויים",
       "rejected": "נדחה"
     },
     "fields": {
@@ -706,8 +714,8 @@
         "placeholder": "חמים ונעים"
       },
       "handle": {
-        "label": "מזהה",
-        "tooltip": "המזהה משמש להפניה למוצר בחנות שלך. אם לא צוין, המזהה ייווצר מכותרת המוצר.",
+        "label": "מזהה URL",
+        "tooltip": "נוצר אוטומטית מכותרת המוצר. אותיות קטנות, ספרות ומקפים בלבד — לא ניתן לערוך שדה זה ישירות.",
         "placeholder": "מעיל-חורף"
       },
       "description": {
@@ -828,7 +836,8 @@
       "validation": {
         "titleRequired": "יש להזין כותרת",
         "optionRequired": "יש לבחור ערך"
-      }
+      },
+      "tableItem_two": "{{availableCount}} זמינים ב-{{locationCount}} מיקומים"
     },
     "options": {
       "header": "אפשרויות",
@@ -903,6 +912,7 @@
     "attributeProductInformationDescription": "מאפיינים המשמשים למטרות מידע",
     "attributeRequiredByMarketplace": "מאפיין זה נדרש על ידי השוק.",
     "attributeRequiredDeleteDisabledTooltip": "לא ניתן להסיר מאפיינים נדרשים.",
+    "missingRequiredAttributesHint": "יש להזין את המידע הנדרש",
     "addAttribute": "הוסף מאפיין",
     "deleteAttributeWarning": "האם אתה בטוח שברצונך למחוק את המאפיין \"{{title}}\"? פעולה זו אינה ניתנת לביטול.",
     "attributesSection": {
@@ -930,7 +940,7 @@
       "status": "סטטוס",
       "thumbnail": "תמונה ממוזערת",
       "title": "כותרת",
-      "handle": "מזהה",
+      "handle": "מזהה URL",
       "created_at": "נוצר",
       "updated_at": "עודכן בתאריך"
     },
@@ -951,7 +961,8 @@
       },
       "header": "מעקב מלאי",
       "lowStock": "מלאי נמוך"
-    }
+    },
+    "variantCount_two": "{{count}} וריאנטים"
   },
   "productDetailInfoWidget": {
     "title": "הרחבה",
@@ -973,7 +984,7 @@
     "createCollectionHint": "צור קולקציה חדשה כדי לארגן את המוצרים שלך.",
     "createSuccess": "הקולקציה נוצרה בהצלחה.",
     "editCollection": "ערוך קולקציה",
-    "handleTooltip": "המזהה משמש להפניה לקולקציה בחנות שלך. אם לא צוין, המזהה ייווצר מכותרת הקולקציה.",
+    "handleTooltip": "נוצר אוטומטית מכותרת האוסף. אותיות קטנות, ספרות ומקפים בלבד — לא ניתן לערוך שדה זה ישירות.",
     "deleteWarning": "אתה עומד למחוק את הקולקציה {{title}}. פעולה זו אינה ניתנת לביטול.",
     "removeSingleProductWarning": "אתה עומד להסיר את המוצר {{title}} מהקולקציה. פעולה זו אינה ניתנת לביטול.",
     "removeProductsWarning_one": "אתה עומד להסיר {{count}} מוצר מהקולקציה. פעולה זו אינה ניתנת לביטול.",
@@ -984,11 +995,13 @@
       },
       "add": {
         "successToast_one": "המוצר נוסף בהצלחה לקולקציה.",
-        "successToast_other": "המוצרים נוספו בהצלחה לקולקציה."
+        "successToast_other": "המוצרים נוספו בהצלחה לקולקציה.",
+        "successToast_two": "המוצרים נוספו בהצלחה לקולקציה."
       },
       "remove": {
         "successToast_one": "המוצר הוסר בהצלחה מהקולקציה.",
-        "successToast_other": "המוצרים הוסרו בהצלחה מהקולקציה."
+        "successToast_other": "המוצרים הוסרו בהצלחה מהקולקציה.",
+        "successToast_two": "המוצרים הוסרו בהצלחה מהקולקציה."
       }
     },
     "requestSuccess": "בקשת האוסף נשלחה בהצלחה",
@@ -1007,7 +1020,8 @@
         "header": "אין סמל עדיין",
         "description": "סמל שנוסף על ידי מפעיל השוק יופיע כאן."
       }
-    }
+    },
+    "removeProductsWarning_two": "אתה עומד להסיר {{count}} מוצרים מהקולקציה. פעולה זו אינה ניתנת לביטול."
   },
   "categories": {
     "domain": "קטגוריות",
@@ -1034,13 +1048,16 @@
       "add": {
         "disabledTooltip": "המוצר כבר נמצא בקטגוריה זו.",
         "successToast_one": "נוסף {{count}} מוצר לקטגוריה.",
-        "successToast_other": "נוספו {{count}} מוצרים לקטגוריה."
+        "successToast_other": "נוספו {{count}} מוצרים לקטגוריה.",
+        "successToast_two": "נוספו {{count}} מוצרים לקטגוריה."
       },
       "remove": {
         "confirmation_one": "אתה עומד להסיר {{count}} מוצר מהקטגוריה. פעולה זו אינה ניתנת לביטול.",
         "confirmation_other": "אתה עומד להסיר {{count}} מוצרים מהקטגוריה. פעולה זו אינה ניתנת לביטול.",
         "successToast_one": "הוסר {{count}} מוצר מהקטגוריה.",
-        "successToast_other": "הוסרו {{count}} מוצרים מהקטגוריה."
+        "successToast_other": "הוסרו {{count}} מוצרים מהקטגוריה.",
+        "successToast_two": "הוסרו {{count}} מוצרים מהקטגוריה.",
+        "confirmation_two": "אתה עומד להסיר {{count}} מוצרים מהקטגוריה. פעולה זו אינה ניתנת לביטול."
       },
       "list": {
         "noRecordsMessage": "אין מוצרים בקטגוריה."
@@ -1092,7 +1109,7 @@
   "inventory": {
     "domain": "מלאי",
     "subtitle": "נהל את פריטי המלאי שלך",
-    "reserved": "שמור",
+    "reserved": "משוריין",
     "available": "זמין",
     "locationLevels": "מיקומים",
     "associatedVariants": "וריאנטים משויכים",
@@ -1110,50 +1127,93 @@
       "requiresShipping": "דורש שילוח",
       "requiresShippingHint": "האם פריט המלאי דורש שילוח?",
       "successToast": "פריט מלאי נוצר בהצלחה.",
+      "errors": {
+        "titleRequired": "יש להזין כותרת"
+      },
+      "attributesHint": "אלה ערכי ברירת מחדל המשמשים לתיאור הפריט. הם אינם מוגדרים על ידי השוק.",
       "descriptionPlaceholder": "תיאור הפריט"
     },
     "reservation": {
-      "header": "הזמנה של {{itemName}}",
-      "editItemDetails": "ערוך הזמנה",
+      "header": "שריון של {{itemName}}",
+      "editItemDetails": "ערוך שריון",
       "lineItemId": "מזהה פריט שורה",
       "orderID": "מזהה הזמנה",
       "description": "תיאור",
       "location": "מיקום",
       "inStockAtLocation": "במלאי במיקום זה",
       "availableAtLocation": "זמין במיקום זה",
-      "reservedAtLocation": "שמור במיקום זה",
-      "reservedAmount": "כמות שמורה",
-      "create": "צור הזמנה",
-      "itemToReserve": "פריט להזמנה",
-      "quantityPlaceholder": "כמה אתה רוצה להזמין?",
-      "descriptionPlaceholder": "איזה סוג של הזמנה זו?",
-      "successToast": "ההזמנה נוצרה בהצלחה.",
-      "updateSuccessToast": "ההזמנה עודכנה בהצלחה.",
-      "deleteSuccessToast": "ההזמנה נמחקה בהצלחה.",
+      "reservedAtLocation": "משוריין במיקום זה",
+      "reservedAmount": "כמות לשריון",
+      "create": "צור שריון",
+      "itemToReserve": "פריט לשריון",
+      "quantityPlaceholder": "כמה ברצונך לשריין?",
+      "descriptionPlaceholder": "איזה סוג שריון זה?",
+      "successToast": "השריון נוצר בהצלחה.",
+      "updateSuccessToast": "השריון עודכן בהצלחה.",
+      "deleteSuccessToast": "השריון נמחק בהצלחה.",
       "errors": {
-        "noAvaliableQuantity": "מיקום המלאי אין לו כמות זמינה.",
-        "quantityOutOfRange": "כמות מינימלית היא 1 וכמות מקסימלית היא {{max}}"
-      }
+        "noAvaliableQuantity": "אין כמות זמינה במיקום המלאי",
+        "quantityOutOfRange": "כמות מינימלית היא 1 וכמות מקסימלית היא {{max}}",
+        "idRequired": "יש לבחור פריט מלאי",
+        "selectLocation": "יש לבחור מיקום",
+        "enterQuantity": "יש להזין כמות",
+        "pleaseEnterQuantity": "יש להזין כמות"
+      },
+      "deleteTitle": "מחק שריון",
+      "deleteDescription": "אתה עומד למחוק שריון. פעולה זו אינה ניתנת לביטול.",
+      "deleteBlockedDescription": "לא ניתן למחוק שריון זה כי הוא מקושר להזמנה שטרם מומשה.",
+      "gotIt": "הבנתי",
+      "locationPlaceholder": "בחר מיקום",
+      "itemId": "מזהה פריט",
+      "goToInventoryItem": "עבור לפריט מלאי",
+      "reserved": "משוריין",
+      "itemPlaceholder": "בחר פריט"
     },
     "adjustInventory": {
       "errors": {
-        "stockedQuantity": "לא ניתן לעדכן את הכמות במלאי לפחות מהכמות השמורה של {{quantity}}."
+        "stockedQuantity": "לא ניתן לעדכן את הכמות במלאי לפחות מהכמות המשוריינת, {{quantity}}.",
+        "enterQuantity": "יש להזין כמות"
       }
     },
     "toast": {
       "updateLocations": "המיקומים עודכנו בהצלחה.",
       "updateLevel": "רמת המלאי עודכנה בהצלחה.",
-      "updateItem": "פריט המלאי עודכן בהצלחה."
+      "updateItem": "פריט המלאי עודכן בהצלחה.",
+      "deleteItem": "פריט המלאי נמחק בהצלחה."
     },
     "stock": {
       "title": "עדכן רמות מלאי",
-      "description": "עדכן את רמות המלאי במלאי עבור פריטי המלאי שנבחרו.",
+      "description": "עדכן את רמות המלאי של פריטי המלאי שנבחרו.",
       "action": "ערוך רמות מלאי",
       "placeholder": "לא מופעל",
       "disablePrompt_one": "אתה עומד להשבית {{count}} רמת מיקום. פעולה זו אינה ניתנת לביטול.",
       "disablePrompt_other": "אתה עומד להשבית {{count}} רמות מיקום. פעולה זו אינה ניתנת לביטול.",
-      "disabledToggleTooltip": "לא ניתן להשבית: נקה כמות נכנסת ו/או שמורה לפני השבתה.",
-      "successToast": "רמות המלאי עודכנו בהצלחה."
+      "disabledToggleTooltip": "לא ניתן להשבית: יש לנקות כמות נכנסת ו/או משוריינת לפני ההשבתה.",
+      "successToast": "רמות המלאי עודכנו בהצלחה.",
+      "disablePrompt_two": "אתה עומד להשבית {{count}} רמות מיקום. פעולה זו אינה ניתנת לביטול."
+    },
+    "attributes": {
+      "tip": "אלה ערכי ברירת מחדל המשמשים לתיאור הפריט. הם אינם מנוהלים על ידי השוק."
+    },
+    "item": {
+      "deleteTitle": "מחק פריט מלאי",
+      "deleteDescription": "אתה עומד למחוק פריט מלאי. פעולה זו אינה ניתנת לביטול."
+    },
+    "level": {
+      "deleteTitle": "מחק רמת מלאי",
+      "deleteDescription": "אתה עומד למחוק את רמת המלאי מ-{{location}}. פעולה זו תמחק את המלאי והשריונים במיקום זה ואינה ניתנת לביטול."
+    },
+    "list": {
+      "noRecordsTitle": "אין עדיין פריטי מלאי",
+      "noRecordsMessage": "צור פריטי מלאי כדי לנהל את המלאי"
+    },
+    "locations": {
+      "noRecordsTitle": "אין עדיין מיקומים",
+      "noRecordsMessage": "הוסף מיקום כדי להתחיל לנהל רמות מלאי"
+    },
+    "reservations": {
+      "noRecordsTitle": "אין עדיין שריונים",
+      "noRecordsMessage": "אין שריונים להצגה"
     },
     "levelDeleted": "רמת המלאי נמחקה בהצלחה."
   },
@@ -1287,7 +1347,8 @@
         "successToast_other": "הלקוחות נוספו בהצלחה לקבוצה.",
         "list": {
           "noRecordsMessage": "צור לקוח תחילה."
-        }
+        },
+        "successToast_two": "הלקוחות נוספו בהצלחה לקבוצה."
       },
       "remove": {
         "title_one": "הסר לקוח",
@@ -1295,7 +1356,10 @@
         "description_one": "אתה עומד להסיר {{count}} לקוח מקבוצת הלקוחות. פעולה זו אינה ניתנת לביטול.",
         "description_other": "אתה עומד להסיר {{count}} לקוחות מקבוצת הלקוחות. פעולה זו אינה ניתנת לביטול.",
         "successToast_one": "הלקוח הוסר בהצלחה מהקבוצה.",
-        "successToast_other": "הלקוחות הוסרו בהצלחה מהקבוצה."
+        "successToast_other": "הלקוחות הוסרו בהצלחה מהקבוצה.",
+        "successToast_two": "הלקוחות הוסרו בהצלחה מהקבוצה.",
+        "title_two": "הסר לקוחות",
+        "description_two": "אתה עומד להסיר {{count}} לקוחות מקבוצת הלקוחות. פעולה זו אינה ניתנת לביטול."
       },
       "list": {
         "noRecordsMessage": "לקבוצה זו אין לקוחות.",
@@ -1365,9 +1429,9 @@
         "partiallyAuthorized": "מאושר חלקית",
         "awaiting": "ממתין",
         "captured": "נתפס",
-        "partiallyRefunded": "הוחזר חלקית",
+        "partiallyRefunded": "הכסף הוחזר חלקית",
         "partiallyCaptured": "נתפס חלקית",
-        "refunded": "הוחזר",
+        "refunded": "הכסף הוחזר",
         "canceled": "בוטל",
         "requiresAction": "דורש פעולה",
         "pending": "ממתין"
@@ -1377,14 +1441,14 @@
       "createRefund": "צור החזר",
       "refundPaymentSuccess": "החזר של {{amount}} בוצע בהצלחה",
       "createRefundWrongQuantity": "הכמות צריכה להיות מספר בין 1 ל{{number}}",
-      "refundAmount": "החזר {{amount}}",
-      "paymentLink": "העתק קישור תשלום עבור {{amount}}",
+      "refundAmount": "החזר {{ amount }}",
+      "paymentLink": "העתק קישור תשלום עבור {{ amount }}",
       "selectPaymentToRefund": "בחר תשלום להחזר",
       "totalPending": "סה\"כ ממתין",
-      "totalRefunded": "הוחזר",
+      "totalRefunded": "הכסף שהוחזר",
       "totalStoreCreditRefunds": "סה\"כ החזרי אשראי חנות",
       "enterAmount": "יש להזין סכום",
-      "copyPaymentLink": "העתק קישור תשלום עבור {{amount}}",
+      "copyPaymentLink": "העתק קישור תשלום עבור {{ amount }}",
       "copyLinkSuccess": "קישור התשלום הועתק ללוח",
       "copyLinkError": "העתקת קישור התשלום נכשלה",
       "outstandingAmount": "סכום לתשלום"
@@ -1421,7 +1485,7 @@
       },
       "sendNotification": "שלח התראה",
       "sendNotificationHint": "הודע ללקוח על העריכה.",
-      "removeBlockedFulfilledOrReturned": "לא ניתן להסיר פריטים שמולאו או הוחזרו."
+      "removeBlockedFulfilledOrReturned": "לא ניתן להסיר פריטים שמומשו או הוחזרו."
     },
     "edit": {
       "email": {
@@ -1484,7 +1548,7 @@
       },
       "receive": {
         "action": "קבל פריטים",
-        "receiveItems": "{{returnType}} {{id}}",
+        "receiveItems": "{{ returnType }} {{ id }}",
         "restockAll": "החזר מלאי לכל הפריטים",
         "itemsLabel": "פריטים שהתקבלו",
         "title": "קבל פריטים עבור #{{returnId}}",
@@ -1657,7 +1721,7 @@
       }
     },
     "shipment": {
-      "title": "סמן מימוש כשולח",
+      "title": "סמן מימוש כנשלח",
       "trackingNumber": "מספר מעקב",
       "addTracking": "הוסף מספר מעקב",
       "sendNotification": "שלח התראה",
@@ -1673,7 +1737,7 @@
       "markAsDeliveredWarning": "אתה עומד לסמן מימוש כנמסר. פעולה זו אינה ניתנת לביטול.",
       "differentOptionSelected": "אפשרות המשלוח שנבחרה שונה מזו שנבחרה על ידי הלקוח.",
       "disabledItemTooltip": "אפשרות המשלוח שבחרת אינה מאפשרת מימוש של פריט זה",
-      "unfulfilledItems": "פריטים לא מומשו",
+      "unfulfilledItems": "פריטים שלא מומשו",
       "statusLabel": "סטטוס מימוש",
       "statusTitle": "סטטוס מימוש",
       "fulfillItems": "ממש פריטים",
@@ -1697,7 +1761,8 @@
         "noItems": "אין פריטים למימוש.",
         "noShippingOption": "נדרשת אפשרות משלוח",
         "noLocation": "נדרש מיקום",
-        "exceedsReservedQuantity": "הכמות שברצונך למלא חורגת מהכמות השמורה עבור הפריטים. יש לסקור את המילוי שלך."
+        "exceedsReservedQuantity": "הכמות שברצונך לממש חורגת מהכמות המשוריינת עבור הפריטים. בדוק את המימוש שלך.",
+        "wrongQuantity_two": "הכמות צריכה להיות מספר בין 1 ל{{number}}"
       },
       "status": {
         "notFulfilled": "לא מומש",
@@ -1734,11 +1799,11 @@
       "title": "צור החזר",
       "sendNotificationHint": "הודע ללקוחות על ההחזר שנוצר.",
       "systemPayment": "תשלום מערכת",
-      "systemPaymentDesc": "אחד או יותר מהתשלומים שלך הוא תשלום מערכת. שים לב, תפיסות והחזרים אינם מנוהלים על ידי Kayı.com עבור תשלומים אלו.",
+      "systemPaymentDesc": "אחד או יותר מהתשלומים שלך הוא תשלום מערכת. שים לב: Kayı.com אינה מטפלת בתפיסות ובהחזרים של תשלומים כאלה.",
       "error": {
         "amountToLarge": "לא ניתן להחזיר יותר מסכום ההזמנה המקורי.",
         "amountNegative": "סכום ההחזר חייב להיות מספר חיובי.",
-        "reasonRequired": "אנא בחר סיבת החזר."
+        "reasonRequired": "יש לבחור סיבת החזר כספי."
       }
     },
     "customer": {
@@ -1753,7 +1818,7 @@
       "showMoreActivities_one": "הצג עוד {{count}} פעילות",
       "showMoreActivities_other": "הצג עוד {{count}} פעילויות",
       "comment": {
-        "label": "תגובה",
+        "label": "הערה",
         "placeholder": "השאר תגובה",
         "addButtonText": "הוסף תגובה",
         "deleteButtonText": "מחק תגובה"
@@ -1784,17 +1849,19 @@
           "shipped": "פריטים נשלחו",
           "delivered": "פריטים נמסרו",
           "items_one": "{{count}} פריט",
-          "items_other": "{{count}} פריטים"
+          "items_other": "{{count}} פריטים",
+          "items_two": "{{count}} פריטים"
         },
         "return": {
           "created": "בקשת החזרה #{{returnId}} נוצרה",
           "canceled": "בקשת החזרה #{{returnId}} בוטלה",
           "received": "בקשת החזרה #{{returnId}} התקבלה",
           "items_one": "{{count}} פריט הוחזר",
-          "items_other": "{{count}} פריטים הוחזרו"
+          "items_other": "{{count}} פריטים הוחזרו",
+          "items_two": "{{count}} פריטים הוחזרו"
         },
         "note": {
-          "comment": "תגובה",
+          "comment": "הערה",
           "byLine": "על ידי {{author}}"
         },
         "claim": {
@@ -1823,12 +1890,16 @@
           "billing_address": "כתובת חיוב עודכנה",
           "email": "אימייל עודכן"
         }
-      }
+      },
+      "showMoreActivities_two": "הצג עוד {{count}} פעילויות"
     },
     "fields": {
-      "displayId": "מספר תצוגה",
+      "displayId": "מזהה הזמנה",
       "refundableAmount": "סכום להחזר",
       "returnableQuantity": "כמות להחזרה"
+    },
+    "requiresAction": {
+      "actionUnavailable": "לא זמין עד שהזמנה זו תאושר"
     },
     "giftCardsStoreCreditLines": "כרטיסי מתנה ושורות אשראי",
     "creditLines": {
@@ -1856,7 +1927,7 @@
       }
     },
     "actions": {
-      "cancelDisabledFulfilled": "לא ניתן לבטל הזמנה שיש בה פריטים שמולאו."
+      "cancelDisabledFulfilled": "לא ניתן לבטל הזמנה שיש בה פריטים שמומשו."
     },
     "export": {
       "header": "ייצא רשימת הזמנות",
@@ -2076,7 +2147,10 @@
           "pickup_one": "{{count}} אפשרות איסוף",
           "pickup_other": "{{count}} אפשרויות איסוף",
           "returns_one": "{{count}} אפשרות החזרה",
-          "returns_other": "{{count}} אפשרויות החזרה"
+          "returns_other": "{{count}} אפשרויות החזרה",
+          "shipping_two": "{{count}} אפשרויות משלוח",
+          "pickup_two": "{{count}} אפשרויות איסוף",
+          "returns_two": "{{count}} אפשרויות החזרה"
         },
         "priceType": {
           "label": "סוג מחיר",
@@ -2170,10 +2244,10 @@
       "successToast": "אזור המס עודכן בהצלחה."
     },
     "province": {
-      "header": "מחוזות",
+      "header": "פרובינציות",
       "create": {
-        "header": "צור אזור מס מחוז",
-        "hint": "צור אזור מס חדש כדי להגדיר שיעורי מס למחוז מסוים."
+        "header": "צור אזור מס פרובינציה",
+        "hint": "צור אזור מס חדש כדי להגדיר שיעורי מס לפרובינציה מסוימת."
       }
     },
     "provider": {
@@ -2346,35 +2420,38 @@
         "numberOfTargets_other": "{{count}} יעדים",
         "additionalValues_one": "ועוד {{count}} ערך",
         "additionalValues_other": "ועוד {{count}} ערכים",
-        "action": "הוסף יעד"
+        "action": "הוסף יעד",
+        "values_two": "{{count}} ערכים",
+        "numberOfTargets_two": "{{count}} יעדים",
+        "additionalValues_two": "ועוד {{count}} ערכים"
       },
       "sublevels": {
         "labels": {
-          "province": "מחוז",
+          "province": "פרובינציה",
           "state": "מדינה",
           "region": "אזור",
           "stateOrTerritory": "מדינה/טריטוריה",
           "department": "מחלקה",
           "county": "מחוז",
           "territory": "טריטוריה",
-          "prefecture": "מחוז",
-          "district": "מחוז",
-          "governorate": "מחוז",
+          "prefecture": "פרפקטורה",
+          "district": "נפה",
+          "governorate": "מושלות",
           "emirate": "אמירות",
           "canton": "קנטון",
           "sublevel": "קוד תת-רמה"
         },
         "placeholders": {
-          "province": "בחר מחוז",
+          "province": "בחר פרובינציה",
           "state": "בחר מדינה",
           "region": "בחר אזור",
           "stateOrTerritory": "בחר מדינה/טריטוריה",
           "department": "בחר מחלקה",
           "county": "בחר מחוז",
           "territory": "בחר טריטוריה",
-          "prefecture": "בחר מחוז",
-          "district": "בחר מחוז",
-          "governorate": "בחר מחוז",
+          "prefecture": "בחר פרפקטורה",
+          "district": "בחר נפה",
+          "governorate": "בחר מושלות",
           "emirate": "בחר אמירות",
           "canton": "בחר קנטון"
         },
@@ -2396,17 +2473,17 @@
   },
   "promotions": {
     "templates": {
-      "amountOffProducts": {
-        "title": "הנחת סכום על מוצרים",
-        "description": "הנחה על מוצרים מסוימים או אוסף מוצרים"
+      "amountOffOffers": {
+        "title": "הנחת סכום על פריטים",
+        "description": "הנחה על פריטים נבחרים"
       },
       "amountOffOrder": {
         "title": "הנחת סכום על הזמנה",
         "description": "הנחה על סכום ההזמנה הכולל"
       },
       "percentageOffProduct": {
-        "title": "הנחת אחוזים על מוצר",
-        "description": "הנחה באחוזים על מוצרים נבחרים"
+        "title": "הנחת אחוזים על פריטים",
+        "description": "הנחה באחוזים על פריטים נבחרים"
       },
       "percentageOffOrder": {
         "title": "הנחת אחוזים על הזמנה",
@@ -2430,8 +2507,22 @@
       "details": "פרטים",
       "campaign": "קמפיין"
     },
+    "list": {
+      "noRecords": {
+        "title": "אין עדיין מבצעים",
+        "message": "צור מבצעים כדי להציע הנחות"
+      }
+    },
     "fields": {
       "type": "סוג",
+      "typeLabels": {
+        "percentageItems": "הנחת אחוזים על פריטים",
+        "percentageShipping": "הנחת אחוזים על משלוח",
+        "percentageOrder": "הנחת אחוזים על הזמנה",
+        "amountItems": "הנחת סכום על פריטים",
+        "amountShipping": "הנחת סכום על משלוח",
+        "amountOrder": "הנחת סכום על הזמנה"
+      },
       "value_type": "סוג ערך",
       "value": "ערך",
       "campaign": "קמפיין",
@@ -2471,6 +2562,7 @@
       "allocationTooltip": "\"כל פריט\" אוכף את מגבלת הכמות לכל פריט, בעוד ש\"פעם אחת\" אוכף את מגבלת הכמות על העגלה כולה",
       "taxInclusive": "כולל מס",
       "usageLimit": "מגבלת שימוש",
+      "unlimited": "ללא הגבלה",
       "usage": "שימוש"
     },
     "tooltips": {
@@ -2478,10 +2570,15 @@
     },
     "errors": {
       "requiredField": "שדה חובה",
-      "promotionTabError": "תקן שגיאות בכרטיסיית המבצע לפני ההמשך"
+      "promotionTabError": "תקן שגיאות בכרטיסיית המבצע לפני ההמשך",
+      "applyToQuantityRequired": "הגדר את כמות הפריטים שעליהם חל המבצע.",
+      "buyRulesMinQuantityRequired": "הגדר את הכמות המינימלית של פריטים לקנייה.",
+      "maxQuantityLowerThanApplyTo": "הכמות המרבית חייבת להיות גדולה מהכמות שעליה חל המבצע או שווה לה."
     },
     "toasts": {
-      "promotionCreateSuccess": "המבצע ({{code}}) נוצר בהצלחה."
+      "promotionCreateSuccess": "המבצע ({{code}}) נוצר בהצלחה.",
+      "promotionUpdateSuccess": "המבצע עודכן בהצלחה.",
+      "promotionDeleteSuccess": "המבצע ({{code}}) נמחק בהצלחה."
     },
     "edit": {
       "title": "ערוך פרטי מבצע",
@@ -2560,6 +2657,10 @@
         "title": "כמות מקסימלית",
         "description": "כמות מקסימלית של פריטים שהמבצע חל עליהם."
       },
+      "usageLimit": {
+        "title": "מגבלת שימוש",
+        "description": "המספר המרבי של פעמים שבהן ניתן להשתמש במבצע זה בכל ההזמנות. השאר ריק לשימוש בלתי מוגבל."
+      },
       "type": {
         "standard": {
           "title": "סטנדרטי",
@@ -2625,7 +2726,11 @@
     "campaignSection": {
       "noRecordsTitle": "לא חלק מקמפיין",
       "noRecordsMessage": "הוסף מבצע זה לקמפיין קיים",
-      "addToCampaign": "הוסף לקמפיין"
+      "addToCampaign": "הוסף לקמפיין",
+      "warnings": {
+        "promotionExpires": "המבצע יפוג כשתוקף הקמפיין יפוג.",
+        "promotionMustBeActive": "כדי שהקמפיין יפעל, סטטוס המבצע חייב להיות פעיל."
+      }
     },
     "ruleAttributes": {
       "productCategory": "קטגוריית מוצר",
@@ -2650,7 +2755,7 @@
     "delete": {
       "title": "האם אתה בטוח?",
       "description": "אתה עומד למחוק את הקמפיין '{{name}}'. פעולה זו אינה ניתנת לביטול.",
-      "successToast": "הקמפיין '{{name}}' נוצר בהצלחה."
+      "successToast": "הקמפיין '{{name}}' נמחק בהצלחה."
     },
     "edit": {
       "header": "ערוך קמפיין",
@@ -2659,6 +2764,7 @@
     },
     "configuration": {
       "header": "הגדרות",
+      "expiryWarning": "המבצע יפוג כשתוקף הקמפיין יפוג.",
       "edit": {
         "header": "ערוך הגדרות קמפיין",
         "description": "ערוך את הגדרות הקמפיין.",
@@ -2672,11 +2778,17 @@
       "header": "צור קמפיין",
       "successToast": "הקמפיין '{{name}}' נוצר בהצלחה."
     },
+    "validation": {
+      "name_required": "יש להזין שם",
+      "identifier_required": "יש להזין מזהה",
+      "currency_required": "יש לבחור מטבע"
+    },
     "fields": {
       "name": "שם",
       "identifier": "מזהה",
       "identifierTooltip": "נוצר אוטומטית משם הקמפיין. אותיות קטנות, ספרות ומקפים בלבד — לא ניתן לערוך שדה זה ישירות.",
       "identifierPlaceholder": "מבצע-קיץ",
+      "type": "סוג",
       "start_date": "תאריך התחלה",
       "end_date": "תאריך סיום",
       "total_spend": "תקציב שהוצא",
@@ -2692,10 +2804,12 @@
         "hint": "צור תקציב לקמפיין.",
         "header": "תקציב קמפיין"
       },
+      "noLimitHint": "אם לא תגדיר מגבלות, תקציב הקמפיין יהיה ללא הגבלה.",
       "details": "תקציב קמפיין",
       "fields": {
         "type": "סוג",
         "currency": "מטבע",
+        "selectCurrency": "בחר מטבע",
         "limit": "מגבלה",
         "used": "בשימוש",
         "budgetAttribute": "הגבל שימוש לפי",
@@ -2713,6 +2827,10 @@
           "title": "שימוש",
           "description": "הגדר מגבלה על מספר הפעמים שהמבצע יכול לשמש."
         },
+        "use_by_attribute": {
+          "title": "שימוש",
+          "description": "הגדר מגבלה על מספר הפעמים שהמבצע יכול לשמש."
+        },
         "useByAttribute": {
           "title": "שימוש לפי מאפיין (מזהה לקוח, דוא\"ל וכו')",
           "titleCustomerId": "שימוש לכל לקוח",
@@ -2725,7 +2843,8 @@
       },
       "attribute": {
         "customer_id": "לקוח",
-        "customer_email": "דוא\"ל"
+        "customer_email": "דוא\"ל",
+        "promotion_code": "קוד מבצע"
       }
     },
     "promotions": {
@@ -2737,14 +2856,21 @@
       "alreadyAddedDiffCampaign": "מבצע זה כבר נוסף לקמפיין שונה ({{name}}).",
       "currencyMismatch": "מטבע המבצע והקמפיין אינם תואמים",
       "toast": {
-        "success": "הוספו בהצלחה {{count}} מבצע(ים) לקמפיין"
+        "added_one": "המבצע נוסף בהצלחה לקמפיין.",
+        "added_other": "המבצעים נוספו בהצלחה לקמפיין.",
+        "removed_one": "המבצע הוסר בהצלחה מהקמפיין.",
+        "removed_other": "המבצעים הוסרו בהצלחה מהקמפיין.",
+        "added_two": "המבצעים נוספו בהצלחה לקמפיין.",
+        "removed_two": "המבצעים הוסרו בהצלחה מהקמפיין."
       },
       "add": {
+        "tip": "ניתן להוסיף רק מבצעים שאינם כבר בקמפיין אחר.",
         "list": {
           "noRecordsMessage": "צור מבצע תחילה."
         }
       },
       "list": {
+        "noRecordsTitle": "אין עדיין מבצעים",
         "noRecordsMessage": "אין מבצעים בקמפיין."
       }
     },
@@ -2771,6 +2897,10 @@
         "list": {
           "noRecordsMessage": "צור מוצר תחילה."
         }
+      },
+      "validation": {
+        "title": "יש להזין כותרת",
+        "description": "יש להזין תיאור"
       }
     },
     "edit": {
@@ -2785,17 +2915,33 @@
         "successToast": "הגדרות רשימת המחירים עודכנו בהצלחה."
       }
     },
+    "customerAvailability": {
+      "header": "זמינות ללקוחות",
+      "add": "הוסף קבוצות לקוחות",
+      "list": {
+        "noRecordsTitle": "אין קבוצות לקוחות",
+        "noRecordsMessage": "הוסף קבוצות לקוחות כדי להגביל לאילו לקוחות רשימת מחירים זו חלה."
+      },
+      "edit": {
+        "header": "זמינות ללקוחות",
+        "description": "בחר אילו קבוצות לקוחות רשימת המחירים תחול עליהן.",
+        "successToast": "רשימת המחירים עודכנה בהצלחה."
+      }
+    },
     "products": {
       "header": "מוצרים",
       "actions": {
         "addProducts": "הוסף מוצרים",
-        "editPrices": "ערוך מחירים"
+        "editPrices": "ערוך מחירים",
+        "editPricesDisabled": "הוסף מוצרים לפני עריכת מחירים"
       },
       "delete": {
         "confirmation_one": "אתה עומד למחוק את המחירים עבור {{count}} מוצר ברשימת המחירים. פעולה זו אינה ניתנת לביטול.",
         "confirmation_other": "אתה עומד למחוק את המחירים עבור {{count}} מוצרים ברשימת המחירים. פעולה זו אינה ניתנת לביטול.",
         "successToast_one": "המחירים עבור {{count}} מוצר נמחקו בהצלחה.",
-        "successToast_other": "המחירים עבור {{count}} מוצרים נמחקו בהצלחה."
+        "successToast_other": "המחירים עבור {{count}} מוצרים נמחקו בהצלחה.",
+        "confirmation_two": "אתה עומד למחוק את המחירים עבור {{count}} מוצרים ברשימת המחירים. פעולה זו אינה ניתנת לביטול.",
+        "successToast_two": "המחירים עבור {{count}} מוצרים נמחקו בהצלחה."
       },
       "add": {
         "successToast": "המחירים נוספו בהצלחה לרשימת המחירים.",
@@ -2823,6 +2969,10 @@
           "draft": "טיוטה",
           "expired": "פג תוקף",
           "scheduled": "מתוזמן"
+        },
+        "descriptions": {
+          "draft": "הלקוחות לא יוכלו לראות את רשימת המחירים",
+          "active": "הלקוחות יוכלו לראות את רשימת המחירים"
         }
       },
       "type": {
@@ -2830,21 +2980,21 @@
         "hint": "בחר את סוג רשימת המחירים שברצונך ליצור.",
         "options": {
           "sale": {
-            "label": "מבצע",
+            "label": "מחירי מבצע",
             "description": "מחירי מבצע הם שינויים זמניים במחיר המוצרים."
           },
           "override": {
-            "label": "החלפה",
-            "description": "החלפות משמשות בדרך כלל ליצירת מחירים מותאמים ללקוח."
+            "label": "דריסה",
+            "description": "דריסות משמשות בדרך כלל ליצירת מחירים ייעודיים ללקוחות."
           }
         }
       },
       "startsAt": {
-        "label": "רשימת המחירים כוללת תאריך התחלה?",
+        "label": "תאריך התחלה",
         "hint": "תזמן את רשימת המחירים להפעלה בעתיד."
       },
       "endsAt": {
-        "label": "רשימת המחירים כוללת תאריך תפוגה?",
+        "label": "תאריך תפוגה",
         "hint": "תזמן את רשימת המחירים לכיבוי בעתיד."
       },
       "customerAvailability": {
@@ -2853,6 +3003,12 @@
         "hint": "בחר אילו קבוצות לקוחות רשימת המחירים תחול עליהן.",
         "placeholder": "חפש קבוצות לקוחות",
         "attribute": "קבוצות לקוחות"
+      }
+    },
+    "list": {
+      "noRecords": {
+        "title": "אין עדיין רשימות מחירים",
+        "message": "צור רשימות מחירים למחירי מבצע ולדריסת מחירים"
       }
     }
   },
@@ -2867,7 +3023,7 @@
     },
     "edit": {
       "header": "ערוך פרופיל",
-      "languageHint": "השפה שברצונך להשתמש בלוח הבקרה של המנהל. זה לא משנה את שפת החנות שלך.",
+      "languageHint": "השפה שבה ברצונך להשתמש בלוח הבקרה של המוכר. הדבר אינו משנה את שפת החנות שלך.",
       "languagePlaceholder": "בחר שפה",
       "usageInsightsHint": "שתף תובנות שימוש ועזור לנו לשפר את Kayı.com. ניתן לקרוא עוד על מה אנו אוספים ואיך אנו משתמשים בזה ב<0>התיעוד</0> שלנו."
     },
@@ -2895,7 +3051,7 @@
     },
     "roles": {
       "admin": "מנהל",
-      "developer": "מפתח",
+      "developer": "מפתח תוכנה",
       "member": "חבר",
       "administration": "ניהול",
       "inventoryManagement": "ניהול מלאי",
@@ -2964,10 +3120,10 @@
       "currenciesUpdated": "מטבעות עודכנו בהצלחה",
       "currenciesRemoved": "מטבעות הוסרו מהחנות בהצלחה",
       "updatedTaxInclusivitySuccessfully": "תמחור כולל מס עודכן בהצלחה",
-      "localesUpdated": "האזורים עודכנו בהצלחה",
-      "localesRemoved": "האזורים הוסרו מהחנות בהצלחה"
+      "localesUpdated": "השפות עודכנו בהצלחה",
+      "localesRemoved": "השפות הוסרו מהחנות בהצלחה"
     },
-    "handleTooltip": "המזהה הופך לתבנית ה-URL של החנות שלך. השאר ריק ליצירה אוטומטית מהשם.",
+    "handleTooltip": "מזהה ה-URL הופך לכתובת החנות שלך. השאר ריק כדי ליצור אותו אוטומטית מהשם.",
     "validation": {
       "nameRequired": "יש להזין שם",
       "emailRequired": "יש להזין כתובת דוא\"ל",
@@ -3002,11 +3158,11 @@
         "description": "החנות שלך הופסקה לצמיתות על ידי מנהל הפלטפורמה. אנא פנה לתמיכה לקבלת מידע נוסף."
       }
     },
-    "defaultLocale": "אזור ברירת מחדל",
-    "locales": "אזורים",
-    "removeLocaleWarning_one": "אתה עומד להסיר {{count}} אזור מהחנות שלך. כל תרגום המשתמש באזור זה יוסר.",
-    "removeLocaleWarning_other": "אתה עומד להסיר {{count}} אזורים מהחנות שלך. כל תרגום המשתמש באזורים אלה יוסר.",
-    "localeAlreadyAdded": "האזור כבר נוסף לחנות שלך.",
+    "defaultLocale": "שפת ברירת מחדל",
+    "locales": "שפות",
+    "removeLocaleWarning_one": "אתה עומד להסיר שפה אחת ({{count}}) מהחנות שלך. כל תרגום המשתמש בשפה זו יוסר.",
+    "removeLocaleWarning_other": "אתה עומד להסיר {{count}} שפות מהחנות שלך. כל תרגום המשתמש בשפות אלה יוסר.",
+    "localeAlreadyAdded": "השפה כבר נוספה לחנות שלך.",
     "company": "חברה",
     "manageCompanyDetails": "נהל את פרטי החברה שלך",
     "logo": "לוגו",
@@ -3072,8 +3228,8 @@
       "categories": {
         "order": "הזמנות",
         "orderDescription": "הזמנות חדשות בחנות שלך.",
-        "payout": "תשלומים",
-        "payoutDescription": "כאשר נשלח אליך תשלום.",
+        "payout": "העברות כספים",
+        "payoutDescription": "כאשר נשלחה אליך העברת כספים.",
         "request": "בקשות",
         "requestDescription": "אישורים ודחיות של הבקשות שהגשת.",
         "review": "ביקורות",
@@ -3137,7 +3293,9 @@
         "description": "האם אתה בטוח שברצונך להסיר תקופת חופשה זו?"
       },
       "deleteSuccess": "החופשה נמחקה בהצלחה."
-    }
+    },
+    "removeLocaleWarning_two": "אתה עומד להסיר {{count}} שפות מהחנות שלך. כל תרגום המשתמש בשפות אלה יוסר.",
+    "removeCurrencyWarning_two": "אתה עומד להסיר {{count}} מטבעות מהחנות שלך. ודא שהסרת את כל המחירים המשתמשים במטבעות לפני ההמשך."
   },
   "regions": {
     "domain": "אזורים",
@@ -3195,7 +3353,8 @@
         "label": "דרישות",
         "hint": "ציין את הדרישות עבור אפשרות המשלוח."
       }
-    }
+    },
+    "removeCountriesWarning_two": "אתה עומד להסיר {{count}} מדינות מהאזור. פעולה זו אינה ניתנת לביטול."
   },
   "taxes": {
     "domain": "אזורי מס",
@@ -3254,12 +3413,27 @@
       "create": "המיקום נוצר בהצלחה",
       "update": "המיקום עודכן בהצלחה",
       "removeChannel": "ערוץ המכירה הוסר בהצלחה"
-    }
+    },
+    "removeSalesChannelsWarning_two": "אתה עומד להסיר {{count}} ערוצי מכירה מהמיקום."
   },
   "reservations": {
-    "domain": "הזמנות",
-    "subtitle": "נהל את הכמות השמורה של פריטי מלאי.",
-    "deleteWarning": "אתה עומד למחוק הזמנה. פעולה זו אינה ניתנת לביטול."
+    "domain": "שריונים",
+    "subtitle": "נהל את הכמות המשוריינת של פריטי מלאי.",
+    "deleteWarning": "אתה עומד למחוק שריון. פעולה זו אינה ניתנת לביטול.",
+    "list": {
+      "noRecordsTitle": "אין עדיין שריונים",
+      "noRecordsMessage": "צור שריונים כדי לנהל את הכמות המשוריינת של פריטי מלאי"
+    },
+    "delete": {
+      "title": "מחק שריון",
+      "description": "אתה עומד למחוק שריון. פעולה זו אינה ניתנת לביטול.",
+      "lockedTitle": "מחק שריון",
+      "lockedDescription": "לא ניתן למחוק שריון זה כי הוא מקושר להזמנה שטרם מומשה."
+    },
+    "edit": {
+      "lockedTitle": "ערוך שריון",
+      "lockedDescription": "לא ניתן לערוך שריון זה כי הוא מקושר להזמנה שטרם מומשה."
+    }
   },
   "salesChannels": {
     "domain": "ערוצי מכירה",
@@ -3300,7 +3474,8 @@
           "noRecordsMessage": "צור מוצר תחילה."
         }
       }
-    }
+    },
+    "removeProductsWarning_two": "אתה עומד להסיר {{count}} מוצרים מ-{{sales_channel}}."
   },
   "apiKeyManagement": {
     "domain": {
@@ -3313,7 +3488,7 @@
     },
     "status": {
       "active": "פעיל",
-      "revoked": "בוטל"
+      "revoked": "נשלל"
     },
     "type": {
       "publishable": "לפרסום",
@@ -3343,15 +3518,16 @@
       "alreadyAddedTooltip": "ערוץ המכירה כבר נוסף למפתח ה-API.",
       "list": {
         "noRecordsMessage": "אין ערוצי מכירה בהיקף מפתח ה-API לפרסום."
-      }
+      },
+      "successToast_two": "{{count}} ערוצי מכירה נוספו בהצלחה למפתח ה-API."
     },
     "delete": {
       "warning": "אתה עומד למחוק את מפתח ה-API {{title}}. פעולה זו אינה ניתנת לביטול.",
       "successToast": "מפתח ה-API {{title}} נמחק בהצלחה."
     },
     "revoke": {
-      "warning": "אתה עומד לבטל את מפתח ה-API {{title}}. פעולה זו אינה ניתנת לביטול.",
-      "successToast": "מפתח ה-API {{title}} בוטל בהצלחה."
+      "warning": "אתה עומד לשלול את מפתח ה-API {{title}}. פעולה זו אינה ניתנת לביטול.",
+      "successToast": "מפתח ה-API {{title}} נשלל בהצלחה."
     },
     "addSalesChannels": {
       "list": {
@@ -3364,10 +3540,12 @@
       "warningBatch_other": "אתה עומד להסיר {{count}} ערוצי מכירה ממפתח ה-API. פעולה זו אינה ניתנת לביטול.",
       "successToast": "ערוץ המכירה הוסר בהצלחה ממפתח ה-API.",
       "successToastBatch_one": "{{count}} ערוץ מכירה הוסר בהצלחה ממפתח ה-API.",
-      "successToastBatch_other": "{{count}} ערוצי מכירה הוסרו בהצלחה ממפתח ה-API."
+      "successToastBatch_other": "{{count}} ערוצי מכירה הוסרו בהצלחה ממפתח ה-API.",
+      "warningBatch_two": "אתה עומד להסיר {{count}} ערוצי מכירה ממפתח ה-API. פעולה זו אינה ניתנת לביטול.",
+      "successToastBatch_two": "{{count}} ערוצי מכירה הוסרו בהצלחה ממפתח ה-API."
     },
     "actions": {
-      "revoke": "בטל מפתח API",
+      "revoke": "שלול מפתח API",
       "copy": "העתק מפתח API",
       "copySuccessToast": "מפתח ה-API הועתק ללוח."
     },
@@ -3377,8 +3555,8 @@
     },
     "fields": {
       "lastUsedAtLabel": "שימוש אחרון בתאריך",
-      "revokedByLabel": "בוטל על ידי",
-      "revokedAtLabel": "בוטל בתאריך",
+      "revokedByLabel": "נשלל על ידי",
+      "revokedAtLabel": "נשלל בתאריך",
       "createdByLabel": "נוצר על ידי"
     }
   },
@@ -3421,8 +3599,8 @@
   },
   "login": {
     "forgotPassword": "שכחת סיסמה? - <0>איפוס</0>",
-    "title": "ברוכים הבאים ל-Kayı.com",
-    "hint": "התחבר כדי לגשת לאזור החשבון",
+    "title": "ברוך שובך!",
+    "hint": "התחבר לחשבון המוכר שלך.",
     "submit": "התחבר",
     "sessionExpired": "הסשן פג",
     "notSellerYet": "עדיין אין לך חנות? <0>צור חשבון</0>",
@@ -3496,13 +3674,13 @@
       "definitionLabel": "הגדרה",
       "outputLabel": "פלט",
       "compensateInputLabel": "קלט פיצוי",
-      "revertedLabel": "בוטל",
+      "revertedLabel": "הוחזר לאחור",
       "errorLabel": "שגיאה"
     },
     "state": {
       "done": "הושלם",
       "failed": "נכשל",
-      "reverted": "בוטל",
+      "reverted": "הוחזר לאחור",
       "invoking": "מפעיל",
       "compensating": "מפצה",
       "notStarted": "לא התחיל"
@@ -3519,7 +3697,8 @@
         "dormant": "רדום",
         "timeout": "פסק זמן"
       }
-    }
+    },
+    "stepsCompletedLabel_two": "{{completed}} מתוך {{count}} שלבים"
   },
   "productTypes": {
     "domain": "סוגי מוצרים",
@@ -3629,7 +3808,7 @@
     "category": "קטגוריה",
     "collection": "אוסף",
     "discountable": "ניתן להנחה",
-    "handle": "מזהה",
+    "handle": "מזהה URL",
     "subtitle": "כותרת משנה",
     "by": "על ידי",
     "item": "פריט",
@@ -3661,7 +3840,7 @@
     "totalRedemptions": "סך פדיונות",
     "countries": "מדינות",
     "paymentProviders": "ספקי תשלום",
-    "refundReason": "סיבת החזר",
+    "refundReason": "סיבת החזר כספי",
     "fulfillmentProviders": "ספקי מימוש",
     "fulfillmentProvider": "ספק מימוש",
     "providers": "ספקים",
@@ -3713,7 +3892,7 @@
     "product": "מוצר",
     "createdAt": "נוצר בתאריך",
     "updatedAt": "עודכן בתאריך",
-    "revokedAt": "בוטל בתאריך",
+    "revokedAt": "נשלל בתאריך",
     "true": "נכון",
     "false": "לא נכון",
     "giftCard": "כרטיס מתנה",
@@ -3792,7 +3971,7 @@
     "variant_attributes": "מאפייני וריאנט",
     "product_attributes": "מאפייני מוצר",
     "handleAutoGeneratedHint": "נוצר אוטומטית מהשם. אותיות קטנות, ספרות ומקפים בלבד — לא ניתן לערוך שדה זה ישירות.",
-    "handleInvalidFormat": "המזהה יכול להכיל רק אותיות קטנות, ספרות ומקפים"
+    "handleInvalidFormat": "מזהה ה-URL יכול להכיל רק אותיות קטנות, ספרות ומקפים"
   },
   "dateTime": {
     "years_one": "שנה",
@@ -3808,12 +3987,19 @@
     "minutes_one": "דקה",
     "minutes_other": "דקות",
     "seconds_one": "שנייה",
-    "seconds_other": "שניות"
+    "seconds_other": "שניות",
+    "years_two": "שנים",
+    "months_two": "חודשים",
+    "weeks_two": "שבועות",
+    "days_two": "ימים",
+    "hours_two": "שעות",
+    "minutes_two": "דקות",
+    "seconds_two": "שניות"
   },
   "attributes": {
     "fields": {
       "name": "שם",
-      "handle": "מזהה",
+      "handle": "מזהה URL",
       "required": "חובה",
       "type": "סוג",
       "values": "ערכים",
@@ -3828,6 +4014,121 @@
       "toggle": "מתג",
       "text_area": "אזור טקסט"
     }
+  },
+  "permissions": {
+    "noAccess": "אין לך הרשאה לצפות בזה.",
+    "accessDenied": {
+      "title": "הגישה נדחתה",
+      "description": "אין לך הרשאה לגשת לדף זה.",
+      "requiredPermission": "הרשאה נדרשת: {{permission}}",
+      "action": "אין לך הרשאה לבצע פעולה זו."
+    },
+    "requiredPermissions": {
+      "title": "הרשאות נדרשות",
+      "none": "לא הוגדרו הרשאות בתצוגה זו.",
+      "anyOf": "אחת מאלה",
+      "allOf": "כל אלה",
+      "source": "מקור: {{source}}"
+    },
+    "resources": {
+      "api_key": "מפתח API",
+      "campaign": "קמפיין",
+      "commission_line": "שורת עמלה",
+      "commission_rate": "שיעור עמלה",
+      "commission_rule": "כלל עמלה",
+      "currency": "מטבע",
+      "customer": "לקוח",
+      "customer_address": "כתובת לקוח",
+      "customer_group": "קבוצת לקוחות",
+      "file": "קובץ",
+      "fulfillment": "מימוש",
+      "fulfillment_provider": "ספק מימוש",
+      "fulfillment_set": "ערכת מימוש",
+      "inventory_item": "פריט מלאי",
+      "inventory_level": "רמת מלאי",
+      "invite": "הזמנה להצטרפות",
+      "member_invite": "הזמנת חבר צוות",
+      "notification": "התראה",
+      "order": "הזמנה",
+      "order_change": "שינוי הזמנה",
+      "order_claim": "תביעת הזמנה",
+      "order_claim_item": "פריט בתביעת הזמנה",
+      "order_exchange": "החלפת הזמנה",
+      "order_group": "קבוצת הזמנות",
+      "order_item": "פריט הזמנה",
+      "payment": "תשלום",
+      "payment_collection": "גביית תשלום",
+      "payment_method": "אמצעי תשלום",
+      "payment_session": "הפעלת תשלום",
+      "payout": "העברת כספים",
+      "payout_account": "חשבון להעברת כספים",
+      "price": "מחיר",
+      "price_list": "רשימת מחירים",
+      "price_preference": "העדפת מחיר",
+      "product": "מוצר",
+      "product_attribute": "מאפיין מוצר",
+      "product_attribute_value": "ערך מאפיין מוצר",
+      "product_category": "קטגוריית מוצר",
+      "product_change": "שינוי מוצר",
+      "product_collection": "אוסף מוצרים",
+      "product_option": "אפשרות מוצר",
+      "product_option_value": "ערך אפשרות מוצר",
+      "product_tag": "תגית מוצר",
+      "product_type": "סוג מוצר",
+      "product_variant": "וריאנט מוצר",
+      "promotion": "מבצע",
+      "rbac_policy": "מדיניות",
+      "rbac_role": "תפקיד",
+      "refund_reason": "סיבת החזר כספי",
+      "region": "אזור",
+      "reservation_item": "פריט שריון",
+      "return": "החזרה",
+      "return_reason": "סיבת החזרה",
+      "review": "ביקורת",
+      "sales_channel": "ערוץ מכירה",
+      "seller": "מוכר",
+      "seller_member": "חבר צוות של מוכר",
+      "service_zone": "אזור שירות",
+      "shipping_option": "אפשרות משלוח",
+      "shipping_option_type": "סוג אפשרות משלוח",
+      "shipping_profile": "פרופיל משלוח",
+      "stock_location": "מיקום מלאי",
+      "store": "חנות",
+      "store_locale": "שפת חנות",
+      "tax_provider": "ספק מס",
+      "tax_rate": "שיעור מס",
+      "tax_region": "אזור מס",
+      "translation": "תרגום",
+      "translation_setting": "הגדרת תרגום",
+      "user": "משתמש",
+      "workflow_execution": "ביצוע תהליך עבודה"
+    },
+    "actions": {
+      "read": "קריאה",
+      "create": "צור",
+      "update": "עדכן",
+      "delete": "מחק"
+    }
+  },
+  "richTextEditor": {
+    "bold": "מודגש",
+    "italic": "נטוי",
+    "underline": "קו תחתון",
+    "strike": "קו חוצה",
+    "paragraph": "פסקה",
+    "heading2": "כותרת",
+    "heading3": "כותרת משנה",
+    "bulletList": "רשימת תבליטים",
+    "orderedList": "רשימה ממוספרת",
+    "blockquote": "ציטוט",
+    "link": "קישור",
+    "linkPlaceholder": "https://example.com",
+    "removeLink": "הסר קישור",
+    "image": "הוסף תמונה",
+    "uploadingImage": "מעלה תמונה...",
+    "imageUploadFailed": "העלאת התמונה נכשלה",
+    "undo": "בטל",
+    "redo": "בצע שוב"
   },
   "seller": {
     "domain": "חנות"
@@ -3844,15 +4145,61 @@
     }
   },
   "payouts": {
-    "domain": "תשלומים",
-    "payout": "תשלום",
-    "noRecords": "לא נמצאו תשלומים",
+    "domain": "העברות כספים",
+    "payout": "העברת כספים",
+    "noRecords": "לא נמצאו העברות כספים",
     "status": {
       "pending": "ממתין",
       "processing": "בעיבוד",
       "paid": "שולם",
       "failed": "נכשל",
       "canceled": "בוטל"
+    }
+  },
+  "reviews": {
+    "domain": "ביקורות",
+    "status": {
+      "pending": "ממתין",
+      "published": "פורסם",
+      "rejected": "נדחה"
+    },
+    "fields": {
+      "rating": "דירוג",
+      "content": "תוכן",
+      "response": "תגובה"
+    },
+    "filters": {
+      "stars_one": "כוכב {{count}}",
+      "stars_other": "{{count}} כוכבים",
+      "stars_two": "{{count}} כוכבים"
+    },
+    "list": {
+      "columns": {
+        "reviewId": "מזהה ביקורת",
+        "rating": "דירוג",
+        "content": "תוכן",
+        "customer": "לקוח",
+        "date": "תאריך",
+        "status": "סטטוס",
+        "response": "תגובה"
+      },
+      "noRecordsTitle": "אין עדיין ביקורות",
+      "noRecordsMessage": "כשלקוחות ישלחו ביקורות, הן יופיעו כאן",
+      "noResultsTitle": "אין תוצאות",
+      "noResultsMessage": "נסה לשנות את המסננים או את שאילתת החיפוש"
+    },
+    "detail": {
+      "customer": "לקוח",
+      "order": "הזמנה"
+    },
+    "respond": {
+      "action": "הגב",
+      "header": "הגב לביקורת",
+      "label": "תגובה",
+      "confirmTitle": "הגב לביקורת",
+      "confirmDescription": "התגובה שלך תפורסם בחנות ותהיה גלויה ללקוחות. לאחר השמירה לא ניתן יהיה לערוך או למחוק אותה.",
+      "successToast": "התגובה נשלחה בהצלחה.",
+      "validation": "יש לכתוב תגובה"
     }
   },
   "translations": {
@@ -3864,7 +4211,7 @@
     "actions": {
       "manage": "נהל תרגומים",
       "manageEntities": "נהל ישויות",
-      "manageLocales": "נהל אזורים"
+      "manageLocales": "נהל שפות"
     },
     "subtitle": "נהל תרגומים של הנתונים שלך ב-Kayı.com",
     "list": {
@@ -3879,7 +4226,7 @@
     },
     "bulk": {
       "header": "עורך תרגומים מרוכז",
-      "mainColumn": "אזור"
+      "mainColumn": "שפה"
     },
     "activeLocales": {
       "heading": "שפות",
@@ -3895,24 +4242,24 @@
     }
   },
   "refundReasons": {
-    "domain": "סיבות החזר",
-    "subtitle": "נהל סיבות להנפקת החזרים.",
-    "calloutHint": "נהל את הסיבות לסיווג החזרים.",
-    "editReason": "ערוך סיבת החזר",
+    "domain": "סיבות החזר כספי",
+    "subtitle": "נהל סיבות למתן החזרים כספיים.",
+    "calloutHint": "נהל את הסיבות לסיווג החזרים כספיים.",
+    "editReason": "ערוך סיבת החזר כספי",
     "create": {
-      "header": "הוסף סיבת החזר",
-      "subtitle": "ציין את הסיבות הנפוצות ביותר להחזרים.",
-      "hint": "צור סיבת החזר חדשה לסיווג החזרים.",
-      "successToast": "סיבת ההחזר {{label}} נוצרה בהצלחה."
+      "header": "הוסף סיבת החזר כספי",
+      "subtitle": "ציין את הסיבות הנפוצות ביותר להחזרים כספיים.",
+      "hint": "צור סיבת החזר כספי חדשה לסיווג החזרים כספיים.",
+      "successToast": "סיבת ההחזר הכספי {{label}} נוצרה בהצלחה."
     },
     "edit": {
-      "header": "ערוך סיבת החזר",
-      "subtitle": "ערוך את הערך של סיבת ההחזר.",
-      "successToast": "סיבת ההחזר {{label}} עודכנה בהצלחה."
+      "header": "ערוך סיבת החזר כספי",
+      "subtitle": "ערוך את הערך של סיבת ההחזר הכספי.",
+      "successToast": "סיבת ההחזר הכספי {{label}} עודכנה בהצלחה."
     },
     "delete": {
-      "confirmation": "אתה עומד למחוק את סיבת ההחזר \"{{label}}\". פעולה זו אינה ניתנת לביטול.",
-      "successToast": "סיבת ההחזר נמחקה בהצלחה."
+      "confirmation": "אתה עומד למחוק את סיבת ההחזר הכספי \"{{label}}\". פעולה זו אינה ניתנת לביטול.",
+      "successToast": "סיבת ההחזר הכספי נמחקה בהצלחה."
     },
     "fields": {
       "label": {
@@ -4104,8 +4451,8 @@
         "title": "הזן את פרטי החנות שלך",
         "name": "שם החנות",
         "email": "אימייל החנות",
-        "handle": "מזהה",
-        "handleTooltip": "המזהה הופך לתבנית ה-URL של החנות שלך. השאר ריק ליצירה אוטומטית מהשם.",
+        "handle": "מזהה URL",
+        "handleTooltip": "נוצר אוטומטית משם החנות. אותיות קטנות, ספרות ומקפים בלבד — לא ניתן לערוך שדה זה ישירות.",
         "handlePlaceholder": "my-store",
         "currency": "מטבע",
         "selectCurrency": "בחר",
@@ -4157,7 +4504,7 @@
       },
       "preview": {
         "title": "ברוך הבא ל-Kayı.com",
-        "description": "פורטל הספקים הכל-באחד שלך לניהול החנות, המוצרים, ההזמנות והתשלומים.",
+        "description": "פורטל המוכרים הכל-באחד שלך לניהול החנות, המוצרים, ההזמנות והעברות הכספים.",
         "placeholder": "תצוגה מקדימה של האפליקציה"
       }
     }

@@ -203,7 +203,7 @@
     },
     "fields": {
       "name": "שם",
-      "handle": "מזהה",
+      "handle": "מזהה URL",
       "description": "תיאור",
       "active": "פעיל",
       "internal": "פנימי",
@@ -265,7 +265,7 @@
     "noRecords": "לא נמצאו ביקורות",
     "columns": {
       "rating": "דירוג",
-      "reference": "מזהה",
+      "reference": "הפניה",
       "customerNote": "הערת לקוח"
     }
   },
@@ -288,7 +288,7 @@
     },
     "analytics": {
       "title": "אנליטיקה",
-      "subtitle": "עקבו אחר ביצועי השוק לאורך זמן",
+      "subtitle": "עקוב אחר ביצועי השוק לאורך זמן",
       "orders": "הזמנות",
       "commissionEarnings": "הכנסות מעמלות",
       "noData": "אין עדיין נתונים",
