@@ -190,16 +190,16 @@
       "noRecords": "No se encontraron solicitudes de tipos"
     },
     "returnReasons": {
-      "navLabel": "Razones de Devolución",
-      "heading": "Solicitudes de razones de devolución",
-      "noRecords": "No se encontraron solicitudes de razones de devolución"
+      "navLabel": "Motivos de devolución",
+      "heading": "Solicitudes de motivos de devolución",
+      "noRecords": "No se encontraron solicitudes de motivos de devolución"
     },
     "typeLabels": {
       "product_category": "Categoría",
       "product_collection": "Colección",
       "product_tag": "Etiqueta",
       "product_type": "Tipo",
-      "return_reason": "Razón de Devolución"
+      "return_reason": "Motivo de devolución"
     },
     "fields": {
       "name": "Nombre",

@@ -713,7 +713,7 @@
       },
       "handle": {
         "label": "URL Slug",
-        "tooltip": "URL Slug (Benzersiz Bağlantı), ürünü mağazanızın vitrininde referans almak için kullanılır. Belirtilmezse ürün başlığından otomatik oluşturulur.",
+        "tooltip": "Ürün başlığından otomatik olarak oluşturulur. Yalnızca küçük harfler, rakamlar ve tire kullanılabilir — bu alan doğrudan düzenlenemez.",
         "placeholder": "kışlık-ceket"
       },
       "description": {
@@ -980,7 +980,7 @@
     "createCollectionHint": "Ürünlerinizi organize etmek için yeni bir koleksiyon oluşturun.",
     "createSuccess": "Koleksiyon başarıyla oluşturuldu.",
     "editCollection": "Koleksiyonu Düzenle",
-    "handleTooltip": "URL Slug (Benzersiz Bağlantı), koleksiyonu mağazanızda referans almak için kullanılır. Belirtilmezse koleksiyon başlığından otomatik oluşturulur.",
+    "handleTooltip": "Koleksiyon başlığından otomatik olarak oluşturulur. Yalnızca küçük harfler, rakamlar ve tire kullanılabilir — bu alan doğrudan düzenlenemez.",
     "deleteWarning": "Koleksiyon {{title}}'i silmek üzeresiniz. Bu işlem geri alınamaz.",
     "removeSingleProductWarning": "Ürünü koleksiyondan kaldırmak üzeresiniz: {{title}}. Bu işlem geri alınamaz.",
     "removeProductsWarning_one": "{{count}} ürünü koleksiyondan kaldırmak üzeresiniz. Bu işlem geri alınamaz.",

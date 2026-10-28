@@ -155,7 +155,7 @@
     "reviews": {
       "navLabel": "Reseñas",
       "heading": "Informes de reseñas",
-      "subtitle": "Reseñas que ha reportado al administrador para moderación.",
+      "subtitle": "Reseñas que has reportado al administrador para su moderación.",
       "columns": {
         "reason": "Motivo",
         "status": "Estado",
@@ -201,7 +201,7 @@
     },
     "report": {
       "title": "Reportar al administrador",
-      "description": "Reporte esta reseña a un administrador del marketplace para moderación.",
+      "description": "Reporta esta reseña a un administrador del marketplace para su moderación.",
       "placeholder": "Explique por qué está reportando esta reseña...",
       "submit": "Enviar informe",
       "successToast": "Informe enviado al administrador.",
