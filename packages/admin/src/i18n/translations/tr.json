@@ -2733,7 +2733,7 @@
       },
       "storeOffers": {
         "title": "Promosyon hangi mağazanın ürünlerine uygulanacak?",
-        "description": "Bu promosyonun ürünlerine uygulanacağı mağazayı seçin.",
+        "description": "Bu promosyon yalnızca seçtiğiniz mağazanın ürünlerine uygulanır.",
         "label": "Mağaza",
         "placeholder": "Seçin",
         "required": "Lütfen bir mağaza seçin"
