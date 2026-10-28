@@ -203,7 +203,7 @@
     },
     "fields": {
       "name": "Όνομα",
-      "handle": "Handle",
+      "handle": "Αναγνωριστικό",
       "description": "Περιγραφή",
       "active": "Ενεργό",
       "internal": "Εσωτερικό",
