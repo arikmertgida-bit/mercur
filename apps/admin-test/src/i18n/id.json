@@ -22,7 +22,7 @@
     "status": {
       "pending": "Tertunda",
       "resolved": "Terselesaikan",
-      "dismissed": "Ditolak"
+      "dismissed": "Diabaikan"
     },
     "reasons": {
       "inaccurate_product_details": "Detail produk tidak akurat",
@@ -37,15 +37,15 @@
     },
     "actions": {
       "resolve": "Tandai terselesaikan",
-      "dismiss": "Tolak"
+      "dismiss": "Abaikan"
     },
     "resolvePrompt": {
       "title": "Tandai laporan sebagai terselesaikan?",
       "description": "Laporan ini akan ditandai sebagai terselesaikan dan dihapus dari antrean tertunda."
     },
     "dismissPrompt": {
-      "title": "Tolak laporan ini?",
-      "description": "Laporan ini akan ditandai sebagai ditolak dan dihapus dari antrean tertunda."
+      "title": "Abaikan laporan ini?",
+      "description": "Laporan ini akan ditandai sebagai diabaikan dan dihapus dari antrean tertunda."
     },
     "deletePrompt": {
       "title": "Hapus laporan ini?",
@@ -89,14 +89,14 @@
     },
     "actions": {
       "remove": "Hapus gambar",
-      "dismiss": "Tolak laporan"
+      "dismiss": "Abaikan laporan"
     },
     "removePrompt": {
       "title": "Hapus gambar ini?",
       "description": "Gambar akan dihapus secara permanen dari ulasan. Tindakan ini tidak dapat dibatalkan."
     },
     "dismissPrompt": {
-      "title": "Tolak laporan ini?",
+      "title": "Abaikan laporan ini?",
       "description": "Gambar akan tetap dipublikasikan dan laporan akan ditandai sebagai terselesaikan."
     },
     "resolveSuccess": "Laporan terselesaikan",
@@ -203,7 +203,7 @@
     },
     "fields": {
       "name": "Nama",
-      "handle": "Handle",
+      "handle": "Slug URL",
       "description": "Deskripsi",
       "active": "Aktif",
       "internal": "Internal",
@@ -239,7 +239,7 @@
         "adminNote": "Catatan Admin"
       },
       "status": {
-        "pending": "Menunggu",
+        "pending": "Tertunda",
         "resolved_deleted": "Dihapus",
         "resolved_kept": "Ditinjau, Tidak Dihapus"
       },
@@ -254,7 +254,7 @@
         "resolveSuccess": "Laporan diselesaikan.",
         "resolveError": "Laporan tidak dapat diselesaikan.",
         "deletePrompt": {
-          "title": "Hapus Ulasan",
+          "title": "Hapus ulasan",
           "description": "Apakah Anda yakin ingin menghapus ulasan ini? Tindakan ini tidak dapat dibatalkan."
         }
       }
@@ -264,7 +264,7 @@
     "domain": "Ulasan",
     "noRecords": "Tidak ada ulasan ditemukan",
     "columns": {
-      "rating": "Peringkat",
+      "rating": "Penilaian",
       "reference": "Referensi",
       "customerNote": "Catatan pelanggan"
     }
