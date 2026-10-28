@@ -22,7 +22,7 @@
     "status": {
       "pending": "Oczekujące",
       "resolved": "Rozwiązane",
-      "dismissed": "Odrzucone"
+      "dismissed": "Zignorowane"
     },
     "reasons": {
       "inaccurate_product_details": "Niedokładne dane produktu",
@@ -37,15 +37,15 @@
     },
     "actions": {
       "resolve": "Oznacz jako rozwiązane",
-      "dismiss": "Odrzuć"
+      "dismiss": "Zignoruj"
     },
     "resolvePrompt": {
       "title": "Oznaczyć zgłoszenie jako rozwiązane?",
       "description": "To zgłoszenie zostanie oznaczone jako rozwiązane i usunięte z kolejki oczekujących."
     },
     "dismissPrompt": {
-      "title": "Odrzucić to zgłoszenie?",
-      "description": "To zgłoszenie zostanie oznaczone jako odrzucone i usunięte z kolejki oczekujących."
+      "title": "Zignorować to zgłoszenie?",
+      "description": "To zgłoszenie zostanie oznaczone jako zignorowane i usunięte z kolejki oczekujących."
     },
     "deletePrompt": {
       "title": "Usunąć to zgłoszenie?",
@@ -89,14 +89,14 @@
     },
     "actions": {
       "remove": "Usuń zdjęcie",
-      "dismiss": "Odrzuć zgłoszenie"
+      "dismiss": "Zignoruj zgłoszenie"
     },
     "removePrompt": {
       "title": "Usunąć to zdjęcie?",
-      "description": "Zdjęcie zostanie trwale usunięte z opinii. Tej czynności nie można cofnąć."
+      "description": "Zdjęcie zostanie trwale usunięte z recenzji. Tej czynności nie można cofnąć."
     },
     "dismissPrompt": {
-      "title": "Odrzucić to zgłoszenie?",
+      "title": "Zignorować to zgłoszenie?",
       "description": "Zdjęcie pozostanie opublikowane, a zgłoszenie zostanie oznaczone jako rozwiązane."
     },
     "resolveSuccess": "Zgłoszenie rozwiązane",
@@ -203,7 +203,7 @@
     },
     "fields": {
       "name": "Nazwa",
-      "handle": "Uchwyt",
+      "handle": "Identyfikator URL",
       "description": "Opis",
       "active": "Aktywny",
       "internal": "Wewnętrzny",
@@ -284,7 +284,7 @@
       "products": "Produkty",
       "sellers": "Sprzedawcy",
       "customers": "Klienci",
-      "lowStock": "Towary z niskim stanem"
+      "lowStock": "Produkty z niskim stanem magazynowym"
     },
     "analytics": {
       "title": "Analityka",
