@@ -137,7 +137,7 @@
     "deleteForEveryone": "Supprimer pour tout le monde",
     "close": "Fermer",
     "connectionLost": "Connexion perdue. Reconnexion en cours...",
-    "imageUploadFailed": "Échec du téléchargement de l'image",
+    "imageUploadFailed": "Échec du téléversement de l'image",
     "deleteConfirmTitle": "Supprimer le message",
     "deleteConfirmDesc": "Êtes-vous sûr de vouloir supprimer ce message ?",
     "productQuestion": "Question sur le produit",
@@ -180,9 +180,9 @@
       "noRecords": "Aucune demande de collection trouvée"
     },
     "tags": {
-      "navLabel": "Étiquettes",
-      "heading": "Demandes d'étiquettes",
-      "noRecords": "Aucune demande d'étiquette trouvée"
+      "navLabel": "Tags",
+      "heading": "Demandes de tags",
+      "noRecords": "Aucune demande de tag trouvée"
     },
     "types": {
       "navLabel": "Types",
@@ -190,16 +190,16 @@
       "noRecords": "Aucune demande de type trouvée"
     },
     "returnReasons": {
-      "navLabel": "Raisons de retour",
-      "heading": "Demandes de raisons de retour",
-      "noRecords": "Aucune demande de raison de retour trouvée"
+      "navLabel": "Motifs de retour",
+      "heading": "Demandes de motifs de retour",
+      "noRecords": "Aucune demande de motif de retour trouvée"
     },
     "typeLabels": {
       "product_category": "Catégorie",
       "product_collection": "Collection",
-      "product_tag": "Étiquette",
+      "product_tag": "Tag",
       "product_type": "Type",
-      "return_reason": "Raison de retour"
+      "return_reason": "Motif de retour"
     },
     "fields": {
       "name": "Nom",
@@ -274,7 +274,7 @@
     "pageTitle": "Tableau de bord",
     "orders": {
       "title": "Résumé des commandes",
-      "subtitle": "Nombre de commandes en direct sur toute la marketplace",
+      "subtitle": "Nombre de commandes en direct sur l'ensemble du marketplace",
       "today": "Aujourd'hui",
       "thisWeek": "Cette semaine",
       "thisMonth": "Ce mois-ci",
@@ -288,7 +288,7 @@
     },
     "analytics": {
       "title": "Analytique",
-      "subtitle": "Suivez la performance de la marketplace dans le temps",
+      "subtitle": "Suivez la performance du marketplace dans le temps",
       "orders": "Commandes",
       "commissionEarnings": "Revenus de commission",
       "noData": "Pas encore de données",
