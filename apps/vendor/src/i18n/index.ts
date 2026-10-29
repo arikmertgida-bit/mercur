@@ -53,16 +53,16 @@ const i18nResources: Resource = {
   mn: { translation: mn },
   nl: { translation: nl },
   pl: { translation: pl },
-  ptBR: { translation: ptBR },
-  ptPT: { translation: ptPT },
+  "pt-BR": { translation: ptBR },
+  "pt-PT": { translation: ptPT },
   ro: { translation: ro },
   ru: { translation: ru },
   th: { translation: th },
   tr: { translation: tr },
   uk: { translation: uk },
   vi: { translation: vi },
-  zhCN: { translation: zhCN },
-  zhTW: { translation: zhTW },
+  "zh-CN": { translation: zhCN },
+  "zh-TW": { translation: zhTW },
 }
 
 export default i18nResources

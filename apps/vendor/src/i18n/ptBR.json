@@ -159,7 +159,7 @@
       "columns": {
         "reason": "Motivo",
         "status": "Status",
-        "adminNote": "Nota do administrador"
+        "adminNote": "Observação do administrador"
       },
       "status": {
         "pending": "Pendente",

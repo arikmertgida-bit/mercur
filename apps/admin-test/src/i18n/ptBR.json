@@ -192,7 +192,7 @@
     "returnReasons": {
       "navLabel": "Razões de Devolução",
       "heading": "Solicitações de razões de devolução",
-      "noRecords": "Nenhuma solicitação de razão de devolução encontrada"
+      "noRecords": "Nenhuma solicitação de motivo de devolução encontrada"
     },
     "typeLabels": {
       "product_category": "Categoria",
@@ -236,7 +236,7 @@
         "seller": "Vendedor",
         "reason": "Motivo",
         "status": "Status",
-        "adminNote": "Nota do administrador"
+        "adminNote": "Observação do administrador"
       },
       "status": {
         "pending": "Pendente",
@@ -246,7 +246,7 @@
       "detail": {
         "reportHeading": "Denúncia",
         "reviewHeading": "Avaliação",
-        "customerNote": "Nota do cliente",
+        "customerNote": "Observação do cliente",
         "resolveHeading": "Resolver",
         "rejectAction": "Rejeitar",
         "defaultRejectNote": "Analisada, não removida. Se você não concorda com nossa decisão, pode enviar outra denúncia.",
