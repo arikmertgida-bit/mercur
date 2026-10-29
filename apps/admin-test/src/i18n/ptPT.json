@@ -22,7 +22,7 @@
     "status": {
       "pending": "Pendente",
       "resolved": "Resolvido",
-      "dismissed": "Rejeitado"
+      "dismissed": "Ignorado"
     },
     "reasons": {
       "inaccurate_product_details": "Detalhes do produto imprecisos",
@@ -37,15 +37,15 @@
     },
     "actions": {
       "resolve": "Marcar como resolvido",
-      "dismiss": "Rejeitar"
+      "dismiss": "Ignorar"
     },
     "resolvePrompt": {
       "title": "Marcar a denúncia como resolvida?",
       "description": "Esta denúncia será marcada como resolvida e removida da fila de pendentes."
     },
     "dismissPrompt": {
-      "title": "Rejeitar esta denúncia?",
-      "description": "Esta denúncia será marcada como rejeitada e removida da fila de pendentes."
+      "title": "Ignorar esta denúncia?",
+      "description": "Esta denúncia será marcada como ignorada e removida da fila de pendentes."
     },
     "deletePrompt": {
       "title": "Eliminar esta denúncia?",
@@ -89,14 +89,14 @@
     },
     "actions": {
       "remove": "Remover imagem",
-      "dismiss": "Rejeitar denúncia"
+      "dismiss": "Ignorar denúncia"
     },
     "removePrompt": {
       "title": "Remover esta imagem?",
       "description": "A imagem será eliminada permanentemente da avaliação. Esta ação não pode ser anulada."
     },
     "dismissPrompt": {
-      "title": "Rejeitar esta denúncia?",
+      "title": "Ignorar esta denúncia?",
       "description": "A imagem permanecerá publicada e a denúncia será marcada como resolvida."
     },
     "resolveSuccess": "Denúncia resolvida",
@@ -190,7 +190,7 @@
       "noRecords": "Não foram encontrados pedidos de tipos"
     },
     "returnReasons": {
-      "navLabel": "Motivos de Devolução",
+      "navLabel": "Motivos de devolução",
       "heading": "Pedidos de motivos de devolução",
       "noRecords": "Não foram encontrados pedidos de motivos de devolução"
     },
@@ -199,7 +199,7 @@
       "product_collection": "Coleção",
       "product_tag": "Etiqueta",
       "product_type": "Tipo",
-      "return_reason": "Motivo de Devolução"
+      "return_reason": "Motivo de devolução"
     },
     "fields": {
       "name": "Nome",

@@ -59,9 +59,9 @@
     "productQuestion": "Questão sobre o produto",
     "storeQuestion": "Questão sobre a loja",
     "imageUploadFailed": "Falha ao carregar a imagem",
-    "blockedReasonEmail": "Não foi possível enviar a mensagem: não é permitida a partilha de endereços de email.",
+    "blockedReasonEmail": "Não foi possível enviar a mensagem: não é permitida a partilha de endereços de e-mail.",
     "blockedReasonPhone": "Não foi possível enviar a mensagem: não é permitida a partilha de números de telefone.",
-    "blockedReasonUrl": "Não foi possível enviar a mensagem: não é permitida a partilha de links.",
+    "blockedReasonUrl": "Não foi possível enviar a mensagem: não é permitida a partilha de ligações.",
     "blockedReasonGeneric": "Não foi possível enviar a mensagem: o conteúdo viola a política da plataforma.",
     "sendFailed": "Não foi possível enviar a mensagem. Tente novamente.",
     "connectionLost": "Ligação perdida. A reconectar...",
@@ -132,9 +132,9 @@
       "heading": "Pedidos de etiquetas",
       "noRecords": "Não foram encontrados pedidos de etiquetas",
       "create": {
-        "heading": "Pedir tag",
-        "description": "Envie um pedido para criar uma nova tag de produto.",
-        "successToast": "Pedido de tag criado com sucesso"
+        "heading": "Pedir etiqueta",
+        "description": "Envie um pedido para criar uma nova etiqueta de produto.",
+        "successToast": "Pedido de etiqueta criado com sucesso"
       }
     },
     "types": {
@@ -212,8 +212,8 @@
     "domain": "Seguidores",
     "noRecords": "Ainda não há seguidores",
     "columns": {
-      "followedAt": "Data de Seguimento",
-      "reviewsAverage": "Avaliação Média"
+      "followedAt": "A seguir desde",
+      "reviewsAverage": "Classificação média"
     },
     "count": "Seguidores: {{count}}"
   },
@@ -245,7 +245,7 @@
       "product": "Produto",
       "sku": "SKU",
       "available": "Disponível",
-      "viewInventory": "Ver stock"
+      "viewInventory": "Ver inventário"
     },
     "quickAccess": {
       "returns": "Devoluções",
