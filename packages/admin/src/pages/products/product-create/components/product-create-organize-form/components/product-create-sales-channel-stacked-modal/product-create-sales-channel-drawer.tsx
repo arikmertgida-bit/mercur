@@ -122,6 +122,9 @@ export const ProductCreateSalesChannelStackedModal = () => {
     return (
       <StackedFocusModal.Content className="flex flex-col overflow-hidden">
         <StackedFocusModal.Header />
+        <StackedFocusModal.Title asChild>
+          <span className="sr-only">{t("products.fields.sales_channels.label")}</span>
+        </StackedFocusModal.Title>
         <StackedFocusModal.Body>
           <SectionNoAccess />
         </StackedFocusModal.Body>
@@ -132,6 +135,9 @@ export const ProductCreateSalesChannelStackedModal = () => {
   return (
     <StackedFocusModal.Content className="flex flex-col overflow-hidden">
       <StackedFocusModal.Header />
+      <StackedFocusModal.Title asChild>
+        <span className="sr-only">{t("products.fields.sales_channels.label")}</span>
+      </StackedFocusModal.Title>
       <StackedFocusModal.Body className="flex-1 overflow-hidden">
         <DataTable
           data={sales_channels}

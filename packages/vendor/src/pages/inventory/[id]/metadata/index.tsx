@@ -2,7 +2,6 @@ import { useRequiredParam } from "@mercurjs/dashboard-shared"
 // Route: /inventory/:id/metadata
 import { useInventoryItem, useUpdateInventoryItem } from "@hooks/api"
 import { MetadataForm } from "@components/forms/metadata-form"
-import { RouteDrawer } from "@components/modals"
 import type { ClientError } from "@mercurjs/client"
 import type { JsonRecord } from "@mercurjs/types"
 
@@ -21,13 +20,11 @@ export const Component = () => {
   }
 
   return (
-    <RouteDrawer>
-      <MetadataForm
-        isPending={isPending}
-        isMutating={isMutating}
-        hook={handleUpdate}
-        metadata={inventory_item?.metadata}
-      />
-    </RouteDrawer>
+    <MetadataForm
+      isPending={isPending}
+      isMutating={isMutating}
+      hook={handleUpdate}
+      metadata={inventory_item?.metadata}
+    />
   )
 }

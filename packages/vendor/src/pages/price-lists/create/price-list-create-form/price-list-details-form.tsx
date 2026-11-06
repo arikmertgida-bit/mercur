@@ -255,6 +255,9 @@ export const PriceListDetailsForm = ({ form }: PriceListDetailsFormProps) => {
                         </StackedFocusModal.Trigger>
                         <StackedFocusModal.Content>
                           <StackedFocusModal.Header />
+                          <StackedFocusModal.Title asChild>
+                            <span className="sr-only">{t("priceLists.customerAvailability.add")}</span>
+                          </StackedFocusModal.Title>
                           <PriceListCustomerGroupRuleForm
                             state={fields}
                             setState={handleAddCustomerGroup}

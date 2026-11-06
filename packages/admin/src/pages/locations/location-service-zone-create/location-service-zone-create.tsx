@@ -1,4 +1,5 @@
 import { useRequiredParam } from "@mercurjs/dashboard-shared"
+import { useTranslation } from "react-i18next"
 
 import { RouteFocusModal } from "../../../components/modals"
 import { useStockLocation } from "../../../hooks/api/stock-locations"
@@ -6,6 +7,7 @@ import { CreateServiceZoneForm } from "./components/create-service-zone-form"
 import { FulfillmentSetType } from "../common/constants"
 
 export function LocationCreateServiceZone() {
+  const { t } = useTranslation()
   const location_id = useRequiredParam("location_id")
   const fset_id = useRequiredParam("fset_id")
 
@@ -36,6 +38,17 @@ export function LocationCreateServiceZone() {
 
   return (
     <RouteFocusModal prev={`/settings/locations/${location_id}`} data-testid="location-service-zone-create-modal">
+      <RouteFocusModal.Title asChild>
+        <span className="sr-only">
+          {stock_location &&
+            t(
+              type === FulfillmentSetType.Pickup
+                ? "stockLocations.serviceZones.create.headerPickup"
+                : "stockLocations.serviceZones.create.headerShipping",
+              { location: stock_location.name }
+            )}
+        </span>
+      </RouteFocusModal.Title>
       {stock_location && fulfillmentSet && (
         <CreateServiceZoneForm
           fulfillmentSet={fulfillmentSet}

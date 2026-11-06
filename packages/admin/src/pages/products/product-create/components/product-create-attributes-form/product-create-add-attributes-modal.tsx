@@ -220,6 +220,9 @@ export const ProductCreateAddAttributesModal = () => {
     return (
       <StackedFocusModal.Content className="flex flex-col overflow-hidden">
         <StackedFocusModal.Header />
+        <StackedFocusModal.Title asChild>
+          <span className="sr-only">{t("products.create.attributes.header")}</span>
+        </StackedFocusModal.Title>
         <StackedFocusModal.Body>
           <SectionNoAccess />
         </StackedFocusModal.Body>
@@ -230,6 +233,9 @@ export const ProductCreateAddAttributesModal = () => {
   return (
     <StackedFocusModal.Content className="flex flex-col overflow-hidden">
       <StackedFocusModal.Header />
+      <StackedFocusModal.Title asChild>
+        <span className="sr-only">{t("products.create.attributes.header")}</span>
+      </StackedFocusModal.Title>
       <StackedFocusModal.Body className="flex size-full flex-col overflow-hidden">
         <_DataTable
           table={table}

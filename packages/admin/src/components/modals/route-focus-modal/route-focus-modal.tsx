@@ -1,6 +1,19 @@
 import { FocusModal, clx } from "@medusajs/ui"
-import { ComponentType, PropsWithChildren, useEffect, useState } from "react"
+import {
+  ComponentPropsWithoutRef,
+  ComponentRef,
+  ComponentType,
+  PropsWithChildren,
+  forwardRef,
+  useEffect,
+  useState,
+} from "react"
 import { Path, useNavigate } from "react-router-dom"
+import {
+  DialogDescriptionPresenceProvider,
+  useDialogDescriptionPresence,
+  useRegisterDialogDescription,
+} from "../dialog-description-presence"
 import { useStateAwareTo } from "../hooks/use-state-aware-to"
 import { RouteModalForm } from "../route-modal-form"
 import { useRouteModal } from "../route-modal-provider"
@@ -63,31 +76,43 @@ type ContentProps = PropsWithChildren<{
 
 const Content: ComponentType<ContentProps> = ({ stackedModalOpen, children }: ContentProps) => {
   const { __internal } = useRouteModal()
+  const { setHasDescription, describedByProps } = useDialogDescriptionPresence()
 
   const shouldPreventClose = !__internal.closeOnEscape
 
   return (
-    <FocusModal.Content
-      onEscapeKeyDown={
-        shouldPreventClose
-          ? (e) => {
-              e.preventDefault()
-            }
-          : undefined
-      }
-      className={clx({
-        "!bg-ui-bg-disabled !inset-x-5 !inset-y-3": stackedModalOpen,
-      })}
-    >
-      <FocusModal.Title className="sr-only" />
-      {children}
-    </FocusModal.Content>
+    <DialogDescriptionPresenceProvider value={setHasDescription}>
+      <FocusModal.Content
+        {...describedByProps}
+        onEscapeKeyDown={
+          shouldPreventClose
+            ? (e) => {
+                e.preventDefault()
+              }
+            : undefined
+        }
+        className={clx({
+          "!bg-ui-bg-disabled !inset-x-5 !inset-y-3": stackedModalOpen,
+        })}
+      >
+        {children}
+      </FocusModal.Content>
+    </DialogDescriptionPresenceProvider>
   )
 }
 
+const Description: typeof FocusModal.Description = forwardRef<
+  ComponentRef<typeof FocusModal.Description>,
+  ComponentPropsWithoutRef<typeof FocusModal.Description>
+>((props, ref) => {
+  useRegisterDialogDescription()
+
+  return <FocusModal.Description ref={ref} {...props} />
+})
+Description.displayName = "RouteFocusModal.Description"
+
 const Header: typeof FocusModal.Header = FocusModal.Header
 const Title: typeof FocusModal.Title = FocusModal.Title
-const Description: typeof FocusModal.Description = FocusModal.Description
 const Footer: typeof FocusModal.Footer = FocusModal.Footer
 const Body: typeof FocusModal.Body = FocusModal.Body
 const Close: typeof FocusModal.Close = FocusModal.Close
@@ -103,7 +128,7 @@ export const RouteFocusModal: typeof Root & {
   Header: typeof FocusModal.Header;
   Title: typeof FocusModal.Title;
   Body: typeof FocusModal.Body;
-  Description: typeof FocusModal.Description;
+  Description: typeof Description;
   Footer: typeof FocusModal.Footer;
   Close: typeof FocusModal.Close;
   Form: typeof RouteModalForm;

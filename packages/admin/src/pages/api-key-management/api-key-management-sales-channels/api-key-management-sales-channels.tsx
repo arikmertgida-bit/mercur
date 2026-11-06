@@ -1,4 +1,5 @@
 
+import { useTranslation } from "react-i18next"
 import { z } from "zod"
 import { RouteFocusModal } from "../../../components/modals"
 import { useApiKey } from "../../../hooks/api/api-keys"
@@ -10,6 +11,7 @@ const ApiKeySalesChannelsSchema = z.object({
 })
 
 export const ApiKeyManagementAddSalesChannels = () => {
+  const { t } = useTranslation()
   const id = useRequiredParam("id")
 
   const { api_key, isLoading, isError, error } = useApiKey(id)
@@ -29,6 +31,9 @@ export const ApiKeyManagementAddSalesChannels = () => {
 
   return (
     <RouteFocusModal data-testid="publishable-api-key-sales-channels-modal">
+      <RouteFocusModal.Title asChild>
+        <span className="sr-only">{t("apiKeyManagement.salesChannels.title")}</span>
+      </RouteFocusModal.Title>
       {ready && (
         <ApiKeySalesChannelsForm apiKey={id} preSelected={preSelected} />
       )}

@@ -1,5 +1,4 @@
 import { MetadataForm } from "@components/forms/metadata-form"
-import { RouteDrawer } from "@components/modals"
 import { useStore, useUpdateStore } from "@hooks/api"
 
 export const MarketplaceMetadata = () => {
@@ -12,13 +11,11 @@ export const MarketplaceMetadata = () => {
   }
 
   return (
-    <RouteDrawer>
-      <MetadataForm
-        isPending={isPending}
-        isMutating={isMutating}
-        hook={mutateAsync}
-        metadata={store?.metadata}
-      />
-    </RouteDrawer>
+    <MetadataForm
+      isPending={isPending}
+      isMutating={isMutating}
+      hook={mutateAsync}
+      metadata={store?.metadata}
+    />
   )
 }

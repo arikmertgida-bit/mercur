@@ -77,6 +77,9 @@ export const ExchangeCreate = () => {
 
   return (
     <RouteFocusModal data-testid="order-create-exchange-modal">
+      <RouteFocusModal.Title asChild>
+        <span className="sr-only">{t("orders.exchanges.create")}</span>
+      </RouteFocusModal.Title>
       {exchange && preview && order && (
         <ExchangeCreateForm
           order={order}

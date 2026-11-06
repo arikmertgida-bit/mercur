@@ -1,10 +1,12 @@
 import { useRequiredParam } from "@mercurjs/dashboard-shared"
+import { useTranslation } from "react-i18next"
 
 import { RouteFocusModal } from "@components/modals"
 import { useStockLocation } from "@hooks/api/stock-locations"
 import { EditServiceZoneAreasForm } from "./_components/edit-service-zone-areas-form"
 
 const LocationServiceZoneManageAreas = () => {
+  const { t } = useTranslation()
   const location_id = useRequiredParam("location_id")
   const fset_id = useRequiredParam("fset_id")
   const zone_id = useRequiredParam("zone_id")
@@ -34,6 +36,14 @@ const LocationServiceZoneManageAreas = () => {
 
   return (
     <RouteFocusModal prev={`/settings/locations/${location_id}`}>
+      <RouteFocusModal.Title asChild>
+        <span className="sr-only">
+          {zone &&
+            t("stockLocations.serviceZones.manageAreas.header", {
+              name: zone.name,
+            })}
+        </span>
+      </RouteFocusModal.Title>
       {zone && (
         <EditServiceZoneAreasForm
           zone={zone}

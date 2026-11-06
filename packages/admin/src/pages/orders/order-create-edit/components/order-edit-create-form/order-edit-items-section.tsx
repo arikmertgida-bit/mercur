@@ -100,6 +100,9 @@ export const OrderEditItemsSection = ({
 
             <StackedFocusModal.Content>
               <StackedFocusModal.Header data-testid="order-edit-items-section-add-items-modal-header" />
+              <StackedFocusModal.Title asChild>
+                <span className="sr-only">{t("actions.addItems")}</span>
+              </StackedFocusModal.Title>
 
               <AddOrderEditItemsTable
                 onSelectionChange={(finalSelection) => {

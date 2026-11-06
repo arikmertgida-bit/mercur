@@ -1,5 +1,4 @@
 import { MetadataForm } from "@components/forms/metadata-form";
-import { RouteDrawer } from "@components/modals";
 import { useUpdateUser, useUser } from "@hooks/api";
 import { useRequiredParam } from "@mercurjs/dashboard-shared";
 
@@ -14,13 +13,11 @@ export const UserMetadata = () => {
   }
 
   return (
-    <RouteDrawer data-testid="user-metadata-drawer">
-      <MetadataForm
-        isPending={isPending}
-        isMutating={isMutating}
-        hook={mutateAsync}
-        metadata={user?.metadata}
-      />
-    </RouteDrawer>
+    <MetadataForm
+      isPending={isPending}
+      isMutating={isMutating}
+      hook={mutateAsync}
+      metadata={user?.metadata}
+    />
   );
 };

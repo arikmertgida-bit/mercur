@@ -104,10 +104,14 @@ type AddExistingFormValues = zod.infer<typeof AddExistingAttributesSchema>;
 // --- Component ---
 
 export const ProductAddExistingAttributes = () => {
+  const { t } = useTranslation();
   const productId = useRequiredParam("id");
 
   return (
     <RouteFocusModal>
+      <RouteFocusModal.Title asChild>
+        <span className="sr-only">{t("products.create.attributes.header")}</span>
+      </RouteFocusModal.Title>
       <RouteFocusModal.Header />
       <Content productId={productId} />
     </RouteFocusModal>

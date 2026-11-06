@@ -5,8 +5,10 @@ import { useRequiredParam } from "@mercurjs/dashboard-shared"
 import { RouteFocusModal } from "@components/modals"
 import { useOrder } from "@hooks/api/orders"
 import { OrderCreateFulfillmentForm } from "./order-create-fulfillment-form"
+import { useTranslation } from "react-i18next"
 
 export const Component = () => {
+  const { t } = useTranslation()
   const id = useRequiredParam("id")
   const [searchParams] = useSearchParams()
   const requiresShipping = searchParams.get("requires_shipping") === "true"
@@ -27,6 +29,9 @@ export const Component = () => {
 
   return (
     <RouteFocusModal>
+      <RouteFocusModal.Title asChild>
+        <span className="sr-only">{t("orders.fulfillment.create")}</span>
+      </RouteFocusModal.Title>
       {ready && (
         <OrderCreateFulfillmentForm
           order={order}

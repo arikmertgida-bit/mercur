@@ -315,6 +315,9 @@ export const ExchangeInboundSection = ({
 
           <StackedFocusModal.Content>
             <StackedFocusModal.Header />
+            <StackedFocusModal.Title asChild>
+              <span className="sr-only">{t("actions.addItems")}</span>
+            </StackedFocusModal.Title>
 
             <AddExchangeInboundItemsTable
               items={order.items ?? []}

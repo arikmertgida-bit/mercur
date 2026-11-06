@@ -77,6 +77,9 @@ export const ClaimCreate = () => {
 
   return (
     <RouteFocusModal data-testid="order-create-claim-modal">
+      <RouteFocusModal.Title asChild>
+        <span className="sr-only">{t("orders.claims.create")}</span>
+      </RouteFocusModal.Title>
       {claim && preview && order && (
         <ClaimCreateForm
           order={order}

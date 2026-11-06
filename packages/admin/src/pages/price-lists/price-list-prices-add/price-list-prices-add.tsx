@@ -12,8 +12,10 @@ import {
 import { PriceListPricesAddProductIdsForm } from "./components/price-list-prices-add-form/price-list-prices-add-product-ids-form"
 import { PriceListPricesAddPricesForm } from "./components/price-list-prices-add-form/price-list-prices-add-prices-form"
 import { PriceListPricesAddSchema } from "./components/price-list-prices-add-form/schema"
+import { useTranslation } from "react-i18next"
 
 const Root = ({ children }: { children?: ReactNode }) => {
+  const { t } = useTranslation()
   const id = useRequiredParam("id")
 
   const { price_list, isPending, isError, error } = usePriceList(id, {
@@ -29,6 +31,9 @@ const Root = ({ children }: { children?: ReactNode }) => {
 
   return (
     <RouteFocusModal prev="../..">
+      <RouteFocusModal.Title asChild>
+        <span className="sr-only">{t("priceLists.products.actions.addProducts")}</span>
+      </RouteFocusModal.Title>
       {ready && (
         Children.count(children) > 0 ? (
           children

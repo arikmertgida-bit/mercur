@@ -84,10 +84,14 @@ const getInitialValues = (type: string): string | string[] =>
   type === AttributeType.MULTI_SELECT ? [] : ""
 
 export const Component = () => {
+  const { t } = useTranslation()
   const productId = useRequiredParam("id")
 
   return (
     <RouteFocusModal>
+      <RouteFocusModal.Title asChild>
+        <span className="sr-only">{t("products.create.attributes.header")}</span>
+      </RouteFocusModal.Title>
       <RouteFocusModal.Header />
       <Content productId={productId} />
     </RouteFocusModal>

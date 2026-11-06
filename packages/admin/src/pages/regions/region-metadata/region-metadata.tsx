@@ -1,5 +1,4 @@
 import { MetadataForm } from "@components/forms/metadata-form"
-import { RouteDrawer } from "@components/modals"
 import { useRegion, useUpdateRegion } from "@hooks/api"
 import { useRequiredParam } from "@mercurjs/dashboard-shared"
 
@@ -14,13 +13,11 @@ export const RegionMetadata = () => {
   }
 
   return (
-    <RouteDrawer data-testid="region-metadata-drawer">
-      <MetadataForm
-        isPending={isPending}
-        isMutating={isMutating}
-        hook={mutateAsync}
-        metadata={region?.metadata}
-      />
-    </RouteDrawer>
+    <MetadataForm
+      isPending={isPending}
+      isMutating={isMutating}
+      hook={mutateAsync}
+      metadata={region?.metadata}
+    />
   )
 }

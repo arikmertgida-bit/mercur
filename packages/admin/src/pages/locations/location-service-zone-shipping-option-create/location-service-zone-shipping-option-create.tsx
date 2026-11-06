@@ -1,11 +1,12 @@
 import { Children, ReactNode } from "react"
 import { useRequiredParam } from "@mercurjs/dashboard-shared"
+import { useTranslation } from "react-i18next"
 import { useSearchParams } from "react-router-dom"
 
 import { RouteFocusModal } from "../../../components/modals"
 import { TabbedForm } from "../../../components/tabbed-form/tabbed-form"
 import { useStockLocation } from "../../../hooks/api/stock-locations"
-import { toFulfillmentSetType } from "../common/constants"
+import { FulfillmentSetType, toFulfillmentSetType } from "../common/constants"
 import {
   CreateShippingOptionsForm,
   CreateShippingOptionSchemaType,
@@ -16,6 +17,7 @@ import { CreateShippingOptionSchema } from "./components/create-shipping-options
 import { LOC_CREATE_SHIPPING_OPTION_FIELDS } from "./constants"
 
 const Root = ({ children }: { children?: ReactNode }) => {
+  const { t } = useTranslation()
   const location_id = useRequiredParam("location_id")
   const fset_id = useRequiredParam("fset_id")
   const zone_id = useRequiredParam("zone_id")
@@ -53,6 +55,23 @@ const Root = ({ children }: { children?: ReactNode }) => {
 
   return (
     <RouteFocusModal prev={`/settings/locations/${location_id}`} data-testid="location-shipping-option-create-modal">
+      <RouteFocusModal.Title asChild>
+        <span className="sr-only">
+          {zone &&
+            fulfillmentSet &&
+            t(
+              `stockLocations.shippingOptions.create.${
+                toFulfillmentSetType(fulfillmentSet.type) ===
+                FulfillmentSetType.Pickup
+                  ? "pickup"
+                  : isReturn
+                    ? "returns"
+                    : "shipping"
+              }.header`,
+              { zone: zone.name }
+            )}
+        </span>
+      </RouteFocusModal.Title>
       {zone && fulfillmentSet && (
         Children.count(children) > 0 ? (
           children

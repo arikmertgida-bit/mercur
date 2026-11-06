@@ -485,6 +485,9 @@ export const ClaimCreateForm = ({
                 </StackedFocusModal.Trigger>
                 <StackedFocusModal.Content>
                   <StackedFocusModal.Header />
+                  <StackedFocusModal.Title asChild>
+                    <span className="sr-only">{t("actions.addItems")}</span>
+                  </StackedFocusModal.Title>
 
                   <AddClaimItemsTable
                     items={order.items ?? []}

@@ -1,13 +1,18 @@
 import { useRequiredParam } from "@mercurjs/dashboard-shared"
+import { useTranslation } from "react-i18next"
 import { useSearchParams } from "react-router-dom"
 
 import { RouteFocusModal } from "@components/modals"
 import { useStockLocation } from "@hooks/api/stock-locations"
 import { CreateShippingOptionsForm } from "./_components/create-shipping-options-form"
 import { LOC_CREATE_SHIPPING_OPTION_FIELDS } from "./constants"
-import { toFulfillmentSetType } from "@pages/settings/locations/_common/constants"
+import {
+  FulfillmentSetType,
+  toFulfillmentSetType,
+} from "@pages/settings/locations/_common/constants"
 
 function LocationServiceZoneShippingOptionCreate() {
+  const { t } = useTranslation()
   const location_id = useRequiredParam("location_id")
   const fset_id = useRequiredParam("fset_id")
   const zone_id = useRequiredParam("zone_id")
@@ -49,6 +54,23 @@ function LocationServiceZoneShippingOptionCreate() {
 
   return (
     <RouteFocusModal prev={`/settings/locations/${location_id}`}>
+      <RouteFocusModal.Title asChild>
+        <span className="sr-only">
+          {zone &&
+            fulfillmentSet &&
+            t(
+              `stockLocations.shippingOptions.create.${
+                toFulfillmentSetType(fulfillmentSet.type) ===
+                FulfillmentSetType.Pickup
+                  ? "pickup"
+                  : isReturn
+                    ? "returns"
+                    : "shipping"
+              }.header`,
+              { zone: zone.name }
+            )}
+        </span>
+      </RouteFocusModal.Title>
       {zone && fulfillmentSet && (
         <CreateShippingOptionsForm
           zone={zone}

@@ -1,11 +1,17 @@
 import { FocusModal, clx } from "@medusajs/ui";
 import {
   ComponentPropsWithoutRef,
+  ComponentRef,
   ComponentType,
   PropsWithChildren,
   forwardRef,
   useEffect,
 } from "react";
+import {
+  DialogDescriptionPresenceProvider,
+  useDialogDescriptionPresence,
+  useRegisterDialogDescription,
+} from "../dialog-description-presence";
 import { useStackedModal } from "../stacked-modal-provider";
 
 type StackedFocusModalProps = PropsWithChildren<{
@@ -76,40 +82,52 @@ Footer.displayName = "StackedFocusModal.Footer";
 const Title = FocusModal.Title;
 Title.displayName = "StackedFocusModal.Title";
 
-const Description = FocusModal.Description;
+const Description: typeof FocusModal.Description = forwardRef<
+  ComponentRef<typeof FocusModal.Description>,
+  ComponentPropsWithoutRef<typeof FocusModal.Description>
+>((props, ref) => {
+  useRegisterDialogDescription();
+
+  return <FocusModal.Description ref={ref} {...props} />;
+});
 Description.displayName = "StackedFocusModal.Description";
 
 const Content = forwardRef<
   HTMLDivElement,
   ComponentPropsWithoutRef<typeof FocusModal.Content>
 >(({ className, onFocusOutside, onWheel, onTouchMove, ...props }, ref) => {
+  const { setHasDescription, describedByProps } = useDialogDescriptionPresence();
+
   return (
-    <FocusModal.Content
-      ref={ref}
-      className={clx("!top-6", className)}
-      overlayProps={{
-        className: "bg-transparent",
-      }}
-      // Same rationale as StackedDrawer.Content: the trigger that opens a
-      // StackedFocusModal still has focus, outside this non-modal dialog,
-      // at the instant it mounts — without this it would close itself
-      // immediately. Consumers can still opt back in with their own handler.
-      onFocusOutside={onFocusOutside ?? ((event) => event.preventDefault())}
-      // Same nested-scroll-lock fix as StackedDrawer.Content: the parent
-      // RouteFocusModal is still `modal=true`, so its `react-remove-scroll`
-      // lock keeps intercepting wheel/touchmove events at the document level
-      // for anything outside its own content subtree — including this
-      // modal's separate portal. Stop propagation so the lock never sees it.
-      onWheel={(event) => {
-        event.stopPropagation()
-        onWheel?.(event)
-      }}
-      onTouchMove={(event) => {
-        event.stopPropagation()
-        onTouchMove?.(event)
-      }}
-      {...props}
-    />
+    <DialogDescriptionPresenceProvider value={setHasDescription}>
+      <FocusModal.Content
+        ref={ref}
+        {...describedByProps}
+        className={clx("!top-6", className)}
+        overlayProps={{
+          className: "bg-transparent",
+        }}
+        // Same rationale as StackedDrawer.Content: the trigger that opens a
+        // StackedFocusModal still has focus, outside this non-modal dialog,
+        // at the instant it mounts — without this it would close itself
+        // immediately. Consumers can still opt back in with their own handler.
+        onFocusOutside={onFocusOutside ?? ((event) => event.preventDefault())}
+        // Same nested-scroll-lock fix as StackedDrawer.Content: the parent
+        // RouteFocusModal is still `modal=true`, so its `react-remove-scroll`
+        // lock keeps intercepting wheel/touchmove events at the document level
+        // for anything outside its own content subtree — including this
+        // modal's separate portal. Stop propagation so the lock never sees it.
+        onWheel={(event) => {
+          event.stopPropagation()
+          onWheel?.(event)
+        }}
+        onTouchMove={(event) => {
+          event.stopPropagation()
+          onTouchMove?.(event)
+        }}
+        {...props}
+      />
+    </DialogDescriptionPresenceProvider>
   );
 });
 Content.displayName = "StackedFocusModal.Content";
@@ -121,7 +139,7 @@ export const StackedFocusModal: typeof Root & {
   Content: typeof FocusModal.Content;
   Trigger: typeof FocusModal.Trigger;
   Footer: typeof FocusModal.Footer;
-  Description: typeof FocusModal.Description;
+  Description: typeof Description;
   Title: typeof FocusModal.Title;
 } = Object.assign(Root, {
   Close,

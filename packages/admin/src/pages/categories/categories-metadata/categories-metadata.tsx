@@ -3,7 +3,6 @@ import {
   useUpdateProductCategory,
 } from "@hooks/api"
 import { MetadataForm } from "@components/forms/metadata-form"
-import { RouteDrawer } from "@components/modals"
 import { useRequiredParam } from "@mercurjs/dashboard-shared"
 
 export const CategoriesMetadata = () => {
@@ -17,13 +16,11 @@ export const CategoriesMetadata = () => {
   }
 
   return (
-    <RouteDrawer>
-      <MetadataForm
-        isPending={isPending}
-        isMutating={isMutating}
-        hook={mutateAsync}
-        metadata={product_category?.metadata}
-      />
-    </RouteDrawer>
+    <MetadataForm
+      isPending={isPending}
+      isMutating={isMutating}
+      hook={mutateAsync}
+      metadata={product_category?.metadata}
+    />
   )
 }

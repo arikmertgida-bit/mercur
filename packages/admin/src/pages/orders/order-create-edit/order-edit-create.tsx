@@ -63,6 +63,9 @@ export const OrderEditCreate = () => {
 
   return (
     <RouteFocusModal data-testid="order-edit-create-modal">
+      <RouteFocusModal.Title asChild>
+        <span className="sr-only">{t("orders.edits.create")}</span>
+      </RouteFocusModal.Title>
       {preview && order && (
         <OrderEditCreateForm order={order} preview={preview} />
       )}

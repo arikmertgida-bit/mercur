@@ -7,8 +7,10 @@ import { RouteFocusModal } from "../../../components/modals"
 import { usePricePreferences } from "../../../hooks/api/price-preferences"
 import { useStore } from "../../../hooks/api/store"
 import { AddCurrenciesForm } from "./components/add-currencies-form/add-currencies-form"
+import { useTranslation } from "react-i18next"
 
 export const MarketplaceAddCurrencies = () => {
+  const { t } = useTranslation()
   const { can } = usePermissions()
   const canViewCurrencies = can("regions")
   const canViewPreferences = can("price_preferences")
@@ -49,6 +51,9 @@ export const MarketplaceAddCurrencies = () => {
 
   return (
     <RouteFocusModal>
+      <RouteFocusModal.Title asChild>
+        <span className="sr-only">{t("store.addCurrencies")}</span>
+      </RouteFocusModal.Title>
       {forbidden && (
         <>
           <RouteFocusModal.Header />

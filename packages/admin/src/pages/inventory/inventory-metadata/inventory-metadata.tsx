@@ -1,6 +1,5 @@
 import { useInventoryItem, useUpdateInventoryItem } from "@hooks/api";
 import { MetadataForm } from "@components/forms/metadata-form";
-import { RouteDrawer } from "@components/modals";
 import { useRequiredParam } from "@mercurjs/dashboard-shared";
 
 export const InventoryItemMetadata = () => {
@@ -14,13 +13,11 @@ export const InventoryItemMetadata = () => {
   }
 
   return (
-    <RouteDrawer data-testid="inventory-metadata-drawer">
-      <MetadataForm
-        isPending={isPending}
-        isMutating={isMutating}
-        hook={mutateAsync}
-        metadata={inventory_item?.metadata}
-      />
-    </RouteDrawer>
+    <MetadataForm
+      isPending={isPending}
+      isMutating={isMutating}
+      hook={mutateAsync}
+      metadata={inventory_item?.metadata}
+    />
   );
 };

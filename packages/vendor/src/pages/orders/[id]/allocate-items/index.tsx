@@ -4,8 +4,10 @@ import { useRequiredParam } from "@mercurjs/dashboard-shared"
 import { useOrder } from "@hooks/api/orders"
 import { RouteFocusModal } from "@components/modals"
 import { OrderAllocateItemsForm } from "./order-create-fulfillment-form"
+import { useTranslation } from "react-i18next"
 
 export const Component = () => {
+  const { t } = useTranslation()
   const id = useRequiredParam("id")
 
   const { order, isLoading, isError, error } = useOrder(id, {
@@ -24,6 +26,9 @@ export const Component = () => {
 
   return (
     <RouteFocusModal>
+      <RouteFocusModal.Title asChild>
+        <span className="sr-only">{t("orders.allocateItems.title")}</span>
+      </RouteFocusModal.Title>
       {ready && <OrderAllocateItemsForm order={order} />}
     </RouteFocusModal>
   )

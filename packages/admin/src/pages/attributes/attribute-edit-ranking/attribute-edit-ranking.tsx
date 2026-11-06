@@ -201,8 +201,13 @@ const EditRankingInner = () => {
 }
 
 export const AttributeEditRanking = () => {
+  const { t } = useTranslation()
+
   return (
     <RouteFocusModal>
+      <RouteFocusModal.Title asChild>
+        <span className="sr-only">{t("attributes.possibleValues.editRanking")}</span>
+      </RouteFocusModal.Title>
       <EditRankingInner />
     </RouteFocusModal>
   )

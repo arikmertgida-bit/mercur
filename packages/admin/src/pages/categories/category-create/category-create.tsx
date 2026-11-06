@@ -10,13 +10,18 @@ import {
 import { CreateCategoryDetails } from "./components/create-category-form/create-category-details"
 import { CreateCategoryNesting } from "./components/create-category-form/create-category-nesting"
 import { CreateCategorySchema } from "./components/create-category-form/schema"
+import { useTranslation } from "react-i18next"
 
 const Root = ({ children }: { children?: ReactNode }) => {
+  const { t } = useTranslation()
   const [searchParams] = useSearchParams()
   const parentCategoryId = searchParams.get("parent_category_id")
 
   return (
     <RouteFocusModal>
+      <RouteFocusModal.Title asChild>
+        <span className="sr-only">{t("categories.create.header")}</span>
+      </RouteFocusModal.Title>
       {Children.count(children) > 0 ? (
         children
       ) : (

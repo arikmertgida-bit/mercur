@@ -1,4 +1,5 @@
 import { Children, ReactNode } from "react"
+import { useTranslation } from "react-i18next"
 
 import { RouteFocusModal } from "../../../components/modals"
 import { TabbedForm } from "../../../components/tabbed-form/tabbed-form"
@@ -9,8 +10,13 @@ import { PromotionTemplateTab } from "./components/create-promotion-form/promoti
 import { CreatePromotionSchema } from "./components/create-promotion-form/form-schema"
 
 const Root = ({ children }: { children?: ReactNode }) => {
+  const { t } = useTranslation()
+
   return (
     <RouteFocusModal data-testid="promotion-create-modal">
+      <RouteFocusModal.Title asChild>
+        <span className="sr-only">{t("promotions.createPromotionTitle")}</span>
+      </RouteFocusModal.Title>
       {Children.count(children) > 0 ? (
         children
       ) : (

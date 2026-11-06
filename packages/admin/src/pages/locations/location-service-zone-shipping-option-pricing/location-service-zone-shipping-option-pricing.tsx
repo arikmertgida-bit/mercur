@@ -38,6 +38,11 @@ export function LocationServiceZoneShippingOptionPricing() {
 
   return (
     <RouteFocusModal prev={`/settings/locations/${location_id}`} data-testid="location-shipping-option-pricing-modal">
+      <RouteFocusModal.Title asChild>
+        <span className="sr-only">
+          {t("stockLocations.shippingOptions.pricing.action")}
+        </span>
+      </RouteFocusModal.Title>
       {forbidden && (
         <>
           <RouteFocusModal.Header />

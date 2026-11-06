@@ -8,13 +8,18 @@ import { PriceListDetailsForm } from "./components/price-list-create-form/price-
 import { PriceListProductsForm } from "./components/price-list-create-form/price-list-products-form"
 import { PriceListPricesForm } from "./components/price-list-create-form/price-list-prices-form"
 import { PricingCreateSchema, PricingCreateSchemaType } from "./components/price-list-create-form/schema"
+import { useTranslation } from "react-i18next"
 
 const Root = ({ children }: { children?: ReactNode }) => {
+  const { t } = useTranslation()
   const { isReady, regions, currencies, pricePreferences } =
     usePriceListCurrencyData()
 
   return (
     <RouteFocusModal>
+      <RouteFocusModal.Title asChild>
+        <span className="sr-only">{t("priceLists.create.header")}</span>
+      </RouteFocusModal.Title>
       {isReady && (
         Children.count(children) > 0 ? (
           children

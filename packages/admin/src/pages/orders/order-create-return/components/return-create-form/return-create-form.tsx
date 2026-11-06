@@ -458,6 +458,9 @@ export const ReturnCreateForm = ({
                 </StackedFocusModal.Trigger>
                 <StackedFocusModal.Content>
                   <StackedFocusModal.Header />
+                  <StackedFocusModal.Title asChild>
+                    <span className="sr-only">{t("actions.addItems")}</span>
+                  </StackedFocusModal.Title>
 
                   <AddReturnItemsTable
                     items={order.items ?? []}

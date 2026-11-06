@@ -1,12 +1,18 @@
 import { Drawer, clx } from "@medusajs/ui";
 import {
   ComponentPropsWithoutRef,
+  ComponentRef,
   ComponentType,
   ForwardRefExoticComponent,
   PropsWithChildren,
   forwardRef,
   useEffect,
 } from "react";
+import {
+  DialogDescriptionPresenceProvider,
+  useDialogDescriptionPresence,
+  useRegisterDialogDescription,
+} from "../dialog-description-presence";
 import { useStackedModal } from "../stacked-modal-provider";
 
 type StackedDrawerProps = PropsWithChildren<{
@@ -70,7 +76,14 @@ Footer.displayName = "StackedDrawer.Footer";
 const Title: typeof Drawer.Title = Drawer.Title;
 Title.displayName = "StackedDrawer.Title";
 
-const Description: typeof Drawer.Description = Drawer.Description;
+const Description: typeof Drawer.Description = forwardRef<
+  ComponentRef<typeof Drawer.Description>,
+  ComponentPropsWithoutRef<typeof Drawer.Description>
+>((props, ref) => {
+  useRegisterDialogDescription();
+
+  return <Drawer.Description ref={ref} {...props} />;
+});
 Description.displayName = "StackedDrawer.Description";
 
 type ContentProps = ComponentPropsWithoutRef<typeof Drawer.Content>;
@@ -79,40 +92,45 @@ const Content: ForwardRefExoticComponent<ContentProps> = forwardRef<
   HTMLDivElement,
   ComponentPropsWithoutRef<typeof Drawer.Content>
 >(({ className, onFocusOutside, onWheel, onTouchMove, ...props }, ref) => {
+  const { setHasDescription, describedByProps } = useDialogDescriptionPresence();
+
   return (
-    <Drawer.Content
-      ref={ref}
-      className={clx(className)}
-      overlayProps={{
-        className: "bg-transparent",
-      }}
-      // The trigger that opens a StackedDrawer (e.g. a button inside the
-      // parent modal's own content) still has DOM focus at the instant
-      // this non-modal (`modal={false}`, see Root above) drawer mounts —
-      // that focus is, by definition, outside this drawer's content.
-      // Without overriding this, Radix's DismissableLayer reads that as
-      // "focus moved outside" and closes the drawer immediately after
-      // opening it. Consumers can still opt back into the default
-      // dismiss-on-focus-outside behavior by passing their own handler.
-      onFocusOutside={onFocusOutside ?? ((event) => event.preventDefault())}
-      // The parent RouteFocusModal stays `modal=true` (Radix default), so
-      // its `react-remove-scroll` lock is still active and installs a
-      // document-level wheel/touchmove listener that `preventDefault()`s
-      // any event whose target isn't inside that outer dialog's own content
-      // subtree. This drawer renders in a separate sibling portal, so
-      // without stopping propagation here the lock swallows every wheel/
-      // touch scroll over this drawer's body — the scrollbar is visible but
-      // the wheel does nothing.
-      onWheel={(event) => {
-        event.stopPropagation()
-        onWheel?.(event)
-      }}
-      onTouchMove={(event) => {
-        event.stopPropagation()
-        onTouchMove?.(event)
-      }}
-      {...props}
-    />
+    <DialogDescriptionPresenceProvider value={setHasDescription}>
+      <Drawer.Content
+        ref={ref}
+        {...describedByProps}
+        className={clx(className)}
+        overlayProps={{
+          className: "bg-transparent",
+        }}
+        // The trigger that opens a StackedDrawer (e.g. a button inside the
+        // parent modal's own content) still has DOM focus at the instant
+        // this non-modal (`modal={false}`, see Root above) drawer mounts —
+        // that focus is, by definition, outside this drawer's content.
+        // Without overriding this, Radix's DismissableLayer reads that as
+        // "focus moved outside" and closes the drawer immediately after
+        // opening it. Consumers can still opt back into the default
+        // dismiss-on-focus-outside behavior by passing their own handler.
+        onFocusOutside={onFocusOutside ?? ((event) => event.preventDefault())}
+        // The parent RouteFocusModal stays `modal=true` (Radix default), so
+        // its `react-remove-scroll` lock is still active and installs a
+        // document-level wheel/touchmove listener that `preventDefault()`s
+        // any event whose target isn't inside that outer dialog's own content
+        // subtree. This drawer renders in a separate sibling portal, so
+        // without stopping propagation here the lock swallows every wheel/
+        // touch scroll over this drawer's body — the scrollbar is visible but
+        // the wheel does nothing.
+        onWheel={(event) => {
+          event.stopPropagation()
+          onWheel?.(event)
+        }}
+        onTouchMove={(event) => {
+          event.stopPropagation()
+          onTouchMove?.(event)
+        }}
+        {...props}
+      />
+    </DialogDescriptionPresenceProvider>
   );
 });
 Content.displayName = "StackedDrawer.Content";
@@ -124,7 +142,7 @@ export const StackedDrawer: typeof Root & {
   Content: typeof Drawer.Content;
   Trigger: typeof Drawer.Trigger;
   Footer: typeof Drawer.Footer;
-  Description: typeof Drawer.Description;
+  Description: typeof Description;
   Title: typeof Drawer.Title;
 } = Object.assign(Root, {
   Close,

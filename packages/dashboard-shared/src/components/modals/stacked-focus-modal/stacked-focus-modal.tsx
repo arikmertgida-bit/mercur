@@ -1,11 +1,17 @@
 import { FocusModal, clx } from "@medusajs/ui";
 import {
   ComponentPropsWithoutRef,
+  ComponentRef,
   ComponentType,
   PropsWithChildren,
   forwardRef,
   useEffect,
 } from "react";
+import {
+  DialogDescriptionPresenceProvider,
+  useDialogDescriptionPresence,
+  useRegisterDialogDescription,
+} from "../dialog-description-presence";
 import { useStackedModal } from "../stacked-modal-provider";
 
 type StackedFocusModalProps = PropsWithChildren<{
@@ -67,22 +73,34 @@ Footer.displayName = "StackedFocusModal.Footer";
 const Title = FocusModal.Title;
 Title.displayName = "StackedFocusModal.Title";
 
-const Description = FocusModal.Description;
+const Description: typeof FocusModal.Description = forwardRef<
+  ComponentRef<typeof FocusModal.Description>,
+  ComponentPropsWithoutRef<typeof FocusModal.Description>
+>((props, ref) => {
+  useRegisterDialogDescription();
+
+  return <FocusModal.Description ref={ref} {...props} />;
+});
 Description.displayName = "StackedFocusModal.Description";
 
 const Content = forwardRef<
   HTMLDivElement,
   ComponentPropsWithoutRef<typeof FocusModal.Content>
 >(({ className, ...props }, ref) => {
+  const { setHasDescription, describedByProps } = useDialogDescriptionPresence();
+
   return (
-    <FocusModal.Content
-      ref={ref}
-      className={clx("!top-6", className)}
-      overlayProps={{
-        className: "bg-transparent",
-      }}
-      {...props}
-    />
+    <DialogDescriptionPresenceProvider value={setHasDescription}>
+      <FocusModal.Content
+        ref={ref}
+        {...describedByProps}
+        className={clx("!top-6", className)}
+        overlayProps={{
+          className: "bg-transparent",
+        }}
+        {...props}
+      />
+    </DialogDescriptionPresenceProvider>
   );
 });
 Content.displayName = "StackedFocusModal.Content";
@@ -94,7 +112,7 @@ export const StackedFocusModal: typeof Root & {
   Content: typeof FocusModal.Content;
   Trigger: typeof FocusModal.Trigger;
   Footer: typeof FocusModal.Footer;
-  Description: typeof FocusModal.Description;
+  Description: typeof Description;
   Title: typeof FocusModal.Title;
 } = Object.assign(Root, {
   Close,

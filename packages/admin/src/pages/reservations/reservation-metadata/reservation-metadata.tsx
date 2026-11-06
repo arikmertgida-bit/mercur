@@ -1,6 +1,5 @@
 import { useReservationItem, useUpdateReservationItem } from "@hooks/api";
 import { MetadataForm } from "@components/forms/metadata-form";
-import { RouteDrawer } from "@components/modals";
 import { useRequiredParam } from "@mercurjs/dashboard-shared";
 
 export const ReservationMetadata = () => {
@@ -14,13 +13,11 @@ export const ReservationMetadata = () => {
   }
 
   return (
-    <RouteDrawer>
-      <MetadataForm
-        isPending={isPending}
-        isMutating={isMutating}
-        hook={mutateAsync}
-        metadata={reservation?.metadata}
-      />
-    </RouteDrawer>
+    <MetadataForm
+      isPending={isPending}
+      isMutating={isMutating}
+      hook={mutateAsync}
+      metadata={reservation?.metadata}
+    />
   );
 };

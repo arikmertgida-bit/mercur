@@ -81,6 +81,12 @@ export const Component = () => {
 
   return (
     <RouteFocusModal>
+      <RouteFocusModal.Title asChild>
+        <span className="sr-only">{t("orders.edits.title")}</span>
+      </RouteFocusModal.Title>
+      <RouteFocusModal.Description className="sr-only">
+        {t("orders.edits.title")}
+      </RouteFocusModal.Description>
       {preview && order && (
         <OrderEditCreateForm order={order} preview={preview} />
       )}

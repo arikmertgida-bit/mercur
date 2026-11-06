@@ -4,10 +4,15 @@ import { StoreCreateForm } from "./components/store-create-form";
 import { StoreCreateDetailsTab } from "./components/store-create-details-tab";
 import { StoreCreateUsersTab } from "./components/store-create-users-tab";
 import { CreateStoreSchema, CreateStoreSchemaType } from "./components/schema";
+import { useTranslation } from "react-i18next";
 
 const Root = () => {
+  const { t } = useTranslation();
   return (
     <RouteFocusModal>
+      <RouteFocusModal.Title asChild>
+        <span className="sr-only">{t("stores.create.header")}</span>
+      </RouteFocusModal.Title>
       <StoreCreateForm />
     </RouteFocusModal>
   );

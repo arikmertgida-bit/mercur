@@ -3,8 +3,10 @@ import { RouteFocusModal } from "@components/modals"
 import { useStockLocations } from "@hooks/api"
 import { isForbidden, SectionNoAccess, useCan } from "@mercurjs/dashboard-shared"
 import { InventoryCreateForm } from "./inventory-create-form"
+import { useTranslation } from "react-i18next"
 
 export const Component = () => {
+  const { t } = useTranslation()
   const canViewLocations = useCan("stock_locations")
   const { isPending, stock_locations, isError, error } = useStockLocations(
     { limit: 9999, fields: "id,name" },
@@ -18,6 +20,9 @@ export const Component = () => {
 
   return (
     <RouteFocusModal>
+      <RouteFocusModal.Title asChild>
+        <span className="sr-only">{t("inventory.create.title")}</span>
+      </RouteFocusModal.Title>
       {forbidden ? (
         <>
           <RouteFocusModal.Header />

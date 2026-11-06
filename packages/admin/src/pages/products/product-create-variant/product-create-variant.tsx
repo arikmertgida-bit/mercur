@@ -10,8 +10,10 @@ import {
 import { CreateProductVariantSchema } from "./components/create-product-variant-form/constants"
 import DetailsTab from "./components/create-product-variant-form/details-tab"
 import { useRequiredParam } from "@mercurjs/dashboard-shared"
+import { useTranslation } from "react-i18next"
 
 const Root = ({ children }: { children?: ReactNode }) => {
+  const { t } = useTranslation()
   const id = useRequiredParam("id")
 
   const { product, isLoading, isError, error } = useProduct(id, PRODUCT_DETAIL_QUERY)
@@ -22,6 +24,9 @@ const Root = ({ children }: { children?: ReactNode }) => {
 
   return (
     <RouteFocusModal prev="../..">
+      <RouteFocusModal.Title asChild>
+        <span className="sr-only">{t("products.variant.create.header")}</span>
+      </RouteFocusModal.Title>
       {!isLoading && product && (
         Children.count(children) > 0 ? (
           children

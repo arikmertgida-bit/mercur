@@ -98,12 +98,6 @@ export const OrderEditCreateForm = ({
     >
       <KeyboundForm onSubmit={handleSubmit} className="flex h-full flex-col">
         <RouteFocusModal.Header />
-        <RouteFocusModal.Title asChild>
-          <span className="sr-only">{t("orders.edits.title")}</span>
-        </RouteFocusModal.Title>
-        <RouteFocusModal.Description className="sr-only">
-          {t("orders.edits.title")}
-        </RouteFocusModal.Description>
 
         <RouteFocusModal.Body className="flex size-full justify-center overflow-y-auto">
           <div className="mt-16 w-[720px] max-w-[100%] px-4 md:p-0">

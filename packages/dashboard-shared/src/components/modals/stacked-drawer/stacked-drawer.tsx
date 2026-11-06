@@ -1,12 +1,18 @@
 import { Drawer, clx } from "@medusajs/ui";
 import {
   ComponentPropsWithoutRef,
+  ComponentRef,
   ComponentType,
   ForwardRefExoticComponent,
   PropsWithChildren,
   forwardRef,
   useEffect,
 } from "react";
+import {
+  DialogDescriptionPresenceProvider,
+  useDialogDescriptionPresence,
+  useRegisterDialogDescription,
+} from "../dialog-description-presence";
 import { useStackedModal } from "../stacked-modal-provider";
 
 type StackedDrawerProps = PropsWithChildren<{
@@ -58,7 +64,14 @@ Footer.displayName = "StackedDrawer.Footer";
 const Title: typeof Drawer.Title = Drawer.Title;
 Title.displayName = "StackedDrawer.Title";
 
-const Description: typeof Drawer.Description = Drawer.Description;
+const Description: typeof Drawer.Description = forwardRef<
+  ComponentRef<typeof Drawer.Description>,
+  ComponentPropsWithoutRef<typeof Drawer.Description>
+>((props, ref) => {
+  useRegisterDialogDescription();
+
+  return <Drawer.Description ref={ref} {...props} />;
+});
 Description.displayName = "StackedDrawer.Description";
 
 type ContentProps = ComponentPropsWithoutRef<typeof Drawer.Content>;
@@ -67,15 +80,20 @@ const Content: ForwardRefExoticComponent<ContentProps> = forwardRef<
   HTMLDivElement,
   ComponentPropsWithoutRef<typeof Drawer.Content>
 >(({ className, ...props }, ref) => {
+  const { setHasDescription, describedByProps } = useDialogDescriptionPresence();
+
   return (
-    <Drawer.Content
-      ref={ref}
-      className={clx(className)}
-      overlayProps={{
-        className: "bg-transparent",
-      }}
-      {...props}
-    />
+    <DialogDescriptionPresenceProvider value={setHasDescription}>
+      <Drawer.Content
+        ref={ref}
+        {...describedByProps}
+        className={clx(className)}
+        overlayProps={{
+          className: "bg-transparent",
+        }}
+        {...props}
+      />
+    </DialogDescriptionPresenceProvider>
   );
 });
 Content.displayName = "StackedDrawer.Content";
@@ -87,7 +105,7 @@ export const StackedDrawer: typeof Root & {
   Content: typeof Drawer.Content;
   Trigger: typeof Drawer.Trigger;
   Footer: typeof Drawer.Footer;
-  Description: typeof Drawer.Description;
+  Description: typeof Description;
   Title: typeof Drawer.Title;
 } = Object.assign(Root, {
   Close,
