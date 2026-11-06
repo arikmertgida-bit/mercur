@@ -83,7 +83,7 @@
     "supportName": "ทีมสนับสนุน",
     "supportSubject": "แชทฝ่ายสนับสนุน",
     "emptyState": "ยังไม่มีข้อความ เริ่มการสนทนาเลย",
-    "viewPromotion": "ดูโปรโมชัน",
+    "viewPromotion": "ดูโปรโมชั่น",
     "imageAlt": "รูปภาพ",
     "placeholder": "พิมพ์ข้อความ...",
     "send": "ส่งข้อความ",
@@ -179,7 +179,7 @@
     "columns": {
       "rating": "คะแนน",
       "reference": "หมายเลขอ้างอิง",
-      "customerNote": "หมายเหตุลูกค้า",
+      "customerNote": "หมายเหตุของลูกค้า",
       "replyStatus": "สถานะการตอบกลับ",
       "createdAt": "สร้างเมื่อ",
       "updatedAt": "อัปเดตเมื่อ"
