@@ -61,7 +61,7 @@
     "subtitle": "Списки желаний покупателей, для целей модерации",
     "noProducts": "Нет товаров",
     "columns": {
-      "customer": "Покупатель",
+      "customer": "Клиент",
       "products": "Товары",
       "created": "Создан"
     },
@@ -142,7 +142,7 @@
     "deleteConfirmDesc": "Вы уверены, что хотите удалить это сообщение?",
     "productQuestion": "Вопрос о товаре",
     "storeQuestion": "Вопрос о магазине",
-    "customerMessage": "Сообщение от покупателя",
+    "customerMessage": "Сообщение от клиента",
     "sellerMessage": "Сообщение от продавца",
     "directMessage": "Личное сообщение",
     "storeContext": "Вопрос о магазине",
@@ -246,7 +246,7 @@
       "detail": {
         "reportHeading": "Жалоба",
         "reviewHeading": "Отзыв",
-        "customerNote": "Заметка покупателя",
+        "customerNote": "Заметка клиента",
         "resolveHeading": "Решить",
         "rejectAction": "Отклонить",
         "defaultRejectNote": "Проверен, не удалён. Если вы не согласны с нашим решением, вы можете подать жалобу повторно.",
