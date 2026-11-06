@@ -41,11 +41,11 @@
     },
     "resolvePrompt": {
       "title": "Đánh dấu báo cáo là đã giải quyết?",
-      "description": "Báo cáo này sẽ được đánh dấu là đã giải quyết và xóa khỏi hàng đợi."
+      "description": "Báo cáo này sẽ được đánh dấu là đã giải quyết và xóa khỏi hàng đợi xử lý."
     },
     "dismissPrompt": {
       "title": "Bỏ qua báo cáo này?",
-      "description": "Báo cáo này sẽ được đánh dấu là đã bỏ qua và xóa khỏi hàng đợi."
+      "description": "Báo cáo này sẽ được đánh dấu là đã bỏ qua và xóa khỏi hàng đợi xử lý."
     },
     "deletePrompt": {
       "title": "Xóa báo cáo này?",
@@ -264,7 +264,7 @@
     "domain": "Đánh giá",
     "noRecords": "Không tìm thấy đánh giá nào",
     "columns": {
-      "rating": "Xếp hạng",
+      "rating": "Điểm đánh giá",
       "reference": "Mã tham chiếu",
       "customerNote": "Ghi chú của khách hàng"
     }
@@ -274,7 +274,7 @@
     "pageTitle": "Bảng điều khiển",
     "orders": {
       "title": "Tóm tắt đơn hàng",
-      "subtitle": "Số lượng đơn hàng theo thời gian thực trên toàn bộ chợ",
+      "subtitle": "Số lượng đơn hàng theo thời gian thực trên toàn sàn giao dịch",
       "today": "Hôm nay",
       "thisWeek": "Tuần này",
       "thisMonth": "Tháng này",
@@ -288,7 +288,7 @@
     },
     "analytics": {
       "title": "Phân tích",
-      "subtitle": "Theo dõi hiệu suất toàn chợ theo thời gian",
+      "subtitle": "Theo dõi hiệu suất của sàn giao dịch theo thời gian",
       "orders": "Đơn hàng",
       "commissionEarnings": "Doanh thu hoa hồng",
       "noData": "Chưa có dữ liệu",

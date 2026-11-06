@@ -28,7 +28,7 @@
     "supportTeam": "Đội hỗ trợ",
     "support": "Hỗ trợ",
     "adminChatTitle": "Trò chuyện với quản trị viên",
-    "adminChatDescription": "Gửi tin nhắn cho đội hỗ trợ của sàn thương mại và xem lại lịch sử trò chuyện của bạn.",
+    "adminChatDescription": "Gửi tin nhắn cho đội ngũ quản trị của sàn giao dịch và xem lại lịch sử trò chuyện của bạn.",
     "unknown": "Không xác định",
     "imageMessage": "Hình ảnh",
     "noMessages": "Chưa có tin nhắn nào",
@@ -150,7 +150,7 @@
     "returnReasons": {
       "navLabel": "Lý do trả hàng",
       "heading": "Yêu cầu lý do trả hàng",
-      "noRecords": "Không tìm thấy yêu cầu lý do trả hàng"
+      "noRecords": "Không tìm thấy yêu cầu lý do trả hàng nào"
     },
     "reviews": {
       "navLabel": "Đánh giá",
@@ -177,12 +177,12 @@
     "domain": "Đánh giá",
     "noRecords": "Không tìm thấy đánh giá nào",
     "columns": {
-      "rating": "Xếp hạng",
+      "rating": "Điểm đánh giá",
       "reference": "Mã tham chiếu",
       "customerNote": "Ghi chú của khách hàng",
       "replyStatus": "Trạng thái phản hồi",
-      "createdAt": "Đã tạo",
-      "updatedAt": "Đã cập nhật"
+      "createdAt": "Ngày tạo",
+      "updatedAt": "Ngày cập nhật"
     },
     "photos": "Hình ảnh",
     "noPhotos": "Không có hình ảnh nào được đính kèm vào đánh giá này.",
@@ -201,7 +201,7 @@
     },
     "report": {
       "title": "Báo cáo cho quản trị viên",
-      "description": "Báo cáo đánh giá này cho quản trị viên sàn thương mại để kiểm duyệt.",
+      "description": "Báo cáo đánh giá này cho quản trị viên sàn giao dịch để kiểm duyệt.",
       "placeholder": "Giải thích lý do bạn báo cáo đánh giá này...",
       "submit": "Gửi báo cáo",
       "successToast": "Đã gửi báo cáo đến quản trị viên.",
@@ -209,13 +209,13 @@
     }
   },
   "followers": {
-    "domain": "Người Theo Dõi",
+    "domain": "Người theo dõi",
     "noRecords": "Chưa có người theo dõi",
     "columns": {
-      "followedAt": "Ngày Theo Dõi",
-      "reviewsAverage": "Đánh Giá TB"
+      "followedAt": "Ngày theo dõi",
+      "reviewsAverage": "Điểm đánh giá TB"
     },
-    "count": "Người Theo Dõi: {{count}}"
+    "count": "Người theo dõi: {{count}}"
   },
   "dashboard": {
     "domain": "Bảng điều khiển",
