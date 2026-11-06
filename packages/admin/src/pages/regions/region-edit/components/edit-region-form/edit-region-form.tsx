@@ -251,7 +251,7 @@ export const EditRegionForm = ({
                   weight="plus"
                   data-testid="region-edit-form-payment-providers-label"
                 >
-                  Providers
+                  {t("fields.providers")}
                 </Text>
                 <Text
                   size="small"

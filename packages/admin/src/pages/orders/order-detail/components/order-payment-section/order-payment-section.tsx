@@ -193,11 +193,11 @@ const Payment = ({
     payment: AdminPayment,
   ): [string, "green" | "orange" | "red"] => {
     if (payment.canceled_at) {
-      return ["Canceled", "red"];
+      return [t("orders.payment.status.canceled"), "red"];
     } else if (payment.captured_at) {
-      return ["Captured", "green"];
+      return [t("orders.payment.status.captured"), "green"];
     } else {
-      return ["Pending", "orange"];
+      return [t("orders.status.pending"), "orange"];
     }
   };
 

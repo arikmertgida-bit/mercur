@@ -1571,7 +1571,7 @@
       "statusLabel": "Estado do pagamento",
       "statusTitle": "Estado do pagamento",
       "status": {
-        "notPaid": "Não paga",
+        "notPaid": "Não pago",
         "authorized": "Autorizado",
         "partiallyAuthorized": "Parcialmente autorizado",
         "awaiting": "A aguardar",
@@ -1579,7 +1579,7 @@
         "partiallyRefunded": "Parcialmente reembolsado",
         "partiallyCaptured": "Parcialmente capturado",
         "refunded": "Reembolsado",
-        "canceled": "Cancelada",
+        "canceled": "Cancelado",
         "requiresAction": "Requer ação"
       },
       "capturePayment": "Será capturado o pagamento de {{amount}}.",

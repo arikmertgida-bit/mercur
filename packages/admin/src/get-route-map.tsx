@@ -993,7 +993,7 @@ export function getRouteMap({
                 path: "/payouts",
                 errorElement: <ErrorBoundary />,
                 handle: {
-                  breadcrumb: () => "Payouts",
+                  breadcrumb: () => t("payouts.domain"),
                   permissions: "payouts:view",
                 },
                 children: [

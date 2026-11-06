@@ -107,7 +107,7 @@ export const CreateRefundForm = ({ order }: CreateRefundFormProps) => {
 	payment?.id || '',
 	form,
 	order.summary.pending_difference,
-	payment.amount,
+	payment?.amount,
 	currency.decimal_digits
 ]);
   /* oxlint-enable react-hooks/exhaustive-deps */
