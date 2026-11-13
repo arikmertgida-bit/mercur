@@ -272,6 +272,7 @@
     "back": "返回",
     "close": "关闭",
     "showMore": "显示更多",
+    "showLess": "收起",
     "continue": "继续",
     "continueWithEmail": "使用邮箱继续",
     "idCopiedToClipboard": "ID已复制到剪贴板",
@@ -320,7 +321,7 @@
         "product": "产品",
         "productVariant": "产品变体",
         "inventory": "库存",
-        "reservation": "预订",
+        "reservation": "预留",
         "category": "分类",
         "collection": "系列",
         "order": "订单",
@@ -356,7 +357,7 @@
         "goToCustomers": "客户",
         "goToCustomerGroups": "客户组",
         "goToInventory": "库存",
-        "goToReservations": "预订",
+        "goToReservations": "预留",
         "goToPriceLists": "价格表",
         "goToPromotions": "促销",
         "goToCampaigns": "活动",
@@ -945,6 +946,7 @@
     "attributeProductInformationDescription": "仅用于信息展示的属性",
     "attributeRequiredByMarketplace": "此属性为市场要求的必填项。",
     "attributeRequiredDeleteDisabledTooltip": "必填属性无法删除。",
+    "missingRequiredAttributesHint": "请填写必填信息",
     "addAttribute": "添加属性",
     "deleteAttributeWarning": "确定要删除属性“{{title}}”吗？此操作无法撤销。",
     "editAttribute": "编辑属性",
@@ -1118,7 +1120,7 @@
         "details": "详情",
         "organize": "组织排序"
       },
-      "successToast": "分类 {{name}} 创建成功。"
+      "successToast": "分类已成功创建。"
     },
     "edit": {
       "header": "编辑分类",
@@ -1127,7 +1129,7 @@
     },
     "delete": {
       "confirmation": "您即将删除分类 {{name}}。此操作无法撤销。",
-      "successToast": "分类 {{name}} 删除成功。"
+      "successToast": "分类已成功删除。"
     },
     "products": {
       "add": {
@@ -1236,6 +1238,7 @@
   "inventory": {
     "domain": "库存",
     "subtitle": "管理您的库存项目",
+    "store": "商店",
     "reserved": "已预留",
     "available": "可用",
     "locationLevels": "位置",
@@ -1260,24 +1263,38 @@
       "header": "预留 {{itemName}}",
       "editItemDetails": "编辑预留",
       "lineItemId": "行项目ID",
+      "itemId": "项目 ID",
       "orderID": "订单ID",
       "description": "描述",
       "location": "位置",
+      "goToInventoryItem": "转到库存项目",
       "inStockAtLocation": "该位置库存",
       "availableAtLocation": "该位置可用",
       "reservedAtLocation": "该位置已预留",
       "reservedAmount": "预留数量",
+      "reserved": "已预留",
+      "storeLocationWarningLabel": "警告",
+      "storeLocationWarning": "您正在修改商店地点的预留。请与商家确认，以避免数据不一致。",
       "create": "创建预留",
       "itemToReserve": "要预留的项目",
+      "itemPlaceholder": "选择项目",
+      "locationPlaceholder": "选择地点",
       "quantityPlaceholder": "您想预留多少？",
       "descriptionPlaceholder": "这是什么类型的预留？",
       "successToast": "预留创建成功。",
       "updateSuccessToast": "预留更新成功。",
       "deleteSuccessToast": "预留删除成功。",
+      "deleteTitle": "删除预留",
+      "deleteDescription": "您即将删除一个预留。这可能会影响商店的库存记录。继续之前，请确保商家已确认此更改，以避免数据不一致。",
+      "deleteBlockedDescription": "此预留关联了未履行的订单，因此无法删除。",
+      "gotIt": "知道了",
       "errors": {
         "noAvaliableQuantity": "库存位置没有可用数量。",
         "quantityOutOfRange": "最小数量为1，最大数量为{{max}}",
-        "idRequired": "库存项 ID 为必填项"
+        "pleaseEnterQuantity": "请输入数量",
+        "idRequired": "库存项 ID 为必填项",
+        "selectLocation": "请选择地点",
+        "enterQuantity": "请输入数量"
       }
     },
     "adjustInventory": {
@@ -1288,7 +1305,8 @@
     "toast": {
       "updateLocations": "位置更新成功。",
       "updateLevel": "库存水平更新成功。",
-      "updateItem": "库存项目更新成功。"
+      "updateItem": "库存项目更新成功。",
+      "deleteItem": "库存项目已成功删除。"
     },
     "stock": {
       "title": "更新库存数量",
@@ -1298,9 +1316,36 @@
       "disablePrompt_one": "您即将禁用 {{count}} 个库存地点。此操作无法撤消。",
       "disablePrompt_other": "您即将禁用 {{count}} 个库存地点。此操作无法撤消。",
       "disabledToggleTooltip": "无法禁用：禁用前请先清除在途和/或预留数量。",
-      "successToast": "库存数量更新成功。"
+      "foreignStoreTooltip": "该商品属于其他商店，因此无法在此地点为其启用库存。",
+      "successToast": "库存数量更新成功。",
+      "confirmTitle": "编辑库存数量",
+      "confirmDescription": "您即将编辑多个商店地点的库存水平。更改库存水平之前，请先与相关商家确认，以避免数据不一致或误解。",
+      "editQuantityWarning": "您正在编辑商店地点的数量。更改库存水平之前，请先与商家确认，以避免数据不一致或误解。"
     },
-    "levelDeleted": "库存水平已成功删除。"
+    "list": {
+      "noRecordsTitle": "暂无库存项目",
+      "noRecordsMessage": "您各商店的库存项目将显示在这里。"
+    },
+    "locations": {
+      "noRecordsTitle": "暂无地点",
+      "noRecordsMessage": "添加地点以开始管理库存水平"
+    },
+    "reservations": {
+      "noRecordsTitle": "暂无预留",
+      "noRecordsMessage": "没有可显示的预留"
+    },
+    "levelDeleted": "库存水平已成功删除。",
+    "attributes": {
+      "tip": "这些是用于描述该商品的默认值，不在“设置 → 商品属性”中管理。"
+    },
+    "item": {
+      "deleteTitle": "删除库存项目",
+      "deleteDescription": "您即将删除一个库存项目。这可能会影响商店的库存记录。继续之前，请确保商家已确认此更改，以避免数据不一致。"
+    },
+    "level": {
+      "deleteTitle": "删除库存水平",
+      "deleteDescription": "您即将删除 {{location}} 的库存水平。这将删除该地点的库存和预留，且无法撤消。继续之前，请确保商家已确认此更改，以避免数据不一致。"
+    }
   },
   "giftCards": {
     "domain": "礼品卡",
@@ -1920,6 +1965,9 @@
       "vendorsCount_one": "{{count}} 个店铺",
       "vendorsCount_other": "{{count}} 个店铺"
     },
+    "requiresAction": {
+      "actionUnavailable": "此订单被接受之前不可用"
+    },
     "group": {
       "heading": "组内订单",
       "noOtherOrders": "此组内暂无其他订单"
@@ -2493,6 +2541,12 @@
         "description": "购买 X 件商品，赠送 Y 件商品"
       }
     },
+    "list": {
+      "noRecords": {
+        "title": "暂无促销",
+        "message": "创建促销以提供折扣"
+      }
+    },
     "domain": "促销活动",
     "sections": {
       "details": "促销详情"
@@ -2504,11 +2558,25 @@
     },
     "fields": {
       "type": "类型",
+      "typeLabels": {
+        "percentageItems": "商品折扣",
+        "percentageShipping": "运费折扣",
+        "percentageOrder": "订单折扣",
+        "amountItems": "商品减价",
+        "amountShipping": "运费减价",
+        "amountOrder": "订单减价"
+      },
       "value_type": "价值类型",
       "value": "价值",
+      "promotion_value": "促销价值",
       "campaign": "营销活动",
       "method": "方式",
+      "owner": "所有者",
+      "platformOwner": "Kayı.com",
+      "coverage": "承担方",
       "allocation": "分配",
+      "usageLimit": "使用次数限制",
+      "unlimited": "不限",
       "addCondition": "添加条件",
       "clearAll": "清除全部",
       "amount": {
@@ -2548,7 +2616,9 @@
       "promotionTabError": "继续前请修复促销选项卡中的错误"
     },
     "toasts": {
-      "promotionCreateSuccess": "促销活动 ({{code}}) 创建成功。"
+      "promotionCreateSuccess": "促销活动 ({{code}}) 创建成功。",
+      "promotionUpdateSuccess": "促销已成功更新。",
+      "promotionDeleteSuccess": "促销已成功删除。"
     },
     "create": {},
     "edit": {
@@ -2659,6 +2729,7 @@
       },
       "value": {
         "title": "促销价值",
+        "description": "要折扣的金额。例如：100",
         "invalid": "促销值无效"
       },
       "value_type": {
@@ -2675,6 +2746,38 @@
       "taxInclusive": {
         "title": "该促销是否含税？",
         "description": "启用此字段，将在计税后应用该促销"
+      },
+      "limit": {
+        "title": "使用次数限制",
+        "description": "该促销在所有订单中可使用的最大次数，留空表示不限次数。"
+      },
+      "storeOffers": {
+        "title": "该促销将应用于哪个商店的商品？",
+        "description": "选择此促销适用其商品的商店。",
+        "label": "商店",
+        "placeholder": "请选择",
+        "required": "请选择一个商店"
+      },
+      "costBearer": {
+        "label": "促销费用由谁承担？",
+        "description": "选择由谁承担此促销所产生的折扣。",
+        "tip": "对已创建促销的更改不会影响已在处理中的订单。",
+        "store": {
+          "title": "商店",
+          "description": "折扣从商店的收入中扣除"
+        },
+        "marketplace": {
+          "title": "市场",
+          "description": "折扣从佣金中扣除"
+        },
+        "shared": {
+          "title": "共同承担",
+          "description": "费用由市场和商店分摊"
+        },
+        "sharedPercentage": {
+          "title": "市场承担比例",
+          "description": "由市场承担的折扣百分比，其余部分由商店承担。"
+        }
       }
     },
     "deleteWarning": "您即将删除促销 {{code}}。此操作无法撤销。",
@@ -2683,13 +2786,18 @@
     "conditions": {
       "add": "添加条件",
       "list": {
+        "noRecordsTitle": "暂无条件",
         "noRecordsMessage": "添加条件以限制促销适用的商品。"
       }
     },
     "campaignSection": {
       "noRecordsTitle": "未加入任何活动",
       "noRecordsMessage": "将此促销添加至现有活动",
-      "addToCampaign": "添加至活动"
+      "addToCampaign": "添加至活动",
+      "warnings": {
+        "promotionMustBeActive": "此促销属于某个营销活动，但未处于活跃状态，因此结账时不会生效。",
+        "promotionExpires": "此营销活动设有结束日期。营销活动结束后，该促销将不再生效。"
+      }
     }
   },
   "campaigns": {
@@ -2703,15 +2811,17 @@
     "delete": {
       "title": "确定要删除吗？",
       "description": "您即将删除营销活动 '{{name}}'。此操作无法撤销。",
-      "successToast": "营销活动 '{{name}}' 创建成功。"
+      "successToast": "营销活动已成功删除。"
     },
     "edit": {
       "header": "编辑营销活动",
       "description": "编辑营销活动的详细信息。",
-      "successToast": "营销活动 '{{name}}' 更新成功。"
+      "successToast": "营销活动已成功更新。"
     },
     "configuration": {
       "header": "配置",
+      "expiryWarningLabel": "警告",
+      "expiryWarning": "营销活动到期时，该促销也将到期。",
       "edit": {
         "header": "编辑营销活动配置",
         "description": "编辑营销活动的配置。",
@@ -2723,25 +2833,37 @@
       "description": "创建营销活动。",
       "hint": "创建营销活动。",
       "header": "创建营销活动",
-      "successToast": "营销活动 '{{name}}' 创建成功。"
+      "successToast": "营销活动已成功创建。"
+    },
+    "validation": {
+      "nameRequired": "请输入名称",
+      "identifierRequired": "请输入标识符",
+      "currencyRequired": "请选择货币"
     },
     "fields": {
       "name": "名称",
       "identifier": "标识符",
+      "identifierTooltip": "标识符是便于业务使用的营销活动代码，用于集成、报表以及快速识别营销活动——它不是数据库中的技术 ID。",
       "start_date": "开始日期",
       "end_date": "结束日期",
       "total_spend": "预算花费",
       "total_used": "预算使用",
       "budget_limit": "预算限制",
+      "type": "类型",
+      "owner": "所有者",
+      "platformOwner": "Kayı.com",
+      "budget_used": "已用预算",
       "campaign_id": {
         "hint": "只有与促销相同的货币代码的营销活动才会显示在此列表中。"
       },
       "totalUsedByAttribute": "已使用总数"
     },
     "budget": {
+      "title": "营销活动预算",
       "create": {
         "hint": "创建营销活动的预算。",
-        "header": "营销活动预算"
+        "header": "营销活动预算",
+        "noLimitHint": "如果不设置任何限制，营销活动预算将不受限制。"
       },
       "details": "营销活动预算",
       "fields": {
@@ -2751,6 +2873,7 @@
         "used": "已使用",
         "budgetAttribute": "按以下维度限制使用次数",
         "budgetAttributeTooltip": "定义特定客户或邮箱可使用该促销的次数。",
+        "noLimit": "无限制",
         "totalUsedByAttribute": "按 {{attribute}} 限制预算"
       },
       "type": {
@@ -2780,14 +2903,19 @@
       "alreadyAddedDiffCampaign": "此促销已添加到不同的营销活动 ({{name}})。",
       "currencyMismatch": "促销和营销活动的货币不匹配",
       "toast": {
-        "success": "成功添加 {{count}} 个促销到营销活动"
+        "success": "已成功将促销添加到营销活动。",
+        "removed_one": "已成功将促销从营销活动中移除。",
+        "removed_other": "已成功将促销从营销活动中移除。"
       },
       "add": {
+        "tipLabel": "提示：",
+        "tip": "只能添加尚未分配给其他营销活动的促销。",
         "list": {
           "noRecordsMessage": "首先创建促销。"
         }
       },
       "list": {
+        "noRecordsTitle": "暂无促销",
         "noRecordsMessage": "营销活动中没有促销。"
       }
     },
@@ -2801,6 +2929,16 @@
       "confirmation": "您即将删除价格列表 {{title}}。此操作无法撤销。",
       "successToast": "价格列表 {{title}} 删除成功。"
     },
+    "list": {
+      "noRecords": {
+        "title": "暂无价格列表",
+        "message": "创建价格列表，用于促销定价和价格覆盖"
+      },
+      "noResults": {
+        "title": "无结果",
+        "message": "请尝试更改筛选条件或搜索关键词"
+      }
+    },
     "create": {
       "header": "创建价格列表",
       "subheader": "创建新的价格列表以管理您的产品价格。",
@@ -2810,6 +2948,10 @@
         "prices": "价格"
       },
       "successToast": "价格列表 {{title}} 创建成功。",
+      "validation": {
+        "title": "请输入标题",
+        "description": "请输入描述"
+      },
       "products": {
         "list": {
           "noRecordsMessage": "首先创建产品。"
@@ -2826,6 +2968,19 @@
         "header": "编辑价格列表配置",
         "description": "编辑价格列表的配置。",
         "successToast": "价格列表配置更新成功。"
+      }
+    },
+    "customerAvailability": {
+      "header": "客户可用性",
+      "add": "添加客户组",
+      "list": {
+        "noRecordsTitle": "暂无客户组",
+        "noRecordsMessage": "添加客户组，以限制此价格列表适用的客户。"
+      },
+      "edit": {
+        "header": "客户可用性",
+        "description": "选择此价格列表适用的客户组。",
+        "successToast": "客户可用性已成功更新。"
       }
     },
     "products": {
@@ -2857,6 +3012,10 @@
         "label": "价格覆盖",
         "header": "价格覆盖"
       },
+      "owner": {
+        "label": "所有者",
+        "marketplace": "Kayı.com"
+      },
       "status": {
         "label": "状态",
         "options": {
@@ -2864,6 +3023,10 @@
           "draft": "草稿",
           "expired": "已过期",
           "scheduled": "已计划"
+        },
+        "descriptions": {
+          "draft": "客户将无法看到此价格列表",
+          "active": "客户将可以看到此价格列表"
         }
       },
       "type": {
@@ -2955,10 +3118,14 @@
     "deleteUserWarning": "您即将删除用户 {{name}}。此操作无法撤销。",
     "deleteUserSuccess": "用户 {{name}} 删除成功。",
     "invite": "邀请",
+    "inviteRolesTooltip": "如果未选择角色，用户将以超级用户角色被邀请。",
     "status": {
       "active": "活跃",
       "pending": "处理中"
     }
+  },
+  "roles": {
+    "domain": "角色"
   },
   "store": {
     "scheduledClosure": {
@@ -3196,9 +3363,28 @@
     }
   },
   "reservations": {
-    "domain": "预订",
-    "subtitle": "管理库存商品的预订数量。",
-    "deleteWarning": "您即将删除预订。此操作无法撤销。"
+    "domain": "预留",
+    "subtitle": "管理库存项目的预留数量。",
+    "deleteWarning": "您即将删除一个预留。此操作无法撤消。",
+    "fields": {
+      "date": "日期",
+      "product": "产品",
+      "store": "商店"
+    },
+    "list": {
+      "noRecordsTitle": "暂无预留",
+      "noRecordsMessage": "创建预留以管理库存项目的预留数量"
+    },
+    "delete": {
+      "title": "删除预留",
+      "description": "您即将删除一个预留。这可能会影响您商店的库存记录。继续之前，请确保商家已确认此更改，以避免数据不一致。",
+      "lockedTitle": "删除预留",
+      "lockedDescription": "此预留关联了未履行的订单，因此无法删除。"
+    },
+    "edit": {
+      "lockedTitle": "编辑预留",
+      "lockedDescription": "此预留关联了未履行的订单，因此无法编辑。"
+    }
   },
   "salesChannels": {
     "domain": "销售渠道",
@@ -3362,7 +3548,16 @@
     "forgotPassword": "忘记密码？ - <0>重置</0>",
     "title": "欢迎使用Kayı.com",
     "hint": "登录以访问账户区域",
-    "sessionExpired": "会话已过期"
+    "submit": "登录",
+    "sessionExpired": "会话已过期",
+    "invalidCredentials": "邮箱或密码错误，请重试。",
+    "showPassword": "显示密码",
+    "hidePassword": "隐藏密码",
+    "validation": {
+      "emailRequired": "请输入邮箱",
+      "emailInvalid": "请输入有效的邮箱地址",
+      "passwordRequired": "请输入密码"
+    }
   },
   "invite": {
     "title": "欢迎使用Kayı.com",
@@ -3847,7 +4042,7 @@
       "isFilterableHint": "勾选后，客户将可以使用此属性筛选商品。",
       "isGlobal": "全局属性",
       "isGlobalHint": "勾选后，此属性将适用于所有分类下的所有商品。",
-      "isVariantAxis": "Use for Variations",
+      "isVariantAxis": "用于生成变体",
       "isVariantAxisHint": "勾选后，此属性将用于定义商品变体（例如尺寸、颜色）。"
     },
     "type": {
@@ -3867,6 +4062,57 @@
       "categoryInheritance": "子分类将继承此属性。"
     },
     "handleTooltip": "根据属性名称自动生成。仅限小写字母、数字和连字符——此字段无法直接编辑。"
+  },
+  "reviews": {
+    "domain": "评价",
+    "subtitle": "管理客户对您各商店的评价。",
+    "fields": {
+      "id": "评价 ID",
+      "rating": "评分",
+      "content": "内容",
+      "store": "商店",
+      "customer": "客户",
+      "date": "日期",
+      "status": "状态",
+      "response": "回复"
+    },
+    "status": {
+      "pending": "待审核",
+      "published": "已发布",
+      "rejected": "已拒绝"
+    },
+    "filters": {
+      "stars_one": "{{count}} 星",
+      "stars_other": "{{count}} 星"
+    },
+    "list": {
+      "noRecordsTitle": "暂无评价",
+      "noRecordsMessage": "客户提交评价后，将显示在这里"
+    },
+    "detail": {
+      "customer": "客户",
+      "order": "订单",
+      "store": "商店"
+    },
+    "edit": {
+      "header": "编辑评价",
+      "description": "编辑评价的状态和评分。",
+      "successToast": "评价已成功更新。"
+    },
+    "respond": {
+      "action": "回复",
+      "header": "回复评价",
+      "description": "为此评价添加回复。",
+      "label": "回复",
+      "successToast": "回复已成功发送。",
+      "alreadyResponded": "此评价已有回复。",
+      "validation": "请填写回复内容"
+    },
+    "delete": {
+      "confirmTitle": "删除评价",
+      "confirmDescription": "您即将删除此评价。此操作无法撤消。",
+      "successToast": "评价已成功删除。"
+    }
   },
   "refundReasons": {
     "domain": "退款原因",
@@ -4152,5 +4398,77 @@
       "enabledToast": "佣金费率已成功启用",
       "disabledToast": "佣金费率已成功禁用"
     }
+  },
+  "permissions": {
+    "noAccess": "您无权查看此内容。",
+    "accessDenied": {
+      "title": "访问被拒绝",
+      "description": "您无权访问此页面。",
+      "requiredPermission": "所需权限：{{permission}}",
+      "action": "您无权执行此操作。"
+    },
+    "requiredPermissions": {
+      "title": "所需权限",
+      "none": "此视图未声明任何权限。",
+      "anyOf": "任一",
+      "allOf": "全部",
+      "source": "来源：{{source}}"
+    },
+    "resources": {
+      "customer": "客户",
+      "customer_group": "客户群组",
+      "order": "订单",
+      "product": "产品",
+      "product_category": "产品分类",
+      "product_collection": "产品系列",
+      "product_tag": "产品标签",
+      "product_type": "产品类型",
+      "inventory": "库存",
+      "reservation": "预留",
+      "promotion": "促销",
+      "campaign": "营销活动",
+      "price_list": "价格列表",
+      "region": "地区",
+      "store": "商店",
+      "user": "用户",
+      "rbac_role": "角色",
+      "rbac_policy": "策略",
+      "sales_channel": "销售渠道",
+      "stock_location": "库存地点",
+      "shipping_profile": "配送方案",
+      "shipping_option": "配送选项",
+      "tax_region": "税务区域",
+      "api_key": "API 密钥",
+      "return_reason": "退货原因",
+      "refund_reason": "退款原因",
+      "workflow": "工作流",
+      "translation": "翻译"
+    },
+    "actions": {
+      "read": "查看",
+      "create": "创建",
+      "update": "更新",
+      "delete": "删除"
+    }
+  },
+  "richTextEditor": {
+    "bold": "粗体",
+    "italic": "斜体",
+    "underline": "下划线",
+    "strike": "删除线",
+    "paragraph": "正文",
+    "heading2": "标题",
+    "heading3": "副标题",
+    "bulletList": "项目符号列表",
+    "orderedList": "编号列表",
+    "blockquote": "引用",
+    "link": "链接",
+    "linkPlaceholder": "https://example.com",
+    "removeLink": "移除链接",
+    "image": "插入图片",
+    "uploadingImage": "正在上传图片...",
+    "imageUploadFailed": "图片上传失败",
+    "undo": "撤销",
+    "redo": "重做"
   }
 }
