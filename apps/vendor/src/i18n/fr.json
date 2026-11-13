@@ -128,7 +128,7 @@
       }
     },
     "tags": {
-      "navLabel": "Étiquettes",
+      "navLabel": "Tags",
       "heading": "Demandes d'étiquettes",
       "noRecords": "Aucune demande d'étiquette trouvée",
       "create": {
@@ -243,7 +243,7 @@
       "subtitle": "Produits dont le stock est bas",
       "noRecords": "Aucun produit à faible stock",
       "product": "Produit",
-      "sku": "Référence",
+      "sku": "SKU",
       "available": "Disponible",
       "viewInventory": "Voir l'inventaire"
     },

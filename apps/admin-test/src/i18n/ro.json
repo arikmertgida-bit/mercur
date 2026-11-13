@@ -1,13 +1,13 @@
 {
   "customFields": {
     "title": "Câmpuri personalizate",
-    "description": "Gestionează câmpurile personalizate și configurațiile tale",
+    "description": "Gestionați câmpurile personalizate și configurațiile dvs.",
     "noFields": "Niciun câmp personalizat configurat încă"
   },
   "actions": {
-    "continue": "Continuă",
-    "cancel": "Anulează",
-    "delete": "Șterge"
+    "continue": "Continuați",
+    "cancel": "Anulați",
+    "delete": "Ștergeți"
   },
   "productReports": {
     "domain": "Sesizări produse",
@@ -36,11 +36,11 @@
       "other": "Altele"
     },
     "actions": {
-      "resolve": "Marchează ca rezolvat",
-      "dismiss": "Ignoră"
+      "resolve": "Marcați ca rezolvat",
+      "dismiss": "Ignorați"
     },
     "resolvePrompt": {
-      "title": "Marchezi sesizarea ca rezolvată?",
+      "title": "Marcați sesizarea ca rezolvată?",
       "description": "Această sesizare va fi marcată ca rezolvată și eliminată din coada de așteptare."
     },
     "dismissPrompt": {
@@ -48,7 +48,7 @@
       "description": "Această sesizare va fi marcată ca ignorată și eliminată din coada de așteptare."
     },
     "deletePrompt": {
-      "title": "Ștergi această sesizare?",
+      "title": "Ștergeți această sesizare?",
       "description": "Această acțiune va șterge definitiv sesizarea. Această acțiune nu poate fi anulată."
     },
     "updateSuccess": "Sesizare actualizată",
@@ -66,7 +66,7 @@
       "created": "Creată"
     },
     "deletePrompt": {
-      "title": "Ștergi această listă de dorințe?",
+      "title": "Ștergeți această listă de dorințe?",
       "description": "Această acțiune va șterge definitiv lista de dorințe a clientului și toate intrările sale. Această acțiune nu poate fi anulată."
     },
     "deleteSuccess": "Listă de dorințe ștearsă",
@@ -74,7 +74,7 @@
   },
   "reportedImages": {
     "domain": "Imagini semnalate",
-    "subtitle": "Revizuiește imaginile semnalate de clienți ca necorespunzătoare",
+    "subtitle": "Revizuiți imaginile semnalate de clienți ca necorespunzătoare",
     "filterAll": "Toate stările",
     "imageRemoved": "Imagine eliminată",
     "columns": {
@@ -88,11 +88,11 @@
       "resolved": "Rezolvat"
     },
     "actions": {
-      "remove": "Elimină imaginea",
-      "dismiss": "Ignoră sesizarea"
+      "remove": "Eliminați imaginea",
+      "dismiss": "Ignorați sesizarea"
     },
     "removePrompt": {
-      "title": "Elimini această imagine?",
+      "title": "Eliminați această imagine?",
       "description": "Imaginea va fi ștearsă definitiv din recenzie. Această acțiune nu poate fi anulată."
     },
     "dismissPrompt": {
@@ -110,15 +110,15 @@
     "newMessageBody": "Aveți un mesaj nou",
     "customer": "Client",
     "seller": "Vânzător",
-    "searchConversations": "Caută conversații...",
+    "searchConversations": "Căutați conversații...",
     "noConversations": "Nicio conversație încă",
-    "startConversation": "Începe o conversație",
-    "selectConversation": "Selectează o conversație",
-    "startMessaging": "Selectează o conversație pentru a începe să discuți",
-    "typeMessage": "Scrie un mesaj...",
+    "startConversation": "Începeți o conversație",
+    "selectConversation": "Selectați o conversație",
+    "startMessaging": "Selectați o conversație pentru a începe să discutați",
+    "typeMessage": "Scrieți un mesaj...",
     "seen": "Văzut",
     "sent": "Trimis",
-    "notificationTitle": "{{senderName}} ți-a trimis un mesaj",
+    "notificationTitle": "{{senderName}} v-a trimis un mesaj",
     "notificationBody": "{{preview}}",
     "image": "Imagine",
     "support": "Suport",
@@ -133,13 +133,13 @@
     "domain": "Mesaje",
     "product": "Produs",
     "store": "Magazin",
-    "delete": "Șterge",
-    "deleteForEveryone": "Șterge pentru toată lumea",
-    "close": "Închide",
+    "delete": "Ștergeți",
+    "deleteForEveryone": "Ștergeți pentru toată lumea",
+    "close": "Închideți",
     "connectionLost": "Conexiune pierdută. Se reconectează...",
     "imageUploadFailed": "Încărcarea imaginii a eșuat",
-    "deleteConfirmTitle": "Șterge mesajul",
-    "deleteConfirmDesc": "Sigur dorești să ștergi acest mesaj?",
+    "deleteConfirmTitle": "Ștergeți mesajul",
+    "deleteConfirmDesc": "Sigur doriți să ștergeți acest mesaj?",
     "productQuestion": "Întrebare despre produs",
     "storeQuestion": "Întrebare despre magazin",
     "customerMessage": "Mesaj de la client",
@@ -148,10 +148,10 @@
     "storeContext": "Întrebare despre magazin",
     "back": "Înapoi",
     "failedToGetUserInfo": "Nu s-au putut obține informațiile despre utilizator.",
-    "send": "Trimite mesaj",
-    "attachImage": "Atașează imagine",
-    "removeAttachment": "Elimină imaginea atașată",
-    "viewImage": "Vezi imaginea la dimensiune completă",
+    "send": "Trimiteți mesajul",
+    "attachImage": "Atașați o imagine",
+    "removeAttachment": "Eliminați imaginea atașată",
+    "viewImage": "Vedeți imaginea la dimensiune completă",
     "pendingImageAlt": "Imagine de trimis",
     "imageAlt": "Imagine"
   },
@@ -190,16 +190,16 @@
       "noRecords": "Nu s-au găsit cereri de tipuri"
     },
     "returnReasons": {
-      "navLabel": "Motive de întoarcere",
-      "heading": "Cereri de motive de întoarcere",
-      "noRecords": "Nu s-au găsit cereri de motive de întoarcere"
+      "navLabel": "Motive de retur",
+      "heading": "Cereri de motiv de retur",
+      "noRecords": "Nu s-au găsit cereri de motiv de retur"
     },
     "typeLabels": {
       "product_category": "Categorie",
       "product_collection": "Colecție",
       "product_tag": "Etichetă",
       "product_type": "Tip",
-      "return_reason": "Motiv de întoarcere"
+      "return_reason": "Motiv de retur"
     },
     "fields": {
       "name": "Nume",
@@ -217,12 +217,12 @@
     },
     "detail": {
       "pendingReview": "În curs de revizuire",
-      "accept": "Acceptă",
-      "reject": "Respinge",
-      "acceptPromptTitle": "Acceptă cererea",
-      "acceptPromptDescription": "Sigur dorești să accepți această cerere? Această acțiune va crea entitatea.",
-      "rejectPromptTitle": "Respinge cererea",
-      "rejectPromptDescription": "Sigur dorești să respingi această cerere? Această acțiune nu poate fi anulată.",
+      "accept": "Acceptați",
+      "reject": "Respingeți",
+      "acceptPromptTitle": "Acceptați cererea",
+      "acceptPromptDescription": "Sigur doriți să acceptați această cerere? Această acțiune va crea entitatea.",
+      "rejectPromptTitle": "Respingeți cererea",
+      "rejectPromptDescription": "Sigur doriți să respingeți această cerere? Această acțiune nu poate fi anulată.",
       "acceptSuccess": "Cerere acceptată",
       "rejectSuccess": "Cerere respinsă",
       "submitter": "Solicitant",
@@ -247,14 +247,14 @@
         "reportHeading": "Sesizare",
         "reviewHeading": "Recenzie",
         "customerNote": "Notă client",
-        "resolveHeading": "Rezolvă",
-        "rejectAction": "Respinge",
+        "resolveHeading": "Rezolvați",
+        "rejectAction": "Respingeți",
         "defaultRejectNote": "Analizată, nu a fost eliminată. Dacă nu sunteți de acord cu decizia noastră, puteți trimite o nouă sesizare.",
         "defaultDeleteNote": "Această recenzie a fost analizată și eliminată de echipa de administrare.",
         "resolveSuccess": "Sesizare rezolvată.",
         "resolveError": "Sesizarea nu a putut fi rezolvată.",
         "deletePrompt": {
-          "title": "Șterge recenzia",
+          "title": "Ștergeți recenzia",
           "description": "Sigur doriți să ștergeți această recenzie? Această acțiune nu poate fi anulată."
         }
       }
@@ -288,7 +288,7 @@
     },
     "analytics": {
       "title": "Analitice",
-      "subtitle": "Urmărește performanța pieței în timp",
+      "subtitle": "Urmăriți performanța pieței în timp",
       "orders": "Comenzi",
       "commissionEarnings": "Venituri din comisioane",
       "noData": "Încă nu există date",

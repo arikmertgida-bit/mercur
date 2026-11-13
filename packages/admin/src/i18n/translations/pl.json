@@ -624,10 +624,10 @@
         },
         "productVariants": {
           "label": "Warianty produktu",
-          "hint": "Ta kolejność wpłynie na porządek wariantów w Twoim sklepie.",
-          "alert": "Dodaj opcje, aby utworzyć warianty.",
+          "hint": "Ta kolejność wpłynie na kolejność wyświetlania wariantów.",
+          "alert": "Dodaj wartości do atrybutów wariantów, aby wygenerować warianty.",
           "noAxes": "Oznacz atrybuty jako \"Użyj dla wariantów\" w kroku Atrybuty, aby wygenerować warianty.",
-          "tip": "Warianty, które nie zostały wybrane, nie zostaną utworzone. Możesz zawsze później dodać i edytować warianty."
+          "tip": "Warianty, które nie zostały zaznaczone, nie zostaną utworzone. Zawsze możesz później tworzyć i edytować warianty, ale ta lista odpowiada wariacjom atrybutów Twojego produktu."
         },
         "productOptions": {
           "label": "Opcje produktu",
@@ -714,7 +714,7 @@
       "deleteImageLabel": "Usuń aktualny obraz",
       "emptyState": {
         "header": "Brak mediów",
-        "description": "Dodaj media do produktu, aby zaprezentować go w swoim sklepie.",
+        "description": "Dodaj media do produktu, aby zaprezentować go w witrynie sklepu.",
         "action": "Dodaj media"
       },
       "successToast": "Media zostały pomyślnie zaktualizowane.",
@@ -782,16 +782,16 @@
         "reject": "Odrzuć"
       },
       "confirmPrompt": {
-        "title": "Potwierdź wniosek o aktualizację",
+        "title": "Potwierdź wniosek",
         "description": "Zamierzasz potwierdzić ten wniosek o aktualizację produktu. Po potwierdzeniu produkt zostanie zaktualizowany w sklepie internetowym.",
         "noteLabel": "Notatki dla sklepu",
         "notePlaceholder": "Dodaj opcjonalną notatkę dla sklepu"
       },
       "rejectPrompt": {
-        "title": "Odrzuć wniosek o aktualizację",
-        "description": "Zamierzasz odrzucić ten wniosek o aktualizację produktu. Proponowane zmiany zostaną odrzucone.",
+        "title": "Odrzuć wniosek",
+        "description": "Zamierzasz odrzucić ten wniosek dotyczący produktu.",
         "noteLabel": "Notatki dla sklepu",
-        "notePlaceholder": "Wyjaśnij, dlaczego odrzucasz wniosek o aktualizację, lub zaproponuj zmiany",
+        "notePlaceholder": "Wyjaśnij, dlaczego odrzucasz wniosek, lub zaproponuj zmiany",
         "confirm": "Odrzuć"
       },
       "toast": {
@@ -2557,7 +2557,7 @@
   "promotions": {
     "templates": {
       "amountOffProducts": {
-        "title": "Zniżka kwotowa na produkty",
+        "title": "Zniżka kwotowa na pozycje",
         "description": "Rabat na wybrane produkty lub kolekcję produktów"
       },
       "amountOffOrder": {
@@ -2932,7 +2932,7 @@
     },
     "promotions": {
       "remove": {
-        "title": "Usuń promocję z kampanii",
+        "title": "Usuń promocje",
         "description": "Zamierzasz usunąć promocje z kampanii ({{count}}). Tej akcji nie można cofnąć."
       },
       "alreadyAdded": "Ta promocja została już dodana do kampanii.",
@@ -3804,7 +3804,7 @@
   "login": {
     "forgotPassword": "Nie pamiętasz hasła? <0>Zresetuj</0>",
     "title": "Witaj ponownie!",
-    "hint": "Zaloguj się, aby uzyskać dostęp do obszaru konta",
+    "hint": "Zaloguj się na swoje konto administratora.",
     "submit": "Zaloguj się",
     "sessionExpired": "Sesja wygasła",
     "invalidCredentials": "Nieprawidłowy adres e-mail lub hasło. Spróbuj ponownie.",

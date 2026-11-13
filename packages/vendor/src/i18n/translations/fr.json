@@ -155,7 +155,7 @@
     "showMore": "Voir plus",
     "showLess": "Afficher moins",
     "continue": "Continuer",
-    "continueWithEmail": "Continuer avec l'email",
+    "continueWithEmail": "Continuer avec l'e-mail",
     "idCopiedToClipboard": "ID copié dans le presse-papier",
     "addReason": "Ajouter un motif",
     "addNote": "Ajouter une note",
@@ -425,7 +425,7 @@
     "title": "Adresses"
   },
   "email": {
-    "editHeader": "Modifier l'email",
+    "editHeader": "Modifier l'e-mail",
     "editLabel": "E-mail",
     "label": "E-mail"
   },
@@ -455,7 +455,7 @@
   "products": {
     "domain": "Produits",
     "list": {
-      "noRecordsMessage": "Créez votre premier produit pour commencer à vendre.",
+      "noRecordsMessage": "Créez des produits pour commencer à vendre sur la marketplace",
       "noRecordsTitle": "Aucun produit pour le moment"
     },
     "edit": {
@@ -492,7 +492,7 @@
       "tabs": {
         "details": "Détails",
         "organize": "Organiser",
-        "variants": "Variantes",
+        "variants": "Publier",
         "attributes": "Attributs"
       },
       "errors": {
@@ -527,8 +527,8 @@
         },
         "productVariants": {
           "label": "Variantes de produit",
-          "hint": "Cette classification affectera l'ordre des variantes dans votre boutique.",
-          "alert": "Ajoutez des options pour créer des variantes.",
+          "hint": "Ce classement affectera l'ordre d'affichage des variantes.",
+          "alert": "Ajoutez des valeurs à vos attributs de variante pour générer des variantes.",
           "tip": "Seules les variantes avec des prix et du stock seront visibles par les clients.",
           "searchPlaceholder": "Rechercher",
           "media": "Médias"
@@ -549,17 +549,17 @@
       "successToast": "Le produit {{title}} a été créé avec succès.",
       "attributes": {
         "header": "Attributs",
-        "addExisting": "Ajouter existant",
+        "addExisting": "Ajouter un existant",
         "createNew": "Créer un nouveau",
-        "requiredAttributes": "Attributs obligatoires",
+        "requiredAttributes": "Attributs requis",
         "requiredAttributesHint": "Ces attributs sont requis par le marketplace. Sélectionnez-les avant de continuer.",
-        "selectValues": "Sélectionner les valeurs",
+        "selectValues": "Sélectionner des valeurs",
         "tip": "Astuce",
         "useForVariants": "Utiliser pour les variantes",
         "useForVariantsDescription": "Si cette case est cochée, vous pourrez créer des variantes à l'aide de cet attribut. Sinon, l'attribut sera utilisé uniquement à titre informatif.",
         "variantAxisTip": "Cet attribut créera des variantes. Vous pourrez les définir à l'étape suivante.",
-        "titlePlaceholder": "p. ex. Couleur",
-        "valuePlaceholder": "Saisir les valeurs",
+        "titlePlaceholder": "ex. Couleur",
+        "valuePlaceholder": "Saisir des valeurs",
         "description": "Gérez les attributs et les variations de votre produit, par ex. couleur, taille, marque, etc. Choisissez parmi les attributs définis par le marketplace ou créez les vôtres.",
         "requiredHeading": "Attributs requis",
         "requiredDescription": "Ces attributs sont requis pour les produits de cette catégorie.",
@@ -669,7 +669,7 @@
         "action": "Ajouter des images",
         "variantDescription": "Cette variante n'a aucune image. Ajoutez des images à la variante."
       },
-      "successToast": "Le média à été mis à jour avec succès.",
+      "successToast": "Le média a été mis à jour avec succès.",
       "manageImageVariants": "Gérer les variantes associées",
       "fileTooLarge": "Un ou plusieurs fichiers dépassent la taille maximale de {{size}} : {{name}}",
       "variantImages": "Images de la variante",
@@ -724,7 +724,7 @@
         "placeholder": "Une veste chaude et confortable"
       },
       "discountable": {
-        "label": "Éligible aux remises",
+        "label": "Remisable",
         "hint": "Lorsque la case n'est pas cochée, les remises ne seront pas appliquées à ce produit"
       },
       "type": {
@@ -765,9 +765,9 @@
         "label": "Options de produit",
         "hint": "Les options sont utilisées pour définir la couleur, la taille, etc. du produit",
         "add": "Ajouter une option",
-        "optionTitle": "Titre de l'option",
+        "optionTitle": "Titre",
         "optionTitlePlaceholder": "Couleur",
-        "variations": "Variations (séparées par des virgules)",
+        "variations": "Valeurs",
         "variantionsPlaceholder": "Rouge, Bleu, Vert"
       },
       "variants": {
@@ -822,7 +822,7 @@
     "variant": {
       "edit": {
         "header": "Modifier la variante",
-        "success": "Variante de produit modifiée avec succès",
+        "success": "La variante a été mise à jour avec succès.",
         "attributesTooltip": "Ce sont des valeurs par défaut utilisées pour décrire l'article. Elles ne sont pas définies par le marketplace."
       },
       "create": {
@@ -1183,8 +1183,8 @@
       }
     },
     "stock": {
-      "title": "Mettre à jour les niveaux d'inventaire",
-      "description": "Mettez à jour les niveaux d'inventaire des articles d'inventaire sélectionnés.",
+      "title": "Mettre à jour les niveaux de stock",
+      "description": "Mettez à jour les niveaux de stock des articles d'inventaire sélectionnés.",
       "action": "Modifier les niveaux de stock",
       "placeholder": "Non activé",
       "disablePrompt_one": "Vous êtes sur le point de désactiver {{count}} niveau d'emplacement. Cette action est irréversible.",
@@ -1398,7 +1398,7 @@
     },
     "transfer": {
       "title": "Transfert de propriété",
-      "requestSuccess": "La demande de transfert de la commande à été envoyé à: {{email}}.",
+      "requestSuccess": "La demande de transfert de la commande a été envoyée à : {{email}}.",
       "currentOwner": "Propriétaire actuel",
       "newOwner": "Nouveau propriétaire",
       "currentOwnerDescription": "Le client actuellement lié à cette commande.",
@@ -1408,7 +1408,7 @@
       "title": "Paiements",
       "isReadyToBeCaptured": "Le paiement <0/> est prêt à être capturé.",
       "totalPaidByCustomer": "Total payé par le client",
-      "capture": "Capture du paiement",
+      "capture": "Capturer le paiement",
       "capture_short": "Capture",
       "refund": "Remboursement",
       "statusLabel": "Statut du paiement",
@@ -1423,7 +1423,7 @@
         "partiallyCaptured": "Partiellement capturé",
         "refunded": "Remboursé",
         "canceled": "Annulé",
-        "requiresAction": "Requiert une action",
+        "requiresAction": "Action requise",
         "pending": "En attente"
       },
       "capturePayment": "Le paiement de {{amount}} sera capturé.",
@@ -1686,7 +1686,7 @@
       "itemsToAllocateDesc": "Sélectionner le nombre d'articles que vous souhaitez allouer",
       "search": "Rechercher des articles",
       "consistsOf": "Consiste de {{num}}x articles d'inventaire",
-      "requires": "Requiert {{num}} par variant",
+      "requires": "{{num}} requis par variante",
       "toast": {
         "created": "Articles alloués avec succès",
         "error": "Échec de l'allocation des articles suivants : {{items}}"
@@ -1702,7 +1702,7 @@
       "addTracking": "Ajouter un numéro de suivi",
       "sendNotification": "Envoyer une notification",
       "sendNotificationHint": "Notifier le client concernant cette expédition.",
-      "toastCreated": "Expédition créée avec succès.",
+      "toastCreated": "Envoi créé avec succès.",
       "trackingUrl": "URL de suivi",
       "labelUrl": "URL de l'étiquette",
       "addTrackingUrl": "Ajouter une URL de suivi",
@@ -1716,7 +1716,7 @@
       "statusTitle": "Statut de l'expédition",
       "fulfillItems": "Expédier des articles",
       "awaitingFulfillmentBadge": "En attente de traitement",
-      "requiresShipping": "Requiert une expédition",
+      "requiresShipping": "Livraison requise",
       "number": "Expédition #{{number}}",
       "itemsToFulfill": "Articles à expédier",
       "create": "Créer une expédition",
@@ -1738,7 +1738,7 @@
         "wrongQuantity_many": "La quantité doit être un nombre entre 1 et {{number}}"
       },
       "status": {
-        "notFulfilled": "Non expédié",
+        "notFulfilled": "Non traité",
         "partiallyFulfilled": "Partiellement traité",
         "fulfilled": "Traité",
         "partiallyShipped": "Partiellement expédié",
@@ -1748,7 +1748,7 @@
         "partiallyReturned": "Partiellement retourné",
         "returned": "Retourné",
         "canceled": "Annulé",
-        "requiresAction": "Requiert une action",
+        "requiresAction": "Action requise",
         "awaitingPickup": "En attente de retrait",
         "awaitingShipping": "En attente d'expédition",
         "awaitingDelivery": "En attente de livraison"
@@ -1775,7 +1775,7 @@
       "title": "Créer un remboursement",
       "sendNotificationHint": "Notifier le client concernant le remboursement créé.",
       "systemPayment": "Paiement système",
-      "systemPaymentDesc": "Un ou plusieurs de vos paiements est un paiement système. Soyez conscient que les captures et les remboursements ne sont pas gérés par Kayı.com pour de tels paiements.",
+      "systemPaymentDesc": "Un ou plusieurs de vos paiements sont des paiements système. Notez que les captures et les remboursements de ces paiements ne sont pas gérés par Kayı.com.",
       "error": {
         "amountToLarge": "Ne peut rembourser plus que le montant de la commande originale.",
         "amountNegative": "Le montant du remboursement doit être un nombre positif.",
@@ -1784,7 +1784,7 @@
     },
     "customer": {
       "contactLabel": "Contact",
-      "editEmail": "Modifier l'email",
+      "editEmail": "Modifier l'e-mail",
       "transferOwnership": "Transférer la propriété",
       "editBillingAddress": "Modifier l'adresse de facturation",
       "editShippingAddress": "Modifier l'adresse de livraison"
@@ -1925,11 +1925,11 @@
       "draft": "Brouillon",
       "archived": "Archivée",
       "canceled": "Annulé",
-      "requires_action": "Requiert une action"
+      "requires_action": "Action requise"
     },
     "edit": {
       "email": {
-        "title": "Modifier l'email",
+        "title": "Modifier l'e-mail",
         "requestSuccess": "E-mail de la commande mis à jour vers {{email}}."
       },
       "shippingAddress": {
@@ -1944,14 +1944,14 @@
     "orderCompleted": "Commande terminée avec succès"
   },
   "draftOrders": {
-    "domain": "Commandes à rédiger",
-    "deleteWarning": "Vous êtes sur le point de supprimer la commande à rédiger {{id}}. Cette action ne peut être annulée.",
+    "domain": "Brouillons de commande",
+    "deleteWarning": "Vous êtes sur le point de supprimer le brouillon de commande {{id}}. Cette action ne peut être annulée.",
     "paymentLinkLabel": "Lien de paiement",
     "cartIdLabel": "ID de panier",
     "markAsPaid": {
       "label": "Marquer comme payée",
       "warningTitle": "Marquer comme payée",
-      "warningDescription": "Vous êtes sur le point de marquer la commande à rédiger comme payée. Cette action ne peut être annulée, et la collecte de paiement ne sera pas possible plus tard."
+      "warningDescription": "Vous êtes sur le point de marquer le brouillon de commande comme payé. Cette action ne peut être annulée et l'encaissement du paiement ne sera plus possible par la suite."
     },
     "status": {
       "open": "Ouvrir",
@@ -1981,16 +1981,16 @@
       "sendNotificationHint": "Envoyer une notification au client lors de la création du brouillon de commande."
     },
     "validation": {
-      "requiredEmailOrCustomer": "Email ou client requis.",
+      "requiredEmailOrCustomer": "E-mail ou client requis.",
       "requiredItems": "Au moins un article est requis.",
-      "invalidEmail": "L'email doit être une adresse email valide."
+      "invalidEmail": "L'e-mail doit être une adresse e-mail valide."
     },
     "list": {
-      "noRecordsMessage": "Aucune commande brouillon trouvée",
-      "description": "Créez une nouvelle commande brouillon pour commencer.",
+      "noRecordsMessage": "Aucun brouillon de commande trouvé",
+      "description": "Créez un nouveau brouillon de commande pour commencer.",
       "filtered": {
         "heading": "Aucun résultat trouvé",
-        "description": "Aucune commande brouillon ne correspond à vos critères de filtre."
+        "description": "Aucun brouillon de commande ne correspond à vos critères de filtre."
       }
     }
   },
@@ -2102,7 +2102,7 @@
       },
       "fields": {
         "count": {
-          "shipping_one": "{{count}} option d'expédition",
+          "shipping_one": "{{count}} option de livraison",
           "shipping_other": "{{count}} options de livraison",
           "returns_one": "{{count}} option de retour",
           "returns_other": "{{count}} options de retour",
@@ -2221,129 +2221,129 @@
     }
   },
   "taxRegions": {
-    "domain": "Taxes par régions",
+    "domain": "Régions fiscales",
     "list": {
       "hint": "Gérer les taxes que vous facturez à vos clients lorsqu'ils achètent depuis différents pays et régions."
     },
     "delete": {
-      "confirmation": "Vous êtes sur le point de supprimer une taxe. Cette action ne peut être annulée.",
+      "confirmation": "Vous êtes sur le point de supprimer une région fiscale. Cette action ne peut être annulée.",
       "successToast": "La région fiscale a été supprimée avec succès."
     },
     "create": {
-      "header": "Créer une taxe",
-      "hint": "Créer une nouvelle taxe pour définir les taux de taxe pour un pays spécifique.",
+      "header": "Créer une région fiscale",
+      "hint": "Créez une nouvelle région fiscale pour définir les taux de taxe d'un pays spécifique.",
       "errors": {
         "missingProvider": "Le fournisseur est requis lors de la création d'une région fiscale.",
         "missingCountry": "Le pays est requis lors de la création d'une région fiscale."
       },
-      "successToast": "La taxe a été créée avec succès."
+      "successToast": "La région fiscale a été créée avec succès."
     },
     "province": {
       "header": "Provinces",
       "create": {
-        "header": "Créer une taxe pour la région",
-        "hint": "Créer une nouvelle taxe pour définir les taux de taxe pour une province spécifique."
+        "header": "Créer une région fiscale de province",
+        "hint": "Créez une nouvelle région fiscale pour définir les taux de taxe d'une province spécifique."
       }
     },
     "state": {
       "header": "États",
       "create": {
-        "header": "Créer une taxe pour les états",
-        "hint": "Créer une nouvelle taxe pour définir les taux de taxe pour un état spécifique."
+        "header": "Créer une région fiscale d'état",
+        "hint": "Créez une nouvelle région fiscale pour définir les taux de taxe d'un état spécifique."
       }
     },
     "stateOrTerritory": {
       "header": "États ou territoires",
       "create": {
-        "header": "Créer une taxe pour les états ou territoires",
+        "header": "Créer une région fiscale d'état/territoire",
         "hint": "Créez une nouvelle région fiscale pour définir les taux de taxe d'un état/territoire spécifique."
       }
     },
     "county": {
       "header": "Comtés",
       "create": {
-        "header": "Créer une taxe pour les comtés",
-        "hint": "Créer une nouvelle taxe pour définir les taux de taxe pour un comté spécifique."
+        "header": "Créer une région fiscale de comté",
+        "hint": "Créez une nouvelle région fiscale pour définir les taux de taxe d'un comté spécifique."
       }
     },
     "region": {
       "header": "Régions",
       "create": {
-        "header": "Créer une taxe pour les régions",
-        "hint": "Créer une nouvelle taxe pour définir les taux de taxe pour une région spécifique."
+        "header": "Créer une région fiscale régionale",
+        "hint": "Créez une nouvelle région fiscale pour définir les taux de taxe d'une région spécifique."
       }
     },
     "department": {
       "header": "Départements",
       "create": {
-        "header": "Créer une taxe pour les départements",
-        "hint": "Créer une nouvelle taxe pour définir les taux de taxe pour un département spécifique."
+        "header": "Créer une région fiscale de département",
+        "hint": "Créez une nouvelle région fiscale pour définir les taux de taxe d'un département spécifique."
       }
     },
     "territory": {
       "header": "Territoires",
       "create": {
-        "header": "Créer une taxe pour les territoires",
-        "hint": "Créer une nouvelle taxe pour définir les taux de taxe pour un territoire spécifique."
+        "header": "Créer une région fiscale de territoire",
+        "hint": "Créez une nouvelle région fiscale pour définir les taux de taxe d'un territoire spécifique."
       }
     },
     "prefecture": {
       "header": "Préfectures",
       "create": {
-        "header": "Créer une taxe pour les préfectures",
-        "hint": "Créer une nouvelle taxe pour définir les taux de taxe pour une préfecture spécifique."
+        "header": "Créer une région fiscale de préfecture",
+        "hint": "Créez une nouvelle région fiscale pour définir les taux de taxe d'une préfecture spécifique."
       }
     },
     "district": {
       "header": "Quartiers",
       "create": {
-        "header": "Créer une taxe pour les quartiers",
-        "hint": "Créer une nouvelle taxe pour définir les taux de taxe pour un district spécifique."
+        "header": "Créer une région fiscale de district",
+        "hint": "Créez une nouvelle région fiscale pour définir les taux de taxe d'un district spécifique."
       }
     },
     "governorate": {
       "header": "Gouvernorats",
       "create": {
-        "header": "Créer une taxe pour les gouvernorats",
-        "hint": "Créer une nouvelle taxe pour définir les taux de taxe pour un gouvernorat spécifique."
+        "header": "Créer une région fiscale de gouvernorat",
+        "hint": "Créez une nouvelle région fiscale pour définir les taux de taxe d'un gouvernorat spécifique."
       }
     },
     "canton": {
       "header": "Cantons",
       "create": {
-        "header": "Créer une taxe pour les cantons",
-        "hint": "Créer une nouvelle taxe pour définir les taux de taxe pour un canton spécifique."
+        "header": "Créer une région fiscale de canton",
+        "hint": "Créez une nouvelle région fiscale pour définir les taux de taxe d'un canton spécifique."
       }
     },
     "emirate": {
       "header": "Émirats",
       "create": {
-        "header": "Créer une taxe pour les émirats",
-        "hint": "Créer une nouvelle taxe pour définir les taux de taxe pour un émirat spécifique."
+        "header": "Créer une région fiscale d'émirat",
+        "hint": "Créez une nouvelle région fiscale pour définir les taux de taxe d'un émirat spécifique."
       }
     },
     "sublevel": {
       "header": "Niveaux subordonnés",
       "create": {
-        "header": "Créer une taxe pour les niveaux subordonnés",
-        "hint": "Créer une nouvelle taxe pour définir les taux de taxe pour un niveau subordonné spécifique."
+        "header": "Créer une région fiscale de niveau subordonné",
+        "hint": "Créez une nouvelle région fiscale pour définir les taux de taxe d'un niveau subordonné spécifique."
       }
     },
     "taxOverrides": {
-      "header": "Dérogations",
+      "header": "Surcharges",
       "create": {
         "header": "Créer une surcharge",
-        "hint": "Créer une taxe qui surcharge les taux de taxe par défaut pour les conditions sélectionnées."
+        "hint": "Créez un taux de taxe qui remplace les taux de taxe par défaut pour les conditions sélectionnées."
       },
       "edit": {
         "header": "Modifier la surcharge",
-        "hint": "Modifier la taxe qui surcharge les taux de taxe par défaut pour les conditions sélectionnées."
+        "hint": "Modifiez le taux de taxe qui remplace les taux de taxe par défaut pour les conditions sélectionnées."
       }
     },
     "taxRates": {
       "create": {
         "header": "Créer un taux d'imposition",
-        "hint": "Créer une nouvelle taxe pour définir le taux de taxe pour une région.",
+        "hint": "Créez un nouveau taux de taxe pour définir le taux de taxe d'une région.",
         "successToast": "Taxe créée avec succès."
       },
       "edit": {
@@ -2359,7 +2359,7 @@
     "fields": {
       "isCombinable": {
         "label": "Combinable",
-        "hint": "Indique si cette taxe peut être combinée avec le taux de taxe par défaut de la région.",
+        "hint": "Indique si ce taux de taxe peut être combiné avec le taux par défaut de la région fiscale.",
         "true": "Combinable",
         "false": "Non combinable"
       },
@@ -2433,7 +2433,7 @@
           "sublevel": "Code de niveau subordonné"
         },
         "placeholders": {
-          "province": "Sélectionner une province",
+          "province": "Sélectionner la province",
           "state": "Sélectionner l'état",
           "region": "Sélectionner la région",
           "stateOrTerritory": "Sélectionner l'état/territoire",
@@ -2447,18 +2447,18 @@
           "canton": "Sélectionner le canton"
         },
         "tooltips": {
-          "sublevel": "Entrer le code ISO 3166-2 pour la région de taxe subordonnée.",
+          "sublevel": "Saisissez le code ISO 3166-2 de la région fiscale subordonnée.",
           "notPartOfCountry": "{{province}} ne semble pas être une partie de {{country}}. Veuillez vérifier si c'est correct."
         },
         "alert": {
-          "header": "Les régions subordonnées sont désactivées pour cette taxe",
+          "header": "Les régions subordonnées sont désactivées pour cette région fiscale",
           "description": "Les régions subordonnées sont désactivées pour cette région par défaut. Vous pouvez les activer pour créer des régions subordonnées comme des provinces, des états ou des territoires.",
           "action": "Activer les régions subordonnées"
         }
       },
       "noDefaultRate": {
         "label": "Pas de taux de taxe par défaut",
-        "tooltip": "Cette région de taxe n'a pas de taux de taxe par défaut. Si un taux standard est appliqué, comme la TVA d'un pays, veuillez l'ajouter à cette région."
+        "tooltip": "Cette région fiscale n'a pas de taux de taxe par défaut. S'il existe un taux standard, comme la TVA d'un pays, veuillez l'ajouter à cette région."
       },
       "taxProvider": "Fournisseur"
     },
@@ -2483,7 +2483,7 @@
       },
       "percentageOffProduct": {
         "title": "Pourcentage de réduction sur les produits",
-        "description": "Remise d'un pourcentage sur les produits sélectionnés"
+        "description": "Applique une remise en pourcentage sur les articles sélectionnés"
       },
       "percentageOffOrder": {
         "title": "Pourcentage de réduction sur la commande",
@@ -2674,7 +2674,7 @@
       "allocation": {
         "each": {
           "title": "Chaque",
-          "description": "Applique la valeur sur chaque article"
+          "description": "Applique la promotion à chaque article éligible séparément"
         },
         "across": {
           "title": "Sur tous les articles",
@@ -2682,12 +2682,12 @@
         },
         "once": {
           "title": "Une fois",
-          "description": "Applique la valeur à un nombre limité d'articles"
+          "description": "Applique la promotion à un nombre total limité d'articles éligibles dans l'ensemble du panier"
         }
       },
       "code": {
         "title": "Code",
-        "description": "Le code que les clients entreront lors de la caisse.",
+        "description": "Le code que vos clients saisiront lors du paiement. Si une promotion est automatique, elle sera appliquée automatiquement.",
         "autoGeneratedHint": "Généré automatiquement à partir du nom de votre boutique. Unique sur l'ensemble du marketplace — ce champ ne peut pas être modifié directement."
       },
       "value": {
@@ -2805,7 +2805,7 @@
         "header": "Budget de la campagne"
       },
       "noLimitHint": "Si vous ne définissez aucune limite, le budget de la campagne sera illimité.",
-      "details": "Budget de la campagne",
+      "details": "Budget",
       "fields": {
         "type": "Type",
         "currency": "Devise",
@@ -2849,7 +2849,7 @@
     },
     "promotions": {
       "remove": {
-        "title": "Supprimer la promotion de la campagne",
+        "title": "Retirer les promotions",
         "description": "Vous êtes sur le point de supprimer {{count}} promotion(s) de la campagne. Cette action ne peut être annulée."
       },
       "alreadyAdded": "Cette promotion a déjà été ajoutée à la campagne.",
@@ -2936,11 +2936,11 @@
         "editPricesDisabled": "Ajoutez des produits avant de modifier les prix"
       },
       "delete": {
-        "confirmation_one": "Vous êtes sur le point de supprimer les prix pour {{count}} produit dans la liste de prix. Cette action ne peut être annulée.",
-        "confirmation_other": "Vous êtes sur le point de supprimer les prix pour {{count}} produits dans la liste de prix. Cette action ne peut être annulée.",
+        "confirmation_one": "Vous êtes sur le point de retirer {{count}} produit de la liste de prix. Cette action ne peut être annulée.",
+        "confirmation_other": "Vous êtes sur le point de retirer {{count}} produits de la liste de prix. Cette action ne peut être annulée.",
         "successToast_one": "Les prix pour {{count}} produit ont été supprimés avec succès.",
         "successToast_other": "Les prix pour {{count}} produits ont été supprimés avec succès.",
-        "confirmation_many": "Vous êtes sur le point de supprimer les prix pour {{count}} produits dans la liste de prix. Cette action ne peut être annulée.",
+        "confirmation_many": "Vous êtes sur le point de retirer {{count}} produits de la liste de prix. Cette action ne peut être annulée.",
         "successToast_many": "Les prix pour {{count}} produits ont été supprimés avec succès."
       },
       "add": {
@@ -3050,7 +3050,7 @@
       "expired": "Expiré"
     },
     "roles": {
-      "admin": "Admin",
+      "admin": "Administrateur",
       "developer": "Développeur",
       "member": "Membre",
       "administration": "Administration",
@@ -3110,7 +3110,7 @@
       "bannerTooSmall": "L'image est petite ({{width}}×{{height}}px). Une taille d'au moins {{minWidth}}×{{minHeight}}px est recommandée, sinon elle risque d'apparaître floue.",
       "logoTooSmall": "L'image est petite ({{width}}×{{height}}px). Une taille d'au moins {{minWidth}}×{{minHeight}}px est recommandée, sinon elle risque d'apparaître floue.",
       "notificationLanguageLabel": "Langue des notifications",
-      "notificationLanguageHint": "La langue utilisée pour les notifications de commandes, d'avis et de paiements envoyées à votre boutique.",
+      "notificationLanguageHint": "La langue utilisée pour les notifications de commandes, d'avis et de versements envoyées à votre boutique.",
       "notificationLanguagePlaceholder": "Sélectionner une langue"
     },
     "toast": {
@@ -3229,7 +3229,7 @@
         "order": "Commandes",
         "orderDescription": "Nouvelles commandes sur votre boutique.",
         "payout": "Versements",
-        "payoutDescription": "Lorsqu'un paiement vous a été envoyé.",
+        "payoutDescription": "Lorsqu'un versement vous a été envoyé.",
         "request": "Demandes",
         "requestDescription": "Approbations et refus de vos demandes envoyées.",
         "review": "Avis",
@@ -3332,7 +3332,7 @@
       "createShippingOption": "Créer une option de livraison",
       "createShippingOptionHint": "Créer une nouvelle option de livraison pour la région.",
       "editShippingOption": "Modifier l'option de livraison",
-      "fulfillmentMethod": "Méthode de livraison",
+      "fulfillmentMethod": "Méthode d'expédition",
       "type": {
         "outbound": "Sortant",
         "outboundHint": "Utiliser cette option si vous créez une option de livraison pour envoyer des produits au client.",
@@ -3612,11 +3612,11 @@
   },
   "invite": {
     "title": "Vous êtes invité(e) à rejoindre {{name}} !",
-    "hint": "Créez votre compte ci-dessous",
+    "hint": "Saisissez vos informations et créez un mot de passe pour configurer votre compte.",
     "backToLogin": "Retour à la connexion",
     "createAccount": "Créer un compte",
     "alreadyHaveAccount": "Vous avez déjà un compte?",
-    "emailTooltip": "Votre email ne peut être modifié. Si vous souhaitez utiliser un autre email, un nouveau lien d'invitation doit être envoyé.",
+    "emailTooltip": "Votre e-mail ne peut pas être modifié. Si vous souhaitez utiliser un autre e-mail, un nouveau lien d'invitation doit être envoyé.",
     "invalidInvite": "Le lien d'invitation est invalide ou a expiré.",
     "successTitle": "Bienvenue chez {{name}} !",
     "successHint": "Configuration de votre compte...",
@@ -3632,7 +3632,7 @@
   },
   "resetPassword": {
     "title": "Réinitialiser le mot de passe",
-    "hint": "Entrez votre email ci-dessous, et nous vous enverrons des instructions sur la façon de réinitialiser votre mot de passe.",
+    "hint": "Saisissez votre e-mail ci-dessous et nous vous enverrons des instructions pour réinitialiser votre mot de passe.",
     "email": "E-mail",
     "sendResetInstructions": "Envoyer les instructions de réinitialisation",
     "backToLogin": "<0>Retour à la connexion</0>",
@@ -3645,8 +3645,8 @@
     "newPassword": "Nouveau mot de passe",
     "repeatNewPassword": "Répéter le nouveau mot de passe",
     "tokenExpiresIn": "Le lien expire dans <0>{{time}}</0> minutes",
-    "successfulRequestTitle": "Un email vous a été envoyé",
-    "successfulRequest": "Nous vous avons envoyé un email que vous pouvez utiliser pour réinitialiser votre mot de passe. Vérifiez votre dossier de spam si vous n'avez pas reçu l'email après quelques minutes.",
+    "successfulRequestTitle": "Un e-mail vous a été envoyé",
+    "successfulRequest": "Nous vous avons envoyé un e-mail que vous pouvez utiliser pour réinitialiser votre mot de passe. Vérifiez votre dossier de spam si vous ne l'avez pas reçu après quelques minutes.",
     "successfulResetTitle": "Réinitialisation du mot de passe réussie",
     "successfulReset": "Veuillez vous connecter sur la page de connexion.",
     "passwordMismatch": "Les mots de passe ne correspondent pas",
@@ -3754,7 +3754,7 @@
   },
   "errors": {
     "serverError": "Erreur serveur - Réessayez plus tard.",
-    "invalidCredentials": "Mauvais email ou mot de passe"
+    "invalidCredentials": "E-mail ou mot de passe incorrect"
   },
   "statuses": {
     "scheduled": "Programmé",
@@ -3870,15 +3870,15 @@
     "totalExclTax": "Total hors taxes",
     "subtotal": "Sous-total",
     "shipping": "Livraison",
-    "outboundShipping": "Expédition sortante",
-    "returnShipping": "Expédition retour",
+    "outboundShipping": "Livraison sortante",
+    "returnShipping": "Livraison retour",
     "tax": "Taxe",
     "created": "Créé",
     "key": "Clé",
     "customer": "Client",
     "date": "Date",
     "order": "Commande",
-    "fulfillment": "Livraison",
+    "fulfillment": "Expédition",
     "provider": "Fournisseur",
     "payment": "Paiement",
     "items": "Articles",
@@ -3906,7 +3906,7 @@
     "length": "Longueur",
     "weight": "Poids",
     "midCode": "Code MID",
-    "hsCode": "Code SH",
+    "hsCode": "Code HS",
     "ean": "EAN",
     "upc": "UPC",
     "inventoryQuantity": "Quantité en inventaire",
@@ -3930,7 +3930,7 @@
     "details": "Détails",
     "label": "Libellé",
     "rate": "Taux",
-    "requiresShipping": "Requiert une livraison",
+    "requiresShipping": "Livraison requise",
     "unitPrice": "Prix unitaire",
     "startDate": "Date de début",
     "endDate": "Date de fin",
@@ -4263,7 +4263,7 @@
     },
     "fields": {
       "label": {
-        "label": "Étiquette",
+        "label": "Libellé",
         "placeholder": "Geste commercial"
       },
       "code": {
@@ -4526,7 +4526,7 @@
       "successToast": "Le type d'option d'expédition « {{label}} » a été supprimé avec succès."
     },
     "fields": {
-      "label": "Étiquette",
+      "label": "Libellé",
       "code": "Code",
       "description": "Description"
     }

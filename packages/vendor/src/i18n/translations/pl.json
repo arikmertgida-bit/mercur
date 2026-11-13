@@ -460,7 +460,7 @@
   "products": {
     "domain": "Produkty",
     "list": {
-      "noRecordsMessage": "Utwórz swój pierwszy produkt, aby rozpocząć sprzedaż.",
+      "noRecordsMessage": "Utwórz produkty, aby rozpocząć sprzedaż w marketplace",
       "noRecordsTitle": "Brak produktów"
     },
     "edit": {
@@ -573,8 +573,8 @@
         },
         "productVariants": {
           "label": "Warianty produktu",
-          "hint": "Ta kolejność wpłynie na porządek wariantów w Twoim sklepie.",
-          "alert": "Dodaj opcje, aby utworzyć warianty.",
+          "hint": "Ta kolejność wpłynie na kolejność wyświetlania wariantów.",
+          "alert": "Dodaj wartości do atrybutów wariantów, aby wygenerować warianty.",
           "tip": "Klienci zobaczą tylko warianty z cenami i stanem magazynowym.",
           "searchPlaceholder": "Wyszukaj",
           "media": "Multimedia"
@@ -754,7 +754,7 @@
       },
       "primaryCategory": {
         "label": "Kategoria główna",
-        "tooltip": "Kategoria główna określa, które atrybuty są dostępne dla tego produktu. Atrybuty są tworzone przez administratora podczas konfiguracji platformy."
+        "tooltip": "Kategoria może określać atrybuty mające zastosowanie do tego produktu. Atrybuty są tworzone przez administratora podczas konfiguracji platformy."
       },
       "secondaryCategories": {
         "label": "Kategorie dodatkowe"
@@ -788,9 +788,9 @@
         "label": "Opcje produktu",
         "hint": "Opcje służą do określenia koloru, rozmiaru itp. produktu",
         "add": "Dodaj opcję",
-        "optionTitle": "Nazwa opcji",
+        "optionTitle": "Tytuł",
         "optionTitlePlaceholder": "Kolor",
-        "variations": "Warianty (oddzielone przecinkami)",
+        "variations": "Wartości",
         "variantionsPlaceholder": "Czerwony, Niebieski, Zielony"
       },
       "variants": {
@@ -834,7 +834,7 @@
     "variant": {
       "edit": {
         "header": "Edytuj wariant",
-        "success": "Wariant produktu został pomyślnie edytowany",
+        "success": "Wariant został pomyślnie zaktualizowany.",
         "attributesTooltip": "Są to domyślne wartości opisujące pozycję. Nie są one zdefiniowane przez marketplace."
       },
       "create": {
@@ -2743,7 +2743,7 @@
       "allocation": {
         "each": {
           "title": "Każdy",
-          "description": "Stosuje wartość do każdego elementu"
+          "description": "Stosuje promocję osobno do każdej kwalifikującej się pozycji"
         },
         "across": {
           "title": "Łącznie",
@@ -2870,7 +2870,7 @@
         "header": "Budżet kampanii"
       },
       "noLimitHint": "Jeśli nie ustawisz żadnych limitów, budżet kampanii nie będzie ograniczony.",
-      "details": "Budżet kampanii",
+      "details": "Budżet",
       "fields": {
         "type": "Typ",
         "currency": "Waluta",
@@ -2914,7 +2914,7 @@
     },
     "promotions": {
       "remove": {
-        "title": "Usuń promocję z kampanii",
+        "title": "Usuń promocje",
         "description": "Zamierzasz usunąć promocje z kampanii ({{count}}). Tej akcji nie można cofnąć."
       },
       "alreadyAdded": "Ta promocja została już dodana do kampanii.",
@@ -3759,7 +3759,7 @@
   "login": {
     "forgotPassword": "Nie pamiętasz hasła? <0>Zresetuj</0>",
     "title": "Witaj ponownie!",
-    "hint": "Zaloguj się, aby uzyskać dostęp do obszaru konta",
+    "hint": "Zaloguj się na swoje konto sprzedawcy.",
     "submit": "Zaloguj się",
     "sessionExpired": "Sesja wygasła",
     "notSellerYet": "Nie masz jeszcze sklepu? <0>Utwórz konto</0>",

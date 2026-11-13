@@ -611,9 +611,9 @@
         },
         "productVariants": {
           "label": "Ürün varyantları",
-          "hint": "Bu sıralama, varyantların mağazanızdaki sırasını etkileyecektir.",
-          "alert": "Varyantlar oluşturmak için seçenekler ekleyin.",
-          "tip": "İşaretlenmeyen varyantlar oluşturulmayacaktır. Ürün seçeneklerinizdeki varyasyonları bu listeye uyacak şekilde oluşturup düzenleyebilirsiniz.",
+          "hint": "Bu sıralama, varyantların görüntülenme sırasını etkileyecektir.",
+          "alert": "Varyant oluşturmak için varyant özelliklerinize değer ekleyin.",
+          "tip": "İşaretlenmeyen varyantlar oluşturulmayacaktır. Varyantları daha sonra her zaman oluşturup düzenleyebilirsiniz; bu liste ürün özelliklerinizdeki varyasyonlara göre hazırlanır.",
           "noAxes": "Varyant oluşturmak için Özellikler adımında özellikleri \"Varyasyonlar için kullan\" olarak işaretleyin."
         },
         "productOptions": {
@@ -720,7 +720,7 @@
       "deleteImageLabel": "Mevcut resmi sil",
       "emptyState": {
         "header": "Henüz medya yok",
-        "description": "Ürünü mağazanızda sergilemek için medya ekleyin.",
+        "description": "Ürünü vitrininizde sergilemek için ürüne medya ekleyin.",
         "action": "Medya ekle"
       },
       "successToast": "Medya başarıyla güncellendi.",
@@ -1924,7 +1924,7 @@
       }
     },
     "fields": {
-      "displayId": "Görüntüleme Kimliği",
+      "displayId": "Sipariş ID",
       "refundableAmount": "İade edilebilir tutar",
       "returnableQuantity": "İade edilebilir miktar",
       "groupId": "Grup ID",
@@ -2896,7 +2896,7 @@
     },
     "promotions": {
       "remove": {
-        "title": "Promosyonu kampanyadan kaldır",
+        "title": "Promosyonları kaldır",
         "description": "Kampanyadan {{count}} promosyon(ları) kaldırmak üzeresiniz. Bu işlem geri alınamaz."
       },
       "alreadyAdded": "Bu promosyon zaten kampanyaya eklenmiştir.",
@@ -2991,8 +2991,8 @@
         "editPricesDisabled": "Fiyatları düzenlemeden önce ürün ekleyin"
       },
       "delete": {
-        "confirmation_one": "Fiyat listesindeki {{count}} ürün için fiyatları silmek üzeresiniz. Bu işlem geri alınamaz.",
-        "confirmation_other": "Fiyat listesindeki {{count}} ürün için fiyatları silmek üzeresiniz. Bu işlem geri alınamaz.",
+        "confirmation_one": "{{count}} ürünü fiyat listesinden kaldırmak üzeresiniz. Bu işlem geri alınamaz.",
+        "confirmation_other": "{{count}} ürünü fiyat listesinden kaldırmak üzeresiniz. Bu işlem geri alınamaz.",
         "successToast_one": "{{count}} ürün için fiyatlar başarıyla silindi.",
         "successToast_other": "{{count}} ürün için fiyatlar başarıyla silindi."
       },
@@ -3547,7 +3547,7 @@
   "login": {
     "forgotPassword": "Şifrenizi mi unuttunuz? - <0>Sıfırla</0>",
     "title": "Tekrar hoş geldiniz!",
-    "hint": "Hesap alanına erişmek için oturum açın",
+    "hint": "Yönetici hesabınızda oturum açın.",
     "submit": "Giriş yap",
     "sessionExpired": "Oturum süresi doldu",
     "invalidCredentials": "E-posta veya şifre hatalı. Lütfen tekrar deneyin.",

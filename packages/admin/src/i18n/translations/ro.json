@@ -135,12 +135,12 @@
       "disabled": "Inactiv"
     },
     "validation": {
-      "titleRequired": "Vă rugăm introduceți un titlu",
-      "codeRequired": "Vă rugăm introduceți un cod",
-      "value": "Vă rugăm introduceți o valoare",
-      "storesRequired": "Vă rugăm selectați cel puțin un magazin",
-      "productTypesRequired": "Vă rugăm selectați cel puțin un tip de produs",
-      "categoriesRequired": "Vă rugăm selectați cel puțin o categorie"
+      "titleRequired": "Vă rugăm să introduceți un titlu",
+      "codeRequired": "Vă rugăm să introduceți un cod",
+      "value": "Vă rugăm să introduceți o valoare",
+      "storesRequired": "Vă rugăm să selectați cel puțin un magazin",
+      "productTypesRequired": "Vă rugăm să selectați cel puțin un tip de produs",
+      "categoriesRequired": "Vă rugăm să selectați cel puțin o categorie"
     }
   },
   "$schema": "./$schema.json",
@@ -188,7 +188,7 @@
     "plusCountMore": "+ încă {{count}}",
     "areYouSure": "Sunteți sigur?",
     "noRecordsFound": "Nu au fost găsite înregistrări",
-    "typeToConfirm": "Introdu {val} pentru a confirma:",
+    "typeToConfirm": "Introduceți {val} pentru a confirma:",
     "noResultsTitle": "Niciun rezultat",
     "noResultsMessage": "Încercați să schimbați filtrele sau interogarea de căutare",
     "noSearchResults": "Niciun rezultat al căutării",
@@ -207,7 +207,7 @@
     "yes": "Da",
     "no": "Nu",
     "noRecordsMessageFiltered": "Nu există înregistrări care să corespundă filtrelor",
-    "drawerAccessibleDescription": "Folosește acest panou pentru a vizualiza sau edita detaliile acestei resurse."
+    "drawerAccessibleDescription": "Folosiți acest panou pentru a vizualiza sau edita detaliile acestei resurse."
   },
   "json": {
     "header": "JSON",
@@ -272,7 +272,7 @@
     "disable": "Dezactivați",
     "undo": "Anulați",
     "complete": "Finalizați",
-    "viewDetails": "Vezi detalii",
+    "viewDetails": "Vedeți detaliile",
     "back": "Înapoi",
     "close": "Închideți",
     "showMore": "Afișați mai multe",
@@ -366,7 +366,7 @@
         "goToPromotions": "Promoții",
         "goToCampaigns": "Campanii",
         "goToSellers": "Magazine",
-        "goToPayouts": "Plăți"
+        "goToPayouts": "Transferuri"
       },
       "settings": {
         "goToSettings": "Setări",
@@ -589,12 +589,12 @@
         "options": "Vă rugăm să creați cel puțin o opțiune.",
         "uniqueSku": "SKU trebuie să fie unic.",
         "requiredAttribute": "Acest atribut este obligatoriu.",
-        "requiredAttributeSelect": "Acest atribut este obligatoriu conform marketplace-ului. Vă rugăm selectați o valoare.",
-        "requiredAttributeEnter": "Acest atribut este obligatoriu conform marketplace-ului. Vă rugăm introduceți o valoare.",
-        "requiredAttributeMultiSelect": "Acest atribut este obligatoriu conform marketplace-ului. Vă rugăm selectați cel puțin o valoare.",
-        "requiredStore": "Vă rugăm selectați cel puțin un magazin",
-        "requiredTitle": "Vă rugăm introduceți un titlu",
-        "requiredCategory": "Vă rugăm selectați o categorie",
+        "requiredAttributeSelect": "Acest atribut este obligatoriu conform marketplace-ului. Vă rugăm să selectați o valoare.",
+        "requiredAttributeEnter": "Acest atribut este obligatoriu conform marketplace-ului. Vă rugăm să introduceți o valoare.",
+        "requiredAttributeMultiSelect": "Acest atribut este obligatoriu conform marketplace-ului. Vă rugăm să selectați cel puțin o valoare.",
+        "requiredStore": "Vă rugăm să selectați cel puțin un magazin",
+        "requiredTitle": "Vă rugăm să introduceți un titlu",
+        "requiredCategory": "Vă rugăm să selectați o categorie",
         "handleInvalidFormat": "Identificatorul trebuie să conțină doar litere mici, cifre și cratime",
         "handleMustContainLetter": "Identificatorul trebuie să conțină cel puțin o literă"
       },
@@ -616,8 +616,8 @@
         },
         "productVariants": {
           "label": "Variante de produs",
-          "hint": "Acest clasament va afecta ordinea variantelor din vitrina dvs.",
-          "alert": "Adăugați opțiuni pentru a crea variante.",
+          "hint": "Acest clasament va afecta ordinea de afișare a variantelor.",
+          "alert": "Adăugați valori atributelor de variantă pentru a genera variante.",
           "tip": "Variantele rămase nebifate nu vor fi create. Puteți oricând să creați și să editați variante ulterior, dar această listă se potrivește cu variațiile din atributele produsului dvs.",
           "noAxes": "Marcați atributele ca \"Utilizează pentru variații\" în pasul Atribute pentru a genera variante."
         },
@@ -642,15 +642,15 @@
         "requiredAttributes": "Atribute obligatorii",
         "requiredAttributesHint": "Aceste atribute sunt cerute de marketplace. Selectați-le înainte de a continua.",
         "useForVariants": "Utilizează pentru variații",
-        "useForVariantsDescription": "Dacă este bifat, veți putea crea variante folosind acest atribut. Dacă nu, atributul va fi folosit doar informativ.",
+        "useForVariantsDescription": "Dacă este bifat, veți putea crea variante folosind acest atribut. Dacă nu, atributul va fi utilizat doar în scop informativ.",
         "tip": "Sfat",
         "variantAxisTip": "Acest atribut va crea variante. Le puteți defini la pasul următor.",
         "editVariantAxisTip": "Veți putea crea variante folosind acest atribut.",
         "warning": "Avertizare",
         "editWarning": "Modificările aduse acestui atribut pot afecta variantele sau detaliile existente ale produsului. Verificați variantele și detaliile produsului după salvare.",
         "errors": {
-          "titleRequired": "Vă rugăm introduceți un titlu",
-          "valuesRequired": "Vă rugăm introduceți cel puțin o valoare"
+          "titleRequired": "Vă rugăm să introduceți un titlu",
+          "valuesRequired": "Vă rugăm să introduceți cel puțin o valoare"
         }
       }
     },
@@ -721,7 +721,7 @@
       "deleteImageLabel": "Ștergeți imaginea curentă",
       "emptyState": {
         "header": "Încă nu există media",
-        "description": "Adăugați conținut media la produs pentru a-l prezenta în vitrina dvs.",
+        "description": "Adăugați conținut media la produs pentru a-l prezenta în magazinul online.",
         "action": "Adăugați conținut media"
       },
       "successToast": "Media a fost actualizată cu succes.",
@@ -1071,7 +1071,7 @@
     "deleteSuccess": "Colecția a fost ștearsă cu succes.",
     "updateSuccess": "Colecția a fost actualizată cu succes.",
     "validation": {
-      "titleRequired": "Vă rugăm introduceți un titlu"
+      "titleRequired": "Vă rugăm să introduceți un titlu"
     },
     "media": {
       "label": "Media",
@@ -1199,7 +1199,7 @@
     },
     "handleTooltip": "Generat automat din titlul categoriei. Doar litere mici, cifre și cratime — acest câmp nu poate fi editat direct.",
     "validation": {
-      "titleRequired": "Vă rugăm introduceți un titlu"
+      "titleRequired": "Vă rugăm să introduceți un titlu"
     },
     "media": {
       "label": "Media",
@@ -1468,7 +1468,7 @@
         "successToast": "Adresa a fost ștearsă cu succes."
       },
       "validation": {
-        "addressNameRequired": "Vă rugăm introduceți un nume pentru adresă",
+        "addressNameRequired": "Vă rugăm să introduceți un nume pentru adresă",
         "addressRequired": "Vă rugăm să introduceți o adresă",
         "countryRequired": "Vă rugăm să selectați o țară"
       }
@@ -1526,14 +1526,14 @@
   },
   "orders": {
     "domain": "Comenzi",
-    "claim": "Revendicare",
+    "claim": "Reclamație",
     "exchange": "Schimb",
     "return": "Retur",
     "cancelWarning": "Sunteți pe cale să anulați comanda {{id}}. Această acțiune nu poate fi anulată.",
     "orderCanceled": "Comanda a fost anulată cu succes",
     "onDateFromSalesChannel": "{{date}} din {{salesChannel}}",
     "list": {
-      "noRecordsMessage": "Comenzile tale vor apărea aici.",
+      "noRecordsMessage": "Comenzile dvs. vor apărea aici.",
       "expandAll": "Extinde toate rândurile",
       "collapseAll": "Restrânge toate rândurile"
     },
@@ -1572,10 +1572,10 @@
     },
     "payment": {
       "title": "Plăți",
-      "isReadyToBeCaptured": "Plată <0/> este gata pentru a fi capturat.",
+      "isReadyToBeCaptured": "Plata <0/> este gata pentru a fi încasată.",
       "totalPaidByCustomer": "Total plătit de client",
-      "capture": "Capturați plata",
-      "capture_short": "Capturați",
+      "capture": "Încasați plata",
+      "capture_short": "Încasați",
       "refund": "Rambursare",
       "markAsPaid": "Marcați ca plătit",
       "statusLabel": "Starea plății",
@@ -1585,15 +1585,15 @@
         "authorized": "Autorizat",
         "partiallyAuthorized": "Parțial autorizat",
         "awaiting": "În așteptare",
-        "captured": "Capturat",
+        "captured": "Încasat",
         "partiallyRefunded": "Rambursat parțial",
-        "partiallyCaptured": "Parțial capturat",
+        "partiallyCaptured": "Încasat parțial",
         "refunded": "Rambursat",
         "canceled": "Anulat",
         "requiresAction": "Necesită acțiune"
       },
-      "capturePayment": "Plata de {{amount}} va fi capturat.",
-      "capturePaymentSuccess": "Plata de {{amount}} capturat cu succes",
+      "capturePayment": "Plata de {{amount}} va fi încasată.",
+      "capturePaymentSuccess": "Plata de {{amount}} a fost încasată cu succes",
       "markAsPaidPayment": "Plata de {{amount}} va fi marcat ca plătit.",
       "markAsPaidPaymentSuccess": "Plata de {{amount}} marcat cu succes ca plătit",
       "createRefund": "Creați rambursare",
@@ -1622,7 +1622,7 @@
       "noteHint": "Adăugați o notă internă pentru editare",
       "cancelSuccessToast": "Modificarea comenzii a fost anulată",
       "createSuccessToast": "Solicitarea de modificare a comenzii a fost creată",
-      "activeChangeError": "Există deja o modificare activă a comenzii (retur, revendicare, schimb etc.). Finalizați sau anulați modificarea înainte de a edita comanda.",
+      "activeChangeError": "Există deja o modificare activă a comenzii (retur, reclamație, schimb etc.). Vă rugăm să finalizați sau să anulați modificarea înainte de a edita comanda.",
       "panel": {
         "title": "A fost solicitată modificarea comenzii",
         "titlePending": "Modificarea comenzii este în așteptare"
@@ -1664,7 +1664,7 @@
       "confirmText": "Sunteți pe cale să confirmați un retur. Această acțiune nu poate fi anulată.",
       "inbound": "Intrare",
       "outbound": "Ieșire",
-      "sendNotification": "Trimite o notificare",
+      "sendNotification": "Trimiteți o notificare",
       "sendNotificationHint": "Anunțați clientul despre retur.",
       "returnTotal": "Total retur",
       "inboundTotal": "Total de intrare",
@@ -1673,7 +1673,7 @@
       "reasonHint": "Alegeți de ce clientul dorește să returneze articole.",
       "note": "Notă",
       "noInventoryLevel": "Fără nivel de inventar",
-      "noInventoryLevelDesc": "Locația selectată nu are un nivel de inventar pentru articolele selectate. Returul poate fi solicitat, dar nu poate fi primit până când nu este creat un nivel de inventar pentru locația selectată.",
+      "noInventoryLevelDesc": "Locația selectată nu are un nivel de inventar pentru articolele selectate. Returul poate fi solicitat, dar nu poate fi primit până când nu se creează un nivel de inventar pentru locația selectată.",
       "noteHint": "Puteți scrie liber dacă doriți să specificați ceva.",
       "location": "Locație",
       "locationHint": "Alegeți locația în care doriți să returnați articolele.",
@@ -1730,12 +1730,12 @@
       "estDifference": "Diferența estimată"
     },
     "claims": {
-      "create": "Creați revendicare",
-      "confirm": "Confirmați revendicarea",
-      "confirmText": "Sunteți pe cale să confirmați o revendicare. Această acțiune nu poate fi anulată.",
-      "manage": "Gestionați revendicarea",
+      "create": "Creați reclamație",
+      "confirm": "Confirmați reclamația",
+      "confirmText": "Sunteți pe cale să confirmați o reclamație. Această acțiune nu poate fi anulată.",
+      "manage": "Gestionați reclamația",
       "outbound": "Ieșire",
-      "outboundItemAdded": "{{itemsCount}}x adăugat prin revendicare",
+      "outboundItemAdded": "{{itemsCount}}x adăugat prin reclamație",
       "outboundTotal": "Total de ieșire",
       "outboundShipping": "Livrare ieșire",
       "outboundShippingHint": "Alegeți ce metodă doriți să utilizați.",
@@ -1743,23 +1743,23 @@
       "activeChangeError": "Există o modificare activă a acestei comenzi. Vă rugăm să finalizați sau să renunțați la modificarea anterioară.",
       "actions": {
         "cancelClaim": {
-          "successToast": "Revendicarea a fost anulată cu succes."
+          "successToast": "Reclamația a fost anulată cu succes."
         }
       },
       "cancel": {
-        "title": "Anulează revendicarea",
-        "description": "Sigur doriți să anulați revendicarea?"
+        "title": "Anulați reclamația",
+        "description": "Sigur doriți să anulați reclamația?"
       },
       "tooltips": {
         "onlyReturnShippingOptions": "Această listă va consta numai din opțiunile de expediere retur."
       },
       "toast": {
-        "canceledSuccessfully": "Revendicarea a fost anulată cu succes",
-        "confirmedSuccessfully": "Revendicarea a fost confirmată cu succes"
+        "canceledSuccessfully": "Reclamația a fost anulată cu succes",
+        "confirmedSuccessfully": "Reclamația a fost confirmată cu succes"
       },
       "panel": {
-        "title": "Revendicare inițiată",
-        "description": "Există o cerere de revendicare deschisă care trebuie completată"
+        "title": "Reclamație inițiată",
+        "description": "Există o reclamație deschisă care trebuie finalizată"
       }
     },
     "exchanges": {
@@ -1820,7 +1820,7 @@
       "title": "Marcați îndeplinirea ca expediată",
       "trackingNumber": "Număr de urmărire",
       "addTracking": "Adăugați numărul de urmărire",
-      "sendNotification": "Trimite o notificare",
+      "sendNotification": "Trimiteți o notificare",
       "sendNotificationHint": "Notificați clientul despre această expediere.",
       "toastCreated": "Expedierea a fost creată cu succes."
     },
@@ -1841,12 +1841,12 @@
       "markAsShipped": "Marcați ca fiind expediat",
       "markAsDelivered": "Marcați ca livrat",
       "itemsToFulfillDesc": "Alegeți articolele și cantitățile de îndeplinit",
-      "locationDescription": "Alegeți locația din care doriți să completați articolele.",
+      "locationDescription": "Alegeți locația din care doriți să îndepliniți articolele.",
       "sendNotificationHint": "Notificați clienții despre îndeplinirea creată.",
       "methodDescription": "Alegeți o metodă de expediere diferită de cea selectată de client",
       "error": {
         "wrongQuantity": "Un singur articol este disponibil pentru îndeplinire",
-        "noItems": "Nu există elemente de îndeplinit.",
+        "noItems": "Nu există articole de îndeplinit.",
         "wrongQuantity_few": "Cantitatea ar trebui să fie un număr între 1 și {{number}}",
         "wrongQuantity_other": "Cantitatea ar trebui să fie un număr între 1 și {{number}}",
         "noShippingOption": "Opțiunea de livrare este obligatorie",
@@ -1872,14 +1872,14 @@
         "created": "Îndeplinirea a fost creată cu succes",
         "canceled": "Îndeplinirea a fost anulată",
         "fulfillmentShipped": "Nu se poate anula o livrare deja expediată",
-        "fulfillmentDelivered": "Realizare marcată ca livrată cu succes",
-        "fulfillmentPickedUp": "Onorarea a fost marcată cu succes ca ridicată"
+        "fulfillmentDelivered": "Îndeplinirea a fost marcată cu succes ca livrată",
+        "fulfillmentPickedUp": "Îndeplinirea a fost marcată cu succes ca ridicată"
       },
       "trackingLabel": "Urmărire",
       "shippingFromLabel": "Livrare de la",
       "itemsLabel": "Articole",
       "differentOptionSelected": "Opțiunea de livrare selectată diferă de cea aleasă de client.",
-      "disabledItemTooltip": "Opțiunea de livrare selectată nu permite onorarea acestui articol",
+      "disabledItemTooltip": "Opțiunea de livrare selectată nu permite îndeplinirea acestui articol",
       "markAsPickedUp": "Marchează ca ridicat",
       "labelLink": "Etichetă"
     },
@@ -1887,7 +1887,7 @@
       "title": "Creați rambursare",
       "sendNotificationHint": "Notificați clienții despre rambursarea creată.",
       "systemPayment": "Sistem de plată",
-      "systemPaymentDesc": "Una sau mai multe dintre plățile dvs. sunt o plată de sistem. Rețineți că încasările și rambursările pentru astfel de plăți nu sunt gestionate de Kayı.com.",
+      "systemPaymentDesc": "Una sau mai multe dintre plățile dvs. sunt plăți de sistem. Rețineți că, pentru astfel de plăți, încasările și rambursările nu sunt gestionate de Kayı.com.",
       "error": {
         "amountToLarge": "Nu se poate rambursa mai mult decât suma inițială a comenzii.",
         "amountNegative": "Suma rambursării trebuie să fie un număr pozitiv.",
@@ -1925,7 +1925,7 @@
         },
         "payment": {
           "awaiting": "În așteptarea plății",
-          "captured": "Plata capturată",
+          "captured": "Plată încasată",
           "canceled": "Plata anulată",
           "refunded": "Plata rambursată"
         },
@@ -2028,7 +2028,7 @@
       }
     },
     "actions": {
-      "cancelDisabledFulfilled": "Nu se poate anula o comandă care are articole onorate."
+      "cancelDisabledFulfilled": "Nu se poate anula o comandă care are articole îndeplinite."
     }
   },
   "draftOrders": {
@@ -2039,20 +2039,20 @@
     "markAsPaid": {
       "label": "Marcați ca plătit",
       "warningTitle": "Marcați ca plătit",
-      "warningDescription": "Sunteți pe cale să marcați comanda nefinalizată ca plătită. Această acțiune nu poate fi anulată, iar încasarea plății nu va mai fi posibilă ulterior."
+      "warningDescription": "Sunteți pe cale să marcați comanda ciornă ca plătită. Această acțiune nu poate fi anulată, iar încasarea plății nu va mai fi posibilă ulterior."
     },
     "status": {
       "open": "Deschis",
       "completed": "Finalizat"
     },
     "create": {
-      "createDraftOrder": "Creați comanda nefinalizată",
-      "createDraftOrderHint": "Creați o nouă comandă nefinalizată pentru a gestiona detaliile unei comenzi înainte ca aceasta să fie plasată.",
+      "createDraftOrder": "Creați comanda ciornă",
+      "createDraftOrderHint": "Creați o nouă comandă ciornă pentru a gestiona detaliile unei comenzi înainte ca aceasta să fie plasată.",
       "chooseRegionHint": "Alegeți regiunea",
       "existingItemsLabel": "Articole existente",
-      "existingItemsHint": "Adăugați produse existente la comanda nefinalizată.",
+      "existingItemsHint": "Adăugați produse existente la comanda ciornă.",
       "customItemsLabel": "Articole personalizate",
-      "customItemsHint": "Adăugați articole personalizate la comanda nefinalizată.",
+      "customItemsHint": "Adăugați articole personalizate la comanda ciornă.",
       "addExistingItemsAction": "Adăugați articole existente",
       "addCustomItemAction": "Adăugați un articol personalizat",
       "noCustomItemsAddedLabel": "Nu s-au adăugat încă articole personalizate",
@@ -2062,11 +2062,11 @@
       "addShippingMethodsAction": "Adăugați metode de expediere",
       "unitPriceOverrideLabel": "Preț unitar personalizat",
       "shippingOptionLabel": "Opțiune de livrare",
-      "shippingOptionHint": "Alegeți opțiunea de livrare pentru comanda nefinalizată.",
+      "shippingOptionHint": "Alegeți opțiunea de livrare pentru comanda ciornă.",
       "shippingPriceOverrideLabel": "Preț de livrare personalizat",
-      "shippingPriceOverrideHint": "Înlocuiți prețul de livrare pentru comanda nefinalizată.",
-      "sendNotificationLabel": "Trimite o notificare",
-      "sendNotificationHint": "Trimiteți o notificare clientului când este creată comanda nefinalizată."
+      "shippingPriceOverrideHint": "Înlocuiți prețul de livrare pentru comanda ciornă.",
+      "sendNotificationLabel": "Trimiteți o notificare",
+      "sendNotificationHint": "Trimiteți o notificare clientului când este creată comanda ciornă."
     },
     "validation": {
       "requiredEmailOrCustomer": "E-mailul sau clientul este necesar.",
@@ -2097,13 +2097,13 @@
       "successToast": "Locația \"{{name}}\" a fost ștearsă cu succes."
     },
     "fulfillmentProviders": {
-      "header": "Furnizori de servicii",
+      "header": "Furnizori de îndeplinire",
       "shippingOptionsTooltip": "Această listă conține doar furnizorii activați pentru această locație. Adăugați-i la locație dacă lista este dezactivată.",
-      "label": "Furnizori de servicii de onorare conectați",
-      "connectedTo": "Conectat la {{count}} de {{total}} furnizorii de împlinire",
-      "noProviders": "Această locație de stoc nu este conectată la niciun furnizor de servicii de onorare.",
+      "label": "Furnizori de îndeplinire conectați",
+      "connectedTo": "Conectat la {{count}} din {{total}} furnizori de îndeplinire",
+      "noProviders": "Această locație de stoc nu este conectată la niciun furnizor de îndeplinire.",
       "action": "Conectați furnizorii",
-      "successToast": "Furnizorii de servicii de onorare pentru locația stocului au fost actualizați cu succes."
+      "successToast": "Furnizorii de îndeplinire pentru locația de stoc au fost actualizați cu succes."
     },
     "fulfillmentSets": {
       "pickup": {
@@ -2113,7 +2113,7 @@
         "header": "Livrare"
       },
       "disable": {
-        "confirmation": "Sunteți sigur că doriți să dezactivați „{{name}}”? Aceasta va șterge toate zonele de servicii și opțiunile de livrare asociate și nu poate fi anulată.",
+        "confirmation": "Sigur doriți să dezactivați „{{name}}”? Toate zonele de serviciu și opțiunile de livrare asociate vor fi șterse, iar acțiunea nu poate fi anulată.",
         "pickup": "Ridicarea a fost dezactivată cu succes.",
         "shipping": "Livrarea a fost dezactivată cu succes."
       },
@@ -2236,13 +2236,13 @@
             },
             "calculated": {
               "label": "Calculat",
-              "hint": "Prețul opțiunii de livrare este calculat de furnizorul de servicii de onorare în timpul plății."
+              "hint": "Prețul opțiunii de livrare este calculat de furnizorul de îndeplinire la finalizarea comenzii."
             }
           }
         },
         "enableInStore": {
           "label": "Activați în magazin",
-          "hint": "Dacă clienții pot folosi această opțiune în timpul plății."
+          "hint": "Dacă clienții pot folosi această opțiune la finalizarea comenzii."
         },
         "provider": "Furnizor de îndeplinire",
         "profile": "Profil de livrare",
@@ -2274,7 +2274,7 @@
       },
       "fields": {
         "noRecords": "Nu există zone de servicii pentru a adăuga opțiuni de expediere.",
-        "tip": "O zonă de serviciu este o colecție de zone sau zone geografice. Este folosită pentru a restricționa opțiunile de livrare disponibile la un set definit de locații."
+        "tip": "O zonă de serviciu este un ansamblu de zone sau arii geografice. Este folosită pentru a restricționa opțiunile de livrare disponibile la un set definit de locații."
       }
     },
     "pickupOptions": {
@@ -2423,12 +2423,12 @@
     "taxRates": {
       "create": {
         "header": "Creați cota de impozitare",
-        "hint": "Creați o nouă cotă de impozitare pentru a defini rata de impozitare pentru o regiune.",
+        "hint": "Creați o nouă cotă de impozitare pentru a defini cota de impozitare a unei regiuni.",
         "successToast": "Cota de impozitare a fost creată cu succes."
       },
       "edit": {
-        "header": "Editați rata de impozitare",
-        "hint": "Editați cota de impozitare pentru a defini rata de impozitare pentru o regiune.",
+        "header": "Editați cota de impozitare",
+        "hint": "Editați cota de impozitare pentru a defini cota de impozitare a unei regiuni.",
         "successToast": "Cota de impozitare a fost actualizată cu succes."
       },
       "delete": {
@@ -2439,17 +2439,17 @@
     "fields": {
       "isCombinable": {
         "label": "Combinabil",
-        "hint": "Dacă această cotă de impozitare poate fi combinată cu rata implicită din regiunea fiscală.",
+        "hint": "Dacă această cotă de impozitare poate fi combinată cu cota implicită din regiunea fiscală.",
         "true": "Combinabil",
         "false": "Nu se poate combina"
       },
       "defaultTaxRate": {
         "label": "Cota de impozitare implicită",
-        "tooltip": "Rata de impozitare implicită pentru această regiune. Un exemplu este rata standard de TVA pentru o țară sau regiune.",
-        "action": "Creați o rată de impozitare implicită"
+        "tooltip": "Cota de impozitare implicită pentru această regiune. Un exemplu este cota standard de TVA a unei țări sau regiuni.",
+        "action": "Creați o cotă de impozitare implicită"
       },
       "taxRate": "Cota de impozitare",
-      "taxCode": "Cod fiscal",
+      "taxCode": "Cod taxă",
       "targets": {
         "label": "Ținte",
         "hint": "Selectați obiectivele cărora li se va aplica această cotă de impozitare.",
@@ -2528,17 +2528,17 @@
         },
         "tooltips": {
           "sublevel": "Introduceți codul ISO 3166-2 pentru regiunea fiscală de subnivel.",
-          "notPartOfCountry": "{{province}} nu pare să facă parte din {{country}}. Verificați dacă acest lucru este corect."
+          "notPartOfCountry": "{{province}} nu pare să facă parte din {{country}}. Vă rugăm să verificați dacă este corect."
         },
         "alert": {
           "header": "Regiunile de subnivel sunt dezactivate pentru această regiune fiscală",
-          "description": "Regiunile de subnivel sunt dezactivate pentru această regiune în mod implicit. Le puteți activa pentru a crea regiuni de subnivel precum provincii, state sau teritorii.",
+          "description": "Regiunile de subnivel sunt dezactivate implicit pentru această regiune. Le puteți activa pentru a crea regiuni de subnivel, cum ar fi provincii, state sau teritorii.",
           "action": "Activați regiunile de subnivel"
         }
       },
       "noDefaultRate": {
-        "label": "Fără rată implicită",
-        "tooltip": "Această regiune fiscală nu are o rată de impozitare implicită. Dacă există o rată standard, cum ar fi TVA-ul unei țări, adăugați-o la această regiune."
+        "label": "Fără cotă implicită",
+        "tooltip": "Această regiune fiscală nu are o cotă de impozitare implicită. Dacă există o cotă standard, cum ar fi TVA-ul unei țări, vă rugăm să o adăugați la această regiune."
       },
       "taxProvider": "Furnizor de taxe"
     },
@@ -2554,7 +2554,7 @@
   "promotions": {
     "templates": {
       "amountOffProducts": {
-        "title": "Reducere valorică la produse",
+        "title": "Reducere valorică la articole",
         "description": "Reduce prețul unor produse specifice sau al unei colecții de produse"
       },
       "amountOffOrder": {
@@ -2677,7 +2677,7 @@
       }
     },
     "campaign_currency": {
-      "tooltip": "Aceasta este moneda promoției. Schimbați-o din fila Detalii."
+      "tooltip": "Aceasta este moneda promoției. O puteți schimba din fila Detalii."
     },
     "form": {
       "required": "Obligatoriu",
@@ -2758,7 +2758,7 @@
       },
       "code": {
         "title": "Cod",
-        "description": "Codul pe care clienții dumneavoastră îl vor introduce în timpul plății."
+        "description": "Codul pe care clienții dumneavoastră îl vor introduce la finalizarea comenzii."
       },
       "value": {
         "title": "Valoarea promoției",
@@ -2905,7 +2905,7 @@
         "limit": "Limită",
         "used": "Folosit",
         "budgetAttribute": "Limitează utilizarea per",
-        "budgetAttributeTooltip": "Definiți de câte ori poate fi utilizată promoția de un anumit client sau email.",
+        "budgetAttributeTooltip": "Definiți de câte ori poate fi utilizată promoția de un anumit client sau e-mail.",
         "noLimit": "Fără limită",
         "totalUsedByAttribute": "Limita bugetului per: {{attribute}}"
       },
@@ -2919,7 +2919,7 @@
           "description": "Stabiliți o limită de câte ori poate fi utilizată promoția."
         },
         "useByAttribute": {
-          "title": "Utilizare pe atribut (ID client, email etc.)",
+          "title": "Utilizare pe atribut (ID client, e-mail etc.)",
           "description": "Setați o limită pentru de câte ori poate fi utilizată promoția pentru o anumită valoare a atributului."
         }
       },
@@ -3025,12 +3025,12 @@
         "editPricesDisabled": "Adăugați produse înainte de a edita prețurile"
       },
       "delete": {
-        "confirmation_one": "Sunteți pe cale să ștergeți prețurile pentru {{count}} produs din lista de prețuri. Această acțiune nu poate fi anulată.",
-        "confirmation_few": "Sunteți pe cale să ștergeți prețurile pentru {{count}} produse din lista de prețuri. Această acțiune nu poate fi anulată.",
-        "confirmation_other": "Sunteți pe cale să ștergeți prețurile pentru {{count}} de produse din lista de prețuri. Această acțiune nu poate fi anulată.",
-        "successToast_one": "Prețuri șterse cu succes pentru {{count}} produs.",
-        "successToast_few": "Prețuri șterse cu succes pentru {{count}} produse.",
-        "successToast_other": "Prețuri șterse cu succes pentru {{count}} de produse."
+        "confirmation_one": "Sunteți pe cale să eliminați {{count}} produs din lista de prețuri. Această acțiune nu poate fi anulată.",
+        "confirmation_few": "Sunteți pe cale să eliminați {{count}} produse din lista de prețuri. Această acțiune nu poate fi anulată.",
+        "confirmation_other": "Sunteți pe cale să eliminați {{count}} de produse din lista de prețuri. Această acțiune nu poate fi anulată.",
+        "successToast_one": "{{count}} produs a fost eliminat cu succes din lista de prețuri.",
+        "successToast_few": "{{count}} produse au fost eliminate cu succes din lista de prețuri.",
+        "successToast_other": "{{count}} de produse au fost eliminate cu succes din lista de prețuri."
       },
       "add": {
         "successToast": "Prețurile au fost adăugate cu succes la lista de prețuri.",
@@ -3118,7 +3118,7 @@
     "editUser": "Editați utilizatorul",
     "inviteUser": "Invitați utilizator",
     "inviteUserHint": "Invitați un utilizator nou în magazinul dvs.",
-    "sendInvite": "Trimite invitația",
+    "sendInvite": "Trimiteți invitația",
     "pendingInvites": "Invitații în așteptare",
     "deleteInviteWarning": "Sunteți pe cale să ștergeți invitația pentru {{email}}. Această acțiune nu poate fi anulată.",
     "resendInvite": "Retrimiteți invitația",
@@ -3225,7 +3225,7 @@
         "successToast": "Adresa a fost actualizată cu succes."
       },
       "validation": {
-        "nameRequired": "Vă rugăm introduceți un nume",
+        "nameRequired": "Vă rugăm să introduceți un nume",
         "countryRequired": "Vă rugăm să selectați o țară"
       }
     },
@@ -3253,7 +3253,7 @@
       },
       "validation": {
         "countryRequired": "Vă rugăm să selectați o țară",
-        "accountNameRequired": "Vă rugăm introduceți un nume de cont"
+        "accountNameRequired": "Vă rugăm să introduceți un nume de cont"
       }
     },
     "professionalDetails": {
@@ -3294,7 +3294,7 @@
     "removeCountryWarning": "Sunteți pe cale să eliminați țara {{name}} din regiune. Această acțiune nu poate fi anulată.",
     "automaticTaxesHint": "Când este activată, taxele vor fi calculate numai la finalizarea comenzii pe baza adresei de expediere.",
     "taxInclusiveHint": "Când este activat, prețurile din regiune vor fi cu taxe incluse.",
-    "providersHint": " Adăugați ce furnizori de plăți sunt disponibili în această regiune.",
+    "providersHint": "Adăugați ce furnizori de plăți sunt disponibili în această regiune.",
     "shippingOptions": "Opțiuni de livrare",
     "deleteShippingOptionWarning": "Sunteți pe cale să ștergeți opțiunea de expediere {{name}}. Această acțiune nu poate fi anulată.",
     "return": "Retur",
@@ -3352,30 +3352,30 @@
       "taxProviderLabel": "Furnizor de taxe",
       "systemTaxProviderLabel": "Furnizor de taxe de sistem",
       "calculateTaxesAutomaticallyLabel": "Calculați automat taxele",
-      "calculateTaxesAutomaticallyHint": "Când este activată, cotele de impozitare vor fi calculate automat și aplicate cărucioarelor. Când este dezactivată, taxele trebuie calculate manual la finalizarea comenzii. Calcularea manuală a taxelor este recomandată pentru utilizarea cu furnizori terți de taxe.",
+      "calculateTaxesAutomaticallyHint": "Când este activată, cotele de impozitare vor fi calculate automat și aplicate coșurilor. Când este dezactivată, taxele trebuie calculate manual la finalizarea comenzii. Taxele manuale sunt recomandate pentru utilizarea cu furnizori fiscali terți.",
       "applyTaxesOnGiftCardsLabel": "Aplicați taxe pe cardurile cadou",
-      "applyTaxesOnGiftCardsHint": "Când este activată, taxele vor fi aplicate cardurilor cadou la finalizare. În unele țări, reglementările fiscale impun aplicarea taxelor pe cardurile cadou la achiziție.",
+      "applyTaxesOnGiftCardsHint": "Când este activată, taxele vor fi aplicate cardurilor cadou la finalizarea comenzii. În unele țări, reglementările fiscale impun aplicarea taxelor la cardurile cadou la cumpărare.",
       "defaultTaxRateLabel": "Cota de impozitare implicită",
       "defaultTaxCodeLabel": "Cod fiscal implicit"
     },
     "defaultRate": {
-      "sectionTitle": "Rata de impozitare implicită"
+      "sectionTitle": "Cota de impozitare implicită"
     },
     "taxRate": {
       "sectionTitle": "Cote de impozitare",
       "createTaxRate": "Creați cota de impozitare",
       "createTaxRateHint": "Creați o nouă cotă de impozitare pentru regiune.",
       "deleteRateDescription": "Sunteți pe cale să ștergeți cota de impozitare {{name}}. Această acțiune nu poate fi anulată.",
-      "editRateAction": "Editați rata",
+      "editRateAction": "Editați cota",
       "editOverridesAction": "Editați suprascrierile",
       "editOverridesTitle": "Editați anulări ale cotei de impozitare",
-      "editOverridesHint": "Specificați suprascrierile pentru rata de impozitare.",
+      "editOverridesHint": "Specificați suprascrierile pentru cota de impozitare.",
       "deleteTaxRateWarning": "Sunteți pe cale să ștergeți cota de impozitare {{name}}. Această acțiune nu poate fi anulată.",
       "productOverridesLabel": "Excepții pentru produse",
-      "productOverridesHint": "Specificați suprascrierile de produs pentru rata de impozitare.",
+      "productOverridesHint": "Specificați suprascrierile de produs pentru cota de impozitare.",
       "addProductOverridesAction": "Adăugați înlocuiri de produs",
       "productTypeOverridesLabel": "Excepții pentru tipuri de produs",
-      "productTypeOverridesHint": "Specificați suprascrierile tipului de produs pentru rata de impozitare.",
+      "productTypeOverridesHint": "Specificați suprascrierile tipului de produs pentru cota de impozitare.",
       "addProductTypeOverridesAction": "Adăugați înlocuiri de tip de produs",
       "shippingOptionOverridesLabel": "Excepții pentru opțiuni de livrare",
       "shippingOptionOverridesHint": "Specificați opțiunile de expediere pentru anularea cotei de impozitare.",
@@ -3490,7 +3490,7 @@
       "createSecretHeader": "Creați cheia API secretă",
       "createSecretHint": "Creați o nouă cheie API secretă pentru a accesa API-ul Kayı.com ca utilizator administrator autentificat.",
       "secretKeyCreatedHeader": "Cheie secretă creată",
-      "secretKeyCreatedHint": "Noua ta cheie secretă a fost generată. Copiază-o și stochează-o în siguranță acum. Aceasta este singura dată când va fi afișată.",
+      "secretKeyCreatedHint": "Noua dvs. cheie secretă a fost generată. Copiați-o și păstrați-o acum în siguranță. Aceasta este singura dată când va fi afișată.",
       "copySecretTokenSuccess": "Cheia secretă a fost copiată în clipboard.",
       "copySecretTokenFailure": "Nu s-a putut copia cheia secretă în clipboard.",
       "successToast": "Cheia API a fost creată cu succes."
@@ -3590,7 +3590,7 @@
   "login": {
     "forgotPassword": "Ați uitat parola? <0>Resetați</0>",
     "title": "Bine ați revenit!",
-    "hint": "Conectați-vă pentru a accesa zona de cont",
+    "hint": "Conectați-vă la contul dvs. de administrator.",
     "submit": "Autentificare",
     "sessionExpired": "Sesiune expirată",
     "invalidCredentials": "E-mail sau parolă incorectă. Vă rugăm să încercați din nou.",
@@ -3604,7 +3604,7 @@
   },
   "invite": {
     "title": "Bun venit la Kayı.com",
-    "hint": "Creează-ți contul mai jos",
+    "hint": "Creați-vă contul mai jos",
     "backToLogin": "Înapoi la autentificare",
     "createAccount": "Creează cont",
     "alreadyHaveAccount": "Aveți deja un cont?  <0>Log in</0>",
@@ -3636,7 +3636,7 @@
     "repeatNewPassword": "Repetați parola nouă",
     "tokenExpiresIn": "Tokenul expiră în <0>{{time}}</0> minute",
     "successfulRequestTitle": "V-a trimis cu succes un e-mail",
-    "successfulRequest": "V-am trimis un e-mail pe care îl puteți folosi pentru a vă reseta parola. Verificați folderul de spam dacă nu l-ați primit după câteva minute.",
+    "successfulRequest": "V-am trimis un e-mail pe care îl puteți folosi pentru a vă reseta parola. Verificați dosarul de spam dacă nu l-ați primit după câteva minute.",
     "successfulResetTitle": "Parola a fost resetată cu succes",
     "successfulReset": "Vă rugăm să vă conectați pe pagina de conectare.",
     "passwordMismatch": "Parolele nu se potrivesc",
@@ -3829,8 +3829,8 @@
     "countries": "Țări",
     "paymentProviders": "Furnizori de plăți",
     "refundReason": "Motivul rambursării",
-    "fulfillmentProviders": "Furnizori de servicii",
-    "fulfillmentProvider": "Furnizor de servicii",
+    "fulfillmentProviders": "Furnizori de îndeplinire",
+    "fulfillmentProvider": "Furnizor de îndeplinire",
     "providers": "Furnizori",
     "availability": "Disponibilitate",
     "inventory": "Inventar",
@@ -3989,9 +3989,9 @@
     "seconds_other": "Secunde"
   },
   "payouts": {
-    "domain": "Plăți",
+    "domain": "Transferuri",
     "list": {
-      "empty": "Nicio plată găsită"
+      "empty": "Niciun transfer găsit"
     },
     "status": {
       "paid": "Plătit",
@@ -4031,9 +4031,9 @@
         "details": "Detalii",
         "type": "Tip"
       },
-      "titleRequired": "Vă rugăm introduceți un titlu",
-      "possibleValuesRequired": "Vă rugăm adăugați cel puțin o valoare",
-      "categoriesRequired": "Vă rugăm selectați cel puțin o categorie",
+      "titleRequired": "Vă rugăm să introduceți un titlu",
+      "possibleValuesRequired": "Vă rugăm să adăugați cel puțin o valoare",
+      "categoriesRequired": "Vă rugăm să selectați cel puțin o categorie",
       "successToast": "Atributul \"{{name}}\" a fost creat cu succes."
     },
     "edit": {
@@ -4105,7 +4105,7 @@
     },
     "selectCategory": {
       "title": "Selectați categoria",
-      "description": "Vă rugăm selectați categoria unde se aplică acest atribut.",
+      "description": "Vă rugăm să selectați categoria în care se aplică acest atribut.",
       "placeholder": "Selectați categoria"
     },
     "hints": {
@@ -4297,7 +4297,7 @@
         "addedToast": "Utilizatorul a fost adăugat cu succes.",
         "invitedToast": "Utilizatorul a fost invitat cu succes.",
         "validation": {
-          "roleRequired": "Vă rugăm selectați un rol"
+          "roleRequired": "Vă rugăm să selectați un rol"
         }
       },
       "invite": {
@@ -4328,14 +4328,14 @@
       "usersHeader": "Administrator",
       "usersHint": "Atribuiți un administrator pentru a gestiona acest magazin. Selectați un utilizator existent sau invitați unul nou.",
       "usersHintSecondary": "După crearea magazinului, utilizatorul selectat va primi o invitație de alăturare.",
-      "ownerEmail": "Email proprietar",
+      "ownerEmail": "E-mail proprietar",
       "ownerEmailHint": "Proprietarului i se va acorda rolul de Administrare magazin.",
       "successToast": "Magazinul a fost creat cu succes.",
       "validation": {
-        "nameRequired": "Vă rugăm introduceți un nume",
-        "emailRequired": "Vă rugăm introduceți un email",
-        "emailInvalid": "Vă rugăm introduceți un email valid",
-        "currencyRequired": "Vă rugăm selectați o monedă"
+        "nameRequired": "Vă rugăm să introduceți un nume",
+        "emailRequired": "Vă rugăm să introduceți un e-mail",
+        "emailInvalid": "Vă rugăm să introduceți un e-mail valid",
+        "currencyRequired": "Vă rugăm să selectați o monedă"
       }
     },
     "request": {
