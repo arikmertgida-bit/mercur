@@ -3611,7 +3611,7 @@
   },
   "login": {
     "forgotPassword": "¿Olvidaste la contraseña? - <0>Restablecer</0>",
-    "title": "Bienvenido a Kayı.com",
+    "title": "¡Bienvenido de nuevo!",
     "hint": "Inicia sesión para acceder a la área de cuentas",
     "submit": "Iniciar sesión",
     "sessionExpired": "Sesión caducada",

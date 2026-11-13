@@ -3546,7 +3546,7 @@
   },
   "login": {
     "forgotPassword": "Passwort vergessen? - <0>Zurücksetzen</0>",
-    "title": "Willkommen bei Kayı.com",
+    "title": "Willkommen zurück!",
     "hint": "Melden Sie sich an, um auf ihr Konto zuzugreifen",
     "submit": "Anmelden",
     "sessionExpired": "Sitzung abgelaufen",

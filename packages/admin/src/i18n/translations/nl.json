@@ -2809,7 +2809,7 @@
       "scheduled": "Gepland"
     },
     "delete": {
-      "title": "Weet u het zeker?",
+      "title": "Campagne verwijderen",
       "description": "U staat op het punt de campagne '{{name}}' te verwijderen. Deze actie kan niet ongedaan worden gemaakt.",
       "successToast": "Campagne is succesvol verwijderd."
     },
@@ -2854,7 +2854,7 @@
       "platformOwner": "Kayı.com",
       "budget_used": "Budget gebruikt",
       "campaign_id": {
-        "hint": "Alleen campagnes met dezelfde valutacode als de promotie worden in deze lijst weergegeven."
+        "hint": "Uitgeschakelde campagnes hebben een budget in een andere valuta dan de promotie."
       },
       "totalUsedByAttribute": "Totaal gebruikt"
     },

@@ -524,7 +524,7 @@
           "label": "Varian produk",
           "hint": "Peringkat ini akan memengaruhi urutan varian di etalase Anda.",
           "alert": "Tambah opsi untuk membuat varian.",
-          "tip": "Varian yang tidak dicentang tidak akan dibuat. Anda selalu dapat membuat dan mengedit varian setelahnya, tetapi daftar ini sesuai dengan variasi dalam opsi produk Anda.",
+          "tip": "Hanya varian dengan harga dan stok yang akan terlihat oleh pelanggan.",
           "searchPlaceholder": "Cari",
           "media": "Media"
         },
@@ -841,7 +841,7 @@
         "header": "Buat Opsi",
         "successToast": "Opsi {{title}} berhasil dibuat."
       },
-      "deleteWarning": "Anda akan menghapus opsi produk: {{title}}. Tindakan ini tidak dapat dibatalkan.",
+      "deleteWarning": "Apakah Anda yakin ingin menghapus opsi \"{{title}}\"? Tindakan ini akan menghapus semua varian terkait.",
       "variations": {
         "label": "Variasi",
         "description": "Atribut yang digunakan untuk membuat varian produk."
@@ -1302,7 +1302,7 @@
     "list": {
       "empty": {
         "heading": "Tidak ada grup pelanggan",
-        "description": "Tidak ada grup pelanggan untuk ditampilkan."
+        "description": "Buat grup pelanggan untuk mengatur pelanggan"
       },
       "filtered": {
         "heading": "Tidak ada hasil",
@@ -3557,7 +3557,7 @@
   },
   "login": {
     "forgotPassword": "Lupa kata sandi? - <0>Setel ulang</0>",
-    "title": "Selamat datang di Kayı.com",
+    "title": "Selamat datang kembali!",
     "hint": "Masuk ke akun penjual Anda.",
     "submit": "Masuk",
     "sessionExpired": "Sesi berakhir",

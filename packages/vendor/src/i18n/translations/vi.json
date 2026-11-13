@@ -708,7 +708,7 @@
       },
       "handle": {
         "label": "Định danh",
-        "tooltip": "Định danh được sử dụng để tham chiếu sản phẩm trên giao diện cửa hàng của bạn. Nếu không chỉ định, định danh sẽ được tạo từ tiêu đề sản phẩm.",
+        "tooltip": "Được tạo tự động từ tiêu đề sản phẩm. Chỉ gồm chữ thường, số và dấu gạch ngang — không thể chỉnh sửa trực tiếp trường này.",
         "placeholder": "ao-khoac-mua-dong"
       },
       "description": {
@@ -841,7 +841,7 @@
         "header": "Tạo tùy chọn",
         "successToast": "Tùy chọn {{title}} đã được tạo thành công."
       },
-      "deleteWarning": "Bạn sắp xóa tùy chọn sản phẩm: {{title}}. Hành động này không thể hoàn tác.",
+      "deleteWarning": "Bạn có chắc chắn muốn xóa tùy chọn \"{{title}}\" không? Thao tác này sẽ xóa tất cả biến thể liên quan.",
       "variations": {
         "label": "Biến thể",
         "description": "Thuộc tính dùng để tạo biến thể sản phẩm."
@@ -975,7 +975,7 @@
     "createCollectionHint": "Tạo một bộ sưu tập mới để sắp xếp sản phẩm của bạn.",
     "createSuccess": "Bộ sưu tập đã được tạo thành công.",
     "editCollection": "Chỉnh sửa bộ sưu tập",
-    "handleTooltip": "Định danh được sử dụng để tham chiếu bộ sưu tập trên giao diện cửa hàng của bạn. Nếu không chỉ định, định danh sẽ được tạo từ tiêu đề bộ sưu tập.",
+    "handleTooltip": "Được tạo tự động từ tiêu đề bộ sưu tập. Chỉ gồm chữ thường, số và dấu gạch ngang — không thể chỉnh sửa trực tiếp trường này.",
     "deleteWarning": "Bạn sắp xóa bộ sưu tập {{title}}. Hành động này không thể hoàn tác.",
     "removeSingleProductWarning": "Bạn sắp xóa sản phẩm {{title}} khỏi bộ sưu tập. Hành động này không thể hoàn tác.",
     "removeProductsWarning_one": "Bạn sắp xóa {{count}} sản phẩm khỏi bộ sưu tập. Hành động này không thể hoàn tác.",
@@ -1302,7 +1302,7 @@
     "list": {
       "empty": {
         "heading": "Không có nhóm khách hàng",
-        "description": "Không có nhóm khách hàng nào để hiển thị."
+        "description": "Tạo nhóm khách hàng để sắp xếp khách hàng"
       },
       "filtered": {
         "heading": "Không có kết quả",
@@ -4401,7 +4401,7 @@
         "name": "Tên cửa hàng",
         "email": "Email cửa hàng",
         "handle": "Định danh",
-        "handleTooltip": "Được tạo tự động từ tên cửa hàng. Chỉ gồm chữ thường, số và dấu gạch nối — không thể chỉnh sửa trực tiếp trường này.",
+        "handleTooltip": "Được tạo tự động từ tên cửa hàng. Chỉ gồm chữ thường, số và dấu gạch ngang — không thể chỉnh sửa trực tiếp trường này.",
         "handlePlaceholder": "my-store",
         "currency": "Tiền tệ",
         "selectCurrency": "Chọn",

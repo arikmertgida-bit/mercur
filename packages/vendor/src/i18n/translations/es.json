@@ -551,7 +551,7 @@
           "label": "Variantes de producto",
           "hint": "Este orden afectará el orden de las variantes en tu tienda.",
           "alert": "Agrega opciones para crear variantes.",
-          "tip": "Las variantes sin marcar no serán creadas. Siempre puedes crear y editar variantes después, pero esta lista se adapta a las variaciones en tus opciones de producto.",
+          "tip": "Solo las variantes con precios y stock serán visibles para los clientes.",
           "searchPlaceholder": "Buscar",
           "media": "Medios"
         },
@@ -687,7 +687,7 @@
       "deleteImageLabel": "Eliminar imagen actual",
       "emptyState": {
         "header": "Aún no hay medios",
-        "description": "Agrega medios al producto para mostrarlo en tu tienda.",
+        "description": "No hay imágenes asignadas a esta variante.",
         "action": "Agregar medios",
         "variantDescription": "Esta variante no tiene imágenes. Añade imágenes a la variante."
       },
@@ -871,7 +871,7 @@
         "header": "Crear Opción",
         "successToast": "Opción {{title}} creada correctamente."
       },
-      "deleteWarning": "Estás a punto de eliminar la opción del producto: {{title}}. Esta acción no puede deshacerse.",
+      "deleteWarning": "¿Seguro que quieres eliminar la opción \"{{title}}\"? Esto eliminará todas las variantes asociadas.",
       "variations": {
         "label": "Variaciones",
         "description": "Atributos usados para crear variantes de producto."
@@ -1340,7 +1340,7 @@
     "list": {
       "empty": {
         "heading": "No hay grupos de clientes",
-        "description": "No hay grupos de clientes para mostrar."
+        "description": "Crea grupos de clientes para organizar a los clientes"
       },
       "filtered": {
         "heading": "Sin resultados",
@@ -3660,7 +3660,7 @@
   },
   "login": {
     "forgotPassword": "¿Olvidaste la contraseña? - <0>Restablecer</0>",
-    "title": "Bienvenido a Kayı.com",
+    "title": "¡Bienvenido de nuevo!",
     "hint": "Inicia sesión en tu cuenta de vendedor.",
     "submit": "Iniciar sesión",
     "sessionExpired": "Sesión caducada",

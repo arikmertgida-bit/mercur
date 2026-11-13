@@ -529,7 +529,7 @@
           "label": "Variantes do produto",
           "hint": "Essa classificação afetará a ordem das variantes na sua vitrine.",
           "alert": "Adicione opções para criar variantes.",
-          "tip": "Variantes desmarcadas não serão criadas. Você pode sempre criar e editar variantes depois, mas essa lista organiza as variantes nas suas opções de produto.",
+          "tip": "Somente as variantes com preços e estoque ficarão visíveis para os clientes.",
           "searchPlaceholder": "Buscar",
           "media": "Mídia"
         },
@@ -715,7 +715,7 @@
       },
       "handle": {
         "label": "Identificador",
-        "tooltip": "O identificador é usado para referenciar o produto na sua vitrine. Se não especificado, o identificador será gerado a partir do título do produto.",
+        "tooltip": "Gerado automaticamente a partir do título do produto. Apenas letras minúsculas, números e hifens — este campo não pode ser editado diretamente.",
         "placeholder": "jaqueta-de-inverno"
       },
       "description": {
@@ -849,7 +849,7 @@
         "header": "Criar opção",
         "successToast": "Opção {{title}} foi criada com sucesso."
       },
-      "deleteWarning": "Você está prestes a excluir a opção de produto: {{title}}. Esta ação não pode ser desfeita.",
+      "deleteWarning": "Tem certeza de que deseja excluir a opção \"{{title}}\"? Isso removerá todas as variantes associadas.",
       "variations": {
         "label": "Variantes",
         "description": "Atributos usados para criar variantes de produto."
@@ -984,7 +984,7 @@
     "createCollectionHint": "Crie uma nova coleção para organizar seus produtos.",
     "createSuccess": "Coleção criada com sucesso.",
     "editCollection": "Editar coleção",
-    "handleTooltip": "O identificador é usado para referenciar a coleção na sua vitrine. Se não especificado, o identificador será gerado a partir do título da coleção.",
+    "handleTooltip": "Gerado automaticamente a partir do título da coleção. Apenas letras minúsculas, números e hifens — este campo não pode ser editado diretamente.",
     "deleteWarning": "Você está prestes a excluir a coleção {{title}}. Esta ação não pode ser desfeita.",
     "removeSingleProductWarning": "Você está prestes a remover o produto {{title}} da coleção. Esta ação não pode ser desfeita.",
     "removeProductsWarning_one": "Você está prestes a remover {{count}} produto da coleção. Esta ação não pode ser desfeita.",
@@ -4452,7 +4452,7 @@
         "name": "Nome da loja",
         "email": "E-mail da loja",
         "handle": "Identificador",
-        "handleTooltip": "O identificador se torna o slug de URL da sua loja. Deixe em branco para gerar automaticamente a partir do nome.",
+        "handleTooltip": "Gerado automaticamente a partir do nome da loja. Apenas letras minúsculas, números e hifens — este campo não pode ser editado diretamente.",
         "handlePlaceholder": "minha-loja",
         "currency": "Moeda",
         "selectCurrency": "Selecionar",

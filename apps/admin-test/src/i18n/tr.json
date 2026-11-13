@@ -22,7 +22,7 @@
     "status": {
       "pending": "Bekliyor",
       "resolved": "Çözüldü",
-      "dismissed": "Reddedildi"
+      "dismissed": "Yoksayıldı"
     },
     "reasons": {
       "inaccurate_product_details": "Hatalı ürün bilgileri",
@@ -37,15 +37,15 @@
     },
     "actions": {
       "resolve": "Çözüldü olarak işaretle",
-      "dismiss": "Reddet"
+      "dismiss": "Yoksay"
     },
     "resolvePrompt": {
       "title": "Şikayet çözüldü olarak işaretlensin mi?",
       "description": "Bu şikayet çözüldü olarak işaretlenecek ve bekleyen kuyruktan kaldırılacaktır."
     },
     "dismissPrompt": {
-      "title": "Bu şikayet reddedilsin mi?",
-      "description": "Bu şikayet reddedildi olarak işaretlenecek ve bekleyen kuyruktan kaldırılacaktır."
+      "title": "Bu şikayet yoksayılsın mı?",
+      "description": "Bu şikayet yoksayıldı olarak işaretlenecek ve bekleyen kuyruktan kaldırılacaktır."
     },
     "deletePrompt": {
       "title": "Bu şikayet silinsin mi?",
@@ -89,14 +89,14 @@
     },
     "actions": {
       "remove": "Görseli kaldır",
-      "dismiss": "Şikayeti reddet"
+      "dismiss": "Şikayeti yoksay"
     },
     "removePrompt": {
       "title": "Bu görsel kaldırılsın mı?",
       "description": "Görsel değerlendirmeden kalıcı olarak silinecektir. Bu işlem geri alınamaz."
     },
     "dismissPrompt": {
-      "title": "Bu şikayet reddedilsin mi?",
+      "title": "Bu şikayet yoksayılsın mı?",
       "description": "Görsel yayında kalacak ve şikayet çözüldü olarak işaretlenecektir."
     },
     "resolveSuccess": "Şikayet çözüldü",

@@ -2842,7 +2842,7 @@
       "scheduled": "Agendada"
     },
     "delete": {
-      "title": "Tem a certeza?",
+      "title": "Eliminar campanha",
       "description": "Está prestes a eliminar a campanha '{{name}}'. Esta ação não pode ser anulada.",
       "successToast": "Campanha eliminada com sucesso."
     },

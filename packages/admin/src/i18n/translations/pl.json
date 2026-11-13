@@ -2845,7 +2845,7 @@
       "scheduled": "Zaplanowany"
     },
     "delete": {
-      "title": "Czy na pewno?",
+      "title": "Usuń kampanię",
       "description": "Zamierzasz usunąć kampanię „{{name}}”. Tej akcji nie można cofnąć.",
       "successToast": "Kampania została usunięta."
     },

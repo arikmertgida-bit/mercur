@@ -3546,7 +3546,7 @@
   },
   "login": {
     "forgotPassword": "Lupa kata sandi? - <0>Setel ulang</0>",
-    "title": "Selamat datang di Kayı.com",
+    "title": "Selamat datang kembali!",
     "hint": "Masuk ke akun admin Anda.",
     "submit": "Masuk",
     "sessionExpired": "Sesi berakhir",

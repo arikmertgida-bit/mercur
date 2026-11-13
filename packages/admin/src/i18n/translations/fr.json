@@ -3589,7 +3589,7 @@
   },
   "login": {
     "forgotPassword": "Mot de passe oublié? - <0>Réinitialiser</0>",
-    "title": "Bienvenue sur Kayı.com",
+    "title": "Bon retour !",
     "hint": "Connectez-vous pour accéder à l'espace administratif",
     "submit": "Se connecter",
     "sessionExpired": "Session expirée",

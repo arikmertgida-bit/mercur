@@ -587,7 +587,7 @@
         "optionValue": "Valoare implicită a opțiunii",
         "variantTitle": "Variantă implicită"
       },
-      "requestSuccessToast": "Produsul a fost solicitat cu succes. Acum puteți crea oferte pentru acest produs. După aprobarea produsului de către administrator, ofertele dumneavoastră vor apărea pe magazinul online. Doar ofertele cu stoc și preț setate vor fi vizibile."
+      "requestSuccessToast": "Produsul a fost solicitat cu succes. După ce administratorul aprobă produsul, acesta va apărea în magazinul online. Vor fi vizibile doar variantele cu stoc și prețuri setate."
     },
     "export": {
       "header": "Exportați lista de produse",
@@ -661,7 +661,7 @@
       "deleteImageLabel": "Ștergeți imaginea curentă",
       "emptyState": {
         "header": "Încă nu există media",
-        "description": "Adăugați conținut media la produs pentru a-l prezenta în vitrina dvs.",
+        "description": "Nu există imagini atribuite acestei variante.",
         "action": "Adăugați imagini",
         "variantDescription": "Această variantă nu are imagini. Adăugați imagini variantei."
       },
@@ -713,7 +713,7 @@
       },
       "handle": {
         "label": "Identificator",
-        "tooltip": "Identificatorul este folosit pentru a face referire la produsul din vitrina dvs. Dacă nu este specificat, identificatorul va fi generat din titlul produsului.",
+        "tooltip": "Generat automat din titlul produsului. Doar litere mici, cifre și cratime — acest câmp nu poate fi editat direct.",
         "placeholder": "jachetă-de-iarnă"
       },
       "description": {
@@ -984,7 +984,7 @@
     "createCollectionHint": "Creați o nouă colecție pentru a vă organiza produsele.",
     "createSuccess": "Colecție creată cu succes.",
     "editCollection": "Editați colecția",
-    "handleTooltip": "Identificatorul este folosit pentru a face referire la colecția din vitrina dvs. Dacă nu este specificat, identificatorul va fi generat din titlul colecției.",
+    "handleTooltip": "Generat automat din titlul colecției. Doar litere mici, cifre și cratime — acest câmp nu poate fi editat direct.",
     "deleteWarning": "Sunteți pe cale să ștergeți colecția {{title}}. Această acțiune nu poate fi anulată.",
     "removeSingleProductWarning": "Sunteți pe cale să eliminați produsul {{title}} din colecție. Această acțiune nu poate fi anulată.",
     "products": {
@@ -1318,7 +1318,7 @@
     "list": {
       "empty": {
         "heading": "Fără grupuri de clienți",
-        "description": "Nu există grupuri de clienți de afișat."
+        "description": "Creați grupuri de clienți pentru a vă organiza clienții"
       },
       "filtered": {
         "heading": "Niciun rezultat",
@@ -4451,7 +4451,7 @@
         "name": "Numele magazinului",
         "email": "E-mailul magazinului",
         "handle": "Identificator",
-        "handleTooltip": "Identificatorul devine slug-ul URL al magazinului dumneavoastră. Lăsați gol pentru a-l genera automat din nume.",
+        "handleTooltip": "Generat automat din numele magazinului. Doar litere mici, cifre și cratime — acest câmp nu poate fi editat direct.",
         "handlePlaceholder": "magazinul-meu",
         "currency": "Valută",
         "selectCurrency": "Selectați",

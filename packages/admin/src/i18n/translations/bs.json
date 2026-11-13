@@ -3589,7 +3589,7 @@
   },
   "login": {
     "forgotPassword": "Zaboravili ste lozinku? - <0>Poništi</0>",
-    "title": "Dobrodošli u Kayı.com",
+    "title": "Dobrodošli nazad!",
     "hint": "Prijavite se da biste pristupili korisničkom području",
     "submit": "Prijavi se",
     "sessionExpired": "Sesija je istekla",

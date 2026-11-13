@@ -529,7 +529,7 @@
           "label": "Varianti di prodotto",
           "hint": "Questo ordinamento influenzerà l'ordine delle varianti nel tuo negozio.",
           "alert": "Aggiungi opzioni per creare varianti.",
-          "tip": "Le varianti lasciate deselezionate non verranno create. Puoi sempre creare e modificare varianti in seguito, ma questo elenco si adatta alle variazioni nelle opzioni del tuo prodotto.",
+          "tip": "Solo le varianti con prezzi e stock saranno visibili ai clienti.",
           "searchPlaceholder": "Cerca",
           "media": "Media"
         },
@@ -849,7 +849,7 @@
         "header": "Crea Opzione",
         "successToast": "Opzione {{title}} creata con successo."
       },
-      "deleteWarning": "Stai per eliminare l'opzione di prodotto: {{title}}. Questa azione non può essere annullata.",
+      "deleteWarning": "Vuoi davvero eliminare l'opzione \"{{title}}\"? Verranno rimosse tutte le varianti associate.",
       "variations": {
         "label": "Varianti",
         "description": "Attributi usati per creare le varianti di prodotto."

@@ -22,7 +22,7 @@
     "status": {
       "pending": "Függőben",
       "resolved": "Megoldva",
-      "dismissed": "Elutasítva"
+      "dismissed": "Figyelmen kívül hagyva"
     },
     "reasons": {
       "inaccurate_product_details": "Pontatlan termékadatok",
@@ -37,15 +37,15 @@
     },
     "actions": {
       "resolve": "Megoldottként jelölés",
-      "dismiss": "Elutasítás"
+      "dismiss": "Figyelmen kívül hagyás"
     },
     "resolvePrompt": {
       "title": "Megoldottként jelöli a bejelentést?",
       "description": "Ez a bejelentés megoldottként lesz megjelölve, és eltávolításra kerül a függő sorból."
     },
     "dismissPrompt": {
-      "title": "Elutasítja ezt a bejelentést?",
-      "description": "Ez a bejelentés elutasítottként lesz megjelölve, és eltávolításra kerül a függő sorból."
+      "title": "Figyelmen kívül hagyja ezt a bejelentést?",
+      "description": "Ez a bejelentés figyelmen kívül hagyottként lesz megjelölve, és eltávolításra kerül a függő sorból."
     },
     "deletePrompt": {
       "title": "Törli ezt a bejelentést?",
@@ -89,14 +89,14 @@
     },
     "actions": {
       "remove": "Kép eltávolítása",
-      "dismiss": "Bejelentés elutasítása"
+      "dismiss": "Bejelentés figyelmen kívül hagyása"
     },
     "removePrompt": {
       "title": "Eltávolítja ezt a képet?",
       "description": "A kép véglegesen törlésre kerül az értékelésből. Ez a művelet nem vonható vissza."
     },
     "dismissPrompt": {
-      "title": "Elutasítja ezt a bejelentést?",
+      "title": "Figyelmen kívül hagyja ezt a bejelentést?",
       "description": "A kép közzétéve marad, a bejelentés pedig megoldottként lesz megjelölve."
     },
     "resolveSuccess": "Bejelentés megoldva",

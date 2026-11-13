@@ -22,7 +22,7 @@
     "status": {
       "pending": "În așteptare",
       "resolved": "Rezolvat",
-      "dismissed": "Respins"
+      "dismissed": "Ignorată"
     },
     "reasons": {
       "inaccurate_product_details": "Detalii de produs inexacte",
@@ -37,15 +37,15 @@
     },
     "actions": {
       "resolve": "Marchează ca rezolvat",
-      "dismiss": "Respinge"
+      "dismiss": "Ignoră"
     },
     "resolvePrompt": {
       "title": "Marchezi sesizarea ca rezolvată?",
       "description": "Această sesizare va fi marcată ca rezolvată și eliminată din coada de așteptare."
     },
     "dismissPrompt": {
-      "title": "Respingi această sesizare?",
-      "description": "Această sesizare va fi marcată ca respinsă și eliminată din coada de așteptare."
+      "title": "Ignorați această sesizare?",
+      "description": "Această sesizare va fi marcată ca ignorată și eliminată din coada de așteptare."
     },
     "deletePrompt": {
       "title": "Ștergi această sesizare?",
@@ -89,14 +89,14 @@
     },
     "actions": {
       "remove": "Elimină imaginea",
-      "dismiss": "Respinge sesizarea"
+      "dismiss": "Ignoră sesizarea"
     },
     "removePrompt": {
       "title": "Elimini această imagine?",
       "description": "Imaginea va fi ștearsă definitiv din recenzie. Această acțiune nu poate fi anulată."
     },
     "dismissPrompt": {
-      "title": "Respingi această sesizare?",
+      "title": "Ignorați această sesizare?",
       "description": "Imaginea va rămâne publicată, iar sesizarea va fi marcată ca rezolvată."
     },
     "resolveSuccess": "Sesizare rezolvată",

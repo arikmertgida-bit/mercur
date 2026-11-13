@@ -961,7 +961,7 @@
       },
       "confirmPrompt": {
         "title": "Confirmă cererea",
-        "description": "Urmează să confirmați această cerere de actualizare a produsului. După confirmare, orice ofertă creată pentru acest produs va apărea pe magazinul online. Doar ofertele cu stoc și preț setate vor fi vizibile.",
+        "description": "Urmează să confirmați această cerere de actualizare a produsului. După confirmare, produsul va apărea în magazinul online. Vor fi vizibile doar variantele cu stoc și prețuri setate.",
         "noteLabel": "Notă pentru magazin",
         "notePlaceholder": "Specificați modificările efectuate sau cererile suplimentare"
       },
@@ -2887,7 +2887,7 @@
       "platformOwner": "Kayı.com",
       "budget_used": "Buget utilizat",
       "campaign_id": {
-        "hint": "În această listă sunt afișate numai campaniile cu același cod de monedă ca și promoția."
+        "hint": "Campaniile dezactivate au bugetul într-o altă monedă decât promoția."
       },
       "totalUsedByAttribute": "Total utilizat"
     },

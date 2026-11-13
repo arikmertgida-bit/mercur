@@ -529,7 +529,7 @@
           "label": "Prekės variantai",
           "hint": "Šis reitingas turės įtakos variantų reikiavimui parduotuvėje.",
           "alert": "Pridėkite pasirinkimų, kad sukurtumėte variantų.",
-          "tip": "Nepažymėti variantai nebus sukurti. Jūs galite bet kada sukurti ar keisti variantus, bet šis sąrašas aitinka variantus su jūsų prekės pasrinkimais.",
+          "tip": "Pirkėjams bus matomi tik variantai su kainomis ir atsargomis.",
           "searchPlaceholder": "Paieška",
           "media": "Nuotraukos"
         },
@@ -849,7 +849,7 @@
         "header": "Sukurti pasirinkimą",
         "successToast": "Pasirinkimas {{title}} sėkmingai sukurtas."
       },
-      "deleteWarning": "Ketinate pašalinti prekės pasirinkimą: {{title}}. Šis veiksmas neatstatomas.",
+      "deleteWarning": "Ar tikrai norite pašalinti pasirinkimą „{{title}}“? Bus pašalinti visi susiję variantai.",
       "variations": {
         "label": "Variantai",
         "description": "Atributai, naudojami prekės variantams kurti."
@@ -1318,7 +1318,7 @@
     "list": {
       "empty": {
         "heading": "Klientų grupių nėra",
-        "description": "Nėra klientų grupių parodymui."
+        "description": "Sukurkite klientų grupes klientams tvarkyti"
       },
       "filtered": {
         "heading": "Rezultatų nėra",

@@ -529,7 +529,7 @@
           "label": "Varijante proizvoda",
           "hint": "Ovaj rang će uticati na redoslijed varijanti na vašoj prodavnici.",
           "alert": "Dodajte opcije da biste kreirali varijante.",
-          "tip": "Varijante koje nisu označene neće biti kreirane. Uvijek možete kreirati i uređivati varijante kasnije, ali ovaj popis odgovara varijacijama u vašim opcijama proizvoda.",
+          "tip": "Kupcima će biti vidljive samo varijante s cijenama i zalihama.",
           "searchPlaceholder": "Pretraga",
           "media": "Mediji"
         },
@@ -665,7 +665,7 @@
       "deleteImageLabel": "Obrišite trenutnu sliku",
       "emptyState": {
         "header": "Nema medija još",
-        "description": "Dodajte medije u proizvod kako biste ga prikazali u vašoj prodavnici.",
+        "description": "Ovoj varijanti nisu dodijeljene slike.",
         "action": "Dodajte medije",
         "variantDescription": "Ova varijanta nema slika. Dodajte slike varijanti."
       },
@@ -715,7 +715,7 @@
       },
       "handle": {
         "label": "Identifikator",
-        "tooltip": "Identifikator se koristi za referenciranje proizvoda u vašoj prodavnici. Ako nije specificiran, identifikator će biti generisan iz naziva proizvoda.",
+        "tooltip": "Automatski se generira iz naziva proizvoda. Samo mala slova, brojevi i crtice — ovo polje se ne može direktno uređivati.",
         "placeholder": "zimska-jakna"
       },
       "description": {
@@ -849,7 +849,7 @@
         "header": "Kreiraj opciju",
         "successToast": "Opcija {{title}} je uspješno kreirana."
       },
-      "deleteWarning": "Upravo ćete obrisati opciju proizvoda: {{title}}. Ova akcija se ne može poništiti.",
+      "deleteWarning": "Jeste li sigurni da želite obrisati opciju „{{title}}“? Ovo će ukloniti sve povezane varijante.",
       "variations": {
         "label": "Varijacije",
         "description": "Atributi korišteni za kreiranje varijanti proizvoda."
@@ -984,7 +984,7 @@
     "createCollectionHint": "Kreirajte novu kolekciju kako biste organizovali svoje proizvode.",
     "createSuccess": "Kolekcija je uspješno kreirana.",
     "editCollection": "Uredi kolekciju",
-    "handleTooltip": "Identifikator se koristi za upućivanje na kolekciju na vašoj prodavnici. Ako nije specificiran, identifikator će biti generisan iz naziva kolekcije.",
+    "handleTooltip": "Automatski se generira iz naziva kolekcije. Samo mala slova, brojevi i crtice — ovo polje se ne može direktno uređivati.",
     "deleteWarning": "Upravo ćete obrisati kolekciju {{title}}. Ova akcija se ne može poništiti.",
     "removeSingleProductWarning": "Upravo ćete ukloniti proizvod {{title}} iz kolekcije. Ova akcija se ne može poništiti.",
     "removeProductsWarning_one": "Upravo ćete ukloniti {{count}} proizvod iz kolekcije. Ova akcija se ne može poništiti.",
@@ -1318,7 +1318,7 @@
     "list": {
       "empty": {
         "heading": "Nema grupacija kupaca",
-        "description": "Trenutno nema grupacija kupaca za prikazivanje."
+        "description": "Kreirajte grupacije kupaca kako biste organizovali kupce"
       },
       "filtered": {
         "heading": "Nema rezultata",
@@ -3599,7 +3599,7 @@
   },
   "login": {
     "forgotPassword": "Zaboravili ste lozinku? - <0>Poništi</0>",
-    "title": "Dobrodošli u Kayı.com",
+    "title": "Dobrodošli nazad!",
     "hint": "Prijavite se da biste pristupili korisničkom području",
     "submit": "Prijavi se",
     "sessionExpired": "Sesija je istekla",
@@ -4452,7 +4452,7 @@
         "name": "Naziv trgovine",
         "email": "E-mail trgovine",
         "handle": "Identifikator",
-        "handleTooltip": "Identifikator (handle) postaje URL slug za vašu prodavnicu. Ostavite prazno da se automatski generiše iz naziva.",
+        "handleTooltip": "Automatski se generira iz naziva prodavnice. Samo mala slova, brojevi i crtice — ovo polje se ne može direktno uređivati.",
         "handlePlaceholder": "moja-prodavnica",
         "currency": "Valuta",
         "selectCurrency": "Odabir",

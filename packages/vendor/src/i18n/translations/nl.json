@@ -692,7 +692,7 @@
       "draft": "Concept",
       "published": "Gepubliceerd",
       "proposed": "Voorgesteld",
-      "requires_action": "Changes required",
+      "requires_action": "Actie vereist",
       "rejected": "Afgewezen"
     },
     "fields": {
@@ -841,7 +841,7 @@
         "header": "Optie aanmaken",
         "successToast": "Optie {{title}} is succesvol aangemaakt."
       },
-      "deleteWarning": "U staat op het punt de productoptie: {{title}} te verwijderen. Deze actie kan niet ongedaan worden gemaakt.",
+      "deleteWarning": "Weet u zeker dat u de optie \"{{title}}\" wilt verwijderen? Hiermee worden alle bijbehorende varianten verwijderd.",
       "variations": {
         "label": "Variaties",
         "description": "Attributen gebruikt om productvarianten te maken."
@@ -1302,7 +1302,7 @@
     "list": {
       "empty": {
         "heading": "Geen klantengroepen",
-        "description": "Er zijn geen klantengroepen om weer te geven."
+        "description": "Maak klantengroepen aan om klanten te ordenen"
       },
       "filtered": {
         "heading": "Geen resultaten",
@@ -2723,7 +2723,7 @@
       "scheduled": "Gepland"
     },
     "delete": {
-      "title": "Weet u het zeker?",
+      "title": "Campagne verwijderen",
       "description": "U staat op het punt de campagne '{{name}}' te verwijderen. Deze actie kan niet ongedaan worden gemaakt.",
       "successToast": "Campagne '{{name}}' is succesvol verwijderd."
     },

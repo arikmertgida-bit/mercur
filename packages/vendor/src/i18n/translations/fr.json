@@ -529,7 +529,7 @@
           "label": "Variantes de produit",
           "hint": "Cette classification affectera l'ordre des variantes dans votre boutique.",
           "alert": "Ajoutez des options pour créer des variantes.",
-          "tip": "Les variantes non cochées ne seront pas créées. Vous pouvez toujours créer et modifier des variantes par la suite, mais cette liste correspond aux variations dans vos options de produit.",
+          "tip": "Seules les variantes avec des prix et du stock seront visibles par les clients.",
           "searchPlaceholder": "Rechercher",
           "media": "Médias"
         },
@@ -699,7 +699,7 @@
       "draft": "Brouillon",
       "published": "Publié",
       "proposed": "Proposé",
-      "requires_action": "Modifications requises",
+      "requires_action": "Action requise",
       "rejected": "Rejeté"
     },
     "fields": {
@@ -849,7 +849,7 @@
         "header": "Créer une option",
         "successToast": "Option {{title}} créée avec succès."
       },
-      "deleteWarning": "Vous êtes sur le point de supprimer l'option : {{title}}. Cette action ne peut être annulée.",
+      "deleteWarning": "Voulez-vous vraiment supprimer l'option « {{title}} » ? Toutes les variantes associées seront supprimées.",
       "variations": {
         "label": "Variations",
         "description": "Attributs utilisés pour créer des variantes de produit."
@@ -3599,7 +3599,7 @@
   },
   "login": {
     "forgotPassword": "Mot de passe oublié? - <0>Réinitialiser</0>",
-    "title": "Bienvenue sur Kayı.com",
+    "title": "Bon retour !",
     "hint": "Connectez-vous à votre compte vendeur.",
     "submit": "Se connecter",
     "sessionExpired": "Session expirée",

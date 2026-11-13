@@ -575,7 +575,7 @@
           "label": "Warianty produktu",
           "hint": "Ta kolejność wpłynie na porządek wariantów w Twoim sklepie.",
           "alert": "Dodaj opcje, aby utworzyć warianty.",
-          "tip": "Warianty, które nie zostały wybrane, nie zostaną utworzone. Możesz zawsze później dodać i edytować warianty.",
+          "tip": "Klienci zobaczą tylko warianty z cenami i stanem magazynowym.",
           "searchPlaceholder": "Wyszukaj",
           "media": "Media"
         },
@@ -727,7 +727,7 @@
       },
       "handle": {
         "label": "Identyfikator URL",
-        "tooltip": "Identyfikator jest używany do odniesienia do produktu w Twoim sklepie. Jeśli nie zostanie określony, identyfikator zostanie wygenerowany z tytułu produktu.",
+        "tooltip": "Generowane automatycznie na podstawie tytułu produktu. Tylko małe litery, cyfry i myślniki — tego pola nie można edytować bezpośrednio.",
         "placeholder": "kurtka-zimowa"
       },
       "description": {
@@ -862,7 +862,7 @@
         "header": "Utwórz opcję",
         "successToast": "Opcja {{title}} została pomyślnie utworzona."
       },
-      "deleteWarning": "Zamierzasz usunąć opcję produktu: {{title}}. Tej akcji nie można cofnąć.",
+      "deleteWarning": "Czy na pewno chcesz usunąć opcję „{{title}}”? Spowoduje to usunięcie wszystkich powiązanych wariantów.",
       "variations": {
         "label": "Warianty",
         "description": "Atrybuty używane do tworzenia wariantów produktu."
@@ -993,7 +993,7 @@
     "createCollectionHint": "Utwórz nową kolekcję, aby uporządkować swoje produkty.",
     "createSuccess": "Kolekcja została pomyślnie utworzona.",
     "editCollection": "Edytuj kolekcję",
-    "handleTooltip": "Identyfikator jest używany do odniesienia się do kolekcji w Twoim sklepie. Jeśli nie zostanie określony, zostanie wygenerowany z tytułu kolekcji.",
+    "handleTooltip": "Generowane automatycznie na podstawie tytułu kolekcji. Tylko małe litery, cyfry i myślniki — tego pola nie można edytować bezpośrednio.",
     "deleteWarning": "Zamierzasz usunąć kolekcję {{title}}. Tej akcji nie można cofnąć.",
     "removeSingleProductWarning": "Zamierzasz usunąć produkt {{title}} z kolekcji. Tej akcji nie można cofnąć.",
     "removeProductsWarning_one": "Zamierzasz usunąć {{count}} produkt z kolekcji. Tej akcji nie można cofnąć.",
@@ -1334,7 +1334,7 @@
     "list": {
       "empty": {
         "heading": "Brak grup klientów",
-        "description": "Nie ma żadnych grup klientów do wyświetlenia."
+        "description": "Utwórz grupy klientów, aby uporządkować klientów"
       },
       "filtered": {
         "heading": "Brak wyników",
@@ -2818,7 +2818,7 @@
       "scheduled": "Zaplanowany"
     },
     "delete": {
-      "title": "Czy na pewno?",
+      "title": "Usuń kampanię",
       "description": "Zamierzasz usunąć kampanię „{{name}}”. Tej akcji nie można cofnąć.",
       "successToast": "Kampania „{{name}}” została usunięta."
     },
@@ -3933,7 +3933,7 @@
         "name": "Nazwa sklepu",
         "email": "E-mail sklepu",
         "handle": "Identyfikator URL",
-        "handleTooltip": "Identyfikator staje się fragmentem URL Twojego sklepu. Pozostaw puste, aby wygenerować automatycznie z nazwy.",
+        "handleTooltip": "Generowane automatycznie na podstawie nazwy sklepu. Tylko małe litery, cyfry i myślniki — tego pola nie można edytować bezpośrednio.",
         "handlePlaceholder": "moj-sklep",
         "currency": "Waluta",
         "selectCurrency": "Wybierz",

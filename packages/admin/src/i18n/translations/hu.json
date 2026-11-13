@@ -2809,7 +2809,7 @@
       "scheduled": "Ütemezett"
     },
     "delete": {
-      "title": "Biztos benne?",
+      "title": "Kampány törlése",
       "description": "A(z) '{{name}}' kampány törlésére készül. Ez a művelet nem vonható vissza.",
       "successToast": "A kampány sikeresen törölve."
     },
@@ -3546,7 +3546,7 @@
   },
   "login": {
     "forgotPassword": "Elfelejtette a jelszavát? - <0>Visszaállítás</0>",
-    "title": "Üdvözöljük a Kayı.com-ban",
+    "title": "Üdvözöljük újra!",
     "hint": "Jelentkezzen be az adminisztrációs terület eléréséhez",
     "submit": "Bejelentkezés",
     "sessionExpired": "A munkamenet lejárt",

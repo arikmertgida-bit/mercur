@@ -22,7 +22,7 @@
     "status": {
       "pending": "ממתין",
       "resolved": "טופל",
-      "dismissed": "נדחה"
+      "dismissed": "סומן כלא רלוונטי"
     },
     "reasons": {
       "inaccurate_product_details": "פרטי מוצר לא מדויקים",
@@ -37,15 +37,15 @@
     },
     "actions": {
       "resolve": "סמן כטופל",
-      "dismiss": "דחה"
+      "dismiss": "סמן כלא רלוונטי"
     },
     "resolvePrompt": {
       "title": "לסמן את הדיווח כטופל?",
       "description": "דיווח זה יסומן כטופל ויוסר מתור הממתינים."
     },
     "dismissPrompt": {
-      "title": "לדחות דיווח זה?",
-      "description": "דיווח זה יסומן כנדחה ויוסר מתור הממתינים."
+      "title": "לסמן דיווח זה כלא רלוונטי?",
+      "description": "דיווח זה יסומן כלא רלוונטי ויוסר מתור הממתינים."
     },
     "deletePrompt": {
       "title": "למחוק דיווח זה?",
@@ -89,14 +89,14 @@
     },
     "actions": {
       "remove": "הסר תמונה",
-      "dismiss": "דחה דיווח"
+      "dismiss": "סמן דיווח כלא רלוונטי"
     },
     "removePrompt": {
       "title": "להסיר תמונה זו?",
       "description": "התמונה תימחק לצמיתות מהביקורת. לא ניתן לבטל פעולה זו."
     },
     "dismissPrompt": {
-      "title": "לדחות דיווח זה?",
+      "title": "לסמן דיווח זה כלא רלוונטי?",
       "description": "התמונה תישאר מפורסמת והדיווח יסומן כטופל."
     },
     "resolveSuccess": "הדיווח טופל",

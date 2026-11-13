@@ -529,7 +529,7 @@
           "label": "Variantes de produto",
           "hint": "Esta ordenação afetará a ordem das variantes na loja.",
           "alert": "Adicione opções para criar variantes.",
-          "tip": "As variantes desmarcadas não serão criadas. Pode sempre criar e editar variantes depois, mas esta lista reflete as variantes nas opções do produto.",
+          "tip": "Só as variantes com preços e stock ficarão visíveis para os clientes.",
           "searchPlaceholder": "Pesquisar",
           "media": "Multimédia"
         },
@@ -873,7 +873,7 @@
         "header": "Criar opção",
         "successToast": "A opção {{title}} foi criada com sucesso."
       },
-      "deleteWarning": "Está prestes a eliminar a opção do produto: {{title}}. Esta ação não pode ser anulada.",
+      "deleteWarning": "Tem a certeza de que pretende eliminar a opção \"{{title}}\"? Esta ação removerá todas as variantes associadas.",
       "variations": {
         "label": "Variantes",
         "description": "Atributos utilizados para criar variantes de produto."
@@ -1318,7 +1318,7 @@
     "list": {
       "empty": {
         "heading": "Sem grupos de clientes",
-        "description": "Não há grupos de clientes para apresentar."
+        "description": "Crie grupos de clientes para organizar os clientes"
       },
       "filtered": {
         "heading": "Sem resultados",
@@ -2753,7 +2753,7 @@
       "scheduled": "Agendada"
     },
     "delete": {
-      "title": "Tem a certeza?",
+      "title": "Eliminar campanha",
       "description": "Está prestes a eliminar a campanha '{{name}}'. Esta ação não pode ser anulada.",
       "successToast": "Campanha '{{name}}' eliminada com sucesso."
     },

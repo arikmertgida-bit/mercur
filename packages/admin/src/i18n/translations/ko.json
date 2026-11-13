@@ -2809,7 +2809,7 @@
       "scheduled": "예정됨"
     },
     "delete": {
-      "title": "확실합니까?",
+      "title": "캠페인 삭제",
       "description": "캠페인 '{{name}}'을(를) 삭제하려고 합니다. 이 작업은 취소할 수 없습니다.",
       "successToast": "캠페인이 성공적으로 삭제되었습니다."
     },
@@ -3546,7 +3546,7 @@
   },
   "login": {
     "forgotPassword": "비밀번호를 잊으셨나요? - <0>재설정</0>",
-    "title": "Kayı.com에 오신 것을 환영합니다",
+    "title": "다시 오신 것을 환영합니다!",
     "hint": "관리자 계정에 로그인하세요.",
     "submit": "로그인",
     "sessionExpired": "세션이 만료되었습니다",

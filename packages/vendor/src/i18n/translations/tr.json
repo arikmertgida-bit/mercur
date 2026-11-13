@@ -529,7 +529,7 @@
           "label": "Ürün varyantları",
           "hint": "Bu sıralama, varyantların mağazanızdaki sırasını etkileyecektir.",
           "alert": "Varyantlar oluşturmak için seçenekler ekleyin.",
-          "tip": "İşaretlenmeyen varyantlar oluşturulmayacaktır. Ürün seçeneklerinizdeki varyasyonları bu listeye uyacak şekilde oluşturup düzenleyebilirsiniz.",
+          "tip": "Yalnızca fiyatı ve stoğu olan varyantlar müşterilere görünür.",
           "searchPlaceholder": "Ara",
           "media": "Görsel"
         },
@@ -665,7 +665,7 @@
       "deleteImageLabel": "Mevcut resmi sil",
       "emptyState": {
         "header": "Henüz medya yok",
-        "description": "Ürünü mağazanızda sergilemek için medya ekleyin.",
+        "description": "Bu varyanta atanmış görsel yok.",
         "action": "Medya ekle",
         "variantDescription": "Bu varyantın görseli yok. Varyanta görsel ekleyin."
       },
@@ -846,7 +846,7 @@
         "header": "Seçenek Oluştur",
         "successToast": "Seçenek {{title}} başarıyla oluşturuldu."
       },
-      "deleteWarning": "Ürün seçeneğini silmek üzeresiniz: {{title}}. Bu işlem geri alınamaz.",
+      "deleteWarning": "\"{{title}}\" seçeneğini silmek istediğinizden emin misiniz? Bu, ilişkili tüm varyantları kaldıracaktır.",
       "variations": {
         "label": "Varyasyonlar",
         "description": "Ürün varyantları oluşturmak için kullanılan özellikler."
@@ -1348,7 +1348,7 @@
       },
       "empty": {
         "heading": "Müşteri grubu bulunamadı",
-        "description": "Bir kullanıcı davet edildiğinde, burada görünecektir."
+        "description": "Müşterilerinizi düzenlemek için müşteri grupları oluşturun"
       }
     },
     "validation": {
@@ -3562,7 +3562,7 @@
   },
   "login": {
     "forgotPassword": "Şifrenizi mi unuttunuz? - <0>Sıfırla</0>",
-    "title": "Kayı.com'a Hoş Geldiniz",
+    "title": "Tekrar hoş geldiniz!",
     "hint": "Hesap alanına erişmek için oturum açın",
     "submit": "Giriş yap",
     "sessionExpired": "Oturum süresi doldu",

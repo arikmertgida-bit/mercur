@@ -529,7 +529,7 @@
           "label": "Varianty produktů",
           "hint": "Toto pořadí ovlivní pořadí variant ve vašem obchodě.",
           "alert": "Přidejte možnosti pro vytvoření variant.",
-          "tip": "Varianty, které nejsou zaškrtnuté, nebudou vytvořeny. Můžete vždy vytvořit a upravit varianty později, ale tento seznam odpovídá variacím ve vašich produktových možnostech.",
+          "tip": "Zákazníkům se zobrazí pouze varianty s cenami a skladovými zásobami.",
           "searchPlaceholder": "Hledat",
           "media": "Média"
         },
@@ -665,7 +665,7 @@
       "deleteImageLabel": "Smazat aktuální obrázek",
       "emptyState": {
         "header": "Zatím žádná média",
-        "description": "Přidejte média k produktu, aby se zobrazila ve vašem obchodě.",
+        "description": "K této variantě nejsou přiřazeny žádné obrázky.",
         "action": "Přidat média",
         "variantDescription": "Tato varianta nemá žádné obrázky. Přidejte k variantě obrázky."
       },
@@ -715,7 +715,7 @@
       },
       "handle": {
         "label": "Identifikátor",
-        "tooltip": "Identifikátor se používá k odkazování na produkt ve vašem obchodě. Pokud není specifikován, identifikátor bude vygenerován z názvu produktu.",
+        "tooltip": "Automaticky generováno z názvu produktu. Pouze malá písmena, čísla a spojovníky — toto pole nelze upravovat přímo.",
         "placeholder": "zimní-bunda"
       },
       "description": {
@@ -849,7 +849,7 @@
         "header": "Vytvořit možnost",
         "successToast": "Možnost {{title}} byla úspěšně vytvořena."
       },
-      "deleteWarning": "Chystáte se smazat možnost produktu: {{title}}. Tuto akci nelze vrátit zpět.",
+      "deleteWarning": "Opravdu chcete smazat možnost „{{title}}“? Tím se odstraní všechny související varianty.",
       "variations": {
         "label": "Varianty",
         "description": "Atributy použité k vytvoření variant produktu."
@@ -984,7 +984,7 @@
     "createCollectionHint": "Vytvořte novou kolekci pro organizaci vašich produktů.",
     "createSuccess": "Kolekce byla úspěšně vytvořena.",
     "editCollection": "Upravit kolekci",
-    "handleTooltip": "Identifikátor se používá k odkazování na kolekci ve vašem obchodě. Pokud není specifikován, identifikátor bude vygenerován z názvu kolekce.",
+    "handleTooltip": "Automaticky generováno z názvu kolekce. Pouze malá písmena, čísla a spojovníky — toto pole nelze upravovat přímo.",
     "deleteWarning": "Chystáte se smazat kolekci {{title}}. Tuto akci nelze vrátit zpět.",
     "removeSingleProductWarning": "Chystáte se odstranit produkt {{title}} z kolekce. Tuto akci nelze vrátit zpět.",
     "removeProductsWarning_one": "Chystáte se odstranit {{count}} produkt z kolekce. Tuto akci nelze vrátit zpět.",
@@ -1318,7 +1318,7 @@
     "list": {
       "empty": {
         "heading": "Žádné skupiny zákazníků",
-        "description": "Nejsou žádné skupiny zákazníků k zobrazení."
+        "description": "Vytvořte skupiny zákazníků pro uspořádání zákazníků"
       },
       "filtered": {
         "heading": "Žádné výsledky",
@@ -3599,7 +3599,7 @@
   },
   "login": {
     "forgotPassword": "Zapomněli jste heslo? - <0>Obnovit</0>",
-    "title": "Vítejte v Kayı.com",
+    "title": "Vítejte zpět!",
     "hint": "Přihlaste se pro přístup do oblasti účtu",
     "submit": "Přihlásit se",
     "sessionExpired": "Relace vypršela",
@@ -4452,7 +4452,7 @@
         "name": "Název obchodu",
         "email": "E-mail obchodu",
         "handle": "Identifikátor",
-        "handleTooltip": "Identifikátor se stane URL slugem vašeho obchodu. Ponechte prázdné pro automatické vygenerování z názvu.",
+        "handleTooltip": "Automaticky generováno z názvu obchodu. Pouze malá písmena, čísla a spojovníky — toto pole nelze upravovat přímo.",
         "handlePlaceholder": "muj-obchod",
         "currency": "Měna",
         "selectCurrency": "Vybrat",

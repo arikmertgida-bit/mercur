@@ -22,7 +22,7 @@
     "status": {
       "pending": "En attente",
       "resolved": "Résolu",
-      "dismissed": "Rejeté"
+      "dismissed": "Ignoré"
     },
     "reasons": {
       "inaccurate_product_details": "Informations produit inexactes",
@@ -37,15 +37,15 @@
     },
     "actions": {
       "resolve": "Marquer comme résolu",
-      "dismiss": "Rejeter"
+      "dismiss": "Ignorer"
     },
     "resolvePrompt": {
       "title": "Marquer le signalement comme résolu ?",
       "description": "Ce signalement sera marqué comme résolu et retiré de la file d'attente."
     },
     "dismissPrompt": {
-      "title": "Rejeter ce signalement ?",
-      "description": "Ce signalement sera marqué comme rejeté et retiré de la file d'attente."
+      "title": "Ignorer ce signalement ?",
+      "description": "Ce signalement sera marqué comme ignoré et retiré de la file d'attente."
     },
     "deletePrompt": {
       "title": "Supprimer ce signalement ?",
@@ -89,14 +89,14 @@
     },
     "actions": {
       "remove": "Retirer l'image",
-      "dismiss": "Rejeter le signalement"
+      "dismiss": "Ignorer le signalement"
     },
     "removePrompt": {
       "title": "Retirer cette image ?",
       "description": "L'image sera définitivement supprimée de l'avis. Cette action est irréversible."
     },
     "dismissPrompt": {
-      "title": "Rejeter ce signalement ?",
+      "title": "Ignorer ce signalement ?",
       "description": "L'image restera publiée et le signalement sera marqué comme résolu."
     },
     "resolveSuccess": "Signalement résolu",

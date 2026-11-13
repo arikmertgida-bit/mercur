@@ -22,7 +22,7 @@
     "status": {
       "pending": "Čeká na vyřízení",
       "resolved": "Vyřešeno",
-      "dismissed": "Zamítnuto"
+      "dismissed": "Ignorováno"
     },
     "reasons": {
       "inaccurate_product_details": "Nepřesné údaje o produktu",
@@ -37,15 +37,15 @@
     },
     "actions": {
       "resolve": "Označit jako vyřešené",
-      "dismiss": "Zamítnout"
+      "dismiss": "Ignorovat"
     },
     "resolvePrompt": {
       "title": "Označit nahlášení jako vyřešené?",
       "description": "Toto nahlášení bude označeno jako vyřešené a odebráno z fronty čekajících."
     },
     "dismissPrompt": {
-      "title": "Zamítnout toto nahlášení?",
-      "description": "Toto nahlášení bude označeno jako zamítnuté a odebráno z fronty čekajících."
+      "title": "Ignorovat toto nahlášení?",
+      "description": "Toto nahlášení bude označeno jako ignorované a odebráno z fronty čekajících."
     },
     "deletePrompt": {
       "title": "Smazat toto nahlášení?",
@@ -89,14 +89,14 @@
     },
     "actions": {
       "remove": "Odstranit obrázek",
-      "dismiss": "Zamítnout nahlášení"
+      "dismiss": "Ignorovat nahlášení"
     },
     "removePrompt": {
       "title": "Odstranit tento obrázek?",
       "description": "Obrázek bude trvale odstraněn z recenze. Tuto akci nelze vrátit zpět."
     },
     "dismissPrompt": {
-      "title": "Zamítnout toto nahlášení?",
+      "title": "Ignorovat toto nahlášení?",
       "description": "Obrázek zůstane publikován a nahlášení bude označeno jako vyřešené."
     },
     "resolveSuccess": "Nahlášení vyřešeno",

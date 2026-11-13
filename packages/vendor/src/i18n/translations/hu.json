@@ -524,7 +524,7 @@
           "label": "Termékvariánsok",
           "hint": "Ez a rangsorolás befolyásolja a változatok sorrendjét az áruházban.",
           "alert": "Adjon hozzá opciókat a variánsok létrehozásához",
-          "tip": "A kijelöletlen változatok nem jönnek létre. A variánsokat utólag is létrehozhatja és szerkesztheti, de ez a lista illeszkedik a termékopciókban szereplő variációkhoz.",
+          "tip": "Csak az árral és készlettel rendelkező variánsok lesznek láthatók a vásárlók számára.",
           "searchPlaceholder": "Keresés",
           "media": "Média"
         },
@@ -660,7 +660,7 @@
       "deleteImageLabel": "Kép törlése",
       "emptyState": {
         "header": "Nincsenek képek",
-        "description": "Nincsenek megjeleníthető képek",
+        "description": "Ehhez a variánshoz nincs kép hozzárendelve.",
         "action": "Képek feltöltése",
         "variantDescription": "Ehhez a variánshoz nincsenek képek. Adjon hozzá képeket a variánshoz."
       },
@@ -841,7 +841,7 @@
         "header": "Opció létrehozása",
         "successToast": "{{title}} opció sikeresen létrehozva."
       },
-      "deleteWarning": "A(z) {{title}} opció törlésére készül. Ez a művelet nem vonható vissza.",
+      "deleteWarning": "Biztosan törölni szeretné a(z) „{{title}}” opciót? Ezzel az összes kapcsolódó variáns is törlődik.",
       "variations": {
         "label": "Variációk",
         "description": "A termékvariánsok létrehozásához használt tulajdonságok."
@@ -1302,7 +1302,7 @@
     "list": {
       "empty": {
         "heading": "Nincsenek vásárlói csoportok",
-        "description": "Nincsenek megjeleníthető vásárlói csoportok."
+        "description": "Hozzon létre vásárlói csoportokat a vásárlók rendszerezéséhez"
       },
       "filtered": {
         "heading": "Nincs találat",
@@ -2723,7 +2723,7 @@
       "scheduled": "Ütemezett"
     },
     "delete": {
-      "title": "Biztos benne?",
+      "title": "Kampány törlése",
       "description": "A(z) '{{name}}' kampány törlésére készül. Ez a művelet nem vonható vissza.",
       "successToast": "A(z) '{{name}}' kampány sikeresen törölve."
     },
@@ -3557,7 +3557,7 @@
   },
   "login": {
     "forgotPassword": "Elfelejtette a jelszavát? - <0>Visszaállítás</0>",
-    "title": "Üdvözöljük a Kayı.com-ban",
+    "title": "Üdvözöljük újra!",
     "hint": "Jelentkezzen be eladói fiókjába.",
     "submit": "Bejelentkezés",
     "sessionExpired": "A munkamenet lejárt",

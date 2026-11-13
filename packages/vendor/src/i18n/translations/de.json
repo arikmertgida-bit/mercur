@@ -524,7 +524,7 @@
           "label": "Produktvarianten",
           "hint": "Dieses Ranking wirkt sich auf die Anzeigereihenfolge der Varianten aus.",
           "alert": "Fügen Sie Optionen hinzu, um Varianten zu erstellen.",
-          "tip": "Varianten, die nicht aktiviert sind, werden nicht erstellt. Sie können nachträglich jederzeit Varianten erstellen und bearbeiten, diese Liste passt jedoch zu den Variationen in Ihren Produktoptionen.",
+          "tip": "Nur Varianten mit Preisen und Lagerbestand sind für Kunden sichtbar.",
           "searchPlaceholder": "Suchen",
           "media": "Medien"
         },
@@ -660,7 +660,7 @@
       "deleteImageLabel": "Aktuelles Bild löschen",
       "emptyState": {
         "header": "Noch keine Medien",
-        "description": "Fügen Sie dem Produkt Medien hinzu, um es in Ihrem Schaufenster zu präsentieren.",
+        "description": "Dieser Variante sind keine Bilder zugewiesen.",
         "action": "Medien hinzufügen",
         "variantDescription": "Diese Variante hat keine Bilder. Fügen Sie der Variante Bilder hinzu."
       },
@@ -708,7 +708,7 @@
       },
       "handle": {
         "label": "Identifikator",
-        "tooltip": "Der Identifikator wird verwendet, um auf das Produkt in Ihrer Storefront zu verweisen. Wenn nicht angegeben, wird der Identifikator aus dem Produkttitel generiert.",
+        "tooltip": "Wird automatisch aus dem Produkttitel generiert. Nur Kleinbuchstaben, Zahlen und Bindestriche — dieses Feld kann nicht direkt bearbeitet werden.",
         "placeholder": "winterjacke"
       },
       "description": {
@@ -841,7 +841,7 @@
         "header": "Option erstellen",
         "successToast": "Option {{title}} wurde erfolgreich erstellt."
       },
-      "deleteWarning": "Sie sind dabei, die Produktoption zu löschen: {{title}}. Diese Aktion kann nicht rückgängig gemacht werden.",
+      "deleteWarning": "Möchten Sie die Option „{{title}}“ wirklich löschen? Dadurch werden alle zugehörigen Varianten entfernt.",
       "variations": {
         "label": "Varianten",
         "description": "Attribute, die zur Erstellung von Produktvarianten verwendet werden."
@@ -975,7 +975,7 @@
     "createCollectionHint": "Erstellen Sie eine neue Sammlung, um Ihre Produkte zu organisieren.",
     "createSuccess": "Sammlung erfolgreich erstellt.",
     "editCollection": "Sammlung bearbeiten",
-    "handleTooltip": "Der Identifikator wird verwendet, um auf die Sammlung in Ihrer Storefront zu verweisen. Wenn nicht angegeben, wird der Identifikator aus dem Sammlungstitel generiert.",
+    "handleTooltip": "Wird automatisch aus dem Sammlungstitel generiert. Nur Kleinbuchstaben, Zahlen und Bindestriche — dieses Feld kann nicht direkt bearbeitet werden.",
     "deleteWarning": "Sie sind dabei, die Sammlung {{title}} zu löschen. Diese Aktion kann nicht rückgängig gemacht werden.",
     "removeSingleProductWarning": "Sie sind dabei, das Produkt {{title}} aus der Sammlung zu entfernen. Diese Aktion kann nicht rückgängig gemacht werden.",
     "removeProductsWarning_one": "Sie sind dabei, {{count}} Produkt aus der Sammlung zu entfernen. Diese Aktion kann nicht rückgängig gemacht werden.",
@@ -3557,7 +3557,7 @@
   },
   "login": {
     "forgotPassword": "Passwort vergessen? - <0>Zurücksetzen</0>",
-    "title": "Willkommen bei Kayı.com",
+    "title": "Willkommen zurück!",
     "hint": "Melden Sie sich an, um auf ihr Konto zuzugreifen",
     "submit": "Anmelden",
     "sessionExpired": "Sitzung abgelaufen",
@@ -4401,7 +4401,7 @@
         "name": "Shopname",
         "email": "Shop-E-Mail",
         "handle": "Identifikator",
-        "handleTooltip": "Der Identifikator wird zum URL-Slug für Ihren Shop. Leer lassen, um ihn automatisch aus dem Namen zu generieren.",
+        "handleTooltip": "Wird automatisch aus dem Shopnamen generiert. Nur Kleinbuchstaben, Zahlen und Bindestriche — dieses Feld kann nicht direkt bearbeitet werden.",
         "handlePlaceholder": "mein-shop",
         "currency": "Währung",
         "selectCurrency": "Wählen",

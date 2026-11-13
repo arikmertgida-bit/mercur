@@ -3589,7 +3589,7 @@
   },
   "login": {
     "forgotPassword": "Zapomněli jste heslo? - <0>Obnovit</0>",
-    "title": "Vítejte v Kayı.com",
+    "title": "Vítejte zpět!",
     "hint": "Přihlaste se pro přístup do oblasti účtu",
     "submit": "Přihlásit se",
     "sessionExpired": "Relace vypršela",

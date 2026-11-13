@@ -3546,7 +3546,7 @@
   },
   "login": {
     "forgotPassword": "Şifrenizi mi unuttunuz? - <0>Sıfırla</0>",
-    "title": "Kayı.com'a Hoş Geldiniz",
+    "title": "Tekrar hoş geldiniz!",
     "hint": "Hesap alanına erişmek için oturum açın",
     "submit": "Giriş yap",
     "sessionExpired": "Oturum süresi doldu",

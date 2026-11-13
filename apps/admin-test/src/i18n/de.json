@@ -22,7 +22,7 @@
     "status": {
       "pending": "Ausstehend",
       "resolved": "Gelöst",
-      "dismissed": "Abgelehnt"
+      "dismissed": "Ignoriert"
     },
     "reasons": {
       "inaccurate_product_details": "Ungenaue Produktdetails",
@@ -37,15 +37,15 @@
     },
     "actions": {
       "resolve": "Als gelöst markieren",
-      "dismiss": "Ablehnen"
+      "dismiss": "Ignorieren"
     },
     "resolvePrompt": {
       "title": "Meldung als gelöst markieren?",
       "description": "Diese Meldung wird als gelöst markiert und aus der Warteschlange entfernt."
     },
     "dismissPrompt": {
-      "title": "Diese Meldung ablehnen?",
-      "description": "Diese Meldung wird als abgelehnt markiert und aus der Warteschlange entfernt."
+      "title": "Diese Meldung ignorieren?",
+      "description": "Diese Meldung wird als ignoriert markiert und aus der Warteschlange entfernt."
     },
     "deletePrompt": {
       "title": "Diese Meldung löschen?",
@@ -89,14 +89,14 @@
     },
     "actions": {
       "remove": "Bild entfernen",
-      "dismiss": "Meldung ablehnen"
+      "dismiss": "Meldung ignorieren"
     },
     "removePrompt": {
       "title": "Dieses Bild entfernen?",
       "description": "Das Bild wird dauerhaft aus der Bewertung gelöscht. Diese Aktion kann nicht rückgängig gemacht werden."
     },
     "dismissPrompt": {
-      "title": "Diese Meldung ablehnen?",
+      "title": "Diese Meldung ignorieren?",
       "description": "Das Bild bleibt veröffentlicht und die Meldung wird als gelöst markiert."
     },
     "resolveSuccess": "Meldung gelöst",
