@@ -6,7 +6,7 @@
   },
   "actions": {
     "continue": "המשך",
-    "cancel": "ביטול",
+    "cancel": "בטל",
     "delete": "מחק"
   },
   "productReports": {
@@ -138,7 +138,7 @@
     "close": "סגור",
     "connectionLost": "החיבור אבד. מתחבר מחדש...",
     "imageUploadFailed": "העלאת התמונה נכשלה",
-    "deleteConfirmTitle": "מחיקת הודעה",
+    "deleteConfirmTitle": "מחק הודעה",
     "deleteConfirmDesc": "האם אתה בטוח שברצונך למחוק הודעה זו?",
     "productQuestion": "שאלה על מוצר",
     "storeQuestion": "שאלה על החנות",
@@ -146,7 +146,7 @@
     "sellerMessage": "הודעה ממוכר",
     "directMessage": "הודעה ישירה",
     "storeContext": "שאלה על החנות",
-    "back": "חזרה",
+    "back": "חזור",
     "failedToGetUserInfo": "לא ניתן היה לאחזר את פרטי המשתמש.",
     "send": "שלח הודעה",
     "attachImage": "צרף תמונה",
@@ -175,9 +175,9 @@
       "noRecords": "לא נמצאו בקשות קטגוריה"
     },
     "collections": {
-      "navLabel": "אוספים",
-      "heading": "בקשות אוסף",
-      "noRecords": "לא נמצאו בקשות אוסף"
+      "navLabel": "קולקציות",
+      "heading": "בקשות קולקציה",
+      "noRecords": "לא נמצאו בקשות קולקציה"
     },
     "tags": {
       "navLabel": "תגיות",
@@ -196,7 +196,7 @@
     },
     "typeLabels": {
       "product_category": "קטגוריה",
-      "product_collection": "אוסף",
+      "product_collection": "קולקציה",
       "product_tag": "תגית",
       "product_type": "סוג",
       "return_reason": "סיבת החזרה"
@@ -217,11 +217,11 @@
     },
     "detail": {
       "pendingReview": "ממתין לבדיקה",
-      "accept": "אישור",
-      "reject": "דחייה",
-      "acceptPromptTitle": "אישור הבקשה",
+      "accept": "אשר",
+      "reject": "דחה",
+      "acceptPromptTitle": "אשר בקשה",
       "acceptPromptDescription": "האם אתה בטוח שברצונך לאשר בקשה זו? פעולה זו תיצור את הישות.",
-      "rejectPromptTitle": "דחיית הבקשה",
+      "rejectPromptTitle": "דחה בקשה",
       "rejectPromptDescription": "האם אתה בטוח שברצונך לדחות בקשה זו? לא ניתן לבטל פעולה זו.",
       "acceptSuccess": "הבקשה אושרה",
       "rejectSuccess": "הבקשה נדחתה",
@@ -265,7 +265,7 @@
     "noRecords": "לא נמצאו ביקורות",
     "columns": {
       "rating": "דירוג",
-      "reference": "הפניה",
+      "reference": "מזהה יחוס",
       "customerNote": "הערת לקוח"
     }
   },

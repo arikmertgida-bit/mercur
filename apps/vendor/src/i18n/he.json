@@ -1,19 +1,19 @@
 {
   "productImportExport": {
-    "import": "ייבוא",
-    "export": "ייצוא",
+    "import": "ייבא",
+    "export": "ייצא",
     "done": "סיום",
-    "importHeader": "ייבוא מוצרים",
+    "importHeader": "ייבא מוצרים",
     "importDescription": "העלה קובץ CSV כדי לייבא מוצרים לחנות שלך.",
     "importHint": "העלה קובץ CSV עם המוצרים שלך. באפשרותך",
     "downloadTemplate": "להוריד את התבנית",
-    "uploadLabel": "העלאת קובץ CSV",
+    "uploadLabel": "העלה קובץ CSV",
     "uploadHint": "נתמכים רק קבצי .csv",
     "importingActivity": "מייבא מוצרים...",
     "importSuccessToast": "{{count}} מוצרים יובאו בהצלחה.",
     "importCompleteTitle": "הייבוא הושלם",
     "importCompleteDescription": "{{count}} מוצרים נוצרו בהצלחה.",
-    "exportHeader": "ייצוא מוצרים",
+    "exportHeader": "ייצא מוצרים",
     "exportDescription": "ייצא את המוצרים שלך כקובץ CSV.",
     "exportBody": "פעולה זו תייצא את כל המוצרים שלך לקובץ CSV. ההורדה תתחיל אוטומטית ברגע שהייצוא יהיה מוכן.",
     "exportSuccessToast": "המוצרים יוצאו בהצלחה.",
@@ -70,14 +70,14 @@
     "close": "סגור",
     "customer": "לקוח",
     "store": "חנות",
-    "back": "חזרה",
+    "back": "חזור",
     "participant": "משתתף",
     "noMessages": "אין הודעות",
     "chatOptions": "אפשרויות צ'אט",
     "deleteOnlyForMe": "מחק רק עבורי",
     "storeContext": "שאלה על החנות",
     "product": "מוצר",
-    "deleteConfirmTitle": "מחיקת הודעה",
+    "deleteConfirmTitle": "מחק הודעה",
     "deleteConfirmDesc": "האם אתה בטוח שברצונך למחוק הודעה זו?",
     "error": "לא ניתן היה לאחזר את פרטי המשתמש.",
     "supportName": "צוות התמיכה",
@@ -118,13 +118,13 @@
       }
     },
     "collections": {
-      "navLabel": "אוספים",
-      "heading": "בקשות אוסף",
-      "noRecords": "לא נמצאו בקשות אוסף",
+      "navLabel": "קולקציות",
+      "heading": "בקשות קולקציה",
+      "noRecords": "לא נמצאו בקשות קולקציה",
       "create": {
-        "heading": "בקשת אוסף",
-        "description": "שלח בקשה ליצירת אוסף מוצרים חדש.",
-        "successToast": "בקשת האוסף נוצרה בהצלחה"
+        "heading": "בקשת קולקציה",
+        "description": "שלח בקשה ליצירת קולקציית מוצרים חדשה.",
+        "successToast": "בקשת הקולקציה נוצרה בהצלחה"
       }
     },
     "tags": {
@@ -178,7 +178,7 @@
     "noRecords": "לא נמצאו ביקורות",
     "columns": {
       "rating": "דירוג",
-      "reference": "מזהה",
+      "reference": "מזהה יחוס",
       "customerNote": "הערת לקוח",
       "replyStatus": "סטטוס תגובה",
       "createdAt": "נוצר בתאריך",
@@ -230,7 +230,7 @@
     },
     "analytics": {
       "title": "אנליטיקה",
-      "subtitle": "עקבו אחר ביצועי המכירות שלכם לאורך זמן",
+      "subtitle": "עקוב אחר ביצועי המכירות שלך לאורך זמן",
       "orders": "הזמנות",
       "earnings": "רווחים",
       "noData": "אין עדיין נתונים",
@@ -245,7 +245,7 @@
       "product": "מוצר",
       "sku": "מק\"ט",
       "available": "זמין",
-      "viewInventory": "מעבר למלאי"
+      "viewInventory": "עבור למלאי"
     },
     "quickAccess": {
       "returns": "החזרות",

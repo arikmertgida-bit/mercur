@@ -32,7 +32,7 @@
       "incorrect_categorization": "Pogrešna kategorizacija",
       "inappropriate_media": "Neprikladan medijski sadržaj",
       "dmca_violation": "Kršenje DMCA",
-      "seller_complaint": "Žalba na prodavca",
+      "seller_complaint": "Žalba na prodavača",
       "other": "Ostalo"
     },
     "actions": {
@@ -143,7 +143,7 @@
     "productQuestion": "Pitanje o proizvodu",
     "storeQuestion": "Pitanje o prodavnici",
     "customerMessage": "Poruka kupca",
-    "sellerMessage": "Poruka prodavca",
+    "sellerMessage": "Poruka prodavača",
     "directMessage": "Direktna poruka",
     "storeContext": "Pitanje o prodavnici",
     "back": "Nazad",
@@ -233,7 +233,7 @@
       "heading": "Prijave recenzija",
       "noRecords": "Nisu pronađene prijave recenzija",
       "columns": {
-        "seller": "Prodavac",
+        "seller": "Prodavač",
         "reason": "Razlog",
         "status": "Status",
         "adminNote": "Napomena administratora"
@@ -282,7 +282,7 @@
     },
     "totals": {
       "products": "Proizvodi",
-      "sellers": "Prodavci",
+      "sellers": "Prodavači",
       "customers": "Kupci",
       "lowStock": "Artikli s niskim zalihama"
     },
