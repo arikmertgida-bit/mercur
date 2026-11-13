@@ -3,21 +3,21 @@
     "import": "匯入",
     "export": "匯出",
     "done": "完成",
-    "importHeader": "匯入產品",
-    "importDescription": "上傳CSV檔案以將產品匯入您的商店。",
-    "importHint": "上傳包含您產品資訊的CSV檔案。您可以",
+    "importHeader": "匯入商品",
+    "importDescription": "上傳 CSV 檔案，將商品匯入您的商店。",
+    "importHint": "上傳包含您商品資訊的 CSV 檔案。您可以",
     "downloadTemplate": "下載範本",
-    "uploadLabel": "上傳CSV檔案",
+    "uploadLabel": "上傳 CSV 檔案",
     "uploadHint": "僅支援 .csv 檔案",
-    "importingActivity": "正在匯入產品...",
-    "importSuccessToast": "已成功匯入 {{count}} 個產品。",
+    "importingActivity": "正在匯入商品...",
+    "importSuccessToast": "已成功匯入 {{count}} 個商品。",
     "importCompleteTitle": "匯入完成",
-    "importCompleteDescription": "已成功建立 {{count}} 個產品。",
-    "exportHeader": "匯出產品",
-    "exportDescription": "將您的產品匯出為CSV檔案。",
-    "exportBody": "此操作會將您的所有產品匯出為CSV檔案。匯出準備完成後將自動開始下載。",
-    "exportSuccessToast": "產品匯出成功。",
-    "importErrorFallback": "匯入產品時發生錯誤。"
+    "importCompleteDescription": "已成功建立 {{count}} 個商品。",
+    "exportHeader": "匯出商品",
+    "exportDescription": "將您的商品匯出為 CSV 檔案。",
+    "exportBody": "此操作會將您的所有商品匯出為 CSV 檔案。匯出準備完成後將自動開始下載。",
+    "exportSuccessToast": "商品匯出成功。",
+    "importErrorFallback": "匯入商品時發生錯誤。"
   },
   "customFields": {
     "title": "自訂欄位",
@@ -56,14 +56,14 @@
     "management": "支援團隊",
     "helpSupport": "支援團隊",
     "me": "我",
-    "productQuestion": "產品問題",
+    "productQuestion": "商品問題",
     "storeQuestion": "商店問題",
     "imageUploadFailed": "圖片上傳失敗",
-    "blockedReasonEmail": "訊息傳送失敗:不允許分享電子郵件地址。",
-    "blockedReasonPhone": "訊息傳送失敗:不允許分享電話號碼。",
-    "blockedReasonUrl": "訊息傳送失敗:不允許分享連結。",
-    "blockedReasonGeneric": "訊息傳送失敗:內容違反平台政策。",
-    "sendFailed": "訊息傳送失敗,請再試一次。",
+    "blockedReasonEmail": "訊息傳送失敗：不允許分享電子郵件地址。",
+    "blockedReasonPhone": "訊息傳送失敗：不允許分享電話號碼。",
+    "blockedReasonUrl": "訊息傳送失敗：不允許分享連結。",
+    "blockedReasonGeneric": "訊息傳送失敗：內容違反平台政策。",
+    "sendFailed": "訊息傳送失敗，請再試一次。",
     "connectionLost": "連線已中斷，正在重新連線...",
     "delete": "刪除",
     "deleteForEveryone": "為所有人刪除",
@@ -76,14 +76,14 @@
     "chatOptions": "聊天選項",
     "deleteOnlyForMe": "僅為我刪除",
     "storeContext": "商店問題",
-    "product": "產品",
+    "product": "商品",
     "deleteConfirmTitle": "刪除訊息",
     "deleteConfirmDesc": "確定要刪除此訊息嗎？",
     "error": "無法取得使用者資訊。",
     "supportName": "支援團隊",
     "supportSubject": "支援聊天",
     "emptyState": "尚無訊息，開始對話吧。",
-    "viewPromotion": "查看促銷活動",
+    "viewPromotion": "查看促銷",
     "imageAlt": "圖片",
     "placeholder": "輸入訊息...",
     "send": "傳送訊息",
@@ -94,7 +94,7 @@
     "deletedMessage": "[此訊息已被刪除]"
   },
   "requests": {
-    "domain": "請求",
+    "domain": "申請",
     "status": {
       "draft": "草稿",
       "pending": "待處理",
@@ -109,8 +109,8 @@
     },
     "categories": {
       "navLabel": "分類",
-      "heading": "分類請求",
-      "noRecords": "找不到分類請求",
+      "heading": "分類申請",
+      "noRecords": "找不到分類申請",
       "create": {
         "heading": "申請分類",
         "description": "提交申請以建立新的商品分類。",
@@ -118,19 +118,19 @@
       }
     },
     "collections": {
-      "navLabel": "系列",
-      "heading": "系列請求",
-      "noRecords": "找不到系列請求",
+      "navLabel": "商品系列",
+      "heading": "商品系列申請",
+      "noRecords": "找不到商品系列申請",
       "create": {
-        "heading": "申請系列",
+        "heading": "申請商品系列",
         "description": "提交申請以建立新的商品系列。",
         "successToast": "系列申請建立成功"
       }
     },
     "tags": {
       "navLabel": "標籤",
-      "heading": "標籤請求",
-      "noRecords": "找不到標籤請求",
+      "heading": "標籤申請",
+      "noRecords": "找不到標籤申請",
       "create": {
         "heading": "申請標籤",
         "description": "提交申請以建立新的商品標籤。",
@@ -139,8 +139,8 @@
     },
     "types": {
       "navLabel": "類型",
-      "heading": "類型請求",
-      "noRecords": "找不到類型請求",
+      "heading": "類型申請",
+      "noRecords": "找不到類型申請",
       "create": {
         "heading": "申請類型",
         "description": "提交申請以建立新的商品類型。",
@@ -171,18 +171,18 @@
       "reReportError": "無法送出檢舉。",
       "noRecords": "找不到評價檢舉"
     },
-    "createErrorFallback": "無法建立請求。"
+    "createErrorFallback": "無法建立申請。"
   },
   "reviews": {
-    "domain": "評論",
-    "noRecords": "找不到評論",
+    "domain": "評價",
+    "noRecords": "找不到評價",
     "columns": {
       "rating": "評分",
       "reference": "參考編號",
       "customerNote": "顧客備註",
       "replyStatus": "回覆狀態",
-      "createdAt": "建立於",
-      "updatedAt": "更新於"
+      "createdAt": "建立時間",
+      "updatedAt": "更新時間"
     },
     "photos": "照片",
     "noPhotos": "此評價未附帶照片。",
@@ -197,7 +197,7 @@
       "submit": "傳送回覆",
       "successToast": "回覆傳送成功。",
       "errorToast": "無法傳送回覆。",
-      "attachImage": "新增圖片"
+      "attachImage": "附加圖片"
     },
     "report": {
       "title": "檢舉給管理員",
@@ -209,13 +209,13 @@
     }
   },
   "followers": {
-    "domain": "關注者",
-    "noRecords": "尚無關注者",
+    "domain": "追蹤者",
+    "noRecords": "尚無追蹤者",
     "columns": {
-      "followedAt": "關注日期",
+      "followedAt": "追蹤日期",
       "reviewsAverage": "平均評分"
     },
-    "count": "關注者：{{count}}"
+    "count": "追蹤者：{{count}}"
   },
   "dashboard": {
     "domain": "儀表板",

@@ -10,11 +10,11 @@
     "delete": "刪除"
   },
   "productReports": {
-    "domain": "產品檢舉",
-    "subtitle": "顧客標記待審核的產品",
+    "domain": "商品檢舉",
+    "subtitle": "顧客標記待審核的商品",
     "filterAll": "所有狀態",
     "columns": {
-      "product": "產品",
+      "product": "商品",
       "reporter": "檢舉人",
       "reason": "原因",
       "status": "狀態"
@@ -25,7 +25,7 @@
       "dismissed": "已駁回"
     },
     "reasons": {
-      "inaccurate_product_details": "產品資訊不準確",
+      "inaccurate_product_details": "商品資訊不準確",
       "pricing_irregularities": "定價異常",
       "prohibited_item": "違禁商品",
       "counterfeit_trademark": "仿冒品 / 商標侵權",
@@ -59,10 +59,10 @@
   "wishlistModeration": {
     "domain": "願望清單",
     "subtitle": "用於審核目的的顧客願望清單",
-    "noProducts": "尚無產品",
+    "noProducts": "尚無商品",
     "columns": {
       "customer": "顧客",
-      "products": "產品",
+      "products": "商品",
       "created": "建立時間"
     },
     "deletePrompt": {
@@ -93,7 +93,7 @@
     },
     "removePrompt": {
       "title": "移除此圖片？",
-      "description": "該圖片將從評論中永久刪除。此操作無法復原。"
+      "description": "該圖片將從評價中永久刪除。此操作無法復原。"
     },
     "dismissPrompt": {
       "title": "駁回此檢舉？",
@@ -108,7 +108,7 @@
     "newMessage": "新訊息",
     "sentImage": "已傳送圖片",
     "newMessageBody": "您有一則新訊息",
-    "customer": "客戶",
+    "customer": "顧客",
     "seller": "賣家",
     "searchConversations": "搜尋對話...",
     "noConversations": "尚無對話",
@@ -131,7 +131,7 @@
   },
   "messages": {
     "domain": "訊息",
-    "product": "產品",
+    "product": "商品",
     "store": "商店",
     "delete": "刪除",
     "deleteForEveryone": "為所有人刪除",
@@ -140,7 +140,7 @@
     "imageUploadFailed": "圖片上傳失敗",
     "deleteConfirmTitle": "刪除訊息",
     "deleteConfirmDesc": "確定要刪除此訊息嗎？",
-    "productQuestion": "產品問題",
+    "productQuestion": "商品問題",
     "storeQuestion": "商店問題",
     "customerMessage": "顧客訊息",
     "sellerMessage": "賣家訊息",
@@ -156,7 +156,7 @@
     "imageAlt": "圖片"
   },
   "requests": {
-    "domain": "請求",
+    "domain": "申請",
     "status": {
       "draft": "草稿",
       "pending": "待處理",
@@ -171,32 +171,32 @@
     },
     "categories": {
       "navLabel": "分類",
-      "heading": "分類請求",
-      "noRecords": "找不到分類請求"
+      "heading": "分類申請",
+      "noRecords": "找不到分類申請"
     },
     "collections": {
-      "navLabel": "系列",
-      "heading": "系列請求",
-      "noRecords": "找不到系列請求"
+      "navLabel": "商品系列",
+      "heading": "商品系列申請",
+      "noRecords": "找不到商品系列申請"
     },
     "tags": {
       "navLabel": "標籤",
-      "heading": "標籤請求",
-      "noRecords": "找不到標籤請求"
+      "heading": "標籤申請",
+      "noRecords": "找不到標籤申請"
     },
     "types": {
       "navLabel": "類型",
-      "heading": "類型請求",
-      "noRecords": "找不到類型請求"
+      "heading": "類型申請",
+      "noRecords": "找不到類型申請"
     },
     "returnReasons": {
       "navLabel": "退貨原因",
-      "heading": "退貨原因請求",
-      "noRecords": "找不到退貨原因請求"
+      "heading": "退貨原因申請",
+      "noRecords": "找不到退貨原因申請"
     },
     "typeLabels": {
       "product_category": "分類",
-      "product_collection": "系列",
+      "product_collection": "商品系列",
       "product_tag": "標籤",
       "product_type": "類型",
       "return_reason": "退貨原因"
@@ -204,7 +204,7 @@
     "fields": {
       "name": "名稱",
       "handle": "識別碼",
-      "description": "描述",
+      "description": "說明",
       "active": "啟用",
       "internal": "內部",
       "title": "標題",
@@ -219,12 +219,12 @@
       "pendingReview": "待審核",
       "accept": "接受",
       "reject": "拒絕",
-      "acceptPromptTitle": "接受請求",
-      "acceptPromptDescription": "確定要接受此請求嗎？此操作將建立相應的實體。",
-      "rejectPromptTitle": "拒絕請求",
-      "rejectPromptDescription": "確定要拒絕此請求嗎？此操作無法復原。",
-      "acceptSuccess": "請求已接受",
-      "rejectSuccess": "請求已拒絕",
+      "acceptPromptTitle": "接受申請",
+      "acceptPromptDescription": "確定要接受此申請嗎？此操作將建立對應的項目。",
+      "rejectPromptTitle": "拒絕申請",
+      "rejectPromptDescription": "確定要拒絕此申請嗎？此操作無法復原。",
+      "acceptSuccess": "申請已接受",
+      "rejectSuccess": "申請已拒絕",
       "submitter": "提交人",
       "reviewer": "審核人"
     },
@@ -261,8 +261,8 @@
     }
   },
   "reviews": {
-    "domain": "評論",
-    "noRecords": "找不到評論",
+    "domain": "評價",
+    "noRecords": "找不到評價",
     "columns": {
       "rating": "評分",
       "reference": "參考編號",
@@ -283,7 +283,7 @@
     "totals": {
       "products": "商品",
       "sellers": "賣家",
-      "customers": "客戶",
+      "customers": "顧客",
       "lowStock": "庫存不足商品"
     },
     "analytics": {

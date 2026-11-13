@@ -146,7 +146,7 @@
   "$schema": "./$schema.json",
   "general": {
     "unknownError": "發生未知錯誤",
-    "notAvailable": "無",
+    "notAvailable": "不適用",
     "ascending": "升序",
     "descending": "降序",
     "add": "新增",
@@ -162,7 +162,7 @@
     "pages": "頁",
     "next": "下一頁",
     "prev": "上一頁",
-    "is": "真",
+    "is": "是",
     "timeline": "時間軸",
     "success": "成功",
     "warning": "警告",
@@ -181,7 +181,7 @@
     "removed": "已移除",
     "admin": "管理員",
     "store": "商店",
-    "details": "詳情",
+    "details": "詳細資訊",
     "items_one": "{{count}} 項",
     "items_other": "{{count}} 項",
     "countSelected": "已選擇 {{count}} 項",
@@ -194,7 +194,7 @@
     "typeToConfirm": "請輸入 {val} 以確認：",
     "noResultsTitle": "沒有結果",
     "noResultsMessage": "請嘗試變更篩選條件或搜尋關鍵字",
-    "noSearchResults": "沒有結果",
+    "noSearchResults": "沒有搜尋結果",
     "noSearchResultsFor": "<0>'{{query}}'</0> 沒有搜尋結果",
     "noRecordsTitle": "沒有記錄",
     "noRecordsMessage": "沒有可顯示的記錄",
@@ -203,8 +203,8 @@
     "includesTaxTooltip": "此欄位的價格含稅。",
     "excludesTaxTooltip": "此欄位的價格不含稅。",
     "noMoreData": "沒有更多資料",
-    "yes": "真",
-    "no": "假",
+    "yes": "是",
+    "no": "否",
     "noRecordsMessageFiltered": "沒有符合篩選條件的記錄",
     "drawerAccessibleDescription": "使用此面板檢視或編輯此資源的詳細資訊。"
   },
@@ -233,7 +233,7 @@
       },
       "labels": {
         "key": "鍵",
-        "value": "變化 (以逗號分隔)"
+        "value": "值"
       },
       "complexRow": {
         "label": "部分列已停用",
@@ -260,18 +260,19 @@
     "create": "建立",
     "delete": "刪除",
     "remove": "移除",
-    "revoke": "復原",
+    "revoke": "撤銷",
     "cancel": "取消",
     "forceConfirm": "強制確認",
     "continueEdit": "繼續編輯",
-    "enable": "使用中",
+    "enable": "啟用",
     "disable": "停用",
     "undo": "復原",
     "complete": "完成",
     "viewDetails": "檢視詳細資訊",
-    "back": "退貨",
+    "back": "返回",
     "close": "關閉",
     "showMore": "顯示更多",
+    "showLess": "顯示較少",
     "continue": "繼續",
     "continueWithEmail": "使用電子郵件繼續",
     "idCopiedToClipboard": "ID 已複製到剪貼簿",
@@ -325,7 +326,7 @@
         "collection": "商品系列",
         "order": "訂單",
         "promotion": "促銷",
-        "campaign": "活動記錄",
+        "campaign": "行銷活動",
         "priceList": "價格清單",
         "user": "使用者",
         "region": "區域",
@@ -335,7 +336,7 @@
         "productType": "商品類型",
         "productTag": "商品標籤",
         "location": "地點",
-        "shippingProfile": "運送配置",
+        "shippingProfile": "運送設定檔",
         "publishableApiKey": "可發佈 API 金鑰",
         "secretApiKey": "私密 API 金鑰",
         "command": "指令",
@@ -359,7 +360,7 @@
         "goToReservations": "預留",
         "goToPriceLists": "價格清單",
         "goToPromotions": "促銷",
-        "goToCampaigns": "活動記錄",
+        "goToCampaigns": "行銷活動",
         "goToSellers": "商店",
         "goToPayouts": "撥款"
       },
@@ -482,7 +483,7 @@
       "range": "範圍",
       "lessThanLabel": "小於 {{value}}",
       "greaterThanLabel": "大於 {{value}}",
-      "andLabel": "及"
+      "andLabel": "且"
     },
     "sorting": {
       "alphabeticallyAsc": "A 到 Z",
@@ -511,10 +512,10 @@
     "backToDashboard": "返回儀表板"
   },
   "addresses": {
-    "title": "標題",
+    "title": "地址",
     "shippingAddress": {
       "header": "運送地址",
-      "editHeader": "編輯送貨地址",
+      "editHeader": "編輯運送地址",
       "editLabel": "運送地址",
       "label": "運送地址"
     },
@@ -525,7 +526,7 @@
       "label": "帳單地址",
       "sameAsShipping": "與運送地址相同"
     },
-    "contactHeading": "聯絡人",
+    "contactHeading": "聯絡資訊",
     "locationHeading": "地點"
   },
   "email": {
@@ -582,15 +583,15 @@
         "variants": "請至少選擇一個變體。",
         "options": "請至少建立一個選項。",
         "uniqueSku": "SKU 必須是唯一的。",
-        "requiredAttribute": "此屬性為必填項。",
+        "requiredAttribute": "此屬性為必填項目。",
         "requiredAttributeSelect": "此屬性為市集平台要求的必填項目，請選擇數值。",
         "requiredAttributeEnter": "此屬性為市集平台要求的必填項目，請輸入數值。",
         "requiredAttributeMultiSelect": "此屬性為市集平台要求的必填項目，請至少選擇一個數值。",
         "requiredStore": "請至少選擇一個商店",
         "requiredTitle": "請輸入標題",
         "requiredCategory": "請選擇分類",
-        "handleInvalidFormat": "代稱只能包含小寫字母、數字和連字號",
-        "handleMustContainLetter": "代稱必須至少包含一個字母"
+        "handleInvalidFormat": "識別碼只能包含小寫字母、數字和連字號",
+        "handleMustContainLetter": "識別碼必須至少包含一個字母"
       },
       "inventory": {
         "heading": "庫存套件",
@@ -610,9 +611,9 @@
         },
         "productVariants": {
           "label": "商品變體",
-          "hint": "此排序將影響變體在您店面中的順序。",
-          "alert": "新增選項以建立變體。",
-          "tip": "未勾選的變體將不會被建立。您隨時可以建立和編輯變體，但此清單符合您商品選項的變化。",
+          "hint": "此排序將影響變體的顯示順序。",
+          "alert": "為您的變體屬性新增值，即可產生變體。",
+          "tip": "未勾選的變體將不會被建立。您之後隨時可以建立和編輯變體，此清單會列出您商品屬性的所有組合。",
           "noAxes": "在「屬性」步驟中將屬性標記為「用於生成變體」以產生變體。"
         },
         "productOptions": {
@@ -624,24 +625,24 @@
       "attributes": {
         "header": "屬性",
         "description": "管理商品的屬性和變體，例如顏色、尺寸、品牌等。\n可選擇市集已定義的屬性，或建立自訂屬性。",
-        "addExisting": "新增已有屬性",
-        "createNew": "新增",
+        "addExisting": "新增現有屬性",
+        "createNew": "建立新屬性",
         "title": "標題",
         "titlePlaceholder": "例如：顏色",
         "values": "變化 (以逗號分隔)",
         "selectValues": "選擇值",
-        "valuePlaceholder": "輸入數值",
+        "valuePlaceholder": "輸入值",
         "enterValuePlaceholder": "輸入數值",
         "selectValuePlaceholder": "選擇值",
         "requiredAttributes": "必填屬性",
-        "requiredAttributesHint": "此屬性為市集所要求的必填屬性，請先設定後再繼續。",
-        "useForVariants": "用於款式變化",
-        "useForVariantsDescription": "勾選後，可使用此屬性建立變體；否則該屬性僅用於資訊展示。",
+        "requiredAttributesHint": "這些屬性為市集要求的必填屬性，請先選擇後再繼續。",
+        "useForVariants": "用於產生變體",
+        "useForVariantsDescription": "勾選後，即可使用此屬性建立變體；若未勾選，此屬性僅供參考。",
         "tip": "提示",
-        "variantAxisTip": "此屬性將用於生成變體，您可在下一步中進行定義。",
-        "editVariantAxisTip": "您將可以使用此屬性建立款式。",
+        "variantAxisTip": "此屬性將用於產生變體，您可以在下一步中定義。",
+        "editVariantAxisTip": "您將可以使用此屬性建立變體。",
         "warning": "警告",
-        "editWarning": "此屬性的變更可能影響現有商品款式或詳細資料。儲存後請檢查款式與商品詳情。",
+        "editWarning": "此屬性的變更可能影響現有的商品變體或詳細資料。儲存後請檢查變體與商品詳細資料。",
         "errors": {
           "titleRequired": "請輸入標題",
           "valuesRequired": "請至少輸入一個數值"
@@ -703,7 +704,7 @@
     "editPrices": "編輯價格",
     "media": {
       "label": "媒體",
-      "editHint": "新增媒體以在店面中展示。",
+      "editHint": "為商品新增媒體，以在商店前台展示。",
       "makeThumbnail": "設為縮圖",
       "uploadImagesLabel": "上傳圖片",
       "uploadImagesHint": "拖放圖片到此處或點擊上傳。",
@@ -719,7 +720,7 @@
       "deleteImageLabel": "刪除目前圖片",
       "emptyState": {
         "header": "尚無媒體",
-        "description": "新增媒體以在店面中展示。",
+        "description": "為商品新增媒體，以在商店前台展示。",
         "action": "新增媒體"
       },
       "successToast": "媒體已成功更新。",
@@ -903,7 +904,7 @@
     "shippingProfile": {
       "header": "運送配置",
       "edit": {
-        "header": "運送配置",
+        "header": "運送設定",
         "toasts": {
           "success": "已成功更新 {{title}} 的運送設定檔。"
         }
@@ -939,12 +940,13 @@
       "successToast_one": "已成功刪除 {{count}} 項商品。",
       "successToast_other": "已成功刪除 {{count}} 項商品。"
     },
-    "attributeVariations": "變體",
-    "attributeVariantsDescription": "用於款式的屬性",
+    "attributeVariations": "變體屬性",
+    "attributeVariantsDescription": "用於變體的屬性",
     "attributeProductInformation": "商品資訊",
     "attributeProductInformationDescription": "用於資訊說明的屬性",
     "attributeRequiredByMarketplace": "此屬性為市集平台要求的必填項目。",
     "attributeRequiredDeleteDisabledTooltip": "必填屬性無法移除。",
+    "missingRequiredAttributesHint": "請填寫必填資訊",
     "addAttribute": "新增屬性",
     "deleteAttributeWarning": "確定要刪除屬性「{{title}}」嗎？此操作無法復原。",
     "editAttribute": "編輯屬性",
@@ -961,7 +963,7 @@
       },
       "confirmPrompt": {
         "title": "確認申請",
-        "description": "您即將確認此商品更新申請。確認後，為該商品建立的報價將顯示在前台商城中。僅設定了庫存和價格的報價才會顯示。",
+        "description": "您即將確認此商品更新申請。確認後，商品將顯示於商店前台。僅已設定庫存量與價格的變體會顯示。",
         "noteLabel": "給商店的備註",
         "notePlaceholder": "說明您所做的變更或其他要求"
       },
@@ -996,7 +998,7 @@
       },
       "confirmPrompt": {
         "title": "確認申請",
-        "description": "您即將確認此商品更新申請。確認後，該商品將在前台商城中更新。",
+        "description": "您即將確認此商品更新申請。確認後，商品將在商店前台更新。",
         "noteLabel": "給商店的備註",
         "notePlaceholder": "說明您所做的變更或其他要求"
       },
@@ -1021,8 +1023,8 @@
       "thumbnail": "縮圖",
       "title": "標題",
       "handle": "識別碼",
-      "created_at": "建立於",
-      "updated_at": "更新於"
+      "created_at": "建立時間",
+      "updated_at": "更新時間"
     }
   },
   "collections": {
@@ -1061,11 +1063,11 @@
       "thumbnail": "縮圖",
       "banner": "橫幅",
       "galleryLabel": "圖庫",
-      "editHint": "為系列新增媒體，在前台商城中展示。",
+      "editHint": "為商品系列新增媒體，以在商店前台展示。",
       "deleteWarning": "您即將刪除此圖片。此操作無法復原。",
       "empty": {
         "header": "尚無媒體",
-        "description": "新增媒體，在前台商城中展示。"
+        "description": "新增媒體，以在商店前台展示。"
       },
       "upload": {
         "title": "上傳圖片",
@@ -1083,7 +1085,7 @@
       },
       "edit": {
         "header": "編輯媒體",
-        "description": "上傳圖片並選擇在前台商城中顯示的縮圖和橫幅。",
+        "description": "上傳圖片，並選擇要在商店前台顯示的縮圖和橫幅。",
         "successToast": "系列媒體已成功更新。"
       }
     },
@@ -1091,11 +1093,11 @@
       "label": "圖示",
       "empty": {
         "header": "尚無圖示",
-        "description": "新增圖示，在前台商城的系列標籤旁展示。"
+        "description": "新增圖示，顯示在商店前台的商品系列標籤旁。"
       },
       "tip": {
         "label": "提示：",
-        "text": "此圖示將顯示在前台商城的系列標籤旁。"
+        "text": "此圖示將顯示在商店前台的商品系列標籤旁。"
       },
       "upload": {
         "title": "上傳檔案",
@@ -1103,7 +1105,7 @@
       },
       "edit": {
         "header": "編輯圖示",
-        "description": "上傳一個圖示，顯示在前台商城的系列標籤旁。",
+        "description": "上傳一個圖示，顯示在商店前台的商品系列標籤旁。",
         "successToast": "系列圖示已成功更新。"
       }
     }
@@ -1118,7 +1120,7 @@
         "details": "詳情",
         "organize": "整理排序"
       },
-      "successToast": "分類 {{name}} 建立成功。"
+      "successToast": "分類已成功建立。"
     },
     "edit": {
       "header": "編輯分類",
@@ -1127,19 +1129,19 @@
     },
     "delete": {
       "confirmation": "您即將刪除分類 {{name}}。此操作無法復原。",
-      "successToast": "分類 {{name}} 已成功刪除。"
+      "successToast": "分類已成功刪除。"
     },
     "products": {
       "add": {
         "disabledTooltip": "該商品已在此分類中。",
-        "successToast_one": "已將 {{count}} 個商品新增到分類。",
-        "successToast_other": "已將 {{count}} 個商品新增到分類。"
+        "successToast_one": "商品已成功新增至分類。",
+        "successToast_other": "商品已成功新增至分類。"
       },
       "remove": {
         "confirmation_one": "您即將從分類中移除 {{count}} 個商品。此操作無法復原。",
         "confirmation_other": "您即將從分類中移除 {{count}} 個商品。此操作無法復原。",
-        "successToast_one": "已從分類中移除 {{count}} 個商品。",
-        "successToast_other": "已從分類中移除 {{count}} 個商品。"
+        "successToast_one": "商品已成功從分類中移除。",
+        "successToast_other": "商品已成功從分類中移除。"
       },
       "list": {
         "noRecordsMessage": "分類中沒有商品。",
@@ -1186,11 +1188,11 @@
       "thumbnail": "縮圖",
       "banner": "橫幅",
       "galleryLabel": "圖庫",
-      "editHint": "為分類新增媒體，在前台商城中展示。",
+      "editHint": "為分類新增媒體，以在商店前台展示。",
       "deleteWarning": "您即將刪除此圖片。此操作無法復原。",
       "empty": {
         "header": "尚無媒體",
-        "description": "新增媒體，在前台商城中展示。"
+        "description": "新增媒體，以在商店前台展示。"
       },
       "upload": {
         "title": "上傳圖片",
@@ -1208,7 +1210,7 @@
       },
       "edit": {
         "header": "編輯媒體",
-        "description": "上傳圖片並選擇在前台商城中顯示的縮圖和橫幅。",
+        "description": "上傳圖片，並選擇要在商店前台顯示的縮圖和橫幅。",
         "successToast": "分類媒體已成功更新。"
       }
     },
@@ -1216,11 +1218,11 @@
       "label": "圖示",
       "empty": {
         "header": "尚無圖示",
-        "description": "新增圖示，在前台商城的分類標籤旁展示。"
+        "description": "新增圖示，顯示在商店前台的分類標籤旁。"
       },
       "tip": {
         "label": "提示：",
-        "text": "此圖示將顯示在前台商城的分類標籤旁。"
+        "text": "此圖示將顯示在商店前台的分類標籤旁。"
       },
       "upload": {
         "title": "上傳檔案",
@@ -1228,7 +1230,7 @@
       },
       "edit": {
         "header": "編輯圖示",
-        "description": "上傳一個圖示，顯示在前台商城的分類標籤旁。",
+        "description": "上傳一個圖示，顯示在商店前台的分類標籤旁。",
         "successToast": "分類圖示已成功更新。"
       }
     }
@@ -1236,6 +1238,7 @@
   "inventory": {
     "domain": "庫存",
     "subtitle": "管理您的庫存項目",
+    "store": "商店",
     "reserved": "已預留",
     "available": "可用",
     "locationLevels": "地點",
@@ -1247,7 +1250,7 @@
     "quantityAcrossLocations": "{{quantity}} 個，跨 {{locations}} 個地點",
     "create": {
       "title": "建立庫存項目",
-      "details": "詳情",
+      "details": "詳細資訊",
       "availability": "可用性",
       "locations": "地點",
       "attributes": "屬性",
@@ -1260,24 +1263,38 @@
       "header": "{{itemName}} 的預留",
       "editItemDetails": "編輯預留",
       "lineItemId": "行項目 ID",
+      "itemId": "項目 ID",
       "orderID": "訂單 ID",
       "description": "說明",
       "location": "地點",
+      "goToInventoryItem": "前往庫存項目",
       "inStockAtLocation": "此地點的庫存",
       "availableAtLocation": "此地點的可用數量",
       "reservedAtLocation": "此地點的預留數量",
       "reservedAmount": "預留數量",
+      "reserved": "已預留",
+      "storeLocationWarningLabel": "警告",
+      "storeLocationWarning": "您正在修改商店地點的預留。請先與商家確認，以免資料不一致。",
       "create": "建立預留",
       "itemToReserve": "要預留的項目",
+      "itemPlaceholder": "選擇項目",
+      "locationPlaceholder": "選擇地點",
       "quantityPlaceholder": "您想預留多少？",
       "descriptionPlaceholder": "這是什麼類型的預留？",
       "successToast": "預留已成功建立。",
       "updateSuccessToast": "預留已成功更新。",
       "deleteSuccessToast": "預留已成功刪除。",
+      "deleteTitle": "刪除預留",
+      "deleteDescription": "您即將刪除一筆預留。這可能會影響商店的庫存紀錄。繼續之前，請先確認商家已同意此變更，以免資料不一致。",
+      "deleteBlockedDescription": "此預留已連結至尚未出貨的訂單，因此無法刪除。",
+      "gotIt": "知道了",
       "errors": {
         "noAvaliableQuantity": "庫存地點沒有可用數量。",
         "quantityOutOfRange": "最小數量為 1，最大數量為 {{max}}",
-        "idRequired": "庫存項目 ID 為必填項"
+        "pleaseEnterQuantity": "請輸入數量",
+        "idRequired": "庫存項目 ID 為必填項",
+        "selectLocation": "請選擇地點",
+        "enterQuantity": "請輸入數量"
       }
     },
     "adjustInventory": {
@@ -1288,7 +1305,8 @@
     "toast": {
       "updateLocations": "地點已成功更新。",
       "updateLevel": "庫存等級已成功更新。",
-      "updateItem": "庫存項目已成功更新。"
+      "updateItem": "庫存項目已成功更新。",
+      "deleteItem": "庫存項目已成功刪除。"
     },
     "stock": {
       "title": "更新庫存等級",
@@ -1298,9 +1316,36 @@
       "disablePrompt_one": "您即將停用 {{count}} 個地點等級。此操作無法復原。",
       "disablePrompt_other": "您即將停用 {{count}} 個地點等級。此操作無法復原。",
       "disabledToggleTooltip": "無法停用：請在停用前清除進貨和/或預留數量。",
-      "successToast": "庫存等級已成功更新。"
+      "foreignStoreTooltip": "此項目屬於其他商店，因此無法在此地點啟用庫存。",
+      "successToast": "庫存等級已成功更新。",
+      "confirmTitle": "編輯庫存等級",
+      "confirmDescription": "您即將編輯商店地點的庫存等級。變更庫存等級前，請先與商家確認，以免資料不一致或產生誤會。",
+      "editQuantityWarning": "您正在編輯商店地點的數量。變更庫存等級前，請先與商家確認，以免資料不一致或產生誤會。"
     },
-    "levelDeleted": "庫存等級已成功刪除。"
+    "list": {
+      "noRecordsTitle": "尚無庫存項目",
+      "noRecordsMessage": "您商店的庫存項目會顯示在這裡。"
+    },
+    "locations": {
+      "noRecordsTitle": "尚無地點",
+      "noRecordsMessage": "新增地點即可開始管理庫存等級"
+    },
+    "reservations": {
+      "noRecordsTitle": "尚無預留",
+      "noRecordsMessage": "沒有可顯示的預留"
+    },
+    "levelDeleted": "庫存等級已成功刪除。",
+    "attributes": {
+      "tip": "這些是用於描述此項目的預設值，不在「設定 → 商品屬性」中管理。"
+    },
+    "item": {
+      "deleteTitle": "刪除庫存項目",
+      "deleteDescription": "您即將刪除一個庫存項目。這可能會影響商店的庫存紀錄。繼續之前，請先確認商家已同意此變更，以免資料不一致。"
+    },
+    "level": {
+      "deleteTitle": "刪除庫存等級",
+      "deleteDescription": "您即將刪除 {{location}} 的庫存等級。這將刪除此地點的庫存與預留，且無法復原。繼續之前，請先確認商家已同意此變更，以免資料不一致。"
+    }
   },
   "giftCards": {
     "domain": "禮品卡",
@@ -1440,7 +1485,7 @@
     "customers": {
       "alreadyAddedTooltip": "此顧客已加入此群組。",
       "add": {
-        "successToast_one": "多位顧客已成功加入群組。",
+        "successToast_one": "顧客已成功加入群組。",
         "successToast_other": "多位顧客已成功加入群組。",
         "list": {
           "noRecordsMessage": "請先建立顧客。"
@@ -1472,7 +1517,7 @@
     },
     "status": {
       "not_paid": "未付款",
-      "pending": "處理中",
+      "pending": "待處理",
       "completed": "已完成",
       "draft": "草稿",
       "archived": "已存檔",
@@ -1617,7 +1662,7 @@
       "refundableAmountLabel": "可退款金額",
       "returnRequestedInfo": "已請求退貨 {{requestedItemsCount}} 個項目",
       "returnReceivedInfo": "已收到退貨 {{requestedItemsCount}} 個項目",
-      "itemReceived": "已接收項目",
+      "itemReceived": "已收到項目",
       "returnRequested": "已請求退貨",
       "damagedItemReceived": "已收到損壞項目",
       "damagedItemsReturned": "已退貨 {{quantity}} 個損壞項目",
@@ -1834,7 +1879,7 @@
       "editShippingAddress": "編輯送貨地址"
     },
     "activity": {
-      "header": "活動記錄",
+      "header": "動態記錄",
       "showMoreActivities_one": "顯示更多 {{count}} 筆活動",
       "showMoreActivities_other": "顯示更多 {{count}} 筆活動",
       "comment": {
@@ -1911,7 +1956,7 @@
       }
     },
     "fields": {
-      "displayId": "顯示 ID",
+      "displayId": "訂單 ID",
       "refundableAmount": "可退款金額",
       "returnableQuantity": "可退貨數量",
       "groupId": "群組 ID",
@@ -1919,6 +1964,9 @@
       "vendor": "商店",
       "vendorsCount_one": "{{count}} 個商店",
       "vendorsCount_other": "{{count}} 個商店"
+    },
+    "requiresAction": {
+      "actionUnavailable": "此訂單接受後才能使用"
     },
     "group": {
       "heading": "群組內訂單",
@@ -2050,7 +2098,7 @@
     "sidebar": {
       "header": "運送設定",
       "shippingProfiles": {
-        "label": "運送配置",
+        "label": "運送設定檔",
         "description": "按運送需求將商品分組"
       },
       "shippingOptionTypes": {
@@ -2060,12 +2108,12 @@
     },
     "salesChannels": {
       "header": "銷售管道",
-      "label": "已連接的銷售渠道",
-      "connectedTo": "已連接到 {{total}} 個銷售渠道中的 {{count}} 個",
-      "noChannels": "此地點未連接到任何銷售渠道。",
-      "action": "連接銷售渠道",
-      "successToast": "銷售渠道已成功更新。",
-      "hint": "管理連接到此地點的銷售渠道。"
+      "label": "已連接的銷售管道",
+      "connectedTo": "已連接到 {{total}} 個銷售管道中的 {{count}} 個",
+      "noChannels": "此地點未連接到任何銷售管道。",
+      "action": "連接銷售管道",
+      "successToast": "銷售管道已成功更新。",
+      "hint": "管理連接到此地點的銷售管道。"
     },
     "pickupOptions": {
       "edit": {
@@ -2093,7 +2141,7 @@
           "successToast": "退貨選項 {{name}} 已成功建立。"
         },
         "tabs": {
-          "details": "詳情",
+          "details": "詳細資訊",
           "prices": "價格"
         },
         "action": "建立選項"
@@ -2172,7 +2220,7 @@
           "hint": "顧客是否可以在結帳時使用此選項。"
         },
         "provider": "出貨提供商",
-        "profile": "運送配置",
+        "profile": "運送設定檔",
         "fulfillmentOption": "出貨選項",
         "type": "運送選項類型"
       }
@@ -2206,7 +2254,7 @@
     }
   },
   "shippingProfile": {
-    "domain": "運送配置",
+    "domain": "運送設定檔",
     "subtitle": "將具有類似運送需求的商品分組成設定檔。",
     "create": {
       "header": "建立運送設定檔",
@@ -2362,7 +2410,7 @@
         "successToast": "稅率已成功更新。"
       },
       "delete": {
-        "confirmation": "您即將刪除稅率 {{name}}。此操作無法復原。",
+        "confirmation": "您即將刪除稅率「{{name}}」。此操作無法復原。",
         "successToast": "稅率已成功刪除。"
       }
     },
@@ -2481,7 +2529,7 @@
         "description": "對訂單總金額進行折扣"
       },
       "percentageOffProduct": {
-        "title": "商品折扣",
+        "title": "商品百分比折扣",
         "description": "對所選商品按百分比折扣"
       },
       "percentageOffOrder": {
@@ -2491,6 +2539,12 @@
       "buyGet": {
         "title": "買 X 送 Y",
         "description": "購買 X 件商品，贈送 Y 件商品"
+      }
+    },
+    "list": {
+      "noRecords": {
+        "title": "尚無促銷",
+        "message": "建立促銷以提供折扣"
       }
     },
     "domain": "促銷",
@@ -2504,11 +2558,25 @@
     },
     "fields": {
       "type": "類型",
+      "typeLabels": {
+        "percentageItems": "商品折扣",
+        "percentageShipping": "運費百分比折扣",
+        "percentageOrder": "訂單折扣",
+        "amountItems": "商品減價",
+        "amountShipping": "運費減價",
+        "amountOrder": "訂單減價"
+      },
       "value_type": "值類型",
       "value": "值",
+      "promotion_value": "促銷數值",
       "campaign": "行銷活動",
       "method": "方式",
+      "owner": "擁有者",
+      "platformOwner": "Kayı.com",
+      "coverage": "涵蓋範圍",
       "allocation": "分配",
+      "usageLimit": "使用次數限制",
+      "unlimited": "無限制",
       "addCondition": "新增條件",
       "clearAll": "清除全部",
       "amount": {
@@ -2548,7 +2616,9 @@
       "promotionTabError": "請在繼續之前修正促銷分頁中的錯誤"
     },
     "toasts": {
-      "promotionCreateSuccess": "促銷 ({{code}}) 已成功建立。"
+      "promotionCreateSuccess": "促銷 ({{code}}) 已成功建立。",
+      "promotionUpdateSuccess": "促銷已成功更新。",
+      "promotionDeleteSuccess": "促銷已成功刪除。"
     },
     "create": {},
     "edit": {
@@ -2658,12 +2728,13 @@
         "description": "顧客在結帳時將輸入的代碼。"
       },
       "value": {
-        "title": "百分比",
+        "title": "促銷值",
+        "description": "要折扣的金額。例如 100",
         "invalid": "無效的促銷值"
       },
       "value_type": {
         "fixed": {
-          "title": "百分比",
+          "title": "固定金額",
           "description": "要折扣的金額。例如 100"
         },
         "percentage": {
@@ -2675,6 +2746,38 @@
       "taxInclusive": {
         "title": "促銷是否含稅？",
         "description": "啟用此欄位以在稅後套用促銷"
+      },
+      "limit": {
+        "title": "使用次數限制",
+        "description": "此促銷可在所有訂單中使用的最大次數。留空表示無限制。"
+      },
+      "storeOffers": {
+        "title": "促銷要套用到哪間商店的商品？",
+        "description": "選擇此促銷要套用其商品的商店。",
+        "label": "商店",
+        "placeholder": "請選擇",
+        "required": "請選擇商店"
+      },
+      "costBearer": {
+        "label": "促銷成本由誰負擔？",
+        "description": "選擇由誰負擔此促銷所提供的折扣。",
+        "tip": "變更已建立的促銷不會影響已在處理中的訂單。",
+        "store": {
+          "title": "商店",
+          "description": "折扣將從商店的收益中扣除"
+        },
+        "marketplace": {
+          "title": "市集",
+          "description": "折扣將從佣金中扣除"
+        },
+        "shared": {
+          "title": "共同分擔",
+          "description": "成本由市集與商店共同分擔"
+        },
+        "sharedPercentage": {
+          "title": "市集分擔比例",
+          "description": "由市集負擔的折扣百分比，其餘由商店負擔。"
+        }
       }
     },
     "deleteWarning": "您即將刪除促銷 {{code}}。此操作無法復原。",
@@ -2683,13 +2786,18 @@
     "conditions": {
       "add": "新增條件",
       "list": {
+        "noRecordsTitle": "尚無條件",
         "noRecordsMessage": "新增條件以限制促銷適用的項目。"
       }
     },
     "campaignSection": {
       "noRecordsTitle": "未加入任何活動",
-      "noRecordsMessage": "將此優惠加入現有活動",
-      "addToCampaign": "加入活動"
+      "noRecordsMessage": "將此促銷加入現有的行銷活動",
+      "addToCampaign": "加入活動",
+      "warnings": {
+        "promotionMustBeActive": "此促銷屬於某個行銷活動但尚未啟用，因此結帳時不會套用。",
+        "promotionExpires": "此行銷活動設有結束日期。行銷活動結束後，促銷將停止套用。"
+      }
     }
   },
   "campaigns": {
@@ -2701,17 +2809,19 @@
       "scheduled": "已排程"
     },
     "delete": {
-      "title": "您確定嗎？",
+      "title": "刪除行銷活動",
       "description": "您即將刪除行銷活動「{{name}}」。此操作無法復原。",
-      "successToast": "行銷活動「{{name}}」已成功建立。"
+      "successToast": "行銷活動已成功刪除。"
     },
     "edit": {
       "header": "編輯行銷活動",
       "description": "編輯行銷活動的詳細資訊。",
-      "successToast": "行銷活動「{{name}}」已成功更新。"
+      "successToast": "行銷活動已成功更新。"
     },
     "configuration": {
       "header": "設定",
+      "expiryWarningLabel": "警告",
+      "expiryWarning": "行銷活動到期時，促銷也會隨之到期。",
       "edit": {
         "header": "編輯行銷活動配置",
         "description": "編輯行銷活動的配置。",
@@ -2723,25 +2833,37 @@
       "description": "建立促銷行銷活動。",
       "hint": "建立促銷行銷活動。",
       "header": "建立行銷活動",
-      "successToast": "行銷活動「{{name}}」已成功建立。"
+      "successToast": "行銷活動已成功建立。"
+    },
+    "validation": {
+      "nameRequired": "請輸入名稱",
+      "identifierRequired": "請輸入識別碼",
+      "currencyRequired": "請選擇貨幣"
     },
     "fields": {
       "name": "名稱",
       "identifier": "識別碼",
+      "identifierTooltip": "識別碼是您自訂、便於業務使用的行銷活動代碼，用於整合、報表及快速辨識行銷活動，並非資料庫中的技術 ID。",
       "start_date": "開始日期",
       "end_date": "結束日期",
       "total_spend": "已支出預算",
       "total_used": "已使用預算",
       "budget_limit": "預算限制",
+      "type": "類型",
+      "owner": "擁有者",
+      "platformOwner": "Kayı.com",
+      "budget_used": "已使用預算",
       "campaign_id": {
         "hint": "停用的行銷活動的預算貨幣與促銷不同。"
       },
       "totalUsedByAttribute": "總使用量"
     },
     "budget": {
+      "title": "行銷活動預算",
       "create": {
         "hint": "為行銷活動建立預算。",
-        "header": "行銷活動預算"
+        "header": "行銷活動預算",
+        "noLimitHint": "若未設定任何限制，行銷活動預算將沒有上限。"
       },
       "details": "行銷活動預算",
       "fields": {
@@ -2751,6 +2873,7 @@
         "used": "已使用",
         "budgetAttribute": "每次使用限制",
         "budgetAttributeTooltip": "定義特定顧客或電子郵件可使用該促銷的次數。",
+        "noLimit": "無限制",
         "totalUsedByAttribute": "每 {{attribute}} 的預算限制"
       },
       "type": {
@@ -2759,7 +2882,7 @@
           "description": "設定所有促銷使用的總折扣金額限制。"
         },
         "usage": {
-          "title": "已使用次數",
+          "title": "使用次數",
           "description": "設定促銷可使用次數的限制。"
         },
         "useByAttribute": {
@@ -2773,21 +2896,26 @@
     },
     "promotions": {
       "remove": {
-        "title": "從行銷活動中移除促銷",
+        "title": "移除促銷",
         "description": "您即將從行銷活動中移除 {{count}} 個促銷。此操作無法復原。"
       },
       "alreadyAdded": "此促銷已新增到行銷活動。",
       "alreadyAddedDiffCampaign": "此促銷已新增到不同的行銷活動 ({{name}})。",
       "currencyMismatch": "促銷和行銷活動的貨幣不符",
       "toast": {
-        "success": "已成功新增 {{count}} 個促銷到行銷活動"
+        "success": "已成功將促銷新增至行銷活動。",
+        "removed_one": "已成功將促銷從行銷活動中移除。",
+        "removed_other": "已成功將促銷從行銷活動中移除。"
       },
       "add": {
+        "tipLabel": "提示：",
+        "tip": "您只能新增尚未指派給其他行銷活動的促銷。",
         "list": {
           "noRecordsMessage": "請先建立促銷。"
         }
       },
       "list": {
+        "noRecordsTitle": "尚無促銷",
         "noRecordsMessage": "行銷活動中沒有促銷。"
       }
     },
@@ -2801,6 +2929,16 @@
       "confirmation": "您即將刪除價格清單「{{title}}」。此操作無法復原。",
       "successToast": "價格清單「{{title}}」已成功刪除。"
     },
+    "list": {
+      "noRecords": {
+        "title": "尚無價格清單",
+        "message": "建立價格清單以設定特價與覆寫價格"
+      },
+      "noResults": {
+        "title": "沒有結果",
+        "message": "請嘗試變更篩選條件或搜尋關鍵字"
+      }
+    },
     "create": {
       "header": "建立價格清單",
       "subheader": "建立新的價格清單來管理您商品的價格。",
@@ -2810,6 +2948,10 @@
         "prices": "價格"
       },
       "successToast": "價格清單 {{title}} 已成功建立。",
+      "validation": {
+        "title": "請輸入標題",
+        "description": "請輸入說明"
+      },
       "products": {
         "list": {
           "noRecordsMessage": "請先建立商品。"
@@ -2828,6 +2970,19 @@
         "successToast": "價格清單配置已成功更新。"
       }
     },
+    "customerAvailability": {
+      "header": "顧客可用性",
+      "add": "新增顧客群組",
+      "list": {
+        "noRecordsTitle": "沒有顧客群組",
+        "noRecordsMessage": "新增顧客群組，以限制此價格清單適用的顧客。"
+      },
+      "edit": {
+        "header": "顧客可用性",
+        "description": "選擇價格清單應套用於哪些顧客群組。",
+        "successToast": "顧客可用性已成功更新。"
+      }
+    },
     "products": {
       "header": "商品",
       "actions": {
@@ -2836,26 +2991,30 @@
         "editPricesDisabled": "編輯價格前請先新增商品"
       },
       "delete": {
-        "confirmation_one": "您即將刪除價格清單中 {{count}} 個商品的價格。此操作無法復原。",
-        "confirmation_other": "您即將刪除價格清單中 {{count}} 個商品的價格。此操作無法復原。",
+        "confirmation_one": "您即將從價格清單中移除 {{count}} 個商品。此操作無法復原。",
+        "confirmation_other": "您即將從價格清單中移除 {{count}} 個商品。此操作無法復原。",
         "successToast_one": "已成功刪除 {{count}} 個商品的價格。",
         "successToast_other": "已成功刪除 {{count}} 個商品的價格。"
       },
       "add": {
         "successToast": "價格已成功新增到價格清單。",
         "alreadyInPriceList": "此商品已在價格清單中",
-        "noVariants": "此商品沒有任何款式"
+        "noVariants": "此商品沒有任何變體"
       },
       "edit": {
         "successToast": "價格已成功更新。",
         "header": "編輯 {{title}} 的價格",
-        "description": "更新此價格表中商品的價格。"
+        "description": "更新此價格清單中商品的價格。"
       }
     },
     "fields": {
       "priceOverrides": {
         "label": "價格覆寫",
         "header": "價格覆寫"
+      },
+      "owner": {
+        "label": "擁有者",
+        "marketplace": "Kayı.com"
       },
       "status": {
         "label": "狀態",
@@ -2864,6 +3023,10 @@
           "draft": "草稿",
           "expired": "已過期",
           "scheduled": "已排程"
+        },
+        "descriptions": {
+          "draft": "顧客將無法看到此價格清單",
+          "active": "顧客將可以看到此價格清單"
         }
       },
       "type": {
@@ -2955,10 +3118,14 @@
     "deleteUserWarning": "您即將刪除使用者 {{name}}。此操作無法復原。",
     "deleteUserSuccess": "使用者 {{name}} 已成功刪除",
     "invite": "邀請",
+    "inviteRolesTooltip": "若未選擇角色，使用者將以超級使用者角色受邀。",
     "status": {
       "active": "使用中",
-      "pending": "處理中"
+      "pending": "待處理"
     }
+  },
+  "roles": {
+    "domain": "角色"
   },
   "store": {
     "scheduledClosure": {
@@ -2992,7 +3159,7 @@
     "addCurrencies": "新增貨幣",
     "enableTaxInclusivePricing": "啟用含稅價格",
     "disableTaxInclusivePricing": "停用含稅價格",
-    "removeCurrencyWarning_one": "您即將從商店中移除 {{count}} 個貨幣。請確保在繼續之前已移除所有使用這些貨幣的價格。",
+    "removeCurrencyWarning_one": "您即將從商店中移除 {{count}} 個貨幣。請確保在繼續之前已移除所有使用該貨幣的價格。",
     "removeCurrencyWarning_other": "您即將從商店中移除 {{count}} 個貨幣。請確保在繼續之前已移除所有使用這些貨幣的價格。",
     "currencyAlreadyAdded": "此貨幣已加入您的商店。",
     "edit": {
@@ -3099,7 +3266,7 @@
     "outbound": "出貨",
     "priceType": "價格類型",
     "flatRate": "固定費率",
-    "calculated": "計算",
+    "calculated": "動態計算",
     "list": {
       "noRecordsMessage": "為您銷售的區域建立區域資料。"
     },
@@ -3198,7 +3365,26 @@
   "reservations": {
     "domain": "預留",
     "subtitle": "管理庫存項目的預留數量。",
-    "deleteWarning": "您即將刪除一筆預留。此操作無法復原。"
+    "deleteWarning": "您即將刪除一筆預留。此操作無法復原。",
+    "fields": {
+      "date": "日期",
+      "product": "商品",
+      "store": "商店"
+    },
+    "list": {
+      "noRecordsTitle": "尚無預留",
+      "noRecordsMessage": "建立預留以管理庫存項目的預留數量"
+    },
+    "delete": {
+      "title": "刪除預留",
+      "description": "您即將刪除一筆預留。這可能會影響您商店的庫存紀錄。繼續之前，請先確認商家已同意此變更，以免資料不一致。",
+      "lockedTitle": "刪除預留",
+      "lockedDescription": "此預留已連結至尚未出貨的訂單，因此無法刪除。"
+    },
+    "edit": {
+      "lockedTitle": "編輯預留",
+      "lockedDescription": "此預留已連結至尚未出貨的訂單，因此無法編輯。"
+    }
   },
   "salesChannels": {
     "domain": "銷售管道",
@@ -3255,7 +3441,7 @@
       "revoked": "已撤銷"
     },
     "type": {
-      "publishable": "發佈",
+      "publishable": "可發佈",
       "secret": "私密"
     },
     "create": {
@@ -3311,8 +3497,8 @@
       "copySuccessToast": "API 金鑰已複製到剪貼簿。"
     },
     "table": {
-      "lastUsedAtHeader": "最後使用於",
-      "createdAtHeader": "撤銷於"
+      "lastUsedAtHeader": "最後使用時間",
+      "createdAtHeader": "撤銷時間"
     },
     "fields": {
       "lastUsedAtLabel": "最後使用於",
@@ -3344,7 +3530,7 @@
     },
     "fields": {
       "value": {
-        "label": "變化 (以逗號分隔)",
+        "label": "值",
         "placeholder": "wrong_size",
         "tooltip": "此值應為退貨原因的唯一識別碼。"
       },
@@ -3360,9 +3546,18 @@
   },
   "login": {
     "forgotPassword": "忘記密碼？ - <0>重設</0>",
-    "title": "歡迎使用 Kayı.com",
-    "hint": "登入以存取帳戶區域",
-    "sessionExpired": "工作階段已過期"
+    "title": "歡迎回來！",
+    "hint": "登入您的管理員帳戶。",
+    "submit": "登入",
+    "sessionExpired": "工作階段已過期",
+    "invalidCredentials": "電子郵件或密碼錯誤，請再試一次。",
+    "showPassword": "顯示密碼",
+    "hidePassword": "隱藏密碼",
+    "validation": {
+      "emailRequired": "請輸入電子郵件",
+      "emailInvalid": "請輸入有效的電子郵件",
+      "passwordRequired": "請輸入密碼"
+    }
   },
   "invite": {
     "title": "歡迎使用 Kayı.com",
@@ -3374,7 +3569,7 @@
     "invalidInvite": "邀請無效或已過期。",
     "successTitle": "您的帳戶已註冊",
     "successHint": "立即開始使用 Kayı.com 管理後臺。",
-    "successAction": "開始使用 Kayı.com Admin",
+    "successAction": "開始使用 Kayı.com 管理後台",
     "invalidTokenTitle": "您的邀請令牌無效",
     "invalidTokenHint": "請嘗試請求新的邀請連結。",
     "passwordMismatch": "密碼不符合",
@@ -3468,7 +3663,7 @@
       "successToast": "商品類型「{{value}}」已成功刪除。"
     },
     "fields": {
-      "value": "變化 (以逗號分隔)"
+      "value": "值"
     }
   },
   "productTags": {
@@ -3488,7 +3683,7 @@
       "successToast": "商品標籤 {{value}} 已成功刪除。"
     },
     "fields": {
-      "value": "變化 (以逗號分隔)"
+      "value": "值"
     }
   },
   "notifications": {
@@ -3525,7 +3720,7 @@
     "to": "到",
     "beaware": "請注意",
     "loading": "載入中",
-    "updated": "更新於",
+    "updated": "更新時間",
     "selectValue": "選擇值",
     "selectValues": "選擇值"
   },
@@ -3577,7 +3772,7 @@
     "product_collections": "商品系列",
     "status": "狀態",
     "code": "代碼",
-    "value": "變化 (以逗號分隔)",
+    "value": "值",
     "disabled": "已停用",
     "dynamic": "動態",
     "normal": "一般",
@@ -3642,8 +3837,8 @@
     "createdAt": "建立於",
     "updatedAt": "更新於",
     "revokedAt": "撤銷於",
-    "true": "真",
-    "false": "假",
+    "true": "是",
+    "false": "否",
     "giftCard": "禮品卡",
     "tag": "標籤",
     "dateIssued": "發行日期",
@@ -3656,12 +3851,12 @@
     "length": "長度",
     "weight": "重量",
     "midCode": "MID 代碼",
-    "hsCode": "HS 編號",
+    "hsCode": "HS 代碼",
     "ean": "EAN",
     "upc": "UPC",
     "inventoryQuantity": "庫存數量",
     "barcode": "條碼",
-    "countryOfOrigin": "原產地國家",
+    "countryOfOrigin": "原產地",
     "material": "材質",
     "thumbnail": "縮圖",
     "sku": "SKU",
@@ -3675,7 +3870,7 @@
     "parent": "父項",
     "minSubtotal": "最低小計",
     "maxSubtotal": "最高小計",
-    "shippingProfile": "運送配置",
+    "shippingProfile": "運送設定檔",
     "summary": "摘要",
     "details": "詳情",
     "label": "標籤",
@@ -3685,7 +3880,7 @@
     "startDate": "開始日期",
     "endDate": "結束日期",
     "draft": "草稿",
-    "values": "變化 (以逗號分隔)",
+    "values": "值",
     "yes": "真",
     "no": "假",
     "commission": "佣金",
@@ -3712,19 +3907,19 @@
     "category_ids": "分類",
     "allow_backorder": "允許預購",
     "manage_inventory": "管理庫存",
-    "variant_rank": "款式順序",
+    "variant_rank": "變體順序",
     "attribute_values": "屬性數值",
     "isbn": "ISBN",
     "asin": "ASIN",
     "gtin": "GTIN",
     "inventory_quantity": "庫存數量",
     "requires_shipping": "需要運送",
-    "variant_attributes": "款式屬性",
+    "variant_attributes": "變體屬性",
     "product_attributes": "商品屬性",
     "type_id": "類型",
     "collection_id": "商品系列",
     "handleAutoGeneratedHint": "根據名稱自動產生。僅限小寫字母、數字和連字號——此欄位無法直接編輯。",
-    "handleInvalidFormat": "Handle 只能包含小寫字母、數字和連字號"
+    "handleInvalidFormat": "識別碼只能包含小寫字母、數字和連字號"
   },
   "dateTime": {
     "years_one": "年",
@@ -3750,7 +3945,7 @@
     "status": {
       "paid": "已付款",
       "processing": "處理中",
-      "pending": "處理中",
+      "pending": "待處理",
       "failed": "失敗",
       "canceled": "已取消"
     }
@@ -3835,10 +4030,10 @@
       "category": "分類",
       "categories": "分類",
       "productAttribute": "商品屬性",
-      "values": "變化 (以逗號分隔)",
+      "values": "值",
       "possibleValues": "可選值",
       "value": "變化 (以逗號分隔)",
-      "variantAxis": "用於款式變化",
+      "variantAxis": "用於產生變體",
       "rank": "排序",
       "metadata": "中繼資料",
       "isRequired": "必填屬性",
@@ -3867,6 +4062,57 @@
       "categoryInheritance": "子分類將繼承此屬性。"
     },
     "handleTooltip": "根據屬性名稱自動產生。僅限小寫字母、數字和連字號——此欄位無法直接編輯。"
+  },
+  "reviews": {
+    "domain": "評價",
+    "subtitle": "管理顧客對您商店的評價。",
+    "fields": {
+      "id": "評價 ID",
+      "rating": "評分",
+      "content": "內容",
+      "store": "商店",
+      "customer": "顧客",
+      "date": "日期",
+      "status": "狀態",
+      "response": "回覆"
+    },
+    "status": {
+      "pending": "待審核",
+      "published": "已發佈",
+      "rejected": "已拒絕"
+    },
+    "filters": {
+      "stars_one": "{{count}} 顆星",
+      "stars_other": "{{count}} 顆星"
+    },
+    "list": {
+      "noRecordsTitle": "尚無評價",
+      "noRecordsMessage": "顧客提交評價後，會顯示在這裡"
+    },
+    "detail": {
+      "customer": "顧客",
+      "order": "訂單",
+      "store": "商店"
+    },
+    "edit": {
+      "header": "編輯評價",
+      "description": "編輯評價的狀態與評分。",
+      "successToast": "評價已成功更新。"
+    },
+    "respond": {
+      "action": "回覆",
+      "header": "回覆評價",
+      "description": "為此評價新增回覆。",
+      "label": "回覆",
+      "successToast": "回覆已成功送出。",
+      "alreadyResponded": "此評價已有回覆。",
+      "validation": "請撰寫回覆"
+    },
+    "delete": {
+      "confirmTitle": "刪除評價",
+      "confirmDescription": "您即將刪除此評價。此操作無法復原。",
+      "successToast": "評價已成功刪除。"
+    }
   },
   "refundReasons": {
     "domain": "退款原因",
@@ -3973,8 +4219,8 @@
     },
     "status": {
       "open": "使用中",
-      "pending_approval": "處理中",
-      "pendingApproval": "處理中",
+      "pending_approval": "待核准",
+      "pendingApproval": "待核准",
       "suspended": "停用",
       "terminated": "已終止"
     },
@@ -4152,5 +4398,77 @@
       "enabledToast": "佣金費率已成功啟用",
       "disabledToast": "佣金費率已成功停用"
     }
+  },
+  "permissions": {
+    "noAccess": "您沒有檢視此內容的權限。",
+    "accessDenied": {
+      "title": "拒絕存取",
+      "description": "您沒有存取此頁面的權限。",
+      "requiredPermission": "所需權限：{{permission}}",
+      "action": "您沒有執行此操作的權限。"
+    },
+    "requiredPermissions": {
+      "title": "所需權限",
+      "none": "此檢視未宣告任何權限。",
+      "anyOf": "符合任一項",
+      "allOf": "須全部符合",
+      "source": "來源：{{source}}"
+    },
+    "resources": {
+      "customer": "顧客",
+      "customer_group": "顧客群組",
+      "order": "訂單",
+      "product": "商品",
+      "product_category": "商品分類",
+      "product_collection": "商品系列",
+      "product_tag": "商品標籤",
+      "product_type": "商品類型",
+      "inventory": "庫存",
+      "reservation": "預留",
+      "promotion": "促銷",
+      "campaign": "行銷活動",
+      "price_list": "價格清單",
+      "region": "區域",
+      "store": "商店",
+      "user": "使用者",
+      "rbac_role": "角色",
+      "rbac_policy": "政策",
+      "sales_channel": "銷售管道",
+      "stock_location": "庫存地點",
+      "shipping_profile": "運送設定檔",
+      "shipping_option": "運送選項",
+      "tax_region": "稅務區域",
+      "api_key": "API 金鑰",
+      "return_reason": "退貨原因",
+      "refund_reason": "退款原因",
+      "workflow": "工作流程",
+      "translation": "翻譯"
+    },
+    "actions": {
+      "read": "讀取",
+      "create": "建立",
+      "update": "更新",
+      "delete": "刪除"
+    }
+  },
+  "richTextEditor": {
+    "bold": "粗體",
+    "italic": "斜體",
+    "underline": "底線",
+    "strike": "刪除線",
+    "paragraph": "段落",
+    "heading2": "標題",
+    "heading3": "副標題",
+    "bulletList": "項目符號清單",
+    "orderedList": "編號清單",
+    "blockquote": "引言",
+    "link": "連結",
+    "linkPlaceholder": "https://example.com",
+    "removeLink": "移除連結",
+    "image": "插入圖片",
+    "uploadingImage": "正在上傳圖片...",
+    "imageUploadFailed": "圖片上傳失敗",
+    "undo": "復原",
+    "redo": "重做"
   }
 }
