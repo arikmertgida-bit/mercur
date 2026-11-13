@@ -180,9 +180,9 @@
       "noRecords": "لم يتم العثور على طلبات مجموعات"
     },
     "tags": {
-      "navLabel": "الوسوم",
-      "heading": "طلبات الوسوم",
-      "noRecords": "لم يتم العثور على طلبات وسوم"
+      "navLabel": "العلامات",
+      "heading": "طلبات العلامات",
+      "noRecords": "لم يتم العثور على طلبات علامات"
     },
     "types": {
       "navLabel": "الأنواع",
@@ -197,7 +197,7 @@
     "typeLabels": {
       "product_category": "فئة",
       "product_collection": "مجموعة",
-      "product_tag": "وسم",
+      "product_tag": "علامة",
       "product_type": "نوع",
       "return_reason": "سبب الإرجاع"
     },
@@ -264,7 +264,7 @@
     "domain": "التقييمات",
     "noRecords": "لم يتم العثور على تقييمات",
     "columns": {
-      "rating": "التقييم",
+      "rating": "الدرجة",
       "reference": "المرجع",
       "customerNote": "ملاحظة العميل"
     }

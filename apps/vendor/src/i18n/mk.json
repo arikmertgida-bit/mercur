@@ -68,7 +68,7 @@
     "delete": "Избриши",
     "deleteForEveryone": "Избриши за сите",
     "close": "Затвори",
-    "customer": "Купец",
+    "customer": "Клиент",
     "store": "Продавница",
     "back": "Назад",
     "participant": "учесник",
@@ -97,7 +97,7 @@
     "domain": "Барања",
     "status": {
       "draft": "Нацрт",
-      "pending": "Чека",
+      "pending": "Во очекување",
       "accepted": "Прифатено",
       "rejected": "Одбиено"
     },
@@ -162,7 +162,7 @@
         "adminNote": "Забелешка од администраторот"
       },
       "status": {
-        "pending": "Во исчекување",
+        "pending": "Во очекување",
         "resolved_deleted": "Отстранета",
         "resolved_kept": "Прегледана, не е отстранета"
       },
