@@ -173,9 +173,9 @@
     "enabled": "Ativado",
     "disabled": "Desativado",
     "expired": "Expirado",
-    "active": "Ativa",
-    "revoked": "Revogada",
-    "new": "Nova",
+    "active": "Ativo",
+    "revoked": "Revogado",
+    "new": "Novo",
     "modified": "Modificado",
     "added": "Adicionado",
     "removed": "Removido",
@@ -474,7 +474,7 @@
       "lastTwelveMonths": "Últimos 12 meses",
       "custom": "Personalizado",
       "from": "De",
-      "to": "Para",
+      "to": "Até",
       "starting": "A começar",
       "ending": "A terminar"
     },
@@ -616,9 +616,9 @@
         },
         "productVariants": {
           "label": "Variantes de produto",
-          "hint": "Esta ordenação afetará a ordem das variantes na loja.",
+          "hint": "Esta ordenação afetará a ordem de apresentação das variantes.",
           "alert": "Adicione opções para criar variantes.",
-          "tip": "As variantes desmarcadas não serão criadas. Pode sempre criar e editar variantes depois, mas esta lista reflete as variantes nas opções do produto.",
+          "tip": "As variantes desmarcadas não serão criadas. Pode sempre criar e editar variantes depois, mas esta lista reflete as variações nos atributos do produto.",
           "noAxes": "Marque atributos como \"Usar para variantes\" na etapa Atributos para gerar variantes."
         },
         "productOptions": {
@@ -642,9 +642,9 @@
         "requiredAttributes": "Atributos obrigatórios",
         "requiredAttributesHint": "Estes atributos são obrigatórios no marketplace. Selecione-os antes de continuar.",
         "useForVariants": "Usar para variantes",
-        "useForVariantsDescription": "Se marcado, poderás criar variantes usando este atributo. Caso contrário, o atributo será usado apenas para fins informativos.",
+        "useForVariantsDescription": "Se estiver marcado, poderá criar variantes utilizando este atributo. Caso contrário, o atributo será utilizado apenas para fins informativos.",
         "tip": "Dica",
-        "variantAxisTip": "Este atributo criará variantes. Pode defini-las na próxima etapa.",
+        "variantAxisTip": "Este atributo irá criar variantes. Poderá defini-las no passo seguinte.",
         "editVariantAxisTip": "Poderá criar variantes utilizando este atributo.",
         "warning": "Aviso",
         "editWarning": "As alterações a este atributo podem afetar as variantes ou detalhes de produto existentes. Reveja as suas variantes e os detalhes do produto após guardar.",
@@ -709,7 +709,7 @@
     "editPrices": "Editar preços",
     "media": {
       "label": "Multimédia",
-      "editHint": "Adicione multimédia para a destacar na loja.",
+      "editHint": "Adicione multimédia ao produto para o destacar na loja.",
       "makeThumbnail": "Definir como miniatura",
       "uploadImagesLabel": "Carregar imagens",
       "uploadImagesHint": "Arraste e largue imagens aqui ou clique para carregar.",
@@ -1852,7 +1852,7 @@
         "partiallyDelivered": "Parcialmente entregue",
         "partiallyReturned": "Parcialmente devolvido",
         "returned": "Devolvido",
-        "canceled": "Cancelada",
+        "canceled": "Cancelado",
         "requiresAction": "Requer ação",
         "awaitingPickup": "Aguarda recolha",
         "awaitingShipping": "Aguarda envio",
@@ -2169,7 +2169,7 @@
         }
       },
       "delete": {
-        "confirmation": "Está prestes a eliminar a opção de envio {{name}}. Esta ação não pode ser anulada.",
+        "confirmation": "Está prestes a eliminar a opção de envio \"{{name}}\". Esta ação não pode ser anulada.",
         "successToast": "Opção de envio {{name}} eliminada com sucesso."
       },
       "edit": {
@@ -2432,7 +2432,7 @@
         "successToast": "Taxa atualizada com sucesso."
       },
       "delete": {
-        "confirmation": "Está prestes a eliminar a taxa fiscal {{name}}. Esta ação não pode ser anulada.",
+        "confirmation": "Está prestes a eliminar a taxa de imposto \"{{name}}\". Esta ação não pode ser anulada.",
         "successToast": "Taxa eliminada com sucesso."
       }
     },
@@ -2570,7 +2570,7 @@
         "description": "Aplica um desconto percentual sobre o valor total da encomenda"
       },
       "buyGet": {
-        "title": "Compre X ganhe Y",
+        "title": "Compre X, receba Y",
         "description": "Compre X produto(s), receba Y produto(s)"
       }
     },
@@ -2770,8 +2770,8 @@
           "description": "Uma promoção normal"
         },
         "buyget": {
-          "title": "Compre e ganhe",
-          "description": "Promoção compra X e recebe Y"
+          "title": "Compre X, receba Y",
+          "description": "Promoção «compre X, receba Y»"
         }
       },
       "allocation": {
@@ -2929,7 +2929,7 @@
     },
     "promotions": {
       "remove": {
-        "title": "Remover promoção da campanha",
+        "title": "Remover promoções",
         "description": "Está prestes a remover {{count}} promoção(ões) da campanha. Esta ação não pode ser anulada."
       },
       "alreadyAdded": "Esta promoção já foi adicionada à campanha.",

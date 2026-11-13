@@ -3,7 +3,7 @@
     "import": "Impor",
     "export": "Ekspor",
     "done": "Selesai",
-    "importHeader": "Impor Produk",
+    "importHeader": "Impor produk",
     "importDescription": "Unggah file CSV untuk mengimpor produk ke toko Anda.",
     "importHint": "Unggah file CSV yang berisi produk Anda. Anda dapat",
     "downloadTemplate": "mengunduh template",
@@ -11,23 +11,23 @@
     "uploadHint": "Hanya file .csv yang didukung",
     "importingActivity": "Mengimpor produk...",
     "importSuccessToast": "Berhasil mengimpor {{count}} produk.",
-    "importCompleteTitle": "Impor Selesai",
+    "importCompleteTitle": "Impor selesai",
     "importCompleteDescription": "{{count}} produk berhasil dibuat.",
-    "exportHeader": "Ekspor Produk",
+    "exportHeader": "Ekspor produk",
     "exportDescription": "Ekspor produk Anda sebagai file CSV.",
     "exportBody": "Tindakan ini akan mengekspor semua produk Anda ke file CSV. Unduhan akan dimulai secara otomatis setelah ekspor siap.",
     "exportSuccessToast": "Produk berhasil diekspor.",
     "importErrorFallback": "Terjadi kesalahan saat mengimpor produk."
   },
   "customFields": {
-    "title": "Kolom Kustom",
+    "title": "Kolom kustom",
     "description": "Kelola kolom kustom dan konfigurasi Anda",
     "noFields": "Belum ada kolom kustom yang dikonfigurasi"
   },
   "messenger": {
-    "supportTeam": "Tim Dukungan",
+    "supportTeam": "Tim dukungan",
     "support": "Dukungan",
-    "adminChatTitle": "Obrolan dengan Admin",
+    "adminChatTitle": "Obrolan dengan admin",
     "adminChatDescription": "Kirim pesan ke tim dukungan marketplace dan lihat riwayat percakapan Anda.",
     "unknown": "Tidak dikenal",
     "imageMessage": "Gambar",
@@ -53,11 +53,11 @@
   },
   "messages": {
     "domain": "Pesan",
-    "management": "Tim Dukungan",
-    "helpSupport": "Tim Dukungan",
+    "management": "Tim dukungan",
+    "helpSupport": "Tim dukungan",
     "me": "Saya",
-    "productQuestion": "Pertanyaan Produk",
-    "storeQuestion": "Pertanyaan Toko",
+    "productQuestion": "Pertanyaan produk",
+    "storeQuestion": "Pertanyaan toko",
     "imageUploadFailed": "Gagal mengunggah gambar",
     "blockedReasonEmail": "Pesan tidak dapat dikirim: berbagi alamat email tidak diizinkan.",
     "blockedReasonPhone": "Pesan tidak dapat dikirim: berbagi nomor telepon tidak diizinkan.",
@@ -75,15 +75,15 @@
     "noMessages": "Tidak ada pesan",
     "chatOptions": "Opsi obrolan",
     "deleteOnlyForMe": "Hapus hanya untuk saya",
-    "storeContext": "Pertanyaan Toko",
+    "storeContext": "Pertanyaan toko",
     "product": "Produk",
     "deleteConfirmTitle": "Hapus pesan",
     "deleteConfirmDesc": "Apakah Anda yakin ingin menghapus pesan ini?",
     "error": "Tidak dapat mengambil informasi pengguna.",
-    "supportName": "Tim Dukungan",
-    "supportSubject": "Obrolan Dukungan",
+    "supportName": "Tim dukungan",
+    "supportSubject": "Obrolan dukungan",
     "emptyState": "Belum ada pesan. Mulai percakapan.",
-    "viewPromotion": "Lihat Promosi",
+    "viewPromotion": "Lihat promosi",
     "imageAlt": "Gambar",
     "placeholder": "Ketik pesan...",
     "send": "Kirim pesan",
@@ -109,64 +109,64 @@
     },
     "categories": {
       "navLabel": "Kategori",
-      "heading": "Permintaan Kategori",
+      "heading": "Permintaan kategori",
       "noRecords": "Tidak ada permintaan kategori ditemukan",
       "create": {
-        "heading": "Minta Kategori",
+        "heading": "Minta kategori",
         "description": "Kirim permintaan untuk membuat kategori produk baru.",
         "successToast": "Permintaan kategori berhasil dibuat"
       }
     },
     "collections": {
       "navLabel": "Koleksi",
-      "heading": "Permintaan Koleksi",
+      "heading": "Permintaan koleksi",
       "noRecords": "Tidak ada permintaan koleksi ditemukan",
       "create": {
-        "heading": "Minta Koleksi",
+        "heading": "Minta koleksi",
         "description": "Kirim permintaan untuk membuat koleksi produk baru.",
         "successToast": "Permintaan koleksi berhasil dibuat"
       }
     },
     "tags": {
       "navLabel": "Tag",
-      "heading": "Permintaan Tag",
+      "heading": "Permintaan tag",
       "noRecords": "Tidak ada permintaan tag ditemukan",
       "create": {
-        "heading": "Minta Tag",
+        "heading": "Minta tag",
         "description": "Kirim permintaan untuk membuat tag produk baru.",
         "successToast": "Permintaan tag berhasil dibuat"
       }
     },
     "types": {
       "navLabel": "Jenis",
-      "heading": "Permintaan Jenis",
+      "heading": "Permintaan jenis",
       "noRecords": "Tidak ada permintaan jenis ditemukan",
       "create": {
-        "heading": "Minta Tipe",
-        "description": "Kirim permintaan untuk membuat tipe produk baru.",
-        "successToast": "Permintaan tipe berhasil dibuat"
+        "heading": "Minta jenis",
+        "description": "Kirim permintaan untuk membuat jenis produk baru.",
+        "successToast": "Permintaan jenis berhasil dibuat"
       }
     },
     "returnReasons": {
-      "navLabel": "Alasan Pengembalian",
-      "heading": "Permintaan Alasan Pengembalian",
+      "navLabel": "Alasan pengembalian",
+      "heading": "Permintaan alasan pengembalian",
       "noRecords": "Tidak ada permintaan alasan pengembalian ditemukan"
     },
     "reviews": {
       "navLabel": "Ulasan",
-      "heading": "Laporan Ulasan",
+      "heading": "Laporan ulasan",
       "subtitle": "Ulasan yang telah Anda laporkan kepada admin untuk moderasi.",
       "columns": {
         "reason": "Alasan",
         "status": "Status",
-        "adminNote": "Catatan Admin"
+        "adminNote": "Catatan admin"
       },
       "status": {
-        "pending": "Menunggu",
+        "pending": "Tertunda",
         "resolved_deleted": "Dihapus",
-        "resolved_kept": "Ditinjau, Tidak Dihapus"
+        "resolved_kept": "Ditinjau, tidak dihapus"
       },
-      "reReport": "Laporkan Lagi",
+      "reReport": "Laporkan lagi",
       "reReportSuccess": "Laporan dikirim ulang.",
       "reReportError": "Laporan tidak dapat dikirim.",
       "noRecords": "Tidak ada laporan ulasan ditemukan"
@@ -177,10 +177,10 @@
     "domain": "Ulasan",
     "noRecords": "Tidak ada ulasan ditemukan",
     "columns": {
-      "rating": "Peringkat",
+      "rating": "Penilaian",
       "reference": "Referensi",
       "customerNote": "Catatan pelanggan",
-      "replyStatus": "Status Balasan",
+      "replyStatus": "Status balasan",
       "createdAt": "Dibuat pada",
       "updatedAt": "Diperbarui pada"
     },
@@ -189,21 +189,21 @@
     "hiddenPhoto": "Disembunyikan",
     "status": {
       "answered": "Dibalas",
-      "awaitingReply": "Menunggu Balasan"
+      "awaitingReply": "Menunggu balasan"
     },
     "reply": {
       "title": "Balasan",
       "placeholder": "Tulis balasan untuk ulasan pelanggan...",
-      "submit": "Kirim Balasan",
+      "submit": "Kirim balasan",
       "successToast": "Balasan berhasil dikirim.",
       "errorToast": "Balasan tidak dapat dikirim.",
       "attachImage": "Lampirkan gambar"
     },
     "report": {
-      "title": "Laporkan ke Admin",
+      "title": "Laporkan ke admin",
       "description": "Laporkan ulasan ini ke admin marketplace untuk moderasi.",
       "placeholder": "Jelaskan mengapa Anda melaporkan ulasan ini...",
-      "submit": "Kirim Laporan",
+      "submit": "Kirim laporan",
       "successToast": "Laporan dikirim ke admin.",
       "errorToast": "Laporan tidak dapat dikirim."
     }
@@ -212,8 +212,8 @@
     "domain": "Pengikut",
     "noRecords": "Belum ada pengikut",
     "columns": {
-      "followedAt": "Tanggal Mengikuti",
-      "reviewsAverage": "Rating Rata-rata"
+      "followedAt": "Tanggal mengikuti",
+      "reviewsAverage": "Penilaian rata-rata"
     },
     "count": "Pengikut: {{count}}"
   },
@@ -221,12 +221,12 @@
     "domain": "Dasbor",
     "pageTitle": "Dasbor",
     "orders": {
-      "title": "Ringkasan Pesanan",
+      "title": "Ringkasan pesanan",
       "subtitle": "Jumlah pesanan langsung untuk toko Anda",
-      "today": "Hari Ini",
-      "thisWeek": "Minggu Ini",
-      "thisMonth": "Bulan Ini",
-      "earningsToday": "Pendapatan Hari Ini"
+      "today": "Hari ini",
+      "thisWeek": "Minggu ini",
+      "thisMonth": "Bulan ini",
+      "earningsToday": "Pendapatan hari ini"
     },
     "analytics": {
       "title": "Analitik",
@@ -239,18 +239,18 @@
       "updateNotice": "Data analitik diperbarui setiap 12 jam"
     },
     "lowStock": {
-      "title": "Stok Menipis",
+      "title": "Stok menipis",
       "subtitle": "Produk dengan stok yang menipis",
       "noRecords": "Tidak ada produk dengan stok menipis",
       "product": "Produk",
       "sku": "SKU",
       "available": "Tersedia",
-      "viewInventory": "Lihat Inventaris"
+      "viewInventory": "Lihat inventaris"
     },
     "quickAccess": {
-      "returns": "Retur",
+      "returns": "Pengembalian",
       "followers": "Pengikut",
-      "unreadMessages": "Pesan Belum Dibaca"
+      "unreadMessages": "Pesan belum dibaca"
     }
   }
 }

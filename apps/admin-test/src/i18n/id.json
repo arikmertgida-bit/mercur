@@ -1,6 +1,6 @@
 {
   "customFields": {
-    "title": "Kolom Kustom",
+    "title": "Kolom kustom",
     "description": "Kelola kolom kustom dan konfigurasi Anda",
     "noFields": "Belum ada kolom kustom yang dikonfigurasi"
   },
@@ -10,7 +10,7 @@
     "delete": "Hapus"
   },
   "productReports": {
-    "domain": "Laporan Produk",
+    "domain": "Laporan produk",
     "subtitle": "Produk yang ditandai pelanggan untuk ditinjau",
     "filterAll": "Semua status",
     "columns": {
@@ -57,7 +57,7 @@
     "deleteError": "Gagal menghapus laporan"
   },
   "wishlistModeration": {
-    "domain": "Daftar Keinginan",
+    "domain": "Daftar keinginan",
     "subtitle": "Daftar keinginan pelanggan, untuk tujuan moderasi",
     "noProducts": "Tidak ada produk",
     "columns": {
@@ -73,7 +73,7 @@
     "deleteError": "Gagal menghapus daftar keinginan"
   },
   "reportedImages": {
-    "domain": "Gambar Dilaporkan",
+    "domain": "Gambar dilaporkan",
     "subtitle": "Tinjau gambar yang ditandai pelanggan sebagai tidak pantas",
     "filterAll": "Semua status",
     "imageRemoved": "Gambar dihapus",
@@ -124,7 +124,7 @@
     "support": "Dukungan",
     "direct": "Langsung",
     "unknown": "Tidak dikenal",
-    "supportTeam": "Tim Dukungan",
+    "supportTeam": "Tim dukungan",
     "connected": "Terhubung",
     "disconnected": "Terputus",
     "conversationOptions": "Opsi percakapan"
@@ -140,12 +140,12 @@
     "imageUploadFailed": "Gagal mengunggah gambar",
     "deleteConfirmTitle": "Hapus pesan",
     "deleteConfirmDesc": "Apakah Anda yakin ingin menghapus pesan ini?",
-    "productQuestion": "Pertanyaan Produk",
-    "storeQuestion": "Pertanyaan Toko",
+    "productQuestion": "Pertanyaan produk",
+    "storeQuestion": "Pertanyaan toko",
     "customerMessage": "Pesan pelanggan",
     "sellerMessage": "Pesan penjual",
     "directMessage": "Pesan langsung",
-    "storeContext": "Pertanyaan Toko",
+    "storeContext": "Pertanyaan toko",
     "back": "Kembali",
     "failedToGetUserInfo": "Tidak dapat mengambil informasi pengguna.",
     "send": "Kirim pesan",
@@ -171,27 +171,27 @@
     },
     "categories": {
       "navLabel": "Kategori",
-      "heading": "Permintaan Kategori",
+      "heading": "Permintaan kategori",
       "noRecords": "Tidak ada permintaan kategori ditemukan"
     },
     "collections": {
       "navLabel": "Koleksi",
-      "heading": "Permintaan Koleksi",
+      "heading": "Permintaan koleksi",
       "noRecords": "Tidak ada permintaan koleksi ditemukan"
     },
     "tags": {
       "navLabel": "Tag",
-      "heading": "Permintaan Tag",
+      "heading": "Permintaan tag",
       "noRecords": "Tidak ada permintaan tag ditemukan"
     },
     "types": {
       "navLabel": "Jenis",
-      "heading": "Permintaan Jenis",
+      "heading": "Permintaan jenis",
       "noRecords": "Tidak ada permintaan jenis ditemukan"
     },
     "returnReasons": {
-      "navLabel": "Alasan Pengembalian",
-      "heading": "Permintaan Alasan Pengembalian",
+      "navLabel": "Alasan pengembalian",
+      "heading": "Permintaan alasan pengembalian",
       "noRecords": "Tidak ada permintaan alasan pengembalian ditemukan"
     },
     "typeLabels": {
@@ -199,7 +199,7 @@
       "product_collection": "Koleksi",
       "product_tag": "Tag",
       "product_type": "Jenis",
-      "return_reason": "Alasan Pengembalian"
+      "return_reason": "Alasan pengembalian"
     },
     "fields": {
       "name": "Nama",
@@ -230,23 +230,23 @@
     },
     "reviews": {
       "navLabel": "Ulasan",
-      "heading": "Laporan Ulasan",
+      "heading": "Laporan ulasan",
       "noRecords": "Tidak ada laporan ulasan ditemukan",
       "columns": {
         "seller": "Penjual",
         "reason": "Alasan",
         "status": "Status",
-        "adminNote": "Catatan Admin"
+        "adminNote": "Catatan admin"
       },
       "status": {
         "pending": "Tertunda",
         "resolved_deleted": "Dihapus",
-        "resolved_kept": "Ditinjau, Tidak Dihapus"
+        "resolved_kept": "Ditinjau, tidak dihapus"
       },
       "detail": {
         "reportHeading": "Laporan",
         "reviewHeading": "Ulasan",
-        "customerNote": "Catatan Pelanggan",
+        "customerNote": "Catatan pelanggan",
         "resolveHeading": "Selesaikan",
         "rejectAction": "Tolak",
         "defaultRejectNote": "Ditinjau, tidak dihapus. Jika Anda tidak setuju dengan keputusan kami, Anda dapat mengirim laporan lagi.",
@@ -273,24 +273,24 @@
     "domain": "Dasbor",
     "pageTitle": "Dasbor",
     "orders": {
-      "title": "Ringkasan Pesanan",
+      "title": "Ringkasan pesanan",
       "subtitle": "Jumlah pesanan langsung di seluruh marketplace",
-      "today": "Hari Ini",
-      "thisWeek": "Minggu Ini",
-      "thisMonth": "Bulan Ini",
-      "earningsToday": "Pendapatan Hari Ini"
+      "today": "Hari ini",
+      "thisWeek": "Minggu ini",
+      "thisMonth": "Bulan ini",
+      "earningsToday": "Pendapatan hari ini"
     },
     "totals": {
       "products": "Produk",
       "sellers": "Penjual",
       "customers": "Pelanggan",
-      "lowStock": "Barang Stok Menipis"
+      "lowStock": "Barang stok menipis"
     },
     "analytics": {
       "title": "Analitik",
       "subtitle": "Pantau performa marketplace dari waktu ke waktu",
       "orders": "Pesanan",
-      "commissionEarnings": "Pendapatan Komisi",
+      "commissionEarnings": "Pendapatan komisi",
       "noData": "Belum ada data",
       "updatedAt": "Terakhir diperbarui: {{date}}",
       "updatePending": "Belum dihitung",

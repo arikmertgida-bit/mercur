@@ -3674,8 +3674,8 @@
     },
     "fields": {
       "lastUsedAtLabel": "آخر استخدام في",
-      "revokedByLabel": "تم الإلغاء بواسطة",
-      "revokedAtLabel": "تم الإلغاء في",
+      "revokedByLabel": "تم الإبطال بواسطة",
+      "revokedAtLabel": "تم الإبطال في",
       "createdByLabel": "تم الإنشاء بواسطة",
       "tokenLabel": "الرمز المميز"
     }
@@ -4012,7 +4012,7 @@
     "product": "المنتج",
     "createdAt": "تم الإنشاء في",
     "updatedAt": "تم التحديث في",
-    "revokedAt": "تم الإلغاء في",
+    "revokedAt": "تم الإبطال في",
     "true": "صحيح",
     "false": "خطأ",
     "giftCard": "بطاقة هدايا",

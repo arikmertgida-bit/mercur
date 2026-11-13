@@ -31,7 +31,7 @@
     "disabled": "Désactivé",
     "expired": "Expiré",
     "active": "Actif",
-    "revoked": "Revoqué",
+    "revoked": "Révoqué",
     "new": "Nouveau",
     "modified": "Modifié",
     "added": "Ajouté",
@@ -3488,7 +3488,7 @@
     },
     "status": {
       "active": "Active",
-      "revoked": "Revoqué"
+      "revoked": "Révoqué"
     },
     "type": {
       "publishable": "Publiable",
@@ -3555,8 +3555,8 @@
     },
     "fields": {
       "lastUsedAtLabel": "Dernière utilisation",
-      "revokedByLabel": "Annuler par",
-      "revokedAtLabel": "Annuler à",
+      "revokedByLabel": "Révoqué par",
+      "revokedAtLabel": "Révoqué le",
       "createdByLabel": "Créée par"
     }
   },
@@ -3891,7 +3891,7 @@
     "product": "Produit",
     "createdAt": "Créé",
     "updatedAt": "Mis à jour",
-    "revokedAt": "Annulé à",
+    "revokedAt": "Révoqué le",
     "true": "Vrai",
     "false": "Faux",
     "giftCard": "Carte cadeau",

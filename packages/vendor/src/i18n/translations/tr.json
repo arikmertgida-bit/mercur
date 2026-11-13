@@ -3853,7 +3853,7 @@
     "product": "Ürün",
     "createdAt": "Oluşturulma",
     "updatedAt": "Güncellenme",
-    "revokedAt": "Geri alınma",
+    "revokedAt": "İptal zamanı",
     "true": "Doğru",
     "false": "Yanlış",
     "giftCard": "Hediye Kartı",

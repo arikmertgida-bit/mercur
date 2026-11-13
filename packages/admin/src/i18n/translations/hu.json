@@ -3502,8 +3502,8 @@
     },
     "fields": {
       "lastUsedAtLabel": "Utolsó használat ekkor",
-      "revokedByLabel": "Visszavonva által",
-      "revokedAtLabel": "Visszavonva ekkor",
+      "revokedByLabel": "Visszavonta",
+      "revokedAtLabel": "Visszavonás ideje",
       "createdByLabel": "Létrehozva által",
       "tokenLabel": "Token"
     }
@@ -3836,7 +3836,7 @@
     "product": "Termék",
     "createdAt": "Létrehozva",
     "updatedAt": "Frissítve",
-    "revokedAt": "Visszavonva ekkor",
+    "revokedAt": "Visszavonás ideje",
     "true": "Igaz",
     "false": "Hamis",
     "giftCard": "Ajándékkártya",

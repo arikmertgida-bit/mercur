@@ -3702,8 +3702,8 @@
     },
     "fields": {
       "lastUsedAtLabel": "Ostatnio używany o godz",
-      "revokedByLabel": "Odwołane przez",
-      "revokedAtLabel": "Odwołane o godz",
+      "revokedByLabel": "Unieważniony przez",
+      "revokedAtLabel": "Data unieważnienia",
       "createdByLabel": "Stworzony przez"
     }
   },
@@ -4302,7 +4302,7 @@
     "product": "Produkt",
     "createdAt": "Utworzono",
     "updatedAt": "Zaktualizowano",
-    "revokedAt": "Odwołane o godz",
+    "revokedAt": "Data unieważnienia",
     "true": "Prawda",
     "false": "Fałsz",
     "giftCard": "Karta podarunkowa",
