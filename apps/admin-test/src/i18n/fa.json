@@ -22,7 +22,7 @@
     "status": {
       "pending": "در انتظار",
       "resolved": "حل شده",
-      "dismissed": "نادیده گرفته شد"
+      "dismissed": "نادیده گرفته شده"
     },
     "reasons": {
       "inaccurate_product_details": "جزئیات نادرست محصول",
@@ -160,8 +160,8 @@
     "status": {
       "draft": "پیش‌نویس",
       "pending": "در انتظار",
-      "accepted": "پذیرفته شد",
-      "rejected": "رد شد"
+      "accepted": "پذیرفته شده",
+      "rejected": "رد شده"
     },
     "filters": {
       "status": "وضعیت"
@@ -209,7 +209,7 @@
       "internal": "داخلی",
       "title": "عنوان",
       "value": "مقدار",
-      "label": "برچسب"
+      "label": "نام نمایشی"
     },
     "values": {
       "yes": "بله",
@@ -221,7 +221,7 @@
       "reject": "رد کردن",
       "acceptPromptTitle": "پذیرفتن درخواست",
       "acceptPromptDescription": "آیا مطمئن هستید که می‌خواهید این درخواست را بپذیرید؟ این عملیات موجودیت مربوطه را ایجاد خواهد کرد.",
-      "rejectPromptTitle": "رد کردن درخواست",
+      "rejectPromptTitle": "رد درخواست",
       "rejectPromptDescription": "آیا مطمئن هستید که می‌خواهید این درخواست را رد کنید؟ این عملیات قابل بازگشت نیست.",
       "acceptSuccess": "درخواست پذیرفته شد",
       "rejectSuccess": "درخواست رد شد",
@@ -248,7 +248,7 @@
         "reviewHeading": "نظر",
         "customerNote": "یادداشت مشتری",
         "resolveHeading": "حل",
-        "rejectAction": "رد",
+        "rejectAction": "رد کردن",
         "defaultRejectNote": "بررسی شد، حذف نشد. اگر با تصمیم ما موافق نیستید، می‌توانید گزارش دیگری ارسال کنید.",
         "defaultDeleteNote": "این نظر توسط تیم مدیریت بررسی و حذف شد.",
         "resolveSuccess": "گزارش حل شد.",

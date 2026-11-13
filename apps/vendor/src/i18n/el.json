@@ -34,7 +34,7 @@
     "noMessages": "Δεν υπάρχουν ακόμη μηνύματα",
     "startConversation": "Ξεκινήστε τη συνομιλία",
     "seen": "Αναγνώστηκε",
-    "sent": "Εστάλη",
+    "sent": "Στάλθηκε",
     "notificationTitle": "Ο/Η {{senderName}} σας έστειλε ένα μήνυμα",
     "notificationBody": "{{preview}}",
     "image": "Εικόνα",
@@ -98,7 +98,7 @@
     "status": {
       "draft": "Πρόχειρο",
       "pending": "Εκκρεμεί",
-      "accepted": "Εγκρίθηκε",
+      "accepted": "Έγινε αποδεκτό",
       "rejected": "Απορρίφθηκε"
     },
     "filters": {
@@ -162,7 +162,7 @@
         "adminNote": "Σημείωση διαχειριστή"
       },
       "status": {
-        "pending": "Σε εκκρεμότητα",
+        "pending": "Εκκρεμεί",
         "resolved_deleted": "Αφαιρέθηκε",
         "resolved_kept": "Ελέγχθηκε, δεν αφαιρέθηκε"
       },
@@ -212,8 +212,8 @@
     "domain": "Ακόλουθοι",
     "noRecords": "Δεν υπάρχουν ακόλουθοι ακόμη",
     "columns": {
-      "followedAt": "Ημερομηνία Παρακολούθησης",
-      "reviewsAverage": "Μέση Βαθμολογία"
+      "followedAt": "Ημερομηνία παρακολούθησης",
+      "reviewsAverage": "Μέση βαθμολογία"
     },
     "count": "Ακόλουθοι: {{count}}"
   },
@@ -244,7 +244,7 @@
       "noRecords": "Δεν υπάρχουν προϊόντα με χαμηλό απόθεμα",
       "product": "Προϊόν",
       "sku": "SKU",
-      "available": "Διαθέσιμα",
+      "available": "Διαθέσιμο",
       "viewInventory": "Μετάβαση στο απόθεμα"
     },
     "quickAccess": {

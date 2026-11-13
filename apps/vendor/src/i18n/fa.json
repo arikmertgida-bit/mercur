@@ -1,22 +1,22 @@
 {
   "productImportExport": {
-    "import": "درون‌ریزی",
-    "export": "برون‌ریزی",
+    "import": "وارد کردن",
+    "export": "خروجی گرفتن",
     "done": "انجام شد",
-    "importHeader": "درون‌ریزی محصولات",
+    "importHeader": "وارد کردن محصولات",
     "importDescription": "یک فایل CSV بارگذاری کنید تا محصولات به فروشگاه شما وارد شوند.",
     "importHint": "یک فایل CSV حاوی محصولات خود را بارگذاری کنید. می‌توانید",
     "downloadTemplate": "قالب را دانلود کنید",
     "uploadLabel": "بارگذاری فایل CSV",
     "uploadHint": "فقط فایل‌های .csv پشتیبانی می‌شوند",
-    "importingActivity": "در حال درون‌ریزی محصولات...",
-    "importSuccessToast": "{{count}} محصول با موفقیت درون‌ریزی شد.",
-    "importCompleteTitle": "درون‌ریزی کامل شد",
+    "importingActivity": "در حال وارد کردن محصولات...",
+    "importSuccessToast": "{{count}} محصول با موفقیت وارد شد.",
+    "importCompleteTitle": "وارد کردن کامل شد",
     "importCompleteDescription": "{{count}} محصول با موفقیت ایجاد شد.",
-    "exportHeader": "برون‌ریزی محصولات",
-    "exportDescription": "محصولات خود را به‌صورت فایل CSV برون‌ریزی کنید.",
-    "exportBody": "با این کار تمام محصولات شما به یک فایل CSV برون‌ریزی می‌شود. با آماده شدن فایل، دانلود به‌طور خودکار آغاز خواهد شد.",
-    "exportSuccessToast": "محصولات با موفقیت برون‌ریزی شدند.",
+    "exportHeader": "خروجی گرفتن از محصولات",
+    "exportDescription": "از محصولات خود به‌صورت فایل CSV خروجی بگیرید.",
+    "exportBody": "با این کار از تمام محصولات شما یک فایل CSV خروجی گرفته می‌شود. با آماده شدن فایل، دانلود به‌طور خودکار آغاز خواهد شد.",
+    "exportSuccessToast": "خروجی محصولات با موفقیت گرفته شد.",
     "importErrorFallback": "هنگام وارد کردن محصولات خطایی رخ داد."
   },
   "customFields": {
@@ -98,8 +98,8 @@
     "status": {
       "draft": "پیش‌نویس",
       "pending": "در انتظار",
-      "accepted": "پذیرفته شد",
-      "rejected": "رد شد"
+      "accepted": "پذیرفته شده",
+      "rejected": "رد شده"
     },
     "filters": {
       "status": "وضعیت"
@@ -197,7 +197,7 @@
       "submit": "ارسال پاسخ",
       "successToast": "پاسخ با موفقیت ارسال شد.",
       "errorToast": "ارسال پاسخ ممکن نشد.",
-      "attachImage": "پیوست کردن تصویر"
+      "attachImage": "پیوست تصویر"
     },
     "report": {
       "title": "گزارش به مدیر",
@@ -243,9 +243,9 @@
       "subtitle": "محصولاتی که موجودی آن‌ها رو به اتمام است",
       "noRecords": "محصولی با موجودی کم وجود ندارد",
       "product": "محصول",
-      "sku": "کد کالا",
+      "sku": "SKU",
       "available": "موجود",
-      "viewInventory": "مشاهده انبار"
+      "viewInventory": "مشاهده موجودی"
     },
     "quickAccess": {
       "returns": "مرجوعی‌ها",

@@ -16,7 +16,7 @@
     "columns": {
       "product": "Προϊόν",
       "reporter": "Αναφέρθηκε από",
-      "reason": "Αιτία",
+      "reason": "Λόγος",
       "status": "Κατάσταση"
     },
     "status": {
@@ -80,7 +80,7 @@
     "columns": {
       "image": "Εικόνα",
       "reporter": "Αναφέρθηκε από",
-      "reason": "Αιτία",
+      "reason": "Λόγος",
       "status": "Κατάσταση"
     },
     "status": {
@@ -106,7 +106,7 @@
     "today": "Σήμερα",
     "yesterday": "Χθες",
     "newMessage": "Νέο μήνυμα",
-    "sentImage": "Απεστάλη εικόνα",
+    "sentImage": "Στάλθηκε εικόνα",
     "newMessageBody": "Έχετε νέο μήνυμα",
     "customer": "Πελάτης",
     "seller": "Πωλητής",
@@ -117,7 +117,7 @@
     "startMessaging": "Επιλέξτε μια συνομιλία για να ξεκινήσετε",
     "typeMessage": "Πληκτρολογήστε ένα μήνυμα...",
     "seen": "Αναγνώστηκε",
-    "sent": "Εστάλη",
+    "sent": "Στάλθηκε",
     "notificationTitle": "Ο/Η {{senderName}} σας έστειλε ένα μήνυμα",
     "notificationBody": "{{preview}}",
     "image": "Εικόνα",
@@ -160,7 +160,7 @@
     "status": {
       "draft": "Πρόχειρο",
       "pending": "Εκκρεμεί",
-      "accepted": "Εγκρίθηκε",
+      "accepted": "Έγινε αποδεκτό",
       "rejected": "Απορρίφθηκε"
     },
     "filters": {
@@ -209,7 +209,7 @@
       "internal": "Εσωτερικό",
       "title": "Τίτλος",
       "value": "Τιμή",
-      "label": "Ετικέτα"
+      "label": "Ονομασία"
     },
     "values": {
       "yes": "Ναι",
@@ -239,7 +239,7 @@
         "adminNote": "Σημείωση διαχειριστή"
       },
       "status": {
-        "pending": "Σε εκκρεμότητα",
+        "pending": "Εκκρεμεί",
         "resolved_deleted": "Αφαιρέθηκε",
         "resolved_kept": "Ελέγχθηκε, δεν αφαιρέθηκε"
       },
