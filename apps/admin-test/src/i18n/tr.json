@@ -16,11 +16,11 @@
     "columns": {
       "product": "Ürün",
       "reporter": "Şikayet Eden",
-      "reason": "Neden",
+      "reason": "Sebep",
       "status": "Durum"
     },
     "status": {
-      "pending": "Bekliyor",
+      "pending": "Beklemede",
       "resolved": "Çözüldü",
       "dismissed": "Yoksayıldı"
     },
@@ -80,11 +80,11 @@
     "columns": {
       "image": "Görsel",
       "reporter": "Şikayet Eden",
-      "reason": "Neden",
+      "reason": "Sebep",
       "status": "Durum"
     },
     "status": {
-      "pending": "Bekliyor",
+      "pending": "Beklemede",
       "resolved": "Çözüldü"
     },
     "actions": {
@@ -160,7 +160,7 @@
     "status": {
       "draft": "Taslak",
       "pending": "Beklemede",
-      "accepted": "Kabul Edildi",
+      "accepted": "Kabul edildi",
       "rejected": "Reddedildi"
     },
     "filters": {
@@ -234,12 +234,12 @@
       "noRecords": "Değerlendirme talebi bulunamadı",
       "columns": {
         "seller": "Satıcı",
-        "reason": "Neden",
+        "reason": "Sebep",
         "status": "Durum",
         "adminNote": "Yönetici Notu"
       },
       "status": {
-        "pending": "Bekliyor",
+        "pending": "Beklemede",
         "resolved_deleted": "Kaldırıldı",
         "resolved_kept": "İncelendi, Kaldırılmadı"
       },

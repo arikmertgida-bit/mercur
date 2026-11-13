@@ -98,7 +98,7 @@
     "status": {
       "draft": "Taslak",
       "pending": "Beklemede",
-      "accepted": "Kabul Edildi",
+      "accepted": "Kabul edildi",
       "rejected": "Reddedildi"
     },
     "filters": {
@@ -157,12 +157,12 @@
       "heading": "Değerlendirme Talepleri",
       "subtitle": "Moderasyon için yöneticiye bildirdiğiniz değerlendirmeler.",
       "columns": {
-        "reason": "Neden",
+        "reason": "Sebep",
         "status": "Durum",
         "adminNote": "Yönetici Notu"
       },
       "status": {
-        "pending": "Bekliyor",
+        "pending": "Beklemede",
         "resolved_deleted": "Kaldırıldı",
         "resolved_kept": "İncelendi, Kaldırılmadı"
       },

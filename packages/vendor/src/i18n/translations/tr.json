@@ -493,25 +493,25 @@
         "details": "Detaylar",
         "organize": "Organize Et",
         "variants": "Yayınla",
-        "attributes": "Öznitelikler"
+        "attributes": "Özellikler"
       },
       "errors": {
         "variants": "Lütfen en az bir varyant seçin.",
         "options": "Lütfen en az bir seçenek oluşturun.",
         "uniqueSku": "SKU benzersiz olmalıdır.",
-        "requiredAttribute": "Bu öznitelik zorunludur.",
+        "requiredAttribute": "Bu özellik zorunludur.",
         "shippingProfileRequired": "Lütfen bir kargo profili seçin.",
         "priceRequired": "Lütfen bu varyant için en az bir para biriminde fiyat girin.",
         "stockRequired": "Lütfen bu varyant için en az bir lokasyonda stok miktarı girin.",
         "mediaRequired": "Lütfen bu varyant için en az bir görsel ekleyin.",
         "formIncomplete": "Eksik alanlar var — yayınlamadan önce işaretli satırları kontrol edin.",
         "categoryRequired": "Lütfen bir kategori seçin",
-        "handleInvalidFormat": "URL Slug yalnızca küçük harf, rakam ve tire içerebilir",
-        "handleMustContainLetter": "URL Slug en az bir harf içermelidir",
+        "handleInvalidFormat": "Handle yalnızca küçük harf, rakam ve tire içerebilir",
+        "handleMustContainLetter": "Handle en az bir harf içermelidir",
         "primaryCategoryRequired": "Birincil kategori zorunludur",
-        "requiredAttributeEnter": "Bu öznitelik pazar yeri tarafından zorunlu kılınmıştır. Lütfen bir değer girin.",
-        "requiredAttributeMultiSelect": "Bu öznitelik pazar yeri tarafından zorunlu kılınmıştır. Lütfen en az bir değer seçin.",
-        "requiredAttributeSelect": "Bu öznitelik pazar yeri tarafından zorunlu kılınmıştır. Lütfen bir değer seçin.",
+        "requiredAttributeEnter": "Bu özellik pazar yeri tarafından zorunlu kılınmıştır. Lütfen bir değer girin.",
+        "requiredAttributeMultiSelect": "Bu özellik pazar yeri tarafından zorunlu kılınmıştır. Lütfen en az bir değer seçin.",
+        "requiredAttributeSelect": "Bu özellik pazar yeri tarafından zorunlu kılınmıştır. Lütfen bir değer seçin.",
         "titleRequired": "Başlık zorunludur",
         "mediaUploadFailed": "Bir veya daha fazla görsel yüklenemedi. Yayınlamadan önce başarısız olan görseli kaldırıp tekrar deneyin."
       },
@@ -548,35 +548,35 @@
       },
       "successToast": "Ürün {{title}} başarıyla oluşturuldu.",
       "attributes": {
-        "header": "Öznitelikler",
+        "header": "Özellikler",
         "addExisting": "Mevcut olanı ekle",
         "createNew": "Yeni oluştur",
-        "requiredAttributes": "Zorunlu öznitelikler",
-        "requiredAttributesHint": "Bu öznitelikler pazar yeri tarafından zorunlu tutulmaktadır. Devam etmeden önce bunları seçin.",
-        "selectValues": "Değerleri seç",
+        "requiredAttributes": "Zorunlu özellikler",
+        "requiredAttributesHint": "Bu özellikler pazar yeri tarafından zorunlu kılınmıştır. Devam etmeden önce bunları seçin.",
+        "selectValues": "Değerleri seçin",
         "tip": "İpucu",
         "useForVariants": "Varyantlar için kullan",
-        "useForVariantsDescription": "İşaretlenirse, bu özniteliği kullanarak varyantlar oluşturabilirsiniz. İşaretlenmezse öznitelik yalnızca bilgilendirme amacıyla kullanılır.",
-        "variantAxisTip": "Bu öznitelik varyant oluşturacaktır. Bunları bir sonraki adımda tanımlayabilirsiniz.",
+        "useForVariantsDescription": "İşaretlenirse, bu özelliği kullanarak varyant oluşturabilirsiniz. İşaretlenmezse özellik yalnızca bilgi amaçlı kullanılır.",
+        "variantAxisTip": "Bu özellik varyantlar oluşturacaktır. Bunları bir sonraki adımda tanımlayabilirsiniz.",
         "titlePlaceholder": "örn. Renk",
         "valuePlaceholder": "Değerleri girin",
-        "description": "Ürününüz için öznitelikleri ve varyasyonları yönetin, ör. renk, beden, marka vb. Pazar yeri tarafından tanımlanan özniteliklerden seçin veya kendi özniteliğinizi oluşturun.",
-        "requiredHeading": "Zorunlu Öznitelikler",
-        "requiredDescription": "Bu öznitelikler bu kategorideki ürünler için zorunludur.",
-        "buttonLabel": "Öznitelik",
-        "loading": "Öznitelikler yükleniyor...",
+        "description": "Ürününüz için özellikleri ve varyasyonları yönetin, örn. renk, beden, marka vb. Pazar yeri tarafından tanımlanan özelliklerden seçin veya kendi özelliğinizi oluşturun.",
+        "requiredHeading": "Zorunlu Özellikler",
+        "requiredDescription": "Bu özellikler bu kategorideki ürünler için zorunludur.",
+        "buttonLabel": "Özellik",
+        "loading": "Özellikler yükleniyor...",
         "learnMore": {
-          "label": "Öznitelikler hakkında daha fazla bilgi edinin",
-          "content": "Öznitelikler, müşterilerin ürünlerinizi bulmasına ve filtrelemesine yardımcı olur. Yönetici tarafından tanımlanan öznitelikler arama sonuçlarında görünür."
+          "label": "Özellikler hakkında daha fazla bilgi edinin",
+          "content": "Özellikler, müşterilerin ürünlerinizi bulmasına ve filtrelemesine yardımcı olur. Yönetici tarafından tanımlanan özellikler arama sonuçlarında görünür."
         },
-        "editVariantAxisTip": "Bu özniteliği kullanarak varyant oluşturabileceksiniz.",
+        "editVariantAxisTip": "Bu özelliği kullanarak varyant oluşturabileceksiniz.",
         "warning": "Uyarı",
-        "editWarning": "Bu öznitelikteki değişiklikler mevcut ürün varyantlarını veya detaylarını etkileyebilir. Kaydettikten sonra varyantlarınızı ve ürün detaylarınızı gözden geçirin.",
+        "editWarning": "Bu özellikteki değişiklikler mevcut ürün varyantlarını veya detaylarını etkileyebilir. Kaydettikten sonra varyantlarınızı ve ürün detaylarınızı gözden geçirin.",
         "enterValuePlaceholder": "Değer girin",
         "selectValuePlaceholder": "Değer seçin",
-        "requiredTooltip": "Bu öznitelik pazar yeri tarafından zorunlu kılınmıştır ve seçimi kaldırılamaz.",
+        "requiredTooltip": "Bu özellik pazar yeri tarafından zorunlu kılınmıştır ve seçimi kaldırılamaz.",
         "noAttributesTitle": "Henüz ürün özniteliği yok",
-        "noAttributesDescription": "Pazar yeri tarafından tanımlanmış öznitelik yok.",
+        "noAttributesDescription": "Pazar yeri tarafından tanımlanmış özellik yok.",
         "errors": {
           "titleRequired": "Lütfen bir başlık girin",
           "valuesRequired": "Lütfen en az bir değer girin"
@@ -644,8 +644,8 @@
         "successToast": "Stoklar ve fiyatlar başarıyla güncellendi"
       }
     },
-    "attributes": "Öznitelikler",
-    "editAttributes": "Öznitelikleri Düzenle",
+    "attributes": "Özellikler",
+    "editAttributes": "Özellikleri Düzenle",
     "editOptions": "Seçenekleri Düzenle",
     "media": {
       "label": "Medya",
@@ -659,7 +659,7 @@
       "deleteWarning_other": "{{count}} resmi silmek üzeresiniz. Bu işlem geri alınamaz.",
       "deleteWarningWithThumbnail_one": "Küçük resim dahil {{count}} resmi silmek üzeresiniz. Bu işlem geri alınamaz.",
       "deleteWarningWithThumbnail_other": "Küçük resim dahil {{count}} resmi silmek üzeresiniz. Bu işlem geri alınamaz.",
-      "thumbnailTooltip": "Küçük resim",
+      "thumbnailTooltip": "Bu görsel küçük resimdir",
       "galleryLabel": "Galeri",
       "downloadImageLabel": "Mevcut resmi indir",
       "deleteImageLabel": "Mevcut resmi sil",
@@ -679,7 +679,7 @@
       "uploadError": "Yükleme başarısız",
       "availableImages": "Görselleri seç",
       "editLabel": "Düzenle",
-      "fileTooLarge": "Bir veya daha fazla dosya en fazla {{size}} dosya boyutunu aşıyor: {{name}}",
+      "fileTooLarge": "Bir veya daha fazla dosya {{size}} olan maksimum dosya boyutunu aşıyor: {{name}}",
       "manageImageVariants": "İlişkili varyantları yönet",
       "removeSelected": "Seçilenleri kaldır",
       "selectImages": "Görselleri seç",
@@ -712,9 +712,9 @@
         "placeholder": "Sıcak ve rahat"
       },
       "handle": {
-        "label": "URL Slug",
+        "label": "Handle",
         "tooltip": "Ürün başlığından otomatik olarak oluşturulur. Yalnızca küçük harfler, rakamlar ve tire kullanılabilir — bu alan doğrudan düzenlenemez.",
-        "placeholder": "kışlık-ceket"
+        "placeholder": "kislik-ceket"
       },
       "description": {
         "label": "Açıklama",
@@ -949,7 +949,7 @@
       "status": "Durum",
       "thumbnail": "Küçük resim",
       "title": "Başlık",
-      "handle": "URL Slug",
+      "handle": "Handle",
       "created_at": "Oluşturuldu",
       "updated_at": "Güncellenme"
     },
@@ -1111,7 +1111,7 @@
       "details": "Detaylar",
       "availability": "Mevcutluk",
       "locations": "Konumlar",
-      "attributes": "Öznitelikler",
+      "attributes": "Özellikler",
       "requiresShipping": "Kargo Gerektirir",
       "requiresShippingHint": "Envanter kalemi kargo gerektiriyor mu?",
       "successToast": "Envanter kalemi başarıyla oluşturuldu.",
@@ -1392,11 +1392,11 @@
     },
     "payment": {
       "title": "Ödemeler",
-      "isReadyToBeCaptured": "Ödeme <0/> alınmaya hazır.",
+      "isReadyToBeCaptured": "Ödeme <0/> tahsil edilmeye hazır.",
       "totalPaidByCustomer": "Müşteri tarafından ödenen toplam",
-      "capture": "Ödemeyi al",
-      "capture_short": "Al",
-      "refund": "İade",
+      "capture": "Ödemeyi tahsil et",
+      "capture_short": "Tahsil et",
+      "refund": "Para iadesi",
       "statusLabel": "Ödeme durumu",
       "statusTitle": "Ödeme Durumu",
       "status": {
@@ -1404,25 +1404,25 @@
         "authorized": "Yetkilendirildi",
         "partiallyAuthorized": "Kısmen yetkilendirildi",
         "awaiting": "Bekleniyor",
-        "captured": "Alındı",
-        "partiallyRefunded": "Kısmen iade edildi",
-        "partiallyCaptured": "Kısmen alındı",
-        "refunded": "İade edildi",
+        "captured": "Tahsil edildi",
+        "partiallyRefunded": "Kısmi para iadesi yapıldı",
+        "partiallyCaptured": "Kısmen tahsil edildi",
+        "refunded": "Para iadesi yapıldı",
         "canceled": "İptal edildi",
         "requiresAction": "Eylem gerekiyor",
         "pending": "Beklemede"
       },
-      "capturePayment": "{{amount}} tutarında ödeme alınacak.",
-      "capturePaymentSuccess": "{{amount}} tutarındaki ödeme başarıyla alındı",
-      "createRefund": "İade Oluştur",
-      "refundPaymentSuccess": "{{amount}} tutarındaki iade başarılı",
+      "capturePayment": "{{amount}} tutarındaki ödeme tahsil edilecek.",
+      "capturePaymentSuccess": "{{amount}} tutarındaki ödeme başarıyla tahsil edildi",
+      "createRefund": "Para İadesi Oluştur",
+      "refundPaymentSuccess": "{{amount}} tutarındaki para iadesi başarılı",
       "createRefundWrongQuantity": "Miktar 1 ile {{number}} arasında bir sayı olmalıdır",
-      "refundAmount": "{{ amount }} tutarını iade et",
+      "refundAmount": "{{ amount }} tutarında para iadesi yap",
       "paymentLink": "{{ amount }} için ödeme bağlantısını kopyala",
-      "selectPaymentToRefund": "İade edilecek ödemeyi seçin",
+      "selectPaymentToRefund": "Para iadesi yapılacak ödemeyi seçin",
       "totalPending": "Bekleyen toplam",
-      "totalRefunded": "İade edildi",
-      "totalStoreCreditRefunds": "Toplam mağaza kredisi iadesi",
+      "totalRefunded": "Para iadesi yapıldı",
+      "totalStoreCreditRefunds": "Toplam mağaza kredisi para iadesi",
       "enterAmount": "Lütfen bir tutar girin",
       "copyPaymentLink": "{{ amount }} için ödeme bağlantısını kopyala",
       "copyLinkSuccess": "Ödeme bağlantısı panoya kopyalandı",
@@ -1583,7 +1583,7 @@
       "inboundShipping": "İade kargosu (isteğe bağlı)",
       "inboundShippingHint": "Müşterinin ürünleri iade etmek için kullanacağı kargo yöntemi.",
       "typeLabel": "Talep türü",
-      "typeRefund": "İade — değişim gönderisi yok",
+      "typeRefund": "Para iadesi — değişim gönderisi yok",
       "typeReplace": "Değiştir — değişim ürünlerini gönder",
       "typeLockedAfterStart": "Bir taslak başlatıldığında talep türü kilitlenir. Değiştirmek için iptal edip yeniden açın.",
       "claimItems": "Talep edilecek ürünler",
@@ -1757,14 +1757,14 @@
       "markAsPickedUp": "Teslim alındı olarak işaretle"
     },
     "refund": {
-      "title": "İade Oluştur",
-      "sendNotificationHint": "Oluşturulan iade hakkında müşterilere bilgi verin.",
+      "title": "Para İadesi Oluştur",
+      "sendNotificationHint": "Oluşturulan para iadesi hakkında müşterilere bilgi verin.",
       "systemPayment": "Sistem ödemesi",
       "systemPaymentDesc": "Ödemelerinizden biri bir sistem ödemesidir. Bu tür ödemeler için işlemler Kayı.com tarafından yönetilmez.",
       "error": {
         "amountToLarge": "Orijinal sipariş tutarından daha fazlasını iade edemezsiniz.",
-        "amountNegative": "İade tutarı pozitif bir sayı olmalıdır.",
-        "reasonRequired": "Lütfen bir iade sebebi seçin."
+        "amountNegative": "Para iadesi tutarı pozitif bir sayı olmalıdır.",
+        "reasonRequired": "Lütfen bir para iadesi nedeni seçin."
       }
     },
     "customer": {
@@ -1800,9 +1800,9 @@
         },
         "payment": {
           "awaiting": "Ödeme bekleniyor",
-          "captured": "Ödeme alındı",
+          "captured": "Ödeme tahsil edildi",
           "canceled": "Ödeme iptal edildi",
-          "refunded": "Ödeme iade edildi"
+          "refunded": "Ödeme için para iadesi yapıldı"
         },
         "fulfillment": {
           "created": "Ürünler tamamlandı",
@@ -2231,17 +2231,17 @@
       }
     },
     "stateOrTerritory": {
-      "header": "Eyaletler veya Bölgeler",
+      "header": "Eyaletler veya Topraklar",
       "create": {
-        "header": "Eyalet/Bölge Vergi Bölgesi Oluştur",
-        "hint": "Belirli bir eyalet/bölge için vergi oranlarını tanımlamak üzere yeni bir vergi bölgesi oluşturun."
+        "header": "Eyalet/Toprak Vergi Bölgesi Oluştur",
+        "hint": "Belirli bir eyalet/toprak için vergi oranlarını tanımlamak üzere yeni bir vergi bölgesi oluşturun."
       }
     },
     "county": {
-      "header": "İlçeler",
+      "header": "Kontluklar",
       "create": {
-        "header": "İlçe Vergi Bölgesi Oluştur",
-        "hint": "Belirli bir ilçe için vergi oranlarını tanımlamak üzere yeni bir vergi bölgesi oluşturun."
+        "header": "Kontluk Vergi Bölgesi Oluştur",
+        "hint": "Belirli bir kontluk için vergi oranlarını tanımlamak üzere yeni bir vergi bölgesi oluşturun."
       }
     },
     "region": {
@@ -2259,10 +2259,10 @@
       }
     },
     "territory": {
-      "header": "Bölgeler",
+      "header": "Topraklar",
       "create": {
-        "header": "Bölge Vergi Bölgesi Oluştur",
-        "hint": "Belirli bir bölge için vergi oranlarını tanımlamak üzere yeni bir vergi bölgesi oluşturun."
+        "header": "Toprak Vergi Bölgesi Oluştur",
+        "hint": "Belirli bir toprak için vergi oranlarını tanımlamak üzere yeni bir vergi bölgesi oluşturun."
       }
     },
     "prefecture": {
@@ -2273,10 +2273,10 @@
       }
     },
     "district": {
-      "header": "Bölgeler",
+      "header": "İlçeler",
       "create": {
-        "header": "Bölge Vergi Bölgesi Oluştur",
-        "hint": "Belirli bir bölge için vergi oranlarını tanımlamak üzere yeni bir vergi bölgesi oluşturun."
+        "header": "İlçe Vergi Bölgesi Oluştur",
+        "hint": "Belirli bir ilçe için vergi oranlarını tanımlamak üzere yeni bir vergi bölgesi oluşturun."
       }
     },
     "governorate": {
@@ -2396,12 +2396,12 @@
           "province": "İl",
           "state": "Eyalet",
           "region": "Bölge",
-          "stateOrTerritory": "Eyalet/Bölge",
+          "stateOrTerritory": "Eyalet/Toprak",
           "department": "Departman",
-          "county": "İlçe",
-          "territory": "Bölge",
+          "county": "Kontluk",
+          "territory": "Toprak",
           "prefecture": "Prefektörlük",
-          "district": "Bölge",
+          "district": "İlçe",
           "governorate": "Valilik",
           "emirate": "Emirlik",
           "canton": "Kanton",
@@ -2411,12 +2411,12 @@
           "province": "İl seçin",
           "state": "Eyalet seçin",
           "region": "Bölge seçin",
-          "stateOrTerritory": "Eyalet/bölge seçin",
+          "stateOrTerritory": "Eyalet/toprak seçin",
           "department": "Departman seçin",
-          "county": "İlçe seçin",
-          "territory": "Bölge seçin",
+          "county": "Kontluk seçin",
+          "territory": "Toprak seçin",
           "prefecture": "Prefektörlük seçin",
-          "district": "Bölge seçin",
+          "district": "İlçe seçin",
           "governorate": "Valilik seçin",
           "emirate": "Emirlik seçin",
           "canton": "Kanton seçin"
@@ -2427,7 +2427,7 @@
         },
         "alert": {
           "header": "Bu vergi bölgesi için alt seviyeler devre dışı",
-          "description": "Alt seviyeler, bu bölge için varsayılan olarak devre dışıdır. Eyaletler, iller veya bölgeler gibi alt seviyeleri oluşturmak için bunları etkinleştirebilirsiniz.",
+          "description": "Alt seviyeler, bu bölge için varsayılan olarak devre dışıdır. İller, eyaletler veya topraklar gibi alt seviye bölgeler oluşturmak için bunları etkinleştirebilirsiniz.",
           "action": "Alt seviyeleri etkinleştir"
         }
       },
@@ -2656,11 +2656,11 @@
       },
       "value_type": {
         "fixed": {
-          "title": "Promosyon Değeri",
-          "description": "İndirim miktarı. Örn: 100"
+          "title": "Sabit tutar",
+          "description": "İndirim tutarı. Örn: 100"
         },
         "percentage": {
-          "title": "Promosyon Değeri",
+          "title": "Yüzde",
           "description": "İndirim yüzdesi. Örn: %8"
         }
       },
@@ -3094,7 +3094,7 @@
     },
     "defaultSalesChannel": "Varsayılan satış kanalı",
     "defaultLocation": "Varsayılan konum",
-    "handleTooltip": "URL Slug, mağazanız için benzersiz bağlantı (URL) parçası olur. Boş bırakırsanız mağaza adından otomatik oluşturulur.",
+    "handleTooltip": "Handle, mağazanızın URL'sindeki benzersiz bağlantı parçası olur. Boş bırakırsanız mağaza adından otomatik oluşturulur.",
     "validation": {
       "nameRequired": "Lütfen bir ad girin",
       "emailRequired": "Lütfen bir e-posta girin",
@@ -3199,7 +3199,7 @@
       "categories": {
         "order": "Siparişler",
         "orderDescription": "Mağazanıza verilen yeni siparişler.",
-        "payout": "Ödemeler",
+        "payout": "Satıcı ödemeleri",
         "payoutDescription": "Size bir ödeme gönderildiğinde.",
         "request": "Talepler",
         "requestDescription": "Gönderdiğiniz taleplerin onay ve red bildirimleri.",
@@ -3657,7 +3657,7 @@
       "state": {
         "skipped": "Atlandı",
         "skippedFailure": "Atlandı (Başarısızlık)",
-        "dormant": "Beklemede",
+        "dormant": "Uykuda",
         "timeout": "Zaman aşımı"
       }
     }
@@ -3743,8 +3743,8 @@
     "selectValues": "Değerleri Seç"
   },
   "fields": {
-    "amount": "Miktar",
-    "refundAmount": "İade miktarı",
+    "amount": "Tutar",
+    "refundAmount": "Para iadesi tutarı",
     "name": "İsim",
     "default": "Varsayılan",
     "lastName": "Soyadı",
@@ -3770,7 +3770,7 @@
     "category": "Kategori",
     "collection": "Koleksiyon",
     "discountable": "İndirim uygulanabilir",
-    "handle": "URL Slug",
+    "handle": "Handle",
     "subtitle": "Alt başlık",
     "item": "Öğe",
     "qty": "adet.",
@@ -3801,7 +3801,7 @@
     "totalRedemptions": "Toplam Kullanım",
     "countries": "Ülkeler",
     "paymentProviders": "Ödeme Sağlayıcıları",
-    "refundReason": "İade Sebebi",
+    "refundReason": "Para İadesi Nedeni",
     "fulfillmentProviders": "Tamamlama Sağlayıcıları",
     "fulfillmentProvider": "Tamamlama Sağlayıcısı",
     "providers": "Sağlayıcılar",
@@ -3817,7 +3817,7 @@
     "city": "Şehir",
     "postalCode": "Posta Kodu",
     "country": "Ülke",
-    "state": "İl",
+    "state": "Eyalet",
     "province": "İl",
     "company": "Şirket",
     "phone": "Telefon",
@@ -3933,7 +3933,7 @@
     "variant_attributes": "Varyant özellikleri",
     "product_attributes": "Ürün özellikleri",
     "handleAutoGeneratedHint": "Ad alanından otomatik olarak oluşturulur. Yalnızca küçük harfler, rakamlar ve tire kullanılabilir — bu alan doğrudan düzenlenemez.",
-    "handleInvalidFormat": "URL Slug yalnızca küçük harf, rakam ve tire içerebilir"
+    "handleInvalidFormat": "Handle yalnızca küçük harf, rakam ve tire içerebilir"
   },
   "dateTime": {
     "years_one": "Yıl",
@@ -3953,8 +3953,8 @@
   },
   "attributes": {
     "fields": {
-      "name": "İsim",
-      "handle": "URL Slug",
+      "name": "Ad",
+      "handle": "Handle",
       "required": "Zorunlu",
       "type": "Tür",
       "values": "Değerler",
@@ -3966,7 +3966,7 @@
       "select": "Tekli Seçim",
       "multivalue": "Çoklu Seçim",
       "unit": "Birim",
-      "toggle": "Anahtar",
+      "toggle": "Açık/Kapalı",
       "text_area": "Metin Alanı"
     }
   },
@@ -4034,7 +4034,7 @@
       "promotion": "Promosyon",
       "rbac_policy": "Politika",
       "rbac_role": "Rol",
-      "refund_reason": "Geri Ödeme Nedeni",
+      "refund_reason": "Para İadesi Nedeni",
       "region": "Bölge",
       "reservation_item": "Rezervasyon Kalemi",
       "return": "İade",
@@ -4100,9 +4100,9 @@
     }
   },
   "payouts": {
-    "domain": "Ödemeler",
-    "payout": "Ödeme",
-    "noRecords": "Ödeme bulunamadı",
+    "domain": "Satıcı Ödemeleri",
+    "payout": "Satıcı ödemesi",
+    "noRecords": "Satıcı ödemesi bulunamadı",
     "status": {
       "pending": "Beklemede",
       "processing": "İşleniyor",
@@ -4196,24 +4196,24 @@
     }
   },
   "refundReasons": {
-    "domain": "İade Nedenleri",
-    "subtitle": "İade verme nedenlerini yönetin.",
-    "calloutHint": "İadeleri kategorize etmek için nedenleri yönetin.",
-    "editReason": "İade Nedenini Düzenle",
+    "domain": "Para İadesi Nedenleri",
+    "subtitle": "Para iadesi nedenlerini yönetin.",
+    "calloutHint": "Para iadelerini sınıflandırmak için nedenleri yönetin.",
+    "editReason": "Para İadesi Nedenini Düzenle",
     "create": {
-      "header": "İade Nedeni Ekle",
-      "subtitle": "İadeler için en yaygın nedenleri belirtin.",
-      "hint": "İadeleri kategorize etmek için yeni bir iade nedeni oluşturun.",
-      "successToast": "{{label}} iade nedeni başarıyla oluşturuldu."
+      "header": "Para İadesi Nedeni Ekle",
+      "subtitle": "Para iadeleri için en yaygın nedenleri belirtin.",
+      "hint": "Para iadelerini sınıflandırmak için yeni bir para iadesi nedeni oluşturun.",
+      "successToast": "{{label}} para iadesi nedeni başarıyla oluşturuldu."
     },
     "edit": {
-      "header": "İade Nedenini Düzenle",
-      "subtitle": "İade nedeninin değerini düzenleyin.",
-      "successToast": "{{label}} iade nedeni başarıyla güncellendi."
+      "header": "Para İadesi Nedenini Düzenle",
+      "subtitle": "Para iadesi nedeninin değerini düzenleyin.",
+      "successToast": "{{label}} para iadesi nedeni başarıyla güncellendi."
     },
     "delete": {
-      "confirmation": "\"{{label}}\" iade nedenini silmek üzeresiniz. Bu işlem geri alınamaz.",
-      "successToast": "İade nedeni başarıyla silindi."
+      "confirmation": "\"{{label}}\" para iadesi nedenini silmek üzeresiniz. Bu işlem geri alınamaz.",
+      "successToast": "Para iadesi nedeni başarıyla silindi."
     },
     "fields": {
       "label": {
@@ -4405,7 +4405,7 @@
         "title": "Mağaza detaylarınızı girin",
         "name": "Mağaza Adı",
         "email": "Mağaza E-posta",
-        "handle": "URL Slug",
+        "handle": "Handle",
         "handleTooltip": "Mağaza adından otomatik olarak oluşturulur. Yalnızca küçük harfler, rakamlar ve tire kullanılabilir — bu alan doğrudan düzenlenemez.",
         "handlePlaceholder": "magazam",
         "currency": "Para birimi",

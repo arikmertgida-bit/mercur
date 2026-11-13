@@ -157,7 +157,7 @@
     "noSearchResultsFor": "Brak wyników dla <0>'{{query}}'</0>",
     "noRecordsTitle": "Brak rekordów",
     "noRecordsMessage": "Brak rekordów do wyświetlenia",
-    "noRecordsMessageFiltered": "Brak rekordów do wyświetlenia pasujących do filtrów",
+    "noRecordsMessageFiltered": "Brak rekordów pasujących do filtrów",
     "unsavedChangesTitle": "Czy na pewno chcesz opuścić ten formularz?",
     "unsavedChangesDescription": "Masz niezapisane zmiany, które zostaną utracone po wyjściu.",
     "includesTaxTooltip": "Ceny w tej kolumnie zawierają podatek.",
@@ -599,7 +599,7 @@
         "requiredAttributes": "Wymagane atrybuty",
         "requiredAttributesHint": "Te atrybuty są wymagane przez marketplace. Wybierz je przed kontynuowaniem.",
         "useForVariants": "Użyj dla wariantów",
-        "useForVariantsDescription": "Jeśli zaznaczone, będziesz mógł tworzyć warianty używając tego atrybutu. Jeśli nie, atrybut będzie używany tylko w celach informacyjnych.",
+        "useForVariantsDescription": "Jeśli zaznaczone, będziesz mógł tworzyć warianty przy użyciu tego atrybutu. Jeśli nie, atrybut będzie używany tylko w celach informacyjnych.",
         "tip": "Wskazówka",
         "variantAxisTip": "Ten atrybut utworzy warianty. Możesz je zdefiniować w następnym kroku.",
         "enterValuePlaceholder": "Wprowadź wartość",
@@ -691,7 +691,7 @@
     "attributeProductInformationDescription": "Atrybuty używane w celach informacyjnych",
     "attributeRequiredByMarketplace": "Ten atrybut jest wymagany przez marketplace",
     "addAttribute": "Dodaj atrybut",
-    "deleteAttributeWarning": "Czy na pewno chcesz usunąć atrybut \"{{title}}\"? Tej czynności nie można cofnąć.",
+    "deleteAttributeWarning": "Czy na pewno chcesz usunąć atrybut \"{{title}}\"? Tej akcji nie można cofnąć.",
     "editAttributes": "Edytuj atrybuty",
     "editOptions": "Edytuj opcje",
     "editPrices": "Edytuj ceny",
@@ -738,8 +738,8 @@
     },
     "request": {
       "panel": {
-        "title": "Prośba o produkt",
-        "description": "{{store}} przesłał prośbę o produkt. Przejrzyj szczegóły, wprowadź niezbędne zmiany i wybierz, czy potwierdzić i opublikować produkt, poprosić o aktualizację lub odrzucić prośbę."
+        "title": "Wniosek o produkt",
+        "description": "{{store}} złożył wniosek o produkt. Przejrzyj szczegóły, wprowadź niezbędne zmiany i wybierz, czy potwierdzić i opublikować produkt, poprosić o aktualizację lub odrzucić wniosek."
       },
       "fallbackStore": "Sklep",
       "actions": {
@@ -747,8 +747,8 @@
         "reject": "Odrzuć"
       },
       "confirmPrompt": {
-        "title": "Potwierdź prośbę",
-        "description": "Zamierzasz potwierdzić tę prośbę o aktualizację produktu. Po potwierdzeniu produkt pojawi się w sklepie internetowym. Widoczne będą tylko warianty z ustawionymi stanami magazynowymi i cenami.",
+        "title": "Potwierdź wniosek",
+        "description": "Zamierzasz potwierdzić ten wniosek o aktualizację produktu. Po potwierdzeniu produkt pojawi się w sklepie internetowym. Widoczne będą tylko warianty z ustawionymi stanami magazynowymi i cenami.",
         "noteLabel": "Notatki dla sklepu",
         "notePlaceholder": "Określ wprowadzone zmiany lub dodatkowe prośby"
       },
@@ -760,43 +760,43 @@
         "send": "Wyślij"
       },
       "rejectPrompt": {
-        "title": "Odrzuć prośbę",
-        "description": "Zamierzasz odrzucić tę prośbę o produkt.",
+        "title": "Odrzuć wniosek",
+        "description": "Zamierzasz odrzucić ten wniosek o produkt.",
         "noteLabel": "Notatki dla sklepu",
-        "notePlaceholder": "Wyjaśnij, dlaczego odrzucasz prośbę",
+        "notePlaceholder": "Wyjaśnij, dlaczego odrzucasz wniosek",
         "confirm": "Odrzuć"
       },
       "toast": {
         "publishedSuccessfully": "Produkt został potwierdzony i opublikowany",
-        "updateRequestedSuccessfully": "Prośba o aktualizację została wysłana do sklepu",
-        "rejectedSuccessfully": "Prośba o produkt została odrzucona"
+        "updateRequestedSuccessfully": "Wniosek o aktualizację został wysłany do sklepu",
+        "rejectedSuccessfully": "Wniosek o produkt został odrzucony"
       }
     },
     "edits": {
       "panel": {
-        "title": "Prośba o aktualizację produktu",
-        "description": "{{store}} przesłał prośbę o aktualizację produktu. Przejrzyj proponowane zmiany i wybierz, czy potwierdzić i opublikować aktualizacje lub odrzucić tę prośbę.",
-        "deleteRequested": "Usunięcie produktu czeka na zatwierdzenie."
+        "title": "Wniosek o aktualizację produktu",
+        "description": "{{store}} złożył wniosek o aktualizację produktu. Przejrzyj proponowane zmiany i wybierz, czy potwierdzić i opublikować aktualizacje, czy odrzucić ten wniosek.",
+        "deleteRequested": "Usunięcie produktu oczekuje na zatwierdzenie."
       },
       "actions": {
         "reject": "Odrzuć"
       },
       "confirmPrompt": {
-        "title": "Potwierdź prośbę o aktualizację",
-        "description": "Zamierzasz potwierdzić tę prośbę o aktualizację produktu. Po potwierdzeniu produkt zostanie zaktualizowany w sklepie internetowym.",
+        "title": "Potwierdź wniosek o aktualizację",
+        "description": "Zamierzasz potwierdzić ten wniosek o aktualizację produktu. Po potwierdzeniu produkt zostanie zaktualizowany w sklepie internetowym.",
         "noteLabel": "Notatki dla sklepu",
         "notePlaceholder": "Dodaj opcjonalną notatkę dla sklepu"
       },
       "rejectPrompt": {
-        "title": "Odrzuć prośbę o aktualizację",
-        "description": "Zamierzasz odrzucić tę prośbę o aktualizację produktu. Proponowane zmiany zostaną odrzucone.",
+        "title": "Odrzuć wniosek o aktualizację",
+        "description": "Zamierzasz odrzucić ten wniosek o aktualizację produktu. Proponowane zmiany zostaną odrzucone.",
         "noteLabel": "Notatki dla sklepu",
-        "notePlaceholder": "Wyjaśnij, dlaczego odrzucasz prośbę o aktualizację",
+        "notePlaceholder": "Wyjaśnij, dlaczego odrzucasz wniosek o aktualizację, lub zaproponuj zmiany",
         "confirm": "Odrzuć"
       },
       "toast": {
-        "confirmedSuccessfully": "Prośba o aktualizację produktu została potwierdzona",
-        "rejectedSuccessfully": "Prośba o aktualizację produktu została odrzucona"
+        "confirmedSuccessfully": "Wniosek o aktualizację produktu został potwierdzony",
+        "rejectedSuccessfully": "Wniosek o aktualizację produktu został odrzucony"
       }
     },
     "columns": {
@@ -1267,8 +1267,8 @@
     "reservation": {
       "header": "Rezerwacja {{itemName}}",
       "editItemDetails": "Edytuj rezerwację",
-      "lineItemId": "ID pozycji",
-      "itemId": "ID pozycji",
+      "lineItemId": "ID pozycji zamówienia",
+      "itemId": "ID pozycji magazynowej",
       "orderID": "ID zamówienia",
       "description": "Opis",
       "location": "Lokalizacja",
@@ -1547,7 +1547,7 @@
     "status": {
       "not_paid": "Nieopłacone",
       "pending": "Oczekujące",
-      "completed": "Zrealizowane",
+      "completed": "Zakończone",
       "draft": "Szkic",
       "archived": "Zarchiwizowane",
       "canceled": "Anulowane",
@@ -1563,9 +1563,9 @@
       "shippingTotal": "Koszt wysyłki",
       "discountTotal": "Wartość rabatów",
       "taxTotalIncl": "Kwota podatku (wliczona)",
-      "itemSubtotal": "Wartość produktów",
-      "shippingSubtotal": "Koszt wysyłki",
-      "discountSubtotal": "Wartość rabatów",
+      "itemSubtotal": "Suma częściowa produktów",
+      "shippingSubtotal": "Suma częściowa wysyłki",
+      "discountSubtotal": "Suma częściowa rabatów",
       "taxTotal": "Kwota podatku",
       "totalAfterDiscount": "Razem po rabacie"
     },
@@ -1582,8 +1582,8 @@
       "isReadyToBeCaptured": "Płatność <0/> jest gotowa do realizacji.",
       "totalPaidByCustomer": "Łączna kwota zapłacona przez klienta",
       "totalStoreCreditRefunds": "Całkowite zwroty kredytów sklepowych",
-      "capture": "Pobierz płatność",
-      "capture_short": "Pobierz",
+      "capture": "Zrealizuj płatność",
+      "capture_short": "Zrealizuj",
       "refund": "Zwrot pieniędzy",
       "markAsPaid": "Oznacz jako opłacone",
       "statusLabel": "Status płatności",
@@ -2023,9 +2023,9 @@
     "status": {
       "paid": "Wypłacono",
       "processing": "W trakcie przetwarzania",
-      "pending": "Oczekujące",
+      "pending": "Oczekująca",
       "failed": "Nieudana",
-      "canceled": "Anulowane"
+      "canceled": "Anulowana"
     }
   },
   "draftOrders": {
@@ -2773,7 +2773,7 @@
       },
       "type": {
         "standard": {
-          "title": "Standard",
+          "title": "Standardowa",
           "description": "Standardowa promocja"
         },
         "buyget": {
@@ -2884,7 +2884,7 @@
       "end_date": "Data końcowa",
       "total_spend": "Budżet wydany",
       "total_used": "Wykorzystany budżet",
-      "totalUsedByAttribute": "Łącznie użyto",
+      "totalUsedByAttribute": "Łącznie wykorzystano",
       "budget_limit": "Limit budżetu",
       "type": "Typ",
       "owner": "Właściciel",
@@ -2923,7 +2923,7 @@
         },
         "useByAttribute": {
           "title": "Użycie według atrybutu (ID klienta, e-mail itp.)",
-          "description": "Ustaw limit, ile razy promocja może zostać użyta przez konkretną wartość atrybutu."
+          "description": "Ustaw limit, ile razy promocja może zostać użyta dla określonej wartości atrybutu."
         }
       },
       "edit": {
@@ -3135,7 +3135,7 @@
     "inviteStatus": {
       "accepted": "Zaakceptowane",
       "pending": "Oczekujące",
-      "expired": "Wygasły"
+      "expired": "Wygasłe"
     },
     "status": {
       "active": "Aktywny",
@@ -3212,7 +3212,7 @@
       "edit": {
         "header": "Edytuj adres",
         "description": "Zaktualizuj adres tego sklepu.",
-        "successToast": "Adres zaktualizowany"
+        "successToast": "Adres został zaktualizowany"
       },
       "validation": {
         "nameRequired": "Wprowadź nazwę",
@@ -3228,11 +3228,11 @@
       "edit": {
         "header": "Edytuj dane płatności",
         "description": "Zaktualizuj dane płatności tego sklepu.",
-        "successToast": "Dane płatności zaktualizowane"
+        "successToast": "Dane płatności zostały zaktualizowane"
       },
       "fields": {
         "countryCode": "Kraj",
-        "holderName": "Nazwa konta",
+        "holderName": "Nazwa właściciela konta",
         "bankName": "Nazwa banku",
         "iban": "IBAN",
         "bic": "SWIFT / BIC",
@@ -3243,7 +3243,7 @@
       },
       "validation": {
         "countryRequired": "Wybierz kraj",
-        "accountNameRequired": "Wprowadź nazwę konta"
+        "accountNameRequired": "Wprowadź nazwę właściciela konta"
       }
     },
     "professionalDetails": {
@@ -3255,19 +3255,19 @@
       "edit": {
         "header": "Edytuj dane firmy",
         "description": "Zaktualizuj dane firmy tego sklepu.",
-        "successToast": "Dane firmy zaktualizowane"
+        "successToast": "Dane firmy zostały zaktualizowane"
       },
       "fields": {
-        "corporateName": "Firma",
+        "corporateName": "Nazwa firmy",
         "registrationNumber": "Numer rejestracyjny",
         "taxId": "NIP"
       }
     },
     "timeOff": {
-      "header": "Dni wolne",
+      "header": "Przerwa",
       "empty": {
-        "title": "Brak dni wolnych",
-        "message": "Ten sklep nie ma zaplanowanych dni wolnych",
+        "title": "Brak zaplanowanej przerwy",
+        "message": "Ten sklep nie ma zaplanowanej przerwy",
         "action": "Utwórz"
       }
     },
@@ -3640,7 +3640,7 @@
       "possibleValues": "Możliwe wartości",
       "value": "Wartość",
       "variantAxis": "Użyj dla wariantów",
-      "rank": "Pozycja",
+      "rank": "Kolejność",
       "metadata": "Metadane",
       "isRequired": "Atrybut wymagany",
       "isRequiredHint": "Jeśli zaznaczone, dla tego atrybutu należy ustawić wartość.",
@@ -4244,7 +4244,7 @@
     },
     "save": "Zapisz",
     "saveAsNew": "Zapisz jako nowy widok",
-    "updateDefaultForEveryone": "Zaktualizuj domyślny dla wszystkich",
+    "updateDefaultForEveryone": "Zaktualizuj domyślny widok dla wszystkich",
     "updateViewName": "Zaktualizuj widok",
     "prompts": {
       "updateDefault": {

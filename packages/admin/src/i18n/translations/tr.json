@@ -24,7 +24,7 @@
       },
       "updateView": {
         "title": "Görünümü güncelle",
-        "description": "\"{{name}}\" öğesini güncellemek istediğinizden emin misiniz?",
+        "description": "\"{{name}}\" görünümünü güncellemek istediğinizden emin misiniz?",
         "confirmText": "Güncelle",
         "cancelText": "İptal"
       },
@@ -83,7 +83,7 @@
       "shippingIncludedHint": "İşaretlenirse, komisyon kargo dahil toplam üzerinden hesaplanır. İşaretlenmezse, kargo ücretleri tamamen mağazaya gider.",
       "type": {
         "label": "Tür",
-        "percentage": "Promosyon Değeri",
+        "percentage": "Yüzde",
         "fixed": "Sabit",
         "percentageHint": "Sipariş toplamının bir yüzdesini tahsil edin.",
         "fixedHint": "Sipariş başına sabit bir tutar tahsil edin."
@@ -362,7 +362,7 @@
         "goToPromotions": "Promosyonlar",
         "goToCampaigns": "Kampanyalar",
         "goToSellers": "Mağazalar",
-        "goToPayouts": "Ödemeler"
+        "goToPayouts": "Satıcı Ödemeleri"
       },
       "settings": {
         "goToSettings": "Ayarlar",
@@ -577,7 +577,7 @@
         "organize": "Organize Et",
         "variants": "Varyantlar",
         "inventory": "Envanter Kitleri",
-        "attributes": "Öznitelikler"
+        "attributes": "Özellikler"
       },
       "errors": {
         "variants": "Lütfen en az bir varyant seçin.",
@@ -595,8 +595,8 @@
       },
       "inventory": {
         "heading": "Envanter Kitleri",
-        "label": "Varyantın envanter kitine envanter öğeleri ekleyin.",
-        "itemPlaceholder": "Envanter öğesi seçin",
+        "label": "Varyantın envanter kitine envanter kalemleri ekleyin.",
+        "itemPlaceholder": "Envanter kalemi seçin",
         "quantityPlaceholder": "Kit için kaç tane gerektiğini belirtin."
       },
       "variants": {
@@ -623,12 +623,12 @@
       },
       "successToast": "Ürün {{title}} başarıyla oluşturuldu.",
       "attributes": {
-        "header": "Öznitelikler",
-        "description": "Ürününüz için özellikleri ve varyasyonları yönetin, ör. renk, beden, marka vb.\nPazar yeri tarafından tanımlanan özelliklerden seçin veya kendi özelliğinizi oluşturun.",
+        "header": "Özellikler",
+        "description": "Ürününüz için özellikleri ve varyasyonları yönetin, örn. renk, beden, marka vb.\nPazar yeri tarafından tanımlanan özelliklerden seçin veya kendi özelliğinizi oluşturun.",
         "addExisting": "Mevcut olanı ekle",
         "createNew": "Yeni oluştur",
         "title": "Başlık",
-        "titlePlaceholder": "ör. Renk",
+        "titlePlaceholder": "örn. Renk",
         "values": "Değerler",
         "selectValues": "Değerleri seçin",
         "valuePlaceholder": "Değerleri girin",
@@ -698,8 +698,8 @@
         "description": "Varyantlar mevcut filtrelerle eşleşmiyor."
       }
     },
-    "attributes": "Öznitelikler",
-    "editAttributes": "Öznitelikleri Düzenle",
+    "attributes": "Özellikler",
+    "editAttributes": "Özellikleri Düzenle",
     "editOptions": "Seçenekleri Düzenle",
     "editPrices": "Fiyatları düzenle",
     "media": {
@@ -750,9 +750,9 @@
         "placeholder": "Sıcak ve rahat"
       },
       "handle": {
-        "label": "Tutamak",
+        "label": "Handle",
         "tooltip": "Ürün başlığından otomatik olarak oluşturulur. Yalnızca küçük harfler, rakamlar ve tire kullanılabilir — bu alan doğrudan düzenlenemez.",
-        "placeholder": "kışlık-ceket"
+        "placeholder": "kislik-ceket"
       },
       "description": {
         "label": "Açıklama",
@@ -839,35 +839,35 @@
       "deleteWarning": "Bu varyantı silmek istediğinizden emin misiniz?",
       "pricesPagination": "1 - {{current}} / {{total}} fiyatlar",
       "tableItemAvailable": "{{availableCount}} mevcut",
-      "tableItem_one": "{{availableCount}} öğesi {{locationCount}} konumda mevcut",
-      "tableItem_other": "{{availableCount}} öğesi {{locationCount}} konumda mevcut",
+      "tableItem_one": "{{locationCount}} konumda {{availableCount}} adet mevcut",
+      "tableItem_other": "{{locationCount}} konumda {{availableCount}} adet mevcut",
       "inventory": {
         "notManaged": "Yönetilmiyor",
-        "manageItems": "Envanter öğelerini yönet",
+        "manageItems": "Envanter kalemlerini yönet",
         "notManagedDesc": "Bu varyant için envanter yönetilmiyor. Envanteri izlemek için 'Envanteri Yönet' özelliğini açın.",
         "manageKit": "Envanter kitini yönet",
-        "navigateToItem": "Envanter öğesine git",
+        "navigateToItem": "Envanter kalemine git",
         "actions": {
-          "inventoryItems": "Envanter öğesine git",
-          "inventoryKit": "Envanter öğelerini göster"
+          "inventoryItems": "Envanter kalemine git",
+          "inventoryKit": "Envanter kalemlerini göster"
         },
         "inventoryKit": "Envanter Kiti",
-        "inventoryKitHint": "Bu varyant birkaç envanter öğesinden mi oluşuyor?",
+        "inventoryKitHint": "Bu varyant birkaç envanter kaleminden mi oluşuyor?",
         "validation": {
-          "itemId": "Lütfen envanter öğesini seçin.",
+          "itemId": "Lütfen envanter kalemini seçin.",
           "quantity": "Miktar zorunludur. Lütfen pozitif bir sayı girin."
         },
         "header": "Stok & Envanter",
-        "editItemDetails": "Öğe detaylarını düzenle",
+        "editItemDetails": "Kalem detaylarını düzenle",
         "manageInventoryLabel": "Envanteri yönet",
         "manageInventoryHint": "Etkinleştirildiğinde, siparişler ve iadeler oluşturulduğunda envanter miktarını sizin için değiştireceğiz.",
         "allowBackordersLabel": "Geri siparişlere izin ver",
         "allowBackordersHint": "Etkinleştirildiğinde, müşteriler mevcut miktar olmasa bile varyantı satın alabilir.",
         "toast": {
           "levelsBatch": "Envanter seviyeleri güncellendi.",
-          "update": "Envanter öğesi başarıyla güncellendi.",
+          "update": "Envanter kalemi başarıyla güncellendi.",
           "updateLevel": "Envanter seviyesi başarıyla güncellendi.",
-          "itemsManageSuccess": "Envanter öğeleri başarıyla güncellendi."
+          "itemsManageSuccess": "Envanter kalemleri başarıyla güncellendi."
         }
       }
     },
@@ -908,8 +908,8 @@
       "description": "Tüm ürün varyantlarının stok seviyelerini güncelleyin.",
       "loading": "Bu biraz zaman alabilir...",
       "tooltips": {
-        "alreadyManaged": "Bu envanter öğesi zaten {{title}} altında düzenlenebilir.",
-        "alreadyManagedWithSku": "Bu envanter öğesi zaten {{title}} altında düzenlenebilir ({{sku}})."
+        "alreadyManaged": "Bu envanter kalemi zaten {{title}} altında düzenlenebilir.",
+        "alreadyManagedWithSku": "Bu envanter kalemi zaten {{title}} altında düzenlenebilir ({{sku}})."
       }
     },
     "shippingProfile": {
@@ -1022,7 +1022,7 @@
       "status": "Durum",
       "thumbnail": "Küçük resim",
       "title": "Başlık",
-      "handle": "Tutamak",
+      "handle": "Handle",
       "created_at": "Oluşturuldu",
       "updated_at": "Güncellenme"
     }
@@ -1237,17 +1237,17 @@
   },
   "inventory": {
     "domain": "Envanter",
-    "subtitle": "Envanter öğelerinizi yönetin",
+    "subtitle": "Envanter kalemlerinizi yönetin",
     "store": "Mağaza",
     "reserved": "Rezerve Edildi",
     "available": "Mevcut",
     "locationLevels": "Konumlar",
     "associatedVariants": "İlişkili varyantlar",
     "manageLocations": "Konumları yönet",
-    "deleteWarning": "Bir envanter öğesini silmek üzeresiniz. Bu işlem geri alınamaz.",
-    "editItemDetails": "Öğe detaylarını düzenle",
+    "deleteWarning": "Bir envanter kalemini silmek üzeresiniz. Bu işlem geri alınamaz.",
+    "editItemDetails": "Kalem detaylarını düzenle",
     "attributes": {
-      "tip": "Bunlar öğeyi tanımlamak için kullanılan varsayılan değerlerdir. Ayarlar → Ürün Özellikleri altında yönetilmezler."
+      "tip": "Bunlar kalemi tanımlamak için kullanılan varsayılan değerlerdir. Ayarlar → Ürün Özellikleri altında yönetilmezler."
     },
     "item": {
       "deleteTitle": "Envanter kalemini sil",
@@ -1258,25 +1258,25 @@
       "deleteDescription": "{{location}} konumundaki envanter seviyesini silmek üzeresiniz. Bu işlem bu konumdaki stoku ve rezervasyonları siler ve geri alınamaz. Tutarsızlıkları önlemek için devam etmeden önce Satıcının bu değişikliği onayladığından emin olun."
     },
     "create": {
-      "title": "Envanter Öğesi Oluştur",
+      "title": "Envanter Kalemi Oluştur",
       "details": "Detaylar",
       "availability": "Mevcutluk",
       "locations": "Konumlar",
-      "attributes": "Öznitelikler",
+      "attributes": "Özellikler",
       "requiresShipping": "Kargo Gerektirir",
-      "requiresShippingHint": "Envanter öğesi kargo gerektiriyor mu?",
-      "successToast": "Envanter öğesi başarıyla oluşturuldu.",
+      "requiresShippingHint": "Envanter kalemi kargo gerektiriyor mu?",
+      "successToast": "Envanter kalemi başarıyla oluşturuldu.",
       "descriptionPlaceholder": "Ürün açıklaması"
     },
     "reservation": {
       "header": "{{itemName}} için Rezervasyon",
       "editItemDetails": "Rezervasyonu düzenle",
-      "lineItemId": "Satır öğesi ID",
+      "lineItemId": "Satır kalemi ID",
       "itemId": "Kalem ID",
       "orderID": "Sipariş ID",
       "description": "Açıklama",
       "location": "Konum",
-      "goToInventoryItem": "Envanter öğesine git",
+      "goToInventoryItem": "Envanter kalemine git",
       "inStockAtLocation": "Bu konumda mevcut",
       "availableAtLocation": "Bu konumda mevcut",
       "reservedAtLocation": "Bu konumda rezerve edildi",
@@ -1285,7 +1285,7 @@
       "storeLocationWarningLabel": "Uyarı",
       "storeLocationWarning": "Bir Mağaza Konumundaki rezervasyonu değiştiriyorsunuz. Veri tutarsızlıklarını önlemek için lütfen bunu Satıcıyla teyit edin.",
       "create": "Rezervasyon Oluştur",
-      "itemToReserve": "Rezerve edilecek öğe",
+      "itemToReserve": "Rezerve edilecek kalem",
       "itemPlaceholder": "Kalem seçin",
       "locationPlaceholder": "Konum seçin",
       "quantityPlaceholder": "Ne kadar rezerve etmek istiyorsunuz?",
@@ -1309,7 +1309,7 @@
     "toast": {
       "updateLocations": "Konumlar başarıyla güncellendi.",
       "updateLevel": "Envanter seviyesi başarıyla güncellendi.",
-      "updateItem": "Envanter öğesi başarıyla güncellendi.",
+      "updateItem": "Envanter kalemi başarıyla güncellendi.",
       "deleteItem": "Envanter kalemi başarıyla silindi."
     },
     "adjustInventory": {
@@ -1519,7 +1519,7 @@
       "allocateItems": "Ürünleri tahsis et",
       "editOrder": "Siparişi düzenle",
       "editOrderContinue": "Sipariş düzenlemeye devam et",
-      "inventoryKit": "{{count}}x envanter öğesinden oluşur",
+      "inventoryKit": "{{count}}x envanter kaleminden oluşur",
       "itemTotal": "Ürün Toplamı",
       "shippingTotal": "Kargo Toplamı",
       "discountTotal": "İndirim Toplamı",
@@ -1540,11 +1540,11 @@
     },
     "payment": {
       "title": "Ödemeler",
-      "isReadyToBeCaptured": "Ödeme <0/> alınmaya hazır.",
+      "isReadyToBeCaptured": "Ödeme <0/> tahsil edilmeye hazır.",
       "totalPaidByCustomer": "Müşteri tarafından ödenen toplam",
-      "capture": "Ödemeyi al",
-      "capture_short": "Al",
-      "refund": "İade",
+      "capture": "Ödemeyi tahsil et",
+      "capture_short": "Tahsil et",
+      "refund": "Para iadesi",
       "markAsPaid": "Ödendi olarak işaretle",
       "statusLabel": "Ödeme durumu",
       "statusTitle": "Ödeme Durumu",
@@ -1553,25 +1553,25 @@
         "authorized": "Yetkilendirildi",
         "partiallyAuthorized": "Kısmen yetkilendirildi",
         "awaiting": "Bekleniyor",
-        "captured": "Alındı",
-        "partiallyRefunded": "Kısmen iade edildi",
-        "partiallyCaptured": "Kısmen alındı",
-        "refunded": "İade edildi",
+        "captured": "Tahsil edildi",
+        "partiallyRefunded": "Kısmi para iadesi yapıldı",
+        "partiallyCaptured": "Kısmen tahsil edildi",
+        "refunded": "Para iadesi yapıldı",
         "canceled": "İptal edildi",
         "requiresAction": "Eylem gerekiyor"
       },
-      "capturePayment": "{{amount}} tutarında ödeme alınacak.",
-      "capturePaymentSuccess": "{{amount}} tutarındaki ödeme başarıyla alındı",
+      "capturePayment": "{{amount}} tutarındaki ödeme tahsil edilecek.",
+      "capturePaymentSuccess": "{{amount}} tutarındaki ödeme başarıyla tahsil edildi",
       "markAsPaidPayment": "{{amount}} tutarındaki ödeme ödenmiş olarak işaretlenecek.",
       "markAsPaidPaymentSuccess": "{{amount}} tutarındaki ödeme başarıyla ödenmiş olarak işaretlendi",
-      "createRefund": "İade Oluştur",
-      "refundPaymentSuccess": "{{amount}} tutarındaki iade başarılı",
+      "createRefund": "Para İadesi Oluştur",
+      "refundPaymentSuccess": "{{amount}} tutarındaki para iadesi başarılı",
       "createRefundWrongQuantity": "Miktar 1 ile {{number}} arasında bir sayı olmalıdır",
-      "refundAmount": "{{ amount }} tutarını iade et",
+      "refundAmount": "{{ amount }} tutarında para iadesi yap",
       "paymentLink": "{{ amount }} için ödeme bağlantısını kopyala",
-      "selectPaymentToRefund": "İade edilecek ödemeyi seçin",
+      "selectPaymentToRefund": "Para iadesi yapılacak ödemeyi seçin",
       "totalPending": "Bekleyen toplam",
-      "totalStoreCreditRefunds": "Toplam mağaza kredisi iadesi"
+      "totalStoreCreditRefunds": "Toplam mağaza kredisi para iadesi"
     },
     "edits": {
       "title": "Siparişi düzenle",
@@ -1752,7 +1752,7 @@
       "itemsToAllocate": "Tahsis edilecek ürünler",
       "itemsToAllocateDesc": "Tahsis etmek istediğiniz ürün sayısını seçin",
       "search": "Ürünleri ara",
-      "consistsOf": "{{num}}x envanter öğesinden oluşur",
+      "consistsOf": "{{num}}x envanter kaleminden oluşur",
       "requires": "Her bir varyant için {{num}} gerektirir",
       "toast": {
         "created": "Ürünler başarıyla tahsis edildi",
@@ -1829,14 +1829,14 @@
       "labelLink": "Etiket"
     },
     "refund": {
-      "title": "İade Oluştur",
-      "sendNotificationHint": "Oluşturulan iade hakkında müşterilere bilgi verin.",
+      "title": "Para İadesi Oluştur",
+      "sendNotificationHint": "Oluşturulan para iadesi hakkında müşterilere bilgi verin.",
       "systemPayment": "Sistem ödemesi",
       "systemPaymentDesc": "Ödemelerinizden biri bir sistem ödemesidir. Bu tür ödemeler için işlemler Kayı.com tarafından yönetilmez.",
       "error": {
         "amountToLarge": "Orijinal sipariş tutarından daha fazlasını iade edemezsiniz.",
-        "amountNegative": "İade tutarı pozitif bir sayı olmalıdır.",
-        "reasonRequired": "Lütfen bir iade sebebi seçin."
+        "amountNegative": "Para iadesi tutarı pozitif bir sayı olmalıdır.",
+        "reasonRequired": "Lütfen bir para iadesi nedeni seçin."
       }
     },
     "customer": {
@@ -1872,9 +1872,9 @@
         },
         "payment": {
           "awaiting": "Ödeme bekleniyor",
-          "captured": "Ödeme alındı",
+          "captured": "Ödeme tahsil edildi",
           "canceled": "Ödeme iptal edildi",
-          "refunded": "Ödeme iade edildi"
+          "refunded": "Ödeme için para iadesi yapıldı"
         },
         "fulfillment": {
           "created": "Ürünler tamamlandı",
@@ -2303,17 +2303,17 @@
       }
     },
     "stateOrTerritory": {
-      "header": "Eyaletler veya Bölgeler",
+      "header": "Eyaletler veya Topraklar",
       "create": {
-        "header": "Eyalet/Bölge Vergi Bölgesi Oluştur",
-        "hint": "Belirli bir eyalet/bölge için vergi oranlarını tanımlamak üzere yeni bir vergi bölgesi oluşturun."
+        "header": "Eyalet/Toprak Vergi Bölgesi Oluştur",
+        "hint": "Belirli bir eyalet/toprak için vergi oranlarını tanımlamak üzere yeni bir vergi bölgesi oluşturun."
       }
     },
     "county": {
-      "header": "İlçeler",
+      "header": "Kontluklar",
       "create": {
-        "header": "İlçe Vergi Bölgesi Oluştur",
-        "hint": "Belirli bir ilçe için vergi oranlarını tanımlamak üzere yeni bir vergi bölgesi oluşturun."
+        "header": "Kontluk Vergi Bölgesi Oluştur",
+        "hint": "Belirli bir kontluk için vergi oranlarını tanımlamak üzere yeni bir vergi bölgesi oluşturun."
       }
     },
     "region": {
@@ -2331,10 +2331,10 @@
       }
     },
     "territory": {
-      "header": "Bölgeler",
+      "header": "Topraklar",
       "create": {
-        "header": "Bölge Vergi Bölgesi Oluştur",
-        "hint": "Belirli bir bölge için vergi oranlarını tanımlamak üzere yeni bir vergi bölgesi oluşturun."
+        "header": "Toprak Vergi Bölgesi Oluştur",
+        "hint": "Belirli bir toprak için vergi oranlarını tanımlamak üzere yeni bir vergi bölgesi oluşturun."
       }
     },
     "prefecture": {
@@ -2345,10 +2345,10 @@
       }
     },
     "district": {
-      "header": "Bölgeler",
+      "header": "İlçeler",
       "create": {
-        "header": "Bölge Vergi Bölgesi Oluştur",
-        "hint": "Belirli bir bölge için vergi oranlarını tanımlamak üzere yeni bir vergi bölgesi oluşturun."
+        "header": "İlçe Vergi Bölgesi Oluştur",
+        "hint": "Belirli bir ilçe için vergi oranlarını tanımlamak üzere yeni bir vergi bölgesi oluşturun."
       }
     },
     "governorate": {
@@ -2468,12 +2468,12 @@
           "province": "İl",
           "state": "Eyalet",
           "region": "Bölge",
-          "stateOrTerritory": "Eyalet/Bölge",
+          "stateOrTerritory": "Eyalet/Toprak",
           "department": "Departman",
-          "county": "İlçe",
-          "territory": "Bölge",
+          "county": "Kontluk",
+          "territory": "Toprak",
           "prefecture": "Prefektörlük",
-          "district": "Bölge",
+          "district": "İlçe",
           "governorate": "Valilik",
           "emirate": "Emirlik",
           "canton": "Kanton",
@@ -2483,12 +2483,12 @@
           "province": "İl seçin",
           "state": "Eyalet seçin",
           "region": "Bölge seçin",
-          "stateOrTerritory": "Eyalet/bölge seçin",
+          "stateOrTerritory": "Eyalet/toprak seçin",
           "department": "Departman seçin",
-          "county": "İlçe seçin",
-          "territory": "Bölge seçin",
+          "county": "Kontluk seçin",
+          "territory": "Toprak seçin",
           "prefecture": "Prefektörlük seçin",
-          "district": "Bölge seçin",
+          "district": "İlçe seçin",
           "governorate": "Valilik seçin",
           "emirate": "Emirlik seçin",
           "canton": "Kanton seçin"
@@ -2499,7 +2499,7 @@
         },
         "alert": {
           "header": "Bu vergi bölgesi için alt seviyeler devre dışı",
-          "description": "Alt seviyeler, bu bölge için varsayılan olarak devre dışıdır. Eyaletler, iller veya bölgeler gibi alt seviyeleri oluşturmak için bunları etkinleştirebilirsiniz.",
+          "description": "Alt seviyeler, bu bölge için varsayılan olarak devre dışıdır. İller, eyaletler veya topraklar gibi alt seviye bölgeler oluşturmak için bunları etkinleştirebilirsiniz.",
           "action": "Alt seviyeleri etkinleştir"
         }
       },
@@ -2719,11 +2719,11 @@
       },
       "value_type": {
         "fixed": {
-          "title": "Promosyon Değeri",
-          "description": "İndirim miktarı. Örn: 100"
+          "title": "Sabit tutar",
+          "description": "İndirim tutarı. Örn: 100"
         },
         "percentage": {
-          "title": "Promosyon Değeri",
+          "title": "Yüzde",
           "description": "İndirim yüzdesi. Örn: %8"
         }
       },
@@ -3641,7 +3641,7 @@
       "state": {
         "skipped": "Atlandı",
         "skippedFailure": "Atlandı (Başarısızlık)",
-        "dormant": "Beklemede",
+        "dormant": "Uykuda",
         "timeout": "Zaman aşımı"
       }
     }
@@ -3725,8 +3725,8 @@
     "selectValues": "Değerleri Seç"
   },
   "fields": {
-    "amount": "Miktar",
-    "refundAmount": "İade miktarı",
+    "amount": "Tutar",
+    "refundAmount": "Para iadesi tutarı",
     "name": "İsim",
     "default": "Varsayılan",
     "lastName": "Soyadı",
@@ -3735,8 +3735,8 @@
     "customTitle": "Özel başlık",
     "manageInventory": "Envanteri yönet",
     "inventoryKit": "Envanter seti var",
-    "inventoryItems": "Envanter öğeleri",
-    "inventoryItem": "Envanter öğesi",
+    "inventoryItems": "Envanter kalemleri",
+    "inventoryItem": "Envanter kalemi",
     "requiredQuantity": "Gerekli miktar",
     "description": "Açıklama",
     "email": "E-posta",
@@ -3752,7 +3752,7 @@
     "category": "Kategori",
     "collection": "Koleksiyon",
     "discountable": "İndirim uygulanabilir",
-    "handle": "Tanıtıcı",
+    "handle": "Handle",
     "subtitle": "Alt başlık",
     "item": "Öğe",
     "qty": "adet.",
@@ -3783,7 +3783,7 @@
     "totalRedemptions": "Toplam Kullanım",
     "countries": "Ülkeler",
     "paymentProviders": "Ödeme Sağlayıcıları",
-    "refundReason": "Geri Ödeme Nedeni",
+    "refundReason": "Para İadesi Nedeni",
     "fulfillmentProviders": "Tamamlama Sağlayıcıları",
     "fulfillmentProvider": "Tamamlama Sağlayıcısı",
     "providers": "Sağlayıcılar",
@@ -3938,9 +3938,9 @@
     "seconds_other": "Saniyeler"
   },
   "payouts": {
-    "domain": "Ödemeler",
+    "domain": "Satıcı Ödemeleri",
     "list": {
-      "empty": "Ödeme bulunamadı"
+      "empty": "Satıcı ödemesi bulunamadı"
     },
     "status": {
       "paid": "Ödendi",
@@ -4021,7 +4021,7 @@
     },
     "fields": {
       "name": "Ad",
-      "handle": "Tutamak",
+      "handle": "Handle",
       "description": "Açıklama",
       "type": "Tür",
       "filterable": "Filtrelenebilir",
@@ -4049,7 +4049,7 @@
       "select": "Tekli Seçim",
       "multivalue": "Çoklu Seçim",
       "unit": "Birim",
-      "toggle": "Anahtar",
+      "toggle": "Açık/Kapalı",
       "text_area": "Metin Alanı"
     },
     "selectCategory": {
@@ -4115,24 +4115,24 @@
     }
   },
   "refundReasons": {
-    "domain": "Geri Ödeme Nedenleri",
-    "subtitle": "Geri ödeme verme nedenlerini yönetin.",
-    "calloutHint": "Geri ödemeleri kategorize etmek için nedenleri yönetin.",
-    "editReason": "Geri Ödeme Nedenini Düzenle",
+    "domain": "Para İadesi Nedenleri",
+    "subtitle": "Para iadesi nedenlerini yönetin.",
+    "calloutHint": "Para iadelerini sınıflandırmak için nedenleri yönetin.",
+    "editReason": "Para İadesi Nedenini Düzenle",
     "create": {
-      "header": "Geri Ödeme Nedeni Ekle",
-      "subtitle": "Geri ödemeler için en yaygın nedenleri belirtin.",
-      "hint": "Geri ödemeleri kategorize etmek için yeni bir geri ödeme nedeni oluşturun.",
-      "successToast": "{{label}} geri ödeme nedeni başarıyla oluşturuldu."
+      "header": "Para İadesi Nedeni Ekle",
+      "subtitle": "Para iadeleri için en yaygın nedenleri belirtin.",
+      "hint": "Para iadelerini sınıflandırmak için yeni bir para iadesi nedeni oluşturun.",
+      "successToast": "{{label}} para iadesi nedeni başarıyla oluşturuldu."
     },
     "edit": {
-      "header": "Geri Ödeme Nedenini Düzenle",
-      "subtitle": "Geri ödeme nedeninin değerini düzenleyin.",
-      "successToast": "{{label}} geri ödeme nedeni başarıyla güncellendi."
+      "header": "Para İadesi Nedenini Düzenle",
+      "subtitle": "Para iadesi nedeninin değerini düzenleyin.",
+      "successToast": "{{label}} para iadesi nedeni başarıyla güncellendi."
     },
     "delete": {
-      "confirmation": "\"{{label}}\" geri ödeme nedenini silmek üzeresiniz. Bu işlem geri alınamaz.",
-      "successToast": "Geri ödeme nedeni başarıyla silindi."
+      "confirmation": "\"{{label}}\" para iadesi nedenini silmek üzeresiniz. Bu işlem geri alınamaz.",
+      "successToast": "Para iadesi nedeni başarıyla silindi."
     },
     "fields": {
       "label": {
@@ -4202,7 +4202,7 @@
     },
     "fields": {
       "name": "Ad",
-      "handle": "Tutamak",
+      "handle": "Handle",
       "email": "E-posta",
       "phone": "Telefon",
       "logo": "Logo",
@@ -4372,7 +4372,7 @@
       "code": "Kod",
       "type": {
         "label": "Tür",
-        "percentage": "Promosyon Değeri",
+        "percentage": "Yüzde",
         "fixed": "Sabit"
       },
       "target": {
@@ -4440,7 +4440,7 @@
       "tax_region": "Vergi Bölgesi",
       "api_key": "API Anahtarı",
       "return_reason": "İade Nedeni",
-      "refund_reason": "Geri Ödeme Nedeni",
+      "refund_reason": "Para İadesi Nedeni",
       "workflow": "İş Akışı",
       "translation": "Çeviri"
     },

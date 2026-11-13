@@ -467,7 +467,7 @@
       "header": "Edytuj produkt",
       "description": "Edytuj szczegóły produktu.",
       "successToast": "Produkt {{title}} został pomyślnie zaktualizowany.",
-      "requestSuccessToast": "Zgłoszenie aktualizacji produktu zostało wysłane. Po potwierdzeniu przez administratora zmiany pojawią się w sklepie internetowym.",
+      "requestSuccessToast": "Wniosek o aktualizację produktu został wysłany. Po potwierdzeniu przez administratora zmiany pojawią się w sklepie internetowym.",
       "attributes": {
         "addAttribute": "Dodaj atrybut",
         "editHeader": "Edytuj atrybut",
@@ -530,12 +530,12 @@
         "addExisting": "Dodaj istniejący",
         "createNew": "Utwórz nowy",
         "requiredAttributes": "Wymagane atrybuty",
-        "requiredAttributesHint": "Te atrybuty są wymagane przez marketplace. Wybierz je, zanim przejdziesz dalej.",
+        "requiredAttributesHint": "Te atrybuty są wymagane przez marketplace. Wybierz je przed kontynuowaniem.",
         "selectValues": "Wybierz wartości",
         "tip": "Wskazówka",
         "useForVariants": "Użyj dla wariantów",
-        "useForVariantsDescription": "Jeśli zaznaczone, będziesz mógł tworzyć warianty przy użyciu tego atrybutu. Jeśli nie, atrybut będzie używany wyłącznie w celach informacyjnych.",
-        "variantAxisTip": "Ten atrybut utworzy warianty. Możesz je zdefiniować w kolejnym kroku.",
+        "useForVariantsDescription": "Jeśli zaznaczone, będziesz mógł tworzyć warianty przy użyciu tego atrybutu. Jeśli nie, atrybut będzie używany tylko w celach informacyjnych.",
+        "variantAxisTip": "Ten atrybut utworzy warianty. Możesz je zdefiniować w następnym kroku.",
         "titlePlaceholder": "np. Kolor",
         "valuePlaceholder": "Wprowadź wartości",
         "description": "Dodaj atrybuty do swojego produktu. Wybierz z atrybutów zdefiniowanych przez administratora lub stwórz własne.",
@@ -577,7 +577,7 @@
           "alert": "Dodaj opcje, aby utworzyć warianty.",
           "tip": "Klienci zobaczą tylko warianty z cenami i stanem magazynowym.",
           "searchPlaceholder": "Wyszukaj",
-          "media": "Media"
+          "media": "Multimedia"
         },
         "productOptions": {
           "label": "Opcje produktu",
@@ -592,7 +592,7 @@
         }
       },
       "successToast": "Produkt {{title}} został pomyślnie utworzony.",
-      "requestSuccessToast": "Zgłoszenie produktu zostało wysłane. Gdy administrator zatwierdzi produkt, pojawi się on w sklepie internetowym. Widoczne będą tylko warianty z ustawionymi stanami magazynowymi i cenami."
+      "requestSuccessToast": "Wniosek o dodanie produktu został wysłany. Gdy administrator zatwierdzi produkt, pojawi się on w sklepie internetowym. Widoczne będą tylko warianty z ustawionymi stanami magazynowymi i cenami."
     },
     "export": {
       "header": "Eksportuj listę produktów",
@@ -656,7 +656,7 @@
     "editAttributes": "Edytuj atrybuty",
     "editOptions": "Edytuj opcje",
     "media": {
-      "label": "Media",
+      "label": "Multimedia",
       "editHint": "Dodaj media do produktu, aby zaprezentować go w swoim sklepie.",
       "makeThumbnail": "Ustaw jako miniaturę",
       "uploadImagesLabel": "Prześlij obrazy",
@@ -683,7 +683,7 @@
       },
       "successToast": "Media zostały pomyślnie zaktualizowane.",
       "manageImageVariants": "Zarządzaj powiązanymi wariantami",
-      "fileTooLarge": "Jeden lub więcej plików przekracza maksymalny rozmiar {{size}}: {{name}}",
+      "fileTooLarge": "Jeden lub więcej plików przekracza maksymalny rozmiar pliku {{size}}: {{name}}",
       "variantImages": "Obrazy wariantu",
       "showAvailableImages": "Pokaż dostępne obrazy",
       "availableImages": "Wybierz obrazy",
@@ -910,13 +910,13 @@
     },
     "edits": {
       "panel": {
-        "title": "Zgłoszenie aktualizacji produktu",
+        "title": "Wniosek o aktualizację produktu",
         "deleteRequested": "Usunięcie produktu oczekuje na zatwierdzenie.",
-        "cancelTitle": "Anuluj zgłoszenie aktualizacji",
-        "cancelDescription": "Czy na pewno chcesz anulować to zgłoszenie aktualizacji produktu? Tej operacji nie można cofnąć."
+        "cancelTitle": "Anuluj wniosek o aktualizację",
+        "cancelDescription": "Czy na pewno chcesz anulować ten wniosek o aktualizację produktu? Tej akcji nie można cofnąć."
       },
       "toast": {
-        "canceledSuccessfully": "Zgłoszenie aktualizacji produktu zostało anulowane"
+        "canceledSuccessfully": "Wniosek o aktualizację produktu został anulowany"
       }
     },
     "attributeVariantsDescription": "Atrybuty używane do wariantów",
@@ -924,7 +924,7 @@
     "attributeProductInformationDescription": "Atrybuty używane w celach informacyjnych",
     "attributeRequiredByMarketplace": "Ten atrybut jest wymagany przez marketplace",
     "addAttribute": "Dodaj atrybut",
-    "deleteAttributeWarning": "Czy na pewno chcesz usunąć atrybut \"{{title}}\"? Tej operacji nie można cofnąć.",
+    "deleteAttributeWarning": "Czy na pewno chcesz usunąć atrybut \"{{title}}\"? Tej akcji nie można cofnąć.",
     "variantMedia": {
       "label": "Media wariantu",
       "manageVariants": "Zarządzaj wariantami",
@@ -1151,7 +1151,7 @@
     "reservation": {
       "header": "Rezerwacja {{itemName}}",
       "editItemDetails": "Edytuj rezerwację",
-      "lineItemId": "ID pozycji",
+      "lineItemId": "ID pozycji zamówienia",
       "orderID": "ID zamówienia",
       "description": "Opis",
       "location": "Lokalizacja",
@@ -1179,7 +1179,7 @@
       "deleteBlockedDescription": "Tej rezerwacji nie można usunąć, ponieważ jest powiązana z niezrealizowanym zamówieniem.",
       "gotIt": "Rozumiem",
       "locationPlaceholder": "Wybierz lokalizację",
-      "itemId": "ID pozycji",
+      "itemId": "ID pozycji magazynowej",
       "goToInventoryItem": "Przejdź do pozycji magazynowej",
       "reserved": "Zarezerwowane",
       "itemPlaceholder": "Wybierz pozycję"
@@ -1467,7 +1467,7 @@
     "status": {
       "not_paid": "Nieopłacone",
       "pending": "Oczekujące",
-      "completed": "Zrealizowane",
+      "completed": "Zakończone",
       "draft": "Szkic",
       "archived": "Zarchiwizowane",
       "canceled": "Anulowane",
@@ -1483,9 +1483,9 @@
       "shippingTotal": "Koszt wysyłki",
       "discountTotal": "Wartość rabatów",
       "taxTotalIncl": "Kwota podatku (wliczona)",
-      "itemSubtotal": "Wartość produktów",
-      "shippingSubtotal": "Koszt wysyłki",
-      "discountSubtotal": "Wartość rabatów",
+      "itemSubtotal": "Suma częściowa produktów",
+      "shippingSubtotal": "Suma częściowa wysyłki",
+      "discountSubtotal": "Suma częściowa rabatów",
       "taxTotal": "Kwota podatku",
       "totalAfterDiscount": "Razem po rabacie"
     },
@@ -1504,8 +1504,8 @@
       "totalPending": "Łącznie oczekujące",
       "totalRefunded": "Zwrócona kwota",
       "totalStoreCreditRefunds": "Całkowite zwroty kredytów sklepowych",
-      "capture": "Pobierz płatność",
-      "capture_short": "Pobierz",
+      "capture": "Zrealizuj płatność",
+      "capture_short": "Zrealizuj",
       "refund": "Zwrot pieniędzy",
       "statusLabel": "Status płatności",
       "statusTitle": "Status płatności",
@@ -2877,9 +2877,9 @@
         "selectCurrency": "Wybierz walutę",
         "limit": "Limit",
         "used": "Używany",
-        "budgetAttribute": "Ogranicz użycie na",
+        "budgetAttribute": "Ogranicz użycie według",
         "budgetAttributeTooltip": "Zdefiniuj, ile razy promocja może zostać użyta przez każdego klienta lub adres e-mail.",
-        "totalUsedByAttribute": "Limit budżetu na: {{attribute}}",
+        "totalUsedByAttribute": "Limit budżetu według: {{attribute}}",
         "totalUsedByAttributeCustomerId": "Limit budżetu na klienta",
         "totalUsedByAttributeEmail": "Limit budżetu na e-mail"
       },
@@ -3097,7 +3097,7 @@
     "payout": "Wypłata",
     "noRecords": "Nie znaleziono wypłat",
     "status": {
-      "pending": "Oczekuje",
+      "pending": "Oczekująca",
       "processing": "W trakcie przetwarzania",
       "paid": "Wypłacono",
       "failed": "Nieudana",
@@ -3186,7 +3186,7 @@
     "acceptedOnDate": "Zaakceptowano w dniu {{date}}",
     "inviteStatus": {
       "accepted": "Zaakceptowane",
-      "pending": "Oczekuje",
+      "pending": "Oczekujące",
       "expired": "Wygasłe"
     },
     "roles": {
@@ -3286,7 +3286,7 @@
     },
     "address": {
       "header": "Adres",
-      "defaultName": "Siedziba",
+      "defaultName": "Siedziba główna",
       "nameLabel": "Nazwa",
       "namePlaceholder": "Siedziba",
       "empty": {
@@ -3321,8 +3321,8 @@
         "iban": "IBAN",
         "bic": "SWIFT / BIC",
         "swiftBic": "SWIFT / BIC",
-        "routingNumber": "Numer routingu",
-        "achRoutingNumber": "Numer routingu ACH",
+        "routingNumber": "Numer rozliczeniowy",
+        "achRoutingNumber": "Numer rozliczeniowy ACH",
         "accountNumber": "Numer konta"
       },
       "validation": {
@@ -3368,7 +3368,7 @@
         "successToast": "Dane firmy zostały zaktualizowane"
       },
       "fields": {
-        "corporateName": "Pełna nazwa firmy",
+        "corporateName": "Nazwa firmy",
         "registrationNumber": "Numer rejestracyjny",
         "taxId": "NIP"
       }
@@ -3405,7 +3405,7 @@
       },
       "deleteSuccess": "Przerwa została usunięta",
       "edit": {
-        "successToast": "Urlop został pomyślnie zaktualizowany."
+        "successToast": "Przerwa została zaktualizowana"
       }
     },
     "toast": {
@@ -4347,25 +4347,25 @@
     "endDate": "Data końcowa",
     "draft": "Szkic",
     "values": "Wartości",
-    "images": "Media",
+    "images": "Multimedia",
     "type_id": "Typ",
     "collection_id": "Kolekcja",
     "promotionCode": "Kod promocyjny",
     "website": "Strona internetowa",
     "premium": "Premium",
-    "professional": "Profesjonalne",
+    "professional": "Profesjonalny",
     "is_giftcard": "Karta podarunkowa",
     "origin_country": "Kraj pochodzenia",
     "hs_code": "Kod HS",
     "mid_code": "Kod MID",
-    "external_id": "ID zewnętrzne",
-    "is_restricted": "Ograniczone",
+    "external_id": "Zewnętrzne ID",
+    "is_restricted": "Ograniczona",
     "tag_ids": "Tagi",
     "category_ids": "Kategorie",
     "allow_backorder": "Zezwól na zamówienia oczekujące",
     "manage_inventory": "Zarządzaj zapasami",
     "variant_rank": "Pozycja wariantu",
-    "attribute_values": "Wartości atrybutu",
+    "attribute_values": "Wartości atrybutów",
     "isbn": "ISBN",
     "asin": "ASIN",
     "gtin": "GTIN",
@@ -4410,16 +4410,16 @@
     "fields": {
       "name": "Nazwa",
       "handle": "Identyfikator",
-      "required": "Wymagane",
+      "required": "Wymagany",
       "type": "Typ",
       "values": "Wartości",
       "variantAxis": "Użyj dla wariantów",
-      "filterable": "Filtrowalne",
+      "filterable": "Filtrowalny",
       "productAttribute": "Atrybut produktu"
     },
     "type": {
-      "select": "Lista jednokrotnego wyboru",
-      "multivalue": "Lista wielokrotnego wyboru",
+      "select": "Pojedynczy wybór",
+      "multivalue": "Wielokrotny wybór",
       "unit": "Jednostka",
       "toggle": "Przełącznik",
       "text_area": "Pole tekstowe"

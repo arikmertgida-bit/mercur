@@ -112,9 +112,9 @@
       "heading": "Wnioski o kategorie",
       "noRecords": "Nie znaleziono wniosków o kategorie",
       "create": {
-        "heading": "Zgłoś kategorię",
-        "description": "Wyślij zgłoszenie o utworzenie nowej kategorii produktu.",
-        "successToast": "Zgłoszenie kategorii zostało utworzone pomyślnie"
+        "heading": "Złóż wniosek o kategorię",
+        "description": "Wyślij wniosek o utworzenie nowej kategorii produktu.",
+        "successToast": "Wniosek o kategorię został utworzony"
       }
     },
     "collections": {
@@ -122,9 +122,9 @@
       "heading": "Wnioski o kolekcje",
       "noRecords": "Nie znaleziono wniosków o kolekcje",
       "create": {
-        "heading": "Zgłoś kolekcję",
-        "description": "Wyślij zgłoszenie o utworzenie nowej kolekcji produktów.",
-        "successToast": "Zgłoszenie kolekcji zostało utworzone pomyślnie"
+        "heading": "Złóż wniosek o kolekcję",
+        "description": "Wyślij wniosek o utworzenie nowej kolekcji produktów.",
+        "successToast": "Wniosek o kolekcję został utworzony"
       }
     },
     "tags": {
@@ -132,9 +132,9 @@
       "heading": "Wnioski o tagi",
       "noRecords": "Nie znaleziono wniosków o tagi",
       "create": {
-        "heading": "Zgłoś tag",
-        "description": "Wyślij zgłoszenie o utworzenie nowego tagu produktu.",
-        "successToast": "Zgłoszenie tagu zostało utworzone pomyślnie"
+        "heading": "Złóż wniosek o tag",
+        "description": "Wyślij wniosek o utworzenie nowego tagu produktu.",
+        "successToast": "Wniosek o tag został utworzony"
       }
     },
     "types": {
@@ -142,9 +142,9 @@
       "heading": "Wnioski o typy",
       "noRecords": "Nie znaleziono wniosków o typy",
       "create": {
-        "heading": "Zgłoś typ",
-        "description": "Wyślij zgłoszenie o utworzenie nowego typu produktu.",
-        "successToast": "Zgłoszenie typu zostało utworzone pomyślnie"
+        "heading": "Złóż wniosek o typ",
+        "description": "Wyślij wniosek o utworzenie nowego typu produktu.",
+        "successToast": "Wniosek o typ został utworzony"
       }
     },
     "returnReasons": {
@@ -181,8 +181,8 @@
       "reference": "Numer referencyjny",
       "customerNote": "Notatka klienta",
       "replyStatus": "Status odpowiedzi",
-      "createdAt": "Stworzony",
-      "updatedAt": "Zaktualizowany"
+      "createdAt": "Utworzono",
+      "updatedAt": "Zaktualizowano"
     },
     "photos": "Zdjęcia",
     "noPhotos": "Do tej recenzji nie dołączono zdjęć.",
