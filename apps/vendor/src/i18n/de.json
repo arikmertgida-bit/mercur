@@ -4,7 +4,7 @@
     "export": "Exportieren",
     "done": "Fertig",
     "importHeader": "Produkte importieren",
-    "importDescription": "Laden Sie eine CSV-Datei hoch, um Produkte in Ihr Geschäft zu importieren.",
+    "importDescription": "Laden Sie eine CSV-Datei hoch, um Produkte in Ihren Shop zu importieren.",
     "importHint": "Laden Sie eine CSV-Datei mit Ihren Produkten hoch. Sie können",
     "downloadTemplate": "die Vorlage herunterladen",
     "uploadLabel": "CSV-Datei hochladen",
@@ -57,7 +57,7 @@
     "helpSupport": "Support-Team",
     "me": "Ich",
     "productQuestion": "Produktfrage",
-    "storeQuestion": "Frage zum Geschäft",
+    "storeQuestion": "Frage zum Shop",
     "imageUploadFailed": "Bild-Upload fehlgeschlagen",
     "blockedReasonEmail": "Nachricht konnte nicht gesendet werden: Das Teilen von E-Mail-Adressen ist nicht erlaubt.",
     "blockedReasonPhone": "Nachricht konnte nicht gesendet werden: Das Teilen von Telefonnummern ist nicht erlaubt.",
@@ -69,13 +69,13 @@
     "deleteForEveryone": "Für alle löschen",
     "close": "Schließen",
     "customer": "Kunde",
-    "store": "Geschäft",
+    "store": "Shop",
     "back": "Zurück",
     "participant": "Teilnehmer",
     "noMessages": "Keine Nachrichten",
     "chatOptions": "Chat-Optionen",
     "deleteOnlyForMe": "Nur für mich löschen",
-    "storeContext": "Frage zum Geschäft",
+    "storeContext": "Frage zum Shop",
     "product": "Produkt",
     "deleteConfirmTitle": "Nachricht löschen",
     "deleteConfirmDesc": "Möchten Sie diese Nachricht wirklich löschen?",
@@ -98,7 +98,7 @@
     "status": {
       "draft": "Entwurf",
       "pending": "Ausstehend",
-      "accepted": "Angenommen",
+      "accepted": "Akzeptiert",
       "rejected": "Abgelehnt"
     },
     "filters": {
@@ -118,13 +118,13 @@
       }
     },
     "collections": {
-      "navLabel": "Kollektionen",
-      "heading": "Kollektionsanfragen",
-      "noRecords": "Keine Kollektionsanfragen gefunden",
+      "navLabel": "Sammlungen",
+      "heading": "Sammlungsanfragen",
+      "noRecords": "Keine Sammlungsanfragen gefunden",
       "create": {
-        "heading": "Kollektion anfragen",
-        "description": "Senden Sie eine Anfrage zur Erstellung einer neuen Produktkollektion.",
-        "successToast": "Kollektionsanfrage erfolgreich erstellt"
+        "heading": "Sammlung anfragen",
+        "description": "Senden Sie eine Anfrage zur Erstellung einer neuen Produktsammlung.",
+        "successToast": "Sammlungsanfrage erfolgreich erstellt"
       }
     },
     "tags": {
@@ -177,7 +177,7 @@
     "domain": "Bewertungen",
     "noRecords": "Keine Bewertungen gefunden",
     "columns": {
-      "rating": "Bewertung",
+      "rating": "Sternebewertung",
       "reference": "Referenz",
       "customerNote": "Kundenhinweis",
       "replyStatus": "Antwortstatus",
@@ -243,7 +243,7 @@
       "subtitle": "Produkte mit knappem Lagerbestand",
       "noRecords": "Keine Produkte mit niedrigem Bestand",
       "product": "Produkt",
-      "sku": "SKU",
+      "sku": "Artikelnummer",
       "available": "Verfügbar",
       "viewInventory": "Zum Lagerbestand"
     },

@@ -16,7 +16,7 @@
     "columns": {
       "product": "Termék",
       "reporter": "Bejelentette",
-      "reason": "Ok",
+      "reason": "Indok",
       "status": "Státusz"
     },
     "status": {
@@ -80,7 +80,7 @@
     "columns": {
       "image": "Kép",
       "reporter": "Bejelentette",
-      "reason": "Ok",
+      "reason": "Indok",
       "status": "Státusz"
     },
     "status": {
@@ -121,7 +121,7 @@
     "notificationTitle": "{{senderName}} üzenetet küldött Önnek",
     "notificationBody": "{{preview}}",
     "image": "Kép",
-    "support": "Támogatás",
+    "support": "Ügyfélszolgálat",
     "direct": "Közvetlen",
     "unknown": "Ismeretlen",
     "supportTeam": "Ügyfélszolgálati csapat",
@@ -156,7 +156,7 @@
     "imageAlt": "Kép"
   },
   "requests": {
-    "domain": "Kérések",
+    "domain": "Kérelmek",
     "status": {
       "draft": "Piszkozat",
       "pending": "Függőben",
@@ -171,28 +171,28 @@
     },
     "categories": {
       "navLabel": "Kategóriák",
-      "heading": "Kategóriakérések",
-      "noRecords": "Nem található kategóriakérés"
+      "heading": "Kategóriakérelmek",
+      "noRecords": "Nem található kategóriakérelem"
     },
     "collections": {
       "navLabel": "Gyűjtemények",
-      "heading": "Gyűjteménykérések",
-      "noRecords": "Nem található gyűjteménykérés"
+      "heading": "Gyűjteménykérelmek",
+      "noRecords": "Nem található gyűjteménykérelem"
     },
     "tags": {
       "navLabel": "Címkék",
-      "heading": "Címkekérések",
-      "noRecords": "Nem található címkekérés"
+      "heading": "Címkekérelmek",
+      "noRecords": "Nem található címkekérelem"
     },
     "types": {
       "navLabel": "Típusok",
-      "heading": "Típuskérések",
-      "noRecords": "Nem található típuskérés"
+      "heading": "Típuskérelmek",
+      "noRecords": "Nem található típuskérelem"
     },
     "returnReasons": {
-      "navLabel": "Visszaküldési Okok",
-      "heading": "Visszaküldésiok-kérések",
-      "noRecords": "Nem található visszaküldési ok kérés"
+      "navLabel": "Visszaküldési okok",
+      "heading": "Visszaküldésiok-kérelmek",
+      "noRecords": "Nem található visszaküldésiok-kérelem"
     },
     "typeLabels": {
       "product_category": "Kategória",
@@ -209,7 +209,7 @@
       "internal": "Belső",
       "title": "Cím",
       "value": "Érték",
-      "label": "Címke"
+      "label": "Megnevezés"
     },
     "values": {
       "yes": "Igen",
@@ -219,12 +219,12 @@
       "pendingReview": "Ellenőrzés alatt",
       "accept": "Elfogadás",
       "reject": "Elutasítás",
-      "acceptPromptTitle": "Kérés elfogadása",
-      "acceptPromptDescription": "Biztosan elfogadja ezt a kérést? Ez a művelet létrehozza az entitást.",
-      "rejectPromptTitle": "Kérés elutasítása",
-      "rejectPromptDescription": "Biztosan elutasítja ezt a kérést? Ez a művelet nem vonható vissza.",
-      "acceptSuccess": "Kérés elfogadva",
-      "rejectSuccess": "Kérés elutasítva",
+      "acceptPromptTitle": "Kérelem elfogadása",
+      "acceptPromptDescription": "Biztosan elfogadja ezt a kérelmet? Ez a művelet létrehozza az entitást.",
+      "rejectPromptTitle": "Kérelem elutasítása",
+      "rejectPromptDescription": "Biztosan elutasítja ezt a kérelmet? Ez a művelet nem vonható vissza.",
+      "acceptSuccess": "Kérelem elfogadva",
+      "rejectSuccess": "Kérelem elutasítva",
       "submitter": "Beküldő",
       "reviewer": "Ellenőr"
     },

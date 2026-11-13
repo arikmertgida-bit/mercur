@@ -1,8 +1,16 @@
 import { createFormControl } from "react-hook-form"
-import { describe, expect, test } from "vitest"
+import { beforeAll, describe, expect, test } from "vitest"
 
+import { i18n } from "../../../../components/utilities/i18n/i18n"
+import en from "../../../../i18n/translations/en.json"
 import { ProductCreateSchemaType } from "../types"
 import { subscribeVariantsToAttributes } from "../utils"
+
+// utils.ts reads default titles through the shared i18n singleton, which the
+// panel only initialises at runtime via <I18n />.
+beforeAll(async () => {
+  await i18n.init({ lng: "en", resources: { en: { translation: en } } })
+})
 
 const customAxis = (title: string, values: string[]) => ({
   attribute_id: undefined,

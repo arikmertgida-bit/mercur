@@ -132,7 +132,7 @@
   "messages": {
     "domain": "Nachrichten",
     "product": "Produkt",
-    "store": "Geschäft",
+    "store": "Shop",
     "delete": "Löschen",
     "deleteForEveryone": "Für alle löschen",
     "close": "Schließen",
@@ -141,11 +141,11 @@
     "deleteConfirmTitle": "Nachricht löschen",
     "deleteConfirmDesc": "Möchten Sie diese Nachricht wirklich löschen?",
     "productQuestion": "Produktfrage",
-    "storeQuestion": "Frage zum Geschäft",
+    "storeQuestion": "Frage zum Shop",
     "customerMessage": "Kundennachricht",
     "sellerMessage": "Verkäufernachricht",
     "directMessage": "Direktnachricht",
-    "storeContext": "Frage zum Geschäft",
+    "storeContext": "Frage zum Shop",
     "back": "Zurück",
     "failedToGetUserInfo": "Benutzerinformationen konnten nicht abgerufen werden.",
     "send": "Nachricht senden",
@@ -160,7 +160,7 @@
     "status": {
       "draft": "Entwurf",
       "pending": "Ausstehend",
-      "accepted": "Angenommen",
+      "accepted": "Akzeptiert",
       "rejected": "Abgelehnt"
     },
     "filters": {
@@ -175,9 +175,9 @@
       "noRecords": "Keine Kategorieanfragen gefunden"
     },
     "collections": {
-      "navLabel": "Kollektionen",
-      "heading": "Kollektionsanfragen",
-      "noRecords": "Keine Kollektionsanfragen gefunden"
+      "navLabel": "Sammlungen",
+      "heading": "Sammlungsanfragen",
+      "noRecords": "Keine Sammlungsanfragen gefunden"
     },
     "tags": {
       "navLabel": "Tags",
@@ -196,7 +196,7 @@
     },
     "typeLabels": {
       "product_category": "Kategorie",
-      "product_collection": "Kollektion",
+      "product_collection": "Sammlung",
       "product_tag": "Tag",
       "product_type": "Typ",
       "return_reason": "Rückgabegrund"
@@ -217,13 +217,13 @@
     },
     "detail": {
       "pendingReview": "Wird geprüft",
-      "accept": "Annehmen",
+      "accept": "Akzeptieren",
       "reject": "Ablehnen",
-      "acceptPromptTitle": "Anfrage annehmen",
-      "acceptPromptDescription": "Möchten Sie diese Anfrage wirklich annehmen? Dadurch wird die Entität erstellt.",
+      "acceptPromptTitle": "Anfrage akzeptieren",
+      "acceptPromptDescription": "Möchten Sie diese Anfrage wirklich akzeptieren? Dadurch wird die Entität erstellt.",
       "rejectPromptTitle": "Anfrage ablehnen",
       "rejectPromptDescription": "Möchten Sie diese Anfrage wirklich ablehnen? Diese Aktion kann nicht rückgängig gemacht werden.",
-      "acceptSuccess": "Anfrage angenommen",
+      "acceptSuccess": "Anfrage akzeptiert",
       "rejectSuccess": "Anfrage abgelehnt",
       "submitter": "Einreicher",
       "reviewer": "Prüfer"
@@ -264,7 +264,7 @@
     "domain": "Bewertungen",
     "noRecords": "Keine Bewertungen gefunden",
     "columns": {
-      "rating": "Bewertung",
+      "rating": "Sternebewertung",
       "reference": "Referenz",
       "customerNote": "Kundenhinweis"
     }

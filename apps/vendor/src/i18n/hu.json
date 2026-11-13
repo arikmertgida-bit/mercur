@@ -4,7 +4,7 @@
     "export": "Exportálás",
     "done": "Kész",
     "importHeader": "Termékek importálása",
-    "importDescription": "Töltsön fel egy CSV-fájlt a termékek importálásához a boltjába.",
+    "importDescription": "Töltsön fel egy CSV-fájlt a termékek áruházába való importálásához.",
     "importHint": "Töltsön fel egy CSV-fájlt a termékeivel. Lehetősége van",
     "downloadTemplate": "letölteni a sablont",
     "uploadLabel": "CSV-fájl feltöltése",
@@ -26,7 +26,7 @@
   },
   "messenger": {
     "supportTeam": "Ügyfélszolgálati csapat",
-    "support": "Támogatás",
+    "support": "Ügyfélszolgálat",
     "adminChatTitle": "Csevegés az adminisztrátorral",
     "adminChatDescription": "Küldjön üzenetet a piactér ügyfélszolgálatának, és tekintse meg a beszélgetési előzményeket.",
     "unknown": "Ismeretlen",
@@ -57,9 +57,9 @@
     "helpSupport": "Ügyfélszolgálati csapat",
     "me": "Én",
     "productQuestion": "Termékkel kapcsolatos kérdés",
-    "storeQuestion": "Bolttal kapcsolatos kérdés",
+    "storeQuestion": "Áruházzal kapcsolatos kérdés",
     "imageUploadFailed": "A kép feltöltése sikertelen",
-    "blockedReasonEmail": "Az üzenetet nem sikerült elküldeni: e-mail címek megosztása nem engedélyezett.",
+    "blockedReasonEmail": "Az üzenetet nem sikerült elküldeni: e-mail-címek megosztása nem engedélyezett.",
     "blockedReasonPhone": "Az üzenetet nem sikerült elküldeni: telefonszámok megosztása nem engedélyezett.",
     "blockedReasonUrl": "Az üzenetet nem sikerült elküldeni: linkek megosztása nem engedélyezett.",
     "blockedReasonGeneric": "Az üzenetet nem sikerült elküldeni: a tartalom sérti a platform szabályzatát.",
@@ -69,13 +69,13 @@
     "deleteForEveryone": "Törlés mindenki számára",
     "close": "Bezárás",
     "customer": "Vásárló",
-    "store": "Bolt",
+    "store": "Áruház",
     "back": "Vissza",
     "participant": "résztvevő",
     "noMessages": "Nincsenek üzenetek",
     "chatOptions": "Csevegés beállításai",
     "deleteOnlyForMe": "Törlés csak nekem",
-    "storeContext": "Bolttal kapcsolatos kérdés",
+    "storeContext": "Áruházzal kapcsolatos kérdés",
     "product": "Termék",
     "deleteConfirmTitle": "Üzenet törlése",
     "deleteConfirmDesc": "Biztosan törli ezt az üzenetet?",
@@ -83,7 +83,7 @@
     "supportName": "Ügyfélszolgálati csapat",
     "supportSubject": "Ügyfélszolgálati csevegés",
     "emptyState": "Még nincsenek üzenetek. Kezdje el a beszélgetést.",
-    "viewPromotion": "Akció megtekintése",
+    "viewPromotion": "Promóció megtekintése",
     "imageAlt": "Kép",
     "placeholder": "Írjon egy üzenetet...",
     "send": "Üzenet küldése",
@@ -94,7 +94,7 @@
     "deletedMessage": "[Ez az üzenet törölve lett]"
   },
   "requests": {
-    "domain": "Kérések",
+    "domain": "Kérelmek",
     "status": {
       "draft": "Piszkozat",
       "pending": "Függőben",
@@ -102,55 +102,55 @@
       "rejected": "Elutasítva"
     },
     "filters": {
-      "status": "Állapot"
+      "status": "Státusz"
     },
     "columns": {
       "name": "Név"
     },
     "categories": {
       "navLabel": "Kategóriák",
-      "heading": "Kategóriakérések",
-      "noRecords": "Nem található kategóriakérés",
+      "heading": "Kategóriakérelmek",
+      "noRecords": "Nem található kategóriakérelem",
       "create": {
-        "heading": "Kategória igénylése",
-        "description": "Küldjön kérést új termékkategória létrehozásához.",
-        "successToast": "A kategória igénylése sikeresen létrejött"
+        "heading": "Kategória kérelmezése",
+        "description": "Küldjön kérelmet új termékkategória létrehozásához.",
+        "successToast": "A kategóriakérelem sikeresen létrejött"
       }
     },
     "collections": {
-      "navLabel": "Kollekciók",
-      "heading": "Kollekciókérések",
-      "noRecords": "Nem található kollekciókérés",
+      "navLabel": "Gyűjtemények",
+      "heading": "Gyűjteménykérelmek",
+      "noRecords": "Nem található gyűjteménykérelem",
       "create": {
-        "heading": "Kollekció igénylése",
-        "description": "Küldjön kérést új termékkollekció létrehozásához.",
-        "successToast": "A kollekció igénylése sikeresen létrejött"
+        "heading": "Gyűjtemény kérelmezése",
+        "description": "Küldjön kérelmet új termékgyűjtemény létrehozásához.",
+        "successToast": "A gyűjteménykérelem sikeresen létrejött"
       }
     },
     "tags": {
       "navLabel": "Címkék",
-      "heading": "Címkekérések",
-      "noRecords": "Nem található címkekérés",
+      "heading": "Címkekérelmek",
+      "noRecords": "Nem található címkekérelem",
       "create": {
-        "heading": "Címke igénylése",
-        "description": "Küldjön kérést új termékcímke létrehozásához.",
-        "successToast": "A címke igénylése sikeresen létrejött"
+        "heading": "Címke kérelmezése",
+        "description": "Küldjön kérelmet új termékcímke létrehozásához.",
+        "successToast": "A címkekérelem sikeresen létrejött"
       }
     },
     "types": {
       "navLabel": "Típusok",
-      "heading": "Típuskérések",
-      "noRecords": "Nem található típuskérés",
+      "heading": "Típuskérelmek",
+      "noRecords": "Nem található típuskérelem",
       "create": {
-        "heading": "Típus igénylése",
-        "description": "Küldjön kérést új terméktípus létrehozásához.",
-        "successToast": "A típus igénylése sikeresen létrejött"
+        "heading": "Típus kérelmezése",
+        "description": "Küldjön kérelmet új terméktípus létrehozásához.",
+        "successToast": "A típuskérelem sikeresen létrejött"
       }
     },
     "returnReasons": {
       "navLabel": "Visszaküldési okok",
-      "heading": "Visszaküldési ok kérések",
-      "noRecords": "Nem található visszaküldési ok kérés"
+      "heading": "Visszaküldésiok-kérelmek",
+      "noRecords": "Nem található visszaküldésiok-kérelem"
     },
     "reviews": {
       "navLabel": "Értékelések",
@@ -158,7 +158,7 @@
       "subtitle": "Az Ön által moderálásra bejelentett értékelések.",
       "columns": {
         "reason": "Indok",
-        "status": "Állapot",
+        "status": "Státusz",
         "adminNote": "Adminisztrátori megjegyzés"
       },
       "status": {
@@ -171,7 +171,7 @@
       "reReportError": "A bejelentést nem sikerült elküldeni.",
       "noRecords": "Nem található értékelés-bejelentés"
     },
-    "createErrorFallback": "A kérést nem sikerült létrehozni."
+    "createErrorFallback": "A kérelmet nem sikerült létrehozni."
   },
   "reviews": {
     "domain": "Értékelések",
@@ -212,8 +212,8 @@
     "domain": "Követők",
     "noRecords": "Még nincsenek követők",
     "columns": {
-      "followedAt": "Követés Dátuma",
-      "reviewsAverage": "Átlagos Értékelés"
+      "followedAt": "Követés dátuma",
+      "reviewsAverage": "Átlagos értékelés"
     },
     "count": "Követők: {{count}}"
   },
@@ -222,7 +222,7 @@
     "pageTitle": "Irányítópult",
     "orders": {
       "title": "Rendelés-összesítő",
-      "subtitle": "Élő rendelésszámok az üzletében",
+      "subtitle": "Élő rendelésszámok az áruházában",
       "today": "Ma",
       "thisWeek": "Ezen a héten",
       "thisMonth": "Ebben a hónapban",
@@ -243,7 +243,7 @@
       "subtitle": "Fogyóban lévő termékek",
       "noRecords": "Nincs alacsony készletű termék",
       "product": "Termék",
-      "sku": "Cikkszám",
+      "sku": "SKU",
       "available": "Elérhető",
       "viewInventory": "Készlet megtekintése"
     },

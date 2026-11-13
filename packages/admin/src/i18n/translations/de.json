@@ -83,8 +83,8 @@
       "shippingIncludedHint": "Wenn aktiviert, wird die Provision auf den Gesamtbetrag inklusive Versand berechnet. Wenn nicht aktiviert, gehen die Versandkosten vollständig an den Shop.",
       "type": {
         "label": "Typ",
-        "percentage": "Werbewert",
-        "fixed": "Behoben",
+        "percentage": "Prozentsatz",
+        "fixed": "Festbetrag",
         "percentageHint": "Berechnen Sie einen Prozentsatz der Bestellsumme.",
         "fixedHint": "Berechnen Sie einen festen Betrag pro Bestellung."
       },
@@ -162,7 +162,7 @@
     "pages": "Seiten",
     "next": "Nächste",
     "prev": "Zurück",
-    "is": "Ist",
+    "is": "ist",
     "timeline": "Zeitleiste",
     "success": "Erfolg",
     "warning": "Warnung",
@@ -188,7 +188,7 @@
     "countOfTotalSelected": "{{count}} von {{total}} ausgewählt",
     "plusCount": "+ {{count}}",
     "plusCountMore": "+ {{count}} mehr",
-    "areYouSure": "Bist du sicher?",
+    "areYouSure": "Sind Sie sicher?",
     "noRecordsFound": "Keine Datensätze gefunden",
     "typeToConfirm": "Bitte geben Sie zur Bestätigung {val} ein:",
     "noResultsTitle": "Keine Ergebnisse",
@@ -291,8 +291,8 @@
     "browse": "Durchsuchen",
     "logout": "Abmelden",
     "hide": "Verstecken",
-    "export": "Export",
-    "import": "Import",
+    "export": "Exportieren",
+    "import": "Importieren",
     "send": "Senden",
     "cannotUndo": "Diese Aktion kann nicht rückgängig gemacht werden"
   },
@@ -590,8 +590,8 @@
         "requiredStore": "Bitte wählen Sie mindestens einen Shop aus",
         "requiredTitle": "Bitte geben Sie einen Titel ein",
         "requiredCategory": "Bitte wählen Sie eine Kategorie aus",
-        "handleInvalidFormat": "Der Handle darf nur Kleinbuchstaben, Zahlen und Bindestriche enthalten",
-        "handleMustContainLetter": "Der Handle muss mindestens einen Buchstaben enthalten"
+        "handleInvalidFormat": "Das Handle darf nur Kleinbuchstaben, Zahlen und Bindestriche enthalten",
+        "handleMustContainLetter": "Das Handle muss mindestens einen Buchstaben enthalten"
       },
       "inventory": {
         "heading": "Inventar-Kits",
@@ -612,8 +612,8 @@
         "productVariants": {
           "label": "Produktvarianten",
           "hint": "Dieses Ranking wirkt sich auf die Anzeigereihenfolge der Varianten aus.",
-          "alert": "Fügen Sie Optionen hinzu, um Varianten zu erstellen.",
-          "tip": "Varianten, die nicht aktiviert sind, werden nicht erstellt. Sie können nachträglich jederzeit Varianten erstellen und bearbeiten, diese Liste passt jedoch zu den Variationen in Ihren Produktoptionen.",
+          "alert": "Fügen Sie Ihren Variantenattributen Werte hinzu, um Varianten zu erzeugen.",
+          "tip": "Nicht aktivierte Varianten werden nicht erstellt. Sie können Varianten jederzeit nachträglich erstellen und bearbeiten, diese Liste entspricht jedoch den Variationen in Ihren Produktattributen.",
           "noAxes": "Markieren Sie Attribute im Schritt Attribute als \"Für Varianten verwenden\", um Varianten zu erzeugen."
         },
         "productOptions": {
@@ -704,7 +704,7 @@
     "editPrices": "Preise bearbeiten",
     "media": {
       "label": "Medien",
-      "editHint": "Fügen Sie dem Produkt Medien hinzu, um es in Ihrem Schaufenster zu präsentieren.",
+      "editHint": "Fügen Sie dem Produkt Medien hinzu, um es in Ihrem Storefront zu präsentieren.",
       "makeThumbnail": "Miniaturbild erstellen",
       "uploadImagesLabel": "Bilder hochladen",
       "uploadImagesHint": "Ziehen Sie Bilder per Drag-and-Drop hierher oder klicken Sie zum Hochladen.",
@@ -720,7 +720,7 @@
       "deleteImageLabel": "Aktuelles Bild löschen",
       "emptyState": {
         "header": "Noch keine Medien",
-        "description": "Fügen Sie dem Produkt Medien hinzu, um es in Ihrem Schaufenster zu präsentieren.",
+        "description": "Fügen Sie dem Produkt Medien hinzu, um es in Ihrem Storefront zu präsentieren.",
         "action": "Medien hinzufügen"
       },
       "successToast": "Medien wurden erfolgreich aktualisiert.",
@@ -773,7 +773,7 @@
         "label": "Kategorien"
       },
       "tags": {
-        "label": "Schlagworte"
+        "label": "Tags"
       },
       "sales_channels": {
         "label": "Vertriebskanäle",
@@ -1053,8 +1053,8 @@
         "successToast_other": "Produkte wurden erfolgreich aus der Sammlung entfernt."
       }
     },
-    "deleteSuccess": "Kollektion wurde erfolgreich gelöscht.",
-    "updateSuccess": "Kollektion wurde erfolgreich aktualisiert.",
+    "deleteSuccess": "Sammlung wurde erfolgreich gelöscht.",
+    "updateSuccess": "Sammlung wurde erfolgreich aktualisiert.",
     "validation": {
       "titleRequired": "Bitte geben Sie einen Titel ein"
     },
@@ -1063,7 +1063,7 @@
       "thumbnail": "Miniaturansicht",
       "banner": "Banner",
       "galleryLabel": "Galerie",
-      "editHint": "Fügen Sie der Kollektion Medien hinzu, um sie im Storefront zu präsentieren.",
+      "editHint": "Fügen Sie der Sammlung Medien hinzu, um sie im Storefront zu präsentieren.",
       "deleteWarning": "Sie sind dabei, dieses Bild zu löschen. Diese Aktion kann nicht rückgängig gemacht werden.",
       "empty": {
         "header": "Noch keine Medien",
@@ -1074,8 +1074,8 @@
         "hint": "Ziehen Sie Bilder per Drag-and-Drop hierher oder klicken Sie zum Hochladen."
       },
       "tooltips": {
-        "thumbnail": "Wird als Kollektions-Vorschaubild auf der Startseite angezeigt.",
-        "banner": "Wird als Kollektions-Banner in der Kollektionsübersicht angezeigt."
+        "thumbnail": "Wird als Vorschaubild der Sammlung auf der Startseite angezeigt.",
+        "banner": "Wird als Banner der Sammlung in der Sammlungsübersicht angezeigt."
       },
       "actions": {
         "setThumbnail": "Miniaturbild erstellen",
@@ -1086,18 +1086,18 @@
       "edit": {
         "header": "Medien bearbeiten",
         "description": "Laden Sie Bilder hoch und wählen Sie das im Storefront angezeigte Vorschaubild und Banner aus.",
-        "successToast": "Kollektionsmedien wurden erfolgreich aktualisiert."
+        "successToast": "Medien der Sammlung wurden erfolgreich aktualisiert."
       }
     },
     "icon": {
       "label": "Symbol",
       "empty": {
         "header": "Noch kein Symbol",
-        "description": "Fügen Sie ein Symbol hinzu, das neben der Kollektionsbezeichnung im Storefront angezeigt wird."
+        "description": "Fügen Sie ein Symbol hinzu, das neben der Sammlungsbezeichnung im Storefront angezeigt wird."
       },
       "tip": {
         "label": "Tipp:",
-        "text": "Dieses Symbol wird neben der Kollektionsbezeichnung im Storefront angezeigt."
+        "text": "Dieses Symbol wird neben der Sammlungsbezeichnung im Storefront angezeigt."
       },
       "upload": {
         "title": "Datei hochladen",
@@ -1105,8 +1105,8 @@
       },
       "edit": {
         "header": "Symbol bearbeiten",
-        "description": "Laden Sie ein einzelnes Symbol hoch, das neben der Kollektionsbezeichnung im Storefront angezeigt wird.",
-        "successToast": "Kollektionssymbol wurde erfolgreich aktualisiert."
+        "description": "Laden Sie ein einzelnes Symbol hoch, das neben der Sammlungsbezeichnung im Storefront angezeigt wird.",
+        "successToast": "Symbol der Sammlung wurde erfolgreich aktualisiert."
       }
     }
   },
@@ -1504,9 +1504,9 @@
   },
   "orders": {
     "domain": "Bestellungen",
-    "claim": "Beanspruchen",
-    "exchange": "Austausch",
-    "return": "Zurückkehren",
+    "claim": "Reklamation",
+    "exchange": "Umtausch",
+    "return": "Rückgabe",
     "cancelWarning": "Sie sind dabei, die Bestellung {{id}} zu stornieren. Diese Aktion kann nicht rückgängig gemacht werden.",
     "onDateFromSalesChannel": "{{date}} von {{salesChannel}}",
     "list": {
@@ -1552,12 +1552,12 @@
         "notPaid": "Nicht bezahlt",
         "authorized": "Autorisiert",
         "partiallyAuthorized": "Teilweise autorisiert",
-        "awaiting": "Warten",
-        "captured": "Erhalten",
+        "awaiting": "Wartend",
+        "captured": "Erfasst",
         "partiallyRefunded": "Teilweise erstattet",
         "partiallyCaptured": "Teilweise erfasst",
         "refunded": "Erstattet",
-        "canceled": "Abgebrochen",
+        "canceled": "Storniert",
         "requiresAction": "Erfordert Maßnahmen"
       },
       "capturePayment": "Die Zahlung von {{amount}} wird erfasst.",
@@ -1567,7 +1567,7 @@
       "createRefund": "Rückerstattung erstellen",
       "refundPaymentSuccess": "Rückerstattung des Betrags {{amount}} erfolgreich",
       "createRefundWrongQuantity": "Die Menge sollte eine Zahl zwischen 1 und {{number}} sein.",
-      "refundAmount": "Rückerstattung von {{amount}}",
+      "refundAmount": "{{amount}} erstatten",
       "paymentLink": "Zahlungslink für {{amount}} kopieren",
       "selectPaymentToRefund": "Wählen Sie die Zahlung zur Rückerstattung aus",
       "totalPending": "Gesamt ausstehend",
@@ -1648,7 +1648,7 @@
       "inboundShipping": "Rückversand",
       "inboundShippingHint": "Wählen Sie die Methode aus, die Sie verwenden möchten.",
       "returnableQuantityLabel": "Rückgabemenge",
-      "refundableAmountLabel": "Rückerstattungsbetrag",
+      "refundableAmountLabel": "Erstattungsfähiger Betrag",
       "returnRequestedInfo": "Rückgabe von {{requestedItemsCount}}x Artikeln angefordert",
       "returnReceivedInfo": "{{requestedItemsCount}}x Artikel wurden erhalten zurückgegeben",
       "itemReceived": "Erhaltene Artikel",
@@ -1698,12 +1698,12 @@
       "estDifference": "Geschätzter Unterschied"
     },
     "claims": {
-      "create": "Anspruch erstellen",
-      "confirm": "Anspruch bestätigen",
-      "confirmText": "Sie sind dabei, einen Anspruch zu bestätigen. Diese Aktion kann nicht rückgängig gemacht werden.",
-      "manage": "Anspruch verwalten",
+      "create": "Reklamation erstellen",
+      "confirm": "Reklamation bestätigen",
+      "confirmText": "Sie sind dabei, eine Reklamation zu bestätigen. Diese Aktion kann nicht rückgängig gemacht werden.",
+      "manage": "Reklamation verwalten",
       "outbound": "Ausgehend",
-      "outboundItemAdded": "{{itemsCount}}x durch Anspruch hinzugefügt",
+      "outboundItemAdded": "{{itemsCount}}x durch Reklamation hinzugefügt",
       "outboundTotal": "Ausgehender Gesamtwert",
       "outboundShipping": "Ausgehender Versand",
       "outboundShippingHint": "Wählen Sie die Methode aus, die Sie verwenden möchten.",
@@ -1711,32 +1711,32 @@
       "activeChangeError": "Für diese Bestellung liegt eine aktive Bestelländerung vor. Bitte schließen Sie die vorherige Änderung ab oder verwerfen Sie sie.",
       "actions": {
         "cancelClaim": {
-          "successToast": "Der Anspruch wurde erfolgreich storniert."
+          "successToast": "Die Reklamation wurde erfolgreich storniert."
         }
       },
       "cancel": {
-        "title": "Anspruch stornieren",
-        "description": "Sind Sie sicher, dass Sie den Anspruch stornieren möchten?"
+        "title": "Reklamation stornieren",
+        "description": "Sind Sie sicher, dass Sie die Reklamation stornieren möchten?"
       },
       "tooltips": {
         "onlyReturnShippingOptions": "Diese Liste enthält nur Optionen für den Rückversand."
       },
       "toast": {
-        "canceledSuccessfully": "Anspruch erfolgreich storniert",
-        "confirmedSuccessfully": "Anspruch erfolgreich bestätigt"
+        "canceledSuccessfully": "Reklamation erfolgreich storniert",
+        "confirmedSuccessfully": "Reklamation erfolgreich bestätigt"
       },
       "panel": {
-        "title": "Klage eingeleitet",
-        "description": "Es muss ein offener Anspruchsantrag ausgefüllt werden"
+        "title": "Reklamation eingeleitet",
+        "description": "Es gibt eine offene Reklamation, die abgeschlossen werden muss"
       }
     },
     "exchanges": {
       "create": "Exchange erstellen",
       "manage": "Exchange verwalten",
-      "confirm": "Bestätigen Sie den Austausch",
-      "confirmText": "Sie sind dabei, einen Austausch zu bestätigen. Diese Aktion kann nicht rückgängig gemacht werden.",
+      "confirm": "Umtausch bestätigen",
+      "confirmText": "Sie sind dabei, einen Umtausch zu bestätigen. Diese Aktion kann nicht rückgängig gemacht werden.",
       "outbound": "Ausgehend",
-      "outboundItemAdded": "{{itemsCount}}x durch Austausch hinzugefügt",
+      "outboundItemAdded": "{{itemsCount}}x durch Umtausch hinzugefügt",
       "outboundTotal": "Ausgehender Gesamtwert",
       "outboundShipping": "Ausgehender Versand",
       "outboundShippingHint": "Wählen Sie die Methode aus, die Sie verwenden möchten.",
@@ -1756,11 +1756,11 @@
       },
       "toast": {
         "canceledSuccessfully": "Der Umtausch wurde erfolgreich abgebrochen",
-        "confirmedSuccessfully": "Austausch erfolgreich bestätigt"
+        "confirmedSuccessfully": "Umtausch erfolgreich bestätigt"
       },
       "panel": {
-        "title": "Austausch eingeleitet",
-        "description": "Es muss eine offene Austauschanfrage ausgefüllt werden"
+        "title": "Umtausch eingeleitet",
+        "description": "Es gibt einen offenen Umtausch, der abgeschlossen werden muss"
       }
     },
     "reservations": {
@@ -1815,16 +1815,16 @@
       "error": {
         "wrongQuantity": "Es steht nur ein Artikel zur Erfüllung zur Verfügung",
         "wrongQuantity_other": "Die Menge sollte eine Zahl zwischen 1 und {{number}} sein.",
-        "noItems": "Keine zu versendenden Produkte.",
+        "noItems": "Keine Artikel zu erfüllen.",
         "noShippingOption": "Versandoption ist erforderlich",
         "noLocation": "Standort ist erforderlich"
       },
       "status": {
-        "notFulfilled": "Ausstehend",
-        "partiallyFulfilled": "Teilweise versandbereit",
-        "fulfilled": "Versandbereit",
+        "notFulfilled": "Nicht erfüllt",
+        "partiallyFulfilled": "Teilweise erfüllt",
+        "fulfilled": "Erfüllt",
         "partiallyShipped": "Teilweise versandt",
-        "shipped": "Ausgeliefert",
+        "shipped": "Versandt",
         "delivered": "Geliefert",
         "partiallyDelivered": "Teilweise geliefert",
         "partiallyReturned": "Teilweise zurückgegeben",
@@ -1837,16 +1837,16 @@
       },
       "toast": {
         "created": "Erfüllung erfolgreich erstellt",
-        "canceled": "Die Erfüllung wurde abgebrochen",
+        "canceled": "Die Erfüllung wurde erfolgreich storniert",
         "fulfillmentShipped": "Eine bereits versandte Erfüllung kann nicht storniert werden",
         "fulfillmentDelivered": "Die Erfüllung wurde als erfolgreich geliefert markiert",
-        "fulfillmentPickedUp": "Ausführung erfolgreich als abgeholt markiert"
+        "fulfillmentPickedUp": "Erfüllung erfolgreich als abgeholt markiert"
       },
       "trackingLabel": "Verfolgung",
       "shippingFromLabel": "Versand ab",
       "itemsLabel": "Artikel",
       "differentOptionSelected": "Die ausgewählte Versandoption unterscheidet sich von der vom Kunden gewählten.",
-      "disabledItemTooltip": "Die von Ihnen ausgewählte Versandoption erlaubt keine Ausführung dieses Artikels",
+      "disabledItemTooltip": "Die von Ihnen ausgewählte Versandoption erlaubt keine Erfüllung dieses Artikels",
       "markAsPickedUp": "Als abgeholt markieren",
       "labelLink": "Etikett"
     },
@@ -1882,7 +1882,7 @@
       "to": "An",
       "events": {
         "common": {
-          "toReturn": "Zurückkehren",
+          "toReturn": "Zur Rückgabe",
           "toSend": "Zum Versenden"
         },
         "placed": {
@@ -1900,7 +1900,7 @@
         },
         "fulfillment": {
           "created": "Artikel erfüllt",
-          "canceled": "Erfüllung abgesagt",
+          "canceled": "Erfüllung storniert",
           "shipped": "Artikel versendet",
           "delivered": "Gelieferte Artikel",
           "items_one": "{{count}} Artikel",
@@ -1918,14 +1918,14 @@
           "byLine": "von {{author}}"
         },
         "claim": {
-          "created": "Anspruch #{{claimId}} angefordert",
-          "canceled": "Anspruch #{{claimId}} storniert",
+          "created": "Reklamation #{{claimId}} angefordert",
+          "canceled": "Reklamation #{{claimId}} storniert",
           "itemsInbound": "{{count}} Artikel, der zurückgegeben werden soll",
           "itemsOutbound": "{{count}} Artikel zum Senden"
         },
         "exchange": {
           "created": "Exchange #{{exchangeId}} angefordert",
-          "canceled": "Austausch #{{exchangeId}} abgebrochen",
+          "canceled": "Umtausch #{{exchangeId}} storniert",
           "itemsInbound": "{{count}} Artikel, der zurückgegeben werden soll",
           "itemsOutbound": "{{count}} Artikel zum Senden"
         },
@@ -1934,8 +1934,8 @@
           "confirmed": "Bestellbearbeitung #{{editId}} bestätigt"
         },
         "transfer": {
-          "requested": "Bestellung #{{transferId}} übertragen",
-          "confirmed": "Bestellung #{{transferId}} übertragen",
+          "requested": "Übertragung der Bestellung #{{transferId}} angefordert",
+          "confirmed": "Übertragung der Bestellung #{{transferId}} bestätigt",
           "declined": "Bestellübertragung #{{transferId}} abgelehnt"
         },
         "update_order": {
@@ -1947,7 +1947,7 @@
     },
     "fields": {
       "displayId": "Bestell-ID",
-      "refundableAmount": "Rückerstattungsbetrag",
+      "refundableAmount": "Erstattungsfähiger Betrag",
       "returnableQuantity": "Rückgabemenge",
       "groupId": "Gruppen-ID",
       "orderIds": "Bestell-ID",
@@ -1991,7 +1991,7 @@
       }
     },
     "actions": {
-      "cancelDisabledFulfilled": "Eine Bestellung mit ausgeführten Artikeln kann nicht storniert werden."
+      "cancelDisabledFulfilled": "Eine Bestellung mit erfüllten Artikeln kann nicht storniert werden."
     },
     "orderCanceled": "Bestellung erfolgreich storniert",
     "status": {
@@ -2005,7 +2005,7 @@
     }
   },
   "draftOrders": {
-    "domain": "Befehlsentwürfe",
+    "domain": "Bestellentwürfe",
     "deleteWarning": "Sie sind dabei, den Bestellentwurf {{id}} zu löschen. Diese Aktion kann nicht rückgängig gemacht werden.",
     "paymentLinkLabel": "Zahlungslink",
     "cartIdLabel": "Warenkorb-ID",
@@ -2182,7 +2182,7 @@
         "provider": "Fulfillment-Anbieter",
         "profile": "Versandprofil",
         "type": "Versandoptionstyp",
-        "fulfillmentOption": "Ausführungsoption"
+        "fulfillmentOption": "Erfüllungsoption"
       },
       "conditionalPrices": {
         "header": "Bedingte Preise für {{name}}",
@@ -2298,21 +2298,21 @@
     "state": {
       "header": "Staaten",
       "create": {
-        "header": "Erstellen Sie eine staatliche Steuerregion",
+        "header": "Steuerregion für einen Staat erstellen",
         "hint": "Erstellen Sie eine neue Steuerregion, um Steuersätze für einen bestimmten Staat zu definieren."
       }
     },
     "stateOrTerritory": {
       "header": "Staaten oder Gebiete",
       "create": {
-        "header": "Erstellen Sie eine Steuerregion für Bundesstaat/Territorium",
+        "header": "Steuerregion für einen Staat/ein Territorium erstellen",
         "hint": "Erstellen Sie eine neue Steuerregion, um Steuersätze für einen bestimmten Staat/ein bestimmtes Gebiet zu definieren."
       }
     },
     "county": {
       "header": "Landkreise",
       "create": {
-        "header": "Erstellen Sie eine County-Steuerregion",
+        "header": "Steuerregion für einen Landkreis erstellen",
         "hint": "Erstellen Sie eine neue Steuerregion, um Steuersätze für einen bestimmten Landkreis zu definieren."
       }
     },
@@ -2425,7 +2425,7 @@
         "hint": "Wählen Sie die Ziele aus, für die dieser Steuersatz gelten soll.",
         "options": {
           "product": "Produkte",
-          "productCollection": "Produktkollektionen",
+          "productCollection": "Produktsammlungen",
           "productTag": "Produkt-Tags",
           "productType": "Produkttypen",
           "customerGroup": "Kundengruppen",
@@ -2433,12 +2433,12 @@
         },
         "operators": {
           "in": "In",
-          "on": "An",
+          "on": "für",
           "and": "Und"
         },
         "placeholders": {
           "product": "Nach Produkten suchen",
-          "productCollection": "Suchen Sie nach Produktkollektionen",
+          "productCollection": "Suchen Sie nach Produktsammlungen",
           "productTag": "Suchen Sie nach Produkt-Tags",
           "productType": "Suchen Sie nach Produkttypen",
           "customerGroup": "Suche nach Kundengruppen",
@@ -2446,7 +2446,7 @@
         },
         "tags": {
           "product": "Produkt",
-          "productCollection": "Produktkollektion",
+          "productCollection": "Produktsammlung",
           "productTag": "Produkt-Tag",
           "productType": "Produkttyp",
           "customerGroup": "Kundengruppe",
@@ -2466,11 +2466,11 @@
       "sublevels": {
         "labels": {
           "province": "Provinz",
-          "state": "Zustand",
+          "state": "Staat",
           "region": "Region",
           "stateOrTerritory": "Staat/Territorium",
           "department": "Abteilung",
-          "county": "Grafschaft",
+          "county": "Landkreis",
           "territory": "Gebiet",
           "prefecture": "Präfektur",
           "district": "Bezirk",
@@ -2481,9 +2481,9 @@
         },
         "placeholders": {
           "province": "Provinz auswählen",
-          "state": "Bundesland auswählen",
+          "state": "Staat auswählen",
           "region": "Region auswählen",
-          "stateOrTerritory": "Wählen Sie Bundesland/Gebiet aus",
+          "stateOrTerritory": "Staat/Territorium auswählen",
           "department": "Abteilung auswählen",
           "county": "Landkreis auswählen",
           "territory": "Gebiet auswählen",
@@ -2522,7 +2522,7 @@
     "templates": {
       "amountOffProducts": {
         "title": "Betragsrabatt auf Artikel",
-        "description": "Bestimmte Produkte oder Produktkollektionen rabattieren"
+        "description": "Bestimmte Produkte oder Produktsammlungen rabattieren"
       },
       "amountOffOrder": {
         "title": "Betragsrabatt auf Bestellung",
@@ -2537,8 +2537,8 @@
         "description": "Rabattiert einen Prozentsatz des Bestellgesamtbetrags"
       },
       "buyGet": {
-        "title": "Kaufe X, erhalte Y",
-        "description": "Kaufe X Produkt(e), erhalte Y Produkt(e)"
+        "title": "X kaufen, Y erhalten",
+        "description": "X Produkt(e) kaufen, Y Produkt(e) erhalten"
       }
     },
     "list": {
@@ -2613,7 +2613,7 @@
     },
     "errors": {
       "requiredField": "Erforderliches Feld",
-      "promotionTabError": "Beheben Sie Fehler im Tab „Werbung“, bevor Sie fortfahren"
+      "promotionTabError": "Beheben Sie die Fehler im Tab „Werbeaktion“, bevor Sie fortfahren"
     },
     "toasts": {
       "promotionCreateSuccess": "Aktion ({{code}}) wurde erfolgreich erstellt.",
@@ -2653,7 +2653,7 @@
       "campaign": {
         "existing": {
           "title": "Bestehende Kampagne",
-          "description": "Fügen Sie Werbung zu einer vorhandenen Kampagne hinzu.",
+          "description": "Fügen Sie die Werbeaktion einer vorhandenen Kampagne hinzu.",
           "placeholder": {
             "title": "Keine vorhandenen Kampagnen",
             "desc": "Sie können eine erstellen, um mehrere Werbeaktionen zu verfolgen und Budgetgrenzen festzulegen."
@@ -2666,7 +2666,7 @@
         },
         "none": {
           "title": "Ohne Kampagne",
-          "description": "Fahren Sie fort, ohne Werbung mit Kampagne zu verknüpfen"
+          "description": "Fortfahren, ohne die Werbeaktion mit einer Kampagne zu verknüpfen"
         }
       },
       "limit": {
@@ -2737,18 +2737,18 @@
           "description": "Eine Standardaktion"
         },
         "buyget": {
-          "title": "Kaufen Get",
-          "description": "Aktion „Kaufe X, erhalte Y“"
+          "title": "X kaufen, Y erhalten",
+          "description": "Aktion „X kaufen, Y erhalten“"
         }
       },
       "allocation": {
         "each": {
-          "title": "Jede",
-          "description": "Wendet den Wert auf jedes Element an"
+          "title": "Pro Artikel",
+          "description": "Wendet den Wert auf jeden Artikel an"
         },
         "across": {
-          "title": "Über",
-          "description": "Wendet den Wert auf alle Elemente an"
+          "title": "Verteilt",
+          "description": "Verteilt den Wert auf alle Artikel"
         },
         "once": {
           "title": "Einmal",
@@ -2760,18 +2760,18 @@
         "description": "Der Code, den Ihre Kunden beim Bezahlvorgang eingeben."
       },
       "value": {
-        "title": "Werbewert",
+        "title": "Aktionswert",
         "description": "Der zu rabattierende Betrag. z.B. 100",
         "invalid": "Ungültiger Aktionswert"
       },
       "value_type": {
         "fixed": {
-          "title": "Werbewert",
+          "title": "Festbetrag",
           "description": "Der zu rabattierende Betrag. z.B. 100"
         },
         "percentage": {
-          "title": "Werbewert",
-          "description": "Der Prozentsatz, um den der Betrag abgezinst wird. z.B. 8 %"
+          "title": "Prozentsatz",
+          "description": "Der Prozentsatz, der vom Betrag abgezogen wird. z. B. 8 %"
         }
       },
       "selectOperator": "Operator auswählen",
@@ -2782,7 +2782,7 @@
     },
     "deleteWarning": "Sie sind dabei, die Aktion {{code}} zu löschen. Dieser Vorgang kann nicht rückgängig gemacht werden.",
     "createPromotionTitle": "Werbeaktion erstellen",
-    "type": "Werbetyp",
+    "type": "Aktionstyp",
     "conditions": {
       "add": "Bedingung hinzufügen",
       "list": {
@@ -2896,7 +2896,7 @@
     },
     "promotions": {
       "remove": {
-        "title": "Werbung aus der Kampagne entfernen",
+        "title": "Werbeaktionen entfernen",
         "description": "Sie sind dabei, {{count}} Werbeaktionen aus der Kampagne zu entfernen. Diese Aktion kann nicht rückgängig gemacht werden."
       },
       "alreadyAdded": "Diese Aktion wurde bereits zur Kampagne hinzugefügt.",
@@ -3262,7 +3262,7 @@
     "providersHint": "Fügen Sie hinzu, welche Zahlungsanbieter in dieser Region verfügbar sind.",
     "shippingOptions": "Versandoptionen",
     "deleteShippingOptionWarning": "Sie sind dabei, die Versandoption {{name}} zu löschen. Diese Aktion kann nicht rückgängig gemacht werden.",
-    "return": "Zurückkehren",
+    "return": "Rückgabe",
     "outbound": "Ausgehend",
     "priceType": "Preisart",
     "flatRate": "Pauschale",
@@ -3284,7 +3284,7 @@
       "type": {
         "outbound": "Ausgehend",
         "outboundHint": "Verwenden Sie diese Option, wenn Sie eine Versandoption für den Versand von Produkten an den Kunden erstellen.",
-        "return": "Zurückkehren",
+        "return": "Rückgabe",
         "returnHint": "Verwenden Sie diese Option, wenn Sie eine Versandoption erstellen, damit der Kunde Produkte an Sie zurücksenden kann."
       },
       "priceType": {
@@ -3535,7 +3535,7 @@
         "tooltip": "Der Wert sollte eine eindeutige Kennung für den Rückgabegrund sein."
       },
       "label": {
-        "label": "Etikett",
+        "label": "Bezeichnung",
         "placeholder": "Falsche Größe"
       },
       "description": {
@@ -3547,7 +3547,7 @@
   "login": {
     "forgotPassword": "Passwort vergessen? - <0>Zurücksetzen</0>",
     "title": "Willkommen zurück!",
-    "hint": "Melden Sie sich an, um auf ihr Konto zuzugreifen",
+    "hint": "Melden Sie sich bei Ihrem Admin-Konto an.",
     "submit": "Anmelden",
     "sessionExpired": "Sitzung abgelaufen",
     "invalidCredentials": "E-Mail-Adresse oder Passwort ist falsch. Bitte versuchen Sie es erneut.",
@@ -3725,7 +3725,7 @@
     "selectValues": "Werte auswählen"
   },
   "fields": {
-    "amount": "Menge",
+    "amount": "Betrag",
     "refundAmount": "Rückerstattungsbetrag",
     "name": "Name",
     "default": "Standard",
@@ -3757,7 +3757,7 @@
     "item": "Artikel",
     "qty": "Menge.",
     "limit": "Limit",
-    "tags": "Schlagworte",
+    "tags": "Tags",
     "type": "Typ",
     "reason": "Grund",
     "none": "keiner",
@@ -3768,7 +3768,7 @@
     "customer_groups": "Kundengruppen",
     "product_tags": "Produkt-Tags",
     "product_types": "Produkttypen",
-    "product_collections": "Produktkollektionen",
+    "product_collections": "Produktsammlungen",
     "status": "Status",
     "code": "Code",
     "value": "Wert",
@@ -3799,7 +3799,7 @@
     "city": "Stadt",
     "postalCode": "Postleitzahl",
     "country": "Land",
-    "state": "Zustand",
+    "state": "Bundesland",
     "province": "Provinz",
     "company": "Unternehmen",
     "phone": "Telefon",
@@ -3839,7 +3839,7 @@
     "true": "Ja",
     "false": "Nein",
     "giftCard": "Geschenkkarte",
-    "tag": "Etikett",
+    "tag": "Tag",
     "dateIssued": "Ausstellungsdatum",
     "issuedDate": "Ausstellungsdatum",
     "expiryDate": "Verfallsdatum",
@@ -3872,7 +3872,7 @@
     "shippingProfile": "Versandprofil",
     "summary": "Zusammenfassung",
     "details": "Einzelheiten",
-    "label": "Etikett",
+    "label": "Bezeichnung",
     "rate": "Satz",
     "requiresShipping": "Erfordert Versand",
     "unitPrice": "Stückpreis",
@@ -3903,7 +3903,7 @@
     "mid_code": "MID-Code",
     "external_id": "Externe ID",
     "is_restricted": "Eingeschränkt",
-    "tag_ids": "Schlagworte",
+    "tag_ids": "Tags",
     "category_ids": "Kategorien",
     "allow_backorder": "Rückstand zulassen",
     "manage_inventory": "Inventar verwalten",
@@ -3919,7 +3919,7 @@
     "type_id": "Typ",
     "collection_id": "Sammlung",
     "handleAutoGeneratedHint": "Wird automatisch aus dem Namen generiert. Nur Kleinbuchstaben, Zahlen und Bindestriche — dieses Feld kann nicht direkt bearbeitet werden.",
-    "handleInvalidFormat": "Der Handle darf nur Kleinbuchstaben, Zahlen und Bindestriche enthalten"
+    "handleInvalidFormat": "Das Handle darf nur Kleinbuchstaben, Zahlen und Bindestriche enthalten"
   },
   "dateTime": {
     "years_one": "Jahr",
@@ -4046,7 +4046,7 @@
       "isVariantAxisHint": "Wenn aktiviert, definiert dieses Attribut Produktvarianten (z. B. Größe, Farbe)."
     },
     "type": {
-      "select": "Einfachauswahl",
+      "select": "Einzelauswahl",
       "multivalue": "Mehrfachauswahl",
       "unit": "Einheit",
       "toggle": "Umschalter",
@@ -4136,7 +4136,7 @@
     },
     "fields": {
       "label": {
-        "label": "Etikett",
+        "label": "Bezeichnung",
         "placeholder": "Kulanzgeste"
       },
       "code": {
@@ -4166,7 +4166,7 @@
       "successToast": "Versandoptionstyp \"{{label}}\" wurde erfolgreich gelöscht."
     },
     "fields": {
-      "label": "Etikett",
+      "label": "Bezeichnung",
       "code": "Code",
       "description": "Beschreibung"
     }
@@ -4177,7 +4177,7 @@
     "product": "Produkt",
     "review-remove": "Entfernen überprüfen",
     "return": "Bestellrückgabe",
-    "product-collection": "Produktkollektion",
+    "product-collection": "Produktsammlung",
     "product-category": "Produktkategorie",
     "product-tag": "Produkt-Tag",
     "product-type": "Produkttyp",
@@ -4372,8 +4372,8 @@
       "code": "Code",
       "type": {
         "label": "Typ",
-        "percentage": "Werbewert",
-        "fixed": "Behoben"
+        "percentage": "Prozentsatz",
+        "fixed": "Festbetrag"
       },
       "target": {
         "label": "Ziel",
@@ -4420,7 +4420,7 @@
       "order": "Bestellung",
       "product": "Produkt",
       "product_category": "Produktkategorie",
-      "product_collection": "Produktkollektion",
+      "product_collection": "Produktsammlung",
       "product_tag": "Produkt-Tag",
       "product_type": "Produkttyp",
       "inventory": "Inventar",
