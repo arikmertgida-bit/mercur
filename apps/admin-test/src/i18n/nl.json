@@ -112,7 +112,7 @@
     "seller": "Verkoper",
     "searchConversations": "Gesprekken zoeken...",
     "noConversations": "Nog geen gesprekken",
-    "startConversation": "Start een gesprek",
+    "startConversation": "Gesprek starten",
     "selectConversation": "Selecteer een gesprek",
     "startMessaging": "Selecteer een gesprek om te beginnen met chatten",
     "typeMessage": "Typ een bericht...",
@@ -121,7 +121,7 @@
     "notificationTitle": "{{senderName}} heeft u een bericht gestuurd",
     "notificationBody": "{{preview}}",
     "image": "Afbeelding",
-    "support": "Support",
+    "support": "Ondersteuning",
     "direct": "Direct",
     "unknown": "Onbekend",
     "supportTeam": "Supportteam",
@@ -265,7 +265,7 @@
     "noRecords": "Geen recensies gevonden",
     "columns": {
       "rating": "Beoordeling",
-      "reference": "Referentie",
+      "reference": "Onderwerp",
       "customerNote": "Klantnotitie"
     }
   },

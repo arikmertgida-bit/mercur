@@ -190,11 +190,11 @@
     "plusCountMore": "+ さらに{{count}}個",
     "areYouSure": "本当によろしいですか？",
     "noRecordsFound": "レコードが見つかりません",
-    "typeToConfirm": "確認のために{val}と入力してください:",
+    "typeToConfirm": "確認のために{val}と入力してください：",
     "noResultsTitle": "結果なし",
     "noResultsMessage": "フィルターまたは検索クエリを変更してみてください",
     "noSearchResults": "検索結果なし",
-    "noSearchResultsFor": "<0>'{{query}}'</0>の検索結果はありません",
+    "noSearchResultsFor": "<0>「{{query}}」</0>の検索結果はありません",
     "noRecordsTitle": "レコードなし",
     "noRecordsMessage": "表示するレコードがありません",
     "unsavedChangesTitle": "このフォームから離れてもよろしいですか？",
@@ -485,8 +485,8 @@
     "radio": {
       "yes": "はい",
       "no": "いいえ",
-      "true": "真",
-      "false": "偽"
+      "true": "はい",
+      "false": "いいえ"
     },
     "addFilter": "フィルター追加",
     "sortLabel": "並べ替え",
@@ -611,9 +611,9 @@
         },
         "productVariants": {
           "label": "商品バリエーション",
-          "hint": "このランキングはストアフロントでのバリエーションの順序に影響します。",
-          "alert": "バリエーションを作成するにはオプションを追加してください。",
-          "tip": "チェックをしていないバリエーションは作成されません。後でバリエーションを作成・編集できますが、このリストは商品オプションのバリエーションに適合します。",
+          "hint": "この並び順はバリエーションの表示順序に影響します。",
+          "alert": "バリエーションを作成するには、バリエーション属性に値を追加してください。",
+          "tip": "チェックをしていないバリエーションは作成されません。後でいつでもバリエーションを作成・編集できますが、このリストは商品属性のバリエーションに対応しています。",
           "noAxes": "バリエーションを生成するには、属性ステップで「バリエーションに使用」を設定してください。"
         },
         "productOptions": {
@@ -705,7 +705,7 @@
     "media": {
       "label": "メディア",
       "editHint": "ストアフロントで商品を展示するためにメディアを追加します。",
-      "makeThumbnail": "サムネイルを作成",
+      "makeThumbnail": "サムネイルに設定",
       "uploadImagesLabel": "画像をアップロード",
       "uploadImagesHint": "ここに画像をドラッグ＆ドロップするか、クリックしてアップロードします。",
       "invalidFileType": "「{{name}}」はサポートされていないファイルタイプです。サポートされているファイルタイプは次のとおりです：{{types}}。",
@@ -808,7 +808,7 @@
       },
       "variants": {
         "label": "商品バリエーション",
-        "hint": "チェックを外したバリエーションは作成されません。このランキングはフロントエンドでのバリエーションのランク付けに影響します。"
+        "hint": "チェックを外したバリエーションは作成されません。この並び順はフロントエンドでのバリエーションの表示順序に影響します。"
       },
       "mid_code": {
         "label": "中分類コード"
@@ -1078,7 +1078,7 @@
         "banner": "コレクション一覧でコレクションのバナーとして表示されます。"
       },
       "actions": {
-        "setThumbnail": "サムネイルを作成",
+        "setThumbnail": "サムネイルに設定",
         "removeThumbnail": "サムネイルを削除",
         "setBanner": "バナーに設定",
         "removeBanner": "バナーを削除"
@@ -1112,13 +1112,13 @@
   },
   "categories": {
     "domain": "カテゴリー",
-    "subtitle": "商品をカテゴリーに整理し、それらのカテゴリーのランキングと階層を管理します。",
+    "subtitle": "商品をカテゴリーに整理し、それらのカテゴリーの並び順と階層を管理します。",
     "create": {
       "header": "カテゴリーを作成",
       "hint": "商品を整理するための新しいカテゴリーを作成します。",
       "tabs": {
         "details": "詳細",
-        "organize": "ランキングを整理"
+        "organize": "並び順を整理"
       },
       "successToast": "カテゴリーを作成しました。"
     },
@@ -1150,7 +1150,7 @@
     },
     "organize": {
       "header": "整理",
-      "action": "ランキングを編集",
+      "action": "並び順を編集",
       "successToast": "並び順を更新しました。"
     },
     "fields": {
@@ -1160,7 +1160,7 @@
         "public": "公開"
       },
       "isAdult": {
-        "label": "このカテゴリーは年齢制限があります(+18)",
+        "label": "このカテゴリーは年齢制限があります（+18）",
         "hint": "有効にすると、このカテゴリーの商品は、購入者が18歳以上であることを確認するまでストア上でぼかされたままになります。"
       },
       "status": {
@@ -1203,7 +1203,7 @@
         "banner": "カテゴリー一覧でカテゴリーのバナーとして表示されます。"
       },
       "actions": {
-        "setThumbnail": "サムネイルを作成",
+        "setThumbnail": "サムネイルに設定",
         "removeThumbnail": "サムネイルを削除",
         "setBanner": "バナーに設定",
         "removeBanner": "バナーを削除"
@@ -1388,15 +1388,15 @@
         "list": {
           "noRecordsMessage": "まず顧客グループを作成してください。"
         },
-        "successOne": "顧客を {{groups}} グループに追加しました。",
-        "successMany": "顧客を {{groups}} グループに追加しました。"
+        "successOne": "顧客をグループ「{{groups}}」に追加しました。",
+        "successMany": "顧客をグループ「{{groups}}」に追加しました。"
       },
       "removed": {
         "list": {
           "noRecordsMessage": "まず顧客グループを作成してください。"
         },
-        "successOne": "顧客を {{groups}} グループから削除しました。",
-        "successMany": "顧客を {{groups}} グループから削除しました。"
+        "successOne": "顧客をグループ「{{groups}}」から削除しました。",
+        "successMany": "顧客をグループ「{{groups}}」から削除しました。"
       },
       "removeTitle": "顧客を削除"
     },
@@ -1840,7 +1840,7 @@
         "canceled": "出荷が正常にキャンセルされました",
         "fulfillmentShipped": "すでに配送された出荷をキャンセルすることはできません",
         "fulfillmentDelivered": "出荷が正常に配達済みとしてマークされました",
-        "fulfillmentPickedUp": "発送を受け取り済みにしました"
+        "fulfillmentPickedUp": "出荷を受け取り済みにしました"
       },
       "trackingLabel": "追跡",
       "shippingFromLabel": "発送元",
@@ -2006,7 +2006,7 @@
   },
   "draftOrders": {
     "domain": "下書き注文",
-    "deleteWarning": "下書き注文{{id}}を削除しようとしています。この操作は取り消せません。",
+    "deleteWarning": "下書き注文{{id}}を削除しようとしています。この操作は元に戻せません。",
     "paymentLinkLabel": "支払いリンク",
     "cartIdLabel": "カートID",
     "markAsPaid": {
@@ -2050,7 +2050,7 @@
   "stockLocations": {
     "domain": "在庫拠点と配送",
     "list": {
-      "description": "店舗の在庫拠点と配送オプションを管理します。",
+      "description": "ストアの在庫拠点と配送オプションを管理します。",
       "noRecordsMessage": "レコードなし",
       "noRecordsMessageEmpty": "拠点が見つかりません",
       "noRecordsMessageFiltered": "フィルターに一致する拠点が見つかりません"
@@ -2066,7 +2066,7 @@
       "successToast": "拠点「{{name}}」が正常に更新されました。"
     },
     "delete": {
-      "confirmation": "在庫拠点「{{name}}」を削除しようとしています。この操作は取り消せません。",
+      "confirmation": "在庫拠点「{{name}}」を削除しようとしています。この操作は元に戻せません。",
       "successToast": "拠点「{{name}}」を削除しました。"
     },
     "fulfillmentProviders": {
@@ -2086,7 +2086,7 @@
         "header": "配送"
       },
       "disable": {
-        "confirmation": "「{{name}}」を無効にしてもよろしいですか？関連するすべてのサービスゾーンと配送オプションが削除され、この操作は取り消せません。",
+        "confirmation": "「{{name}}」を無効にしてもよろしいですか？関連するすべてのサービスゾーンと配送オプションが削除され、この操作は元に戻せません。",
         "pickup": "受け取りが正常に無効化されました。",
         "shipping": "配送が正常に無効化されました。"
       },
@@ -2142,7 +2142,7 @@
         }
       },
       "delete": {
-        "confirmation": "配送オプション「{{name}}」を削除しようとしています。この操作は取り消せません。",
+        "confirmation": "配送オプション「{{name}}」を削除しようとしています。この操作は元に戻せません。",
         "successToast": "配送オプション「{{name}}」が正常に削除されました。"
       },
       "edit": {
@@ -2182,7 +2182,7 @@
         "provider": "フルフィルメントプロバイダー",
         "profile": "配送プロファイル",
         "type": "配送オプションタイプ",
-        "fulfillmentOption": "発送オプション"
+        "fulfillmentOption": "出荷オプション"
       },
       "conditionalPrices": {
         "header": "{{name}} の条件付き価格",
@@ -2232,7 +2232,7 @@
         "successToast": "サービスゾーン「{{name}}」が正常に更新されました。"
       },
       "delete": {
-        "confirmation": "サービスゾーン「{{name}}」を削除しようとしています。この操作は取り消せません。",
+        "confirmation": "サービスゾーン「{{name}}」を削除しようとしています。この操作は元に戻せません。",
         "successToast": "サービスゾーン「{{name}}」が正常に削除されました。"
       },
       "manageAreas": {
@@ -2263,7 +2263,7 @@
     },
     "delete": {
       "title": "配送プロファイルを削除",
-      "description": "配送プロファイル「{{name}}」を削除しようとしています。この操作は取り消せません。",
+      "description": "配送プロファイル「{{name}}」を削除しようとしています。この操作は元に戻せません。",
       "successToast": "配送プロファイル「{{name}}」が正常に削除されました。"
     },
     "tooltip": {
@@ -2276,7 +2276,7 @@
       "hint": "顧客が異なる国や地域から購入する際の課金方法を管理します。"
     },
     "delete": {
-      "confirmation": "税地域を削除しようとしています。この操作は取り消せません。",
+      "confirmation": "税地域を削除しようとしています。この操作は元に戻せません。",
       "successToast": "税地域が正常に削除されました。"
     },
     "create": {
@@ -2402,7 +2402,7 @@
         "successToast": "税率が正常に更新されました。"
       },
       "delete": {
-        "confirmation": "税率「{{name}}」を削除しようとしています。この操作は取り消せません。",
+        "confirmation": "税率「{{name}}」を削除しようとしています。この操作は元に戻せません。",
         "successToast": "税率が正常に削除されました。"
       }
     },
@@ -2521,7 +2521,7 @@
   "promotions": {
     "templates": {
       "amountOffProducts": {
-        "title": "商品の割引額",
+        "title": "アイテムの割引額",
         "description": "特定の商品または商品コレクションを割引します"
       },
       "amountOffOrder": {
@@ -2529,7 +2529,7 @@
         "description": "注文合計金額を割引します"
       },
       "percentageOffProduct": {
-        "title": "商品の割引率",
+        "title": "アイテムの割引率",
         "description": "選択した商品を割引率で割引します"
       },
       "percentageOffOrder": {
@@ -2780,7 +2780,7 @@
         "description": "税抜き後にプロモーションを適用するにはこの項目を有効にしてください"
       }
     },
-    "deleteWarning": "プロモーション「{{code}}」を削除しようとしています。この操作は取り消せません。",
+    "deleteWarning": "プロモーション「{{code}}」を削除しようとしています。この操作は元に戻せません。",
     "createPromotionTitle": "プロモーションを作成",
     "type": "プロモーションタイプ",
     "conditions": {
@@ -2810,7 +2810,7 @@
     },
     "delete": {
       "title": "キャンペーンを削除",
-      "description": "キャンペーン「{{name}}」を削除しようとしています。この操作は取り消せません。",
+      "description": "キャンペーン「{{name}}」を削除しようとしています。この操作は元に戻せません。",
       "successToast": "キャンペーンを削除しました。"
     },
     "edit": {
@@ -2896,8 +2896,8 @@
     },
     "promotions": {
       "remove": {
-        "title": "キャンペーンからプロモーションを削除",
-        "description": "キャンペーンから{{count}}個のプロモーションを削除しようとしています。この操作は取り消せません。"
+        "title": "プロモーションを削除",
+        "description": "キャンペーンから{{count}}個のプロモーションを削除しようとしています。この操作は元に戻せません。"
       },
       "alreadyAdded": "このプロモーションはすでにキャンペーンに追加されています。",
       "alreadyAddedDiffCampaign": "このプロモーションは別のキャンペーン（{{name}}）にすでに追加されています。",
@@ -2919,14 +2919,14 @@
         "noRecordsMessage": "このキャンペーンにはプロモーションがありません。"
       }
     },
-    "deleteCampaignWarning": "キャンペーン「{{name}}」を削除しようとしています。この操作は取り消せません。",
+    "deleteCampaignWarning": "キャンペーン「{{name}}」を削除しようとしています。この操作は元に戻せません。",
     "totalSpend": "<0>{{amount}}</0> <1>{{currency}}</1>"
   },
   "priceLists": {
     "domain": "価格リスト",
     "subtitle": "特定の条件に対して販売価格を作成または上書きします。",
     "delete": {
-      "confirmation": "価格リスト「{{title}}」を削除しようとしています。この操作は取り消せません。",
+      "confirmation": "価格リスト「{{title}}」を削除しようとしています。この操作は元に戻せません。",
       "successToast": "価格リスト「{{title}}」が正常に削除されました。"
     },
     "list": {
@@ -2991,8 +2991,8 @@
         "editPricesDisabled": "価格を編集する前に商品を追加してください"
       },
       "delete": {
-        "confirmation_one": "{{count}}個の商品に対する価格をこの価格リストから削除しようとしています。この操作は取り消せません。",
-        "confirmation_other": "{{count}}個の商品に対する価格をこの価格リストから削除しようとしています。この操作は取り消せません。",
+        "confirmation_one": "{{count}}個の商品を価格リストから削除しようとしています。この操作は元に戻せません。",
+        "confirmation_other": "{{count}}個の商品を価格リストから削除しようとしています。この操作は元に戻せません。",
         "successToast_one": "{{count}}個の商品に対する価格が正常に削除されました。",
         "successToast_other": "{{count}}個の商品に対する価格が正常に削除されました。"
       },
@@ -3083,16 +3083,16 @@
     "inviteUser": "ユーザーを招待",
     "inviteUserHint": "新しいユーザーをストアに招待します。",
     "sendInvite": "招待を送信",
-    "pendingInvites": "保留中の招待",
-    "deleteInviteWarning": "{{email}}への招待を削除しようとしています 。この操作は取り消せません。",
+    "pendingInvites": "承諾待ちの招待",
+    "deleteInviteWarning": "{{email}}への招待を削除しようとしています。この操作は元に戻せません。",
     "resendInvite": "招待を再送信",
     "copyInviteLink": "招待リンクをコピー",
     "expiredOnDate": "{{date}}に期限切れ",
     "validFromUntil": "<0>{{from}}</0> - <1>{{until}}</1> の間有効",
     "acceptedOnDate": "{{date}}に承認されました",
     "inviteStatus": {
-      "accepted": "承認済み",
-      "pending": "保留中",
+      "accepted": "承諾済み",
+      "pending": "承諾待ち",
       "expired": "期限切れ"
     },
     "roles": {
@@ -3105,12 +3105,12 @@
       "accounting": "経理",
       "support": "サポート"
     },
-    "deleteUserWarning": "{{name}}を削除しようとしています。この操作は取り消せません。",
+    "deleteUserWarning": "{{name}}を削除しようとしています。この操作は元に戻せません。",
     "invite": "招待",
     "inviteRolesTooltip": "役割を選択しない場合、ユーザーはスーパーユーザーの役割で招待されます。",
     "status": {
       "active": "アクティブ",
-      "pending": "保留中"
+      "pending": "承諾待ち"
     },
     "list": {
       "empty": {
@@ -3253,15 +3253,15 @@
     "addCountries": "国を追加",
     "editRegion": "地域を編集",
     "countriesHint": "この地域に含まれる国を追加します。",
-    "deleteRegionWarning": "地域「{{name}}」を削除しようとしています。この操作は取り消せません。",
-    "removeCountriesWarning_one": "{{count}}か国を地域から削除しようとしています。この操作は取り消せません。",
-    "removeCountriesWarning_other": "{{count}}か国を地域から削除しようとしています。この操作は取り消せません。",
-    "removeCountryWarning": "国「{{name}}」を地域から削除しようとしています。この操作は取り消せません。",
+    "deleteRegionWarning": "地域「{{name}}」を削除しようとしています。この操作は元に戻せません。",
+    "removeCountriesWarning_one": "{{count}}か国を地域から削除しようとしています。この操作は元に戻せません。",
+    "removeCountriesWarning_other": "{{count}}か国を地域から削除しようとしています。この操作は元に戻せません。",
+    "removeCountryWarning": "国「{{name}}」を地域から削除しようとしています。この操作は元に戻せません。",
     "automaticTaxesHint": "有効にすると、税金は配送先住所に基づいてチェックアウト時にのみ計算されます。",
     "taxInclusiveHint": "有効にすると、この地域の価格は税込みになります。",
     "providersHint": "この地域で利用可能な決済プロバイダーを追加します。",
     "shippingOptions": "配送オプション",
-    "deleteShippingOptionWarning": "配送オプション「{{name}}」を削除しようとしています。この操作は取り消せません。",
+    "deleteShippingOptionWarning": "配送オプション「{{name}}」を削除しようとしています。この操作は元に戻せません。",
     "return": "返品",
     "outbound": "発送",
     "priceType": "価格タイプ",
@@ -3327,12 +3327,12 @@
       "sectionTitle": "税率",
       "createTaxRate": "税率を作成",
       "createTaxRateHint": "地域の新しい税率を作成します。",
-      "deleteRateDescription": "税率「{{name}}」を削除しようとしています。この操作は取り消せません。",
+      "deleteRateDescription": "税率「{{name}}」を削除しようとしています。この操作は元に戻せません。",
       "editRateAction": "税率を編集",
       "editOverridesAction": "上書きを編集",
       "editOverridesTitle": "税率の上書きを編集",
       "editOverridesHint": "税率の上書きを指定します。",
-      "deleteTaxRateWarning": "税率「{{name}}」を削除しようとしています。この操作は取り消せません。",
+      "deleteTaxRateWarning": "税率「{{name}}」を削除しようとしています。この操作は元に戻せません。",
       "productOverridesLabel": "商品の上書き",
       "productOverridesHint": "税率の商品上書きを指定します。",
       "addProductOverridesAction": "商品の上書きを追加",
@@ -3353,7 +3353,7 @@
     "addSalesChannels": "販売チャネルを追加",
     "noLocationsFound": "拠点が見つかりません",
     "selectLocations": "商品を在庫する拠点を選択してください。",
-    "deleteLocationWarning": "拠点「{{name}}」を削除しようとしています。この操作は取り消せません。",
+    "deleteLocationWarning": "拠点「{{name}}」を削除しようとしています。この操作は元に戻せません。",
     "removeSalesChannelsWarning_one": "{{count}}個の販売チャネルを拠点から削除しようとしています。",
     "removeSalesChannelsWarning_other": "{{count}}個の販売チャネルを拠点から削除しようとしています。",
     "toast": {
@@ -3365,7 +3365,7 @@
   "reservations": {
     "domain": "予約",
     "subtitle": "在庫アイテムの予約数量を管理します。",
-    "deleteWarning": "予約を削除しようとしています。この操作は取り消せません。",
+    "deleteWarning": "予約を削除しようとしています。この操作は元に戻せません。",
     "fields": {
       "date": "日付",
       "product": "商品",
@@ -3397,7 +3397,7 @@
     "addProducts": "商品を追加",
     "editSalesChannel": "販売チャネルを編集",
     "productAlreadyAdded": "この商品はすでに販売チャネルに追加されています。",
-    "deleteSalesChannelWarning": "販売チャネル{{name}}を削除しようとしています。この操作は取り消せません。",
+    "deleteSalesChannelWarning": "販売チャネル{{name}}を削除しようとしています。この操作は元に戻せません。",
     "toast": {
       "create": "販売チャネルが正常に作成されました",
       "update": "販売チャネルが正常に更新されました",
@@ -3471,11 +3471,11 @@
       }
     },
     "delete": {
-      "warning": "APIキー「{{title}}」を削除しようとしています。この操作は取り消せません。",
+      "warning": "APIキー「{{title}}」を削除しようとしています。この操作は元に戻せません。",
       "successToast": "APIキー「{{title}}」が正常に削除されました。"
     },
     "revoke": {
-      "warning": "APIキー「{{title}}」を無効化しようとしています。この操作は取り消せません。",
+      "warning": "APIキー「{{title}}」を無効化しようとしています。この操作は元に戻せません。",
       "successToast": "APIキー「{{title}}」が正常に無効化されました。"
     },
     "addSalesChannels": {
@@ -3484,9 +3484,9 @@
       }
     },
     "removeSalesChannel": {
-      "warning": "販売チャネル「{{name}}」をAPIキーから削除しようとしています。この操作は取り消せません。",
-      "warningBatch_one": "{{count}}個の販売チャネルをAPIキーから削除しようとしています。この操作は取り消せません。",
-      "warningBatch_other": "{{count}}個の販売チャネルをAPIキーから削除しようとしています。この操作は取り消せません。",
+      "warning": "販売チャネル「{{name}}」をAPIキーから削除しようとしています。この操作は元に戻せません。",
+      "warningBatch_one": "{{count}}個の販売チャネルをAPIキーから削除しようとしています。この操作は元に戻せません。",
+      "warningBatch_other": "{{count}}個の販売チャネルをAPIキーから削除しようとしています。この操作は元に戻せません。",
       "successToast": "販売チャネルがAPIキーから正常に削除されました。",
       "successToastBatch_one": "{{count}}個の販売チャネルがAPIキーから正常に削除されました。",
       "successToastBatch_other": "{{count}}個の販売チャネルがAPIキーから正常に削除されました。"
@@ -3525,7 +3525,7 @@
       "successToast": "返品理由「{{label}}」が正常に更新されました。"
     },
     "delete": {
-      "confirmation": "返品理由「{{label}}」を削除しようとしています。この操作は取り消せません。",
+      "confirmation": "返品理由「{{label}}」を削除しようとしています。この操作は元に戻せません。",
       "successToast": "返品理由「{{label}}」が正常に削除されました。"
     },
     "fields": {
@@ -3545,7 +3545,7 @@
     }
   },
   "login": {
-    "forgotPassword": "パスワードをお忘れですか？ - <0>リセット</0>",
+    "forgotPassword": "パスワードをお忘れですか？ <0>リセット</0>",
     "title": "おかえりなさい！",
     "hint": "管理者アカウントにログインしてください。",
     "submit": "ログイン",
@@ -3616,8 +3616,8 @@
       "runningState": "実行中...",
       "awaitingState": "待機中",
       "failedState": "失敗",
-      "skippedState": "スキップ",
-      "skippedFailureState": "スキップ（失敗）",
+      "skippedState": "スキップ済み",
+      "skippedFailureState": "スキップ済み（失敗）",
       "definitionLabel": "定義",
       "outputLabel": "出力",
       "compensateInputLabel": "補償処理入力",
@@ -3639,8 +3639,8 @@
     },
     "step": {
       "state": {
-        "skipped": "スキップ",
-        "skippedFailure": "スキップ（失敗）",
+        "skipped": "スキップ済み",
+        "skippedFailure": "スキップ済み（失敗）",
         "dormant": "休止中",
         "timeout": "タイムアウト"
       }
@@ -3659,7 +3659,7 @@
       "successToast": "商品タイプ「{{value}}」が正常に更新されました。"
     },
     "delete": {
-      "confirmation": "商品タイプ「{{value}}」を削除しようとしています。この操作は取り消せません。",
+      "confirmation": "商品タイプ「{{value}}」を削除しようとしています。この操作は元に戻せません。",
       "successToast": "商品タイプ「{{value}}」が正常に削除されました。"
     },
     "fields": {
@@ -3679,7 +3679,7 @@
       "successToast": "商品タグ「{{value}}」が正常に更新されました。"
     },
     "delete": {
-      "confirmation": "商品タグ「{{value}}」を削除しようとしています。この操作は取り消せません。",
+      "confirmation": "商品タグ「{{value}}」を削除しようとしています。この操作は元に戻せません。",
       "successToast": "商品タグ「{{value}}」が正常に削除されました。"
     },
     "fields": {
@@ -3697,7 +3697,7 @@
     }
   },
   "errors": {
-    "serverError": "サーバーエラー - 後でもう一度お試しください。",
+    "serverError": "サーバーエラーが発生しました。後でもう一度お試しください。",
     "invalidCredentials": "メールアドレスまたはパスワードが間違っています"
   },
   "statuses": {
@@ -3837,8 +3837,8 @@
     "createdAt": "作成日時",
     "updatedAt": "更新日時",
     "revokedAt": "無効化日時",
-    "true": "真",
-    "false": "偽",
+    "true": "はい",
+    "false": "いいえ",
     "giftCard": "ギフトカード",
     "tag": "タグ",
     "dateIssued": "発行日",
@@ -3965,7 +3965,7 @@
       "successToast": "並び順を更新しました。"
     },
     "possibleValues": {
-      "editRanking": "ランキングを編集",
+      "editRanking": "並び順を編集",
       "noRecordsTitle": "作成済みの値がありません",
       "noRecordsMessage": "商品を整理するための属性を作成してください"
     },
@@ -4000,7 +4000,7 @@
       "subtitle": "属性「{{name}}」に値を追加作成します。",
       "tabs": {
         "values": "値",
-        "organizeRanking": "ランキングを整理"
+        "organizeRanking": "並び順を整理"
       },
       "addValue": "値を追加",
       "enterValue": "値を入力",
@@ -4077,7 +4077,7 @@
       "response": "返信"
     },
     "status": {
-      "pending": "保留中",
+      "pending": "審査待ち",
       "published": "公開済み",
       "rejected": "却下済み"
     },
@@ -4404,7 +4404,7 @@
     "accessDenied": {
       "title": "アクセスが拒否されました",
       "description": "このページにアクセスする権限がありません。",
-      "requiredPermission": "必要な権限: {{permission}}",
+      "requiredPermission": "必要な権限：{{permission}}",
       "action": "この操作を実行する権限がありません。"
     },
     "requiredPermissions": {
@@ -4412,7 +4412,7 @@
       "none": "このビューでは権限が宣言されていません。",
       "anyOf": "いずれか",
       "allOf": "すべて",
-      "source": "ソース: {{source}}"
+      "source": "ソース：{{source}}"
     },
     "resources": {
       "customer": "顧客",

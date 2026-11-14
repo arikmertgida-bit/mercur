@@ -20,7 +20,7 @@
       "status": "ステータス"
     },
     "status": {
-      "pending": "保留中",
+      "pending": "対応待ち",
       "resolved": "解決済み",
       "dismissed": "対応不要"
     },
@@ -40,15 +40,15 @@
       "dismiss": "対応不要にする"
     },
     "resolvePrompt": {
-      "title": "通報を解決済みにしますか?",
-      "description": "この通報は解決済みとしてマークされ、保留中のキューから削除されます。"
+      "title": "通報を解決済みにしますか？",
+      "description": "この通報は解決済みとしてマークされ、対応待ちのキューから削除されます。"
     },
     "dismissPrompt": {
-      "title": "この通報を対応不要にしますか?",
-      "description": "この通報は対応不要としてマークされ、保留中のキューから削除されます。"
+      "title": "この通報を対応不要にしますか？",
+      "description": "この通報は対応不要としてマークされ、対応待ちのキューから削除されます。"
     },
     "deletePrompt": {
-      "title": "この通報を削除しますか?",
+      "title": "この通報を削除しますか？",
       "description": "この操作により通報は完全に削除されます。この操作は元に戻せません。"
     },
     "updateSuccess": "通報を更新しました",
@@ -66,7 +66,7 @@
       "created": "作成日"
     },
     "deletePrompt": {
-      "title": "このウィッシュリストを削除しますか?",
+      "title": "このウィッシュリストを削除しますか？",
       "description": "顧客のウィッシュリストとそのすべての項目が完全に削除されます。この操作は元に戻せません。"
     },
     "deleteSuccess": "ウィッシュリストを削除しました",
@@ -84,7 +84,7 @@
       "status": "ステータス"
     },
     "status": {
-      "pending": "保留中",
+      "pending": "対応待ち",
       "resolved": "解決済み"
     },
     "actions": {
@@ -92,11 +92,11 @@
       "dismiss": "通報を対応不要にする"
     },
     "removePrompt": {
-      "title": "この画像を削除しますか?",
+      "title": "この画像を削除しますか？",
       "description": "画像はレビューから完全に削除されます。この操作は元に戻せません。"
     },
     "dismissPrompt": {
-      "title": "この通報を対応不要にしますか?",
+      "title": "この通報を対応不要にしますか？",
       "description": "画像は公開されたままとなり、通報は解決済みとしてマークされます。"
     },
     "resolveSuccess": "通報を解決しました",
@@ -139,7 +139,7 @@
     "connectionLost": "接続が切断されました。再接続中...",
     "imageUploadFailed": "画像のアップロードに失敗しました",
     "deleteConfirmTitle": "メッセージを削除",
-    "deleteConfirmDesc": "このメッセージを削除してもよろしいですか?",
+    "deleteConfirmDesc": "このメッセージを削除してもよろしいですか？",
     "productQuestion": "商品に関する質問",
     "storeQuestion": "ストアに関する質問",
     "customerMessage": "顧客からのメッセージ",
@@ -159,7 +159,7 @@
     "domain": "リクエスト",
     "status": {
       "draft": "下書き",
-      "pending": "保留中",
+      "pending": "審査待ち",
       "accepted": "承認済み",
       "rejected": "却下済み"
     },
@@ -205,7 +205,7 @@
       "name": "名前",
       "handle": "ハンドル",
       "description": "説明",
-      "active": "有効",
+      "active": "アクティブ",
       "internal": "内部",
       "title": "タイトル",
       "value": "値",
@@ -220,9 +220,9 @@
       "accept": "承認",
       "reject": "却下",
       "acceptPromptTitle": "リクエストを承認",
-      "acceptPromptDescription": "このリクエストを承認してもよろしいですか?この操作によりエンティティが作成されます。",
+      "acceptPromptDescription": "このリクエストを承認してもよろしいですか？この操作によりエンティティが作成されます。",
       "rejectPromptTitle": "リクエストを却下",
-      "rejectPromptDescription": "このリクエストを却下してもよろしいですか?この操作は元に戻せません。",
+      "rejectPromptDescription": "このリクエストを却下してもよろしいですか？この操作は元に戻せません。",
       "acceptSuccess": "リクエストが承認されました",
       "rejectSuccess": "リクエストが却下されました",
       "submitter": "申請者",
@@ -239,7 +239,7 @@
         "adminNote": "管理者メモ"
       },
       "status": {
-        "pending": "保留中",
+        "pending": "対応待ち",
         "resolved_deleted": "削除済み",
         "resolved_kept": "確認済み・未削除"
       },
@@ -255,7 +255,7 @@
         "resolveError": "通報に対応できませんでした。",
         "deletePrompt": {
           "title": "レビューを削除",
-          "description": "このレビューを削除してもよろしいですか?この操作は元に戻せません。"
+          "description": "このレビューを削除してもよろしいですか？この操作は元に戻せません。"
         }
       }
     }
@@ -265,7 +265,7 @@
     "noRecords": "レビューが見つかりません",
     "columns": {
       "rating": "評価",
-      "reference": "参照番号",
+      "reference": "レビュー対象",
       "customerNote": "顧客メモ"
     }
   },
@@ -275,10 +275,10 @@
     "orders": {
       "title": "注文サマリー",
       "subtitle": "マーケットプレイス全体のリアルタイム注文数",
-      "today": "本日",
+      "today": "今日",
       "thisWeek": "今週",
       "thisMonth": "今月",
-      "earningsToday": "本日の売上"
+      "earningsToday": "今日の売上"
     },
     "totals": {
       "products": "商品",
@@ -292,7 +292,7 @@
       "orders": "注文数",
       "commissionEarnings": "手数料収益",
       "noData": "まだデータがありません",
-      "updatedAt": "最終更新: {{date}}",
+      "updatedAt": "最終更新：{{date}}",
       "updatePending": "まだ計算されていません",
       "updateNotice": "分析データは12時間ごとに更新されます"
     }

@@ -26,13 +26,13 @@
   },
   "messenger": {
     "supportTeam": "Supportteam",
-    "support": "Support",
+    "support": "Ondersteuning",
     "adminChatTitle": "Chatten met beheerder",
     "adminChatDescription": "Stuur een bericht naar het supportteam van de marketplace en bekijk uw gespreksgeschiedenis.",
     "unknown": "Onbekend",
     "imageMessage": "Afbeelding",
     "noMessages": "Nog geen berichten",
-    "startConversation": "Start het gesprek",
+    "startConversation": "Gesprek starten",
     "seen": "Gezien",
     "sent": "Verzonden",
     "notificationTitle": "{{senderName}} heeft u een bericht gestuurd",
@@ -48,8 +48,8 @@
     "connected": "Verbonden",
     "disconnected": "Verbinding verbroken",
     "newMessageToastTitle": "Nieuw bericht",
-    "imageSentPreview": "Heeft een afbeelding verstuurd",
-    "newMessageGenericPreview": "U heeft een nieuw bericht"
+    "imageSentPreview": "Heeft een afbeelding verzonden",
+    "newMessageGenericPreview": "U hebt een nieuw bericht"
   },
   "messages": {
     "domain": "Berichten",
@@ -153,9 +153,9 @@
       "noRecords": "Geen retourreden-aanvragen gevonden"
     },
     "reviews": {
-      "navLabel": "Beoordelingen",
-      "heading": "Meldingen van beoordelingen",
-      "subtitle": "Beoordelingen die u bij de beheerder heeft gemeld voor moderatie.",
+      "navLabel": "Recensies",
+      "heading": "Meldingen van recensies",
+      "subtitle": "Recensies die u bij de beheerder hebt gemeld voor moderatie.",
       "columns": {
         "reason": "Reden",
         "status": "Status",
@@ -169,23 +169,23 @@
       "reReport": "Opnieuw melden",
       "reReportSuccess": "Melding opnieuw verzonden.",
       "reReportError": "Melding kon niet worden verzonden.",
-      "noRecords": "Geen meldingen van beoordelingen gevonden"
+      "noRecords": "Geen meldingen van recensies gevonden"
     },
     "createErrorFallback": "Het verzoek kon niet worden aangemaakt."
   },
   "reviews": {
-    "domain": "Beoordelingen",
-    "noRecords": "Geen beoordelingen gevonden",
+    "domain": "Recensies",
+    "noRecords": "Geen recensies gevonden",
     "columns": {
       "rating": "Beoordeling",
-      "reference": "Referentie",
+      "reference": "Onderwerp",
       "customerNote": "Klantnotitie",
       "replyStatus": "Antwoordstatus",
       "createdAt": "Aangemaakt",
       "updatedAt": "Bijgewerkt"
     },
     "photos": "Foto's",
-    "noPhotos": "Er zijn geen foto's toegevoegd aan deze beoordeling.",
+    "noPhotos": "Er zijn geen foto's toegevoegd aan deze recensie.",
     "hiddenPhoto": "Verborgen",
     "status": {
       "answered": "Beantwoord",
@@ -193,7 +193,7 @@
     },
     "reply": {
       "title": "Antwoord",
-      "placeholder": "Schrijf een antwoord op de beoordeling van de klant...",
+      "placeholder": "Schrijf een antwoord op de recensie van de klant...",
       "submit": "Antwoord verzenden",
       "successToast": "Antwoord succesvol verzonden.",
       "errorToast": "Antwoord kon niet worden verzonden.",
@@ -201,8 +201,8 @@
     },
     "report": {
       "title": "Melden bij beheerder",
-      "description": "Meld deze beoordeling bij een marketplacebeheerder voor moderatie.",
-      "placeholder": "Leg uit waarom u deze beoordeling meldt...",
+      "description": "Meld deze recensie bij een marketplacebeheerder voor moderatie.",
+      "placeholder": "Leg uit waarom u deze recensie meldt...",
       "submit": "Melding verzenden",
       "successToast": "Melding verzonden naar beheerder.",
       "errorToast": "Melding kon niet worden verzonden."
@@ -212,8 +212,8 @@
     "domain": "Volgers",
     "noRecords": "Nog geen volgers",
     "columns": {
-      "followedAt": "Datum Gevolgd",
-      "reviewsAverage": "Gem. Beoordeling"
+      "followedAt": "Gevolgd op",
+      "reviewsAverage": "Gem. beoordeling"
     },
     "count": "Volgers: {{count}}"
   },
