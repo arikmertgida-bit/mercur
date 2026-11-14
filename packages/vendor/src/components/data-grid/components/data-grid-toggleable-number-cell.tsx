@@ -15,6 +15,7 @@ import {
   InputProps,
 } from "../types"
 import { DataGridCellContainer } from "./data-grid-cell-container"
+import { useNumberInputLocale } from "../../../lib/number-input-locale"
 
 const EMPTY_TOGGLEABLE_NUMBER: DataGridToggleableNumber = {
   quantity: "",
@@ -174,6 +175,7 @@ const Inner = ({
   }, [value])
 
   const combinedRefs = useCombinedRefs(inputRef, ref)
+  const numberInput = useNumberInputLocale()
 
   const handleInputChange: CurrencyInputProps["onValueChange"] = (
     updatedValue,
@@ -244,6 +246,9 @@ const Inner = ({
           handleOnChange()
         }}
         onFocus={onFocus}
+        intlConfig={numberInput.intlConfig}
+        decimalSeparator={numberInput.decimalSeparator}
+        groupSeparator={numberInput.groupSeparator}
         decimalsLimit={0}
         autoComplete="off"
         tabIndex={-1}

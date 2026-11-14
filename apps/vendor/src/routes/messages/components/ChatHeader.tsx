@@ -49,7 +49,7 @@ export function ChatHeader({
       </IconButton>
 
       {otherParticipantType === "ADMIN" ? (
-        <DynamicAvatar src={null} alt="Kayi.com" className="w-8 h-8" type="ADMIN" />
+        <DynamicAvatar src={null} alt="Kayı.com" className="w-8 h-8" type="ADMIN" />
       ) : (
         <DynamicAvatar src={customerAvatarUrl} alt={otherName} className="w-10 h-10" type="CUSTOMER" />
       )}

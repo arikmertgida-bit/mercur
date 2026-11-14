@@ -2,10 +2,7 @@ import { ArrowsPointingOut, CircleSliders } from "@medusajs/icons"
 import type { JsonValue } from "@mercurjs/types"
 import { clx } from "@medusajs/ui"
 import { useCallback, useEffect, useRef, useState } from "react"
-import CurrencyInput, {
-  CurrencyInputProps,
-  formatValue,
-} from "react-currency-input-field"
+import CurrencyInput, { CurrencyInputProps } from "react-currency-input-field"
 import {
   Control,
   Controller,
@@ -27,6 +24,7 @@ import { useCombinedRefs } from "@hooks/use-combined-refs"
 import { currencies, CurrencyInfo } from "@lib/data/currencies"
 import { getCustomShippingOptionPriceFieldName } from "../../utils/get-custom-shipping-option-price-field-info"
 import { useShippingOptionPrice } from "../shipping-option-price-provider"
+import { toCanonicalDecimal, useNumberInputLocale } from "../../../../../lib/number-input-locale"
 
 interface ShippingOptionPriceCellProps<TData, TValue = JsonValue>
   extends DataGridCellProps<TData, TValue> {
@@ -185,18 +183,11 @@ const Inner = ({
     ...attributes
   } = inputProps
 
-  const formatter = useCallback(
-    (value?: string | number) => {
-      const ensuredValue =
-        typeof value === "number" ? value.toString() : value || ""
+  const numberInput = useNumberInputLocale()
 
-      return formatValue({
-        value: ensuredValue,
-        decimalScale: currencyInfo.decimal_digits,
-        disableGroupSeparators: true,
-        decimalSeparator: ".",
-      })
-    },
+  const formatter = useCallback(
+    (value?: string | number) =>
+      toCanonicalDecimal(value, currencyInfo.decimal_digits),
     [currencyInfo]
   )
 
@@ -252,6 +243,9 @@ const Inner = ({
           onChange(localValue, value)
         }}
         onFocus={onFocus}
+        intlConfig={numberInput.intlConfig}
+        decimalSeparator={numberInput.decimalSeparator}
+        groupSeparator={numberInput.groupSeparator}
         decimalScale={currencyInfo.decimal_digits}
         decimalsLimit={currencyInfo.decimal_digits}
         autoComplete="off"

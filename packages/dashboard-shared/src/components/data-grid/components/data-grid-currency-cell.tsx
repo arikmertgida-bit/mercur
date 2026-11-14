@@ -1,7 +1,4 @@
-import CurrencyInput, {
-  CurrencyInputProps,
-  formatValue,
-} from "react-currency-input-field"
+import CurrencyInput, { CurrencyInputProps } from "react-currency-input-field"
 import type { JsonValue } from "@mercurjs/types"
 import { Controller, ControllerRenderProps } from "react-hook-form"
 
@@ -12,6 +9,7 @@ import { useDataGridCell, useDataGridCellError } from "../hooks"
 import { DataGridCellProps, DataGridFormValues, InputProps } from "../types"
 import { toInputValue } from "../utils"
 import { DataGridCellContainer } from "./data-grid-cell-container"
+import { toCanonicalDecimal, useNumberInputLocale } from "../../../lib/number-input-locale"
 
 export interface DataGridCurrencyCellProps<TData, TValue = JsonValue>
   extends DataGridCellProps<TData, TValue> {
@@ -64,18 +62,11 @@ const Inner = ({
     ...attributes
   } = inputProps
 
-  const formatter = useCallback(
-    (value?: string | number) => {
-      const ensuredValue =
-        typeof value === "number" ? value.toString() : value || ""
+  const numberInput = useNumberInputLocale()
 
-      return formatValue({
-        value: ensuredValue,
-        decimalScale: currencyInfo.decimal_digits,
-        disableGroupSeparators: true,
-        decimalSeparator: ".",
-      })
-    },
+  const formatter = useCallback(
+    (value?: string | number) =>
+      toCanonicalDecimal(value, currencyInfo.decimal_digits),
     [currencyInfo]
   )
 
@@ -134,6 +125,9 @@ const Inner = ({
           onChange(localValue, value)
         }}
         onFocus={onFocus}
+        intlConfig={numberInput.intlConfig}
+        decimalSeparator={numberInput.decimalSeparator}
+        groupSeparator={numberInput.groupSeparator}
         decimalScale={currencyInfo.decimal_digits}
         decimalsLimit={currencyInfo.decimal_digits}
         autoComplete="off"

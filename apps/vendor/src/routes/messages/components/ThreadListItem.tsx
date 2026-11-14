@@ -123,7 +123,7 @@ export function ThreadListItem({ conv, isActive, onOpen, onDelete }: ThreadListI
                   <div className="flex flex-col items-start gap-1 flex-1 min-w-0">
                     <DynamicAvatar
                       src={`${MEDUSA_STOREFRONT_URL.replace(/\/$/, "")}/Logo.png`}
-                      alt="Kayi.com Logo"
+                      alt="Kayı.com Logo"
                       className="h-4"
                       isRectangular={true}
                       type="ADMIN"

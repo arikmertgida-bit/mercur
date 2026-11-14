@@ -2,13 +2,14 @@ import CurrencyInput, { CurrencyInputProps } from "react-currency-input-field"
 import type { JsonValue } from "@mercurjs/types"
 import { Controller, ControllerRenderProps } from "react-hook-form"
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { useCombinedRefs } from "../../../hooks/use-combined-refs"
 import { CurrencyInfo, currencies } from "../../../lib/data/currencies"
 import { useDataGridCell, useDataGridCellError } from "../hooks"
 import { DataGridCellProps, DataGridFormValues, InputProps } from "../types"
 import { toInputValue } from "../utils"
 import { DataGridCellContainer } from "./data-grid-cell-container"
+import { useNumberInputLocale } from "../../../lib/number-input-locale"
 
 export interface DataGridCurrencyCellProps<TData, TValue = JsonValue>
   extends DataGridCellProps<TData, TValue> {
@@ -61,33 +62,9 @@ const Inner = ({
     ...attributes
   } = inputProps
 
-  // Number formatting (thousands/decimal separators) must follow the
-  // seller's own convention — e.g. a Turkish seller types "1.050,00"
-  // (dot-grouped, comma-decimal); parsing that against a hardcoded en-US
-  // convention silently truncates it into "1.05" at the first unrecognised
-  // separator. `intlConfig` drives both display formatting and input
-  // parsing from the same Intl-derived rules, so the two can never disagree.
-  //
-  // Deliberately omits `currency`: passing it makes `react-currency-input-field`
-  // derive its own currency-style prefix from `Intl.NumberFormat` (e.g. "₺"
-  // or "TRY ") and splice it directly into the editable value on every
-  // keystroke — on top of the currency symbol already rendered by the
-  // `<span>` below, and on a separate code path (prefix stripping in the
-  // library's `cleanValue`) that this cell never needs. Omitting `currency`
-  // still yields locale-correct group/decimal separators (verified against
-  // `Intl.NumberFormat(locale).formatToParts` — currency style changes
-  // nothing about those) while keeping the input's own value pure digits,
-  // exactly like the equivalent `@mercurjs/admin` cell.
-  //
-  // Deliberately `navigator.language`, not the dashboard's own `i18n.language`:
-  // this package's language codes are its own internal identifiers, not all
-  // valid BCP-47 tags (`zhCN`/`ptBR`/`ptPT` have no region subtag hyphen) —
-  // feeding one straight into `Intl.NumberFormat` risks silently wrong
-  // formatting for exactly the locales most likely to need this fix. Every
-  // other Intl-based amount formatter in this package already resolves the
-  // browser's own locale instead (see `getLocaleAmount` in
-  // `lib/money-amount-helpers.ts`); this follows the same proven pattern.
-  const intlConfig = useMemo(() => ({ locale: navigator.language }), [])
+  // No `currency` in intlConfig: the library would splice its own "₺"/"TRY "
+  // prefix into the editable value, on top of the symbol <span> below.
+  const numberInput = useNumberInputLocale()
 
   // Pads/rounds to a canonical "." decimal string (e.g. "2500.00") without
   // any locale grouping. `CurrencyInput`'s own renderer (`getRenderValue`,
@@ -120,8 +97,8 @@ const Inner = ({
     toInputValue(value) || ""
   )
 
-  // `localValue` mirrors whatever separator convention the active locale
-  // uses (e.g. "1050,00" once `intlConfig` is Turkish) purely for display —
+  // `localValue` mirrors whatever separator convention the panel language
+  // uses (e.g. "1050,00" in Turkish) purely for display —
   // it must never be written into the form directly. `canonicalValueRef`
   // tracks the same amount as a locale-independent "." decimal string (from
   // the library's own `values.float`), which is what actually gets
@@ -191,7 +168,9 @@ const Inner = ({
           onChange(canonicalValueRef.current, value)
         }}
         onFocus={onFocus}
-        intlConfig={intlConfig}
+        intlConfig={numberInput.intlConfig}
+        decimalSeparator={numberInput.decimalSeparator}
+        groupSeparator={numberInput.groupSeparator}
         decimalScale={currencyInfo.decimal_digits}
         decimalsLimit={currencyInfo.decimal_digits}
         autoComplete="off"
