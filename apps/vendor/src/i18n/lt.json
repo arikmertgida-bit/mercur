@@ -3,21 +3,21 @@
     "import": "Importuoti",
     "export": "Eksportuoti",
     "done": "Atlikta",
-    "importHeader": "Importuoti produktus",
-    "importDescription": "Įkelkite CSV failą, kad importuotumėte produktus į savo parduotuvę.",
-    "importHint": "Įkelkite CSV failą su savo produktais. Galite",
+    "importHeader": "Importuoti prekes",
+    "importDescription": "Įkelkite CSV failą, kad importuotumėte prekes į savo parduotuvę.",
+    "importHint": "Įkelkite CSV failą su savo prekėmis. Galite",
     "downloadTemplate": "atsisiųsti šabloną",
     "uploadLabel": "Įkelti CSV failą",
     "uploadHint": "Palaikomi tik .csv failai",
-    "importingActivity": "Importuojami produktai...",
-    "importSuccessToast": "Sėkmingai importuota produktų: {{count}}.",
+    "importingActivity": "Importuojamos prekės...",
+    "importSuccessToast": "Sėkmingai importuota prekių: {{count}}.",
     "importCompleteTitle": "Importavimas baigtas",
-    "importCompleteDescription": "Sėkmingai sukurta produktų: {{count}}.",
-    "exportHeader": "Eksportuoti produktus",
-    "exportDescription": "Eksportuokite savo produktus kaip CSV failą.",
-    "exportBody": "Tai eksportuos visus jūsų produktus į CSV failą. Atsisiuntimas prasidės automatiškai, kai tik eksportas bus paruoštas.",
-    "exportSuccessToast": "Produktai sėkmingai eksportuoti.",
-    "importErrorFallback": "Importuojant produktus įvyko klaida."
+    "importCompleteDescription": "Sėkmingai sukurta prekių: {{count}}.",
+    "exportHeader": "Eksportuoti prekes",
+    "exportDescription": "Eksportuokite savo prekes kaip CSV failą.",
+    "exportBody": "Tai eksportuos visas jūsų prekes į CSV failą. Atsisiuntimas prasidės automatiškai, kai tik eksportas bus paruoštas.",
+    "exportSuccessToast": "Prekės sėkmingai eksportuotos.",
+    "importErrorFallback": "Importuojant prekes įvyko klaida."
   },
   "customFields": {
     "title": "Pasirinktiniai laukai",
@@ -48,7 +48,7 @@
     "connected": "Prisijungta",
     "disconnected": "Atsijungta",
     "newMessageToastTitle": "Nauja žinutė",
-    "imageSentPreview": "Išsiuntė paveikslėlį",
+    "imageSentPreview": "Išsiuntė nuotrauką",
     "newMessageGenericPreview": "Turite naują žinutę"
   },
   "messages": {
@@ -56,7 +56,7 @@
     "management": "Pagalbos komanda",
     "helpSupport": "Pagalbos komanda",
     "me": "Aš",
-    "productQuestion": "Klausimas apie produktą",
+    "productQuestion": "Klausimas apie prekę",
     "storeQuestion": "Klausimas apie parduotuvę",
     "imageUploadFailed": "Nepavyko įkelti nuotraukos",
     "blockedReasonEmail": "Nepavyko išsiųsti žinutės: dalintis el. pašto adresais neleidžiama.",
@@ -76,10 +76,10 @@
     "chatOptions": "Pokalbio parinktys",
     "deleteOnlyForMe": "Ištrinti tik sau",
     "storeContext": "Klausimas apie parduotuvę",
-    "product": "Produktas",
+    "product": "Prekė",
     "deleteConfirmTitle": "Ištrinti žinutę",
     "deleteConfirmDesc": "Ar tikrai norite ištrinti šią žinutę?",
-    "error": "Nepavyko gauti vartotojo informacijos.",
+    "error": "Nepavyko gauti naudotojo informacijos.",
     "supportName": "Pagalbos komanda",
     "supportSubject": "Pagalbos pokalbis",
     "emptyState": "Kol kas nėra žinučių. Pradėkite pokalbį.",
@@ -97,7 +97,7 @@
     "domain": "Užklausos",
     "status": {
       "draft": "Juodraštis",
-      "pending": "Laukiama",
+      "pending": "Laukia",
       "accepted": "Priimta",
       "rejected": "Atmesta"
     },
@@ -113,7 +113,7 @@
       "noRecords": "Kategorijų užklausų nerasta",
       "create": {
         "heading": "Kategorijos užklausa",
-        "description": "Pateikite užklausą naujai produkto kategorijai sukurti.",
+        "description": "Pateikite užklausą naujai prekių kategorijai sukurti.",
         "successToast": "Kategorijos užklausa sėkmingai sukurta"
       }
     },
@@ -123,7 +123,7 @@
       "noRecords": "Kolekcijų užklausų nerasta",
       "create": {
         "heading": "Kolekcijos užklausa",
-        "description": "Pateikite užklausą naujai produktų kolekcijai sukurti.",
+        "description": "Pateikite užklausą naujai prekių kolekcijai sukurti.",
         "successToast": "Kolekcijos užklausa sėkmingai sukurta"
       }
     },
@@ -133,7 +133,7 @@
       "noRecords": "Žymų užklausų nerasta",
       "create": {
         "heading": "Žymos užklausa",
-        "description": "Pateikite užklausą naujai produkto žymai sukurti.",
+        "description": "Pateikite užklausą naujai prekių žymai sukurti.",
         "successToast": "Žymos užklausa sėkmingai sukurta"
       }
     },
@@ -143,14 +143,14 @@
       "noRecords": "Tipų užklausų nerasta",
       "create": {
         "heading": "Tipo užklausa",
-        "description": "Pateikite užklausą naujam produkto tipui sukurti.",
+        "description": "Pateikite užklausą naujam prekių tipui sukurti.",
         "successToast": "Tipo užklausa sėkmingai sukurta"
       }
     },
     "returnReasons": {
       "navLabel": "Grąžinimo priežastys",
-      "heading": "Grąžinimo priežasties užklausos",
-      "noRecords": "Grąžinimo priežasties užklausų nerasta"
+      "heading": "Grąžinimo priežasčių užklausos",
+      "noRecords": "Grąžinimo priežasčių užklausų nerasta"
     },
     "reviews": {
       "navLabel": "Atsiliepimai",
@@ -162,7 +162,7 @@
         "adminNote": "Administratoriaus pastaba"
       },
       "status": {
-        "pending": "Laukiama",
+        "pending": "Laukia",
         "resolved_deleted": "Pašalinta",
         "resolved_kept": "Peržiūrėta, nepašalinta"
       },
@@ -189,7 +189,7 @@
     "hiddenPhoto": "Paslėpta",
     "status": {
       "answered": "Atsakyta",
-      "awaitingReply": "Laukiama atsakymo"
+      "awaitingReply": "Laukia atsakymo"
     },
     "reply": {
       "title": "Atsakymas",
@@ -240,9 +240,9 @@
     },
     "lowStock": {
       "title": "Mažos atsargos",
-      "subtitle": "Produktai, kurių atsargos senka",
-      "noRecords": "Nėra produktų su mažomis atsargomis",
-      "product": "Produktas",
+      "subtitle": "Prekės, kurių atsargos senka",
+      "noRecords": "Nėra prekių su mažomis atsargomis",
+      "product": "Prekė",
       "sku": "SKU",
       "available": "Turima",
       "viewInventory": "Peržiūrėti atsargas"

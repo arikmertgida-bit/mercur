@@ -48,7 +48,7 @@
     "connected": "Свързан",
     "disconnected": "Изключен",
     "newMessageToastTitle": "Ново съобщение",
-    "imageSentPreview": "Изпрати изображение",
+    "imageSentPreview": "Изпратено изображение",
     "newMessageGenericPreview": "Имате ново съобщение"
   },
   "messages": {
@@ -97,7 +97,7 @@
     "domain": "Заявки",
     "status": {
       "draft": "Чернова",
-      "pending": "Изчаква",
+      "pending": "В изчакване",
       "accepted": "Приета",
       "rejected": "Отхвърлена"
     },
@@ -149,8 +149,8 @@
     },
     "returnReasons": {
       "navLabel": "Причини за връщане",
-      "heading": "Заявки за причина за връщане",
-      "noRecords": "Не са намерени заявки за причина за връщане"
+      "heading": "Заявки за причини за връщане",
+      "noRecords": "Не са намерени заявки за причини за връщане"
     },
     "reviews": {
       "navLabel": "Отзиви",
@@ -162,7 +162,7 @@
         "adminNote": "Бележка от администратора"
       },
       "status": {
-        "pending": "Изчаква се",
+        "pending": "В изчакване",
         "resolved_deleted": "Премахнат",
         "resolved_kept": "Прегледан, не е премахнат"
       },
