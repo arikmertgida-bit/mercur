@@ -1,9 +1,9 @@
 {
   "productImportExport": {
-    "import": "Імпорт",
-    "export": "Експорт",
+    "import": "Імпортувати",
+    "export": "Експортувати",
     "done": "Готово",
-    "importHeader": "Імпорт товарів",
+    "importHeader": "Імпортувати товари",
     "importDescription": "Завантажте файл CSV, щоб імпортувати товари у ваш магазин.",
     "importHint": "Завантажте файл CSV зі своїми товарами. Ви можете",
     "downloadTemplate": "завантажити шаблон",
@@ -13,7 +13,7 @@
     "importSuccessToast": "Успішно імпортовано товарів: {{count}}.",
     "importCompleteTitle": "Імпорт завершено",
     "importCompleteDescription": "Успішно створено товарів: {{count}}.",
-    "exportHeader": "Експорт товарів",
+    "exportHeader": "Експортувати товари",
     "exportDescription": "Експортуйте свої товари у вигляді файлу CSV.",
     "exportBody": "Це експортує всі ваші товари у файл CSV. Завантаження почнеться автоматично, щойно експорт буде готовий.",
     "exportSuccessToast": "Товари успішно експортовано.",
@@ -48,7 +48,7 @@
     "connected": "Підключено",
     "disconnected": "Відключено",
     "newMessageToastTitle": "Нове повідомлення",
-    "imageSentPreview": "Надіслав(ла) зображення",
+    "imageSentPreview": "Надіслав(-ла) зображення",
     "newMessageGenericPreview": "У вас нове повідомлення"
   },
   "messages": {
@@ -97,7 +97,7 @@
     "domain": "Запити",
     "status": {
       "draft": "Чернетка",
-      "pending": "Очікує",
+      "pending": "Очікує на розгляд",
       "accepted": "Прийнято",
       "rejected": "Відхилено"
     },
@@ -149,8 +149,8 @@
     },
     "returnReasons": {
       "navLabel": "Причини повернення",
-      "heading": "Запити причин повернення",
-      "noRecords": "Запитів причин повернення не знайдено"
+      "heading": "Запити на причини повернення",
+      "noRecords": "Запитів на причини повернення не знайдено"
     },
     "reviews": {
       "navLabel": "Відгуки",
@@ -162,7 +162,7 @@
         "adminNote": "Примітка адміністратора"
       },
       "status": {
-        "pending": "Очікує",
+        "pending": "Очікує на розгляд",
         "resolved_deleted": "Видалено",
         "resolved_kept": "Розглянуто, не видалено"
       },
@@ -178,14 +178,14 @@
     "noRecords": "Відгуків не знайдено",
     "columns": {
       "rating": "Оцінка",
-      "reference": "Об’єкт",
+      "reference": "Об'єкт",
       "customerNote": "Примітка клієнта",
       "replyStatus": "Статус відповіді",
       "createdAt": "Створено",
       "updatedAt": "Оновлено"
     },
-    "photos": "Фотографії",
-    "noPhotos": "До цього відгуку не додано фотографій.",
+    "photos": "Зображення",
+    "noPhotos": "До цього відгуку не додано зображень.",
     "hiddenPhoto": "Приховано",
     "status": {
       "answered": "Відповідь надано",
@@ -243,8 +243,8 @@
       "subtitle": "Товари з низьким залишком",
       "noRecords": "Немає товарів із низьким залишком",
       "product": "Товар",
-      "sku": "Артикул",
-      "available": "В наявності",
+      "sku": "SKU",
+      "available": "Доступно",
       "viewInventory": "Переглянути запаси"
     },
     "quickAccess": {

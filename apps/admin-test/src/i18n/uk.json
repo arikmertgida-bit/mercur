@@ -20,7 +20,7 @@
       "status": "Статус"
     },
     "status": {
-      "pending": "Очікує",
+      "pending": "Очікує на розгляд",
       "resolved": "Вирішено",
       "dismissed": "Проігноровано"
     },
@@ -84,7 +84,7 @@
       "status": "Статус"
     },
     "status": {
-      "pending": "Очікує",
+      "pending": "Очікує на розгляд",
       "resolved": "Вирішено"
     },
     "actions": {
@@ -159,7 +159,7 @@
     "domain": "Запити",
     "status": {
       "draft": "Чернетка",
-      "pending": "Очікує",
+      "pending": "Очікує на розгляд",
       "accepted": "Прийнято",
       "rejected": "Відхилено"
     },
@@ -239,7 +239,7 @@
         "adminNote": "Примітка адміністратора"
       },
       "status": {
-        "pending": "Очікує",
+        "pending": "Очікує на розгляд",
         "resolved_deleted": "Видалено",
         "resolved_kept": "Розглянуто, не видалено"
       },
@@ -265,7 +265,7 @@
     "noRecords": "Відгуків не знайдено",
     "columns": {
       "rating": "Оцінка",
-      "reference": "Об’єкт",
+      "reference": "Об'єкт",
       "customerNote": "Примітка клієнта"
     }
   },

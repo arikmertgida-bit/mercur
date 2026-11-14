@@ -79,23 +79,23 @@
     "items_many": "{{count}} artículos"
   },
   "shippingOptionTypes": {
-    "domain": "Tipos de Opciones de Envío",
+    "domain": "Tipos de opciones de envío",
     "subtitle": "Organiza tus opciones de envío por tipos.",
     "create": {
-      "header": "Crear Tipo de Opción de Envío",
+      "header": "Crear tipo de opción de envío",
       "hint": "Crea un nuevo tipo de opción de envío para categorizar tus opciones de envío.",
       "successToast": "Tipo de opción de envío {{label}} creado correctamente."
     },
     "edit": {
-      "header": "Editar Tipo de Opción de Envío",
+      "header": "Editar tipo de opción de envío",
       "successToast": "Tipo de opción de envío {{label}} actualizado correctamente."
     },
     "delete": {
-      "confirmation": "Estás a punto de eliminar el tipo de opción de envío \"{{label}}\". Esta acción no puede deshacerse.",
-      "successToast": "Tipo de opción de envío \"{{label}}\" eliminado correctamente."
+      "confirmation": "Estás a punto de eliminar el tipo de opción de envío «{{label}}». Esta acción no puede deshacerse.",
+      "successToast": "Tipo de opción de envío «{{label}}» eliminado correctamente."
     },
     "fields": {
-      "label": "Etiqueta",
+      "label": "Nombre visible",
       "code": "Código",
       "description": "Descripción"
     }
@@ -117,7 +117,7 @@
     "numberOfKeys_one": "{{count}} clave",
     "numberOfKeys_other": "{{count}} claves",
     "edit": {
-      "header": "Editar Metadatos",
+      "header": "Editar metadatos",
       "description": "Edita los metadatos de este objeto.",
       "successToast": "Los metadatos se actualizaron correctamente.",
       "actions": {
@@ -140,7 +140,7 @@
   "validation": {
     "requiredField": "Campo obligatorio",
     "valueRequired": "El valor es obligatorio",
-    "atLeastOnePrice": "Se debe añadir al menos un precio.",
+    "atLeastOnePrice": "Se debe agregar al menos un precio.",
     "currencyCodeNotFound": "Código de moneda no encontrado",
     "shippingOptionIdMissing": "Falta el parámetro de ID de la opción de envío",
     "mustBeInt": "El valor debe ser un número entero.",
@@ -180,7 +180,7 @@
     "showMore": "Mostrar más",
     "showLess": "Mostrar menos",
     "continue": "Continuar",
-    "continueWithEmail": "Continuar con Email",
+    "continueWithEmail": "Continuar con correo electrónico",
     "idCopiedToClipboard": "ID copiado al portapapeles",
     "addReason": "Agregar motivo",
     "addNote": "Agregar nota",
@@ -224,7 +224,7 @@
       "noResultsTitle": "No se encontraron resultados",
       "noResultsMessage": "No pudimos encontrar nada que coincidiera con tu búsqueda.",
       "emptySearchTitle": "Escribe para buscar",
-      "emptySearchMessage": "Ingresa una palabra clave o frase para explorar.",
+      "emptySearchMessage": "Introduce una palabra clave o frase para explorar.",
       "loadMore": "Cargar {{count}} más",
       "groups": {
         "all": "Todas las áreas",
@@ -325,7 +325,7 @@
         "storeSettings": "Configuraciones de la tienda"
       },
       "settings": {
-        "header": "Configuraciones",
+        "header": "Configuración",
         "general": "General",
         "developer": "Desarrollador",
         "myAccount": "Mi cuenta"
@@ -477,21 +477,21 @@
   "products": {
     "domain": "Productos",
     "list": {
-      "noRecordsMessage": "Crea tu primer producto para comenzar a vender.",
+      "noRecordsMessage": "Crea productos para empezar a vender en el marketplace",
       "noRecordsTitle": "Aún no hay productos"
     },
     "edit": {
-      "header": "Editar Producto",
+      "header": "Editar producto",
       "description": "Edita los detalles del producto.",
       "successToast": "Producto {{title}} actualizado correctamente.",
       "requestSuccessToast": "La actualización del producto se solicitó correctamente. Una vez confirmada por el administrador, los cambios aparecerán en la tienda online.",
       "duplicateRequestErrorToast": "Ya tienes una solicitud activa. Solo puedes tener una a la vez.",
       "attributes": {
         "createSuccessToast": "El atributo se creó correctamente.",
-        "addSuccessToast": "Los atributos se añadieron correctamente.",
+        "addSuccessToast": "Los atributos se agregaron correctamente.",
         "updateSuccessToast": "El atributo se actualizó correctamente.",
         "deleteSuccessToast": "El atributo se eliminó correctamente.",
-        "addAttribute": "Añadir atributo",
+        "addAttribute": "Agregar atributo",
         "editHeader": "Editar atributo",
         "required": "Atributo obligatorio",
         "valuesRequired": "Se requiere al menos un valor",
@@ -508,13 +508,13 @@
       }
     },
     "create": {
-      "title": "Crear Producto",
+      "title": "Crear producto",
       "description": "Crea un nuevo producto.",
       "header": "General",
       "tabs": {
         "details": "Detalles",
         "organize": "Organizar",
-        "variants": "Variantes",
+        "variants": "Publicar",
         "attributes": "Atributos"
       },
       "errors": {
@@ -549,11 +549,11 @@
         },
         "productVariants": {
           "label": "Variantes de producto",
-          "hint": "Este orden afectará el orden de las variantes en tu tienda.",
-          "alert": "Agrega opciones para crear variantes.",
+          "hint": "Este orden afectará el orden de visualización de las variantes.",
+          "alert": "Agrega valores a los atributos de variante para generar variantes.",
           "tip": "Solo las variantes con precios y stock serán visibles para los clientes.",
           "searchPlaceholder": "Buscar",
-          "media": "Medios"
+          "media": "Multimedia"
         },
         "productOptions": {
           "label": "Opciones de producto",
@@ -571,15 +571,15 @@
       "successToast": "Producto {{title}} creado correctamente.",
       "attributes": {
         "header": "Atributos",
-        "addExisting": "Añadir existente",
+        "addExisting": "Agregar existente",
         "createNew": "Crear nuevo",
         "requiredAttributes": "Atributos obligatorios",
         "requiredAttributesHint": "El marketplace exige estos atributos. Selecciónalos antes de continuar.",
         "selectValues": "Seleccionar valores",
         "tip": "Consejo",
         "useForVariants": "Usar para variantes",
-        "useForVariantsDescription": "Si está marcado, podrá crear variantes utilizando este atributo. Si no, el atributo se usará solo con fines informativos.",
-        "variantAxisTip": "Este atributo creará variantes. Podrá definirlas en el siguiente paso.",
+        "useForVariantsDescription": "Si está marcado, podrás crear variantes usando este atributo. Si no, el atributo se usará solo con fines informativos.",
+        "variantAxisTip": "Este atributo creará variantes. Podrás definirlas en el siguiente paso.",
         "titlePlaceholder": "p. ej. Color",
         "valuePlaceholder": "Introducir valores",
         "description": "Gestiona los atributos y variaciones de tu producto, p. ej. color, talla, marca, etc. Selecciona atributos definidos por el marketplace o crea los tuyos propios.",
@@ -629,7 +629,7 @@
     },
     "import": {
       "header": "Importar lista de productos",
-      "uploadLabel": "Importar Productos",
+      "uploadLabel": "Importar productos",
       "uploadHint": "Arrastra y suelta un archivo CSV o haz clic para cargar",
       "description": "Importa productos proporcionando un archivo CSV en un formato predefinido",
       "template": {
@@ -667,40 +667,40 @@
       }
     },
     "attributes": "Atributos",
-    "editAttributes": "Editar Atributos",
-    "editOptions": "Editar Opciones",
+    "editAttributes": "Editar atributos",
+    "editOptions": "Editar opciones",
     "media": {
-      "label": "Medios",
-      "editHint": "Agrega medios al producto para mostrarlo en tu tienda.",
+      "label": "Multimedia",
+      "editHint": "Agrega contenido multimedia al producto para mostrarlo en tu tienda.",
       "makeThumbnail": "Crear miniatura",
       "uploadImagesLabel": "Subir imágenes",
       "uploadImagesHint": "Arrastra y suelta imágenes aquí o haz clic para cargar.",
       "invalidFileType": "'{{name}}' no es un tipo de archivo compatible. Los tipos de archivo soportados son: {{types}}.",
-      "failedToUpload": "Error al subir los medios agregados. Por favor, intenta nuevamente.",
+      "failedToUpload": "Error al subir el contenido multimedia agregado. Por favor, intenta nuevamente.",
       "deleteWarning_one": "Estás a punto de eliminar {{count}} imagen. Esta acción no puede deshacerse.",
       "deleteWarning_other": "Estás a punto de eliminar {{count}} imágenes. Esta acción no puede deshacerse.",
       "deleteWarningWithThumbnail_one": "Estás a punto de eliminar {{count}} imagen incluyendo la miniatura. Esta acción no puede deshacerse.",
       "deleteWarningWithThumbnail_other": "Estás a punto de eliminar {{count}} imágenes incluyendo la miniatura. Esta acción no puede deshacerse.",
-      "thumbnailTooltip": "Miniatura",
+      "thumbnailTooltip": "Esta imagen es la miniatura",
       "galleryLabel": "Galería",
       "downloadImageLabel": "Descargar imagen actual",
       "deleteImageLabel": "Eliminar imagen actual",
       "emptyState": {
-        "header": "Aún no hay medios",
+        "header": "Sin contenido multimedia",
         "description": "No hay imágenes asignadas a esta variante.",
-        "action": "Agregar medios",
-        "variantDescription": "Esta variante no tiene imágenes. Añade imágenes a la variante."
+        "action": "Agregar imágenes",
+        "variantDescription": "Esta variante no tiene imágenes. Agrega imágenes a la variante."
       },
-      "successToast": "Medios actualizados correctamente.",
+      "successToast": "Contenido multimedia actualizado correctamente.",
       "manageImageVariants": "Gestionar variantes asociadas",
       "fileTooLarge": "Uno o más archivos superan el tamaño máximo de {{size}}: {{name}}",
       "variantImages": "Imágenes de la variante",
       "showAvailableImages": "Mostrar imágenes disponibles",
       "availableImages": "Seleccionar imágenes",
-      "selectToAdd": "Añade imágenes del producto a la variante. Para añadir imágenes nuevas, añádelas primero al producto.",
+      "selectToAdd": "Agrega imágenes del producto a la variante. Para agregar imágenes nuevas, agrégalas primero al producto.",
       "removeSelected": "Eliminar seleccionadas",
       "selectImages": "Seleccionar imágenes",
-      "selectImagesHint": "Haz clic en las imágenes para añadirlas a esta variante.",
+      "selectImagesHint": "Haz clic en las imágenes para agregarlas a esta variante.",
       "editLabel": "Editar",
       "limitExceeded": {
         "description": "Puedes subir hasta {{max}} imágenes por producto.",
@@ -787,9 +787,9 @@
         "label": "Opciones de producto",
         "hint": "Las opciones se usan para definir el color, tamaño, etc. del producto",
         "add": "Agregar opción",
-        "optionTitle": "Título de opción",
+        "optionTitle": "Título",
         "optionTitlePlaceholder": "Color",
-        "variations": "Variaciones (separadas por comas)",
+        "variations": "Valores",
         "variantionsPlaceholder": "Rojo, Azul, Verde"
       },
       "variants": {
@@ -843,12 +843,12 @@
     },
     "variant": {
       "edit": {
-        "header": "Editar Variante",
-        "success": "Variante de producto editada correctamente",
+        "header": "Editar variante",
+        "success": "La variante se actualizó correctamente.",
         "attributesTooltip": "Estos son valores predeterminados usados para describir el artículo. No están definidos por el marketplace."
       },
       "create": {
-        "header": "Detalles de la Variante",
+        "header": "Detalles de la variante",
         "successToast": "La variante se creó correctamente."
       },
       "deleteWarning": "¿Estás seguro de que quieres eliminar esta variante?",
@@ -864,14 +864,14 @@
     "options": {
       "header": "Opciones",
       "edit": {
-        "header": "Editar Opción",
+        "header": "Editar opción",
         "successToast": "Opción {{title}} actualizada correctamente."
       },
       "create": {
-        "header": "Crear Opción",
+        "header": "Crear opción",
         "successToast": "Opción {{title}} creada correctamente."
       },
-      "deleteWarning": "¿Seguro que quieres eliminar la opción \"{{title}}\"? Esto eliminará todas las variantes asociadas.",
+      "deleteWarning": "¿Estás seguro de que quieres eliminar la opción «{{title}}»? Esto eliminará todas las variantes asociadas.",
       "variations": {
         "label": "Variaciones",
         "description": "Atributos usados para crear variantes de producto."
@@ -880,7 +880,7 @@
     "organization": {
       "header": "Organizar",
       "edit": {
-        "header": "Editar Organización",
+        "header": "Editar organización",
         "toasts": {
           "success": "Organización de {{title}} actualizada correctamente."
         }
@@ -922,7 +922,7 @@
         "title": "Solicitud de actualización de producto",
         "deleteRequested": "La eliminación del producto está pendiente de aprobación.",
         "cancelTitle": "Cancelar solicitud de actualización",
-        "cancelDescription": "¿Seguro que quieres cancelar esta solicitud de actualización de producto? Esta acción no se puede deshacer."
+        "cancelDescription": "¿Estás seguro de que quieres cancelar esta solicitud de actualización de producto? Esta acción no se puede deshacer."
       },
       "toast": {
         "canceledSuccessfully": "La solicitud de actualización de producto se canceló correctamente."
@@ -935,8 +935,8 @@
     "attributeRequiredByMarketplace": "El marketplace exige este atributo.",
     "attributeRequiredDeleteDisabledTooltip": "Los atributos obligatorios no se pueden eliminar.",
     "missingRequiredAttributesHint": "Proporciona la información obligatoria",
-    "addAttribute": "Añadir atributo",
-    "deleteAttributeWarning": "¿Seguro que quieres eliminar el atributo \"{{title}}\"? Esta acción no se puede deshacer.",
+    "addAttribute": "Agregar atributo",
+    "deleteAttributeWarning": "¿Estás seguro de que quieres eliminar el atributo «{{title}}»? Esta acción no se puede deshacer.",
     "attributesSection": {
       "removeWarning": "Estás a punto de eliminar este atributo del producto. Esta acción no se puede deshacer."
     },
@@ -945,13 +945,13 @@
     "variantMedia": {
       "label": "Contenido multimedia de la variante",
       "manageVariants": "Gestionar variantes",
-      "addToMultipleVariants": "Añadir a varias variantes",
+      "addToMultipleVariants": "Agregar a varias variantes",
       "manageVariantsDescription": "Gestionar las variantes asociadas a la imagen",
       "successToast": "Las variantes de la imagen se actualizaron correctamente.",
       "emptyState": {
-        "header": "Aún no hay medios",
-        "description": "Añade contenido multimedia a la variante para mostrarla en tu tienda online.",
-        "action": "Agregar medios"
+        "header": "Aún no hay contenido multimedia",
+        "description": "Agrega contenido multimedia a la variante para mostrarla en tu tienda online.",
+        "action": "Agregar contenido multimedia"
       }
     },
     "columns": {
@@ -1002,10 +1002,10 @@
   "collections": {
     "domain": "Colecciones",
     "subtitle": "Organiza los productos en colecciones.",
-    "createCollection": "Crear Colección",
+    "createCollection": "Crear colección",
     "createCollectionHint": "Crea una nueva colección para organizar tus productos.",
     "createSuccess": "Colección creada exitosamente.",
-    "editCollection": "Editar Colección",
+    "editCollection": "Editar colección",
     "handleTooltip": "Se genera automáticamente a partir del título de la colección. Solo letras minúsculas, números y guiones; este campo no se puede editar directamente.",
     "deleteWarning": "Estás a punto de eliminar la colección {{title}}. Esta acción no puede deshacerse.",
     "removeSingleProductWarning": "Estás a punto de eliminar el producto {{title}} de la colección. Esta acción no puede deshacerse.",
@@ -1028,19 +1028,19 @@
     },
     "requestSuccess": "La colección se solicitó correctamente",
     "media": {
-      "label": "Medios",
+      "label": "Multimedia",
       "thumbnail": "Miniatura",
       "banner": "Banner",
       "empty": {
-        "header": "Aún no hay medios",
-        "description": "El contenido multimedia añadido por el operador del marketplace aparecerá aquí."
+        "header": "Aún no hay contenido multimedia",
+        "description": "El contenido multimedia agregado por el operador del marketplace aparecerá aquí."
       }
     },
     "icon": {
       "label": "Icono",
       "empty": {
         "header": "Aún no hay icono",
-        "description": "El icono añadido por el operador del marketplace aparecerá aquí."
+        "description": "El icono agregado por el operador del marketplace aparecerá aquí."
       }
     },
     "removeProductsWarning_many": "Estás a punto de eliminar {{count}} productos de la colección. Esta acción no puede deshacerse."
@@ -1049,16 +1049,16 @@
     "domain": "Categorías",
     "subtitle": "Organiza productos en categorías, y administra el ranking y jerarquía de esas categorías.",
     "create": {
-      "header": "Crear Categoría",
+      "header": "Crear categoría",
       "hint": "Crea una nueva categoría para organizar tus productos.",
       "tabs": {
         "details": "Detalles",
-        "organize": "Organizar Ranking"
+        "organize": "Organizar ranking"
       },
       "successToast": "Categoría {{name}} creada correctamente."
     },
     "edit": {
-      "header": "Editar Categoría",
+      "header": "Editar categoría",
       "description": "Edita la categoría para actualizar sus detalles.",
       "successToast": "Categoría actualizada correctamente."
     },
@@ -1112,19 +1112,19 @@
       }
     },
     "media": {
-      "label": "Medios",
+      "label": "Multimedia",
       "thumbnail": "Miniatura",
       "banner": "Banner",
       "empty": {
-        "header": "Aún no hay medios",
-        "description": "El contenido multimedia añadido por el operador del marketplace aparecerá aquí."
+        "header": "Aún no hay contenido multimedia",
+        "description": "El contenido multimedia agregado por el operador del marketplace aparecerá aquí."
       }
     },
     "icon": {
       "label": "Icono",
       "empty": {
         "header": "Aún no hay icono",
-        "description": "El icono añadido por el operador del marketplace aparecerá aquí."
+        "description": "El icono agregado por el operador del marketplace aparecerá aquí."
       }
     }
   },
@@ -1189,7 +1189,7 @@
     },
     "locations": {
       "noRecordsTitle": "Aún no hay ubicaciones",
-      "noRecordsMessage": "Añade una ubicación para empezar a gestionar los niveles de stock"
+      "noRecordsMessage": "Agrega una ubicación para empezar a gestionar los niveles de stock"
     },
     "reservations": {
       "noRecordsTitle": "Aún no hay reservas",
@@ -1240,9 +1240,9 @@
     "levelDeleted": "El nivel de inventario se eliminó correctamente."
   },
   "giftCards": {
-    "domain": "Tarjetas de Regalo",
-    "editGiftCard": "Editar Tarjeta de Regalo",
-    "createGiftCard": "Crear Tarjeta de Regalo",
+    "domain": "Tarjetas de regalo",
+    "editGiftCard": "Editar tarjeta de regalo",
+    "createGiftCard": "Crear tarjeta de regalo",
     "createGiftCardHint": "Crea manualmente una tarjeta de regalo que se puede usar como método de pago en tu tienda.",
     "selectRegionFirst": "Selecciona primero una región",
     "deleteGiftCardWarning": "Estás a punto de eliminar la tarjeta de regalo {{code}}. Esta acción no puede deshacerse.",
@@ -1263,13 +1263,13 @@
       "noRecordsMessage": "Tus clientes aparecerán aquí."
     },
     "create": {
-      "header": "Crear Cliente",
+      "header": "Crear cliente",
       "hint": "Crea un nuevo cliente y administra sus detalles.",
       "successToast": "Cliente {{email}} creado correctamente."
     },
     "groups": {
       "label": "Grupos de clientes",
-      "remove": "¿Estás seguro de que deseas eliminar al cliente del grupo de clientes \"{{name}}\"?",
+      "remove": "¿Estás seguro de que deseas eliminar al cliente del grupo de clientes «{{name}}»?",
       "removeMany": "¿Estás seguro de que deseas eliminar al cliente de los siguientes grupos de clientes: {{groups}}?",
       "alreadyAddedTooltip": "El cliente ya está en este grupo de clientes.",
       "list": {
@@ -1278,27 +1278,27 @@
       },
       "add": {
         "list": {
-          "noRecordsMessage": "Por favor, crea un grupo de clientes primero."
+          "noRecordsMessage": "Primero crea un grupo de clientes."
         },
-        "successOne": "El cliente se añadió correctamente al grupo {{groups}}.",
-        "successMany": "El cliente se añadió correctamente a {{groups}} grupos."
+        "successOne": "El cliente se agregó correctamente al grupo {{groups}}.",
+        "successMany": "El cliente se agregó correctamente a los grupos {{groups}}."
       },
       "removed": {
         "list": {
-          "noRecordsMessage": "Por favor, crea un grupo de clientes primero."
+          "noRecordsMessage": "Primero crea un grupo de clientes."
         },
         "successOne": "El cliente se eliminó correctamente del grupo {{groups}}.",
-        "successMany": "El cliente se eliminó correctamente de {{groups}} grupos."
+        "successMany": "El cliente se eliminó correctamente de los grupos {{groups}}."
       },
       "removeTitle": "Eliminar cliente"
     },
     "edit": {
-      "header": "Editar Cliente",
+      "header": "Editar cliente",
       "emailDisabledTooltip": "La dirección de correo electrónico no puede ser cambiada para clientes registrados.",
       "successToast": "Cliente {{email}} actualizado correctamente."
     },
     "delete": {
-      "title": "Eliminar Cliente",
+      "title": "Eliminar cliente",
       "description": "Estás a punto de eliminar al cliente {{email}}. Esta acción no puede deshacerse.",
       "successToast": "Cliente {{email}} eliminado correctamente."
     },
@@ -1326,7 +1326,7 @@
         "provinceCode": "Código de provincia"
       },
       "create": {
-        "header": "Crear Dirección",
+        "header": "Crear dirección",
         "hint": "Crea una nueva dirección para el cliente.",
         "successToast": "La dirección fue creada correctamente."
       },
@@ -1335,12 +1335,12 @@
     }
   },
   "customerGroups": {
-    "domain": "Grupos de Clientes",
+    "domain": "Grupos de clientes",
     "subtitle": "Organiza a los clientes en grupos. Los grupos pueden tener promociones y precios diferentes.",
     "list": {
       "empty": {
         "heading": "No hay grupos de clientes",
-        "description": "Crea grupos de clientes para organizar a los clientes"
+        "description": "Crea grupos de clientes para organizar a tus clientes"
       },
       "filtered": {
         "heading": "Sin resultados",
@@ -1348,17 +1348,17 @@
       }
     },
     "create": {
-      "header": "Crear Grupo de Clientes",
+      "header": "Crear grupo de clientes",
       "hint": "Crea un nuevo grupo de clientes para segmentar a tus clientes.",
       "successToast": "Grupo de clientes {{name}} creado correctamente.",
       "alreadyExistsToast": "Ya existe un grupo de clientes con el nombre {{name}}."
     },
     "edit": {
-      "header": "Editar Grupo de Clientes",
+      "header": "Editar grupo de clientes",
       "successToast": "Grupo de clientes {{name}} actualizado correctamente."
     },
     "delete": {
-      "title": "Eliminar Grupo de Clientes",
+      "title": "Eliminar grupo de clientes",
       "description": "Estás a punto de eliminar el grupo de clientes {{name}}. Esta acción no puede deshacerse.",
       "successToast": "Grupo de clientes {{name}} eliminado correctamente."
     },
@@ -1405,7 +1405,7 @@
     "creditLines": {
       "title": "Líneas de crédito",
       "total": "Suma de todas las líneas de crédito",
-      "creditOrDebit": "Crédito / Débito",
+      "creditOrDebit": "Crédito / débito",
       "createCreditLine": "Crear línea de crédito",
       "createCreditLineSuccess": "Línea de crédito creada correctamente",
       "createCreditLineError": "Error al crear línea de crédito",
@@ -1516,7 +1516,7 @@
       "totalStoreCreditRefunds": "Total de reembolsos de crédito de tienda",
       "totalPending": "Total pendiente",
       "totalRefunded": "Reembolsado",
-      "enterAmount": "Introduce un importe",
+      "enterAmount": "Introduce un monto",
       "copyPaymentLink": "Copiar enlace de pago para {{ amount }}",
       "copyLinkSuccess": "Enlace de pago copiado al portapapeles",
       "copyLinkError": "Error al copiar el enlace de pago",
@@ -1631,15 +1631,15 @@
       "noItemsSelected": "Selecciona al menos un artículo para devolver.",
       "emptyState": {
         "title": "Aún no hay registros",
-        "description": "Añade al menos un artículo del pedido para crear la devolución"
+        "description": "Agrega al menos un artículo del pedido para crear la devolución"
       },
-      "emptyItemsError": "Añade al menos un artículo del pedido"
+      "emptyItemsError": "Agrega al menos un artículo del pedido"
     },
     "claims": {
-      "create": "Crear Reclamación",
-      "confirm": "Confirmar Reclamación",
+      "create": "Crear reclamación",
+      "confirm": "Confirmar reclamación",
       "confirmText": "Estás a punto de confirmar una reclamación. Esta acción no puede deshacerse.",
-      "manage": "Gestionar Reclamación",
+      "manage": "Gestionar reclamación",
       "outbound": "Saliente",
       "outboundItemAdded": "{{itemsCount}}x agregados a través de la reclamación",
       "outboundTotal": "Total saliente",
@@ -1653,7 +1653,7 @@
         }
       },
       "cancel": {
-        "title": "Cancelar Reclamación",
+        "title": "Cancelar reclamación",
         "description": "¿Estás seguro de que deseas cancelar la reclamación?"
       },
       "tooltips": {
@@ -1667,7 +1667,7 @@
         "title": "Reclamación iniciada",
         "description": "Hay una solicitud de reclamación pendiente de completar"
       },
-      "title": "Crear Reclamación",
+      "title": "Crear reclamación",
       "description": "Elige el tipo de reclamación y selecciona los artículos que el cliente quiere reclamar.",
       "policyHint": "Las reclamaciones se aceptan dentro de los {{days}} días posteriores a la entrega.",
       "outOfPolicy": "Las reclamaciones se aceptan dentro de los {{days}} días posteriores a la entrega.",
@@ -1682,24 +1682,24 @@
       "claimItems": "Artículos a reclamar",
       "noClaimableItems": "No hay artículos reclamables en este pedido.",
       "outboundItems": "Artículos a enviar",
-      "noOutboundItems": "Aún no se han añadido artículos de reemplazo.",
+      "noOutboundItems": "Aún no se han agregado artículos de reemplazo.",
       "addOutboundItems": "Agregar artículos",
       "addOutboundItemsDescription": "Elige las variantes que se enviarán como reemplazo de los artículos reclamados.",
       "remainingQty": "{{count}} reclamable",
       "reasonPlaceholder": "Elige un motivo",
-      "itemNotePlaceholder": "Añadir una nota (opcional)",
+      "itemNotePlaceholder": "Agregar una nota (opcional)",
       "reasons": {
         "missing_item": "Artículo faltante",
         "wrong_item": "Artículo incorrecto",
         "production_failure": "Fallo de producción",
         "other": "Otro"
       },
-      "noteHint": "Añade una nota interna para esta reclamación (visible solo para tu equipo)."
+      "noteHint": "Agrega una nota interna para esta reclamación (visible solo para tu equipo)."
     },
     "exchanges": {
-      "create": "Crear Intercambio",
-      "manage": "Gestionar Intercambio",
-      "confirm": "Confirmar Intercambio",
+      "create": "Crear intercambio",
+      "manage": "Gestionar intercambio",
+      "confirm": "Confirmar intercambio",
       "confirmText": "Estás a punto de confirmar un intercambio. Esta acción no puede deshacerse.",
       "outbound": "Saliente",
       "outboundItemAdded": "{{itemsCount}}x agregados a través del intercambio",
@@ -1714,7 +1714,7 @@
         }
       },
       "cancel": {
-        "title": "Cancelar Intercambio",
+        "title": "Cancelar intercambio",
         "description": "¿Estás seguro de que deseas cancelar el intercambio?"
       },
       "tooltips": {
@@ -1728,14 +1728,14 @@
         "title": "Intercambio iniciado",
         "description": "Hay una solicitud de intercambio pendiente de completar"
       },
-      "title": "Crear Intercambio",
+      "title": "Crear intercambio",
       "description": "Selecciona artículos devolvibles y confirma para crear una solicitud de cambio.",
       "policyHint": "Los cambios se aceptan dentro de los {{days}} días posteriores a la entrega.",
       "outOfPolicy": "Los cambios se aceptan dentro de los {{days}} días posteriores a la entrega.",
       "inboundItems": "Artículos a devolver",
       "noReturnableItems": "No hay artículos devolvibles en este pedido.",
       "outboundItems": "Artículos a enviar",
-      "noOutboundItems": "Aún no se han añadido artículos de reemplazo.",
+      "noOutboundItems": "Aún no se han agregado artículos de reemplazo.",
       "addOutboundItems": "Agregar artículos",
       "addOutboundItemsDescription": "Elige las variantes que se enviarán como reemplazo de los artículos devueltos.",
       "location": "Ubicación de devolución",
@@ -1746,9 +1746,9 @@
       "inboundShippingPlaceholder": "Elige una opción de envío",
       "inboundShippingLockedPlaceholder": "Elige primero una ubicación",
       "reasonPlaceholder": "Elige un motivo",
-      "itemNotePlaceholder": "Añadir una nota (opcional)",
+      "itemNotePlaceholder": "Agregar una nota (opcional)",
       "remainingQty": "{{count}} devolvible",
-      "noteHint": "Añade una nota interna para este cambio (visible solo para tu equipo).",
+      "noteHint": "Agrega una nota interna para este cambio (visible solo para tu equipo).",
       "carryOverPromotion": "Trasladar promociones",
       "carryOverPromotionHint": "Aplica las promociones del pedido a los artículos del cambio",
       "carryOverPromotionTooltip": "Solo las promociones de tipo fijo con asignación CADA UNO y las promociones de tipo porcentaje con asignación CADA UNO o TOTAL se pueden trasladar a los artículos de cambio salientes."
@@ -1784,7 +1784,7 @@
       "toastCreated": "Envío creado correctamente.",
       "trackingUrl": "URL de seguimiento",
       "labelUrl": "URL de la etiqueta",
-      "addTrackingUrl": "Añadir URL de seguimiento",
+      "addTrackingUrl": "Agregar URL de seguimiento",
       "trackingUrlPlaceholder": "https://www.dhl.com/shipment/1234567890"
     },
     "fulfillment": {
@@ -1798,7 +1798,7 @@
       "requiresShipping": "Requiere envío",
       "number": "Cumplimiento #{{number}}",
       "itemsToFulfill": "Artículos a cumplir",
-      "create": "Crear Cumplimiento",
+      "create": "Crear cumplimiento",
       "available": "Disponible",
       "inStock": "En stock",
       "markAsShipped": "Marcar como enviado",
@@ -1813,7 +1813,7 @@
       "error": {
         "wrongQuantity": "Solo hay un artículo disponible para cumplir",
         "wrongQuantity_other": "La cantidad debe ser un número entre 1 y {{number}}",
-        "noItems": "No hay artículos para cumplir.",
+        "noItems": "No hay artículos para preparar.",
         "noShippingOption": "La opción de envío es obligatoria",
         "noLocation": "La ubicación es obligatoria",
         "exceedsReservedQuantity": "La cantidad que quieres preparar supera la cantidad reservada de los artículos. Revisa tu preparación de pedido.",
@@ -1851,7 +1851,7 @@
       }
     },
     "refund": {
-      "title": "Crear Reembolso",
+      "title": "Crear reembolso",
       "sendNotificationHint": "Notificar a los clientes sobre el reembolso creado.",
       "systemPayment": "Pago del sistema",
       "systemPaymentDesc": "Uno o más de tus pagos son pagos del sistema. Ten en cuenta que Kayı.com no maneja las capturas y reembolsos para dichos pagos.",
@@ -1966,7 +1966,7 @@
     "orderCompleted": "Pedido completado correctamente"
   },
   "draftOrders": {
-    "domain": "Pedidos Borradores",
+    "domain": "Pedidos borrador",
     "list": {
       "description": "Crea un nuevo pedido borrador para empezar.",
       "noRecordsMessage": "No se encontraron pedidos borradores",
@@ -1988,7 +1988,7 @@
       "completed": "Completado"
     },
     "create": {
-      "createDraftOrder": "Crear Pedido Borrador",
+      "createDraftOrder": "Crear pedido borrador",
       "createDraftOrderHint": "Crea un nuevo pedido borrador para gestionar los detalles de un pedido antes de que se realice.",
       "chooseRegionHint": "Elige región",
       "existingItemsLabel": "Artículos existentes",
@@ -2017,7 +2017,7 @@
     }
   },
   "stockLocations": {
-    "domain": "Ubicaciones & Envío",
+    "domain": "Ubicaciones y envíos",
     "list": {
       "description": "Gestiona las ubicaciones de inventario de tu tienda y las opciones de envío.",
       "noRecordsMessage": "No hay registros",
@@ -2025,26 +2025,26 @@
       "noRecordsMessageFiltered": "No se encontraron ubicaciones que coincidan con los filtros"
     },
     "create": {
-      "header": "Crear Ubicación de Inventario",
+      "header": "Crear ubicación de inventario",
       "hint": "Una ubicación de inventario es un sitio físico donde se almacenan y envían los productos.",
       "successToast": "Ubicación {{name}} creada correctamente."
     },
     "edit": {
-      "header": "Editar Ubicación de Inventario",
+      "header": "Editar ubicación de inventario",
       "viewInventory": "Ver inventario",
       "successToast": "Ubicación {{name}} actualizada correctamente."
     },
     "delete": {
       "confirmation": "Estás a punto de eliminar la ubicación de inventario {{name}}. Esta acción no puede deshacerse.",
-      "successToast": "La ubicación \"{{name}}\" se eliminó correctamente."
+      "successToast": "La ubicación «{{name}}» se eliminó correctamente."
     },
     "fulfillmentProviders": {
-      "header": "Proveedores de Cumplimiento",
+      "header": "Proveedores de cumplimiento",
       "shippingOptionsTooltip": "Este menú desplegable solo consistirá en proveedores habilitados para esta ubicación. Agréguelos a la ubicación si el menú desplegable está deshabilitado.",
       "label": "Proveedores de cumplimiento conectados",
       "connectedTo": "Conectado a {{count}} de {{total}} proveedores de cumplimiento",
       "noProviders": "Esta Ubicación de Inventario no está conectada a ningún proveedor de cumplimiento.",
-      "action": "Conectar Proveedores",
+      "action": "Conectar proveedores",
       "successToast": "Proveedores de cumplimiento para la ubicación de inventario actualizados correctamente."
     },
     "fulfillmentSets": {
@@ -2065,18 +2065,18 @@
       }
     },
     "sidebar": {
-      "header": "Configuración de Envío",
+      "header": "Configuración de envío",
       "shippingProfiles": {
-        "label": "Perfiles de Envío",
+        "label": "Perfiles de envío",
         "description": "Agrupa productos por requisitos de envío"
       },
       "shippingOptionTypes": {
-        "label": "Tipos de Opciones de Envío",
+        "label": "Tipos de opciones de envío",
         "description": "Agrupa opciones de envío por tipos"
       }
     },
     "salesChannels": {
-      "header": "Canales de Venta",
+      "header": "Canales de venta",
       "hint": "Gestiona los canales de venta conectados a esta ubicación.",
       "label": "Canales de venta conectados",
       "connectedTo": "Conectado a {{count}} de {{total}} canales de venta",
@@ -2086,25 +2086,25 @@
     },
     "pickupOptions": {
       "edit": {
-        "header": "Editar Opción de Recogida"
+        "header": "Editar opción de recogida"
       }
     },
     "shippingOptions": {
       "create": {
         "shipping": {
-          "header": "Crear Opción de Envío para {{zone}}",
+          "header": "Crear opción de envío para {{zone}}",
           "hint": "Crea una nueva opción de envío para definir cómo se enviarán los productos desde esta ubicación.",
           "label": "Opciones de envío",
           "successToast": "Opción de envío {{name}} creada correctamente."
         },
         "returns": {
-          "header": "Crear Opción de Devolución para {{zone}}",
+          "header": "Crear opción de devolución para {{zone}}",
           "hint": "Crea una nueva opción de devolución para definir cómo se devolverán los productos a esta ubicación.",
           "label": "Opciones de devolución",
           "successToast": "Opción de devolución {{name}} creada correctamente."
         },
         "pickup": {
-          "header": "Crear Opción de Recogida para {{zone}}",
+          "header": "Crear opción de recogida para {{zone}}",
           "hint": "Crea una nueva opción de recogida para definir cómo se recogerán los productos desde esta ubicación.",
           "label": "Opciones de recogida",
           "successToast": "Opción de recogida {{name}} creada correctamente."
@@ -2120,7 +2120,7 @@
         "successToast": "Opción de envío {{name}} eliminada correctamente."
       },
       "edit": {
-        "header": "Editar Opción de Envío",
+        "header": "Editar opción de envío",
         "action": "Editar opción",
         "successToast": "Opción de envío {{name}} actualizada correctamente."
       },
@@ -2143,7 +2143,7 @@
           "manageConditionalPrices": "Gestionar precios condicionales"
         },
         "rules": {
-          "amount": "Monto",
+          "amount": "Precio de la opción de envío",
           "gte": "Mayor o igual que",
           "lte": "Menor o igual que"
         },
@@ -2199,13 +2199,13 @@
     },
     "serviceZones": {
       "create": {
-        "headerPickup": "Crear Zona de Servicio para Recogida desde {{location}}",
-        "headerShipping": "Crear Zona de Servicio para Envío desde {{location}}",
+        "headerPickup": "Crear zona de servicio para recogida desde {{location}}",
+        "headerShipping": "Crear zona de servicio para envío desde {{location}}",
         "action": "Crear zona de servicio",
         "successToast": "Zona de servicio {{name}} creada correctamente."
       },
       "edit": {
-        "header": "Editar Zona de Servicio",
+        "header": "Editar zona de servicio",
         "successToast": "Zona de servicio {{name}} actualizada correctamente."
       },
       "delete": {
@@ -2213,7 +2213,7 @@
         "successToast": "Zona de servicio {{name}} eliminada correctamente."
       },
       "manageAreas": {
-        "header": "Gestionar Áreas para {{name}}",
+        "header": "Gestionar áreas para {{name}}",
         "action": "Gestionar áreas",
         "label": "Áreas",
         "hint": "Selecciona las áreas geográficas que cubre la zona de servicio.",
@@ -2226,15 +2226,15 @@
     }
   },
   "shippingProfile": {
-    "domain": "Perfiles de Envío",
+    "domain": "Perfiles de envío",
     "subtitle": "Agrupa productos con requisitos similares de envío en perfiles.",
     "create": {
-      "header": "Crear Perfil de Envío",
+      "header": "Crear perfil de envío",
       "hint": "Crea un nuevo perfil de envío para agrupar productos con requisitos similares de envío.",
       "successToast": "Perfil de envío {{name}} creado correctamente."
     },
     "delete": {
-      "title": "Eliminar Perfil de Envío",
+      "title": "Eliminar perfil de envío",
       "description": "Estás a punto de eliminar el perfil de envío {{name}}. Esta acción no puede deshacerse.",
       "successToast": "Perfil de envío {{name}} eliminado correctamente."
     },
@@ -2243,7 +2243,7 @@
     }
   },
   "taxRegions": {
-    "domain": "Regiones Impositivas",
+    "domain": "Regiones impositivas",
     "list": {
       "hint": "Gestiona lo que cobras a tus clientes cuando compran desde diferentes países y regiones."
     },
@@ -2252,7 +2252,7 @@
       "successToast": "La región impositiva fue eliminada correctamente."
     },
     "create": {
-      "header": "Crear Región Impositiva",
+      "header": "Crear región impositiva",
       "hint": "Crea una nueva región impositiva para definir las tasas de impuestos de un país específico.",
       "errors": {
         "missingProvider": "El proveedor es obligatorio al crear una región fiscal.",
@@ -2261,123 +2261,123 @@
       "successToast": "La región impositiva fue creada correctamente."
     },
     "edit": {
-      "header": "Editar Región Impositiva",
+      "header": "Editar región impositiva",
       "hint": "Edita una región impositiva existente para actualizar las tasas de impuestos.",
       "successToast": "La región impositiva fue actualizada correctamente."
     },
     "provider": {
-      "header": "Proveedor Fiscal"
+      "header": "Proveedor fiscal"
     },
     "province": {
       "header": "Provincias",
       "create": {
-        "header": "Crear Región Impositiva para Provincia",
+        "header": "Crear región impositiva para provincia",
         "hint": "Crea una nueva región impositiva para definir las tasas de impuestos para una provincia específica."
       }
     },
     "state": {
       "header": "Estados",
       "create": {
-        "header": "Crear Región Impositiva para Estado",
+        "header": "Crear región impositiva para estado",
         "hint": "Crea una nueva región impositiva para definir las tasas de impuestos para un estado específico."
       }
     },
     "stateOrTerritory": {
-      "header": "Estados o Territorios",
+      "header": "Estados o territorios",
       "create": {
-        "header": "Crear Región Impositiva para Estado/Territorio",
+        "header": "Crear región impositiva para estado/territorio",
         "hint": "Crea una nueva región impositiva para definir las tasas de impuestos para un estado/territorio específico."
       }
     },
     "county": {
       "header": "Condados",
       "create": {
-        "header": "Crear Región Impositiva para Condado",
+        "header": "Crear región impositiva para condado",
         "hint": "Crea una nueva región impositiva para definir las tasas de impuestos para un condado específico."
       }
     },
     "region": {
       "header": "Regiones",
       "create": {
-        "header": "Crear Región Impositiva para Región",
+        "header": "Crear región impositiva para región",
         "hint": "Crea una nueva región impositiva para definir las tasas de impuestos para una región específica."
       }
     },
     "department": {
       "header": "Departamentos",
       "create": {
-        "header": "Crear Región Impositiva para Departamento",
+        "header": "Crear región impositiva para departamento",
         "hint": "Crea una nueva región impositiva para definir las tasas de impuestos para un departamento específico."
       }
     },
     "territory": {
       "header": "Territorios",
       "create": {
-        "header": "Crear Región Impositiva para Territorio",
+        "header": "Crear región impositiva para territorio",
         "hint": "Crea una nueva región impositiva para definir las tasas de impuestos para un territorio específico."
       }
     },
     "prefecture": {
       "header": "Prefecturas",
       "create": {
-        "header": "Crear Región Impositiva para Prefectura",
+        "header": "Crear región impositiva para prefectura",
         "hint": "Crea una nueva región impositiva para definir las tasas de impuestos para una prefectura específica."
       }
     },
     "district": {
       "header": "Distritos",
       "create": {
-        "header": "Crear Región Impositiva para Distrito",
+        "header": "Crear región impositiva para distrito",
         "hint": "Crea una nueva región impositiva para definir las tasas de impuestos para un distrito específico."
       }
     },
     "governorate": {
       "header": "Gobernaturas",
       "create": {
-        "header": "Crear Región Impositiva para Gobernatura",
+        "header": "Crear región impositiva para gobernación",
         "hint": "Crea una nueva región impositiva para definir las tasas de impuestos para una gobernatura específica."
       }
     },
     "canton": {
       "header": "Cantones",
       "create": {
-        "header": "Crear Región Impositiva para Cantón",
+        "header": "Crear región impositiva para cantón",
         "hint": "Crea una nueva región impositiva para definir las tasas de impuestos para un cantón específico."
       }
     },
     "emirate": {
       "header": "Emiratos",
       "create": {
-        "header": "Crear Región Impositiva para Emirato",
+        "header": "Crear región impositiva para emirato",
         "hint": "Crea una nueva región impositiva para definir las tasas de impuestos para un emirato específico."
       }
     },
     "sublevel": {
       "header": "Subniveles",
       "create": {
-        "header": "Crear Región Impositiva para Subnivel",
+        "header": "Crear región impositiva para subnivel",
         "hint": "Crea una nueva región impositiva para definir las tasas de impuestos para un subnivel específico."
       }
     },
     "taxOverrides": {
       "header": "Anulaciones",
       "create": {
-        "header": "Crear Anulación",
+        "header": "Crear anulación",
         "hint": "Crea una tasa de impuestos que anule las tasas de impuestos predeterminadas para condiciones seleccionadas."
       },
       "edit": {
-        "header": "Editar Anulación",
+        "header": "Editar anulación",
         "hint": "Edita la tasa de impuestos que anula las tasas de impuestos predeterminadas para condiciones seleccionadas."
       }
     },
     "taxRates": {
       "create": {
-        "header": "Crear Tasa de Impuesto",
+        "header": "Crear tasa de impuesto",
         "hint": "Crea una nueva tasa de impuestos para definir la tasa de impuestos para una región.",
         "successToast": "Tasa de impuestos creada correctamente."
       },
       "edit": {
-        "header": "Editar Tasa de Impuesto",
+        "header": "Editar tasa de impuesto",
         "hint": "Edita la tasa de impuestos para definir la tasa de impuestos para una región.",
         "successToast": "Tasa de impuestos actualizada correctamente."
       },
@@ -2413,8 +2413,8 @@
           "shippingOption": "Opciones de envío"
         },
         "operators": {
-          "in": "en",
-          "on": "en",
+          "in": "está en",
+          "on": "aplicado a",
           "and": "y"
         },
         "placeholders": {
@@ -2496,12 +2496,12 @@
   "promotions": {
     "templates": {
       "amountOffOffers": {
-        "title": "Importe de descuento en productos",
+        "title": "Monto de descuento en productos",
         "description": "Descuento en los productos seleccionados"
       },
       "amountOffOrder": {
-        "title": "Importe de descuento en el pedido",
-        "description": "Descuenta el importe total del pedido"
+        "title": "Monto de descuento en el pedido",
+        "description": "Descuenta el monto total del pedido"
       },
       "percentageOffProduct": {
         "title": "Porcentaje de descuento en productos",
@@ -2509,7 +2509,7 @@
       },
       "percentageOffOrder": {
         "title": "Porcentaje de descuento en el pedido",
-        "description": "Descuenta un porcentaje del importe total del pedido"
+        "description": "Descuenta un porcentaje del monto total del pedido"
       },
       "buyGet": {
         "title": "Compra X y llévate Y",
@@ -2522,7 +2522,7 @@
     },
     "domain": "Promociones",
     "sections": {
-      "details": "Detalles de la Promoción"
+      "details": "Detalles de la promoción"
     },
     "tabs": {
       "template": "Tipo",
@@ -2541,9 +2541,9 @@
         "percentageItems": "Porcentaje de descuento en productos",
         "percentageShipping": "Porcentaje de descuento en el envío",
         "percentageOrder": "Porcentaje de descuento en el pedido",
-        "amountItems": "Importe de descuento en productos",
-        "amountShipping": "Importe de descuento en el envío",
-        "amountOrder": "Importe de descuento en el pedido"
+        "amountItems": "Monto de descuento en productos",
+        "amountShipping": "Monto de descuento en el envío",
+        "amountOrder": "Monto de descuento en el pedido"
       },
       "value_type": "Tipo de valor",
       "value": "Valor",
@@ -2582,7 +2582,7 @@
           "description": "Si estas condiciones coinciden, habilitaremos la promoción en los artículos objetivo."
         }
       },
-      "allocationTooltip": "\"Cada uno\" aplica el límite de cantidad por artículo, mientras que \"Una vez\" aplica el límite de cantidad a todo el carrito",
+      "allocationTooltip": "«Cada uno» aplica el límite de cantidad por artículo, mientras que «Una vez» aplica el límite de cantidad a todo el carrito",
       "usageLimit": "Límite de uso",
       "unlimited": "Ilimitado",
       "usage": "Uso"
@@ -2603,7 +2603,7 @@
       "promotionDeleteSuccess": "La promoción ({{code}}) se eliminó correctamente."
     },
     "edit": {
-      "title": "Editar Detalles de la Promoción",
+      "title": "Editar detalles de la promoción",
       "rules": {
         "title": "Editar condiciones de uso"
       },
@@ -2617,7 +2617,7 @@
     "campaign": {
       "header": "Campaña",
       "edit": {
-        "header": "Editar Campaña",
+        "header": "Editar campaña",
         "successToast": "La campaña de la promoción se actualizó correctamente."
       },
       "actions": {
@@ -2641,11 +2641,11 @@
           }
         },
         "new": {
-          "title": "Nueva Campaña",
+          "title": "Nueva campaña",
           "description": "Crear una nueva campaña para esta promoción."
         },
         "none": {
-          "title": "Sin Campaña",
+          "title": "Sin campaña",
           "description": "Proceder sin asociar la promoción con una campaña"
         }
       },
@@ -2668,7 +2668,7 @@
         "label": "Método",
         "code": {
           "title": "Código de promoción",
-          "description": "Los clientes deben ingresar este código al realizar el pago"
+          "description": "Los clientes deben introducir este código al pagar"
         },
         "automatic": {
           "title": "Automático",
@@ -2689,14 +2689,14 @@
           "description": "Una promoción estándar"
         },
         "buyget": {
-          "title": "Comprar y Obtener",
+          "title": "Compra X y llévate Y",
           "description": "Promoción de comprar X y obtener Y"
         }
       },
       "allocation": {
         "each": {
           "title": "Cada uno",
-          "description": "Aplica el valor a cada artículo"
+          "description": "Aplica la promoción a cada artículo apto por separado"
         },
         "across": {
           "title": "A través de",
@@ -2704,12 +2704,12 @@
         },
         "once": {
           "title": "Una vez",
-          "description": "Aplica el valor a un número limitado de artículos"
+          "description": "Aplica la promoción a un número total limitado de artículos aptos en todo el carrito"
         }
       },
       "code": {
         "title": "Código",
-        "description": "El código que tus clientes ingresarán durante el proceso de pago.",
+        "description": "El código que tus clientes introducirán durante el pago. Si la promoción es automática, se aplicará automáticamente.",
         "autoGeneratedHint": "Generado automáticamente a partir del nombre de tu tienda. Único en todo el marketplace — este campo no se puede editar directamente."
       },
       "value": {
@@ -2722,12 +2722,12 @@
       },
       "value_type": {
         "fixed": {
-          "title": "Valor de la promoción",
-          "description": "La cantidad que se descontará. Ej. 100"
+          "title": "Monto fijo",
+          "description": "El monto que se descontará. Ej. 100"
         },
         "percentage": {
-          "title": "Valor de la promoción",
-          "description": "El porcentaje a descontar. Ej. 8%"
+          "title": "Porcentaje",
+          "description": "El porcentaje que se descontará del monto. Ej. 8%"
         }
       },
       "selectOperator": "Seleccionar operador",
@@ -2737,7 +2737,7 @@
       }
     },
     "deleteWarning": "Estás a punto de eliminar la promoción {{code}}. Esta acción no puede deshacerse.",
-    "createPromotionTitle": "Crear Promoción",
+    "createPromotionTitle": "Crear promoción",
     "type": "Tipo de promoción",
     "conditions": {
       "add": "Agregar condición",
@@ -2747,8 +2747,8 @@
     },
     "campaignSection": {
       "noRecordsTitle": "No forma parte de una campaña",
-      "noRecordsMessage": "Añade esta promoción a una campaña existente",
-      "addToCampaign": "Añadir a campaña",
+      "noRecordsMessage": "Agrega esta promoción a una campaña existente",
+      "addToCampaign": "Agregar a campaña",
       "warnings": {
         "promotionExpires": "La promoción caducará cuando caduque la campaña.",
         "promotionMustBeActive": "La promoción debe tener el estado Activo para que la campaña funcione."
@@ -2780,7 +2780,7 @@
       "successToast": "La campaña «{{name}}» se eliminó correctamente."
     },
     "edit": {
-      "header": "Editar Campaña",
+      "header": "Editar campaña",
       "description": "Editar los detalles de la campaña.",
       "successToast": "La campaña «{{name}}» se actualizó correctamente."
     },
@@ -2788,16 +2788,16 @@
       "header": "Configuración",
       "expiryWarning": "La promoción caducará cuando caduque la campaña.",
       "edit": {
-        "header": "Editar Configuración de la Campaña",
+        "header": "Editar configuración de la campaña",
         "description": "Editar la configuración de la campaña.",
         "successToast": "La configuración de la campaña se actualizó correctamente."
       }
     },
     "create": {
-      "title": "Crear Campaña",
+      "title": "Crear campaña",
       "description": "Crear una campaña promocional.",
       "hint": "Crea una campaña promocional.",
-      "header": "Crear Campaña",
+      "header": "Crear campaña",
       "successToast": "La campaña «{{name}}» se creó correctamente."
     },
     "validation": {
@@ -2824,10 +2824,10 @@
     "budget": {
       "create": {
         "hint": "Crea un presupuesto para la campaña.",
-        "header": "Presupuesto de Campaña"
+        "header": "Presupuesto de campaña"
       },
       "noLimitHint": "Si no estableces ningún límite, el presupuesto de la campaña no tendrá límite.",
-      "details": "Presupuesto de campaña",
+      "details": "Presupuesto",
       "fields": {
         "type": "Tipo",
         "currency": "Moneda",
@@ -2861,7 +2861,7 @@
         }
       },
       "edit": {
-        "header": "Editar Presupuesto de la Campaña"
+        "header": "Editar presupuesto de la campaña"
       },
       "attribute": {
         "customer_id": "cliente",
@@ -2871,22 +2871,22 @@
     },
     "promotions": {
       "remove": {
-        "title": "Eliminar promoción de la campaña",
+        "title": "Eliminar promociones",
         "description": "Estás a punto de eliminar {{count}} promoción(es) de la campaña. Esta acción no puede deshacerse."
       },
       "alreadyAdded": "Esta promoción ya ha sido agregada a la campaña.",
       "alreadyAddedDiffCampaign": "Esta promoción ya ha sido agregada a otra campaña ({{name}}).",
       "currencyMismatch": "La moneda de la promoción y la campaña no coinciden.",
       "toast": {
-        "added_one": "La promoción se añadió correctamente a la campaña.",
-        "added_other": "Las promociones se añadieron correctamente a la campaña.",
+        "added_one": "La promoción se agregó correctamente a la campaña.",
+        "added_other": "Las promociones se agregaron correctamente a la campaña.",
         "removed_one": "La promoción se eliminó correctamente de la campaña.",
         "removed_other": "Las promociones se eliminaron correctamente de la campaña.",
-        "added_many": "Las promociones se añadieron correctamente a la campaña.",
+        "added_many": "Las promociones se agregaron correctamente a la campaña.",
         "removed_many": "Las promociones se eliminaron correctamente de la campaña."
       },
       "add": {
-        "tip": "Solo puedes añadir promociones que no estén ya en otra campaña.",
+        "tip": "Solo puedes agregar promociones que no estén ya en otra campaña.",
         "list": {
           "noRecordsMessage": "Crea una promoción primero."
         }
@@ -2900,14 +2900,14 @@
     "totalSpend": "<0>{{amount}}</0> <1>{{currency}}</1>"
   },
   "priceLists": {
-    "domain": "Listas de Precios",
+    "domain": "Listas de precios",
     "subtitle": "Crea precios de venta o anula precios para condiciones específicas.",
     "delete": {
       "confirmation": "Estás a punto de eliminar la lista de precios {{title}}. Esta acción no puede deshacerse.",
       "successToast": "La lista de precios {{title}} fue eliminada exitosamente."
     },
     "create": {
-      "header": "Crear Lista de Precios",
+      "header": "Crear lista de precios",
       "subheader": "Crea una nueva lista de precios para gestionar los precios de tus productos.",
       "tabs": {
         "details": "Detalles",
@@ -2926,23 +2926,23 @@
       }
     },
     "edit": {
-      "header": "Editar Lista de Precios",
+      "header": "Editar lista de precios",
       "successToast": "La lista de precios {{title}} se actualizó correctamente."
     },
     "configuration": {
       "header": "Configuración",
       "edit": {
-        "header": "Editar Configuración de Lista de Precios",
+        "header": "Editar configuración de la lista de precios",
         "description": "Edita la configuración de la lista de precios.",
         "successToast": "La configuración de la lista de precios fue actualizada exitosamente."
       }
     },
     "customerAvailability": {
       "header": "Disponibilidad para clientes",
-      "add": "Añadir grupos de clientes",
+      "add": "Agregar grupos de clientes",
       "list": {
         "noRecordsTitle": "No hay grupos de clientes",
-        "noRecordsMessage": "Añade grupos de clientes para limitar a qué clientes se aplica esta lista de precios."
+        "noRecordsMessage": "Agrega grupos de clientes para limitar a qué clientes se aplica esta lista de precios."
       },
       "edit": {
         "header": "Disponibilidad para clientes",
@@ -2955,7 +2955,7 @@
       "actions": {
         "addProducts": "Agregar productos",
         "editPrices": "Editar precios",
-        "editPricesDisabled": "Añade productos antes de editar los precios"
+        "editPricesDisabled": "Agrega productos antes de editar los precios"
       },
       "delete": {
         "confirmation_one": "Estás a punto de quitar {{count}} producto de la lista de precios. Esta acción no se puede deshacer.",
@@ -2967,11 +2967,11 @@
       },
       "add": {
         "successToast": "Precios agregados exitosamente a la lista de precios.",
-        "atLeastOnePrice": "Se debe añadir al menos un precio.",
+        "atLeastOnePrice": "Se debe agregar al menos un precio.",
         "alreadyInPriceList": "Este producto ya está en la lista de precios",
         "noVariants": "Este producto no tiene variantes",
-        "title": "Añadir productos a la lista de precios",
-        "description": "Añade productos y establece precios para la lista de precios"
+        "title": "Agregar productos a la lista de precios",
+        "description": "Agrega productos y establece precios para la lista de precios"
       },
       "edit": {
         "successToast": "Precios actualizados exitosamente.",
@@ -2982,7 +2982,7 @@
     "fields": {
       "priceOverrides": {
         "label": "Anulaciones de precios",
-        "header": "Anulaciones de Precios"
+        "header": "Anulaciones de precios"
       },
       "status": {
         "label": "Estado",
@@ -3044,7 +3044,7 @@
       "lastName": "Apellidos"
     },
     "edit": {
-      "header": "Editar Perfil",
+      "header": "Editar perfil",
       "languageHint": "El idioma que quieres usar en el panel de vendedor. Esto no cambia el idioma de tu tienda.",
       "languagePlaceholder": "Selecciona idioma",
       "usageInsightsHint": "Comparte información de uso y ayúdanos a mejorar Kayı.com. Puedes leer más sobre lo que recopilamos y cómo lo usamos en nuestra <0>documentación</0>."
@@ -3065,11 +3065,11 @@
         "description": "Ningún usuario coincide con los criterios de filtro actuales."
       }
     },
-    "editUser": "Editar Usuario",
-    "inviteUser": "Invitar Usuario",
+    "editUser": "Editar usuario",
+    "inviteUser": "Invitar usuario",
     "inviteUserHint": "Invita a un nuevo usuario a tu tienda.",
     "sendInvite": "Enviar invitación",
-    "pendingInvites": "Invitaciones Pendientes",
+    "pendingInvites": "Invitaciones pendientes",
     "deleteInviteWarning": "Estás a punto de eliminar la invitación para {{email}}. Esta acción no puede deshacerse.",
     "resendInvite": "Reenviar invitación",
     "copyInviteLink": "Copiar enlace de invitación",
@@ -3118,7 +3118,7 @@
     },
     "subtitle": "Gestiona las traducciones de tus datos en Kayı.com",
     "bulk": {
-      "header": "Editor de Traducciones en Masa",
+      "header": "Editor de traducciones en masa",
       "mainColumn": "Idioma"
     },
     "edit": {
@@ -3166,7 +3166,7 @@
     "localeAlreadyAdded": "El idioma ya ha sido agregado a tu tienda.",
     "edit": {
       "websiteHint": "Debe incluir el protocolo (p. ej. https://)",
-      "mediaHeading": "Medios",
+      "mediaHeading": "Multimedia",
       "mediaTipLabel": "Consejo:",
       "mediaTipBody": "Este contenido multimedia será visible en la tienda online.",
       "uploadLogoLabel": "Subir logotipo",
@@ -3198,10 +3198,10 @@
     "profileCompletion": {
       "title": "Completar perfil de la tienda",
       "steps": {
-        "storeDetails": "Añadir detalles de la tienda",
-        "address": "Añadir dirección",
-        "companyDetails": "Añadir datos de la empresa",
-        "paymentDetails": "Añadir datos de pago"
+        "storeDetails": "Agregar detalles de la tienda",
+        "address": "Agregar dirección",
+        "companyDetails": "Agregar datos de la empresa",
+        "paymentDetails": "Agregar datos de pago"
       }
     },
     "status": {
@@ -3247,7 +3247,7 @@
       },
       "validation": {
         "nameRequired": "Introduce un nombre",
-        "countryRequired": "Por favor, seleccione un país"
+        "countryRequired": "Selecciona un país"
       }
     },
     "paymentDetails": {
@@ -3273,7 +3273,7 @@
         "accountNumber": "Número de cuenta"
       },
       "validation": {
-        "countryRequired": "Por favor, seleccione un país",
+        "countryRequired": "Selecciona un país",
         "accountNameRequired": "Introduce un nombre de cuenta"
       }
     },
@@ -3351,7 +3351,7 @@
       },
       "deleteConfirm": {
         "title": "Eliminar días de cierre",
-        "description": "¿Seguro que quieres eliminar este período de cierre?"
+        "description": "¿Estás seguro de que quieres eliminar este período de cierre?"
       },
       "deleteSuccess": "Los días de cierre se eliminaron correctamente."
     },
@@ -3361,10 +3361,10 @@
   "regions": {
     "domain": "Regiones",
     "subtitle": "Una región es un área donde vendes productos. Puede cubrir varios países y tiene diferentes tasas impositivas, proveedores y monedas.",
-    "createRegion": "Crear Región",
+    "createRegion": "Crear región",
     "createRegionHint": "Gestiona tasas impositivas y proveedores para un conjunto de países.",
     "addCountries": "Agregar países",
-    "editRegion": "Editar Región",
+    "editRegion": "Editar región",
     "countriesHint": "Agrega los países incluidos en esta región.",
     "deleteRegionWarning": "Estás a punto de eliminar la región {{name}}. Esta acción no puede deshacerse.",
     "removeCountriesWarning_one": "Estás a punto de eliminar {{count}} país de la región. Esta acción no puede deshacerse.",
@@ -3373,12 +3373,12 @@
     "automaticTaxesHint": "Cuando está habilitado, los impuestos solo se calcularán en el proceso de pago según la dirección de envío.",
     "taxInclusiveHint": "Cuando está habilitado, los precios en la región incluirán los impuestos.",
     "providersHint": "Agrega los proveedores de pago disponibles en esta región.",
-    "shippingOptions": "Opciones de Envío",
+    "shippingOptions": "Opciones de envío",
     "deleteShippingOptionWarning": "Estás a punto de eliminar la opción de envío {{name}}. Esta acción no puede deshacerse.",
     "return": "Devolución",
     "outbound": "Envío",
-    "priceType": "Tipo de Precio",
-    "flatRate": "Tarifa Fija",
+    "priceType": "Tipo de precio",
+    "flatRate": "Tarifa fija",
     "calculated": "Calculado",
     "list": {
       "noRecordsMessage": "Crea una región para las áreas donde vendes."
@@ -3390,10 +3390,10 @@
       "countries": "Países de la región actualizados exitosamente"
     },
     "shippingOption": {
-      "createShippingOption": "Crear Opción de Envío",
+      "createShippingOption": "Crear opción de envío",
       "createShippingOptionHint": "Crea una nueva opción de envío para la región.",
-      "editShippingOption": "Editar Opción de Envío",
-      "fulfillmentMethod": "Método de Cumplimiento",
+      "editShippingOption": "Editar opción de envío",
+      "fulfillmentMethod": "Método de cumplimiento",
       "type": {
         "outbound": "Envío",
         "outboundHint": "Usa esto si estás creando una opción de envío para enviar productos al cliente.",
@@ -3401,7 +3401,7 @@
         "returnHint": "Usa esto si estás creando una opción de envío para que el cliente te devuelva productos."
       },
       "priceType": {
-        "label": "Tipo de Precio",
+        "label": "Tipo de precio",
         "flatRate": "Tarifa fija",
         "calculated": "Calculado"
       },
@@ -3418,7 +3418,7 @@
     "removeCountriesWarning_many": "Estás a punto de eliminar {{count}} países de la región. Esta acción no puede deshacerse."
   },
   "taxes": {
-    "domain": "Regiones Fiscales",
+    "domain": "Regiones fiscales",
     "domainDescription": "Gestiona tu región fiscal",
     "countries": {
       "taxCountriesHint": "La configuración de impuestos se aplica a los países listados."
@@ -3497,14 +3497,14 @@
     }
   },
   "salesChannels": {
-    "domain": "Canales de Venta",
+    "domain": "Canales de venta",
     "subtitle": "Gestiona los canales online y offline en los que vendes productos.",
-    "createSalesChannel": "Crear Canal de Venta",
+    "createSalesChannel": "Crear canal de venta",
     "createSalesChannelHint": "Crea un nuevo canal de venta para vender tus productos.",
     "enabledHint": "Especifica si el canal de venta está habilitado.",
     "removeProductsWarning_one": "Estás a punto de eliminar {{count}} producto de {{sales_channel}}.",
     "removeProductsWarning_other": "Estás a punto de eliminar {{count}} productos de {{sales_channel}}.",
-    "addProducts": "Agregar Productos",
+    "addProducts": "Agregar productos",
     "editSalesChannel": "Editar canal de venta",
     "productAlreadyAdded": "El producto ya ha sido agregado al canal de venta.",
     "deleteSalesChannelWarning": "Estás a punto de eliminar el canal de venta {{name}}. Esta acción no puede deshacerse.",
@@ -3540,8 +3540,8 @@
   },
   "apiKeyManagement": {
     "domain": {
-      "publishable": "Claves API Publicables",
-      "secret": "Claves API Secretas"
+      "publishable": "Claves API publicables",
+      "secret": "Claves API secretas"
     },
     "subtitle": {
       "publishable": "Gestiona las claves API usadas en la tienda online para limitar el alcance de las solicitudes a canales de venta específicos.",
@@ -3556,23 +3556,23 @@
       "secret": "Secreta"
     },
     "create": {
-      "createPublishableHeader": "Crear Clave API Publicable",
+      "createPublishableHeader": "Crear clave API publicable",
       "createPublishableHint": "Crea una nueva clave API publicable para limitar el alcance de las solicitudes a canales de venta específicos.",
-      "createSecretHeader": "Crear Clave API Secreta",
+      "createSecretHeader": "Crear clave API secreta",
       "createSecretHint": "Crea una nueva clave API secreta para acceder a la API de Kayı.com como usuario administrador autenticado.",
-      "secretKeyCreatedHeader": "Clave Secreta Creada",
+      "secretKeyCreatedHeader": "Clave secreta creada",
       "secretKeyCreatedHint": "Tu nueva clave secreta ha sido generada. Cópiala y guárdala de manera segura ahora. Esta es la única vez que se mostrará.",
       "copySecretTokenSuccess": "Clave secreta copiada al portapapeles.",
       "copySecretTokenFailure": "No se pudo copiar la clave secreta al portapapeles.",
       "successToast": "Clave API creada exitosamente."
     },
     "edit": {
-      "header": "Editar Clave API",
+      "header": "Editar clave API",
       "description": "Edita el título de la clave API.",
       "successToast": "Clave API {{title}} actualizada exitosamente."
     },
     "salesChannels": {
-      "title": "Agregar Canales de Venta",
+      "title": "Agregar canales de venta",
       "description": "Agrega los canales de venta a los que debe estar limitada la clave API.",
       "successToast_one": "{{count}} canal de venta fue agregado exitosamente a la clave API.",
       "successToast_other": "{{count}} canales de venta fueron agregados exitosamente a la clave API.",
@@ -3611,13 +3611,13 @@
       "copySuccessToast": "Clave API copiada al portapapeles."
     },
     "table": {
-      "lastUsedAtHeader": "Último Uso",
-      "createdAtHeader": "Creado En"
+      "lastUsedAtHeader": "Último uso",
+      "createdAtHeader": "Revocado el"
     },
     "fields": {
       "lastUsedAtLabel": "Último uso",
       "revokedByLabel": "Revocado por",
-      "revokedAtLabel": "Revocado en",
+      "revokedAtLabel": "Revocado el",
       "createdByLabel": "Creado por"
     }
   },
@@ -3628,7 +3628,7 @@
     "calloutHint": "Gestiona los motivos para categorizar las devoluciones.",
     "editReason": "Editar motivo de devolución",
     "create": {
-      "header": "Añadir motivo de devolución",
+      "header": "Agregar motivo de devolución",
       "subtitle": "Especifica los motivos más comunes de devolución.",
       "hint": "Crea un nuevo motivo de devolución para categorizar las devoluciones.",
       "successToast": "El motivo de devolución {{label}} se creó correctamente."
@@ -3649,7 +3649,7 @@
         "tooltip": "El valor debe ser un identificador único para el motivo de devolución."
       },
       "label": {
-        "label": "Etiqueta",
+        "label": "Nombre visible",
         "placeholder": "Tamaño incorrecto"
       },
       "description": {
@@ -3673,7 +3673,7 @@
   },
   "invite": {
     "title": "¡Estás invitado a unirte a {{name}}!",
-    "hint": "Crea tu cuenta a continuación",
+    "hint": "Introduce tus datos y crea una contraseña para configurar tu cuenta.",
     "backToLogin": "Volver al login",
     "createAccount": "Crear cuenta",
     "alreadyHaveAccount": "¿Ya tienes una cuenta?",
@@ -3693,7 +3693,7 @@
   },
   "resetPassword": {
     "title": "Restablecer contraseña",
-    "hint": "Ingresa tu correo a continuación, y te enviaremos instrucciones para restablecer tu contraseña.",
+    "hint": "Introduce tu correo electrónico a continuación y te enviaremos instrucciones para restablecer tu contraseña.",
     "email": "Correo electrónico",
     "sendResetInstructions": "Enviar instrucciones de restablecimiento",
     "backToLogin": "<0>Volver al login</0>",
@@ -3701,7 +3701,7 @@
     "invalidTokenTitle": "Tu token de restablecimiento es inválido",
     "invalidTokenHint": "Intenta solicitar un nuevo enlace de restablecimiento.",
     "expiredTokenTitle": "Tu token de restablecimiento ha expirado",
-    "goToResetPassword": "Ir a Restablecer Contraseña",
+    "goToResetPassword": "Ir a restablecer contraseña",
     "resetPassword": "Restablecer contraseña",
     "newPassword": "Nueva contraseña",
     "repeatNewPassword": "Repetir nueva contraseña",
@@ -3717,8 +3717,8 @@
   "workflowExecutions": {
     "domain": "Flujos de trabajo",
     "subtitle": "Visualiza y realiza un seguimiento de las ejecuciones de flujos de trabajo en tu aplicación Kayı.com.",
-    "transactionIdLabel": "ID de Transacción",
-    "workflowIdLabel": "ID de Flujo de Trabajo",
+    "transactionIdLabel": "ID de transacción",
+    "workflowIdLabel": "ID de flujo de trabajo",
     "progressLabel": "Progreso",
     "stepsCompletedLabel_one": "{{completed}} de {{count}} paso",
     "stepsCompletedLabel_other": "{{completed}} de {{count}} pasos",
@@ -3755,24 +3755,24 @@
       "state": {
         "skipped": "Omitido",
         "skippedFailure": "Omitido (Error)",
-        "dormant": "Inactivo",
+        "dormant": "Latente",
         "timeout": "Tiempo agotado"
       }
     },
     "stepsCompletedLabel_many": "{{completed}} de {{count}} pasos"
   },
   "productTypes": {
-    "domain": "Tipos de Producto",
+    "domain": "Tipos de producto",
     "subtitle": "Organiza tus productos en tipos.",
     "create": {
-      "header": "Crear Tipo de Producto",
+      "header": "Crear tipo de producto",
       "hint": "Crea un nuevo tipo de producto para categorizar tus productos.",
       "successToast": "Tipo de producto {{value}} creado exitosamente.",
       "requestHeader": "Solicitar tipo de producto",
       "requestSuccessToast": "El tipo de producto se solicitó correctamente"
     },
     "edit": {
-      "header": "Editar Tipo de Producto",
+      "header": "Editar tipo de producto",
       "successToast": "Tipo de producto {{value}} actualizado exitosamente."
     },
     "delete": {
@@ -3784,14 +3784,14 @@
     }
   },
   "productTags": {
-    "domain": "Etiquetas de Producto",
+    "domain": "Etiquetas de producto",
     "create": {
-      "header": "Crear Etiqueta de Producto",
+      "header": "Crear etiqueta de producto",
       "subtitle": "Crea una nueva etiqueta de producto para categorizar tus productos.",
       "successToast": "Etiqueta de producto {{value}} creada exitosamente."
     },
     "edit": {
-      "header": "Editar Etiqueta de Producto",
+      "header": "Editar etiqueta de producto",
       "subtitle": "Edita el valor de la etiqueta de producto.",
       "successToast": "Etiqueta de producto {{value}} actualizada exitosamente."
     },
@@ -3827,7 +3827,7 @@
     "draft": "Borrador"
   },
   "labels": {
-    "productVariant": "Variante de Producto",
+    "productVariant": "Variante de producto",
     "prices": "Precios",
     "available": "Disponible",
     "inStock": "En stock",
@@ -3959,7 +3959,7 @@
     "product": "Producto",
     "createdAt": "Creado en",
     "updatedAt": "Actualizado en",
-    "revokedAt": "Revocado en",
+    "revokedAt": "Revocado el",
     "true": "Verdadero",
     "false": "Falso",
     "giftCard": "Tarjeta de regalo",
@@ -4004,7 +4004,7 @@
     "endDate": "Fecha de finalización",
     "draft": "Borrador",
     "values": "Valores",
-    "images": "Medios",
+    "images": "Multimedia",
     "type_id": "Tipo",
     "collection_id": "Colección",
     "promotionCode": "Código de promoción",
@@ -4269,7 +4269,7 @@
     "calloutHint": "Gestiona los motivos para categorizar los reembolsos.",
     "editReason": "Editar motivo de reembolso",
     "create": {
-      "header": "Añadir motivo de reembolso",
+      "header": "Agregar motivo de reembolso",
       "subtitle": "Especifica los motivos más comunes de reembolso.",
       "hint": "Crea un nuevo motivo de reembolso para categorizar los reembolsos.",
       "successToast": "El motivo de reembolso {{label}} se creó correctamente."
@@ -4280,12 +4280,12 @@
       "successToast": "El motivo de reembolso {{label}} se actualizó correctamente."
     },
     "delete": {
-      "confirmation": "Estás a punto de eliminar el motivo de reembolso \"{{label}}\". Esta acción no se puede deshacer.",
+      "confirmation": "Estás a punto de eliminar el motivo de reembolso «{{label}}». Esta acción no se puede deshacer.",
       "successToast": "El motivo de reembolso se eliminó correctamente."
     },
     "fields": {
       "label": {
-        "label": "Etiqueta",
+        "label": "Nombre visible",
         "placeholder": "Gesto de buena voluntad"
       },
       "code": {
@@ -4302,7 +4302,7 @@
     "title": "Selecciona una tienda",
     "subtitle": "Elige una tienda para continuar.",
     "pendingApproval": "Pendiente",
-    "addNewStore": "Añadir nueva tienda",
+    "addNewStore": "Agregar nueva tienda",
     "status": {
       "open": "Activo",
       "pendingApproval": "Pendiente",
@@ -4397,7 +4397,7 @@
         "content": "Todo vendedor que inicie el registro de una tienda en Kayı.com y marque la casilla «Acepto los Términos de Colaboración y Uso para Vendedores» se considera que ha leído, comprendido y aceptado todos los términos sin restricción alguna. Esta aprobación tiene el efecto de una firma digital entre las partes y entra en vigor desde el momento del registro."
       },
       "commissionTable": {
-        "description": "La siguiente tabla muestra las tasas de comisión netas aplicadas a cada categoría de producto y las tasas totales con IVA incluido. Los importes de comisión se calculan sobre el precio de venta.",
+        "description": "La siguiente tabla muestra las tasas de comisión netas aplicadas a cada categoría de producto y las tasas totales con IVA incluido. Los montos de comisión se calculan sobre el precio de venta.",
         "col": {
           "category": "Categoría",
           "netCommission": "Comisión neta (%)",
@@ -4443,7 +4443,7 @@
     },
     "detailsSetup": {
       "title": "Completa tu perfil",
-      "subtitle": "Añade tu dirección y datos de negocio",
+      "subtitle": "Agrega tu dirección y datos de negocio",
       "addressTitle": "Dirección",
       "addressSubtitle": "La dirección de tu negocio",
       "professionalTitle": "Datos de negocio",
@@ -4518,7 +4518,7 @@
         "nameRequired": "Introduce un nombre",
         "emailInvalid": "Introduce un correo electrónico",
         "currencyRequired": "Selecciona una moneda",
-        "countryRequired": "Por favor, seleccione un país",
+        "countryRequired": "Selecciona un país",
         "accountNameRequired": "Introduce un nombre de cuenta",
         "companyTypeRequired": "Selecciona un tipo de negocio",
         "registrationNumberRequired": "Introduce tu número de identificación turco",
@@ -4537,7 +4537,7 @@
     "saveAsSystemDefault": "Guardar como predeterminada del sistema",
     "updateDefaultForEveryone": "Actualizar predeterminada para todos",
     "updateViewName": "Actualizar vista",
-    "updateNamed": "Actualizar \"{{name}}\"",
+    "updateNamed": "Actualizar «{{name}}»",
     "prompts": {
       "updateDefault": {
         "title": "Actualizar vista predeterminada",
@@ -4547,7 +4547,7 @@
       },
       "updateView": {
         "title": "Actualizar vista",
-        "description": "¿Seguro que quieres actualizar \"{{name}}\"?",
+        "description": "¿Estás seguro de que quieres actualizar «{{name}}»?",
         "confirmText": "Actualizar",
         "cancelText": "Cancelar"
       },
@@ -4559,7 +4559,7 @@
       },
       "updateExisting": {
         "title": "Actualizar vista existente",
-        "description": "¿Actualizar \"{{name}}\" con la configuración actual?",
+        "description": "¿Actualizar «{{name}}» con la configuración actual?",
         "confirmText": "Actualizar",
         "cancelText": "Cancelar"
       }

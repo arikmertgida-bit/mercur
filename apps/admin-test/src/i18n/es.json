@@ -139,7 +139,7 @@
     "connectionLost": "Conexión perdida. Reconectando...",
     "imageUploadFailed": "Error al subir la imagen",
     "deleteConfirmTitle": "Eliminar mensaje",
-    "deleteConfirmDesc": "¿Seguro que quieres eliminar este mensaje?",
+    "deleteConfirmDesc": "¿Estás seguro de que quieres eliminar este mensaje?",
     "productQuestion": "Pregunta sobre el producto",
     "storeQuestion": "Pregunta sobre la tienda",
     "customerMessage": "Mensaje del cliente",
@@ -209,7 +209,7 @@
       "internal": "Interno",
       "title": "Título",
       "value": "Valor",
-      "label": "Etiqueta"
+      "label": "Nombre visible"
     },
     "values": {
       "yes": "Sí",
@@ -220,9 +220,9 @@
       "accept": "Aceptar",
       "reject": "Rechazar",
       "acceptPromptTitle": "Aceptar solicitud",
-      "acceptPromptDescription": "¿Seguro que quieres aceptar esta solicitud? Esta acción creará la entidad.",
+      "acceptPromptDescription": "¿Estás seguro de que quieres aceptar esta solicitud? Esta acción creará la entidad.",
       "rejectPromptTitle": "Rechazar solicitud",
-      "rejectPromptDescription": "¿Seguro que quieres rechazar esta solicitud? Esta acción no se puede deshacer.",
+      "rejectPromptDescription": "¿Estás seguro de que quieres rechazar esta solicitud? Esta acción no se puede deshacer.",
       "acceptSuccess": "Solicitud aceptada",
       "rejectSuccess": "Solicitud rechazada",
       "submitter": "Solicitante",
@@ -230,8 +230,8 @@
     },
     "reviews": {
       "navLabel": "Reseñas",
-      "heading": "Informes de reseñas",
-      "noRecords": "No se encontraron informes de reseñas",
+      "heading": "Reportes de reseñas",
+      "noRecords": "No se encontraron reportes de reseñas",
       "columns": {
         "seller": "Vendedor",
         "reason": "Motivo",
@@ -244,18 +244,18 @@
         "resolved_kept": "Revisada, no eliminada"
       },
       "detail": {
-        "reportHeading": "Informe",
+        "reportHeading": "Reporte",
         "reviewHeading": "Reseña",
         "customerNote": "Nota del cliente",
         "resolveHeading": "Resolver",
         "rejectAction": "Rechazar",
-        "defaultRejectNote": "Revisada, no eliminada. Si no está de acuerdo con nuestra decisión, puede enviar otro informe.",
+        "defaultRejectNote": "Revisada, no eliminada. Si no estás de acuerdo con nuestra decisión, puedes enviar otro reporte.",
         "defaultDeleteNote": "Esta reseña fue revisada y eliminada por el equipo de administración.",
-        "resolveSuccess": "Informe resuelto.",
-        "resolveError": "No se pudo resolver el informe.",
+        "resolveSuccess": "Reporte resuelto.",
+        "resolveError": "No se pudo resolver el reporte.",
         "deletePrompt": {
           "title": "Eliminar reseña",
-          "description": "¿Está seguro de que desea eliminar esta reseña? Esta acción no se puede deshacer."
+          "description": "¿Estás seguro de que quieres eliminar esta reseña? Esta acción no se puede deshacer."
         }
       }
     }
@@ -264,7 +264,7 @@
     "domain": "Reseñas",
     "noRecords": "No se encontraron reseñas",
     "columns": {
-      "rating": "Calificación",
+      "rating": "Valoración",
       "reference": "Referencia",
       "customerNote": "Nota del cliente"
     }
@@ -284,7 +284,7 @@
       "products": "Productos",
       "sellers": "Vendedores",
       "customers": "Clientes",
-      "lowStock": "Artículos con poco stock"
+      "lowStock": "Productos con stock bajo"
     },
     "analytics": {
       "title": "Analítica",

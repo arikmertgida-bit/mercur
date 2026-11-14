@@ -2,7 +2,7 @@
   "productImportExport": {
     "import": "Importar",
     "export": "Exportar",
-    "done": "Listo",
+    "done": "Hecho",
     "importHeader": "Importar productos",
     "importDescription": "Sube un archivo CSV para importar productos a tu tienda.",
     "importHint": "Sube un archivo CSV con tus productos. Puedes",
@@ -49,7 +49,7 @@
     "disconnected": "Desconectado",
     "newMessageToastTitle": "Nuevo mensaje",
     "imageSentPreview": "Envió una imagen",
-    "newMessageGenericPreview": "Tiene un nuevo mensaje"
+    "newMessageGenericPreview": "Tienes un nuevo mensaje"
   },
   "messages": {
     "domain": "Mensajes",
@@ -78,7 +78,7 @@
     "storeContext": "Pregunta sobre la tienda",
     "product": "Producto",
     "deleteConfirmTitle": "Eliminar mensaje",
-    "deleteConfirmDesc": "¿Seguro que quieres eliminar este mensaje?",
+    "deleteConfirmDesc": "¿Estás seguro de que quieres eliminar este mensaje?",
     "error": "No se pudo obtener la información del usuario.",
     "supportName": "Equipo de soporte",
     "supportSubject": "Chat de soporte",
@@ -113,7 +113,7 @@
       "noRecords": "No se encontraron solicitudes de categorías",
       "create": {
         "heading": "Solicitar categoría",
-        "description": "Envíe una solicitud para crear una nueva categoría de producto.",
+        "description": "Envía una solicitud para crear una nueva categoría de producto.",
         "successToast": "Solicitud de categoría creada correctamente"
       }
     },
@@ -123,7 +123,7 @@
       "noRecords": "No se encontraron solicitudes de colecciones",
       "create": {
         "heading": "Solicitar colección",
-        "description": "Envíe una solicitud para crear una nueva colección de productos.",
+        "description": "Envía una solicitud para crear una nueva colección de productos.",
         "successToast": "Solicitud de colección creada correctamente"
       }
     },
@@ -133,7 +133,7 @@
       "noRecords": "No se encontraron solicitudes de etiquetas",
       "create": {
         "heading": "Solicitar etiqueta",
-        "description": "Envíe una solicitud para crear una nueva etiqueta de producto.",
+        "description": "Envía una solicitud para crear una nueva etiqueta de producto.",
         "successToast": "Solicitud de etiqueta creada correctamente"
       }
     },
@@ -143,18 +143,18 @@
       "noRecords": "No se encontraron solicitudes de tipos",
       "create": {
         "heading": "Solicitar tipo",
-        "description": "Envíe una solicitud para crear un nuevo tipo de producto.",
+        "description": "Envía una solicitud para crear un nuevo tipo de producto.",
         "successToast": "Solicitud de tipo creada correctamente"
       }
     },
     "returnReasons": {
       "navLabel": "Motivos de devolución",
-      "heading": "Solicitudes de motivo de devolución",
-      "noRecords": "No se encontraron solicitudes de motivo de devolución"
+      "heading": "Solicitudes de motivos de devolución",
+      "noRecords": "No se encontraron solicitudes de motivos de devolución"
     },
     "reviews": {
       "navLabel": "Reseñas",
-      "heading": "Informes de reseñas",
+      "heading": "Reportes de reseñas",
       "subtitle": "Reseñas que has reportado al administrador para su moderación.",
       "columns": {
         "reason": "Motivo",
@@ -167,9 +167,9 @@
         "resolved_kept": "Revisada, no eliminada"
       },
       "reReport": "Reportar de nuevo",
-      "reReportSuccess": "Informe reenviado.",
-      "reReportError": "No se pudo enviar el informe.",
-      "noRecords": "No se encontraron informes de reseñas"
+      "reReportSuccess": "Reporte reenviado.",
+      "reReportError": "No se pudo enviar el reporte.",
+      "noRecords": "No se encontraron reportes de reseñas"
     },
     "createErrorFallback": "No se pudo crear la solicitud."
   },
@@ -177,15 +177,15 @@
     "domain": "Reseñas",
     "noRecords": "No se encontraron reseñas",
     "columns": {
-      "rating": "Calificación",
+      "rating": "Valoración",
       "reference": "Referencia",
       "customerNote": "Nota del cliente",
       "replyStatus": "Estado de respuesta",
       "createdAt": "Creado en",
       "updatedAt": "Actualizado en"
     },
-    "photos": "Fotos",
-    "noPhotos": "No se adjuntaron fotos a esta reseña.",
+    "photos": "Imágenes",
+    "noPhotos": "No se adjuntaron imágenes a esta reseña.",
     "hiddenPhoto": "Oculto",
     "status": {
       "answered": "Respondida",
@@ -193,7 +193,7 @@
     },
     "reply": {
       "title": "Respuesta",
-      "placeholder": "Escriba una respuesta a la reseña del cliente...",
+      "placeholder": "Escribe una respuesta a la reseña del cliente...",
       "submit": "Enviar respuesta",
       "successToast": "Respuesta enviada correctamente.",
       "errorToast": "No se pudo enviar la respuesta.",
@@ -202,18 +202,18 @@
     "report": {
       "title": "Reportar al administrador",
       "description": "Reporta esta reseña a un administrador del marketplace para su moderación.",
-      "placeholder": "Explique por qué está reportando esta reseña...",
-      "submit": "Enviar informe",
-      "successToast": "Informe enviado al administrador.",
-      "errorToast": "No se pudo enviar el informe."
+      "placeholder": "Explica por qué estás reportando esta reseña...",
+      "submit": "Enviar reporte",
+      "successToast": "Reporte enviado al administrador.",
+      "errorToast": "No se pudo enviar el reporte."
     }
   },
   "followers": {
     "domain": "Seguidores",
     "noRecords": "Aún no hay seguidores",
     "columns": {
-      "followedAt": "Fecha de Seguimiento",
-      "reviewsAverage": "Calificación Media"
+      "followedAt": "Fecha de seguimiento",
+      "reviewsAverage": "Valoración media"
     },
     "count": "Seguidores: {{count}}"
   },
