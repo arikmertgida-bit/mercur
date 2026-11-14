@@ -7,6 +7,7 @@ import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
 import { HttpTypes } from "@mercurjs/types"
 
 import { validateSellerReturn } from "../../helpers"
+import { assertItemsReturnable } from "../../../../utils/returnable-quantity"
 import { VendorPostReturnsRequestItemsReqType } from "../../validators"
 import { getSellerId } from "../../../../utils/seller-context"
 import { toHttpOrderPreview } from "../../../../../utils/http-order"
@@ -17,7 +18,8 @@ export const POST = async (
 ) => {
   const { id } = req.params
 
-  await validateSellerReturn(req.scope, getSellerId(req), id)
+  const orderId = await validateSellerReturn(req.scope, getSellerId(req), id)
+  await assertItemsReturnable(req.scope, orderId, req.validatedBody.items)
 
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
 

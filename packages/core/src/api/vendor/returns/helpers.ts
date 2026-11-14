@@ -10,7 +10,7 @@ export const validateSellerReturn = async (
   scope: MedusaContainer,
   sellerId: string,
   returnId: string
-) => {
+): Promise<string> => {
   const query = scope.resolve(ContainerRegistrationKeys.QUERY)
 
   const {
@@ -31,4 +31,6 @@ export const validateSellerReturn = async (
   }
 
   await validateSellerOrder(scope, sellerId, returnData.order_id)
+
+  return returnData.order_id
 }

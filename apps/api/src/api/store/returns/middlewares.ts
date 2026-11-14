@@ -8,6 +8,8 @@ import { ContainerRegistrationKeys, MedusaError } from "@medusajs/framework/util
 import type { Query } from "@medusajs/framework"
 import type { StorePostReturnsReqSchemaType } from "@medusajs/medusa/api/store/returns/validators"
 
+import { assertItemsReturnable } from "@mercurjs/core/api/utils/returnable-quantity"
+
 import { isReturnWindowOpen } from "../../../lib/return-window"
 
 /**
@@ -50,10 +52,22 @@ const enforceReturnWindow = async (
   )
 }
 
+const enforceReturnableQuantities = async (
+  req: MedusaRequest<StorePostReturnsReqSchemaType>,
+  _res: MedusaResponse,
+  next: MedusaNextFunction
+) => {
+  const { order_id: orderId, items } = req.validatedBody
+  if (orderId) {
+    await assertItemsReturnable(req.scope, orderId, items ?? [])
+  }
+  next()
+}
+
 export const storeReturnsReturnWindowMiddlewares: MiddlewareRoute[] = [
   {
     method: ["POST"],
     matcher: "/store/returns",
-    middlewares: [enforceReturnWindow],
+    middlewares: [enforceReturnWindow, enforceReturnableQuantities],
   },
 ]

@@ -1,6 +1,6 @@
 import { MedusaRequest, MedusaResponse } from "@medusajs/framework/http"
 import type { Query } from "@medusajs/framework"
-import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
+import { ContainerRegistrationKeys, MedusaError } from "@medusajs/framework/utils"
 import { z } from "zod"
 
 import {
@@ -48,8 +48,10 @@ export const GET = async (
 
   const product = parseRows(ProductMatchRowSchema, productRows)[0]
   if (!product) {
-    res.status(404).json({ message: "Product not found" })
-    return
+    throw new MedusaError(
+      MedusaError.Types.NOT_FOUND,
+      `Product with id: ${id} was not found`
+    )
   }
 
   const variantIds = (product.variants ?? []).map((variant) => variant.id)

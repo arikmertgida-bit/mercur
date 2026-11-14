@@ -307,4 +307,9 @@ export const vendorReturnsMiddlewares: MiddlewareRoute[] = [
       ),
     ],
   },
+  {
+    method: ["POST"],
+    matcher: "/vendor/returns/:id/mark-seen",
+    middlewares: [requirePermission("orders.returns", "view")],
+  },
 ]

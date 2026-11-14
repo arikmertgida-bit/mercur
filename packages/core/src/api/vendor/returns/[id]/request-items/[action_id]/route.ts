@@ -10,6 +10,7 @@ import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
 import { HttpTypes } from "@mercurjs/types"
 
 import { validateSellerReturn } from "../../../helpers"
+import { assertItemsReturnable } from "../../../../../utils/returnable-quantity"
 import { VendorPostReturnsRequestItemsActionReqType } from "../../../validators"
 import { getSellerId } from "../../../../../utils/seller-context"
 import { toHttpOrderPreview } from "../../../../../../utils/http-order"
@@ -20,9 +21,26 @@ export const POST = async (
 ) => {
   const { id, action_id } = req.params
 
-  await validateSellerReturn(req.scope, getSellerId(req), id)
+  const orderId = await validateSellerReturn(req.scope, getSellerId(req), id)
 
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
+
+  const { quantity } = req.validatedBody
+  if (quantity !== undefined) {
+    const {
+      data: [action],
+    } = await query.graph({
+      entity: "order_change_action",
+      fields: ["id", "details"],
+      filters: { id: action_id },
+    })
+    const referenceId = action?.details?.reference_id
+    if (typeof referenceId === "string") {
+      await assertItemsReturnable(req.scope, orderId, [
+        { id: referenceId, quantity },
+      ])
+    }
+  }
 
   const { result } = await updateRequestItemReturnWorkflow(req.scope).run({
     input: {

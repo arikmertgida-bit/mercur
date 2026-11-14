@@ -11,7 +11,10 @@ module.exports = {
     "node_modules[\\\\/].*core-flows[\\\\/]dist[\\\\/](cart|order|payment)[\\\\/].*\\.js$":
       "@mercurjs/core/patches/jest-transformer",
     "^.+\\.[jt]s$": [
-      "@swc/jest",
+      // Resolved here, not by name: `test:unit` runs with `--rootDir ..`, and
+      // Jest resolves bare transformer names from rootDir, where bun does not
+      // hoist @swc/jest.
+      require.resolve("@swc/jest"),
       {
         jsc: {
           parser: { syntax: "typescript", decorators: true },
