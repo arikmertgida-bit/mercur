@@ -49,7 +49,7 @@
     },
     "deletePrompt": {
       "title": "Eliminare questa segnalazione?",
-      "description": "Questa azione eliminerà definitivamente la segnalazione. Questa azione non può essere annullata."
+      "description": "La segnalazione verrà eliminata definitivamente. Questa azione non può essere annullata."
     },
     "updateSuccess": "Segnalazione aggiornata",
     "updateError": "Impossibile aggiornare la segnalazione",
@@ -67,7 +67,7 @@
     },
     "deletePrompt": {
       "title": "Eliminare questa lista dei desideri?",
-      "description": "Questa azione eliminerà definitivamente la lista dei desideri del cliente e tutte le sue voci. Questa azione non può essere annullata."
+      "description": "La lista dei desideri del cliente e tutte le sue voci verranno eliminate definitivamente. Questa azione non può essere annullata."
     },
     "deleteSuccess": "Lista dei desideri eliminata",
     "deleteError": "Impossibile eliminare la lista dei desideri"

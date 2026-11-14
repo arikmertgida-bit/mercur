@@ -59,7 +59,7 @@
     "productQuestion": "Domanda sul prodotto",
     "storeQuestion": "Domanda sul negozio",
     "imageUploadFailed": "Caricamento dell'immagine non riuscito",
-    "blockedReasonEmail": "Impossibile inviare il messaggio: la condivisione di indirizzi e-mail non è consentita.",
+    "blockedReasonEmail": "Impossibile inviare il messaggio: la condivisione di indirizzi email non è consentita.",
     "blockedReasonPhone": "Impossibile inviare il messaggio: la condivisione di numeri di telefono non è consentita.",
     "blockedReasonUrl": "Impossibile inviare il messaggio: la condivisione di link non è consentita.",
     "blockedReasonGeneric": "Impossibile inviare il messaggio: il contenuto viola le norme della piattaforma.",
@@ -97,7 +97,7 @@
     "domain": "Richieste",
     "status": {
       "draft": "Bozza",
-      "pending": "In sospeso",
+      "pending": "In attesa",
       "accepted": "Accettata",
       "rejected": "Rifiutata"
     },
@@ -181,12 +181,12 @@
       "reference": "Riferimento",
       "customerNote": "Nota del cliente",
       "replyStatus": "Stato risposta",
-      "createdAt": "Creato",
-      "updatedAt": "Aggiornato"
+      "createdAt": "Creata il",
+      "updatedAt": "Aggiornata il"
     },
     "photos": "Foto",
     "noPhotos": "Nessuna foto è stata allegata a questa recensione.",
-    "hiddenPhoto": "Nascosto",
+    "hiddenPhoto": "Nascosta",
     "status": {
       "answered": "Risposto",
       "awaitingReply": "In attesa di risposta"
@@ -212,8 +212,8 @@
     "domain": "Follower",
     "noRecords": "Nessun follower ancora",
     "columns": {
-      "followedAt": "Data di Follow",
-      "reviewsAverage": "Valutazione Media"
+      "followedAt": "Segue dal",
+      "reviewsAverage": "Valutazione media"
     },
     "count": "Follower: {{count}}"
   },
