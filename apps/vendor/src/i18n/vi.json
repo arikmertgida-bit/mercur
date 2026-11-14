@@ -96,7 +96,7 @@
   "requests": {
     "domain": "Yêu cầu",
     "status": {
-      "draft": "Bản nháp",
+      "draft": "Nháp",
       "pending": "Đang chờ",
       "accepted": "Đã chấp nhận",
       "rejected": "Đã từ chối"
@@ -112,7 +112,7 @@
       "heading": "Yêu cầu danh mục",
       "noRecords": "Không tìm thấy yêu cầu danh mục nào",
       "create": {
-        "heading": "Yêu cầu danh mục",
+        "heading": "Yêu cầu tạo danh mục",
         "description": "Gửi yêu cầu tạo danh mục sản phẩm mới.",
         "successToast": "Đã tạo yêu cầu danh mục thành công"
       }
@@ -122,7 +122,7 @@
       "heading": "Yêu cầu bộ sưu tập",
       "noRecords": "Không tìm thấy yêu cầu bộ sưu tập nào",
       "create": {
-        "heading": "Yêu cầu bộ sưu tập",
+        "heading": "Yêu cầu tạo bộ sưu tập",
         "description": "Gửi yêu cầu tạo bộ sưu tập sản phẩm mới.",
         "successToast": "Đã tạo yêu cầu bộ sưu tập thành công"
       }
@@ -132,7 +132,7 @@
       "heading": "Yêu cầu thẻ",
       "noRecords": "Không tìm thấy yêu cầu thẻ nào",
       "create": {
-        "heading": "Yêu cầu thẻ",
+        "heading": "Yêu cầu tạo thẻ",
         "description": "Gửi yêu cầu tạo thẻ sản phẩm mới.",
         "successToast": "Đã tạo yêu cầu thẻ thành công"
       }
@@ -142,7 +142,7 @@
       "heading": "Yêu cầu loại",
       "noRecords": "Không tìm thấy yêu cầu loại nào",
       "create": {
-        "heading": "Yêu cầu loại",
+        "heading": "Yêu cầu tạo loại",
         "description": "Gửi yêu cầu tạo loại sản phẩm mới.",
         "successToast": "Đã tạo yêu cầu loại thành công"
       }
@@ -178,7 +178,7 @@
     "noRecords": "Không tìm thấy đánh giá nào",
     "columns": {
       "rating": "Điểm đánh giá",
-      "reference": "Mã tham chiếu",
+      "reference": "Đối tượng đánh giá",
       "customerNote": "Ghi chú của khách hàng",
       "replyStatus": "Trạng thái phản hồi",
       "createdAt": "Ngày tạo",

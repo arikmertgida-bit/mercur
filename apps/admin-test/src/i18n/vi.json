@@ -49,7 +49,7 @@
     },
     "deletePrompt": {
       "title": "Xóa báo cáo này?",
-      "description": "Thao tác này sẽ xóa vĩnh viễn báo cáo. Không thể hoàn tác hành động này."
+      "description": "Thao tác này sẽ xóa vĩnh viễn báo cáo. Hành động này không thể hoàn tác."
     },
     "updateSuccess": "Đã cập nhật báo cáo",
     "updateError": "Không thể cập nhật báo cáo",
@@ -67,7 +67,7 @@
     },
     "deletePrompt": {
       "title": "Xóa danh sách yêu thích này?",
-      "description": "Thao tác này sẽ xóa vĩnh viễn danh sách yêu thích của khách hàng và tất cả các mục trong đó. Không thể hoàn tác hành động này."
+      "description": "Thao tác này sẽ xóa vĩnh viễn danh sách yêu thích của khách hàng và tất cả các mục trong đó. Hành động này không thể hoàn tác."
     },
     "deleteSuccess": "Đã xóa danh sách yêu thích",
     "deleteError": "Không thể xóa danh sách yêu thích"
@@ -93,7 +93,7 @@
     },
     "removePrompt": {
       "title": "Xóa hình ảnh này?",
-      "description": "Hình ảnh sẽ bị xóa vĩnh viễn khỏi đánh giá. Không thể hoàn tác hành động này."
+      "description": "Hình ảnh sẽ bị xóa vĩnh viễn khỏi đánh giá. Hành động này không thể hoàn tác."
     },
     "dismissPrompt": {
       "title": "Bỏ qua báo cáo này?",
@@ -158,7 +158,7 @@
   "requests": {
     "domain": "Yêu cầu",
     "status": {
-      "draft": "Bản nháp",
+      "draft": "Nháp",
       "pending": "Đang chờ",
       "accepted": "Đã chấp nhận",
       "rejected": "Đã từ chối"
@@ -222,7 +222,7 @@
       "acceptPromptTitle": "Chấp nhận yêu cầu",
       "acceptPromptDescription": "Bạn có chắc chắn muốn chấp nhận yêu cầu này không? Thao tác này sẽ tạo ra thực thể.",
       "rejectPromptTitle": "Từ chối yêu cầu",
-      "rejectPromptDescription": "Bạn có chắc chắn muốn từ chối yêu cầu này không? Không thể hoàn tác hành động này.",
+      "rejectPromptDescription": "Bạn có chắc chắn muốn từ chối yêu cầu này không? Hành động này không thể hoàn tác.",
       "acceptSuccess": "Đã chấp nhận yêu cầu",
       "rejectSuccess": "Đã từ chối yêu cầu",
       "submitter": "Người gửi",
@@ -265,7 +265,7 @@
     "noRecords": "Không tìm thấy đánh giá nào",
     "columns": {
       "rating": "Điểm đánh giá",
-      "reference": "Mã tham chiếu",
+      "reference": "Đối tượng đánh giá",
       "customerNote": "Ghi chú của khách hàng"
     }
   },
