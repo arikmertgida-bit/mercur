@@ -149,7 +149,7 @@
     },
     "returnReasons": {
       "navLabel": "Motivos de devolução",
-      "heading": "Solicitações de motivo de devolução",
+      "heading": "Solicitações de motivos de devolução",
       "noRecords": "Nenhuma solicitação de motivo de devolução encontrada"
     },
     "reviews": {
@@ -177,15 +177,15 @@
     "domain": "Avaliações",
     "noRecords": "Nenhuma avaliação encontrada",
     "columns": {
-      "rating": "Avaliação",
+      "rating": "Pontuação",
       "reference": "Referência",
       "customerNote": "Observação do cliente",
       "replyStatus": "Status da resposta",
       "createdAt": "Criado em",
       "updatedAt": "Atualizado em"
     },
-    "photos": "Fotos",
-    "noPhotos": "Nenhuma foto foi anexada a esta avaliação.",
+    "photos": "Imagens",
+    "noPhotos": "Nenhuma imagem foi anexada a esta avaliação.",
     "hiddenPhoto": "Oculta",
     "status": {
       "answered": "Respondida",
@@ -212,8 +212,8 @@
     "domain": "Seguidores",
     "noRecords": "Ainda não há seguidores",
     "columns": {
-      "followedAt": "Data de Seguimento",
-      "reviewsAverage": "Avaliação Média"
+      "followedAt": "Seguindo desde",
+      "reviewsAverage": "Pontuação média"
     },
     "count": "Seguidores: {{count}}"
   },

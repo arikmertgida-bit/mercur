@@ -63,6 +63,8 @@ export const I18n = () => {
         fallbackLng: config.i18n.defaultLanguage,
       }),
       resources: mergedTranslations,
+      // Custom resources may add languages beyond the built-in set.
+      supportedLngs: Object.keys(mergedTranslations),
     });
 
   // `index.html`'deki statik `lang="en"` niteliği gerçek aktif dille

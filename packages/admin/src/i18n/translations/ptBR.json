@@ -46,7 +46,7 @@
     "rulesTable": {
       "name": "Nome da regra",
       "attribute": "Atributo",
-      "fee": "Taxa"
+      "fee": "Tarifa"
     },
     "domain": "Comissões",
     "create": {
@@ -195,7 +195,7 @@
     "noResultsTitle": "Sem resultados",
     "noResultsMessage": "Tente alterar os filtros ou a consulta de busca",
     "noSearchResults": "Nenhum resultado de busca",
-    "noSearchResultsFor": "Nenhum resultado de busca para <0>'{{query}}'</0>",
+    "noSearchResultsFor": "Nenhum resultado de busca para <0>\"{{query}}\"</0>",
     "noRecordsTitle": "Sem registros",
     "noRecordsMessage": "Não há registros para mostrar",
     "unsavedChangesTitle": "Tem certeza de que deseja sair deste formulário?",
@@ -531,7 +531,7 @@
       "sameAsShipping": "Mesmo que o endereço de entrega"
     },
     "contactHeading": "Contato",
-    "locationHeading": "Localização",
+    "locationHeading": "Local",
     "title": "Endereços"
   },
   "email": {
@@ -616,8 +616,8 @@
         },
         "productVariants": {
           "label": "Variantes do produto",
-          "hint": "Essa classificação afetará a ordem das variantes na sua vitrine.",
-          "alert": "Adicione opções para criar variantes.",
+          "hint": "Essa ordenação afetará a ordem de exibição das variantes.",
+          "alert": "Adicione valores aos atributos de variante para gerar variantes.",
           "tip": "Variantes desmarcadas não serão criadas. Você pode sempre criar e editar variantes depois, mas essa lista organiza as variantes nas suas opções de produto.",
           "noAxes": "Marque atributos como \"Usar para variantes\" na etapa Atributos para gerar variantes."
         },
@@ -636,8 +636,8 @@
         "titlePlaceholder": "ex.: Cor",
         "values": "Valores",
         "selectValues": "Selecionar valores",
-        "valuePlaceholder": "Informar valores",
-        "enterValuePlaceholder": "Informar valor",
+        "valuePlaceholder": "Informe os valores",
+        "enterValuePlaceholder": "Informe um valor",
         "selectValuePlaceholder": "Selecionar valor",
         "requiredAttributes": "Atributos obrigatórios",
         "requiredAttributesHint": "Estes atributos são exigidos pelo marketplace. Selecione-os antes de continuar.",
@@ -713,7 +713,7 @@
       "makeThumbnail": "Criar miniatura",
       "uploadImagesLabel": "Enviar imagens",
       "uploadImagesHint": "Arraste e solte as imagens aqui ou clique para enviar.",
-      "invalidFileType": "'{{name}}' não é um tipo de arquivo suportado. Os tipos de arquivos suportados são: {{types}}.",
+      "invalidFileType": "\"{{name}}\" não é um tipo de arquivo suportado. Os tipos de arquivos suportados são: {{types}}.",
       "failedToUpload": "Falha ao enviar a mídia adicionada. Tente novamente.",
       "deleteWarning_one": "Você está prestes a excluir {{count}} imagem. Esta ação não pode ser desfeita.",
       "deleteWarning_many": "Você está prestes a excluir {{count}} imagens. Esta ação não pode ser desfeita.",
@@ -816,10 +816,10 @@
       },
       "variants": {
         "label": "Variantes do produto",
-        "hint": "Variantes desmarcadas não serão criadas. Esta classificação afetará a ordem das variantes no seu front-end."
+        "hint": "Variantes desmarcadas não serão criadas. Esta ordenação afetará a ordem das variantes no seu front-end."
       },
       "mid_code": {
-        "label": "Código Mid"
+        "label": "Código MID"
       },
       "hs_code": {
         "label": "Código HS"
@@ -1127,13 +1127,13 @@
   },
   "categories": {
     "domain": "Categorias",
-    "subtitle": "Organize os produtos em categorias e gerencie o ranking e a hierarquia dessas categorias.",
+    "subtitle": "Organize os produtos em categorias e gerencie a ordenação e a hierarquia delas.",
     "create": {
       "header": "Criar categoria",
       "hint": "Crie uma nova categoria para organizar seus produtos.",
       "tabs": {
         "details": "Detalhes",
-        "organize": "Organizar ranking"
+        "organize": "Organizar ordenação"
       },
       "successToast": "Categoria criada com sucesso."
     },
@@ -1149,17 +1149,17 @@
     "products": {
       "add": {
         "disabledTooltip": "O produto já está nesta categoria.",
-        "successToast_one": "Adicionado {{count}} produto à categoria.",
-        "successToast_many": "Adicionados {{count}} produtos à categoria.",
-        "successToast_other": "Adicionados {{count}} produtos à categoria."
+        "successToast_one": "{{count}} produto adicionado à categoria com sucesso.",
+        "successToast_many": "{{count}} produtos adicionados à categoria com sucesso.",
+        "successToast_other": "{{count}} produtos adicionados à categoria com sucesso."
       },
       "remove": {
         "confirmation_one": "Você está prestes a remover {{count}} produto da categoria. Esta ação não pode ser desfeita.",
         "confirmation_many": "Você está prestes a remover {{count}} produtos da categoria. Esta ação não pode ser desfeita.",
         "confirmation_other": "Você está prestes a remover {{count}} produtos da categoria. Esta ação não pode ser desfeita.",
-        "successToast_one": "Removido {{count}} produto da categoria.",
-        "successToast_many": "Removidos {{count}} produtos da categoria.",
-        "successToast_other": "Removidos {{count}} produtos da categoria."
+        "successToast_one": "{{count}} produto removido da categoria com sucesso.",
+        "successToast_many": "{{count}} produtos removidos da categoria com sucesso.",
+        "successToast_other": "{{count}} produtos removidos da categoria com sucesso."
       },
       "list": {
         "noRecordsMessage": "Não há produtos nesta categoria.",
@@ -1168,8 +1168,8 @@
     },
     "organize": {
       "header": "Organizar",
-      "action": "Editar ranking",
-      "successToast": "A classificação foi atualizada com sucesso."
+      "action": "Editar ordenação",
+      "successToast": "A ordenação foi atualizada com sucesso."
     },
     "fields": {
       "visibility": {
@@ -1261,7 +1261,7 @@
     "available": "Disponível",
     "locationLevels": "Locais",
     "associatedVariants": "Variantes associadas",
-    "manageLocations": "Gerenciar localizações",
+    "manageLocations": "Gerenciar locais",
     "deleteWarning": "Você está prestes a excluir um item do inventário. Esta ação não pode ser desfeita.",
     "editItemDetails": "Editar detalhes do item",
     "create": {
@@ -1282,11 +1282,11 @@
       "itemId": "ID do item",
       "orderID": "ID do pedido",
       "description": "Descrição",
-      "location": "Localização",
+      "location": "Local",
       "goToInventoryItem": "Ir para item de inventário",
-      "inStockAtLocation": "Em estoque nesta localização",
-      "availableAtLocation": "Disponível nesta localização",
-      "reservedAtLocation": "Reservado nesta localização",
+      "inStockAtLocation": "Em estoque neste local",
+      "availableAtLocation": "Disponível neste local",
+      "reservedAtLocation": "Reservado neste local",
       "reservedAmount": "Quantidade reservada",
       "reserved": "Reservado",
       "storeLocationWarningLabel": "Aviso",
@@ -1305,7 +1305,7 @@
       "deleteBlockedDescription": "Esta reserva não pode ser excluída porque está vinculada a um pedido não atendido.",
       "gotIt": "Entendi",
       "errors": {
-        "noAvaliableQuantity": "A localização do estoque não tem quantidade disponível.",
+        "noAvaliableQuantity": "O local de estoque não tem quantidade disponível.",
         "quantityOutOfRange": "A quantidade mínima é 1 e a máxima é {{max}}",
         "pleaseEnterQuantity": "Informe a quantidade",
         "idRequired": "O ID do item de estoque é obrigatório",
@@ -1314,12 +1314,12 @@
       }
     },
     "toast": {
-      "updateLocations": "Localizações atualizadas com sucesso.",
+      "updateLocations": "Locais atualizados com sucesso.",
       "updateLevel": "Nível de inventário atualizado com sucesso.",
       "updateItem": "Item de inventário atualizado com sucesso.",
       "deleteItem": "Item de inventário excluído com sucesso."
     },
-    "manageLocationQuantity": "Gerenciar quantidade por localização",
+    "manageLocationQuantity": "Gerenciar quantidade por local",
     "quantityAcrossLocations": "{{quantity}} em {{locations}} locais",
     "levelDeleted": "Nível de estoque excluído com sucesso.",
     "attributes": {
@@ -1343,9 +1343,9 @@
       "description": "Atualize os níveis de estoque dos itens de inventário selecionados.",
       "action": "Editar níveis de estoque",
       "placeholder": "Não habilitado",
-      "disablePrompt_one": "Você está prestes a desabilitar {{count}} nível de localização. Esta ação não pode ser desfeita.",
-      "disablePrompt_many": "Você está prestes a desabilitar {{count}} níveis de localização. Esta ação não pode ser desfeita.",
-      "disablePrompt_other": "Você está prestes a desabilitar {{count}} níveis de localização. Esta ação não pode ser desfeita.",
+      "disablePrompt_one": "Você está prestes a desabilitar {{count}} nível de local. Esta ação não pode ser desfeita.",
+      "disablePrompt_many": "Você está prestes a desabilitar {{count}} níveis de local. Esta ação não pode ser desfeita.",
+      "disablePrompt_other": "Você está prestes a desabilitar {{count}} níveis de local. Esta ação não pode ser desfeita.",
       "disabledToggleTooltip": "Não é possível desabilitar: zere a quantidade a receber e/ou reservada antes de desabilitar.",
       "foreignStoreTooltip": "Não é possível ativar o estoque deste item neste local porque ele pertence a outra loja.",
       "successToast": "Níveis de estoque atualizados com sucesso.",
@@ -1663,10 +1663,10 @@
       "reasonHint": "Escolha o motivo pelo qual o cliente deseja devolver os itens.",
       "note": "Nota",
       "noInventoryLevel": "Sem nível de inventário",
-      "noInventoryLevelDesc": "A localização selecionada não possui nível de inventário para os itens selecionados. A devolução pode ser solicitada, mas não pode ser recebida até que um nível de inventário seja criado para a localização selecionada.",
+      "noInventoryLevelDesc": "O local selecionado não possui nível de inventário para os itens selecionados. A devolução pode ser solicitada, mas não pode ser recebida até que um nível de inventário seja criado para o local selecionado.",
       "noteHint": "Você pode digitar livremente caso queira especificar algo.",
-      "location": "Localização",
-      "locationHint": "Escolha a localização para a qual deseja devolver os itens.",
+      "location": "Local",
+      "locationHint": "Escolha o local para o qual deseja devolver os itens.",
       "inboundShipping": "Envio de devolução",
       "inboundShippingHint": "Escolha o método de envio que deseja usar.",
       "returnableQuantityLabel": "Quantidade devolvível",
@@ -1685,11 +1685,11 @@
       "placeholders": {
         "noReturnShippingOptions": {
           "title": "Nenhuma opção de envio de devolução encontrada",
-          "hint": "Nenhuma opção de envio de devolução foi criada para a localização. Você pode criar uma em <LinkComponent>Localização & envio</LinkComponent>."
+          "hint": "Nenhuma opção de envio de devolução foi criada para o local. Você pode criar uma em <LinkComponent>Locais e envio</LinkComponent>."
         },
         "outboundShippingOptions": {
           "title": "Nenhuma opção de envio de saída encontrada",
-          "hint": "Nenhuma opção de envio de saída foi criada para a localização. Você pode criar uma em <LinkComponent>Localização & envio</LinkComponent>."
+          "hint": "Nenhuma opção de envio de saída foi criada para o local. Você pode criar uma em <LinkComponent>Locais e envio</LinkComponent>."
         }
       },
       "receive": {
@@ -1792,7 +1792,7 @@
     "allocateItems": {
       "action": "Alocar itens",
       "title": "Alocar itens do pedido",
-      "locationDescription": "Escolha de qual localização você deseja alocar.",
+      "locationDescription": "Escolha de qual local você deseja alocar.",
       "itemsToAllocate": "Itens a alocar",
       "itemsToAllocateDesc": "Selecione a quantidade de itens que deseja alocar",
       "search": "Buscar itens",
@@ -1840,7 +1840,7 @@
         "wrongQuantity_other": "A quantidade deve ser um número entre 1 e {{number}}",
         "noItems": "Sem itens para atender.",
         "noShippingOption": "A opção de envio é obrigatória",
-        "noLocation": "A localização é obrigatória"
+        "noLocation": "O local é obrigatório"
       },
       "status": {
         "notFulfilled": "Não atendido",
@@ -1869,7 +1869,7 @@
       "shippingFromLabel": "Enviado de",
       "itemsLabel": "Itens",
       "differentOptionSelected": "A opção de envio selecionada é diferente da escolhida pelo cliente.",
-      "disabledItemTooltip": "A opção de envio selecionada não permite o processamento deste item",
+      "disabledItemTooltip": "A opção de envio selecionada não permite o atendimento deste item",
       "markAsPickedUp": "Marcar como retirado",
       "labelLink": "Etiqueta"
     },
@@ -2018,7 +2018,7 @@
       }
     },
     "actions": {
-      "cancelDisabledFulfilled": "Não é possível cancelar um pedido que possui itens processados."
+      "cancelDisabledFulfilled": "Não é possível cancelar um pedido que possui itens atendidos."
     },
     "orderCanceled": "Pedido cancelado com sucesso",
     "status": {
@@ -2080,7 +2080,7 @@
       "description": "Gerencie os locais de estoque e as opções de envio da sua loja.",
       "noRecordsMessage": "Sem registros",
       "noRecordsMessageEmpty": "Nenhum local encontrado",
-      "noRecordsMessageFiltered": "Nenhuma localização encontrada correspondente aos filtros"
+      "noRecordsMessageFiltered": "Nenhum local encontrado correspondente aos filtros"
     },
     "create": {
       "header": "Criar local de estoque",
@@ -2094,7 +2094,7 @@
     },
     "delete": {
       "confirmation": "Você está prestes a excluir o local de estoque {{name}}. Esta ação não pode ser desfeita.",
-      "successToast": "A localização \"{{name}}\" foi excluída com sucesso."
+      "successToast": "O local \"{{name}}\" foi excluído com sucesso."
     },
     "fulfillmentProviders": {
       "header": "Provedores de atendimento",
@@ -2140,7 +2140,7 @@
       "noChannels": "O local não está conectado a nenhum canal de vendas.",
       "action": "Conectar canais de vendas",
       "successToast": "Canais de vendas foram atualizados com sucesso.",
-      "hint": "Gerencie os canais de venda conectados a esta localização."
+      "hint": "Gerencie os canais de venda conectados a este local."
     },
     "shippingOptions": {
       "create": {
@@ -2163,7 +2163,7 @@
         "action": "Criar opção",
         "pickup": {
           "header": "Criar opção de retirada para {{zone}}",
-          "hint": "Crie uma nova opção de retirada para definir como os produtos são retirados nesta localização.",
+          "hint": "Crie uma nova opção de retirada para definir como os produtos são retirados neste local.",
           "label": "Opções de retirada",
           "successToast": "A opção de retirada {{name}} foi criada com sucesso."
         }
@@ -2462,8 +2462,8 @@
           "shippingOption": "Opções de envio"
         },
         "operators": {
-          "in": "em",
-          "on": "em",
+          "in": "está em",
+          "on": "aplicado a",
           "and": "e"
         },
         "placeholders": {
@@ -2570,7 +2570,7 @@
         "description": "Aplica um desconto percentual sobre o valor total do pedido"
       },
       "buyGet": {
-        "title": "Compre X ganhe Y",
+        "title": "Compre X, ganhe Y",
         "description": "Compre X produto(s), ganhe Y produto(s)"
       }
     },
@@ -2843,7 +2843,7 @@
     },
     "delete": {
       "title": "Excluir campanha",
-      "description": "Você está prestes a excluir a campanha '{{name}}'. Esta ação não pode ser desfeita.",
+      "description": "Você está prestes a excluir a campanha \"{{name}}\". Esta ação não pode ser desfeita.",
       "successToast": "Campanha excluída com sucesso."
     },
     "edit": {
@@ -2929,7 +2929,7 @@
     },
     "promotions": {
       "remove": {
-        "title": "Remover promoção da campanha",
+        "title": "Remover promoções",
         "description": "Você está prestes a remover {{count}} promoção(ões) da campanha. Esta ação não pode ser desfeita."
       },
       "alreadyAdded": "Esta promoção já foi adicionada à campanha.",
@@ -3207,7 +3207,7 @@
       "updatedTaxInclusivitySuccessfully": "Preços com impostos inclusos atualizados com sucesso"
     },
     "defaultSalesChannel": "Canal de venda padrão",
-    "defaultLocation": "Localização padrão",
+    "defaultLocation": "Local padrão",
     "logo": "Logotipo",
     "banner": "Banner",
     "address": {
@@ -3541,7 +3541,7 @@
     },
     "table": {
       "lastUsedAtHeader": "Último uso em",
-      "createdAtHeader": "Criado em"
+      "createdAtHeader": "Revogado em"
     },
     "fields": {
       "lastUsedAtLabel": "Último uso em",
@@ -3590,7 +3590,7 @@
   "login": {
     "forgotPassword": "Esqueceu a senha? - <0>Redefinir</0>",
     "title": "Boas-vindas de volta!",
-    "hint": "Faça login para acessar a área da conta",
+    "hint": "Faça login na sua conta de administrador.",
     "submit": "Entrar",
     "sessionExpired": "Sessão expirada",
     "invalidCredentials": "E-mail ou senha incorretos. Tente novamente.",
@@ -3685,7 +3685,7 @@
       "state": {
         "skipped": "Ignorado",
         "skippedFailure": "Ignorado (Falha)",
-        "dormant": "Inativo",
+        "dormant": "Latente",
         "timeout": "Tempo limite"
       }
     }
@@ -3906,7 +3906,7 @@
     "managedInventory": "Inventário gerido",
     "allowBackorder": "Permitir pré-venda",
     "inStock": "Em estoque",
-    "location": "Localização",
+    "location": "Local",
     "quantity": "Quantidade",
     "variant": "Variante",
     "id": "ID",
@@ -3941,7 +3941,7 @@
     "premium": "Loja em destaque",
     "professional": "Profissional",
     "creditTotal": "Total de linhas de crédito",
-    "is_giftcard": "Vale-presente",
+    "is_giftcard": "Cartão de presente",
     "origin_country": "País de origem",
     "hs_code": "Código HS",
     "mid_code": "Código MID",
@@ -3951,7 +3951,7 @@
     "category_ids": "Categorias",
     "allow_backorder": "Permitir pré-venda",
     "manage_inventory": "Gerenciar inventário",
-    "variant_rank": "Classificação da variante",
+    "variant_rank": "Posição da variante",
     "attribute_values": "Valores do atributo",
     "isbn": "ISBN",
     "asin": "ASIN",
@@ -4013,10 +4013,10 @@
     "domain": "Atributos de produto",
     "subtitle": "Gerencie os atributos de produto e seus possíveis valores.",
     "editRanking": {
-      "successToast": "Classificação atualizada com sucesso."
+      "successToast": "Ordenação atualizada com sucesso."
     },
     "possibleValues": {
-      "editRanking": "Editar ranking",
+      "editRanking": "Editar ordenação",
       "noRecordsTitle": "Nenhum valor criado",
       "noRecordsMessage": "Crie um atributo para organizar seus produtos"
     },
@@ -4051,10 +4051,10 @@
       "subtitle": "Crie valores adicionais para o atributo \"{{name}}\".",
       "tabs": {
         "values": "Valores",
-        "organizeRanking": "Organizar ranking"
+        "organizeRanking": "Organizar ordenação"
       },
       "addValue": "Adicionar valor",
-      "enterValue": "Informar valor",
+      "enterValue": "Informe um valor",
       "successToast": "Os valores foram criados com sucesso."
     },
     "deletePossibleValue": {
@@ -4085,7 +4085,7 @@
       "possibleValues": "Valores possíveis",
       "value": "Valor",
       "variantAxis": "Usar para variantes",
-      "rank": "Classificação",
+      "rank": "Posição",
       "metadata": "Metadados",
       "isRequired": "Atributo obrigatório",
       "isRequiredHint": "Se marcado, um valor deve ser definido para este atributo.",
@@ -4119,7 +4119,7 @@
     "subtitle": "Gerencie as avaliações de clientes das suas lojas.",
     "fields": {
       "id": "ID da avaliação",
-      "rating": "Classificação",
+      "rating": "Pontuação",
       "content": "Conteúdo",
       "store": "Loja",
       "customer": "Cliente",
@@ -4148,7 +4148,7 @@
     },
     "edit": {
       "header": "Editar avaliação",
-      "description": "Edite o status e a nota da avaliação.",
+      "description": "Edite o status e a pontuação da avaliação.",
       "successToast": "Avaliação atualizada com sucesso."
     },
     "respond": {
@@ -4270,10 +4270,10 @@
       "premium": "Em destaque"
     },
     "status": {
-      "open": "Ativo",
-      "pending_approval": "Pendente",
-      "pendingApproval": "Pendente",
-      "suspended": "Inativo",
+      "open": "Ativa",
+      "pending_approval": "Aguardando aprovação",
+      "pendingApproval": "Aguardando aprovação",
+      "suspended": "Inativa",
       "terminated": "Encerrada"
     },
     "premium": {

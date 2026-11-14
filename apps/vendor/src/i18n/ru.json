@@ -35,7 +35,7 @@
     "startConversation": "Начать разговор",
     "seen": "Прочитано",
     "sent": "Отправлено",
-    "notificationTitle": "{{senderName}} отправил(а) вам сообщение",
+    "notificationTitle": "Новое сообщение от {{senderName}}",
     "notificationBody": "{{preview}}",
     "image": "Изображение",
     "close": "Закрыть",
@@ -48,7 +48,7 @@
     "connected": "Подключено",
     "disconnected": "Отключено",
     "newMessageToastTitle": "Новое сообщение",
-    "imageSentPreview": "Отправил(а) изображение",
+    "imageSentPreview": "Отправлено изображение",
     "newMessageGenericPreview": "У вас новое сообщение"
   },
   "messages": {
@@ -177,15 +177,15 @@
     "domain": "Отзывы",
     "noRecords": "Отзывы не найдены",
     "columns": {
-      "rating": "Рейтинг",
-      "reference": "Артикул",
+      "rating": "Оценка",
+      "reference": "Объект отзыва",
       "customerNote": "Заметка клиента",
       "replyStatus": "Статус ответа",
       "createdAt": "Создано",
       "updatedAt": "Обновлено"
     },
-    "photos": "Фотографии",
-    "noPhotos": "К этому отзыву не прикреплены фотографии.",
+    "photos": "Изображения",
+    "noPhotos": "К этому отзыву не прикреплены изображения.",
     "hiddenPhoto": "Скрыто",
     "status": {
       "answered": "Отвечено",
@@ -201,7 +201,7 @@
     },
     "report": {
       "title": "Пожаловаться администратору",
-      "description": "Сообщите об этом отзыве администратору торговой площадки для модерации.",
+      "description": "Сообщите об этом отзыве администратору маркетплейса для модерации.",
       "placeholder": "Объясните, почему вы жалуетесь на этот отзыв...",
       "submit": "Отправить жалобу",
       "successToast": "Жалоба отправлена администратору.",
@@ -213,7 +213,7 @@
     "noRecords": "Пока нет подписчиков",
     "columns": {
       "followedAt": "Дата подписки",
-      "reviewsAverage": "Средний рейтинг"
+      "reviewsAverage": "Средняя оценка"
     },
     "count": "Подписчики: {{count}}"
   },
@@ -243,8 +243,8 @@
       "subtitle": "Товары с низким остатком на складе",
       "noRecords": "Нет товаров с низким остатком",
       "product": "Товар",
-      "sku": "Артикул",
-      "available": "В наличии",
+      "sku": "SKU",
+      "available": "Доступно",
       "viewInventory": "Перейти к складу"
     },
     "quickAccess": {

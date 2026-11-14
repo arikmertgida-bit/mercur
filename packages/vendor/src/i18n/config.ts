@@ -1,5 +1,7 @@
 import { InitOptions } from "i18next"
 
+import translations from "./translations"
+
 export const defaultI18nOptions: InitOptions = {
   debug: process.env.NODE_ENV === "development",
   detection: {
@@ -20,5 +22,9 @@ export const defaultI18nOptions: InitOptions = {
   fallbackNS: "translation",
   interpolation: {
     escapeValue: false,
-  }
+  },
+  // A stale/invalid `lng` cookie (e.g. "ptBR" instead of "pt-BR") must not
+  // become `i18n.language`: `toIntlLocale()` would pass it to `Intl.*`,
+  // which throws `RangeError: Invalid language tag`.
+  supportedLngs: Object.keys(translations),
 }

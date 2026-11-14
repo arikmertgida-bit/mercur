@@ -21,8 +21,8 @@
     },
     "status": {
       "pending": "Pendente",
-      "resolved": "Resolvido",
-      "dismissed": "Descartado"
+      "resolved": "Resolvida",
+      "dismissed": "Descartada"
     },
     "reasons": {
       "inaccurate_product_details": "Detalhes do produto imprecisos",
@@ -36,7 +36,7 @@
       "other": "Outro"
     },
     "actions": {
-      "resolve": "Marcar como resolvido",
+      "resolve": "Marcar como resolvida",
       "dismiss": "Descartar"
     },
     "resolvePrompt": {
@@ -85,7 +85,7 @@
     },
     "status": {
       "pending": "Pendente",
-      "resolved": "Resolvido"
+      "resolved": "Resolvida"
     },
     "actions": {
       "remove": "Remover imagem",
@@ -190,8 +190,8 @@
       "noRecords": "Nenhuma solicitação de tipo encontrada"
     },
     "returnReasons": {
-      "navLabel": "Razões de Devolução",
-      "heading": "Solicitações de razões de devolução",
+      "navLabel": "Motivos de devolução",
+      "heading": "Solicitações de motivos de devolução",
       "noRecords": "Nenhuma solicitação de motivo de devolução encontrada"
     },
     "typeLabels": {
@@ -199,7 +199,7 @@
       "product_collection": "Coleção",
       "product_tag": "Tag",
       "product_type": "Tipo",
-      "return_reason": "Razão de Devolução"
+      "return_reason": "Motivo de devolução"
     },
     "fields": {
       "name": "Nome",
@@ -264,7 +264,7 @@
     "domain": "Avaliações",
     "noRecords": "Nenhuma avaliação encontrada",
     "columns": {
-      "rating": "Avaliação",
+      "rating": "Pontuação",
       "reference": "Referência",
       "customerNote": "Observação do cliente"
     }
