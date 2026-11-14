@@ -232,6 +232,7 @@ const Preview = ({
   next: () => void
   goTo: (index: number) => void
 }) => {
+  const { t } = useTranslation()
   if (!media.length) {
     return null
   }
@@ -270,7 +271,7 @@ const Preview = ({
           return (
             <button
               type="button"
-              aria-label="Media file input"
+              aria-label={t("a11y.mediaFileInput")}
               onClick={() => goTo(originalIndex)}
               className={clx(
                 "transition-fg size-7 overflow-hidden rounded-[4px] outline-none",

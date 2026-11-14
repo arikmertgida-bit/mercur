@@ -4470,5 +4470,13 @@
     "imageUploadFailed": "이미지 업로드에 실패했습니다",
     "undo": "실행 취소",
     "redo": "다시 실행"
+  },
+  "a11y": {
+    "fileUpload": "파일 업로드",
+    "mediaFileInput": "미디어 파일 선택",
+    "cellInput": "셀 입력",
+    "chipInput": "값 입력",
+    "showPassword": "비밀번호 표시",
+    "hidePassword": "비밀번호 숨기기"
   }
 }

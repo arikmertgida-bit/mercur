@@ -4522,5 +4522,13 @@
     "imageUploadFailed": "Nepavyko įkelti nuotraukos",
     "undo": "Anuliuoti",
     "redo": "Pakartoti"
+  },
+  "a11y": {
+    "fileUpload": "Failo įkėlimas",
+    "mediaFileInput": "Medijos failo pasirinkimas",
+    "cellInput": "Langelio įvestis",
+    "chipInput": "Reikšmių įvestis",
+    "showPassword": "Rodyti slaptažodį",
+    "hidePassword": "Slėpti slaptažodį"
   }
 }

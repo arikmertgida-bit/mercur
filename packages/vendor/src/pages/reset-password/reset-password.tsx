@@ -1,5 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Alert, Button, Heading, Input, Text, toast } from "@medusajs/ui"
+import { PasswordInput } from "@components/inputs/password-input"
 import { useForm } from "react-hook-form"
 import { Trans, useTranslation } from "react-i18next"
 import { Link, useNavigate, useSearchParams } from "react-router-dom"
@@ -167,9 +168,8 @@ const ChooseNewPassword = ({ token }: { token: string }) => {
                     return (
                       <Form.Item>
                         <Form.Control>
-                          <Input
+                          <PasswordInput
                             autoComplete="new-password"
-                            type="password"
                             {...field}
                             placeholder={t("resetPassword.newPassword")}
                           />
@@ -186,9 +186,8 @@ const ChooseNewPassword = ({ token }: { token: string }) => {
                     return (
                       <Form.Item>
                         <Form.Control>
-                          <Input
+                          <PasswordInput
                             autoComplete="off"
-                            type="password"
                             {...field}
                             placeholder={t("resetPassword.repeatNewPassword")}
                           />

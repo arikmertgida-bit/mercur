@@ -4576,5 +4576,13 @@
     "description": "Jūsų parduotuvė buvo laikinai sustabdyta administracijos. Negalėsite kurti naujų prekių, kol ji nebus vėl aktyvuota. Jei turite klausimų, mūsų palaikymo komanda pasiruošusi padėti.",
     "help": "Pagalba",
     "title": "Parduotuvė sustabdyta"
+  },
+  "a11y": {
+    "fileUpload": "Failo įkėlimas",
+    "mediaFileInput": "Medijos failo pasirinkimas",
+    "cellInput": "Langelio įvestis",
+    "chipInput": "Reikšmių įvestis",
+    "showPassword": "Rodyti slaptažodį",
+    "hidePassword": "Slėpti slaptažodį"
   }
 }

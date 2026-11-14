@@ -4470,5 +4470,13 @@
     "imageUploadFailed": "Bild konnte nicht hochgeladen werden",
     "undo": "Rückgängig machen",
     "redo": "Wiederholen"
+  },
+  "a11y": {
+    "fileUpload": "Datei hochladen",
+    "mediaFileInput": "Mediendatei auswählen",
+    "cellInput": "Zelleneingabe",
+    "chipInput": "Werteingabe",
+    "showPassword": "Passwort anzeigen",
+    "hidePassword": "Passwort verbergen"
   }
 }

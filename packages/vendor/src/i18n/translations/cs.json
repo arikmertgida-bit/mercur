@@ -4576,5 +4576,13 @@
     "description": "Váš obchod byl pozastaven administrací. Dokud nebude znovu aktivován, nebudete moci vytvářet nové produkty. Máte-li dotazy, náš tým podpory je tu, aby vám pomohl.",
     "help": "Nápověda",
     "title": "Obchod pozastaven"
+  },
+  "a11y": {
+    "fileUpload": "Nahrání souboru",
+    "mediaFileInput": "Výběr mediálního souboru",
+    "cellInput": "Zadání do buňky",
+    "chipInput": "Zadání hodnot",
+    "showPassword": "Zobrazit heslo",
+    "hidePassword": "Skrýt heslo"
   }
 }

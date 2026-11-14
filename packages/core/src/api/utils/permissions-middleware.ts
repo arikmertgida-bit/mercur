@@ -4,7 +4,10 @@ import {
   MedusaResponse,
 } from "@medusajs/framework"
 import { ConfigModule } from "@medusajs/framework/types"
-import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
+import {
+  ContainerRegistrationKeys,
+  MedusaError,
+} from "@medusajs/framework/utils"
 import {
   IPermissionResolver,
   MISSING_PERMISSION_CODE,
@@ -97,10 +100,28 @@ export function resolvePermissionsMiddleware(surface: PermissionSurface) {
 
 export const REQUIRED_PERMISSION = Symbol.for("mercur:required-permission")
 
+/**
+ * A denial is handed to the error handler instead of being written here, so
+ * the app's error layer (apps/api vendor/admin-error-i18n) answers in the
+ * caller's language. FORBIDDEN keeps the 403 status; `code` stays
+ * MISSING_PERMISSION_CODE for clients that branch on it.
+ */
+function missingPermissionError(
+  requirements: PermissionRequirement[]
+): MedusaError {
+  return new MedusaError(
+    MedusaError.Types.FORBIDDEN,
+    `Missing required permission: ${requirements
+      .map((requirement) => `${requirement.key}:${requirement.right}`)
+      .join(" or ")}`,
+    MISSING_PERMISSION_CODE
+  )
+}
+
 export function requirePermission(key: string, right: PermissionRight) {
   const middleware = (
     req: AuthenticatedMedusaRequest,
-    res: MedusaResponse,
+    _res: MedusaResponse,
     next: MedusaNextFunction
   ) => {
     req.required_permissions ??= []
@@ -116,13 +137,7 @@ export function requirePermission(key: string, right: PermissionRight) {
       return next()
     }
 
-    res.status(403).json({
-      type: "not_allowed",
-      code: MISSING_PERMISSION_CODE,
-      message: `Missing required permission: ${key}:${right}`,
-      permission: key,
-      right,
-    })
+    return next(missingPermissionError([{ key, right }]))
   }
 
   return Object.assign(middleware, {
@@ -137,7 +152,7 @@ export function requirePermission(key: string, right: PermissionRight) {
 export function requireAnyPermission(requirements: PermissionRequirement[]) {
   const middleware = (
     req: AuthenticatedMedusaRequest,
-    res: MedusaResponse,
+    _res: MedusaResponse,
     next: MedusaNextFunction
   ) => {
     req.required_permissions ??= []
@@ -155,17 +170,7 @@ export function requireAnyPermission(requirements: PermissionRequirement[]) {
       return next()
     }
 
-    const [{ key, right }] = requirements
-
-    res.status(403).json({
-      type: "not_allowed",
-      code: MISSING_PERMISSION_CODE,
-      message: `Missing required permission: ${requirements
-        .map((requirement) => `${requirement.key}:${requirement.right}`)
-        .join(" or ")}`,
-      permission: key,
-      right,
-    })
+    return next(missingPermissionError(requirements))
   }
 
   return Object.assign(middleware, {

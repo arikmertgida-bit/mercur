@@ -4522,5 +4522,13 @@
     "imageUploadFailed": "Încărcarea imaginii a eșuat",
     "undo": "Anulați",
     "redo": "Refaceți"
+  },
+  "a11y": {
+    "fileUpload": "Încărcare fișier",
+    "mediaFileInput": "Selectare fișier media",
+    "cellInput": "Introducere în celulă",
+    "chipInput": "Introducere valori",
+    "showPassword": "Afișați parola",
+    "hidePassword": "Ascundeți parola"
   }
 }

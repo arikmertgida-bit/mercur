@@ -2,6 +2,7 @@ import { Children, ReactNode, useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import i18n from "i18next";
 import { Button, Heading, Input, Text, toast } from "@medusajs/ui";
+import { PasswordInput } from "@components/inputs/password-input";
 import { useForm } from "react-hook-form";
 import { Trans, useTranslation } from "react-i18next";
 import {
@@ -140,8 +141,8 @@ const LoginForm = () => {
               <Form.Item>
                 <Form.Label>{t("fields.password")}</Form.Label>
                 <Form.Control>
-                  <Input
-                    type="password"
+                  <PasswordInput
+
                     autoComplete="current-password"
                     {...field}
                     data-testid="login-password-input"

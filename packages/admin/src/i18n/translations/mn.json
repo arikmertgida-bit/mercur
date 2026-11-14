@@ -4470,5 +4470,13 @@
     "imageUploadFailed": "Зураг байршуулж чадсангүй",
     "undo": "Үйлдлийг буцаах",
     "redo": "Дахин хийх"
+  },
+  "a11y": {
+    "fileUpload": "Файл байршуулах",
+    "mediaFileInput": "Медиа файл сонгох",
+    "cellInput": "Нүдний оролт",
+    "chipInput": "Утгын оролт",
+    "showPassword": "Нууц үгийг харуулах",
+    "hidePassword": "Нууц үгийг нуух"
   }
 }

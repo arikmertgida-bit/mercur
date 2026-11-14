@@ -1,4 +1,5 @@
 import { ArrowDownTray } from "@medusajs/icons";
+import { useTranslation } from "react-i18next";
 import { Text, clx } from "@medusajs/ui";
 import { ChangeEvent, DragEvent, useRef, useState } from "react";
 
@@ -27,6 +28,7 @@ export const FileUpload = ({
   onUploaded,
   uploadedImage = "",
 }: FileUploadProps) => {
+  const { t } = useTranslation();
   const [isDragOver, setIsDragOver] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const dropZoneRef = useRef<HTMLButtonElement>(null);
@@ -139,7 +141,7 @@ export const FileUpload = ({
       </button>
       <input
         hidden
-        aria-label="File upload"
+        aria-label={t("a11y.fileUpload")}
         ref={inputRef}
         onChange={handleFileChange}
         type="file"

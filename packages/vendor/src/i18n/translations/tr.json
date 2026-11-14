@@ -4525,5 +4525,13 @@
       "cloud": "Kayı.com ile Giriş Yap"
     },
     "backToStore": "Kayı.com'a geri dön"
+  },
+  "a11y": {
+    "fileUpload": "Dosya yükleme",
+    "mediaFileInput": "Medya dosyası seçimi",
+    "cellInput": "Hücre girişi",
+    "chipInput": "Değer girişi",
+    "showPassword": "Şifreyi göster",
+    "hidePassword": "Şifreyi gizle"
   }
 }

@@ -4525,5 +4525,13 @@
     "description": "Cửa hàng của bạn đã bị tạm ngưng bởi ban quản trị. Bạn sẽ không thể tạo sản phẩm mới cho đến khi được kích hoạt lại. Nếu có thắc mắc, đội ngũ hỗ trợ của chúng tôi luôn sẵn sàng giúp đỡ.",
     "help": "Trợ giúp",
     "title": "Cửa hàng bị tạm ngưng"
+  },
+  "a11y": {
+    "fileUpload": "Tải tệp lên",
+    "mediaFileInput": "Chọn tệp phương tiện",
+    "cellInput": "Nhập ô",
+    "chipInput": "Nhập giá trị",
+    "showPassword": "Hiện mật khẩu",
+    "hidePassword": "Ẩn mật khẩu"
   }
 }

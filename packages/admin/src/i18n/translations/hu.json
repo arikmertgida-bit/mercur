@@ -4470,5 +4470,13 @@
     "imageUploadFailed": "Nem sikerült feltölteni a képet",
     "undo": "Visszavonás",
     "redo": "Ismétlés"
+  },
+  "a11y": {
+    "fileUpload": "Fájlfeltöltés",
+    "mediaFileInput": "Médiafájl kiválasztása",
+    "cellInput": "Cellabevitel",
+    "chipInput": "Értékek bevitele",
+    "showPassword": "Jelszó megjelenítése",
+    "hidePassword": "Jelszó elrejtése"
   }
 }

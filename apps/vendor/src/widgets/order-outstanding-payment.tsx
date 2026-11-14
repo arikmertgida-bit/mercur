@@ -3,6 +3,7 @@ import type { HttpTypes } from "@medusajs/types"
 import { Button, toast } from "@medusajs/ui"
 import { useTranslation } from "react-i18next"
 import { z } from "zod"
+import { toIntlLocale } from "../lib/intl-locale"
 
 export const config = defineWidgetConfig({
   zone: "orders.detail.summary.after",
@@ -35,8 +36,12 @@ const resolvePaymentLink = (session?: PaymentSession): string | null => {
   }
 }
 
-const formatAmount = (amount: number, currencyCode: string) =>
-  new Intl.NumberFormat([], {
+const formatAmount = (
+  amount: number,
+  currencyCode: string,
+  language: string
+): string =>
+  new Intl.NumberFormat(toIntlLocale(language), {
     style: "currency",
     currencyDisplay: "narrowSymbol",
     currency: currencyCode,
@@ -47,7 +52,7 @@ const OrderOutstandingPayment = ({
 }: {
   data?: HttpTypes.AdminOrder
 }) => {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
 
   if (!order) {
     return null
@@ -92,7 +97,7 @@ const OrderOutstandingPayment = ({
         data-testid="order-outstanding-copy-payment-link"
       >
         {t("orders.payment.copyPaymentLink", {
-          amount: formatAmount(pendingDifference, order.currency_code),
+          amount: formatAmount(pendingDifference, order.currency_code, i18n.language),
         })}
       </Button>
     </div>

@@ -1127,6 +1127,7 @@ const DataGridRowSkeleton = ({
   virtualPaddingRight,
   virtualColumns,
 }: DataGridRowSkeletonProps) => {
+  const { t } = useTranslation()
   return (
     <div
       role="row"
@@ -1163,7 +1164,7 @@ const DataGridRowSkeleton = ({
           <div
             key={`skeleton-cell-${vc.index}`}
             role="gridcell"
-            aria-label="Cell input"
+            aria-label={t("a11y.cellInput")}
             style={{ width: vc.size }}
             className="relative flex items-center border-b border-r p-0 outline-none"
           >

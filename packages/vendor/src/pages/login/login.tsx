@@ -2,6 +2,7 @@ import { Children, ReactNode } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import i18n from "i18next";
 import { Alert, Button, Heading, Input, Text } from "@medusajs/ui";
+import { PasswordInput } from "@components/inputs/password-input";
 import { useForm } from "react-hook-form";
 import { Trans, useTranslation } from "react-i18next";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
@@ -145,8 +146,7 @@ const LoginForm = () => {
               <Form.Item>
                 <Form.Label>{t("fields.password")}</Form.Label>
                 <Form.Control>
-                  <Input
-                    type="password"
+                  <PasswordInput
                     autoComplete="current-password"
                     {...field}
                   />

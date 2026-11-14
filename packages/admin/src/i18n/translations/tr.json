@@ -4470,5 +4470,13 @@
     "imageUploadFailed": "Görsel yüklenemedi",
     "undo": "Geri Al",
     "redo": "Yinele"
+  },
+  "a11y": {
+    "fileUpload": "Dosya yükleme",
+    "mediaFileInput": "Medya dosyası seçimi",
+    "cellInput": "Hücre girişi",
+    "chipInput": "Değer girişi",
+    "showPassword": "Şifreyi göster",
+    "hidePassword": "Şifreyi gizle"
   }
 }

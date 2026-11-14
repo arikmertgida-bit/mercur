@@ -4627,5 +4627,13 @@
     "description": "Twój sklep został zawieszony przez administrację. Nie będziesz mógł tworzyć nowych produktów, dopóki nie zostanie ponownie aktywowany. W razie pytań nasz zespół wsparcia chętnie pomoże.",
     "help": "Pomoc",
     "title": "Sklep zawieszony"
+  },
+  "a11y": {
+    "fileUpload": "Przesyłanie pliku",
+    "mediaFileInput": "Wybór pliku multimedialnego",
+    "cellInput": "Pole komórki",
+    "chipInput": "Wprowadzanie wartości",
+    "showPassword": "Pokaż hasło",
+    "hidePassword": "Ukryj hasło"
   }
 }

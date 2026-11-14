@@ -4522,5 +4522,13 @@
     "imageUploadFailed": "Échec du téléversement de l'image",
     "undo": "Annuler",
     "redo": "Rétablir"
+  },
+  "a11y": {
+    "fileUpload": "Téléversement de fichier",
+    "mediaFileInput": "Sélection de fichier média",
+    "cellInput": "Saisie de cellule",
+    "chipInput": "Saisie de valeurs",
+    "showPassword": "Afficher le mot de passe",
+    "hidePassword": "Masquer le mot de passe"
   }
 }

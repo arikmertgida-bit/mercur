@@ -4470,5 +4470,13 @@
     "imageUploadFailed": "Gagal mengunggah gambar",
     "undo": "Urungkan",
     "redo": "Ulangi"
+  },
+  "a11y": {
+    "fileUpload": "Unggah berkas",
+    "mediaFileInput": "Pilih berkas media",
+    "cellInput": "Input sel",
+    "chipInput": "Input nilai",
+    "showPassword": "Tampilkan kata sandi",
+    "hidePassword": "Sembunyikan kata sandi"
   }
 }

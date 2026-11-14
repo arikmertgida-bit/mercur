@@ -4525,5 +4525,13 @@
     "description": "您的店铺已被管理方暂停。在重新激活之前，您将无法创建新商品。如有疑问，我们的支持团队随时为您提供帮助。",
     "help": "帮助",
     "title": "店铺已暂停"
+  },
+  "a11y": {
+    "fileUpload": "文件上传",
+    "mediaFileInput": "选择媒体文件",
+    "cellInput": "单元格输入",
+    "chipInput": "值输入",
+    "showPassword": "显示密码",
+    "hidePassword": "隐藏密码"
   }
 }

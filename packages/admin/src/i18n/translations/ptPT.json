@@ -4522,5 +4522,13 @@
     "imageUploadFailed": "Não foi possível carregar a imagem",
     "undo": "Anular",
     "redo": "Refazer"
+  },
+  "a11y": {
+    "fileUpload": "Carregamento de ficheiro",
+    "mediaFileInput": "Seleção de ficheiro multimédia",
+    "cellInput": "Entrada de célula",
+    "chipInput": "Entrada de valores",
+    "showPassword": "Mostrar palavra-passe",
+    "hidePassword": "Ocultar palavra-passe"
   }
 }

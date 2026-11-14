@@ -4576,5 +4576,13 @@
     "description": "Votre boutique a été suspendue par l'administration. Vous ne pourrez pas créer de nouveaux produits tant qu'elle n'aura pas été réactivée. Pour toute question, notre équipe d'assistance est là pour vous aider.",
     "help": "Aide",
     "title": "Boutique suspendue"
+  },
+  "a11y": {
+    "fileUpload": "Téléversement de fichier",
+    "mediaFileInput": "Sélection de fichier média",
+    "cellInput": "Saisie de cellule",
+    "chipInput": "Saisie de valeurs",
+    "showPassword": "Afficher le mot de passe",
+    "hidePassword": "Masquer le mot de passe"
   }
 }

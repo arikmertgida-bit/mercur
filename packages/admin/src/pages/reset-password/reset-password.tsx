@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import { Alert, Button, Heading, Input, Text, toast } from "@medusajs/ui";
+import { PasswordInput } from "@components/inputs/password-input";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -210,9 +211,8 @@ const ChooseNewPassword = ({ token }: { token: string }) => {
                     return (
                       <Form.Item>
                         <Form.Control>
-                          <Input
+                          <PasswordInput
                             autoComplete="new-password"
-                            type="password"
                             {...field}
                             placeholder={t("resetPassword.newPassword")}
                             data-testid="reset-password-new-password-input"
@@ -230,9 +230,8 @@ const ChooseNewPassword = ({ token }: { token: string }) => {
                     return (
                       <Form.Item>
                         <Form.Control>
-                          <Input
+                          <PasswordInput
                             autoComplete="off"
-                            type="password"
                             {...field}
                             placeholder={t("resetPassword.repeatNewPassword")}
                             data-testid="reset-password-repeat-password-input"

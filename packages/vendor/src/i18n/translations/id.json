@@ -4525,5 +4525,13 @@
     "description": "Toko Anda telah ditangguhkan oleh pihak manajemen. Anda tidak akan dapat membuat produk baru hingga diaktifkan kembali. Jika Anda memiliki pertanyaan, tim dukungan kami siap membantu.",
     "help": "Bantuan",
     "title": "Toko ditangguhkan"
+  },
+  "a11y": {
+    "fileUpload": "Unggah berkas",
+    "mediaFileInput": "Pilih berkas media",
+    "cellInput": "Input sel",
+    "chipInput": "Input nilai",
+    "showPassword": "Tampilkan kata sandi",
+    "hidePassword": "Sembunyikan kata sandi"
   }
 }

@@ -4521,5 +4521,13 @@
     "imageUploadFailed": "Failed to upload image",
     "undo": "Undo",
     "redo": "Redo"
+  },
+  "a11y": {
+    "fileUpload": "File upload",
+    "mediaFileInput": "Media file input",
+    "cellInput": "Cell input",
+    "chipInput": "Chip input",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password"
   }
 }

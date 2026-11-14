@@ -4525,5 +4525,13 @@
     "description": "Áruházát a vezetés felfüggesztette. Amíg nem aktiválják újra, nem tud új termékeket létrehozni. Ha kérdése van, ügyfélszolgálati csapatunk készséggel segít.",
     "help": "Súgó",
     "title": "Áruház felfüggesztve"
+  },
+  "a11y": {
+    "fileUpload": "Fájlfeltöltés",
+    "mediaFileInput": "Médiafájl kiválasztása",
+    "cellInput": "Cellabevitel",
+    "chipInput": "Értékek bevitele",
+    "showPassword": "Jelszó megjelenítése",
+    "hidePassword": "Jelszó elrejtése"
   }
 }

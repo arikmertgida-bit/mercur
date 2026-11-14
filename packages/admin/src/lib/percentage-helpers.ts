@@ -1,8 +1,12 @@
-const formatter = new Intl.NumberFormat([], {
-  style: "percent",
-  minimumFractionDigits: 2,
-  maximumFractionDigits: 4,
-})
+import { getActiveIntlLocale } from "./active-intl-locale"
+
+// Built per call: the active panel language can change at runtime.
+const getPercentageFormatter = (): Intl.NumberFormat =>
+  new Intl.NumberFormat(getActiveIntlLocale(), {
+    style: "percent",
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 4,
+  })
 
 /**
  * Formats a number as a percentage
@@ -24,5 +28,5 @@ export const formatPercentage = (
     val = val / 100
   }
 
-  return formatter.format(val)
+  return getPercentageFormatter().format(val)
 }

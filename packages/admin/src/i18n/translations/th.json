@@ -4470,5 +4470,13 @@
     "imageUploadFailed": "อัปโหลดรูปภาพไม่สำเร็จ",
     "undo": "เลิกทำ",
     "redo": "ทำซ้ำ"
+  },
+  "a11y": {
+    "fileUpload": "อัปโหลดไฟล์",
+    "mediaFileInput": "เลือกไฟล์สื่อ",
+    "cellInput": "ช่องป้อนข้อมูลเซลล์",
+    "chipInput": "ช่องป้อนค่า",
+    "showPassword": "แสดงรหัสผ่าน",
+    "hidePassword": "ซ่อนรหัสผ่าน"
   }
 }

@@ -4522,5 +4522,13 @@
     "imageUploadFailed": "Nahrání obrázku se nezdařilo",
     "undo": "Vrátit zpět",
     "redo": "Znovu"
+  },
+  "a11y": {
+    "fileUpload": "Nahrání souboru",
+    "mediaFileInput": "Výběr mediálního souboru",
+    "cellInput": "Zadání do buňky",
+    "chipInput": "Zadání hodnot",
+    "showPassword": "Zobrazit heslo",
+    "hidePassword": "Skrýt heslo"
   }
 }

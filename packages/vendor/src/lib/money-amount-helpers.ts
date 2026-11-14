@@ -1,21 +1,22 @@
 import { currencies } from "./data/currencies"
+import { getActiveIntlLocale } from "./active-intl-locale"
 
 export const getDecimalDigits = (currency: string) => {
   return currencies[currency.toUpperCase()]?.decimal_digits ?? 0
 }
 
 /**
- * Returns a formatted amount based on the currency code using the browser's locale
+ * Returns a formatted amount based on the currency code in the active panel language
  * @param amount - The amount to format
  * @param currencyCode - The currency code to format the amount in
  * @returns - The formatted amount
  *
  * @example
- * getFormattedAmount(10, "usd") // '$10.00' if the browser's locale is en-US
- * getFormattedAmount(10, "usd") // '10,00 $' if the browser's locale is fr-FR
+ * getLocaleAmount(10, "usd") // '$10.00' when the panel language is en
+ * getLocaleAmount(10, "usd") // '10,00 $' when the panel language is fr
  */
 export const getLocaleAmount = (amount: number, currencyCode: string) => {
-  const formatter = new Intl.NumberFormat([], {
+  const formatter = new Intl.NumberFormat(getActiveIntlLocale(), {
     style: "currency",
     currencyDisplay: "narrowSymbol",
     currency: currencyCode,
@@ -24,14 +25,19 @@ export const getLocaleAmount = (amount: number, currencyCode: string) => {
   return formatter.format(amount)
 }
 
-export const getNativeSymbol = (currencyCode: string) => {
-  const formatted = new Intl.NumberFormat([], {
+export const getNativeSymbol = (currencyCode: string): string => {
+  // Take the currency part itself: stripping digits/separators from a
+  // formatted 0 left Persian digits ("₺۰٫۰۰") and RTL marks (ar/he) behind.
+  const parts = new Intl.NumberFormat(getActiveIntlLocale(), {
     style: "currency",
     currency: currencyCode,
     currencyDisplay: "narrowSymbol",
-  }).format(0)
+  }).formatToParts(0)
 
-  return formatted.replace(/\d/g, "").replace(/[.,]/g, "").trim()
+  return (
+    parts.find((part) => part.type === "currency")?.value ??
+    currencyCode.toUpperCase()
+  )
 }
 
 /**
@@ -58,7 +64,7 @@ export const getStylizedAmount = (
     currencyCode
   )
 
-  const total = safeAmount.toLocaleString(undefined, {
+  const total = safeAmount.toLocaleString(getActiveIntlLocale(), {
     minimumFractionDigits: decimalDigits,
     maximumFractionDigits: decimalDigits,
     signDisplay: lessThanRoundingPrecission ? "exceptZero" : "auto",

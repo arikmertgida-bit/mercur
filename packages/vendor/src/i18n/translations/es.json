@@ -4576,5 +4576,13 @@
     "description": "Tu tienda ha sido suspendida por la administración. No podrás crear nuevos productos hasta que se reactive. Si tienes preguntas, nuestro equipo de soporte está aquí para ayudarte.",
     "help": "Ayuda",
     "title": "Tienda suspendida"
+  },
+  "a11y": {
+    "fileUpload": "Subida de archivo",
+    "mediaFileInput": "Selección de archivo multimedia",
+    "cellInput": "Entrada de celda",
+    "chipInput": "Entrada de valores",
+    "showPassword": "Mostrar contraseña",
+    "hidePassword": "Ocultar contraseña"
   }
 }

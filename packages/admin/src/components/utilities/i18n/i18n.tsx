@@ -5,6 +5,7 @@ import type { TranslationTree } from "../../../i18n/types";
 
 import { defaultI18nOptions } from "../../../i18n/config";
 import translations from "../../../i18n/translations";
+import { languages } from "../../../i18n/languages";
 import customI18nResources from "virtual:mercur/i18n";
 import config from "virtual:mercur/config";
 
@@ -33,6 +34,18 @@ const toResource = (tree: TranslationTree): Resource =>
       typeof namespaces === "object" ? [[language, namespaces]] : [],
     ),
   );
+
+/**
+ * Mirrors the active panel language onto `<html>`: `lang` for the browser
+ * (no false "translate this page?" prompt) and `dir` so ar/fa/he render
+ * right-to-left. `dir` comes from the `ltr` flag in `i18n/languages`; Radix
+ * menus/selects read it back through `useDocumentDirection`.
+ */
+const syncDocumentLanguage = (lng: string): void => {
+  const language = languages.find((entry) => entry.code === lng);
+  document.documentElement.lang = lng;
+  document.documentElement.dir = language?.ltr === false ? "rtl" : "ltr";
+};
 
 const mergedTranslations = toResource(
   deepMerge(translations, customI18nResources),
@@ -70,10 +83,8 @@ export const I18n = () => {
   // vendor panelde de var (packages/vendor/.../i18n.tsx) — bkz. oradaki
   // yorum. `document.documentElement.lang`'i i18next'in aktif diliyle her
   // zaman eşitle: ilk yüklemede ve her `changeLanguage()` çağrısında.
-  document.documentElement.lang = i18n.language;
-  i18n.on("languageChanged", (lng) => {
-    document.documentElement.lang = lng;
-  });
+  syncDocumentLanguage(i18n.language);
+  i18n.on("languageChanged", syncDocumentLanguage);
 
   return null;
 };

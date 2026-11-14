@@ -4525,5 +4525,13 @@
     "description": "您的商店已被管理方暫停。在重新啟用之前,您將無法建立新商品。如有疑問,我們的支援團隊隨時為您提供協助。",
     "help": "說明",
     "title": "商店已暫停"
+  },
+  "a11y": {
+    "fileUpload": "檔案上傳",
+    "mediaFileInput": "選擇媒體檔案",
+    "cellInput": "儲存格輸入",
+    "chipInput": "值輸入",
+    "showPassword": "顯示密碼",
+    "hidePassword": "隱藏密碼"
   }
 }

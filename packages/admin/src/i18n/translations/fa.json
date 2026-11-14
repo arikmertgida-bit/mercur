@@ -4470,5 +4470,13 @@
     "imageUploadFailed": "بارگذاری تصویر ناموفق بود",
     "undo": "برگشت",
     "redo": "انجام دوباره"
+  },
+  "a11y": {
+    "fileUpload": "بارگذاری فایل",
+    "mediaFileInput": "انتخاب فایل رسانه",
+    "cellInput": "ورودی خانه",
+    "chipInput": "ورودی مقادیر",
+    "showPassword": "نمایش رمز عبور",
+    "hidePassword": "پنهان کردن رمز عبور"
   }
 }

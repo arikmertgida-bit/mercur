@@ -4525,5 +4525,13 @@
     "description": "Uw winkel is opgeschort door het beheer. U kunt geen nieuwe producten aanmaken totdat deze weer is geactiveerd. Hebt u vragen? Ons supportteam helpt u graag.",
     "help": "Help",
     "title": "Winkel opgeschort"
+  },
+  "a11y": {
+    "fileUpload": "Bestand uploaden",
+    "mediaFileInput": "Mediabestand kiezen",
+    "cellInput": "Celinvoer",
+    "chipInput": "Waarden invoeren",
+    "showPassword": "Wachtwoord tonen",
+    "hidePassword": "Wachtwoord verbergen"
   }
 }

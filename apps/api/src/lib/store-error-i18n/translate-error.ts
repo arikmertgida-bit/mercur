@@ -108,31 +108,6 @@ function translateValidationMessage(
     .join(" ")
 }
 
-/**
- * Matches the "not found" phrasings actually produced in this codebase:
- * Medusa's base module service (`"X with id: v was not found"`, `"X with
- * id, seller_id: v1, v2 was not found"`) and this project's own
- * hand-written throws (`"X with id v was not found"`, `"X v not found"`).
- */
-function matchNotFound(message: string): { entity: string; id: string } | null {
-  let match = message.match(/^(.+?) with .+?:\s*(.+?) was not found\.?$/i)
-  if (match) {
-    return { entity: match[1].trim(), id: match[2].trim() }
-  }
-
-  match = message.match(/^(.+?) with id (\S+) was not found\.?$/i)
-  if (match) {
-    return { entity: match[1].trim(), id: match[2].trim() }
-  }
-
-  match = message.match(/^(.+?) (\S+) not found\.?$/i)
-  if (match) {
-    return { entity: match[1].trim(), id: match[2].trim() }
-  }
-
-  return null
-}
-
 function typeFallbackFor(type: string, messages: StoreErrorMessages): string {
   switch (type) {
     case MedusaError.Types.NOT_FOUND:
@@ -164,8 +139,9 @@ function typeFallbackFor(type: string, messages: StoreErrorMessages): string {
 /**
  * Three-tier translation: (1) structured validation messages produced by
  * `zodValidator` — deterministic, field-by-field; (2) known `MedusaError`
- * types — a regex template for the very common "not found" phrasing, a
- * translated generic sentence per type otherwise; (3) anything unmodeled —
+ * types — a translated generic sentence per type (a "not found" names no
+ * entity: Medusa's English model names such as "ProductVariant" cannot be
+ * inflected correctly in every language); (3) anything unmodeled —
  * always a translated generic sentence, never the raw English message (the
  * original is left in `error.message` for server-side logging by the
  * caller).
@@ -193,19 +169,6 @@ export function translateStoreError(
         code: error.code ?? "invalid_request_error",
         type: error.type,
         message: translateValidationMessage(error.message, messages),
-      }
-    }
-
-    if (error.type === MedusaError.Types.NOT_FOUND) {
-      const found = matchNotFound(error.message)
-      if (found) {
-        return {
-          code: error.code ?? "not_found",
-          type: error.type,
-          message: messages.notFoundTemplate
-            .replace("{entity}", found.entity)
-            .replace("{id}", found.id),
-        }
       }
     }
 

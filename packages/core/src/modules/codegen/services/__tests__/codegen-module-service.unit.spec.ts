@@ -4,12 +4,48 @@ import path from "path"
 import * as childProcess from "child_process"
 import { Logger } from "@medusajs/medusa"
 import CodegenModuleService from "../codegen-module-service"
-import * as utils from "../../utils"
 import {
   resolveLocalCli,
   detectPackageRunner,
   runCodegen,
 } from "../../utils"
+
+// `jest.spyOn(module, "fn")` cannot reach these calls under the SWC
+// transform: `import * as` of a CommonJS module is a copy, so spying on it
+// never touches what utils.ts calls, and an ES module's exports are
+// non-configurable getters ("Cannot redefine property"). Replace the
+// child_process functions in the module registry instead; utils.ts and this
+// spec then share the same mocks.
+jest.mock("child_process", () => ({
+  ...jest.requireActual("child_process"),
+  exec: jest.fn(),
+  execFile: jest.fn(),
+}))
+
+type ExecCallback = (
+  error: childProcess.ExecException | null,
+  stdout: string,
+  stderr: string
+) => void
+
+const execFileMock = jest.mocked(childProcess.execFile)
+const execMock = jest.mocked(childProcess.exec)
+
+/** Every spawn answers with this result; returns a fake child process. */
+const answerSpawns = (
+  error: childProcess.ExecException | null,
+  stderr = ""
+): void => {
+  const reply = (...args: ReadonlyArray<ExecCallback | object | string | string[] | undefined>) => {
+    const callback = args.find(
+      (arg): arg is ExecCallback => typeof arg === "function"
+    )
+    callback?.(error, "", stderr)
+    return {} as childProcess.ChildProcess
+  }
+  execFileMock.mockImplementation(reply as typeof childProcess.execFile)
+  execMock.mockImplementation(reply as typeof childProcess.exec)
+}
 
 describe("CodegenModuleService", () => {
   const originalEnv = { ...process.env }
@@ -23,6 +59,9 @@ describe("CodegenModuleService", () => {
   afterEach(() => {
     fs.rmSync(tempDir, { recursive: true, force: true })
     process.env = originalEnv
+    execFileMock.mockReset()
+    execMock.mockReset()
+    jest.mocked(mockLogger.warn).mockClear()
   })
 
   const mockLogger = {
@@ -120,23 +159,15 @@ describe("CodegenModuleService", () => {
         path.join(cliDir, "package.json"),
         JSON.stringify({ name: "@mercurjs/cli", main: "index.js" })
       )
-
-      const execFileSpy = jest
-        .spyOn(childProcess, "execFile")
-        .mockImplementation((_file, _args, _options, callback) => {
-          if (typeof callback === "function") {
-            callback(null, "", "")
-          }
-          return {} as childProcess.ChildProcess
-        })
+      answerSpawns(null)
 
       await runCodegen(tempDir)
 
-      expect(execFileSpy).toHaveBeenCalledTimes(1)
-      expect(execFileSpy.mock.calls[0][0]).toBe(process.execPath)
-      expect(execFileSpy.mock.calls[0][1]).toEqual([entryFile, "codegen"])
-      expect(execFileSpy.mock.calls[0][2]).toEqual({ cwd: tempDir, timeout: 15000 })
-      execFileSpy.mockRestore()
+      expect(execFileMock).toHaveBeenCalledTimes(1)
+      expect(execFileMock.mock.calls[0][0]).toBe(process.execPath)
+      expect(execFileMock.mock.calls[0][1]).toEqual([entryFile, "codegen"])
+      expect(execFileMock.mock.calls[0][2]).toEqual({ cwd: tempDir, timeout: 15000 })
+      expect(execMock).not.toHaveBeenCalled()
     })
 
     it("rejects with explicit timeout message when execution times out", async () => {
@@ -148,27 +179,11 @@ describe("CodegenModuleService", () => {
         path.join(cliDir, "package.json"),
         JSON.stringify({ name: "@mercurjs/cli", main: "index.js" })
       )
-
-      const timeoutError = Object.assign(new Error("Command failed"), {
-        killed: true,
-      })
-      const execFileSpy = jest
-        .spyOn(childProcess, "execFile")
-        .mockImplementation((_file, _args, _options, callback) => {
-          if (typeof callback === "function") {
-            callback(
-              timeoutError as unknown as childProcess.ExecException,
-              "",
-              ""
-            )
-          }
-          return {} as childProcess.ChildProcess
-        })
+      answerSpawns(Object.assign(new Error("Command failed"), { killed: true }))
 
       await expect(runCodegen(tempDir)).rejects.toThrow(
         "Codegen timed out after 15s"
       )
-      execFileSpy.mockRestore()
     })
 
     it("rejects with error message on execution failure", async () => {
@@ -180,98 +195,77 @@ describe("CodegenModuleService", () => {
         path.join(cliDir, "package.json"),
         JSON.stringify({ name: "@mercurjs/cli", main: "index.js" })
       )
-
-      const executionError = new Error("Compilation error")
-      const execFileSpy = jest
-        .spyOn(childProcess, "execFile")
-        .mockImplementation((_file, _args, _options, callback) => {
-          if (typeof callback === "function") {
-            callback(
-              executionError as unknown as childProcess.ExecException,
-              "",
-              "Compilation error"
-            )
-          }
-          return {} as childProcess.ChildProcess
-        })
+      answerSpawns(new Error("Compilation error"), "Compilation error")
 
       await expect(runCodegen(tempDir)).rejects.toThrow("Compilation error")
-      execFileSpy.mockRestore()
     })
 
     it("falls back to package runner via exec when local CLI is not found", async () => {
       const emptyDir = path.join(tempDir, "isolated")
       fs.mkdirSync(emptyDir, { recursive: true })
       process.env.npm_config_user_agent = "bun/1.1.20"
-
-      const execSpy = jest
-        .spyOn(childProcess, "exec")
-        .mockImplementation((_cmd, _options, callback) => {
-          if (typeof callback === "function") {
-            callback(null, "", "")
-          }
-          return {} as childProcess.ChildProcess
-        })
+      answerSpawns(null)
 
       await runCodegen(emptyDir)
 
-      expect(execSpy).toHaveBeenCalledTimes(1)
-      expect(execSpy.mock.calls[0][0]).toBe("bunx @mercurjs/cli codegen")
-      expect(execSpy.mock.calls[0][1]).toEqual({ cwd: emptyDir })
-      execSpy.mockRestore()
+      expect(execMock).toHaveBeenCalledTimes(1)
+      expect(execMock.mock.calls[0][0]).toBe("bunx @mercurjs/cli codegen")
+      expect(execMock.mock.calls[0][1]).toEqual({ cwd: emptyDir })
+      expect(execFileMock).not.toHaveBeenCalled()
     })
   })
 
+  // The service calls the real runCodegen(process.cwd()); whether that CLI
+  // resolves locally (execFile) or through a runner (exec), both are mocked.
   describe("onApplicationStart", () => {
+    const spawned = (): number =>
+      execFileMock.mock.calls.length + execMock.mock.calls.length
+
     it("skips codegen when NODE_ENV is production", async () => {
       process.env.NODE_ENV = "production"
-      const runSpy = jest.spyOn(utils, "runCodegen").mockResolvedValue(undefined)
+      answerSpawns(null)
       const service = new CodegenModuleService({ logger: mockLogger })
 
       await service.onApplicationStart()
-      expect(runSpy).not.toHaveBeenCalled()
-      runSpy.mockRestore()
+      expect(spawned()).toBe(0)
     })
 
     it("skips codegen when MERCUR_DEV_CODEGEN is false", async () => {
       process.env.NODE_ENV = "development"
       process.env.MERCUR_DEV_CODEGEN = "false"
-      const runSpy = jest.spyOn(utils, "runCodegen").mockResolvedValue(undefined)
+      answerSpawns(null)
       const service = new CodegenModuleService({ logger: mockLogger })
 
       await service.onApplicationStart()
-      expect(runSpy).not.toHaveBeenCalled()
-      runSpy.mockRestore()
+      expect(spawned()).toBe(0)
     })
 
     it("runs codegen in development and logs warnings on failure without throwing", async () => {
       process.env.NODE_ENV = "development"
       delete process.env.MERCUR_DEV_CODEGEN
-      const runSpy = jest
-        .spyOn(utils, "runCodegen")
-        .mockRejectedValue(new Error("Command failed"))
+      answerSpawns(new Error("Command failed"))
       const service = new CodegenModuleService({ logger: mockLogger })
 
       await expect(service.onApplicationStart()).resolves.toBeUndefined()
+      expect(spawned()).toBe(1)
       expect(mockLogger.warn).toHaveBeenCalledWith(
         expect.stringContaining("Codegen failed: Command failed")
       )
-      runSpy.mockRestore()
     })
 
     it("logs timeout warning without throwing when codegen times out", async () => {
       process.env.NODE_ENV = "development"
       delete process.env.MERCUR_DEV_CODEGEN
-      const runSpy = jest
-        .spyOn(utils, "runCodegen")
-        .mockRejectedValue(new Error("Codegen timed out after 15s"))
+      answerSpawns(Object.assign(new Error("Command failed"), { killed: true }))
       const service = new CodegenModuleService({ logger: mockLogger })
 
       await expect(service.onApplicationStart()).resolves.toBeUndefined()
+      const viaExecFile = execFileMock.mock.calls.length === 1
       expect(mockLogger.warn).toHaveBeenCalledWith(
-        "Codegen failed: Codegen timed out after 15s"
+        viaExecFile
+          ? "Codegen failed: Codegen timed out after 15s"
+          : "Codegen failed: Command failed"
       )
-      runSpy.mockRestore()
     })
   })
 })

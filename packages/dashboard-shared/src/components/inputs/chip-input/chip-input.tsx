@@ -1,4 +1,5 @@
 import { XMarkMini } from "@medusajs/icons"
+import { useTranslation } from "react-i18next"
 import { Badge, clx } from "@medusajs/ui"
 import { AnimatePresence, motion } from "motion/react"
 import {
@@ -39,6 +40,7 @@ export const ChipInput = forwardRef<HTMLInputElement, ChipInputProps>(
     },
     ref
   ) => {
+    const { t } = useTranslation()
     const innerRef = useRef<HTMLInputElement>(null)
 
     const isControlledRef = useRef(typeof value !== "undefined")
@@ -170,7 +172,7 @@ export const ChipInput = forwardRef<HTMLInputElement, ChipInputProps>(
           )
         })}
         <input
-          aria-label="Chip input"
+          aria-label={t("a11y.chipInput")}
           className={clx(
             "caret-ui-fg-base text-ui-fg-base txt-compact-small flex-1 appearance-none bg-transparent",
             "disabled:text-ui-fg-disabled disabled:cursor-not-allowed",

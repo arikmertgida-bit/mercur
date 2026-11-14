@@ -4470,5 +4470,13 @@
     "imageUploadFailed": "图片上传失败",
     "undo": "撤销",
     "redo": "重做"
+  },
+  "a11y": {
+    "fileUpload": "文件上传",
+    "mediaFileInput": "选择媒体文件",
+    "cellInput": "单元格输入",
+    "chipInput": "值输入",
+    "showPassword": "显示密码",
+    "hidePassword": "隐藏密码"
   }
 }

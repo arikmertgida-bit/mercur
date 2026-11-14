@@ -4678,5 +4678,13 @@
     "imageUploadFailed": "فشل تحميل الصورة",
     "undo": "تراجع",
     "redo": "إعادة"
+  },
+  "a11y": {
+    "fileUpload": "رفع ملف",
+    "mediaFileInput": "إدخال ملف وسائط",
+    "cellInput": "إدخال الخلية",
+    "chipInput": "إدخال القيم",
+    "showPassword": "إظهار كلمة المرور",
+    "hidePassword": "إخفاء كلمة المرور"
   }
 }

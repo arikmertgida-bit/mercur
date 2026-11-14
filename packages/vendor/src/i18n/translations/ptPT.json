@@ -4576,5 +4576,13 @@
     "description": "A sua loja foi suspensa pela administração. Não poderá criar novos produtos até que seja reativada. Se tiver dúvidas, a nossa equipa de suporte está aqui para ajudar.",
     "help": "Ajuda",
     "title": "Loja suspensa"
+  },
+  "a11y": {
+    "fileUpload": "Carregamento de ficheiro",
+    "mediaFileInput": "Seleção de ficheiro multimédia",
+    "cellInput": "Entrada de célula",
+    "chipInput": "Entrada de valores",
+    "showPassword": "Mostrar palavra-passe",
+    "hidePassword": "Ocultar palavra-passe"
   }
 }

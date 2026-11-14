@@ -4522,5 +4522,13 @@
     "imageUploadFailed": "Učitavanje slike nije uspjelo",
     "undo": "Poništi",
     "redo": "Ponovi"
+  },
+  "a11y": {
+    "fileUpload": "Otpremanje datoteke",
+    "mediaFileInput": "Odabir medijske datoteke",
+    "cellInput": "Unos u ćeliju",
+    "chipInput": "Unos vrijednosti",
+    "showPassword": "Prikaži lozinku",
+    "hidePassword": "Sakrij lozinku"
   }
 }

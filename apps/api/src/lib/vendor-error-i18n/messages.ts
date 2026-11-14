@@ -29,8 +29,6 @@ export interface VendorErrorMessages {
   tooBig: string
   invalidFormat: string
   unrecognizedKeys: string
-  /** "{entity} was not found (id: {id})." — entity/id are extracted from the original English message. */
-  notFoundTemplate: string
   typeFallback: VendorErrorTypeFallback
   /** Tier-3 catch-all for unmodeled/unstructured errors — never the raw English message. */
   genericUnexpected: string
@@ -45,7 +43,6 @@ export const VENDOR_ERROR_MESSAGES: Record<VendorLanguage, VendorErrorMessages> 
     tooBig: "{field} çok büyük (en fazla {max}).",
     invalidFormat: "{field} geçerli bir biçimde değil.",
     unrecognizedKeys: "Tanınmayan alan(lar): {keys}.",
-    notFoundTemplate: "{entity} bulunamadı (kimlik: {id}).",
     typeFallback: {
       notFound: "İstenen kayıt bulunamadı.",
       invalidData: "Gönderilen veriler geçersiz.",
@@ -74,7 +71,6 @@ export const VENDOR_ERROR_MESSAGES: Record<VendorLanguage, VendorErrorMessages> 
     tooBig: "{field} ist zu groß (maximal {max}).",
     invalidFormat: "{field} hat kein gültiges Format.",
     unrecognizedKeys: "Unbekannte Felder: {keys}.",
-    notFoundTemplate: "{entity} wurde nicht gefunden (ID: {id}).",
     typeFallback: {
       notFound: "Der angeforderte Datensatz wurde nicht gefunden.",
       invalidData: "Die übermittelten Daten sind ungültig.",
@@ -103,7 +99,6 @@ export const VENDOR_ERROR_MESSAGES: Record<VendorLanguage, VendorErrorMessages> 
     tooBig: "{field} est trop grand (maximum {max}).",
     invalidFormat: "{field} n'est pas dans un format valide.",
     unrecognizedKeys: "Champ(s) non reconnu(s) : {keys}.",
-    notFoundTemplate: "{entity} introuvable (id : {id}).",
     typeFallback: {
       notFound: "L'enregistrement demandé est introuvable.",
       invalidData: "Les données envoyées sont invalides.",
@@ -132,7 +127,6 @@ export const VENDOR_ERROR_MESSAGES: Record<VendorLanguage, VendorErrorMessages> 
     tooBig: "{field} es demasiado grande (máximo {max}).",
     invalidFormat: "{field} no tiene un formato válido.",
     unrecognizedKeys: "Campo(s) no reconocido(s): {keys}.",
-    notFoundTemplate: "No se encontró {entity} (id: {id}).",
     typeFallback: {
       notFound: "No se encontró el registro solicitado.",
       invalidData: "Los datos enviados no son válidos.",
@@ -161,7 +155,6 @@ export const VENDOR_ERROR_MESSAGES: Record<VendorLanguage, VendorErrorMessages> 
     tooBig: "{field} è troppo grande (massimo {max}).",
     invalidFormat: "{field} non ha un formato valido.",
     unrecognizedKeys: "Campo/i non riconosciuto/i: {keys}.",
-    notFoundTemplate: "{entity} non trovato (id: {id}).",
     typeFallback: {
       notFound: "Il record richiesto non è stato trovato.",
       invalidData: "I dati inviati non sono validi.",
@@ -190,7 +183,6 @@ export const VENDOR_ERROR_MESSAGES: Record<VendorLanguage, VendorErrorMessages> 
     tooBig: "{field} é muito grande (máximo {max}).",
     invalidFormat: "{field} não está em um formato válido.",
     unrecognizedKeys: "Campo(s) não reconhecido(s): {keys}.",
-    notFoundTemplate: "{entity} não encontrado (id: {id}).",
     typeFallback: {
       notFound: "O registro solicitado não foi encontrado.",
       invalidData: "Os dados enviados são inválidos.",
@@ -219,7 +211,6 @@ export const VENDOR_ERROR_MESSAGES: Record<VendorLanguage, VendorErrorMessages> 
     tooBig: "{field} é demasiado grande (máximo {max}).",
     invalidFormat: "{field} não está num formato válido.",
     unrecognizedKeys: "Campo(s) não reconhecido(s): {keys}.",
-    notFoundTemplate: "{entity} não encontrado (id: {id}).",
     typeFallback: {
       notFound: "O registo solicitado não foi encontrado.",
       invalidData: "Os dados enviados são inválidos.",
@@ -248,7 +239,6 @@ export const VENDOR_ERROR_MESSAGES: Record<VendorLanguage, VendorErrorMessages> 
     tooBig: "{field} слишком велико (максимум {max}).",
     invalidFormat: "{field} имеет неверный формат.",
     unrecognizedKeys: "Нераспознанные поля: {keys}.",
-    notFoundTemplate: "{entity} не найден(о) (id: {id}).",
     typeFallback: {
       notFound: "Запрошенная запись не найдена.",
       invalidData: "Отправленные данные недействительны.",
@@ -277,7 +267,6 @@ export const VENDOR_ERROR_MESSAGES: Record<VendorLanguage, VendorErrorMessages> 
     tooBig: "{field} занадто велике (максимум {max}).",
     invalidFormat: "{field} має неправильний формат.",
     unrecognizedKeys: "Нерозпізнані поля: {keys}.",
-    notFoundTemplate: "{entity} не знайдено (id: {id}).",
     typeFallback: {
       notFound: "Запитаний запис не знайдено.",
       invalidData: "Надіслані дані недійсні.",
@@ -306,7 +295,6 @@ export const VENDOR_ERROR_MESSAGES: Record<VendorLanguage, VendorErrorMessages> 
     tooBig: "Pole {field} jest za duże (maksimum {max}).",
     invalidFormat: "Pole {field} ma nieprawidłowy format.",
     unrecognizedKeys: "Nierozpoznane pole/pola: {keys}.",
-    notFoundTemplate: "Nie znaleziono: {entity} (id: {id}).",
     typeFallback: {
       notFound: "Żądany rekord nie został znaleziony.",
       invalidData: "Przesłane dane są nieprawidłowe.",
@@ -335,7 +323,6 @@ export const VENDOR_ERROR_MESSAGES: Record<VendorLanguage, VendorErrorMessages> 
     tooBig: "Pole {field} je příliš velké (maximálně {max}).",
     invalidFormat: "Pole {field} nemá platný formát.",
     unrecognizedKeys: "Nerozpoznaná pole: {keys}.",
-    notFoundTemplate: "{entity} nebylo nalezeno (id: {id}).",
     typeFallback: {
       notFound: "Požadovaný záznam nebyl nalezen.",
       invalidData: "Odeslaná data jsou neplatná.",
@@ -364,7 +351,6 @@ export const VENDOR_ERROR_MESSAGES: Record<VendorLanguage, VendorErrorMessages> 
     tooBig: "Полето {field} е твърде голямо (максимум {max}).",
     invalidFormat: "Полето {field} няма валиден формат.",
     unrecognizedKeys: "Непознати полета: {keys}.",
-    notFoundTemplate: "{entity} не е намерен(о) (id: {id}).",
     typeFallback: {
       notFound: "Заявеният запис не е намерен.",
       invalidData: "Изпратените данни са невалидни.",
@@ -393,7 +379,6 @@ export const VENDOR_ERROR_MESSAGES: Record<VendorLanguage, VendorErrorMessages> 
     tooBig: "Polje {field} je preveliko (maksimalno {max}).",
     invalidFormat: "Polje {field} nema validan format.",
     unrecognizedKeys: "Neprepoznata polja: {keys}.",
-    notFoundTemplate: "{entity} nije pronađen(o) (id: {id}).",
     typeFallback: {
       notFound: "Traženi zapis nije pronađen.",
       invalidData: "Poslani podaci nisu validni.",
@@ -422,7 +407,6 @@ export const VENDOR_ERROR_MESSAGES: Record<VendorLanguage, VendorErrorMessages> 
     tooBig: "Το πεδίο {field} είναι πολύ μεγάλο (μέγιστο {max}).",
     invalidFormat: "Το πεδίο {field} δεν έχει έγκυρη μορφή.",
     unrecognizedKeys: "Μη αναγνωρισμένα πεδία: {keys}.",
-    notFoundTemplate: "Δεν βρέθηκε: {entity} (id: {id}).",
     typeFallback: {
       notFound: "Η εγγραφή που ζητήθηκε δεν βρέθηκε.",
       invalidData: "Τα δεδομένα που υποβλήθηκαν δεν είναι έγκυρα.",
@@ -451,7 +435,6 @@ export const VENDOR_ERROR_MESSAGES: Record<VendorLanguage, VendorErrorMessages> 
     tooBig: "فیلد {field} خیلی بزرگ است (حداکثر {max}).",
     invalidFormat: "فیلد {field} قالب معتبری ندارد.",
     unrecognizedKeys: "فیلد(های) ناشناخته: {keys}.",
-    notFoundTemplate: "{entity} یافت نشد (شناسه: {id}).",
     typeFallback: {
       notFound: "رکورد درخواستی یافت نشد.",
       invalidData: "داده‌های ارسالی نامعتبر است.",
@@ -480,7 +463,6 @@ export const VENDOR_ERROR_MESSAGES: Record<VendorLanguage, VendorErrorMessages> 
     tooBig: "השדה {field} גדול מדי (מקסימום {max}).",
     invalidFormat: "השדה {field} אינו בפורמט תקין.",
     unrecognizedKeys: "שדות לא מזוהים: {keys}.",
-    notFoundTemplate: "{entity} לא נמצא (מזהה: {id}).",
     typeFallback: {
       notFound: "הרשומה המבוקשת לא נמצאה.",
       invalidData: "הנתונים שנשלחו אינם תקינים.",
@@ -509,7 +491,6 @@ export const VENDOR_ERROR_MESSAGES: Record<VendorLanguage, VendorErrorMessages> 
     tooBig: "A(z) {field} mező túl nagy (maximum {max}).",
     invalidFormat: "A(z) {field} mező formátuma érvénytelen.",
     unrecognizedKeys: "Ismeretlen mező(k): {keys}.",
-    notFoundTemplate: "{entity} nem található (azonosító: {id}).",
     typeFallback: {
       notFound: "A kért rekord nem található.",
       invalidData: "A beküldött adatok érvénytelenek.",
@@ -538,7 +519,6 @@ export const VENDOR_ERROR_MESSAGES: Record<VendorLanguage, VendorErrorMessages> 
     tooBig: "{field} terlalu besar (maksimal {max}).",
     invalidFormat: "{field} tidak dalam format yang valid.",
     unrecognizedKeys: "Kolom tidak dikenali: {keys}.",
-    notFoundTemplate: "{entity} tidak ditemukan (id: {id}).",
     typeFallback: {
       notFound: "Data yang diminta tidak ditemukan.",
       invalidData: "Data yang dikirim tidak valid.",
@@ -567,7 +547,6 @@ export const VENDOR_ERROR_MESSAGES: Record<VendorLanguage, VendorErrorMessages> 
     tooBig: "{field} が大きすぎます(最大 {max})。",
     invalidFormat: "{field} の形式が正しくありません。",
     unrecognizedKeys: "認識できないフィールド: {keys}",
-    notFoundTemplate: "{entity} が見つかりません(id: {id})。",
     typeFallback: {
       notFound: "要求されたレコードが見つかりませんでした。",
       invalidData: "送信されたデータが無効です。",
@@ -596,7 +575,6 @@ export const VENDOR_ERROR_MESSAGES: Record<VendorLanguage, VendorErrorMessages> 
     tooBig: "{field} 항목이 너무 큽니다 (최대 {max}).",
     invalidFormat: "{field} 항목의 형식이 올바르지 않습니다.",
     unrecognizedKeys: "인식할 수 없는 필드: {keys}",
-    notFoundTemplate: "{entity}을(를) 찾을 수 없습니다 (id: {id}).",
     typeFallback: {
       notFound: "요청한 레코드를 찾을 수 없습니다.",
       invalidData: "제출된 데이터가 유효하지 않습니다.",
@@ -625,7 +603,6 @@ export const VENDOR_ERROR_MESSAGES: Record<VendorLanguage, VendorErrorMessages> 
     tooBig: "Laukas {field} yra per didelis (maksimum {max}).",
     invalidFormat: "Laukas {field} yra netinkamo formato.",
     unrecognizedKeys: "Neatpažinti laukai: {keys}.",
-    notFoundTemplate: "{entity} nerasta (id: {id}).",
     typeFallback: {
       notFound: "Prašomas įrašas nerastas.",
       invalidData: "Pateikti duomenys yra neteisingi.",
@@ -654,7 +631,6 @@ export const VENDOR_ERROR_MESSAGES: Record<VendorLanguage, VendorErrorMessages> 
     tooBig: "Полето {field} е преголемо (максимум {max}).",
     invalidFormat: "Полето {field} нема валиден формат.",
     unrecognizedKeys: "Непрепознати полиња: {keys}.",
-    notFoundTemplate: "{entity} не е пронајден(о) (id: {id}).",
     typeFallback: {
       notFound: "Бараниот запис не е пронајден.",
       invalidData: "Испратените податоци се невалидни.",
@@ -683,7 +659,6 @@ export const VENDOR_ERROR_MESSAGES: Record<VendorLanguage, VendorErrorMessages> 
     tooBig: "{field} талбар хэтэрхий их байна (дээд тал нь {max}).",
     invalidFormat: "{field} талбарын формат буруу байна.",
     unrecognizedKeys: "Танигдаагүй талбар(ууд): {keys}.",
-    notFoundTemplate: "{entity} олдсонгүй (id: {id}).",
     typeFallback: {
       notFound: "Хүссэн бичлэг олдсонгүй.",
       invalidData: "Илгээсэн өгөгдөл буруу байна.",
@@ -712,7 +687,6 @@ export const VENDOR_ERROR_MESSAGES: Record<VendorLanguage, VendorErrorMessages> 
     tooBig: "{field} is te groot (maximaal {max}).",
     invalidFormat: "{field} heeft geen geldig formaat.",
     unrecognizedKeys: "Onbekende veld(en): {keys}.",
-    notFoundTemplate: "{entity} niet gevonden (id: {id}).",
     typeFallback: {
       notFound: "Het gevraagde record is niet gevonden.",
       invalidData: "De verzonden gegevens zijn ongeldig.",
@@ -741,7 +715,6 @@ export const VENDOR_ERROR_MESSAGES: Record<VendorLanguage, VendorErrorMessages> 
     tooBig: "Câmpul {field} este prea mare (maxim {max}).",
     invalidFormat: "Câmpul {field} nu are un format valid.",
     unrecognizedKeys: "Câmp(uri) nerecunoscut(e): {keys}.",
-    notFoundTemplate: "{entity} nu a fost găsit (id: {id}).",
     typeFallback: {
       notFound: "Înregistrarea solicitată nu a fost găsită.",
       invalidData: "Datele trimise sunt invalide.",
@@ -770,7 +743,6 @@ export const VENDOR_ERROR_MESSAGES: Record<VendorLanguage, VendorErrorMessages> 
     tooBig: "{field} มีค่ามากเกินไป (สูงสุด {max})",
     invalidFormat: "{field} มีรูปแบบไม่ถูกต้อง",
     unrecognizedKeys: "พบฟิลด์ที่ไม่รู้จัก: {keys}",
-    notFoundTemplate: "ไม่พบ {entity} (id: {id})",
     typeFallback: {
       notFound: "ไม่พบข้อมูลที่ร้องขอ",
       invalidData: "ข้อมูลที่ส่งมาไม่ถูกต้อง",
@@ -799,7 +771,6 @@ export const VENDOR_ERROR_MESSAGES: Record<VendorLanguage, VendorErrorMessages> 
     tooBig: "{field} quá lớn (tối đa {max}).",
     invalidFormat: "{field} không đúng định dạng.",
     unrecognizedKeys: "Trường không xác định: {keys}.",
-    notFoundTemplate: "Không tìm thấy {entity} (id: {id}).",
     typeFallback: {
       notFound: "Không tìm thấy bản ghi được yêu cầu.",
       invalidData: "Dữ liệu gửi lên không hợp lệ.",
@@ -828,7 +799,6 @@ export const VENDOR_ERROR_MESSAGES: Record<VendorLanguage, VendorErrorMessages> 
     tooBig: "{field} 太大(最大 {max})。",
     invalidFormat: "{field} 格式不正确。",
     unrecognizedKeys: "无法识别的字段:{keys}。",
-    notFoundTemplate: "未找到 {entity}(id:{id})。",
     typeFallback: {
       notFound: "未找到请求的记录。",
       invalidData: "提交的数据无效。",
@@ -857,7 +827,6 @@ export const VENDOR_ERROR_MESSAGES: Record<VendorLanguage, VendorErrorMessages> 
     tooBig: "{field} 太大(最大 {max})。",
     invalidFormat: "{field} 格式不正確。",
     unrecognizedKeys: "無法辨識的欄位:{keys}。",
-    notFoundTemplate: "找不到 {entity}(id:{id})。",
     typeFallback: {
       notFound: "找不到要求的紀錄。",
       invalidData: "提交的資料無效。",
@@ -886,7 +855,6 @@ export const VENDOR_ERROR_MESSAGES: Record<VendorLanguage, VendorErrorMessages> 
     tooBig: "الحقل {field} كبير جدًا (الحد الأقصى {max}).",
     invalidFormat: "الحقل {field} ليس بتنسيق صحيح.",
     unrecognizedKeys: "حقول غير معروفة: {keys}.",
-    notFoundTemplate: "لم يتم العثور على {entity} (المعرف: {id}).",
     typeFallback: {
       notFound: "لم يتم العثور على السجل المطلوب.",
       invalidData: "البيانات المرسلة غير صالحة.",

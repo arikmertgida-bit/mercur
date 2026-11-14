@@ -21,6 +21,7 @@ import {
 } from "@mercurjs/dashboard-shared";
 
 import { Form } from "@components/common/form";
+import { PasswordInput } from "@components/inputs/password-input";
 import AvatarBox from "@components/common/logo-box/avatar-box";
 import { useSignInForInvite, useSignUpForInvite } from "@hooks/api/auth";
 import { useAcceptInvite } from "@hooks/api/invites";
@@ -366,9 +367,8 @@ const CreateView = ({
                 <Form.Item>
                   <Form.Label>{t("fields.password")}</Form.Label>
                   <Form.Control>
-                    <Input
+                    <PasswordInput
                       autoComplete="new-password"
-                      type="password"
                       {...field}
                     />
                   </Form.Control>
@@ -383,9 +383,8 @@ const CreateView = ({
                   <Form.Item>
                     <Form.Label>{t("fields.repeatPassword")}</Form.Label>
                     <Form.Control>
-                      <Input
+                      <PasswordInput
                         autoComplete="off"
-                        type="password"
                         {...field}
                       />
                     </Form.Control>

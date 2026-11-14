@@ -4470,5 +4470,13 @@
     "imageUploadFailed": "画像のアップロードに失敗しました",
     "undo": "元に戻す",
     "redo": "やり直し"
+  },
+  "a11y": {
+    "fileUpload": "ファイルのアップロード",
+    "mediaFileInput": "メディアファイルの選択",
+    "cellInput": "セルの入力",
+    "chipInput": "値の入力",
+    "showPassword": "パスワードを表示",
+    "hidePassword": "パスワードを隠す"
   }
 }

@@ -4522,5 +4522,13 @@
     "imageUploadFailed": "Falha ao enviar a imagem",
     "undo": "Desfazer",
     "redo": "Refazer"
+  },
+  "a11y": {
+    "fileUpload": "Envio de arquivo",
+    "mediaFileInput": "Seleção de arquivo de mídia",
+    "cellInput": "Entrada de célula",
+    "chipInput": "Entrada de valores",
+    "showPassword": "Mostrar senha",
+    "hidePassword": "Ocultar senha"
   }
 }

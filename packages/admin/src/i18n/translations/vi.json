@@ -4470,5 +4470,13 @@
     "imageUploadFailed": "Không thể tải hình ảnh lên",
     "undo": "Hoàn tác",
     "redo": "Làm lại"
+  },
+  "a11y": {
+    "fileUpload": "Tải tệp lên",
+    "mediaFileInput": "Chọn tệp phương tiện",
+    "cellInput": "Nhập ô",
+    "chipInput": "Nhập giá trị",
+    "showPassword": "Hiện mật khẩu",
+    "hidePassword": "Ẩn mật khẩu"
   }
 }

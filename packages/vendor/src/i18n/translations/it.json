@@ -4576,5 +4576,13 @@
     "description": "Il tuo negozio è stato sospeso dall'amministrazione. Non potrai creare nuovi prodotti finché non verrà riattivato. Per qualsiasi domanda, il nostro team di supporto è qui per aiutarti.",
     "help": "Aiuto",
     "title": "Negozio sospeso"
+  },
+  "a11y": {
+    "fileUpload": "Caricamento file",
+    "mediaFileInput": "Selezione file multimediale",
+    "cellInput": "Inserimento cella",
+    "chipInput": "Inserimento valori",
+    "showPassword": "Mostra password",
+    "hidePassword": "Nascondi password"
   }
 }

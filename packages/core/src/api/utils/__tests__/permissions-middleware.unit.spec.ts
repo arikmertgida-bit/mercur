@@ -2,13 +2,16 @@ import {
   AuthenticatedMedusaRequest,
   MedusaResponse,
 } from "@medusajs/framework"
+import { MedusaError } from "@medusajs/framework/utils"
 import {
   IPermissionResolver,
+  MISSING_PERMISSION_CODE,
   PERMISSIONS_MODULE,
   PermissionMap,
 } from "@mercurjs/types"
 
 import {
+  requireAnyPermission,
   requirePermission,
   resolvePermissionsMiddleware,
 } from "../permissions-middleware"
@@ -80,14 +83,43 @@ describe("permissions middleware", () => {
 
     expect((await run(makeReq(resolver), "orders", "view")).allowed).toHaveBeenCalled()
 
+    // A denial goes through next(error) so the app's error handler can
+    // localize the message (vendor/admin-error-i18n); writing the response
+    // here would bypass it and always answer in English.
     const denied = await run(makeReq(resolver), "payouts", "view")
-    expect(denied.allowed).not.toHaveBeenCalled()
-    expect(denied.res.statusCode).toBe(403)
-    expect(denied.res.body).toEqual(
+    expect(denied.res.body).toBeUndefined()
+    expect(denied.allowed).toHaveBeenCalledTimes(1)
+    const [error] = denied.allowed.mock.calls[0]
+    expect(MedusaError.isMedusaError(error)).toBe(true)
+    expect(error).toEqual(
       expect.objectContaining({
-        code: "MISSING_PERMISSION",
-        permission: "payouts",
-        right: "view",
+        type: MedusaError.Types.FORBIDDEN,
+        code: MISSING_PERMISSION_CODE,
+        message: "Missing required permission: payouts:view",
+      })
+    )
+  })
+
+  it("passes a forbidden error to next when no alternative right is held", async () => {
+    const req = makeReq({
+      resolvePermissions: async (): Promise<PermissionMap> => ({ orders: "view" }),
+    })
+    await resolvePermissionsMiddleware("vendor")(req, makeRes().api, jest.fn())
+
+    const next = jest.fn()
+    const { res, api } = makeRes()
+    requireAnyPermission([
+      { key: "products", right: "edit" },
+      { key: "store", right: "edit" },
+    ])(req, api, next)
+
+    expect(res.body).toBeUndefined()
+    const [error] = next.mock.calls[0]
+    expect(error).toEqual(
+      expect.objectContaining({
+        type: MedusaError.Types.FORBIDDEN,
+        code: MISSING_PERMISSION_CODE,
+        message: "Missing required permission: products:edit or store:edit",
       })
     )
   })

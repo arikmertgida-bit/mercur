@@ -4525,5 +4525,13 @@
     "description": "Ihr Shop wurde von der Verwaltung gesperrt. Sie können keine neuen Produkte erstellen, bis er wieder aktiviert wird. Bei Fragen steht Ihnen unser Support-Team gerne zur Verfügung.",
     "help": "Hilfe",
     "title": "Shop gesperrt"
+  },
+  "a11y": {
+    "fileUpload": "Datei hochladen",
+    "mediaFileInput": "Mediendatei auswählen",
+    "cellInput": "Zelleneingabe",
+    "chipInput": "Werteingabe",
+    "showPassword": "Passwort anzeigen",
+    "hidePassword": "Passwort verbergen"
   }
 }

@@ -4522,5 +4522,13 @@
     "imageUploadFailed": "No se pudo subir la imagen",
     "undo": "Deshacer",
     "redo": "Rehacer"
+  },
+  "a11y": {
+    "fileUpload": "Subida de archivo",
+    "mediaFileInput": "Selección de archivo multimedia",
+    "cellInput": "Entrada de celda",
+    "chipInput": "Entrada de valores",
+    "showPassword": "Mostrar contraseña",
+    "hidePassword": "Ocultar contraseña"
   }
 }

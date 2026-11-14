@@ -4575,5 +4575,13 @@
     "description": "Magazinul dvs. a fost suspendat de administrație. Nu veți putea crea produse noi până la reactivare. Dacă aveți întrebări, echipa noastră de asistență este aici să vă ajute.",
     "help": "Ajutor",
     "title": "Magazin suspendat"
+  },
+  "a11y": {
+    "fileUpload": "Încărcare fișier",
+    "mediaFileInput": "Selectare fișier media",
+    "cellInput": "Introducere în celulă",
+    "chipInput": "Introducere valori",
+    "showPassword": "Afișați parola",
+    "hidePassword": "Ascundeți parola"
   }
 }

@@ -1,5 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Alert, Button, Heading, Hint, Input, Text, toast } from "@medusajs/ui"
+import { PasswordInput } from "@components/inputs/password-input"
 import i18n from "i18next"
 import { AnimatePresence, motion } from "motion/react"
 import { useState } from "react"
@@ -319,9 +320,8 @@ const CreateView = ({
                 return (
                   <Form.Item>
                     <Form.Control>
-                      <Input
+                      <PasswordInput
                         autoComplete="new-password"
-                        type="password"
                         {...field}
                         className="bg-ui-bg-field-component"
                         placeholder={t("fields.password")}
@@ -339,9 +339,8 @@ const CreateView = ({
                 return (
                   <Form.Item>
                     <Form.Control>
-                      <Input
+                      <PasswordInput
                         autoComplete="off"
-                        type="password"
                         {...field}
                         className="bg-ui-bg-field-component"
                         placeholder={t("fields.repeatPassword")}

@@ -2,6 +2,7 @@ import { Children, ReactNode, useState } from "react"
 
 import { Spinner } from "@medusajs/icons"
 import { Button, Heading, Hint, Input, Switch, Text } from "@medusajs/ui"
+import { PasswordInput } from "@components/inputs/password-input"
 import { FormExtensionZone, useExtendableForm } from "@mercurjs/dashboard-shared"
 import { MercurFeatureFlags } from "@mercurjs/types/feature-flags"
 import { Trans, useTranslation } from "react-i18next"
@@ -127,8 +128,7 @@ const RegisterForm = () => {
               <Form.Item>
                 <Form.Label>{t("register.fields.password")}</Form.Label>
                 <Form.Control>
-                  <Input
-                    type="password"
+                  <PasswordInput
                     autoComplete="new-password"
                     {...field}
                   />

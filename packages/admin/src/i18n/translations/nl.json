@@ -4470,5 +4470,13 @@
     "imageUploadFailed": "Afbeelding uploaden mislukt",
     "undo": "Ongedaan maken",
     "redo": "Opnieuw uitvoeren"
+  },
+  "a11y": {
+    "fileUpload": "Bestand uploaden",
+    "mediaFileInput": "Mediabestand kiezen",
+    "cellInput": "Celinvoer",
+    "chipInput": "Waarden invoeren",
+    "showPassword": "Wachtwoord tonen",
+    "hidePassword": "Wachtwoord verbergen"
   }
 }

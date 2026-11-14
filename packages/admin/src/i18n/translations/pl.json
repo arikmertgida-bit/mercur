@@ -4574,5 +4574,13 @@
     "imageUploadFailed": "Nie udało się przesłać obrazu",
     "undo": "Cofnij",
     "redo": "Ponów"
+  },
+  "a11y": {
+    "fileUpload": "Przesyłanie pliku",
+    "mediaFileInput": "Wybór pliku multimedialnego",
+    "cellInput": "Pole komórki",
+    "chipInput": "Wprowadzanie wartości",
+    "showPassword": "Pokaż hasło",
+    "hidePassword": "Ukryj hasło"
   }
 }

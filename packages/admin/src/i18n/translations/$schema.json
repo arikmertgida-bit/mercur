@@ -12642,6 +12642,29 @@
           "type": "string"
         }
       }
+    },
+    "a11y": {
+      "type": "object",
+      "properties": {
+        "fileUpload": {
+          "type": "string"
+        },
+        "mediaFileInput": {
+          "type": "string"
+        },
+        "cellInput": {
+          "type": "string"
+        },
+        "chipInput": {
+          "type": "string"
+        },
+        "showPassword": {
+          "type": "string"
+        },
+        "hidePassword": {
+          "type": "string"
+        }
+      }
     }
   }
 }

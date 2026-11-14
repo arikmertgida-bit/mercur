@@ -4522,5 +4522,13 @@
     "imageUploadFailed": "העלאת התמונה נכשלה",
     "undo": "בטל פעולה",
     "redo": "בצע שוב"
+  },
+  "a11y": {
+    "fileUpload": "העלאת קובץ",
+    "mediaFileInput": "בחירת קובץ מדיה",
+    "cellInput": "קלט תא",
+    "chipInput": "קלט ערכים",
+    "showPassword": "הצג סיסמה",
+    "hidePassword": "הסתר סיסמה"
   }
 }

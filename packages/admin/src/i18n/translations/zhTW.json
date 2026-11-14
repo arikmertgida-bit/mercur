@@ -4470,5 +4470,13 @@
     "imageUploadFailed": "圖片上傳失敗",
     "undo": "復原",
     "redo": "重做"
+  },
+  "a11y": {
+    "fileUpload": "檔案上傳",
+    "mediaFileInput": "選擇媒體檔案",
+    "cellInput": "儲存格輸入",
+    "chipInput": "值輸入",
+    "showPassword": "顯示密碼",
+    "hidePassword": "隱藏密碼"
   }
 }

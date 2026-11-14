@@ -4522,5 +4522,13 @@
     "imageUploadFailed": "Caricamento dell'immagine non riuscito",
     "undo": "Annulla azione",
     "redo": "Ripeti azione"
+  },
+  "a11y": {
+    "fileUpload": "Caricamento file",
+    "mediaFileInput": "Selezione file multimediale",
+    "cellInput": "Inserimento cella",
+    "chipInput": "Inserimento valori",
+    "showPassword": "Mostra password",
+    "hidePassword": "Nascondi password"
   }
 }
