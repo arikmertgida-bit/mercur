@@ -10,9 +10,9 @@
     "uploadLabel": "Nahrát soubor CSV",
     "uploadHint": "Podporovány jsou pouze soubory .csv",
     "importingActivity": "Importují se produkty...",
-    "importSuccessToast": "Úspěšně importováno {{count}} produkt(ů).",
+    "importSuccessToast": "Počet úspěšně importovaných produktů: {{count}}.",
     "importCompleteTitle": "Import dokončen",
-    "importCompleteDescription": "Bylo úspěšně vytvořeno {{count}} produkt(ů).",
+    "importCompleteDescription": "Počet úspěšně vytvořených produktů: {{count}}.",
     "exportHeader": "Exportovat produkty",
     "exportDescription": "Exportujte své produkty jako soubor CSV.",
     "exportBody": "Tímto exportujete všechny své produkty do souboru CSV. Stahování se spustí automaticky, jakmile bude export připraven.",
@@ -184,8 +184,8 @@
       "createdAt": "Vytvořeno",
       "updatedAt": "Aktualizováno"
     },
-    "photos": "Fotografie",
-    "noPhotos": "K této recenzi nebyly přiloženy žádné fotografie.",
+    "photos": "Obrázky",
+    "noPhotos": "K této recenzi nebyly přiloženy žádné obrázky.",
     "hiddenPhoto": "Skryto",
     "status": {
       "answered": "Zodpovězeno",

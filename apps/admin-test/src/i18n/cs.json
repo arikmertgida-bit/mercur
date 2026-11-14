@@ -203,11 +203,11 @@
     },
     "fields": {
       "name": "Název",
-      "handle": "Handle",
+      "handle": "Identifikátor",
       "description": "Popis",
       "active": "Aktivní",
       "internal": "Interní",
-      "title": "Nadpis",
+      "title": "Název",
       "value": "Hodnota",
       "label": "Popisek"
     },
@@ -218,13 +218,13 @@
     "detail": {
       "pendingReview": "Čeká na kontrolu",
       "accept": "Přijmout",
-      "reject": "Odmítnout",
+      "reject": "Zamítnout",
       "acceptPromptTitle": "Přijmout žádost",
       "acceptPromptDescription": "Opravdu chcete přijmout tuto žádost? Tato akce vytvoří danou entitu.",
-      "rejectPromptTitle": "Odmítnout žádost",
-      "rejectPromptDescription": "Opravdu chcete odmítnout tuto žádost? Tuto akci nelze vrátit zpět.",
+      "rejectPromptTitle": "Zamítnout žádost",
+      "rejectPromptDescription": "Opravdu chcete tuto žádost zamítnout? Tuto akci nelze vrátit zpět.",
       "acceptSuccess": "Žádost přijata",
-      "rejectSuccess": "Žádost odmítnuta",
+      "rejectSuccess": "Žádost zamítnuta",
       "submitter": "Odesílatel",
       "reviewer": "Posuzovatel"
     },
@@ -254,8 +254,8 @@
         "resolveSuccess": "Nahlášení vyřešeno.",
         "resolveError": "Nahlášení se nepodařilo vyřešit.",
         "deletePrompt": {
-          "title": "Odstranit recenzi",
-          "description": "Opravdu chcete tuto recenzi odstranit? Tuto akci nelze vrátit zpět."
+          "title": "Smazat recenzi",
+          "description": "Opravdu chcete tuto recenzi smazat? Tuto akci nelze vrátit zpět."
         }
       }
     }
