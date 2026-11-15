@@ -40,6 +40,7 @@ import {
   useDeleteStockLocation,
 } from "../../../../../hooks/api/stock-locations"
 import { getFormattedAddress } from "../../../../../lib/addresses"
+import { localizeCountryList } from "../../../../../lib/format-country-name"
 import {
   countries as staticCountries,
 } from "../../../../../lib/data/countries"
@@ -61,6 +62,8 @@ type LocationGeneralSectionProps = {
 export const LocationGeneralSection = ({
   location,
 }: LocationGeneralSectionProps) => {
+  const { i18n } = useTranslation()
+
   return (
     <>
       <Container className="p-0" data-testid="location-general-section-container">
@@ -68,7 +71,10 @@ export const LocationGeneralSection = ({
           <div data-testid="location-general-section-info">
             <Heading data-testid="location-general-section-heading">{location.name}</Heading>
             <Text className="text-ui-fg-subtle txt-small" data-testid="location-general-section-address">
-              {getFormattedAddress({ address: location.address }).join(", ")}
+              {getFormattedAddress({
+                address: location.address,
+                locale: i18n.language,
+              }).join(", ")}
             </Text>
           </div>
           <Actions location={location} />
@@ -149,7 +155,7 @@ function ShippingOption({
       <div className="flex-1" data-testid={`location-shipping-option-name-${option.id}`}>
         <Text size="small" weight="plus">
           {option.name} - {option.shipping_profile.name} (
-          {formatProvider(option.provider_id)})
+          {formatProvider(option.provider_id, t)})
         </Text>
       </div>
       <Badge
@@ -317,7 +323,7 @@ function ServiceZone({
   fulfillmentSetId,
   type,
 }: ServiceZoneProps) {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const prompt = usePrompt()
   const [open, setOpen] = useState(true)
 
@@ -363,8 +369,8 @@ function ServiceZone({
       )
       .filter(isTruthy)
 
-    return countries.sort((c1, c2) => c1.name.localeCompare(c2.name))
-  }, [zone.geo_zones])
+    return localizeCountryList(countries, i18n.language)
+  }, [zone.geo_zones, i18n.language])
 
   const [shippingOptionsCount, returnOptionsCount] = useMemo(() => {
     const options = zone.shipping_options

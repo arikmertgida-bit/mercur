@@ -172,6 +172,14 @@ export function translateStoreError(
       }
     }
 
+    if (error.code === MedusaError.Codes.INSUFFICIENT_INVENTORY) {
+      return {
+        code: error.code,
+        type: error.type,
+        message: messages.insufficientInventory,
+      }
+    }
+
     return {
       code: error.code ?? "unknown_error",
       type: error.type,

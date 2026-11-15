@@ -2,6 +2,7 @@ import { errorHandler as defaultErrorHandler } from "@medusajs/framework/http"
 import type { MedusaErrorHandlerFunction } from "@medusajs/framework/http"
 import { MedusaError } from "@medusajs/framework/utils"
 
+import { toHandledError } from "../errors"
 import { resolveKayiLogger } from "../logger"
 import { resolveVendorLanguage } from "./languages"
 import { translateVendorError } from "./translate-error"
@@ -55,7 +56,10 @@ export const vendorAwareErrorHandler: MedusaErrorHandlerFunction = (
     req.path.startsWith("/vendor") ||
     req.path.startsWith("/auth/seller") ||
     req.path.startsWith("/auth/member")
-  if (!isVendorScoped || !(error instanceof Error)) {
+  // Workflow failures arrive serialized (not `instanceof Error`); normalize
+  // them so they are translated too instead of falling through in English.
+  const handledError = toHandledError(error)
+  if (!isVendorScoped || !handledError) {
     fallbackErrorHandler(error, req, res, next)
     return
   }
@@ -66,13 +70,13 @@ export const vendorAwareErrorHandler: MedusaErrorHandlerFunction = (
     return
   }
 
-  const translated = translateVendorError(error, language)
+  const translated = translateVendorError(handledError, language)
 
   const logger = resolveKayiLogger(req.scope)
   if (statusCodeFor(translated.type) >= 500) {
-    logger.error(`[vendor-error-i18n:${language}] ${error.message}`)
+    logger.error(`[vendor-error-i18n:${language}] ${handledError.message}`)
   } else {
-    logger.info(`[vendor-error-i18n:${language}] ${error.message}`)
+    logger.info(`[vendor-error-i18n:${language}] ${handledError.message}`)
   }
 
   res.status(statusCodeFor(translated.type)).json(translated)

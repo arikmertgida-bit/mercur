@@ -107,7 +107,7 @@ const PAGE_SIZE = 50
 const AreaStackedModal = () => {
   const form = useFormContext<GeoZoneValues>()
 
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const { getValues, setValue } = form
   const { setIsOpen, getIsOpen } = useStackedModal()
 
@@ -130,6 +130,7 @@ const AreaStackedModal = () => {
       iso_3: c.iso_3,
       num_code: c.num_code,
     })),
+    locale: i18n.language,
     ...searchParams,
   })
 

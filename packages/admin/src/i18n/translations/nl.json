@@ -1027,6 +1027,14 @@
       "updated_at": "Bijgewerkt"
     }
   },
+  "providers": {
+    "tokens": {
+      "system": "Systeem",
+      "default": "Standaard",
+      "manual": "Handmatig",
+      "test": "Test"
+    }
+  },
   "collections": {
     "domain": "Collecties",
     "subtitle": "Organiseer producten in collecties.",

@@ -3,9 +3,11 @@ import {
   forwardRef,
   ForwardRefExoticComponent,
   RefAttributes,
+  useMemo,
 } from "react";
 import { useTranslation } from "react-i18next";
 import { countries } from "../../../lib/data/countries";
+import { localizeCountryList } from "../../../lib/format-country-name";
 import { Select } from "@medusajs/ui";
 
 type CountrySelectProps = ComponentPropsWithoutRef<typeof Select> & {
@@ -20,7 +22,12 @@ export const CountrySelect: ForwardRefExoticComponent<
   HTMLButtonElement,
   CountrySelectProps
 >(({ disabled, placeholder, defaultValue, onChange, ...field }, ref) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+
+  const localizedCountries = useMemo(
+    () => localizeCountryList(countries, i18n.language),
+    [i18n.language]
+  );
 
   return (
     <div className="relative">
@@ -37,7 +44,7 @@ export const CountrySelect: ForwardRefExoticComponent<
           />
         </Select.Trigger>
         <Select.Content>
-          {countries.map((country) => (
+          {localizedCountries.map((country) => (
             <Select.Item
               key={country.iso_2}
               value={country.iso_2.toLowerCase()}

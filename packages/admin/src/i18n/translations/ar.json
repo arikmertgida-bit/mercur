@@ -1075,6 +1075,14 @@
       "updated_at": "تم التحديث في"
     }
   },
+  "providers": {
+    "tokens": {
+      "system": "النظام",
+      "default": "افتراضي",
+      "manual": "يدوي",
+      "test": "اختبار"
+    }
+  },
   "collections": {
     "domain": "المجموعات",
     "subtitle": "تنظيم المنتجات في مجموعات.",

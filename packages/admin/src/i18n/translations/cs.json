@@ -1039,6 +1039,14 @@
       "updated_at": "Aktualizováno"
     }
   },
+  "providers": {
+    "tokens": {
+      "system": "Systém",
+      "default": "Výchozí",
+      "manual": "Ruční",
+      "test": "Test"
+    }
+  },
   "collections": {
     "domain": "Kolekce",
     "subtitle": "Organizujte produkty do kolekcí.",

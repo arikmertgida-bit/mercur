@@ -1027,6 +1027,14 @@
       }
     }
   },
+  "providers": {
+    "tokens": {
+      "system": "System",
+      "default": "Standard",
+      "manual": "Manuell",
+      "test": "Test"
+    }
+  },
   "collections": {
     "domain": "Sammlungen",
     "subtitle": "Organisieren Sie Produkte in Sammlungen.",

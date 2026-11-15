@@ -1027,6 +1027,14 @@
       "updated_at": "更新时间"
     }
   },
+  "providers": {
+    "tokens": {
+      "system": "系统",
+      "default": "默认",
+      "manual": "手动",
+      "test": "测试"
+    }
+  },
   "collections": {
     "domain": "系列",
     "subtitle": "将商品组织到系列中。",

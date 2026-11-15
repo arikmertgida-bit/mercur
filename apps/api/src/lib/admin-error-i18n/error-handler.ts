@@ -2,6 +2,7 @@ import { errorHandler as defaultErrorHandler } from "@medusajs/framework/http"
 import type { MedusaErrorHandlerFunction } from "@medusajs/framework/http"
 import { MedusaError } from "@medusajs/framework/utils"
 
+import { toHandledError } from "../errors"
 import { resolveKayiLogger } from "../logger"
 import { resolveAdminLanguage } from "./languages"
 import { translateAdminError } from "./translate-error"
@@ -52,7 +53,10 @@ export const adminAwareErrorHandler: MedusaErrorHandlerFunction = (
 ) => {
   const isAdminScoped =
     req.path.startsWith("/admin") || req.path.startsWith("/auth/user")
-  if (!isAdminScoped || !(error instanceof Error)) {
+  // Workflow failures arrive serialized (not `instanceof Error`); normalize
+  // them so they are translated too instead of falling through in English.
+  const handledError = toHandledError(error)
+  if (!isAdminScoped || !handledError) {
     fallbackErrorHandler(error, req, res, next)
     return
   }
@@ -63,13 +67,13 @@ export const adminAwareErrorHandler: MedusaErrorHandlerFunction = (
     return
   }
 
-  const translated = translateAdminError(error, language)
+  const translated = translateAdminError(handledError, language)
 
   const logger = resolveKayiLogger(req.scope)
   if (statusCodeFor(translated.type) >= 500) {
-    logger.error(`[admin-error-i18n:${language}] ${error.message}`)
+    logger.error(`[admin-error-i18n:${language}] ${handledError.message}`)
   } else {
-    logger.info(`[admin-error-i18n:${language}] ${error.message}`)
+    logger.info(`[admin-error-i18n:${language}] ${handledError.message}`)
   }
 
   res.status(statusCodeFor(translated.type)).json(translated)

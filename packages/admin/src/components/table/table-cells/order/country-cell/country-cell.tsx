@@ -2,6 +2,8 @@ import { Tooltip } from "@medusajs/ui"
 import ReactCountryFlag from "react-country-flag"
 import { PlaceholderCell } from "../../common/placeholder-cell"
 import { HttpTypes } from "@medusajs/types"
+import { useTranslation } from "react-i18next"
+import { getLocalizedCountryName } from "../../../../../lib/format-country-name"
 
 type Country = Omit<HttpTypes.AdminRegionCountry, "id"> & {
   id?: string
@@ -12,15 +14,19 @@ export const CountryCell = ({
 }: {
   country?: Country | null
 }) => {
+  const { i18n } = useTranslation()
   const iso2 = country?.iso_2
 
   if (!country || !iso2) {
     return <PlaceholderCell />
   }
 
+  const localizedName =
+    getLocalizedCountryName(country, i18n.language) ?? country.display_name
+
   return (
     <div className="flex size-5 items-center justify-center">
-      <Tooltip content={country.display_name}>
+      <Tooltip content={localizedName}>
         <div className="flex size-4 items-center justify-center overflow-hidden rounded-sm">
           <ReactCountryFlag
             countryCode={iso2.toUpperCase()}
@@ -29,7 +35,7 @@ export const CountryCell = ({
               width: "16px",
               height: "16px",
             }}
-            aria-label={country.display_name}
+            aria-label={localizedName}
           />
         </div>
       </Tooltip>

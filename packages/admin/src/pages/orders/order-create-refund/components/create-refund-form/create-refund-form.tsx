@@ -200,7 +200,7 @@ export const CreateRefundForm = ({ order }: CreateRefundFormProps) => {
                           )}
                           {" - "}
                         </span>
-                        <span>{formatProvider(payment.provider_id)}</span>
+                        <span>{formatProvider(payment.provider_id, t)}</span>
                         <span> - (#{payment.id.substring(23)})</span>
                       </Select.Item>
                     );

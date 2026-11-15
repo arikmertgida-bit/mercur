@@ -1,6 +1,15 @@
 import { HttpTypes } from "@medusajs/types"
 
+import { getActiveIntlLocale } from "./active-intl-locale"
 import { countries, getCountryByIso2 } from "./data/countries"
+import { getLocalizedCountryName } from "./format-country-name"
+
+/**
+ * Plain (non-hook) helpers: components pass `i18n.language` so the country
+ * name follows the panel language and re-renders when it changes; the
+ * fallback is the active panel language, never hardcoded English.
+ */
+const fallbackLocale = (): string => getActiveIntlLocale() ?? "en"
 
 export const isSameAddress = (
   a?: HttpTypes.AdminOrderAddress | null,
@@ -24,6 +33,7 @@ export const isSameAddress = (
 
 export const getFormattedAddress = ({
   address,
+  locale = fallbackLocale(),
 }: {
   address?: {
     first_name?: string | null
@@ -39,7 +49,8 @@ export const getFormattedAddress = ({
       display_name?: string | null
     } | null
   } | null
-}) => {
+  locale?: string
+}): string[] => {
   if (!address) {
     return []
   }
@@ -86,12 +97,19 @@ export const getFormattedAddress = ({
   }
 
   if (country?.display_name) {
-    formattedAddress.push(country.display_name)
+    formattedAddress.push(
+      getLocalizedCountryName(
+        { iso_2: country_code, display_name: country.display_name },
+        locale
+      ) ?? country.display_name
+    )
   } else if (country_code) {
     const country = getCountryByIso2(country_code)
 
     if (country) {
-      formattedAddress.push(country.display_name)
+      formattedAddress.push(
+        getLocalizedCountryName(country, locale) ?? country.display_name
+      )
     } else {
       formattedAddress.push(country_code.toUpperCase())
     }
@@ -100,11 +118,17 @@ export const getFormattedAddress = ({
   return formattedAddress
 }
 
-export const getFormattedCountry = (countryCode: string | null | undefined) => {
+export const getFormattedCountry = (
+  countryCode: string | null | undefined,
+  locale: string = fallbackLocale()
+): string => {
   if (!countryCode) {
     return ""
   }
 
   const country = countries.find((c) => c.iso_2 === countryCode)
-  return country ? country.display_name : countryCode
+  if (!country) {
+    return countryCode
+  }
+  return getLocalizedCountryName(country, locale) ?? country.display_name
 }

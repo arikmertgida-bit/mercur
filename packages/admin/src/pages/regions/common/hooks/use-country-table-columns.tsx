@@ -17,7 +17,9 @@ export const useCountryTableColumns = () => {
       }),
       columnHelper.accessor("iso_2", {
         header: t("fields.code"),
-        cell: ({ getValue }) => <span className="uppercase">{getValue()}</span>,
+        // String#toUpperCase is locale-independent; CSS `uppercase` follows the
+        // page language and turns "vi" into "Vİ" in Turkish.
+        cell: ({ getValue }) => getValue().toUpperCase(),
       }),
     ],
     [t]

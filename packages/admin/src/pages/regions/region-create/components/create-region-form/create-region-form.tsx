@@ -38,6 +38,7 @@ import {
 } from "../../../../../lib/data/countries";
 import { CurrencyInfo } from "../../../../../lib/data/currencies";
 import { formatProvider } from "../../../../../lib/format-provider";
+import { getLocalizedCountryName } from "../../../../../lib/format-country-name";
 import { useCountries } from "../../../common/hooks/use-countries";
 import { useCountryTableColumns } from "../../../common/hooks/use-country-table-columns";
 import { useCountryTableQuery } from "../../../common/hooks/use-country-table-query";
@@ -87,7 +88,7 @@ export const CreateRegionForm = ({ currencies }: CreateRegionFormProps) => {
     defaultValue: [],
   });
 
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const { mutateAsync: createRegion, isPending: isPendingRegion } =
     useCreateRegion();
@@ -129,6 +130,7 @@ export const CreateRegionForm = ({ currencies }: CreateRegionFormProps) => {
       region_id: null,
       region: {},
     })),
+    locale: i18n.language,
     ...searchParams,
   });
 
@@ -159,7 +161,10 @@ export const CreateRegionForm = ({ currencies }: CreateRegionFormProps) => {
       selected.map((key) => ({
         code: key,
         name:
-          staticCountries.find((c) => c.iso_2 === key)?.display_name ?? key,
+          getLocalizedCountryName(
+            staticCountries.find((c) => c.iso_2 === key),
+            i18n.language,
+          ) ?? key,
       })),
       { shouldDirty: true, shouldTouch: true },
     );
@@ -201,7 +206,7 @@ export const CreateRegionForm = ({ currencies }: CreateRegionFormProps) => {
     queryKey: ["payment_providers"],
     getOptions: (data) =>
       data.payment_providers.map((pp) => ({
-        label: formatProvider(pp.id),
+        label: formatProvider(pp.id, t),
         value: pp.id,
       })),
     enabled: paymentsGate.allowed,

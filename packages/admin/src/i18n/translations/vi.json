@@ -1027,6 +1027,14 @@
       "updated_at": "Đã cập nhật"
     }
   },
+  "providers": {
+    "tokens": {
+      "system": "Hệ thống",
+      "default": "Mặc định",
+      "manual": "Thủ công",
+      "test": "Thử nghiệm"
+    }
+  },
   "collections": {
     "domain": "Bộ sưu tập",
     "subtitle": "Sắp xếp sản phẩm vào các bộ sưu tập.",

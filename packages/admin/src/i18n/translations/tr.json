@@ -1027,6 +1027,14 @@
       "updated_at": "Güncellenme"
     }
   },
+  "providers": {
+    "tokens": {
+      "system": "Sistem",
+      "default": "Varsayılan",
+      "manual": "Manuel",
+      "test": "Test"
+    }
+  },
   "collections": {
     "domain": "Koleksiyonlar",
     "subtitle": "Ürünleri koleksiyonlar halinde organize edin.",

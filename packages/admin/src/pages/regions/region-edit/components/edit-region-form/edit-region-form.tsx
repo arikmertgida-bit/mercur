@@ -69,7 +69,7 @@ export const EditRegionForm = ({
       }),
     getOptions: (data) =>
       data.payment_providers.map((pp) => ({
-        label: formatProvider(pp.id),
+        label: formatProvider(pp.id, t),
         value: pp.id,
       })),
     enabled: paymentsGate.allowed,

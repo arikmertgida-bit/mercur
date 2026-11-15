@@ -1061,6 +1061,14 @@
       "updated_at": "Actualizado en"
     }
   },
+  "providers": {
+    "tokens": {
+      "system": "Sistema",
+      "default": "Predeterminado",
+      "manual": "Manual",
+      "test": "Prueba"
+    }
+  },
   "collections": {
     "domain": "Colecciones",
     "subtitle": "Organiza los productos en colecciones.",

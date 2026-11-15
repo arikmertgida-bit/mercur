@@ -73,7 +73,7 @@ const Root = ({
     enabled: providersGate.allowed,
     getOptions: (data) =>
       data.fulfillment_providers.map((provider) => ({
-        label: formatProvider(provider.id),
+        label: formatProvider(provider.id, t),
         value: provider.id,
       })),
   })

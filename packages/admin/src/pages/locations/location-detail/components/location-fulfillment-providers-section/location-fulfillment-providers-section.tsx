@@ -66,7 +66,7 @@ function LocationsFulfillmentProvidersSection({
                   </IconAvatar>
 
                   <div className="txt-compact-small" data-testid={`location-fulfillment-providers-section-provider-name-${fulfillmentProvider.id}`}>
-                    {formatProvider(fulfillmentProvider.id)}
+                    {formatProvider(fulfillmentProvider.id, t)}
                   </div>
                 </Fragment>
               )

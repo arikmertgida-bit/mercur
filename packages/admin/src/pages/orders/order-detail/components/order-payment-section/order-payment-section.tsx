@@ -3,6 +3,7 @@ import DisplayId from "@components/common/display-id/display-id";
 import { useCapturePayment } from "@hooks/api";
 import { isOrderActionable, PermissionAction } from "@mercurjs/dashboard-shared";
 import { formatCurrency } from "@lib/format-currency";
+import { formatProvider } from "@lib/format-provider";
 import { getLocaleAmount, getStylizedAmount } from "@lib/money-amount-helpers";
 import { getOrderPaymentStatus } from "@lib/order-helpers";
 import { getPaymentsFromOrder } from "@lib/orders";
@@ -244,10 +245,9 @@ const Payment = ({
           <Text
             size="small"
             leading="compact"
-            className="capitalize"
             data-testid={`order-payment-${payment.id}-provider`}
           >
-            {payment.provider_id}
+            {formatProvider(payment.provider_id, t)}
           </Text>
         </div>
         <div className="flex items-center justify-end">

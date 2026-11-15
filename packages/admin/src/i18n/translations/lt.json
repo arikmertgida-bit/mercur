@@ -1039,6 +1039,14 @@
       "updated_at": "Atnaujinta"
     }
   },
+  "providers": {
+    "tokens": {
+      "system": "Sistema",
+      "default": "Numatytasis",
+      "manual": "Rankinis",
+      "test": "Testas"
+    }
+  },
   "collections": {
     "domain": "Kolekcijos",
     "subtitle": "Suskirstykite prekes į kolekcijas.",

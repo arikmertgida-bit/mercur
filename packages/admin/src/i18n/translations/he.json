@@ -1039,6 +1039,14 @@
       "updated_at": "עודכן בתאריך"
     }
   },
+  "providers": {
+    "tokens": {
+      "system": "מערכת",
+      "default": "ברירת מחדל",
+      "manual": "ידני",
+      "test": "בדיקה"
+    }
+  },
   "collections": {
     "domain": "קולקציות",
     "subtitle": "ארגן מוצרים לקולקציות.",

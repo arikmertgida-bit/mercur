@@ -883,6 +883,14 @@
       }
     }
   },
+  "providers": {
+    "tokens": {
+      "system": "System",
+      "default": "Default",
+      "manual": "Manual",
+      "test": "Test"
+    }
+  },
   "collections": {
     "domain": "Collections",
     "subtitle": "Organize products into collections.",

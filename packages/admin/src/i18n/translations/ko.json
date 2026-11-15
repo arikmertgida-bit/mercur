@@ -1027,6 +1027,14 @@
       "updated_at": "업데이트일"
     }
   },
+  "providers": {
+    "tokens": {
+      "system": "시스템",
+      "default": "기본값",
+      "manual": "수동",
+      "test": "테스트"
+    }
+  },
   "collections": {
     "domain": "컬렉션",
     "subtitle": "상품을 컬렉션으로 구성합니다.",

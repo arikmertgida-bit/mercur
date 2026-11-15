@@ -1039,6 +1039,14 @@
       }
     }
   },
+  "providers": {
+    "tokens": {
+      "system": "Sistema",
+      "default": "Padrão",
+      "manual": "Manual",
+      "test": "Teste"
+    }
+  },
   "collections": {
     "domain": "Coleções",
     "subtitle": "Organize os produtos em coleções.",

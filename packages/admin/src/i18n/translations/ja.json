@@ -1027,6 +1027,14 @@
       }
     }
   },
+  "providers": {
+    "tokens": {
+      "system": "システム",
+      "default": "デフォルト",
+      "manual": "手動",
+      "test": "テスト"
+    }
+  },
   "collections": {
     "domain": "コレクション",
     "subtitle": "商品をコレクションに整理します。",

@@ -16,6 +16,7 @@ import { ActionMenu } from "../../../../../components/common/action-menu"
 import { isTruthy } from "../../../../../lib/is-truthy"
 import { IconAvatar } from "../../../../../components/common/icon-avatar"
 import { getCountryByIso2 } from "../../../../../lib/data/countries"
+import { getLocalizedCountryName } from "../../../../../lib/format-country-name"
 import {
   getProvinceByIso2,
   isProvinceInCountry,
@@ -37,19 +38,20 @@ export const TaxRegionCard = ({
   asLink = true,
   badge,
 }: TaxRegionCardProps) => {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const { id, country_code, province_code } = taxRegion
 
   const country = getCountryByIso2(country_code)
+  const countryName = getLocalizedCountryName(country, i18n.language)
   const province = getProvinceByIso2(province_code)
 
-  let name = "N/A"
+  let name = t("general.notAvailable")
   let misconfiguredSublevelTooltip: string | null = null
 
   if (province || province_code) {
     name = province || province_code?.toUpperCase() || name
   } else if (country || country_code) {
-    name = country?.display_name || country_code?.toUpperCase() || name
+    name = countryName || country_code?.toUpperCase() || name
   }
 
   if (
@@ -61,7 +63,7 @@ export const TaxRegionCard = ({
     misconfiguredSublevelTooltip = t(
       "taxRegions.fields.sublevels.tooltips.notPartOfCountry",
       {
-        country: country?.display_name,
+        country: countryName,
         province: province_code.toUpperCase(),
       }
     )
@@ -101,7 +103,7 @@ export const TaxRegionCard = ({
                       ? { width: "12px", height: "9px" }
                       : { width: "16px", height: "12px" }
                   }
-                  aria-label={country?.display_name}
+                  aria-label={countryName}
                 />
               </div>
             ) : (

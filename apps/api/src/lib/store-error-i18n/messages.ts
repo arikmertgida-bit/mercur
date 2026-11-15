@@ -25,6 +25,8 @@ export interface StoreErrorMessages {
   typeFallback: StoreErrorTypeFallback
   /** Tier-3 catch-all for unmodeled/unstructured errors — never the raw English message. */
   genericUnexpected: string
+  /** Medusa `insufficient_inventory` (cart/order quantity above available stock). */
+  insufficientInventory: string
 }
 
 export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
@@ -49,6 +51,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
       default: "İşlem tamamlanamadı.",
     },
     genericUnexpected: "Beklenmeyen bir hata oluştu. Lütfen tekrar deneyin.",
+    insufficientInventory: "Yeterli stok bulunmuyor.",
   },
   de: {
     requiredField: "{field} ist erforderlich.",
@@ -71,6 +74,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
       default: "Der Vorgang konnte nicht abgeschlossen werden.",
     },
     genericUnexpected: "Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
+    insufficientInventory: "Nicht ausreichend Lagerbestand verfügbar.",
   },
   fr: {
     requiredField: "{field} est obligatoire.",
@@ -93,6 +97,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
       default: "L'opération n'a pas pu être terminée.",
     },
     genericUnexpected: "Une erreur inattendue s'est produite. Veuillez réessayer.",
+    insufficientInventory: "Stock disponible insuffisant.",
   },
   es: {
     requiredField: "{field} es obligatorio.",
@@ -115,6 +120,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
       default: "No se pudo completar la operación.",
     },
     genericUnexpected: "Se produjo un error inesperado. Vuelve a intentarlo.",
+    insufficientInventory: "No hay suficiente stock disponible.",
   },
   it: {
     requiredField: "{field} è obbligatorio.",
@@ -137,6 +143,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
       default: "Impossibile completare l'operazione.",
     },
     genericUnexpected: "Si è verificato un errore imprevisto. Riprova.",
+    insufficientInventory: "Stock disponibile insufficiente.",
   },
   ptBR: {
     requiredField: "{field} é obrigatório.",
@@ -159,6 +166,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
       default: "Não foi possível concluir a operação.",
     },
     genericUnexpected: "Ocorreu um erro inesperado. Tente novamente.",
+    insufficientInventory: "Estoque insuficiente disponível.",
   },
   ptPT: {
     requiredField: "{field} é obrigatório.",
@@ -181,6 +189,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
       default: "Não foi possível concluir a operação.",
     },
     genericUnexpected: "Ocorreu um erro inesperado. Tente novamente.",
+    insufficientInventory: "Stock insuficiente disponível.",
   },
   ru: {
     requiredField: "{field} обязательно для заполнения.",
@@ -203,6 +212,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
       default: "Не удалось выполнить операцию.",
     },
     genericUnexpected: "Произошла непредвиденная ошибка. Повторите попытку.",
+    insufficientInventory: "Недостаточно товара на складе.",
   },
   uk: {
     requiredField: "{field} є обов'язковим.",
@@ -225,6 +235,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
       default: "Не вдалося завершити операцію.",
     },
     genericUnexpected: "Сталася неочікувана помилка. Спробуйте ще раз.",
+    insufficientInventory: "Недостатньо товару на складі.",
   },
   pl: {
     requiredField: "Pole {field} jest wymagane.",
@@ -247,6 +258,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
       default: "Nie udało się zakończyć operacji.",
     },
     genericUnexpected: "Wystąpił nieoczekiwany błąd. Spróbuj ponownie.",
+    insufficientInventory: "Brak wystarczającego stanu magazynowego.",
   },
   cs: {
     requiredField: "Pole {field} je povinné.",
@@ -269,6 +281,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
       default: "Operaci se nepodařilo dokončit.",
     },
     genericUnexpected: "Došlo k neočekávané chybě. Zkuste to znovu.",
+    insufficientInventory: "Není k dispozici dostatečná zásoba.",
   },
   bg: {
     requiredField: "Полето {field} е задължително.",
@@ -291,6 +304,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
       default: "Операцията не можа да бъде завършена.",
     },
     genericUnexpected: "Възникна неочаквана грешка. Опитайте отново.",
+    insufficientInventory: "Няма достатъчна наличност.",
   },
   bs: {
     requiredField: "Polje {field} je obavezno.",
@@ -313,6 +327,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
       default: "Operacija nije mogla biti završena.",
     },
     genericUnexpected: "Došlo je do neočekivane greške. Pokušajte ponovo.",
+    insufficientInventory: "Nema dovoljno zaliha na stanju.",
   },
   el: {
     requiredField: "Το πεδίο {field} είναι υποχρεωτικό.",
@@ -335,6 +350,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
       default: "Η λειτουργία δεν ολοκληρώθηκε.",
     },
     genericUnexpected: "Παρουσιάστηκε ένα μη αναμενόμενο σφάλμα. Δοκιμάστε ξανά.",
+    insufficientInventory: "Δεν υπάρχει επαρκές απόθεμα.",
   },
   fa: {
     requiredField: "فیلد {field} الزامی است.",
@@ -357,6 +373,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
       default: "عملیات تکمیل نشد.",
     },
     genericUnexpected: "خطای غیرمنتظره‌ای رخ داد. لطفاً دوباره تلاش کنید.",
+    insufficientInventory: "موجودی کافی نیست.",
   },
   he: {
     requiredField: "השדה {field} הוא שדה חובה.",
@@ -379,6 +396,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
       default: "לא ניתן להשלים את הפעולה.",
     },
     genericUnexpected: "אירעה שגיאה בלתי צפויה. נסה שוב.",
+    insufficientInventory: "אין מספיק מלאי זמין.",
   },
   hu: {
     requiredField: "A(z) {field} mező kötelező.",
@@ -401,6 +419,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
       default: "A műveletet nem sikerült befejezni.",
     },
     genericUnexpected: "Váratlan hiba történt. Próbálja újra.",
+    insufficientInventory: "Nincs elegendő készleten lévő termék.",
   },
   id: {
     requiredField: "{field} wajib diisi.",
@@ -423,6 +442,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
       default: "Operasi tidak dapat diselesaikan.",
     },
     genericUnexpected: "Terjadi kesalahan tak terduga. Silakan coba lagi.",
+    insufficientInventory: "Stok tidak mencukupi.",
   },
   ja: {
     requiredField: "{field} は必須です。",
@@ -445,6 +465,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
       default: "操作を完了できませんでした。",
     },
     genericUnexpected: "予期しないエラーが発生しました。もう一度お試しください。",
+    insufficientInventory: "在庫が不足しています。",
   },
   ko: {
     requiredField: "{field} 항목은 필수입니다.",
@@ -467,6 +488,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
       default: "작업을 완료할 수 없습니다.",
     },
     genericUnexpected: "예기치 않은 오류가 발생했습니다. 다시 시도해 주세요.",
+    insufficientInventory: "재고가 부족합니다.",
   },
   lt: {
     requiredField: "Laukas {field} yra privalomas.",
@@ -489,6 +511,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
       default: "Nepavyko užbaigti operacijos.",
     },
     genericUnexpected: "Įvyko netikėta klaida. Bandykite dar kartą.",
+    insufficientInventory: "Nepakanka atsargų.",
   },
   mk: {
     requiredField: "Полето {field} е задолжително.",
@@ -511,6 +534,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
       default: "Операцијата не можеше да се заврши.",
     },
     genericUnexpected: "Настана неочекувана грешка. Обидете се повторно.",
+    insufficientInventory: "Нема доволно залиха на располагање.",
   },
   mn: {
     requiredField: "{field} талбарыг заавал бөглөнө үү.",
@@ -533,6 +557,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
       default: "Үйлдлийг гүйцэтгэж чадсангүй.",
     },
     genericUnexpected: "Гэнэтийн алдаа гарлаа. Дахин оролдоно уу.",
+    insufficientInventory: "Нөөц хүрэлцэхгүй байна.",
   },
   nl: {
     requiredField: "{field} is verplicht.",
@@ -555,6 +580,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
       default: "De bewerking kon niet worden voltooid.",
     },
     genericUnexpected: "Er is een onverwachte fout opgetreden. Probeer het opnieuw.",
+    insufficientInventory: "Onvoldoende voorraad beschikbaar.",
   },
   ro: {
     requiredField: "Câmpul {field} este obligatoriu.",
@@ -577,6 +603,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
       default: "Operațiunea nu a putut fi finalizată.",
     },
     genericUnexpected: "A apărut o eroare neașteptată. Încearcă din nou.",
+    insufficientInventory: "Stoc insuficient disponibil.",
   },
   th: {
     requiredField: "จำเป็นต้องระบุ {field}",
@@ -599,6 +626,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
       default: "ไม่สามารถดำเนินการให้เสร็จสมบูรณ์ได้",
     },
     genericUnexpected: "เกิดข้อผิดพลาดที่ไม่คาดคิด กรุณาลองใหม่อีกครั้ง",
+    insufficientInventory: "สต็อกสินค้าไม่เพียงพอ",
   },
   vi: {
     requiredField: "{field} là bắt buộc.",
@@ -621,6 +649,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
       default: "Không thể hoàn tất thao tác.",
     },
     genericUnexpected: "Đã xảy ra lỗi không mong muốn. Vui lòng thử lại.",
+    insufficientInventory: "Không đủ hàng tồn kho.",
   },
   zhCN: {
     requiredField: "{field} 为必填项。",
@@ -643,6 +672,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
       default: "无法完成该操作。",
     },
     genericUnexpected: "发生意外错误,请重试。",
+    insufficientInventory: "库存不足。",
   },
   zhTW: {
     requiredField: "{field} 為必填項目。",
@@ -665,6 +695,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
       default: "無法完成該操作。",
     },
     genericUnexpected: "發生未預期的錯誤,請重試。",
+    insufficientInventory: "庫存不足。",
   },
   ar: {
     requiredField: "الحقل {field} مطلوب.",
@@ -687,5 +718,6 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
       default: "تعذر إتمام العملية.",
     },
     genericUnexpected: "حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى.",
+    insufficientInventory: "المخزون المتوفر غير كافٍ.",
   },
 }

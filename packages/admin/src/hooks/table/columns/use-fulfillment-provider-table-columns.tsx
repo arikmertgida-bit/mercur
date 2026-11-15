@@ -17,7 +17,7 @@ export const useFulfillmentProviderTableColumns = () => {
     () => [
       columnHelper.accessor("id", {
         header: () => <TextHeader text={t("fields.provider")} />,
-        cell: ({ getValue }) => <TextCell text={formatProvider(getValue())} />,
+        cell: ({ getValue }) => <TextCell text={formatProvider(getValue(), t)} />,
       }),
     ],
     [t]

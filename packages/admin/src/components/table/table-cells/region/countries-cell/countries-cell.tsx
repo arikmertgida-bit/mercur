@@ -2,6 +2,7 @@ import { HttpTypes } from "@medusajs/types"
 import { useTranslation } from "react-i18next"
 
 import { countries as COUNTRIES } from "../../../../../lib/data/countries"
+import { getLocalizedCountryName } from "../../../../../lib/format-country-name"
 import { isTruthy } from "../../../../../lib/is-truthy"
 import { ListSummary } from "../../../../common/list-summary"
 import { PlaceholderCell } from "../../common/placeholder-cell"
@@ -11,6 +12,8 @@ type CountriesCellProps = {
 }
 
 export const CountriesCell = ({ countries }: CountriesCellProps) => {
+  const { i18n } = useTranslation()
+
   if (!countries || countries.length === 0) {
     return <PlaceholderCell />
   }
@@ -18,7 +21,10 @@ export const CountriesCell = ({ countries }: CountriesCellProps) => {
   const list = countries
     .map(
       (country) =>
-        COUNTRIES.find((c) => c.iso_2 === country.iso_2)?.display_name
+        getLocalizedCountryName(
+          COUNTRIES.find((c) => c.iso_2 === country.iso_2),
+          i18n.language
+        )
     )
     .filter(isTruthy)
 

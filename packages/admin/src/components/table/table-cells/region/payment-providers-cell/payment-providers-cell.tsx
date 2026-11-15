@@ -12,11 +12,13 @@ type PaymentProvidersCellProps = {
 export const PaymentProvidersCell = ({
   paymentProviders,
 }: PaymentProvidersCellProps) => {
+  const { t } = useTranslation()
+
   if (!paymentProviders || paymentProviders.length === 0) {
     return <PlaceholderCell />
   }
 
-  const displayValues = paymentProviders.map((p) => formatProvider(p.id))
+  const displayValues = paymentProviders.map((p) => formatProvider(p.id, t))
 
   return (
     <div className="flex size-full items-center overflow-hidden">

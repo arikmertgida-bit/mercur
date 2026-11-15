@@ -1027,6 +1027,14 @@
       "updated_at": "更新時間"
     }
   },
+  "providers": {
+    "tokens": {
+      "system": "系統",
+      "default": "預設",
+      "manual": "手動",
+      "test": "測試"
+    }
+  },
   "collections": {
     "domain": "商品系列",
     "subtitle": "將商品整理成系列。",

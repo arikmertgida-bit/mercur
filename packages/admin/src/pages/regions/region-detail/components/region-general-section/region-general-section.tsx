@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom"
 import { ActionMenu } from "../../../../../components/common/action-menu/index.ts"
 import { ListSummary } from "../../../../../components/common/list-summary/index.ts"
 import { useDeleteRegion } from "../../../../../hooks/api/regions.tsx"
-import { currencies } from "../../../../../lib/data/currencies.ts"
+import { getLocalizedCurrencyName } from "../../../../../lib/format-currency-name.ts"
 import { formatProvider } from "../../../../../lib/format-provider.ts"
 import { SectionRow } from "../../../../../components/common/section/section-row.tsx"
 
@@ -36,11 +36,11 @@ export const RegionGeneralSection = ({
         title={t("fields.currency")}
         value={
           <div className="flex items-center gap-x-2" data-testid="region-general-section-currency-value">
-            <Badge size="2xsmall" className="uppercase" data-testid="region-general-section-currency-badge">
-              {region.currency_code}
+            <Badge size="2xsmall" data-testid="region-general-section-currency-badge">
+              {region.currency_code.toUpperCase()}
             </Badge>
             <Text size="small" leading="compact" data-testid="region-general-section-currency-name">
-              {currencies[region.currency_code.toUpperCase()].name}
+              {getLocalizedCurrencyName(region.currency_code)}
             </Text>
           </div>
         }
@@ -71,7 +71,7 @@ export const RegionGeneralSection = ({
           <div className="inline-flex" data-testid="region-general-section-payment-providers-value">
             {region.payment_providers?.length ? (
               <ListSummary
-                list={region.payment_providers.map((p) => formatProvider(p.id))}
+                list={region.payment_providers.map((p) => formatProvider(p.id, t))}
               />
             ) : (
               "-"

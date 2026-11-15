@@ -1027,6 +1027,14 @@
       "updated_at": "Diperbarui pada"
     }
   },
+  "providers": {
+    "tokens": {
+      "system": "Sistem",
+      "default": "Default",
+      "manual": "Manual",
+      "test": "Uji"
+    }
+  },
   "collections": {
     "domain": "Koleksi",
     "subtitle": "Atur produk ke dalam koleksi.",

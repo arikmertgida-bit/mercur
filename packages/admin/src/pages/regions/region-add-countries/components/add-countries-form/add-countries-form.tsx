@@ -35,7 +35,7 @@ const PAGE_SIZE = 50
 const PREFIX = "ac"
 
 export const AddCountriesForm = ({ region }: AddCountriesFormProps) => {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const { handleSuccess } = useRouteModal()
 
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({})
@@ -73,6 +73,7 @@ export const AddCountriesForm = ({ region }: AddCountriesFormProps) => {
       region_id: null,
       region: {},
     })),
+    locale: i18n.language,
     ...searchParams,
   })
 

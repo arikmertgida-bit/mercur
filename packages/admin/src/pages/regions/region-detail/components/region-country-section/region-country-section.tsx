@@ -25,7 +25,7 @@ const PREFIX = "c"
 const PAGE_SIZE = 10
 
 export const RegionCountrySection = ({ region }: RegionCountrySectionProps) => {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const prompt = usePrompt()
 
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({})
@@ -36,6 +36,7 @@ export const RegionCountrySection = ({ region }: RegionCountrySectionProps) => {
   })
   const { countries, count } = useCountries({
     countries: convertToStaticCountries(region.countries),
+    locale: i18n.language,
     ...searchParams,
   })
 

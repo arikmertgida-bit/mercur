@@ -1027,6 +1027,14 @@
       "updated_at": "Frissítve"
     }
   },
+  "providers": {
+    "tokens": {
+      "system": "Rendszer",
+      "default": "Alapértelmezett",
+      "manual": "Manuális",
+      "test": "Teszt"
+    }
+  },
   "collections": {
     "domain": "Gyűjtemények",
     "subtitle": "Rendezze gyűjteményekbe a termékeket.",

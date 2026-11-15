@@ -21,7 +21,7 @@ import {
   StaticCountry,
   countries as staticCountries,
 } from "@lib/data/countries"
-import { getLocalizedCountryName } from "@lib/format-country-name"
+import { toIntlLocale } from "../../../../../../i18n/languages"
 import { useCountries } from "@pages/settings/regions/_common/hooks/use-countries"
 import { useCountryTableColumns } from "@pages/settings/regions/_common/hooks/use-country-table-columns"
 import { useCountryTableQuery } from "@pages/settings/regions/_common/hooks/use-country-table-query"
@@ -125,12 +125,13 @@ const AreaStackedModal = () => {
   })
   const { countries, count } = useCountries({
     countries: staticCountries.map((c) => ({
-      display_name: getLocalizedCountryName(c, i18n.language) ?? c.display_name,
+      display_name: c.display_name,
       name: c.name,
       iso_2: c.iso_2,
       iso_3: c.iso_3,
       num_code: c.num_code,
     })),
+    locale: toIntlLocale(i18n.language),
     ...searchParams,
   })
 

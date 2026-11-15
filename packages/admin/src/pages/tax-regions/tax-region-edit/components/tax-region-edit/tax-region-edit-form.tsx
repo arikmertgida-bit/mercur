@@ -31,7 +31,7 @@ export const TaxRegionEditForm = ({ taxRegion }: TaxRegionEditFormProps) => {
     queryFn: (params) => sdk.admin.taxProviders.query(params),
     getOptions: (data) =>
       data.tax_providers.map((provider) => ({
-        label: formatProvider(provider.id),
+        label: formatProvider(provider.id, t),
         value: provider.id,
       })),
   })

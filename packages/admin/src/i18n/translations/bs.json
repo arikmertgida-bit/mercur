@@ -1039,6 +1039,14 @@
       "updated_at": "Ažurirano"
     }
   },
+  "providers": {
+    "tokens": {
+      "system": "Sistem",
+      "default": "Zadano",
+      "manual": "Ručno",
+      "test": "Test"
+    }
+  },
   "collections": {
     "domain": "Kolekcije",
     "subtitle": "Organizujte proizvode u kolekcije.",
