@@ -20,7 +20,7 @@ export const GET = async (
     },
   })
 
-  normalizeOrderPaymentCollections(result)
+  normalizeOrderPaymentCollections(result, req.queryConfig.fields)
 
   res.json({
     // @ts-expect-error -- Medusa boundary: getOrderDetailWorkflow is typed as

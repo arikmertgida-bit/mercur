@@ -33,7 +33,7 @@ export const GET = async (
     },
   })
 
-  normalizeOrderPaymentCollections(result)
+  normalizeOrderPaymentCollections(result, req.queryConfig.fields)
 
   res.json({ order: toHttpOrder(result) })
 }

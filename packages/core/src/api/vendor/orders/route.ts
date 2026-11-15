@@ -40,7 +40,9 @@ export const GET = async (
   }
   const { rows, metadata } = result
 
-  rows.forEach((order) => normalizeOrderPaymentCollections(order))
+  rows.forEach((order) =>
+    normalizeOrderPaymentCollections(order, req.queryConfig.fields)
+  )
 
   res.json({
     orders: rows.map(toHttpOrder),

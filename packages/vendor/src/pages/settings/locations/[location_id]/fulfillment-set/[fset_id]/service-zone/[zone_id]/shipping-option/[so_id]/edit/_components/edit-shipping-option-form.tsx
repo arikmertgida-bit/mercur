@@ -15,8 +15,10 @@ import { useUpdateShippingOptions } from "@hooks/api/shipping-options"
 import { useComboboxData } from "@hooks/use-combobox-data"
 import { fetchQuery } from "@lib/client"
 import {
+  buildShippingOptionRules,
   getShippingProfileName,
   isOptionEnabledInStore,
+  toShippingOptionPriceType,
 } from "@lib/shipping-options"
 import {
   FulfillmentSetType,
@@ -83,11 +85,18 @@ export const EditShippingOptionForm = ({
   )
 
   const handleSubmit = form.handleSubmit(async (values) => {
+    const rules = buildShippingOptionRules(
+      shippingOption,
+      !!values.enabled_in_store
+    )
+
     await mutateAsync(
       {
         name: values.name,
+        price_type: toShippingOptionPriceType(values.price_type),
         shipping_profile_id: values.shipping_profile_id,
         provider_id: shippingOption.provider_id,
+        rules,
       },
       {
         onSuccess: ({ shipping_option }) => {

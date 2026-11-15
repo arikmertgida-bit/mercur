@@ -38,18 +38,34 @@ export const withCartPaymentCollectionFields = (fields: string[]): string[] => {
   ])
 }
 
+const CART_FIELD_PREFIX = "cart."
+const CART_PAYMENT_COLLECTION_FIELD = "cart.payment_collection"
+
+const isOwnCartField = (field: string): boolean =>
+  field.startsWith(CART_FIELD_PREFIX) &&
+  field !== CART_PAYMENT_COLLECTION_FIELD &&
+  !field.startsWith(`${CART_PAYMENT_COLLECTION_FIELD}.`)
+
 // Exposes the order's payment collections under `payment_collections` whichever
 // way they are attached, and recomputes `payment_status` from them: Medusa's
-// aggregation only reads the linked ones.
+// aggregation only reads the linked ones. The cart's shared payment collection
+// is never returned under `cart` (it spans every split order of the cart); the
+// cart itself stays only when the client asked for its own fields, e.g. the
+// storefront's `cart.id` for return shipping options.
 export const normalizeOrderPaymentCollections = <
   T extends OrderWithCartPaymentCollection
 >(
-  order: T
+  order: T,
+  requestedFields: string[]
 ): T => {
   const hadCart = !!order.cart
   const paymentCollections = resolveOrderPaymentCollections(order)
 
-  delete order.cart
+  if (order.cart && requestedFields.some(isOwnCartField)) {
+    delete order.cart.payment_collection
+  } else {
+    delete order.cart
+  }
 
   if (!hadCart && !order.payment_collections) {
     return order

@@ -39,7 +39,9 @@ export const GET = async (
   }
   const { rows, metadata } = result
 
-  rows.forEach((order) => normalizeOrderPaymentCollections(order))
+  rows.forEach((order) =>
+    normalizeOrderPaymentCollections(order, req.queryConfig.fields)
+  )
 
   res.json({
     // @ts-expect-error -- Medusa boundary: getOrdersListWorkflow is typed as

@@ -110,6 +110,12 @@ export const EditShippingOptionForm = ({
       storeRule.value = values.enabled_in_store ? "true" : "false"
     }
 
+    // An option without an `is_return` rule matches every storefront context
+    // and was listed as a return option as well.
+    if (!rules.some((r) => r.attribute === "is_return")) {
+      rules.push({ value: "false", attribute: "is_return", operator: "eq" })
+    }
+
     await mutateAsync(
       {
         name: values.name,
