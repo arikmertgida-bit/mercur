@@ -70,7 +70,7 @@ export const StoreGeneralSection = ({
                 {t("fields.handle")}
               </Text>
               <Text size="small" leading="compact">
-                {seller.handle ? `/${seller.handle}` : "-"}
+                <span dir="ltr">{seller.handle ? `/${seller.handle}` : "-"}</span>
               </Text>
             </div>
           </DisplayField>

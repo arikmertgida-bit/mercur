@@ -144,7 +144,7 @@ export const ProductGeneralSection = ({
         />
       </DisplayField>
       <DisplayField model="product" zone="general" id="handle" data={product}>
-        <SectionRow title={t("fields.handle")} value={`/${product.handle}`} />
+        <SectionRow title={t("fields.handle")} value={`/${product.handle}`} valueDir="ltr" />
       </DisplayField>
       <DisplayField
         model="product"

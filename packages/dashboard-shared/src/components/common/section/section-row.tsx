@@ -5,9 +5,10 @@ export type SectionRowProps = {
   title: string
   value?: ReactNode | string | null
   actions?: ReactNode
+  valueDir?: "ltr" | "rtl"
 }
 
-export const SectionRow = ({ title, value, actions }: SectionRowProps) => {
+export const SectionRow = ({ title, value, actions, valueDir }: SectionRowProps) => {
   const isValueString = typeof value === "string" || !value
 
   return (
@@ -29,7 +30,7 @@ export const SectionRow = ({ title, value, actions }: SectionRowProps) => {
           leading="compact"
           className="whitespace-pre-line text-pretty"
         >
-          {value ?? "-"}
+          {valueDir ? <span dir={valueDir}>{value ?? "-"}</span> : value ?? "-"}
         </Text>
       ) : (
         <div className="flex flex-wrap gap-1">{value}</div>

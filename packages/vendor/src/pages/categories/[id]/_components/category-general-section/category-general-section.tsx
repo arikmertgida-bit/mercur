@@ -48,7 +48,7 @@ export const CategoryGeneralSection = ({
             {t("fields.handle")}
           </Text>
           <Text size="small" leading="compact">
-            /{category.handle}
+            <span dir="ltr">/{category.handle}</span>
           </Text>
         </div>
       </DisplayField>

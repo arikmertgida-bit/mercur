@@ -310,7 +310,7 @@ const useColumns = () => {
         header: t("attributes.fields.handle"),
         cell: (info) => {
           const handle = info.getValue()
-          return handle ? `/${handle}` : "-"
+          return handle ? <span dir="ltr">{`/${handle}`}</span> : "-"
         },
       }),
       columnHelper.accessor("is_required", {

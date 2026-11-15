@@ -111,6 +111,7 @@ export const AttributeGeneralSection = ({
       <SectionRow
         title={t("attributes.fields.handle")}
         value={attribute.handle ? `/${attribute.handle}` : "-"}
+        valueDir="ltr"
         data-testid="attribute-general-section-handle"
       />
 

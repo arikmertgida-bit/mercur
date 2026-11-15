@@ -98,7 +98,7 @@ export const useCategoryTableColumns = () => {
       columnHelper.accessor("handle", {
         header: () => <TextHeader text={t("fields.handle")} />,
         cell: ({ getValue }) => {
-          return <TextCell text={`/${getValue()}`} />
+          return <TextCell text={`/${getValue()}`} dir="ltr" />
         },
       }),
       columnHelper.accessor("is_active", {

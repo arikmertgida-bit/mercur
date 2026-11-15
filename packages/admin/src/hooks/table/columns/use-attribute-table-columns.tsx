@@ -224,7 +224,7 @@ export const useAttributeTableColumns = () => {
         header: () => t("attributes.fields.handle"),
         cell: ({ getValue }) => {
           const handle = getValue()
-          return <TextCell text={handle ? `/${handle}` : "-"} />
+          return <TextCell text={handle ? `/${handle}` : "-"} dir="ltr" />
         },
       }),
       columnHelper.accessor("is_required", {

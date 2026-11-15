@@ -6,6 +6,7 @@ type CellProps = {
   text?: string | number
   align?: "left" | "center" | "right"
   maxWidth?: number
+  dir?: "ltr" | "rtl"
 }
 
 type HeaderProps = {
@@ -13,7 +14,7 @@ type HeaderProps = {
   align?: "left" | "center" | "right"
 }
 
-export const TextCell = ({ text, align = "left", maxWidth = 220 }: CellProps) => {
+export const TextCell = ({ text, align = "left", maxWidth = 220, dir }: CellProps) => {
   if (!text) {
     return <PlaceholderCell />
   }
@@ -30,7 +31,7 @@ export const TextCell = ({ text, align = "left", maxWidth = 220 }: CellProps) =>
     style={{
       maxWidth: maxWidth,
     }}>
-      <span className="truncate">{text}</span>
+      <span className="truncate" dir={dir}>{text}</span>
     </div>
     </ConditionalTooltip>
   )

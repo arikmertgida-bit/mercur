@@ -32,7 +32,7 @@ export const HandleInput: ComponentType<HandleInputProps> = forwardRef<
   const mergedStyle: CSSProperties = { ...style, paddingLeft };
 
   return (
-    <div className="relative">
+    <div className="relative" dir="ltr">
       <div
         ref={prefixRef}
         className="absolute inset-y-0 left-0 z-10 flex min-w-8 items-center justify-center border-r px-2.5"

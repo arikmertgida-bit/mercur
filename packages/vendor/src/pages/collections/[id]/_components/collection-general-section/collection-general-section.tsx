@@ -27,7 +27,7 @@ export const CollectionGeneralSection = ({
           <Text size="small" leading="compact" weight="plus">
             {t("fields.handle")}
           </Text>
-          <Text size="small">/{collection.handle}</Text>
+          <Text size="small"><span dir="ltr">/{collection.handle}</span></Text>
         </div>
       </DisplayField>
       <DisplayExtensionZone

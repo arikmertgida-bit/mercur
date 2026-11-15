@@ -151,6 +151,7 @@ export const ProductGeneralSection = ({
         <SectionRow
           title={t("fields.handle")}
           value={`/${product.handle}`}
+          valueDir="ltr"
           data-testid="product-handle-row"
         />
       </DisplayField>

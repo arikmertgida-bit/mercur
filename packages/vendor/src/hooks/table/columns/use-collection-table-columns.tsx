@@ -35,7 +35,7 @@ export const useCollectionTableColumns = () => {
       }),
       columnHelper.accessor("handle", {
         header: t("fields.handle"),
-        cell: ({ getValue }) => <TextCell text={`/${getValue()}`} />,
+        cell: ({ getValue }) => <TextCell text={`/${getValue()}`} dir="ltr" />,
       }),
       columnHelper.accessor("products", {
         header: t("fields.products"),
