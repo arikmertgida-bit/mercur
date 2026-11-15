@@ -31,8 +31,8 @@ import { MediaSchema } from "@pages/products/product-create/constants";
 import { InferClientOutput } from "@mercurjs/client";
 import { sdk } from "@lib/client";
 import { useUpdateSeller } from "@hooks/api/sellers";
-import { currencies } from "@/lib/data/currencies";
 import { SellerStatus } from "@mercurjs/types/seller";
+import { getLocalizedCurrencyName } from "../../../../lib/format-currency-name";
 
 type Seller = InferClientOutput<typeof sdk.admin.sellers.$id.query>["seller"];
 
@@ -280,7 +280,9 @@ export const StoreEditForm = ({ seller }: StoreEditFormProps) => {
   };
 
   const currencyCode = seller.currency_code?.toUpperCase() ?? "";
-  const currencyName = currencies[currencyCode]?.name ?? currencyCode;
+  const currencyName = currencyCode
+    ? getLocalizedCurrencyName(currencyCode)
+    : currencyCode;
 
   return (
     <RouteDrawer.Form form={form}>

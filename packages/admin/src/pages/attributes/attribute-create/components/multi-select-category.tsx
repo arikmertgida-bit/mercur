@@ -203,7 +203,7 @@ export const MultiSelectCategory = ({
                       className="rounded-md p-2 hover:bg-ui-bg-base-hover"
                       data-testid={`attribute-form-category-multiselect-item-${category.id}-drill-down`}
                     >
-                      <TriangleRightMini className="mr-1" />
+                      <TriangleRightMini className="me-1 rtl:rotate-180" />
                     </div>
                   )}
                 </div>

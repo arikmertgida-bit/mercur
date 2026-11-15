@@ -39,3 +39,8 @@ export const buildShippingOptionPriceRules = (rule: {
     value ? [createPriceRule(ITEM_TOTAL_ATTRIBUTE, operator, value)] : []
   )
 }
+
+// An emptied grid cell is "", while 0 is a real (free shipping) price.
+export const hasPriceAmount = (
+  value: string | number | undefined
+): value is string | number => value !== undefined && value !== ""

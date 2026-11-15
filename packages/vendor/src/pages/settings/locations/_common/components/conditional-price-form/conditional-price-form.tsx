@@ -10,7 +10,6 @@ import {
   Badge,
   Button,
   clx,
-  CurrencyInput,
   Divider,
   Heading,
   IconButton,
@@ -18,6 +17,7 @@ import {
   Text,
   Tooltip,
 } from "@medusajs/ui"
+import { PanelCurrencyInput } from "@components/inputs/locale-currency-input"
 import { Accordion as RadixAccordion } from "radix-ui"
 import React, { Fragment, ReactNode, useRef, useState } from "react"
 import {
@@ -328,7 +328,7 @@ const ConditionalPriceItem = ({
                   </div>
                   <div className="flex flex-col gap-y-1">
                     <Form.Control>
-                      <CurrencyInput
+                      <PanelCurrencyInput
                         className="bg-ui-bg-field-component hover:bg-ui-bg-field-component-hover focus-visible:bg-ui-bg-field-component-hover"
                         placeholder={formatValue({
                           value: "0",
@@ -446,7 +446,7 @@ const OperatorInput = <
         {!isNull && (
           <div className="flex flex-col gap-y-1">
             <Form.Control>
-              <CurrencyInput
+              <PanelCurrencyInput
                 className="bg-ui-bg-field-component hover:bg-ui-bg-field-component-hover focus-visible:bg-ui-bg-field-component-hover"
                 placeholder={formatValue({
                   value: placeholder,
@@ -518,7 +518,7 @@ const ReadOnlyConditions = ({
                 )}
               </Label>
             </div>
-            <CurrencyInput
+            <PanelCurrencyInput
               className="bg-ui-bg-field-component hover:bg-ui-bg-field-component-hover focus-visible:bg-ui-bg-field-component-hover"
               symbol={currency.symbol_native}
               code={currency.code}
@@ -538,7 +538,7 @@ const ReadOnlyConditions = ({
                   )}
                 </Label>
               </div>
-              <CurrencyInput
+              <PanelCurrencyInput
                 className="bg-ui-bg-field-component hover:bg-ui-bg-field-component-hover focus-visible:bg-ui-bg-field-component-hover"
                 symbol={currency.symbol_native}
                 code={currency.code}
@@ -559,7 +559,7 @@ const ReadOnlyConditions = ({
                   )}
                 </Label>
               </div>
-              <CurrencyInput
+              <PanelCurrencyInput
                 className="bg-ui-bg-field-component hover:bg-ui-bg-field-component-hover focus-visible:bg-ui-bg-field-component-hover"
                 symbol={currency.symbol_native}
                 code={currency.code}

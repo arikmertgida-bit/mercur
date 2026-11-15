@@ -8,7 +8,6 @@ import {
 } from "@medusajs/types";
 import {
   Button,
-  CurrencyInput,
   Heading,
   IconButton,
   Switch,
@@ -16,6 +15,7 @@ import {
   toast,
   usePrompt,
 } from "@medusajs/ui";
+import { PanelCurrencyInput } from "../../../../../components/inputs/locale-currency-input";
 import { useEffect, useMemo, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -877,7 +877,7 @@ export const ClaimCreateForm = ({
                   )}
 
                   {isShippingInboundPriceEdit ? (
-                    <CurrencyInput
+                    <PanelCurrencyInput
                       id="js-shipping-inbound-input"
                       onBlur={() => {
                         let actionId;
@@ -953,7 +953,7 @@ export const ClaimCreateForm = ({
                   )}
 
                   {isShippingOutboundPriceEdit ? (
-                    <CurrencyInput
+                    <PanelCurrencyInput
                       id="js-shipping-outbound-input"
                       onBlur={() => {
                         let actionId;

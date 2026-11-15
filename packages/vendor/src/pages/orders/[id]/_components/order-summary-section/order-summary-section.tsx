@@ -190,7 +190,7 @@ export const OrderSummarySection = ({
                           id: `#${id?.slice(-7)}`,
                           returnType,
                         }),
-                        icon: <ArrowLongRight />,
+                        icon: <ArrowLongRight className="rtl:rotate-180" />,
                         to: `/orders/${order.id}/returns/${r.id}/receive`,
                       }
                     }),

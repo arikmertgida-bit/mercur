@@ -1,5 +1,4 @@
 import {
-  CurrencyInput,
   DatePicker,
   Divider,
   Heading,
@@ -25,6 +24,7 @@ import {
 } from "@lib/data/currencies"
 import { getLocalizedCurrencyName } from "@lib/format-currency-name"
 import { CampaignFieldsFormValues } from "../../schema"
+import { LocaleCurrencyInput } from "@components/inputs/locale-currency-input"
 
 type CreateCampaignFormFieldsProps = {
   /**
@@ -352,11 +352,9 @@ export const CreateCampaignFormFields = ({
 
                 <Form.Control>
                   {isTypeSpend ? (
-                    <CurrencyInput
+                    <LocaleCurrencyInput
                       min={0}
-                      onValueChange={(value) =>
-                        onChange(value ? parseInt(value) : "")
-                      }
+                      onValueChange={(amount) => onChange(amount ?? "")}
                       code={currencyValue ?? ""}
                       symbol={
                         currencyValue ? getCurrencySymbol(currencyValue) : ""

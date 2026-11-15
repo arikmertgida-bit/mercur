@@ -1,10 +1,11 @@
-import { CurrencyInput, Label } from "@medusajs/ui";
+import { Label } from "@medusajs/ui";
 import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 import { Form } from "../../../../components/common/form";
 import { DeprecatedPercentageInput } from "../../../../components/inputs/percentage-input";
 import { getCurrencySymbol } from "../../../../lib/data/currencies";
+import { LocaleCurrencyInput } from "../../../../components/inputs/locale-currency-input"
 
 /**
  * The value fields every commission form (wizard, global drawer, rule
@@ -23,7 +24,7 @@ type CommissionValueFieldsProps = {
 /**
  * Renders the commission Value field:
  *  - Percentage → a single `%` input bound to `value`.
- *  - Fixed → one `CurrencyInput` per store currency, bound to
+ *  - Fixed → one `LocaleCurrencyInput` per store currency, bound to
  *    `fixed_values.<currency_code>`.
  */
 export const CommissionValueFields = ({
@@ -75,13 +76,11 @@ export const CommissionValueFields = ({
             render={({ field: { value, onChange, ...field } }) => (
               <Form.Item>
                 <Form.Control>
-                  <CurrencyInput
+                  <LocaleCurrencyInput
                     min={0}
                     code={code}
                     symbol={getCurrencySymbol(code)}
-                    onValueChange={(val) =>
-                    onChange(val ? parseFloat(val) : undefined)
-                  }
+                    onValueChange={(amount) => onChange(amount ?? undefined)}
                     {...field}
                     value={value ?? ""}
                   />

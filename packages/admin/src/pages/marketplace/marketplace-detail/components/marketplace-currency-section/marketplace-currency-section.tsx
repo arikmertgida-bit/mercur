@@ -28,6 +28,7 @@ import { useUpdateStore } from "../../../../../hooks/api/store"
 import { useDataTable } from "../../../../../hooks/use-data-table"
 import { useCurrenciesTableColumns } from "../../../common/hooks/use-currencies-table-columns"
 import { useCurrenciesTableQuery } from "../../../common/hooks/use-currencies-table-query"
+import { getLocalizedCurrencyName } from "../../../../../lib/format-currency-name"
 
 type MarketplaceCurrencySectionProps = {
   store: HttpTypes.AdminStore
@@ -263,7 +264,7 @@ const CurrencyActions = ({
         count: 1,
       }),
       verificationInstruction: t("general.typeToConfirm"),
-      verificationText: currency.name,
+      verificationText: getLocalizedCurrencyName(currency.code),
       confirmText: t("actions.remove"),
       cancelText: t("actions.cancel"),
     })

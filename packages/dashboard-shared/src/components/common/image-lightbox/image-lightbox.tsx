@@ -179,7 +179,7 @@ export const ImageLightbox = ({
                       goTo(-1)
                     }}
                   >
-                    <ArrowLeft />
+                    <ArrowLeft className="rtl:rotate-180" />
                   </IconButton>
                   <IconButton
                     variant="transparent"
@@ -190,7 +190,7 @@ export const ImageLightbox = ({
                       goTo(1)
                     }}
                   >
-                    <ArrowRight />
+                    <ArrowRight className="rtl:rotate-180" />
                   </IconButton>
                 </>
               )}

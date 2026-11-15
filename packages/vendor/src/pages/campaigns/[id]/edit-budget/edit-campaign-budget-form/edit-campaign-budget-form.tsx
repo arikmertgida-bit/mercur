@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { AdminCampaign } from "@medusajs/types"
-import { Button, CurrencyInput, Input, toast } from "@medusajs/ui"
+import { Button, Input, toast } from "@medusajs/ui"
 import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import * as zod from "zod"
@@ -9,6 +9,7 @@ import { RouteDrawer, useRouteModal } from "@components/modals"
 import { KeyboundForm } from "@components/utilities/keybound-form"
 import { useUpdateCampaign } from "@hooks/api/campaigns"
 import { getCurrencySymbol } from "@lib/data/currencies"
+import { LocaleCurrencyInput } from "@components/inputs/locale-currency-input"
 
 type EditCampaignBudgetFormProps = {
   campaign: AdminCampaign
@@ -74,11 +75,9 @@ export const EditCampaignBudgetForm = ({
 
                     <Form.Control>
                       {campaign.budget?.type === "spend" ? (
-                        <CurrencyInput
+                        <LocaleCurrencyInput
                           min={0}
-                          onValueChange={(value) =>
-                            onChange(value ? parseInt(value) : null)
-                          }
+                          onValueChange={(amount) => onChange(amount)}
                           code={campaign.budget?.currency_code}
                           symbol={
                             campaign.budget?.currency_code
@@ -88,7 +87,7 @@ export const EditCampaignBudgetForm = ({
                               : ""
                           }
                           {...field}
-                          value={value || undefined}
+                          value={value}
                         />
                       ) : (
                         <Input

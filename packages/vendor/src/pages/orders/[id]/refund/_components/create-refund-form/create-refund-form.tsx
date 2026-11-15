@@ -15,12 +15,12 @@ import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
   Button,
-  CurrencyInput,
   Heading,
   Select,
   Textarea,
   toast,
 } from "@medusajs/ui"
+import { PanelCurrencyInput } from "@components/inputs/locale-currency-input"
 import { HttpTypes } from "@medusajs/types"
 
 import { RouteDrawer, useRouteModal } from "@components/modals"
@@ -192,7 +192,7 @@ export const CreateRefundForm = ({ order }: CreateRefundFormProps) => {
                 <Form.Item>
                   <Form.Label>{t("fields.amount")}</Form.Label>
                   <Form.Control>
-                    <CurrencyInput
+                    <PanelCurrencyInput
                       {...field}
                       min={0}
                       placeholder={formatValue({

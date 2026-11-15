@@ -13,6 +13,7 @@ import {
 import { KeyboundForm } from "@components/utilities/keybound-form"
 import { useCreateShippingOptions } from "@hooks/api/shipping-options"
 import { castNumber } from "@lib/cast-number"
+import { buildShippingOptionPriceRules } from "@pages/settings/locations/_common/utils/price-rule-helpers"
 import {
   FulfillmentSetType,
   ShippingOptionPriceType,
@@ -120,6 +121,26 @@ export function CreateShippingOptionsForm({
       })
       .filter((p): p is { region_id: string; amount: number } => !!p)
 
+    const conditionalRegionPrices = Object.entries(
+      data.conditional_region_prices
+    ).flatMap(([region_id, value]) =>
+      value?.map((rule) => ({
+        region_id,
+        amount: castNumber(rule.amount),
+        rules: buildShippingOptionPriceRules(rule),
+      })) ?? []
+    )
+
+    const conditionalCurrencyPrices = Object.entries(
+      data.conditional_currency_prices
+    ).flatMap(([currency_code, value]) =>
+      value?.map((rule) => ({
+        currency_code,
+        amount: castNumber(rule.amount),
+        rules: buildShippingOptionPriceRules(rule),
+      })) ?? []
+    )
+
     const fulfillmentOptions = FulfillmentOptionListSchema.safeParse(
       fulfillmentProviderOptions
     )
@@ -136,7 +157,12 @@ export function CreateShippingOptionsForm({
         shipping_profile_id: data.shipping_profile_id,
         provider_id: data.provider_id,
         price_type: data.price_type,
-        prices: [...currencyPrices, ...regionPrices],
+        prices: [
+          ...currencyPrices,
+          ...conditionalCurrencyPrices,
+          ...regionPrices,
+          ...conditionalRegionPrices,
+        ],
         data: fulfillmentOptionData,
         rules: [
           {

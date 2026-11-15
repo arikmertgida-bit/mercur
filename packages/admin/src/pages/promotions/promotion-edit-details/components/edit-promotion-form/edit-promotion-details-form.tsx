@@ -4,7 +4,6 @@ import type {
 } from "@medusajs/types"
 import {
   Button,
-  CurrencyInput,
   Divider,
   InlineTip,
   Input,
@@ -37,6 +36,7 @@ import {
 import { SwitchBox } from "../../../../../components/common/switch-box"
 import { useDocumentDirection } from "../../../../../hooks/use-document-direction"
 import { getPromotionLinks } from "../../../common/promotion-links"
+import { LocaleCurrencyInput } from "../../../../../components/inputs/locale-currency-input"
 
 type EditPromotionFormProps = {
   promotion: AdminPromotion
@@ -513,11 +513,9 @@ return (
                         </Form.Label>
                         <Form.Control data-testid="promotion-edit-details-form-value-control">
                           {isFixedValueType ? (
-                            <CurrencyInput
+                            <LocaleCurrencyInput
                               min={0}
-                              onValueChange={(val) => onChange(val)}
-                              decimalSeparator="."
-                              groupSeparator=","
+                              onValueChange={(amount) => onChange(amount ?? undefined)}
                               decimalScale={currencyInfo.decimal_digits}
                               decimalsLimit={currencyInfo.decimal_digits}
                               code={currencyCode}

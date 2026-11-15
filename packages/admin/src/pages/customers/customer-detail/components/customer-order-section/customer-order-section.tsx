@@ -265,6 +265,7 @@ const useColumns = () => {
                       className={clx({
                         "rotate-90 transition-transform will-change-transform":
                           row.getIsExpanded(),
+                          "rtl:rotate-180": !row.getIsExpanded(),
                       })}
                     />
                   </IconButton>

@@ -10,7 +10,6 @@ import {
 import {
   Alert,
   Button,
-  CurrencyInput,
   Heading,
   IconButton,
   Switch,
@@ -18,6 +17,7 @@ import {
   toast,
   usePrompt,
 } from "@medusajs/ui"
+import { PanelCurrencyInput } from "../../../../../components/inputs/locale-currency-input"
 import { useEffect, useMemo, useState } from "react"
 import { useFieldArray, useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
@@ -727,7 +727,7 @@ export const ReturnCreateForm = ({
                     </IconButton>
                   )}
                   {isShippingPriceEdit ? (
-                    <CurrencyInput
+                    <PanelCurrencyInput
                       id="js-shipping-input"
                       onBlur={() => {
                         let actionId

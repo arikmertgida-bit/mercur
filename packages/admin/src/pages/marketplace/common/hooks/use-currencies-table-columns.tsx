@@ -7,6 +7,7 @@ import {
   TextCell,
   TextHeader,
 } from "../../../../components/table/table-cells/common/text-cell"
+import { getLocalizedCurrencyName } from "../../../../lib/format-currency-name"
 
 const columnHelper = createColumnHelper<HttpTypes.AdminCurrency>()
 
@@ -21,7 +22,9 @@ export const useCurrenciesTableColumns = () => {
       }),
       columnHelper.accessor("name", {
         header: () => <TextHeader text={t("fields.name")} />,
-        cell: ({ getValue }) => <TextCell text={getValue()} />,
+        cell: ({ getValue, row }) => (
+          <TextCell text={getLocalizedCurrencyName(row.original.code) || getValue()} />
+        ),
       }),
     ],
     [t]

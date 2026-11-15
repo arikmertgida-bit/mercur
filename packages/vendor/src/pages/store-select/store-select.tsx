@@ -117,7 +117,7 @@ const StoreSelectList = ({
                 data={seller}
                 builtInFieldIds={["status"]}
               />
-              <ChevronRight className="text-ui-fg-muted" />
+              <ChevronRight className="text-ui-fg-muted rtl:rotate-180" />
             </button>
           );
         })}

@@ -29,7 +29,7 @@ export const WizardSidebar = ({
             onClick={onBack}
             className="txt-compact-small text-ui-fg-base flex items-center gap-x-0.5 font-medium transition-colors hover:text-ui-fg-subtle self-start mb-6"
           >
-            <ChevronLeft className="size-4" />
+            <ChevronLeft className="size-4 rtl:rotate-180" />
             <span>{t("actions.back")}</span>
           </button>
         )}

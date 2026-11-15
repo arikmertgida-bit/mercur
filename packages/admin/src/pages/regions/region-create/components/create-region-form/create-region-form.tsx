@@ -44,6 +44,7 @@ import { useCountryTableQuery } from "../../../common/hooks/use-country-table-qu
 import { useDocumentDirection } from "../../../../../hooks/use-document-direction";
 import { useComboboxData } from "../../../../../hooks/use-combobox-data";
 import { sdk } from "../../../../../lib/client";
+import { getLocalizedCurrencyName } from "../../../../../lib/format-currency-name";
 
 type CreateRegionFormProps = {
   currencies: CurrencyInfo[];
@@ -287,7 +288,7 @@ export const CreateRegionForm = ({ currencies }: CreateRegionFormProps) => {
                                     key={currency.code}
                                     data-testid={`region-create-form-currency-select-option-${currency.code}`}
                                   >
-                                    {currency.name}
+                                    {getLocalizedCurrencyName(currency.code)}
                                   </Select.Item>
                                 ))}
                               </Select.Content>

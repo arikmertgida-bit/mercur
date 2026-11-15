@@ -8,6 +8,7 @@ import { Link } from "react-router-dom"
 import { ActionMenu } from "../../../../../components/common/action-menu"
 import { useSalesChannel, useStockLocation } from "../../../../../hooks/api"
 import { useRegion } from "../../../../../hooks/api/regions"
+import { getLocalizedCurrencyName } from "../../../../../lib/format-currency-name"
 
 type MarketplaceGeneralSectionProps = {
   store: AdminStore
@@ -84,7 +85,9 @@ export const MarketplaceGeneralSection = ({ store }: MarketplaceGeneralSectionPr
               {defaultCurrency.currency_code?.toUpperCase()}
             </Badge>
             <Text size="small" leading="compact" data-testid="store-general-section-currency-name">
-              {defaultCurrency.currency?.name}
+              {defaultCurrency.currency_code
+                ? getLocalizedCurrencyName(defaultCurrency.currency_code)
+                : defaultCurrency.currency?.name}
             </Text>
           </div>
         ) : (

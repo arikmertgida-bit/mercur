@@ -165,6 +165,7 @@ const Collapse = ({ collapsed, onCollapse, clone }: CollapseProps) => {
       <TriangleRightMini
         className={clx("text-ui-fg-subtle transition-transform", {
           "rotate-90": !collapsed,
+          "rtl:rotate-180": collapsed,
         })}
       />
     </IconButton>

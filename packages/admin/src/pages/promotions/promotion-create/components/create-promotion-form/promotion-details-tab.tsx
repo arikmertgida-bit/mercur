@@ -4,7 +4,6 @@ import {
   Alert,
   Badge,
   clx,
-  CurrencyInput,
   Divider,
   Heading,
   InlineTip,
@@ -34,6 +33,7 @@ import {
 import { RulesFormField } from "../../../common/edit-rules/components/rules-form-field";
 import { CreatePromotionSchemaType } from "./form-schema";
 import { SwitchBox } from "@mercurjs/dashboard-shared";
+import { LocaleCurrencyInput } from "../../../../../components/inputs/locale-currency-input"
 
 const AllocationModeSchema = z.enum(["each", "across", "once"]);
 type AllocationMode = z.infer<typeof AllocationModeSchema>;
@@ -600,13 +600,11 @@ const Root = ({ currentTemplate }: PromotionDetailsTabProps) => {
 
                     <Form.Control data-testid="promotion-create-form-value-control">
                       {isFixedValueType ? (
-                        <CurrencyInput
+                        <LocaleCurrencyInput
                           {...field}
                           min={0}
                           code={currencyCode || "USD"}
-                          onValueChange={(_value, _name, values) =>
-                            onChange(values?.value)
-                          }
+                          onValueChange={(amount) => onChange(amount ?? undefined)}
                           decimalScale={currencyInfo?.decimal_digits ?? 2}
                           decimalsLimit={currencyInfo?.decimal_digits ?? 2}
                           symbol={

@@ -7,7 +7,6 @@ import {
   Button,
   clx,
   Copy,
-  CurrencyInput,
   Divider,
   Heading,
   Input,
@@ -37,6 +36,7 @@ import { toPromotionRuleOperator, toRuleValues } from '../../common/edit-rules/r
 import { Tab, TabSchema } from './constants';
 import { CreatePromotionSchema, CreatePromotionSchemaType } from './form-schema';
 import { templates } from './templates';
+import { LocaleCurrencyInput } from "@components/inputs/locale-currency-input"
 
 const defaultValues: DefaultValues<CreatePromotionSchemaType> = {
   campaign_id: undefined,
@@ -919,12 +919,10 @@ export const CreatePromotionForm = () => {
 
                               <Form.Control>
                                 {isFixedValueType ? (
-                                  <CurrencyInput
+                                  <LocaleCurrencyInput
                                     {...field}
                                     min={0}
-                                    onValueChange={value => {
-                                      onChange(value ? parseInt(value) : '');
-                                    }}
+                                    onValueChange={(amount) => onChange(amount ?? "")}
                                     code={currencyCode || 'USD'}
                                     symbol={currencyCode ? getCurrencySymbol(currencyCode) : '$'}
                                     value={value}

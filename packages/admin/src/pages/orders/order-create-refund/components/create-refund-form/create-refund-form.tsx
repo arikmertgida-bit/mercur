@@ -5,13 +5,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { HttpTypes } from "@medusajs/types";
 import {
   Button,
-  CurrencyInput,
   Heading,
   Label,
   Select,
   Textarea,
   toast,
 } from "@medusajs/ui";
+import { PanelCurrencyInput } from "../../../../../components/inputs/locale-currency-input";
 import { formatValue } from "react-currency-input-field";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -235,7 +235,7 @@ export const CreateRefundForm = ({ order }: CreateRefundFormProps) => {
                     </Form.Label>
 
                     <Form.Control data-testid="order-create-refund-amount-control">
-                      <CurrencyInput
+                      <PanelCurrencyInput
                         {...field}
                         min={0}
                         placeholder={formatValue({

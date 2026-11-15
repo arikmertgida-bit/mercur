@@ -7,6 +7,7 @@ import {
   ForwardRefExoticComponent,
 } from "react";
 import Primitive from "react-currency-input-field";
+import { useNumberInputLocale } from "../../../lib/number-input-locale";
 
 const MIN_DECIMAL_SCALE = 2;
 
@@ -31,7 +32,7 @@ export const DeprecatedPercentageInput: ForwardRefExoticComponent<InputProps> =
   >(({ min = 0, max = 100, step = 0.0001, ...props }, ref) => {
     return (
       <div className="relative">
-        <div className="absolute inset-y-0 left-0 z-10 flex w-8 items-center justify-center border-r">
+        <div className="absolute inset-y-0 start-0 z-10 flex w-8 items-center justify-center border-e">
           <Text
             className="text-ui-fg-muted"
             size="small"
@@ -48,7 +49,7 @@ export const DeprecatedPercentageInput: ForwardRefExoticComponent<InputProps> =
           max={max}
           step={step}
           {...props}
-          className="pl-10"
+          className="ps-10"
         />
       </div>
     );
@@ -73,6 +74,7 @@ export const PercentageInput = forwardRef<
   ) => {
     const resolvedDecimalScale = decimalScale ?? resolveDecimalScale(value);
     const resolvedDecimalsLimit = decimalsLimit ?? resolvedDecimalScale;
+    const numberInput = useNumberInputLocale();
 
     return (
       <div className="relative">
@@ -85,8 +87,11 @@ export const PercentageInput = forwardRef<
           decimalsLimit={resolvedDecimalsLimit}
           value={value}
           {...props}
+          intlConfig={numberInput.intlConfig}
+          decimalSeparator={numberInput.decimalSeparator}
+          groupSeparator={numberInput.groupSeparator}
           className={clx(
-            "caret-ui-fg-base bg-ui-bg-field shadow-buttons-neutral transition-fg txt-compact-small flex w-full select-none appearance-none items-center justify-between rounded-md px-2 py-1.5 pl-10 text-left outline-none",
+            "caret-ui-fg-base bg-ui-bg-field shadow-buttons-neutral transition-fg txt-compact-small flex w-full select-none appearance-none items-center justify-between rounded-md px-2 py-1.5 ps-10 text-start outline-none",
             "placeholder:text-ui-fg-muted text-ui-fg-base",
             "hover:bg-ui-bg-field-hover",
             "focus-visible:shadow-borders-interactive-with-active data-[state=open]:!shadow-borders-interactive-with-active",
@@ -96,7 +101,7 @@ export const PercentageInput = forwardRef<
             className
           )}
         />
-        <div className="absolute inset-y-0 left-0 z-10 flex w-8 items-center justify-center border-r">
+        <div className="absolute inset-y-0 start-0 z-10 flex w-8 items-center justify-center border-e">
           <Text
             className="text-ui-fg-muted"
             size="small"

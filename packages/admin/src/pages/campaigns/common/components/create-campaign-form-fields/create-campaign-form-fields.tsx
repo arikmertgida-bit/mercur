@@ -1,5 +1,4 @@
 import {
-  CurrencyInput,
   DatePicker,
   Divider,
   Heading,
@@ -21,6 +20,8 @@ import {
   getCurrencySymbol,
 } from "../../../../../lib/data/currencies"
 import { Combobox } from "../../../../../components/inputs/combobox"
+import { LocaleCurrencyInput } from "../../../../../components/inputs/locale-currency-input"
+import { getLocalizedCurrencyName } from "../../../../../lib/format-currency-name"
 
 export const CreateCampaignFormFields = ({ form, fieldScope = "" }) => {
   const { t } = useTranslation()
@@ -301,7 +302,7 @@ export const CreateCampaignFormFields = ({ form, fieldScope = "" }) => {
                               key={currency.code}
                               data-testid={`campaign-create-form-fields-budget-currency-select-option-${currency.code.toLowerCase()}`}
                             >
-                              {currency.name}
+                              {getLocalizedCurrencyName(currency.code)}
                             </Select.Item>
                           ))}
                       </Select.Content>
@@ -334,11 +335,9 @@ export const CreateCampaignFormFields = ({ form, fieldScope = "" }) => {
 
                 <Form.Control data-testid="campaign-create-form-fields-budget-limit-control">
                   {isTypeSpend ? (
-                    <CurrencyInput
+                    <LocaleCurrencyInput
                       min={0}
-                      onValueChange={(value) =>
-                        onChange(value ? parseInt(value) : "")
-                      }
+                      onValueChange={(amount) => onChange(amount ?? "")}
                       code={currencyValue}
                       symbol={
                         currencyValue ? getCurrencySymbol(currencyValue) : ""

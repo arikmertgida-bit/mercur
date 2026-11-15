@@ -230,7 +230,7 @@ export function OrderReceiveReturnForm({
         <RouteDrawer.Body className="flex size-full flex-col overflow-auto">
           <div className="mb-4 flex flex-col gap-y-1">
             <div className="flex items-center gap-2">
-              <ArrowRight className="text-ui-fg-subtle" />
+              <ArrowRight className="text-ui-fg-subtle rtl:rotate-180" />
               <Form.Label>{t("orders.returns.location")}</Form.Label>
             </div>
             <Form.Field

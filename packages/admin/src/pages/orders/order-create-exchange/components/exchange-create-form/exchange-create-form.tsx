@@ -3,13 +3,13 @@ import { PencilSquare } from "@medusajs/icons";
 import { AdminExchange, AdminOrder, AdminOrderPreview } from "@medusajs/types";
 import {
   Button,
-  CurrencyInput,
   Heading,
   IconButton,
   Switch,
   toast,
   usePrompt,
 } from "@medusajs/ui";
+import { PanelCurrencyInput } from "../../../../../components/inputs/locale-currency-input";
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -394,7 +394,7 @@ export const ExchangeCreateForm = ({
                   )}
 
                   {isInboundShippingPriceEdit ? (
-                    <CurrencyInput
+                    <PanelCurrencyInput
                       id="js-inbound-shipping-input"
                       onBlur={() => {
                         let actionId;
@@ -470,7 +470,7 @@ export const ExchangeCreateForm = ({
                   )}
 
                   {isOutboundShippingPriceEdit ? (
-                    <CurrencyInput
+                    <PanelCurrencyInput
                       id="js-outbound-shipping-input"
                       onBlur={() => {
                         let actionId;

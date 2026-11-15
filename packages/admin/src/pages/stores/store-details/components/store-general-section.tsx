@@ -8,7 +8,7 @@ import { InferClientOutput } from "@mercurjs/client";
 import { sdk } from "@lib/client";
 
 import { StoreDetailHeader } from "./store-detail-header";
-import { currencies } from "@/lib/data/currencies";
+import { getLocalizedCurrencyName } from "../../../../lib/format-currency-name";
 
 type Seller = InferClientOutput<typeof sdk.admin.sellers.$id.query>["seller"];
 
@@ -114,7 +114,9 @@ export const StoreGeneralSection = ({
                   {seller.currency_code?.toUpperCase()}
                 </Badge>
                 <Text size="small" leading="compact">
-                  {currencies[seller.currency_code?.toUpperCase()]?.name || "-"}
+                  {seller.currency_code
+                    ? getLocalizedCurrencyName(seller.currency_code)
+                    : "-"}
                 </Text>
               </div>
             </div>

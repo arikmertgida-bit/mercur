@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import { AdminPromotion } from '@medusajs/types';
 import {
   Button,
-  CurrencyInput,
   Divider,
   Input,
   RadioGroup,
@@ -27,6 +26,7 @@ import { RouteDrawer, useRouteModal } from "@components/modals"
 import { KeyboundForm } from "@components/utilities/keybound-form"
 import { getCurrencySymbol } from "@lib/data/currencies"
 import { useUpdatePromotion } from "@hooks/api/promotions"
+import { LocaleCurrencyInput } from "@components/inputs/locale-currency-input"
 
 type EditPromotionFormProps = {
   promotion: AdminPromotion;
@@ -324,12 +324,10 @@ export const EditPromotionDetailsForm = ({ promotion }: EditPromotionFormProps) 
                           </Form.Label>
                           <Form.Control>
                             {isFixedValueType ? (
-                              <CurrencyInput
+                              <LocaleCurrencyInput
                                 {...field}
                                 min={0}
-                                onValueChange={val => {
-                                  onChange(val ? parseInt(val) : '');
-                                }}
+                                onValueChange={(amount) => onChange(amount ?? "")}
                                 code={currencyCode || 'USD'}
                                 symbol={
                                   currencyCode

@@ -34,7 +34,10 @@ import {
   UpdateConditionalPriceSchema,
 } from "../../../common/schema"
 import { ConditionalPriceInfo } from "../../../common/types"
-import { buildShippingOptionPriceRules } from "../../../common/utils/price-rule-helpers"
+import {
+  buildShippingOptionPriceRules,
+  hasPriceAmount,
+} from "../../../common/utils/price-rule-helpers"
 
 type PriceRecord = {
   id?: string
@@ -138,7 +141,7 @@ export function EditShippingOptionsPricingForm({
     const currencyPrices = Object.entries(data.currency_prices)
       .map(([code, value]) => {
         if (
-          !value ||
+          !hasPriceAmount(value) ||
           !currencies.some((c) => c.toLowerCase() === code.toLowerCase())
         ) {
           return undefined
@@ -178,7 +181,7 @@ export function EditShippingOptionsPricingForm({
      */
     const regionPrices = Object.entries(data.region_prices)
       .map(([region_id, value]) => {
-        if (!value || !regions?.some((region) => region.id === region_id)) {
+        if (!hasPriceAmount(value) || !regions?.some((region) => region.id === region_id)) {
           return undefined
         }
 
