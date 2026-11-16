@@ -36,3 +36,25 @@ export async function resolveRegionByCountryCode(
 
   return match ? { id: match.id, currency_code: match.currency_code } : null
 }
+
+// Snapshots are keyed by currency, so two regions sharing a currency would
+// write the same rows twice; the oldest region (lowest id) wins.
+export function pickOneRegionPerCurrency(regions: ResolvedRegion[]): ResolvedRegion[] {
+  const byCurrency = new Map<string, ResolvedRegion>()
+  const sorted = [...regions].sort((a, b) => a.id.localeCompare(b.id))
+  for (const region of sorted) {
+    if (!byCurrency.has(region.currency_code)) {
+      byCurrency.set(region.currency_code, { id: region.id, currency_code: region.currency_code })
+    }
+  }
+  return [...byCurrency.values()]
+}
+
+export async function listOneRegionPerCurrency(query: Query): Promise<ResolvedRegion[]> {
+  const { data: regions } = await query.graph({
+    entity: 'region',
+    fields: ['id', 'currency_code'],
+  })
+
+  return pickOneRegionPerCurrency(parseRows(RegionCountryRowSchema, regions))
+}

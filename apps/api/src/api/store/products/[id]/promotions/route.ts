@@ -17,8 +17,7 @@ import { resolveRegionByCountryCode } from "../../../../../lib/resolve-region"
 import { parseRows } from "../../../../../lib/graph-schemas"
 import { VARIANT_PRICE_HISTORY_MODULE } from "../../../../../modules/variant-price-history"
 import VariantPriceHistoryService from "../../../../../modules/variant-price-history/service"
-
-const STORE_COUNTRY_CODE = "tr"
+import { StoreGetProductPromotionsParamsType } from "./validators"
 
 const ProductMatchRowSchema = z.object({
   id: z.string(),
@@ -32,7 +31,7 @@ const ProductMatchRowSchema = z.object({
 })
 
 export const GET = async (
-  req: MedusaRequest,
+  req: MedusaRequest<never, StoreGetProductPromotionsParamsType>,
   res: MedusaResponse
 ): Promise<void> => {
   const { id } = req.params
@@ -87,7 +86,7 @@ export const GET = async (
 
   const [loadedPromotions, region] = await Promise.all([
     loadPromotionDetails(query, matchedIds, sellerIdByPromotionId),
-    resolveRegionByCountryCode(query, STORE_COUNTRY_CODE),
+    resolveRegionByCountryCode(query, req.validatedQuery.country_code),
   ])
   const promotions = presentProductPromotions(loadedPromotions, {
     currency_code: region?.currency_code ?? null,

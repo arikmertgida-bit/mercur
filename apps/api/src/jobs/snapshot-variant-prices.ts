@@ -6,7 +6,7 @@ import { z } from "zod"
 
 import { parseRows } from "../lib/graph-schemas"
 import { getIstanbulDateString } from "../lib/reference-price"
-import { resolveRegionByCountryCode } from "../lib/resolve-region"
+import { listOneRegionPerCurrency, ResolvedRegion } from "../lib/resolve-region"
 import { VARIANT_PRICE_HISTORY_MODULE } from "../modules/variant-price-history"
 import VariantPriceHistoryService from "../modules/variant-price-history/service"
 import { CreateVariantPriceSnapshotInput } from "../workflows/steps/create-variant-price-snapshots"
@@ -22,7 +22,6 @@ import { snapshotVariantPricesWorkflow } from "../workflows/snapshot-variant-pri
 const JOB_NAME = "snapshot-variant-prices"
 const CRON_SCHEDULE = "0 21 * * *" // 21:00 UTC = 00:00 Europe/Istanbul
 const BATCH_LIMIT = 200
-const STORE_COUNTRY_CODE = "tr"
 
 const SnapshotEligibilityRowSchema = z.object({
   id: z.string(),
@@ -179,21 +178,83 @@ async function loadAlreadySnapshottedVariantIds(
   return already
 }
 
-export default async function snapshotVariantPricesJob(
-  container: MedusaContainer
+async function snapshotRegionPrices(
+  container: MedusaContainer,
+  region: ResolvedRegion,
+  eligibleVariants: EligibleVariant[],
+  capturedDate: string
 ): Promise<void> {
   const logger = container.resolve(ContainerRegistrationKeys.LOGGER)
   const query = container.resolve<Query>(ContainerRegistrationKeys.QUERY)
   const variantPriceHistoryService = container.resolve<VariantPriceHistoryService>(
     VARIANT_PRICE_HISTORY_MODULE
   )
+  const currency = region.currency_code
+
+  const alreadySnapshotted = await loadAlreadySnapshottedVariantIds(
+    variantPriceHistoryService,
+    eligibleVariants.map((variant) => variant.variantId),
+    currency,
+    capturedDate
+  )
+
+  const pending = eligibleVariants.filter(
+    (variant) => !alreadySnapshotted.has(variant.variantId)
+  )
+  if (pending.length === 0) {
+    logger.info(`[${JOB_NAME}] ${currency}: all ${eligibleVariants.length} variants already snapshotted for ${capturedDate}`)
+    return
+  }
+
+  const calculatedPrices = await loadCalculatedPrices(
+    query,
+    pending.map((variant) => variant.variantId),
+    region.id,
+    currency
+  )
+
+  const snapshots: CreateVariantPriceSnapshotInput[] = pending.flatMap((variant) => {
+    const amount = calculatedPrices.get(variant.variantId)
+    if (amount === undefined) {
+      return []
+    }
+    return [
+      {
+        variant_id: variant.variantId,
+        seller_id: variant.sellerId,
+        currency_code: currency,
+        amount,
+        captured_date: capturedDate,
+      },
+    ]
+  })
+
+  if (snapshots.length === 0) {
+    logger.info(`[${JOB_NAME}] ${currency}: no priced variants to snapshot for ${capturedDate}`)
+    return
+  }
+
+  for (const snapshotChunk of chunk(snapshots, BATCH_LIMIT)) {
+    await snapshotVariantPricesWorkflow(container).run({
+      input: { snapshots: snapshotChunk },
+    })
+  }
+
+  logger.info(
+    `[${JOB_NAME}] ${currency}: recorded ${snapshots.length} price snapshots for ${capturedDate} (${eligibleVariants.length - pending.length} already existed)`
+  )
+}
+
+export default async function snapshotVariantPricesJob(
+  container: MedusaContainer
+): Promise<void> {
+  const logger = container.resolve(ContainerRegistrationKeys.LOGGER)
+  const query = container.resolve<Query>(ContainerRegistrationKeys.QUERY)
 
   try {
-    const region = await resolveRegionByCountryCode(query, STORE_COUNTRY_CODE)
-    if (!region) {
-      logger.error(
-        `[${JOB_NAME}] no region found for country code "${STORE_COUNTRY_CODE}" — skipping run`
-      )
+    const regions = await listOneRegionPerCurrency(query)
+    if (regions.length === 0) {
+      logger.error(`[${JOB_NAME}] no region found — skipping run`)
       return
     }
 
@@ -206,59 +267,9 @@ export default async function snapshotVariantPricesJob(
       return
     }
 
-    const eligibleVariantIds = eligibleVariants.map((variant) => variant.variantId)
-    const alreadySnapshotted = await loadAlreadySnapshottedVariantIds(
-      variantPriceHistoryService,
-      eligibleVariantIds,
-      region.currency_code,
-      capturedDate
-    )
-
-    const pending = eligibleVariants.filter(
-      (variant) => !alreadySnapshotted.has(variant.variantId)
-    )
-    if (pending.length === 0) {
-      logger.info(`[${JOB_NAME}] all ${eligibleVariants.length} variants already snapshotted for ${capturedDate}`)
-      return
+    for (const region of regions) {
+      await snapshotRegionPrices(container, region, eligibleVariants, capturedDate)
     }
-
-    const calculatedPrices = await loadCalculatedPrices(
-      query,
-      pending.map((variant) => variant.variantId),
-      region.id,
-      region.currency_code
-    )
-
-    const snapshots: CreateVariantPriceSnapshotInput[] = pending.flatMap((variant) => {
-      const amount = calculatedPrices.get(variant.variantId)
-      if (amount === undefined) {
-        return []
-      }
-      return [
-        {
-          variant_id: variant.variantId,
-          seller_id: variant.sellerId,
-          currency_code: region.currency_code,
-          amount,
-          captured_date: capturedDate,
-        },
-      ]
-    })
-
-    if (snapshots.length === 0) {
-      logger.info(`[${JOB_NAME}] no priced variants to snapshot for ${capturedDate}`)
-      return
-    }
-
-    for (const snapshotChunk of chunk(snapshots, BATCH_LIMIT)) {
-      await snapshotVariantPricesWorkflow(container).run({
-        input: { snapshots: snapshotChunk },
-      })
-    }
-
-    logger.info(
-      `[${JOB_NAME}] recorded ${snapshots.length} price snapshots for ${capturedDate} (${eligibleVariants.length - pending.length} already existed)`
-    )
   } catch (error) {
     logger.error(
       `[${JOB_NAME}] failed:`,

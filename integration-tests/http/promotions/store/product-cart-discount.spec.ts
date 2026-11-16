@@ -118,9 +118,12 @@ medusaIntegrationTestRunner({
                 await Promise.all(PROMOTION_CACHE_KEYS.map((key) => cache.invalidate(key)))
             }
 
-            const getLeadPromotion = async (): Promise<ProductPromotion | undefined> => {
+            const getLeadPromotion = async (countryCode = "us"): Promise<ProductPromotion | undefined> => {
                 await clearPromotionCache()
-                const response = await api.get(`/store/products/${product.id}/promotions`, storeHeaders)
+                const response = await api.get(
+                    `/store/products/${product.id}/promotions?country_code=${countryCode}`,
+                    storeHeaders
+                )
                 const promotions: ProductPromotion[] = response.data.promotions
                 return promotions[0]
             }
@@ -194,6 +197,23 @@ medusaIntegrationTestRunner({
                     UNIT_PRICE
                 )
                 expect(cartDiscount).toBeCloseTo(UNIT_PRICE - labelDiscount, 6)
+            })
+
+            it("prices the cart discount in the currency of the requested country region", async () => {
+                await createItemPromotion("LABELREGION", 10, true)
+                await appContainer
+                    .resolve<IRegionModuleService>(Modules.REGION)
+                    .createRegions({ name: "Label EU Region", currency_code: "eur", countries: ["de"] })
+
+                expect((await getLeadPromotion("us"))?.cart_discount?.currency_code).toBe("usd")
+                expect((await getLeadPromotion("DE"))?.cart_discount?.currency_code).toBe("eur")
+            })
+
+            it("rejects a request without a country code", async () => {
+                const response = await api
+                    .get(`/store/products/${product.id}/promotions`, storeHeaders)
+                    .catch((error: { response: { status: number } }) => error.response)
+                expect(response.status).toBe(400)
             })
 
             it("gives no cart discount once the campaign has ended", async () => {
