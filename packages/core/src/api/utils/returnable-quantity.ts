@@ -78,7 +78,9 @@ export async function assertItemsReturnable(
     data: [order],
   } = await query.graph({
     entity: "order",
-    fields: ["id", "*items"],
+    // query.graph has no "*relation" shorthand (that is the HTTP `fields`
+    // syntax): "*items" loads no items, which made every item non-returnable.
+    fields: ["id", "items.*", "items.detail.*"],
     filters: { id: orderId },
   })
 

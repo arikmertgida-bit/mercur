@@ -4,6 +4,16 @@ import {
   STORE_ORDER_RETRIEVE_LINK_FIELDS,
 } from "../middlewares"
 
+const RETURN_FIELDS = [
+  "returns.id",
+  "returns.status",
+  "returns.created_at",
+  "returns.requested_at",
+  "returns.received_at",
+  "returns.canceled_at",
+  "returns.items",
+]
+
 describe("store orders link fields", () => {
   it("adds the link fields to what is already allowed, once", () => {
     const allowed = ["customer.id", "seller.id"]
@@ -25,6 +35,18 @@ describe("store orders link fields", () => {
     expect(STORE_ORDER_RETRIEVE_LINK_FIELDS).toEqual(
       expect.arrayContaining(["seller.address.address_1", "order_group.id"])
     )
+  })
+
+  it("lets the returns list and return detail link to the seller page", () => {
+    for (const fields of [STORE_ORDER_LIST_LINK_FIELDS, STORE_ORDER_RETRIEVE_LINK_FIELDS]) {
+      expect(fields).toEqual(expect.arrayContaining(["seller.handle", "seller.logo"]))
+    }
+  })
+
+  it("lets the returns pages read the shopper's own returns", () => {
+    for (const fields of [STORE_ORDER_LIST_LINK_FIELDS, STORE_ORDER_RETRIEVE_LINK_FIELDS]) {
+      expect(fields).toEqual(expect.arrayContaining(RETURN_FIELDS))
+    }
   })
 
   it("never grants a whole seller relation", () => {

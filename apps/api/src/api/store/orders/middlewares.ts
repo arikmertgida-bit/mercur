@@ -19,19 +19,34 @@ import {
 // order-group and cart links, so they were silently dropped from the
 // response. Only the fields the storefront renders are granted — never
 // `*seller`, which would hand every seller column to the shopper.
+const STORE_ORDER_RETURN_FIELDS = [
+  "returns.id",
+  "returns.status",
+  "returns.created_at",
+  "returns.requested_at",
+  "returns.received_at",
+  "returns.canceled_at",
+  "returns.items",
+]
+
 export const STORE_ORDER_LIST_LINK_FIELDS = [
   "seller.id",
   "seller.name",
+  "seller.handle",
+  "seller.logo",
   "reviews.id",
   "reviews.reference_id",
   "reviews.rating",
   "reviews.customer_note",
   "reviews.created_at",
+  ...STORE_ORDER_RETURN_FIELDS,
 ]
 
 export const STORE_ORDER_RETRIEVE_LINK_FIELDS = [
   "seller.id",
   "seller.name",
+  "seller.handle",
+  "seller.logo",
   "seller.email",
   "seller.address.address_1",
   "seller.address.city",
@@ -39,6 +54,7 @@ export const STORE_ORDER_RETRIEVE_LINK_FIELDS = [
   "seller.address.country_code",
   "order_group.id",
   "cart.id",
+  ...STORE_ORDER_RETURN_FIELDS,
 ]
 
 export const grantLinkFields = (allowed: string[], fields: string[]): void => {
