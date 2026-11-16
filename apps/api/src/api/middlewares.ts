@@ -31,7 +31,6 @@ import { storeCatalogProductsMiddlewares } from "./store/catalog/products/middle
 import { storeCatalogFacetsMiddlewares } from "./store/catalog/facets/middlewares";
 import { storeSellerProductsMiddlewares } from "./store/sellers/[handle]/products/middlewares";
 import { storeSearchSuggestMiddlewares } from "./store/search/suggest/middlewares";
-import { storeCampaignsMiddlewares } from "./store/campaigns/middlewares";
 import { storeReturnsReturnWindowMiddlewares } from "./store/returns/middlewares";
 import { storeOrdersLinkFieldsMiddlewares } from "./store/orders/middlewares";
 import { vendorFollowersMiddlewares } from "./vendor/followers/middlewares";
@@ -104,7 +103,6 @@ export default defineMiddlewares({
         ...storeCatalogFacetsMiddlewares,
         ...storeSellerProductsMiddlewares,
         ...storeSearchSuggestMiddlewares,
-        ...storeCampaignsMiddlewares,
         ...storeReturnsReturnWindowMiddlewares,
         ...storeOrdersLinkFieldsMiddlewares,
         ...adminProductReportsMiddlewares,

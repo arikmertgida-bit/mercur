@@ -33,7 +33,6 @@ export const GET = async (
     color,
     condition,
     promotion_type,
-    campaign_id,
     has_active_campaign,
     has_upcoming_campaign,
   } = req.validatedQuery
@@ -49,7 +48,6 @@ export const GET = async (
     color_values: toStringArray(color),
     condition_values: toStringArray(condition),
     promotion_types: toStringArray(promotion_type),
-    campaign_id,
     has_active_campaign,
     has_upcoming_campaign,
     price_min: min_price,

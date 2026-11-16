@@ -19,7 +19,6 @@ export const StoreGetCatalogProductsParams = z.object({
   color: csvOrArray.optional(),
   condition: csvOrArray.optional(),
   promotion_type: csvOrArray.optional(),
-  campaign_id: z.string().optional(),
   has_active_campaign: booleanString().optional(),
   has_upcoming_campaign: booleanString().optional(),
 })

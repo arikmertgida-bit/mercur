@@ -298,9 +298,6 @@ class MeilisearchProductIndex {
     if (exclude !== 'promotion_types' && filters.promotion_types?.length) {
       filterParts.push(`promotion_types IN [${meiliValueList(filters.promotion_types)}]`)
     }
-    if (filters.campaign_id) {
-      filterParts.push(`campaign_ids IN [${meiliValueList([filters.campaign_id])}]`)
-    }
     if (filters.has_active_campaign) {
       filterParts.push('campaign_ids IS NOT EMPTY')
     }
@@ -433,15 +430,6 @@ class MeilisearchProductIndex {
     return { collections, categories, attributes, sizes, colors, conditions, promotions, types }
   }
 
-  async campaignIdsForCategory(categoryId: string): Promise<string[]> {
-    await this.ensureSettings()
-    const result = await this.productIndex_.searchForFacetValues({
-      facetName: 'campaign_ids',
-      filter: `seller_status = "open" AND in_stock = true AND category_ids IN [${meiliValueList([categoryId])}]`,
-    })
-    return result.facetHits.map((hit) => hit.value)
-  }
-
   // Live, debounced sidebar search-box support for the Collection/Type
   // facet lists: searches only the requested facet's own value text
   // (`facetQuery`) against the currently active context filters, without
@@ -494,16 +482,6 @@ export async function removeDocs(ids: string[]): Promise<void> {
 
 export async function searchProducts(query: SearchQueryBase): Promise<SearchResults> {
   return (await getProductIndex()).search(query)
-}
-
-// Distinct campaign IDs among currently discoverable (in_stock, open-seller)
-// products in the given category. Used to filter the active-campaigns list
-// by category without duplicating category/campaign resolution logic —
-// campaign coverage is already fully resolved at product-index time (see
-// promotion-index.ts), regardless of which of Medusa's promotion rule types
-// (product/category/collection/type/tag) produced it.
-export async function getCampaignIdsForCategory(categoryId: string): Promise<string[]> {
-  return (await getProductIndex()).campaignIdsForCategory(categoryId)
 }
 
 // Powers the sidebar Collection/Type search box: a lightweight, context-aware

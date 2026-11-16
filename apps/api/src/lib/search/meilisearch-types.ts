@@ -20,7 +20,6 @@ export type MeilisearchProviderFilters = {
   color_values?: string[]
   condition_values?: string[]
   promotion_types?: string[]
-  campaign_id?: string
   has_active_campaign?: boolean
   has_upcoming_campaign?: boolean
   price_min?: number

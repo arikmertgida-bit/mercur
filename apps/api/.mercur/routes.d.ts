@@ -689,9 +689,6 @@ export type Routes = {
         auth: {
             messengerToken: typeof import("../src/api/store/auth/messenger-token/route");
         };
-        campaigns: typeof import("../src/api/store/campaigns/route") & {
-            $id: typeof import("../src/api/store/campaigns/[id]/route");
-        };
         catalog: {
             facets: typeof import("../src/api/store/catalog/facets/route");
             products: typeof import("../src/api/store/catalog/products/route");
