@@ -8,6 +8,7 @@ import {
   IndexedProductPromotion,
   matchCampaignIds,
   matchProductPromotions,
+  promotionsInSellerScope,
   PromotionMatchableProduct,
 } from './promotion-index'
 import { SearchDoc, SearchDocAttribute, SearchDocPrice } from './types'
@@ -312,7 +313,7 @@ export const buildProductDocs = async (
     }
     const { promotion_types, campaign_ids } = matchProductPromotions(
       matchableProduct,
-      activePromotions
+      promotionsInSellerScope(activePromotions, seller?.id)
     )
 
     return {
@@ -348,7 +349,10 @@ export const buildProductDocs = async (
       in_stock: resolveInStock(product, defaultSalesChannelId),
       promotion_types,
       campaign_ids,
-      upcoming_campaign_ids: matchCampaignIds(matchableProduct, upcomingPromotions),
+      upcoming_campaign_ids: matchCampaignIds(
+        matchableProduct,
+        promotionsInSellerScope(upcomingPromotions, seller?.id)
+      ),
     }
   })
 

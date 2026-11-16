@@ -61,9 +61,18 @@ import { refreshOrderCommissionLinesWorkflow } from "../../commission/workflows/
 import { InventoryWorkflowEvents } from "../../events"
 import { AddressRow } from "../../../utils/address-row"
 import { parseGraphRow, parseGraphRows } from "../../../utils/graph-rows"
+import { validateCartPricingWorkflow } from "./validate-cart-pricing"
 
 type CompleteCartWithSplitOrdersWorkflowInput = {
     cart_id: string
+    /**
+     * Skips re-pricing the cart before the orders are created. Only for a
+     * completion driven by a payment the provider already took: the shopper
+     * paid the session amount, so aborting would leave a payment without an
+     * order. The amount itself has to be validated before that payment
+     * session is started.
+     */
+    skip_pricing_validation?: boolean
 }
 
 const SetOrderStatusHookResultSchema = z
@@ -175,6 +184,18 @@ export const completeCartWithSplitOrdersWorkflow = createWorkflow(
                 resultValidator: SetOrderStatusHookResultSchema,
             }
         )
+
+        // Adjustments and unit prices are copied onto the orders as stored, so
+        // a cart priced while a campaign ran, or before a seller changed a
+        // price, must not reach the order split unchanged. A sibling `when`,
+        // not part of phase 1, for the same reason phase 2 is one (see below).
+        when("validate-cart-pricing", { orderGroupId, input }, ({ orderGroupId, input }) => {
+            return !orderGroupId && !input.skip_pricing_validation
+        }).then(() => {
+            validateCartPricingWorkflow.runAsStep({
+                input: { cart_id: input.cart_id },
+            })
+        })
 
         // PHASE 1 — validate the cart and create (or, under a lost
         // concurrency race, gracefully recover) the order group. Skipped

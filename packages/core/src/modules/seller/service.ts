@@ -147,14 +147,24 @@ class SellerModuleService extends MedusaService({
     return super.createSellers(input, sharedContext)
   }
 
-  @InjectTransactionManager()
   // @ts-expect-error — see createSellers: base's generated type doesn't match
   // our named DTO exactly, a real third-party type-system boundary.
   async updateSellers(
     data: UpdateSellerInput[],
     sharedContext?: Context,
-  ): Promise<SellerDTO[]> {
-    const input = data.map((seller) => {
+  ): Promise<SellerDTO[]>
+  // @ts-expect-error — same generated-type boundary as the overload above.
+  async updateSellers(
+    data: UpdateSellerInput,
+    sharedContext?: Context,
+  ): Promise<SellerDTO>
+  @InjectTransactionManager()
+  // @ts-expect-error — same generated-type boundary as the overloads above.
+  async updateSellers(
+    data: UpdateSellerInput | UpdateSellerInput[],
+    sharedContext?: Context,
+  ): Promise<SellerDTO | SellerDTO[]> {
+    const input = (Array.isArray(data) ? data : [data]).map((seller) => {
       this.validateSellerData_(seller)
 
       if (!seller.handle && seller.name) {
@@ -166,7 +176,9 @@ class SellerModuleService extends MedusaService({
 
     // @ts-expect-error — see class-level comment: base's generated param type
     // is a DML-inferred anonymous type, not our named UpdateSellerDTO.
-    return super.updateSellers(input, sharedContext)
+    const updated: SellerDTO[] = await super.updateSellers(input, sharedContext)
+
+    return Array.isArray(data) ? updated : updated[0]
   }
 
   @InjectTransactionManager()

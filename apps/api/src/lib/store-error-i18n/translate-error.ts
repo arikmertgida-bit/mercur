@@ -1,4 +1,5 @@
 import { MedusaError } from "@medusajs/framework/utils"
+import { CART_PRICES_CHANGED_ERROR_CODE } from "@mercurjs/types"
 
 import type { StoreLanguage } from "./languages"
 import { STORE_ERROR_MESSAGES, StoreErrorMessages } from "./messages"
@@ -177,6 +178,14 @@ export function translateStoreError(
         code: error.code,
         type: error.type,
         message: messages.insufficientInventory,
+      }
+    }
+
+    if (error.code === CART_PRICES_CHANGED_ERROR_CODE) {
+      return {
+        code: error.code,
+        type: error.type,
+        message: messages.cartPricesChanged,
       }
     }
 

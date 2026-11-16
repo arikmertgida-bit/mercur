@@ -1,4 +1,5 @@
 import { MedusaError } from "@medusajs/framework/utils"
+import { CART_PRICES_CHANGED_ERROR_CODE } from "@mercurjs/types"
 
 import { toHandledError } from "../errors"
 import { translateStoreError } from "../store-error-i18n/translate-error"
@@ -50,6 +51,23 @@ describe("translateStoreError with workflow errors", () => {
       code: MedusaError.Codes.INSUFFICIENT_INVENTORY,
       type: MedusaError.Types.NOT_ALLOWED,
       message: "Yeterli stok bulunmuyor.",
+    })
+  })
+  it("translates a cart whose prices changed before completion", () => {
+    const handled = toHandledError({
+      name: "Error",
+      message: "The prices in your cart have been updated. Please review your cart.",
+      type: MedusaError.Types.NOT_ALLOWED,
+      code: CART_PRICES_CHANGED_ERROR_CODE,
+      __isMedusaError: true,
+    })
+    if (!handled) {
+      throw new Error("expected a handled error")
+    }
+    expect(translateStoreError(handled, "tr")).toEqual({
+      code: CART_PRICES_CHANGED_ERROR_CODE,
+      type: MedusaError.Types.NOT_ALLOWED,
+      message: "Sepetinizdeki fiyatlar güncellendi. Lütfen sepetinizi kontrol edin.",
     })
   })
 })

@@ -23,6 +23,9 @@ export * from "./promotion-cost"
 // Review types
 export * from "./review"
 
+// Cart contracts
+export * from "./cart"
+
 
 // Product types — explicit re-export overrides Medusa's product surface.
 // Mercur's runtime enums and Mercur-extended DTOs (Omit + intersection over

@@ -14,6 +14,14 @@ session detail aggressively. The per-spec source of truth lives in
   `bun run test:integration:http -- <pattern>`
 - **Current blocker**: none
 
+## Session — Kayı 9e-1e-1b checkout price revalidation (2026-11-16, kayi-main)
+
+- Cart completion re-prices the cart (`validateCartPricingWorkflow`) before any order/payment; drift → `cart_prices_changed` (NOT_ALLOWED), store route runs `refreshCartItemsWorkflow({ force_refresh: true })`. Webhook completion skips it (`skip_pricing_validation`).
+- Spec: `integration-tests/http/promotions/store/checkout-price-revalidation.spec.ts` (6/6).
+- Integration harness runs on Windows again: reinstall `node_modules` from an uppercase `D:` cwd (bun junction drive-letter case made Jest load core-flows twice); MinIO provider moved to `apps/api/src/providers/`; cross-module migrations made fresh-DB safe (oversell trigger → `apps/api/src/migration-scripts/`); RBAC block dropped from `create-admin-user` helper (upstream); `updateSellers` accepts a single object again.
+- Search index / catalog promotions now scope seller promotions to that seller's products (`promotionsInSellerScope`); platform promotions are re-synced by `search-sync-promotions`.
+- Known: upstream offer-based specs fail in Kayı (no offer module).
+
 ## Session — Panel auth collision, branch `fix/panel-auth-session-collision`
 
 Admin and vendor panels shared one API session cookie, so logging in to one logged the other out.

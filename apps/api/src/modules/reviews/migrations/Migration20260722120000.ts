@@ -7,18 +7,26 @@ export class Migration20260722120000 extends Migration {
 
     // Backfill from the link tables so existing reviews keep working —
     // the link tables remain the source of truth for cross-module joins,
-    // this column is a denormalized copy for plain reads.
+    // this column is a denormalized copy for plain reads. Link tables are
+    // created after every module migration, so on an empty database they
+    // do not exist yet — and there is no review to backfill either.
     this.addSql(`
-      update "review" r
-      set "reference_id" = p."product_id"
-      from "product_product_reviews_review" p
-      where p."review_id" = r."id" and p."deleted_at" is null and r."reference_id" is null;
-    `);
-    this.addSql(`
-      update "review" r
-      set "reference_id" = s."seller_id"
-      from "seller_seller_reviews_review" s
-      where s."review_id" = r."id" and s."deleted_at" is null and r."reference_id" is null;
+      do $$
+      begin
+        if to_regclass('product_product_reviews_review') is not null then
+          update "review" r
+          set "reference_id" = p."product_id"
+          from "product_product_reviews_review" p
+          where p."review_id" = r."id" and p."deleted_at" is null and r."reference_id" is null;
+        end if;
+        if to_regclass('seller_seller_reviews_review') is not null then
+          update "review" r
+          set "reference_id" = s."seller_id"
+          from "seller_seller_reviews_review" s
+          where s."review_id" = r."id" and s."deleted_at" is null and r."reference_id" is null;
+        end if;
+      end
+      $$;
     `);
   }
 

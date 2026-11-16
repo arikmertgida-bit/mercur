@@ -10,6 +10,7 @@ import {
   matchProductPromotions,
   PromotionMatchableProduct,
   ProductPromotionKind,
+  promotionsInSellerScope,
 } from '../lib/search/promotion-index'
 import { getProductIdsForSeller, reindexProductsById } from '../lib/search/sync'
 import { presentItems } from "../lib/graph-list"
@@ -23,9 +24,9 @@ import { presentItems } from "../lib/graph-list"
 // `upcoming_campaign_ids` correct.
 //
 // Cost is bounded by the catalog of sellers who currently have (or, last
-// run, had) an active or upcoming product-targeting promotion — never by the total
-// marketplace catalog — so this stays cheap at 10k+ seller / 1M+ product
-// scale even though it re-scans in full each run.
+// run, had) an active or upcoming product-targeting promotion. A platform
+// promotion (no seller) can discount every seller's products, so while one
+// is active or upcoming every seller is scanned.
 const JOB_NAME = 'search-sync-promotions'
 const CRON_SCHEDULE = '*/5 * * * *'
 const SNAPSHOT_CACHE_KEY = 'search:promotion-coverage-snapshot:v2'
@@ -67,8 +68,8 @@ async function computeSellerCoverage(
   upcomingPromotions: IndexedProductPromotion[]
 ): Promise<SellerSnapshot> {
   const query = container.resolve<Query>(ContainerRegistrationKeys.QUERY)
-  const sellerPromotions = activePromotions.filter((p) => p.sellerId === sellerId)
-  const sellerUpcomingPromotions = upcomingPromotions.filter((p) => p.sellerId === sellerId)
+  const sellerPromotions = promotionsInSellerScope(activePromotions, sellerId)
+  const sellerUpcomingPromotions = promotionsInSellerScope(upcomingPromotions, sellerId)
   if (!sellerPromotions.length && !sellerUpcomingPromotions.length) {
     return {}
   }
@@ -106,6 +107,12 @@ async function computeSellerCoverage(
   return snapshot
 }
 
+async function listSellerIds(container: MedusaContainer): Promise<string[]> {
+  const query = container.resolve<Query>(ContainerRegistrationKeys.QUERY)
+  const { data: sellers } = await query.graph({ entity: 'seller', fields: ['id'] })
+  return sellers.map((seller: { id: string }) => seller.id)
+}
+
 export default async function searchSyncPromotionsJob(
   container: MedusaContainer
 ): Promise<void> {
@@ -120,10 +127,11 @@ export default async function searchSyncPromotionsJob(
     const previousSnapshot =
       (await cache.get<CoverageSnapshot>(SNAPSHOT_CACHE_KEY)) ?? {}
 
+    const promotions = [...activePromotions, ...upcomingPromotions]
     const activeSellerIds = new Set(
-      [...activePromotions, ...upcomingPromotions]
-        .map((p) => p.sellerId)
-        .filter((id): id is string => id !== null)
+      promotions.some((p) => p.sellerId === null)
+        ? await listSellerIds(container)
+        : promotions.map((p) => p.sellerId).filter((id): id is string => id !== null)
     )
     // Sellers scanned last run must be re-scanned even with zero currently
     // active promotions — that's exactly the "last promotion just ended"

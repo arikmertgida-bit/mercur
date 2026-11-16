@@ -1,10 +1,20 @@
 import { MedusaRequest, MedusaResponse } from "@medusajs/framework/http"
 import { ContainerRegistrationKeys, MedusaError } from "@medusajs/framework/utils"
+import { refreshCartItemsWorkflow } from "@medusajs/medusa/core-flows"
 import { HttpTypes } from "@mercurjs/types"
+import { z } from "zod"
 
-import { completeCartWithSplitOrdersWorkflow } from "../../../../../workflows/cart"
+import {
+    CART_PRICES_CHANGED_ERROR_CODE,
+    completeCartWithSplitOrdersWorkflow,
+} from "../../../../../workflows/cart"
 import { defaultStoreCartFields, refetchCart } from "../../helpers"
 import { StoreCompleteCartParamsType } from "./validators"
+
+// Workflow errors arrive serialized; the MedusaError code survives.
+const PricesChangedErrorSchema = z.object({
+    code: z.literal(CART_PRICES_CHANGED_ERROR_CODE),
+})
 
 export const POST = async (
     req: MedusaRequest<never, StoreCompleteCartParamsType>,
@@ -21,6 +31,26 @@ export const POST = async (
 
     if (errors?.[0]) {
         const error = errors[0].error
+
+        // The completion stopped before any order or payment because the
+        // cart's prices are stale. Re-price it now so the shopper's next look
+        // at the cart, and the payment collection, show the current amount.
+        if (PricesChangedErrorSchema.safeParse(error).success) {
+            try {
+                await refreshCartItemsWorkflow(req.scope).run({
+                    input: { cart_id, force_refresh: true },
+                })
+            } catch (refreshError) {
+                const logger = req.scope.resolve(ContainerRegistrationKeys.LOGGER)
+                logger.error(
+                    `Refreshing cart ${cart_id} after a price change failed: ${
+                        refreshError instanceof Error ? refreshError.message : String(refreshError)
+                    }`
+                )
+            }
+            throw error
+        }
+
         const statusOKErrors: string[] = [
             MedusaError.Types.PAYMENT_AUTHORIZATION_ERROR,
             MedusaError.Types.PAYMENT_REQUIRES_MORE_ERROR,

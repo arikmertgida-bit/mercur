@@ -4,6 +4,7 @@ import {
   matchCampaignIds,
   pickCampaignWindow,
   PromotionMatchableProduct,
+  promotionsInSellerScope,
 } from "../promotion-index"
 
 const NOW = Date.parse("2026-11-16T12:00:00.000Z")
@@ -116,5 +117,23 @@ describe("pickCampaignWindow", () => {
     expect(
       pickCampaignWindow(product, [promotion({ promotionId: "p1" })], "active")
     ).toBeNull()
+  })
+})
+
+describe("promotionsInSellerScope", () => {
+  const own = promotion({ promotionId: "own", sellerId: "sel_1" })
+  const other = promotion({ promotionId: "other", sellerId: "sel_2" })
+  const platform = promotion({ promotionId: "platform", sellerId: null })
+
+  it("keeps platform promotions and the seller's own, drops other sellers'", () => {
+    expect(
+      promotionsInSellerScope([own, other, platform], "sel_1").map((p) => p.promotionId)
+    ).toEqual(["own", "platform"])
+  })
+
+  it("leaves only platform promotions for a product without a seller", () => {
+    expect(
+      promotionsInSellerScope([own, other, platform], undefined).map((p) => p.promotionId)
+    ).toEqual(["platform"])
   })
 })

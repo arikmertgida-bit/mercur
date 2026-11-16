@@ -312,6 +312,19 @@ export function matchProductPromotions(
   }
 }
 
+/**
+ * The promotions that can discount a product of the given seller: platform
+ * promotions (no seller) and that seller's own. Mirrors the cart-side scope
+ * (`isAdjustmentInSellerScope` in @mercurjs/core), so the index never marks a
+ * product with a campaign the cart would not apply to it.
+ */
+export function promotionsInSellerScope(
+  promotions: IndexedProductPromotion[],
+  sellerId: string | null | undefined
+): IndexedProductPromotion[] {
+  return promotions.filter((promotion) => !promotion.sellerId || promotion.sellerId === sellerId)
+}
+
 export function matchCampaignIds(
   product: PromotionMatchableProduct,
   promotions: IndexedProductPromotion[]

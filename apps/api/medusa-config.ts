@@ -152,9 +152,6 @@ module.exports = withMercur({
       resolve: './src/modules/attribute-legacy-cleanup',
     },
     {
-      resolve: './src/modules/inventory-integrity-guard',
-    },
-    {
       resolve: '@mercurjs/core/modules/admin-ui',
       options: {
         appDir: '',
@@ -200,7 +197,7 @@ module.exports = withMercur({
       options: {
         providers: [
           {
-            resolve: './src/modules/minio-file-provider',
+            resolve: './src/providers/minio-file-provider',
             id: 'minio',
             options: {
               file_url: requireEnv('MINIO_FILE_URL'),

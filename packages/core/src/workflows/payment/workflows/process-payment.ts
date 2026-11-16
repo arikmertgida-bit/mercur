@@ -195,7 +195,10 @@ export const processPaymentWorkflow = createWorkflow(
         ).then(() => {
             completeCartWithSplitOrdersWorkflow
                 .runAsStep({
-                    input: { cart_id: cartPaymentCollection.data[0].cart_id },
+                    input: {
+                        cart_id: cartPaymentCollection.data[0].cart_id,
+                        skip_pricing_validation: true,
+                    },
                 })
                 .config({
                     name: "complete-cart-with-split-orders",

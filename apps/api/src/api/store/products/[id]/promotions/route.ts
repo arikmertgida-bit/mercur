@@ -9,6 +9,7 @@ import {
   matchProductPromotionIds,
   pickCampaignWindow,
   PromotionMatchableProduct,
+  promotionsInSellerScope,
 } from "../../../../../lib/search/promotion-index"
 import { loadPromotionDetails } from "../../../../../lib/search/promotion-details"
 import { loadReferencePrices, ReferencePriceEntry } from "../../../../../lib/reference-price"
@@ -26,6 +27,7 @@ const ProductMatchRowSchema = z.object({
   type_id: z.string().nullable().optional(),
   tags: z.array(z.object({ id: z.string() })).nullable().default([]),
   variants: z.array(z.object({ id: z.string() })).nullable().default([]),
+  sellers: z.array(z.object({ id: z.string() })).nullable().default([]),
 })
 
 export const GET = async (
@@ -44,6 +46,7 @@ export const GET = async (
       "type_id",
       "tags.id",
       "variants.id",
+      "sellers.id",
     ],
     filters: { id },
   })
@@ -66,9 +69,14 @@ export const GET = async (
     tag_ids: (product.tags ?? []).map((tag) => tag.id),
   }
 
+  const sellerId = (product.sellers ?? [])[0]?.id
   const [activePromotions, upcomingPromotions] = await Promise.all([
-    loadActiveProductPromotions(req.scope),
-    loadUpcomingProductPromotions(req.scope),
+    loadActiveProductPromotions(req.scope).then((promotions) =>
+      promotionsInSellerScope(promotions, sellerId)
+    ),
+    loadUpcomingProductPromotions(req.scope).then((promotions) =>
+      promotionsInSellerScope(promotions, sellerId)
+    ),
   ])
   const matchedIds = matchProductPromotionIds(matchableProduct, activePromotions)
   const sellerIdByPromotionId = new Map(

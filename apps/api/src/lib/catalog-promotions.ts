@@ -11,6 +11,7 @@ import {
   matchProductPromotionIds,
   pickCampaignWindow,
   PromotionMatchableProduct,
+  promotionsInSellerScope,
 } from './search/promotion-index'
 import { loadPromotionDetails, PromotionDetail } from './search/promotion-details'
 import { VARIANT_PRICE_HISTORY_MODULE } from '../modules/variant-price-history'
@@ -74,10 +75,15 @@ export async function loadCatalogPromotionPricing(
       type_id: product.type_id ?? null,
       tag_ids: (product.tags ?? []).map((tag) => tag.id),
     }
-    const matchedIds = matchProductPromotionIds(matchableProduct, activePromotions)
+    const scopedActive = promotionsInSellerScope(activePromotions, product.seller?.id)
+    const matchedIds = matchProductPromotionIds(matchableProduct, scopedActive)
     matchedIdsByProductId.set(product.id, matchedIds)
-    const active = pickCampaignWindow(matchableProduct, activePromotions, 'active')
-    const upcoming = pickCampaignWindow(matchableProduct, upcomingPromotions, 'upcoming')
+    const active = pickCampaignWindow(matchableProduct, scopedActive, 'active')
+    const upcoming = pickCampaignWindow(
+      matchableProduct,
+      promotionsInSellerScope(upcomingPromotions, product.seller?.id),
+      'upcoming'
+    )
     if (active || upcoming) {
       campaignWindows[product.id] = { active, upcoming }
     }
