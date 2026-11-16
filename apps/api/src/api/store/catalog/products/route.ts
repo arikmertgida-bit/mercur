@@ -35,6 +35,7 @@ export const GET = async (
     promotion_type,
     campaign_id,
     has_active_campaign,
+    has_upcoming_campaign,
   } = req.validatedQuery
 
   const region = await resolveRegionByCountryCode(query, country_code)
@@ -50,6 +51,7 @@ export const GET = async (
     promotion_types: toStringArray(promotion_type),
     campaign_id,
     has_active_campaign,
+    has_upcoming_campaign,
     price_min: min_price,
     price_max: max_price,
     sort,
@@ -71,7 +73,7 @@ export const GET = async (
 
   const products = await hydrateOrderedProducts(query, orderedIds, pricingContext)
 
-  const { promotionsByProductId, referencePrices } = await loadCatalogPromotionPricing(
+  const { promotionsByProductId, referencePrices, campaignWindows } = await loadCatalogPromotionPricing(
     req.scope,
     query,
     products,
@@ -93,5 +95,6 @@ export const GET = async (
     typeFacets: searchResult.facets?.types ?? [],
     promotions: promotionsByProductId,
     reference_prices: referencePrices,
+    campaign_windows: campaignWindows,
   })
 }

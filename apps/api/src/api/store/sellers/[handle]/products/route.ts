@@ -53,6 +53,8 @@ export const GET = async (
     color,
     condition,
     promotion_type,
+    has_active_campaign,
+    has_upcoming_campaign,
   } = req.validatedQuery
 
   const [region, sellerId] = await Promise.all([
@@ -69,6 +71,8 @@ export const GET = async (
     color_values: toStringArray(color),
     condition_values: toStringArray(condition),
     promotion_types: toStringArray(promotion_type),
+    has_active_campaign,
+    has_upcoming_campaign,
     price_min: min_price,
     price_max: max_price,
     sort,
@@ -93,7 +97,7 @@ export const GET = async (
     include_categories ? getSellerCategories(query, sellerId) : Promise.resolve(undefined),
   ])
 
-  const { promotionsByProductId, referencePrices } = await loadCatalogPromotionPricing(
+  const { promotionsByProductId, referencePrices, campaignWindows } = await loadCatalogPromotionPricing(
     req.scope,
     query,
     products,
@@ -111,5 +115,6 @@ export const GET = async (
     typeFacets: searchResult.facets?.types ?? [],
     promotions: promotionsByProductId,
     reference_prices: referencePrices,
+    campaign_windows: campaignWindows,
   })
 }

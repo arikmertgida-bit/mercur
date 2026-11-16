@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { booleanString } from '@medusajs/medusa/api/utils/common-validators/common'
 
 const csvOrArray = z.union([z.string(), z.array(z.string())])
 
@@ -19,7 +20,8 @@ export const StoreGetCatalogProductsParams = z.object({
   condition: csvOrArray.optional(),
   promotion_type: csvOrArray.optional(),
   campaign_id: z.string().optional(),
-  has_active_campaign: z.coerce.boolean().optional(),
+  has_active_campaign: booleanString().optional(),
+  has_upcoming_campaign: booleanString().optional(),
 })
 
 export type StoreGetCatalogProductsParamsType = z.infer<typeof StoreGetCatalogProductsParams>

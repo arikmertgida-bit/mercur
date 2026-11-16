@@ -51,6 +51,7 @@ const FILTERABLE_ATTRIBUTES = [
   'condition_values',
   'promotion_types',
   'campaign_ids',
+  'upcoming_campaign_ids',
 ]
 
 const SORTABLE_ATTRIBUTES = ['default_price_amount', 'created_at']
@@ -302,6 +303,11 @@ class MeilisearchProductIndex {
     }
     if (filters.has_active_campaign) {
       filterParts.push('campaign_ids IS NOT EMPTY')
+    }
+    if (filters.has_upcoming_campaign) {
+      // EXISTS first: Meilisearch's IS NOT EMPTY also matches documents that
+      // lack the field entirely (indexed before it was introduced).
+      filterParts.push('(upcoming_campaign_ids EXISTS AND upcoming_campaign_ids IS NOT EMPTY)')
     }
 
     return filterParts

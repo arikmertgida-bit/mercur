@@ -26,10 +26,14 @@ export type ProductTargetRule = {
   values: string[]
 }
 
-export type ActiveProductPromotion = {
+export type IndexedProductPromotion = {
   promotionId: string
   sellerId: string | null
   campaignId: string | null
+  // ISO strings, not Dates: the loaded list round-trips through the Redis
+  // cache, which would turn a Date into a string anyway.
+  campaignStartsAt: string | null
+  campaignEndsAt: string | null
   kind: ProductPromotionKind
   // Every rule must match (AND) for a product to be considered covered —
   // mirrors how Medusa evaluates a promotion's own target rules against
@@ -105,18 +109,29 @@ function classifyPromotionKind(promotion: PromotionRow): ProductPromotionKind | 
   return null
 }
 
-function isCampaignCurrentlyActive(campaign: PromotionRow['campaign']): boolean {
-  if (!campaign) {
-    return true
-  }
-  const now = Date.now()
-  if (campaign.starts_at && new Date(campaign.starts_at).getTime() > now) {
+export type CampaignPhase = 'active' | 'upcoming'
+
+export function isInCampaignPhase(
+  campaign: PromotionRow['campaign'],
+  phase: CampaignPhase,
+  now: number
+): boolean {
+  const startsAt = campaign?.starts_at ? new Date(campaign.starts_at).getTime() : null
+  const endsAt = campaign?.ends_at ? new Date(campaign.ends_at).getTime() : null
+  if (endsAt !== null && endsAt < now) {
     return false
   }
-  if (campaign.ends_at && new Date(campaign.ends_at).getTime() < now) {
-    return false
+  if (phase === 'upcoming') {
+    return startsAt !== null && startsAt > now
   }
-  return true
+  return startsAt === null || startsAt <= now
+}
+
+function toIsoString(value: string | Date | null | undefined): string | null {
+  if (!value) {
+    return null
+  }
+  return new Date(value).toISOString()
 }
 
 // Returns null (not resolvable) rather than a partial rule set — a
@@ -146,7 +161,10 @@ function resolveTargetRules(
   return rules
 }
 
-const CACHE_KEY = 'search:active-product-promotions'
+const CACHE_KEY_BY_PHASE: Record<CampaignPhase, string> = {
+  active: 'search:product-promotions:active',
+  upcoming: 'search:product-promotions:upcoming',
+}
 const CACHE_TTL_SECONDS = 60
 
 // Loaded fresh on every reindex call (product.created/updated, the stock
@@ -155,9 +173,27 @@ const CACHE_TTL_SECONDS = 60
 // new/edited promotion.
 export async function loadActiveProductPromotions(
   container: MedusaContainer
-): Promise<ActiveProductPromotion[]> {
+): Promise<IndexedProductPromotion[]> {
+  return loadProductPromotions(container, 'active')
+}
+
+// Promotions of campaigns whose starts_at is still ahead. Medusa applies
+// none of them yet; they only let the storefront list a seller's planned
+// campaign products (at their current price) before the campaign starts.
+// A promotion without a campaign has no start date and is never upcoming.
+export async function loadUpcomingProductPromotions(
+  container: MedusaContainer
+): Promise<IndexedProductPromotion[]> {
+  return loadProductPromotions(container, 'upcoming')
+}
+
+async function loadProductPromotions(
+  container: MedusaContainer,
+  phase: CampaignPhase
+): Promise<IndexedProductPromotion[]> {
+  const cacheKey = CACHE_KEY_BY_PHASE[phase]
   const cache = container.resolve<ICacheService>(Modules.CACHE)
-  const cached = await cache.get<ActiveProductPromotion[]>(CACHE_KEY)
+  const cached = await cache.get<IndexedProductPromotion[]>(cacheKey)
   if (cached) {
     return cached
   }
@@ -182,12 +218,12 @@ export async function loadActiveProductPromotions(
     filters: { status: 'active' },
   })
 
-  const rows = promotions
+  const now = Date.now()
   const candidates: { promotion: PromotionRow; kind: ProductPromotionKind; rules: ProductTargetRule[] }[] = []
 
-  for (const promotion of rows) {
+  for (const promotion of promotions) {
     const kind = classifyPromotionKind(promotion)
-    if (!kind || !isCampaignCurrentlyActive(promotion.campaign)) {
+    if (!kind || !isInCampaignPhase(promotion.campaign, phase, now)) {
       continue
     }
     const rules = resolveTargetRules(promotion.application_method?.target_rules)
@@ -210,15 +246,17 @@ export async function loadActiveProductPromotions(
     }
   }
 
-  const resolved: ActiveProductPromotion[] = candidates.map(({ promotion, kind, rules }) => ({
+  const resolved: IndexedProductPromotion[] = candidates.map(({ promotion, kind, rules }) => ({
     promotionId: promotion.id,
     sellerId: sellerByPromotionId.get(promotion.id) ?? null,
     campaignId: promotion.campaign_id ?? null,
+    campaignStartsAt: toIsoString(promotion.campaign?.starts_at),
+    campaignEndsAt: toIsoString(promotion.campaign?.ends_at),
     kind,
     rules,
   }))
 
-  await cache.set(CACHE_KEY, resolved, CACHE_TTL_SECONDS)
+  await cache.set(cacheKey, resolved, CACHE_TTL_SECONDS)
   return resolved
 }
 
@@ -243,7 +281,7 @@ function ruleMatches(rule: ProductTargetRule, product: PromotionMatchableProduct
 // fields (discount value, code, campaign name), not just facet counts.
 export function matchProductPromotionIds(
   product: PromotionMatchableProduct,
-  activePromotions: ActiveProductPromotion[]
+  activePromotions: IndexedProductPromotion[]
 ): string[] {
   return activePromotions
     .filter((promotion) => promotion.rules.every((rule) => ruleMatches(rule, product)))
@@ -252,7 +290,7 @@ export function matchProductPromotionIds(
 
 export function matchProductPromotions(
   product: PromotionMatchableProduct,
-  activePromotions: ActiveProductPromotion[]
+  activePromotions: IndexedProductPromotion[]
 ): { promotion_types: ProductPromotionKind[]; campaign_ids: string[] } {
   const kinds = new Set<ProductPromotionKind>()
   const campaignIds = new Set<string>()
@@ -272,4 +310,52 @@ export function matchProductPromotions(
     promotion_types: [...kinds],
     campaign_ids: [...campaignIds],
   }
+}
+
+export function matchCampaignIds(
+  product: PromotionMatchableProduct,
+  promotions: IndexedProductPromotion[]
+): string[] {
+  const campaignIds = new Set<string>()
+  for (const promotion of promotions) {
+    if (promotion.campaignId && promotion.rules.every((rule) => ruleMatches(rule, product))) {
+      campaignIds.add(promotion.campaignId)
+    }
+  }
+  return [...campaignIds]
+}
+
+export type CampaignWindow = {
+  campaign_id: string
+  starts_at: string | null
+  ends_at: string | null
+}
+
+function timeOrInfinity(value: string | null): number {
+  return value ? new Date(value).getTime() : Number.POSITIVE_INFINITY
+}
+
+// The one campaign a product card counts down to: the soonest-ending
+// running campaign, or the soonest-starting planned one.
+export function pickCampaignWindow(
+  product: PromotionMatchableProduct,
+  promotions: IndexedProductPromotion[],
+  phase: CampaignPhase
+): CampaignWindow | null {
+  let best: CampaignWindow | null = null
+  for (const promotion of promotions) {
+    if (!promotion.campaignId || !promotion.rules.every((rule) => ruleMatches(rule, product))) {
+      continue
+    }
+    const candidate: CampaignWindow = {
+      campaign_id: promotion.campaignId,
+      starts_at: promotion.campaignStartsAt,
+      ends_at: promotion.campaignEndsAt,
+    }
+    const key = phase === 'upcoming' ? 'starts_at' : 'ends_at'
+    if (!best || timeOrInfinity(candidate[key]) < timeOrInfinity(best[key])) {
+      best = candidate
+    }
+  }
+  return best
 }

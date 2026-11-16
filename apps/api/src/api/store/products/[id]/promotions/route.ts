@@ -5,7 +5,9 @@ import { z } from "zod"
 
 import {
   loadActiveProductPromotions,
+  loadUpcomingProductPromotions,
   matchProductPromotionIds,
+  pickCampaignWindow,
   PromotionMatchableProduct,
 } from "../../../../../lib/search/promotion-index"
 import { loadPromotionDetails } from "../../../../../lib/search/promotion-details"
@@ -64,7 +66,10 @@ export const GET = async (
     tag_ids: (product.tags ?? []).map((tag) => tag.id),
   }
 
-  const activePromotions = await loadActiveProductPromotions(req.scope)
+  const [activePromotions, upcomingPromotions] = await Promise.all([
+    loadActiveProductPromotions(req.scope),
+    loadUpcomingProductPromotions(req.scope),
+  ])
   const matchedIds = matchProductPromotionIds(matchableProduct, activePromotions)
   const sellerIdByPromotionId = new Map(
     activePromotions.map((promotion) => [promotion.promotionId, promotion.sellerId] as const)
@@ -92,5 +97,9 @@ export const GET = async (
   res.json({
     promotions,
     reference_prices: referencePriceByVariantId,
+    campaign_windows: {
+      active: pickCampaignWindow(matchableProduct, activePromotions, "active"),
+      upcoming: pickCampaignWindow(matchableProduct, upcomingPromotions, "upcoming"),
+    },
   })
 }

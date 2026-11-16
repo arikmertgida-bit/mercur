@@ -5,7 +5,8 @@ import {
 } from '@mercurjs/core/api/utils/product-pricing'
 
 import {
-  ActiveProductPromotion,
+  IndexedProductPromotion,
+  matchCampaignIds,
   matchProductPromotions,
   PromotionMatchableProduct,
 } from './promotion-index'
@@ -266,7 +267,8 @@ export const buildProductDocs = async (
   products: SearchProductRow[],
   regions: SearchRegion[],
   defaultSalesChannelId: string | null,
-  activePromotions: ActiveProductPromotion[] = []
+  activePromotions: IndexedProductPromotion[] = [],
+  upcomingPromotions: IndexedProductPromotion[] = []
 ): Promise<{
   docs: SearchDoc[]
   attributesByProduct: Map<
@@ -346,6 +348,7 @@ export const buildProductDocs = async (
       in_stock: resolveInStock(product, defaultSalesChannelId),
       promotion_types,
       campaign_ids,
+      upcoming_campaign_ids: matchCampaignIds(matchableProduct, upcomingPromotions),
     }
   })
 

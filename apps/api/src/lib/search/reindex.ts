@@ -4,7 +4,7 @@ import { ContainerRegistrationKeys } from '@medusajs/framework/utils'
 
 import { indexDocs } from './meilisearch-client'
 import { buildProductDocs, SearchProductRow, SearchRegion } from './build-docs'
-import { loadActiveProductPromotions } from './promotion-index'
+import { loadActiveProductPromotions, loadUpcomingProductPromotions } from './promotion-index'
 
 export const loadRegions = async (
   container: MedusaContainer
@@ -37,13 +37,17 @@ export const indexProductPage = async (
   regions: SearchRegion[],
   defaultSalesChannelId: string | null
 ): Promise<void> => {
-  const activePromotions = await loadActiveProductPromotions(container)
+  const [activePromotions, upcomingPromotions] = await Promise.all([
+    loadActiveProductPromotions(container),
+    loadUpcomingProductPromotions(container),
+  ])
   const { docs: productDocs } = await buildProductDocs(
     container,
     products,
     regions,
     defaultSalesChannelId,
-    activePromotions
+    activePromotions,
+    upcomingPromotions
   )
 
   if (!productDocs.length) {

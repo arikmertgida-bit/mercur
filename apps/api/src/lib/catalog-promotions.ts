@@ -5,13 +5,21 @@ import type { HydratedCatalogProduct } from './catalog-hydration'
 import type { ResolvedRegion } from './resolve-region'
 import { loadReferencePrices, ReferencePriceEntry } from './reference-price'
 import {
+  CampaignWindow,
   loadActiveProductPromotions,
+  loadUpcomingProductPromotions,
   matchProductPromotionIds,
+  pickCampaignWindow,
   PromotionMatchableProduct,
 } from './search/promotion-index'
 import { loadPromotionDetails, PromotionDetail } from './search/promotion-details'
 import { VARIANT_PRICE_HISTORY_MODULE } from '../modules/variant-price-history'
 import VariantPriceHistoryService from '../modules/variant-price-history/service'
+
+export type ProductCampaignWindows = {
+  active: CampaignWindow | null
+  upcoming: CampaignWindow | null
+}
 
 export type CatalogPromotionPricing = {
   // Mirrors the per-product `/store/products/:id/promotions` route's
@@ -19,11 +27,15 @@ export type CatalogPromotionPricing = {
   promotionsByProductId: Record<string, PromotionDetail | null>
   // Keyed by variant id (Ticaret Bakanlığı 10-günlük referans fiyat kuralı).
   referencePrices: Record<string, ReferencePriceEntry>
+  // Only products covered by at least one campaign appear here — the
+  // storefront campaign pages count each card down to these dates.
+  campaignWindows: Record<string, ProductCampaignWindows>
 }
 
 const EMPTY_RESULT: CatalogPromotionPricing = {
   promotionsByProductId: {},
   referencePrices: {},
+  campaignWindows: {},
 }
 
 // Same promotion-matching + reference-price data the PDP/card already show
@@ -43,13 +55,17 @@ export async function loadCatalogPromotionPricing(
     return EMPTY_RESULT
   }
 
-  const activePromotions = await loadActiveProductPromotions(container)
+  const [activePromotions, upcomingPromotions] = await Promise.all([
+    loadActiveProductPromotions(container),
+    loadUpcomingProductPromotions(container),
+  ])
   const sellerIdByPromotionId = new Map(
     activePromotions.map((promotion) => [promotion.promotionId, promotion.sellerId] as const)
   )
 
   const matchedIdsByProductId = new Map<string, string[]>()
   const allMatchedIds = new Set<string>()
+  const campaignWindows: Record<string, ProductCampaignWindows> = {}
   for (const product of products) {
     const matchableProduct: PromotionMatchableProduct = {
       id: product.id,
@@ -60,6 +76,11 @@ export async function loadCatalogPromotionPricing(
     }
     const matchedIds = matchProductPromotionIds(matchableProduct, activePromotions)
     matchedIdsByProductId.set(product.id, matchedIds)
+    const active = pickCampaignWindow(matchableProduct, activePromotions, 'active')
+    const upcoming = pickCampaignWindow(matchableProduct, upcomingPromotions, 'upcoming')
+    if (active || upcoming) {
+      campaignWindows[product.id] = { active, upcoming }
+    }
     for (const id of matchedIds) {
       allMatchedIds.add(id)
     }
@@ -93,5 +114,5 @@ export async function loadCatalogPromotionPricing(
     }
   }
 
-  return { promotionsByProductId, referencePrices }
+  return { promotionsByProductId, referencePrices, campaignWindows }
 }

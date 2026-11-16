@@ -46,6 +46,8 @@ export interface SearchDoc {
   // no active, product-targeting promotion.
   promotion_types?: string[]
   campaign_ids?: string[]
+  // Campaigns that will cover this product once their starts_at passes.
+  upcoming_campaign_ids?: string[]
 }
 
 export interface SearchDocAttribute {

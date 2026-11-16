@@ -3,8 +3,10 @@ import { ICacheService, MedusaContainer } from '@medusajs/framework/types'
 import { ContainerRegistrationKeys, Modules } from '@medusajs/framework/utils'
 
 import {
-  ActiveProductPromotion,
+  IndexedProductPromotion,
   loadActiveProductPromotions,
+  loadUpcomingProductPromotions,
+  matchCampaignIds,
   matchProductPromotions,
   PromotionMatchableProduct,
   ProductPromotionKind,
@@ -17,46 +19,57 @@ import { presentItems } from "../lib/graph-list"
 // inventory levels (see search-sync-stock-changed.ts). A campaign also
 // starts/ends purely by its `starts_at`/`ends_at` dates passing, which no
 // event could fire for even if one existed. A scheduled reconciliation job
-// is therefore the only way to keep `promotion_types`/`campaign_ids` correct.
+// is therefore the only way to keep `promotion_types`/`campaign_ids`/
+// `upcoming_campaign_ids` correct.
 //
 // Cost is bounded by the catalog of sellers who currently have (or, last
-// run, had) an active product-targeting promotion — never by the total
+// run, had) an active or upcoming product-targeting promotion — never by the total
 // marketplace catalog — so this stays cheap at 10k+ seller / 1M+ product
 // scale even though it re-scans in full each run.
 const JOB_NAME = 'search-sync-promotions'
 const CRON_SCHEDULE = '*/5 * * * *'
-const SNAPSHOT_CACHE_KEY = 'search:promotion-coverage-snapshot'
+const SNAPSHOT_CACHE_KEY = 'search:promotion-coverage-snapshot:v2'
 const SNAPSHOT_TTL_SECONDS = 900
 
-type ProductCoverage = { kinds: ProductPromotionKind[]; campaigns: string[] }
+type ProductCoverage = {
+  kinds: ProductPromotionKind[]
+  campaigns: string[]
+  upcoming: string[]
+}
 type SellerSnapshot = Record<string, ProductCoverage>
 type CoverageSnapshot = Record<string, SellerSnapshot>
+
+const EMPTY_COVERAGE: ProductCoverage = { kinds: [], campaigns: [], upcoming: [] }
+
+function sameMembers(a: string[], b: string[]): boolean {
+  if (a.length !== b.length) {
+    return false
+  }
+  const sortedB = [...b].sort()
+  return [...a].sort().every((value, i) => value === sortedB[i])
+}
 
 function coverageEqual(a: ProductCoverage | undefined, b: ProductCoverage): boolean {
   if (!a) {
     return false
   }
-  if (a.kinds.length !== b.kinds.length || a.campaigns.length !== b.campaigns.length) {
-    return false
-  }
-  const aKinds = [...a.kinds].sort()
-  const bKinds = [...b.kinds].sort()
-  const aCampaigns = [...a.campaigns].sort()
-  const bCampaigns = [...b.campaigns].sort()
   return (
-    aKinds.every((kind, i) => kind === bKinds[i]) &&
-    aCampaigns.every((id, i) => id === bCampaigns[i])
+    sameMembers(a.kinds, b.kinds) &&
+    sameMembers(a.campaigns, b.campaigns) &&
+    sameMembers(a.upcoming, b.upcoming)
   )
 }
 
 async function computeSellerCoverage(
   container: MedusaContainer,
   sellerId: string,
-  activePromotions: ActiveProductPromotion[]
+  activePromotions: IndexedProductPromotion[],
+  upcomingPromotions: IndexedProductPromotion[]
 ): Promise<SellerSnapshot> {
   const query = container.resolve<Query>(ContainerRegistrationKeys.QUERY)
   const sellerPromotions = activePromotions.filter((p) => p.sellerId === sellerId)
-  if (!sellerPromotions.length) {
+  const sellerUpcomingPromotions = upcomingPromotions.filter((p) => p.sellerId === sellerId)
+  if (!sellerPromotions.length && !sellerUpcomingPromotions.length) {
     return {}
   }
 
@@ -84,8 +97,9 @@ async function computeSellerCoverage(
       matchable,
       sellerPromotions
     )
-    if (promotion_types.length) {
-      snapshot[product.id] = { kinds: promotion_types, campaigns: campaign_ids }
+    const upcoming = matchCampaignIds(matchable, sellerUpcomingPromotions)
+    if (promotion_types.length || upcoming.length) {
+      snapshot[product.id] = { kinds: promotion_types, campaigns: campaign_ids, upcoming }
     }
   }
 
@@ -99,12 +113,17 @@ export default async function searchSyncPromotionsJob(
   const cache = container.resolve<ICacheService>(Modules.CACHE)
 
   try {
-    const activePromotions = await loadActiveProductPromotions(container)
+    const [activePromotions, upcomingPromotions] = await Promise.all([
+      loadActiveProductPromotions(container),
+      loadUpcomingProductPromotions(container),
+    ])
     const previousSnapshot =
       (await cache.get<CoverageSnapshot>(SNAPSHOT_CACHE_KEY)) ?? {}
 
     const activeSellerIds = new Set(
-      activePromotions.map((p) => p.sellerId).filter((id): id is string => id !== null)
+      [...activePromotions, ...upcomingPromotions]
+        .map((p) => p.sellerId)
+        .filter((id): id is string => id !== null)
     )
     // Sellers scanned last run must be re-scanned even with zero currently
     // active promotions — that's exactly the "last promotion just ended"
@@ -125,7 +144,8 @@ export default async function searchSyncPromotionsJob(
       const sellerSnapshot = await computeSellerCoverage(
         container,
         sellerId,
-        activePromotions
+        activePromotions,
+        upcomingPromotions
       )
       if (Object.keys(sellerSnapshot).length) {
         nextSnapshot[sellerId] = sellerSnapshot
@@ -137,7 +157,7 @@ export default async function searchSyncPromotionsJob(
         ...Object.keys(previousSellerSnapshot),
       ])
       for (const productId of productIds) {
-        if (!coverageEqual(previousSellerSnapshot[productId], sellerSnapshot[productId] ?? { kinds: [], campaigns: [] })) {
+        if (!coverageEqual(previousSellerSnapshot[productId], sellerSnapshot[productId] ?? EMPTY_COVERAGE)) {
           changedProductIds.add(productId)
         }
       }

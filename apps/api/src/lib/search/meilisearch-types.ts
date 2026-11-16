@@ -22,6 +22,7 @@ export type MeilisearchProviderFilters = {
   promotion_types?: string[]
   campaign_id?: string
   has_active_campaign?: boolean
+  has_upcoming_campaign?: boolean
   price_min?: number
   price_max?: number
   sort?: MeilisearchSort
