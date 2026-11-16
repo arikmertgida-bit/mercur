@@ -13,7 +13,12 @@ import {
   PromotionMatchableProduct,
   promotionsInSellerScope,
 } from './search/promotion-index'
-import { loadPromotionDetails, PromotionDetail } from './search/promotion-details'
+import {
+  LoadedPromotion,
+  loadPromotionDetails,
+  presentProductPromotions,
+  PromotionDetail,
+} from './search/promotion-details'
 import { VARIANT_PRICE_HISTORY_MODULE } from '../modules/variant-price-history'
 import VariantPriceHistoryService from '../modules/variant-price-history/service'
 
@@ -24,7 +29,8 @@ export type ProductCampaignWindows = {
 
 export type CatalogPromotionPricing = {
   // Mirrors the per-product `/store/products/:id/promotions` route's
-  // `promotions[0] ?? null` pick — one badge-worthy promotion per product.
+  // `promotions[0] ?? null` pick — one badge-worthy promotion per product,
+  // the one the cart applies first, carrying the product's `cart_discount`.
   promotionsByProductId: Record<string, PromotionDetail | null>
   // Keyed by variant id (Ticaret Bakanlığı 10-günlük referans fiyat kuralı).
   referencePrices: Record<string, ReferencePriceEntry>
@@ -92,20 +98,27 @@ export async function loadCatalogPromotionPricing(
     }
   }
 
-  const promotionDetails = await loadPromotionDetails(
+  const loadedPromotions = await loadPromotionDetails(
     query,
     [...allMatchedIds],
     sellerIdByPromotionId
   )
-  const promotionById = new Map(promotionDetails.map((promotion) => [promotion.id, promotion] as const))
+  const promotionById = new Map(
+    loadedPromotions.map((promotion) => [promotion.detail.id, promotion] as const)
+  )
 
+  const now = Date.now()
   const promotionsByProductId: Record<string, PromotionDetail | null> = {}
   for (const product of products) {
-    const matchedIds = matchedIdsByProductId.get(product.id) ?? []
-    const first = matchedIds
+    const matched = (matchedIdsByProductId.get(product.id) ?? [])
       .map((id) => promotionById.get(id))
-      .find((promotion): promotion is PromotionDetail => promotion !== undefined)
-    promotionsByProductId[product.id] = first ?? null
+      .filter((promotion): promotion is LoadedPromotion => promotion !== undefined)
+    const presented = presentProductPromotions(matched, {
+      currency_code: region?.currency_code ?? null,
+      product_discountable: product.discountable,
+      now,
+    })
+    promotionsByProductId[product.id] = presented[0] ?? null
   }
 
   const referencePrices: Record<string, ReferencePriceEntry> = {}

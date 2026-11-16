@@ -11,7 +11,7 @@ import {
   PromotionMatchableProduct,
   promotionsInSellerScope,
 } from "../../../../../lib/search/promotion-index"
-import { loadPromotionDetails } from "../../../../../lib/search/promotion-details"
+import { loadPromotionDetails, presentProductPromotions } from "../../../../../lib/search/promotion-details"
 import { loadReferencePrices, ReferencePriceEntry } from "../../../../../lib/reference-price"
 import { resolveRegionByCountryCode } from "../../../../../lib/resolve-region"
 import { parseRows } from "../../../../../lib/graph-schemas"
@@ -28,6 +28,7 @@ const ProductMatchRowSchema = z.object({
   tags: z.array(z.object({ id: z.string() })).nullable().default([]),
   variants: z.array(z.object({ id: z.string() })).nullable().default([]),
   sellers: z.array(z.object({ id: z.string() })).nullable().default([]),
+  discountable: z.boolean().default(true),
 })
 
 export const GET = async (
@@ -47,6 +48,7 @@ export const GET = async (
       "tags.id",
       "variants.id",
       "sellers.id",
+      "discountable",
     ],
     filters: { id },
   })
@@ -83,9 +85,16 @@ export const GET = async (
     activePromotions.map((promotion) => [promotion.promotionId, promotion.sellerId] as const)
   )
 
-  const promotions = await loadPromotionDetails(query, matchedIds, sellerIdByPromotionId)
+  const [loadedPromotions, region] = await Promise.all([
+    loadPromotionDetails(query, matchedIds, sellerIdByPromotionId),
+    resolveRegionByCountryCode(query, STORE_COUNTRY_CODE),
+  ])
+  const promotions = presentProductPromotions(loadedPromotions, {
+    currency_code: region?.currency_code ?? null,
+    product_discountable: product.discountable,
+    now: Date.now(),
+  })
 
-  const region = await resolveRegionByCountryCode(query, STORE_COUNTRY_CODE)
   const referencePriceByVariantId: Record<string, ReferencePriceEntry> = {}
 
   if (region) {

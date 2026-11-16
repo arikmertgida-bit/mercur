@@ -65,6 +65,8 @@ const CatalogProductRowSchema = z.object({
   // `type_id` target rule (see lib/catalog-promotions.ts). '*' already
   // requests every scalar column, this just keeps Zod from stripping it.
   type_id: z.string().nullable().optional(),
+  // A non-discountable product's cart lines never get promotion adjustments.
+  discountable: z.boolean().default(true),
   created_at: z.union([z.string(), z.date()]),
   updated_at: z.union([z.string(), z.date()]),
   images: z

@@ -531,7 +531,7 @@ medusaIntegrationTestRunner({
                     await api.post(
                         `/store/carts/${cart.id}/line-items`,
                         {
-                            offer_id: offer1.id,
+                            variant_id: product1.variants[0].id,
                             quantity: 1,
                         },
                         storeHeaders
