@@ -34,6 +34,9 @@ export type IndexedProductPromotion = {
   // cache, which would turn a Date into a string anyway.
   campaignStartsAt: string | null
   campaignEndsAt: string | null
+  // When the discount began: the campaign start, else the promotion's own
+  // creation. Anchors the 10-day reference-price window (see reference-price.ts).
+  discountStartsAt: string | null
   kind: ProductPromotionKind
   // Every rule must match (AND) for a product to be considered covered —
   // mirrors how Medusa evaluates a promotion's own target rules against
@@ -58,6 +61,7 @@ type TargetRuleRow = {
 
 type PromotionRow = {
   id: string
+  created_at?: string | Date | null
   status?: string | null
   type?: string | null
   campaign_id?: string | null
@@ -204,6 +208,7 @@ async function loadProductPromotions(
     entity: 'promotion',
     fields: [
       'id',
+      'created_at',
       'status',
       'type',
       'campaign_id',
@@ -252,6 +257,7 @@ async function loadProductPromotions(
     campaignId: promotion.campaign_id ?? null,
     campaignStartsAt: toIsoString(promotion.campaign?.starts_at),
     campaignEndsAt: toIsoString(promotion.campaign?.ends_at),
+    discountStartsAt: toIsoString(promotion.campaign?.starts_at ?? promotion.created_at),
     kind,
     rules,
   }))
@@ -336,6 +342,26 @@ export function matchCampaignIds(
     }
   }
   return [...campaignIds]
+}
+
+// The earliest start among the promotions discounting a product: the
+// reference price must come from before the discount began, not from the
+// discount's own (possibly raised) days.
+export function earliestDiscountStart(
+  promotionIds: string[],
+  promotions: IndexedProductPromotion[]
+): string | null {
+  let earliest: string | null = null
+  for (const promotion of promotions) {
+    const startsAt = promotion.discountStartsAt ?? null
+    if (!startsAt || !promotionIds.includes(promotion.promotionId)) {
+      continue
+    }
+    if (!earliest || new Date(startsAt).getTime() < new Date(earliest).getTime()) {
+      earliest = startsAt
+    }
+  }
+  return earliest
 }
 
 export type CampaignWindow = {

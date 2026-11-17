@@ -4,6 +4,7 @@ import { ContainerRegistrationKeys, MedusaError } from "@medusajs/framework/util
 import { z } from "zod"
 
 import {
+  earliestDiscountStart,
   loadActiveProductPromotions,
   loadUpcomingProductPromotions,
   matchProductPromotionIds,
@@ -100,10 +101,12 @@ export const GET = async (
     const variantPriceHistoryService = req.scope.resolve<VariantPriceHistoryService>(
       VARIANT_PRICE_HISTORY_MODULE
     )
+    const discountStartsAt = earliestDiscountStart(matchedIds, activePromotions)
     const referencePrices = await loadReferencePrices(
       variantPriceHistoryService,
       variantIds,
-      region.currency_code
+      region.currency_code,
+      new Map(discountStartsAt ? variantIds.map((variantId) => [variantId, discountStartsAt] as const) : [])
     )
     for (const [variantId, entry] of referencePrices) {
       referencePriceByVariantId[variantId] = entry

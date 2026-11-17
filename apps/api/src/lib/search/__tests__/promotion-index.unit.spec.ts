@@ -1,4 +1,5 @@
 import {
+  earliestDiscountStart,
   IndexedProductPromotion,
   isInCampaignPhase,
   matchCampaignIds,
@@ -30,6 +31,7 @@ function promotion(
     campaignId: null,
     campaignStartsAt: null,
     campaignEndsAt: null,
+    discountStartsAt: null,
     kind: "percentage_off_product",
     rules: [{ attribute: "product_id", values: ["prod_1"] }],
     ...overrides,
@@ -135,5 +137,21 @@ describe("promotionsInSellerScope", () => {
     expect(
       promotionsInSellerScope([own, other, platform], undefined).map((p) => p.promotionId)
     ).toEqual(["platform"])
+  })
+})
+
+describe("earliestDiscountStart", () => {
+  it("returns the earliest start among the product's own promotions only", () => {
+    const promotions = [
+      promotion({ promotionId: "late", discountStartsAt: iso(-2 * HOUR) }),
+      promotion({ promotionId: "early", discountStartsAt: iso(-5 * HOUR) }),
+      promotion({ promotionId: "unmatched", discountStartsAt: iso(-9 * HOUR) }),
+    ]
+    expect(earliestDiscountStart(["late", "early"], promotions)).toBe(iso(-5 * HOUR))
+  })
+
+  it("returns null when no matched promotion has a start", () => {
+    expect(earliestDiscountStart(["p1"], [promotion({ promotionId: "p1" })])).toBeNull()
+    expect(earliestDiscountStart([], [promotion({ promotionId: "p1", discountStartsAt: iso(0) })])).toBeNull()
   })
 })

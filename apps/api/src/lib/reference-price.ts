@@ -35,34 +35,51 @@ function subtractDays(date: Date, days: number): Date {
   return result
 }
 
-// Reads the trailing REFERENCE_PRICE_WINDOW_DAYS of tracked snapshots per
-// variant and reduces them to a floor in application code (Math.min over the
-// listed rows) — never a database-side MIN/GROUP BY, per the "no raw SQL in
-// business logic" rule (README §II). `has_full_history` gates the storefront
-// from ever showing a "was" price built on fewer than the full window's
-// worth of real tracked days.
+function cutoffDateFor(discountStartsAt: string | undefined, now: Date): string {
+  const start = discountStartsAt ? new Date(discountStartsAt) : now
+  const anchor = start.getTime() < now.getTime() ? start : now
+  return getIstanbulDateString(subtractDays(anchor, REFERENCE_PRICE_WINDOW_DAYS))
+}
+
+// Reduces the tracked snapshots per variant to a floor in application code
+// (Math.min over the listed rows) — never a database-side MIN/GROUP BY, per
+// the "no raw SQL in business logic" rule (README §II). The window starts
+// REFERENCE_PRICE_WINDOW_DAYS before the variant's discount began (or before
+// today when it has none) and runs to today, so a price raised during a
+// long campaign never replaces the pre-campaign floor. `has_full_history`
+// gates the storefront from ever showing a "was" price built on fewer than
+// the full window's worth of real tracked days.
 export async function loadReferencePrices(
   service: VariantPriceHistoryService,
   variantIds: string[],
-  currencyCode: string
+  currencyCode: string,
+  discountStartByVariantId: ReadonlyMap<string, string> = new Map()
 ): Promise<Map<string, ReferencePriceEntry>> {
   const result = new Map<string, ReferencePriceEntry>()
   if (variantIds.length === 0) {
     return result
   }
 
-  const cutoffDate = getIstanbulDateString(
-    subtractDays(new Date(), REFERENCE_PRICE_WINDOW_DAYS)
+  const now = new Date()
+  const cutoffByVariantId = new Map(
+    variantIds.map((id) => [id, cutoffDateFor(discountStartByVariantId.get(id), now)] as const)
+  )
+  const earliestCutoff = [...cutoffByVariantId.values()].reduce((min, date) =>
+    date < min ? date : min
   )
 
   const rows = await service.listVariantPriceSnapshots({
     variant_id: variantIds,
     currency_code: currencyCode,
-    captured_date: { $gte: cutoffDate },
+    captured_date: { $gte: earliestCutoff },
   })
 
   const byVariant = new Map<string, { amounts: number[]; dates: Set<string> }>()
   for (const row of parseRows(SnapshotRowSchema, rows)) {
+    const cutoff = cutoffByVariantId.get(row.variant_id)
+    if (cutoff === undefined || row.captured_date < cutoff) {
+      continue
+    }
     const entry = byVariant.get(row.variant_id) ?? { amounts: [], dates: new Set<string>() }
     entry.amounts.push(row.amount)
     entry.dates.add(row.captured_date)

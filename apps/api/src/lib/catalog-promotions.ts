@@ -6,6 +6,7 @@ import type { ResolvedRegion } from './resolve-region'
 import { loadReferencePrices, ReferencePriceEntry } from './reference-price'
 import {
   CampaignWindow,
+  earliestDiscountStart,
   loadActiveProductPromotions,
   loadUpcomingProductPromotions,
   matchProductPromotionIds,
@@ -123,11 +124,29 @@ export async function loadCatalogPromotionPricing(
 
   const referencePrices: Record<string, ReferencePriceEntry> = {}
   if (region) {
-    const variantIds = products.flatMap((product) => (product.variants ?? []).map((variant) => variant.id))
+    const variantIds: string[] = []
+    const discountStartByVariantId = new Map<string, string>()
+    for (const product of products) {
+      const discountStartsAt = earliestDiscountStart(
+        matchedIdsByProductId.get(product.id) ?? [],
+        activePromotions
+      )
+      for (const variant of product.variants ?? []) {
+        variantIds.push(variant.id)
+        if (discountStartsAt) {
+          discountStartByVariantId.set(variant.id, discountStartsAt)
+        }
+      }
+    }
     const variantPriceHistoryService = container.resolve<VariantPriceHistoryService>(
       VARIANT_PRICE_HISTORY_MODULE
     )
-    const entries = await loadReferencePrices(variantPriceHistoryService, variantIds, region.currency_code)
+    const entries = await loadReferencePrices(
+      variantPriceHistoryService,
+      variantIds,
+      region.currency_code,
+      discountStartByVariantId
+    )
     for (const [variantId, entry] of entries) {
       referencePrices[variantId] = entry
     }
