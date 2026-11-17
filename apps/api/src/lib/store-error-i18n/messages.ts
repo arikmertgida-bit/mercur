@@ -29,6 +29,8 @@ export interface StoreErrorMessages {
   insufficientInventory: string
   /** Cart completion stopped because the cart's prices or discounts changed since they were applied. */
   cartPricesChanged: string
+  /** Code promotion in a per-customer campaign applied to a cart with no customer yet. */
+  campaignRequiresLogin: string
 }
 
 export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
@@ -55,6 +57,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
     genericUnexpected: "Beklenmeyen bir hata oluştu. Lütfen tekrar deneyin.",
     insufficientInventory: "Yeterli stok bulunmuyor.",
     cartPricesChanged: "Sepetinizdeki fiyatlar güncellendi. Lütfen sepetinizi kontrol edin.",
+    campaignRequiresLogin: "Bu kampanyadan yararlanmak için giriş yapın.",
   },
   de: {
     requiredField: "{field} ist erforderlich.",
@@ -79,6 +82,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
     genericUnexpected: "Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
     insufficientInventory: "Nicht ausreichend Lagerbestand verfügbar.",
     cartPricesChanged: "Die Preise in Ihrem Warenkorb wurden aktualisiert. Bitte überprüfen Sie Ihren Warenkorb.",
+    campaignRequiresLogin: "Melden Sie sich an, um diese Aktion zu nutzen.",
   },
   fr: {
     requiredField: "{field} est obligatoire.",
@@ -103,6 +107,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
     genericUnexpected: "Une erreur inattendue s'est produite. Veuillez réessayer.",
     insufficientInventory: "Stock disponible insuffisant.",
     cartPricesChanged: "Les prix de votre panier ont été mis à jour. Veuillez vérifier votre panier.",
+    campaignRequiresLogin: "Connectez-vous pour profiter de cette campagne.",
   },
   es: {
     requiredField: "{field} es obligatorio.",
@@ -127,6 +132,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
     genericUnexpected: "Se produjo un error inesperado. Vuelve a intentarlo.",
     insufficientInventory: "No hay suficiente stock disponible.",
     cartPricesChanged: "Los precios de tu carrito se han actualizado. Revisa tu carrito.",
+    campaignRequiresLogin: "Inicia sesión para aprovechar esta campaña.",
   },
   it: {
     requiredField: "{field} è obbligatorio.",
@@ -151,6 +157,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
     genericUnexpected: "Si è verificato un errore imprevisto. Riprova.",
     insufficientInventory: "Stock disponibile insufficiente.",
     cartPricesChanged: "I prezzi nel tuo carrello sono stati aggiornati. Controlla il carrello.",
+    campaignRequiresLogin: "Accedi per usufruire di questa campagna.",
   },
   ptBR: {
     requiredField: "{field} é obrigatório.",
@@ -175,6 +182,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
     genericUnexpected: "Ocorreu um erro inesperado. Tente novamente.",
     insufficientInventory: "Estoque insuficiente disponível.",
     cartPricesChanged: "Os preços do seu carrinho foram atualizados. Confira o seu carrinho.",
+    campaignRequiresLogin: "Entre na sua conta para aproveitar esta campanha.",
   },
   ptPT: {
     requiredField: "{field} é obrigatório.",
@@ -199,6 +207,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
     genericUnexpected: "Ocorreu um erro inesperado. Tente novamente.",
     insufficientInventory: "Stock insuficiente disponível.",
     cartPricesChanged: "Os preços do seu carrinho foram atualizados. Verifique o seu carrinho.",
+    campaignRequiresLogin: "Inicie sessão para usufruir desta campanha.",
   },
   ru: {
     requiredField: "{field} обязательно для заполнения.",
@@ -223,6 +232,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
     genericUnexpected: "Произошла непредвиденная ошибка. Повторите попытку.",
     insufficientInventory: "Недостаточно товара на складе.",
     cartPricesChanged: "Цены в вашей корзине обновились. Проверьте корзину.",
+    campaignRequiresLogin: "Войдите, чтобы воспользоваться этой акцией.",
   },
   uk: {
     requiredField: "{field} є обов'язковим.",
@@ -247,6 +257,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
     genericUnexpected: "Сталася неочікувана помилка. Спробуйте ще раз.",
     insufficientInventory: "Недостатньо товару на складі.",
     cartPricesChanged: "Ціни у вашому кошику оновлено. Перевірте кошик.",
+    campaignRequiresLogin: "Увійдіть, щоб скористатися цією акцією.",
   },
   pl: {
     requiredField: "Pole {field} jest wymagane.",
@@ -271,6 +282,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
     genericUnexpected: "Wystąpił nieoczekiwany błąd. Spróbuj ponownie.",
     insufficientInventory: "Brak wystarczającego stanu magazynowego.",
     cartPricesChanged: "Ceny w Twoim koszyku zostały zaktualizowane. Sprawdź koszyk.",
+    campaignRequiresLogin: "Zaloguj się, aby skorzystać z tej kampanii.",
   },
   cs: {
     requiredField: "Pole {field} je povinné.",
@@ -295,6 +307,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
     genericUnexpected: "Došlo k neočekávané chybě. Zkuste to znovu.",
     insufficientInventory: "Není k dispozici dostatečná zásoba.",
     cartPricesChanged: "Ceny ve vašem košíku byly aktualizovány. Zkontrolujte košík.",
+    campaignRequiresLogin: "Pro využití této kampaně se přihlaste.",
   },
   bg: {
     requiredField: "Полето {field} е задължително.",
@@ -319,6 +332,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
     genericUnexpected: "Възникна неочаквана грешка. Опитайте отново.",
     insufficientInventory: "Няма достатъчна наличност.",
     cartPricesChanged: "Цените в количката ви бяха актуализирани. Проверете количката си.",
+    campaignRequiresLogin: "Влезте в профила си, за да се възползвате от тази кампания.",
   },
   bs: {
     requiredField: "Polje {field} je obavezno.",
@@ -343,6 +357,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
     genericUnexpected: "Došlo je do neočekivane greške. Pokušajte ponovo.",
     insufficientInventory: "Nema dovoljno zaliha na stanju.",
     cartPricesChanged: "Cijene u vašoj korpi su ažurirane. Provjerite svoju korpu.",
+    campaignRequiresLogin: "Prijavite se da biste iskoristili ovu kampanju.",
   },
   el: {
     requiredField: "Το πεδίο {field} είναι υποχρεωτικό.",
@@ -367,6 +382,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
     genericUnexpected: "Παρουσιάστηκε ένα μη αναμενόμενο σφάλμα. Δοκιμάστε ξανά.",
     insufficientInventory: "Δεν υπάρχει επαρκές απόθεμα.",
     cartPricesChanged: "Οι τιμές στο καλάθι σας ενημερώθηκαν. Ελέγξτε το καλάθι σας.",
+    campaignRequiresLogin: "Συνδεθείτε για να επωφεληθείτε από αυτήν την καμπάνια.",
   },
   fa: {
     requiredField: "فیلد {field} الزامی است.",
@@ -391,6 +407,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
     genericUnexpected: "خطای غیرمنتظره‌ای رخ داد. لطفاً دوباره تلاش کنید.",
     insufficientInventory: "موجودی کافی نیست.",
     cartPricesChanged: "قیمت‌های سبد خرید شما به‌روزرسانی شد. لطفاً سبد خرید خود را بررسی کنید.",
+    campaignRequiresLogin: "برای استفاده از این کمپین وارد حساب خود شوید.",
   },
   he: {
     requiredField: "השדה {field} הוא שדה חובה.",
@@ -415,6 +432,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
     genericUnexpected: "אירעה שגיאה בלתי צפויה. נסה שוב.",
     insufficientInventory: "אין מספיק מלאי זמין.",
     cartPricesChanged: "המחירים בעגלה שלך עודכנו. נא לבדוק את העגלה.",
+    campaignRequiresLogin: "התחברו כדי ליהנות מהקמפיין הזה.",
   },
   hu: {
     requiredField: "A(z) {field} mező kötelező.",
@@ -439,6 +457,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
     genericUnexpected: "Váratlan hiba történt. Próbálja újra.",
     insufficientInventory: "Nincs elegendő készleten lévő termék.",
     cartPricesChanged: "A kosárban lévő árak frissültek. Kérjük, ellenőrizze a kosarát.",
+    campaignRequiresLogin: "Jelentkezzen be, hogy igénybe vehesse ezt a kampányt.",
   },
   id: {
     requiredField: "{field} wajib diisi.",
@@ -463,6 +482,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
     genericUnexpected: "Terjadi kesalahan tak terduga. Silakan coba lagi.",
     insufficientInventory: "Stok tidak mencukupi.",
     cartPricesChanged: "Harga di keranjang Anda telah diperbarui. Silakan periksa keranjang Anda.",
+    campaignRequiresLogin: "Masuk untuk memanfaatkan kampanye ini.",
   },
   ja: {
     requiredField: "{field} は必須です。",
@@ -487,6 +507,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
     genericUnexpected: "予期しないエラーが発生しました。もう一度お試しください。",
     insufficientInventory: "在庫が不足しています。",
     cartPricesChanged: "カート内の価格が更新されました。カートの内容をご確認ください。",
+    campaignRequiresLogin: "このキャンペーンを利用するにはログインしてください。",
   },
   ko: {
     requiredField: "{field} 항목은 필수입니다.",
@@ -511,6 +532,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
     genericUnexpected: "예기치 않은 오류가 발생했습니다. 다시 시도해 주세요.",
     insufficientInventory: "재고가 부족합니다.",
     cartPricesChanged: "장바구니의 가격이 변경되었습니다. 장바구니를 확인해 주세요.",
+    campaignRequiresLogin: "이 캠페인을 이용하려면 로그인하세요.",
   },
   lt: {
     requiredField: "Laukas {field} yra privalomas.",
@@ -535,6 +557,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
     genericUnexpected: "Įvyko netikėta klaida. Bandykite dar kartą.",
     insufficientInventory: "Nepakanka atsargų.",
     cartPricesChanged: "Jūsų krepšelio kainos atnaujintos. Peržiūrėkite krepšelį.",
+    campaignRequiresLogin: "Prisijunkite, kad galėtumėte pasinaudoti šia kampanija.",
   },
   mk: {
     requiredField: "Полето {field} е задолжително.",
@@ -559,6 +582,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
     genericUnexpected: "Настана неочекувана грешка. Обидете се повторно.",
     insufficientInventory: "Нема доволно залиха на располагање.",
     cartPricesChanged: "Цените во вашата кошничка се ажурирани. Проверете ја кошничката.",
+    campaignRequiresLogin: "Најавете се за да ја искористите оваа кампања.",
   },
   mn: {
     requiredField: "{field} талбарыг заавал бөглөнө үү.",
@@ -583,6 +607,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
     genericUnexpected: "Гэнэтийн алдаа гарлаа. Дахин оролдоно уу.",
     insufficientInventory: "Нөөц хүрэлцэхгүй байна.",
     cartPricesChanged: "Таны сагсан дахь үнэ шинэчлэгдлээ. Сагсаа шалгана уу.",
+    campaignRequiresLogin: "Энэ кампанит ажлыг ашиглахын тулд нэвтэрнэ үү.",
   },
   nl: {
     requiredField: "{field} is verplicht.",
@@ -607,6 +632,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
     genericUnexpected: "Er is een onverwachte fout opgetreden. Probeer het opnieuw.",
     insufficientInventory: "Onvoldoende voorraad beschikbaar.",
     cartPricesChanged: "De prijzen in uw winkelwagen zijn bijgewerkt. Controleer uw winkelwagen.",
+    campaignRequiresLogin: "Log in om van deze campagne gebruik te maken.",
   },
   ro: {
     requiredField: "Câmpul {field} este obligatoriu.",
@@ -631,6 +657,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
     genericUnexpected: "A apărut o eroare neașteptată. Încearcă din nou.",
     insufficientInventory: "Stoc insuficient disponibil.",
     cartPricesChanged: "Prețurile din coșul tău au fost actualizate. Verifică-ți coșul.",
+    campaignRequiresLogin: "Conectați-vă pentru a beneficia de această campanie.",
   },
   th: {
     requiredField: "จำเป็นต้องระบุ {field}",
@@ -655,6 +682,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
     genericUnexpected: "เกิดข้อผิดพลาดที่ไม่คาดคิด กรุณาลองใหม่อีกครั้ง",
     insufficientInventory: "สต็อกสินค้าไม่เพียงพอ",
     cartPricesChanged: "ราคาสินค้าในตะกร้าของคุณมีการอัปเดต กรุณาตรวจสอบตะกร้าสินค้าของคุณ",
+    campaignRequiresLogin: "เข้าสู่ระบบเพื่อใช้สิทธิ์แคมเปญนี้",
   },
   vi: {
     requiredField: "{field} là bắt buộc.",
@@ -679,6 +707,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
     genericUnexpected: "Đã xảy ra lỗi không mong muốn. Vui lòng thử lại.",
     insufficientInventory: "Không đủ hàng tồn kho.",
     cartPricesChanged: "Giá trong giỏ hàng của bạn đã được cập nhật. Vui lòng kiểm tra lại giỏ hàng.",
+    campaignRequiresLogin: "Đăng nhập để sử dụng chiến dịch này.",
   },
   zhCN: {
     requiredField: "{field} 为必填项。",
@@ -703,6 +732,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
     genericUnexpected: "发生意外错误,请重试。",
     insufficientInventory: "库存不足。",
     cartPricesChanged: "您购物车中的价格已更新，请查看购物车。",
+    campaignRequiresLogin: "登录后即可参与此活动。",
   },
   zhTW: {
     requiredField: "{field} 為必填項目。",
@@ -727,6 +757,7 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
     genericUnexpected: "發生未預期的錯誤,請重試。",
     insufficientInventory: "庫存不足。",
     cartPricesChanged: "您購物車中的價格已更新，請檢查購物車。",
+    campaignRequiresLogin: "登入後即可參與此活動。",
   },
   ar: {
     requiredField: "الحقل {field} مطلوب.",
@@ -751,5 +782,6 @@ export const STORE_ERROR_MESSAGES: Record<StoreLanguage, StoreErrorMessages> = {
     genericUnexpected: "حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى.",
     insufficientInventory: "المخزون المتوفر غير كافٍ.",
     cartPricesChanged: "تم تحديث الأسعار في السلة. يرجى مراجعة السلة.",
+    campaignRequiresLogin: "سجّل الدخول للاستفادة من هذه الحملة.",
   },
 }

@@ -18,6 +18,7 @@ export interface AdminErrorCustomCodes {
   handle_invalid_format: string
   variant_axis_multi_select_only: string
   inline_attribute_requires_type: string
+  automatic_promotion_attribute_budget: string
 }
 
 export interface AdminErrorMessages {
@@ -57,6 +58,7 @@ export const ADMIN_ERROR_MESSAGES: Record<AdminLanguage, AdminErrorMessages> = {
     },
     genericUnexpected: "Beklenmeyen bir hata oluştu. Lütfen tekrar deneyin.",
     customCodes: {
+      automatic_promotion_attribute_budget: "Müşteri başına bütçeli kampanyaya otomatik promosyon eklenemez. Bunun yerine promosyon kodu kullanın.",
       handle_invalid_format: "Handle yalnızca URL için güvenli karakterler içermelidir.",
       variant_axis_multi_select_only: "is_variant_axis yalnızca çoklu seçim (multi-select) özniteliklerinde kullanılabilir.",
       inline_attribute_requires_type: "Eksene bağlı olmayan satır içi öznitelikler için açık bir tür belirtilmelidir.",
@@ -84,6 +86,7 @@ export const ADMIN_ERROR_MESSAGES: Record<AdminLanguage, AdminErrorMessages> = {
     },
     genericUnexpected: "Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
     customCodes: {
+      automatic_promotion_attribute_budget: "Automatische Aktionen können keiner Kampagne mit Budget pro Kunde hinzugefügt werden. Verwenden Sie stattdessen einen Aktionscode.",
       handle_invalid_format: "Das Handle darf nur URL-sichere Zeichen enthalten.",
       variant_axis_multi_select_only: "is_variant_axis ist nur bei Mehrfachauswahl-Attributen erlaubt.",
       inline_attribute_requires_type: "Inline-Attribute ohne Achsenbezug erfordern einen expliziten Typ.",
@@ -111,6 +114,7 @@ export const ADMIN_ERROR_MESSAGES: Record<AdminLanguage, AdminErrorMessages> = {
     },
     genericUnexpected: "Une erreur inattendue s'est produite. Veuillez réessayer.",
     customCodes: {
+      automatic_promotion_attribute_budget: "Les promotions automatiques ne peuvent pas être ajoutées à une campagne avec un budget par client. Utilisez plutôt un code promo.",
       handle_invalid_format: "Le handle ne doit contenir que des caractères sûrs pour une URL.",
       variant_axis_multi_select_only: "is_variant_axis n'est autorisé que pour les attributs à sélection multiple.",
       inline_attribute_requires_type: "Les attributs en ligne non liés à un axe nécessitent un type explicite.",
@@ -138,6 +142,7 @@ export const ADMIN_ERROR_MESSAGES: Record<AdminLanguage, AdminErrorMessages> = {
     },
     genericUnexpected: "Se produjo un error inesperado. Vuelve a intentarlo.",
     customCodes: {
+      automatic_promotion_attribute_budget: "No se pueden añadir promociones automáticas a una campaña con presupuesto por cliente. Usa un código promocional en su lugar.",
       handle_invalid_format: "El handle solo debe contener caracteres seguros para URL.",
       variant_axis_multi_select_only: "is_variant_axis solo está permitido en atributos de selección múltiple.",
       inline_attribute_requires_type: "Los atributos en línea que no son de eje requieren un tipo explícito.",
@@ -165,6 +170,7 @@ export const ADMIN_ERROR_MESSAGES: Record<AdminLanguage, AdminErrorMessages> = {
     },
     genericUnexpected: "Si è verificato un errore imprevisto. Riprova.",
     customCodes: {
+      automatic_promotion_attribute_budget: "Le promozioni automatiche non possono essere aggiunte a una campagna con budget per cliente. Usa invece un codice promozionale.",
       handle_invalid_format: "L'handle deve contenere solo caratteri sicuri per URL.",
       variant_axis_multi_select_only: "is_variant_axis è consentito solo per attributi a selezione multipla.",
       inline_attribute_requires_type: "Gli attributi inline non legati a un asse richiedono un tipo esplicito.",
@@ -192,6 +198,7 @@ export const ADMIN_ERROR_MESSAGES: Record<AdminLanguage, AdminErrorMessages> = {
     },
     genericUnexpected: "Ocorreu um erro inesperado. Tente novamente.",
     customCodes: {
+      automatic_promotion_attribute_budget: "Promoções automáticas não podem ser adicionadas a uma campanha com orçamento por cliente. Use um código promocional.",
       handle_invalid_format: "O handle deve conter apenas caracteres seguros para URL.",
       variant_axis_multi_select_only: "is_variant_axis só é permitido em atributos de seleção múltipla.",
       inline_attribute_requires_type: "Atributos inline sem eixo exigem um tipo explícito.",
@@ -219,6 +226,7 @@ export const ADMIN_ERROR_MESSAGES: Record<AdminLanguage, AdminErrorMessages> = {
     },
     genericUnexpected: "Ocorreu um erro inesperado. Tente novamente.",
     customCodes: {
+      automatic_promotion_attribute_budget: "Não é possível adicionar promoções automáticas a uma campanha com orçamento por cliente. Utilize um código promocional.",
       handle_invalid_format: "O handle deve conter apenas carateres seguros para URL.",
       variant_axis_multi_select_only: "is_variant_axis só é permitido em atributos de seleção múltipla.",
       inline_attribute_requires_type: "Atributos inline sem eixo requerem um tipo explícito.",
@@ -246,6 +254,7 @@ export const ADMIN_ERROR_MESSAGES: Record<AdminLanguage, AdminErrorMessages> = {
     },
     genericUnexpected: "Произошла непредвиденная ошибка. Повторите попытку.",
     customCodes: {
+      automatic_promotion_attribute_budget: "Автоматические акции нельзя добавить в кампанию с бюджетом на покупателя. Используйте промокод.",
       handle_invalid_format: "Идентификатор (handle) должен содержать только символы, безопасные для URL.",
       variant_axis_multi_select_only: "is_variant_axis разрешён только для атрибутов с множественным выбором.",
       inline_attribute_requires_type: "Встроенные атрибуты без привязки к оси должны иметь явно указанный тип.",
@@ -273,6 +282,7 @@ export const ADMIN_ERROR_MESSAGES: Record<AdminLanguage, AdminErrorMessages> = {
     },
     genericUnexpected: "Сталася неочікувана помилка. Спробуйте ще раз.",
     customCodes: {
+      automatic_promotion_attribute_budget: "Автоматичні акції не можна додати до кампанії з бюджетом на покупця. Використовуйте промокод.",
       handle_invalid_format: "Ідентифікатор (handle) повинен містити лише символи, безпечні для URL.",
       variant_axis_multi_select_only: "is_variant_axis дозволено лише для атрибутів із множинним вибором.",
       inline_attribute_requires_type: "Вбудовані атрибути без прив'язки до осі повинні мати явно вказаний тип.",
@@ -300,6 +310,7 @@ export const ADMIN_ERROR_MESSAGES: Record<AdminLanguage, AdminErrorMessages> = {
     },
     genericUnexpected: "Wystąpił nieoczekiwany błąd. Spróbuj ponownie.",
     customCodes: {
+      automatic_promotion_attribute_budget: "Promocji automatycznych nie można dodać do kampanii z budżetem na klienta. Użyj zamiast tego kodu promocyjnego.",
       handle_invalid_format: "Uchwyt (handle) może zawierać wyłącznie znaki bezpieczne dla adresu URL.",
       variant_axis_multi_select_only: "is_variant_axis jest dozwolone tylko dla atrybutów wielokrotnego wyboru.",
       inline_attribute_requires_type: "Atrybuty wbudowane niezwiązane z osią wymagają jawnie podanego typu.",
@@ -327,6 +338,7 @@ export const ADMIN_ERROR_MESSAGES: Record<AdminLanguage, AdminErrorMessages> = {
     },
     genericUnexpected: "Došlo k neočekávané chybě. Zkuste to znovu.",
     customCodes: {
+      automatic_promotion_attribute_budget: "Automatické akce nelze přidat do kampaně s rozpočtem na zákazníka. Použijte místo toho promo kód.",
       handle_invalid_format: "Handle smí obsahovat pouze znaky bezpečné pro URL.",
       variant_axis_multi_select_only: "is_variant_axis je povoleno pouze u atributů s výběrem více hodnot.",
       inline_attribute_requires_type: "Vložené atributy bez vazby na osu vyžadují explicitně uvedený typ.",
@@ -354,6 +366,7 @@ export const ADMIN_ERROR_MESSAGES: Record<AdminLanguage, AdminErrorMessages> = {
     },
     genericUnexpected: "Възникна неочаквана грешка. Опитайте отново.",
     customCodes: {
+      automatic_promotion_attribute_budget: "Автоматични промоции не могат да се добавят към кампания с бюджет на клиент. Използвайте промоционален код.",
       handle_invalid_format: "Идентификаторът (handle) трябва да съдържа само символи, безопасни за URL.",
       variant_axis_multi_select_only: "is_variant_axis е разрешено само за атрибути с множествен избор.",
       inline_attribute_requires_type: "Вградените атрибути без ос изискват изрично зададен тип.",
@@ -381,6 +394,7 @@ export const ADMIN_ERROR_MESSAGES: Record<AdminLanguage, AdminErrorMessages> = {
     },
     genericUnexpected: "Došlo je do neočekivane greške. Pokušajte ponovo.",
     customCodes: {
+      automatic_promotion_attribute_budget: "Automatske promocije ne mogu se dodati kampanji s budžetom po kupcu. Umjesto toga koristite promotivni kod.",
       handle_invalid_format: "Handle smije sadržavati samo znakove sigurne za URL.",
       variant_axis_multi_select_only: "is_variant_axis je dozvoljen samo za atribute s višestrukim izborom.",
       inline_attribute_requires_type: "Ugrađeni atributi bez ose zahtijevaju eksplicitno naveden tip.",
@@ -408,6 +422,7 @@ export const ADMIN_ERROR_MESSAGES: Record<AdminLanguage, AdminErrorMessages> = {
     },
     genericUnexpected: "Παρουσιάστηκε ένα μη αναμενόμενο σφάλμα. Δοκιμάστε ξανά.",
     customCodes: {
+      automatic_promotion_attribute_budget: "Οι αυτόματες προωθήσεις δεν μπορούν να προστεθούν σε καμπάνια με προϋπολογισμό ανά πελάτη. Χρησιμοποιήστε κωδικό προώθησης.",
       handle_invalid_format: "Το handle πρέπει να περιέχει μόνο χαρακτήρες ασφαλείς για URL.",
       variant_axis_multi_select_only: "Το is_variant_axis επιτρέπεται μόνο σε χαρακτηριστικά πολλαπλής επιλογής.",
       inline_attribute_requires_type: "Τα ενσωματωμένα χαρακτηριστικά χωρίς άξονα απαιτούν ρητά καθορισμένο τύπο.",
@@ -435,6 +450,7 @@ export const ADMIN_ERROR_MESSAGES: Record<AdminLanguage, AdminErrorMessages> = {
     },
     genericUnexpected: "خطای غیرمنتظره‌ای رخ داد. لطفاً دوباره تلاش کنید.",
     customCodes: {
+      automatic_promotion_attribute_budget: "تبلیغات خودکار را نمی‌توان به کمپینی با بودجه به‌ازای هر مشتری اضافه کرد. به‌جای آن از کد تبلیغاتی استفاده کنید.",
       handle_invalid_format: "شناسه (handle) باید فقط شامل کاراکترهای امن برای URL باشد.",
       variant_axis_multi_select_only: "is_variant_axis فقط برای ویژگی‌های چندانتخابی مجاز است.",
       inline_attribute_requires_type: "ویژگی‌های درون‌خطی بدون محور نیاز به تعیین صریح نوع دارند.",
@@ -462,6 +478,7 @@ export const ADMIN_ERROR_MESSAGES: Record<AdminLanguage, AdminErrorMessages> = {
     },
     genericUnexpected: "אירעה שגיאה בלתי צפויה. נסה שוב.",
     customCodes: {
+      automatic_promotion_attribute_budget: "לא ניתן להוסיף מבצעים אוטומטיים לקמפיין עם תקציב לכל לקוח. השתמשו בקוד מבצע במקום.",
       handle_invalid_format: "המזהה (handle) חייב להכיל רק תווים בטוחים לכתובת URL.",
       variant_axis_multi_select_only: "is_variant_axis מותר רק במאפייני בחירה מרובה.",
       inline_attribute_requires_type: "מאפיינים מוטבעים שאינם ציר דורשים סוג מפורש.",
@@ -489,6 +506,7 @@ export const ADMIN_ERROR_MESSAGES: Record<AdminLanguage, AdminErrorMessages> = {
     },
     genericUnexpected: "Váratlan hiba történt. Próbálja újra.",
     customCodes: {
+      automatic_promotion_attribute_budget: "Automatikus promóció nem adható ügyfelenkénti keretű kampányhoz. Használjon helyette promóciós kódot.",
       handle_invalid_format: "A handle csak URL-biztonságos karaktereket tartalmazhat.",
       variant_axis_multi_select_only: "Az is_variant_axis csak többválasztós attribútumoknál engedélyezett.",
       inline_attribute_requires_type: "A tengelyhez nem kötött beágyazott attribútumoknak explicit típussal kell rendelkezniük.",
@@ -516,6 +534,7 @@ export const ADMIN_ERROR_MESSAGES: Record<AdminLanguage, AdminErrorMessages> = {
     },
     genericUnexpected: "Terjadi kesalahan tak terduga. Silakan coba lagi.",
     customCodes: {
+      automatic_promotion_attribute_budget: "Promosi otomatis tidak dapat ditambahkan ke kampanye dengan anggaran per pelanggan. Gunakan kode promosi sebagai gantinya.",
       handle_invalid_format: "Handle hanya boleh berisi karakter yang aman untuk URL.",
       variant_axis_multi_select_only: "is_variant_axis hanya diizinkan untuk atribut pilihan ganda.",
       inline_attribute_requires_type: "Atribut inline non-axis memerlukan tipe eksplisit.",
@@ -543,6 +562,7 @@ export const ADMIN_ERROR_MESSAGES: Record<AdminLanguage, AdminErrorMessages> = {
     },
     genericUnexpected: "予期しないエラーが発生しました。もう一度お試しください。",
     customCodes: {
+      automatic_promotion_attribute_budget: "顧客ごとの予算があるキャンペーンには自動プロモーションを追加できません。代わりにプロモーションコードを使用してください。",
       handle_invalid_format: "ハンドルにはURLセーフな文字のみを含める必要があります。",
       variant_axis_multi_select_only: "is_variant_axis は複数選択属性でのみ使用できます。",
       inline_attribute_requires_type: "軸に紐づかないインライン属性には明示的なタイプが必要です。",
@@ -570,6 +590,7 @@ export const ADMIN_ERROR_MESSAGES: Record<AdminLanguage, AdminErrorMessages> = {
     },
     genericUnexpected: "예기치 않은 오류가 발생했습니다. 다시 시도해 주세요.",
     customCodes: {
+      automatic_promotion_attribute_budget: "고객별 예산이 있는 캠페인에는 자동 프로모션을 추가할 수 없습니다. 대신 프로모션 코드를 사용하세요.",
       handle_invalid_format: "핸들에는 URL에 안전한 문자만 포함할 수 있습니다.",
       variant_axis_multi_select_only: "is_variant_axis는 다중 선택 속성에서만 허용됩니다.",
       inline_attribute_requires_type: "축과 연결되지 않은 인라인 속성에는 명시적인 유형이 필요합니다.",
@@ -597,6 +618,7 @@ export const ADMIN_ERROR_MESSAGES: Record<AdminLanguage, AdminErrorMessages> = {
     },
     genericUnexpected: "Įvyko netikėta klaida. Bandykite dar kartą.",
     customCodes: {
+      automatic_promotion_attribute_budget: "Automatinių akcijų negalima pridėti prie kampanijos su biudžetu kiekvienam klientui. Vietoj to naudokite akcijos kodą.",
       handle_invalid_format: "Nuorodos (handle) reikšmėje gali būti tik URL saugūs simboliai.",
       variant_axis_multi_select_only: "is_variant_axis leidžiamas tik daugkartinio pasirinkimo atributams.",
       inline_attribute_requires_type: "Įterptiniams atributams be ašies reikalingas aiškiai nurodytas tipas.",
@@ -624,6 +646,7 @@ export const ADMIN_ERROR_MESSAGES: Record<AdminLanguage, AdminErrorMessages> = {
     },
     genericUnexpected: "Настана неочекувана грешка. Обидете се повторно.",
     customCodes: {
+      automatic_promotion_attribute_budget: "Автоматски промоции не може да се додадат во кампања со буџет по купувач. Наместо тоа, користете промотивен код.",
       handle_invalid_format: "Идентификаторот (handle) мора да содржи само знаци безбедни за URL.",
       variant_axis_multi_select_only: "is_variant_axis е дозволено само за атрибути со повеќекратен избор.",
       inline_attribute_requires_type: "Вградените атрибути без оска бараат експлицитно наведен тип.",
@@ -651,6 +674,7 @@ export const ADMIN_ERROR_MESSAGES: Record<AdminLanguage, AdminErrorMessages> = {
     },
     genericUnexpected: "Гэнэтийн алдаа гарлаа. Дахин оролдоно уу.",
     customCodes: {
+      automatic_promotion_attribute_budget: "Харилцагч тус бүрийн төсөвтэй кампанит ажилд автомат урамшуулал нэмэх боломжгүй. Оронд нь урамшууллын код ашиглана уу.",
       handle_invalid_format: "Handle нь зөвхөн URL-д аюулгүй тэмдэгтүүдийг агуулах ёстой.",
       variant_axis_multi_select_only: "is_variant_axis нь зөвхөн олон сонголттой шинж чанарт зөвшөөрөгдөнө.",
       inline_attribute_requires_type: "Тэнхлэгтэй холбоогүй шигтгээ шинж чанарт тодорхой төрөл заавал шаардлагатай.",
@@ -678,6 +702,7 @@ export const ADMIN_ERROR_MESSAGES: Record<AdminLanguage, AdminErrorMessages> = {
     },
     genericUnexpected: "Er is een onverwachte fout opgetreden. Probeer het opnieuw.",
     customCodes: {
+      automatic_promotion_attribute_budget: "Automatische promoties kunnen niet worden toegevoegd aan een campagne met een budget per klant. Gebruik in plaats daarvan een promotiecode.",
       handle_invalid_format: "De handle mag alleen URL-veilige tekens bevatten.",
       variant_axis_multi_select_only: "is_variant_axis is alleen toegestaan bij kenmerken met meervoudige selectie.",
       inline_attribute_requires_type: "Inline kenmerken zonder as vereisen een expliciet type.",
@@ -705,6 +730,7 @@ export const ADMIN_ERROR_MESSAGES: Record<AdminLanguage, AdminErrorMessages> = {
     },
     genericUnexpected: "A apărut o eroare neașteptată. Încearcă din nou.",
     customCodes: {
+      automatic_promotion_attribute_budget: "Promoțiile automate nu pot fi adăugate la o campanie cu buget per client. Folosiți în schimb un cod promoțional.",
       handle_invalid_format: "Handle-ul trebuie să conțină doar caractere sigure pentru URL.",
       variant_axis_multi_select_only: "is_variant_axis este permis doar pentru atributele cu selecție multiplă.",
       inline_attribute_requires_type: "Atributele inline fără axă necesită un tip specificat explicit.",
@@ -732,6 +758,7 @@ export const ADMIN_ERROR_MESSAGES: Record<AdminLanguage, AdminErrorMessages> = {
     },
     genericUnexpected: "เกิดข้อผิดพลาดที่ไม่คาดคิด กรุณาลองใหม่อีกครั้ง",
     customCodes: {
+      automatic_promotion_attribute_budget: "ไม่สามารถเพิ่มโปรโมชันอัตโนมัติในแคมเปญที่มีงบประมาณต่อลูกค้าได้ โปรดใช้รหัสโปรโมชันแทน",
       handle_invalid_format: "Handle ต้องมีเฉพาะอักขระที่ปลอดภัยสำหรับ URL เท่านั้น",
       variant_axis_multi_select_only: "is_variant_axis ใช้ได้เฉพาะกับคุณสมบัติแบบเลือกได้หลายค่าเท่านั้น",
       inline_attribute_requires_type: "คุณสมบัติแบบอินไลน์ที่ไม่ใช่แกนต้องระบุประเภทอย่างชัดเจน",
@@ -759,6 +786,7 @@ export const ADMIN_ERROR_MESSAGES: Record<AdminLanguage, AdminErrorMessages> = {
     },
     genericUnexpected: "Đã xảy ra lỗi không mong muốn. Vui lòng thử lại.",
     customCodes: {
+      automatic_promotion_attribute_budget: "Không thể thêm khuyến mãi tự động vào chiến dịch có ngân sách theo từng khách hàng. Hãy dùng mã khuyến mãi thay thế.",
       handle_invalid_format: "Handle chỉ được chứa các ký tự an toàn cho URL.",
       variant_axis_multi_select_only: "is_variant_axis chỉ được phép dùng cho thuộc tính chọn nhiều.",
       inline_attribute_requires_type: "Thuộc tính nội tuyến không thuộc trục yêu cầu phải chỉ định rõ loại.",
@@ -786,6 +814,7 @@ export const ADMIN_ERROR_MESSAGES: Record<AdminLanguage, AdminErrorMessages> = {
     },
     genericUnexpected: "发生意外错误,请重试。",
     customCodes: {
+      automatic_promotion_attribute_budget: "无法将自动促销添加到按客户设置预算的活动中。请改用促销代码。",
       handle_invalid_format: "Handle 只能包含对 URL 安全的字符。",
       variant_axis_multi_select_only: "is_variant_axis 仅允许用于多选属性。",
       inline_attribute_requires_type: "非轴内联属性必须显式指定类型。",
@@ -813,6 +842,7 @@ export const ADMIN_ERROR_MESSAGES: Record<AdminLanguage, AdminErrorMessages> = {
     },
     genericUnexpected: "發生未預期的錯誤,請重試。",
     customCodes: {
+      automatic_promotion_attribute_budget: "無法將自動促銷加入依顧客設定預算的活動。請改用促銷代碼。",
       handle_invalid_format: "Handle 只能包含對 URL 安全的字元。",
       variant_axis_multi_select_only: "is_variant_axis 僅適用於多選屬性。",
       inline_attribute_requires_type: "非軸內聯屬性必須明確指定類型。",
@@ -840,6 +870,7 @@ export const ADMIN_ERROR_MESSAGES: Record<AdminLanguage, AdminErrorMessages> = {
     },
     genericUnexpected: "حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى.",
     customCodes: {
+      automatic_promotion_attribute_budget: "لا يمكن إضافة عروض ترويجية تلقائية إلى حملة ذات ميزانية لكل عميل. استخدم رمزًا ترويجيًا بدلاً من ذلك.",
       handle_invalid_format: "يجب أن يحتوي المعرف (handle) على أحرف آمنة لعنوان URL فقط.",
       variant_axis_multi_select_only: "يُسمح باستخدام is_variant_axis فقط مع الخصائص متعددة الاختيار.",
       inline_attribute_requires_type: "الخصائص المضمّنة غير المرتبطة بمحور تتطلب تحديد نوع صريح.",

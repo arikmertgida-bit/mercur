@@ -1,4 +1,6 @@
 import {
+  authenticate,
+  AuthenticatedMedusaRequest,
   MedusaNextFunction,
   MedusaRequest,
   MedusaResponse,
@@ -9,6 +11,7 @@ import type { Query } from "@medusajs/framework"
 import type { StorePostReturnsReqSchemaType } from "@medusajs/medusa/api/store/returns/validators"
 
 import { assertItemsReturnable } from "@mercurjs/core/api/utils/returnable-quantity"
+import { assertStoreOrderAccess } from "@mercurjs/core/api/utils/store-order-access"
 
 import { isReturnWindowOpen } from "../../../lib/return-window"
 
@@ -52,6 +55,21 @@ const enforceReturnWindow = async (
   )
 }
 
+// Medusa keeps this route open so a guest can return with the order id
+// alone; a registered customer's order may only be returned by its owner,
+// the same rule GET /store/orders/:id applies.
+const enforceOrderOwnership = async (
+  req: AuthenticatedMedusaRequest<StorePostReturnsReqSchemaType>,
+  _res: MedusaResponse,
+  next: MedusaNextFunction
+) => {
+  const { order_id: orderId } = req.validatedBody
+  if (orderId) {
+    await assertStoreOrderAccess(req.scope, orderId, req.auth_context?.actor_id)
+  }
+  next()
+}
+
 const enforceReturnableQuantities = async (
   req: MedusaRequest<StorePostReturnsReqSchemaType>,
   _res: MedusaResponse,
@@ -68,6 +86,13 @@ export const storeReturnsReturnWindowMiddlewares: MiddlewareRoute[] = [
   {
     method: ["POST"],
     matcher: "/store/returns",
-    middlewares: [enforceReturnWindow, enforceReturnableQuantities],
+    middlewares: [
+      authenticate("customer", ["session", "bearer"], {
+        allowUnauthenticated: true,
+      }),
+      enforceOrderOwnership,
+      enforceReturnWindow,
+      enforceReturnableQuantities,
+    ],
   },
 ]

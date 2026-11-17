@@ -1,4 +1,4 @@
-import { resolveClientIp } from "../rate-limit"
+import { isUncountedAuthSuccess, resolveClientIp, resolveReporterKey } from "../rate-limit"
 
 const request = (
   remoteAddress: string,
@@ -33,5 +33,38 @@ describe("resolveClientIp", () => {
 
   it("ignores a header value that is not an IP address", () => {
     expect(resolveClientIp(request("172.18.0.9", { "x-real-ip": "random-123" }))).toBe("172.18.0.9")
+  })
+})
+
+describe("resolveReporterKey", () => {
+  it("keys reports by the logged-in customer, not the shared address", () => {
+    const behindProxy = { socket: { remoteAddress: "172.18.0.9" }, ip: "172.18.0.9", headers: {} }
+    expect(resolveReporterKey({ ...behindProxy, auth_context: { actor_id: "cus_1" } })).toBe("customer:cus_1")
+    expect(resolveReporterKey({ ...behindProxy, auth_context: { actor_id: "cus_2" } })).toBe("customer:cus_2")
+  })
+
+  it("falls back to the client address without a customer", () => {
+    expect(resolveReporterKey({ socket: { remoteAddress: "85.105.1.2" }, ip: "85.105.1.2", headers: {} })).toBe(
+      "85.105.1.2"
+    )
+  })
+})
+
+describe("isUncountedAuthSuccess", () => {
+  it("does not count successful logins, session exchanges or refreshes", () => {
+    expect(isUncountedAuthSuccess("/auth/customer/emailpass", 200)).toBe(true)
+    expect(isUncountedAuthSuccess("/auth/member/emailpass", 200)).toBe(true)
+    expect(isUncountedAuthSuccess("/auth/session", 200)).toBe(true)
+    expect(isUncountedAuthSuccess("/auth/token/refresh?x=1", 200)).toBe(true)
+  })
+
+  it("counts failed logins", () => {
+    expect(isUncountedAuthSuccess("/auth/customer/emailpass", 401)).toBe(false)
+  })
+
+  it("counts registration and password reset even when they succeed", () => {
+    expect(isUncountedAuthSuccess("/auth/customer/emailpass/register", 200)).toBe(false)
+    expect(isUncountedAuthSuccess("/auth/customer/emailpass/reset-password", 201)).toBe(false)
+    expect(isUncountedAuthSuccess("/auth/customer/emailpass/update", 200)).toBe(false)
   })
 })

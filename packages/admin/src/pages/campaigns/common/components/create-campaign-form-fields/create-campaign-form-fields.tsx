@@ -409,10 +409,6 @@ export const CreateCampaignFormFields = ({ form, fieldScope = "" }) => {
                           label: t("fields.email"),
                           value: "customer_email",
                         },
-                        {
-                          label: t("fields.promotionCode"),
-                          value: "promotion_code",
-                        },
                       ]}
                       data-testid="campaign-create-form-fields-budget-attribute-combobox"
                     ></Combobox>

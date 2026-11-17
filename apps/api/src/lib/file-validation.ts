@@ -86,3 +86,24 @@ export const csvUpload = multer({
 export function looksLikeTextCsv(buffer: Buffer): boolean {
   return !buffer.subarray(0, 8192).includes(0)
 }
+
+// Admin media may also be SVG (category/collection icons, store logo,
+// product images). An SVG is a document: opened directly it runs any script
+// it carries, from the media origin. Only plain drawing markup is accepted.
+const SVG_ROOT =
+  /^\s*(?:<\?xml[^>]*\?>\s*)?(?:<!--[\s\S]*?-->\s*)*(?:<!DOCTYPE\s+svg[^>[]*>\s*)?<svg[\s>]/i
+const SVG_ACTIVE_CONTENT =
+  /<script|<foreignObject|<iframe|<embed|<object|<!ENTITY|<a[\s>]|\son[a-z]+\s*=|javascript:|data:text\/html|&#x?[0-9a-f]+/i
+
+export function isSafeSvg(buffer: Buffer): boolean {
+  if (buffer.includes(0)) {
+    return false
+  }
+
+  const text = buffer.toString('utf8')
+  return SVG_ROOT.test(text) && !SVG_ACTIVE_CONTENT.test(text)
+}
+
+export function matchesAllowedAdminMediaContent(buffer: Buffer): boolean {
+  return matchesAllowedImageMagicBytes(buffer) || isSafeSvg(buffer)
+}

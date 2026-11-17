@@ -939,7 +939,6 @@ medusaIntegrationTestRunner({
                     const promotionResponse = await api.post(
                         `/vendor/promotions`,
                         {
-                            code: "CAMPAIGN_PROMO_1",
                             type: "standard",
                             application_method: {
                                 type: "percentage",
@@ -968,7 +967,6 @@ medusaIntegrationTestRunner({
                     const promotionResponse = await api.post(
                         `/vendor/promotions`,
                         {
-                            code: "CAMPAIGN_PROMO_2",
                             type: "standard",
                             application_method: {
                                 type: "percentage",
@@ -1027,7 +1025,6 @@ medusaIntegrationTestRunner({
                     const promotionResponse = await api.post(
                         `/vendor/promotions`,
                         {
-                            code: "SELLER2_PROMO",
                             type: "standard",
                             application_method: {
                                 type: "percentage",
@@ -1068,7 +1065,6 @@ medusaIntegrationTestRunner({
                     const promotionResponse = await api.post(
                         `/vendor/promotions`,
                         {
-                            code: "OTHER_SELLER_PROMO",
                             type: "standard",
                             application_method: {
                                 type: "percentage",

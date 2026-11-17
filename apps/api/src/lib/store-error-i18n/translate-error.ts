@@ -147,6 +147,10 @@ function typeFallbackFor(type: string, messages: StoreErrorMessages): string {
  * original is left in `error.message` for server-side logging by the
  * caller).
  */
+// Medusa promotion module (computeActions), message spelled as Medusa ships it.
+const CAMPAIGN_ATTRIBUTE_REQUIRED =
+  /^Attribute value for "[a-z_]+" is required by promotion campaing? budget$/
+
 export function translateStoreError(
   error: Error,
   language: StoreLanguage
@@ -186,6 +190,14 @@ export function translateStoreError(
         code: error.code,
         type: error.type,
         message: messages.cartPricesChanged,
+      }
+    }
+
+    if (CAMPAIGN_ATTRIBUTE_REQUIRED.test(error.message)) {
+      return {
+        code: error.code ?? "campaign_requires_login",
+        type: error.type,
+        message: messages.campaignRequiresLogin,
       }
     }
 

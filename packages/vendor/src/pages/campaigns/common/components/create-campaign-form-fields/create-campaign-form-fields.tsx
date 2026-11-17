@@ -414,10 +414,6 @@ export const CreateCampaignFormFields = ({
                       options={[
                         { label: t("fields.customer"), value: "customer_id" },
                         { label: t("fields.email"), value: "customer_email" },
-                        {
-                          label: t("fields.promotionCode"),
-                          value: "promotion_code",
-                        },
                       ]}
                     />
                   </Form.Control>

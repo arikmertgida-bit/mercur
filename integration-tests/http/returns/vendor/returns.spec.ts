@@ -1,5 +1,6 @@
 import { medusaIntegrationTestRunner } from "@medusajs/test-utils"
 import {
+    ICustomerModuleService,
     IRegionModuleService,
     ISalesChannelModuleService,
     MedusaContainer,
@@ -29,6 +30,10 @@ medusaIntegrationTestRunner({
             let _seller2: SellerDTO
             let seller2Headers: RequestHeaders
             let storeHeaders: RequestHeaders
+            let publicHeaders: RequestHeaders
+            let otherCustomerHeaders: RequestHeaders
+            let customerId: string
+            let returnShippingOptionId: string
             let region: RegionDTO
             let salesChannel: SalesChannelDTO
             let product1: ProductDTO
@@ -64,9 +69,20 @@ medusaIntegrationTestRunner({
                     last_name: "Customer",
                 })
 
+                customerId = customerResult.customer.id
+                const otherCustomerResult = await createCustomerUser(appContainer, {
+                    email: "returnsother@test.com",
+                })
+                const customerModule = appContainer.resolve<ICustomerModuleService>(Modules.CUSTOMER)
+                await customerModule.updateCustomers(customerId, { has_account: true })
+                await customerModule.updateCustomers(otherCustomerResult.customer.id, { has_account: true })
+
                 const apiKey = await generatePublishableKey(appContainer)
-                storeHeaders = generateStoreHeaders({ publishableKey: apiKey })
-                storeHeaders = { headers: { ...storeHeaders.headers, ...customerResult.headers.headers } }
+                publicHeaders = generateStoreHeaders({ publishableKey: apiKey })
+                storeHeaders = { headers: { ...publicHeaders.headers, ...customerResult.headers.headers } }
+                otherCustomerHeaders = {
+                    headers: { ...publicHeaders.headers, ...otherCustomerResult.headers.headers },
+                }
 
                 // Create sales channel
                 const salesChannelModule = appContainer.resolve<ISalesChannelModuleService>(Modules.SALES_CHANNEL)
@@ -118,6 +134,29 @@ medusaIntegrationTestRunner({
                     },
                     seller1Headers
                 )
+
+                const returnOptionResponse = await api.post(
+                    `/vendor/shipping-options`,
+                    {
+                        name: "Returns Seller 1 Return Shipping",
+                        service_zone_id: shippingPrerequisites1.serviceZone.id,
+                        shipping_profile_id: shippingPrerequisites1.shippingProfile.id,
+                        provider_id: "manual_manual",
+                        price_type: "flat",
+                        type: {
+                            label: "Return",
+                            description: "Return shipping",
+                            code: "return",
+                        },
+                        prices: [{ currency_code: "usd", amount: 0 }],
+                        rules: [
+                            { attribute: "enabled_in_store", value: "true", operator: "eq" },
+                            { attribute: "is_return", value: "true", operator: "eq" },
+                        ],
+                    },
+                    seller1Headers
+                )
+                returnShippingOptionId = returnOptionResponse.data.shipping_option.id
 
                 // Create product for seller 1, with pricing + inventory on the variant.
                 product1 = await createVendorProduct(api, seller1Headers, {
@@ -434,6 +473,72 @@ medusaIntegrationTestRunner({
                         .catch((e) => e.response)
 
                     expect(response.status).toEqual(404)
+                })
+            })
+
+            describe("POST /store/returns", () => {
+                const storeReturnBody = (orderId: string, itemId: string, quantity: number) => ({
+                    order_id: orderId,
+                    items: [{ id: itemId, quantity }],
+                    return_shipping: { option_id: returnShippingOptionId },
+                    location_id: stockLocation1.id,
+                })
+
+                it("lets the customer return their delivered order", async () => {
+                    const { order } = await createFulfilledOrder(seller1Headers, product1.variants[0].id, stockLocation1)
+
+                    const response = await api.post(
+                        `/store/returns`,
+                        storeReturnBody(order.id, order.items[0].id, 1),
+                        storeHeaders
+                    )
+
+                    expect(response.status).toEqual(200)
+                    expect(response.data.return.order_id).toEqual(order.id)
+                    expect(response.data.return.items).toEqual([
+                        expect.objectContaining({ item_id: order.items[0].id, quantity: 1 }),
+                    ])
+                })
+
+                it("hides a registered customer's order from anonymous and foreign requests", async () => {
+                    const { order } = await createFulfilledOrder(seller1Headers, product1.variants[0].id, stockLocation1)
+                    const body = storeReturnBody(order.id, order.items[0].id, 1)
+
+                    const anonymous = await api.post(`/store/returns`, body, publicHeaders).catch((e) => e.response)
+                    expect(anonymous.status).toEqual(404)
+
+                    const foreign = await api.post(`/store/returns`, body, otherCustomerHeaders).catch((e) => e.response)
+                    expect(foreign.status).toEqual(404)
+
+                    const vendorReturns = await api.get(`/vendor/returns?order_id=${order.id}`, seller1Headers)
+                    expect(vendorReturns.data.returns).toHaveLength(0)
+                })
+
+                it("keeps guest orders returnable by order id", async () => {
+                    const { order } = await createFulfilledOrder(seller1Headers, product1.variants[0].id, stockLocation1)
+                    const customerModule = appContainer.resolve<ICustomerModuleService>(Modules.CUSTOMER)
+                    await customerModule.updateCustomers(customerId, { has_account: false })
+
+                    const response = await api.post(
+                        `/store/returns`,
+                        storeReturnBody(order.id, order.items[0].id, 1),
+                        publicHeaders
+                    )
+
+                    expect(response.status).toEqual(200)
+                })
+
+                it("rejects returning more than is left to return", async () => {
+                    const { order } = await createFulfilledOrder(seller1Headers, product1.variants[0].id, stockLocation1)
+                    const itemId = order.items[0].id
+
+                    const first = await api.post(`/store/returns`, storeReturnBody(order.id, itemId, 2), storeHeaders)
+                    expect(first.status).toEqual(200)
+
+                    const again = await api
+                        .post(`/store/returns`, storeReturnBody(order.id, itemId, 1), storeHeaders)
+                        .catch((e) => e.response)
+                    expect(again.status).toEqual(400)
                 })
             })
 

@@ -174,5 +174,45 @@ medusaIntegrationTestRunner({
                 expect(res.status).toEqual(401)
             })
         })
+
+        describe("Store - reports require a customer", () => {
+            let storeHeaders: RequestHeaders
+            let customerHeaders: RequestHeaders
+
+            beforeEach(async () => {
+                const container = getContainer()
+                const customer = await createCustomerUser(container, { email: "reporter@kayi.test" })
+                const apiKey = await generatePublishableKey(container)
+                storeHeaders = generateStoreHeaders({ publishableKey: apiKey })
+                customerHeaders = withHeaders(storeHeaders, customer.headers)
+            })
+
+            it("rejects anonymous product and review-image reports", async () => {
+                const product = await api
+                    .post(
+                        "/store/product-reports/prod_x/report",
+                        { reason: "other", comment: "spam" },
+                        storeHeaders
+                    )
+                    .catch((e) => e.response)
+                expect(product.status).toEqual(401)
+
+                const image = await api
+                    .post("/store/review-images/rimg_x/report", { reason: "spam" }, storeHeaders)
+                    .catch((e) => e.response)
+                expect(image.status).toEqual(401)
+            })
+
+            it("rejects a report for a product that does not exist", async () => {
+                const res = await api
+                    .post(
+                        "/store/product-reports/prod_missing/report",
+                        { reason: "other", comment: "spam" },
+                        customerHeaders
+                    )
+                    .catch((e) => e.response)
+                expect(res.status).toEqual(404)
+            })
+        })
     },
 })

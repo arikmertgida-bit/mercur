@@ -272,7 +272,10 @@ export class MinioFileProviderService
       throw new MedusaError(MedusaError.Types.INVALID_DATA, "No filename provided")
     }
 
-    const fileKey = `${this.config_.prefix}${fileData.filename}`
+    // The filename comes from the client; used verbatim as the key it could
+    // overwrite any object in the bucket (another seller's image, a
+    // customer's avatar). Same unique key shape as upload().
+    const fileKey = this.buildFileKey(fileData.filename)
     const acl = fileData.access ? this.resolveAcl(fileData.access) : undefined
 
     const command = new PutObjectCommand({

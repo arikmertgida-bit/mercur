@@ -540,7 +540,6 @@ medusaIntegrationTestRunner({
                     await api.post(
                         `/vendor/promotions`,
                         {
-                            code: "AUTO_FILTER_PROMO",
                             type: "standard",
                             is_automatic: true,
                             application_method: {
@@ -555,7 +554,6 @@ medusaIntegrationTestRunner({
                     await api.post(
                         `/vendor/promotions`,
                         {
-                            code: "CODE_FILTER_PROMO",
                             type: "standard",
                             is_automatic: false,
                             application_method: {
@@ -583,7 +581,6 @@ medusaIntegrationTestRunner({
                     await api.post(
                         `/vendor/promotions`,
                         {
-                            code: "FIXED_FILTER_PROMO",
                             type: "standard",
                             application_method: {
                                 type: "fixed",
@@ -598,7 +595,6 @@ medusaIntegrationTestRunner({
                     await api.post(
                         `/vendor/promotions`,
                         {
-                            code: "PERCENT_FILTER_PROMO",
                             type: "standard",
                             application_method: {
                                 type: "percentage",
@@ -789,7 +785,6 @@ medusaIntegrationTestRunner({
                     const response = await api.post(
                         `/vendor/promotions`,
                         {
-                            code: "USAGE_LIMIT_PROMO",
                             type: "standard",
                             application_method: {
                                 type: "percentage",
@@ -810,7 +805,6 @@ medusaIntegrationTestRunner({
                         .post(
                             `/vendor/promotions`,
                             {
-                                code: "AUTO_LIMIT_PROMO",
                                 type: "standard",
                                 is_automatic: true,
                                 application_method: {
@@ -831,7 +825,6 @@ medusaIntegrationTestRunner({
                     const createResponse = await api.post(
                         `/vendor/promotions`,
                         {
-                            code: "EDIT_DETAILS_PROMO",
                             type: "standard",
                             application_method: {
                                 type: "percentage",

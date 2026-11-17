@@ -10,17 +10,8 @@ import { moduleKayiLogger } from "./logger"
 const MESSENGER_URL =
   process.env.MESSENGER_INTERNAL_URL || "http://messenger:4000"
 
-if (!process.env.MESSENGER_INTERNAL_SECRET) {
-  if (process.env.NODE_ENV === "production") {
-    throw new Error("[messenger] MESSENGER_INTERNAL_SECRET env variable must be set in production")
-  }
-  moduleKayiLogger.warn(
-    "[messenger] MESSENGER_INTERNAL_SECRET is not set — using insecure default. Set it in your .env file."
-  )
-}
-
-const INTERNAL_SECRET =
-  process.env.MESSENGER_INTERNAL_SECRET ?? "kayi-internal-secret"
+// Required at boot by medusa-config.ts.
+const INTERNAL_SECRET = process.env.MESSENGER_INTERNAL_SECRET ?? ""
 
 /**
  * Canonical `sourceUserId` for system-initiated messenger notifications

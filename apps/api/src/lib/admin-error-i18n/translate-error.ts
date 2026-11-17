@@ -1,5 +1,6 @@
 import { MedusaError } from "@medusajs/framework/utils"
 
+import { AUTOMATIC_PROMOTION_ATTRIBUTE_BUDGET_CODE } from "../campaign-budget-attribute"
 import type { AdminLanguage } from "./languages"
 import { ADMIN_ERROR_MESSAGES, AdminErrorCustomCodes, AdminErrorMessages } from "./messages"
 
@@ -171,6 +172,14 @@ export function translateAdminError(
         code: error.code ?? "invalid_request_error",
         type: error.type,
         message: translateValidationMessage(error.message, messages),
+      }
+    }
+
+    if (error.code === AUTOMATIC_PROMOTION_ATTRIBUTE_BUDGET_CODE) {
+      return {
+        code: error.code,
+        type: error.type,
+        message: messages.customCodes.automatic_promotion_attribute_budget,
       }
     }
 

@@ -15,13 +15,8 @@ import {
 } from "../../../../lib/graph-schemas"
 import { moduleKayiLogger } from "../../../../lib/logger"
 
+// Required at boot by medusa-config.ts; an empty value rejects every call.
 const INTERNAL_SECRET = process.env.MESSENGER_INTERNAL_SECRET ?? ""
-
-if (!INTERNAL_SECRET) {
-  moduleKayiLogger.warn(
-    "[messenger-internal] MESSENGER_INTERNAL_SECRET is not set — internal endpoint will reject all requests"
-  )
-}
 
 const isInternalSecret = (header: string | string[] | undefined): boolean => {
   if (!INTERNAL_SECRET || typeof header !== "string") {

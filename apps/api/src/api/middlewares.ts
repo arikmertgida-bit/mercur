@@ -33,6 +33,7 @@ import { storeCatalogFacetsMiddlewares } from "./store/catalog/facets/middleware
 import { storeSellerProductsMiddlewares } from "./store/sellers/[handle]/products/middlewares";
 import { storeSearchSuggestMiddlewares } from "./store/search/suggest/middlewares";
 import { storeReturnsReturnWindowMiddlewares } from "./store/returns/middlewares";
+import { campaignPromotionsBudgetMiddlewares } from "./campaign-promotions/middlewares";
 import { storeOrdersLinkFieldsMiddlewares } from "./store/orders/middlewares";
 import { vendorFollowersMiddlewares } from "./vendor/followers/middlewares";
 import { authRateLimiter, registrationRateLimiter } from "../lib/rate-limit";
@@ -106,6 +107,7 @@ export default defineMiddlewares({
         ...storeSellerProductsMiddlewares,
         ...storeSearchSuggestMiddlewares,
         ...storeReturnsReturnWindowMiddlewares,
+        ...campaignPromotionsBudgetMiddlewares,
         ...storeOrdersLinkFieldsMiddlewares,
         ...adminProductReportsMiddlewares,
         ...storeProductReportsMiddlewares,

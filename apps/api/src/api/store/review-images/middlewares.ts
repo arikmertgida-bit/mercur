@@ -5,6 +5,7 @@ import {
   validateAndTransformQuery,
 } from "@medusajs/framework"
 
+import { reportRateLimiter } from "../../../lib/rate-limit"
 import {
   StoreCreateReviewImages,
   StoreGetReviewImages,
@@ -28,6 +29,10 @@ export const storeReviewImagesMiddlewares: MiddlewareRoute[] = [
   {
     method: ["POST"],
     matcher: "/store/review-images/:id/report",
-    middlewares: [validateAndTransformBody(StoreReportReviewImage)],
+    middlewares: [
+      authenticate("customer", ["session", "bearer"]),
+      reportRateLimiter,
+      validateAndTransformBody(StoreReportReviewImage),
+    ],
   },
 ]

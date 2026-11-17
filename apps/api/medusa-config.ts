@@ -20,6 +20,10 @@ function requireEnv(name: string): string {
 // first search request.
 requireEnv('MEILISEARCH_HOST')
 requireEnv('MEILISEARCH_MASTER_KEY')
+// Backend <-> messenger calls and messenger tokens are signed with these;
+// without them the backend used a publicly known default secret.
+requireEnv('JWT_SECRET')
+requireEnv('MESSENGER_INTERNAL_SECRET')
 
 module.exports = withMercur({
   projectConfig: {

@@ -4,6 +4,7 @@ import {
   MedusaResponse,
 } from "@medusajs/framework/http"
 import { MedusaError } from "@medusajs/framework/utils"
+import { matchesAllowedAdminMediaContent } from "../../../lib/file-validation"
 import { fixMultipartFilenameEncoding } from "../../../lib/fix-multipart-filename-encoding"
 
 // Overrides Medusa core's `/admin/uploads` POST route handler (project-level
@@ -14,6 +15,8 @@ import { fixMultipartFilenameEncoding } from "../../../lib/fix-multipart-filenam
 // filename passed into `uploadFilesWorkflow` is corrected before storage —
 // see `fixMultipartFilenameEncoding` for why that is necessary. This is
 // what the admin panel's category/product image uploads go through.
+// Core stores whatever bytes it receives under the client's Content-Type, so
+// the content itself is checked here (raster images, or SVG without script).
 export const POST = async (
   req: AuthenticatedMedusaRequest,
   res: MedusaResponse
@@ -24,6 +27,14 @@ export const POST = async (
     throw new MedusaError(
       MedusaError.Types.INVALID_DATA,
       "No files were uploaded"
+    )
+  }
+
+  const invalidFile = input.find((f) => !matchesAllowedAdminMediaContent(f.buffer))
+  if (invalidFile) {
+    throw new MedusaError(
+      MedusaError.Types.INVALID_DATA,
+      `File "${invalidFile.originalname}" is not a valid image`
     )
   }
 

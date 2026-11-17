@@ -22,6 +22,15 @@ type ClientAddressSource = Pick<MedusaRequest, 'headers' | 'ip'> & {
   socket?: { remoteAddress?: string }
 }
 
+type ReporterSource = ClientAddressSource & {
+  auth_context?: { actor_id?: string }
+}
+
+export function resolveReporterKey(req: ReporterSource): string {
+  const customerId = req.auth_context?.actor_id
+  return customerId ? `customer:${customerId}` : resolveClientIp(req)
+}
+
 export function resolveClientIp(req: ClientAddressSource): string {
   const peer = req.socket?.remoteAddress ?? req.ip ?? ''
   const realIp = req.headers['x-real-ip']
@@ -42,12 +51,27 @@ export function resolveClientIp(req: ClientAddressSource): string {
 // (admin/vendor/customer) share the /auth/* prefix — none of it was
 // throttled before this, allowing unlimited credential-stuffing / brute
 // force against any account.
+// Mobile carriers put many shoppers behind one address (CGNAT), so a
+// successful login, session exchange or token refresh is not counted: the
+// limit then only bites on failed passwords. Registration and password-reset
+// requests count even when they succeed (account and e-mail flooding).
+const UNCOUNTED_WHEN_SUCCESSFUL =
+  /^\/auth\/(?:[a-z]+\/emailpass|session|token\/refresh)\/?$/
+
+export function isUncountedAuthSuccess(url: string, statusCode: number): boolean {
+  const path = url.split("?")[0] ?? ""
+  return statusCode < 400 && UNCOUNTED_WHEN_SUCCESSFUL.test(path)
+}
+
 export const authRateLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   limit: 20,
   standardHeaders: true,
   legacyHeaders: false,
   keyGenerator: resolveClientIp,
+  skipSuccessfulRequests: true,
+  requestWasSuccessful: (req, res) =>
+    isUncountedAuthSuccess(req.originalUrl, res.statusCode),
   message: {
     type: 'not_allowed',
     message: 'Too many attempts, please try again later.',
@@ -65,5 +89,20 @@ export const registrationRateLimiter = rateLimit({
   message: {
     type: 'not_allowed',
     message: 'Too many attempts, please try again later.',
+  },
+})
+
+// Product and review-image reports. A review-image report hides the image
+// until an admin reviews it, so one account must not be able to hide every
+// image in a loop. Keyed per customer (the routes require a login).
+export const reportRateLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000,
+  limit: 20,
+  standardHeaders: true,
+  legacyHeaders: false,
+  keyGenerator: resolveReporterKey,
+  message: {
+    type: "not_allowed",
+    message: "Too many reports, please try again later.",
   },
 })

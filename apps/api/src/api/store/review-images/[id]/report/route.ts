@@ -1,4 +1,4 @@
-import { MedusaResponse, MedusaStoreRequest } from "@medusajs/framework/http"
+import { AuthenticatedMedusaRequest, MedusaResponse } from "@medusajs/framework/http"
 
 import { REVIEW_IMAGE_MODULE } from "../../../../../modules/review-images"
 import ReviewImageService from "../../../../../modules/review-images/service"
@@ -11,11 +11,11 @@ export type StoreReportReviewImageResponse = {
 }
 
 export const POST = async (
-  req: MedusaStoreRequest<StoreReportReviewImageType>,
+  req: AuthenticatedMedusaRequest<StoreReportReviewImageType>,
   res: MedusaResponse<StoreReportReviewImageResponse>
 ) => {
   const { reason } = req.validatedBody
-  const customerId = req.auth_context?.actor_id ?? "anonymous"
+  const customerId = req.auth_context.actor_id
 
   const reviewImageService = req.scope.resolve<ReviewImageService>(REVIEW_IMAGE_MODULE)
   const reportService = req.scope.resolve<ReviewImageReportService>(REVIEW_IMAGE_REPORT_MODULE)
