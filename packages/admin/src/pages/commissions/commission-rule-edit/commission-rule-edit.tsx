@@ -32,10 +32,10 @@ const EditCommissionRuleSchema = zod.object({
   status: zod.enum(["active", "inactive"]),
   name: zod
     .string()
-    .min(1, { message: i18n.t("commissions.validation.titleRequired") }),
+    .min(1, { error: () => i18n.t("commissions.validation.titleRequired") }),
   code: zod
     .string()
-    .min(1, { message: i18n.t("commissions.validation.codeRequired") }),
+    .min(1, { error: () => i18n.t("commissions.validation.codeRequired") }),
   scopeType: zod.enum([
     "store",
     "product_type",

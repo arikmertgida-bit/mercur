@@ -29,7 +29,7 @@ const EditCampaignSchema = zod.object({
     .optional()
     .or(zod.literal(""))
     .refine((value) => !value || isValidHandleFormat(value), {
-      message: i18n.t("fields.handleInvalidFormat"),
+      error: () => i18n.t("fields.handleInvalidFormat"),
     }),
 })
 

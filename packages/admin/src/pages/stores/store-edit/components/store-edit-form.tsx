@@ -44,19 +44,19 @@ const EditStoreSchema = zod.object({
   status: zod.nativeEnum(SellerStatus),
   name: zod
     .string()
-    .min(1, { message: i18n.t("stores.create.validation.nameRequired") }),
+    .min(1, { error: () => i18n.t("stores.create.validation.nameRequired") }),
   description: zod.string().optional().or(zod.literal("")),
   handle: zod
     .string()
     .optional()
     .or(zod.literal(""))
     .refine((value) => !value || isValidHandleFormat(value), {
-      message: i18n.t("fields.handleInvalidFormat"),
+      error: () => i18n.t("fields.handleInvalidFormat"),
     }),
   email: zod
     .string()
-    .min(1, { message: i18n.t("stores.create.validation.emailRequired") })
-    .email({ message: i18n.t("stores.create.validation.emailInvalid") }),
+    .min(1, { error: () => i18n.t("stores.create.validation.emailRequired") })
+    .email({ error: () => i18n.t("stores.create.validation.emailInvalid") }),
   phone: zod.string().optional().or(zod.literal("")),
   website_url: zod.string().optional().or(zod.literal("")),
   is_premium: zod.boolean(),

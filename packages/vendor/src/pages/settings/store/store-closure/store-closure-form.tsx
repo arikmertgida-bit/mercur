@@ -15,13 +15,9 @@ type StoreClosureFormProps = {
   seller: HttpTypes.StoreSellerResponse["seller"];
 };
 
-const firstDayRequiredMessage = () =>
-  i18n.t("store.timeOff.validation.firstDayRequired");
-
 const StoreClosureSchema = z.object({
   closed_from: z.date({
-    required_error: firstDayRequiredMessage(),
-    invalid_type_error: firstDayRequiredMessage(),
+    error: () => i18n.t("store.timeOff.validation.firstDayRequired"),
   }),
   closed_to: z.date().nullable(),
   closure_note: z.string().nullable(),

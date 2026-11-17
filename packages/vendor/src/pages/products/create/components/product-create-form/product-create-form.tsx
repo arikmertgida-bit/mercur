@@ -19,7 +19,7 @@ import {
 import { sdk } from "@lib/client"
 import { sellerSuspensionBridge } from "@lib/seller-suspension-bridge"
 
-import { PRODUCT_CREATE_FORM_DEFAULTS, ProductCreateSchema } from "../../constants"
+import { getProductCreateFormDefaults, ProductCreateSchema } from "../../constants"
 import { ProductCreateSchemaType } from "../../types"
 import {
   subscribeVariantsToAttributes,
@@ -187,7 +187,7 @@ const ProductCreateFormContent = ({
   const { isUploading: isMediaUploading, resolveMedia } = useProductMediaUpload()
   const form = useForm<ProductCreateSchemaType>({
     defaultValues: {
-      ...PRODUCT_CREATE_FORM_DEFAULTS,
+      ...getProductCreateFormDefaults(),
       ...extraDefaults,
     },
     resolver: zodResolver(schema ?? ProductCreateSchema),

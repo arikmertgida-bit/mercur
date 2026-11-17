@@ -54,12 +54,12 @@ const ROLE_LABEL_MAP: Record<string, string> = Object.fromEntries(
 const InviteUserSchema = zod.object({
   email: zod
     .string()
-    .email({ message: i18n.t("users.inviteForm.validation.emailInvalid") }),
+    .email({ error: () => i18n.t("users.inviteForm.validation.emailInvalid") }),
   // The select starts empty (""), so the field is a string until it holds
   // one of the seller roles the invite endpoint accepts.
   role_id: zod
     .string()
-    .min(1, { message: i18n.t("users.inviteForm.validation.roleRequired") })
+    .min(1, { error: () => i18n.t("users.inviteForm.validation.roleRequired") })
     .pipe(zod.enum(SellerRole)),
 });
 

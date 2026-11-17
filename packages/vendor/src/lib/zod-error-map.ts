@@ -44,9 +44,13 @@ const MESSAGES: Record<string, ZodValidationMessages> = {
   zhTW: { required: "此欄位為必填項目。", tooSmall: "必須至少為 {min}。", tooBig: "必須最多為 {max}。", invalid: "無效值。", invalidEmail: "請輸入有效的電子郵件地址。", invalidUrl: "請輸入有效的網址。" },
 }
 
+// i18next codes are "pt-BR" / "zh-CN" while this table is keyed like the
+// translation files ("ptBR", "zhCN").
 function messagesForCurrentLanguage(): ZodValidationMessages {
-  const language = i18n.language?.split("-")[0] ?? "en"
-  return MESSAGES[i18n.language] ?? MESSAGES[language] ?? MESSAGES.en
+  const code = i18n.language ?? "en"
+  return (
+    MESSAGES[code.replace("-", "")] ?? MESSAGES[code.split("-")[0]] ?? MESSAGES.en
+  )
 }
 
 /**
@@ -67,6 +71,13 @@ const kayiZodErrorMap: z.core.$ZodErrorMap = (issue) => {
     case "invalid_type":
       return issue.input === undefined ? messages.required : messages.invalid
     case "too_small":
+      // An empty required text/list field reads "must be at least 1" otherwise.
+      if (
+        (issue.origin === "string" || issue.origin === "array") &&
+        Number(issue.minimum) === 1
+      ) {
+        return messages.required
+      }
       return messages.tooSmall.replace("{min}", String(issue.minimum))
     case "too_big":
       return messages.tooBig.replace("{max}", String(issue.maximum))

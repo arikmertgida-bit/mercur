@@ -622,6 +622,9 @@
           "hint": "Xác định các tùy chọn cho sản phẩm, ví dụ: màu sắc, kích thước, v.v."
         }
       },
+      "defaults": {
+        "variantTitle": "Biến thể mặc định"
+      },
       "successToast": "Sản phẩm {{title}} đã được tạo thành công.",
       "attributes": {
         "header": "Thuộc tính",

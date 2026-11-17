@@ -34,14 +34,14 @@ const toPhoneCharsOnly = (value: string): string => {
 };
 
 const StoreStepSchema = z.object({
-  name: z.string().min(1, i18n.t("onboarding.wizard.validation.nameRequired")),
-  email: z.string().email(i18n.t("onboarding.wizard.validation.emailInvalid")),
+  name: z.string().min(1, { error: () => i18n.t("onboarding.wizard.validation.nameRequired") }),
+  email: z.string().email({ error: () => i18n.t("onboarding.wizard.validation.emailInvalid") }),
   phone: z.string().optional(),
-  currency_code: z.string().min(1, i18n.t("onboarding.wizard.validation.currencyRequired")),
+  currency_code: z.string().min(1, { error: () => i18n.t("onboarding.wizard.validation.currencyRequired") }),
   description: z.string().optional(),
   handle: z
     .string()
-    .refine(isValidHandleFormat, { message: i18n.t("fields.handleInvalidFormat") }),
+    .refine(isValidHandleFormat, { error: () => i18n.t("fields.handleInvalidFormat") }),
 });
 
 type StoreStepValues = z.infer<typeof StoreStepSchema>;

@@ -622,6 +622,9 @@
           "hint": "定義商品的選項，例如顏色、尺寸等。"
         }
       },
+      "defaults": {
+        "variantTitle": "預設變體"
+      },
       "successToast": "商品 {{title}} 已成功建立。",
       "attributes": {
         "header": "屬性",

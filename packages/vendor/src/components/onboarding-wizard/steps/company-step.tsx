@@ -20,8 +20,8 @@ const CompanyStepSchema = z
   .object({
     company_type: z
       .string()
-      .min(1, i18n.t("onboarding.wizard.validation.companyTypeRequired")),
-    corporate_name: z.string().min(1, i18n.t("onboarding.wizard.validation.nameRequired")),
+      .min(1, { error: () => i18n.t("onboarding.wizard.validation.companyTypeRequired") }),
+    corporate_name: z.string().min(1, { error: () => i18n.t("onboarding.wizard.validation.nameRequired") }),
     registration_number: z.string().optional(),
     tax_id: z.string().optional(),
   })

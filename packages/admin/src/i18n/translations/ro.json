@@ -627,6 +627,9 @@
           "hint": "Definiți opțiunile produsului, de ex. culoare, mărime etc."
         }
       },
+      "defaults": {
+        "variantTitle": "Variantă implicită"
+      },
       "successToast": "Produs {{title}} a fost creat cu succes.",
       "attributes": {
         "header": "Atribute",

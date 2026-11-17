@@ -6,6 +6,7 @@ import type { TranslationTree } from "../../../i18n/types";
 import { defaultI18nOptions } from "../../../i18n/config";
 import translations from "../../../i18n/translations";
 import { languages } from "../../../i18n/languages";
+import { installKayiZodErrorMap } from "../../../lib/zod-error-map";
 import customI18nResources from "virtual:mercur/i18n";
 import config from "virtual:mercur/config";
 
@@ -85,6 +86,8 @@ export const I18n = () => {
   // zaman eşitle: ilk yüklemede ve her `changeLanguage()` çağrısında.
   syncDocumentLanguage(i18n.language);
   i18n.on("languageChanged", syncDocumentLanguage);
+
+  installKayiZodErrorMap();
 
   return null;
 };

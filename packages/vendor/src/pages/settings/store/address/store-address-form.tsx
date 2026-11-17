@@ -19,7 +19,7 @@ type StoreAddressFormProps = {
 const StoreAddressSchema = zod.object({
   name: zod
     .string()
-    .min(1, { message: i18n.t("store.address.validation.nameRequired") }),
+    .min(1, { error: () => i18n.t("store.address.validation.nameRequired") }),
   address_1: zod.string().optional().or(zod.literal("")),
   address_2: zod.string().optional().or(zod.literal("")),
   city: zod.string().optional().or(zod.literal("")),
@@ -27,7 +27,7 @@ const StoreAddressSchema = zod.object({
   postal_code: zod.string().optional().or(zod.literal("")),
   country_code: zod
     .string()
-    .min(2, { message: i18n.t("store.address.validation.countryRequired") })
+    .min(2, { error: () => i18n.t("store.address.validation.countryRequired") })
     .max(2),
 });
 

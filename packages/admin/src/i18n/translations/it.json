@@ -627,6 +627,9 @@
           "hint": "Definisci le opzioni per il prodotto, ad esempio colore, dimensione, ecc."
         }
       },
+      "defaults": {
+        "variantTitle": "Variante predefinita"
+      },
       "successToast": "Il prodotto {{title}} è stato creato con successo.",
       "attributes": {
         "header": "Attributi",

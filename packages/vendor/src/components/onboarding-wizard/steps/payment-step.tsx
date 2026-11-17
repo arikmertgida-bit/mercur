@@ -9,8 +9,8 @@ import { Form } from "@components/common/form";
 import { CountrySelect } from "@components/inputs/country-select/country-select";
 
 const PaymentStepSchema = z.object({
-  country_code: z.string().min(1, i18n.t("onboarding.wizard.validation.countryRequired")),
-  holder_name: z.string().min(1, i18n.t("onboarding.wizard.validation.accountNameRequired")),
+  country_code: z.string().min(1, { error: () => i18n.t("onboarding.wizard.validation.countryRequired") }),
+  holder_name: z.string().min(1, { error: () => i18n.t("onboarding.wizard.validation.accountNameRequired") }),
   iban: z.string().optional(),
   bic: z.string().optional(),
   routing_number: z.string().optional(),

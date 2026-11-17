@@ -5,12 +5,12 @@ import { CreateCampaignSchema } from "../../../../campaigns/campaign-create/comp
 const RuleSchema = z.array(
   z.object({
     id: z.string().optional(),
-    attribute: z.string().min(1, { message: i18n.t("validation.requiredField") }),
-    operator: z.string().min(1, { message: i18n.t("validation.requiredField") }),
+    attribute: z.string().min(1, { error: () => i18n.t("validation.requiredField") }),
+    operator: z.string().min(1, { error: () => i18n.t("validation.requiredField") }),
     values: z.union([
-      z.number().min(1, { message: i18n.t("validation.requiredField") }),
-      z.string().min(1, { message: i18n.t("validation.requiredField") }),
-      z.array(z.string()).min(1, { message: i18n.t("validation.requiredField") }),
+      z.number().min(1, { error: () => i18n.t("validation.requiredField") }),
+      z.string().min(1, { error: () => i18n.t("validation.requiredField") }),
+      z.array(z.string()).min(1, { error: () => i18n.t("validation.requiredField") }),
     ]),
     required: z.boolean().optional(),
     disguised: z.boolean().optional(),
@@ -55,7 +55,7 @@ export const CreatePromotionSchema = z
     },
     {
       path: ["application_method.max_quantity"],
-      message: i18n.t("validation.requiredField"),
+      error: () => i18n.t("validation.requiredField"),
     }
   )
   .refine(
@@ -68,7 +68,7 @@ export const CreatePromotionSchema = z
     },
     {
       path: ["shared_marketplace_percentage"],
-      message: i18n.t("validation.requiredField"),
+      error: () => i18n.t("validation.requiredField"),
     }
   )
   .refine(
@@ -81,7 +81,7 @@ export const CreatePromotionSchema = z
     },
     {
       path: ["seller_id"],
-      message: i18n.t("promotions.form.storeOffers.required"),
+      error: () => i18n.t("promotions.form.storeOffers.required"),
     }
   )
 

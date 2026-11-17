@@ -25,11 +25,11 @@ type EditCollectionFormProps = {
 const EditCollectionSchema = zod.object({
   title: zod
     .string()
-    .min(1, { message: i18n.t("collections.validation.titleRequired") }),
+    .min(1, { error: () => i18n.t("collections.validation.titleRequired") }),
   handle: zod
     .string()
     .min(1)
-    .refine(isValidHandleFormat, { message: i18n.t("fields.handleInvalidFormat") }),
+    .refine(isValidHandleFormat, { error: () => i18n.t("fields.handleInvalidFormat") }),
 })
 
 export const EditCollectionForm = ({ collection }: EditCollectionFormProps) => {

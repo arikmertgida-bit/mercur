@@ -21,12 +21,12 @@ type StoreClosureFormProps = {
 const StoreClosureSchema = z
   .object({
     closed_from: z.date({
-      required_error: i18n.t("store.scheduledClosure.validation.closedFromRequired"),
+      error: () => i18n.t("store.scheduledClosure.validation.closedFromRequired"),
     }),
     closed_to: z.date().nullable(),
   })
   .refine((data) => data.closed_from >= new Date(new Date().toDateString()), {
-    message: i18n.t("store.scheduledClosure.validation.closedFromInPast"),
+    error: () => i18n.t("store.scheduledClosure.validation.closedFromInPast"),
     path: ["closed_from"],
   });
 

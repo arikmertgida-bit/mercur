@@ -635,6 +635,9 @@
           "hint": "Określ opcje dla produktu, np. kolor, rozmiar, itp."
         }
       },
+      "defaults": {
+        "variantTitle": "Domyślny wariant"
+      },
       "successToast": "Produkt {{title}} został pomyślnie utworzony."
     },
     "export": {

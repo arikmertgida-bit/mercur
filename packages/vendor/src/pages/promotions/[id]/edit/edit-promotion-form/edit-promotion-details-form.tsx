@@ -39,8 +39,8 @@ const EditPromotionSchema = zod.object({
   value_type: zod.enum(['fixed', 'percentage']),
   value: zod
     .number()
-    .min(0, { message: i18n.t('validation.requiredField') })
-    .or(zod.string().min(1, { message: i18n.t('validation.requiredField') })),
+    .min(0, { error: () => i18n.t('validation.requiredField') })
+    .or(zod.string().min(1, { error: () => i18n.t('validation.requiredField') })),
   allocation: zod.enum(['each', 'across', 'once']),
   target_type: zod.enum(['order', 'shipping_methods', 'items']),
   max_quantity: zod.number().min(1).optional().nullable(),

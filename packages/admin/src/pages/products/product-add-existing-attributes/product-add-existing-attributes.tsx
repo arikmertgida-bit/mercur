@@ -91,7 +91,7 @@ const AttributeValueSchema = zod.object({
         if (Array.isArray(val)) return val.length > 0;
         return val.length > 0;
       },
-      { message: i18n.t("validation.valueRequired") }
+      { error: () => i18n.t("validation.valueRequired") }
     ),
 });
 

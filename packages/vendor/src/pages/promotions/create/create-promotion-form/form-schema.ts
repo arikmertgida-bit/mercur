@@ -5,14 +5,14 @@ import { CreateCampaignSchema } from "@pages/campaigns/create/create-campaign-fo
 const RuleSchema = z.array(
   z.object({
     id: z.string().optional(),
-    attribute: z.string().min(1, { message: i18n.t("validation.requiredField") }),
+    attribute: z.string().min(1, { error: () => i18n.t("validation.requiredField") }),
     operator: z
       .string()
-      .min(1, { message: i18n.t("validation.requiredField") }),
+      .min(1, { error: () => i18n.t("validation.requiredField") }),
     values: z.union([
-      z.number().min(1, { message: i18n.t("validation.requiredField") }),
-      z.string().min(1, { message: i18n.t("validation.requiredField") }),
-      z.array(z.string()).min(1, { message: i18n.t("validation.requiredField") }),
+      z.number().min(1, { error: () => i18n.t("validation.requiredField") }),
+      z.string().min(1, { error: () => i18n.t("validation.requiredField") }),
+      z.array(z.string()).min(1, { error: () => i18n.t("validation.requiredField") }),
     ]),
     required: z.boolean().optional(),
     disguised: z.boolean().optional(),
@@ -35,8 +35,8 @@ export const CreatePromotionSchema = z
       allocation: z.enum(["each", "across", "once"]),
       value: z
         .number()
-        .min(0, { message: i18n.t("validation.requiredField") })
-        .or(z.string().min(1, { message: i18n.t("validation.requiredField") })),
+        .min(0, { error: () => i18n.t("validation.requiredField") })
+        .or(z.string().min(1, { error: () => i18n.t("validation.requiredField") })),
       currency_code: z.string().optional(),
       max_quantity: z.number().optional().nullable(),
       target_rules: RuleSchema,
@@ -60,7 +60,7 @@ export const CreatePromotionSchema = z
     },
     {
       path: ["application_method.max_quantity"],
-      message: i18n.t("validation.requiredField"),
+      error: () => i18n.t("validation.requiredField"),
     }
   )
 

@@ -39,18 +39,18 @@ type EditStoreFormProps = HttpTypes.StoreSellerResponse;
 const EditStoreSchema = zod.object({
   name: zod
     .string()
-    .min(1, { message: i18n.t("store.validation.nameRequired") }),
+    .min(1, { error: () => i18n.t("store.validation.nameRequired") }),
   handle: zod
     .string()
     .optional()
     .or(zod.literal(""))
     .refine((value) => !value || isValidHandleFormat(value), {
-      message: i18n.t("fields.handleInvalidFormat"),
+      error: () => i18n.t("fields.handleInvalidFormat"),
     }),
   email: zod
     .string()
-    .min(1, { message: i18n.t("store.validation.emailRequired") })
-    .email({ message: i18n.t("store.validation.emailInvalid") }),
+    .min(1, { error: () => i18n.t("store.validation.emailRequired") })
+    .email({ error: () => i18n.t("store.validation.emailInvalid") }),
   phone: zod.string().optional().or(zod.literal("")),
   description: zod.string().optional().or(zod.literal("")),
   website_url: zod.string().optional().or(zod.literal("")),

@@ -16,15 +16,15 @@ import { useRequiredParam } from "@mercurjs/dashboard-shared"
 
 const CreateCustomerAddressSchema = zod.object({
   address_name: zod.string().min(1, {
-    message: i18n.t("customers.addresses.validation.addressNameRequired"),
+    error: () => i18n.t("customers.addresses.validation.addressNameRequired"),
   }),
   address_1: zod.string().min(1, {
-    message: i18n.t("customers.addresses.validation.addressRequired"),
+    error: () => i18n.t("customers.addresses.validation.addressRequired"),
   }),
   address_2: zod.string().optional(),
   country_code: zod
     .string()
-    .min(2, { message: i18n.t("customers.addresses.validation.countryRequired") })
+    .min(2, { error: () => i18n.t("customers.addresses.validation.countryRequired") })
     .max(2),
   city: zod.string().optional(),
   postal_code: zod.string().optional(),

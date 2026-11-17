@@ -4,6 +4,7 @@ import type { ProductAttributeBatchAdd } from "@mercurjs/types"
 import { AttributeType } from "@mercurjs/types/product"
 import { UseFormReturn } from "react-hook-form"
 import { sdk } from "../../../lib/client"
+import { i18n } from "../../../components/utilities/i18n/i18n"
 import { isTruthy } from "../../../lib/is-truthy"
 import { toAttributeType } from "../common/utils/attribute-type"
 import { ProductCreateSchemaType } from "./types"
@@ -116,7 +117,7 @@ export const normalizeVariants = (
       }))
 
     return {
-      title: variant.title || (hasOpts ? Object.values(opts).join(" / ") : "Default variant"),
+      title: variant.title || (hasOpts ? Object.values(opts).join(" / ") : i18n.t("products.create.defaults.variantTitle")),
       options: hasOpts ? opts : hasAxis ? undefined : { "Default Option": "Default" },
       sku: variant.sku || undefined,
       variant_rank: variant.variant_rank,
@@ -258,7 +259,7 @@ export const generateVariantsFromAttributes = (
     }
     return decorateVariantsWithDefaultValues([
       {
-        title: "Default variant",
+        title: i18n.t("products.create.defaults.variantTitle"),
         should_create: true,
         variant_rank: 0,
         options: {},

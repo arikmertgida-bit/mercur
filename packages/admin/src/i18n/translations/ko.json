@@ -622,6 +622,9 @@
           "hint": "색상, 크기 등과 같은 상품 옵션을 정의합니다."
         }
       },
+      "defaults": {
+        "variantTitle": "기본 변형"
+      },
       "successToast": "상품 {{title}}이(가) 성공적으로 생성되었습니다.",
       "attributes": {
         "header": "속성",

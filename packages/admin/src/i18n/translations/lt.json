@@ -627,6 +627,9 @@
           "hint": "Apibrėžkite prekės parinktis, pvz., spalvą, dydį ir kt."
         }
       },
+      "defaults": {
+        "variantTitle": "Numatytasis variantas"
+      },
       "successToast": "Prekė {{title}} sėkmingai sukurta.",
       "attributes": {
         "header": "Atributai",

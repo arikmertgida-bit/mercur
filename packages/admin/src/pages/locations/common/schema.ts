@@ -12,7 +12,7 @@ export const ConditionalPriceSchema = z
     eq: z.number().nullish(),
   })
   .refine((data) => data.amount !== "", {
-    message: t(
+    error: () => t(
       "stockLocations.shippingOptions.conditionalPrices.errors.amountRequired"
     ),
     path: ["amount"],
@@ -33,7 +33,7 @@ export const ConditionalPriceSchema = z
       )
     },
     {
-      message: t(
+      error: () => t(
         "stockLocations.shippingOptions.conditionalPrices.errors.minOrMaxRequired"
       ),
       path: ["gte"],
@@ -54,7 +54,7 @@ export const ConditionalPriceSchema = z
       return true
     },
     {
-      message: t(
+      error: () => t(
         "stockLocations.shippingOptions.conditionalPrices.errors.minGreaterThanMax"
       ),
       path: ["gte"],

@@ -73,7 +73,7 @@ export const UpdateAttributeSchema = z.object({
     .string()
     .optional()
     .refine((value) => !value || isValidHandleFormat(value), {
-      message: i18n.t("fields.handleInvalidFormat"),
+      error: () => i18n.t("fields.handleInvalidFormat"),
     }),
   is_filterable: z.boolean().optional(),
   is_required: z.boolean().optional(),

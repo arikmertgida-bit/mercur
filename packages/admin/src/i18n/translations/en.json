@@ -518,6 +518,9 @@
           "hint": "Define the options for the product, e.g. color, size, etc."
         }
       },
+      "defaults": {
+        "variantTitle": "Default variant"
+      },
       "successToast": "Product {{title}} was successfully created."
     },
     "export": {

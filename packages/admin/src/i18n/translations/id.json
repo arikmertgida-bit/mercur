@@ -622,6 +622,9 @@
           "hint": "Definisikan opsi untuk produk, misal: warna, ukuran, dll."
         }
       },
+      "defaults": {
+        "variantTitle": "Varian default"
+      },
       "successToast": "Produk {{title}} berhasil dibuat.",
       "attributes": {
         "header": "Atribut",

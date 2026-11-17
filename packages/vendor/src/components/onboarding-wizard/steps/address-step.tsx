@@ -13,7 +13,7 @@ const AddressStepSchema = z.object({
   address_2: z.string().optional(),
   postal_code: z.string().optional(),
   city: z.string().optional(),
-  country_code: z.string().min(1, i18n.t("onboarding.wizard.validation.countryRequired")),
+  country_code: z.string().min(1, { error: () => i18n.t("onboarding.wizard.validation.countryRequired") }),
 });
 
 type AddressStepValues = z.infer<typeof AddressStepSchema>;

@@ -10,8 +10,8 @@ export enum PromotionStatus {
 }
 
 export type StatusColors = "grey" | "orange" | "green" | "red" | "grey"
-export type StatusMap = Record<string, [StatusColors, string]>
-export const promotionStatusMap: StatusMap = {
+
+const getPromotionStatusMap = (): Record<string, [StatusColors, string]> => ({
   [PromotionStatus.ACTIVE]: ["green", i18n.t("statuses.active")],
   [PromotionStatus.INACTIVE]: ["red", i18n.t("statuses.inactive")],
   [PromotionStatus.DRAFT]: ["grey", i18n.t("statuses.draft")],
@@ -23,7 +23,7 @@ export const promotionStatusMap: StatusMap = {
     "red",
     `${i18n.t("promotions.fields.campaign")} ${i18n.t("statuses.expired")?.toLowerCase()}`,
   ],
-}
+})
 
 export const getPromotionType = (promotion: HttpTypes.AdminPromotion) => {
   const applicationMethod = promotion.application_method
@@ -54,13 +54,20 @@ export const getPromotionType = (promotion: HttpTypes.AdminPromotion) => {
 export const getPromotionStatus = (promotion: HttpTypes.AdminPromotion) => {
   const date = new Date()
   const campaign = promotion.campaign
+  const statusMap = getPromotionStatusMap()
+
+  // Medusa creates promotions as drafts, so a promotion without a serialized
+  // status is shown as one.
+  const promotionStatus = statusMap[
+    promotion.status?.toUpperCase() ?? PromotionStatus.DRAFT
+  ]
 
   if (!campaign) {
-    return getStatusFromPromotion(promotion)
+    return promotionStatus
   }
 
   if (campaign.starts_at && new Date(campaign.starts_at) > date) {
-    return promotionStatusMap[PromotionStatus.SCHEDULED]
+    return statusMap[PromotionStatus.SCHEDULED]
   }
 
   const campaignBudget = campaign.budget
@@ -70,13 +77,8 @@ export const getPromotionStatus = (promotion: HttpTypes.AdminPromotion) => {
     (campaignBudget.used ?? 0) > campaignBudget.limit
 
   if ((campaign.ends_at && new Date(campaign.ends_at) < date) || overBudget) {
-    return promotionStatusMap[PromotionStatus.EXPIRED]
+    return statusMap[PromotionStatus.EXPIRED]
   }
 
-  return getStatusFromPromotion(promotion)
+  return promotionStatus
 }
-
-// Medusa creates promotions as drafts, so a promotion without a serialized
-// status is shown as one.
-const getStatusFromPromotion = (promotion: HttpTypes.AdminPromotion) =>
-  promotionStatusMap[promotion.status?.toUpperCase() ?? PromotionStatus.DRAFT]

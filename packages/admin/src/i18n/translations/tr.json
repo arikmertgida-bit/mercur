@@ -622,6 +622,9 @@
           "hint": "Ürün için seçenekleri belirleyin, örneğin renk, boyut vb."
         }
       },
+      "defaults": {
+        "variantTitle": "Varsayılan varyant"
+      },
       "successToast": "Ürün {{title}} başarıyla oluşturuldu.",
       "attributes": {
         "header": "Özellikler",

@@ -1497,6 +1497,14 @@
                 }
               }
             },
+            "defaults": {
+              "type": "object",
+              "properties": {
+                "variantTitle": {
+                  "type": "string"
+                }
+              }
+            },
             "successToast": {
               "type": "string"
             }

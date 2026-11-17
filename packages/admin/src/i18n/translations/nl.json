@@ -622,6 +622,9 @@
           "hint": "Definieer de opties voor het product, zoals kleur, maat, etc."
         }
       },
+      "defaults": {
+        "variantTitle": "Standaardvariant"
+      },
       "successToast": "Product {{title}} is succesvol aangemaakt.",
       "attributes": {
         "header": "Attributen",

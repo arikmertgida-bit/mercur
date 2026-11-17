@@ -31,7 +31,7 @@ type ProductEditVariantFormProps = {
 }
 
 const ProductEditVariantSchema = z.object({
-  title: z.string().min(1, i18next.t("products.variant.validation.titleRequired")),
+  title: z.string().min(1, { error: () => i18next.t("products.variant.validation.titleRequired") }),
   // Read-only in this form (see the SKU-block inputs below) — kept in the
   // schema only so `defaultValues` stays typed against the real variant.
   sku: z.string().optional(),
@@ -44,7 +44,7 @@ const ProductEditVariantSchema = z.object({
   length: optionalFloat,
   mid_code: z.string().optional(),
   hs_code: z.string().optional(),
-  origin_country: z.string().min(1, i18next.t("validation.requiredField")),
+  origin_country: z.string().min(1, { error: () => i18next.t("validation.requiredField") }),
   prices: z
     .record(z.string(), z.union([
     z.literal(""),
@@ -56,7 +56,7 @@ const ProductEditVariantSchema = z.object({
   ]))
     .optional(),
   options: z
-    .record(z.string().min(1, i18next.t("products.variant.validation.optionRequired")))
+    .record(z.string().min(1, { error: () => i18next.t("products.variant.validation.optionRequired") }))
     .optional(),
 })
 

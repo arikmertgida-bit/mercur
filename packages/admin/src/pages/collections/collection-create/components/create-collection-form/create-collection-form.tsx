@@ -39,10 +39,10 @@ const CollectionIconSchema = zod.object({
 const CreateCollectionSchema = zod.object({
   title: zod
     .string()
-    .min(1, { message: i18n.t("collections.validation.titleRequired") }),
+    .min(1, { error: () => i18n.t("collections.validation.titleRequired") }),
   handle: zod
     .string()
-    .refine(isValidHandleFormat, { message: i18n.t("fields.handleInvalidFormat") }),
+    .refine(isValidHandleFormat, { error: () => i18n.t("fields.handleInvalidFormat") }),
   media: zod.array(CollectionMediaSchema).optional(),
   icon: CollectionIconSchema.nullable().optional(),
 })

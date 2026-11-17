@@ -17,11 +17,11 @@ export const CategoryIconSchema = z.object({
 })
 
 export const CreateCategoryDetailsSchema = z.object({
-  name: z.string().min(1, { message: i18n.t("categories.validation.titleRequired") }),
+  name: z.string().min(1, { error: () => i18n.t("categories.validation.titleRequired") }),
   description: z.string().optional(),
   handle: z
     .string()
-    .refine(isValidHandleFormat, { message: i18n.t("fields.handleInvalidFormat") }),
+    .refine(isValidHandleFormat, { error: () => i18n.t("fields.handleInvalidFormat") }),
   status: z.enum(["active", "inactive"]),
   visibility: z.enum(["public", "internal"]),
   is_adult: z.boolean(),

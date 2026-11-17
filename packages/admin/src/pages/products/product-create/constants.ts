@@ -163,16 +163,18 @@ export const EditProductMediaSchema = z.object({
   media: z.array(MediaSchema),
 })
 
-export const PRODUCT_CREATE_FORM_DEFAULTS: Partial<
+// A function so the placeholder variant title is translated in the language
+// active when the form opens, not the one active when this module loaded.
+export const getProductCreateFormDefaults = (): Partial<
   z.infer<typeof ProductCreateSchema>
-> = {
+> => ({
   discountable: true,
   globally_available: true,
   seller_ids: [],
   tags: [],
   variants: decorateVariantsWithDefaultValues([
     {
-      title: "Default variant",
+      title: i18n.t("products.create.defaults.variantTitle"),
       should_create: true,
       variant_rank: 0,
       options: {},
@@ -199,4 +201,4 @@ export const PRODUCT_CREATE_FORM_DEFAULTS: Partial<
   type_id: "",
   weight: "",
   width: "",
-}
+})

@@ -64,7 +64,7 @@ export const PriceListPricesAddSchema = PriceListPricesAddBaseSchema.refine(
     return false;
   },
   {
-    message: i18n.t('validation.atLeastOnePrice'),
+    error: () => i18n.t('validation.atLeastOnePrice'),
     path: ['products']
   }
 );

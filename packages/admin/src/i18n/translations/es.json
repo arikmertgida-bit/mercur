@@ -649,6 +649,9 @@
           "hint": "Define las opciones del producto, por ejemplo, color, tamaño, etc."
         }
       },
+      "defaults": {
+        "variantTitle": "Variante predeterminada"
+      },
       "successToast": "Producto {{title}} creado correctamente.",
       "attributes": {
         "header": "Atributos",

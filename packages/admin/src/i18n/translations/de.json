@@ -622,6 +622,9 @@
           "hint": "Definieren Sie die Optionen für das Produkt, z.B. Farbe, Größe usw."
         }
       },
+      "defaults": {
+        "variantTitle": "Standardvariante"
+      },
       "successToast": "Produkt {{title}} wurde erfolgreich erstellt.",
       "attributes": {
         "header": "Attribute",

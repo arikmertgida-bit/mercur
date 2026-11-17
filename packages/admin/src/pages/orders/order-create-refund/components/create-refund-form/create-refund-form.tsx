@@ -48,7 +48,7 @@ const CreateRefundSchema = zod.object({
       float: zod.number().or(zod.null()),
     })
     .refine((amount) => amount.float !== null && amount.float > 0, {
-      message: i18next.t("validation.mustBePositive"),
+      error: () => i18next.t("validation.mustBePositive"),
     }),
   note: zod.string().optional(),
   refund_reason_id: zod.string().optional(),

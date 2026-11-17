@@ -23,7 +23,7 @@ export const TransferOwnershipSchema = z
     current_owner_id: z.string().min(1),
     new_owner_id: z
       .string()
-      .min(1, i18n.t("transferOwnership.validation.required")),
+      .min(1, { error: () => i18n.t("transferOwnership.validation.required") }),
   })
   .superRefine((data, ctx) => {
     if (data.current_owner_id === data.new_owner_id) {

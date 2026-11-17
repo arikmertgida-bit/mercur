@@ -627,6 +627,9 @@
           "hint": "Definišite opcije za proizvod, npr. boja, veličina, itd."
         }
       },
+      "defaults": {
+        "variantTitle": "Podrazumijevana varijanta"
+      },
       "successToast": "Proizvod {{title}} je uspješno kreiran.",
       "attributes": {
         "header": "Atributi",

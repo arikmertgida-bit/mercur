@@ -23,12 +23,12 @@ const StorePaymentDetailsSchema = zod.object({
   country_code: zod
     .string()
     .min(1, {
-      message: i18n.t("store.paymentDetails.validation.countryRequired"),
+      error: () => i18n.t("store.paymentDetails.validation.countryRequired"),
     }),
   holder_name: zod
     .string()
     .min(1, {
-      message: i18n.t("store.paymentDetails.validation.accountNameRequired"),
+      error: () => i18n.t("store.paymentDetails.validation.accountNameRequired"),
     }),
   iban: zod.string().optional().or(zod.literal("")),
   bic: zod.string().optional().or(zod.literal("")),

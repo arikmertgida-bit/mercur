@@ -622,6 +622,9 @@
           "hint": "Az opciók segítségével meghatározhatja a termék tulajdonságait, például a színt vagy a méretet."
         }
       },
+      "defaults": {
+        "variantTitle": "Alapértelmezett variáns"
+      },
       "successToast": "A {{title}} termék sikeresen létrehozva.",
       "attributes": {
         "header": "Jellemzők",

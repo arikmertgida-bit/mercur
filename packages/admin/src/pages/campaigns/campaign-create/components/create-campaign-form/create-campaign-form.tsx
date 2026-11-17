@@ -19,11 +19,11 @@ export const CreateCampaignSchema = zod
   .object({
     name: zod
       .string()
-      .min(1, { message: i18n.t("campaigns.validation.nameRequired") }),
+      .min(1, { error: () => i18n.t("campaigns.validation.nameRequired") }),
     description: zod.string().optional(),
     campaign_identifier: zod
       .string()
-      .min(1, { message: i18n.t("campaigns.validation.identifierRequired") }),
+      .min(1, { error: () => i18n.t("campaigns.validation.identifierRequired") }),
     starts_at: zod.date().nullable(),
     ends_at: zod.date().nullable(),
     budget: zod.object({

@@ -14,7 +14,7 @@ import { useCreateProduct } from "../../../../../hooks/api/products";
 import { useRegions } from "../../../../../hooks/api";
 import { sdk } from "../../../../../lib/client";
 import {
-  PRODUCT_CREATE_FORM_DEFAULTS,
+  getProductCreateFormDefaults,
   ProductCreateSchema,
 } from "../../constants";
 import { ProductCreateSchemaType } from "../../types";
@@ -118,7 +118,7 @@ export const ProductCreateForm = ({
   const { handleSuccess } = useRouteModal();
   const form = useForm<ProductCreateSchemaType>({
     defaultValues: {
-      ...PRODUCT_CREATE_FORM_DEFAULTS,
+      ...getProductCreateFormDefaults(),
       ...extraDefaults,
     },
     resolver: zodResolver(schema ?? ProductCreateSchema),

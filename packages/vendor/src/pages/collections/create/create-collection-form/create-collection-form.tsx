@@ -21,7 +21,7 @@ const CreateCollectionSchema = zod.object({
   title: zod.string().min(1),
   handle: zod
     .string()
-    .refine(isValidHandleFormat, { message: i18n.t("fields.handleInvalidFormat") }),
+    .refine(isValidHandleFormat, { error: () => i18n.t("fields.handleInvalidFormat") }),
 })
 
 export const CreateCollectionForm = () => {

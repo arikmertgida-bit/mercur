@@ -21,11 +21,11 @@ import { useUpdateProductCategory } from "../../../../../hooks/api/categories"
 import { useDocumentDirection } from "../../../../../hooks/use-document-direction"
 
 const EditCategorySchema = z.object({
-  name: z.string().min(1, { message: i18n.t("categories.validation.titleRequired") }),
+  name: z.string().min(1, { error: () => i18n.t("categories.validation.titleRequired") }),
   handle: z
     .string()
     .min(1)
-    .refine(isValidHandleFormat, { message: i18n.t("fields.handleInvalidFormat") }),
+    .refine(isValidHandleFormat, { error: () => i18n.t("fields.handleInvalidFormat") }),
   description: z.string().optional(),
   status: z.enum(["active", "inactive"]),
   visibility: z.enum(["public", "internal"]),

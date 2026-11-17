@@ -21,7 +21,7 @@ type EditCustomerGroupFormProps = {
 export const EditCustomerGroupSchema = z.object({
   name: z
     .string()
-    .min(1, { message: i18n.t("customerGroups.validation.nameRequired") }),
+    .min(1, { error: () => i18n.t("customerGroups.validation.nameRequired") }),
 });
 
 export const EditCustomerGroupForm = ({

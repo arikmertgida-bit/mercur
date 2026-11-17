@@ -37,7 +37,7 @@ const EditProductSchema = zod.object({
   handle: zod
     .string()
     .min(1)
-    .refine(isValidHandleFormat, { message: i18n.t("fields.handleInvalidFormat") }),
+    .refine(isValidHandleFormat, { error: () => i18n.t("fields.handleInvalidFormat") }),
   material: zod.string().optional(),
   description: zod.string().optional(),
   discountable: zod.boolean(),

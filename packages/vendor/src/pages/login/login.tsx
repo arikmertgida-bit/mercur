@@ -20,11 +20,11 @@ import config from "virtual:mercur/config";
 const LoginSchema = z.object({
   email: z
     .string()
-    .min(1, { message: i18n.t("login.validation.emailRequired") })
-    .email({ message: i18n.t("login.validation.emailInvalid") }),
+    .min(1, { error: () => i18n.t("login.validation.emailRequired") })
+    .email({ error: () => i18n.t("login.validation.emailInvalid") }),
   password: z
     .string()
-    .min(1, { message: i18n.t("login.validation.passwordRequired") }),
+    .min(1, { error: () => i18n.t("login.validation.passwordRequired") }),
 });
 
 const LoginLogo = () => {

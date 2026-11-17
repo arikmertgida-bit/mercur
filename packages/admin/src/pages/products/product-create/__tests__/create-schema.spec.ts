@@ -1,13 +1,13 @@
 import { describe, expect, it, vi } from "vitest"
 
 import { i18n } from "../../../../components/utilities/i18n/i18n"
-import { PRODUCT_CREATE_FORM_DEFAULTS, ProductCreateSchema } from "../constants"
+import { getProductCreateFormDefaults, ProductCreateSchema } from "../constants"
 
-const baseVariant = PRODUCT_CREATE_FORM_DEFAULTS.variants?.[0]
+const baseVariant = getProductCreateFormDefaults().variants?.[0]
 
 const parse = (title: string, prices: Record<string, number | "" | undefined>) =>
   ProductCreateSchema.safeParse({
-    ...PRODUCT_CREATE_FORM_DEFAULTS,
+    ...getProductCreateFormDefaults(),
     title,
     category_id: "pcat_1",
     variants: [{ ...baseVariant, prices }],

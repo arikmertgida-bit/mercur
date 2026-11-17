@@ -627,6 +627,9 @@
           "hint": "Definujte možnosti pro produkt, např. barvu, velikost atd."
         }
       },
+      "defaults": {
+        "variantTitle": "Výchozí varianta"
+      },
       "successToast": "Produkt {{title}} byl úspěšně vytvořen.",
       "attributes": {
         "header": "Atributy",

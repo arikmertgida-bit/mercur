@@ -39,13 +39,13 @@ const ROLE_OPTIONS = [
 const InviteMemberSchema = zod.object({
   email: zod
     .string()
-    .min(1, { message: i18n.t("stores.create.validation.emailRequired") })
-    .email({ message: i18n.t("stores.create.validation.emailInvalid") }),
+    .min(1, { error: () => i18n.t("stores.create.validation.emailRequired") })
+    .email({ error: () => i18n.t("stores.create.validation.emailInvalid") }),
   // The select starts empty (""), so the field is a string until it holds
   // one of the seller roles the member endpoints accept.
   role_id: zod
     .string()
-    .min(1, { message: i18n.t("stores.members.addUser.validation.roleRequired") })
+    .min(1, { error: () => i18n.t("stores.members.addUser.validation.roleRequired") })
     .pipe(zod.enum(SellerRole)),
 });
 
