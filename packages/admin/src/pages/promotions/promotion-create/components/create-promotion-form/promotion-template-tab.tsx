@@ -1,3 +1,5 @@
+import { useContext } from "react"
+
 import { RadioGroup } from "@medusajs/ui"
 import { useTranslation } from "react-i18next"
 
@@ -6,12 +8,14 @@ import { useTabbedForm } from "../../../../../components/tabbed-form/tabbed-form
 import { defineTabMeta } from "../../../../../components/tabbed-form/types"
 import { useDocumentDirection } from "../../../../../hooks/use-document-direction"
 import { CreatePromotionSchemaType } from "./form-schema"
+import { PromotionTemplateChangeContext } from "./template-values"
 import { templates } from "./templates"
 
 const Root = () => {
   const { t } = useTranslation()
   const direction = useDocumentDirection()
   const form = useTabbedForm<CreatePromotionSchemaType>()
+  const applyTemplate = useContext(PromotionTemplateChangeContext)
 
   return (
     <div className="flex size-full flex-col items-center">
@@ -32,7 +36,7 @@ const Root = () => {
                     key="template_id"
                     className="flex-col gap-y-3"
                     {...field}
-                    onValueChange={field.onChange}
+                    onValueChange={applyTemplate ?? field.onChange}
                     data-testid="promotion-create-form-template-radio-group"
                   >
                     {templates.map((template) => {

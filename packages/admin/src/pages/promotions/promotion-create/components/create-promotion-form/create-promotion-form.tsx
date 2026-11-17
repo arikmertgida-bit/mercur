@@ -1,4 +1,4 @@
-import { Children, ReactNode, useEffect, useMemo } from "react"
+import { Children, ReactNode, useCallback, useEffect, useMemo } from "react"
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { toast } from "@medusajs/ui"
@@ -22,6 +22,11 @@ import { CreatePromotionSchema, CreatePromotionSchemaType } from "./form-schema"
 import { PromotionCampaignTab } from "./promotion-campaign-tab"
 import { PromotionDetailsTab } from "./promotion-details-tab"
 import { PromotionTemplateTab } from "./promotion-template-tab"
+import {
+  applyTemplateDefaults,
+  PromotionFormDefaults,
+  PromotionTemplateChangeContext,
+} from "./template-values"
 import { templates } from "./templates"
 
 const PROMOTION_CREATE_DEFAULTS = {
@@ -62,14 +67,40 @@ export function CreatePromotionForm({
   const { t } = useTranslation()
   const { handleSuccess } = useRouteModal()
 
+  const baseValues: PromotionFormDefaults = {
+    ...PROMOTION_CREATE_DEFAULTS,
+    ...extraDefaults,
+  }
+  const initialTemplate = templates.find(
+    (template) => template.id === baseValues.template_id
+  )
+
   const form = useForm<CreatePromotionSchemaType>({
-    defaultValues: {
-      ...PROMOTION_CREATE_DEFAULTS,
-      ...extraDefaults,
-    },
+    defaultValues: initialTemplate
+      ? applyTemplateDefaults(baseValues, initialTemplate)
+      : baseValues,
     resolver: zodResolver(schema ?? CreatePromotionSchema),
   })
-  const { setValue, reset, getValues } = form
+  const { setValue, reset, getValues, clearErrors } = form
+
+  const applyTemplate = useCallback(
+    (templateId: string) => {
+      const template = templates.find(({ id }) => id === templateId)
+
+      if (!template) {
+        setValue("template_id", templateId)
+        return
+      }
+
+      reset(
+        applyTemplateDefaults(
+          { ...PROMOTION_CREATE_DEFAULTS, ...extraDefaults },
+          template
+        )
+      )
+    },
+    [extraDefaults, reset, setValue]
+  )
 
   const { mutateAsync: createPromotion, isPending: isLoading } =
     useCreatePromotion()
@@ -204,57 +235,15 @@ export function CreatePromotionForm({
     }
   )
 
-  // Template selection: reset form and apply template defaults
   const watchTemplateId = useWatch({
     control: form.control,
     name: "template_id",
   })
 
-  const currentTemplate = useMemo(() => {
-    const currentTemplate = templates.find(
-      (template) => template.id === watchTemplateId
-    )
-
-    if (!currentTemplate) {
-      return
-    }
-
-    reset({
-      ...PROMOTION_CREATE_DEFAULTS,
-      ...extraDefaults,
-      template_id: watchTemplateId,
-    })
-
-    const { is_automatic, type, application_method } = currentTemplate.defaults
-
-    setValue("is_automatic", is_automatic)
-    setValue("type", type)
-
-    if (application_method.allocation !== undefined) {
-      setValue("application_method.allocation", application_method.allocation)
-    }
-    if (application_method.target_type !== undefined) {
-      setValue("application_method.target_type", application_method.target_type)
-    }
-    if (application_method.type !== undefined) {
-      setValue("application_method.type", application_method.type)
-    }
-    if (application_method.value !== undefined) {
-      setValue("application_method.value", application_method.value)
-    }
-    if (application_method.max_quantity !== undefined) {
-      setValue("application_method.max_quantity", application_method.max_quantity)
-    }
-
-    // `across` allocation forbids max_quantity, but the reset above restores the
-    // default of 1; null it so the payload is valid for order-scoped templates.
-    if (application_method.allocation === "across") {
-      setValue("application_method.max_quantity", null)
-    }
-
-    return currentTemplate
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [watchTemplateId, setValue, reset])
+  const currentTemplate = useMemo(
+    () => templates.find((template) => template.id === watchTemplateId),
+    [watchTemplateId]
+  )
 
   // Campaign choice effects
   const watchCampaignChoice = useWatch({
@@ -267,7 +256,7 @@ export function CreatePromotionForm({
 
     if (watchCampaignChoice !== "existing") {
       setValue("campaign_id", undefined)
-      form.clearErrors("campaign_id")
+      clearErrors("campaign_id")
     }
 
     if (watchCampaignChoice !== "new") {
@@ -285,7 +274,7 @@ export function CreatePromotionForm({
         })
       }
     }
-  }, [watchCampaignChoice, getValues, setValue, form])
+  }, [watchCampaignChoice, getValues, setValue, clearErrors])
 
   // Currency rule syncing
   const watchRules = useWatch({
@@ -293,19 +282,20 @@ export function CreatePromotionForm({
     name: "rules",
   })
 
-  const watchCurrencyRule = watchRules.find(
+  const currencyRuleValue = watchRules.find(
     (rule) => rule.attribute === "currency_code"
-  )
+  )?.values
+  const currencyFromRule =
+    typeof currencyRuleValue === "string" ? currencyRuleValue : undefined
 
-  if (watchCurrencyRule) {
-    const formData = form.getValues()
-    const currencyCode = formData.application_method.currency_code
-    const ruleValue = watchCurrencyRule.values
-
-    if (typeof ruleValue === "string" && currencyCode !== ruleValue) {
-      form.setValue("application_method.currency_code", ruleValue)
+  useEffect(() => {
+    if (
+      currencyFromRule !== undefined &&
+      getValues("application_method.currency_code") !== currencyFromRule
+    ) {
+      setValue("application_method.currency_code", currencyFromRule)
     }
-  }
+  }, [currencyFromRule, getValues, setValue])
 
   const defaultTabs = useMemo(
     () => [
@@ -319,15 +309,17 @@ export function CreatePromotionForm({
   const hasCustomChildren = Children.count(children) > 0
 
   return (
-    <TabbedForm
-      model="promotion"
-      zone="create"
-      form={form}
-      onSubmit={handleSubmit}
-      isLoading={isLoading}
-    >
-      {hasCustomChildren ? children : defaultTabs}
-    </TabbedForm>
+    <PromotionTemplateChangeContext.Provider value={applyTemplate}>
+      <TabbedForm
+        model="promotion"
+        zone="create"
+        form={form}
+        onSubmit={handleSubmit}
+        isLoading={isLoading}
+      >
+        {hasCustomChildren ? children : defaultTabs}
+      </TabbedForm>
+    </PromotionTemplateChangeContext.Provider>
   )
 }
 

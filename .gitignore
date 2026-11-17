@@ -44,3 +44,6 @@ packages/modules/*
 
 # Local spec tracker (not versioned)
 docs/specs/
+
+# Medusa local file provider output of integration tests
+integration-tests/static/

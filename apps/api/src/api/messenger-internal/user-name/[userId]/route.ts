@@ -1,3 +1,5 @@
+import { timingSafeEqual } from "node:crypto"
+
 import type { MedusaRequest, MedusaResponse } from "@medusajs/framework"
 import { ContainerRegistrationKeys, Modules } from "@medusajs/framework/utils"
 import type { ICustomerModuleService } from "@medusajs/framework/types"
@@ -19,6 +21,15 @@ if (!INTERNAL_SECRET) {
   moduleKayiLogger.warn(
     "[messenger-internal] MESSENGER_INTERNAL_SECRET is not set — internal endpoint will reject all requests"
   )
+}
+
+const isInternalSecret = (header: string | string[] | undefined): boolean => {
+  if (!INTERNAL_SECRET || typeof header !== "string") {
+    return false
+  }
+  const given = Buffer.from(header)
+  const expected = Buffer.from(INTERNAL_SECRET)
+  return given.length === expected.length && timingSafeEqual(given, expected)
 }
 
 const UserIdParamsSchema = z.object({
@@ -108,8 +119,7 @@ export async function GET(
   req: MedusaRequest,
   res: MedusaResponse
 ): Promise<void> {
-  const secret = req.headers["x-internal-secret"]
-  if (!secret || secret !== INTERNAL_SECRET) {
+  if (!isInternalSecret(req.headers["x-internal-secret"])) {
     res.status(401).json({ message: "Unauthorized" })
     return
   }

@@ -40,11 +40,8 @@ export const RulesFormField = ({
   setRulesToRemove,
   rulesToRemove,
   scope = 'rules',
-  promotion,
-  formType = 'create'
+  promotion
 }: RulesFormFieldType) => {
-  const initialRulesSet = useRef(false);
-
   const { t } = useTranslation();
   const direction = useDocumentDirection();
   const form = useFormContext<PromotionRulesFormValues>();
@@ -92,16 +89,25 @@ export const RulesFormField = ({
     enabled: !!promotion?.id || (!!promotionType && !!applicationMethodType)
   });
 
+  const seededRef = useRef<{
+    rules: typeof rules;
+    promotionType: typeof promotionType;
+  } | null>(null);
+
   useEffect(() => {
     if (isLoading) {
       return;
     }
 
-    /**
-     * This effect sets rules after mount but since it is reused in create and edit flows, prevent this hook from recreating rules
-     * when fields are intentionally set to empty (e.g. "Clear all" is pressed).
-     */
-    if (!fields.length && formType === 'edit' && initialRulesSet.current) {
+    // An empty list after these exact rules were seeded means the user cleared
+    // it ("Clear all"); only a new rules response or promotion type re-seeds.
+    const seeded = seededRef.current;
+    if (
+      !fields.length &&
+      seeded &&
+      seeded.rules === rules &&
+      seeded.promotionType === promotionType
+    ) {
       return;
     }
 
@@ -131,13 +137,12 @@ export const RulesFormField = ({
       replace(generateRuleAttributes(rulesToAppend));
     }
 
-    initialRulesSet.current = true;
+    seededRef.current = { rules, promotionType };
   }, [
     promotionType,
     isLoading,
     ruleType,
     fields.length,
-    formType,
     resetField,
     replace,
     rules,

@@ -1,5 +1,8 @@
 import { AuthenticatedMedusaRequest, MedusaRequest, MedusaResponse } from "@medusajs/framework/http"
 
+import { MedusaError } from "@medusajs/framework/utils"
+
+import { isCustomerUploadUrl } from "../../../lib/customer-upload"
 import { toStringArray } from "../../../lib/query-params"
 import { REVIEW_IMAGE_MODULE } from "../../../modules/review-images"
 import ReviewImageService from "../../../modules/review-images/service"
@@ -52,6 +55,14 @@ export const POST = async (
   const customerId = req.auth_context.actor_id
 
   await validateCustomerReview(req.scope, customerId, review_id)
+
+  const foreignUrl = urls.find((url) => !isCustomerUploadUrl(url, customerId))
+  if (foreignUrl) {
+    throw new MedusaError(
+      MedusaError.Types.INVALID_DATA,
+      "Review images must be uploaded through the store first"
+    )
+  }
 
   const reviewImageService = req.scope.resolve<ReviewImageService>(REVIEW_IMAGE_MODULE)
 

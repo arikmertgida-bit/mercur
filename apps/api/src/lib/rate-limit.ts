@@ -1,20 +1,36 @@
+import { isIP } from 'node:net'
+
 import type { MedusaRequest } from '@medusajs/framework/http'
 import rateLimit, { ipKeyGenerator } from 'express-rate-limit'
 
-// Requests normally arrive via kayi_nginx_gateway, which sets X-Forwarded-For
-// to the real client IP (see nginx/nginx.conf). Express's own req.ip would
-// otherwise resolve to the gateway container's IP for every request,
-// collapsing every real client into a single shared rate-limit bucket.
+// Docker-network peers: kayi_nginx_gateway and the storefront server.
+const PRIVATE_PEER =
+  /^(?:::ffff:)?(?:10\.|127\.|192\.168\.|172\.(?:1[6-9]|2\d|3[01])\.)|^::1$|^f[cd][0-9a-f]{2}:/i
+
+// Requests reach the backend through kayi_nginx_gateway (browser → /api/) or
+// the storefront server (its server actions log customers in). Both are
+// private peers and pass the visitor's address in X-Real-IP: nginx overwrites
+// it with $remote_addr, the storefront forwards the value nginx gave it.
+// X-Forwarded-For is not used — its first entry is whatever the client sent,
+// so a forged header gave every request a fresh bucket. Without a trusted
+// X-Real-IP the peer itself is the key; keying on the peer alone made every
+// visitor behind nginx or the storefront share one bucket.
 // ipKeyGenerator groups IPv6 addresses by /56 subnet (express-rate-limit's
 // own default) — one client can otherwise rotate through its subnet to
 // bypass the limit.
-function resolveClientIp(req: MedusaRequest): string {
-  const forwardedFor = req.headers['x-forwarded-for']
-  if (typeof forwardedFor === 'string' && forwardedFor.length > 0) {
-    const [clientIp = ''] = forwardedFor.split(',')
-    return ipKeyGenerator(clientIp.trim())
+type ClientAddressSource = Pick<MedusaRequest, 'headers' | 'ip'> & {
+  socket?: { remoteAddress?: string }
+}
+
+export function resolveClientIp(req: ClientAddressSource): string {
+  const peer = req.socket?.remoteAddress ?? req.ip ?? ''
+  const realIp = req.headers['x-real-ip']
+
+  if (PRIVATE_PEER.test(peer) && typeof realIp === 'string' && isIP(realIp.trim())) {
+    return ipKeyGenerator(realIp.trim())
   }
-  return req.ip ? ipKeyGenerator(req.ip) : 'unknown'
+
+  return peer ? ipKeyGenerator(peer) : 'unknown'
 }
 
 // In-memory store: correct for this deployment (a single backend

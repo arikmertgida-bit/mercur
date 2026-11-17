@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
@@ -35,6 +35,7 @@ import { AddCampaignPromotionFields } from "@pages/promotions/[id]/add-to-campai
 import { toPromotionRuleOperator, toRuleValues } from '../../common/edit-rules/rule-payload';
 import { Tab, TabSchema } from './constants';
 import { CreatePromotionSchema, CreatePromotionSchemaType } from './form-schema';
+import { applyTemplateDefaults } from './template-values';
 import { templates } from './templates';
 import { LocaleCurrencyInput } from "@components/inputs/locale-currency-input"
 
@@ -85,10 +86,24 @@ export const CreatePromotionForm = () => {
   const { handleSuccess } = useRouteModal();
 
   const form = useForm<z.infer<typeof CreatePromotionSchema>>({
-    defaultValues,
+    defaultValues: applyTemplateDefaults(defaultValues, templates[0]),
     resolver: zodResolver(CreatePromotionSchema)
   });
-  const { setValue, reset, getValues } = form;
+  const { setValue, reset, getValues, clearErrors } = form;
+
+  const applyTemplate = useCallback(
+    (templateId: string) => {
+      const template = templates.find(({ id }) => id === templateId);
+
+      if (!template) {
+        setValue('template_id', templateId);
+        return;
+      }
+
+      reset(applyTemplateDefaults(defaultValues, template));
+    },
+    [reset, setValue]
+  );
 
   const { mutateAsync: createPromotion } = useCreatePromotion();
   const { mutate: generatePromotionCode } = useGenerateVendorPromotionCode();
@@ -347,41 +362,10 @@ export const CreatePromotionForm = () => {
     name: 'template_id'
   });
 
-  const currentTemplate = useMemo(() => {
-    const currentTemplate = templates.find(template => template.id === watchTemplateId);
-
-    if (!currentTemplate) {
-      return;
-    }
-
-    reset({
-      ...defaultValues,
-      template_id: watchTemplateId
-    });
-
-    const { is_automatic, type, application_method } = currentTemplate.defaults;
-
-    setValue('is_automatic', is_automatic);
-    setValue('type', type);
-
-    if (application_method.allocation !== undefined) {
-      setValue('application_method.allocation', application_method.allocation);
-    }
-    if (application_method.target_type !== undefined) {
-      setValue('application_method.target_type', application_method.target_type);
-    }
-    if (application_method.type !== undefined) {
-      setValue('application_method.type', application_method.type);
-    }
-    if (application_method.value !== undefined) {
-      setValue('application_method.value', application_method.value);
-    }
-    if (application_method.max_quantity !== undefined) {
-      setValue('application_method.max_quantity', application_method.max_quantity);
-    }
-
-    return currentTemplate;
-  }, [watchTemplateId, setValue, reset]);
+  const currentTemplate = useMemo(
+    () => templates.find(template => template.id === watchTemplateId),
+    [watchTemplateId]
+  );
 
   const watchValueType = useWatch({
     control: form.control,
@@ -440,7 +424,7 @@ export const CreatePromotionForm = () => {
 
     if (watchCampaignChoice !== 'existing') {
       setValue('campaign_id', undefined);
-      form.clearErrors('campaign_id');
+      clearErrors('campaign_id');
     }
 
     if (watchCampaignChoice !== 'new') {
@@ -458,29 +442,27 @@ export const CreatePromotionForm = () => {
         });
       }
     }
-  }, [
-	watchCampaignChoice,
-	getValues,
-	setValue,
-	form
-]);
+  }, [watchCampaignChoice, getValues, setValue, clearErrors]);
 
   const watchRules = useWatch({
     control: form.control,
     name: 'rules'
   });
 
-  const watchCurrencyRule = watchRules.find(rule => rule.attribute === 'currency_code');
+  const currencyRuleValue = watchRules.find(rule => rule.attribute === 'currency_code')?.values;
+  const currencyFromRule =
+    typeof currencyRuleValue === 'string' || typeof currencyRuleValue === 'number'
+      ? String(currencyRuleValue)
+      : undefined;
 
-  if (watchCurrencyRule) {
-    const formData = form.getValues();
-    const currencyCode = formData.application_method.currency_code;
-    const ruleValue = watchCurrencyRule.values;
-
-    if (!Array.isArray(ruleValue) && currencyCode !== ruleValue) {
-      form.setValue('application_method.currency_code', String(ruleValue));
+  useEffect(() => {
+    if (
+      currencyFromRule !== undefined &&
+      getValues('application_method.currency_code') !== currencyFromRule
+    ) {
+      setValue('application_method.currency_code', currencyFromRule);
     }
-  }
+  }, [currencyFromRule, getValues, setValue]);
 
   return (
     <RouteFocusModal.Form form={form}>
@@ -603,7 +585,7 @@ export const CreatePromotionForm = () => {
                               key={'template_id'}
                               className="flex-col gap-y-3"
                               {...field}
-                              onValueChange={field.onChange}
+                              onValueChange={applyTemplate}
                             >
                               {templates.map(template => {
                                 return (
