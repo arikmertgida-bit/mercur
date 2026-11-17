@@ -67,7 +67,8 @@ export const RulesFormField = ({
 }: RulesFormFieldType) => {
   const { t } = useTranslation();
   const form = useFormContext<PromotionRulesFormValues>();
-  const formData = form.getValues();
+  const { resetField, getValues } = form;
+  const formData = getValues();
   const { attributes } = usePromotionRuleAttributes(
     ruleType,
     formData.type,
@@ -136,7 +137,7 @@ export const RulesFormField = ({
     }
 
     if (ruleType === "rules" && !fields.length) {
-      form.resetField("rules");
+      resetField("rules");
 
       const apiRules = rules || [];
       const needsCurrency =
@@ -153,7 +154,7 @@ export const RulesFormField = ({
     }
 
     if (ruleType === "buy-rules" && !fields.length) {
-      form.resetField("application_method.buy_rules");
+      resetField("application_method.buy_rules");
       const apiRules =
         promotion?.id || promotionType === "standard"
           ? rules || []
@@ -165,7 +166,7 @@ export const RulesFormField = ({
     }
 
     if (ruleType === "target-rules" && !fields.length) {
-      form.resetField("application_method.target_rules");
+      resetField("application_method.target_rules");
       const apiRules =
         promotion?.id || promotionType === "standard"
           ? rules || []
@@ -180,7 +181,7 @@ export const RulesFormField = ({
     isLoading,
     ruleType,
     fields.length,
-    form,
+    resetField,
     replace,
     rules,
     promotion?.id,
@@ -193,7 +194,7 @@ export const RulesFormField = ({
     }
 
     const currentRules =
-      form.getValues(scope) || [];
+      getValues(scope) || [];
     const currencyIndex = currentRules.findIndex(
       (rule) => rule.attribute === "currency_code",
     );
@@ -207,7 +208,7 @@ export const RulesFormField = ({
     applicationMethodType,
     ruleType,
     scope,
-    form,
+    getValues,
     append,
     remove,
     promotion?.id,

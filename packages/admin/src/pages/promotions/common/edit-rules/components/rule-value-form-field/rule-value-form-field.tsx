@@ -56,6 +56,7 @@ export const RuleValueFormField = ({
 }: RuleValueFormFieldType) => {
   const { t } = useTranslation();
   const form = useFormContext<PromotionRulesFormValues>();
+  const { setValue } = form;
   const name: `${PromotionRuleScope}.${number}.values` = `${scope}.${index}.values`;
   const operator: `${PromotionRuleScope}.${number}.operator` = `${scope}.${index}.operator`;
 
@@ -118,14 +119,14 @@ export const RuleValueFormField = ({
     prevOperatorRef.current = watchOperator;
 
     if (watchOperator === "eq") {
-      form.setValue(name, "");
+      setValue(name, "");
     } else {
-      form.setValue(name, []);
+      setValue(name, []);
     }
   }, [
 	watchOperator,
 	name,
-	form
+	setValue
 ]);
 
   const testIdBase = `rule-value-form-field-${ruleType}-${index}`;

@@ -48,6 +48,7 @@ export const RulesFormField = ({
   const { t } = useTranslation();
   const direction = useDocumentDirection();
   const form = useFormContext<PromotionRulesFormValues>();
+  const { resetField } = form;
   const formData = form.getValues();
   const { attributes } = usePromotionRuleAttributes(
     ruleType,
@@ -105,13 +106,13 @@ export const RulesFormField = ({
     }
 
     if (ruleType === 'rules' && !fields.length) {
-      form.resetField('rules');
+      resetField('rules');
 
       replace(generateRuleAttributes(rules));
     }
 
     if (ruleType === 'buy-rules' && !fields.length) {
-      form.resetField('application_method.buy_rules');
+      resetField('application_method.buy_rules');
       const rulesToAppend =
         promotion?.id || promotionType === 'standard'
           ? rules
@@ -121,7 +122,7 @@ export const RulesFormField = ({
     }
 
     if (ruleType === 'target-rules' && !fields.length) {
-      form.resetField('application_method.target_rules');
+      resetField('application_method.target_rules');
       const rulesToAppend =
         promotion?.id || promotionType === 'standard'
           ? rules
@@ -137,7 +138,7 @@ export const RulesFormField = ({
     ruleType,
     fields.length,
     formType,
-    form,
+    resetField,
     replace,
     rules,
     promotion?.id

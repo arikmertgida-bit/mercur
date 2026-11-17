@@ -46,13 +46,14 @@ export const UploadMediaFormItem = ({
 }) => {
   const { t } = useTranslation();
   const form = useFormContext<MediaFieldValues>();
+  const { setError, clearErrors } = form;
 
   const hasInvalidFiles = useCallback(
     (fileList: FileType[]) => {
       const invalidTypeFile = fileList.find(f => !SUPPORTED_FORMATS.includes(f.file.type));
 
       if (invalidTypeFile) {
-        form.setError('media', {
+        setError('media', {
           type: 'invalid_file',
           message: t('products.media.invalidFileType', {
             name: invalidTypeFile.file.name,
@@ -66,7 +67,7 @@ export const UploadMediaFormItem = ({
       const oversizedFile = fileList.find(f => f.file.size > config.imageLimit);
 
       if (oversizedFile) {
-        form.setError('media', {
+        setError('media', {
           type: 'invalid_file',
           message: t('products.media.fileTooLarge', {
             name: oversizedFile.file.name,
@@ -79,12 +80,12 @@ export const UploadMediaFormItem = ({
 
       return false;
     },
-    [form, t]
+    [setError, t]
   );
 
   const onUploaded = useCallback(
     (files: FileType[]) => {
-      form.clearErrors('media');
+      clearErrors('media');
       if (hasInvalidFiles(files)) {
         return;
       }
@@ -110,7 +111,7 @@ export const UploadMediaFormItem = ({
         onLimitExceeded?.(skippedFiles.length);
       }
     },
-    [form, append, hasInvalidFiles, maxCount, existingCount, onLimitExceeded, onFilesAppended]
+    [clearErrors, append, hasInvalidFiles, maxCount, existingCount, onLimitExceeded, onFilesAppended]
   );
 
   return (

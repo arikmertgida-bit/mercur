@@ -34,6 +34,7 @@ type PricingPricesFormProps = {
 const Root = ({ type }: PricingPricesFormProps) => {
   const isPickup = type === FulfillmentSetType.Pickup
   const form = useTabbedForm<CreateShippingOptionSchema>()
+  const { setValue } = form
   const { getIsOpen, setIsOpen } = useStackedModal()
   const [selectedPrice, setSelectedPrice] =
     useState<ConditionalPriceInfo | null>(null)
@@ -102,13 +103,13 @@ const Root = ({ type }: PricingPricesFormProps) => {
     if (!isLoading && isPickup) {
       if (currencies?.length) {
         currencies.forEach((currency) => {
-          form.setValue(`currency_prices.${currency}`, "0")
+          setValue(`currency_prices.${currency}`, "0")
         })
       }
 
       if (regions?.length) {
         regions.forEach((region) => {
-          form.setValue(`region_prices.${region.id}`, "0")
+          setValue(`region_prices.${region.id}`, "0")
         })
       }
     }
@@ -118,7 +119,7 @@ const Root = ({ type }: PricingPricesFormProps) => {
     currencies?.length,
     regions?.length,
     currencies,
-    form,
+    setValue,
     regions,
   ])
 

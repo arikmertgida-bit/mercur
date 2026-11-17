@@ -46,6 +46,7 @@ export const UploadMediaFormItem = ({
 }) => {
   const { t } = useTranslation()
   const form = useFormContext<MediaFieldValues>()
+  const { setError, clearErrors } = form
 
   const hasInvalidFiles = useCallback(
     (fileList: FileType[]) => {
@@ -54,7 +55,7 @@ export const UploadMediaFormItem = ({
       )
 
       if (invalidFile) {
-        form.setError("media", {
+        setError("media", {
           type: "invalid_file",
           message: t("products.media.invalidFileType", {
             name: invalidFile.file.name,
@@ -70,7 +71,7 @@ export const UploadMediaFormItem = ({
       )
 
       if (oversizedFile) {
-        form.setError("media", {
+        setError("media", {
           type: "invalid_file",
           message: t("products.media.fileTooLarge", {
             name: oversizedFile.file.name,
@@ -83,19 +84,19 @@ export const UploadMediaFormItem = ({
 
       return false
     },
-    [form, t]
+    [setError, t]
   )
 
   const onUploaded = useCallback(
     (files: FileType[]) => {
-      form.clearErrors("media")
+      clearErrors("media")
       if (hasInvalidFiles(files)) {
         return
       }
 
       files.forEach((f) => append({ ...f, isThumbnail: false }))
     },
-    [form, append, hasInvalidFiles]
+    [clearErrors, append, hasInvalidFiles]
   )
 
   return (
