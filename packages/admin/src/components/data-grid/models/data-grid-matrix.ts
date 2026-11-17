@@ -186,6 +186,14 @@ export class DataGridMatrix<TData> {
   }
 
   getCoordinatesByField(field: string): DataGridCoordinates | null {
+    const sharedColumn = this.cells[0]?.findIndex(
+      (cell) => cell?.sharedAcrossRows === true && cell.field === field
+    )
+
+    if (sharedColumn !== undefined && sharedColumn !== -1) {
+      return { row: 0, col: sharedColumn }
+    }
+
     if (this.rowAccessors.length === 1) {
       const col = this.columnAccessors.indexOf(field)
 
@@ -220,6 +228,19 @@ export class DataGridMatrix<TData> {
           return { row, col: column }
         }
       }
+
+      // A row-level error on a parent path (`variants.0.prices`) leads to
+      // the first cell under it.
+      for (let column = 0; column < this.columnAccessors.length; column++) {
+        const columnAccessor = this.columnAccessors[column]
+
+        if (
+          columnAccessor !== null &&
+          `${rowAccessor}.${columnAccessor}`.startsWith(`${field}.`)
+        ) {
+          return { row, col: column }
+        }
+      }
     }
 
     return null
@@ -233,7 +254,9 @@ export class DataGridMatrix<TData> {
     const cells = this.cells[row]
 
     const nonNullFields = cells
-      .filter((cell): cell is GridCell => cell !== null)
+      .filter(
+        (cell): cell is GridCell => cell !== null && !cell.sharedAcrossRows
+      )
       .map((cell) => cell.field.split("."))
 
     if (nonNullFields.length === 0) {
@@ -264,6 +287,12 @@ export class DataGridMatrix<TData> {
   public getColumnAccessor(column: number): string | null {
     if (column < 0 || column >= this.cells[0].length) {
       return null
+    }
+
+    const sharedCell = this.cells.find((row) => row[column])?.[column]
+
+    if (sharedCell?.sharedAcrossRows) {
+      return sharedCell.field
     }
 
     // Extract the unique part of the field name for each row in the specified column
@@ -397,7 +426,7 @@ export class DataGridMatrix<TData> {
           return
         }
 
-        const { field, type } = meta.data
+        const { field, type, sharedAcrossRows } = meta.data
 
         const fieldValue = field ? field({ row, column }) : null
 
@@ -409,6 +438,7 @@ export class DataGridMatrix<TData> {
           field: fieldValue,
           type,
           enabled: true,
+          sharedAcrossRows: sharedAcrossRows ?? false,
         }
       })
     })

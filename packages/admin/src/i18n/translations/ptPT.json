@@ -596,7 +596,8 @@
         "requiredTitle": "Introduza um título",
         "requiredCategory": "Selecione uma categoria",
         "handleInvalidFormat": "O identificador só pode conter letras minúsculas, números e hífens",
-        "handleMustContainLetter": "O identificador deve conter pelo menos uma letra"
+        "handleMustContainLetter": "O identificador deve conter pelo menos uma letra",
+        "formIncomplete": "Faltam alguns campos obrigatórios — verifique as linhas destacadas antes de publicar."
       },
       "inventory": {
         "heading": "Kits de stock",

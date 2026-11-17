@@ -1337,6 +1337,9 @@
                 },
                 "handleMustContainLetter": {
                   "type": "string"
+                },
+                "formIncomplete": {
+                  "type": "string"
                 }
               }
             },

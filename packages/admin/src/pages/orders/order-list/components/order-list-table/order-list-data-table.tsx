@@ -7,7 +7,7 @@ import { TriangleRightMini } from "@medusajs/icons";
 import type { HttpTypes } from "@medusajs/types";
 import type { OrderGroupDTO } from "@mercurjs/types";
 import { keepPreviousData } from "@tanstack/react-query";
-import { createColumnHelper, type ColumnDef } from "@tanstack/react-table";
+import { createColumnHelper } from "@tanstack/react-table";
 import {
   useExtendableTable,
   useLinkQuery,

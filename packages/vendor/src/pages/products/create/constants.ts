@@ -17,6 +17,17 @@ export const MediaSchema = z.object({
 // otherwise the extra files silently fail to upload at submit time.
 export const MAX_PRODUCT_MEDIA_COUNT = 10
 
+// A blank amount is "" (cleared input) or `undefined` (a grid cell registers
+// its field before anything is typed). Treating `undefined` as an invalid
+// number would also stop the object-level price/stock rules from running.
+// Order matters: `z.coerce.number()` turns "" into 0 (`Number("") === 0`),
+// so tried first it would make a blank cell look like an entered zero.
+const BlankOrAmountSchema = z.union([
+  z.literal(""),
+  z.undefined().transform((): "" => ""),
+  z.coerce.number().min(0),
+])
+
 const ProductCreateVariantSchema = z.object({
   should_create: z.boolean(),
   is_default: z.boolean().optional(),
@@ -35,21 +46,15 @@ const ProductCreateVariantSchema = z.object({
   sku: z.string().optional(),
   options: z.record(z.string(), z.string()).optional(),
   variant_rank: z.number(),
-  // `z.literal("")` MUST come before `z.coerce.number()` in this union:
-  // Zod tries union members in order, and `z.coerce.number()` happily
-  // coerces an empty string to `0` (`Number("") === 0`) — tried first, it
-  // would silently turn "left blank" into a valid zero, making an empty
-  // cell indistinguishable from an intentionally entered 0 everywhere this
-  // field is read (including the required-price/-stock checks below).
   prices: z
-    .record(z.string(), z.union([z.literal(""), z.coerce.number().min(0)]))
+    .record(z.string(), BlankOrAmountSchema)
     .default({}),
   inventory: z
     .record(
       z.string(),
       z.object({
         checked: z.boolean().default(false),
-        quantity: z.union([z.literal(""), z.coerce.number().min(0)]).default(""),
+        quantity: BlankOrAmountSchema.default(""),
         disabledToggle: z.boolean().optional(),
       })
     )
@@ -66,27 +71,19 @@ export type ProductCreateVariantSchema = z.infer<
 
 export const ProductCreateSchema = z
   .object({
-    title: z.string().min(1, {
-      message: i18n.t("products.fields.title.required"),
-    }),
+    title: z.string().min(1, { error: () => i18n.t("products.fields.title.required") }),
     subtitle: z.string().optional(),
     handle: z
       .string()
-      .refine(isValidHandleFormat, { message: i18n.t("fields.handleInvalidFormat") }),
+      .refine(isValidHandleFormat, { error: () => i18n.t("fields.handleInvalidFormat") }),
     description: z.string().optional(),
     discountable: z.boolean(),
     type_id: z.string().optional(),
     collection_id: z.string().optional(),
-    shipping_profile_id: z.string().min(1, {
-      message: i18n.t("products.create.errors.shippingProfileRequired"),
-    }),
-    category_id: z.string().min(1, {
-      message: i18n.t("products.create.errors.categoryRequired"),
-    }),
+    shipping_profile_id: z.string().min(1, { error: () => i18n.t("products.create.errors.shippingProfileRequired") }),
+    category_id: z.string().min(1, { error: () => i18n.t("products.create.errors.categoryRequired") }),
     tags: z.array(z.string()).optional(),
-    origin_country: z.string().min(1, {
-      message: i18n.t("validation.requiredField"),
-    }),
+    origin_country: z.string().min(1, { error: () => i18n.t("validation.requiredField") }),
     material: z.string().optional(),
     width: optionalFloat,
     length: optionalFloat,
@@ -141,7 +138,7 @@ export const ProductCreateSchema = z
       return ctx.addIssue({
         code: z.ZodIssueCode.custom,
         path: ["variants"],
-        message: "invalid_length",
+        message: i18n.t("products.create.errors.variants"),
       })
     }
 

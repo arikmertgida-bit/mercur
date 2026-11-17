@@ -591,7 +591,8 @@
         "requiredTitle": "Kérjük, adjon meg egy címet",
         "requiredCategory": "Kérjük, válasszon kategóriát",
         "handleInvalidFormat": "Az URL-azonosító csak kisbetűket, számokat és kötőjeleket tartalmazhat",
-        "handleMustContainLetter": "Az URL-azonosítónak legalább egy betűt kell tartalmaznia"
+        "handleMustContainLetter": "Az URL-azonosítónak legalább egy betűt kell tartalmaznia",
+        "formIncomplete": "Néhány kötelező mező hiányzik — közzététel előtt ellenőrizze a kiemelt sorokat."
       },
       "inventory": {
         "heading": "Készletcsomagok",

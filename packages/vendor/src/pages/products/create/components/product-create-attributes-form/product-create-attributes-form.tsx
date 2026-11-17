@@ -589,6 +589,7 @@ const RequiredAttributes = ({
 }) => {
   const { t } = useTranslation()
   const form = useTabbedForm<ProductCreateSchemaType>()
+  const { getValues } = form
   const categoryId = form.watch("category_id")
 
   const canViewAttributes = useCan("product_attributes")
@@ -606,7 +607,7 @@ const RequiredAttributes = ({
   useEffect(() => {
     if (!product_attributes) return
 
-    const currentAttributes = form.getValues("attributes") || []
+    const currentAttributes = getValues("attributes") || []
     const requiredIds = new Set(
       product_attributes.map((a: ProductAttributeDTO) => a.id)
     )
@@ -659,7 +660,7 @@ const RequiredAttributes = ({
     // whole-array mutator and keeps every subscriber of this field name in
     // sync.
     replace(nextAttributes)
-  }, [product_attributes, form.getValues, replace])
+  }, [product_attributes, getValues, replace])
 
   if (!categoryId || !product_attributes?.length) return null
 

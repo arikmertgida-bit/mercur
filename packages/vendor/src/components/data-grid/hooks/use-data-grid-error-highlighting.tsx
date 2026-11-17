@@ -37,13 +37,29 @@ export const useDataGridErrorHighlighting = <
         rowsWithErrors.add(rowIndex)
       }
 
-      const columnIndex = matrix.columnAccessors.findIndex(
-        (accessor) =>
+      const rowAccessor = rowIndex !== -1 ? matrix.rowAccessors[rowIndex] : null
+      const relativePath =
+        rowAccessor && errorPath.startsWith(`${rowAccessor}.`)
+          ? errorPath.slice(rowAccessor.length + 1)
+          : errorPath
+
+      // An error on a parent path (e.g. `variants.0.prices`) belongs to
+      // every column under it, one per currency.
+      matrix.columnAccessors.forEach((accessor, columnIndex) => {
+        if (
           accessor &&
-          (errorPath === accessor || errorPath.endsWith(`.${accessor}`))
-      )
-      if (columnIndex !== -1) {
-        columnsWithErrors.add(columnIndex)
+          (errorPath === accessor ||
+            errorPath.endsWith(`.${accessor}`) ||
+            accessor.startsWith(`${relativePath}.`))
+        ) {
+          columnsWithErrors.add(columnIndex)
+        }
+      })
+
+      // A field shared by every row (no row accessor of its own) still
+      // needs one visible row for its cell to show up while highlighting.
+      if (rowIndex === -1 && matrix.columnAccessors.includes(errorPath)) {
+        rowsWithErrors.add(0)
       }
     })
 

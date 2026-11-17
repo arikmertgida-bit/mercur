@@ -18,11 +18,12 @@ export const DataGridCellContainer = ({
   children,
   errors,
   rowErrors,
+  cellError,
   outerComponent,
   isMultiLine,
 }: DataGridCellContainerProps &
   DataGridErrorRenderProps<FieldValues> & { isMultiLine?: boolean }) => {
-  const error: FieldError | undefined = get(errors, field)
+  const error: FieldError | undefined = cellError ?? get(errors, field)
   const hasError = !!error
 
   return (

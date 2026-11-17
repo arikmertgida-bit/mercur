@@ -43,6 +43,13 @@ type DataGridHelperColumnsProps<TData, TFieldValues extends FieldValues> = {
    * The maximum size of the column in pixels.
    */
   maxSize?: number
+  /**
+   * The column edits one form field shared by every row instead of a field
+   * under the row (see `GridCell.sharedAcrossRows`).
+   *
+   * @default false
+   */
+  sharedAcrossRows?: boolean
 } & (
   | {
       field: FieldFunction<TData, TFieldValues>
@@ -69,6 +76,7 @@ export function createDataGridHelper<
       size,
       minSize,
       maxSize,
+      sharedAcrossRows = false,
     }: DataGridHelperColumnsProps<TData, TFieldValues>) =>
       columnHelper.display({
         id,
@@ -82,6 +90,7 @@ export function createDataGridHelper<
           name,
           field,
           type,
+          sharedAcrossRows,
         },
       }),
   }

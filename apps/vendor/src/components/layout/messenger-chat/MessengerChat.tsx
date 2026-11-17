@@ -425,6 +425,7 @@ export function MessengerChat({ currentUserId, otherName }: MessengerChatProps):
               variant="transparent"
               onClick={() => fileInputRef.current?.click()}
               className="flex-shrink-0 mb-0.5"
+              aria-label={t("messages.attachImage")}
             >
               <PaperClip />
             </IconButton>
@@ -434,8 +435,10 @@ export function MessengerChat({ currentUserId, otherName }: MessengerChatProps):
               accept="image/*"
               className="hidden"
               onChange={handleFileChange}
+              aria-label={t("messages.attachImage")}
             />
             <textarea
+              aria-label={t("messages.placeholder")}
               value={text}
               onChange={handleTextChange}
               onKeyDown={handleKeyDown}
@@ -491,6 +494,7 @@ export function MessengerChat({ currentUserId, otherName }: MessengerChatProps):
         onIndexChange={(nextIndex) => {
           if (nextIndex === null) setLightboxSrc(null)
         }}
+        labels={{ close: t("actions.close"), previous: t("general.prev"), next: t("general.next") }}
       />
     </div>
   )

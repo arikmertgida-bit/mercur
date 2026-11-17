@@ -162,6 +162,7 @@ const AdminReviewReportDetailPage = () => {
                 images={report.review.images}
                 index={lightboxIndex}
                 onIndexChange={setLightboxIndex}
+                labels={{ close: t("actions.close"), previous: t("general.prev"), next: t("general.next") }}
               />
             </div>
           )}

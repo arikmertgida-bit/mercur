@@ -94,9 +94,11 @@ export function ThreadListItem({ conv, isActive, onOpen, onDelete }: ThreadListI
   return (
     <>
       <div className="relative group">
-        <div
+        <button
+          type="button"
+          aria-current={isActive ? "true" : undefined}
           onClick={() => onOpen(conv.id)}
-          className={`w-full text-left p-3 border-b border-ui-border-base transition-colors hover:bg-ui-bg-base-hover cursor-pointer ${
+          className={`block w-full text-left p-3 border-b border-ui-border-base transition-colors hover:bg-ui-bg-base-hover cursor-pointer ${
             isActive ? "bg-ui-bg-base border-l-2 border-l-ui-border-interactive" : ""
           }`}
         >
@@ -140,13 +142,13 @@ export function ThreadListItem({ conv, isActive, onOpen, onDelete }: ThreadListI
                 </span>
               </div>
 
-              <p className="text-xs text-ui-fg-muted truncate mt-0.5">
+              <span className="block text-xs text-ui-fg-muted truncate mt-0.5">
                 {lastMsg
                   ? lastMsg.messageType === "IMAGE"
                     ? `📷 ${t("messenger.imageMessage")}`
                     : lastMsg.content?.slice(0, 50)
                   : conv.subject ?? t("messages.noMessages")}
-              </p>
+              </span>
 
               {/* Context badge */}
               {isAdmin ? null : isProduct ? (
@@ -162,10 +164,14 @@ export function ThreadListItem({ conv, isActive, onOpen, onDelete }: ThreadListI
               )}
             </div>
           </div>
-        </div>
+        </button>
 
         {/* 3-dot menu */}
-        <div className="absolute right-2 top-1/2 -translate-y-1/2 z-10" onClick={(e) => e.stopPropagation()}>
+        <div
+          role="presentation"
+          className="absolute right-2 top-1/2 -translate-y-1/2 z-10"
+          onClick={(e) => e.stopPropagation()}
+        >
           <DropdownMenu>
             <DropdownMenu.Trigger asChild>
               <IconButton

@@ -117,7 +117,7 @@ type FooterRenderProps = {
 
 type TabbedFormProps<T extends FieldValues> = {
   form: UseFormReturn<T>
-  onSubmit: (e?: React.BaseSyntheticEvent) => void
+  onSubmit: (e?: React.BaseSyntheticEvent) => void | Promise<void>
   children: ReactNode
   isLoading?: boolean
   footer?: (props: FooterRenderProps) => ReactNode
@@ -155,10 +155,19 @@ function Root<T extends FieldValues>({
     isLastTab,
     onNext,
     onTabChange,
+    revealFirstError,
   } = useTabManagement<T>({
     tabs,
     form,
   })
+
+  // A blocked submit would leave the seller on the last tab even when the
+  // invalid field sits on an earlier one. revealFirstError reads live field
+  // state, so after a valid submit it does nothing.
+  const submit = async (e?: React.BaseSyntheticEvent): Promise<void> => {
+    await onSubmit(e)
+    revealFirstError()
+  }
 
   const visibleElements = elements.flatMap((element) => {
     const meta = resolveTabMeta<T>(element)
@@ -183,6 +192,10 @@ function Root<T extends FieldValues>({
               e.preventDefault()
 
               if (e.metaKey || e.ctrlKey) {
+                if (isLoading) {
+                  return
+                }
+
                 if (!isLastTab) {
                   e.preventDefault()
                   e.stopPropagation()
@@ -191,11 +204,11 @@ function Root<T extends FieldValues>({
                   return
                 }
 
-                onSubmit()
+                void submit()
               }
             }
           }}
-          onSubmit={onSubmit}
+          onSubmit={submit}
           className="flex h-full flex-col"
         >
           <ProgressTabs

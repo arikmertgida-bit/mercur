@@ -596,7 +596,8 @@
         "requiredTitle": "Vă rugăm să introduceți un titlu",
         "requiredCategory": "Vă rugăm să selectați o categorie",
         "handleInvalidFormat": "Identificatorul trebuie să conțină doar litere mici, cifre și cratime",
-        "handleMustContainLetter": "Identificatorul trebuie să conțină cel puțin o literă"
+        "handleMustContainLetter": "Identificatorul trebuie să conțină cel puțin o literă",
+        "formIncomplete": "Lipsesc unele câmpuri obligatorii — verifică rândurile evidențiate înainte de publicare."
       },
       "inventory": {
         "heading": "Truse de inventar",

@@ -42,6 +42,7 @@ export const CreateCampaignFormFields = ({
   syncPromotionCurrency = false,
 }: CreateCampaignFormFieldsProps) => {
   const form = useFormContext<CampaignFieldsFormValues>()
+  const { resetField, setValue } = form
   const { t, i18n } = useTranslation()
   const { currency_code: sellerCurrencyCode } = useCurrentSeller()
 
@@ -51,11 +52,11 @@ export const CreateCampaignFormFields = ({
   })
 
   useEffect(() => {
-    form.setValue("campaign.campaign_identifier", toHandle(watchNameValue ?? ""), {
+    setValue("campaign.campaign_identifier", toHandle(watchNameValue ?? ""), {
       shouldValidate: true,
       shouldDirty: false,
     })
-  }, [watchNameValue, form.setValue])
+  }, [watchNameValue, setValue])
 
   const watchValueType = useWatch({
     control: form.control,
@@ -77,15 +78,15 @@ export const CreateCampaignFormFields = ({
   const currency = currencyValue || promotionCurrencyValue
 
   useEffect(() => {
-    form.resetField("campaign.budget.limit")
+    resetField("campaign.budget.limit")
 
     if (syncPromotionCurrency) {
-      form.setValue(
+      setValue(
         "campaign.budget.currency_code",
         isTypeSpend ? promotionCurrencyValue : null
       )
     }
-  }, [watchValueType, syncPromotionCurrency, form.resetField, form.setValue, isTypeSpend, promotionCurrencyValue])
+  }, [watchValueType, syncPromotionCurrency, resetField, setValue, isTypeSpend, promotionCurrencyValue])
 
   if (promotionCurrencyValue && syncPromotionCurrency) {
     const budget = form.getValues().campaign?.budget

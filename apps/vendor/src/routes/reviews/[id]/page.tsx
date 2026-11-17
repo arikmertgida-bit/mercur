@@ -160,6 +160,7 @@ const ReviewPhotosSection = ({ review }: { review: ReviewDTO }) => {
         images={images}
         index={lightboxIndex}
         onIndexChange={setLightboxIndex}
+        labels={{ close: t("actions.close"), previous: t("general.prev"), next: t("general.next") }}
       />
     </Container>
   );
@@ -225,7 +226,12 @@ const ReviewReplyMessage = ({ reply }: { reply: ReviewReplyDTO }) => {
           </div>
         )}
       </div>
-      <ImageLightbox images={images} index={lightboxIndex} onIndexChange={setLightboxIndex} />
+      <ImageLightbox
+        images={images}
+        index={lightboxIndex}
+        onIndexChange={setLightboxIndex}
+        labels={{ close: t("actions.close"), previous: t("general.prev"), next: t("general.next") }}
+      />
     </div>
   );
 };

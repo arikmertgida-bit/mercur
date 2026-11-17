@@ -591,7 +591,8 @@
         "requiredTitle": "Silakan masukkan judul",
         "requiredCategory": "Silakan pilih kategori",
         "handleInvalidFormat": "Slug URL hanya boleh berisi huruf kecil, angka, dan tanda hubung",
-        "handleMustContainLetter": "Slug URL harus berisi setidaknya satu huruf"
+        "handleMustContainLetter": "Slug URL harus berisi setidaknya satu huruf",
+        "formIncomplete": "Beberapa kolom wajib belum diisi — periksa baris yang disorot sebelum mempublikasikan."
       },
       "inventory": {
         "heading": "Kit inventaris",

@@ -596,7 +596,8 @@
         "requiredTitle": "Inserisci un titolo",
         "requiredCategory": "Seleziona una categoria",
         "handleInvalidFormat": "Lo slug URL deve contenere solo lettere minuscole, numeri e trattini",
-        "handleMustContainLetter": "Lo slug URL deve contenere almeno una lettera"
+        "handleMustContainLetter": "Lo slug URL deve contenere almeno una lettera",
+        "formIncomplete": "Mancano alcuni campi obbligatori: controlla le righe evidenziate prima di pubblicare."
       },
       "inventory": {
         "heading": "Kit di inventario",

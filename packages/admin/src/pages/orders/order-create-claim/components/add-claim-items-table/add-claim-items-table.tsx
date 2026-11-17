@@ -102,7 +102,7 @@ export const AddClaimItemsTable = ({
     }
 
     return results.slice(offset, offset + limit)
-  }, [items, currencyCode, searchParams])
+  }, [items, searchParams])
 
   const columns = useClaimItemTableColumns(currencyCode)
   const filters = useClaimItemTableFilters()

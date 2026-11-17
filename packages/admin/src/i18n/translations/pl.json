@@ -578,7 +578,8 @@
         "requiredTitle": "Wprowadź tytuł",
         "requiredCategory": "Wybierz kategorię",
         "handleInvalidFormat": "Identyfikator URL może zawierać tylko małe litery, cyfry i myślniki",
-        "handleMustContainLetter": "Identyfikator URL musi zawierać co najmniej jedną literę"
+        "handleMustContainLetter": "Identyfikator URL musi zawierać co najmniej jedną literę",
+        "formIncomplete": "Brakuje niektórych wymaganych pól — sprawdź podświetlone wiersze przed publikacją."
       },
       "inventory": {
         "heading": "Zestawy magazynowe",

@@ -618,7 +618,8 @@
         "requiredTitle": "Introduce un título",
         "requiredCategory": "Selecciona una categoría",
         "handleInvalidFormat": "El identificador solo puede contener letras minúsculas, números y guiones",
-        "handleMustContainLetter": "El identificador debe contener al menos una letra"
+        "handleMustContainLetter": "El identificador debe contener al menos una letra",
+        "formIncomplete": "Faltan algunos campos obligatorios; revisa las filas resaltadas antes de publicar."
       },
       "inventory": {
         "heading": "Kits de inventario",

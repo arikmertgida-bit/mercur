@@ -60,15 +60,49 @@ export const useDataGridCellError = <TextData, TValue>({
     collectErrors(rowErrorsObject, accessor)
   }
 
-  const cellError: FieldError | undefined = field
-    ? get(errors, field)
-    : undefined
+  const cellError = field ? getCellError(errors, field, accessor) : undefined
 
   return {
     errors,
     rowErrors,
     cellError,
   }
+}
+
+/**
+ * A cell shows its own error, or an error set on one of its parent paths
+ * below the row: a schema rule such as "at least one price per variant" can
+ * only be attached to `variants.N.prices`, not to a single currency cell.
+ */
+export function getCellError(
+  errors: FieldErrors,
+  field: string,
+  rowAccessor: string | null
+): FieldError | undefined {
+  const own: FieldErrors | FieldError | undefined = get(errors, field)
+
+  if (own && isFieldError(own)) {
+    return own
+  }
+
+  if (!rowAccessor || !field.startsWith(`${rowAccessor}.`)) {
+    return undefined
+  }
+
+  const segments = field.slice(rowAccessor.length + 1).split(".")
+
+  for (let depth = segments.length - 1; depth > 0; depth--) {
+    const parent: FieldErrors | FieldError | undefined = get(
+      errors,
+      [rowAccessor, ...segments.slice(0, depth)].join(".")
+    )
+
+    if (parent && isFieldError(parent)) {
+      return parent
+    }
+  }
+
+  return undefined
 }
 
 function isFieldError(errors: FieldErrors | FieldError): errors is FieldError {

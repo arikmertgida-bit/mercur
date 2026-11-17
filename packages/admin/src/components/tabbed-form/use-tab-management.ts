@@ -1,6 +1,13 @@
 import { ProgressStatus } from "@medusajs/ui"
-import { useCallback, useEffect, useMemo, useState } from "react"
-import { FieldValues, UseFormReturn } from "react-hook-form"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import {
+  FieldError,
+  FieldErrors,
+  FieldPath,
+  FieldValues,
+  UseFormReturn,
+} from "react-hook-form"
+import { z } from "zod"
 
 import { TabDefinition } from "./types"
 
@@ -39,6 +46,28 @@ const validateTabRange = async <T extends FieldValues>(
   return true
 }
 
+/**
+ * Walks a (possibly nested) RHF error down to the first leaf that carries a
+ * message, so focus lands on e.g. `attributes.2.values` rather than on the
+ * `attributes` array as a whole.
+ */
+const findFirstErrorPath = (
+  error: FieldErrors | FieldError | undefined,
+  path: string
+): string => {
+  if (!error || typeof error !== "object" || "message" in error) {
+    return path
+  }
+
+  for (const [key, nested] of Object.entries(error)) {
+    if (nested && typeof nested === "object" && key !== "ref") {
+      return findFirstErrorPath(nested, `${path}.${key}`)
+    }
+  }
+
+  return path
+}
+
 export const useTabManagement = <T extends FieldValues>({
   tabs,
   form,
@@ -54,6 +83,25 @@ export const useTabManagement = <T extends FieldValues>({
   const [activeTabId, setActiveTabId] = useState<string>(
     visibleTabs[0]?.id ?? ""
   )
+
+  const { getFieldState, setFocus } = form
+
+  const fieldPathSchema = useMemo(
+    () => z.custom<FieldPath<T>>((value) => typeof value === "string"),
+    []
+  )
+
+  // Set right before switching to the tab that holds the first error; the
+  // field only mounts (and can take focus) once that tab has rendered.
+  const pendingFocusRef = useRef<FieldPath<T> | null>(null)
+
+  useEffect(() => {
+    const name = pendingFocusRef.current
+    if (!name) return
+
+    pendingFocusRef.current = null
+    setFocus(name)
+  }, [activeTabId, setFocus])
 
   const [tabState, setTabState] = useState<TabState>(() => {
     const state: TabState = {}
@@ -136,6 +184,40 @@ export const useTabManagement = <T extends FieldValues>({
     [form, visibleTabs, activeTabId]
   )
 
+  /**
+   * After a failed submit: opens the first tab (in tab order) that holds an
+   * invalid field and focuses that field. Tabs are matched through their
+   * `validationFields`, the same list "Continue" validates.
+   */
+  const revealFirstError = useCallback(() => {
+    for (const tab of visibleTabs) {
+      const invalidField = tab.validationFields?.find(
+        (field) => getFieldState(field).invalid
+      )
+
+      if (!invalidField) {
+        continue
+      }
+
+      const parsed = fieldPathSchema.safeParse(
+        findFirstErrorPath(
+          getFieldState(invalidField).error,
+          invalidField
+        )
+      )
+      const name = parsed.success ? parsed.data : invalidField
+
+      if (tab.id === activeTabId) {
+        setFocus(name)
+      } else {
+        pendingFocusRef.current = name
+        setActiveTabId(tab.id)
+      }
+
+      return
+    }
+  }, [visibleTabs, activeTabId, fieldPathSchema, getFieldState, setFocus])
+
   return {
     activeTabId,
     setActiveTabId,
@@ -144,5 +226,6 @@ export const useTabManagement = <T extends FieldValues>({
     isLastTab,
     onNext,
     onTabChange,
+    revealFirstError,
   }
 }

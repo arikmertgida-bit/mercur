@@ -461,7 +461,8 @@
         "requiredTitle": "Please enter a title",
         "requiredCategory": "Please select a category",
         "handleInvalidFormat": "Handle must contain only lowercase letters, numbers, and hyphens",
-        "handleMustContainLetter": "Handle must contain at least one letter"
+        "handleMustContainLetter": "Handle must contain at least one letter",
+        "formIncomplete": "Some required fields are missing — check the highlighted rows before publishing."
       },
       "inventory": {
         "heading": "Inventory kits",

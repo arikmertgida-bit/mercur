@@ -634,7 +634,8 @@
         "requiredTitle": "يرجى إدخال عنوان",
         "requiredCategory": "يرجى اختيار فئة",
         "handleInvalidFormat": "يجب أن يحتوي المُعرّف على أحرف صغيرة وأرقام وشرطات فقط",
-        "handleMustContainLetter": "يجب أن يحتوي المُعرّف على حرف واحد على الأقل"
+        "handleMustContainLetter": "يجب أن يحتوي المُعرّف على حرف واحد على الأقل",
+        "formIncomplete": "بعض الحقول المطلوبة مفقودة — تحقق من الصفوف المميزة قبل النشر."
       },
       "inventory": {
         "heading": "مجموعات المخزون",

@@ -596,7 +596,8 @@
         "requiredTitle": "יש להזין כותרת",
         "requiredCategory": "יש לבחור קטגוריה",
         "handleInvalidFormat": "מזהה ה-URL יכול להכיל רק אותיות קטנות, ספרות ומקפים",
-        "handleMustContainLetter": "מזהה ה-URL חייב להכיל לפחות אות אחת"
+        "handleMustContainLetter": "מזהה ה-URL חייב להכיל לפחות אות אחת",
+        "formIncomplete": "חסרים כמה שדות חובה — בדוק את השורות המודגשות לפני הפרסום."
       },
       "inventory": {
         "heading": "ערכות מלאי",

@@ -591,7 +591,8 @@
         "requiredTitle": "Voer een titel in",
         "requiredCategory": "Selecteer een categorie",
         "handleInvalidFormat": "De slug mag alleen kleine letters, cijfers en koppeltekens bevatten",
-        "handleMustContainLetter": "De slug moet ten minste één letter bevatten"
+        "handleMustContainLetter": "De slug moet ten minste één letter bevatten",
+        "formIncomplete": "Sommige verplichte velden ontbreken — controleer de gemarkeerde rijen voordat u publiceert."
       },
       "inventory": {
         "heading": "Voorraadsets",

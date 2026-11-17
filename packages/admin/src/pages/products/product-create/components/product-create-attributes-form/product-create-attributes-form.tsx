@@ -471,6 +471,7 @@ const SelectedAttributes = ({
 const RequiredAttributes = () => {
   const { t } = useTranslation()
   const form = useTabbedForm<ProductCreateSchemaType>()
+  const { getValues, setValue } = form
   const categoryId = form.watch("category_id")
   const canViewAttributes = useCan("product_attributes")
 
@@ -487,7 +488,7 @@ const RequiredAttributes = () => {
   useEffect(() => {
     if (!product_attributes) return
 
-    const currentAttributes = form.getValues("attributes") || []
+    const currentAttributes = getValues("attributes") || []
     const requiredIds = new Set(product_attributes.map((a) => a.id))
 
     // Keep all non-required attributes (custom + modal-added) untouched
@@ -515,8 +516,8 @@ const RequiredAttributes = () => {
       }
     })
 
-    form.setValue("attributes", [...otherAttributes, ...requiredAttributes])
-  }, [product_attributes, form.getValues, form.setValue])
+    setValue("attributes", [...otherAttributes, ...requiredAttributes])
+  }, [product_attributes, getValues, setValue])
 
   if (!categoryId || !product_attributes?.length) return null
 

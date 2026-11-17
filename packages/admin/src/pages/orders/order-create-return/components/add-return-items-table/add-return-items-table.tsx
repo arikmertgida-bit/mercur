@@ -102,7 +102,7 @@ export const AddReturnItemsTable = ({
     }
 
     return results.slice(offset, offset + limit)
-  }, [items, currencyCode, searchParams])
+  }, [items, searchParams])
 
   const columns = useReturnItemTableColumns(currencyCode)
   const filters = useReturnItemTableFilters()

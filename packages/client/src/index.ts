@@ -9,7 +9,6 @@ type JsonPrimitive = string | number | boolean | null
 type JsonObject = { [key: string]: JsonValue }
 type JsonArray = JsonValue[]
 type JsonValue = JsonPrimitive | JsonObject | JsonArray
-type JsonRecord = Record<string, JsonValue>
 type ClientPayloadEntry = JsonValue | Blob | (JsonValue | Blob)[]
 type ClientPayload = Record<string, ClientPayloadEntry>
 type ClientRequestInput = ClientPayload & FetchOptionsInput

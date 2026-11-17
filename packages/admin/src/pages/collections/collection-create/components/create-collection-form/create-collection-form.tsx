@@ -60,17 +60,18 @@ export const CreateCollectionForm = () => {
     },
     resolver: zodResolver(CreateCollectionSchema),
   })
+  const { setValue } = form
 
   const { mutateAsync, isPending } = useCreateCollection()
 
   const titleValue = useWatch({ control: form.control, name: "title" })
 
   useEffect(() => {
-    form.setValue("handle", toHandle(titleValue ?? ""), {
+    setValue("handle", toHandle(titleValue ?? ""), {
       shouldValidate: true,
       shouldDirty: false,
     })
-  }, [titleValue, form.setValue])
+  }, [titleValue, setValue])
 
   const handleSubmit = form.handleSubmit(async (data) => {
     const { media, icon, ...rest } = data

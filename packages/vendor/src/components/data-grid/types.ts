@@ -6,7 +6,13 @@ import {
   VisibilityState,
 } from "@tanstack/react-table"
 import React, { ReactNode, RefObject } from "react"
-import { FieldErrors, FieldPath, FieldValues, UseFormReturn } from "react-hook-form"
+import {
+  FieldError,
+  FieldErrors,
+  FieldPath,
+  FieldValues,
+  UseFormReturn,
+} from "react-hook-form"
 import { z } from "zod"
 
 export const DataGridColumnTypeSchema = z.enum([
@@ -58,6 +64,7 @@ export type DataGridRowError = {
 export type DataGridErrorRenderProps<TFieldValues extends FieldValues> = {
   errors: FieldErrors<TFieldValues>
   rowErrors: DataGridRowError[]
+  cellError?: FieldError
 }
 
 export interface DataGridCellRenderProps {
@@ -141,12 +148,19 @@ export const createDataGridColumnMetaSchema = <TData>() =>
       )
       .nullish(),
     type: DataGridColumnTypeSchema.optional(),
+    sharedAcrossRows: z.boolean().optional(),
   })
 
 export type GridCell = {
   field: string
   type: DataGridColumnType
   enabled: boolean
+  /**
+   * The cell edits a form field that is not under its row (e.g. the
+   * product-level `shipping_profile_id` repeated on every variant row), so
+   * it must not take part in working out the row's accessor.
+   */
+  sharedAcrossRows: boolean
 }
 
 export type Grid = (GridCell | null)[][]

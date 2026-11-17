@@ -591,7 +591,8 @@
         "requiredTitle": "Vui lòng nhập tiêu đề",
         "requiredCategory": "Vui lòng chọn danh mục",
         "handleInvalidFormat": "Định danh chỉ được chứa chữ thường, số và dấu gạch nối",
-        "handleMustContainLetter": "Định danh phải chứa ít nhất một chữ cái"
+        "handleMustContainLetter": "Định danh phải chứa ít nhất một chữ cái",
+        "formIncomplete": "Thiếu một số trường bắt buộc — hãy kiểm tra các hàng được đánh dấu trước khi đăng."
       },
       "inventory": {
         "heading": "Bộ thành phần trong kho",

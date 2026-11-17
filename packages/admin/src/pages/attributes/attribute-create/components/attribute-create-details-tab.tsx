@@ -26,15 +26,16 @@ type AttributeCreateFormValues = {
 const Root = () => {
   const { t } = useTranslation();
   const form = useTabbedForm<AttributeCreateFormValues>();
+  const { setValue } = form;
   const isGlobal = useWatch({ control: form.control, name: "is_global" });
   const nameValue = useWatch({ control: form.control, name: "name" });
 
   useEffect(() => {
-    form.setValue("handle", toHandle(nameValue ?? ""), {
+    setValue("handle", toHandle(nameValue ?? ""), {
       shouldValidate: true,
       shouldDirty: false,
     });
-  }, [nameValue, form.setValue]);
+  }, [nameValue, setValue]);
 
   return (
     <div

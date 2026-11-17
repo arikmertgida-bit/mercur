@@ -18,6 +18,7 @@ export const ProductCreateVariantMediaDrawer = ({
 }: ProductCreateVariantMediaDrawerProps) => {
   const { t } = useTranslation()
   const form = useTabbedForm<ProductCreateSchemaType>()
+  const { getValues } = form
   const { getIsOpen, setIsOpen } = useStackedModal()
 
   const open = getIsOpen(VARIANT_MEDIA_DRAWER_ID)
@@ -30,13 +31,13 @@ export const ProductCreateVariantMediaDrawer = ({
       return
     }
 
-    const current = form.getValues(`variants.${activeIndex}.media`) ?? []
+    const current = getValues(`variants.${activeIndex}.media`) ?? []
     setSelectedIds(
       current
         .map((media) => media.id)
         .filter((id): id is string => !!id)
     )
-  }, [open, activeIndex, form.getValues])
+  }, [open, activeIndex, getValues])
 
   const toggleSelected = (mediaId: string, checked: boolean) => {
     setSelectedIds((prev) =>

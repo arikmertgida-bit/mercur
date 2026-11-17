@@ -596,7 +596,8 @@
         "requiredTitle": "Veuillez saisir un titre",
         "requiredCategory": "Veuillez sélectionner une catégorie",
         "handleInvalidFormat": "L'identifiant ne doit contenir que des lettres minuscules, des chiffres et des traits d'union",
-        "handleMustContainLetter": "L'identifiant doit contenir au moins une lettre"
+        "handleMustContainLetter": "L'identifiant doit contenir au moins une lettre",
+        "formIncomplete": "Certains champs obligatoires sont manquants — vérifiez les lignes surlignées avant de publier."
       },
       "inventory": {
         "heading": "Inventaires",

@@ -52,17 +52,18 @@ const CategoryRequestCreateForm = () => {
     },
     resolver: zodResolver(createCategoryRequestSchema(t)),
   });
+  const { setValue } = form;
 
   const { mutateAsync, isPending } = useCreateVendorRequest("product_category");
 
   const nameValue = useWatch({ control: form.control, name: "name" });
 
   useEffect(() => {
-    form.setValue("handle", toHandle(nameValue ?? ""), {
+    setValue("handle", toHandle(nameValue ?? ""), {
       shouldValidate: true,
       shouldDirty: false,
     });
-  }, [nameValue, form.setValue]);
+  }, [nameValue, setValue]);
 
   const handleSubmit = form.handleSubmit(async ({ handle, ...data }) => {
     const payload = handle ? { ...data, handle } : data;

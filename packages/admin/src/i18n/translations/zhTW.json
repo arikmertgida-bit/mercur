@@ -591,7 +591,8 @@
         "requiredTitle": "請輸入標題",
         "requiredCategory": "請選擇分類",
         "handleInvalidFormat": "識別碼只能包含小寫字母、數字和連字號",
-        "handleMustContainLetter": "識別碼必須至少包含一個字母"
+        "handleMustContainLetter": "識別碼必須至少包含一個字母",
+        "formIncomplete": "缺少部分必填欄位——請在發布前檢查醒目提示的資料列。"
       },
       "inventory": {
         "heading": "庫存套件",

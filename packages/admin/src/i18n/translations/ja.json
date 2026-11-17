@@ -591,7 +591,8 @@
         "requiredTitle": "タイトルを入力してください",
         "requiredCategory": "カテゴリーを選択してください",
         "handleInvalidFormat": "ハンドルには小文字、数字、ハイフンのみを使用してください",
-        "handleMustContainLetter": "ハンドルには少なくとも1文字のアルファベットを含めてください"
+        "handleMustContainLetter": "ハンドルには少なくとも1文字のアルファベットを含めてください",
+        "formIncomplete": "必須項目が入力されていません。公開する前にハイライトされた行を確認してください。"
       },
       "inventory": {
         "heading": "在庫キット",

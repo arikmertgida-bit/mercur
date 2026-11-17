@@ -46,7 +46,14 @@ const ProductEditVariantSchema = z.object({
   hs_code: z.string().optional(),
   origin_country: z.string().min(1, i18next.t("validation.requiredField")),
   prices: z
-    .record(z.string(), z.union([z.literal(""), z.coerce.number().min(0)]))
+    .record(z.string(), z.union([
+    z.literal(""),
+    // A grid cell registers its field with `undefined` before anything is
+    // typed; that is a blank too, not an invalid number (which would also
+    // stop the object-level price/stock rules from running at all).
+    z.undefined().transform((): "" => ""),
+    z.coerce.number().min(0),
+  ]))
     .optional(),
   options: z
     .record(z.string().min(1, i18next.t("products.variant.validation.optionRequired")))

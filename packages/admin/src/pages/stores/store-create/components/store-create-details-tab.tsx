@@ -17,17 +17,18 @@ import { ConditionalTooltip } from "../../../../components/common/conditional-to
 const Root = () => {
   const { t } = useTranslation();
   const form = useTabbedForm<CreateStoreSchemaType>();
+  const { setValue } = form;
   const storeGate = usePermissionGate("store:view");
   const { store } = useStore(undefined, { enabled: storeGate.allowed });
 
   const nameValue = useWatch({ control: form.control, name: "name" });
 
   useEffect(() => {
-    form.setValue("handle", toHandle(nameValue ?? ""), {
+    setValue("handle", toHandle(nameValue ?? ""), {
       shouldValidate: true,
       shouldDirty: false,
     });
-  }, [nameValue, form.setValue]);
+  }, [nameValue, setValue]);
 
   return (
     <div className="flex flex-1 flex-col items-center overflow-y-auto px-3">

@@ -591,7 +591,8 @@
         "requiredTitle": "Гарчиг оруулна уу",
         "requiredCategory": "Ангилал сонгоно уу",
         "handleInvalidFormat": "URL танигч зөвхөн жижиг үсэг, тоо, зураас агуулах ёстой",
-        "handleMustContainLetter": "URL танигч дор хаяж нэг үсэг агуулсан байх ёстой"
+        "handleMustContainLetter": "URL танигч дор хаяж нэг үсэг агуулсан байх ёстой",
+        "formIncomplete": "Заавал бөглөх зарим талбар дутуу байна — нийтлэхийн өмнө тодруулсан мөрүүдийг шалгана уу."
       },
       "inventory": {
         "heading": "Барааны иж бүрдэл",

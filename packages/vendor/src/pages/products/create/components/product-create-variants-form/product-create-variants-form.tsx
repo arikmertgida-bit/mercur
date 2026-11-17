@@ -34,6 +34,7 @@ type ShippingProfileLite = { id: string; name?: string | null }
 const Root = () => {
   const { t } = useTranslation()
   const form = useTabbedForm<ProductCreateSchemaType>()
+  const { getValues, setValue } = form
   const { setCloseOnEscape } = useRouteModal()
   const { setIsOpen: setStackedModalOpen } = useStackedModal()
 
@@ -89,7 +90,7 @@ const Root = () => {
   useEffect(() => {
     if (!stock_locations?.length) return
 
-    const current = form.getValues("variants") ?? []
+    const current = getValues("variants") ?? []
 
     current.forEach((variant, index) => {
       const inventory = { ...(variant.inventory ?? {}) }
@@ -107,12 +108,12 @@ const Root = () => {
       }
 
       if (changed) {
-        form.setValue(`variants.${index}.inventory`, inventory, {
+        setValue(`variants.${index}.inventory`, inventory, {
           shouldDirty: false,
         })
       }
     })
-  }, [stock_locations, variants.length, form.getValues, form.setValue])
+  }, [stock_locations, variants.length, getValues, setValue])
 
   const productTitle = useWatch({
     control: form.control,
@@ -132,7 +133,7 @@ const Root = () => {
     const trimmedTitle = productTitle.trim()
     if (!trimmedTitle) return
 
-    const current = form.getValues("variants") ?? []
+    const current = getValues("variants") ?? []
 
     current.forEach((variant, index) => {
       const hasOptions = !!variant.options && Object.keys(variant.options).length > 0
@@ -141,11 +142,11 @@ const Root = () => {
         return
       }
 
-      form.setValue(`variants.${index}.title`, trimmedTitle, {
+      setValue(`variants.${index}.title`, trimmedTitle, {
         shouldDirty: false,
       })
     })
-  }, [productTitle, variants.length, form.getValues, form.setValue])
+  }, [productTitle, variants.length, getValues, setValue])
 
   // SKU is store-only, generated once per row, and read-only in the grid —
   // there is nothing for the seller to edit, so this only ever fills in a
@@ -157,18 +158,18 @@ const Root = () => {
   useEffect(() => {
     if (!seller) return
 
-    const current = form.getValues("variants") ?? []
+    const current = getValues("variants") ?? []
 
     current.forEach((variant, index) => {
       if (variant.sku) {
         return
       }
 
-      form.setValue(`variants.${index}.sku`, generateVariantSku(seller), {
+      setValue(`variants.${index}.sku`, generateVariantSku(seller), {
         shouldDirty: false,
       })
     })
-  }, [seller, variants.length, form.getValues, form.setValue])
+  }, [seller, variants.length, getValues, setValue])
 
   const watchedMedia = useWatch({
     control: form.control,
@@ -190,7 +191,7 @@ const Root = () => {
         .filter((id): id is string => !!id)
     )
 
-    const current = form.getValues("variants") ?? []
+    const current = getValues("variants") ?? []
 
     current.forEach((variant, index) => {
       const media = variant.media ?? []
@@ -199,11 +200,11 @@ const Root = () => {
       const filtered = media.filter((m) => !!m.id && validIds.has(m.id))
       if (filtered.length === media.length) return
 
-      form.setValue(`variants.${index}.media`, filtered, {
+      setValue(`variants.${index}.media`, filtered, {
         shouldDirty: false,
       })
     })
-  }, [watchedMedia, form.getValues, form.setValue])
+  }, [watchedMedia, getValues, setValue])
 
   const watchedAttributes = useWatch({
     control: form.control,
@@ -299,7 +300,7 @@ const Root = () => {
 Root._tabMeta = defineTabMeta<ProductCreateSchemaType>({
   id: "variants",
   labelKey: "products.create.tabs.variants",
-  validationFields: ["variants"],
+  validationFields: ["variants", "shipping_profile_id"],
 })
 
 export const ProductCreateVariantsForm = Root
@@ -418,6 +419,7 @@ const useColumns = ({
         // row edits the same `shipping_profile_id` so the value stays in
         // sync across the whole grid.
         field: () => "shipping_profile_id",
+        sharedAcrossRows: true,
         type: "select",
         cell: (context) => (
           <DataGrid.SelectCell

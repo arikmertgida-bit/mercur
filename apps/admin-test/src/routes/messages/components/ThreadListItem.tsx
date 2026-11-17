@@ -126,9 +126,11 @@ export function ThreadListItem({ conv, isActive, onOpen, onDelete }: ThreadListI
   return (
     <>
       <div className="relative group">
-        <div
+        <button
+          type="button"
+          aria-current={isActive ? "true" : undefined}
           onClick={() => onOpen(conv.id)}
-          className={`w-full text-left p-3 border-b border-ui-border-base transition-colors hover:bg-ui-bg-base-hover cursor-pointer ${
+          className={`block w-full text-left p-3 border-b border-ui-border-base transition-colors hover:bg-ui-bg-base-hover cursor-pointer ${
             isActive ? "bg-ui-bg-base border-l-2 border-l-ui-border-interactive" : ""
           }`}
         >
@@ -160,7 +162,7 @@ export function ThreadListItem({ conv, isActive, onOpen, onDelete }: ThreadListI
                   {formatRelativeTime(conv.updatedAt, i18n.language)}
                 </span>
               </div>
-              <p className="text-xs text-ui-fg-muted truncate mt-0.5">
+              <span className="block text-xs text-ui-fg-muted truncate mt-0.5">
                 {lastMsg
                   ? lastMsg.messageType === "IMAGE"
                     ? `📷 ${t("messenger.image")}`
@@ -168,7 +170,7 @@ export function ThreadListItem({ conv, isActive, onOpen, onDelete }: ThreadListI
                   : conv.type === "ADMIN_SUPPORT"
                     ? t("messenger.support")
                     : t("messenger.direct")}
-              </p>
+              </span>
               {isProduct ? (
                 <span className="mt-1 inline-flex items-center gap-1 text-[10px] px-1.5 py-0.5 rounded-full bg-ui-tag-orange-bg text-ui-tag-orange-text font-medium max-w-full">
                   <ShoppingBag className="w-2.5 h-2.5 flex-shrink-0" />
@@ -182,10 +184,14 @@ export function ThreadListItem({ conv, isActive, onOpen, onDelete }: ThreadListI
               )}
             </div>
           </div>
-        </div>
+        </button>
 
         {/* 3-dot menu */}
-        <div className="absolute right-2 top-1/2 -translate-y-1/2 z-10" onClick={(e) => e.stopPropagation()}>
+        <div
+          role="presentation"
+          className="absolute right-2 top-1/2 -translate-y-1/2 z-10"
+          onClick={(e) => e.stopPropagation()}
+        >
           <DropdownMenu>
             <DropdownMenu.Trigger asChild>
               <IconButton

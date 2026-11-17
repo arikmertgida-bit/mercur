@@ -596,7 +596,8 @@
         "requiredTitle": "Unesite naslov",
         "requiredCategory": "Odaberite kategoriju",
         "handleInvalidFormat": "Identifikator (handle) smije sadržavati samo mala slova, brojeve i crtice",
-        "handleMustContainLetter": "Identifikator (handle) mora sadržavati najmanje jedno slovo"
+        "handleMustContainLetter": "Identifikator (handle) mora sadržavati najmanje jedno slovo",
+        "formIncomplete": "Nedostaju neka obavezna polja — provjerite označene redove prije objavljivanja."
       },
       "inventory": {
         "heading": "Kits inventara",

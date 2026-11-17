@@ -9,7 +9,6 @@ import { keepPreviousData } from "@tanstack/react-query"
 import {
   RowSelectionState,
   createColumnHelper,
-  type ColumnDef,
 } from "@tanstack/react-table"
 
 import { useExtendableTable, useLinkQuery, mergeListFilters } from "@mercurjs/dashboard-shared"

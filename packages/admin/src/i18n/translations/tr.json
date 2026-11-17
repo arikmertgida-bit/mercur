@@ -591,7 +591,8 @@
         "requiredTitle": "Lütfen bir başlık girin",
         "requiredCategory": "Lütfen bir kategori seçin",
         "handleInvalidFormat": "Handle yalnızca küçük harf, rakam ve tire içerebilir",
-        "handleMustContainLetter": "Handle en az bir harf içermelidir"
+        "handleMustContainLetter": "Handle en az bir harf içermelidir",
+        "formIncomplete": "Eksik alanlar var — yayınlamadan önce işaretli satırları kontrol edin."
       },
       "inventory": {
         "heading": "Envanter Kitleri",

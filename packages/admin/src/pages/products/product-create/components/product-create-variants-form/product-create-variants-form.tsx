@@ -23,6 +23,7 @@ type ShippingProfileLite = { id: string; name?: string | null };
 const Root = () => {
   const { t } = useTranslation();
   const form = useTabbedForm<ProductCreateSchemaType>();
+  const { getValues, setValue } = form;
   const { setCloseOnEscape } = useRouteModal();
 
   const [search, setSearch] = useState("");
@@ -51,7 +52,7 @@ const Root = () => {
   useEffect(() => {
     if (!stock_locations?.length) return;
 
-    const current = form.getValues("variants") ?? [];
+    const current = getValues("variants") ?? [];
     let changed = false;
 
     const next = current.map((variant) => {
@@ -70,9 +71,9 @@ const Root = () => {
     });
 
     if (changed) {
-      form.setValue("variants", next, { shouldDirty: false });
+      setValue("variants", next, { shouldDirty: false });
     }
-  }, [stock_locations, variants.length, form.getValues, form.setValue]);
+  }, [stock_locations, variants.length, getValues, setValue]);
 
   const watchedAttributes = useWatch({
     control: form.control,
@@ -164,7 +165,7 @@ const Root = () => {
 Root._tabMeta = defineTabMeta<ProductCreateSchemaType>({
   id: "variants",
   labelKey: "products.create.tabs.variants",
-  validationFields: ["variants"],
+  validationFields: ["variants", "shipping_profile_id"],
 });
 
 export const ProductCreateVariantsForm = Root;
@@ -250,6 +251,7 @@ const useColumns = ({
         // row edits the same `shipping_profile_id` so the value stays in
         // sync across the whole grid.
         field: () => "shipping_profile_id",
+        sharedAcrossRows: true,
         type: "select",
         cell: (context) => (
           <DataGrid.SelectCell

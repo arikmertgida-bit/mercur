@@ -675,6 +675,7 @@ export function MessengerVendorInbox({ sellerId: _sellerId, sellerLogo }: Messen
         onIndexChange={(nextIndex) => {
           if (nextIndex === null) setLightboxSrc(null)
         }}
+        labels={{ close: t("actions.close"), previous: t("general.prev"), next: t("general.next") }}
       />
 
       {/* Delete confirmation dialog */}

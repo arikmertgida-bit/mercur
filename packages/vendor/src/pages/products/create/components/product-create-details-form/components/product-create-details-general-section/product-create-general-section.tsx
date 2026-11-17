@@ -13,16 +13,17 @@ import { ProductCreateSchemaType } from "../../../../types"
 
 export const ProductCreateGeneralSection = () => {
   const form = useTabbedForm<ProductCreateSchemaType>()
+  const { setValue } = form
   const { t } = useTranslation()
 
   const titleValue = useWatch({ control: form.control, name: "title" })
 
   useEffect(() => {
-    form.setValue("handle", toHandle(titleValue ?? ""), {
+    setValue("handle", toHandle(titleValue ?? ""), {
       shouldValidate: true,
       shouldDirty: false,
     })
-  }, [titleValue, form.setValue])
+  }, [titleValue, setValue])
 
   return (
     <div id="general" className="flex flex-col gap-y-6" data-testid="product-create-general-section">

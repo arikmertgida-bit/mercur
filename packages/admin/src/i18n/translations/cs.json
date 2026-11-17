@@ -596,7 +596,8 @@
         "requiredTitle": "Zadejte prosím název",
         "requiredCategory": "Vyberte prosím kategorii",
         "handleInvalidFormat": "Identifikátor smí obsahovat pouze malá písmena, čísla a spojovníky",
-        "handleMustContainLetter": "Identifikátor musí obsahovat alespoň jedno písmeno"
+        "handleMustContainLetter": "Identifikátor musí obsahovat alespoň jedno písmeno",
+        "formIncomplete": "Chybí některá povinná pole — před publikováním zkontrolujte zvýrazněné řádky."
       },
       "inventory": {
         "heading": "Sady inventáře",

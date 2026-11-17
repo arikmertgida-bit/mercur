@@ -1,4 +1,4 @@
-import { z, ZodIssueCode } from "zod"
+import { z } from "zod"
 import { i18n } from "../components/utilities/i18n/i18n"
 
 interface ZodValidationMessages {
@@ -50,48 +50,37 @@ function messagesForCurrentLanguage(): ZodValidationMessages {
 }
 
 /**
- * Zod's built-in default messages ("String must contain at least 1
- * character(s)", "Required") are always English and bypass the app's i18n
- * layer entirely — this custom error map is zod's own supported extension
- * point (https://zod.dev/error-customization#error-map) for replacing them,
- * used only when a schema doesn't already set its own `message`.
+ * Zod's built-in default messages ("Too small: expected string to have
+ * >=1 characters", "Invalid input") are always English and bypass the app's
+ * i18n layer — `z.config({ customError })` is Zod 4's supported extension
+ * point for replacing them, used only when a schema doesn't set its own
+ * `message`. Returning `undefined` keeps Zod's default for the rest.
+ *
+ * Zod 4 calls the map with the issue only (no Zod 3 `ctx`): the previous
+ * Zod 3 style map read `ctx.defaultError` and threw on every unhandled code
+ * (e.g. `invalid_union`), which aborted form validation altogether.
  */
-const kayiZodErrorMap: z.ZodErrorMap = (issue, ctx) => {
+const kayiZodErrorMap: z.core.$ZodErrorMap = (issue) => {
   const messages = messagesForCurrentLanguage()
 
-  if (issue.code === ZodIssueCode.invalid_type && issue.received === "undefined") {
-    return { message: messages.required }
+  switch (issue.code) {
+    case "invalid_type":
+      return issue.input === undefined ? messages.required : messages.invalid
+    case "too_small":
+      return messages.tooSmall.replace("{min}", String(issue.minimum))
+    case "too_big":
+      return messages.tooBig.replace("{max}", String(issue.maximum))
+    case "invalid_format":
+      if (issue.format === "email") return messages.invalidEmail
+      if (issue.format === "url") return messages.invalidUrl
+      return messages.invalid
+    case "invalid_value":
+      return messages.invalid
+    default:
+      return undefined
   }
-
-  if (issue.code === ZodIssueCode.too_small) {
-    return { message: messages.tooSmall.replace("{min}", String(issue.minimum)) }
-  }
-
-  if (issue.code === ZodIssueCode.too_big) {
-    return { message: messages.tooBig.replace("{max}", String(issue.maximum)) }
-  }
-
-  if (issue.code === ZodIssueCode.invalid_string) {
-    if (issue.validation === "email") {
-      return { message: messages.invalidEmail }
-    }
-    if (issue.validation === "url") {
-      return { message: messages.invalidUrl }
-    }
-    return { message: messages.invalid }
-  }
-
-  if (
-    issue.code === ZodIssueCode.invalid_type ||
-    issue.code === ZodIssueCode.invalid_enum_value ||
-    issue.code === ZodIssueCode.invalid_date
-  ) {
-    return { message: messages.invalid }
-  }
-
-  return { message: ctx.defaultError }
 }
 
 export function installKayiZodErrorMap(): void {
-  z.setErrorMap(kayiZodErrorMap)
+  z.config({ customError: kayiZodErrorMap })
 }

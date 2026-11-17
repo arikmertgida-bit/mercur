@@ -19,6 +19,14 @@ type ImageLightboxProps = {
   /** Index of the image currently shown, or null when the lightbox is closed. */
   index: number | null
   onIndexChange: (index: number | null) => void
+  /** Accessible names for the icon-only buttons; this package has no i18n of its own. */
+  labels: ImageLightboxLabels
+}
+
+export type ImageLightboxLabels = {
+  close: string
+  previous: string
+  next: string
 }
 
 /**
@@ -33,6 +41,7 @@ export const ImageLightbox = ({
   images,
   index,
   onIndexChange,
+  labels,
 }: ImageLightboxProps) => {
   const activeIndex =
     index !== null && images.length > 0
@@ -127,6 +136,7 @@ export const ImageLightbox = ({
               "bg-ui-bg-base shadow-elevation-modal flex w-full max-w-[420px] flex-col overflow-hidden rounded-lg border outline-none sm:max-w-[840px]",
               "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 data-[state=closed]:zoom-out-95 duration-150"
             )}
+            role="presentation"
             onClick={(event): void => event.stopPropagation()}
           >
             <div className="border-ui-border-base flex items-center justify-between gap-x-4 border-b px-4 py-2">
@@ -138,7 +148,12 @@ export const ImageLightbox = ({
                 <span />
               )}
               <RadixDialog.Close asChild>
-                <IconButton variant="transparent" size="small" type="button">
+                <IconButton
+                  variant="transparent"
+                  size="small"
+                  type="button"
+                  aria-label={labels.close}
+                >
                   <XMark />
                 </IconButton>
               </RadixDialog.Close>
@@ -174,6 +189,7 @@ export const ImageLightbox = ({
                     variant="transparent"
                     size="small"
                     className="bg-ui-bg-base/80 hover:bg-ui-bg-base absolute left-2 top-1/2 -translate-y-1/2"
+                    aria-label={labels.previous}
                     onClick={(event): void => {
                       event.stopPropagation()
                       goTo(-1)
@@ -185,6 +201,7 @@ export const ImageLightbox = ({
                     variant="transparent"
                     size="small"
                     className="bg-ui-bg-base/80 hover:bg-ui-bg-base absolute right-2 top-1/2 -translate-y-1/2"
+                    aria-label={labels.next}
                     onClick={(event): void => {
                       event.stopPropagation()
                       goTo(1)

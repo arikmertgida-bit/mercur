@@ -1,8 +1,9 @@
 import { HttpTypes } from "@medusajs/types";
 import { Button, toast } from "@medusajs/ui";
 import { ReactNode, useEffect, useMemo, Children } from "react";
-import { useForm } from "react-hook-form";
+import { FieldErrors, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import { TFunction } from "i18next";
 import { isForbidden, useCan } from "@mercurjs/dashboard-shared";
 import {
   RouteFocusModal,
@@ -21,6 +22,11 @@ import {
   normalizeProductFormValues,
   subscribeVariantsToAttributes,
 } from "../../utils";
+import {
+  collectFormErrors,
+  FormErrorEntry,
+  FormErrorList,
+} from "../../../common/components/form-error-list";
 import { ProductCreateAttributesForm } from "../product-create-attributes-form";
 import { ProductCreateDetailsForm } from "../product-create-details-form";
 import { ProductCreateOrganizeForm } from "../product-create-organize-form";
@@ -29,6 +35,73 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { DeepPartial } from "react-hook-form";
 
 const SAVE_DRAFT_BUTTON = "save-draft-button";
+
+// Set by the schema on `variants` when every variant is deselected; the
+// details tab matches on it, so it stays a code and is only named here.
+const NO_VARIANTS_ERROR = "invalid_length";
+
+const FIELD_LABEL_KEYS: Record<string, string> = {
+  title: "products.fields.title.label",
+  subtitle: "products.fields.subtitle.label",
+  handle: "products.fields.handle.label",
+  description: "products.fields.description.label",
+  media: "products.media.label",
+  type_id: "products.fields.type.label",
+  collection_id: "products.fields.collection.label",
+  category_id: "fields.category",
+  seller_ids: "products.fields.stores.label",
+  tags: "products.fields.tags.label",
+  origin_country: "products.fields.countryOrigin.label",
+  shipping_profile_id: "products.fields.shipping_profile.label",
+  attributes: "products.create.tabs.attributes",
+  variants: "products.fields.variants.label",
+};
+
+const getErrorLabel = (
+  { path }: FormErrorEntry,
+  values: ProductCreateSchemaType,
+  t: TFunction,
+): string => {
+  const [field = "", index] = path;
+  const position = Number(index);
+
+  if (field === "attributes" && Number.isInteger(position)) {
+    const title = values.attributes?.[position]?.title;
+    if (title) return title;
+  }
+
+  if (field === "variants" && Number.isInteger(position)) {
+    const title = values.variants[position]?.title;
+    if (title) return title;
+  }
+
+  const key = FIELD_LABEL_KEYS[field];
+  return key ? t(key) : field;
+};
+
+const showFormErrors = (
+  errors: FieldErrors<ProductCreateSchemaType>,
+  values: ProductCreateSchemaType,
+  t: TFunction,
+): void => {
+  const lines = collectFormErrors(errors).map((entry) => ({
+    id: entry.path.join("."),
+    label: getErrorLabel(entry, values, t),
+    message:
+      entry.message === NO_VARIANTS_ERROR
+        ? t("products.create.errors.variants")
+        : entry.message,
+  }));
+
+  toast.error(t("products.create.errors.formIncomplete"), {
+    description: (
+      <FormErrorList
+        lines={lines}
+        moreLabel={(count) => t("general.plusCountMore", { count })}
+      />
+    ),
+  });
+};
 
 type ProductCreateFormProps = {
   children?: ReactNode;
@@ -152,7 +225,7 @@ export const ProductCreateForm = ({
         toast.error(error.message);
       }
     }
-  });
+  }, (errors) => showFormErrors(errors, form.getValues(), t));
 
   const defaultTabs = useMemo(
     () => [

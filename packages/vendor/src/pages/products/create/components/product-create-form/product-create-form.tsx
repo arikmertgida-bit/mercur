@@ -4,7 +4,7 @@ import { HttpTypes } from "@medusajs/types"
 import { Button, toast } from "@medusajs/ui"
 import { TFunction } from "i18next"
 import { ReactNode, useEffect, useMemo, Children } from "react"
-import { useForm, DeepPartial } from "react-hook-form"
+import { useForm, DeepPartial, FieldErrors } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { zodResolver } from "@hookform/resolvers/zod"
 
@@ -32,6 +32,11 @@ import {
   ResolvedMediaEntry,
   useProductMediaUpload,
 } from "../../../common/hooks/use-product-media-upload"
+import {
+  collectFormErrors,
+  FormErrorEntry,
+  FormErrorList,
+} from "../../../common/components/form-error-list"
 import { ProductCreateAttributesForm } from "../product-create-attributes-form"
 import { ProductCreateDetailsForm } from "../product-create-details-form"
 import { ProductCreateOrganizeForm } from "../product-create-organize-form"
@@ -44,6 +49,69 @@ type ProductCreateFormProps = {
 }
 
 type UploadedMediaEntry = ResolvedMediaEntry
+
+const FIELD_LABEL_KEYS: Record<string, string> = {
+  title: "products.fields.title.label",
+  subtitle: "products.fields.subtitle.label",
+  handle: "products.fields.handle.label",
+  description: "products.fields.description.label",
+  media: "products.media.label",
+  type_id: "products.fields.type.label",
+  collection_id: "products.fields.collection.label",
+  category_id: "fields.category",
+  tags: "products.fields.tags.label",
+  origin_country: "products.fields.countryOrigin.label",
+  shipping_profile_id: "products.fields.shipping_profile.label",
+  attributes: "products.create.tabs.attributes",
+  variants: "products.fields.variants.label",
+}
+
+/**
+ * Names the field an error belongs to the way the seller sees it: the
+ * attribute or variant title for rows, the field label otherwise.
+ */
+const getErrorLabel = (
+  { path }: FormErrorEntry,
+  values: ProductCreateSchemaType,
+  t: TFunction
+): string => {
+  const [field = "", index] = path
+  const position = Number(index)
+
+  if (field === "attributes" && Number.isInteger(position)) {
+    const title = values.attributes?.[position]?.title
+    if (title) return title
+  }
+
+  if (field === "variants" && Number.isInteger(position)) {
+    const title = values.variants[position]?.title
+    if (title) return title
+  }
+
+  const key = FIELD_LABEL_KEYS[field]
+  return key ? t(key) : field
+}
+
+const showFormErrors = (
+  errors: FieldErrors<ProductCreateSchemaType>,
+  values: ProductCreateSchemaType,
+  t: TFunction
+): void => {
+  const lines = collectFormErrors(errors).map((entry) => ({
+    id: entry.path.join("."),
+    label: getErrorLabel(entry, values, t),
+    message: entry.message,
+  }))
+
+  toast.error(t("products.create.errors.formIncomplete"), {
+    description: (
+      <FormErrorList
+        lines={lines}
+        moreLabel={(count) => t("general.plusCountMore", { count })}
+      />
+    ),
+  })
+}
 
 /**
  * Fires the per-variant `thumbnail`/`images.add` follow-up calls (see
@@ -255,14 +323,11 @@ const ProductCreateFormContent = ({
     async (values) => {
       await submitProduct(values, false)
     },
-    () => {
-      // Zod's superRefine (required shipping profile / price / stock /
-      // variant media) already populated `formState.errors` — the
-      // Variants-tab DataGrid highlights each affected row on its own via
-      // that same error state. This toast is just the unmissable signal
-      // that publish was blocked, since a per-row badge alone is easy to
-      // miss on a long grid.
-      toast.error(t("products.create.errors.formIncomplete"))
+    (errors) => {
+      // The DataGrid marks the affected cells and TabbedForm opens the tab
+      // holding the first error; the toast names every field so nothing on
+      // another tab goes unnoticed.
+      showFormErrors(errors, form.getValues(), t)
     }
   )
 
@@ -271,6 +336,11 @@ const ProductCreateFormContent = ({
     // incomplete products without filling category, attributes, etc.
     const titleValid = await form.trigger("title")
     if (!titleValid) {
+      showFormErrors(
+        { title: form.getFieldState("title").error },
+        form.getValues(),
+        t
+      )
       return
     }
     await submitProduct(form.getValues(), true)

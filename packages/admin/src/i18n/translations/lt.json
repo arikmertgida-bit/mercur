@@ -596,7 +596,8 @@
         "requiredTitle": "Įveskite pavadinimą",
         "requiredCategory": "Pasirinkite kategoriją",
         "handleInvalidFormat": "URL identifikatorių gali sudaryti tik mažosios raidės, skaičiai ir brūkšneliai",
-        "handleMustContainLetter": "URL identifikatoriuje turi būti bent viena raidė"
+        "handleMustContainLetter": "URL identifikatoriuje turi būti bent viena raidė",
+        "formIncomplete": "Trūksta kai kurių privalomų laukų — prieš publikuodami patikrinkite paryškintas eilutes."
       },
       "inventory": {
         "heading": "Atsargų rinkiniai",

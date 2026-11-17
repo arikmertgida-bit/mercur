@@ -21,16 +21,17 @@ import { CreateCategorySchema } from "./schema"
 const Root = () => {
   const { t } = useTranslation()
   const form = useTabbedForm<CreateCategorySchema>()
+  const { setValue } = form
   const direction = useDocumentDirection()
 
   const nameValue = useWatch({ control: form.control, name: "name" })
 
   useEffect(() => {
-    form.setValue("handle", toHandle(nameValue ?? ""), {
+    setValue("handle", toHandle(nameValue ?? ""), {
       shouldValidate: true,
       shouldDirty: false,
     })
-  }, [nameValue, form.setValue])
+  }, [nameValue, setValue])
 
   return (
     <div className="flex flex-col items-center p-16">
