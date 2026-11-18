@@ -8,6 +8,96 @@ import {
   MedusaError,
   promiseAll,
 } from "@medusajs/framework/utils"
+import { z } from "zod"
+
+import { parseGraphRows } from "../../../utils/graph-rows"
+import { validateSellerFulfillmentSet } from "../fulfillment-sets/helpers"
+
+const ServiceZoneRowSchema = z.object({ fulfillment_set_id: z.string() })
+
+const IdRowSchema = z.object({ id: z.string() })
+
+const ShippingOptionChildrenRowSchema = z.object({
+  rules: z.array(IdRowSchema.nullable()).nullish(),
+  prices: z.array(IdRowSchema.nullable()).nullish(),
+})
+
+/**
+ * A service zone has no seller link of its own; it belongs to the seller
+ * that owns the stock location its fulfillment set is attached to.
+ */
+export const validateSellerServiceZone = async (
+  scope: MedusaContainer,
+  sellerId: string,
+  serviceZoneId: string
+): Promise<void> => {
+  const query = scope.resolve(ContainerRegistrationKeys.QUERY)
+
+  const { data } = await query.graph({
+    entity: "service_zone",
+    filters: { id: serviceZoneId },
+    fields: ["fulfillment_set_id"],
+  })
+
+  const [zone] = parseGraphRows(ServiceZoneRowSchema, data)
+
+  if (!zone) {
+    throw new MedusaError(
+      MedusaError.Types.NOT_FOUND,
+      `Service zone with id: ${serviceZoneId} was not found`
+    )
+  }
+
+  await validateSellerFulfillmentSet(scope, sellerId, zone.fulfillment_set_id)
+}
+
+/**
+ * Medusa updates and deletes rules and prices by their own id, without
+ * checking which shipping option they belong to. Ids sent through a
+ * seller's option must therefore be that option's own rules and prices.
+ */
+export const validateShippingOptionChildIds = async (
+  scope: MedusaContainer,
+  shippingOptionId: string,
+  ids: { rule_ids?: string[]; price_ids?: string[] }
+): Promise<void> => {
+  const ruleIds = ids.rule_ids ?? []
+  const priceIds = ids.price_ids ?? []
+
+  if (!ruleIds.length && !priceIds.length) {
+    return
+  }
+
+  const query = scope.resolve(ContainerRegistrationKeys.QUERY)
+
+  const { data } = await query.graph({
+    entity: "shipping_option",
+    filters: { id: shippingOptionId },
+    fields: ["rules.id", "prices.id"],
+  })
+
+  const [option] = parseGraphRows(ShippingOptionChildrenRowSchema, data)
+  const ownIds = (rows: ({ id: string } | null)[] | null | undefined) =>
+    new Set((rows ?? []).flatMap((row) => (row ? [row.id] : [])))
+
+  const ownRules = ownIds(option?.rules)
+  const foreignRule = ruleIds.find((id) => !ownRules.has(id))
+  if (foreignRule) {
+    throw new MedusaError(
+      MedusaError.Types.NOT_FOUND,
+      `Shipping option rule with id: ${foreignRule} was not found`
+    )
+  }
+
+  const ownPrices = ownIds(option?.prices)
+  const foreignPrice = priceIds.find((id) => !ownPrices.has(id))
+  if (foreignPrice) {
+    throw new MedusaError(
+      MedusaError.Types.NOT_FOUND,
+      `Shipping option price with id: ${foreignPrice} was not found`
+    )
+  }
+}
 
 export const validateSellerShippingOption = async (
   scope: MedusaContainer,

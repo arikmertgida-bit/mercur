@@ -169,7 +169,11 @@ const CreateProduct = z
   .object({
     title: z.string(),
     subtitle: z.string().optional(),
-    description: z.string().optional().transform(sanitizeOptionalRichText),
+    description: z
+      .string()
+      .optional()
+      .transform(sanitizeOptionalRichText)
+      .optional(),
     status: statusEnum.optional(),
     is_giftcard: booleanString().optional().default(false),
     discountable: booleanString().optional().default(true),
@@ -223,7 +227,11 @@ const UpdateProduct = z
   .object({
     title: z.string().optional(),
     subtitle: z.string().nullish(),
-    description: z.string().nullish().transform(sanitizeNullableRichText),
+    description: z
+      .string()
+      .nullish()
+      .transform(sanitizeNullableRichText)
+      .optional(),
     discountable: booleanString().optional(),
     is_giftcard: booleanString().optional(),
     images: z

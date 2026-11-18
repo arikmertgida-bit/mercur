@@ -24,6 +24,9 @@ requireEnv('MEILISEARCH_MASTER_KEY')
 // without them the backend used a publicly known default secret.
 requireEnv('JWT_SECRET')
 requireEnv('MESSENGER_INTERNAL_SECRET')
+// Messenger tokens get their own secret so Medusa never accepts one as a
+// session (lib/messenger-token also refuses a value equal to JWT_SECRET).
+requireEnv('MESSENGER_JWT_SECRET')
 
 module.exports = withMercur({
   projectConfig: {

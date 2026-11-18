@@ -1,17 +1,15 @@
 import { AuthenticatedMedusaRequest, MedusaResponse } from "@medusajs/framework/http"
 import { MedusaError } from "@medusajs/framework/utils"
-import jwt from "jsonwebtoken"
 import { z } from "zod"
 import type {} from "@mercurjs/core/types/seller-context"
 
 import { getCatchMessage } from "../../../lib/errors"
 import { moduleKayiLogger } from "../../../lib/logger"
+import {
+  MessengerActorType,
+  signMessengerToken,
+} from "../../../lib/messenger-token"
 
-const rawJwtSecret = process.env.JWT_SECRET
-if (!rawJwtSecret) {
-  throw new Error("[notification-preferences] JWT_SECRET environment variable is not set")
-}
-const JWT_SECRET: string = rawJwtSecret
 
 const MESSENGER_URL =
   process.env.MESSENGER_INTERNAL_URL || "http://messenger:4000"
@@ -37,11 +35,7 @@ const PreferencesRequestBodySchema = z.object({
  * preferences themselves have exactly one source of truth.
  */
 function mintMessengerToken(sellerId: string): string {
-  return jwt.sign(
-    { sub: sellerId, actor_id: sellerId, actor_type: "seller" },
-    JWT_SECRET,
-    { expiresIn: "1m" }
-  )
+  return signMessengerToken(sellerId, MessengerActorType.SELLER, "1m")
 }
 
 function requireSellerId(req: AuthenticatedMedusaRequest): string {

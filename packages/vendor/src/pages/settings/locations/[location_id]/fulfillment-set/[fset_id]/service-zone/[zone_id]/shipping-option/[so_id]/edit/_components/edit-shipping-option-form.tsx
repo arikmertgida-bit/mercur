@@ -13,10 +13,10 @@ import { RouteDrawer, useRouteModal } from "@components/modals"
 import { KeyboundForm } from "@components/utilities/keybound-form"
 import { useUpdateShippingOptions } from "@hooks/api/shipping-options"
 import { useComboboxData } from "@hooks/use-combobox-data"
-import { fetchQuery } from "@lib/client"
+import { sdk } from "@lib/client"
+import { InferClientInput, InferClientOutput } from "@mercurjs/client"
 import {
   buildShippingOptionRules,
-  getShippingProfileName,
   isOptionEnabledInStore,
   toShippingOptionPriceType,
 } from "@lib/shipping-options"
@@ -51,20 +51,13 @@ export const EditShippingOptionForm = ({
   const profilesGate = usePermissionGate("shipping_profiles:view")
 
   const shippingProfiles = useComboboxData({
-    queryFn: async () => {
-      const { shipping_profiles } = await fetchQuery(
-        "/vendor/shipping-profiles",
-        {
-          method: "GET",
-        }
-      )
-      return shipping_profiles
-    },
+    queryFn: (params: InferClientInput<typeof sdk.vendor.shippingProfiles.query>) =>
+      sdk.vendor.shippingProfiles.query(params),
     queryKey: ["shipping_profiles_edit_shipping_option"],
-    getOptions: (data) =>
-      data?.map((profile: { shipping_profile?: { name?: string; id?: string }; name?: string; id: string }) => ({
-        label: getShippingProfileName(profile.shipping_profile?.name ?? profile.name ?? ""),
-        value: profile.shipping_profile?.id ?? profile.id,
+    getOptions: (data: InferClientOutput<typeof sdk.vendor.shippingProfiles.query>) =>
+      data.shipping_profiles.map((profile) => ({
+        label: profile.name,
+        value: profile.id,
       })),
     defaultValue: shippingOption.shipping_profile_id,
     enabled: profilesGate.allowed,

@@ -1,10 +1,12 @@
-import { AdminShippingProfileResponse } from "@medusajs/types"
+import type { HttpTypes } from "@mercurjs/types"
 import { createColumnHelper } from "@tanstack/react-table"
 import { useMemo } from "react"
 import { useTranslation } from "react-i18next"
 
+import { ShippingProfileRowActions } from "./shipping-profile-row-actions"
+
 const columnHelper =
-  createColumnHelper<AdminShippingProfileResponse["shipping_profile"]>()
+  createColumnHelper<HttpTypes.VendorShippingProfileResponse["shipping_profile"]>()
 
 export const useShippingProfileTableColumns = () => {
   const { t } = useTranslation()
@@ -18,6 +20,10 @@ export const useShippingProfileTableColumns = () => {
       columnHelper.accessor("type", {
         header: t("fields.type"),
         cell: (cell) => cell.getValue(),
+      }),
+      columnHelper.display({
+        id: "actions",
+        cell: ({ row }) => <ShippingProfileRowActions profile={row.original} />,
       }),
     ],
     [t]

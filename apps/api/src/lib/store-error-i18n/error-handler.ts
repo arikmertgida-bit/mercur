@@ -5,7 +5,10 @@ import { MedusaError } from "@medusajs/framework/utils"
 import { toHandledError } from "../errors"
 import { resolveKayiLogger } from "../logger"
 import { resolveStoreLanguage } from "./languages"
-import { translateStoreError } from "./translate-error"
+import {
+  translateEnglishStoreError,
+  translateStoreError,
+} from "./translate-error"
 
 const fallbackErrorHandler = defaultErrorHandler()
 
@@ -63,6 +66,11 @@ export const storeAwareErrorHandler: MedusaErrorHandlerFunction = (
 
   const language = resolveStoreLanguage(req.headers["accept-language"])
   if (language === "en") {
+    const english = translateEnglishStoreError(handledError)
+    if (english) {
+      res.status(statusCodeFor(english.type)).json(english)
+      return
+    }
     fallbackErrorHandler(error, req, res, next)
     return
   }

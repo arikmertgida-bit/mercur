@@ -6,7 +6,8 @@ import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
 import { HttpTypes } from "@mercurjs/types"
 
 import { createSellerShippingOptionsWorkflow } from "../../../workflows/shipping-option"
-import { refetchShippingOption } from "./helpers"
+import { refetchShippingOption, validateSellerServiceZone } from "./helpers"
+import { validateSellerShippingProfile } from "../shipping-profiles/helpers"
 import { VendorCreateShippingOptionType } from "./validators"
 import { getSellerId } from "../../utils/seller-context"
 
@@ -36,6 +37,17 @@ export const POST = async (
   res: MedusaResponse<HttpTypes.VendorShippingOptionResponse>
 ) => {
   const sellerId = getSellerId(req)
+
+  await validateSellerServiceZone(
+    req.scope,
+    sellerId,
+    req.validatedBody.service_zone_id
+  )
+  await validateSellerShippingProfile(
+    req.scope,
+    sellerId,
+    req.validatedBody.shipping_profile_id
+  )
 
   const { result } = await createSellerShippingOptionsWorkflow(req.scope).run({
     input: {

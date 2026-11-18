@@ -119,7 +119,7 @@ medusaIntegrationTestRunner({
                 )
                 const shippingProfile = await createShippingProfile(appContainer, {
                     name: `SP${tag}`,
-                })
+                }, { seller_id: result.seller.id })
 
                 await api.post(
                     `/vendor/stock-locations/${stockLocation.id}/fulfillment-providers`,

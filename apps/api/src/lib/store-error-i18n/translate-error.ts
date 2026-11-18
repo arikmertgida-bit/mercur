@@ -151,6 +151,30 @@ function typeFallbackFor(type: string, messages: StoreErrorMessages): string {
 const CAMPAIGN_ATTRIBUTE_REQUIRED =
   /^Attribute value for "[a-z_]+" is required by promotion campaing? budget$/
 
+export const CAMPAIGN_REQUIRES_LOGIN_CODE = "campaign_requires_login"
+const CAMPAIGN_REQUIRES_LOGIN_EN = "Log in to use this campaign."
+
+/**
+ * English store requests normally keep Medusa's own message, but this one is
+ * an internal sentence (with Medusa's typo) shown to a guest who entered a
+ * per-customer campaign code, so it is replaced in English too.
+ */
+export function translateEnglishStoreError(
+  error: Error
+): TranslatedStoreError | undefined {
+  if (
+    MedusaError.isMedusaError(error) &&
+    CAMPAIGN_ATTRIBUTE_REQUIRED.test(error.message)
+  ) {
+    return {
+      code: CAMPAIGN_REQUIRES_LOGIN_CODE,
+      type: error.type,
+      message: CAMPAIGN_REQUIRES_LOGIN_EN,
+    }
+  }
+  return undefined
+}
+
 export function translateStoreError(
   error: Error,
   language: StoreLanguage
@@ -195,7 +219,7 @@ export function translateStoreError(
 
     if (CAMPAIGN_ATTRIBUTE_REQUIRED.test(error.message)) {
       return {
-        code: error.code ?? "campaign_requires_login",
+        code: error.code ?? CAMPAIGN_REQUIRES_LOGIN_CODE,
         type: error.type,
         message: messages.campaignRequiresLogin,
       }

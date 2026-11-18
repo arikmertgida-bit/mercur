@@ -46,7 +46,6 @@ import { getLocalizedCountryName } from "@lib/format-country-name"
 import { isTruthy } from "@lib/is-truthy"
 import { formatProvider } from "@lib/format-provider"
 import {
-  getShippingProfileName,
   isReturnOption,
 } from "@lib/shipping-options"
 import {
@@ -152,7 +151,7 @@ function ShippingOption({
     <div className="flex items-center justify-between px-3 py-2">
       <div className="flex-1">
         <Text size="small" weight="plus">
-          {option.name} - {getShippingProfileName(option.shipping_profile?.name ?? "")}{" "}
+          {option.name} - {option.shipping_profile?.name ?? ""}{" "}
           ({formatProvider(option.provider_id, t)})
         </Text>
       </div>

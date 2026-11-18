@@ -1242,6 +1242,14 @@ export function getRouteMap({
                             await import("./pages/settings/shipping-profiles");
                           return { Component: ShippingProfileListPage };
                         },
+                        children: [
+                          {
+                            path: "create",
+                            handle: { permissions: "shipping_profiles:edit" },
+                            lazy: () =>
+                              import("./pages/settings/shipping-profiles/create"),
+                          },
+                        ],
                       },
                       {
                         path: ":shipping_profile_id",

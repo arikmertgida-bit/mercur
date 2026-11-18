@@ -2026,7 +2026,7 @@
     "sidebar": {
       "header": "Teslimat Yapılandırması",
       "shippingProfiles": {
-        "label": "Teslimat Profilleri",
+        "label": "Kargo Profilleri",
         "description": "Ürünleri teslimat gereksinimlerine göre gruplayın"
       },
       "shippingOptionTypes": {
@@ -2182,20 +2182,20 @@
     }
   },
   "shippingProfile": {
-    "domain": "teslimat Profilleri",
+    "domain": "Kargo Profilleri",
     "subtitle": "Benzer teslimat gereksinimlerine sahip ürünleri profillere gruplandırın.",
     "create": {
-      "header": "teslimat Profili Oluştur",
-      "hint": "Benzer teslimat gereksinimlerine sahip ürünleri gruplandırmak için yeni bir teslimat profili oluşturun.",
-      "successToast": "teslimat profili {{name}} başarıyla oluşturuldu."
+      "header": "Kargo Profili Oluştur",
+      "hint": "Benzer teslimat gereksinimlerine sahip ürünleri gruplandırmak için yeni bir kargo profili oluşturun.",
+      "successToast": "{{name}} kargo profili oluşturuldu."
     },
     "delete": {
-      "title": "teslimat Profilini Sil",
-      "description": "teslimat profili {{name}} silinmek üzere. Bu işlem geri alınamaz.",
-      "successToast": "teslimat profili {{name}} başarıyla silindi."
+      "title": "Kargo Profilini Sil",
+      "description": "{{name}} kargo profili silinecek. Bu işlem geri alınamaz.",
+      "successToast": "{{name}} kargo profili silindi."
     },
     "tooltip": {
-      "type": "teslimat profili türünü girin, örneğin: Ağır, Aşırı Büyük, Sadece teslimat, vb."
+      "type": "Kargo profilinin türünü girin, örneğin: Ağır, Aşırı Büyük, Yalnız Teslimat."
     }
   },
   "taxRegions": {

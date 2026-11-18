@@ -18,6 +18,7 @@
         "JWT_SECRET",
         "COOKIE_SECRET",
         "MESSENGER_INTERNAL_SECRET",
+        "MESSENGER_JWT_SECRET",
         "MINIO_ENDPOINT",
         "MINIO_FILE_URL",
         "MINIO_PUBLIC_URL",

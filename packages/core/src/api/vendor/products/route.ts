@@ -13,6 +13,7 @@ import {
 import { enrichProductAttributes } from "../../utils"
 import { VendorCreateProductType, VendorGetProductsParamsType } from "./validators"
 import { getSellerId } from "../../utils/seller-context"
+import { validateSellerShippingProfile } from "../shipping-profiles/helpers"
 
 export const GET = async (
   req: AuthenticatedMedusaRequest<
@@ -48,6 +49,12 @@ export const POST = async (
   const sellerId = getSellerId(req)
 
   const { additional_data, ...payload } = req.validatedBody
+
+  await validateSellerShippingProfile(
+    req.scope,
+    sellerId,
+    payload.shipping_profile_id
+  )
 
   const productInput: CreateProductsWorkflowInput["products"][number] = {
     ...payload,

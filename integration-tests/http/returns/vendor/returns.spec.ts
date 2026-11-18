@@ -282,7 +282,7 @@ medusaIntegrationTestRunner({
                 // Create shipping profile
                 const shippingProfile = await createShippingProfile(appContainer, {
                     name: `Ret Shipping Profile${uniqueSuffix}`,
-                })
+                }, { seller_id: headers.headers["x-seller-id"] })
 
                 // Add fulfillment provider
                 await api.post(

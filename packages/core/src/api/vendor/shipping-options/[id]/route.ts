@@ -10,7 +10,12 @@ import {
 import { MedusaError } from "@medusajs/framework/utils"
 import { HttpTypes } from "@mercurjs/types"
 
-import { refetchShippingOption, validateSellerShippingOption } from "../helpers"
+import {
+  refetchShippingOption,
+  validateSellerShippingOption,
+  validateShippingOptionChildIds,
+} from "../helpers"
+import { validateSellerShippingProfile } from "../../shipping-profiles/helpers"
 import { VendorUpdateShippingOptionType } from "../validators"
 import { getSellerId } from "../../../utils/seller-context"
 
@@ -47,6 +52,20 @@ export const POST = async (
   await validateSellerShippingOption(req.scope, sellerId, req.params.id)
 
   const shippingOptionPayload = req.validatedBody
+
+  await validateSellerShippingProfile(
+    req.scope,
+    sellerId,
+    shippingOptionPayload.shipping_profile_id
+  )
+  await validateShippingOptionChildIds(req.scope, req.params.id, {
+    rule_ids: (shippingOptionPayload.rules ?? []).flatMap((rule) =>
+      "id" in rule ? [rule.id] : []
+    ),
+    price_ids: (shippingOptionPayload.prices ?? []).flatMap((price) =>
+      price.id ? [price.id] : []
+    ),
+  })
 
   const workflow = updateShippingOptionsWorkflow(req.scope)
 

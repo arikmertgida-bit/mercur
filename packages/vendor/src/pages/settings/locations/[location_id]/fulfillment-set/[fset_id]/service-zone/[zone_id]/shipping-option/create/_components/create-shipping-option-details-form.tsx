@@ -10,7 +10,8 @@ import { Form } from "@components/common/form"
 import { Combobox } from "@components/inputs/combobox"
 import { shippingProfileQueryKeys } from "@hooks/api/shipping-profiles"
 import { useComboboxData } from "@hooks/use-combobox-data"
-import { fetchQuery } from "@lib/client"
+import { sdk } from "@lib/client"
+import { InferClientInput, InferClientOutput } from "@mercurjs/client"
 import {
   FulfillmentSetType,
   ShippingOptionPriceType,
@@ -37,20 +38,14 @@ export const CreateShippingOptionDetailsForm = ({
   const profilesGate = usePermissionGate("shipping_profiles:view")
 
   const shippingProfiles = useComboboxData({
-    queryFn: () =>
-      fetchQuery(`/vendor/shipping-profiles`, {
-        method: "GET",
-      }),
+    queryFn: (params: InferClientInput<typeof sdk.vendor.shippingProfiles.query>) =>
+      sdk.vendor.shippingProfiles.query(params),
     queryKey: shippingProfileQueryKeys.lists(),
-    getOptions: (data: { shipping_profiles?: Array<{ shipping_profile?: { name?: string; id?: string }; name?: string; id: string }> }) =>
-      (data.shipping_profiles || []).map((profile) => {
-        const name = profile.shipping_profile?.name ?? profile.name ?? ""
-        const id = profile.shipping_profile?.id ?? profile.id
-        return {
-          label: name.includes(":") ? name.split(":")[1] : name,
-          value: id,
-        }
-      }),
+    getOptions: (data: InferClientOutput<typeof sdk.vendor.shippingProfiles.query>) =>
+      data.shipping_profiles.map((profile) => ({
+        label: profile.name,
+        value: profile.id,
+      })),
     enabled: profilesGate.allowed,
   })
 

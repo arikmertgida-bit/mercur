@@ -11,6 +11,7 @@ export * from "./promotion"
 export * from "./promotion-cost"
 export * from "./seller"
 export * from "./shipping-option"
+export * from "./shipping-profile"
 export * from "./stock-location"
 export * from './cart'
 export * from './events'

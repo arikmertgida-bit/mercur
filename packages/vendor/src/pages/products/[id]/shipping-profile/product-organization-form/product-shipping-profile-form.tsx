@@ -11,7 +11,8 @@ import { RouteDrawer, useRouteModal } from "@components/modals"
 import { KeyboundForm } from "@components/utilities/keybound-form"
 import { useUpdateProduct } from "@hooks/api/products"
 import { useComboboxData } from "@hooks/use-combobox-data"
-import { fetchQuery } from "@lib/client"
+import { sdk } from "@lib/client"
+import { InferClientInput, InferClientOutput } from "@mercurjs/client"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useEffect } from "react"
@@ -34,14 +35,13 @@ export const ProductShippingProfileForm = ({
 
   const shippingProfiles = useComboboxData({
     queryKey: ["shipping_profiles"],
-    queryFn: (params) =>
-      fetchQuery(`/vendor/shipping-profiles`, {
-        method: "GET",
-        query: params,
-      }),
-    getOptions: (data: { shipping_profiles?: { id: string; name?: string }[] }) =>
-      (data.shipping_profiles || []).map((sp) => ({
-        label: sp.name ?? "",
+    queryFn: (params: InferClientInput<typeof sdk.vendor.shippingProfiles.query>) =>
+      sdk.vendor.shippingProfiles.query(params),
+    getOptions: (
+      data: InferClientOutput<typeof sdk.vendor.shippingProfiles.query>
+    ) =>
+      data.shipping_profiles.map((sp) => ({
+        label: sp.name,
         value: sp.id,
       })),
     enabled: profilesGate.allowed,

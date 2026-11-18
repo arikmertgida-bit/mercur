@@ -36,7 +36,7 @@ ENV ADMIN_CORS=http://admin:7000,http://localhost:7000
 ENV VENDOR_CORS=http://vendor:7001,http://localhost:7001
 ENV AUTH_CORS=http://admin:7000,http://vendor:7001,http://localhost:7000,http://localhost:7001,http://localhost:3000,http://storefront:3000
 
-# JWT_SECRET/COOKIE_SECRET/MESSENGER_INTERNAL_SECRET are validated (requireEnv) at config-load time too,
+# JWT_SECRET/COOKIE_SECRET/MESSENGER_INTERNAL_SECRET/MESSENGER_JWT_SECRET are validated (requireEnv) at config-load time too,
 # same reason as CORS above — no real token is signed during build, but the
 # values must be defined or the build step throws. BUILD-TIME PLACEHOLDERS
 # ONLY: docker-compose.yml's env_file/environment supplies the real secrets
@@ -45,6 +45,7 @@ ENV AUTH_CORS=http://admin:7000,http://vendor:7001,http://localhost:7000,http://
 ENV JWT_SECRET=build-placeholder
 ENV COOKIE_SECRET=build-placeholder
 ENV MESSENGER_INTERNAL_SECRET=build-placeholder
+ENV MESSENGER_JWT_SECRET=build-placeholder-messenger
 
 # The MinIO file provider options are validated (requireEnv) at config-load
 # time too, for the same reason as CORS above — no real connection happens

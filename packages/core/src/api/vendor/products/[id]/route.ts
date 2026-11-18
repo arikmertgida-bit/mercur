@@ -17,6 +17,7 @@ import {
   VendorGetProductParamsType,
 } from "../validators"
 import { getSellerId } from "../../../utils/seller-context"
+import { validateSellerShippingProfile } from "../../shipping-profiles/helpers"
 
 export const GET = async (
   req: AuthenticatedMedusaRequest<
@@ -55,6 +56,12 @@ export const POST = async (
   const sellerId = getSellerId(req)
 
   const { additional_data, ...update } = req.validatedBody
+
+  await validateSellerShippingProfile(
+    req.scope,
+    sellerId,
+    update.shipping_profile_id
+  )
 
   const { result } = await productEditUpdateProductWorkflow(req.scope).run({
     input: {
