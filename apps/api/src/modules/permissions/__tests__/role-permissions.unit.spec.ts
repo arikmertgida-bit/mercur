@@ -4,15 +4,133 @@ import {
   getPermissionCatalog,
   satisfiesRight,
 } from "@mercurjs/core/permissions/registry"
-import { PermissionActor, PermissionMap, SellerRole } from "@mercurjs/types"
+import {
+  MemberAreaPermissions,
+  PermissionActor,
+  PermissionMap,
+  SellerRole,
+} from "@mercurjs/types"
+import { MedusaError } from "@medusajs/framework/utils"
 
 import "../../../permissions"
+import {
+  MEMBER_PERMISSION_AREAS,
+  ROLE_AREA_TEMPLATES,
+  validateMemberAreaPermissions,
+} from "../member-areas"
 import { SELLER_ROLE_PERMISSIONS } from "../role-permissions"
 import { resolveActorPermissions } from "../service"
 
+// The role table as hand-written in 9e-3b-3a (approved 2026-11-18); the area
+// templates must keep producing exactly this.
+type LimitedSellerRole = Exclude<SellerRole, SellerRole.SELLER_ADMINISTRATION>
+
+const REFERENCE_DATA: PermissionMap = {
+  store: "view",
+  regions: "view",
+  tax_regions: "view",
+  return_reasons: "view",
+  refund_reasons: "view",
+  sales_channels: "view",
+  price_preferences: "view",
+}
+
+const CATALOG_VIEW: PermissionMap = {
+  products: "view",
+  product_changes: "view",
+  product_attributes: "view",
+  product_categories: "view",
+  product_collections: "view",
+  product_types: "view",
+  product_tags: "view",
+}
+
+const LEGACY_SELLER_ROLE_PERMISSIONS: Record<LimitedSellerRole, PermissionMap> = {
+  [SellerRole.ORDER_MANAGEMENT]: {
+    ...REFERENCE_DATA,
+    ...CATALOG_VIEW,
+    orders: "manage",
+    "orders.edits": "manage",
+    "orders.returns": "manage",
+    "orders.refunds": "edit",
+    payments: "edit",
+    customers: "view",
+    customer_groups: "view",
+    inventory_items: "view",
+    reservations: "view",
+    stock_locations: "view",
+    shipping_profiles: "view",
+    shipping_options: "view",
+    fulfillment_sets: "view",
+    promotions: "view",
+    campaigns: "view",
+    return_reasons: "edit",
+    reviews: "view",
+    messages: "edit",
+    dashboard: "view",
+  },
+  [SellerRole.INVENTORY_MANAGEMENT]: {
+    ...REFERENCE_DATA,
+    orders: "view",
+    "orders.edits": "view",
+    "orders.returns": "edit",
+    products: "manage",
+    product_changes: "edit",
+    product_attributes: "manage",
+    product_categories: "edit",
+    product_collections: "edit",
+    product_types: "edit",
+    product_tags: "edit",
+    inventory_items: "manage",
+    reservations: "manage",
+    stock_locations: "manage",
+    shipping_profiles: "manage",
+    shipping_options: "manage",
+    fulfillment_sets: "manage",
+    price_lists: "manage",
+    price_preferences: "edit",
+    reviews: "view",
+  },
+  [SellerRole.ACCOUNTING]: {
+    ...REFERENCE_DATA,
+    ...CATALOG_VIEW,
+    orders: "view",
+    "orders.edits": "view",
+    "orders.returns": "view",
+    "orders.refunds": "edit",
+    payments: "edit",
+    customers: "view",
+    customer_groups: "view",
+    price_lists: "view",
+    promotions: "view",
+    campaigns: "view",
+    commission_rates: "view",
+    commission_lines: "view",
+    payouts: "view",
+    payout_accounts: "view",
+    dashboard: "view",
+  },
+  [SellerRole.SUPPORT]: {
+    ...REFERENCE_DATA,
+    ...CATALOG_VIEW,
+    orders: "view",
+    "orders.edits": "view",
+    "orders.returns": "view",
+    customers: "view",
+    customer_groups: "view",
+    promotions: "view",
+    campaigns: "view",
+    reviews: "edit",
+    messages: "edit",
+    followers: "view",
+  },
+}
+
+
 const member = (
   role: string | null,
-  is_owner = false
+  is_owner = false,
+  permissions: MemberAreaPermissions | null = null
 ): PermissionActor => ({
   actor_type: "member",
   actor_id: "mem_1",
@@ -21,6 +139,7 @@ const member = (
   seller_member_id: "selmem_1",
   seller_member_role_id: role,
   seller_member_is_owner: is_owner,
+  seller_member_permissions: permissions,
 })
 
 const resolve = (actor: PermissionActor): PermissionMap =>
@@ -121,5 +240,84 @@ describe("seller role permissions", () => {
       expect(granted["members.invites"]).toBeUndefined()
       expect(granted.roles).toBeUndefined()
     }
+  })
+
+  it("derives every role from its area template without changing the approved table", () => {
+    expect(SELLER_ROLE_PERMISSIONS).toEqual(LEGACY_SELLER_ROLE_PERMISSIONS)
+  })
+})
+
+describe("custom member permissions (checkbox grant)", () => {
+  const full = (): PermissionMap => resolve(member(null, true))
+  const validate = (areas: MemberAreaPermissions, granted: PermissionMap = full()) =>
+    validateMemberAreaPermissions(areas, granted, getPermissionCatalog())
+
+  const codeOf = (fn: () => void): string | undefined => {
+    try {
+      fn()
+    } catch (error) {
+      return error instanceof MedusaError ? error.code : "not-medusa-error"
+    }
+    return undefined
+  }
+
+  it("lets a custom grant replace the role template", () => {
+    const granted = resolve(
+      member(SellerRole.SUPPORT, false, { orders: "view", products: "manage" })
+    )
+    expect(granted.products).toEqual("manage")
+    expect(granted.product_changes).toEqual("edit")
+    expect(granted.product_attributes).toEqual("manage")
+    expect(granted.orders).toEqual("view")
+    expect(granted.store).toEqual("view")
+    expect(granted.reviews).toBeUndefined()
+    expect(granted.messages).toBeUndefined()
+    expect(granted.members).toBeUndefined()
+  })
+
+  it("keeps the owner and administration full whatever is stored", () => {
+    for (const actor of [
+      member(SellerRole.SUPPORT, true, { orders: "view" }),
+      member(SellerRole.SELLER_ADMINISTRATION, false, { orders: "view" }),
+    ]) {
+      expect(resolve(actor).members).toEqual("manage")
+    }
+  })
+
+  it("accepts every template and the full table", () => {
+    for (const template of Object.values(ROLE_AREA_TEMPLATES)) {
+      expect(validate(template)).toEqual(template)
+    }
+    const everything = Object.fromEntries(
+      MEMBER_PERMISSION_AREAS.map((area) => [area.id, area.max_right])
+    )
+    expect(validate(everything)).toEqual(everything)
+    const granted = resolve(member(SellerRole.SUPPORT, false, everything))
+    expect(granted.members).toBeUndefined()
+    expect(granted["members.invites"]).toBeUndefined()
+    expect(granted.roles).toBeUndefined()
+    expect(granted.store).toEqual("view")
+    expect(granted.payout_accounts).toEqual("view")
+    expect(granted.sales_channels).toEqual("view")
+  })
+
+  it("rejects unknown areas, rights above the area maximum and team keys", () => {
+    expect(codeOf(() => validate({ members: "view" }))).toEqual("member_permissions_invalid")
+    expect(codeOf(() => validate({ payouts: "edit" }))).toEqual("member_permissions_invalid")
+    expect(codeOf(() => validate({ reviews: "manage" }))).toEqual("member_permissions_invalid")
+  })
+
+  it("rejects a grant whose dependency is left unchecked", () => {
+    expect(codeOf(() => validate({ returns: "view" }))).toEqual("member_permissions_invalid")
+    expect(codeOf(() => validate({ refunds: "edit" }))).toEqual("member_permissions_invalid")
+    expect(codeOf(() => validate({ returns: "view", orders: "view" }))).toBeUndefined()
+  })
+
+  it("never grants beyond the granter", () => {
+    const support = resolve(member(SellerRole.SUPPORT))
+    expect(codeOf(() => validate({ orders: "manage" }, support))).toEqual(
+      "member_permissions_escalation"
+    )
+    expect(codeOf(() => validate({ orders: "view", reviews: "edit" }, support))).toBeUndefined()
   })
 })

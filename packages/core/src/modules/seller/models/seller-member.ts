@@ -1,4 +1,4 @@
-import type { JsonRecord } from "@mercurjs/types"
+import type { JsonRecord, MemberAreaPermissions } from "@mercurjs/types"
 import { model } from "@medusajs/framework/utils"
 import Seller from "./seller"
 import Member from "./member"
@@ -12,6 +12,7 @@ const SellerMember = model.define("SellerMember", {
     mappedBy: "sellers",
   }),
   role_id: model.text().nullable(),
+  custom_permissions: model.json<MemberAreaPermissions>().nullable(),
   is_owner: model.boolean().default(false),
   metadata: model.json<JsonRecord>().nullable(),
 })

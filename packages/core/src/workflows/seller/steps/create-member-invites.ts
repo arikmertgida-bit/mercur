@@ -1,5 +1,9 @@
 import { StepResponse, createStep } from "@medusajs/framework/workflows-sdk"
-import { MercurModules, MemberInviteDTO } from "@mercurjs/types"
+import {
+  MemberAreaPermissions,
+  MemberInviteDTO,
+  MercurModules,
+} from "@mercurjs/types"
 
 import SellerModuleService from "../../../modules/seller/service"
 
@@ -7,6 +11,7 @@ type CreateMemberInviteStepInput = {
   seller_id: string
   email: string
   role_id: string
+  custom_permissions?: MemberAreaPermissions | null
 }
 
 export const createMemberInvitesStep = createStep(

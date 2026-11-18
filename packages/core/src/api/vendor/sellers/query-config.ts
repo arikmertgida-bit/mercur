@@ -45,6 +45,7 @@ export const listVendorMembersQueryConfig = {
       "id",
       "is_owner",
       "role_id",
+      "custom_permissions",
       "member.*",
       "created_at",
     ])
@@ -59,6 +60,7 @@ export const retrieveVendorMemberQueryConfig = {
       "id",
       "is_owner",
       "role_id",
+      "custom_permissions",
       "member.*",
       "created_at",
     ])
@@ -71,6 +73,7 @@ export const listVendorMemberInvitesQueryConfig = {
     "email",
     "accepted",
     "role_id",
+    "custom_permissions",
     "expires_at",
     "created_at",
   ],

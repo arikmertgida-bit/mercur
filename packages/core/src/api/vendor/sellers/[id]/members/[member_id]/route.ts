@@ -4,6 +4,7 @@ import {
 } from "@medusajs/framework"
 
 import { VendorUpdateMemberRoleType } from "../../../validators"
+import { validateMemberPermissionsInput } from "../../../../../utils/member-permissions"
 import {
   updateMemberRoleWorkflow,
   removeSellerMemberWorkflow,
@@ -17,6 +18,11 @@ export const POST = async (
     input: {
       seller_member_id: req.params.member_id,
       role_id: req.validatedBody.role_id,
+      custom_permissions: validateMemberPermissionsInput(
+        req,
+        req.validatedBody.role_id,
+        req.validatedBody.permissions
+      ),
       actor_seller_member_id: req.seller_context?.seller_member.id,
     },
   })

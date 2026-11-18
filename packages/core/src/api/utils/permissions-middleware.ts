@@ -44,7 +44,7 @@ export function isPermissionsModuleEnabled(config: ConfigModule): boolean {
   return !(typeof entry === "object" && "disable" in entry && entry.disable)
 }
 
-function getResolver(
+export function getPermissionResolver(
   req: AuthenticatedMedusaRequest
 ): IPermissionResolver | undefined {
   const config = req.scope.resolve<ConfigModule>(
@@ -71,7 +71,7 @@ export function resolvePermissionsMiddleware(surface: PermissionSurface) {
       validatePermissionCatalog(catalog)
       catalogValidated = true
     }
-    const resolver = getResolver(req)
+    const resolver = getPermissionResolver(req)
     const actorId = req.auth_context?.actor_id
 
     if (!resolver || !actorId) {
@@ -88,6 +88,8 @@ export function resolvePermissionsMiddleware(surface: PermissionSurface) {
       seller_member_id: req.seller_context?.seller_member?.id,
       seller_member_role_id: req.seller_context?.seller_member?.role_id ?? null,
       seller_member_is_owner: req.seller_context?.seller_member?.is_owner ?? false,
+      seller_member_permissions:
+        req.seller_context?.seller_member?.custom_permissions ?? null,
     }
 
     try {

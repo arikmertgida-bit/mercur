@@ -47,6 +47,7 @@ const loadInviteStep = createStep(
     return new StepResponse({
       email: invite.email,
       role_id: invite.role_id,
+      custom_permissions: invite.custom_permissions ?? null,
       seller_id: invite.seller_id,
     })
   }
@@ -66,6 +67,7 @@ export const resendMemberInviteWorkflow = createWorkflow(
         seller_id: existing.seller_id,
         email: existing.email,
         role_id: existing.role_id,
+        custom_permissions: existing.custom_permissions,
       },
     ])
 

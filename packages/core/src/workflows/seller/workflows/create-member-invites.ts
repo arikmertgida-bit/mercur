@@ -4,6 +4,7 @@ import {
   WorkflowResponse,
 } from "@medusajs/framework/workflows-sdk"
 import { emitEventStep } from "@medusajs/medusa/core-flows"
+import { MemberAreaPermissions } from "@mercurjs/types"
 
 import { createMemberInvitesStep } from "../steps"
 import { MemberInviteWorkflowEvents } from "../../events"
@@ -14,6 +15,7 @@ type CreateMemberInvitesWorkflowInput = {
   seller_id: string
   email: string
   role_id: string
+  custom_permissions?: MemberAreaPermissions | null
 }[]
 
 export const createMemberInvitesWorkflow = createWorkflow(

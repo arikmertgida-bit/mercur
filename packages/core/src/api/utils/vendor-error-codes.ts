@@ -5,3 +5,5 @@
  */
 export const SELLER_IMAGE_NOT_OWNED_CODE = "seller_image_not_owned"
 export const MEMBER_INVITE_EMAIL_MISMATCH_CODE = "member_invite_email_mismatch"
+export const MEMBER_PERMISSIONS_INVALID_CODE = "member_permissions_invalid"
+export const MEMBER_PERMISSIONS_ESCALATION_CODE = "member_permissions_escalation"

@@ -1,4 +1,5 @@
 import type { JsonRecord } from "../json-value"
+import type { MemberAreaPermissions } from "../permissions"
 export type SellerModuleOptions = {
   invite_valid_duration?: number
   jwt_secret?: string
@@ -160,6 +161,7 @@ export interface SellerMemberDTO {
   created_at: Date
   updated_at: Date
   role_id: string
+  custom_permissions: MemberAreaPermissions | null
 }
 
 export interface MemberInviteDTO {
@@ -169,6 +171,7 @@ export interface MemberInviteDTO {
   accepted: boolean
   expires_at: Date
   role_id: string
+  custom_permissions: MemberAreaPermissions | null
   seller_id: string
   metadata: JsonRecord | null
   created_at: Date
@@ -178,6 +181,7 @@ export interface MemberInviteDTO {
 export interface CreateMemberInviteDTO {
   email: string
   role_id: string
+  custom_permissions?: MemberAreaPermissions | null
   seller_id: string
   metadata?: JsonRecord | null
 }

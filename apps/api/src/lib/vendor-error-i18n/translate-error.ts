@@ -2,6 +2,8 @@ import { MedusaError } from "@medusajs/framework/utils"
 
 import {
   MEMBER_INVITE_EMAIL_MISMATCH_CODE,
+  MEMBER_PERMISSIONS_ESCALATION_CODE,
+  MEMBER_PERMISSIONS_INVALID_CODE,
   SELLER_IMAGE_NOT_OWNED_CODE,
 } from "@mercurjs/core/api/utils/vendor-error-codes"
 
@@ -227,6 +229,22 @@ export function translateVendorError(
         code: error.code,
         type: error.type,
         message: messages.customCodes.member_invite_email_mismatch,
+      }
+    }
+
+    if (error.code === MEMBER_PERMISSIONS_INVALID_CODE) {
+      return {
+        code: error.code,
+        type: error.type,
+        message: messages.customCodes.member_permissions_invalid,
+      }
+    }
+
+    if (error.code === MEMBER_PERMISSIONS_ESCALATION_CODE) {
+      return {
+        code: error.code,
+        type: error.type,
+        message: messages.customCodes.member_permissions_escalation,
       }
     }
 

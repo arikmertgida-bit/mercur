@@ -12,6 +12,8 @@ import {
   validateNotSelfMemberStep,
   updateSellerMembersStep,
 } from "../steps"
+import { MemberAreaPermissions } from "@mercurjs/types"
+
 import { SellerMemberWorkflowEvents } from "../../events"
 
 export const updateMemberRoleWorkflowId = "update-member-role"
@@ -19,6 +21,8 @@ export const updateMemberRoleWorkflowId = "update-member-role"
 type UpdateMemberRoleWorkflowInput = {
   seller_member_id: string
   role_id: string
+  /** null (or omitted) drops a custom grant, so the role template applies. */
+  custom_permissions?: MemberAreaPermissions | null
   actor_seller_member_id?: string
 }
 
@@ -35,7 +39,10 @@ export const updateMemberRoleWorkflow = createWorkflow(
       { input },
       ({ input }) => ({
         selector: { id: input.seller_member_id },
-        update: { role_id: input.role_id },
+        update: {
+          role_id: input.role_id,
+          custom_permissions: input.custom_permissions ?? null,
+        },
       })
     )
 

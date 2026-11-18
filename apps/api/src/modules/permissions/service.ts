@@ -1,13 +1,19 @@
 import {
   IPermissionResolver,
+  MemberAreaPermissions,
   PermissionActor,
   PermissionDefinition,
   PermissionMap,
   SellerRole,
+  ValidateMemberPermissionsInput,
 } from "@mercurjs/types"
 import { grantAll } from "@mercurjs/core/permissions/registry"
 
 import { isLimitedSellerRole, SELLER_ROLE_PERMISSIONS } from "./role-permissions"
+import {
+  expandMemberAreas,
+  validateMemberAreaPermissions,
+} from "./member-areas"
 
 // Admin routes accept a user session or a secret API key; both are operators.
 const ADMIN_ACTOR_TYPES = new Set(["user", "api-key"])
@@ -22,8 +28,9 @@ function forSurface(
 
 /**
  * Admin users and secret API keys keep every right (operators have no role split). A seller's
- * owner and administration members get every vendor right; the other roles get
- * their row from SELLER_ROLE_PERMISSIONS. Anything unknown gets nothing.
+ * owner and administration members get every vendor right. Other members get
+ * the grant their inviter checked (custom_permissions) or, without one, their
+ * role row from SELLER_ROLE_PERMISSIONS. Anything unknown gets nothing.
  */
 export function resolveActorPermissions(
   actor: PermissionActor,
@@ -53,7 +60,9 @@ export function resolveActorPermissions(
     return {}
   }
 
-  const rolePermissions = SELLER_ROLE_PERMISSIONS[role]
+  const rolePermissions = actor.seller_member_permissions
+    ? expandMemberAreas(actor.seller_member_permissions)
+    : SELLER_ROLE_PERMISSIONS[role]
   const granted: PermissionMap = {}
   for (const definition of vendorCatalog) {
     const right = rolePermissions[definition.key]
@@ -70,6 +79,14 @@ class PermissionsModuleService implements IPermissionResolver {
     catalog: PermissionDefinition[]
   ): Promise<PermissionMap> {
     return resolveActorPermissions(actor, catalog)
+  }
+
+  validateMemberPermissions({
+    permissions,
+    granted,
+    catalog,
+  }: ValidateMemberPermissionsInput): MemberAreaPermissions {
+    return validateMemberAreaPermissions(permissions, granted, catalog)
   }
 }
 

@@ -4,7 +4,7 @@ import {
   WithAdditionalData,
 } from "@medusajs/medusa/api/utils/validators"
 import { AdditionalData } from "@medusajs/framework/types"
-import { SellerRole } from "@mercurjs/types"
+import { PERMISSION_RIGHTS, SellerRole } from "@mercurjs/types"
 import { z } from "zod"
 import { JsonRecordSchema } from "../../../utils/json-schema"
 
@@ -88,15 +88,19 @@ export const UpdateSeller = z.object({
 })
 export const VendorUpdateSeller = WithAdditionalData(UpdateSeller)
 
+const MemberAreaPermissionsSchema = z.record(z.string(), z.enum(PERMISSION_RIGHTS))
+
 export type VendorInviteMemberType = z.infer<typeof VendorInviteMember>
 export const VendorInviteMember = z.object({
   email: z.string().email(),
   role_id: z.nativeEnum(SellerRole),
+  permissions: MemberAreaPermissionsSchema.nullable().optional(),
 })
 
 export type VendorUpdateMemberRoleType = z.infer<typeof VendorUpdateMemberRole>
 export const VendorUpdateMemberRole = z.object({
   role_id: z.nativeEnum(SellerRole),
+  permissions: MemberAreaPermissionsSchema.nullable().optional(),
 })
 
 export type VendorUpsertSellerAddressType = z.infer<typeof UpsertSellerAddress> & AdditionalData

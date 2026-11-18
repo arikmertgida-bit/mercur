@@ -1017,6 +1017,7 @@ export type Routes = {
         };
         dashboard: typeof import("../src/api/vendor/dashboard/route");
         followers: typeof import("../src/api/vendor/followers/route");
+        memberPermissionAreas: typeof import("../src/api/vendor/member-permission-areas/route");
         notificationPreferences: typeof import("../src/api/vendor/notification-preferences/route");
         requests: {
             productCategories: typeof import("../src/api/vendor/requests/product-categories/route");

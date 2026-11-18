@@ -15,6 +15,7 @@ export const vendorRoutePermissionMiddlewares: MiddlewareRoute[] = [
   { method: ["GET"], matcher: "/vendor/customers/:id/avatar", middlewares: [requirePermission("customers", "view")] },
   { method: ["GET"], matcher: "/vendor/dashboard", middlewares: [requirePermission(KAYI_VENDOR_PERMISSION.DASHBOARD, "view")] },
   { method: ["GET"], matcher: "/vendor/followers", middlewares: [requirePermission(KAYI_VENDOR_PERMISSION.FOLLOWERS, "view")] },
+  { method: ["GET"], matcher: "/vendor/member-permission-areas", middlewares: [requirePermission("members", "view")] },
   { method: ["GET"], matcher: "/vendor/notification-preferences", middlewares: [requirePermission("store", "view")] },
   { method: ["POST"], matcher: "/vendor/notification-preferences", middlewares: [requirePermission("store", "edit")] },
   { method: ["POST"], matcher: "/vendor/products/export", middlewares: [requirePermission("products", "view")] },

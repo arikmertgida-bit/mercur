@@ -77,6 +77,7 @@ export const acceptMemberInviteWorkflow = createWorkflow(
           seller_id: invite.seller_id,
           member_id: member.id,
           role_id: invite.role_id,
+          custom_permissions: invite.custom_permissions ?? null,
           is_owner: !ownerCheck.hasOwner,
         }]
       )

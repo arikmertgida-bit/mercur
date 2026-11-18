@@ -1,4 +1,4 @@
-import { SellerStatus } from "@mercurjs/types"
+import { PERMISSION_RIGHTS, SellerStatus } from "@mercurjs/types"
 import { z } from "zod"
 
 export const SellerContextMemberSchema = z.object({
@@ -7,6 +7,7 @@ export const SellerContextMemberSchema = z.object({
   member_id: z.string(),
   role_id: z.string().nullable(),
   is_owner: z.boolean(),
+  custom_permissions: z.record(z.string(), z.enum(PERMISSION_RIGHTS)).nullable().default(null),
   seller: z.object({
     id: z.string(),
     currency_code: z.string(),

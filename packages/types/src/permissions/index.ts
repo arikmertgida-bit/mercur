@@ -31,6 +31,13 @@ export interface PermissionDefinition {
 
 export type PermissionMap = Record<string, PermissionRight>
 
+/**
+ * A seller member's own grant keyed by permission AREA (a row of the invite
+ * checkbox table), not by catalog key; null means the role template applies.
+ * The app's permissions module expands areas into catalog keys.
+ */
+export type MemberAreaPermissions = Record<string, PermissionRight>
+
 export interface PermissionActor {
   actor_type: string
   actor_id: string
@@ -39,6 +46,14 @@ export interface PermissionActor {
   seller_member_id?: string
   seller_member_role_id?: string | null
   seller_member_is_owner?: boolean
+  seller_member_permissions?: MemberAreaPermissions | null
+}
+
+export interface ValidateMemberPermissionsInput {
+  permissions: MemberAreaPermissions
+  /** Rights of whoever grants them; nothing beyond these may be given. */
+  granted: PermissionMap
+  catalog: PermissionDefinition[]
 }
 
 /**
@@ -51,6 +66,15 @@ export interface IPermissionResolver {
     actor: PermissionActor,
     catalog: PermissionDefinition[]
   ): Promise<PermissionMap>
+  /**
+   * Checks an area grant before it is stored on an invite or member and
+   * returns it normalized; throws a MedusaError when an area or right is not
+   * grantable, a dependency is missing or the grant exceeds `granted`.
+   * Without it, custom member permissions are rejected.
+   */
+  validateMemberPermissions?(
+    input: ValidateMemberPermissionsInput
+  ): MemberAreaPermissions
 }
 
 export const PERMISSIONS_MODULE = "permissions"
