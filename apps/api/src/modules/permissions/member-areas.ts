@@ -197,10 +197,11 @@ export function expandMemberAreas(areas: MemberAreaPermissions): PermissionMap {
   return granted
 }
 
-function invalid(message: string): MedusaError {
+// The reason stays in the code path; the panel shows one plain sentence.
+function invalid(): MedusaError {
   return new MedusaError(
     MedusaError.Types.INVALID_DATA,
-    message,
+    "These permissions cannot be granted to a member.",
     MEMBER_PERMISSIONS_INVALID_CODE
   )
 }
@@ -220,10 +221,10 @@ export function validateMemberAreaPermissions(
   for (const [areaId, right] of Object.entries(areas)) {
     const area = AREAS_BY_ID.get(areaId)
     if (!area) {
-      throw invalid(`Unknown permission area: ${areaId}`)
+      throw invalid()
     }
     if (PERMISSION_RIGHT_RANK[right] > PERMISSION_RIGHT_RANK[area.max_right]) {
-      throw invalid(`Permission area ${areaId} allows at most ${area.max_right}`)
+      throw invalid()
     }
     normalized[areaId] = right
   }
@@ -234,19 +235,17 @@ export function validateMemberAreaPermissions(
   for (const [key, right] of Object.entries(expanded)) {
     const definition = byKey.get(key)
     if (!definition || !definition.surface.includes("vendor")) {
-      throw invalid(`Permission ${key} is not a vendor permission`)
+      throw invalid()
     }
     for (const requirement of definition.requires ?? []) {
       if (!satisfiesRight(expanded[requirement.key], requirement.right)) {
-        throw invalid(
-          `Permission ${key} requires ${requirement.key}:${requirement.right}`
-        )
+        throw invalid()
       }
     }
     if (!satisfiesRight(granted[key], right)) {
       throw new MedusaError(
         MedusaError.Types.NOT_ALLOWED,
-        `You cannot grant ${key}:${right}`,
+        "You cannot grant a permission you do not have.",
         MEMBER_PERMISSIONS_ESCALATION_CODE
       )
     }

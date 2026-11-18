@@ -187,6 +187,11 @@ medusaIntegrationTestRunner({
           ])
         }
 
+        const english = await failure(
+          api.post(memberUrl(), bodies[0], owner.headers)
+        )
+        expect(english.data.message).toBe("These permissions cannot be granted to a member.")
+
         const invalidRight = await failure(
           api.post(
             memberUrl(),

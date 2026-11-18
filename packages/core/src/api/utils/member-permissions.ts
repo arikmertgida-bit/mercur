@@ -28,7 +28,7 @@ export function validateMemberPermissionsInput(
   ) {
     throw new MedusaError(
       MedusaError.Types.INVALID_DATA,
-      "These permissions cannot be granted to a member",
+      "These permissions cannot be granted to a member.",
       MEMBER_PERMISSIONS_INVALID_CODE
     )
   }
