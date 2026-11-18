@@ -7,7 +7,11 @@ import {
   emitEventStep,
 } from "@medusajs/medusa/core-flows"
 
-import { validateNotOwnerStep, updateSellerMembersStep } from "../steps"
+import {
+  validateNotOwnerStep,
+  validateNotSelfMemberStep,
+  updateSellerMembersStep,
+} from "../steps"
 import { SellerMemberWorkflowEvents } from "../../events"
 
 export const updateMemberRoleWorkflowId = "update-member-role"
@@ -15,12 +19,17 @@ export const updateMemberRoleWorkflowId = "update-member-role"
 type UpdateMemberRoleWorkflowInput = {
   seller_member_id: string
   role_id: string
+  actor_seller_member_id?: string
 }
 
 export const updateMemberRoleWorkflow = createWorkflow(
   updateMemberRoleWorkflowId,
   function (input: UpdateMemberRoleWorkflowInput) {
     validateNotOwnerStep(input.seller_member_id)
+    validateNotSelfMemberStep({
+      seller_member_id: input.seller_member_id,
+      actor_seller_member_id: input.actor_seller_member_id,
+    })
 
     const updateInput = transform(
       { input },

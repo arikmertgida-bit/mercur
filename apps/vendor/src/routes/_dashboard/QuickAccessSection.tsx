@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next"
 import { Link } from "react-router-dom"
 import { Badge, Button } from "@medusajs/ui"
 import { TriangleRightMini } from "@medusajs/icons"
+import { useCan } from "@mercurjs/dashboard-shared"
 import { useFollowers } from "../../hooks/api/followers"
 import { useUnseenReturnsCount } from "../../hooks/api/returns"
 import { useMessengerUnreads } from "../../providers/messenger-provider/MessengerProvider"
@@ -34,27 +35,36 @@ const QuickAccessButton = ({
 // packages/vendor's main-layout), so the two never drift apart.
 export const QuickAccessSection = () => {
   const { t } = useTranslation()
-  const { data: unseenReturnsCount } = useUnseenReturnsCount()
-  const { count: followersCount } = useFollowers({ limit: 1 })
+  const canViewReturns = useCan("orders.returns")
+  const canViewFollowers = useCan("followers")
+  const canViewMessages = useCan("messages")
+  const { data: unseenReturnsCount } = useUnseenReturnsCount({ enabled: canViewReturns })
+  const { count: followersCount } = useFollowers({ limit: 1 }, { enabled: canViewFollowers })
   const unreadMessages = useMessengerUnreads()
 
   return (
     <div className="mt-2 grid grid-cols-1 gap-4 sm:grid-cols-3">
-      <QuickAccessButton
-        to="/returns"
-        count={unseenReturnsCount ?? 0}
-        label={t("dashboard.quickAccess.returns")}
-      />
-      <QuickAccessButton
-        to="/followers"
-        count={followersCount ?? 0}
-        label={t("dashboard.quickAccess.followers")}
-      />
-      <QuickAccessButton
-        to="/messages"
-        count={unreadMessages.length}
-        label={t("dashboard.quickAccess.unreadMessages")}
-      />
+      {canViewReturns && (
+        <QuickAccessButton
+          to="/returns"
+          count={unseenReturnsCount ?? 0}
+          label={t("dashboard.quickAccess.returns")}
+        />
+      )}
+      {canViewFollowers && (
+        <QuickAccessButton
+          to="/followers"
+          count={followersCount ?? 0}
+          label={t("dashboard.quickAccess.followers")}
+        />
+      )}
+      {canViewMessages && (
+        <QuickAccessButton
+          to="/messages"
+          count={unreadMessages.length}
+          label={t("dashboard.quickAccess.unreadMessages")}
+        />
+      )}
     </div>
   )
 }

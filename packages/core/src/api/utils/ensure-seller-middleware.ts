@@ -42,6 +42,7 @@ export async function ensureSellerMiddleware(
         "seller_id",
         "member_id",
         "role_id",
+        "is_owner",
         "seller.id",
         "seller.currency_code",
         "seller.status",

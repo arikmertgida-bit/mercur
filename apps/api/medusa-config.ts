@@ -147,6 +147,10 @@ module.exports = withMercur({
       resolve: './src/modules/seller-analytics',
     },
     {
+      // Seller member roles (SellerRole) -> vendor rights; admins keep every right.
+      resolve: './src/modules/permissions',
+    },
+    {
       resolve: './src/modules/wishlist',
     },
     {

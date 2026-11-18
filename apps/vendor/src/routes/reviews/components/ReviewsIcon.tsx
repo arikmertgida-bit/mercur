@@ -1,6 +1,7 @@
 import * as React from "react"
 import { useQueryClient } from "@tanstack/react-query"
 import { Star } from "@medusajs/icons"
+import { useCan } from "@mercurjs/dashboard-shared"
 import { reviewsQueryKeys, useReviewStats } from "../../../hooks/api/reviews"
 import { kayiEventManager } from "../../../lib/messenger/KayiEventManager"
 import { REVIEW_NOTIFICATION_TYPE } from "../../../lib/messenger/types"
@@ -27,7 +28,8 @@ function formatSidebarUnreadCount(count: number): string {
 export function ReviewsIcon(props: { className?: string }): React.JSX.Element {
   const { className } = props
   const queryClient = useQueryClient()
-  const { awaiting_reply_count } = useReviewStats()
+  const canViewReviews = useCan("reviews")
+  const { awaiting_reply_count } = useReviewStats({ enabled: canViewReviews })
 
   React.useEffect((): (() => void) => {
     return kayiEventManager.subscribeNotification(REVIEW_NOTIFICATION_TYPE, (): void => {

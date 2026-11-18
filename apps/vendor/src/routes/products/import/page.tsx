@@ -6,6 +6,10 @@ import { RouteDrawer } from "@mercurjs/dashboard-shared"
 import { UploadImport } from "./components/upload-import"
 import { ImportSummary } from "./components/import-summary"
 
+export const handle = {
+  permissions: "products:edit",
+}
+
 export default function ProductImportPage() {
   const { t } = useTranslation()
   const [summary, setSummary] = useState<{ created: number } | null>(null)

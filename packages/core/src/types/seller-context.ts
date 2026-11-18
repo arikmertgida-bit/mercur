@@ -6,6 +6,7 @@ export const SellerContextMemberSchema = z.object({
   seller_id: z.string(),
   member_id: z.string(),
   role_id: z.string().nullable(),
+  is_owner: z.boolean(),
   seller: z.object({
     id: z.string(),
     currency_code: z.string(),

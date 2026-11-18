@@ -33,6 +33,9 @@ medusaIntegrationTestRunner({
 
       beforeAll(() => {
         container = getContainer()
+        // Kayı registers its own resolver (apps/api modules/permissions, covered by
+        // vendor/roles.spec.ts); these specs start without it and swap in their own.
+        delete modulesConfig()[PERMISSIONS_MODULE]
       })
 
       beforeEach(async () => {
@@ -68,8 +71,8 @@ medusaIntegrationTestRunner({
         expect(regions.data).toEqual(
           expect.objectContaining({
             code: "MISSING_PERMISSION",
-            permission: "regions",
-            right: "view",
+            type: "forbidden",
+            message: "Missing required permission: regions:view",
           })
         )
 
@@ -85,7 +88,9 @@ medusaIntegrationTestRunner({
           .catch((error) => error.response)
 
         expect(response.status).toEqual(403)
-        expect(response.data.permission).toEqual("sellers.approval")
+        expect(response.data.message).toEqual(
+          "Missing required permission: sellers.approval:edit"
+        )
       })
 
       it("lets any admin read the store but requires store:edit to update it", async () => {
@@ -107,8 +112,8 @@ medusaIntegrationTestRunner({
         expect(update.data).toEqual(
           expect.objectContaining({
             code: "MISSING_PERMISSION",
-            permission: "store",
-            right: "edit",
+            type: "forbidden",
+            message: "Missing required permission: store:edit",
           })
         )
       })
@@ -163,7 +168,10 @@ medusaIntegrationTestRunner({
 
         expect(byId.status).toEqual(403)
         expect(byId.data).toEqual(
-          expect.objectContaining({ permission: "users", right: "edit" })
+          expect.objectContaining({
+            code: "MISSING_PERMISSION",
+            message: "Missing required permission: users:edit",
+          })
         )
       })
     })

@@ -11,6 +11,10 @@ import {
 } from "@mercurjs/dashboard-shared";
 import { useCreateProductTagRequest } from "../../../../hooks/api/requests";
 
+export const handle = {
+  permissions: "product_tags:edit",
+}
+
 const CreateTagRequestSchema = zod.object({
   value: zod.string().min(1),
 });

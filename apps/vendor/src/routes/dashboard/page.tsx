@@ -28,10 +28,12 @@ export const config: RouteConfig = {
   translationNs: "dashboard",
   icon: ChartBar,
   rank: -1,
+  permissions: ["dashboard:view"],
 }
 
 export const handle = {
   breadcrumb: () => i18n.t("dashboard.domain"),
+  permissions: "dashboard:view",
 }
 
 /**

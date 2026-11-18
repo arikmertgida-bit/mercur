@@ -11,7 +11,7 @@ import {
   toast,
 } from "@medusajs/ui";
 import type { RouteConfig } from "@mercurjs/dashboard-sdk";
-import { NoRecords } from "@mercurjs/dashboard-shared";
+import { NoRecords, useCan } from "@mercurjs/dashboard-shared";
 
 import {
   ReviewReportDTO,
@@ -23,10 +23,12 @@ export const config: RouteConfig = {
   label: "reviews.navLabel",
   translationNs: "requests",
   nested: "/requests",
+  permissions: ["reviews:view"],
 };
 
 export const handle = {
   breadcrumb: () => i18n.t("requests.reviews.navLabel"),
+  permissions: "reviews:view",
 };
 
 const STATUS_COLOR: Record<ReviewReportDTO["status"], "orange" | "red" | "grey"> = {
@@ -45,6 +47,7 @@ const VendorReviewReportsPage = () => {
     limit: PAGE_SIZE,
     offset,
   });
+  const canReReport = useCan("reviews", "edit");
   const { mutateAsync: reReport, isPending: isReReporting } =
     useCreateReviewReport();
 
@@ -108,7 +111,7 @@ const VendorReviewReportsPage = () => {
                   </Text>
                 </Table.Cell>
                 <Table.Cell>
-                  {report.status === "resolved_kept" && (
+                  {canReReport && report.status === "resolved_kept" && (
                     <Button
                       size="small"
                       variant="secondary"

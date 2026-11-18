@@ -7,6 +7,10 @@ import * as zod from "zod";
 import { Form, RouteFocusModal, useRouteModal } from "@mercurjs/dashboard-shared";
 import { useCreateReturnReasonRequest } from "../../../../hooks/api/requests";
 
+export const handle = {
+  permissions: "return_reasons:edit",
+}
+
 const CreateReturnReasonRequestSchema = zod.object({
   value: zod.string().min(1),
   label: zod.string().min(1),

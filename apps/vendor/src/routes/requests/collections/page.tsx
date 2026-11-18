@@ -9,10 +9,12 @@ export const config: RouteConfig = {
   label: "collections.navLabel",
   translationNs: "requests",
   nested: "/requests",
+  permissions: ["product_collections:view"],
 };
 
 export const handle = {
   breadcrumb: () => i18n.t("requests.collections.navLabel"),
+  permissions: "product_collections:view",
 };
 
 import { useProductCollectionRequests } from "../../../hooks/api/requests";

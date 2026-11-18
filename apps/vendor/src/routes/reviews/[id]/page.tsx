@@ -19,6 +19,7 @@ import {
   Thumbnail,
   TwoColumnPageSkeleton,
   TwoColumnPage,
+  useCan,
   useRequiredParam,
 } from "@mercurjs/dashboard-shared";
 import { client } from "../../../lib/client";
@@ -32,6 +33,10 @@ import {
 import { useCreateReviewReport } from "../../../hooks/api/review-reports";
 import { ReplyStatusBadge } from "../components/ReplyStatusBadge";
 import { toIntlLocale } from "../../../lib/intl-locale";
+
+export const handle = {
+  permissions: "reviews:view",
+}
 
 const REPLY_MAX_LENGTH = 300;
 const REPORT_REASON_MAX_LENGTH = 500;
@@ -328,6 +333,7 @@ const ReplyImagePicker = ({
 
 const ReviewReplySection = ({ review }: { review: ReviewDTO }) => {
   const { t } = useTranslation();
+  const canReply = useCan("reviews", "edit");
   const [content, setContent] = useState("");
   const [pendingImages, setPendingImages] = useState<PendingReplyImage[]>([]);
   const [isUploadingImages, setIsUploadingImages] = useState(false);
@@ -389,6 +395,7 @@ const ReviewReplySection = ({ review }: { review: ReviewDTO }) => {
       <div className="px-6 py-4">
         <ReviewReplyThread reviewId={review.id} />
       </div>
+      {canReply && (
       <div className="flex gap-x-3 px-6 py-4">
         <ReplyImagePicker
           images={pendingImages}
@@ -416,6 +423,7 @@ const ReviewReplySection = ({ review }: { review: ReviewDTO }) => {
           </div>
         </div>
       </div>
+      )}
     </Container>
   );
 };
@@ -471,6 +479,7 @@ export const ReviewDetailPage = () => {
   const id = useRequiredParam("id");
 
   const { review, isLoading, isError, error } = useReview(id);
+  const canReport = useCan("reviews", "edit");
 
   if (isLoading || !review) {
     return <TwoColumnPageSkeleton mainSections={3} sidebarSections={1} showMetadata />;
@@ -488,7 +497,7 @@ export const ReviewDetailPage = () => {
         <ReviewReplySection review={review} />
       </TwoColumnPage.Main>
       <TwoColumnPage.Sidebar>
-        <ReviewReportSection review={review} />
+        {canReport && <ReviewReportSection review={review} />}
       </TwoColumnPage.Sidebar>
     </TwoColumnPage>
   );

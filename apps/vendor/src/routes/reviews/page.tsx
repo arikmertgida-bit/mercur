@@ -11,6 +11,10 @@ import { useReviewTableQuery } from "../../hooks/table/query/use-review-table-qu
 import { useReviewTableFilters } from "../../hooks/table/filters/use-review-table-filters";
 import { ReviewsIcon } from "./components/ReviewsIcon";
 
+export const handle = {
+  permissions: "reviews:view",
+}
+
 const PAGE_SIZE = 10;
 
 const SellerAverageRating = () => {
@@ -104,4 +108,5 @@ export const config: RouteConfig = {
   label: "domain",
   translationNs: "reviews",
   icon: ReviewsIcon,
+  permissions: ["reviews:view"],
 };

@@ -40,6 +40,7 @@ import { authRateLimiter, registrationRateLimiter } from "../lib/rate-limit";
 import { vendorAwareErrorHandler } from "../lib/vendor-error-i18n";
 import { adminAwareErrorHandler } from "../lib/admin-error-i18n";
 import { storeAwareErrorHandler } from "../lib/store-error-i18n";
+import { vendorRoutePermissionMiddlewares } from "./vendor/permission-middlewares";
 
 const fallbackErrorHandler = defaultErrorHandler();
 
@@ -100,6 +101,7 @@ export default defineMiddlewares({
         ...storeCustomerUploadMiddlewares,
         ...storeSellerFollowMiddlewares,
         ...storeSellersFollowingMiddlewares,
+        ...vendorRoutePermissionMiddlewares,
         ...vendorFollowersMiddlewares,
         ...storeCatalogProductsMiddlewares,
         ...storeCatalogFacetsMiddlewares,

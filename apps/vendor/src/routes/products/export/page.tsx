@@ -4,6 +4,10 @@ import { Button, Heading, Text, toast } from "@medusajs/ui"
 import { RouteDrawer, useRouteModal } from "@mercurjs/dashboard-shared"
 import { useExportProducts } from "../../../hooks/api/product-import-export"
 
+export const handle = {
+  permissions: "products:view",
+}
+
 function ExportProductsContent() {
   const { t } = useTranslation()
   const { handleSuccess } = useRouteModal()

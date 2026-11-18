@@ -3,7 +3,8 @@ import { toast } from "@medusajs/ui"
 import { useTranslation } from "react-i18next"
 import i18next from "i18next"
 import { client } from "../client"
-import { SellerMeSchema } from "./schemas"
+import { MemberPermissionsSchema, SellerMeSchema } from "./schemas"
+import { clearMessengerAuthToken } from "./auth-token"
 import { MessengerProvider, useMessenger } from "../../providers/messenger-provider/MessengerProvider"
 import { AdminChat } from "../../components/layout/admin-chat/AdminChat"
 import { OrdersBadgeBridge } from "./OrdersBadgeBridge"
@@ -48,14 +49,35 @@ function isOnRouteWithoutSelectableSeller(): boolean {
 }
 
 /**
+ * Messenger (chats, admin contact, notifications) belongs to the `messages`
+ * right; a member without it never asks for a messenger token.
+ */
+async function memberCanMessage(): Promise<boolean> {
+  try {
+    const raw = await client.vendor.members.me.query({ fields: "+permissions" })
+    const parsed = MemberPermissionsSchema.safeParse(raw)
+    if (!parsed.success) return false
+    const permissions = parsed.data.seller_member.permissions
+    return permissions === undefined || permissions.messages !== undefined
+  } catch {
+    return false
+  }
+}
+
+/**
  * Resolves the current vendor session's seller id via cookie-based auth
  * (see lib/client.ts). Re-checks on window focus, fast (every 2s, capped)
  * while unresolved so a fresh login/store-selection is picked up without a
  * full page reload, and infrequently once resolved as a background safety net.
  */
-function useSellerSession(): { sellerId: string | null; sellerName: string | undefined } {
+function useSellerSession(): {
+  sellerId: string | null
+  sellerName: string | undefined
+  canMessage: boolean
+} {
   const [sellerId, setSellerId] = useState<string | null>(null)
   const [sellerName, setSellerName] = useState<string | undefined>(undefined)
+  const [canMessage, setCanMessage] = useState(false)
 
   useEffect(() => {
     let cancelled = false
@@ -94,9 +116,13 @@ function useSellerSession(): { sellerId: string | null; sellerName: string | und
         const parsed = SellerMeSchema.safeParse(raw)
         const resolvedId = parsed.success ? (parsed.data.seller?.id ?? null) : null
         const resolvedName = parsed.success ? (parsed.data.seller?.name ?? undefined) : undefined
+        const resolvedCanMessage = resolvedId ? await memberCanMessage() : false
+        // A token kept from another store would act as that store in messenger.
+        if (resolvedId && !resolvedCanMessage) clearMessengerAuthToken()
         if (!cancelled) {
           setSellerId(resolvedId)
           setSellerName(resolvedName)
+          setCanMessage(resolvedCanMessage)
           if (resolvedId) {
             startPolling(IDLE_POLL_INTERVAL_MS)
           }
@@ -105,6 +131,7 @@ function useSellerSession(): { sellerId: string | null; sellerName: string | und
         if (!cancelled) {
           setSellerId(null)
           setSellerName(undefined)
+          setCanMessage(false)
         }
       } finally {
         fastAttempts++
@@ -126,7 +153,7 @@ function useSellerSession(): { sellerId: string | null; sellerName: string | und
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  return { sellerId, sellerName }
+  return { sellerId, sellerName, canMessage }
 }
 
 /**
@@ -209,14 +236,15 @@ interface MessengerVendorBootstrapProps {
  * (would create a second QueryClient).
  */
 export function MessengerVendorBootstrap({ children }: MessengerVendorBootstrapProps): React.JSX.Element {
-  const { sellerId, sellerName } = useSellerSession()
+  const { sellerId, sellerName, canMessage } = useSellerSession()
   const i18nReady = useI18nReady()
+  const messengerSellerId = canMessage ? sellerId : null
 
   return (
-    <MessengerProvider sellerId={sellerId} sellerName={sellerName} persistSession>
+    <MessengerProvider sellerId={messengerSellerId} sellerName={sellerName} persistSession>
       {i18nReady && <MessengerGlobalNotifier />}
       <OrdersBadgeBridge />
-      {i18nReady && sellerId && <AdminChat currentUserId={sellerId} />}
+      {i18nReady && messengerSellerId && <AdminChat currentUserId={messengerSellerId} />}
       {children}
     </MessengerProvider>
   )

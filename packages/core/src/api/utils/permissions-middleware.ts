@@ -86,6 +86,8 @@ export function resolvePermissionsMiddleware(surface: PermissionSurface) {
       surface,
       seller_id: req.seller_context?.seller_id,
       seller_member_id: req.seller_context?.seller_member?.id,
+      seller_member_role_id: req.seller_context?.seller_member?.role_id ?? null,
+      seller_member_is_owner: req.seller_context?.seller_member?.is_owner ?? false,
     }
 
     try {

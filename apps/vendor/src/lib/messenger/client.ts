@@ -201,6 +201,8 @@ export async function getNotificationUnreadCount(type: string): Promise<{ count:
 }
 
 export async function markNotificationsRead(type: string): Promise<void> {
+  // A member without the messages right has no messenger session to mark.
+  if (!getMessengerAuthToken()) return
   await request("/api/notifications/mark-read", {
     method: "POST",
     body: JSON.stringify({ type }),

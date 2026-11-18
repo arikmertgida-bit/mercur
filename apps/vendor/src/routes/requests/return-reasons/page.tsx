@@ -9,10 +9,12 @@ export const config: RouteConfig = {
   label: "returnReasons.navLabel",
   translationNs: "requests",
   nested: "/requests",
+  permissions: ["return_reasons:view"],
 };
 
 export const handle = {
   breadcrumb: () => i18n.t("requests.returnReasons.navLabel"),
+  permissions: "return_reasons:view",
 };
 
 import { useReturnReasonRequests } from "../../../hooks/api/requests";

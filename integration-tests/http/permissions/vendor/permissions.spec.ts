@@ -35,6 +35,9 @@ medusaIntegrationTestRunner({
 
       beforeAll(() => {
         container = getContainer()
+        // Kayı registers its own resolver (apps/api modules/permissions, covered by
+        // vendor/roles.spec.ts); these specs start without it and swap in their own.
+        delete modulesConfig()[PERMISSIONS_MODULE]
       })
 
       beforeEach(async () => {
@@ -90,8 +93,8 @@ medusaIntegrationTestRunner({
         expect(payouts.data).toEqual(
           expect.objectContaining({
             code: "MISSING_PERMISSION",
-            permission: "payouts",
-            right: "view",
+            type: "forbidden",
+            message: "Missing required permission: payouts:view",
           })
         )
       })

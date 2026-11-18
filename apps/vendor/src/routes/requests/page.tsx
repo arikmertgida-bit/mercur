@@ -7,6 +7,7 @@ export const config: RouteConfig = {
   label: "domain",
   translationNs: "requests",
   icon: RequestsIcon,
+  permissions: ["product_categories:view", "product_collections:view", "product_types:view", "product_tags:view", "return_reasons:view", "reviews:view"],
 };
 
 export const handle = {

@@ -37,6 +37,8 @@ export interface PermissionActor {
   surface: PermissionSurface
   seller_id?: string
   seller_member_id?: string
+  seller_member_role_id?: string | null
+  seller_member_is_owner?: boolean
 }
 
 /**

@@ -9,6 +9,10 @@ import { useFollowerTableColumns } from "../../hooks/table/columns/use-follower-
 import { useFollowerTableQuery } from "../../hooks/table/query/use-follower-table-query"
 import { FollowersIcon } from "./components/FollowersIcon"
 
+export const handle = {
+  permissions: "followers:view",
+}
+
 const PAGE_SIZE = 20
 // Follow/unfollow happens from the storefront, a separate session — the vendor
 // panel has no push channel for it, so the header count polls instead.
@@ -75,4 +79,5 @@ export const config: RouteConfig = {
   translationNs: "followers",
   icon: FollowersIcon,
   rank: 91,
+  permissions: ["followers:view"],
 }

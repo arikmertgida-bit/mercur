@@ -11,6 +11,10 @@ import {
 } from "@mercurjs/dashboard-shared";
 import { useCreateProductTypeRequest } from "../../../../hooks/api/requests";
 
+export const handle = {
+  permissions: "product_types:edit",
+}
+
 const CreateTypeRequestSchema = zod.object({
   value: zod.string().min(1),
 });

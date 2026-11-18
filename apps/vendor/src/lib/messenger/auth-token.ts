@@ -38,6 +38,10 @@ export function getMessengerAuthToken(): string | null {
   return token
 }
 
+export function clearMessengerAuthToken(): void {
+  window.localStorage.removeItem(KAYI_MESSENGER_AUTH_TOKEN_KEY)
+}
+
 export function setMessengerAuthToken(token: string): void {
   window.localStorage.setItem(KAYI_MESSENGER_AUTH_TOKEN_KEY, token)
 }

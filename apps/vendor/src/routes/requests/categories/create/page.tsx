@@ -22,6 +22,10 @@ import {
 } from "@mercurjs/dashboard-shared";
 import { useCreateProductCategoryRequest } from "../../../../hooks/api/requests";
 
+export const handle = {
+  permissions: "product_categories:edit",
+}
+
 const CreateCategoryRequestSchema = zod.object({
   name: zod.string().min(1),
   handle: zod.string().optional(),

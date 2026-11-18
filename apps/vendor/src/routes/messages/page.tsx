@@ -7,11 +7,16 @@ import { MessengerProvider } from "../../providers/messenger-provider/MessengerP
 import { MessengerVendorInbox } from "./components/MessengerVendorInbox"
 import { MessagesIcon } from "./components/MessagesIcon"
 
+export const handle = {
+  permissions: "messages:view",
+}
+
 export const config = {
   label: "domain",
   translationNs: "messages",
   icon: MessagesIcon,
   rank: 90,
+  permissions: ["messages:view"],
 }
 
 function MessagesContent() {

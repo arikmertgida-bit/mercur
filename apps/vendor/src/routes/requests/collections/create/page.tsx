@@ -14,6 +14,10 @@ import {
 } from "@mercurjs/dashboard-shared";
 import { useCreateProductCollectionRequest } from "../../../../hooks/api/requests";
 
+export const handle = {
+  permissions: "product_collections:edit",
+}
+
 const CreateCollectionRequestSchema = zod.object({
   title: zod.string().min(1),
   handle: zod.string().optional(),
