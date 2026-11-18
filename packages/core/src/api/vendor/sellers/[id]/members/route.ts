@@ -43,5 +43,17 @@ export const POST = async (
     }],
   })
 
-  res.status(201).json({ member_invite: invites[0] })
+  // The token is the invitee's credential; it reaches them by email only.
+  const invite = invites[0]
+  res.status(201).json({
+    member_invite: invite && {
+      id: invite.id,
+      email: invite.email,
+      role_id: invite.role_id,
+      seller_id: invite.seller_id,
+      accepted: invite.accepted,
+      expires_at: invite.expires_at,
+      created_at: invite.created_at,
+    },
+  })
 }

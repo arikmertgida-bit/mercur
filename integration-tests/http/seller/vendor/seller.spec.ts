@@ -13,6 +13,20 @@ jest.setTimeout(50000)
 
 medusaIntegrationTestRunner({
   testSuite: ({ getContainer, api, dbConnection }) => {
+
+      const uploadOwnImage = async (headers: any): Promise<string> => {
+        const png = Buffer.from(
+          "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==",
+          "base64"
+        )
+        const form = new FormData()
+        form.append("files", new Blob([png], { type: "image/png" }), "store.png")
+        const response = await api.post("/vendor/uploads", form, headers)
+        const url: string = response.data.files[0].url
+        // The test app serves uploads from Medusa's local file provider.
+        process.env.MINIO_FILE_URL = url.slice(0, url.lastIndexOf("/"))
+        return url
+      }
     describe("Vendor - Sellers", () => {
       let appContainer: MedusaContainer
       let sellerA: any
@@ -574,30 +588,28 @@ medusaIntegrationTestRunner({
           )
         })
 
-        it("should update logo with valid URL", async () => {
+        it("should update logo with the store's own upload", async () => {
+          const url = await uploadOwnImage(headersA)
           const response = await api.post(
             `/vendor/sellers/${sellerA.id}`,
-            { logo: "https://example.com/logo.png" },
+            { logo: url },
             headersA
           )
 
           expect(response.status).toEqual(200)
-          expect(response.data.seller.logo).toEqual(
-            "https://example.com/logo.png"
-          )
+          expect(response.data.seller.logo).toEqual(url)
         })
 
-        it("should update banner with valid URL", async () => {
+        it("should update banner with the store's own upload", async () => {
+          const url = await uploadOwnImage(headersA)
           const response = await api.post(
             `/vendor/sellers/${sellerA.id}`,
-            { banner: "https://example.com/banner.png" },
+            { banner: url },
             headersA
           )
 
           expect(response.status).toEqual(200)
-          expect(response.data.seller.banner).toEqual(
-            "https://example.com/banner.png"
-          )
+          expect(response.data.seller.banner).toEqual(url)
         })
 
         it("should update website_url", async () => {

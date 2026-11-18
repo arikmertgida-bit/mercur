@@ -12,6 +12,14 @@ import {
   validateAndTransformQuery,
 } from "@medusajs/framework"
 import { MiddlewareRoute } from "@medusajs/medusa"
+import {
+  AuthenticatedMedusaRequest,
+  MedusaNextFunction,
+  MedusaResponse,
+} from "@medusajs/framework/http"
+
+import { assertSellerImageUrls } from "../../utils/seller-upload"
+import { getSellerId } from "../../utils/seller-context"
 
 import * as QueryConfig from "./query-config"
 import {
@@ -26,6 +34,26 @@ import {
   VendorUpsertSellerPaymentDetails,
   VendorUpsertSellerProfessionalDetails,
 } from "./validators"
+
+const ensureOwnStoreImages = async (
+  req: AuthenticatedMedusaRequest<{
+    logo?: string | null
+    banner?: string | null
+  }>,
+  _res: MedusaResponse,
+  next: MedusaNextFunction
+) => {
+  try {
+    await assertSellerImageUrls(req.scope, getSellerId(req), [
+      req.validatedBody.logo,
+      req.validatedBody.banner,
+    ])
+  } catch (error) {
+    return next(error)
+  }
+
+  return next()
+}
 
 export const vendorSellersMiddlewares: MiddlewareRoute[] = [
   {
@@ -52,6 +80,7 @@ export const vendorSellersMiddlewares: MiddlewareRoute[] = [
     middlewares: [
       requirePermission("store", "edit"),
       validateAndTransformBody(VendorUpdateSeller),
+      ensureOwnStoreImages,
       restrictVendorFields(VENDOR_CROSS_SELLER_FIELD_SEGMENTS),
       validateAndTransformQuery(
         VendorGetSellerParams,
@@ -97,6 +126,7 @@ export const vendorSellersMiddlewares: MiddlewareRoute[] = [
       requirePermission("store", "edit"),
       ensureSellerIdParamMiddleware,
       validateAndTransformBody(VendorUpdateSeller),
+      ensureOwnStoreImages,
       restrictVendorFields(VENDOR_CROSS_SELLER_FIELD_SEGMENTS),
       validateAndTransformQuery(
         VendorGetSellerParams,

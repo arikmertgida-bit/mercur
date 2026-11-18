@@ -32,6 +32,7 @@ import {
   MedusaError,
 } from "@medusajs/framework/utils"
 import { getSellerId } from "../../utils/seller-context"
+import { assertSellerImageUrls } from "../../utils/seller-upload"
 import { AndQueryFilter } from "../../../utils/query-filter"
 
 const applySellerProductLinkFilter = async (
@@ -97,6 +98,33 @@ const ensureVariantBelongsToProduct = async (
   return next()
 }
 
+type ImageCarryingBody = {
+  thumbnail?: string | null
+  images?: ReadonlyArray<{ url: string }> | { add?: string[]; remove?: string[] }
+  variants?: ReadonlyArray<{ thumbnail?: string | null }>
+}
+
+const ensureOwnImageUrls = async (
+  req: AuthenticatedMedusaRequest<ImageCarryingBody>,
+  _res: MedusaResponse,
+  next: MedusaNextFunction
+) => {
+  const body = req.validatedBody
+  const images = Array.isArray(body.images) ? body.images : []
+
+  try {
+    await assertSellerImageUrls(req.scope, getSellerId(req), [
+      body.thumbnail,
+      ...images.map((image) => image.url),
+      ...(body.variants ?? []).map((variant) => variant.thumbnail),
+    ])
+  } catch (error) {
+    return next(error)
+  }
+
+  return next()
+}
+
 export const vendorProductsMiddlewares: MiddlewareRoute[] = [
   {
     method: ["GET"],
@@ -124,6 +152,7 @@ export const vendorProductsMiddlewares: MiddlewareRoute[] = [
     middlewares: [
       requirePermission("products", "edit"),
       validateAndTransformBody(VendorCreateProduct),
+      ensureOwnImageUrls,
       validateAndTransformQuery(
         VendorGetProductParams,
         vendorProductQueryConfig.retrieve
@@ -150,6 +179,7 @@ export const vendorProductsMiddlewares: MiddlewareRoute[] = [
       requirePermission("products", "edit"),
       ensureProductVisibleToSeller,
       validateAndTransformBody(VendorUpdateProduct),
+      ensureOwnImageUrls,
       validateAndTransformQuery(
         VendorGetProductParams,
         vendorProductQueryConfig.retrieve
@@ -193,6 +223,7 @@ export const vendorProductsMiddlewares: MiddlewareRoute[] = [
       requirePermission("products", "edit"),
       ensureProductVisibleToSeller,
       validateAndTransformBody(VendorAddProductVariant),
+      ensureOwnImageUrls,
       validateAndTransformQuery(
         VendorGetProductParams,
         vendorProductQueryConfig.retrieve
@@ -220,6 +251,7 @@ export const vendorProductsMiddlewares: MiddlewareRoute[] = [
       ensureProductVisibleToSeller,
       ensureVariantBelongsToProduct,
       validateAndTransformBody(VendorUpdateProductVariant),
+      ensureOwnImageUrls,
       validateAndTransformQuery(
         VendorGetProductParams,
         vendorProductQueryConfig.retrieve

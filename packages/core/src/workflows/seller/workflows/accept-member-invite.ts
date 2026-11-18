@@ -14,6 +14,7 @@ import { MemberInviteDTO } from "@mercurjs/types"
 
 import {
   validateMemberInviteTokenStep,
+  validateMemberInviteAcceptorStep,
   upsertMembersStep,
   createSellerMembersStep,
   deleteMemberInviteStep,
@@ -38,6 +39,14 @@ export const acceptMemberInviteWorkflow = createWorkflow(
     const inviteDTO = transform(
       { invite },
       ({ invite }): MemberInviteDTO => invite
+    )
+
+    validateMemberInviteAcceptorStep(
+      transform({ invite: inviteDTO, input }, ({ invite, input }) => ({
+        invite,
+        auth_identity_id: input.auth_identity_id,
+        member_id: input.member_id,
+      }))
     )
 
     const validate = createHook("validate", {

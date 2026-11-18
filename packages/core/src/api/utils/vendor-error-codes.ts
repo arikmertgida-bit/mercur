@@ -1,0 +1,7 @@
+/**
+ * MedusaError codes the app's vendor error layer (apps/api
+ * vendor-error-i18n) translates. Kept free of imports so the error layer can
+ * read them without loading routes or workflows.
+ */
+export const SELLER_IMAGE_NOT_OWNED_CODE = "seller_image_not_owned"
+export const MEMBER_INVITE_EMAIL_MISMATCH_CODE = "member_invite_email_mismatch"

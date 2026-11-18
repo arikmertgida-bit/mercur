@@ -542,11 +542,21 @@ medusaIntegrationTestRunner({
       })
 
       it("returns every image on the detail query, not just the thumbnail", async () => {
-        const images = [
-          { url: "https://example.com/mer-246-1.png" },
-          { url: "https://example.com/mer-246-2.png" },
-          { url: "https://example.com/mer-246-3.png" },
-        ]
+        // Vendors may only reference their own uploads (seller-<id>--… keys).
+        const png = Buffer.from(
+          "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==",
+          "base64"
+        )
+        const form = new FormData()
+        for (let i = 1; i <= 3; i++) {
+          form.append("files", new Blob([png], { type: "image/png" }), `mer-246-${i}.png`)
+        }
+        const uploaded = await api.post("/vendor/uploads", form, sellerHeaders)
+        const images: { url: string }[] = uploaded.data.files.map(
+          (file: { url: string }) => ({ url: file.url })
+        )
+        const previousFileUrl = process.env.MINIO_FILE_URL
+        process.env.MINIO_FILE_URL = images[0].url.slice(0, images[0].url.lastIndexOf("/"))
 
         const created = await api.post(
           "/vendor/products",
@@ -559,6 +569,7 @@ medusaIntegrationTestRunner({
           },
           sellerHeaders
         )
+        process.env.MINIO_FILE_URL = previousFileUrl
         const productId = created.data.product.id
 
         const res = await api.get(

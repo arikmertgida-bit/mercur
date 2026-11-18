@@ -6,6 +6,8 @@ import {
 import { FileDTO, HttpTypes } from "@medusajs/framework/types"
 import { MedusaError } from "@medusajs/framework/utils"
 import { fixMultipartFilenameEncoding } from "../../../utils/fix-multipart-filename-encoding"
+import { getSellerId } from "../../utils/seller-context"
+import { sellerUploadFilename } from "../../utils/seller-upload"
 import { matchesAllowedImageMagicBytes } from "./file-validation"
 
 export const POST = async (
@@ -30,10 +32,15 @@ export const POST = async (
     )
   }
 
+  const sellerId = getSellerId(req)
+
   const { result: files } = await uploadFilesWorkflow(req.scope).run({
     input: {
-      files: input?.map((f) => ({
-        filename: fixMultipartFilenameEncoding(f.originalname),
+      files: input.map((f) => ({
+        filename: sellerUploadFilename(
+          sellerId,
+          fixMultipartFilenameEncoding(f.originalname)
+        ),
         mimeType: f.mimetype,
         content: f.buffer.toString("base64"),
         access: "public",

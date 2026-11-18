@@ -2,6 +2,7 @@ import { AuthenticatedMedusaRequest, MedusaResponse } from '@medusajs/framework'
 import { ContainerRegistrationKeys, MedusaError } from '@medusajs/framework/utils'
 import type { Query } from '@medusajs/framework'
 import type {} from '@mercurjs/core/types/seller-context'
+import { assertSellerImageUrls } from '@mercurjs/core/api/utils/seller-upload'
 
 import { SellerSummarySchema, parseFirstRow } from '../../../../lib/graph-schemas'
 import { emitReviewSellerReplyEvent } from '../../../../lib/review-events'
@@ -80,6 +81,7 @@ export const POST = async (
   }
 
   await validateSellerReview(req.scope, sellerId, id)
+  await assertSellerImageUrls(req.scope, sellerId, req.validatedBody.image_urls ?? [])
 
   const query = req.scope.resolve<Query>(ContainerRegistrationKeys.QUERY)
   const { seller_note, image_urls } = req.validatedBody

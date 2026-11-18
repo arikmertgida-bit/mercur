@@ -1,5 +1,10 @@
 import { MedusaError } from "@medusajs/framework/utils"
 
+import {
+  MEMBER_INVITE_EMAIL_MISMATCH_CODE,
+  SELLER_IMAGE_NOT_OWNED_CODE,
+} from "@mercurjs/core/api/utils/vendor-error-codes"
+
 import { AUTOMATIC_PROMOTION_ATTRIBUTE_BUDGET_CODE } from "../campaign-budget-attribute"
 import type { VendorLanguage } from "./languages"
 import { VENDOR_ERROR_MESSAGES, VendorErrorCustomCodes, VendorErrorMessages } from "./messages"
@@ -206,6 +211,22 @@ export function translateVendorError(
         code: error.code,
         type: error.type,
         message: messages.customCodes.automatic_promotion_attribute_budget,
+      }
+    }
+
+    if (error.code === SELLER_IMAGE_NOT_OWNED_CODE) {
+      return {
+        code: error.code,
+        type: error.type,
+        message: messages.customCodes.seller_image_not_owned,
+      }
+    }
+
+    if (error.code === MEMBER_INVITE_EMAIL_MISMATCH_CODE) {
+      return {
+        code: error.code,
+        type: error.type,
+        message: messages.customCodes.member_invite_email_mismatch,
       }
     }
 

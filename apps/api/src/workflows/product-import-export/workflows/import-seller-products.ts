@@ -7,6 +7,7 @@ import { parseProductCsvStep } from "@medusajs/core-flows"
 import { createProductsWorkflow } from "@mercurjs/core/workflows"
 import { validateProductsToImportStep } from "../steps/validate-products-to-import"
 import { validateImportShippingProfilesStep } from "../steps/validate-import-shipping-profiles"
+import { validateImportImagesStep } from "../steps/validate-import-images"
 
 type ImportSellerProductsWorkflowInput = {
   file_content: string
@@ -20,6 +21,10 @@ export const importSellerProductsWorkflow = createWorkflow(
 
     validateProductsToImportStep({ products: parsedProducts })
     validateImportShippingProfilesStep({
+      products: parsedProducts,
+      seller_id: input.seller_id,
+    })
+    validateImportImagesStep({
       products: parsedProducts,
       seller_id: input.seller_id,
     })
