@@ -1,10 +1,10 @@
 import { useMemo } from "react";
 
-import { Trash } from "@medusajs/icons";
+import { PencilSquare, Trash } from "@medusajs/icons";
 import { keepPreviousData } from "@tanstack/react-query";
 import { createColumnHelper } from "@tanstack/react-table";
 import { useTranslation } from "react-i18next";
-import { toast } from "@medusajs/ui";
+import { toast, usePrompt } from "@medusajs/ui";
 
 import { ActionMenu } from "@components/common/action-menu";
 import { _DataTable } from "@components/table/data-table";
@@ -14,17 +14,10 @@ import { useMemberTableQuery } from "@hooks/table/query";
 import { useDataTable } from "@hooks/use-data-table";
 import { SectionNoAccess, isForbidden } from "@mercurjs/dashboard-shared";
 import type { SellerMemberDTO } from "@mercurjs/types";
-import { SellerRole } from "@mercurjs/types/seller";
+
+import { MemberGrantCell } from "../common/member-grant-cell";
 
 const PAGE_SIZE = 20;
-
-const ROLE_TRANSLATION_MAP: Record<string, string> = {
-  [SellerRole.SELLER_ADMINISTRATION]: "users.roles.administration",
-  [SellerRole.INVENTORY_MANAGEMENT]: "users.roles.inventoryManagement",
-  [SellerRole.ORDER_MANAGEMENT]: "users.roles.orderManagement",
-  [SellerRole.ACCOUNTING]: "users.roles.accounting",
-  [SellerRole.SUPPORT]: "users.roles.support",
-};
 
 export const TeamListDataTable = () => {
   const { t } = useTranslation();
@@ -41,7 +34,7 @@ export const TeamListDataTable = () => {
     },
   );
 
-  const columns = useColumns(sellerId ?? "");
+  const columns = useColumns(sellerId ?? "", seller_member?.id ?? "");
 
   const { table } = useDataTable({
     data: seller_members ?? [],
@@ -82,7 +75,7 @@ export const TeamListDataTable = () => {
 
 const columnHelper = createColumnHelper<SellerMemberDTO>();
 
-const useColumns = (sellerId: string) => {
+const useColumns = (sellerId: string, currentMemberId: string) => {
   const { t } = useTranslation();
 
   return useMemo(
@@ -107,17 +100,13 @@ const useColumns = (sellerId: string) => {
             <span>{t("fields.role")}</span>
           </div>
         ),
-        cell: ({ row }) => {
-          const roleId = row.original.role_id;
-          const translationKey = ROLE_TRANSLATION_MAP[roleId];
-          const label = translationKey ? t(translationKey) : "-";
-
-          return (
-            <div className="flex size-full items-center overflow-hidden">
-              <span className="truncate">{label}</span>
-            </div>
-          );
-        },
+        cell: ({ row }) => (
+          <MemberGrantCell
+            roleId={row.original.role_id}
+            customPermissions={row.original.custom_permissions}
+            testId={`team-member-grant-${row.original.id}`}
+          />
+        ),
       }),
       columnHelper.accessor("created_at", {
         header: () => (
@@ -133,11 +122,14 @@ const useColumns = (sellerId: string) => {
       columnHelper.display({
         id: "actions",
         cell: ({ row }) => {
+          if (row.original.is_owner || row.original.id === currentMemberId) {
+            return null;
+          }
           return <MemberActions member={row.original} sellerId={sellerId} />;
         },
       }),
     ],
-    [t, sellerId],
+    [t, sellerId, currentMemberId],
   );
 };
 
@@ -149,12 +141,25 @@ const MemberActions = ({
   sellerId: string;
 }) => {
   const { t } = useTranslation();
+  const prompt = usePrompt();
   const { mutateAsync: removeMember } = useRemoveSellerMember(
     sellerId,
     member.id,
   );
 
   const handleRemove = async () => {
+    const confirmed = await prompt({
+      title: t("general.areYouSure"),
+      description: t("users.deleteUserWarning", {
+        name: member.member?.email,
+      }),
+      confirmText: t("actions.remove"),
+      cancelText: t("actions.cancel"),
+    });
+    if (!confirmed) {
+      return;
+    }
+
     try {
       await removeMember();
       toast.success(
@@ -170,6 +175,16 @@ const MemberActions = ({
   return (
     <ActionMenu
       groups={[
+        {
+          actions: [
+            {
+              icon: <PencilSquare />,
+              permission: "members:edit",
+              label: t("users.permissions.edit"),
+              to: `${member.id}/permissions`,
+            },
+          ],
+        },
         {
           actions: [
             {

@@ -3044,6 +3044,49 @@
         "emailInvalid": "유효한 이메일을 입력해 주세요",
         "roleRequired": "역할을 선택해 주세요"
       }
+    },
+    "permissions": {
+      "title": "권한",
+      "hint": "이 멤버가 보고 할 수 있는 항목을 선택하세요.",
+      "templateHint": "역할을 선택하면 아래 체크박스가 채워지며, 이후 변경할 수 있습니다.",
+      "administrationHint": "관리 역할은 팀, 스토어 설정, 정산 계좌를 포함한 전체 권한을 가집니다.",
+      "custom": "사용자 지정",
+      "area": "영역",
+      "rights": {
+        "view": "보기 가능",
+        "edit": "편집 가능",
+        "manage": "삭제 가능"
+      },
+      "areas": {
+        "orders": "주문",
+        "returns": "반품",
+        "return_reason_requests": "반품 사유 요청",
+        "refunds": "환불 및 결제",
+        "customers": "고객",
+        "products": "상품",
+        "catalog": "카테고리, 컬렉션, 유형 및 태그",
+        "inventory": "재고",
+        "shipping": "배송",
+        "price_lists": "가격 목록",
+        "promotions": "프로모션 및 캠페인",
+        "commissions": "수수료",
+        "payouts": "정산 및 정산 계좌",
+        "reviews": "리뷰",
+        "messages": "메시지 및 알림",
+        "followers": "팔로워",
+        "dashboard": "대시보드 요약"
+      },
+      "requiredBy": "{{areas}}에 필요",
+      "summaryItem": "{{area}}: {{right}}",
+      "edit": "권한 편집",
+      "editDescription": "{{email}}이(가) 보고 할 수 있는 항목을 변경합니다. 변경 사항은 즉시 적용됩니다.",
+      "editSuccess": "{{email}}의 권한이 업데이트되었습니다.",
+      "inviteSuccess": "{{email}}에 대한 초대가 생성되었습니다.",
+      "notEditable": "스토어 소유자의 권한과 본인의 권한은 변경할 수 없습니다.",
+      "notFound": "이 멤버를 찾을 수 없습니다. 팀에서 삭제되었을 수 있습니다.",
+      "validation": {
+        "required": "권한을 하나 이상 선택하세요."
+      }
     }
   },
   "store": {

@@ -14,6 +14,16 @@ export const VendorGetSellersParams = createFindParams({
   limit: 50,
 })
 
+export type VendorGetSellerMembersParamsType = z.infer<typeof VendorGetSellerMembersParams>
+export const VendorGetSellerMembersParams = createFindParams({
+  offset: 0,
+  limit: 50,
+}).merge(
+  z.object({
+    id: z.union([z.string(), z.array(z.string())]).optional(),
+  })
+)
+
 export type VendorGetSellerParamsType = z.infer<typeof VendorGetSellerParams>
 export const VendorGetSellerParams = createSelectParams()
 

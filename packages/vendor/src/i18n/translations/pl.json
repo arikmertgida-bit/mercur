@@ -3205,6 +3205,49 @@
         "roleRequired": "Wybierz rolę"
       }
     },
+    "permissions": {
+      "title": "Uprawnienia",
+      "hint": "Zaznacz, co ten członek może widzieć i robić.",
+      "templateHint": "Wybór roli wypełnia pola poniżej; potem możesz je zmienić.",
+      "administrationHint": "Administracja ma pełny dostęp, w tym do zespołu, ustawień sklepu i konta wypłat.",
+      "custom": "Niestandardowe",
+      "area": "Obszar",
+      "rights": {
+        "view": "Może wyświetlać",
+        "edit": "Może edytować",
+        "manage": "Może usuwać"
+      },
+      "areas": {
+        "orders": "Zamówienia",
+        "returns": "Zwroty",
+        "return_reason_requests": "Prośby o powody zwrotu",
+        "refunds": "Zwroty pieniędzy i płatności",
+        "customers": "Klienci",
+        "products": "Produkty",
+        "catalog": "Kategorie, kolekcje, typy i tagi",
+        "inventory": "Magazyn",
+        "shipping": "Wysyłka",
+        "price_lists": "Cenniki",
+        "promotions": "Promocje i kampanie",
+        "commissions": "Prowizja",
+        "payouts": "Wypłaty i konto wypłat",
+        "reviews": "Opinie",
+        "messages": "Wiadomości i powiadomienia",
+        "followers": "Obserwujący",
+        "dashboard": "Podsumowanie pulpitu"
+      },
+      "requiredBy": "Wymagane dla: {{areas}}",
+      "summaryItem": "{{area}}: {{right}}",
+      "edit": "Edytuj uprawnienia",
+      "editDescription": "Zmień, co {{email}} może widzieć i robić. Zmiany obowiązują od razu.",
+      "editSuccess": "Uprawnienia {{email}} zostały zaktualizowane.",
+      "inviteSuccess": "Utworzono zaproszenie dla {{email}}.",
+      "notEditable": "Uprawnień właściciela sklepu i własnych uprawnień nie można zmienić.",
+      "notFound": "Nie znaleziono tego członka. Mógł zostać usunięty z zespołu.",
+      "validation": {
+        "required": "Wybierz co najmniej jedno uprawnienie."
+      }
+    },
     "list": {
       "empty": {
         "heading": "Brak użytkowników",

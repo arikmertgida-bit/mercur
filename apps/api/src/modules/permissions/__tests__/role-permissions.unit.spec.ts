@@ -263,7 +263,13 @@ describe("custom member permissions (checkbox grant)", () => {
 
   it("lets a custom grant replace the role template", () => {
     const granted = resolve(
-      member(SellerRole.SUPPORT, false, { orders: "view", products: "manage" })
+      member(SellerRole.SUPPORT, false, {
+        orders: "view",
+        products: "manage",
+        catalog: "view",
+        inventory: "view",
+        shipping: "view",
+      })
     )
     expect(granted.products).toEqual("manage")
     expect(granted.product_changes).toEqual("edit")
@@ -311,6 +317,50 @@ describe("custom member permissions (checkbox grant)", () => {
     expect(codeOf(() => validate({ returns: "view" }))).toEqual("member_permissions_invalid")
     expect(codeOf(() => validate({ refunds: "edit" }))).toEqual("member_permissions_invalid")
     expect(codeOf(() => validate({ returns: "view", orders: "view" }))).toBeUndefined()
+  })
+
+  it("requires the lists the product form loads", () => {
+    expect(codeOf(() => validate({ products: "view" }))).toEqual("member_permissions_invalid")
+    expect(codeOf(() => validate({ products: "view", catalog: "view" }))).toBeUndefined()
+    expect(codeOf(() => validate({ products: "edit", catalog: "view" }))).toEqual(
+      "member_permissions_invalid"
+    )
+    expect(
+      codeOf(() => validate({ products: "edit", catalog: "view", inventory: "view" }))
+    ).toEqual("member_permissions_invalid")
+    expect(
+      codeOf(() =>
+        validate({ products: "manage", catalog: "view", inventory: "view", shipping: "view" })
+      )
+    ).toBeUndefined()
+  })
+
+  it("lists every catalog dependency between areas as an area requirement", () => {
+    const areaOfKey = new Map<string, string>()
+    for (const area of MEMBER_PERMISSION_AREAS) {
+      for (const { key } of area.keys) {
+        areaOfKey.set(key, area.id)
+      }
+    }
+    const missing: string[] = []
+    for (const area of MEMBER_PERMISSION_AREAS) {
+      for (const { key } of area.keys) {
+        for (const requirement of getPermission(key)?.requires ?? []) {
+          const target = areaOfKey.get(requirement.key)
+          if (!target || target === area.id) {
+            continue
+          }
+          const listed = (area.requires ?? []).some(
+            (entry) =>
+              entry.from === "view" && entry.area === target && entry.right === requirement.right
+          )
+          if (!listed) {
+            missing.push(`${area.id} -> ${target}:${requirement.right}`)
+          }
+        }
+      }
+    }
+    expect(missing).toEqual([])
   })
 
   it("never grants beyond the granter", () => {

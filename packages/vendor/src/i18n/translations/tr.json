@@ -3049,6 +3049,49 @@
         "emailInvalid": "Lütfen geçerli bir e-posta girin",
         "roleRequired": "Lütfen bir rol seçin"
       }
+    },
+    "permissions": {
+      "title": "Yetkiler",
+      "hint": "Bu üyenin neleri görebileceğini ve yapabileceğini işaretleyin.",
+      "templateHint": "Rol seçilince aşağıdaki kutucuklar dolar; sonra değiştirebilirsiniz.",
+      "administrationHint": "Yönetici; ekip, mağaza ayarları ve ödeme hesabı dahil tam yetkilidir.",
+      "custom": "Özel",
+      "area": "Alan",
+      "rights": {
+        "view": "Görebilir",
+        "edit": "Düzenleyebilir",
+        "manage": "Silebilir"
+      },
+      "areas": {
+        "orders": "Siparişler",
+        "returns": "İadeler",
+        "return_reason_requests": "İade nedeni talebi",
+        "refunds": "Para iadesi ve ödeme",
+        "customers": "Müşteriler",
+        "products": "Ürünler",
+        "catalog": "Kategori, koleksiyon, tür ve etiket",
+        "inventory": "Stok",
+        "shipping": "Kargo",
+        "price_lists": "Fiyat Listeleri",
+        "promotions": "Promosyon ve kampanya",
+        "commissions": "Komisyon",
+        "payouts": "Hakediş ve ödeme hesabı",
+        "reviews": "Yorumlar",
+        "messages": "Mesajlar ve bildirimler",
+        "followers": "Takipçiler",
+        "dashboard": "Ana sayfa özeti"
+      },
+      "requiredBy": "Şunun için gerekli: {{areas}}",
+      "summaryItem": "{{area}}: {{right}}",
+      "edit": "Yetkileri düzenle",
+      "editDescription": "{{email}} kişisinin neleri görebileceğini ve yapabileceğini değiştirin. Değişiklik hemen geçerli olur.",
+      "editSuccess": "{{email}} kişisinin yetkileri güncellendi.",
+      "inviteSuccess": "{{email}} için davet oluşturuldu.",
+      "notEditable": "Mağaza sahibinin ve sizin kendi yetkileriniz değiştirilemez.",
+      "notFound": "Bu üye bulunamadı. Ekipten çıkarılmış olabilir.",
+      "validation": {
+        "required": "En az bir yetki seçin."
+      }
     }
   },
   "store": {

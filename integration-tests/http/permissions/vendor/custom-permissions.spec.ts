@@ -14,6 +14,14 @@ type Headers = { headers: Record<string, string> }
 type Check = [method: "get" | "post", url: string, allowed: boolean]
 type ErrorResponse = { status: number; data: { code?: string; message?: string } }
 
+const PRODUCT_GRANT = {
+  orders: "view",
+  products: "manage",
+  catalog: "view",
+  inventory: "view",
+  shipping: "view",
+}
+
 medusaIntegrationTestRunner({
   testSuite: ({ getContainer, api, dbConnection }) => {
     describe("Seller member checkbox permissions - vendor", () => {
@@ -97,7 +105,14 @@ medusaIntegrationTestRunner({
         const response = await api.get("/vendor/member-permission-areas", owner.headers)
         expect(response.status).toBe(200)
         expect(response.data.areas).toHaveLength(17)
-        expect(response.data.areas[0]).toEqual({ id: "orders", max_right: "manage" })
+        expect(response.data.areas[0]).toEqual({ id: "orders", max_right: "manage", requires: [] })
+        expect(
+          response.data.areas.find((area: { id: string }) => area.id === "products").requires
+        ).toEqual([
+          { from: "view", area: "catalog", right: "view" },
+          { from: "edit", area: "inventory", right: "view" },
+          { from: "edit", area: "shipping", right: "view" },
+        ])
         expect(Object.keys(response.data.templates).sort()).toEqual(
           [
             SellerRole.ACCOUNTING,
@@ -114,7 +129,7 @@ medusaIntegrationTestRunner({
       it("applies a checked grant instead of the role template, at once", async () => {
         const updated = await api.post(
           memberUrl(),
-          { role_id: SellerRole.SUPPORT, permissions: { orders: "view", products: "manage" } },
+          { role_id: SellerRole.SUPPORT, permissions: PRODUCT_GRANT },
           owner.headers
         )
         expect(updated.status).toBe(200)
@@ -135,7 +150,7 @@ medusaIntegrationTestRunner({
         const row = list.data.seller_members.find(
           (member: { id: string }) => member.id === sellerMemberId
         )
-        expect(row.custom_permissions).toEqual({ orders: "view", products: "manage" })
+        expect(row.custom_permissions).toEqual(PRODUCT_GRANT)
 
         const me = await api.get(
           "/vendor/members/me?fields=+permissions,+custom_permissions",
@@ -176,6 +191,7 @@ medusaIntegrationTestRunner({
           { role_id: SellerRole.SUPPORT, permissions: { members: "view" } },
           { role_id: SellerRole.SUPPORT, permissions: { payouts: "edit" } },
           { role_id: SellerRole.SUPPORT, permissions: { returns: "view" } },
+          { role_id: SellerRole.SUPPORT, permissions: { products: "edit", catalog: "view" } },
           { role_id: SellerRole.SELLER_ADMINISTRATION, permissions: { orders: "view" } },
         ]
         for (const body of bodies) {

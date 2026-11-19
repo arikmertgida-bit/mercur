@@ -3044,6 +3044,49 @@
         "emailInvalid": "Kérjük, adjon meg érvényes e-mail-címet",
         "roleRequired": "Kérjük, válasszon szerepkört"
       }
+    },
+    "permissions": {
+      "title": "Jogosultságok",
+      "hint": "Jelölje be, mit láthat és tehet ez a tag.",
+      "templateHint": "A szerepkör kiválasztása kitölti az alábbi mezőket; utána módosíthatja őket.",
+      "administrationHint": "Az Adminisztráció teljes hozzáféréssel rendelkezik, beleértve a csapatot, a bolt beállításait és a kifizetési számlát.",
+      "custom": "Egyéni",
+      "area": "Terület",
+      "rights": {
+        "view": "Megtekintheti",
+        "edit": "Szerkesztheti",
+        "manage": "Törölheti"
+      },
+      "areas": {
+        "orders": "Rendelések",
+        "returns": "Visszaküldések",
+        "return_reason_requests": "Visszaküldési okokra vonatkozó kérések",
+        "refunds": "Visszatérítések és fizetések",
+        "customers": "Vásárlók",
+        "products": "Termékek",
+        "catalog": "Kategóriák, kollekciók, típusok és címkék",
+        "inventory": "Készlet",
+        "shipping": "Szállítás",
+        "price_lists": "Árlisták",
+        "promotions": "Promóciók és kampányok",
+        "commissions": "Jutalék",
+        "payouts": "Kifizetések és kifizetési számla",
+        "reviews": "Értékelések",
+        "messages": "Üzenetek és értesítések",
+        "followers": "Követők",
+        "dashboard": "Irányítópult-összefoglaló"
+      },
+      "requiredBy": "Szükséges ehhez: {{areas}}",
+      "summaryItem": "{{area}}: {{right}}",
+      "edit": "Jogosultságok szerkesztése",
+      "editDescription": "Módosítsa, mit láthat és tehet {{email}}. A változások azonnal érvénybe lépnek.",
+      "editSuccess": "{{email}} jogosultságai frissültek.",
+      "inviteSuccess": "Meghívó létrehozva a következő címre: {{email}}.",
+      "notEditable": "A bolt tulajdonosának és a saját jogosultságai nem módosíthatók.",
+      "notFound": "Ez a tag nem található. Lehet, hogy eltávolították a csapatból.",
+      "validation": {
+        "required": "Válasszon legalább egy jogosultságot."
+      }
     }
   },
   "store": {

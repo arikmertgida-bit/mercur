@@ -3044,6 +3044,49 @@
         "emailInvalid": "请输入有效的邮箱地址",
         "roleRequired": "请选择一个角色"
       }
+    },
+    "permissions": {
+      "title": "权限",
+      "hint": "勾选该成员可以查看和操作的内容。",
+      "templateHint": "选择角色会自动勾选下方的复选框，之后可以修改。",
+      "administrationHint": "管理角色拥有全部权限，包括团队、店铺设置和结算账户。",
+      "custom": "自定义",
+      "area": "范围",
+      "rights": {
+        "view": "可查看",
+        "edit": "可编辑",
+        "manage": "可删除"
+      },
+      "areas": {
+        "orders": "订单",
+        "returns": "退货",
+        "return_reason_requests": "退货原因申请",
+        "refunds": "退款与付款",
+        "customers": "客户",
+        "products": "商品",
+        "catalog": "分类、系列、类型和标签",
+        "inventory": "库存",
+        "shipping": "配送",
+        "price_lists": "价格列表",
+        "promotions": "促销与活动",
+        "commissions": "佣金",
+        "payouts": "结算与结算账户",
+        "reviews": "评价",
+        "messages": "消息与通知",
+        "followers": "关注者",
+        "dashboard": "仪表板概览"
+      },
+      "requiredBy": "{{areas}} 需要此项",
+      "summaryItem": "{{area}}：{{right}}",
+      "edit": "编辑权限",
+      "editDescription": "更改 {{email}} 可以查看和操作的内容。更改立即生效。",
+      "editSuccess": "已更新 {{email}} 的权限。",
+      "inviteSuccess": "已为 {{email}} 创建邀请。",
+      "notEditable": "无法更改店铺所有者的权限和您自己的权限。",
+      "notFound": "未找到该成员，可能已被移出团队。",
+      "validation": {
+        "required": "请至少选择一项权限。"
+      }
     }
   },
   "store": {

@@ -5,12 +5,18 @@ import {
 import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
 import { HttpTypes } from "@mercurjs/types"
 
-import { VendorInviteMemberType } from "../../validators"
+import {
+  VendorGetSellerMembersParamsType,
+  VendorInviteMemberType,
+} from "../../validators"
 import { validateMemberPermissionsInput } from "../../../../utils/member-permissions"
 import { createMemberInvitesWorkflow } from "../../../../../workflows/seller"
 
 export const GET = async (
-  req: AuthenticatedMedusaRequest,
+  req: AuthenticatedMedusaRequest<
+    Partial<VendorGetSellerMembersParamsType>,
+    VendorGetSellerMembersParamsType
+  >,
   res: MedusaResponse<HttpTypes.VendorSellerMemberListResponse>
 ) => {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
@@ -19,6 +25,7 @@ export const GET = async (
     entity: "seller_member",
     fields: req.queryConfig.fields,
     filters: {
+      ...(req.filterableFields.id ? { id: req.filterableFields.id } : {}),
       seller_id: req.params.id,
     },
     pagination: req.queryConfig.pagination,

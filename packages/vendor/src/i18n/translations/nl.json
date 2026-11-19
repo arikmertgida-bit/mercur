@@ -3044,6 +3044,49 @@
         "emailInvalid": "Voer een geldig e-mailadres in",
         "roleRequired": "Selecteer een rol"
       }
+    },
+    "permissions": {
+      "title": "Rechten",
+      "hint": "Vink aan wat dit lid mag zien en doen.",
+      "templateHint": "Een rol kiezen vult de vakjes hieronder in; daarna kunt u ze wijzigen.",
+      "administrationHint": "Beheer heeft volledige toegang, inclusief het team, de winkelinstellingen en de uitbetalingsrekening.",
+      "custom": "Aangepast",
+      "area": "Onderdeel",
+      "rights": {
+        "view": "Mag bekijken",
+        "edit": "Mag bewerken",
+        "manage": "Mag verwijderen"
+      },
+      "areas": {
+        "orders": "Bestellingen",
+        "returns": "Retouren",
+        "return_reason_requests": "Verzoeken om retourredenen",
+        "refunds": "Terugbetalingen en betalingen",
+        "customers": "Klanten",
+        "products": "Producten",
+        "catalog": "Categorieën, collecties, typen en tags",
+        "inventory": "Voorraad",
+        "shipping": "Verzending",
+        "price_lists": "Prijslijsten",
+        "promotions": "Promoties en campagnes",
+        "commissions": "Commissie",
+        "payouts": "Uitbetalingen en uitbetalingsrekening",
+        "reviews": "Beoordelingen",
+        "messages": "Berichten en meldingen",
+        "followers": "Volgers",
+        "dashboard": "Dashboardoverzicht"
+      },
+      "requiredBy": "Nodig voor: {{areas}}",
+      "summaryItem": "{{area}}: {{right}}",
+      "edit": "Rechten bewerken",
+      "editDescription": "Wijzig wat {{email}} mag zien en doen. Wijzigingen gelden direct.",
+      "editSuccess": "De rechten van {{email}} zijn bijgewerkt.",
+      "inviteSuccess": "Uitnodiging voor {{email}} aangemaakt.",
+      "notEditable": "De rechten van de winkeleigenaar en uw eigen rechten kunnen niet worden gewijzigd.",
+      "notFound": "Dit lid is niet gevonden. Mogelijk is het uit het team verwijderd.",
+      "validation": {
+        "required": "Selecteer minstens één recht."
+      }
     }
   },
   "store": {

@@ -24,6 +24,7 @@ import { getSellerId } from "../../utils/seller-context"
 import * as QueryConfig from "./query-config"
 import {
   VendorCreateSellerAccount,
+  VendorGetSellerMembersParams,
   VendorGetSellerParams,
   VendorGetSellersParams,
   VendorInviteMember,
@@ -223,7 +224,7 @@ export const vendorSellersMiddlewares: MiddlewareRoute[] = [
       ensureSellerIdParamMiddleware,
       restrictVendorFields(VENDOR_CROSS_SELLER_FIELD_SEGMENTS),
       validateAndTransformQuery(
-        VendorGetSellersParams,
+        VendorGetSellerMembersParams,
         QueryConfig.listVendorMembersQueryConfig
       ),
     ],

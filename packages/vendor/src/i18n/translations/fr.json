@@ -3078,6 +3078,49 @@
         "emailInvalid": "Veuillez saisir un e-mail valide",
         "roleRequired": "Veuillez sélectionner un rôle"
       }
+    },
+    "permissions": {
+      "title": "Autorisations",
+      "hint": "Cochez ce que ce membre peut voir et faire.",
+      "templateHint": "Choisir un rôle remplit les cases ci-dessous ; vous pouvez ensuite les modifier.",
+      "administrationHint": "L'administration a un accès complet, y compris l'équipe, les paramètres de la boutique et le compte de versement.",
+      "custom": "Personnalisé",
+      "area": "Domaine",
+      "rights": {
+        "view": "Peut voir",
+        "edit": "Peut modifier",
+        "manage": "Peut supprimer"
+      },
+      "areas": {
+        "orders": "Commandes",
+        "returns": "Retours",
+        "return_reason_requests": "Demandes de motifs de retour",
+        "refunds": "Remboursements et paiements",
+        "customers": "Clients",
+        "products": "Produits",
+        "catalog": "Catégories, collections, types et tags",
+        "inventory": "Stock",
+        "shipping": "Livraison",
+        "price_lists": "Listes de prix",
+        "promotions": "Promotions et campagnes",
+        "commissions": "Commission",
+        "payouts": "Versements et compte de versement",
+        "reviews": "Avis",
+        "messages": "Messages et notifications",
+        "followers": "Abonnés",
+        "dashboard": "Résumé du tableau de bord"
+      },
+      "requiredBy": "Nécessaire pour : {{areas}}",
+      "summaryItem": "{{area}} : {{right}}",
+      "edit": "Modifier les autorisations",
+      "editDescription": "Modifiez ce que {{email}} peut voir et faire. Les changements s'appliquent immédiatement.",
+      "editSuccess": "Les autorisations de {{email}} ont été mises à jour.",
+      "inviteSuccess": "Invitation créée pour {{email}}.",
+      "notEditable": "Les autorisations du propriétaire de la boutique et les vôtres ne peuvent pas être modifiées.",
+      "notFound": "Ce membre est introuvable. Il a peut-être été retiré de l'équipe.",
+      "validation": {
+        "required": "Sélectionnez au moins une autorisation."
+      }
     }
   },
   "store": {

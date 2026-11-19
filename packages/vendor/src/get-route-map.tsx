@@ -1444,6 +1444,16 @@ export function getRouteMap({
                           return { Component: TeamInvite };
                         },
                       },
+                      {
+                        path: ":id/permissions",
+                        handle: { permissions: "members:edit" },
+                        lazy: async () => {
+                          const { TeamMemberPermissions } =
+                            await import("./pages/settings/team/member-permissions");
+
+                          return { Component: TeamMemberPermissions };
+                        },
+                      },
                     ],
                   },
                 ],

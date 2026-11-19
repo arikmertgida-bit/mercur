@@ -3100,6 +3100,49 @@
         "emailInvalid": "Introduce un correo electrónico válido",
         "roleRequired": "Selecciona un rol"
       }
+    },
+    "permissions": {
+      "title": "Permisos",
+      "hint": "Marca lo que este miembro puede ver y hacer.",
+      "templateHint": "Al elegir un rol se rellenan las casillas de abajo; después puedes cambiarlas.",
+      "administrationHint": "Administración tiene acceso total, incluidos el equipo, la configuración de la tienda y la cuenta de pagos.",
+      "custom": "Personalizado",
+      "area": "Área",
+      "rights": {
+        "view": "Puede ver",
+        "edit": "Puede editar",
+        "manage": "Puede eliminar"
+      },
+      "areas": {
+        "orders": "Pedidos",
+        "returns": "Devoluciones",
+        "return_reason_requests": "Solicitudes de motivos de devolución",
+        "refunds": "Reembolsos y pagos",
+        "customers": "Clientes",
+        "products": "Productos",
+        "catalog": "Categorías, colecciones, tipos y etiquetas",
+        "inventory": "Inventario",
+        "shipping": "Envío",
+        "price_lists": "Listas de precios",
+        "promotions": "Promociones y campañas",
+        "commissions": "Comisión",
+        "payouts": "Pagos y cuenta de pagos",
+        "reviews": "Reseñas",
+        "messages": "Mensajes y notificaciones",
+        "followers": "Seguidores",
+        "dashboard": "Resumen del panel"
+      },
+      "requiredBy": "Necesario para: {{areas}}",
+      "summaryItem": "{{area}}: {{right}}",
+      "edit": "Editar permisos",
+      "editDescription": "Cambia lo que {{email}} puede ver y hacer. Los cambios se aplican al instante.",
+      "editSuccess": "Se actualizaron los permisos de {{email}}.",
+      "inviteSuccess": "Se creó una invitación para {{email}}.",
+      "notEditable": "Los permisos del propietario de la tienda y los tuyos no se pueden cambiar.",
+      "notFound": "No se encontró este miembro. Puede que se haya eliminado del equipo.",
+      "validation": {
+        "required": "Selecciona al menos un permiso."
+      }
     }
   },
   "translations": {

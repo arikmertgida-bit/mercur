@@ -6,10 +6,10 @@ import {
   Container,
   Heading,
   Input,
-  Select,
   StatusBadge,
   Text,
   Tooltip,
+  toast,
 } from "@medusajs/ui";
 import { createColumnHelper } from "@tanstack/react-table";
 import { format } from "date-fns";
@@ -22,46 +22,36 @@ import { Form } from "@components/common/form";
 import { RouteFocusModal } from "@components/modals";
 import { _DataTable } from "@components/table/data-table";
 import { KeyboundForm } from "@components/utilities/keybound-form/keybound-form";
-import { useMe, useCreateInvite, useInvites } from "@hooks/api";
+import {
+  useMe,
+  useCreateInvite,
+  useInvites,
+  useMemberPermissionAreas,
+} from "@hooks/api";
 import { useUserInviteTableQuery } from "@hooks/table/query";
 import { useDataTable } from "@hooks/use-data-table";
 import { useDate } from "@hooks/use-date";
-import { isFetchError } from "@lib/is-fetch-error";
 import type { MemberInviteDTO } from "@mercurjs/types";
-import { SellerRole } from "@mercurjs/types/seller";
 
-const ROLE_OPTIONS = [
-  {
-    value: SellerRole.SELLER_ADMINISTRATION,
-    labelKey: "users.roles.administration",
-  },
-  {
-    value: SellerRole.INVENTORY_MANAGEMENT,
-    labelKey: "users.roles.inventoryManagement",
-  },
-  {
-    value: SellerRole.ORDER_MANAGEMENT,
-    labelKey: "users.roles.orderManagement",
-  },
-  { value: SellerRole.ACCOUNTING, labelKey: "users.roles.accounting" },
-  { value: SellerRole.SUPPORT, labelKey: "users.roles.support" },
-];
+import { MemberGrantCell } from "../../common/member-grant-cell";
+import {
+  MemberPermissionsFields,
+  grantsSomething,
+  memberPermissionsMapSchema,
+  memberRoleIdSchema,
+  permissionsRequiredIssue,
+} from "../../common/member-permissions-fields";
+import { permissionsPayload } from "../../common/member-permissions";
 
-const ROLE_LABEL_MAP: Record<string, string> = Object.fromEntries(
-  ROLE_OPTIONS.map((r) => [r.value, r.labelKey]),
-);
-
-const InviteUserSchema = zod.object({
-  email: zod
-    .string()
-    .email({ error: () => i18n.t("users.inviteForm.validation.emailInvalid") }),
-  // The select starts empty (""), so the field is a string until it holds
-  // one of the seller roles the invite endpoint accepts.
-  role_id: zod
-    .string()
-    .min(1, { error: () => i18n.t("users.inviteForm.validation.roleRequired") })
-    .pipe(zod.enum(SellerRole)),
-});
+const InviteUserSchema = zod
+  .object({
+    email: zod
+      .string()
+      .email({ error: () => i18n.t("users.inviteForm.validation.emailInvalid") }),
+    role_id: memberRoleIdSchema,
+    permissions: memberPermissionsMapSchema,
+  })
+  .refine(grantsSomething, permissionsRequiredIssue);
 
 const PAGE_SIZE = 10;
 const PREFIX = "usr_invite";
@@ -75,6 +65,7 @@ export const InviteUserForm = () => {
     defaultValues: {
       email: "",
       role_id: "",
+      permissions: {},
     },
     resolver: zodResolver(InviteUserSchema),
   });
@@ -107,9 +98,10 @@ export const InviteUserForm = () => {
   });
 
   const { mutateAsync, isPending } = useCreateInvite(sellerId ?? "");
+  const areas = useMemberPermissionAreas({ enabled: Boolean(sellerId) });
 
   const handleSubmit = form.handleSubmit(async (values) => {
-    if (!sellerId) {
+    if (!sellerId || !areas.data) {
       return;
     }
 
@@ -117,21 +109,24 @@ export const InviteUserForm = () => {
       await mutateAsync({
         email: values.email,
         role_id: values.role_id,
+        permissions: permissionsPayload(values.role_id, values.permissions, areas.data),
       });
+      toast.success(t("users.permissions.inviteSuccess", { email: values.email }));
       form.reset();
     } catch (error) {
-      if (isFetchError(error) && error.status === 400) {
-        form.setError("root", {
-          type: "manual",
-          message: error.message,
-        });
-        return;
-      }
+      form.setError("root", {
+        type: "manual",
+        message: error instanceof Error ? error.message : String(error),
+      });
     }
   });
 
   if (isError) {
     throw error;
+  }
+
+  if (areas.isError) {
+    throw areas.error;
   }
 
   return (
@@ -162,60 +157,30 @@ export const InviteUserForm = () => {
               )}
 
               <div className="flex flex-col gap-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <Form.Field
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => {
-                      return (
-                        <Form.Item>
-                          <Form.Label>{t("fields.email")}</Form.Label>
-                          <Form.Control>
-                            <Input {...field} />
-                          </Form.Control>
-                          <Form.ErrorMessage />
-                        </Form.Item>
-                      );
-                    }}
-                  />
-                  <Form.Field
-                    control={form.control}
-                    name="role_id"
-                    render={({ field: { onChange, ref, ...field } }) => {
-                      return (
-                        <Form.Item>
-                          <Form.Label>{t("fields.role")}</Form.Label>
-                          <Form.Control>
-                            <Select {...field} onValueChange={onChange}>
-                              <Select.Trigger ref={ref}>
-                                <Select.Value
-                                  placeholder={t("users.selectRole")}
-                                />
-                              </Select.Trigger>
-                              <Select.Content>
-                                {ROLE_OPTIONS.map((role) => (
-                                  <Select.Item
-                                    key={role.value}
-                                    value={role.value}
-                                  >
-                                    {t(role.labelKey)}
-                                  </Select.Item>
-                                ))}
-                              </Select.Content>
-                            </Select>
-                          </Form.Control>
-                          <Form.ErrorMessage />
-                        </Form.Item>
-                      );
-                    }}
-                  />
-                </div>
+                <Form.Field
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => {
+                    return (
+                      <Form.Item>
+                        <Form.Label>{t("fields.email")}</Form.Label>
+                        <Form.Control>
+                          <Input {...field} data-testid="member-invite-email-input" />
+                        </Form.Control>
+                        <Form.ErrorMessage />
+                      </Form.Item>
+                    );
+                  }}
+                />
+                {areas.data && <MemberPermissionsFields data={areas.data} />}
                 <div className="flex items-center justify-end">
                   <Button
                     size="small"
                     variant="secondary"
                     type="submit"
                     isLoading={isPending}
+                    disabled={!areas.data}
+                    data-testid="member-invite-submit"
                   >
                     {t("users.sendInvite")}
                   </Button>
@@ -265,11 +230,13 @@ const useColumns = () => {
       }),
       columnHelper.accessor("role_id", {
         header: t("fields.role"),
-        cell: ({ getValue }) => {
-          const roleId = getValue();
-          const labelKey = ROLE_LABEL_MAP[roleId];
-          return labelKey ? t(labelKey) : "-";
-        },
+        cell: ({ row }) => (
+          <MemberGrantCell
+            roleId={row.original.role_id}
+            customPermissions={row.original.custom_permissions}
+            testId={`member-invite-grant-${row.original.id}`}
+          />
+        ),
       }),
       columnHelper.accessor("accepted", {
         header: t("fields.status"),

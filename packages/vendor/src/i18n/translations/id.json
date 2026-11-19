@@ -3044,6 +3044,49 @@
         "emailInvalid": "Silakan masukkan email yang valid",
         "roleRequired": "Silakan pilih peran"
       }
+    },
+    "permissions": {
+      "title": "Izin",
+      "hint": "Centang apa yang dapat dilihat dan dilakukan anggota ini.",
+      "templateHint": "Memilih peran akan mengisi kotak di bawah; setelah itu Anda dapat mengubahnya.",
+      "administrationHint": "Administrasi memiliki akses penuh, termasuk tim, pengaturan toko, dan akun pencairan dana.",
+      "custom": "Kustom",
+      "area": "Area",
+      "rights": {
+        "view": "Dapat melihat",
+        "edit": "Dapat mengedit",
+        "manage": "Dapat menghapus"
+      },
+      "areas": {
+        "orders": "Pesanan",
+        "returns": "Retur",
+        "return_reason_requests": "Permintaan alasan retur",
+        "refunds": "Pengembalian dana dan pembayaran",
+        "customers": "Pelanggan",
+        "products": "Produk",
+        "catalog": "Kategori, koleksi, tipe, dan tag",
+        "inventory": "Stok",
+        "shipping": "Pengiriman",
+        "price_lists": "Daftar harga",
+        "promotions": "Promosi dan kampanye",
+        "commissions": "Komisi",
+        "payouts": "Pencairan dana dan akun pencairan",
+        "reviews": "Ulasan",
+        "messages": "Pesan dan notifikasi",
+        "followers": "Pengikut",
+        "dashboard": "Ringkasan dasbor"
+      },
+      "requiredBy": "Diperlukan untuk: {{areas}}",
+      "summaryItem": "{{area}}: {{right}}",
+      "edit": "Edit izin",
+      "editDescription": "Ubah apa yang dapat dilihat dan dilakukan {{email}}. Perubahan langsung berlaku.",
+      "editSuccess": "Izin {{email}} telah diperbarui.",
+      "inviteSuccess": "Undangan untuk {{email}} telah dibuat.",
+      "notEditable": "Izin pemilik toko dan izin Anda sendiri tidak dapat diubah.",
+      "notFound": "Anggota ini tidak ditemukan. Mungkin sudah dihapus dari tim.",
+      "validation": {
+        "required": "Pilih setidaknya satu izin."
+      }
     }
   },
   "store": {

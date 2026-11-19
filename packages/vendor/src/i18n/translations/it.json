@@ -3078,6 +3078,49 @@
         "emailInvalid": "Inserisci un'email valida",
         "roleRequired": "Seleziona un ruolo"
       }
+    },
+    "permissions": {
+      "title": "Autorizzazioni",
+      "hint": "Seleziona cosa questo membro può vedere e fare.",
+      "templateHint": "La scelta di un ruolo compila le caselle qui sotto; poi puoi modificarle.",
+      "administrationHint": "L'Amministrazione ha accesso completo, inclusi il team, le impostazioni del negozio e il conto per i versamenti.",
+      "custom": "Personalizzato",
+      "area": "Area",
+      "rights": {
+        "view": "Può vedere",
+        "edit": "Può modificare",
+        "manage": "Può eliminare"
+      },
+      "areas": {
+        "orders": "Ordini",
+        "returns": "Resi",
+        "return_reason_requests": "Richieste di motivi di reso",
+        "refunds": "Rimborsi e pagamenti",
+        "customers": "Clienti",
+        "products": "Prodotti",
+        "catalog": "Categorie, collezioni, tipi e tag",
+        "inventory": "Magazzino",
+        "shipping": "Spedizione",
+        "price_lists": "Liste prezzi",
+        "promotions": "Promozioni e campagne",
+        "commissions": "Commissione",
+        "payouts": "Versamenti e conto per i versamenti",
+        "reviews": "Recensioni",
+        "messages": "Messaggi e notifiche",
+        "followers": "Follower",
+        "dashboard": "Riepilogo della dashboard"
+      },
+      "requiredBy": "Necessario per: {{areas}}",
+      "summaryItem": "{{area}}: {{right}}",
+      "edit": "Modifica autorizzazioni",
+      "editDescription": "Cambia cosa {{email}} può vedere e fare. Le modifiche valgono subito.",
+      "editSuccess": "Le autorizzazioni di {{email}} sono state aggiornate.",
+      "inviteSuccess": "Invito creato per {{email}}.",
+      "notEditable": "Le autorizzazioni del proprietario del negozio e le tue non possono essere modificate.",
+      "notFound": "Questo membro non è stato trovato. Potrebbe essere stato rimosso dal team.",
+      "validation": {
+        "required": "Seleziona almeno un'autorizzazione."
+      }
     }
   },
   "store": {

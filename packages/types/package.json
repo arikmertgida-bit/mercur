@@ -34,6 +34,10 @@
       "types": "./dist/seller/index.d.ts",
       "default": "./dist/seller/index.js"
     },
+    "./permissions": {
+      "types": "./dist/permissions/index.d.ts",
+      "default": "./dist/permissions/index.js"
+    },
     "./feature-flags": {
       "types": "./dist/feature-flags/index.d.ts",
       "default": "./dist/feature-flags/index.js"

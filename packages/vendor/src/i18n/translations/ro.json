@@ -3077,6 +3077,49 @@
         "emailInvalid": "Vă rugăm să introduceți un e-mail valid",
         "roleRequired": "Vă rugăm să selectați un rol"
       }
+    },
+    "permissions": {
+      "title": "Permisiuni",
+      "hint": "Bifați ce poate vedea și face acest membru.",
+      "templateHint": "Alegerea unui rol completează căsuțele de mai jos; apoi le puteți modifica.",
+      "administrationHint": "Administrarea are acces complet, inclusiv la echipă, setările magazinului și contul pentru transferuri.",
+      "custom": "Personalizat",
+      "area": "Zonă",
+      "rights": {
+        "view": "Poate vedea",
+        "edit": "Poate edita",
+        "manage": "Poate șterge"
+      },
+      "areas": {
+        "orders": "Comenzi",
+        "returns": "Retururi",
+        "return_reason_requests": "Cereri pentru motive de retur",
+        "refunds": "Rambursări și plăți",
+        "customers": "Clienți",
+        "products": "Produse",
+        "catalog": "Categorii, colecții, tipuri și etichete",
+        "inventory": "Stoc",
+        "shipping": "Livrare",
+        "price_lists": "Liste de prețuri",
+        "promotions": "Promoții și campanii",
+        "commissions": "Comision",
+        "payouts": "Transferuri și cont pentru transferuri",
+        "reviews": "Recenzii",
+        "messages": "Mesaje și notificări",
+        "followers": "Urmăritori",
+        "dashboard": "Rezumatul panoului"
+      },
+      "requiredBy": "Necesar pentru: {{areas}}",
+      "summaryItem": "{{area}}: {{right}}",
+      "edit": "Editează permisiunile",
+      "editDescription": "Schimbați ce poate vedea și face {{email}}. Modificările se aplică imediat.",
+      "editSuccess": "Permisiunile pentru {{email}} au fost actualizate.",
+      "inviteSuccess": "Invitația pentru {{email}} a fost creată.",
+      "notEditable": "Permisiunile proprietarului magazinului și propriile dvs. permisiuni nu pot fi modificate.",
+      "notFound": "Acest membru nu a fost găsit. Este posibil să fi fost eliminat din echipă.",
+      "validation": {
+        "required": "Selectați cel puțin o permisiune."
+      }
     }
   },
   "store": {

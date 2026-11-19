@@ -62,6 +62,7 @@ export const useAcceptInvite = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.vendor.members.invites.accept.mutate({
         invite_token: payload.invite_token,
@@ -74,7 +75,6 @@ export const useAcceptInvite = (
           },
         },
       }),
-    ...options,
   });
 };
 
@@ -87,12 +87,12 @@ export const useCreateInvite = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.vendor.sellers.$id.members.mutate({ $id: sellerId, ...payload }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: invitesQueryKeys.lists() });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };

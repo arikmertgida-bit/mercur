@@ -8814,6 +8814,131 @@
               }
             }
           }
+        },
+        "permissions": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string"
+            },
+            "hint": {
+              "type": "string"
+            },
+            "templateHint": {
+              "type": "string"
+            },
+            "administrationHint": {
+              "type": "string"
+            },
+            "custom": {
+              "type": "string"
+            },
+            "area": {
+              "type": "string"
+            },
+            "rights": {
+              "type": "object",
+              "properties": {
+                "view": {
+                  "type": "string"
+                },
+                "edit": {
+                  "type": "string"
+                },
+                "manage": {
+                  "type": "string"
+                }
+              }
+            },
+            "areas": {
+              "type": "object",
+              "properties": {
+                "orders": {
+                  "type": "string"
+                },
+                "returns": {
+                  "type": "string"
+                },
+                "return_reason_requests": {
+                  "type": "string"
+                },
+                "refunds": {
+                  "type": "string"
+                },
+                "customers": {
+                  "type": "string"
+                },
+                "products": {
+                  "type": "string"
+                },
+                "catalog": {
+                  "type": "string"
+                },
+                "inventory": {
+                  "type": "string"
+                },
+                "shipping": {
+                  "type": "string"
+                },
+                "price_lists": {
+                  "type": "string"
+                },
+                "promotions": {
+                  "type": "string"
+                },
+                "commissions": {
+                  "type": "string"
+                },
+                "payouts": {
+                  "type": "string"
+                },
+                "reviews": {
+                  "type": "string"
+                },
+                "messages": {
+                  "type": "string"
+                },
+                "followers": {
+                  "type": "string"
+                },
+                "dashboard": {
+                  "type": "string"
+                }
+              }
+            },
+            "requiredBy": {
+              "type": "string"
+            },
+            "summaryItem": {
+              "type": "string"
+            },
+            "edit": {
+              "type": "string"
+            },
+            "editDescription": {
+              "type": "string"
+            },
+            "editSuccess": {
+              "type": "string"
+            },
+            "inviteSuccess": {
+              "type": "string"
+            },
+            "notEditable": {
+              "type": "string"
+            },
+            "notFound": {
+              "type": "string"
+            },
+            "validation": {
+              "type": "object",
+              "properties": {
+                "required": {
+                  "type": "string"
+                }
+              }
+            }
+          }
         }
       }
     },

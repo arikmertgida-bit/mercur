@@ -3078,6 +3078,49 @@
         "emailInvalid": "Informe um e-mail válido",
         "roleRequired": "Selecione uma função"
       }
+    },
+    "permissions": {
+      "title": "Permissões",
+      "hint": "Marque o que este membro pode ver e fazer.",
+      "templateHint": "Escolher uma função preenche as caixas abaixo; depois você pode alterá-las.",
+      "administrationHint": "A Administração tem acesso total, incluindo a equipe, as configurações da loja e a conta de repasses.",
+      "custom": "Personalizado",
+      "area": "Área",
+      "rights": {
+        "view": "Pode ver",
+        "edit": "Pode editar",
+        "manage": "Pode excluir"
+      },
+      "areas": {
+        "orders": "Pedidos",
+        "returns": "Devoluções",
+        "return_reason_requests": "Solicitações de motivos de devolução",
+        "refunds": "Reembolsos e pagamentos",
+        "customers": "Clientes",
+        "products": "Produtos",
+        "catalog": "Categorias, coleções, tipos e tags",
+        "inventory": "Estoque",
+        "shipping": "Envio",
+        "price_lists": "Listas de preços",
+        "promotions": "Promoções e campanhas",
+        "commissions": "Comissão",
+        "payouts": "Repasses e conta de repasses",
+        "reviews": "Avaliações",
+        "messages": "Mensagens e notificações",
+        "followers": "Seguidores",
+        "dashboard": "Resumo do painel"
+      },
+      "requiredBy": "Necessário para: {{areas}}",
+      "summaryItem": "{{area}}: {{right}}",
+      "edit": "Editar permissões",
+      "editDescription": "Altere o que {{email}} pode ver e fazer. As alterações valem na hora.",
+      "editSuccess": "As permissões de {{email}} foram atualizadas.",
+      "inviteSuccess": "Convite criado para {{email}}.",
+      "notEditable": "As permissões do proprietário da loja e as suas próprias não podem ser alteradas.",
+      "notFound": "Este membro não foi encontrado. Ele pode ter sido removido da equipe.",
+      "validation": {
+        "required": "Selecione pelo menos uma permissão."
+      }
     }
   },
   "store": {

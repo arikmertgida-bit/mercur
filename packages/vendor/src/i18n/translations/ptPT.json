@@ -3078,6 +3078,49 @@
         "emailInvalid": "Introduza um e-mail válido",
         "roleRequired": "Selecione uma função"
       }
+    },
+    "permissions": {
+      "title": "Permissões",
+      "hint": "Assinale o que este membro pode ver e fazer.",
+      "templateHint": "Escolher uma função preenche as caixas abaixo; depois pode alterá-las.",
+      "administrationHint": "A Administração tem acesso total, incluindo a equipa, as definições da loja e a conta de transferências.",
+      "custom": "Personalizado",
+      "area": "Área",
+      "rights": {
+        "view": "Pode ver",
+        "edit": "Pode editar",
+        "manage": "Pode eliminar"
+      },
+      "areas": {
+        "orders": "Encomendas",
+        "returns": "Devoluções",
+        "return_reason_requests": "Pedidos de motivos de devolução",
+        "refunds": "Reembolsos e pagamentos",
+        "customers": "Clientes",
+        "products": "Produtos",
+        "catalog": "Categorias, coleções, tipos e etiquetas",
+        "inventory": "Stock",
+        "shipping": "Envio",
+        "price_lists": "Listas de preços",
+        "promotions": "Promoções e campanhas",
+        "commissions": "Comissão",
+        "payouts": "Transferências e conta de transferências",
+        "reviews": "Avaliações",
+        "messages": "Mensagens e notificações",
+        "followers": "Seguidores",
+        "dashboard": "Resumo do painel"
+      },
+      "requiredBy": "Necessário para: {{areas}}",
+      "summaryItem": "{{area}}: {{right}}",
+      "edit": "Editar permissões",
+      "editDescription": "Altere o que {{email}} pode ver e fazer. As alterações aplicam-se de imediato.",
+      "editSuccess": "As permissões de {{email}} foram atualizadas.",
+      "inviteSuccess": "Convite criado para {{email}}.",
+      "notEditable": "As permissões do proprietário da loja e as suas não podem ser alteradas.",
+      "notFound": "Este membro não foi encontrado. Pode ter sido removido da equipa.",
+      "validation": {
+        "required": "Selecione pelo menos uma permissão."
+      }
     }
   },
   "store": {

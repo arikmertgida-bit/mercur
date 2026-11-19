@@ -9,7 +9,11 @@ import {
   useMutation,
   useQuery,
 } from "@tanstack/react-query";
-import { sdk } from "../../lib/client";
+import { MemberAreaPermissions, PERMISSION_RIGHTS } from "@mercurjs/types/permissions";
+import { SellerRole } from "@mercurjs/types/seller";
+import { z } from "zod";
+
+import { fetchQuery, sdk } from "../../lib/client";
 import { queryClient } from "../../lib/query-client";
 import { queryKeysFactory } from "../../lib/query-key-factory";
 
@@ -61,12 +65,12 @@ export const useUpdateMe = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) => sdk.vendor.members.me.mutate(payload),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: membersQueryKeys.me() });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -116,16 +120,23 @@ export const useMember = (id: string) => {
   return { user }
 }
 
+export type UpdateMemberPermissionsPayload = {
+  role_id: SellerRole
+  /** Omitted or null: the role template applies. */
+  permissions?: MemberAreaPermissions | null
+}
+
 export const useUpdateMemberRole = (
   sellerId: string,
   memberId: string,
   options?: UseMutationOptions<
     InferClientOutput<typeof sdk.vendor.sellers.$id.members.$memberId.mutate>,
     ClientError,
-    { role_id: string }
+    UpdateMemberPermissionsPayload
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.vendor.sellers.$id.members.$memberId.mutate({
         $id: sellerId,
@@ -138,7 +149,6 @@ export const useUpdateMemberRole = (
       });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -152,6 +162,7 @@ export const useRemoveSellerMember = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () =>
       sdk.vendor.sellers.$id.members.$memberId.delete({
         $id: sellerId,
@@ -163,6 +174,46 @@ export const useRemoveSellerMember = (
       });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
+
+const PermissionRightSchema = z.enum(PERMISSION_RIGHTS);
+
+const MemberPermissionAreasSchema = z.object({
+  areas: z.array(
+    z.object({
+      id: z.string(),
+      max_right: PermissionRightSchema,
+      requires: z.array(
+        z.object({
+          from: PermissionRightSchema,
+          area: z.string(),
+          right: PermissionRightSchema,
+        }),
+      ),
+    }),
+  ),
+  templates: z.record(z.string(), z.record(z.string(), PermissionRightSchema)),
+});
+
+export type MemberPermissionAreas = z.infer<typeof MemberPermissionAreasSchema>;
+export type MemberPermissionArea = MemberPermissionAreas["areas"][number];
+
+const fetchMemberPermissionAreas = async (): Promise<MemberPermissionAreas> =>
+  MemberPermissionAreasSchema.parse(
+    await fetchQuery("/vendor/member-permission-areas", { method: "GET" }),
+  );
+
+/** The invite checkbox table and the role templates that prefill it. */
+export const useMemberPermissionAreas = (
+  options?: Omit<
+    UseQueryOptions<MemberPermissionAreas, Error, MemberPermissionAreas>,
+    "queryKey" | "queryFn"
+  >,
+) =>
+  useQuery({
+    queryKey: [MEMBERS_QUERY_KEY, "permission-areas"],
+    queryFn: fetchMemberPermissionAreas,
+    staleTime: Infinity,
+    ...options,
+  });

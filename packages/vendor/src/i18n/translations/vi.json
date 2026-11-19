@@ -3044,6 +3044,49 @@
         "emailInvalid": "Vui lòng nhập email hợp lệ",
         "roleRequired": "Vui lòng chọn vai trò"
       }
+    },
+    "permissions": {
+      "title": "Quyền",
+      "hint": "Đánh dấu những gì thành viên này có thể xem và làm.",
+      "templateHint": "Chọn vai trò sẽ điền sẵn các ô bên dưới; sau đó bạn có thể thay đổi.",
+      "administrationHint": "Quản trị có toàn quyền, bao gồm nhóm, cài đặt cửa hàng và tài khoản chi trả.",
+      "custom": "Tùy chỉnh",
+      "area": "Khu vực",
+      "rights": {
+        "view": "Được xem",
+        "edit": "Được sửa",
+        "manage": "Được xóa"
+      },
+      "areas": {
+        "orders": "Đơn hàng",
+        "returns": "Trả hàng",
+        "return_reason_requests": "Yêu cầu lý do trả hàng",
+        "refunds": "Hoàn tiền và thanh toán",
+        "customers": "Khách hàng",
+        "products": "Sản phẩm",
+        "catalog": "Danh mục, bộ sưu tập, loại và thẻ",
+        "inventory": "Kho hàng",
+        "shipping": "Vận chuyển",
+        "price_lists": "Bảng giá",
+        "promotions": "Khuyến mãi và chiến dịch",
+        "commissions": "Hoa hồng",
+        "payouts": "Chi trả và tài khoản chi trả",
+        "reviews": "Đánh giá",
+        "messages": "Tin nhắn và thông báo",
+        "followers": "Người theo dõi",
+        "dashboard": "Tóm tắt bảng điều khiển"
+      },
+      "requiredBy": "Cần cho: {{areas}}",
+      "summaryItem": "{{area}}: {{right}}",
+      "edit": "Sửa quyền",
+      "editDescription": "Thay đổi những gì {{email}} có thể xem và làm. Thay đổi có hiệu lực ngay.",
+      "editSuccess": "Đã cập nhật quyền của {{email}}.",
+      "inviteSuccess": "Đã tạo lời mời cho {{email}}.",
+      "notEditable": "Không thể thay đổi quyền của chủ cửa hàng và quyền của chính bạn.",
+      "notFound": "Không tìm thấy thành viên này. Có thể họ đã bị xóa khỏi nhóm.",
+      "validation": {
+        "required": "Chọn ít nhất một quyền."
+      }
     }
   },
   "store": {

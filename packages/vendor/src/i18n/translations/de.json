@@ -3044,6 +3044,49 @@
         "emailInvalid": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
         "roleRequired": "Bitte wählen Sie eine Rolle aus"
       }
+    },
+    "permissions": {
+      "title": "Berechtigungen",
+      "hint": "Wählen Sie aus, was dieses Mitglied sehen und tun darf.",
+      "templateHint": "Die Auswahl einer Rolle füllt die Kästchen unten aus; danach können Sie sie ändern.",
+      "administrationHint": "Die Verwaltung hat vollen Zugriff, einschließlich Team, Shop-Einstellungen und Auszahlungskonto.",
+      "custom": "Individuell",
+      "area": "Bereich",
+      "rights": {
+        "view": "Darf ansehen",
+        "edit": "Darf bearbeiten",
+        "manage": "Darf löschen"
+      },
+      "areas": {
+        "orders": "Bestellungen",
+        "returns": "Retouren",
+        "return_reason_requests": "Anfragen zu Rückgabegründen",
+        "refunds": "Erstattungen und Zahlungen",
+        "customers": "Kunden",
+        "products": "Produkte",
+        "catalog": "Kategorien, Kollektionen, Typen und Tags",
+        "inventory": "Lagerbestand",
+        "shipping": "Versand",
+        "price_lists": "Preislisten",
+        "promotions": "Werbeaktionen und Kampagnen",
+        "commissions": "Provision",
+        "payouts": "Auszahlungen und Auszahlungskonto",
+        "reviews": "Bewertungen",
+        "messages": "Nachrichten und Benachrichtigungen",
+        "followers": "Follower",
+        "dashboard": "Dashboard-Übersicht"
+      },
+      "requiredBy": "Erforderlich für: {{areas}}",
+      "summaryItem": "{{area}}: {{right}}",
+      "edit": "Berechtigungen bearbeiten",
+      "editDescription": "Ändern Sie, was {{email}} sehen und tun darf. Änderungen gelten sofort.",
+      "editSuccess": "Die Berechtigungen von {{email}} wurden aktualisiert.",
+      "inviteSuccess": "Einladung für {{email}} wurde erstellt.",
+      "notEditable": "Die Berechtigungen des Shop-Inhabers und Ihre eigenen können nicht geändert werden.",
+      "notFound": "Dieses Mitglied wurde nicht gefunden. Es wurde möglicherweise aus dem Team entfernt.",
+      "validation": {
+        "required": "Wählen Sie mindestens eine Berechtigung aus."
+      }
     }
   },
   "store": {

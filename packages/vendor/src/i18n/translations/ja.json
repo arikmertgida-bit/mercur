@@ -3044,6 +3044,49 @@
         "emailInvalid": "有効なメールアドレスを入力してください",
         "roleRequired": "ロールを選択してください"
       }
+    },
+    "permissions": {
+      "title": "権限",
+      "hint": "このメンバーが閲覧・操作できる内容を選択してください。",
+      "templateHint": "役割を選ぶと下のチェックボックスが入力されます。その後変更できます。",
+      "administrationHint": "管理者はチーム、ストア設定、振込口座を含むすべてにアクセスできます。",
+      "custom": "カスタム",
+      "area": "項目",
+      "rights": {
+        "view": "閲覧可",
+        "edit": "編集可",
+        "manage": "削除可"
+      },
+      "areas": {
+        "orders": "注文",
+        "returns": "返品",
+        "return_reason_requests": "返品理由のリクエスト",
+        "refunds": "返金と支払い",
+        "customers": "顧客",
+        "products": "商品",
+        "catalog": "カテゴリ・コレクション・タイプ・タグ",
+        "inventory": "在庫",
+        "shipping": "配送",
+        "price_lists": "価格リスト",
+        "promotions": "プロモーションとキャンペーン",
+        "commissions": "手数料",
+        "payouts": "振込と振込口座",
+        "reviews": "レビュー",
+        "messages": "メッセージと通知",
+        "followers": "フォロワー",
+        "dashboard": "ダッシュボード概要"
+      },
+      "requiredBy": "{{areas}} に必要です",
+      "summaryItem": "{{area}}：{{right}}",
+      "edit": "権限を編集",
+      "editDescription": "{{email}} が閲覧・操作できる内容を変更します。変更はすぐに反映されます。",
+      "editSuccess": "{{email}} の権限を更新しました。",
+      "inviteSuccess": "{{email}} への招待を作成しました。",
+      "notEditable": "ストアオーナーの権限とご自身の権限は変更できません。",
+      "notFound": "このメンバーが見つかりません。チームから削除された可能性があります。",
+      "validation": {
+        "required": "権限を1つ以上選択してください。"
+      }
     }
   },
   "store": {

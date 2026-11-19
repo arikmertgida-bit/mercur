@@ -3120,6 +3120,49 @@
         "emailInvalid": "Please enter a valid email",
         "roleRequired": "Please select a role"
       }
+    },
+    "permissions": {
+      "title": "Permissions",
+      "hint": "Tick what this member can see and do.",
+      "templateHint": "Choosing a role fills the boxes below; you can then change them.",
+      "administrationHint": "Administration has full access, including the team, store settings and the payout account.",
+      "custom": "Custom",
+      "area": "Area",
+      "rights": {
+        "view": "Can view",
+        "edit": "Can edit",
+        "manage": "Can delete"
+      },
+      "areas": {
+        "orders": "Orders",
+        "returns": "Returns",
+        "return_reason_requests": "Return reason requests",
+        "refunds": "Refunds and payments",
+        "customers": "Customers",
+        "products": "Products",
+        "catalog": "Categories, collections, types and tags",
+        "inventory": "Inventory",
+        "shipping": "Shipping",
+        "price_lists": "Price Lists",
+        "promotions": "Promotions and campaigns",
+        "commissions": "Commission",
+        "payouts": "Payouts and payout account",
+        "reviews": "Reviews",
+        "messages": "Messages and notifications",
+        "followers": "Followers",
+        "dashboard": "Dashboard summary"
+      },
+      "requiredBy": "Needed for: {{areas}}",
+      "summaryItem": "{{area}}: {{right}}",
+      "edit": "Edit permissions",
+      "editDescription": "Change what {{email}} can see and do. Changes apply at once.",
+      "editSuccess": "Permissions of {{email}} were updated.",
+      "inviteSuccess": "Invite created for {{email}}.",
+      "notEditable": "The store owner's and your own permissions cannot be changed.",
+      "notFound": "This member was not found. They may have been removed from the team.",
+      "validation": {
+        "required": "Select at least one permission."
+      }
     }
   },
   "translations": {

@@ -3078,6 +3078,49 @@
         "emailInvalid": "Įveskite galiojantį el. paštą",
         "roleRequired": "Pasirinkite rolę"
       }
+    },
+    "permissions": {
+      "title": "Leidimai",
+      "hint": "Pažymėkite, ką šis narys gali matyti ir daryti.",
+      "templateHint": "Pasirinkus rolę, žemiau esantys laukeliai užpildomi; vėliau juos galite pakeisti.",
+      "administrationHint": "Administravimas turi visą prieigą, įskaitant komandą, parduotuvės nustatymus ir išmokų sąskaitą.",
+      "custom": "Pasirinktiniai",
+      "area": "Sritis",
+      "rights": {
+        "view": "Gali matyti",
+        "edit": "Gali redaguoti",
+        "manage": "Gali ištrinti"
+      },
+      "areas": {
+        "orders": "Užsakymai",
+        "returns": "Grąžinimai",
+        "return_reason_requests": "Grąžinimo priežasčių užklausos",
+        "refunds": "Pinigų grąžinimai ir mokėjimai",
+        "customers": "Klientai",
+        "products": "Prekės",
+        "catalog": "Kategorijos, kolekcijos, tipai ir žymos",
+        "inventory": "Atsargos",
+        "shipping": "Pristatymas",
+        "price_lists": "Kainoraščiai",
+        "promotions": "Akcijos ir kampanijos",
+        "commissions": "Komisinis mokestis",
+        "payouts": "Išmokos ir išmokų sąskaita",
+        "reviews": "Atsiliepimai",
+        "messages": "Žinutės ir pranešimai",
+        "followers": "Sekėjai",
+        "dashboard": "Skydelio suvestinė"
+      },
+      "requiredBy": "Reikia: {{areas}}",
+      "summaryItem": "{{area}}: {{right}}",
+      "edit": "Redaguoti leidimus",
+      "editDescription": "Pakeiskite, ką {{email}} gali matyti ir daryti. Pakeitimai įsigalioja iš karto.",
+      "editSuccess": "{{email}} leidimai atnaujinti.",
+      "inviteSuccess": "Kvietimas {{email}} sukurtas.",
+      "notEditable": "Parduotuvės savininko ir jūsų pačių leidimų keisti negalima.",
+      "notFound": "Šis narys nerastas. Galbūt jis pašalintas iš komandos.",
+      "validation": {
+        "required": "Pasirinkite bent vieną leidimą."
+      }
     }
   },
   "store": {

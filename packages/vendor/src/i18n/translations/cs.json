@@ -3078,6 +3078,49 @@
         "emailInvalid": "Zadejte prosím platný e-mail",
         "roleRequired": "Vyberte prosím roli"
       }
+    },
+    "permissions": {
+      "title": "Oprávnění",
+      "hint": "Zaškrtněte, co tento člen může vidět a dělat.",
+      "templateHint": "Výběr role vyplní políčka níže; poté je můžete upravit.",
+      "administrationHint": "Administrace má plný přístup včetně týmu, nastavení obchodu a účtu pro výplaty.",
+      "custom": "Vlastní",
+      "area": "Oblast",
+      "rights": {
+        "view": "Může zobrazit",
+        "edit": "Může upravit",
+        "manage": "Může smazat"
+      },
+      "areas": {
+        "orders": "Objednávky",
+        "returns": "Vratky",
+        "return_reason_requests": "Žádosti o důvody vrácení",
+        "refunds": "Refundace a platby",
+        "customers": "Zákazníci",
+        "products": "Produkty",
+        "catalog": "Kategorie, kolekce, typy a štítky",
+        "inventory": "Sklad",
+        "shipping": "Doprava",
+        "price_lists": "Ceníky",
+        "promotions": "Propagace a kampaně",
+        "commissions": "Provize",
+        "payouts": "Výplaty a účet pro výplaty",
+        "reviews": "Recenze",
+        "messages": "Zprávy a oznámení",
+        "followers": "Sledující",
+        "dashboard": "Souhrn nástěnky"
+      },
+      "requiredBy": "Potřebné pro: {{areas}}",
+      "summaryItem": "{{area}}: {{right}}",
+      "edit": "Upravit oprávnění",
+      "editDescription": "Změňte, co {{email}} může vidět a dělat. Změny platí okamžitě.",
+      "editSuccess": "Oprávnění pro {{email}} byla aktualizována.",
+      "inviteSuccess": "Pozvánka pro {{email}} byla vytvořena.",
+      "notEditable": "Oprávnění vlastníka obchodu a vaše vlastní oprávnění nelze měnit.",
+      "notFound": "Tento člen nebyl nalezen. Možná byl z týmu odebrán.",
+      "validation": {
+        "required": "Vyberte alespoň jedno oprávnění."
+      }
     }
   },
   "store": {

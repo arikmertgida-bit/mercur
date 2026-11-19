@@ -3044,6 +3044,49 @@
         "emailInvalid": "請輸入有效的電子郵件",
         "roleRequired": "請選擇角色"
       }
+    },
+    "permissions": {
+      "title": "權限",
+      "hint": "勾選此成員可以檢視和操作的內容。",
+      "templateHint": "選擇角色會自動勾選下方的核取方塊，之後可再修改。",
+      "administrationHint": "行政管理角色擁有完整權限，包括團隊、商店設定和撥款帳戶。",
+      "custom": "自訂",
+      "area": "範圍",
+      "rights": {
+        "view": "可檢視",
+        "edit": "可編輯",
+        "manage": "可刪除"
+      },
+      "areas": {
+        "orders": "訂單",
+        "returns": "退貨",
+        "return_reason_requests": "退貨原因申請",
+        "refunds": "退款與付款",
+        "customers": "顧客",
+        "products": "商品",
+        "catalog": "分類、系列、類型和標籤",
+        "inventory": "庫存",
+        "shipping": "配送",
+        "price_lists": "價格清單",
+        "promotions": "促銷與活動",
+        "commissions": "佣金",
+        "payouts": "撥款與撥款帳戶",
+        "reviews": "評價",
+        "messages": "訊息與通知",
+        "followers": "追蹤者",
+        "dashboard": "儀表板總覽"
+      },
+      "requiredBy": "{{areas}} 需要此項",
+      "summaryItem": "{{area}}：{{right}}",
+      "edit": "編輯權限",
+      "editDescription": "變更 {{email}} 可以檢視和操作的內容。變更會立即生效。",
+      "editSuccess": "已更新 {{email}} 的權限。",
+      "inviteSuccess": "已為 {{email}} 建立邀請。",
+      "notEditable": "無法變更商店擁有者的權限及您自己的權限。",
+      "notFound": "找不到此成員，可能已被移出團隊。",
+      "validation": {
+        "required": "請至少選擇一項權限。"
+      }
     }
   },
   "store": {

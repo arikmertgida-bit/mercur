@@ -3078,6 +3078,49 @@
         "emailInvalid": "Unesite ispravan email",
         "roleRequired": "Odaberite ulogu"
       }
+    },
+    "permissions": {
+      "title": "Ovlaštenja",
+      "hint": "Označite šta ovaj član može vidjeti i raditi.",
+      "templateHint": "Odabir uloge popunjava polja ispod; zatim ih možete promijeniti.",
+      "administrationHint": "Administracija ima potpun pristup, uključujući tim, postavke trgovine i račun za isplate.",
+      "custom": "Prilagođeno",
+      "area": "Oblast",
+      "rights": {
+        "view": "Može vidjeti",
+        "edit": "Može uređivati",
+        "manage": "Može brisati"
+      },
+      "areas": {
+        "orders": "Narudžbe",
+        "returns": "Povrati",
+        "return_reason_requests": "Zahtjevi za razloge povrata",
+        "refunds": "Povrati novca i plaćanja",
+        "customers": "Kupci",
+        "products": "Proizvodi",
+        "catalog": "Kategorije, kolekcije, tipovi i oznake",
+        "inventory": "Zalihe",
+        "shipping": "Dostava",
+        "price_lists": "Cjenovni popisi",
+        "promotions": "Promocije i kampanje",
+        "commissions": "Provizija",
+        "payouts": "Isplate i račun za isplate",
+        "reviews": "Recenzije",
+        "messages": "Poruke i obavještenja",
+        "followers": "Pratioci",
+        "dashboard": "Sažetak kontrolne table"
+      },
+      "requiredBy": "Potrebno za: {{areas}}",
+      "summaryItem": "{{area}}: {{right}}",
+      "edit": "Uredi ovlaštenja",
+      "editDescription": "Promijenite šta {{email}} može vidjeti i raditi. Promjene važe odmah.",
+      "editSuccess": "Ovlaštenja za {{email}} su ažurirana.",
+      "inviteSuccess": "Pozivnica za {{email}} je kreirana.",
+      "notEditable": "Ovlaštenja vlasnika trgovine i vaša vlastita ovlaštenja ne mogu se mijenjati.",
+      "notFound": "Ovaj član nije pronađen. Možda je uklonjen iz tima.",
+      "validation": {
+        "required": "Odaberite barem jedno ovlaštenje."
+      }
     }
   },
   "store": {

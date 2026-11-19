@@ -46,24 +46,54 @@ export type MemberPermissionAreaId =
 
 type AreaKey = { key: string; max?: PermissionRight }
 
+/**
+ * Once an area holds at least `from`, `area` must hold at least `right`. The
+ * panel checks and locks these itself; the server rejects grants without them.
+ * Products need the catalog lists to open the product form, and a shipping
+ * profile and stock locations to save one.
+ */
+export interface MemberAreaRequirement {
+  from: PermissionRight
+  area: MemberPermissionAreaId
+  right: PermissionRight
+}
+
 export interface MemberPermissionArea {
   id: MemberPermissionAreaId
   max_right: PermissionRight
   keys: AreaKey[]
+  requires?: MemberAreaRequirement[]
 }
 
 const A = MEMBER_PERMISSION_AREA
 
+const NEEDS_ORDERS_VIEW: MemberAreaRequirement[] = [{ from: "view", area: A.ORDERS, right: "view" }]
+
 export const MEMBER_PERMISSION_AREAS: MemberPermissionArea[] = [
   { id: A.ORDERS, max_right: "manage", keys: [{ key: "orders" }, { key: "orders.edits" }] },
-  { id: A.RETURNS, max_right: "manage", keys: [{ key: "orders.returns" }] },
+  {
+    id: A.RETURNS,
+    max_right: "manage",
+    keys: [{ key: "orders.returns" }],
+    requires: NEEDS_ORDERS_VIEW,
+  },
   { id: A.RETURN_REASON_REQUESTS, max_right: "edit", keys: [{ key: "return_reasons" }] },
-  { id: A.REFUNDS, max_right: "edit", keys: [{ key: "orders.refunds" }, { key: "payments" }] },
+  {
+    id: A.REFUNDS,
+    max_right: "edit",
+    keys: [{ key: "orders.refunds" }, { key: "payments" }],
+    requires: NEEDS_ORDERS_VIEW,
+  },
   { id: A.CUSTOMERS, max_right: "manage", keys: [{ key: "customers" }, { key: "customer_groups" }] },
   {
     id: A.PRODUCTS,
     max_right: "manage",
     keys: [{ key: "products" }, { key: "product_changes", max: "edit" }, { key: "product_attributes" }],
+    requires: [
+      { from: "view", area: A.CATALOG, right: "view" },
+      { from: "edit", area: A.INVENTORY, right: "view" },
+      { from: "edit", area: A.SHIPPING, right: "view" },
+    ],
   },
   {
     id: A.CATALOG,
@@ -227,6 +257,17 @@ export function validateMemberAreaPermissions(
       throw invalid()
     }
     normalized[areaId] = right
+  }
+
+  for (const [areaId, right] of Object.entries(normalized)) {
+    for (const requirement of AREAS_BY_ID.get(areaId)?.requires ?? []) {
+      if (
+        satisfiesRight(right, requirement.from) &&
+        !satisfiesRight(normalized[requirement.area], requirement.right)
+      ) {
+        throw invalid()
+      }
+    }
   }
 
   const expanded = expandMemberAreas(normalized)
