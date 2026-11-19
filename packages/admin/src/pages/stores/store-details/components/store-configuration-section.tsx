@@ -5,7 +5,10 @@ import { useTranslation } from "react-i18next";
 import { DateCell } from "../../../../components/table/table-cells/common/date-cell";
 import { NoRecords } from "../../../../components/common/empty-table-content/empty-table-content";
 import { InferClientOutput } from "@mercurjs/client";
-import { DisplayExtensionZone } from "@mercurjs/dashboard-shared";
+import {
+  DisplayExtensionZone,
+  RTL_TABLE_CLASSNAME,
+} from "@mercurjs/dashboard-shared";
 import { sdk } from "@lib/client";
 
 type Seller = InferClientOutput<typeof sdk.admin.sellers.$id.query>["seller"];
@@ -26,7 +29,7 @@ export const StoreConfigurationSection = ({
         <Heading level="h2">{t("store.timeOff.header")}</Heading>
       </div>
       {hasTimeOff ? (
-        <Table>
+        <Table className={RTL_TABLE_CLASSNAME}>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>{t("fields.startDate")}</Table.HeaderCell>

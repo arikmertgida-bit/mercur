@@ -397,6 +397,9 @@ export function MessengerProvider({
       }
 
       if (cancelled) return
+      if (isStoredTokenValid(sellerId)) {
+        kayiEventManager.setSessionSellerId(sellerId)
+      }
       socketInstance = connectSocket(sellerName)
 
       if (socketInstance.connected) {
@@ -446,6 +449,7 @@ export function MessengerProvider({
 
     return () => {
       cancelled = true
+      kayiEventManager.setSessionSellerId(null)
       unsubscribePreferencesChanged()
       if (socketInstance) {
         socketInstance.off("connect", onConnect)

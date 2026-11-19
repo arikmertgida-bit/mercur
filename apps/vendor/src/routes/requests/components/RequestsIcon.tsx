@@ -5,7 +5,7 @@ import {
   getNotificationUnreadCount,
   markNotificationsRead,
 } from "../../../lib/messenger/client"
-import { getMessengerAuthToken, isTokenExpired } from "../../../lib/messenger/auth-token"
+import { useMessengerSession } from "../../../lib/messenger/use-messenger-session"
 import { kayiEventManager } from "../../../lib/messenger/KayiEventManager"
 import { REQUEST_NOTIFICATION_TYPE } from "../../../lib/messenger/types"
 import { logger } from "../../../lib/logger"
@@ -26,42 +26,50 @@ export function RequestsIcon(props: { className?: string }): React.JSX.Element {
   const [unreadCount, setUnreadCount] = React.useState<number>(0)
   const location = useLocation()
 
-  React.useEffect((): (() => void) => {
-    const unsubscribe = kayiEventManager.subscribeNotification(REQUEST_NOTIFICATION_TYPE, (): void => {
-      setUnreadCount((prev) => prev + 1)
-    })
+  const sessionSellerId = useMessengerSession()
+  const isRequestsRoute =
+    location.pathname === "/requests" || location.pathname.startsWith("/requests/")
 
-    const token = getMessengerAuthToken()
-    if (token && !isTokenExpired(token)) {
-      getNotificationUnreadCount(REQUEST_NOTIFICATION_TYPE)
-        .then((r: { count: number }): void => {
+  React.useEffect(
+    (): (() => void) =>
+      kayiEventManager.subscribeNotification(REQUEST_NOTIFICATION_TYPE, (): void => {
+        setUnreadCount((prev) => prev + 1)
+      }),
+    [],
+  )
+
+  // Counts are read (and cleared on this page) only once the messenger token
+  // belongs to the active store, and again after every store switch.
+  React.useEffect((): (() => void) | undefined => {
+    if (!sessionSellerId) {
+      setUnreadCount(0)
+      return undefined
+    }
+    if (isRequestsRoute) {
+      setUnreadCount(0)
+      markNotificationsRead(REQUEST_NOTIFICATION_TYPE).catch((err): void => {
+        logger.error(
+          `Failed to mark request notifications read: ${getCatchMessage(err instanceof Error ? err : undefined)}`,
+        )
+      })
+      return undefined
+    }
+    let cancelled = false
+    getNotificationUnreadCount(REQUEST_NOTIFICATION_TYPE)
+      .then((r: { count: number }): void => {
+        if (!cancelled) {
           setUnreadCount(r.count ?? 0)
-        })
-        .catch((err): void => {
-          logger.error(
-            `Failed to fetch initial request notification count: ${getCatchMessage(err instanceof Error ? err : undefined)}`,
-          )
-        })
-    }
-
+        }
+      })
+      .catch((err): void => {
+        logger.error(
+          `Failed to fetch request notification count: ${getCatchMessage(err instanceof Error ? err : undefined)}`,
+        )
+      })
     return (): void => {
-      unsubscribe()
+      cancelled = true
     }
-  }, [])
-
-  React.useEffect((): void => {
-    const isRequestsRoute =
-      location.pathname === "/requests" || location.pathname.startsWith("/requests/")
-    if (!isRequestsRoute) {
-      return
-    }
-    setUnreadCount(0)
-    markNotificationsRead(REQUEST_NOTIFICATION_TYPE).catch((err): void => {
-      logger.error(
-        `Failed to mark request notifications read: ${getCatchMessage(err instanceof Error ? err : undefined)}`,
-      )
-    })
-  }, [location.pathname])
+  }, [sessionSellerId, isRequestsRoute])
 
   const safeUnreadCount = unreadCount ?? 0
   const badgeLabel = formatSidebarUnreadCount(safeUnreadCount)

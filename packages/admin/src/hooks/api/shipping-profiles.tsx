@@ -28,6 +28,7 @@ export const useCreateShippingProfile = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) => sdk.admin.shippingProfiles.mutate(payload),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
@@ -36,7 +37,6 @@ export const useCreateShippingProfile = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -104,6 +104,7 @@ export const useUpdateShippingProfile = (
   >
 ) => {
   const { data, ...rest } = useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.shippingProfiles.$id.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -116,7 +117,6 @@ export const useUpdateShippingProfile = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 
   return { ...data, ...rest }
@@ -131,6 +131,7 @@ export const useDeleteShippingProfile = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () => sdk.admin.shippingProfiles.$id.delete({ $id: id }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
@@ -142,6 +143,5 @@ export const useDeleteShippingProfile = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }

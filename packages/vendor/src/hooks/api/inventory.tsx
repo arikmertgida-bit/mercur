@@ -78,6 +78,7 @@ export const useCreateInventoryItem = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) => sdk.vendor.inventoryItems.mutate(payload),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
@@ -85,7 +86,6 @@ export const useCreateInventoryItem = (
       });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -98,6 +98,7 @@ export const useUpdateInventoryItem = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.vendor.inventoryItems.$id.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -109,7 +110,6 @@ export const useUpdateInventoryItem = (
       });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -122,6 +122,7 @@ export const useDeleteInventoryItem = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () => sdk.vendor.inventoryItems.$id.delete({ $id: id }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
@@ -132,7 +133,6 @@ export const useDeleteInventoryItem = (
       });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -148,6 +148,7 @@ export const useDeleteInventoryItemLevel = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () =>
       sdk.vendor.inventoryItems.$id.locationLevels.$locationId.delete({
         $id: inventoryItemId,
@@ -165,7 +166,6 @@ export const useDeleteInventoryItemLevel = (
       });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -222,6 +222,7 @@ export const useUpdateInventoryLevel = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.vendor.inventoryItems.$id.locationLevels.$locationId.mutate({
         $id: inventoryItemId,
@@ -246,7 +247,6 @@ export const useUpdateInventoryLevel = (
       });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -266,6 +266,7 @@ export const useBatchInventoryItemLocationLevels = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.vendor.inventoryItems.$id.locationLevels.batch.mutate({
         $id: inventoryItemId,
@@ -286,7 +287,6 @@ export const useBatchInventoryItemLocationLevels = (
       });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -385,6 +385,7 @@ export const useBatchInventoryItemsLocationLevels = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.vendor.inventoryItems.locationLevels.batch.mutate(payload),
     onSuccess: (data, variables, context) => {
@@ -399,6 +400,5 @@ export const useBatchInventoryItemsLocationLevels = (
       });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };

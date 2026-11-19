@@ -68,6 +68,7 @@ export const useUpdateOrder = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload: HttpTypes.AdminUpdateOrder) =>
       sdk.admin.orders.$id.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -86,7 +87,6 @@ export const useUpdateOrder = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -208,6 +208,7 @@ export const useCancelOrder = (
   options?: UseMutationOptions<HttpTypes.AdminOrderResponse, ClientError, void>,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () => sdk.admin.orders.$id.cancel.mutate({ $id: orderId }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
@@ -220,7 +221,6 @@ export const useCancelOrder = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -233,6 +233,7 @@ export const useRequestTransferOrder = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload: HttpTypes.AdminRequestOrderTransfer) =>
       sdk.admin.orders.$id.transfer.mutate({ $id: orderId, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -246,7 +247,6 @@ export const useRequestTransferOrder = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -259,6 +259,7 @@ export const useCancelOrderTransfer = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () =>
       sdk.admin.orders.$id.transfer.cancel.mutate({ $id: orderId }),
     onSuccess: (data, variables, context) => {
@@ -272,7 +273,6 @@ export const useCancelOrderTransfer = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -285,6 +285,7 @@ export const useCreateOrderCreditLine = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.orders.$id.creditLines.mutate({ $id: orderId, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -298,7 +299,6 @@ export const useCreateOrderCreditLine = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 

@@ -69,6 +69,7 @@ export const useUpdateStore = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.stores.$id.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -82,7 +83,6 @@ export const useUpdateStore = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 

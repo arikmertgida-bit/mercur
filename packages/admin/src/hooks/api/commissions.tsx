@@ -96,6 +96,7 @@ export const useCreateCommissionRule = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) => sdk.admin.commissionRates.mutate(payload),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
@@ -104,7 +105,6 @@ export const useCreateCommissionRule = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -117,6 +117,7 @@ export const useUpdateCommissionRule = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.commissionRates.$id.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -129,7 +130,6 @@ export const useUpdateCommissionRule = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -142,6 +142,7 @@ export const useDeleteCommissionRule = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () => sdk.admin.commissionRates.$id.delete({ $id: id }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
@@ -153,7 +154,6 @@ export const useDeleteCommissionRule = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -169,6 +169,7 @@ export const useBatchCommissionRules = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.commissionRates.$id.rules.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -181,6 +182,5 @@ export const useBatchCommissionRules = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };

@@ -11,7 +11,7 @@ import {
   toast,
 } from "@medusajs/ui";
 import type { RouteConfig } from "@mercurjs/dashboard-sdk";
-import { NoRecords, useCan } from "@mercurjs/dashboard-shared";
+import { NoRecords, RTL_TABLE_CLASSNAME, useCan } from "@mercurjs/dashboard-shared";
 
 import {
   ReviewReportDTO,
@@ -77,7 +77,7 @@ const VendorReviewReportsPage = () => {
       {!isLoading && rows.length === 0 ? (
         <NoRecords />
       ) : (
-        <Table>
+        <Table className={RTL_TABLE_CLASSNAME}>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>

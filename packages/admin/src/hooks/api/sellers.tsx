@@ -103,12 +103,12 @@ export const useCreateSeller = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) => sdk.admin.sellers.mutate(payload),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: sellersQueryKeys.lists() });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -120,12 +120,12 @@ export const useInviteSeller = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) => sdk.admin.sellers.invite.mutate(payload),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: sellersQueryKeys.lists() })
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -138,6 +138,7 @@ export const useSuspendSeller = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload?: { reason?: string }) =>
       sdk.admin.sellers.$id.suspend.mutate({ $id: id, reason: payload?.reason }),
     onSuccess: (data, variables, context) => {
@@ -149,7 +150,6 @@ export const useSuspendSeller = (
       });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -161,6 +161,7 @@ export const useApproveSeller = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () =>
       sdk.admin.sellers.$id.approve.mutate({ $id: id }),
     onSuccess: (data, variables, context) => {
@@ -172,7 +173,6 @@ export const useApproveSeller = (
       });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -184,6 +184,7 @@ export const useUnsuspendSeller = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () =>
       sdk.admin.sellers.$id.unsuspend.mutate({ $id: id }),
     onSuccess: (data, variables, context) => {
@@ -195,7 +196,6 @@ export const useUnsuspendSeller = (
       });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -207,6 +207,7 @@ export const useTerminateSeller = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () =>
       sdk.admin.sellers.$id.terminate.mutate({ $id: id }),
     onSuccess: (data, variables, context) => {
@@ -218,7 +219,6 @@ export const useTerminateSeller = (
       });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -230,6 +230,7 @@ export const useUnterminateSeller = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () =>
       sdk.admin.sellers.$id.unterminate.mutate({ $id: id }),
     onSuccess: (data, variables, context) => {
@@ -241,7 +242,6 @@ export const useUnterminateSeller = (
       });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -254,6 +254,7 @@ export const useUpdateSeller = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.sellers.$id.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -266,7 +267,6 @@ export const useUpdateSeller = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -279,6 +279,7 @@ export const useUpdateSellerAddress = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.sellers.$id.address.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -290,7 +291,6 @@ export const useUpdateSellerAddress = (
       });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -306,6 +306,7 @@ export const useUpdateSellerPaymentDetails = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.sellers.$id.paymentDetails.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -317,7 +318,6 @@ export const useUpdateSellerPaymentDetails = (
       });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -335,6 +335,7 @@ export const useUpdateSellerProfessionalDetails = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.sellers.$id.professionalDetails.mutate({
         $id: id,
@@ -349,7 +350,6 @@ export const useUpdateSellerProfessionalDetails = (
       });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -361,6 +361,7 @@ export const useDeleteSellerProfessionalDetails = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () =>
       sdk.admin.sellers.$id.professionalDetails.delete({ $id: id }),
     onSuccess: (data, variables, context) => {
@@ -372,7 +373,6 @@ export const useDeleteSellerProfessionalDetails = (
       });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -410,6 +410,7 @@ export const useInviteSellerMember = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.sellers.$id.members.invite.mutate({
         $id: sellerId,
@@ -424,7 +425,6 @@ export const useInviteSellerMember = (
       });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -440,6 +440,7 @@ export const useAddSellerMember = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.sellers.$id.members.mutate({
         $id: sellerId,
@@ -451,7 +452,6 @@ export const useAddSellerMember = (
       });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -465,6 +465,7 @@ export const useRemoveSellerMember = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () =>
       sdk.admin.sellers.$id.members.$memberId.delete({
         $id: sellerId,
@@ -476,7 +477,6 @@ export const useRemoveSellerMember = (
       });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -491,6 +491,7 @@ export const useDeleteSellerInvite = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: ({ invite_id }) =>
       sdk.admin.sellers.$id.members.invites.$inviteId.delete({
         $id: sellerId,
@@ -502,7 +503,6 @@ export const useDeleteSellerInvite = (
       });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -517,6 +517,7 @@ export const useResendSellerInvite = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: ({ invite_id }) =>
       sdk.admin.sellers.$id.members.invites.$inviteId.resend.mutate({
         $id: sellerId,
@@ -528,7 +529,6 @@ export const useResendSellerInvite = (
       });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 

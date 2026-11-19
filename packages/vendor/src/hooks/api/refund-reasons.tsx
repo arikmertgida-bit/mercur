@@ -70,6 +70,7 @@ export const useCreateRefundReason = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) => sdk.vendor.refundReasons.mutate(payload),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
@@ -78,7 +79,6 @@ export const useCreateRefundReason = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -91,6 +91,7 @@ export const useUpdateRefundReason = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.vendor.refundReasons.$id.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -103,7 +104,6 @@ export const useUpdateRefundReason = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -115,6 +115,7 @@ export const useDeleteRefundReasonLazy = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (id: string) => sdk.vendor.refundReasons.$id.delete({ $id: id }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
@@ -126,6 +127,5 @@ export const useDeleteRefundReasonLazy = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };

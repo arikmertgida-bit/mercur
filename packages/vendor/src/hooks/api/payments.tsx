@@ -71,6 +71,7 @@ export const useCapturePayment = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload: HttpTypes.AdminCapturePayment) =>
       sdk.vendor.payments.$id.capture.mutate({ $id: paymentId, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -84,7 +85,6 @@ export const useCapturePayment = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -98,6 +98,7 @@ export const useRefundPayment = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload: HttpTypes.AdminRefundPayment) =>
       sdk.vendor.payments.$id.refund.mutate({ $id: paymentId, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -111,6 +112,5 @@ export const useRefundPayment = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };

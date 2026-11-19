@@ -12,7 +12,12 @@ import {
   toast,
 } from "@medusajs/ui"
 import { Photo, CheckCircleSolid, EyeSlash } from "@medusajs/icons"
-import { ActionMenu, NoRecords, Thumbnail } from "@mercurjs/dashboard-shared"
+import {
+  ActionMenu,
+  NoRecords,
+  RTL_TABLE_CLASSNAME,
+  Thumbnail,
+} from "@mercurjs/dashboard-shared"
 
 import type { InferClientOutput } from "@mercurjs/client"
 
@@ -139,7 +144,7 @@ const ReportedImagesPage = () => {
       {!isLoading && reports.length === 0 ? (
         <NoRecords />
       ) : (
-        <Table>
+        <Table className={RTL_TABLE_CLASSNAME}>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>{t("reportedImages.columns.image")}</Table.HeaderCell>

@@ -23,12 +23,12 @@ export const useCreateOrderEdit = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) => sdk.vendor.orderEdits.mutate(payload),
     onSuccess: (data, variables, context) => {
       invalidateOrder(orderId);
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -40,12 +40,12 @@ export const useCancelOrderEdit = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () => sdk.vendor.orderEdits.$id.delete({ $id: orderId }),
     onSuccess: (data, variables, context) => {
       invalidateOrder(orderId);
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -57,13 +57,13 @@ export const useRequestOrderEdit = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () =>
       sdk.vendor.orderEdits.$id.request.mutate({ $id: orderId }),
     onSuccess: (data, variables, context) => {
       invalidateOrder(orderId);
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -75,13 +75,13 @@ export const useConfirmOrderEdit = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () =>
       sdk.vendor.orderEdits.$id.confirm.mutate({ $id: orderId }),
     onSuccess: (data, variables, context) => {
       invalidateOrder(orderId);
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -94,6 +94,7 @@ export const useAddOrderEditItems = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.vendor.orderEdits.$id.items.mutate({ $id: orderId, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -102,7 +103,6 @@ export const useAddOrderEditItems = (
       });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -122,6 +122,7 @@ export const useUpdateOrderEditAddedItem = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: ({ $actionId, ...payload }) =>
       sdk.vendor.orderEdits.$id.items.$actionId.mutate({
         $id: orderId,
@@ -134,7 +135,6 @@ export const useUpdateOrderEditAddedItem = (
       });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -149,6 +149,7 @@ export const useRemoveOrderEditAddedItem = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (actionId: string) =>
       sdk.vendor.orderEdits.$id.items.$actionId.delete({
         $id: orderId,
@@ -160,7 +161,6 @@ export const useRemoveOrderEditAddedItem = (
       });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -180,6 +180,7 @@ export const useUpdateOrderEditOriginalItem = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: ({ $itemId, ...payload }) =>
       sdk.vendor.orderEdits.$id.items.item.$itemId.mutate({
         $id: orderId,
@@ -192,6 +193,5 @@ export const useUpdateOrderEditOriginalItem = (
       });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };

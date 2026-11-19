@@ -137,6 +137,7 @@ export const useUpdateReview = (
   const queryClient = useQueryClient();
 
   return useMutation({
+    ...options,
     mutationFn: (payload: UpdateReviewPayload) =>
       client.vendor.reviews.$id.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -145,6 +146,5 @@ export const useUpdateReview = (
       queryClient.invalidateQueries({ queryKey: reviewsQueryKeys.detail("stats") });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };

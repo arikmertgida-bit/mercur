@@ -53,12 +53,12 @@ export const useCreateExchange = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) => sdk.vendor.exchanges.mutate(payload),
     onSuccess: (data, variables, context) => {
       invalidateOrder(orderId);
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -71,13 +71,13 @@ export const useCancelExchangeBegin = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () =>
       sdk.vendor.exchanges.$id.request.delete({ $id: exchangeId }),
     onSuccess: (data, variables, context) => {
       invalidateOrder(orderId);
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -90,13 +90,13 @@ export const useRequestExchange = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () =>
       sdk.vendor.exchanges.$id.request.mutate({ $id: exchangeId }),
     onSuccess: (data, variables, context) => {
       invalidateOrder(orderId);
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -113,13 +113,13 @@ export const useCancelExchange = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.vendor.exchanges.$id.cancel.mutate({ $id: exchangeId, ...payload }),
     onSuccess: (data, variables, context) => {
       invalidateOrder(orderId);
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -136,6 +136,7 @@ export const useAddExchangeInboundItems = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.vendor.exchanges.$id.inbound.items.mutate({
         $id: exchangeId,
@@ -145,7 +146,6 @@ export const useAddExchangeInboundItems = (
       invalidateOrder(orderId);
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -166,6 +166,7 @@ export const useUpdateExchangeInboundItem = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: ({ $actionId, ...payload }) =>
       sdk.vendor.exchanges.$id.inbound.items.$actionId.mutate({
         $id: exchangeId,
@@ -176,7 +177,6 @@ export const useUpdateExchangeInboundItem = (
       invalidateOrder(orderId);
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -192,6 +192,7 @@ export const useRemoveExchangeInboundItem = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (actionId: string) =>
       sdk.vendor.exchanges.$id.inbound.items.$actionId.delete({
         $id: exchangeId,
@@ -201,7 +202,6 @@ export const useRemoveExchangeInboundItem = (
       invalidateOrder(orderId);
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -218,6 +218,7 @@ export const useAddExchangeOutboundItems = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.vendor.exchanges.$id.outbound.items.mutate({
         $id: exchangeId,
@@ -227,7 +228,6 @@ export const useAddExchangeOutboundItems = (
       invalidateOrder(orderId);
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -248,6 +248,7 @@ export const useUpdateExchangeOutboundItem = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: ({ $actionId, ...payload }) =>
       sdk.vendor.exchanges.$id.outbound.items.$actionId.mutate({
         $id: exchangeId,
@@ -258,7 +259,6 @@ export const useUpdateExchangeOutboundItem = (
       invalidateOrder(orderId);
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -274,6 +274,7 @@ export const useRemoveExchangeOutboundItem = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (actionId: string) =>
       sdk.vendor.exchanges.$id.outbound.items.$actionId.delete({
         $id: exchangeId,
@@ -283,7 +284,6 @@ export const useRemoveExchangeOutboundItem = (
       invalidateOrder(orderId);
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -304,6 +304,7 @@ export const useAddExchangeInboundShipping = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.vendor.exchanges.$id.inbound.shippingMethod.mutate({
         $id: exchangeId,
@@ -313,7 +314,6 @@ export const useAddExchangeInboundShipping = (
       invalidateOrder(orderId);
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -334,6 +334,7 @@ export const useAddExchangeOutboundShipping = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.vendor.exchanges.$id.outbound.shippingMethod.mutate({
         $id: exchangeId,
@@ -343,6 +344,5 @@ export const useAddExchangeOutboundShipping = (
       invalidateOrder(orderId);
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };

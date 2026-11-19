@@ -68,12 +68,12 @@ export const useCreateInvite = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) => sdk.admin.invites.mutate(payload),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: invitesQueryKeys.lists() })
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -86,13 +86,13 @@ export const useResendInvite = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () => sdk.admin.invites.$id.resend.mutate({ $id: id }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: invitesQueryKeys.lists() })
       queryClient.invalidateQueries({ queryKey: invitesQueryKeys.detail(id) })
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -105,13 +105,13 @@ export const useDeleteInvite = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () => sdk.admin.invites.$id.delete({ $id: id }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: invitesQueryKeys.lists() })
       queryClient.invalidateQueries({ queryKey: invitesQueryKeys.detail(id) })
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -138,6 +138,7 @@ export const useAcceptInvite = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: async ({ auth_token, ...body }) =>
       AcceptInviteResponseSchema.parse(
         await fetchQuery('/admin/invites/accept', {
@@ -150,6 +151,5 @@ export const useAcceptInvite = (
     onSuccess: (data, variables, context) => {
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }

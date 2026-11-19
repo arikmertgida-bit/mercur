@@ -79,13 +79,13 @@ export const useUpsertPromotionCost = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: ({ id, ...payload }: UpsertPromotionCostPayload) =>
       sdk.admin.promotions.$id.cost.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: promotionsQueryKeys.detail(variables.id) })
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -222,6 +222,7 @@ export const useDeletePromotion = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () => sdk.admin.promotions.$id.delete({ $id: id }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: promotionsQueryKeys.lists() })
@@ -231,7 +232,6 @@ export const useDeletePromotion = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -243,13 +243,13 @@ export const useCreatePromotion = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) => sdk.admin.promotions.mutate(payload),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: promotionsQueryKeys.lists() })
       queryClient.invalidateQueries({ queryKey: campaignsQueryKeys.lists() })
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -262,6 +262,7 @@ export const useUpdatePromotion = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.promotions.$id.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -269,7 +270,6 @@ export const useUpdatePromotion = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -314,13 +314,13 @@ const usePromotionRulesBatch = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) => batchPromotionRules(id, ruleType, payload),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: promotionsQueryKeys.all })
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 

@@ -75,6 +75,7 @@ export const useCreateCustomerGroup = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) => sdk.admin.customerGroups.mutate(payload),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
@@ -83,7 +84,6 @@ export const useCreateCustomerGroup = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -99,6 +99,7 @@ export const useUpdateCustomerGroup = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.customerGroups.$id.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -111,7 +112,6 @@ export const useUpdateCustomerGroup = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -124,6 +124,7 @@ export const useDeleteCustomerGroup = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () => sdk.admin.customerGroups.$id.delete({ $id: id }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
@@ -135,7 +136,6 @@ export const useDeleteCustomerGroup = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -148,6 +148,7 @@ export const useRemoveCustomersFromGroup = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.customerGroups.$id.customers.mutate({
         $id: id,
@@ -166,7 +167,6 @@ export const useRemoveCustomersFromGroup = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -178,6 +178,7 @@ export const useDeleteCustomerGroupLazy = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: ({ id }) => sdk.admin.customerGroups.$id.delete({ $id: id }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
@@ -189,7 +190,6 @@ export const useDeleteCustomerGroupLazy = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -202,6 +202,7 @@ export const useAddCustomersToGroup = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.customerGroups.$id.customers.mutate({
         $id: id,
@@ -220,7 +221,6 @@ export const useAddCustomersToGroup = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 

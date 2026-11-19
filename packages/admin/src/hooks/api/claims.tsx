@@ -69,6 +69,7 @@ export const useCreateClaim = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload: HttpTypes.AdminCreateClaim) =>
       sdk.admin.claims.mutate(payload),
     onSuccess: (data, variables, context) => {
@@ -86,7 +87,6 @@ export const useCreateClaim = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -96,6 +96,7 @@ export const useCancelClaim = (
   options?: UseMutationOptions<HttpTypes.AdminClaimResponse, ClientError>
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () => sdk.admin.claims.$id.cancel.mutate({ $id: id }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
@@ -115,7 +116,6 @@ export const useCancelClaim = (
       })
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -129,6 +129,7 @@ export const useAddClaimItems = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload: HttpTypes.AdminAddClaimItems) =>
       sdk.admin.claims.$id.claimItems.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -142,7 +143,6 @@ export const useAddClaimItems = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -156,6 +156,7 @@ export const useUpdateClaimItems = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: ({
       actionId,
       ...payload
@@ -177,7 +178,6 @@ export const useUpdateClaimItems = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -191,6 +191,7 @@ export const useRemoveClaimItem = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (actionId: string) =>
       sdk.admin.returns.$id.requestItems.$actionId.delete({
         $id: id,
@@ -207,7 +208,6 @@ export const useRemoveClaimItem = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -221,6 +221,7 @@ export const useAddClaimInboundItems = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.claims.$id.inbound.items.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -234,7 +235,6 @@ export const useAddClaimInboundItems = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -248,6 +248,7 @@ export const useUpdateClaimInboundItem = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: ({
       actionId,
       ...payload
@@ -269,7 +270,6 @@ export const useUpdateClaimInboundItem = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -279,6 +279,7 @@ export const useRemoveClaimInboundItem = (
   options?: UseMutationOptions<HttpTypes.AdminClaimResponse, ClientError, string>
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (actionId: string) =>
       sdk.admin.claims.$id.inbound.items.$actionId.delete({
         $id: id,
@@ -299,7 +300,6 @@ export const useRemoveClaimInboundItem = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -313,6 +313,7 @@ export const useAddClaimInboundShipping = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload: HttpTypes.AdminClaimAddInboundShipping) =>
       sdk.admin.claims.$id.inbound.shippingMethod.mutate({
         $id: id,
@@ -329,7 +330,6 @@ export const useAddClaimInboundShipping = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -343,6 +343,7 @@ export const useUpdateClaimInboundShipping = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: ({
       actionId,
       ...payload
@@ -363,7 +364,6 @@ export const useUpdateClaimInboundShipping = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -373,6 +373,7 @@ export const useDeleteClaimInboundShipping = (
   options?: UseMutationOptions<HttpTypes.AdminClaimResponse, ClientError, string>
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (actionId: string) =>
       sdk.admin.claims.$id.inbound.shippingMethod.$actionId.delete({
         $id: id,
@@ -389,7 +390,6 @@ export const useDeleteClaimInboundShipping = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -403,6 +403,7 @@ export const useAddClaimOutboundItems = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload: HttpTypes.AdminAddClaimOutboundItems) =>
       sdk.admin.claims.$id.outbound.items.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -416,7 +417,6 @@ export const useAddClaimOutboundItems = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -430,6 +430,7 @@ export const useUpdateClaimOutboundItems = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: ({
       actionId,
       ...payload
@@ -451,7 +452,6 @@ export const useUpdateClaimOutboundItems = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -461,6 +461,7 @@ export const useRemoveClaimOutboundItem = (
   options?: UseMutationOptions<HttpTypes.AdminClaimResponse, ClientError, string>
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (actionId: string) =>
       sdk.admin.claims.$id.outbound.items.$actionId.delete({
         $id: id,
@@ -477,7 +478,6 @@ export const useRemoveClaimOutboundItem = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -491,6 +491,7 @@ export const useAddClaimOutboundShipping = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload: HttpTypes.AdminClaimAddOutboundShipping) =>
       sdk.admin.claims.$id.outbound.shippingMethod.mutate({
         $id: id,
@@ -507,7 +508,6 @@ export const useAddClaimOutboundShipping = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -521,6 +521,7 @@ export const useUpdateClaimOutboundShipping = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: ({
       actionId,
       ...payload
@@ -541,7 +542,6 @@ export const useUpdateClaimOutboundShipping = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -551,6 +551,7 @@ export const useDeleteClaimOutboundShipping = (
   options?: UseMutationOptions<HttpTypes.AdminClaimResponse, ClientError, string>
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (actionId: string) =>
       sdk.admin.claims.$id.outbound.shippingMethod.$actionId.delete({
         $id: id,
@@ -567,7 +568,6 @@ export const useDeleteClaimOutboundShipping = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -581,6 +581,7 @@ export const useClaimConfirmRequest = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload: HttpTypes.AdminRequestClaim) =>
       sdk.admin.claims.$id.request.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -602,7 +603,6 @@ export const useClaimConfirmRequest = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -612,6 +612,7 @@ export const useCancelClaimRequest = (
   options?: UseMutationOptions<HttpTypes.AdminClaimResponse, ClientError>
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () => sdk.admin.claims.$id.request.delete({ $id: id }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
@@ -630,6 +631,5 @@ export const useCancelClaimRequest = (
       })
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }

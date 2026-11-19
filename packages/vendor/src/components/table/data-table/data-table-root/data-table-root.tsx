@@ -1,5 +1,9 @@
 import type { Permission } from "@mercurjs/dashboard-sdk"
-import { isPermitted, PermissionsContext } from "@mercurjs/dashboard-shared"
+import {
+  isPermitted,
+  PermissionsContext,
+  RTL_TABLE_CLASSNAME,
+} from "@mercurjs/dashboard-shared"
 import { CommandBar, Table, clx } from "@medusajs/ui"
 import {
   Table as ReactTable,
@@ -150,7 +154,7 @@ export const DataTableRoot = <TData,>({
         })}
       >
         {!noResults ? (
-          <Table className="relative w-full">
+          <Table className={clx("relative w-full", RTL_TABLE_CLASSNAME)}>
             {!noHeader && (
               <Table.Header className="border-t-0">
                 {table.getHeaderGroups().map((headerGroup) => {

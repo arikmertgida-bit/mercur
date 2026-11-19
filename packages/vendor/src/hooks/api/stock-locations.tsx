@@ -73,6 +73,7 @@ export const useCreateStockLocation = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) => sdk.vendor.stockLocations.mutate(payload),
     onSuccess: async (data, variables, context) => {
       await queryClient.invalidateQueries({
@@ -81,7 +82,6 @@ export const useCreateStockLocation = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -94,6 +94,7 @@ export const useUpdateStockLocation = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.vendor.stockLocations.$id.mutate({ $id: id, ...payload }),
     onSuccess: async (data, variables, context) => {
@@ -106,7 +107,6 @@ export const useUpdateStockLocation = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -126,6 +126,7 @@ export const useUpdateStockLocationSalesChannels = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.vendor.stockLocations.$id.salesChannels.mutate({
         $id: id,
@@ -141,7 +142,6 @@ export const useUpdateStockLocationSalesChannels = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -154,6 +154,7 @@ export const useDeleteStockLocation = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () => sdk.vendor.stockLocations.$id.delete({ $id: id }),
     onSuccess: async (data, variables, context) => {
       await queryClient.invalidateQueries({
@@ -165,7 +166,6 @@ export const useDeleteStockLocation = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -185,6 +185,7 @@ export const useCreateStockLocationFulfillmentSet = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.vendor.stockLocations.$id.fulfillmentSets.mutate({
         $id: locationId,
@@ -197,7 +198,6 @@ export const useCreateStockLocationFulfillmentSet = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -217,6 +217,7 @@ export const useUpdateStockLocationFulfillmentProviders = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.vendor.stockLocations.$id.fulfillmentProviders.mutate({
         $id: id,
@@ -232,6 +233,5 @@ export const useUpdateStockLocationFulfillmentProviders = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };

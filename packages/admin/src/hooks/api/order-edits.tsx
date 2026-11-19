@@ -16,6 +16,7 @@ export const useCreateOrderEdit = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload: HttpTypes.AdminInitiateOrderEditRequest) =>
       sdk.admin.orderEdits.mutate(payload),
     onSuccess: (data, variables, context) => {
@@ -28,7 +29,6 @@ export const useCreateOrderEdit = (
       })
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -41,6 +41,7 @@ export const useRequestOrderEdit = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () => sdk.admin.orderEdits.$id.request.mutate({ $id: id }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
@@ -60,7 +61,6 @@ export const useRequestOrderEdit = (
       })
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -73,6 +73,7 @@ export const useConfirmOrderEdit = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () => sdk.admin.orderEdits.$id.confirm.mutate({ $id: id }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
@@ -105,7 +106,6 @@ export const useConfirmOrderEdit = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -118,6 +118,7 @@ export const useCancelOrderEdit = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () => sdk.admin.orderEdits.$id.delete({ $id: orderId }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
@@ -137,7 +138,6 @@ export const useCancelOrderEdit = (
       })
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -150,6 +150,7 @@ export const useAddOrderEditItems = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload: HttpTypes.AdminAddOrderEditItems) =>
       sdk.admin.orderEdits.$id.items.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -158,7 +159,6 @@ export const useAddOrderEditItems = (
       })
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -174,6 +174,7 @@ export const useUpdateOrderEditOriginalItem = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: ({
       itemId,
       ...payload
@@ -190,7 +191,6 @@ export const useUpdateOrderEditOriginalItem = (
       })
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -206,6 +206,7 @@ export const useUpdateOrderEditAddedItem = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: ({
       actionId,
       ...payload
@@ -222,7 +223,6 @@ export const useUpdateOrderEditAddedItem = (
       })
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -239,6 +239,7 @@ export const useRemoveOrderEditItem = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (actionId: string) =>
       sdk.admin.orderEdits.$id.items.$actionId.delete({
         $id: id,
@@ -250,6 +251,5 @@ export const useRemoveOrderEditItem = (
       })
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }

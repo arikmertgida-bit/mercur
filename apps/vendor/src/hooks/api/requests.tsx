@@ -58,13 +58,13 @@ export const useCreateProductCollectionRequest = (
   const queryClient = useQueryClient();
 
   return useMutation({
+    ...options,
     mutationFn: (payload: InferClientInput<typeof client.vendor.requests.productCollections.mutate>) =>
       client.vendor.requests.productCollections.mutate(payload),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: requestsQueryKeys.lists() });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -98,13 +98,13 @@ export const useCreateProductCategoryRequest = (
   const queryClient = useQueryClient();
 
   return useMutation({
+    ...options,
     mutationFn: (payload: InferClientInput<typeof client.vendor.requests.productCategories.mutate>) =>
       client.vendor.requests.productCategories.mutate(payload),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: requestsQueryKeys.lists() });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -138,13 +138,13 @@ export const useCreateProductTypeRequest = (
   const queryClient = useQueryClient();
 
   return useMutation({
+    ...options,
     mutationFn: (payload: InferClientInput<typeof client.vendor.requests.productTypes.mutate>) =>
       client.vendor.requests.productTypes.mutate(payload),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: requestsQueryKeys.lists() });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -178,13 +178,13 @@ export const useCreateReturnReasonRequest = (
   const queryClient = useQueryClient();
 
   return useMutation({
+    ...options,
     mutationFn: (payload: InferClientInput<typeof client.vendor.requests.returnReasons.mutate>) =>
       client.vendor.requests.returnReasons.mutate(payload),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: requestsQueryKeys.lists() });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -218,12 +218,12 @@ export const useCreateProductTagRequest = (
   const queryClient = useQueryClient();
 
   return useMutation({
+    ...options,
     mutationFn: (payload: InferClientInput<typeof client.vendor.requests.productTags.mutate>) =>
       client.vendor.requests.productTags.mutate(payload),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: requestsQueryKeys.lists() });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };

@@ -24,6 +24,7 @@ export const useSignInWithEmailPass = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: async (payload) => {
       const data = AuthTokenResponseSchema.parse(
         await sdk.auth.$actorType.$authProvider.mutate({
@@ -40,7 +41,6 @@ export const useSignInWithEmailPass = (
     onSuccess: async (data, variables, context) => {
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -57,6 +57,7 @@ export const useSignUpWithEmailPass = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: async (payload) =>
       AuthTokenResponseSchema.parse(
         await sdk.auth.$actorType.$authProvider.register.mutate({
@@ -68,7 +69,6 @@ export const useSignUpWithEmailPass = (
     onSuccess: async (data, variables, context) => {
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -82,6 +82,7 @@ export const useResetPasswordForEmailPass = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.auth.$actorType.$authProvider.resetPassword.mutate({
         $actorType: "user",
@@ -92,7 +93,6 @@ export const useResetPasswordForEmailPass = (
     onSuccess: async (data, variables, context) => {
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -120,6 +120,7 @@ export const useUpdateProviderForEmailPass = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.auth.$actorType.$authProvider.update.mutate({
         $actorType: "user",
@@ -134,6 +135,5 @@ export const useUpdateProviderForEmailPass = (
     onSuccess: async (data, variables, context) => {
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }

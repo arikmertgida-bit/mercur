@@ -106,6 +106,7 @@ export const useCreateProductCategory = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) => sdk.vendor.productCategories.mutate(payload),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
@@ -114,7 +115,6 @@ export const useCreateProductCategory = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -130,6 +130,7 @@ export const useUpdateProductCategory = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.vendor.productCategories.$id.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -142,7 +143,6 @@ export const useUpdateProductCategory = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -155,6 +155,7 @@ export const useDeleteProductCategory = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () => sdk.vendor.productCategories.$id.delete({ $id: id }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
@@ -166,7 +167,6 @@ export const useDeleteProductCategory = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -186,6 +186,7 @@ type UseUpdateProductCategoryProducts = (
 export const useUpdateProductCategoryProducts: UseUpdateProductCategoryProducts =
   (id, options) => {
     return useMutation({
+      ...options,
       mutationFn: (payload) =>
         sdk.vendor.productCategories.$id.products.mutate({
           $id: id,
@@ -211,6 +212,5 @@ export const useUpdateProductCategoryProducts: UseUpdateProductCategoryProducts 
 
         options?.onSuccess?.(data, variables, context);
       },
-      ...options,
     });
   };

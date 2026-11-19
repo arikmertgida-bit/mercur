@@ -78,13 +78,13 @@ export const useCreateApiKey = (
   InferClientInput<typeof sdk.admin.apiKeys.mutate>
 > => {
   return useMutation({
+    ...options,
     mutationFn: (payload) => sdk.admin.apiKeys.mutate(payload),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: apiKeysQueryKeys.lists() });
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -97,6 +97,7 @@ export const useUpdateApiKey = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.apiKeys.$id.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -105,7 +106,6 @@ export const useUpdateApiKey = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -118,6 +118,7 @@ export const useRevokeApiKey = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () => sdk.admin.apiKeys.$id.revoke.mutate({ $id: id }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: apiKeysQueryKeys.lists() });
@@ -125,7 +126,6 @@ export const useRevokeApiKey = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -138,6 +138,7 @@ export const useDeleteApiKey = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () => sdk.admin.apiKeys.$id.delete({ $id: id }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: apiKeysQueryKeys.lists() });
@@ -145,7 +146,6 @@ export const useDeleteApiKey = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -158,6 +158,7 @@ export const useBatchRemoveSalesChannelsFromApiKey = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.apiKeys.$id.salesChannels.mutate({ $id: id, remove: payload }),
     onSuccess: (data, variables, context) => {
@@ -169,7 +170,6 @@ export const useBatchRemoveSalesChannelsFromApiKey = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -182,6 +182,7 @@ export const useBatchAddSalesChannelsToApiKey = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.apiKeys.$id.salesChannels.mutate({ $id: id, add: payload }),
     onSuccess: (data, variables, context) => {
@@ -193,6 +194,5 @@ export const useBatchAddSalesChannelsToApiKey = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };

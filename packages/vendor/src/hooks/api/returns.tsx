@@ -58,6 +58,7 @@ export const useMarkReturnSeen = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: async (id: string) => {
       const raw = await fetchQuery(`/vendor/returns/${id}/mark-seen`, {
         method: "POST",
@@ -70,7 +71,6 @@ export const useMarkReturnSeen = (
       });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -124,6 +124,7 @@ export const useInitiateReturn = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) => sdk.vendor.returns.mutate(payload),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
@@ -136,7 +137,6 @@ export const useInitiateReturn = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -149,6 +149,7 @@ export const useCancelReturn = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () => sdk.vendor.returns.$id.cancel.mutate({ $id: id }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
@@ -168,7 +169,6 @@ export const useCancelReturn = (
       });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -186,6 +186,7 @@ export const useConfirmReturnRequest = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.vendor.returns.$id.request.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -205,7 +206,6 @@ export const useConfirmReturnRequest = (
       });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -218,6 +218,7 @@ export const useCancelReturnRequest = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () => sdk.vendor.returns.$id.request.delete({ $id: id }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
@@ -239,7 +240,6 @@ export const useCancelReturnRequest = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -256,6 +256,7 @@ export const useAddReturnItem = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.vendor.returns.$id.requestItems.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -269,7 +270,6 @@ export const useAddReturnItem = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -290,6 +290,7 @@ export const useUpdateReturnItem = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: ({ actionId, ...payload }) => {
       return sdk.vendor.returns.$id.requestItems.$actionId.mutate({
         $id: id,
@@ -308,7 +309,6 @@ export const useUpdateReturnItem = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -324,6 +324,7 @@ export const useRemoveReturnItem = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (actionId: string) =>
       sdk.vendor.returns.$id.requestItems.$actionId.delete({ $id: id, $actionId: actionId }),
     onSuccess: (data, variables, context) => {
@@ -341,7 +342,6 @@ export const useRemoveReturnItem = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -355,6 +355,7 @@ export const useUpdateReturn = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) => {
       return sdk.vendor.returns.$id.mutate({ $id: id, ...payload });
     },
@@ -369,7 +370,6 @@ export const useUpdateReturn = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -386,6 +386,7 @@ export const useAddReturnShipping = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.vendor.returns.$id.shippingMethod.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -399,7 +400,6 @@ export const useAddReturnShipping = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -420,6 +420,7 @@ export const useUpdateReturnShipping = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: ({ actionId, ...payload }) =>
       sdk.vendor.returns.$id.shippingMethod.$actionId.mutate({
         $id: id,
@@ -437,7 +438,6 @@ export const useUpdateReturnShipping = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -453,6 +453,7 @@ export const useDeleteReturnShipping = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (actionId: string) =>
       sdk.vendor.returns.$id.shippingMethod.$actionId.delete({ $id: id, $actionId: actionId }),
     onSuccess: (data, variables, context) => {
@@ -470,7 +471,6 @@ export const useDeleteReturnShipping = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -491,6 +491,7 @@ export const useInitiateReceiveReturn = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.vendor.returns.$id.receive.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -504,7 +505,6 @@ export const useInitiateReceiveReturn = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -521,6 +521,7 @@ export const useAddReceiveItems = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.vendor.returns.$id.receiveItems.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -534,7 +535,6 @@ export const useAddReceiveItems = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -555,6 +555,7 @@ export const useUpdateReceiveItem = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: ({ actionId, ...payload }) => {
       return sdk.vendor.returns.$id.receiveItems.$actionId.mutate({
         $id: id,
@@ -573,7 +574,6 @@ export const useUpdateReceiveItem = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -589,6 +589,7 @@ export const useRemoveReceiveItems = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (actionId: string) => {
       return sdk.vendor.returns.$id.receiveItems.$actionId.delete({
         $id: id,
@@ -606,7 +607,6 @@ export const useRemoveReceiveItems = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -623,6 +623,7 @@ export const useAddDismissItems = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.vendor.returns.$id.dismissItems.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -636,7 +637,6 @@ export const useAddDismissItems = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -657,6 +657,7 @@ export const useUpdateDismissItem = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: ({ actionId, ...payload }) => {
       return sdk.vendor.returns.$id.dismissItems.$actionId.mutate({
         $id: id,
@@ -675,7 +676,6 @@ export const useUpdateDismissItem = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -691,6 +691,7 @@ export const useRemoveDismissItem = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (actionId: string) => {
       return sdk.vendor.returns.$id.dismissItems.$actionId.delete({
         $id: id,
@@ -708,7 +709,6 @@ export const useRemoveDismissItem = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -725,6 +725,7 @@ export const useConfirmReturnReceive = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.vendor.returns.$id.receive.confirm.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -744,7 +745,6 @@ export const useConfirmReturnReceive = (
       });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -757,6 +757,7 @@ export const useCancelReceiveReturn = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () => sdk.vendor.returns.$id.receive.delete({ $id: id }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
@@ -776,6 +777,5 @@ export const useCancelReceiveReturn = (
       });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };

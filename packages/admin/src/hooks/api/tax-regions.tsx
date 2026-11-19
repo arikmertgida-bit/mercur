@@ -71,12 +71,12 @@ export const useCreateTaxRegion = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) => sdk.admin.taxRegions.mutate(payload),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: taxRegionsQueryKeys.all })
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -92,6 +92,7 @@ export const useUpdateTaxRegion = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.taxRegions.$id.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -102,7 +103,6 @@ export const useUpdateTaxRegion = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -115,6 +115,7 @@ export const useDeleteTaxRegion = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () => sdk.admin.taxRegions.$id.delete({ $id: id }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: taxRegionsQueryKeys.lists() })
@@ -127,6 +128,5 @@ export const useDeleteTaxRegion = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }

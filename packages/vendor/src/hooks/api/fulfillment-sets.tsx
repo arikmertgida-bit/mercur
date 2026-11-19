@@ -29,6 +29,7 @@ export const useDeleteFulfillmentSet = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () => sdk.vendor.fulfillmentSets.$id.delete({ $id: id }),
     onSuccess: async (data, variables, context) => {
       await queryClient.invalidateQueries({
@@ -48,7 +49,6 @@ export const useDeleteFulfillmentSet = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -94,6 +94,7 @@ export const useCreateFulfillmentSetServiceZone = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.vendor.fulfillmentSets.$id.serviceZones.mutate({
         $id: fulfillmentSetId,
@@ -109,7 +110,6 @@ export const useCreateFulfillmentSetServiceZone = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -126,6 +126,7 @@ export const useUpdateFulfillmentSetServiceZone = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.vendor.fulfillmentSets.$id.serviceZones.$zoneId.mutate({
         $id: fulfillmentSetId,
@@ -142,7 +143,6 @@ export const useUpdateFulfillmentSetServiceZone = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -156,6 +156,7 @@ export const useDeleteFulfillmentServiceZone = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () =>
       sdk.vendor.fulfillmentSets.$id.serviceZones.$zoneId.delete({
         $id: fulfillmentSetId,
@@ -174,6 +175,5 @@ export const useDeleteFulfillmentServiceZone = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }

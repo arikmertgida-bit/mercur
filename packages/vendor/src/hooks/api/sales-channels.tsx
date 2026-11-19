@@ -71,6 +71,7 @@ export const useCreateSalesChannel = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) => sdk.vendor.salesChannels.mutate(payload),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
@@ -78,7 +79,6 @@ export const useCreateSalesChannel = (
       });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -91,6 +91,7 @@ export const useUpdateSalesChannel = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.vendor.salesChannels.$id.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -103,7 +104,6 @@ export const useUpdateSalesChannel = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -116,6 +116,7 @@ export const useDeleteSalesChannel = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () => sdk.vendor.salesChannels.$id.delete({ $id: id }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
@@ -132,7 +133,6 @@ export const useDeleteSalesChannel = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -144,6 +144,7 @@ export const useDeleteSalesChannelLazy = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (id: string) => sdk.vendor.salesChannels.$id.delete({ $id: id }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
@@ -160,7 +161,6 @@ export const useDeleteSalesChannelLazy = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -173,6 +173,7 @@ export const useSalesChannelRemoveProducts = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.vendor.salesChannels.$id.products.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -197,7 +198,6 @@ export const useSalesChannelRemoveProducts = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -210,6 +210,7 @@ export const useSalesChannelAddProducts = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.vendor.salesChannels.$id.products.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -234,6 +235,5 @@ export const useSalesChannelAddProducts = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };

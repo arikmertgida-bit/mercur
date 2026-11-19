@@ -74,6 +74,7 @@ export const useCreateShippingOptionType = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) => sdk.admin.shippingOptionTypes.mutate(payload),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
@@ -82,7 +83,6 @@ export const useCreateShippingOptionType = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -98,6 +98,7 @@ export const useUpdateShippingOptionType = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.shippingOptionTypes.$id.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -110,7 +111,6 @@ export const useUpdateShippingOptionType = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -123,6 +123,7 @@ export const useDeleteShippingOptionType = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () => sdk.admin.shippingOptionTypes.$id.delete({ $id: id }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
@@ -134,6 +135,5 @@ export const useDeleteShippingOptionType = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }

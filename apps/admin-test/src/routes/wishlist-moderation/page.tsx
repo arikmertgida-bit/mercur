@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { Container, Heading, Text, Table, usePrompt, toast } from "@medusajs/ui"
 import { Heart, Trash } from "@medusajs/icons"
-import { ActionMenu, NoRecords } from "@mercurjs/dashboard-shared"
+import { ActionMenu, NoRecords, RTL_TABLE_CLASSNAME } from "@mercurjs/dashboard-shared"
 
 import type { InferClientOutput } from "@mercurjs/client"
 
@@ -82,7 +82,7 @@ const WishlistModerationPage = () => {
       {!isLoading && wishlists.length === 0 ? (
         <NoRecords />
       ) : (
-        <Table>
+        <Table className={RTL_TABLE_CLASSNAME}>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>

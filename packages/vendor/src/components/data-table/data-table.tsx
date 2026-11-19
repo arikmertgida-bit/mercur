@@ -4,6 +4,7 @@ import {
   parseJsonQueryParam,
   usePermissionGate,
   usePermittedCommands,
+  RTL_TABLE_CLASSNAME,
   type PermissionedCommand,
 } from "@mercurjs/dashboard-shared"
 import {
@@ -393,7 +394,9 @@ export const DataTable = <TData,>({
     <UiDataTable
       instance={instance}
       className={
-        layout === "fill" ? "h-full [&_tr]:last-of-type:!border-b" : undefined
+        layout === "fill"
+          ? `h-full [&_tr]:last-of-type:!border-b ${RTL_TABLE_CLASSNAME}`
+          : RTL_TABLE_CLASSNAME
       }
     >
       {hasToolbarHeader ? (

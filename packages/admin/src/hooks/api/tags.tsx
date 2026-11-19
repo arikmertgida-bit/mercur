@@ -71,6 +71,7 @@ export const useCreateProductTag = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) => sdk.admin.productTags.mutate(payload),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
@@ -79,7 +80,6 @@ export const useCreateProductTag = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -95,6 +95,7 @@ export const useUpdateProductTag = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.productTags.$id.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -107,7 +108,6 @@ export const useUpdateProductTag = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -120,6 +120,7 @@ export const useDeleteProductTag = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () => sdk.admin.productTags.$id.delete({ $id: id }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
@@ -131,6 +132,5 @@ export const useDeleteProductTag = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }

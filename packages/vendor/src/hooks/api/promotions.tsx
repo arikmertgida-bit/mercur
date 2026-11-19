@@ -224,6 +224,7 @@ export const useDeletePromotion = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () => sdk.vendor.promotions.$id.delete({ $id: id }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: promotionsQueryKeys.lists() });
@@ -233,7 +234,6 @@ export const useDeletePromotion = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -258,13 +258,13 @@ export const useCreatePromotion = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) => sdk.vendor.promotions.mutate(payload),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: promotionsQueryKeys.lists() });
       queryClient.invalidateQueries({ queryKey: campaignsQueryKeys.lists() });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -277,6 +277,7 @@ export const useUpdatePromotion = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.vendor.promotions.$id.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -284,7 +285,6 @@ export const useUpdatePromotion = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -301,6 +301,7 @@ export const usePromotionAddRules = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) => {
       if (ruleType === "buy-rules") {
         return sdk.vendor.promotions.$id.buyRules.batch.mutate({
@@ -324,7 +325,6 @@ export const usePromotionAddRules = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -341,6 +341,7 @@ export const usePromotionRemoveRules = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) => {
       if (ruleType === "buy-rules") {
         return sdk.vendor.promotions.$id.buyRules.batch.mutate({
@@ -364,7 +365,6 @@ export const usePromotionRemoveRules = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -381,6 +381,7 @@ export const usePromotionUpdateRules = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) => {
       if (ruleType === "buy-rules") {
         return sdk.vendor.promotions.$id.buyRules.batch.mutate({
@@ -404,7 +405,6 @@ export const usePromotionUpdateRules = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -417,6 +417,7 @@ export const useRemovePromotionFromCampaign = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () =>
       fetchQuery(`/vendor/promotions/${promotionId}`, {
         method: "POST",
@@ -435,6 +436,5 @@ export const useRemovePromotionFromCampaign = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };

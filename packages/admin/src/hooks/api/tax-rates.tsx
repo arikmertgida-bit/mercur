@@ -73,6 +73,7 @@ export const useUpdateTaxRate = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.taxRates.$id.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -85,7 +86,6 @@ export const useUpdateTaxRate = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -97,6 +97,7 @@ export const useCreateTaxRate = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) => sdk.admin.taxRates.mutate(payload),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: taxRatesQueryKeys.lists() })
@@ -105,7 +106,6 @@ export const useCreateTaxRate = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -118,6 +118,7 @@ export const useDeleteTaxRate = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () => sdk.admin.taxRates.$id.delete({ $id: id }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: taxRatesQueryKeys.lists() })
@@ -129,6 +130,5 @@ export const useDeleteTaxRate = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }

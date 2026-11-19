@@ -72,6 +72,7 @@ export const useCreateReturnReason = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) => sdk.admin.returnReasons.mutate(payload),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
@@ -80,7 +81,6 @@ export const useCreateReturnReason = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -96,6 +96,7 @@ export const useUpdateReturnReason = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.returnReasons.$id.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -108,7 +109,6 @@ export const useUpdateReturnReason = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -121,6 +121,7 @@ export const useDeleteReturnReason = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () => sdk.admin.returnReasons.$id.delete({ $id: id }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
@@ -136,6 +137,5 @@ export const useDeleteReturnReason = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }

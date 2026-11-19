@@ -74,6 +74,7 @@ export const useUpdateCollection = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.collections.$id.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -84,7 +85,6 @@ export const useUpdateCollection = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -100,6 +100,7 @@ export const useUpdateCollectionProducts = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.collections.$id.products.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -116,7 +117,6 @@ export const useUpdateCollectionProducts = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -128,13 +128,13 @@ export const useCreateCollection = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) => sdk.admin.collections.mutate(payload),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: collectionsQueryKeys.lists() });
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -147,6 +147,7 @@ export const useDeleteCollection = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () => sdk.admin.collections.$id.delete({ $id: id }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: collectionsQueryKeys.lists() });
@@ -156,6 +157,5 @@ export const useDeleteCollection = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };

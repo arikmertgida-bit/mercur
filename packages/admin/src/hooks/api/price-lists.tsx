@@ -73,6 +73,7 @@ export const useCreatePriceList = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) => sdk.admin.priceLists.mutate(payload),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: priceListsQueryKeys.lists() })
@@ -81,7 +82,6 @@ export const useCreatePriceList = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -97,6 +97,7 @@ export const useUpdatePriceList = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.priceLists.$id.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -109,7 +110,6 @@ export const useUpdatePriceList = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -122,13 +122,13 @@ export const useDeletePriceList = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () => sdk.admin.priceLists.$id.delete({ $id: id }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: priceListsQueryKeys.lists() })
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -144,6 +144,7 @@ export const useBatchPriceListPrices = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.priceLists.$id.prices.batch.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -154,7 +155,6 @@ export const useBatchPriceListPrices = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -170,6 +170,7 @@ export const usePriceListLinkProducts = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.priceLists.$id.products.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -181,6 +182,5 @@ export const usePriceListLinkProducts = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }

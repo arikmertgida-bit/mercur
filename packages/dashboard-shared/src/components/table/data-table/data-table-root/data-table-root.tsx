@@ -1,6 +1,7 @@
 import type { Permission } from "@mercurjs/dashboard-sdk"
 import { isPermitted } from "../../../../permissions/permission-check"
 import { PermissionsContext } from "../../../../permissions/permissions-context"
+import { RTL_TABLE_CLASSNAME } from "../../../../lib/rtl-table"
 import { CommandBar, Table, clx } from "@medusajs/ui"
 import {
   Table as ReactTable,
@@ -150,7 +151,7 @@ export const DataTableRoot = <TData,>({
         })}
       >
         {!noResults ? (
-          <Table className="relative w-full">
+          <Table className={clx("relative w-full", RTL_TABLE_CLASSNAME)}>
             {!noHeader && (
               <Table.Header className="border-t-0">
                 {table.getHeaderGroups().map((headerGroup) => {

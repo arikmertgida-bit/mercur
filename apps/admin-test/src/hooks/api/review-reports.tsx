@@ -80,6 +80,7 @@ export const useResolveReviewReport = (
   const queryClient = useQueryClient();
 
   return useMutation({
+    ...options,
     mutationFn: (payload: ResolveReviewReportPayload) =>
       client.admin.reviewReports.$id.resolve.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -89,6 +90,5 @@ export const useResolveReviewReport = (
       });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };

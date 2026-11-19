@@ -75,12 +75,12 @@ export const useCreateClaim = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) => sdk.vendor.claims.mutate(payload),
     onSuccess: (data, variables, context) => {
       invalidateOrder(orderId);
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -93,13 +93,13 @@ export const useCancelClaimBegin = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () =>
       sdk.vendor.claims.$id.request.delete({ $id: claimId }),
     onSuccess: (data, variables, context) => {
       invalidateOrder(orderId);
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -112,13 +112,13 @@ export const useRequestClaim = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () =>
       sdk.vendor.claims.$id.request.mutate({ $id: claimId }),
     onSuccess: (data, variables, context) => {
       invalidateOrder(orderId);
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -132,13 +132,13 @@ export const useCancelClaim = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.vendor.claims.$id.cancel.mutate({ $id: claimId, ...payload }),
     onSuccess: (data, variables, context) => {
       invalidateOrder(orderId);
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -155,13 +155,13 @@ export const useAddClaimItems = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.vendor.claims.$id.claimItems.mutate({ $id: claimId, ...payload }),
     onSuccess: (data, variables, context) => {
       invalidateOrder(orderId);
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -182,6 +182,7 @@ export const useUpdateClaimItem = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: ({ $actionId, ...payload }) =>
       sdk.vendor.claims.$id.claimItems.$actionId.mutate({
         $id: claimId,
@@ -192,7 +193,6 @@ export const useUpdateClaimItem = (
       invalidateOrder(orderId);
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -208,6 +208,7 @@ export const useRemoveClaimItem = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (actionId: string) =>
       sdk.vendor.claims.$id.claimItems.$actionId.delete({
         $id: claimId,
@@ -217,7 +218,6 @@ export const useRemoveClaimItem = (
       invalidateOrder(orderId);
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -234,6 +234,7 @@ export const useAddClaimInboundItems = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.vendor.claims.$id.inbound.items.mutate({
         $id: claimId,
@@ -243,7 +244,6 @@ export const useAddClaimInboundItems = (
       invalidateOrder(orderId);
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -260,6 +260,7 @@ export const useAddClaimOutboundItems = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.vendor.claims.$id.outbound.items.mutate({
         $id: claimId,
@@ -269,7 +270,6 @@ export const useAddClaimOutboundItems = (
       invalidateOrder(orderId);
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -290,6 +290,7 @@ export const useUpdateClaimOutboundItem = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: ({ actionId, ...payload }) =>
       sdk.vendor.claims.$id.outbound.items.$actionId.mutate({
         $id: claimId,
@@ -300,7 +301,6 @@ export const useUpdateClaimOutboundItem = (
       invalidateOrder(orderId);
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -316,6 +316,7 @@ export const useRemoveClaimOutboundItem = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (actionId: string) =>
       sdk.vendor.claims.$id.outbound.items.$actionId.delete({
         $id: claimId,
@@ -325,7 +326,6 @@ export const useRemoveClaimOutboundItem = (
       invalidateOrder(orderId);
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -346,6 +346,7 @@ export const useAddClaimInboundShipping = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.vendor.claims.$id.inbound.shippingMethod.mutate({
         $id: claimId,
@@ -355,7 +356,6 @@ export const useAddClaimInboundShipping = (
       invalidateOrder(orderId);
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -376,6 +376,7 @@ export const useUpdateClaimInboundItem = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: ({ actionId, ...payload }) =>
       sdk.vendor.claims.$id.inbound.items.$actionId.mutate({
         $id: claimId,
@@ -386,7 +387,6 @@ export const useUpdateClaimInboundItem = (
       invalidateOrder(orderId);
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -402,6 +402,7 @@ export const useRemoveClaimInboundItem = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (actionId: string) =>
       sdk.vendor.claims.$id.inbound.items.$actionId.delete({
         $id: claimId,
@@ -412,7 +413,6 @@ export const useRemoveClaimInboundItem = (
       queryClient.invalidateQueries({ queryKey: returnsQueryKeys.details() });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -433,6 +433,7 @@ export const useUpdateClaimInboundShipping = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: ({ actionId, ...payload }) =>
       sdk.vendor.claims.$id.inbound.shippingMethod.$actionId.mutate({
         $id: claimId,
@@ -443,7 +444,6 @@ export const useUpdateClaimInboundShipping = (
       invalidateOrder(orderId);
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -459,6 +459,7 @@ export const useDeleteClaimInboundShipping = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (actionId: string) =>
       sdk.vendor.claims.$id.inbound.shippingMethod.$actionId.delete({
         $id: claimId,
@@ -468,7 +469,6 @@ export const useDeleteClaimInboundShipping = (
       invalidateOrder(orderId);
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -489,6 +489,7 @@ export const useUpdateClaimOutboundShipping = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: ({ actionId, ...payload }) =>
       sdk.vendor.claims.$id.outbound.shippingMethod.$actionId.mutate({
         $id: claimId,
@@ -499,7 +500,6 @@ export const useUpdateClaimOutboundShipping = (
       invalidateOrder(orderId);
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 

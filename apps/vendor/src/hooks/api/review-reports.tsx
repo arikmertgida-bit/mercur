@@ -50,6 +50,7 @@ export const useCreateReviewReport = (
   const queryClient = useQueryClient();
 
   return useMutation({
+    ...options,
     mutationFn: (
       payload: InferClientInput<typeof client.vendor.reviewReports.mutate>,
     ) => client.vendor.reviewReports.mutate(payload),
@@ -57,6 +58,5 @@ export const useCreateReviewReport = (
       queryClient.invalidateQueries({ queryKey: reviewReportsQueryKeys.lists() });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };

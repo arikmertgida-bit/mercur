@@ -71,13 +71,13 @@ export const useCreateProductType = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) => sdk.admin.productTypes.mutate(payload),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: productTypesQueryKeys.lists() })
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -93,6 +93,7 @@ export const useUpdateProductType = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.productTypes.$id.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -103,7 +104,6 @@ export const useUpdateProductType = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -116,6 +116,7 @@ export const useDeleteProductType = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () => sdk.admin.productTypes.$id.delete({ $id: id }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
@@ -125,6 +126,5 @@ export const useDeleteProductType = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }

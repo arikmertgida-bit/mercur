@@ -68,6 +68,7 @@ export const useCreateExchange = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload: HttpTypes.AdminCreateExchange) =>
       sdk.admin.exchanges.mutate(payload),
     onSuccess: (data, variables, context) => {
@@ -85,7 +86,6 @@ export const useCreateExchange = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -95,6 +95,7 @@ export const useCancelExchange = (
   options?: UseMutationOptions<HttpTypes.AdminExchangeResponse, ClientError>
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () => sdk.admin.exchanges.$id.cancel.mutate({ $id: id }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
@@ -114,7 +115,6 @@ export const useCancelExchange = (
       })
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -128,6 +128,7 @@ export const useAddExchangeInboundItems = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload: HttpTypes.AdminAddExchangeInboundItems) =>
       sdk.admin.exchanges.$id.inbound.items.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -136,7 +137,6 @@ export const useAddExchangeInboundItems = (
       })
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -150,6 +150,7 @@ export const useUpdateExchangeInboundItem = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: ({
       actionId,
       ...payload
@@ -166,7 +167,6 @@ export const useUpdateExchangeInboundItem = (
       })
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -180,6 +180,7 @@ export const useRemoveExchangeInboundItem = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (actionId: string) =>
       sdk.admin.exchanges.$id.inbound.items.$actionId.delete({
         $id: id,
@@ -200,7 +201,6 @@ export const useRemoveExchangeInboundItem = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -214,6 +214,7 @@ export const useAddExchangeInboundShipping = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload: HttpTypes.AdminExchangeAddInboundShipping) =>
       sdk.admin.exchanges.$id.inbound.shippingMethod.mutate({
         $id: id,
@@ -225,7 +226,6 @@ export const useAddExchangeInboundShipping = (
       })
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -239,6 +239,7 @@ export const useUpdateExchangeInboundShipping = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: ({
       actionId,
       ...payload
@@ -254,7 +255,6 @@ export const useUpdateExchangeInboundShipping = (
       })
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -268,6 +268,7 @@ export const useDeleteExchangeInboundShipping = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (actionId: string) =>
       sdk.admin.exchanges.$id.inbound.shippingMethod.$actionId.delete({
         $id: id,
@@ -280,7 +281,6 @@ export const useDeleteExchangeInboundShipping = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -294,6 +294,7 @@ export const useAddExchangeOutboundItems = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload: HttpTypes.AdminAddExchangeOutboundItems) =>
       sdk.admin.exchanges.$id.outbound.items.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -302,7 +303,6 @@ export const useAddExchangeOutboundItems = (
       })
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -316,6 +316,7 @@ export const useUpdateExchangeOutboundItems = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: ({
       actionId,
       ...payload
@@ -332,7 +333,6 @@ export const useUpdateExchangeOutboundItems = (
       })
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -346,6 +346,7 @@ export const useRemoveExchangeOutboundItem = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (actionId: string) =>
       sdk.admin.exchanges.$id.outbound.items.$actionId.delete({
         $id: id,
@@ -362,7 +363,6 @@ export const useRemoveExchangeOutboundItem = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -376,6 +376,7 @@ export const useAddExchangeOutboundShipping = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload: HttpTypes.AdminExchangeAddOutboundShipping) =>
       sdk.admin.exchanges.$id.outbound.shippingMethod.mutate({
         $id: id,
@@ -387,7 +388,6 @@ export const useAddExchangeOutboundShipping = (
       })
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -401,6 +401,7 @@ export const useUpdateExchangeOutboundShipping = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: ({
       actionId,
       ...payload
@@ -416,7 +417,6 @@ export const useUpdateExchangeOutboundShipping = (
       })
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -430,6 +430,7 @@ export const useDeleteExchangeOutboundShipping = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (actionId: string) =>
       sdk.admin.exchanges.$id.outbound.shippingMethod.$actionId.delete({
         $id: id,
@@ -441,7 +442,6 @@ export const useDeleteExchangeOutboundShipping = (
       })
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -455,6 +455,7 @@ export const useExchangeConfirmRequest = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload: HttpTypes.AdminRequestExchange) =>
       sdk.admin.exchanges.$id.request.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -476,7 +477,6 @@ export const useExchangeConfirmRequest = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -486,6 +486,7 @@ export const useCancelExchangeRequest = (
   options?: UseMutationOptions<HttpTypes.AdminExchangeResponse, ClientError>
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () => sdk.admin.exchanges.$id.request.delete({ $id: id }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
@@ -504,6 +505,5 @@ export const useCancelExchangeRequest = (
       })
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }

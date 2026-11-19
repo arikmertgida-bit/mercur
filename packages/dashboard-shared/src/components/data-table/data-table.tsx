@@ -1,6 +1,7 @@
 import type { Permission } from "@mercurjs/dashboard-sdk"
 import { JsonValueSchema } from "../../lib/json"
 import { parseJsonQueryParam } from "../../lib/query-filters"
+import { RTL_TABLE_CLASSNAME } from "../../lib/rtl-table"
 import { usePermissionGate } from "../../permissions/use-permission-gate"
 import {
   usePermittedCommands,
@@ -371,7 +372,9 @@ export const DataTable = <TData,>({
     <UiDataTable
       instance={instance}
       className={
-        layout === "fill" ? "h-full [&_tr]:last-of-type:!border-b" : undefined
+        layout === "fill"
+          ? `h-full [&_tr]:last-of-type:!border-b ${RTL_TABLE_CLASSNAME}`
+          : RTL_TABLE_CLASSNAME
       }
     >
       <UiDataTable.Toolbar

@@ -17,6 +17,7 @@ export const useCreateFulfillment = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) => sdk.admin.fulfillments.mutate(payload),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: fulfillmentsQueryKeys.lists() })
@@ -25,7 +26,6 @@ export const useCreateFulfillment = (
       })
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -38,6 +38,7 @@ export const useCancelFulfillment = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () =>
       sdk.admin.fulfillments.$id.cancel.mutate({ $id: id }),
     onSuccess: (data, variables, context) => {
@@ -47,7 +48,6 @@ export const useCancelFulfillment = (
       })
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -60,6 +60,7 @@ export const useCreateFulfillmentShipment = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload: HttpTypes.AdminCreateFulfillmentShipment) =>
       sdk.admin.fulfillments.$id.shipment.mutate({
         $id: fulfillmentId,
@@ -71,6 +72,5 @@ export const useCreateFulfillmentShipment = (
       })
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }

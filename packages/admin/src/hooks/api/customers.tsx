@@ -75,12 +75,12 @@ export const useCreateCustomer = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) => sdk.admin.customers.mutate(payload),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: customersQueryKeys.lists() })
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -96,6 +96,7 @@ export const useUpdateCustomer = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.customers.$id.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -104,7 +105,6 @@ export const useUpdateCustomer = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -117,6 +117,7 @@ export const useDeleteCustomer = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () => sdk.admin.customers.$id.delete({ $id: id }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: customersQueryKeys.lists() })
@@ -126,7 +127,6 @@ export const useDeleteCustomer = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -142,6 +142,7 @@ export const useBatchCustomerCustomerGroups = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.customers.$id.customerGroups.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -161,7 +162,6 @@ export const useBatchCustomerCustomerGroups = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -177,6 +177,7 @@ export const useCreateCustomerAddress = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.customers.$id.addresses.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -188,7 +189,6 @@ export const useCreateCustomerAddress = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -209,6 +209,7 @@ export const useUpdateCustomerAddress = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.customers.$id.addresses.$addressId.mutate({
         $id: id,
@@ -224,7 +225,6 @@ export const useUpdateCustomerAddress = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -239,6 +239,7 @@ export const useDeleteCustomerAddress = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (addressId: string) =>
       sdk.admin.customers.$id.addresses.$addressId.delete({
         $id: id,
@@ -253,7 +254,6 @@ export const useDeleteCustomerAddress = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 

@@ -5,7 +5,7 @@ import {
   getNotificationUnreadCount,
   markNotificationsRead,
 } from "../../../lib/messenger/client"
-import { getMessengerAuthToken, isTokenExpired } from "../../../lib/messenger/auth-token"
+import { useMessengerSession } from "../../../lib/messenger/use-messenger-session"
 import { kayiEventManager } from "../../../lib/messenger/KayiEventManager"
 import { FOLLOWER_NOTIFICATION_TYPE } from "../../../lib/messenger/types"
 import { logger } from "../../../lib/logger"
@@ -26,42 +26,50 @@ export function FollowersIcon(props: { className?: string }): React.JSX.Element 
   const [unreadCount, setUnreadCount] = React.useState<number>(0)
   const location = useLocation()
 
-  React.useEffect((): (() => void) => {
-    const unsubscribe = kayiEventManager.subscribeNotification(FOLLOWER_NOTIFICATION_TYPE, (): void => {
-      setUnreadCount((prev) => prev + 1)
-    })
+  const sessionSellerId = useMessengerSession()
+  const isFollowersRoute =
+    location.pathname === "/followers" || location.pathname.endsWith("/followers")
 
-    const token = getMessengerAuthToken()
-    if (token && !isTokenExpired(token)) {
-      getNotificationUnreadCount(FOLLOWER_NOTIFICATION_TYPE)
-        .then((r: { count: number }): void => {
+  React.useEffect(
+    (): (() => void) =>
+      kayiEventManager.subscribeNotification(FOLLOWER_NOTIFICATION_TYPE, (): void => {
+        setUnreadCount((prev) => prev + 1)
+      }),
+    [],
+  )
+
+  // Counts are read (and cleared on this page) only once the messenger token
+  // belongs to the active store, and again after every store switch.
+  React.useEffect((): (() => void) | undefined => {
+    if (!sessionSellerId) {
+      setUnreadCount(0)
+      return undefined
+    }
+    if (isFollowersRoute) {
+      setUnreadCount(0)
+      markNotificationsRead(FOLLOWER_NOTIFICATION_TYPE).catch((err): void => {
+        logger.error(
+          `Failed to mark follower notifications read: ${getCatchMessage(err instanceof Error ? err : undefined)}`,
+        )
+      })
+      return undefined
+    }
+    let cancelled = false
+    getNotificationUnreadCount(FOLLOWER_NOTIFICATION_TYPE)
+      .then((r: { count: number }): void => {
+        if (!cancelled) {
           setUnreadCount(r.count ?? 0)
-        })
-        .catch((err): void => {
-          logger.error(
-            `Failed to fetch initial follower notification count: ${getCatchMessage(err instanceof Error ? err : undefined)}`,
-          )
-        })
-    }
-
+        }
+      })
+      .catch((err): void => {
+        logger.error(
+          `Failed to fetch follower notification count: ${getCatchMessage(err instanceof Error ? err : undefined)}`,
+        )
+      })
     return (): void => {
-      unsubscribe()
+      cancelled = true
     }
-  }, [])
-
-  React.useEffect((): void => {
-    const isFollowersRoute =
-      location.pathname === "/followers" || location.pathname.endsWith("/followers")
-    if (!isFollowersRoute) {
-      return
-    }
-    setUnreadCount(0)
-    markNotificationsRead(FOLLOWER_NOTIFICATION_TYPE).catch((err): void => {
-      logger.error(
-        `Failed to mark follower notifications read: ${getCatchMessage(err instanceof Error ? err : undefined)}`,
-      )
-    })
-  }, [location.pathname])
+  }, [sessionSellerId, isFollowersRoute])
 
   const safeUnreadCount = unreadCount ?? 0
   const badgeLabel = formatSidebarUnreadCount(safeUnreadCount)

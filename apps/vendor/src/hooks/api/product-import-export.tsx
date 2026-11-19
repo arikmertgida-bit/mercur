@@ -63,12 +63,12 @@ export const useImportProducts = (
   const queryClient = useQueryClient()
 
   return useMutation({
+    ...options,
     mutationFn: uploadProductImportCsv,
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: productsQueryKeys.lists() })
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 

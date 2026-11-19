@@ -20,6 +20,7 @@ export const useCreatePaymentCollection = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) => sdk.admin.paymentCollections.mutate(payload),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
@@ -36,7 +37,6 @@ export const useCreatePaymentCollection = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -50,6 +50,7 @@ export const useMarkPaymentCollectionAsPaid = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.paymentCollections.$id.markAsPaid.mutate({
         $id: paymentCollectionId,
@@ -70,7 +71,6 @@ export const useMarkPaymentCollectionAsPaid = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -86,6 +86,7 @@ export const useDeletePaymentCollection = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (id: string) =>
       sdk.admin.paymentCollections.$id.delete({ $id: id }),
     onSuccess: (data, variables, context) => {
@@ -103,6 +104,5 @@ export const useDeletePaymentCollection = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }

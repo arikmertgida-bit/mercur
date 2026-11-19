@@ -71,6 +71,7 @@ export const useUpsertPricePreference = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) => {
       if (id) {
         return sdk.vendor.pricePreferences.$id.mutate({ $id: id, ...payload });
@@ -89,7 +90,6 @@ export const useUpsertPricePreference = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -102,6 +102,7 @@ export const useDeletePricePreference = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () => sdk.vendor.pricePreferences.$id.delete({ $id: id }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
@@ -110,6 +111,5 @@ export const useDeletePricePreference = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };

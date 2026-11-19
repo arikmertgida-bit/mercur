@@ -102,6 +102,7 @@ export const useCreateProductType = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) => sdk.vendor.productTypes.mutate(payload),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
@@ -110,7 +111,6 @@ export const useCreateProductType = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 

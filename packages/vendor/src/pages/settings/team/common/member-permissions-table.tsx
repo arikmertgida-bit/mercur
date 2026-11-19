@@ -1,5 +1,5 @@
 import { Checkbox, Table, Text } from "@medusajs/ui";
-import { formatNameList } from "@mercurjs/dashboard-shared";
+import { formatNameList, RTL_TABLE_CLASSNAME } from "@mercurjs/dashboard-shared";
 import type { MemberAreaPermissions, PermissionRight } from "@mercurjs/types";
 import { useTranslation } from "react-i18next";
 
@@ -31,11 +31,6 @@ type MemberPermissionsTableProps = {
   disabled?: boolean;
 };
 
-// Medusa's table row pads its first and last cell with physical left/right
-// padding; in a right-to-left language the last column would touch the edge.
-const RTL_EDGE_PADDING =
-  "rtl:[&_td:first-child]:pr-6 rtl:[&_th:first-child]:pr-6 rtl:[&_td:last-child]:pl-6 rtl:[&_th:last-child]:pl-6";
-
 export const MemberPermissionsTable = ({
   areas,
   value,
@@ -47,9 +42,9 @@ export const MemberPermissionsTable = ({
 
   return (
     <div className="shadow-elevation-card-rest bg-ui-bg-base overflow-x-auto rounded-lg">
-      <Table data-testid="member-permissions-table">
+      <Table className={RTL_TABLE_CLASSNAME} data-testid="member-permissions-table">
         <Table.Header>
-          <Table.Row className={RTL_EDGE_PADDING}>
+          <Table.Row>
             <Table.HeaderCell className="text-start">
               {t("users.permissions.area")}
             </Table.HeaderCell>
@@ -67,7 +62,6 @@ export const MemberPermissionsTable = ({
 
             return (
               <Table.Row
-                className={RTL_EDGE_PADDING}
                 key={area.id}
                 data-testid={`member-permissions-row-${area.id}`}
               >

@@ -72,12 +72,12 @@ export const useCreateCampaign = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) => sdk.admin.campaigns.mutate(payload),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: campaignsQueryKeys.lists() })
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -93,6 +93,7 @@ export const useUpdateCampaign = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.campaigns.$id.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -103,7 +104,6 @@ export const useUpdateCampaign = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -116,6 +116,7 @@ export const useDeleteCampaign = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () => sdk.admin.campaigns.$id.delete({ $id: id }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: campaignsQueryKeys.lists() })
@@ -123,7 +124,6 @@ export const useDeleteCampaign = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -139,6 +139,7 @@ export const useAddOrRemoveCampaignPromotions = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.campaigns.$id.promotions.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -147,6 +148,5 @@ export const useAddOrRemoveCampaignPromotions = (
       queryClient.invalidateQueries({ queryKey: promotionsQueryKeys.details() })
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }

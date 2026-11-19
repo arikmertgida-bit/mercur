@@ -96,6 +96,7 @@ export const useAcceptRequest = (
   const queryClient = useQueryClient();
 
   return useMutation({
+    ...options,
     mutationFn: async (payload: ReviewNotePayload) =>
       client.admin.requests.$type.$id.accept.mutate({
         $type: type,
@@ -107,7 +108,6 @@ export const useAcceptRequest = (
       queryClient.invalidateQueries({ queryKey: requestsQueryKeys.lists() });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -123,6 +123,7 @@ export const useRejectRequest = (
   const queryClient = useQueryClient();
 
   return useMutation({
+    ...options,
     mutationFn: async (payload: ReviewNotePayload) =>
       client.admin.requests.$type.$id.reject.mutate({
         $type: type,
@@ -134,6 +135,5 @@ export const useRejectRequest = (
       queryClient.invalidateQueries({ queryKey: requestsQueryKeys.lists() });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };

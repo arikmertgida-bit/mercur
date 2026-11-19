@@ -1,6 +1,7 @@
 import { Button, Drawer, Heading, Table, Tabs, Text } from "@medusajs/ui"
 import { useState } from "react"
 import { useTranslation } from "react-i18next"
+import { RTL_TABLE_CLASSNAME } from "@mercurjs/dashboard-shared"
 
 import { useDocumentDirection } from "@hooks/use-document-direction"
 
@@ -148,7 +149,7 @@ const SellerAgreementTabContent = ({ tabId }: { tabId: SellerAgreementTabId }) =
           {t("sellerAgreement.sections.commissionTable.description")}
         </Text>
         <div className="border-ui-border-base overflow-x-auto rounded-lg border">
-          <Table>
+          <Table className={RTL_TABLE_CLASSNAME}>
             <Table.Header>
               <Table.Row>
                 <Table.HeaderCell>

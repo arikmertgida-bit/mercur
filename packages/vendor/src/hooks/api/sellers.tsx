@@ -88,13 +88,13 @@ export const useSelectSeller = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) => sdk.vendor.sellers.select.mutate(payload),
     onSuccess: (data, variables, context) => {
       setSellerId(variables.seller_id);
       queryClient.invalidateQueries();
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -107,6 +107,7 @@ export const useUpdateSeller = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.vendor.sellers.$id.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -118,7 +119,6 @@ export const useUpdateSeller = (
       });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -131,6 +131,7 @@ export const useUpdateSellerAddress = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.vendor.sellers.$id.address.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -142,7 +143,6 @@ export const useUpdateSellerAddress = (
       });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -158,6 +158,7 @@ export const useUpdateSellerPaymentDetails = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.vendor.sellers.$id.paymentDetails.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -169,7 +170,6 @@ export const useUpdateSellerPaymentDetails = (
       });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -187,6 +187,7 @@ export const useUpdateSellerProfessionalDetails = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.vendor.sellers.$id.professionalDetails.mutate({
         $id: id,
@@ -201,7 +202,6 @@ export const useUpdateSellerProfessionalDetails = (
       });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -213,6 +213,7 @@ export const useDeleteSellerProfessionalDetails = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () =>
       sdk.vendor.sellers.$id.professionalDetails.delete({ $id: id }),
     onSuccess: (data, variables, context) => {
@@ -224,7 +225,6 @@ export const useDeleteSellerProfessionalDetails = (
       });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -236,6 +236,7 @@ export const useCreateSellerAccount = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) => sdk.vendor.sellers.mutate(payload),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
@@ -243,6 +244,5 @@ export const useCreateSellerAccount = (
       });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };

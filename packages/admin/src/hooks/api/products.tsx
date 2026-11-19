@@ -85,6 +85,7 @@ export const useCreateProduct = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) => sdk.admin.products.mutate(payload),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: productsQueryKeys.lists() });
@@ -93,7 +94,6 @@ export const useCreateProduct = (
       });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -106,6 +106,7 @@ export const useUpdateProduct = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.products.$id.mutate({ $id: id, ...payload }),
     onSuccess: async (data, variables, context) => {
@@ -118,7 +119,6 @@ export const useUpdateProduct = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -131,6 +131,7 @@ export const useLinkProductSellers = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.products.$id.sellers.mutate({ $id: id, ...payload }),
     onSuccess: async (data, variables, context) => {
@@ -143,7 +144,6 @@ export const useLinkProductSellers = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -156,6 +156,7 @@ export const useDeleteProduct = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () => sdk.admin.products.$id.delete({ $id: id }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: productsQueryKeys.lists() });
@@ -163,7 +164,6 @@ export const useDeleteProduct = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -175,12 +175,12 @@ export const useBatchProducts = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) => sdk.admin.products.batch.mutate(payload),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: productsQueryKeys.all });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -195,6 +195,7 @@ export const useConfirmProduct = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.products.$id.confirm.mutate({
         $id: id,
@@ -206,7 +207,6 @@ export const useConfirmProduct = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -219,6 +219,7 @@ export const useRejectProduct = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.products.$id.reject.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -227,7 +228,6 @@ export const useRejectProduct = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -240,6 +240,7 @@ export const useRequestProductChanges = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.products.$id.requestChanges.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -248,7 +249,6 @@ export const useRequestProductChanges = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -279,6 +279,7 @@ export const useConfirmProductChange = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.productChanges.$id.confirm.mutate({
         $id: productChangeId,
@@ -295,7 +296,6 @@ export const useConfirmProductChange = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -309,6 +309,7 @@ export const useCancelProductChange = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.productChanges.$id.cancel.mutate({
         $id: productChangeId,
@@ -325,7 +326,6 @@ export const useCancelProductChange = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -389,6 +389,7 @@ export const useCreateProductVariant = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.products.$id.variants.mutate({ $id: productId, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -398,7 +399,6 @@ export const useCreateProductVariant = (
       });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -415,6 +415,7 @@ export const useUpdateProductVariant = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.products.$id.variants.$variantId.mutate({
         $id: productId,
@@ -432,7 +433,6 @@ export const useUpdateProductVariant = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -446,6 +446,7 @@ export const useDeleteVariant = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () =>
       sdk.admin.products.$id.variants.$variantId.delete({
         $id: productId,
@@ -462,7 +463,6 @@ export const useDeleteVariant = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -477,6 +477,7 @@ export const useDeleteVariantLazy = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: ({ variantId }) =>
       sdk.admin.products.$id.variants.$variantId.delete({
         $id: productId,
@@ -493,7 +494,6 @@ export const useDeleteVariantLazy = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -529,6 +529,7 @@ export const useBatchProductAttributes = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.products.$id.attributes.batch.mutate({
         $id: productId,
@@ -543,7 +544,6 @@ export const useBatchProductAttributes = (
       });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -556,6 +556,7 @@ export const useRemoveAttributeFromProduct = (
   options?: UseMutationOptions<ProductAttributeBatchResponse, ClientError, void>,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () =>
       sdk.admin.products.$id.attributes.batch.mutate({
         $id: productId,
@@ -570,7 +571,6 @@ export const useRemoveAttributeFromProduct = (
       });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -585,6 +585,7 @@ export const useUpdateProductVariantsBatch = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.products.$id.variants.batch.mutate({
         $id: productId,
@@ -599,7 +600,6 @@ export const useUpdateProductVariantsBatch = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -619,6 +619,7 @@ export const useProductVariantsInventoryItemsBatch = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.products.$id.variants.inventoryItems.batch.mutate({
         $id: productId,
@@ -633,6 +634,5 @@ export const useProductVariantsInventoryItemsBatch = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };

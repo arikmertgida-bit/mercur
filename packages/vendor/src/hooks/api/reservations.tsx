@@ -75,6 +75,7 @@ export const useUpdateReservationItem = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.vendor.reservations.$id.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -92,7 +93,6 @@ export const useUpdateReservationItem = (
       });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -104,6 +104,7 @@ export const useCreateReservationItem = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) => sdk.vendor.reservations.mutate(payload),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
@@ -117,7 +118,6 @@ export const useCreateReservationItem = (
       });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -130,6 +130,7 @@ export const useDeleteReservationItem = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () => sdk.vendor.reservations.$id.delete({ $id: id }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
@@ -146,6 +147,5 @@ export const useDeleteReservationItem = (
       });
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };

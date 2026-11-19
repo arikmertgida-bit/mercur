@@ -2,7 +2,7 @@ import * as React from "react"
 import { useLocation } from "react-router-dom"
 import { ChatBubble } from "@medusajs/icons"
 import { getUnreadCount } from "../../../lib/messenger/client"
-import { getMessengerAuthToken, isTokenExpired } from "../../../lib/messenger/auth-token"
+import { useMessengerSession } from "../../../lib/messenger/use-messenger-session"
 import { kayiEventManager } from "../../../lib/messenger/KayiEventManager"
 import { logger } from "../../../lib/logger"
 import { getCatchMessage } from "../../../lib/errors"
@@ -22,28 +22,39 @@ export function MessagesIcon(props: { className?: string }): React.JSX.Element {
   const [unreadCount, setUnreadCount] = React.useState<number>(0)
   const location = useLocation()
 
-  React.useEffect((): (() => void) => {
-    const unsubscribe = kayiEventManager.subscribeUnreadCount((count: number): void => {
-      setUnreadCount(count)
-    })
+  const sessionSellerId = useMessengerSession()
 
-    const token = getMessengerAuthToken()
-    if (token && !isTokenExpired(token)) {
-      getUnreadCount()
-        .then((r: { count: number }): void => {
+  React.useEffect(
+    (): (() => void) =>
+      kayiEventManager.subscribeUnreadCount((count: number): void => {
+        setUnreadCount(count)
+      }),
+    [],
+  )
+
+  // Read only once the messenger token belongs to the active store, and
+  // again after every store switch.
+  React.useEffect((): (() => void) | undefined => {
+    if (!sessionSellerId) {
+      setUnreadCount(0)
+      return undefined
+    }
+    let cancelled = false
+    getUnreadCount()
+      .then((r: { count: number }): void => {
+        if (!cancelled) {
           setUnreadCount(r.count ?? 0)
-        })
-        .catch((err): void => {
-          logger.error(
-            `Failed to fetch initial unread count: ${getCatchMessage(err instanceof Error ? err : undefined)}`,
-          )
-        })
-    }
-
+        }
+      })
+      .catch((err): void => {
+        logger.error(
+          `Failed to fetch unread count: ${getCatchMessage(err instanceof Error ? err : undefined)}`,
+        )
+      })
     return (): void => {
-      unsubscribe()
+      cancelled = true
     }
-  }, [])
+  }, [sessionSellerId])
 
   React.useEffect((): void => {
     const isMessagesRoute =

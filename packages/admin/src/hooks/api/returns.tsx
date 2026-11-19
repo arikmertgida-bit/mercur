@@ -68,6 +68,7 @@ export const useInitiateReturn = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload: HttpTypes.AdminInitiateReturnRequest) =>
       sdk.admin.returns.mutate(payload),
     onSuccess: (data, variables, context) => {
@@ -84,7 +85,6 @@ export const useInitiateReturn = (
       })
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -94,6 +94,7 @@ export const useCancelReturn = (
   options?: UseMutationOptions<HttpTypes.AdminReturnResponse, ClientError>
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () => sdk.admin.returns.$id.cancel.mutate({ $id: id }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
@@ -113,7 +114,6 @@ export const useCancelReturn = (
       })
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -131,6 +131,7 @@ export const useConfirmReturnRequest = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload: HttpTypes.AdminConfirmReturnRequest) =>
       sdk.admin.returns.$id.request.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -150,7 +151,6 @@ export const useConfirmReturnRequest = (
       })
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -160,6 +160,7 @@ export const useCancelReturnRequest = (
   options?: UseMutationOptions<HttpTypes.AdminReturnResponse, ClientError>
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () => sdk.admin.returns.$id.request.delete({ $id: id }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
@@ -181,7 +182,6 @@ export const useCancelReturnRequest = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -195,6 +195,7 @@ export const useAddReturnItem = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload: HttpTypes.AdminAddReturnItems) =>
       sdk.admin.returns.$id.requestItems.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -208,7 +209,6 @@ export const useAddReturnItem = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -222,6 +222,7 @@ export const useUpdateReturnItem = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: ({
       actionId,
       ...payload
@@ -243,7 +244,6 @@ export const useUpdateReturnItem = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -257,6 +257,7 @@ export const useRemoveReturnItem = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (actionId: string) =>
       sdk.admin.returns.$id.requestItems.$actionId.delete({
         $id: id,
@@ -277,7 +278,6 @@ export const useRemoveReturnItem = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -291,6 +291,7 @@ export const useUpdateReturn = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload: HttpTypes.AdminUpdateReturnRequest) => {
       return sdk.admin.returns.$id.mutate({ $id: id, ...payload })
     },
@@ -305,7 +306,6 @@ export const useUpdateReturn = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -319,6 +319,7 @@ export const useAddReturnShipping = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload: HttpTypes.AdminAddReturnShipping) =>
       sdk.admin.returns.$id.shippingMethod.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -332,7 +333,6 @@ export const useAddReturnShipping = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -346,6 +346,7 @@ export const useUpdateReturnShipping = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: ({
       actionId,
       ...payload
@@ -366,7 +367,6 @@ export const useUpdateReturnShipping = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -380,6 +380,7 @@ export const useDeleteReturnShipping = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (actionId: string) =>
       sdk.admin.returns.$id.shippingMethod.$actionId.delete({
         $id: id,
@@ -400,7 +401,6 @@ export const useDeleteReturnShipping = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -418,6 +418,7 @@ export const useInitiateReceiveReturn = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload: HttpTypes.AdminInitiateReceiveReturn) =>
       sdk.admin.returns.$id.receive.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -431,7 +432,6 @@ export const useInitiateReceiveReturn = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -445,6 +445,7 @@ export const useAddReceiveItems = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload: HttpTypes.AdminReceiveItems) =>
       sdk.admin.returns.$id.receiveItems.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -458,7 +459,6 @@ export const useAddReceiveItems = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -472,6 +472,7 @@ export const useUpdateReceiveItem = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: ({
       actionId,
       ...payload
@@ -493,7 +494,6 @@ export const useUpdateReceiveItem = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -507,6 +507,7 @@ export const useRemoveReceiveItems = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (actionId: string) => {
       return sdk.admin.returns.$id.receiveItems.$actionId.delete({
         $id: id,
@@ -524,7 +525,6 @@ export const useRemoveReceiveItems = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -538,6 +538,7 @@ export const useAddDismissItems = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload: HttpTypes.AdminDismissItems) =>
       sdk.admin.returns.$id.dismissItems.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -551,7 +552,6 @@ export const useAddDismissItems = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -565,6 +565,7 @@ export const useUpdateDismissItem = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: ({
       actionId,
       ...payload
@@ -586,7 +587,6 @@ export const useUpdateDismissItem = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -600,6 +600,7 @@ export const useRemoveDismissItem = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (actionId: string) => {
       return sdk.admin.returns.$id.dismissItems.$actionId.delete({
         $id: id,
@@ -617,7 +618,6 @@ export const useRemoveDismissItem = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -631,6 +631,7 @@ export const useConfirmReturnReceive = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload: HttpTypes.AdminConfirmReceiveReturn) =>
       sdk.admin.returns.$id.receive.confirm.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -650,7 +651,6 @@ export const useConfirmReturnReceive = (
       })
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -660,6 +660,7 @@ export const useCancelReceiveReturn = (
   options?: UseMutationOptions<HttpTypes.AdminReturnResponse, ClientError>
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () => sdk.admin.returns.$id.receive.delete({ $id: id }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
@@ -679,6 +680,5 @@ export const useCancelReceiveReturn = (
       })
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }

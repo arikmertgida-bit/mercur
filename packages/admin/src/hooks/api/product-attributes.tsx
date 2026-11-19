@@ -95,6 +95,7 @@ export const useCreateProductAttribute = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.productAttributes.mutate(payload),
     onSuccess: (data, variables, context) => {
@@ -104,7 +105,6 @@ export const useCreateProductAttribute = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -117,6 +117,7 @@ export const useUpdateProductAttribute = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.productAttributes.$id.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -129,7 +130,6 @@ export const useUpdateProductAttribute = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -142,6 +142,7 @@ export const useDeleteProductAttribute = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () =>
       sdk.admin.productAttributes.$id.delete({ $id: id }),
     onSuccess: (data, variables, context) => {
@@ -154,7 +155,6 @@ export const useDeleteProductAttribute = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -167,6 +167,7 @@ export const useUpsertProductAttributeValues = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.productAttributes.$id.values.mutate({
         $id: attributeId,
@@ -182,7 +183,6 @@ export const useUpsertProductAttributeValues = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -196,6 +196,7 @@ export const useUpdateProductAttributeValue = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.productAttributes.$id.values.$valueId.mutate({
         $id: attributeId,
@@ -212,7 +213,6 @@ export const useUpdateProductAttributeValue = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -226,6 +226,7 @@ export const useDeleteProductAttributeValue = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () =>
       sdk.admin.productAttributes.$id.values.$valueId.delete({
         $id: attributeId,
@@ -241,6 +242,5 @@ export const useDeleteProductAttributeValue = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }

@@ -105,6 +105,7 @@ export const useUpdateCollection = (
   >,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.vendor.collections.$id.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -117,7 +118,6 @@ export const useUpdateCollection = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -145,6 +145,7 @@ export const useUpdateCollectionProducts: UseUpdateCollectionProducts = (
   options,
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.vendor.collections.$id.products.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -163,6 +164,5 @@ export const useUpdateCollectionProducts: UseUpdateCollectionProducts = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };

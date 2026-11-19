@@ -110,13 +110,13 @@ export const useCreateUser = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) => sdk.admin.users.mutate(payload),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: usersQueryKeys.lists() })
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -128,13 +128,13 @@ export const useUpdateMe = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) => sdk.admin.users.me.mutate(payload),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: usersQueryKeys.all })
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -150,6 +150,7 @@ export const useUpdateUser = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload) =>
       sdk.admin.users.$id.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -161,7 +162,6 @@ export const useUpdateUser = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }
 
@@ -174,6 +174,7 @@ export const useDeleteUser = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () => sdk.admin.users.$id.delete({ $id: id }),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: usersQueryKeys.detail(id) })
@@ -184,6 +185,5 @@ export const useDeleteUser = (
 
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }

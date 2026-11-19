@@ -90,6 +90,7 @@ export const useUpdateNotificationPreferences = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: saveNotificationPreferences,
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({
@@ -97,6 +98,5 @@ export const useUpdateNotificationPreferences = (
       })
       options?.onSuccess?.(data, variables, context)
     },
-    ...options,
   })
 }

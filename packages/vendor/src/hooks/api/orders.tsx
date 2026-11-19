@@ -58,6 +58,7 @@ export const useUpdateOrder = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload: HttpTypes.AdminUpdateOrder) =>
       sdk.vendor.orders.$id.mutate({ $id: id, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -71,7 +72,6 @@ export const useUpdateOrder = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -151,6 +151,7 @@ export const useCreateOrderFulfillment = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload: HttpTypes.AdminCreateOrderFulfillment) =>
       sdk.vendor.orders.$id.fulfillments.mutate({ $id: orderId, ...payload }),
     onSuccess: (data, variables, context) => {
@@ -172,7 +173,6 @@ export const useCreateOrderFulfillment = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -195,6 +195,7 @@ export const useCancelOrderFulfillment = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload: CancelOrderFulfillmentPayload) =>
       sdk.vendor.orders.$id.fulfillments.$fulfillmentId.cancel.mutate({
         $id: orderId,
@@ -220,7 +221,6 @@ export const useCancelOrderFulfillment = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -234,6 +234,7 @@ export const useCreateOrderShipment = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: (payload: HttpTypes.AdminCreateOrderShipment) =>
       sdk.vendor.orders.$id.fulfillments.$fulfillmentId.shipments.mutate({
         $id: orderId,
@@ -251,7 +252,6 @@ export const useCreateOrderShipment = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -261,6 +261,7 @@ export const useMarkOrderFulfillmentAsDelivered = (
   options?: UseMutationOptions<HttpTypes.AdminOrderResponse, ClientError, void>
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () =>
       sdk.vendor.orders.$id.fulfillments.$fulfillmentId.markAsDelivered.mutate({
         $id: orderId,
@@ -277,7 +278,6 @@ export const useMarkOrderFulfillmentAsDelivered = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -286,6 +286,7 @@ export const useCancelOrder = (
   options?: UseMutationOptions<HttpTypes.AdminOrderResponse, ClientError, void>
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () =>
       sdk.vendor.orders.$id.cancel.mutate({ $id: orderId }),
     onSuccess: (data, variables, context) => {
@@ -299,7 +300,6 @@ export const useCancelOrder = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
@@ -312,6 +312,7 @@ export const useCompleteOrder = (
   >
 ) => {
   return useMutation({
+    ...options,
     mutationFn: () =>
       fetchQuery(`/vendor/orders/${orderId}/complete`, {
         method: "POST",
@@ -331,7 +332,6 @@ export const useCompleteOrder = (
 
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 };
 
