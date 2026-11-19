@@ -3212,8 +3212,18 @@
         "followers": "المتابعون",
         "dashboard": "ملخص لوحة التحكم"
       },
+      "otherAreas": {
+        "team": "إدارة الفريق",
+        "store": "إعدادات المتجر",
+        "salesChannels": "قنوات البيع",
+        "regions": "المناطق",
+        "taxRegions": "المناطق الضريبية",
+        "refundReasons": "أسباب الاسترداد"
+      },
+      "administrationOnlyItem": "{{area}} (لدور الإدارة فقط)",
       "requiredBy": "مطلوب لـ: {{areas}}",
       "summaryItem": "{{area}}: {{right}}",
+      "requiredItem": "{{area}} – {{right}}",
       "edit": "تعديل الصلاحيات",
       "editDescription": "غيّر ما يمكن لـ {{email}} رؤيته وفعله. تسري التغييرات فورًا.",
       "editSuccess": "تم تحديث صلاحيات {{email}}.",
@@ -4214,7 +4224,8 @@
       "title": "تم رفض الوصول",
       "description": "ليس لديك صلاحية للوصول إلى هذه الصفحة.",
       "requiredPermission": "الصلاحية المطلوبة: {{permission}}",
-      "action": "ليس لديك صلاحية لتنفيذ هذا الإجراء."
+      "action": "ليس لديك صلاحية لتنفيذ هذا الإجراء.",
+      "grantHint": "يمكن لمالك المتجر أو أحد أعضاء الإدارة منح هذه الصلاحية."
     },
     "requiredPermissions": {
       "title": "الصلاحيات المطلوبة",

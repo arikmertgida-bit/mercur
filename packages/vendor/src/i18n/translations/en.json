@@ -3152,8 +3152,18 @@
         "followers": "Followers",
         "dashboard": "Dashboard summary"
       },
+      "otherAreas": {
+        "team": "Team management",
+        "store": "Store settings",
+        "salesChannels": "Sales channels",
+        "regions": "Regions",
+        "taxRegions": "Tax regions",
+        "refundReasons": "Refund reasons"
+      },
+      "administrationOnlyItem": "{{area}} (Administration role only)",
       "requiredBy": "Needed for: {{areas}}",
       "summaryItem": "{{area}}: {{right}}",
+      "requiredItem": "{{area}} – {{right}}",
       "edit": "Edit permissions",
       "editDescription": "Change what {{email}} can see and do. Changes apply at once.",
       "editSuccess": "Permissions of {{email}} were updated.",
@@ -4456,7 +4466,8 @@
       "title": "Access Denied",
       "description": "You don't have permission to access this page.",
       "requiredPermission": "Required permission: {{permission}}",
-      "action": "You don't have permission to perform this action."
+      "action": "You don't have permission to perform this action.",
+      "grantHint": "The store owner or an Administration member can grant this permission."
     },
     "requiredPermissions": {
       "title": "Required permissions",

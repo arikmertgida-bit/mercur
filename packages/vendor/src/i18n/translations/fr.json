@@ -3110,8 +3110,18 @@
         "followers": "Abonnés",
         "dashboard": "Résumé du tableau de bord"
       },
+      "otherAreas": {
+        "team": "Gestion de l'équipe",
+        "store": "Paramètres de la boutique",
+        "salesChannels": "Canaux de vente",
+        "regions": "Régions",
+        "taxRegions": "Régions fiscales",
+        "refundReasons": "Motifs de remboursement"
+      },
+      "administrationOnlyItem": "{{area}} (rôle Administration uniquement)",
       "requiredBy": "Nécessaire pour : {{areas}}",
       "summaryItem": "{{area}} : {{right}}",
+      "requiredItem": "{{area}} – {{right}}",
       "edit": "Modifier les autorisations",
       "editDescription": "Modifiez ce que {{email}} peut voir et faire. Les changements s'appliquent immédiatement.",
       "editSuccess": "Les autorisations de {{email}} ont été mises à jour.",
@@ -4064,7 +4074,8 @@
       "title": "Accès refusé",
       "description": "Vous n'avez pas l'autorisation d'accéder à cette page.",
       "requiredPermission": "Autorisation requise : {{permission}}",
-      "action": "Vous n'avez pas l'autorisation d'effectuer cette action."
+      "action": "Vous n'avez pas l'autorisation d'effectuer cette action.",
+      "grantHint": "Le propriétaire de la boutique ou un membre ayant le rôle Administration peut accorder cette autorisation."
     },
     "requiredPermissions": {
       "title": "Autorisations requises",

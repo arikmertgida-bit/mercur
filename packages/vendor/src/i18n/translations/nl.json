@@ -3076,8 +3076,18 @@
         "followers": "Volgers",
         "dashboard": "Dashboardoverzicht"
       },
+      "otherAreas": {
+        "team": "Teambeheer",
+        "store": "Winkelinstellingen",
+        "salesChannels": "Verkoopkanalen",
+        "regions": "Regio's",
+        "taxRegions": "Belastingregio's",
+        "refundReasons": "Terugbetalingsredenen"
+      },
+      "administrationOnlyItem": "{{area}} (alleen rol Beheer)",
       "requiredBy": "Nodig voor: {{areas}}",
       "summaryItem": "{{area}}: {{right}}",
+      "requiredItem": "{{area}} – {{right}}",
       "edit": "Rechten bewerken",
       "editDescription": "Wijzig wat {{email}} mag zien en doen. Wijzigingen gelden direct.",
       "editSuccess": "De rechten van {{email}} zijn bijgewerkt.",
@@ -4014,7 +4024,8 @@
       "title": "Toegang geweigerd",
       "description": "U hebt geen toestemming om deze pagina te openen.",
       "requiredPermission": "Vereiste toestemming: {{permission}}",
-      "action": "U hebt geen toestemming om deze actie uit te voeren."
+      "action": "U hebt geen toestemming om deze actie uit te voeren.",
+      "grantHint": "De winkeleigenaar of een lid met de rol Beheer kan deze toestemming geven."
     },
     "requiredPermissions": {
       "title": "Vereiste toestemmingen",

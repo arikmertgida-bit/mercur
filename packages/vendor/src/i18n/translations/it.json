@@ -3110,8 +3110,18 @@
         "followers": "Follower",
         "dashboard": "Riepilogo della dashboard"
       },
+      "otherAreas": {
+        "team": "Gestione del team",
+        "store": "Impostazioni del negozio",
+        "salesChannels": "Canali di vendita",
+        "regions": "Regioni",
+        "taxRegions": "Regioni fiscali",
+        "refundReasons": "Motivi del rimborso"
+      },
+      "administrationOnlyItem": "{{area}} (solo ruolo Amministrazione)",
       "requiredBy": "Necessario per: {{areas}}",
       "summaryItem": "{{area}}: {{right}}",
+      "requiredItem": "{{area}} – {{right}}",
       "edit": "Modifica autorizzazioni",
       "editDescription": "Cambia cosa {{email}} può vedere e fare. Le modifiche valgono subito.",
       "editSuccess": "Le autorizzazioni di {{email}} sono state aggiornate.",
@@ -4064,7 +4074,8 @@
       "title": "Accesso negato",
       "description": "Non hai il permesso di accedere a questa pagina.",
       "requiredPermission": "Permesso richiesto: {{permission}}",
-      "action": "Non hai il permesso di eseguire questa azione."
+      "action": "Non hai il permesso di eseguire questa azione.",
+      "grantHint": "Questo permesso può essere concesso dal proprietario del negozio o da un membro con il ruolo Amministrazione."
     },
     "requiredPermissions": {
       "title": "Permessi richiesti",

@@ -1489,6 +1489,34 @@ medusaIntegrationTestRunner({
           )
         })
 
+        it("never returns the invite token, which reaches the invitee by e-mail only", async () => {
+          const created = await api.post(
+            `/admin/sellers/${sellerA.id}/members/invite`,
+            { email: "tokenless@test.com", role_id: "role_test" },
+            adminHeaders
+          )
+          expect(created.data.member_invite.token).toBeUndefined()
+
+          for (const query of ["", "?fields=+token", "?fields=token,email"]) {
+            const list = await api.get(
+              `/admin/sellers/${sellerA.id}/members/invites${query}`,
+              adminHeaders
+            )
+            expect(list.data.member_invites.length).toBeGreaterThan(0)
+            for (const invite of list.data.member_invites) {
+              expect(invite.token).toBeUndefined()
+            }
+          }
+
+          const resent = await api.post(
+            `/admin/sellers/${sellerA.id}/members/invites/${created.data.member_invite.id}/resend`,
+            {},
+            adminHeaders
+          )
+          expect(resent.data.member_invite.email).toEqual("tokenless@test.com")
+          expect(resent.data.member_invite.token).toBeUndefined()
+        })
+
         it("should fail for invalid email format", async () => {
           const response = await api
             .post(

@@ -5,6 +5,7 @@ import {
 import { HttpTypes } from "@mercurjs/types"
 
 import { resendMemberInviteWorkflow } from "../../../../../../../../workflows/seller"
+import { toPublicMemberInvite } from "../../../../../../../utils"
 
 export const POST = async (
   req: AuthenticatedMedusaRequest,
@@ -20,6 +21,6 @@ export const POST = async (
   const invite = result[0]
 
   res.status(200).json({
-    member_invite: invite,
+    member_invite: toPublicMemberInvite(invite),
   })
 }

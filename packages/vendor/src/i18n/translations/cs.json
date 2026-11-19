@@ -3110,8 +3110,18 @@
         "followers": "Sledující",
         "dashboard": "Souhrn nástěnky"
       },
+      "otherAreas": {
+        "team": "Správa týmu",
+        "store": "Nastavení obchodu",
+        "salesChannels": "Prodejní kanály",
+        "regions": "Regiony",
+        "taxRegions": "Daňové regiony",
+        "refundReasons": "Důvody vrácení peněz"
+      },
+      "administrationOnlyItem": "{{area}} (pouze role Administrace)",
       "requiredBy": "Potřebné pro: {{areas}}",
       "summaryItem": "{{area}}: {{right}}",
+      "requiredItem": "{{area}} – {{right}}",
       "edit": "Upravit oprávnění",
       "editDescription": "Změňte, co {{email}} může vidět a dělat. Změny platí okamžitě.",
       "editSuccess": "Oprávnění pro {{email}} byla aktualizována.",
@@ -4064,7 +4074,8 @@
       "title": "Přístup odepřen",
       "description": "Nemáte oprávnění k přístupu na tuto stránku.",
       "requiredPermission": "Požadované oprávnění: {{permission}}",
-      "action": "Nemáte oprávnění provést tuto akci."
+      "action": "Nemáte oprávnění provést tuto akci.",
+      "grantHint": "Toto oprávnění může udělit vlastník obchodu nebo člen s rolí Administrace."
     },
     "requiredPermissions": {
       "title": "Požadovaná oprávnění",

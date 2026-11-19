@@ -1,5 +1,6 @@
 import { Avatar, Text } from "@medusajs/ui"
 import { Link } from "react-router-dom"
+import { useCan } from "@mercurjs/dashboard-shared"
 import { useMember } from "../../../hooks/api/members"
 
 type UserLinkProps = {
@@ -19,17 +20,29 @@ export const UserLink = ({
 }: UserLinkProps) => {
   const name = [first_name, last_name].filter(Boolean).join(" ")
   const fallback = name ? name.slice(0, 1) : email.slice(0, 1)
-  const link = type === "user" ? `/settings/users/${id}` : `/customers/${id}`
+  const isUser = type === "user"
+  const link = isUser ? `/settings/users/${id}` : `/customers/${id}`
+  const canOpen = useCan(isUser ? "members" : "customers")
+
+  const label = (
+    <>
+      <Avatar size="2xsmall" fallback={fallback.toUpperCase()} />
+      <Text size="small" leading="compact" weight="regular">
+        {name || email}
+      </Text>
+    </>
+  )
+
+  if (!canOpen) {
+    return <div className="flex items-center gap-x-2 w-fit">{label}</div>
+  }
 
   return (
     <Link
       to={link}
       className="flex items-center gap-x-2 w-fit transition-fg hover:text-ui-fg-subtle outline-none focus-visible:shadow-borders-focus rounded-md"
     >
-      <Avatar size="2xsmall" fallback={fallback.toUpperCase()} />
-      <Text size="small" leading="compact" weight="regular">
-        {name || email}
-      </Text>
+      {label}
     </Link>
   )
 }

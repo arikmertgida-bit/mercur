@@ -1,8 +1,9 @@
-import { useState } from "react"
+import { useState, type ReactNode } from "react"
 import { useTranslation } from "react-i18next"
 import { Link } from "react-router-dom"
 import { Photo } from "@medusajs/icons"
 import { Container, Heading, Text } from "@medusajs/ui"
+import { useCan } from "@mercurjs/dashboard-shared"
 import { VendorDashboardData } from "../../hooks/api/dashboard"
 
 const LOW_STOCK_CARD_GRID_CLASSES =
@@ -47,6 +48,16 @@ const LowStockThumbnail = ({ src, alt }: { src: string | null; alt: string }) =>
   )
 }
 
+const LowStockItemLink = ({
+  id,
+  enabled,
+  children,
+}: {
+  id: string
+  enabled: boolean
+  children: ReactNode
+}) => (enabled ? <Link to={`/inventory/${id}`}>{children}</Link> : <>{children}</>)
+
 export const LowStockSection = ({
   data,
   isLoading,
@@ -55,6 +66,7 @@ export const LowStockSection = ({
   isLoading: boolean
 }) => {
   const { t } = useTranslation()
+  const canViewInventory = useCan("inventory_items")
   const items = data?.low_stock ?? []
 
   return (
@@ -66,9 +78,11 @@ export const LowStockSection = ({
             {t("dashboard.lowStock.subtitle")}
           </Text>
         </div>
-        <Link to="/inventory" className="text-ui-fg-interactive txt-compact-small-plus">
-          {t("dashboard.lowStock.viewInventory")}
-        </Link>
+        {canViewInventory && (
+          <Link to="/inventory" className="text-ui-fg-interactive txt-compact-small-plus">
+            {t("dashboard.lowStock.viewInventory")}
+          </Link>
+        )}
       </div>
       {isLoading ? (
         <div className={LOW_STOCK_CARD_GRID_CLASSES}>
@@ -86,7 +100,11 @@ export const LowStockSection = ({
       ) : (
         <div className={LOW_STOCK_CARD_GRID_CLASSES}>
           {items.map((item) => (
-            <Link key={item.inventory_item_id} to={`/inventory/${item.inventory_item_id}`}>
+            <LowStockItemLink
+              key={item.inventory_item_id}
+              id={item.inventory_item_id}
+              enabled={canViewInventory}
+            >
               <Container className="hover:bg-ui-bg-base-hover transition-fg flex h-full flex-col gap-y-3 p-4">
                 <div className="flex items-start gap-x-3">
                   <LowStockThumbnail src={item.thumbnail} alt={item.product_title} />
@@ -117,7 +135,7 @@ export const LowStockSection = ({
                   </div>
                 </div>
               </Container>
-            </Link>
+            </LowStockItemLink>
           ))}
         </div>
       )}

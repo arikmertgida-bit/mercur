@@ -3,6 +3,7 @@ import { Container, Heading, Text } from "@medusajs/ui"
 import { useTranslation } from "react-i18next"
 
 import { ActionMenu } from "@components/common/action-menu"
+import { useCan } from "@mercurjs/dashboard-shared"
 import { TextSkeleton } from "@components/common/skeleton"
 import { useMultipleInventoryItemLevels } from "@hooks/api/inventory"
 import { LOW_STOCK_THRESHOLD } from "@pages/products/common/constants"
@@ -19,7 +20,15 @@ export type StockSummarySectionProps = {
  * records Envanter itself reads/writes — this is a shortcut into that data,
  * not a second stock system.
  */
-export const StockSummarySection = ({
+export const StockSummarySection = (props: StockSummarySectionProps) => {
+  // Stock levels are inventory data: without inventory access the section
+  // would only fetch into 403s.
+  const canViewInventory = useCan("inventory_items")
+
+  return canViewInventory ? <StockSummary {...props} /> : null
+}
+
+const StockSummary = ({
   inventoryItemIds,
   editTo,
 }: StockSummarySectionProps) => {
@@ -49,6 +58,7 @@ export const StockSummarySection = ({
                   label: t("actions.edit"),
                   to: editTo,
                   icon: <PencilSquare />,
+                  permission: "inventory_items:edit",
                 },
               ],
             },

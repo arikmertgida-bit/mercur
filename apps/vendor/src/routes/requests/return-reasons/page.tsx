@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import i18n from "i18next";
 import { keepPreviousData } from "@tanstack/react-query";
 import { Button, Container, Heading } from "@medusajs/ui";
+import { PermissionAction } from "@mercurjs/dashboard-shared";
 import type { RouteConfig } from "@mercurjs/dashboard-sdk";
 
 export const config: RouteConfig = {
@@ -56,9 +57,11 @@ const VendorReturnReasonRequestsPage = () => {
       <Container className="divide-y p-0">
         <div className="flex items-center justify-between px-6 py-4">
           <Heading>{t("requests.returnReasons.heading")}</Heading>
-          <Button size="small" variant="secondary" asChild>
-            <Link to="create">{t("actions.create")}</Link>
-          </Button>
+          <PermissionAction permission="return_reasons:edit">
+            <Button size="small" variant="secondary" asChild>
+              <Link to="create">{t("actions.create")}</Link>
+            </Button>
+          </PermissionAction>
         </div>
         <_DataTable
           columns={columns}

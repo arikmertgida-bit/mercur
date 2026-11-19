@@ -2,6 +2,7 @@ import { Children, ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { Button, Heading, Text } from "@medusajs/ui";
+import { PermissionAction } from "@mercurjs/dashboard-shared";
 
 export const PriceListListTitle = () => {
   const { t } = useTranslation();
@@ -18,9 +19,11 @@ export const PriceListListTitle = () => {
 export const PriceListListCreateButton = () => {
   const { t } = useTranslation();
   return (
-    <Button size="small" variant="secondary" asChild>
-      <Link to="create">{t("actions.create")}</Link>
-    </Button>
+    <PermissionAction permission="price_lists:edit">
+      <Button size="small" variant="secondary" asChild>
+        <Link to="create">{t("actions.create")}</Link>
+      </Button>
+    </PermissionAction>
   );
 };
 

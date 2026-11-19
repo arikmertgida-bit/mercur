@@ -1,5 +1,5 @@
 import { DeleteResponse, PaginatedResponse } from "@medusajs/types"
-import { MemberDTO, MemberInviteDTO, SellerDTO, SellerMemberDTO } from "../seller"
+import { MemberDTO, PublicMemberInviteDTO, SellerDTO, SellerMemberDTO } from "../seller"
 import { PermissionMap } from "../permissions"
 
 export interface VendorSellerResponse {
@@ -34,7 +34,7 @@ export type VendorMemberInviteListResponse = PaginatedResponse<{
   /**
    * The list of member invites.
    */
-  member_invites: MemberInviteDTO[]
+  member_invites: PublicMemberInviteDTO[]
 }>
 
 export type VendorSellerDeleteResponse = DeleteResponse<"seller">
@@ -70,9 +70,9 @@ export type AdminSellerMemberListResponse = PaginatedResponse<{
 }>
 
 export interface AdminMemberInviteResponse {
-  member_invite: MemberInviteDTO
+  member_invite: PublicMemberInviteDTO
 }
 
 export type AdminMemberInviteListResponse = PaginatedResponse<{
-  member_invites: MemberInviteDTO[]
+  member_invites: PublicMemberInviteDTO[]
 }>

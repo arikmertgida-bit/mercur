@@ -1,11 +1,15 @@
 import { ExclamationCircle } from "@medusajs/icons"
 import { Container, Heading, Text } from "@medusajs/ui"
-import { useMemo } from "react"
+import { useContext, useMemo } from "react"
 import { useTranslation } from "react-i18next"
 import { Navigate, Outlet, useMatches } from "react-router-dom"
 import type { Permission } from "@mercurjs/dashboard-sdk"
 import { z } from "zod"
 import { usePermissions } from "./use-permissions"
+import {
+  PermissionDescriptionContext,
+  formatRequiredPermissions,
+} from "./permission-description"
 
 type ResolvedRequirement = {
   permissions: Permission[]
@@ -122,7 +126,16 @@ const AccessDenied = ({
 }: {
   requirement: ResolvedRequirement
 }) => {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  const description = useContext(PermissionDescriptionContext)
+  const required = description
+    ? formatRequiredPermissions(
+        requirement.permissions,
+        description.describe,
+        i18n.language,
+        requirement.requireAll
+      )
+    : null
 
   return (
     <div className="bg-ui-bg-subtle absolute bottom-0 left-0 right-0 top-0 flex min-h-screen items-center justify-center p-4">
@@ -137,11 +150,20 @@ const AccessDenied = ({
               {t("permissions.accessDenied.description")}
             </Text>
           </div>
-          <Text size="small" className="text-ui-fg-muted">
-            {t("permissions.accessDenied.requiredPermission", {
-              permission: requirement.permissions.join(", "),
-            })}
-          </Text>
+          {required && (
+            <div className="flex flex-col gap-y-1">
+              <Text size="small" className="text-ui-fg-muted" data-testid="access-denied-required">
+                {t("permissions.accessDenied.requiredPermission", {
+                  permission: required,
+                })}
+              </Text>
+              {description?.grantHint && (
+                <Text size="small" className="text-ui-fg-muted">
+                  {description.grantHint}
+                </Text>
+              )}
+            </div>
+          )}
         </div>
       </Container>
     </div>

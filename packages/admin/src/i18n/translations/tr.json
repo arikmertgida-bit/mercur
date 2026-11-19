@@ -4262,10 +4262,7 @@
       },
       "invite": {
         "resendSuccess": "Davet {{email}} adresine başarıyla yeniden gönderildi",
-        "deleteSuccess": "{{email}} için davet silindi",
-        "linkCopied": "Davet bağlantısı panoya başarıyla kopyalandı.",
-        "copyFailed": "Davet bağlantısı kopyalanamadı",
-        "noVendorUrl": "Satıcı URL'si backend'de yapılandırılmamış (MERCUR_VENDOR_URL)"
+        "deleteSuccess": "{{email}} için davet silindi"
       }
     },
     "edit": {

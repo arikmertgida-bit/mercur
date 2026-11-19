@@ -1,7 +1,7 @@
 import { useCan } from "@mercurjs/dashboard-shared";
 import { useMemo } from "react";
 
-import { ArrowPath, Link as LinkIcon, Trash, User } from "@medusajs/icons";
+import { ArrowPath, Trash, User } from "@medusajs/icons";
 import { Badge, toast } from "@medusajs/ui";
 import { keepPreviousData } from "@tanstack/react-query";
 import { createColumnHelper } from "@tanstack/react-table";
@@ -48,7 +48,6 @@ type InviteRow = {
   id: string;
   email: string;
   role_id: string;
-  token: string;
   is_owner: boolean;
   created_at: Date;
   updated_at: Date;
@@ -58,28 +57,6 @@ type UserRow = MemberRow | InviteRow;
 
 type StoreMembersDataTableProps = {
   sellerId: string;
-};
-
-const trimTrailingSlashes = (value: string) => {
-  let end = value.length;
-
-  while (end > 0 && value.charCodeAt(end - 1) === 47) {
-    end -= 1;
-  }
-
-  return end === value.length ? value : value.slice(0, end);
-};
-
-const buildVendorInviteUrl = (token: string) => {
-  const vendorBase = trimTrailingSlashes(__VENDOR_URL__ || "/seller");
-  const url = new URL(
-    `${vendorBase}/invite`,
-    typeof window === "undefined" ? "http://localhost" : window.location.origin,
-  );
-
-  url.searchParams.set("token", token);
-
-  return url.toString();
 };
 
 export const StoreMembersDataTable = ({
@@ -137,7 +114,6 @@ export const StoreMembersDataTable = ({
       id: invite.id,
       email: invite.email,
       role_id: invite.role_id,
-      token: invite.token,
       is_owner: inviteIsFutureOwner,
       created_at: invite.created_at,
       updated_at: invite.updated_at,
@@ -296,26 +272,6 @@ const InviteActions = ({
     }
   };
 
-  const handleCopyLink = async () => {
-    try {
-      let token: string | null = invite.token;
-      if (!token) {
-        const response = await resend({ invite_id: invite.id });
-        token = response.member_invite?.token ?? null;
-      }
-
-      if (!token) {
-        toast.error(t("stores.members.invite.noVendorUrl"));
-        return;
-      }
-
-      await navigator.clipboard.writeText(buildVendorInviteUrl(token));
-      toast.success(t("stores.members.invite.linkCopied"));
-    } catch (e) {
-      toast.error((e instanceof Error ? e.message : String(e)));
-    }
-  };
-
   const handleDelete = async () => {
     try {
       await deleteInvite({ invite_id: invite.id });
@@ -335,11 +291,6 @@ const InviteActions = ({
           label: t("users.resendInvite"),
           onClick: handleResend,
           permission: "members.invites:edit" as const,
-        },
-        {
-          icon: <LinkIcon />,
-          label: t("users.copyInviteLink"),
-          onClick: handleCopyLink,
         },
       ],
     },

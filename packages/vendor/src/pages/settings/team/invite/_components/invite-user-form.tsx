@@ -31,7 +31,7 @@ import {
 import { useUserInviteTableQuery } from "@hooks/table/query";
 import { useDataTable } from "@hooks/use-data-table";
 import { useDate } from "@hooks/use-date";
-import type { MemberInviteDTO } from "@mercurjs/types";
+import type { PublicMemberInviteDTO } from "@mercurjs/types";
 
 import { MemberGrantCell } from "../../common/member-grant-cell";
 import {
@@ -41,7 +41,7 @@ import {
   memberRoleIdSchema,
   permissionsRequiredIssue,
 } from "../../common/member-permissions-fields";
-import { permissionsPayload } from "../../common/member-permissions";
+import { isolateLtr, permissionsPayload } from "../../common/member-permissions";
 
 const InviteUserSchema = zod
   .object({
@@ -92,7 +92,7 @@ export const InviteUserForm = () => {
     columns,
     count,
     enablePagination: true,
-    getRowId: (row: MemberInviteDTO) => row.id,
+    getRowId: (row: PublicMemberInviteDTO) => row.id,
     pageSize: PAGE_SIZE,
     prefix: PREFIX,
   });
@@ -111,7 +111,7 @@ export const InviteUserForm = () => {
         role_id: values.role_id,
         permissions: permissionsPayload(values.role_id, values.permissions, areas.data),
       });
-      toast.success(t("users.permissions.inviteSuccess", { email: values.email }));
+      toast.success(t("users.permissions.inviteSuccess", { email: isolateLtr(values.email) }));
       form.reset();
     } catch (error) {
       form.setError("root", {
@@ -216,7 +216,7 @@ export const InviteUserForm = () => {
   );
 };
 
-const columnHelper = createColumnHelper<MemberInviteDTO>();
+const columnHelper = createColumnHelper<PublicMemberInviteDTO>();
 
 const useColumns = () => {
   const { t } = useTranslation();

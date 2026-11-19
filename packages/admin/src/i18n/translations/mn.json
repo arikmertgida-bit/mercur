@@ -4262,10 +4262,7 @@
       },
       "invite": {
         "resendSuccess": "Урилга {{email}}-д амжилттай дахин илгээгдлээ",
-        "deleteSuccess": "{{email}}-н урилга устгагдлаа",
-        "linkCopied": "Урилгын холбоос амжилттай хуулагдлаа.",
-        "copyFailed": "Урилгын холбоосыг хуулж чадсангүй",
-        "noVendorUrl": "Худалдагчийн URL бэкэнд дээр тохируулагдаагүй байна (MERCUR_VENDOR_URL)"
+        "deleteSuccess": "{{email}}-н урилга устгагдлаа"
       }
     },
     "edit": {

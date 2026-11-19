@@ -3076,8 +3076,18 @@
         "followers": "追蹤者",
         "dashboard": "儀表板總覽"
       },
+      "otherAreas": {
+        "team": "團隊管理",
+        "store": "商店設定",
+        "salesChannels": "銷售管道",
+        "regions": "區域",
+        "taxRegions": "稅務區域",
+        "refundReasons": "退款原因"
+      },
+      "administrationOnlyItem": "{{area}}（僅限「行政管理」角色）",
       "requiredBy": "{{areas}} 需要此項",
       "summaryItem": "{{area}}：{{right}}",
+      "requiredItem": "{{area}} – {{right}}",
       "edit": "編輯權限",
       "editDescription": "變更 {{email}} 可以檢視和操作的內容。變更會立即生效。",
       "editSuccess": "已更新 {{email}} 的權限。",
@@ -4105,7 +4115,8 @@
       "title": "拒絕存取",
       "description": "您沒有存取此頁面的權限。",
       "requiredPermission": "所需權限：{{permission}}",
-      "action": "您沒有執行此操作的權限。"
+      "action": "您沒有執行此操作的權限。",
+      "grantHint": "商店擁有者或具有「行政管理」角色的成員可以授予此權限。"
     },
     "requiredPermissions": {
       "title": "所需權限",

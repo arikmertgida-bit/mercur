@@ -11763,15 +11763,6 @@
                 },
                 "deleteSuccess": {
                   "type": "string"
-                },
-                "linkCopied": {
-                  "type": "string"
-                },
-                "copyFailed": {
-                  "type": "string"
-                },
-                "noVendorUrl": {
-                  "type": "string"
                 }
               }
             }

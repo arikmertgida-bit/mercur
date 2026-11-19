@@ -3076,8 +3076,18 @@
         "followers": "关注者",
         "dashboard": "仪表板概览"
       },
+      "otherAreas": {
+        "team": "团队管理",
+        "store": "店铺设置",
+        "salesChannels": "销售渠道",
+        "regions": "地区",
+        "taxRegions": "税务区域",
+        "refundReasons": "退款原因"
+      },
+      "administrationOnlyItem": "{{area}}（仅限“管理”角色）",
       "requiredBy": "{{areas}} 需要此项",
       "summaryItem": "{{area}}：{{right}}",
+      "requiredItem": "{{area}} – {{right}}",
       "edit": "编辑权限",
       "editDescription": "更改 {{email}} 可以查看和操作的内容。更改立即生效。",
       "editSuccess": "已更新 {{email}} 的权限。",
@@ -4014,7 +4024,8 @@
       "title": "访问被拒绝",
       "description": "您无权访问此页面。",
       "requiredPermission": "所需权限：{{permission}}",
-      "action": "您无权执行此操作。"
+      "action": "您无权执行此操作。",
+      "grantHint": "店铺所有者或具有“管理”角色的成员可以授予此权限。"
     },
     "requiredPermissions": {
       "title": "所需权限",

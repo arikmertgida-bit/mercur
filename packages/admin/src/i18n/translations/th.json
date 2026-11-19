@@ -4262,10 +4262,7 @@
       },
       "invite": {
         "resendSuccess": "ส่งคำเชิญไปยัง {{email}} อีกครั้งสำเร็จแล้ว",
-        "deleteSuccess": "ลบคำเชิญสำหรับ {{email}} แล้ว",
-        "linkCopied": "คัดลอกลิงก์คำเชิญไปยังคลิปบอร์ดสำเร็จแล้ว",
-        "copyFailed": "คัดลอกลิงก์คำเชิญไม่สำเร็จ",
-        "noVendorUrl": "ยังไม่ได้ตั้งค่า URL ของแผงผู้ขายในแบ็กเอนด์ (MERCUR_VENDOR_URL)"
+        "deleteSuccess": "ลบคำเชิญสำหรับ {{email}} แล้ว"
       }
     },
     "edit": {

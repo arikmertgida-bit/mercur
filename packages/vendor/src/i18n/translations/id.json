@@ -3076,8 +3076,18 @@
         "followers": "Pengikut",
         "dashboard": "Ringkasan dasbor"
       },
+      "otherAreas": {
+        "team": "Manajemen tim",
+        "store": "Pengaturan toko",
+        "salesChannels": "Saluran penjualan",
+        "regions": "Wilayah",
+        "taxRegions": "Wilayah pajak",
+        "refundReasons": "Alasan pengembalian dana"
+      },
+      "administrationOnlyItem": "{{area}} (hanya peran Administrasi)",
       "requiredBy": "Diperlukan untuk: {{areas}}",
       "summaryItem": "{{area}}: {{right}}",
+      "requiredItem": "{{area}} – {{right}}",
       "edit": "Edit izin",
       "editDescription": "Ubah apa yang dapat dilihat dan dilakukan {{email}}. Perubahan langsung berlaku.",
       "editSuccess": "Izin {{email}} telah diperbarui.",
@@ -4014,7 +4024,8 @@
       "title": "Akses ditolak",
       "description": "Anda tidak memiliki izin untuk mengakses halaman ini.",
       "requiredPermission": "Izin yang diperlukan: {{permission}}",
-      "action": "Anda tidak memiliki izin untuk melakukan tindakan ini."
+      "action": "Anda tidak memiliki izin untuk melakukan tindakan ini.",
+      "grantHint": "Pemilik toko atau anggota dengan peran Administrasi dapat memberikan izin ini."
     },
     "requiredPermissions": {
       "title": "Izin yang diperlukan",

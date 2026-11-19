@@ -12,7 +12,7 @@ import {
   MemberPermissionsFields,
   MemberPermissionsSchema,
 } from "../../common/member-permissions-fields";
-import { effectiveGrant, permissionsPayload } from "../../common/member-permissions";
+import { effectiveGrant, isolateLtr, permissionsPayload } from "../../common/member-permissions";
 
 type EditMemberPermissionsFormProps = {
   sellerId: string;
@@ -45,7 +45,7 @@ export const EditMemberPermissionsForm = ({
         permissions: permissionsPayload(values.role_id, values.permissions, data),
       });
       toast.success(
-        t("users.permissions.editSuccess", { email: member.member?.email ?? "" }),
+        t("users.permissions.editSuccess", { email: isolateLtr(member.member?.email ?? "") }),
       );
       handleSuccess();
     } catch (error) {

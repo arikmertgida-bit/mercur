@@ -3081,8 +3081,18 @@
         "followers": "Takipçiler",
         "dashboard": "Ana sayfa özeti"
       },
+      "otherAreas": {
+        "team": "Ekip yönetimi",
+        "store": "Mağaza ayarları",
+        "salesChannels": "Satış kanalları",
+        "regions": "Bölgeler",
+        "taxRegions": "Vergi bölgeleri",
+        "refundReasons": "Para iadesi nedenleri"
+      },
+      "administrationOnlyItem": "{{area}} (yalnız Yönetim rolü)",
       "requiredBy": "Şunun için gerekli: {{areas}}",
       "summaryItem": "{{area}}: {{right}}",
+      "requiredItem": "{{area}} – {{right}}",
       "edit": "Yetkileri düzenle",
       "editDescription": "{{email}} kişisinin neleri görebileceğini ve yapabileceğini değiştirin. Değişiklik hemen geçerli olur.",
       "editSuccess": "{{email}} kişisinin yetkileri güncellendi.",
@@ -4019,7 +4029,8 @@
       "title": "Erişim Reddedildi",
       "description": "Bu sayfaya erişim yetkiniz yok.",
       "requiredPermission": "Gerekli yetki: {{permission}}",
-      "action": "Bu işlemi gerçekleştirme yetkiniz yok."
+      "action": "Bu işlemi gerçekleştirme yetkiniz yok.",
+      "grantHint": "Bu yetkiyi mağaza sahibi ya da Yönetici verebilir."
     },
     "requiredPermissions": {
       "title": "Gerekli yetkiler",

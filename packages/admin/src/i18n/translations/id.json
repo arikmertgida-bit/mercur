@@ -4262,10 +4262,7 @@
       },
       "invite": {
         "resendSuccess": "Undangan berhasil dikirim ulang ke {{email}}",
-        "deleteSuccess": "Undangan untuk {{email}} dihapus",
-        "linkCopied": "Tautan undangan berhasil disalin ke clipboard.",
-        "copyFailed": "Gagal menyalin tautan undangan",
-        "noVendorUrl": "URL panel penjual belum dikonfigurasi di backend (MERCUR_VENDOR_URL)"
+        "deleteSuccess": "Undangan untuk {{email}} dihapus"
       }
     },
     "edit": {

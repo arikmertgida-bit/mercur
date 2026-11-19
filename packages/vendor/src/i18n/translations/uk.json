@@ -3144,8 +3144,18 @@
         "followers": "Підписники",
         "dashboard": "Зведення панелі"
       },
+      "otherAreas": {
+        "team": "Керування командою",
+        "store": "Налаштування магазину",
+        "salesChannels": "Канали продажу",
+        "regions": "Регіони",
+        "taxRegions": "Податкові регіони",
+        "refundReasons": "Причини повернення коштів"
+      },
+      "administrationOnlyItem": "{{area}} (лише роль «Адміністрування»)",
       "requiredBy": "Потрібно для: {{areas}}",
       "summaryItem": "{{area}}: {{right}}",
+      "requiredItem": "{{area}} – {{right}}",
       "edit": "Змінити права",
       "editDescription": "Змініть, що {{email}} може бачити й робити. Зміни діють одразу.",
       "editSuccess": "Права {{email}} оновлено.",
@@ -4114,7 +4124,8 @@
       "title": "Доступ заборонено",
       "description": "У вас немає прав доступу до цієї сторінки.",
       "requiredPermission": "Потрібний дозвіл: {{permission}}",
-      "action": "У вас немає прав на виконання цієї дії."
+      "action": "У вас немає прав на виконання цієї дії.",
+      "grantHint": "Це право може надати власник магазину або учасник із роллю «Адміністрування»."
     },
     "requiredPermissions": {
       "title": "Потрібні дозволи",

@@ -3076,8 +3076,18 @@
         "followers": "팔로워",
         "dashboard": "대시보드 요약"
       },
+      "otherAreas": {
+        "team": "팀 관리",
+        "store": "스토어 설정",
+        "salesChannels": "판매 채널",
+        "regions": "지역",
+        "taxRegions": "세금 지역",
+        "refundReasons": "환불 사유"
+      },
+      "administrationOnlyItem": "{{area}} (관리 역할 전용)",
       "requiredBy": "{{areas}}에 필요",
       "summaryItem": "{{area}}: {{right}}",
+      "requiredItem": "{{area}} – {{right}}",
       "edit": "권한 편집",
       "editDescription": "{{email}}이(가) 보고 할 수 있는 항목을 변경합니다. 변경 사항은 즉시 적용됩니다.",
       "editSuccess": "{{email}}의 권한이 업데이트되었습니다.",
@@ -4014,7 +4024,8 @@
       "title": "접근 거부",
       "description": "이 페이지에 접근할 권한이 없습니다.",
       "requiredPermission": "필요한 권한: {{permission}}",
-      "action": "이 작업을 수행할 권한이 없습니다."
+      "action": "이 작업을 수행할 권한이 없습니다.",
+      "grantHint": "이 권한은 스토어 소유자 또는 관리 역할의 멤버가 부여할 수 있습니다."
     },
     "requiredPermissions": {
       "title": "필요한 권한",

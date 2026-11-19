@@ -2,6 +2,7 @@ import { Avatar, Copy, Text } from "@medusajs/ui"
 import { useTranslation } from "react-i18next"
 import { Link } from "react-router-dom"
 import { HttpTypes } from "@medusajs/types"
+import { useCan } from "@mercurjs/dashboard-shared"
 import { z } from "zod"
 import { getFormattedAddress, isSameAddress } from "../../../lib/addresses"
 
@@ -28,27 +29,40 @@ const ID = ({ data }: { data: HttpTypes.AdminOrder }) => {
   const name = getOrderCustomer(data)
   const email = data.email
   const avatarUrl = getCustomerAvatarUrl(data.customer)
+  const canViewCustomers = useCan("customers")
+
+  const customer = (
+    <div className="flex items-center gap-x-2 overflow-hidden">
+      <Avatar size="2xsmall" src={avatarUrl} fallback="" />
+      <Text
+        size="small"
+        leading="compact"
+        className={
+          canViewCustomers
+            ? "text-ui-fg-subtle hover:text-ui-fg-base transition-fg truncate"
+            : "text-ui-fg-subtle truncate"
+        }
+      >
+        {name || email}
+      </Text>
+    </div>
+  )
 
   return (
     <div className="text-ui-fg-subtle grid grid-cols-2 items-center px-6 py-4">
       <Text size="small" leading="compact" weight="plus">
         {t("fields.id")}
       </Text>
-      <Link
-        to={`/customers/${id}`}
-        className="focus:shadow-borders-focus rounded-[4px] outline-none transition-shadow"
-      >
-        <div className="flex items-center gap-x-2 overflow-hidden">
-          <Avatar size="2xsmall" src={avatarUrl} fallback="" />
-          <Text
-            size="small"
-            leading="compact"
-            className="text-ui-fg-subtle hover:text-ui-fg-base transition-fg truncate"
-          >
-            {name || email}
-          </Text>
-        </div>
-      </Link>
+      {canViewCustomers && id ? (
+        <Link
+          to={`/customers/${id}`}
+          className="focus:shadow-borders-focus rounded-[4px] outline-none transition-shadow"
+        >
+          {customer}
+        </Link>
+      ) : (
+        customer
+      )}
     </div>
   )
 }

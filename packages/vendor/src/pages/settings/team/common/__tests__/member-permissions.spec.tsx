@@ -14,7 +14,7 @@ import {
 import { permissionsPayload, templateFor } from "../member-permissions"
 
 vi.mock("react-i18next", () => ({
-  useTranslation: () => ({ t: (key: string): string => key }),
+  useTranslation: () => ({ t: (key: string): string => key, i18n: { language: "tr" } }),
 }))
 
 const DATA: MemberPermissionAreas = {

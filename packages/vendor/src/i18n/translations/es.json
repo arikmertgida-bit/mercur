@@ -3132,8 +3132,18 @@
         "followers": "Seguidores",
         "dashboard": "Resumen del panel"
       },
+      "otherAreas": {
+        "team": "Gestión del equipo",
+        "store": "Ajustes de la tienda",
+        "salesChannels": "Canales de venta",
+        "regions": "Regiones",
+        "taxRegions": "Regiones fiscales",
+        "refundReasons": "Motivos de reembolso"
+      },
+      "administrationOnlyItem": "{{area}} (solo rol Administración)",
       "requiredBy": "Necesario para: {{areas}}",
       "summaryItem": "{{area}}: {{right}}",
+      "requiredItem": "{{area}} – {{right}}",
       "edit": "Editar permisos",
       "editDescription": "Cambia lo que {{email}} puede ver y hacer. Los cambios se aplican al instante.",
       "editSuccess": "Se actualizaron los permisos de {{email}}.",
@@ -4125,7 +4135,8 @@
       "title": "Acceso denegado",
       "description": "No tienes permiso para acceder a esta página.",
       "requiredPermission": "Permiso necesario: {{permission}}",
-      "action": "No tienes permiso para realizar esta acción."
+      "action": "No tienes permiso para realizar esta acción.",
+      "grantHint": "El propietario de la tienda o un miembro con el rol Administración puede conceder este permiso."
     },
     "requiredPermissions": {
       "title": "Permisos necesarios",

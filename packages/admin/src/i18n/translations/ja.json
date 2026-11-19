@@ -4262,10 +4262,7 @@
       },
       "invite": {
         "resendSuccess": "{{email}} に招待を再送信しました",
-        "deleteSuccess": "{{email}} への招待を削除しました",
-        "linkCopied": "招待リンクをクリップボードにコピーしました。",
-        "copyFailed": "招待リンクのコピーに失敗しました",
-        "noVendorUrl": "バックエンドで販売者パネルのURLが設定されていません（MERCUR_VENDOR_URL）"
+        "deleteSuccess": "{{email}} への招待を削除しました"
       }
     },
     "edit": {

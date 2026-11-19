@@ -3110,8 +3110,18 @@
         "followers": "Sekėjai",
         "dashboard": "Skydelio suvestinė"
       },
+      "otherAreas": {
+        "team": "Komandos valdymas",
+        "store": "Parduotuvės nustatymai",
+        "salesChannels": "Pardavimo kanalai",
+        "regions": "Regionai",
+        "taxRegions": "Mokesčių regionai",
+        "refundReasons": "Pinigų grąžinimo priežastys"
+      },
+      "administrationOnlyItem": "{{area}} (tik Administravimo vaidmuo)",
       "requiredBy": "Reikia: {{areas}}",
       "summaryItem": "{{area}}: {{right}}",
+      "requiredItem": "{{area}} – {{right}}",
       "edit": "Redaguoti leidimus",
       "editDescription": "Pakeiskite, ką {{email}} gali matyti ir daryti. Pakeitimai įsigalioja iš karto.",
       "editSuccess": "{{email}} leidimai atnaujinti.",
@@ -4064,7 +4074,8 @@
       "title": "Prieiga uždrausta",
       "description": "Neturite teisės pasiekti šio puslapio.",
       "requiredPermission": "Reikalinga teisė: {{permission}}",
-      "action": "Neturite teisės atlikti šio veiksmo."
+      "action": "Neturite teisės atlikti šio veiksmo.",
+      "grantHint": "Šią teisę gali suteikti parduotuvės savininkas arba narys, turintis Administravimo vaidmenį."
     },
     "requiredPermissions": {
       "title": "Reikalingos teisės",

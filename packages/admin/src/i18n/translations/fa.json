@@ -4262,10 +4262,7 @@
       },
       "invite": {
         "resendSuccess": "دعوت‌نامه با موفقیت مجدداً به {{email}} ارسال شد",
-        "deleteSuccess": "دعوت‌نامه برای {{email}} حذف شد",
-        "linkCopied": "پیوند دعوت با موفقیت در کلیپ‌بورد کپی شد.",
-        "copyFailed": "کپی پیوند دعوت ناموفق بود",
-        "noVendorUrl": "آدرس URL فروشنده در بک‌اند پیکربندی نشده است (MERCUR_VENDOR_URL)"
+        "deleteSuccess": "دعوت‌نامه برای {{email}} حذف شد"
       }
     },
     "edit": {

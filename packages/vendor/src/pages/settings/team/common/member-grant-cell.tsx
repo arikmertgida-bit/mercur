@@ -1,4 +1,5 @@
 import { Badge, Tooltip } from "@medusajs/ui";
+import { formatNameList } from "@mercurjs/dashboard-shared";
 import type { MemberAreaPermissions } from "@mercurjs/types";
 import { useTranslation } from "react-i18next";
 
@@ -16,7 +17,7 @@ type MemberGrantCellProps = {
 
 /** Role label, plus a "Custom" badge listing the checked areas. */
 export const MemberGrantCell = ({ roleId, customPermissions, testId }: MemberGrantCellProps) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { data } = useMemberPermissionAreas();
   const labelKey = MEMBER_ROLE_LABEL_KEYS[roleId];
   const custom =
@@ -51,7 +52,7 @@ export const MemberGrantCell = ({ roleId, customPermissions, testId }: MemberGra
           <button
             type="button"
             className="focus-visible:shadow-borders-focus rounded-md outline-none"
-            aria-label={`${t("users.permissions.custom")}: ${summary.join(", ")}`}
+            aria-label={`${t("users.permissions.custom")}: ${formatNameList(summary, i18n.language)}`}
             data-testid={`${testId}-custom`}
           >
             <Badge size="2xsmall" color="blue">

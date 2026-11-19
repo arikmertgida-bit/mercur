@@ -124,11 +124,13 @@ export const PriceListProductSection = ({
                   label: t("priceLists.products.actions.addProducts"),
                   to: "products/add",
                   icon: <Plus />,
+                  permission: "price_lists:edit",
                 },
                 {
                   label: t("priceLists.products.actions.editPrices"),
                   to: "products/edit",
                   icon: <PencilSquare />,
+                  permission: "price_lists:edit",
                 },
               ],
             },
@@ -153,11 +155,13 @@ export const PriceListProductSection = ({
             action: handleEdit,
             label: t("actions.edit"),
             shortcut: "e",
+            permission: "price_lists:edit",
           },
           {
             action: handleDelete,
             label: t("actions.delete"),
             shortcut: "d",
+            permission: "price_lists:edit",
           },
         ]}
         pagination
@@ -227,6 +231,7 @@ const ProductRowAction = ({
               icon: <PencilSquare />,
               label: t("priceLists.products.actions.editPrices"),
               to: `products/edit?ids[]=${product.id}`,
+              permission: "price_lists:edit",
             },
           ],
         },
@@ -236,6 +241,7 @@ const ProductRowAction = ({
               icon: <Trash />,
               label: t("actions.remove"),
               onClick: handleDelete,
+              permission: "price_lists:edit",
             },
           ],
         },

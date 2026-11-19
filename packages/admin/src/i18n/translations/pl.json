@@ -4352,10 +4352,7 @@
       },
       "invite": {
         "resendSuccess": "Zaproszenie wysłane ponownie do {{email}}",
-        "deleteSuccess": "Zaproszenie dla {{email}} usunięte",
-        "linkCopied": "Link zaproszenia skopiowany do schowka",
-        "copyFailed": "Nie udało się skopiować linku zaproszenia",
-        "noVendorUrl": "URL sprzedawcy nie jest skonfigurowany w backendzie (MERCUR_VENDOR_URL)"
+        "deleteSuccess": "Zaproszenie dla {{email}} usunięte"
       }
     },
     "edit": {

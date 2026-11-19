@@ -178,6 +178,9 @@ export interface MemberInviteDTO {
   updated_at: Date
 }
 
+/** An invite as the API returns it: the token reaches the invitee by e-mail only. */
+export type PublicMemberInviteDTO = Omit<MemberInviteDTO, "token">
+
 export interface CreateMemberInviteDTO {
   email: string
   role_id: string

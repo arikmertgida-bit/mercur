@@ -4470,10 +4470,7 @@
       },
       "invite": {
         "resendSuccess": "تمت إعادة إرسال الدعوة إلى {{email}} بنجاح",
-        "deleteSuccess": "تم حذف دعوة {{email}}",
-        "linkCopied": "تم نسخ رابط الدعوة إلى الحافظة بنجاح.",
-        "copyFailed": "فشل نسخ رابط الدعوة",
-        "noVendorUrl": "لم يتم تكوين رابط URL الخاص بالبائع في الخلفية (MERCUR_VENDOR_URL)"
+        "deleteSuccess": "تم حذف دعوة {{email}}"
       }
     },
     "edit": {

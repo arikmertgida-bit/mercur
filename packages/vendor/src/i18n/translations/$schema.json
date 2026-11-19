@@ -8906,10 +8906,39 @@
                 }
               }
             },
+            "otherAreas": {
+              "type": "object",
+              "properties": {
+                "team": {
+                  "type": "string"
+                },
+                "store": {
+                  "type": "string"
+                },
+                "salesChannels": {
+                  "type": "string"
+                },
+                "regions": {
+                  "type": "string"
+                },
+                "taxRegions": {
+                  "type": "string"
+                },
+                "refundReasons": {
+                  "type": "string"
+                }
+              }
+            },
+            "administrationOnlyItem": {
+              "type": "string"
+            },
             "requiredBy": {
               "type": "string"
             },
             "summaryItem": {
+              "type": "string"
+            },
+            "requiredItem": {
               "type": "string"
             },
             "edit": {
@@ -12639,6 +12668,9 @@
               "type": "string"
             },
             "action": {
+              "type": "string"
+            },
+            "grantHint": {
               "type": "string"
             }
           }

@@ -31,6 +31,7 @@ export const StoreNotificationSettingsSection = () => {
                   label: t("actions.edit"),
                   icon: <PencilSquare />,
                   to: "notification-settings",
+                  permission: "store:edit",
                 },
               ],
             },

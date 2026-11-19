@@ -26,6 +26,9 @@ export const VENDOR_SELLER_PRIVATE_FIELD_SEGMENTS = [
   "members",
 ]
 
+/** The invite token is a credential: no route returns it, admin ones included. */
+export const MEMBER_INVITE_SECRET_FIELD_SEGMENTS = ["token"]
+
 export const restrictVendorFields =
   (disallowed: string[]) =>
   (req: MedusaRequest, _res: MedusaResponse, next: MedusaNextFunction) => {

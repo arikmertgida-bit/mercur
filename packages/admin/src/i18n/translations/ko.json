@@ -4262,10 +4262,7 @@
       },
       "invite": {
         "resendSuccess": "{{email}}로 초대장을 성공적으로 재전송했습니다",
-        "deleteSuccess": "{{email}}에 대한 초대가 삭제되었습니다",
-        "linkCopied": "초대 링크가 클립보드에 성공적으로 복사되었습니다.",
-        "copyFailed": "초대 링크 복사에 실패했습니다",
-        "noVendorUrl": "백엔드에 판매자 패널 URL이 설정되지 않았습니다 (MERCUR_VENDOR_URL)"
+        "deleteSuccess": "{{email}}에 대한 초대가 삭제되었습니다"
       }
     },
     "edit": {

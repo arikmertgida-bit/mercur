@@ -3076,8 +3076,18 @@
         "followers": "ผู้ติดตาม",
         "dashboard": "สรุปแดชบอร์ด"
       },
+      "otherAreas": {
+        "team": "การจัดการทีม",
+        "store": "การตั้งค่าร้านค้า",
+        "salesChannels": "ช่องทางการขาย",
+        "regions": "ภูมิภาค",
+        "taxRegions": "ภูมิภาคภาษี",
+        "refundReasons": "เหตุผลการคืนเงิน"
+      },
+      "administrationOnlyItem": "{{area}} (เฉพาะบทบาทการจัดการระบบ)",
       "requiredBy": "จำเป็นสำหรับ: {{areas}}",
       "summaryItem": "{{area}}: {{right}}",
+      "requiredItem": "{{area}} – {{right}}",
       "edit": "แก้ไขสิทธิ์",
       "editDescription": "เปลี่ยนสิ่งที่ {{email}} สามารถดูและทำได้ การเปลี่ยนแปลงมีผลทันที",
       "editSuccess": "อัปเดตสิทธิ์ของ {{email}} แล้ว",
@@ -4014,7 +4024,8 @@
       "title": "ไม่มีสิทธิ์เข้าถึง",
       "description": "คุณไม่มีสิทธิ์เข้าถึงหน้านี้",
       "requiredPermission": "สิทธิ์ที่ต้องมี: {{permission}}",
-      "action": "คุณไม่มีสิทธิ์ดำเนินการนี้"
+      "action": "คุณไม่มีสิทธิ์ดำเนินการนี้",
+      "grantHint": "เจ้าของร้านค้าหรือสมาชิกที่มีบทบาทการจัดการระบบสามารถให้สิทธิ์นี้ได้"
     },
     "requiredPermissions": {
       "title": "สิทธิ์ที่ต้องมี",

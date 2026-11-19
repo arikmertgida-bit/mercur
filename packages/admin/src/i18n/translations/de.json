@@ -4262,10 +4262,7 @@
       },
       "invite": {
         "resendSuccess": "Einladung wurde erfolgreich erneut an {{email}} gesendet",
-        "deleteSuccess": "Einladung für {{email}} gelöscht",
-        "linkCopied": "Einladungslink wurde erfolgreich in die Zwischenablage kopiert.",
-        "copyFailed": "Einladungslink konnte nicht kopiert werden",
-        "noVendorUrl": "Die Vendor-URL ist im Backend nicht konfiguriert (MERCUR_VENDOR_URL)"
+        "deleteSuccess": "Einladung für {{email}} gelöscht"
       }
     },
     "edit": {

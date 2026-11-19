@@ -10,6 +10,13 @@ import type { MemberPermissionArea, MemberPermissionAreas } from "@hooks/api";
 
 export const MEMBER_PERMISSION_COLUMNS: readonly PermissionRight[] = PERMISSION_RIGHTS;
 
+const LEFT_TO_RIGHT_ISOLATE = "\u2066";
+const POP_DIRECTIONAL_ISOLATE = "\u2069";
+
+/** Keeps an e-mail address left-to-right inside a right-to-left sentence. */
+export const isolateLtr = (value: string): string =>
+  `${LEFT_TO_RIGHT_ISOLATE}${value}${POP_DIRECTIONAL_ISOLATE}`;
+
 const atLeast = (
   granted: PermissionRight | undefined,
   required: PermissionRight,

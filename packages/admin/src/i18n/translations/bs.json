@@ -4314,10 +4314,7 @@
       },
       "invite": {
         "resendSuccess": "Pozivnica je uspješno ponovo poslana na {{email}}",
-        "deleteSuccess": "Pozivnica za {{email}} je obrisana",
-        "linkCopied": "Link za pozivnicu je uspješno kopiran u međuspremnik.",
-        "copyFailed": "Kopiranje linka za pozivnicu nije uspjelo",
-        "noVendorUrl": "URL panela za prodavače nije konfigurisan na backendu (MERCUR_VENDOR_URL)"
+        "deleteSuccess": "Pozivnica za {{email}} je obrisana"
       }
     },
     "edit": {

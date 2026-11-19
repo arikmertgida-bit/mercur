@@ -74,7 +74,7 @@ export const adminMemberInvitesQueryConfig = {
       "email",
       "accepted",
       "role_id",
-      "token",
+      "custom_permissions",
       "expires_at",
       "created_at",
       "updated_at",

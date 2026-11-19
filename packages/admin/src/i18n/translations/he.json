@@ -4314,10 +4314,7 @@
       },
       "invite": {
         "resendSuccess": "ההזמנה נשלחה מחדש בהצלחה אל {{email}}",
-        "deleteSuccess": "ההזמנה עבור {{email}} נמחקה",
-        "linkCopied": "קישור ההזמנה הועתק בהצלחה ללוח.",
-        "copyFailed": "העתקת קישור ההזמנה נכשלה",
-        "noVendorUrl": "כתובת ה-URL של לוח המוכרים אינה מוגדרת בשרת (MERCUR_VENDOR_URL)"
+        "deleteSuccess": "ההזמנה עבור {{email}} נמחקה"
       }
     },
     "edit": {

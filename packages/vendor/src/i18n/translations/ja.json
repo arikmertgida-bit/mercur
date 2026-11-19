@@ -3076,8 +3076,18 @@
         "followers": "フォロワー",
         "dashboard": "ダッシュボード概要"
       },
+      "otherAreas": {
+        "team": "チーム管理",
+        "store": "ストア設定",
+        "salesChannels": "販売チャネル",
+        "regions": "地域",
+        "taxRegions": "税地域",
+        "refundReasons": "返金理由"
+      },
+      "administrationOnlyItem": "{{area}}（「管理」ロールのみ）",
       "requiredBy": "{{areas}} に必要です",
       "summaryItem": "{{area}}：{{right}}",
+      "requiredItem": "{{area}} – {{right}}",
       "edit": "権限を編集",
       "editDescription": "{{email}} が閲覧・操作できる内容を変更します。変更はすぐに反映されます。",
       "editSuccess": "{{email}} の権限を更新しました。",
@@ -4014,7 +4024,8 @@
       "title": "アクセスが拒否されました",
       "description": "このページにアクセスする権限がありません。",
       "requiredPermission": "必要な権限：{{permission}}",
-      "action": "この操作を実行する権限がありません。"
+      "action": "この操作を実行する権限がありません。",
+      "grantHint": "この権限は、ストアのオーナーまたは「管理」ロールのメンバーが付与できます。"
     },
     "requiredPermissions": {
       "title": "必要な権限",

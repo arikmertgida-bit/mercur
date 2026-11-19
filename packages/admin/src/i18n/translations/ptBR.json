@@ -4314,10 +4314,7 @@
       },
       "invite": {
         "resendSuccess": "O convite foi reenviado com sucesso para {{email}}",
-        "deleteSuccess": "Convite para {{email}} excluído",
-        "linkCopied": "O link do convite foi copiado para a área de transferência com sucesso.",
-        "copyFailed": "Falha ao copiar o link do convite",
-        "noVendorUrl": "A URL do vendedor não está configurada no backend (MERCUR_VENDOR_URL)"
+        "deleteSuccess": "Convite para {{email}} excluído"
       }
     },
     "edit": {

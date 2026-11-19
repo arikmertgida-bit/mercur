@@ -4262,10 +4262,7 @@
       },
       "invite": {
         "resendSuccess": "A meghívó sikeresen újraküldve ide: {{email}}",
-        "deleteSuccess": "A(z) {{email}} meghívója törölve",
-        "linkCopied": "A meghívólink sikeresen a vágólapra másolva.",
-        "copyFailed": "Nem sikerült másolni a meghívólinket",
-        "noVendorUrl": "Az eladói URL nincs beállítva a háttérrendszeren (MERCUR_VENDOR_URL)"
+        "deleteSuccess": "A(z) {{email}} meghívója törölve"
       }
     },
     "edit": {

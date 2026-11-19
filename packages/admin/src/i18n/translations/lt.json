@@ -4314,10 +4314,7 @@
       },
       "invite": {
         "resendSuccess": "Kvietimas sėkmingai išsiųstas iš naujo {{email}}",
-        "deleteSuccess": "Kvietimas {{email}} ištrintas",
-        "linkCopied": "Kvietimo nuoroda sėkmingai nukopijuota į iškarpinę.",
-        "copyFailed": "Nepavyko nukopijuoti kvietimo nuorodos",
-        "noVendorUrl": "Serverio pusėje nesukonfigūruotas pardavėjo URL (MERCUR_VENDOR_URL)"
+        "deleteSuccess": "Kvietimas {{email}} ištrintas"
       }
     },
     "edit": {

@@ -3076,8 +3076,18 @@
         "followers": "Follower",
         "dashboard": "Dashboard-Übersicht"
       },
+      "otherAreas": {
+        "team": "Teamverwaltung",
+        "store": "Shop-Einstellungen",
+        "salesChannels": "Vertriebskanäle",
+        "regions": "Regionen",
+        "taxRegions": "Steuerregionen",
+        "refundReasons": "Erstattungsgründe"
+      },
+      "administrationOnlyItem": "{{area}} (nur Rolle Verwaltung)",
       "requiredBy": "Erforderlich für: {{areas}}",
       "summaryItem": "{{area}}: {{right}}",
+      "requiredItem": "{{area}} – {{right}}",
       "edit": "Berechtigungen bearbeiten",
       "editDescription": "Ändern Sie, was {{email}} sehen und tun darf. Änderungen gelten sofort.",
       "editSuccess": "Die Berechtigungen von {{email}} wurden aktualisiert.",
@@ -4014,7 +4024,8 @@
       "title": "Zugriff verweigert",
       "description": "Sie haben keine Berechtigung, auf diese Seite zuzugreifen.",
       "requiredPermission": "Erforderliche Berechtigung: {{permission}}",
-      "action": "Sie haben keine Berechtigung, diesen Vorgang auszuführen."
+      "action": "Sie haben keine Berechtigung, diesen Vorgang auszuführen.",
+      "grantHint": "Diese Berechtigung kann der Shop-Inhaber oder ein Mitglied mit der Rolle Verwaltung erteilen."
     },
     "requiredPermissions": {
       "title": "Erforderliche Berechtigungen",

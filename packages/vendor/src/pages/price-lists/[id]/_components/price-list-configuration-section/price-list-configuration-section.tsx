@@ -33,6 +33,7 @@ export const PriceListConfigurationSection = ({
                   label: t("actions.edit"),
                   to: "configuration",
                   icon: <PencilSquare />,
+                  permission: "price_lists:edit",
                 },
               ],
             },

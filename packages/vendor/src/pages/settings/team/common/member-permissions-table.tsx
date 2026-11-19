@@ -1,4 +1,5 @@
 import { Checkbox, Table, Text } from "@medusajs/ui";
+import { formatNameList } from "@mercurjs/dashboard-shared";
 import type { MemberAreaPermissions, PermissionRight } from "@mercurjs/types";
 import { useTranslation } from "react-i18next";
 
@@ -30,25 +31,30 @@ type MemberPermissionsTableProps = {
   disabled?: boolean;
 };
 
+// Medusa's table row pads its first and last cell with physical left/right
+// padding; in a right-to-left language the last column would touch the edge.
+const RTL_EDGE_PADDING =
+  "rtl:[&_td:first-child]:pr-6 rtl:[&_th:first-child]:pr-6 rtl:[&_td:last-child]:pl-6 rtl:[&_th:last-child]:pl-6";
+
 export const MemberPermissionsTable = ({
   areas,
   value,
   onChange,
   disabled = false,
 }: MemberPermissionsTableProps) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const required = requiredRights(value, areas);
 
   return (
     <div className="shadow-elevation-card-rest bg-ui-bg-base overflow-x-auto rounded-lg">
       <Table data-testid="member-permissions-table">
         <Table.Header>
-          <Table.Row>
+          <Table.Row className={RTL_EDGE_PADDING}>
             <Table.HeaderCell className="text-start">
               {t("users.permissions.area")}
             </Table.HeaderCell>
             {MEMBER_PERMISSION_COLUMNS.map((column) => (
-              <Table.HeaderCell key={column} className="w-28 text-center">
+              <Table.HeaderCell key={column} className="w-px whitespace-nowrap text-center">
                 {t(MEMBER_RIGHT_LABEL_KEYS[column])}
               </Table.HeaderCell>
             ))}
@@ -61,6 +67,7 @@ export const MemberPermissionsTable = ({
 
             return (
               <Table.Row
+                className={RTL_EDGE_PADDING}
                 key={area.id}
                 data-testid={`member-permissions-row-${area.id}`}
               >
@@ -75,9 +82,11 @@ export const MemberPermissionsTable = ({
                       data-testid={`member-permissions-row-${area.id}-required`}
                     >
                       {t("users.permissions.requiredBy", {
-                        areas: requiredBy
-                          .map((id) => t(memberAreaLabelKey(id)))
-                          .join(", "),
+                        areas: formatNameList(
+                          requiredBy.map((id) => t(memberAreaLabelKey(id))),
+                          i18n.language,
+                          "unit",
+                        ),
                       })}
                     </Text>
                   )}

@@ -5,6 +5,8 @@ import { useTranslation } from "react-i18next";
 import { RouteDrawer } from "@components/modals";
 import { useMe, useMemberPermissionAreas, useSellerMembers } from "@hooks/api";
 
+import { isolateLtr } from "../common/member-permissions";
+
 import { EditMemberPermissionsForm } from "./_components/edit-member-permissions-form";
 
 export const TeamMemberPermissions = () => {
@@ -47,7 +49,7 @@ export const TeamMemberPermissions = () => {
         </RouteDrawer.Title>
         <RouteDrawer.Description className="text-ui-fg-subtle">
           {member?.member?.email
-            ? t("users.permissions.editDescription", { email: member.member.email })
+            ? t("users.permissions.editDescription", { email: isolateLtr(member.member.email) })
             : t("users.permissions.edit")}
         </RouteDrawer.Description>
       </RouteDrawer.Header>

@@ -4161,10 +4161,7 @@
       },
       "invite": {
         "resendSuccess": "Invite was successfully resent to {{email}}",
-        "deleteSuccess": "Invite for {{email}} deleted",
-        "linkCopied": "Invite link was successfully copied to clipboard.",
-        "copyFailed": "Failed to copy invite link",
-        "noVendorUrl": "Vendor URL is not configured on the backend (MERCUR_VENDOR_URL)"
+        "deleteSuccess": "Invite for {{email}} deleted"
       }
     },
     "edit": {

@@ -3236,8 +3236,18 @@
         "followers": "Obserwujący",
         "dashboard": "Podsumowanie pulpitu"
       },
+      "otherAreas": {
+        "team": "Zarządzanie zespołem",
+        "store": "Ustawienia sklepu",
+        "salesChannels": "Kanały sprzedaży",
+        "regions": "Regiony",
+        "taxRegions": "Regiony podatkowe",
+        "refundReasons": "Powody zwrotu pieniędzy"
+      },
+      "administrationOnlyItem": "{{area}} (tylko rola Administracja)",
       "requiredBy": "Wymagane dla: {{areas}}",
       "summaryItem": "{{area}}: {{right}}",
+      "requiredItem": "{{area}} – {{right}}",
       "edit": "Edytuj uprawnienia",
       "editDescription": "Zmień, co {{email}} może widzieć i robić. Zmiany obowiązują od razu.",
       "editSuccess": "Uprawnienia {{email}} zostały zaktualizowane.",
@@ -4474,7 +4484,8 @@
       "title": "Odmowa dostępu",
       "description": "Nie masz uprawnień dostępu do tej strony.",
       "requiredPermission": "Wymagane uprawnienie: {{permission}}",
-      "action": "Nie masz uprawnień do wykonania tej czynności."
+      "action": "Nie masz uprawnień do wykonania tej czynności.",
+      "grantHint": "To uprawnienie może nadać właściciel sklepu lub członek z rolą Administracja."
     },
     "requiredPermissions": {
       "title": "Wymagane uprawnienia",

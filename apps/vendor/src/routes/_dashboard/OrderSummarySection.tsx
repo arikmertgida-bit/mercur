@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next"
 import { CalendarMini, ChartBar, Clock, CurrencyDollar } from "@medusajs/icons"
 import { Container, Heading, Text } from "@medusajs/ui"
+import { useCan } from "@mercurjs/dashboard-shared"
 import { StatCard } from "./StatCard"
 import { formatCurrency } from "../../lib/format-currency"
 import { VendorDashboardData } from "../../hooks/api/dashboard"
@@ -13,6 +14,7 @@ export const OrderSummarySection = ({
   isLoading: boolean
 }) => {
   const { t, i18n } = useTranslation()
+  const ordersLink = useCan("orders") ? "/orders" : undefined
 
   const earningsToday = data?.earnings.today.net_earnings ?? 0
   const currencyCode = data?.earnings.currency_code ?? "try"
@@ -32,21 +34,21 @@ export const OrderSummarySection = ({
           icon={<Clock />}
           label={t("dashboard.orders.today")}
           value={data?.orders.today ?? 0}
-          to="/orders"
+          to={ordersLink}
           isLoading={isLoading}
         />
         <StatCard
           icon={<CalendarMini />}
           label={t("dashboard.orders.thisWeek")}
           value={data?.orders.this_week ?? 0}
-          to="/orders"
+          to={ordersLink}
           isLoading={isLoading}
         />
         <StatCard
           icon={<ChartBar />}
           label={t("dashboard.orders.thisMonth")}
           value={data?.orders.this_month ?? 0}
-          to="/orders"
+          to={ordersLink}
           isLoading={isLoading}
         />
         <StatCard

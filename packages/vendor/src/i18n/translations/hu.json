@@ -3076,8 +3076,18 @@
         "followers": "Követők",
         "dashboard": "Irányítópult-összefoglaló"
       },
+      "otherAreas": {
+        "team": "Csapatkezelés",
+        "store": "Áruházbeállítások",
+        "salesChannels": "Értékesítési csatornák",
+        "regions": "Régiók",
+        "taxRegions": "Adórégiók",
+        "refundReasons": "Visszatérítési okok"
+      },
+      "administrationOnlyItem": "{{area}} (csak Adminisztráció szerepkör)",
       "requiredBy": "Szükséges ehhez: {{areas}}",
       "summaryItem": "{{area}}: {{right}}",
+      "requiredItem": "{{area}} – {{right}}",
       "edit": "Jogosultságok szerkesztése",
       "editDescription": "Módosítsa, mit láthat és tehet {{email}}. A változások azonnal érvénybe lépnek.",
       "editSuccess": "{{email}} jogosultságai frissültek.",
@@ -4014,7 +4024,8 @@
       "title": "Hozzáférés megtagadva",
       "description": "Nincs jogosultsága az oldal eléréséhez.",
       "requiredPermission": "Szükséges jogosultság: {{permission}}",
-      "action": "Nincs jogosultsága a művelet végrehajtásához."
+      "action": "Nincs jogosultsága a művelet végrehajtásához.",
+      "grantHint": "Ezt a jogosultságot az áruház tulajdonosa vagy egy Adminisztráció szerepkörű tag adhatja meg."
     },
     "requiredPermissions": {
       "title": "Szükséges jogosultságok",

@@ -3076,8 +3076,18 @@
         "followers": "Người theo dõi",
         "dashboard": "Tóm tắt bảng điều khiển"
       },
+      "otherAreas": {
+        "team": "Quản lý nhóm",
+        "store": "Cài đặt cửa hàng",
+        "salesChannels": "Kênh bán hàng",
+        "regions": "Khu vực",
+        "taxRegions": "Khu vực thuế",
+        "refundReasons": "Lý do hoàn tiền"
+      },
+      "administrationOnlyItem": "{{area}} (chỉ vai trò Quản trị)",
       "requiredBy": "Cần cho: {{areas}}",
       "summaryItem": "{{area}}: {{right}}",
+      "requiredItem": "{{area}} – {{right}}",
       "edit": "Sửa quyền",
       "editDescription": "Thay đổi những gì {{email}} có thể xem và làm. Thay đổi có hiệu lực ngay.",
       "editSuccess": "Đã cập nhật quyền của {{email}}.",
@@ -4014,7 +4024,8 @@
       "title": "Truy cập bị từ chối",
       "description": "Bạn không có quyền truy cập trang này.",
       "requiredPermission": "Quyền cần có: {{permission}}",
-      "action": "Bạn không có quyền thực hiện thao tác này."
+      "action": "Bạn không có quyền thực hiện thao tác này.",
+      "grantHint": "Chủ cửa hàng hoặc thành viên có vai trò Quản trị có thể cấp quyền này."
     },
     "requiredPermissions": {
       "title": "Quyền cần có",

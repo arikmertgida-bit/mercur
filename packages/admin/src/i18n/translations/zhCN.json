@@ -4262,10 +4262,7 @@
       },
       "invite": {
         "resendSuccess": "邀请已成功重新发送至 {{email}}",
-        "deleteSuccess": "已删除对 {{email}} 的邀请",
-        "linkCopied": "邀请链接已成功复制到剪贴板。",
-        "copyFailed": "复制邀请链接失败",
-        "noVendorUrl": "后端未配置商家面板 URL（MERCUR_VENDOR_URL）"
+        "deleteSuccess": "已删除对 {{email}} 的邀请"
       }
     },
     "edit": {

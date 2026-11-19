@@ -3110,8 +3110,18 @@
         "followers": "Seguidores",
         "dashboard": "Resumo do painel"
       },
+      "otherAreas": {
+        "team": "Gestão da equipe",
+        "store": "Configurações da loja",
+        "salesChannels": "Canais de vendas",
+        "regions": "Regiões",
+        "taxRegions": "Regiões fiscais",
+        "refundReasons": "Motivos de reembolso"
+      },
+      "administrationOnlyItem": "{{area}} (somente função Administração)",
       "requiredBy": "Necessário para: {{areas}}",
       "summaryItem": "{{area}}: {{right}}",
+      "requiredItem": "{{area}} – {{right}}",
       "edit": "Editar permissões",
       "editDescription": "Altere o que {{email}} pode ver e fazer. As alterações valem na hora.",
       "editSuccess": "As permissões de {{email}} foram atualizadas.",
@@ -4064,7 +4074,8 @@
       "title": "Acesso negado",
       "description": "Você não tem permissão para acessar esta página.",
       "requiredPermission": "Permissão necessária: {{permission}}",
-      "action": "Você não tem permissão para realizar esta ação."
+      "action": "Você não tem permissão para realizar esta ação.",
+      "grantHint": "O dono da loja ou um membro com a função Administração pode conceder esta permissão."
     },
     "requiredPermissions": {
       "title": "Permissões necessárias",

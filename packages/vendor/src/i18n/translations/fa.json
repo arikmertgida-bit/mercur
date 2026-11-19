@@ -3076,8 +3076,18 @@
         "followers": "دنبال‌کنندگان",
         "dashboard": "خلاصه داشبورد"
       },
+      "otherAreas": {
+        "team": "مدیریت تیم",
+        "store": "تنظیمات فروشگاه",
+        "salesChannels": "کانال‌های فروش",
+        "regions": "مناطق",
+        "taxRegions": "مناطق مالیاتی",
+        "refundReasons": "دلایل بازپرداخت"
+      },
+      "administrationOnlyItem": "{{area}} (فقط نقش مدیریت)",
       "requiredBy": "لازم برای: {{areas}}",
       "summaryItem": "{{area}}: {{right}}",
+      "requiredItem": "{{area}} – {{right}}",
       "edit": "ویرایش دسترسی‌ها",
       "editDescription": "آنچه {{email}} می‌تواند ببیند و انجام دهد را تغییر دهید. تغییرات فوراً اعمال می‌شوند.",
       "editSuccess": "دسترسی‌های {{email}} به‌روزرسانی شد.",
@@ -4014,7 +4024,8 @@
       "title": "دسترسی ممنوع",
       "description": "شما اجازه دسترسی به این صفحه را ندارید.",
       "requiredPermission": "مجوز موردنیاز: {{permission}}",
-      "action": "شما اجازه انجام این عملیات را ندارید."
+      "action": "شما اجازه انجام این عملیات را ندارید.",
+      "grantHint": "مالک فروشگاه یا عضوی با نقش مدیریت می‌تواند این دسترسی را بدهد."
     },
     "requiredPermissions": {
       "title": "مجوزهای موردنیاز",

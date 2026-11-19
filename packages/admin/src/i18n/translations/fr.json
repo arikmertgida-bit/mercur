@@ -4314,10 +4314,7 @@
       },
       "invite": {
         "resendSuccess": "L'invitation a été renvoyée avec succès à {{email}}",
-        "deleteSuccess": "Invitation pour {{email}} supprimée",
-        "linkCopied": "Le lien d'invitation a été copié dans le presse-papiers avec succès.",
-        "copyFailed": "Échec de la copie du lien d'invitation",
-        "noVendorUrl": "L'URL du vendeur n'est pas configurée sur le backend (MERCUR_VENDOR_URL)"
+        "deleteSuccess": "Invitation pour {{email}} supprimée"
       }
     },
     "edit": {

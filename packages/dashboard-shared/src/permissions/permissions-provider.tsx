@@ -9,6 +9,10 @@ import {
   type PermissionsContextValue,
 } from "@mercurjs/dashboard-sdk"
 import { PermissionsContext } from "./permissions-context"
+import {
+  PermissionDescriptionContext,
+  type DescribePermission,
+} from "./permission-description"
 
 export interface PermissionsProviderProps extends PropsWithChildren {
   /**
@@ -18,11 +22,17 @@ export interface PermissionsProviderProps extends PropsWithChildren {
    */
   permissions?: PermissionMap | null
   isLoading?: boolean
+  /** Names a required permission on the access-denied page. Without it the page names none. */
+  describePermission?: DescribePermission
+  /** Who can grant a missing permission, shown on the access-denied page. */
+  grantHint?: string
 }
 
 export const PermissionsProvider = ({
   permissions = null,
   isLoading = false,
+  describePermission,
+  grantHint,
   children,
 }: PermissionsProviderProps) => {
   const isEnforced = !!permissions
@@ -67,9 +77,16 @@ export const PermissionsProvider = ({
     [permissions, isLoading, isEnforced, hasPermission, hasAnyPermission, hasAllPermissions, can]
   )
 
+  const description = useMemo(
+    () => (describePermission ? { describe: describePermission, grantHint } : null),
+    [describePermission, grantHint]
+  )
+
   return (
     <PermissionsContext.Provider value={value}>
-      {children}
+      <PermissionDescriptionContext.Provider value={description}>
+        {children}
+      </PermissionDescriptionContext.Provider>
     </PermissionsContext.Provider>
   )
 }

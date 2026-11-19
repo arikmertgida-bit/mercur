@@ -3109,8 +3109,18 @@
         "followers": "Urmăritori",
         "dashboard": "Rezumatul panoului"
       },
+      "otherAreas": {
+        "team": "Gestionarea echipei",
+        "store": "Setările magazinului",
+        "salesChannels": "Canale de vânzare",
+        "regions": "Regiuni",
+        "taxRegions": "Regiuni fiscale",
+        "refundReasons": "Motive de rambursare"
+      },
+      "administrationOnlyItem": "{{area}} (doar rolul Administrare)",
       "requiredBy": "Necesar pentru: {{areas}}",
       "summaryItem": "{{area}}: {{right}}",
+      "requiredItem": "{{area}} – {{right}}",
       "edit": "Editează permisiunile",
       "editDescription": "Schimbați ce poate vedea și face {{email}}. Modificările se aplică imediat.",
       "editSuccess": "Permisiunile pentru {{email}} au fost actualizate.",
@@ -4063,7 +4073,8 @@
       "title": "Acces refuzat",
       "description": "Nu aveți permisiunea de a accesa această pagină.",
       "requiredPermission": "Permisiune necesară: {{permission}}",
-      "action": "Nu aveți permisiunea de a efectua această acțiune."
+      "action": "Nu aveți permisiunea de a efectua această acțiune.",
+      "grantHint": "Această permisiune poate fi acordată de proprietarul magazinului sau de un membru cu rolul Administrare."
     },
     "requiredPermissions": {
       "title": "Permisiuni necesare",

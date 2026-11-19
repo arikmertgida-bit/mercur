@@ -4262,10 +4262,7 @@
       },
       "invite": {
         "resendSuccess": "Uitnodiging is succesvol opnieuw verzonden naar {{email}}",
-        "deleteSuccess": "Uitnodiging voor {{email}} verwijderd",
-        "linkCopied": "Uitnodigingslink is succesvol naar het klembord gekopieerd.",
-        "copyFailed": "Kopiëren van uitnodigingslink mislukt",
-        "noVendorUrl": "Verkoper-URL is niet geconfigureerd op de backend (MERCUR_VENDOR_URL)"
+        "deleteSuccess": "Uitnodiging voor {{email}} verwijderd"
       }
     },
     "edit": {

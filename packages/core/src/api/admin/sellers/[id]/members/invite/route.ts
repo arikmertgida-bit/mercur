@@ -3,12 +3,15 @@ import {
   MedusaResponse,
 } from "@medusajs/framework/http"
 
+import { HttpTypes } from "@mercurjs/types"
+
 import { AdminInviteSellerMemberType } from "../../../validators"
+import { toPublicMemberInvite } from "../../../../../utils"
 import { createMemberInvitesWorkflow } from "../../../../../../workflows/seller"
 
 export const POST = async (
   req: AuthenticatedMedusaRequest<AdminInviteSellerMemberType>,
-  res: MedusaResponse
+  res: MedusaResponse<HttpTypes.AdminMemberInviteResponse>
 ) => {
   const { result: invites } = await createMemberInvitesWorkflow(
     req.scope
@@ -22,5 +25,5 @@ export const POST = async (
     ],
   })
 
-  res.status(201).json({ member_invite: invites[0] })
+  res.status(201).json({ member_invite: toPublicMemberInvite(invites[0]) })
 }

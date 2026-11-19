@@ -4314,10 +4314,7 @@
       },
       "invite": {
         "resendSuccess": "Invitația a fost retrimisă cu succes către {{email}}",
-        "deleteSuccess": "Invitația pentru {{email}} a fost ștearsă",
-        "linkCopied": "Linkul de invitație a fost copiat cu succes în clipboard.",
-        "copyFailed": "Copierea linkului de invitație a eșuat",
-        "noVendorUrl": "URL-ul vânzătorului nu este configurat pe backend (MERCUR_VENDOR_URL)"
+        "deleteSuccess": "Invitația pentru {{email}} a fost ștearsă"
       }
     },
     "edit": {

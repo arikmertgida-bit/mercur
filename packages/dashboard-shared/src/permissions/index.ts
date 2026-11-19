@@ -8,6 +8,11 @@ export {
   type PermissionGuardProps,
 } from "./permission-guard"
 export { RoutePermissionGuard } from "./route-permission-guard"
+export {
+  formatNameList,
+  formatRequiredPermissions,
+  type DescribePermission,
+} from "./permission-description"
 export { usePermissions } from "./use-permissions"
 export { useResourcePermissions } from "./use-resource-permissions"
 export {

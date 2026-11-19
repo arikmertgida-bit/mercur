@@ -3110,8 +3110,18 @@
         "followers": "עוקבים",
         "dashboard": "סיכום לוח הבקרה"
       },
+      "otherAreas": {
+        "team": "ניהול צוות",
+        "store": "הגדרות חנות",
+        "salesChannels": "ערוצי מכירה",
+        "regions": "אזורים",
+        "taxRegions": "אזורי מס",
+        "refundReasons": "סיבות להחזר כספי"
+      },
+      "administrationOnlyItem": "{{area}} (לתפקיד ניהול בלבד)",
       "requiredBy": "נדרש עבור: {{areas}}",
       "summaryItem": "{{area}}: {{right}}",
+      "requiredItem": "{{area}} – {{right}}",
       "edit": "עריכת הרשאות",
       "editDescription": "שנו מה {{email}} יכול לראות ולעשות. השינויים חלים מיד.",
       "editSuccess": "ההרשאות של {{email}} עודכנו.",
@@ -4064,7 +4074,8 @@
       "title": "הגישה נדחתה",
       "description": "אין לך הרשאה לגשת לדף זה.",
       "requiredPermission": "הרשאה נדרשת: {{permission}}",
-      "action": "אין לך הרשאה לבצע פעולה זו."
+      "action": "אין לך הרשאה לבצע פעולה זו.",
+      "grantHint": "בעל החנות או חבר בתפקיד ניהול יכולים להעניק הרשאה זו."
     },
     "requiredPermissions": {
       "title": "הרשאות נדרשות",

@@ -4262,10 +4262,7 @@
       },
       "invite": {
         "resendSuccess": "Đã gửi lại lời mời đến {{email}} thành công",
-        "deleteSuccess": "Đã xóa lời mời cho {{email}}",
-        "linkCopied": "Đã sao chép liên kết mời vào clipboard thành công.",
-        "copyFailed": "Sao chép liên kết mời thất bại",
-        "noVendorUrl": "URL người bán chưa được cấu hình trên backend (MERCUR_VENDOR_URL)"
+        "deleteSuccess": "Đã xóa lời mời cho {{email}}"
       }
     },
     "edit": {

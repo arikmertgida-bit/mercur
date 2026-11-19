@@ -159,6 +159,7 @@ export function getRouteMap({
                           },
                           {
                             path: "stock",
+                            handle: { permissions: "inventory_items:edit" },
                             lazy: () => import("./pages/products/[id]/stock"),
                           },
                           {
@@ -263,6 +264,7 @@ export function getRouteMap({
                               },
                               {
                                 path: "stock",
+                                handle: { permissions: "inventory_items:edit" },
                                 lazy: () =>
                                   import("./pages/product-variants/product-variant-detail/stock"),
                               },
@@ -1185,6 +1187,7 @@ export function getRouteMap({
                       },
                       {
                         path: "notification-settings",
+                        handle: { permissions: "store:edit" },
                         lazy: () =>
                           import("./pages/settings/store/notification-settings"),
                       },

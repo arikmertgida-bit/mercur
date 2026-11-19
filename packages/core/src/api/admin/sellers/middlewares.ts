@@ -1,4 +1,8 @@
-import { requirePermission } from "../../utils"
+import {
+  MEMBER_INVITE_SECRET_FIELD_SEGMENTS,
+  requirePermission,
+  restrictVendorFields,
+} from "../../utils"
 import { MiddlewareRoute } from "@medusajs/framework/http"
 import {
   validateAndTransformBody,
@@ -228,6 +232,7 @@ export const adminSellersMiddlewares: MiddlewareRoute[] = [
     matcher: "/admin/sellers/:id/members/invites",
     middlewares: [
       requirePermission("members.invites", "view"),
+      restrictVendorFields(MEMBER_INVITE_SECRET_FIELD_SEGMENTS),
       validateAndTransformQuery(
         AdminGetSellersParams,
         adminMemberInvitesQueryConfig.list

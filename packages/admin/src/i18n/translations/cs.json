@@ -4314,10 +4314,7 @@
       },
       "invite": {
         "resendSuccess": "Pozvánka byla úspěšně znovu odeslána na {{email}}",
-        "deleteSuccess": "Pozvánka pro {{email}} byla smazána",
-        "linkCopied": "Odkaz na pozvánku byl úspěšně zkopírován do schránky.",
-        "copyFailed": "Kopírování odkazu na pozvánku se nezdařilo",
-        "noVendorUrl": "URL prodejce není na backendu nakonfigurována (MERCUR_VENDOR_URL)"
+        "deleteSuccess": "Pozvánka pro {{email}} byla smazána"
       }
     },
     "edit": {

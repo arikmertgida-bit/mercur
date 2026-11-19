@@ -3110,8 +3110,18 @@
         "followers": "Pratioci",
         "dashboard": "Sažetak kontrolne table"
       },
+      "otherAreas": {
+        "team": "Upravljanje timom",
+        "store": "Postavke prodavnice",
+        "salesChannels": "Prodajni kanali",
+        "regions": "Regije",
+        "taxRegions": "Poreske regije",
+        "refundReasons": "Razlozi povrata novca"
+      },
+      "administrationOnlyItem": "{{area}} (samo uloga Administracija)",
       "requiredBy": "Potrebno za: {{areas}}",
       "summaryItem": "{{area}}: {{right}}",
+      "requiredItem": "{{area}} – {{right}}",
       "edit": "Uredi ovlaštenja",
       "editDescription": "Promijenite šta {{email}} može vidjeti i raditi. Promjene važe odmah.",
       "editSuccess": "Ovlaštenja za {{email}} su ažurirana.",
@@ -4064,7 +4074,8 @@
       "title": "Pristup odbijen",
       "description": "Nemate dozvolu za pristup ovoj stranici.",
       "requiredPermission": "Potrebna dozvola: {{permission}}",
-      "action": "Nemate dozvolu za izvršavanje ove radnje."
+      "action": "Nemate dozvolu za izvršavanje ove radnje.",
+      "grantHint": "Ovu dozvolu može dati vlasnik prodavnice ili član s ulogom Administracija."
     },
     "requiredPermissions": {
       "title": "Potrebne dozvole",

@@ -1,5 +1,4 @@
 declare const __BASE__: string
-declare const __VENDOR_URL__: string
 
 declare module "virtual:mercur/routes" {
     import { Route } from './utils/routes'
