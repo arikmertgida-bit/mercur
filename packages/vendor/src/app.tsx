@@ -8,6 +8,7 @@ import { ExtensionProvider } from "@mercurjs/dashboard-shared";
 import { ThemeProvider } from "./providers";
 import { Toaster, TooltipProvider } from "@medusajs/ui";
 import { I18nProvider } from "./providers/i18n-provider";
+import { DirectionProvider } from "./providers/direction-provider";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { I18n } from "./components/utilities/i18n";
 import { DocumentTitle } from "./components/utilities/document-title";
@@ -26,29 +27,31 @@ export default function App() {
   }, []);
 
   return (
-    <TooltipProvider>
-      <HelmetProvider>
-        <QueryClientProvider client={queryClient}>
-          <ThemeProvider>
-            <ExtensionProvider
-              widgets={widgets}
-              navigation={navigation}
-              customFields={customFields}
-            >
-              <I18n />
-              <DocumentTitle />
-              <I18nProvider>
-                <RouterProvider
-                  router={createBrowserRouter(getRouteMap(routes), {
-                    basename: __BASE__,
-                  })}
-                />
-              </I18nProvider>
-              <Toaster />
-            </ExtensionProvider>
-          </ThemeProvider>
-        </QueryClientProvider>
-      </HelmetProvider>
-    </TooltipProvider>
+    <DirectionProvider>
+      <TooltipProvider>
+        <HelmetProvider>
+          <QueryClientProvider client={queryClient}>
+            <ThemeProvider>
+              <ExtensionProvider
+                widgets={widgets}
+                navigation={navigation}
+                customFields={customFields}
+              >
+                <I18n />
+                <DocumentTitle />
+                <I18nProvider>
+                  <RouterProvider
+                    router={createBrowserRouter(getRouteMap(routes), {
+                      basename: __BASE__,
+                    })}
+                  />
+                </I18nProvider>
+                <Toaster />
+              </ExtensionProvider>
+            </ThemeProvider>
+          </QueryClientProvider>
+        </HelmetProvider>
+      </TooltipProvider>
+    </DirectionProvider>
   );
 }

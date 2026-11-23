@@ -1,53 +1,29 @@
-import { useEffect, useState } from "react"
+import { useSyncExternalStore } from "react"
 
-const readDocumentDirection = (): "ltr" | "rtl" | undefined => {
+type DocumentDirection = "ltr" | "rtl"
+
+const readDocumentDirection = (): DocumentDirection | undefined => {
   const dir = document.documentElement.getAttribute("dir")
   return dir === "ltr" || dir === "rtl" ? dir : undefined
 }
 
-/**
- * Hook to get the current document direction (ltr/rtl) and listen for changes
- * @returns The current document direction as "ltr" | "rtl" | undefined
- */
-export const useDocumentDirection = (): "ltr" | "rtl" | undefined => {
-  const [direction, setDirection] = useState<"ltr" | "rtl" | undefined>(() => {
-    // Initialize with current value
-    if (typeof document !== "undefined") {
-      return readDocumentDirection()
-    }
-    return undefined
+const subscribe = (onChange: () => void): (() => void) => {
+  const observer = new MutationObserver(onChange)
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["dir"],
   })
-
-  useEffect(() => {
-    // Only run on client side
-    if (typeof document === "undefined") {
-      return
-    }
-
-    // Create a MutationObserver to watch for changes to the dir attribute
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (
-          mutation.type === "attributes" &&
-          mutation.attributeName === "dir" &&
-          mutation.target === document.documentElement
-        ) {
-          setDirection(readDocumentDirection())
-        }
-      })
-    })
-
-    // Start observing the document element for attribute changes
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["dir"],
-    })
-
-    // Cleanup observer on unmount
-    return () => {
-      observer.disconnect()
-    }
-  }, [])
-
-  return direction
+  return () => observer.disconnect()
 }
+
+const getServerSnapshot = (): DocumentDirection | undefined => undefined
+
+/**
+ * The current `<html dir>` (ltr/rtl), kept in sync with later changes.
+ *
+ * Read through `useSyncExternalStore` rather than state + an effect: the i18n
+ * setup writes `dir` from a child effect, which runs before an ancestor's
+ * effect could attach the observer, so the first switch to RTL was missed.
+ */
+export const useDocumentDirection = (): DocumentDirection | undefined =>
+  useSyncExternalStore(subscribe, readDocumentDirection, getServerSnapshot)
