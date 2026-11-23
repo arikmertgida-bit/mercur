@@ -9,6 +9,7 @@ import {
   Modules,
 } from "@medusajs/framework/utils"
 import { createSellerUser } from "../../../helpers/create-seller-user"
+import { approveSeller } from "../../../helpers/split-order-checkout"
 import { createShippingProfile } from "../../../helpers/create-shipping-profile"
 import {
   generatePublishableKey,
@@ -26,12 +27,14 @@ medusaIntegrationTestRunner({
       let region: any
       let salesChannel: any
       let sellerHeaders: any
+      let sellerId: string
 
-      const seedOffer = async (opts: {
+      const seedProduct = async (opts: {
         name: string
-        offerPrice: number
-        offerSku: string
+        price: number
+        sku: string
         headers: any
+        sellerId: string
       }) => {
         const tag = `${Date.now()}-${Math.round(Math.random() * 1e6)}`
         const headers = opts.headers
@@ -50,9 +53,23 @@ medusaIntegrationTestRunner({
           headers
         )
 
+        const shippingProfile = await createShippingProfile(
+          appContainer,
+          { name: `${opts.name} Profile ${tag}` },
+          { seller_id: opts.sellerId }
+        )
+
         const product = await createVendorProduct(api, headers, {
           title: `${opts.name} Product ${tag}`,
-          sku: `${opts.offerSku}-V-${tag}`,
+          variants: [
+            {
+              title: "Default",
+              sku: `${opts.sku}-V-${tag}`,
+              prices: [{ amount: opts.price, currency_code: "usd" }],
+              inventory: [{ location_id: stockLocation.id, quantity: 10 }],
+            },
+          ],
+          extra: { shipping_profile_id: shippingProfile.id },
         })
 
         await api.post(
@@ -61,33 +78,7 @@ medusaIntegrationTestRunner({
           headers
         )
 
-        const shippingProfile = await createShippingProfile(appContainer, {
-            name: `${opts.name} Profile ${tag}`,
-        })
-
-        const offer = (
-          await api.post(
-            `/vendor/offers`,
-            {
-              sku: opts.offerSku,
-              variant_id: product.variants[0].id,
-              shipping_profile_id: shippingProfile.id,
-              inventory_items: [
-                {
-                  title: `${opts.name} Inv ${tag}`,
-                  required_quantity: 1,
-                  stock_levels: [
-                    { location_id: stockLocation.id, stocked_quantity: 10 },
-                  ],
-                },
-              ],
-              prices: [{ amount: opts.offerPrice, currency_code: "usd" }],
-            },
-            headers
-          )
-        ).data.offer
-
-        return { offer }
+        return { productId: product.id, variantId: product.variants[0].id }
       }
 
       const createCart = async () =>
@@ -133,26 +124,35 @@ medusaIntegrationTestRunner({
           name: "Buyget Cart Seller",
         })
         sellerHeaders = seller.headers
+        sellerId = seller.seller.id
+        await approveSeller(appContainer, sellerId)
       })
 
-      it("discounts the 'get' offer when the 'buy' offer is in the cart", async () => {
-        const buy = await seedOffer({
+      it("discounts the 'get' product when the 'buy' product is in the cart", async () => {
+        const buy = await seedProduct({
           name: "Buy",
-          offerPrice: 2000,
-          offerSku: `BUYGET-BUY-${Date.now()}`,
+          price: 2000,
+          sku: `BUYGET-BUY-${Date.now()}`,
           headers: sellerHeaders,
+          sellerId,
         })
-        const get = await seedOffer({
+        const get = await seedProduct({
           name: "Get",
-          offerPrice: 1000,
-          offerSku: `BUYGET-GET-${Date.now()}`,
+          price: 1000,
+          sku: `BUYGET-GET-${Date.now()}`,
           headers: sellerHeaders,
+          sellerId,
         })
+
+        const reservation = await api.get(
+          `/vendor/promotions/generate-code`,
+          sellerHeaders
+        )
 
         await api.post(
           `/vendor/promotions`,
           {
-            code: "BUYGETCART",
+            code_reservation_token: reservation.data.code_reservation_token,
             type: "buyget",
             status: "active",
             application_method: {
@@ -165,16 +165,16 @@ medusaIntegrationTestRunner({
               buy_rules_min_quantity: 1,
               target_rules: [
                 {
-                  attribute: "items.metadata.offer_id",
+                  attribute: "items.product.id",
                   operator: "in",
-                  values: [get.offer.id],
+                  values: [get.productId],
                 },
               ],
               buy_rules: [
                 {
-                  attribute: "items.metadata.offer_id",
+                  attribute: "items.product.id",
                   operator: "in",
-                  values: [buy.offer.id],
+                  values: [buy.productId],
                 },
               ],
             },
@@ -186,18 +186,18 @@ medusaIntegrationTestRunner({
 
         await api.post(
           `/store/carts/${cart.id}/line-items`,
-          { offer_id: buy.offer.id, quantity: 1 },
+          { variant_id: buy.variantId, quantity: 1 },
           storeHeaders
         )
         await api.post(
           `/store/carts/${cart.id}/line-items`,
-          { offer_id: get.offer.id, quantity: 1 },
+          { variant_id: get.variantId, quantity: 1 },
           storeHeaders
         )
 
         const response = await api.post(
           `/store/carts/${cart.id}/promotions`,
-          { promo_codes: ["BUYGETCART"] },
+          { promo_codes: [reservation.data.code] },
           storeHeaders
         )
 
@@ -205,10 +205,10 @@ medusaIntegrationTestRunner({
 
         const items = response.data.cart.items
         const buyLine = items.find(
-          (i: any) => i.metadata?.offer_id === buy.offer.id
+          (i: any) => i.variant_id === buy.variantId
         )
         const getLine = items.find(
-          (i: any) => i.metadata?.offer_id === get.offer.id
+          (i: any) => i.variant_id === get.variantId
         )
 
         expect(getLine.adjustments).toHaveLength(1)

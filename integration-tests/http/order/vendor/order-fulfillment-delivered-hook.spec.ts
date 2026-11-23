@@ -13,7 +13,7 @@ import {
 } from "../../../helpers/create-admin-user"
 import {
     completeSplitOrderCheckout,
-    seedSellerOfferWithShipping,
+    seedSellerProductWithShipping,
 } from "../../../helpers/split-order-checkout"
 
 jest.setTimeout(120000)
@@ -30,7 +30,7 @@ medusaIntegrationTestRunner({
     testSuite: ({ getContainer, api }) => {
         describe("Vendor - fulfillmentDelivered hook", () => {
             let appContainer: MedusaContainer
-            let sellerSeed: Awaited<ReturnType<typeof seedSellerOfferWithShipping>>
+            let sellerSeed: Awaited<ReturnType<typeof seedSellerProductWithShipping>>
             let storeHeaders: { headers: Record<string, string> }
             let customerEmail: string
             let region: { id: string }
@@ -77,14 +77,14 @@ medusaIntegrationTestRunner({
                     [Modules.PAYMENT]: { payment_provider_id: "pp_system_default" },
                 })
 
-                sellerSeed = await seedSellerOfferWithShipping({
+                sellerSeed = await seedSellerProductWithShipping({
                     container: appContainer,
                     api,
                     salesChannelId: salesChannel.id,
                     email: "delivered-hook@test.com",
                     name: "DeliveredHook",
                     stocked: 10,
-                    offerPrice: 1000,
+                    price: 1000,
                 })
             })
 
@@ -95,7 +95,7 @@ medusaIntegrationTestRunner({
                     storeHeaders,
                     regionId: region.id,
                     salesChannelId: salesChannel.id,
-                    offerId: sellerSeed.offer.id,
+                    variantId: sellerSeed.variantId,
                     email: customerEmail,
                 })
 

@@ -38,7 +38,7 @@ medusaIntegrationTestRunner({
         )
       })
 
-      it("exposes offer and product item target-rule attributes", async () => {
+      it("exposes the product item target-rule attributes", async () => {
         const response = await api.get(
           `/admin/promotions/rule-attribute-options/target-rules?promotion_type=standard&application_method_target_type=items`,
           adminHeaders
@@ -48,7 +48,6 @@ medusaIntegrationTestRunner({
         const ids = idsOf(response.data.attributes)
         expect(ids).toEqual(
           expect.arrayContaining([
-            "offer",
             "product",
             "product_category",
             "product_collection",
@@ -56,6 +55,7 @@ medusaIntegrationTestRunner({
             "product_tag",
           ])
         )
+        expect(ids).not.toContain("offer")
       })
 
       it("swaps to shipping option type attributes for shipping_methods target", async () => {

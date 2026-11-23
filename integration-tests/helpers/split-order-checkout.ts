@@ -19,14 +19,14 @@ export const approveSeller = async (
     })
 }
 
-export const seedSellerOfferWithShipping = async (opts: {
+export const seedSellerProductWithShipping = async (opts: {
     container: MedusaContainer
     api: any
     salesChannelId: string
     email: string
     name: string
     stocked: number
-    offerPrice: number
+    price: number
 }) => {
     const { container, api, salesChannelId } = opts
 
@@ -34,7 +34,8 @@ export const seedSellerOfferWithShipping = async (opts: {
         email: opts.email,
         name: opts.name,
     })
-    await approveSeller(container, (result.seller as any).id)
+    const sellerId = (result.seller as any).id
+    await approveSeller(container, sellerId)
     const headers = result.headers
     const tag = `_${opts.name}_${Date.now()}_${++prerequisiteCounter}`
 
@@ -63,9 +64,11 @@ export const seedSellerOfferWithShipping = async (opts: {
             headers
         )
     ).data.fulfillment_set.service_zones.find((z: any) => z.name === `SZ${tag}`)
-    const shippingProfile = await createShippingProfile(container, {
-        name: `SP${tag}`,
-    })
+    const shippingProfile = await createShippingProfile(
+        container,
+        { name: `SP${tag}` },
+        { seller_id: sellerId }
+    )
 
     await api.post(
         `/vendor/stock-locations/${stockLocation.id}/fulfillment-providers`,
@@ -104,7 +107,17 @@ export const seedSellerOfferWithShipping = async (opts: {
 
     const product = await createVendorProduct(api, headers, {
         title: `Prod${tag}`,
-        sku: `V${tag}`,
+        variants: [
+            {
+                title: "Default",
+                sku: `V${tag}`,
+                prices: [{ amount: opts.price, currency_code: "usd" }],
+                inventory: [
+                    { location_id: stockLocation.id, quantity: opts.stocked },
+                ],
+            },
+        ],
+        extra: { shipping_profile_id: shippingProfile.id },
     })
 
     await api.post(
@@ -113,32 +126,13 @@ export const seedSellerOfferWithShipping = async (opts: {
         headers
     )
 
-    const offer = (
-        await api.post(
-            `/vendor/offers`,
-            {
-                sku: `OF${tag}`,
-                variant_id: product.variants[0].id,
-                shipping_profile_id: shippingProfile.id,
-                inventory_items: [
-                    {
-                        title: `Inv${tag}`,
-                        required_quantity: 1,
-                        stock_levels: [
-                            {
-                                location_id: stockLocation.id,
-                                stocked_quantity: opts.stocked,
-                            },
-                        ],
-                    },
-                ],
-                prices: [{ amount: opts.offerPrice, currency_code: "usd" }],
-            },
-            headers
-        )
-    ).data.offer
-
-    return { sellerId: result.seller.id, headers, offer }
+    return {
+        sellerId,
+        headers,
+        product,
+        variantId: product.variants[0].id,
+        stockLocationId: stockLocation.id,
+    }
 }
 
 type SplitOrderCheckoutOptions = {
@@ -157,19 +151,19 @@ type SplitOrderCheckoutOptions = {
 }
 
 export const completeSplitOrderCheckout = async (
-    opts: SplitOrderCheckoutOptions & { offerId: string }
+    opts: SplitOrderCheckoutOptions & { variantId: string }
 ) => {
     const [order] = await completeSplitOrderGroupCheckout({
         ...opts,
-        offerIds: [opts.offerId],
+        variantIds: [opts.variantId],
     })
 
     return order
 }
 
-/** Checks out one cart holding every given offer; resolves to its split orders. */
+/** Checks out one cart holding every given variant; resolves to its split orders. */
 export const completeSplitOrderGroupCheckout = async (
-    opts: SplitOrderCheckoutOptions & { offerIds: string[] }
+    opts: SplitOrderCheckoutOptions & { variantIds: string[] }
 ): Promise<{ id: string }[]> => {
     const { container, api, storeHeaders } = opts
 
@@ -185,10 +179,10 @@ export const completeSplitOrderGroupCheckout = async (
         )
     ).data.cart
 
-    for (const offerId of opts.offerIds) {
+    for (const variantId of opts.variantIds) {
         await api.post(
             `/store/carts/${cart.id}/line-items`,
-            { offer_id: offerId, quantity: 1 },
+            { variant_id: variantId, quantity: 1 },
             storeHeaders
         )
     }

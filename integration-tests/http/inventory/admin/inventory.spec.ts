@@ -24,13 +24,7 @@ jest.setTimeout(60000)
  * product title). Both come from the mercur links, requested off the native
  * `GET /admin/inventory-items` route via `fields`:
  *   - Store   → `+seller.name`          (inventory_item ↔ seller link)
- *   - Product → `+offers.product_variant.product.title` (item → offer → variant → product)
- *
- * IMPORTANT (memory `offer-inventory-not-on-variant`, decision D1): seller
- * inventory is created through an **offer** and links to the *offer*, not the
- * variant — so `inventory_item.variants` is empty. The Product column reaches
- * the title through the offer (`offers.product.title`), inventory-side alias
- * `offers`.
+ *   - Product → `+variants.product.title` (item → variant → product)
  *
  * `seller_id` filtering (the list's "Store" filter) is NOT in the native
  * validator, so the last test specifies the behavior the core route override
@@ -55,16 +49,14 @@ medusaIntegrationTestRunner({
       })
 
       /**
-       * Seed a seller that owns one offer-backed inventory item, mirroring the
+       * Seed a seller that owns one variant inventory item, mirroring the
        * production chain: seller → stock location + fulfillment + shipping
-       * profile → product → offer (with an inventory item + stock level).
-       * Returns the seller and the inventory item's sku.
+       * profile → product (variant with a price and a stock level).
        */
       const seedSellerInventory = async (opts: {
         email: string
         name: string
         productTitle: string
-        offerSku: string
         stocked?: number
       }) => {
         const { seller, headers } = await createSellerUser(container, {
@@ -113,9 +105,11 @@ medusaIntegrationTestRunner({
           (z: { name: string }) => z.name === `SZ${tag}`
         )
 
-        const shippingProfile = await createShippingProfile(container, {
-            name: `SP${tag}`,
-        })
+        const shippingProfile = await createShippingProfile(
+          container,
+          { name: `SP${tag}` },
+          { seller_id: sellerId }
+        )
 
         await api.post(
           `/vendor/stock-locations/${stockLocation.id}/fulfillment-providers`,
@@ -146,7 +140,17 @@ medusaIntegrationTestRunner({
 
         const product = await createVendorProduct(api, headers, {
           title: opts.productTitle,
-          sku: `V${tag}`,
+          variants: [
+            {
+              title: "Default",
+              sku: `V${tag}`,
+              prices: [{ amount: 1000, currency_code: "usd" }],
+              inventory: [
+                { location_id: stockLocation.id, quantity: opts.stocked ?? 100 },
+              ],
+            },
+          ],
+          extra: { shipping_profile_id: shippingProfile.id },
         })
         await api.post(
           `/vendor/sales-channels/${salesChannel.id}/products`,
@@ -154,35 +158,12 @@ medusaIntegrationTestRunner({
           headers
         )
 
-        await api.post(
-          `/vendor/offers`,
-          {
-            sku: opts.offerSku,
-            variant_id: product.variants[0].id,
-            shipping_profile_id: shippingProfile.id,
-            inventory_items: [
-              {
-                title: opts.productTitle,
-                required_quantity: 1,
-                stock_levels: [
-                  {
-                    location_id: stockLocation.id,
-                    stocked_quantity: opts.stocked ?? 100,
-                  },
-                ],
-              },
-            ],
-            prices: [{ amount: 1000, currency_code: "usd" }],
-          },
-          headers
-        )
-
-        return { sellerId, sellerName: opts.name, offerSku: opts.offerSku }
+        return { sellerId, sellerName: opts.name }
       }
 
       const listItemForSeller = async (sellerId: string) => {
         const res = await api.get(
-          `/admin/inventory-items?fields=id,sku,*seller,offers.id,offers.sku,offers.product_variant.title,offers.product_variant.product.title`,
+          `/admin/inventory-items?fields=id,sku,*seller,variants.title,variants.product.title`,
           adminHeaders
         )
         expect(res.status).toEqual(200)
@@ -196,7 +177,6 @@ medusaIntegrationTestRunner({
           email: "inv-store@medusa.js",
           name: "Store One",
           productTitle: "Tennis Dress",
-          offerSku: "OF-STORE-1",
         })
 
         const item = (await listItemForSeller(sellerId)) as
@@ -207,27 +187,21 @@ medusaIntegrationTestRunner({
         expect(item!.seller!.name).toEqual(sellerName)
       })
 
-      it("resolves the Product column via the offer's variant product", async () => {
+      it("resolves the Product column via the variant's product", async () => {
         const { sellerId } = await seedSellerInventory({
-          email: "inv-offer@medusa.js",
+          email: "inv-product@medusa.js",
           name: "Store Two",
           productTitle: "A-Line Dress",
-          offerSku: "OF-STORE-2",
         })
 
         const item = (await listItemForSeller(sellerId)) as
           | {
-              offers?: Array<{
-                product_variant?: { product?: { title?: string } }
-              }>
+              variants?: Array<{ product?: { title?: string } }>
             }
           | undefined
 
         expect(item).toBeDefined()
-        // Product column reads offers[0].product_variant.product.title
-        expect(
-          item!.offers?.[0]?.product_variant?.product?.title
-        ).toEqual("A-Line Dress")
+        expect(item!.variants?.[0]?.product?.title).toEqual("A-Line Dress")
       })
 
       // Specifies delta D-03 (backend). The list "Store" filter sends
@@ -239,13 +213,11 @@ medusaIntegrationTestRunner({
           email: "inv-a@medusa.js",
           name: "Store A",
           productTitle: "Prod A",
-          offerSku: "OF-A",
         })
         await seedSellerInventory({
           email: "inv-b@medusa.js",
           name: "Store B",
           productTitle: "Prod B",
-          offerSku: "OF-B",
         })
 
         const res = await api.get(

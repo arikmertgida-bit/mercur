@@ -32,7 +32,7 @@ medusaIntegrationTestRunner({
             let salesChannel: any
             let counter = 0
 
-            const seedSellerOfferWithShipping = async (opts: {
+            const seedSellerProductWithShipping = async (opts: {
                 email: string
                 name: string
             }) => {
@@ -75,9 +75,11 @@ medusaIntegrationTestRunner({
                 ).data.fulfillment_set.service_zones.find(
                     (z: any) => z.name === `SZ${tag}`
                 )
-                const shippingProfile = await createShippingProfile(appContainer, {
-                    name: `SP${tag}`,
-                })
+                const shippingProfile = await createShippingProfile(
+                    appContainer,
+                    { name: `SP${tag}` },
+                    { seller_id: (result.seller as any).id }
+                )
 
                 await api.post(
                     `/vendor/stock-locations/${stockLocation.id}/fulfillment-providers`,
@@ -116,7 +118,15 @@ medusaIntegrationTestRunner({
 
                 const product = await createVendorProduct(api, headers, {
                     title: `Prod${tag}`,
-                    sku: `V${tag}`,
+                    variants: [
+                        {
+                            title: "Default",
+                            sku: `V${tag}`,
+                            prices: [{ amount: 2500, currency_code: "usd" }],
+                            inventory: [{ location_id: stockLocation.id, quantity: 10 }],
+                        },
+                    ],
+                    extra: { shipping_profile_id: shippingProfile.id },
                 })
 
                 await api.post(
@@ -125,35 +135,10 @@ medusaIntegrationTestRunner({
                     headers
                 )
 
-                const offer = (
-                    await api.post(
-                        `/vendor/offers`,
-                        {
-                            sku: `OF${tag}`,
-                            variant_id: product.variants[0].id,
-                            shipping_profile_id: shippingProfile.id,
-                            inventory_items: [
-                                {
-                                    title: `Inv${tag}`,
-                                    required_quantity: 1,
-                                    stock_levels: [
-                                        {
-                                            location_id: stockLocation.id,
-                                            stocked_quantity: 10,
-                                        },
-                                    ],
-                                },
-                            ],
-                            prices: [{ amount: 2500, currency_code: "usd" }],
-                        },
-                        headers
-                    )
-                ).data.offer
-
-                return { offer }
+                return { variantId: product.variants[0].id }
             }
 
-            const seedReadyCart = async (offerId: string) => {
+            const seedReadyCart = async (variantId: string) => {
                 const cart = (
                     await api.post(
                         `/store/carts`,
@@ -168,7 +153,7 @@ medusaIntegrationTestRunner({
 
                 await api.post(
                     `/store/carts/${cart.id}/line-items`,
-                    { offer_id: offerId, quantity: 1 },
+                    { variant_id: variantId, quantity: 1 },
                     storeHeaders
                 )
 
@@ -272,7 +257,7 @@ medusaIntegrationTestRunner({
                     },
                 })
 
-                sellerSeed = await seedSellerOfferWithShipping({
+                sellerSeed = await seedSellerProductWithShipping({
                     email: "webhook-seller@test.com",
                     name: "WebhookS1",
                 })
@@ -318,7 +303,7 @@ medusaIntegrationTestRunner({
 
             it("completes the cart into split orders when the payment is authorized", async () => {
                 const { cart, sessionId } = await seedReadyCart(
-                    sellerSeed.offer.id
+                    sellerSeed.variantId
                 )
                 const query = appContainer.resolve(
                     ContainerRegistrationKeys.QUERY
@@ -352,7 +337,7 @@ medusaIntegrationTestRunner({
 
             it("does not create a second order when the storefront already completed the cart", async () => {
                 const { cart, sessionId } = await seedReadyCart(
-                    sellerSeed.offer.id
+                    sellerSeed.variantId
                 )
                 const query = appContainer.resolve(
                     ContainerRegistrationKeys.QUERY

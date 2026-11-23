@@ -64,11 +64,11 @@ medusaIntegrationTestRunner({
             let salesChannel: SalesChannelDTO
             let prerequisiteCounter = 0
 
-            const seedSellerOfferWithShipping = async (opts: {
+            const seedSellerProductWithShipping = async (opts: {
                 email: string
                 name: string
                 stocked: number
-                offerPrice: number
+                price: number
             }): Promise<SellerSeed> => {
                 const result = await createSellerUser(appContainer, {
                     email: opts.email,
@@ -109,9 +109,11 @@ medusaIntegrationTestRunner({
                 ).data.fulfillment_set.service_zones.find(
                     (zone: { name: string }) => zone.name === `SZ${tag}`
                 )
-                const shippingProfile = await createShippingProfile(appContainer, {
-                    name: `SP${tag}`,
-                })
+                const shippingProfile = await createShippingProfile(
+                    appContainer,
+                    { name: `SP${tag}` },
+                    { seller_id: result.seller.id }
+                )
 
                 await api.post(
                     `/vendor/stock-locations/${stockLocation.id}/fulfillment-providers`,
@@ -156,7 +158,7 @@ medusaIntegrationTestRunner({
                             sku: `V${tag}`,
                             prices: [
                                 {
-                                    amount: opts.offerPrice,
+                                    amount: opts.price,
                                     currency_code: "usd",
                                 },
                             ],
@@ -320,18 +322,18 @@ medusaIntegrationTestRunner({
                     [Modules.PAYMENT]: { payment_provider_id: "pp_system_default" },
                 })
 
-                seller1Seed = await seedSellerOfferWithShipping({
+                seller1Seed = await seedSellerProductWithShipping({
                     email: "exch-seller1@test.com",
                     name: "ExchS1",
                     stocked: 20,
-                    offerPrice: 2500,
+                    price: 2500,
                 })
 
-                seller2Seed = await seedSellerOfferWithShipping({
+                seller2Seed = await seedSellerProductWithShipping({
                     email: "exch-seller2@test.com",
                     name: "ExchS2",
                     stocked: 20,
-                    offerPrice: 2500,
+                    price: 2500,
                 })
             })
 

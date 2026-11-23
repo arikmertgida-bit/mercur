@@ -21,7 +21,7 @@ import {
     generatePublishableKey,
     generateStoreHeaders,
 } from "../../../helpers/create-admin-user"
-import { seedSellerOfferWithShipping } from "../../../helpers/split-order-checkout"
+import { seedSellerProductWithShipping } from "../../../helpers/split-order-checkout"
 
 jest.setTimeout(180000)
 
@@ -33,7 +33,11 @@ completeCartWithSplitOrdersWorkflow.hooks.setOrderStatus(({ cart }) => {
     const sellerIds = Array.from(
         new Set(
             (cart.items ?? [])
-                .map((item: { offer?: { seller_id?: string } }) => item.offer?.seller_id)
+                .map(
+                    (item: {
+                        variant?: { product?: { sellers?: { id: string }[] | null } | null } | null
+                    }) => item.variant?.product?.sellers?.[0]?.id
+                )
                 .filter((id): id is string => typeof id === "string")
         )
     )
@@ -48,8 +52,8 @@ medusaIntegrationTestRunner({
             let customerEmail: string
             let region: { id: string }
             let salesChannel: { id: string }
-            let sellerA: Awaited<ReturnType<typeof seedSellerOfferWithShipping>>
-            let sellerB: Awaited<ReturnType<typeof seedSellerOfferWithShipping>>
+            let sellerA: Awaited<ReturnType<typeof seedSellerProductWithShipping>>
+            let sellerB: Awaited<ReturnType<typeof seedSellerProductWithShipping>>
 
             beforeAll(async () => {
                 appContainer = getContainer()
@@ -93,23 +97,23 @@ medusaIntegrationTestRunner({
                     [Modules.PAYMENT]: { payment_provider_id: "pp_system_default" },
                 })
 
-                sellerA = await seedSellerOfferWithShipping({
+                sellerA = await seedSellerProductWithShipping({
                     container: appContainer,
                     api,
                     salesChannelId: salesChannel.id,
                     email: "status-hook-a@test.com",
                     name: "StatusHookA",
                     stocked: 10,
-                    offerPrice: 1000,
+                    price: 1000,
                 })
-                sellerB = await seedSellerOfferWithShipping({
+                sellerB = await seedSellerProductWithShipping({
                     container: appContainer,
                     api,
                     salesChannelId: salesChannel.id,
                     email: "status-hook-b@test.com",
                     name: "StatusHookB",
                     stocked: 10,
-                    offerPrice: 2000,
+                    price: 2000,
                 })
             })
 
@@ -126,10 +130,10 @@ medusaIntegrationTestRunner({
                     )
                 ).data.cart
 
-                for (const offerId of [sellerA.offer.id, sellerB.offer.id]) {
+                for (const variantId of [sellerA.variantId, sellerB.variantId]) {
                     await api.post(
                         `/store/carts/${cart.id}/line-items`,
-                        { offer_id: offerId, quantity: 1 },
+                        { variant_id: variantId, quantity: 1 },
                         storeHeaders
                     )
                 }

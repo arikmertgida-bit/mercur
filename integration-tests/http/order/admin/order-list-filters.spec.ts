@@ -64,11 +64,11 @@ medusaIntegrationTestRunner({
             let salesChannel: SalesChannelDTO
             let prerequisiteCounter = 0
 
-            const seedSellerOfferWithShipping = async (opts: {
+            const seedSellerProductWithShipping = async (opts: {
                 email: string
                 name: string
                 stocked: number
-                offerPrice: number
+                price: number
             }): Promise<SellerSeed> => {
                 const result = await createSellerUser(appContainer, {
                     email: opts.email,
@@ -109,9 +109,11 @@ medusaIntegrationTestRunner({
                 ).data.fulfillment_set.service_zones.find(
                     (zone: { name: string }) => zone.name === `SZ${tag}`
                 )
-                const shippingProfile = await createShippingProfile(appContainer, {
-                    name: `SP${tag}`,
-                })
+                const shippingProfile = await createShippingProfile(
+                    appContainer,
+                    { name: `SP${tag}` },
+                    { seller_id: result.seller.id }
+                )
 
                 await api.post(
                     `/vendor/stock-locations/${stockLocation.id}/fulfillment-providers`,
@@ -156,7 +158,7 @@ medusaIntegrationTestRunner({
                             sku: `V${tag}`,
                             prices: [
                                 {
-                                    amount: opts.offerPrice,
+                                    amount: opts.price,
                                     currency_code: "usd",
                                 },
                             ],
@@ -426,18 +428,18 @@ medusaIntegrationTestRunner({
                     },
                 })
 
-                seller1Seed = await seedSellerOfferWithShipping({
+                seller1Seed = await seedSellerProductWithShipping({
                     email: "admin-filter-s1@test.com",
                     name: "AdminFilterS1",
                     stocked: 20,
-                    offerPrice: 2500,
+                    price: 2500,
                 })
 
-                seller2Seed = await seedSellerOfferWithShipping({
+                seller2Seed = await seedSellerProductWithShipping({
                     email: "admin-filter-s2@test.com",
                     name: "AdminFilterS2",
                     stocked: 20,
-                    offerPrice: 2500,
+                    price: 2500,
                 })
             })
 
@@ -487,16 +489,15 @@ medusaIntegrationTestRunner({
                     const group = (
                         response.data.order_groups as {
                             id: string
-                            orders: { seller?: { id: string } | null }[]
+                            orders: { id: string }[]
+                            seller_count: number
+                            total: number
                         }[]
                     ).find((g) => g.id === orderGroupId)
                     expect(group).toBeDefined()
-                    expect(group?.orders.length).toEqual(1)
-                    expect(
-                        group?.orders.every(
-                            (o) => o.seller?.id === seller1Seed.sellerId
-                        )
-                    ).toBe(true)
+                    expect(group?.orders.length).toEqual(2)
+                    expect(group?.seller_count).toEqual(2)
+                    expect(group?.total).toEqual(baseline.total)
                 })
 
                 it("returns an empty list for an unknown seller", async () => {
@@ -513,9 +514,9 @@ medusaIntegrationTestRunner({
 
                 it("intersects id with seller_id instead of dropping both filters", async () => {
                     const { orderGroupId: groupA } = await completeCartCheckout(
-                        seller1Seed.offer.id
+                        seller1Seed.variant.id
                     )
-                    await completeCartCheckout(seller2Seed.offer.id)
+                    await completeCartCheckout(seller2Seed.variant.id)
 
                     const mismatch = await api.get(
                         `/admin/order-groups?id=${groupA}&seller_id=${seller2Seed.sellerId}`,
@@ -592,7 +593,7 @@ medusaIntegrationTestRunner({
 
                 it("matches groups by the payment status computed for their orders", async () => {
                     const { orderGroupId } = await completeCartCheckout(
-                        seller1Seed.offer.id
+                        seller1Seed.variant.id
                     )
                     const status = await paymentStatusOf(orderGroupId)
                     expect(["authorized", "captured"]).toContain(status)
@@ -604,7 +605,7 @@ medusaIntegrationTestRunner({
 
                 it("follows the status after the payment is captured", async () => {
                     const { orderGroupId, order } = await completeCartCheckout(
-                        seller1Seed.offer.id
+                        seller1Seed.variant.id
                     )
 
                     const query = appContainer.resolve(
@@ -655,7 +656,7 @@ medusaIntegrationTestRunner({
 
                 it("finds a group by its own display_id, with or without the #G prefix", async () => {
                     const { orderGroupId } = await completeCartCheckout(
-                        seller1Seed.offer.id
+                        seller1Seed.variant.id
                     )
                     const { display_id } = await detail(orderGroupId)
 
@@ -672,8 +673,8 @@ medusaIntegrationTestRunner({
 
                 it("finds a group by the display_id of one of its orders", async () => {
                     const { orderGroupId } = await completeMultiSellerCheckout([
-                        seller1Seed.offer.id,
-                        seller2Seed.offer.id,
+                        seller1Seed.variant.id,
+                        seller2Seed.variant.id,
                     ])
                     const group = await detail(orderGroupId)
                     const orderDisplayId = group.orders[1].display_id
@@ -690,7 +691,7 @@ medusaIntegrationTestRunner({
 
                 it("still matches id fragments", async () => {
                     const { orderGroupId } = await completeCartCheckout(
-                        seller1Seed.offer.id
+                        seller1Seed.variant.id
                     )
 
                     const response = await api.get(
@@ -708,11 +709,11 @@ medusaIntegrationTestRunner({
                 it("matches groups by child order status without shrinking seller_count or total", async () => {
                     const { orderGroupId, orders } =
                         await completeMultiSellerCheckout([
-                            seller1Seed.offer.id,
-                            seller2Seed.offer.id,
+                            seller1Seed.variant.id,
+                            seller2Seed.variant.id,
                         ])
                     const { orderGroupId: pendingOnlyGroupId } =
-                        await completeCartCheckout(seller1Seed.offer.id)
+                        await completeCartCheckout(seller1Seed.variant.id)
 
                     const baseline = (
                         await api.get(
@@ -768,13 +769,13 @@ medusaIntegrationTestRunner({
             describe("GET /admin/order-groups?order=...", () => {
                 it("sorts by display_id in both directions", async () => {
                     const { orderGroupId: first } = await completeCartCheckout(
-                        seller1Seed.offer.id
+                        seller1Seed.variant.id
                     )
                     const { orderGroupId: second } = await completeCartCheckout(
-                        seller2Seed.offer.id
+                        seller2Seed.variant.id
                     )
                     const { orderGroupId: third } = await completeCartCheckout(
-                        seller1Seed.offer.id
+                        seller1Seed.variant.id
                     )
 
                     const ascending = await api.get(

@@ -46,12 +46,12 @@ medusaIntegrationTestRunner({
         await createAdminUser(dbConnection, adminHeaders, container)
       })
 
-      // Seed a seller that owns one offer-backed inventory item with stock, then
+      // Seed a seller that owns one variant inventory item with stock, then
       // return everything needed to create/inspect its reservations.
       const seedSellerWithReservation = async (opts: {
         email: string
         name: string
-        offerSku: string
+        sku: string
       }) => {
         const { seller, headers } = await createSellerUser(container, {
           email: opts.email,
@@ -95,9 +95,11 @@ medusaIntegrationTestRunner({
           (z: { name: string }) => z.name === `SZ${tag}`
         )
 
-        const shippingProfile = await createShippingProfile(container, {
-            name: `SP${tag}`,
-        })
+        const shippingProfile = await createShippingProfile(
+          container,
+          { name: `SP${tag}` },
+          { seller_id: sellerId }
+        )
 
         await api.post(
           `/vendor/stock-locations/${stockLocation.id}/fulfillment-providers`,
@@ -128,7 +130,15 @@ medusaIntegrationTestRunner({
 
         const product = await createVendorProduct(api, headers, {
           title: `Prod${tag}`,
-          sku: `V${tag}`,
+          variants: [
+            {
+              title: "Default",
+              sku: opts.sku,
+              prices: [{ amount: 1000, currency_code: "usd" }],
+              inventory: [{ location_id: stockLocation.id, quantity: 100 }],
+            },
+          ],
+          extra: { shipping_profile_id: shippingProfile.id },
         })
         await api.post(
           `/vendor/sales-channels/${salesChannel.id}/products`,
@@ -136,30 +146,9 @@ medusaIntegrationTestRunner({
           headers
         )
 
-        await api.post(
-          `/vendor/offers`,
-          {
-            sku: opts.offerSku,
-            variant_id: product.variants[0].id,
-            shipping_profile_id: shippingProfile.id,
-            inventory_items: [
-              {
-                sku: opts.offerSku,
-                title: `Item${tag}`,
-                required_quantity: 1,
-                stock_levels: [
-                  { location_id: stockLocation.id, stocked_quantity: 100 },
-                ],
-              },
-            ],
-            prices: [{ amount: 1000, currency_code: "usd" }],
-          },
-          headers
-        )
-
         // Resolve the seller's own inventory item + create a reservation on it.
         const item = (
-          await api.get(`/vendor/inventory-items?sku=${opts.offerSku}`, headers)
+          await api.get(`/vendor/inventory-items?sku=${opts.sku}`, headers)
         ).data.inventory_items[0]
 
         const reservation = (
@@ -181,12 +170,12 @@ medusaIntegrationTestRunner({
         const a = await seedSellerWithReservation({
           email: "resv-a@medusa.js",
           name: "Resv Store A",
-          offerSku: "RESV-OF-A",
+          sku: "RESV-INV-A",
         })
         await seedSellerWithReservation({
           email: "resv-b@medusa.js",
           name: "Resv Store B",
-          offerSku: "RESV-OF-B",
+          sku: "RESV-INV-B",
         })
 
         const res = await api.get(`/vendor/reservations`, a.headers)
@@ -207,7 +196,7 @@ medusaIntegrationTestRunner({
         const a = await seedSellerWithReservation({
           email: "resv-p@medusa.js",
           name: "Resv Store P",
-          offerSku: "RESV-OF-P",
+          sku: "RESV-INV-P",
         })
 
         const res = await api.get(`/vendor/reservations`, a.headers)
@@ -218,32 +207,31 @@ medusaIntegrationTestRunner({
             inventory_item_id: string
             inventory_item?: {
               sku?: string
-              offers?: Array<{ product?: { id?: string; title?: string } }>
+              variants?: Array<{ product?: { id?: string; title?: string } }>
             }
           }>
         ).find((r) => r.inventory_item_id === a.itemId)
 
-        expect(row?.inventory_item?.sku).toBe("RESV-OF-P")
-        // Product column data must resolve through the offer link.
-        expect(row?.inventory_item?.offers?.[0]?.product?.id).toBeTruthy()
-        expect(row?.inventory_item?.offers?.[0]?.product?.title).toBeTruthy()
+        expect(row?.inventory_item?.sku).toBe("RESV-INV-P")
+        expect(row?.inventory_item?.variants?.[0]?.product?.id).toBeTruthy()
+        expect(row?.inventory_item?.variants?.[0]?.product?.title).toBeTruthy()
       })
 
       it("filters the list by sku, scoped to the caller", async () => {
         const a = await seedSellerWithReservation({
           email: "resv-g@medusa.js",
           name: "Resv Store G",
-          offerSku: "RESV-OF-G",
+          sku: "RESV-INV-G",
         })
         await seedSellerWithReservation({
           email: "resv-h@medusa.js",
           name: "Resv Store H",
-          offerSku: "RESV-OF-H",
+          sku: "RESV-INV-H",
         })
 
         // A's own sku returns A's reservation.
         const match = await api.get(
-          `/vendor/reservations?sku=RESV-OF-G`,
+          `/vendor/reservations?sku=RESV-INV-G`,
           a.headers
         )
         expect(match.status).toEqual(200)
@@ -252,7 +240,7 @@ medusaIntegrationTestRunner({
 
         // B's sku, queried by A, never leaks B's reservation.
         const leak = await api.get(
-          `/vendor/reservations?sku=RESV-OF-H`,
+          `/vendor/reservations?sku=RESV-INV-H`,
           a.headers
         )
         expect(leak.status).toEqual(200)
@@ -263,12 +251,12 @@ medusaIntegrationTestRunner({
         const a = await seedSellerWithReservation({
           email: "resv-c@medusa.js",
           name: "Resv Store C",
-          offerSku: "RESV-OF-C",
+          sku: "RESV-INV-C",
         })
         const b = await seedSellerWithReservation({
           email: "resv-d@medusa.js",
           name: "Resv Store D",
-          offerSku: "RESV-OF-D",
+          sku: "RESV-INV-D",
         })
 
         const res = await api.get(
@@ -283,12 +271,12 @@ medusaIntegrationTestRunner({
         const a = await seedSellerWithReservation({
           email: "resv-e@medusa.js",
           name: "Resv Store E",
-          offerSku: "RESV-OF-E",
+          sku: "RESV-INV-E",
         })
         const b = await seedSellerWithReservation({
           email: "resv-f@medusa.js",
           name: "Resv Store F",
-          offerSku: "RESV-OF-F",
+          sku: "RESV-INV-F",
         })
 
         // A cannot read B's reservation by id.

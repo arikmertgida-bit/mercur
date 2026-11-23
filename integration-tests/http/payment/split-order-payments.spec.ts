@@ -14,7 +14,7 @@ import {
 } from "../../helpers/create-admin-user"
 import {
     completeSplitOrderGroupCheckout,
-    seedSellerOfferWithShipping,
+    seedSellerProductWithShipping,
 } from "../../helpers/split-order-checkout"
 
 jest.setTimeout(180000)
@@ -88,23 +88,23 @@ medusaIntegrationTestRunner({
                     },
                 })
 
-                sellerA = await seedSellerOfferWithShipping({
+                sellerA = await seedSellerProductWithShipping({
                     container: appContainer,
                     api,
                     salesChannelId: salesChannel.id,
                     email: "split-payment-a@test.com",
                     name: "SplitPayA",
                     stocked: 20,
-                    offerPrice: 2500,
+                    price: 2500,
                 })
-                sellerB = await seedSellerOfferWithShipping({
+                sellerB = await seedSellerProductWithShipping({
                     container: appContainer,
                     api,
                     salesChannelId: salesChannel.id,
                     email: "split-payment-b@test.com",
                     name: "SplitPayB",
                     stocked: 20,
-                    offerPrice: 4000,
+                    price: 4000,
                 })
             })
 
@@ -175,14 +175,14 @@ medusaIntegrationTestRunner({
                 }
             }
 
-            const checkout = async (offerIds: string[]) => {
+            const checkout = async (variantIds: string[]) => {
                 const orders = await completeSplitOrderGroupCheckout({
                     container: appContainer,
                     api,
                     storeHeaders,
                     regionId: region.id,
                     salesChannelId: salesChannel.id,
-                    offerIds,
+                    variantIds,
                     email: customerEmail,
                 })
 
@@ -202,7 +202,7 @@ medusaIntegrationTestRunner({
             }
 
             const checkoutBothSellers = () =>
-                checkout([sellerA.offer.id, sellerB.offer.id])
+                checkout([sellerA.variantId, sellerB.variantId])
 
             const capture = (paymentId: string) =>
                 api.post(
@@ -242,7 +242,7 @@ medusaIntegrationTestRunner({
                 })
 
                 it("lets a seller capture the payment of a cart that only holds its own order", async () => {
-                    const { orderA } = await checkout([sellerA.offer.id])
+                    const { orderA } = await checkout([sellerA.variantId])
                     const payment = await cartPayment(orderA)
 
                     const response = await api.post(
@@ -260,7 +260,7 @@ medusaIntegrationTestRunner({
                 })
 
                 it("does not let a seller capture a payment of a cart it has no order in", async () => {
-                    const { orderB } = await checkout([sellerB.offer.id])
+                    const { orderB } = await checkout([sellerB.variantId])
                     const payment = await cartPayment(orderB)
 
                     const response = await api

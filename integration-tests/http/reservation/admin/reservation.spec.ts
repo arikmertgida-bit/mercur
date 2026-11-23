@@ -24,7 +24,7 @@ jest.setTimeout(180000)
  *
  * Data path under test:
  *   reservation -> inventory_item -> seller          (inventory-item-seller-link)
- *   reservation -> inventory_item -> offers -> product (offer-product-link)
+ *   reservation -> inventory_item -> variants -> product (Medusa's own relation)
  */
 
 const approveSeller = async (
@@ -68,43 +68,30 @@ medusaIntegrationTestRunner({
           headers
         )
 
-        const shippingProfile = await createShippingProfile(appContainer, {
-            name: `SP${tag}`,
-        })
-
-        // The offer flow now titles the inventory item after the variant, so
-        // give the variant the unique tag to keep the lookup below stable.
-        const product = await createVendorProduct(api, headers, {
-          title: `Prod${tag}`,
-          sku: `V${tag}`,
-          variantTitle: `Inv${tag}`,
-        })
-
-        await api.post(
-          `/vendor/offers`,
-          {
-            sku: `OF${tag}`,
-            variant_id: product.variants[0].id,
-            shipping_profile_id: shippingProfile.id,
-            inventory_items: [
-              {
-                title: `Inv${tag}`,
-                sku: `SKU${tag}`,
-                required_quantity: 1,
-                stock_levels: [
-                  {
-                    location_id: stockLocation.id,
-                    stocked_quantity: opts.stocked,
-                  },
-                ],
-              },
-            ],
-            prices: [{ amount: 1000, currency_code: "usd" }],
-          },
-          headers
+        const sellerId = (seller as any).id
+        const shippingProfile = await createShippingProfile(
+          appContainer,
+          { name: `SP${tag}` },
+          { seller_id: sellerId }
         )
 
-        // Resolve the inventory item created for the offer + its sku.
+        // The variant's inventory item takes the variant's title, so the unique
+        // tag keeps the lookup below stable.
+        const product = await createVendorProduct(api, headers, {
+          title: `Prod${tag}`,
+          variants: [
+            {
+              title: `Inv${tag}`,
+              sku: `SKU${tag}`,
+              prices: [{ amount: 1000, currency_code: "usd" }],
+              inventory: [
+                { location_id: stockLocation.id, quantity: opts.stocked },
+              ],
+            },
+          ],
+          extra: { shipping_profile_id: shippingProfile.id },
+        })
+
         const inventoryItem = (
           await api.get(
             `/admin/inventory-items?q=Inv${tag}`,
@@ -181,7 +168,7 @@ medusaIntegrationTestRunner({
         expect(row.inventory_item.sku).toEqual(sellerA.inventoryItem.sku)
         expect(row.inventory_item.seller?.id).toEqual(sellerA.sellerId)
         expect(row.inventory_item.seller?.name).toEqual("StoreA")
-        expect(row.inventory_item.offers?.[0]?.product?.id).toEqual(
+        expect(row.inventory_item.variants?.[0]?.product?.id).toEqual(
           sellerA.product.id
         )
       })

@@ -28,7 +28,7 @@ medusaIntegrationTestRunner({
       let storeHeaders: any
       let region: any
       let salesChannel: any
-      let offer: any
+      let variantId: string
 
       const approveSeller = async (sellerId: string) => {
         const sellerModule: any = appContainer.resolve(MercurModules.SELLER)
@@ -144,8 +144,19 @@ medusaIntegrationTestRunner({
 
         const product = await createVendorProduct(api, sellerHeaders, {
           title: "Admin Promo Product",
-          sku: `ADMIN-PROMO-${Date.now()}`,
+          variants: [
+            {
+              title: "Default",
+              sku: `ADMIN-PROMO-${Date.now()}`,
+              prices: [{ amount: 2000, currency_code: "usd" }],
+              inventory: [
+                { location_id: prerequisites.stockLocation.id, quantity: 100 },
+              ],
+            },
+          ],
+          extra: { shipping_profile_id: prerequisites.shippingProfile.id },
         })
+        variantId = product.variants[0].id
         await api.post(
           `/vendor/sales-channels/${salesChannel.id}/products`,
           { add: [product.id] },
@@ -172,31 +183,6 @@ medusaIntegrationTestRunner({
           },
           sellerHeaders
         )
-
-        offer = (
-          await api.post(
-            `/vendor/offers`,
-            {
-              sku: `OF-ADMIN-PROMO-${Date.now()}`,
-              variant_id: product.variants[0].id,
-              shipping_profile_id: prerequisites.shippingProfile.id,
-              inventory_items: [
-                {
-                  title: "Admin Promo Inventory",
-                  required_quantity: 1,
-                  stock_levels: [
-                    {
-                      location_id: prerequisites.stockLocation.id,
-                      stocked_quantity: 100,
-                    },
-                  ],
-                },
-              ],
-              prices: [{ amount: 2000, currency_code: "usd" }],
-            },
-            sellerHeaders
-          )
-        ).data.offer
       })
 
       it("completes checkout when an admin (sellerless) promotion is applied", async () => {
@@ -240,7 +226,7 @@ medusaIntegrationTestRunner({
 
         await api.post(
           `/store/carts/${cart.id}/line-items`,
-          { offer_id: offer.id, quantity: 1 },
+          { variant_id: variantId, quantity: 1 },
           storeHeaders
         )
 

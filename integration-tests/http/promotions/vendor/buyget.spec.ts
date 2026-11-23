@@ -23,7 +23,6 @@ medusaIntegrationTestRunner({
         const response = await api.post(
           `/vendor/promotions`,
           {
-            code: "BUYGET-OK",
             type: "buyget",
             status: "active",
             application_method: {
@@ -66,7 +65,6 @@ medusaIntegrationTestRunner({
           .post(
             `/vendor/promotions`,
             {
-              code: "BUYGET-NO-BUY",
               type: "buyget",
               status: "active",
               application_method: {
@@ -78,9 +76,9 @@ medusaIntegrationTestRunner({
                 buy_rules_min_quantity: 1,
                 target_rules: [
                   {
-                    attribute: "items.metadata.offer_id",
+                    attribute: "items.product.id",
                     operator: "in",
-                    values: ["offer_x"],
+                    values: ["prod_x"],
                   },
                 ],
               },
@@ -97,7 +95,6 @@ medusaIntegrationTestRunner({
           .post(
             `/vendor/promotions`,
             {
-              code: "BUYGET-NO-QTY",
               type: "buyget",
               status: "active",
               application_method: {
@@ -108,16 +105,16 @@ medusaIntegrationTestRunner({
                 max_quantity: 1,
                 target_rules: [
                   {
-                    attribute: "items.metadata.offer_id",
+                    attribute: "items.product.id",
                     operator: "in",
-                    values: ["offer_get"],
+                    values: ["prod_get"],
                   },
                 ],
                 buy_rules: [
                   {
-                    attribute: "items.metadata.offer_id",
+                    attribute: "items.product.id",
                     operator: "in",
-                    values: ["offer_buy"],
+                    values: ["prod_buy"],
                   },
                 ],
               },

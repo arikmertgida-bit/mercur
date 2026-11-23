@@ -7,7 +7,6 @@
   "http/payouts/vendor/payouts.spec.ts": 130,
   "http/customer/vendor/customer.spec.ts": 110,
   "http/product/vendor/product.spec.ts": 75,
-  "http/order/vendor/order-offers.spec.ts": 90,
   "http/order/vendor/order-edit.spec.ts": 90,
   "http/order/vendor/order-exchange.spec.ts": 90,
   "http/order/vendor/order-claim.spec.ts": 90,

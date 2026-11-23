@@ -73,7 +73,7 @@ medusaIntegrationTestRunner({
         const ids = idsOf(attributes)
         expect(ids).toEqual(
           expect.arrayContaining([
-            "offer",
+            "product",
             "product_category",
             "product_collection",
             "product_type",
@@ -81,9 +81,11 @@ medusaIntegrationTestRunner({
           ])
         )
 
-        const offer = attributes.find((a: any) => a.id === "offer")
-        expect(offer.value).toEqual("items.metadata.offer_id")
-        const operatorIds = offer.operators.map((o: any) => o.id)
+        expect(ids).not.toContain("offer")
+
+        const product = attributes.find((a: any) => a.id === "product")
+        expect(product.value).toEqual("items.product.id")
+        const operatorIds = product.operators.map((o: any) => o.id)
         expect(operatorIds).toEqual(
           expect.arrayContaining(["in", "eq", "ne"])
         )
@@ -133,7 +135,7 @@ medusaIntegrationTestRunner({
         )
 
         const buyIds = idsOf(buyRules.data.attributes)
-        expect(buyIds).toContain("offer")
+        expect(buyIds).toContain("product")
         expect(buyIds).toContain("buy_rules_min_quantity")
 
         const minQty = buyRules.data.attributes.find(
