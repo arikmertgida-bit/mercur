@@ -2443,7 +2443,7 @@
   },
   "promotions": {
     "templates": {
-      "amountOffOffers": {
+      "amountOffItems": {
         "title": "Отстъпка от продукти",
         "description": "Отстъпка за избрани продукти"
       },

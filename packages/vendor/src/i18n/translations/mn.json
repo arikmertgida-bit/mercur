@@ -2443,7 +2443,7 @@
   },
   "promotions": {
     "templates": {
-      "amountOffOffers": {
+      "amountOffItems": {
         "title": "Бүтээгдэхүүний дүнгийн хөнгөлөлт",
         "description": "Сонгосон бүтээгдэхүүнд хөнгөлөлт үзүүлэх"
       },

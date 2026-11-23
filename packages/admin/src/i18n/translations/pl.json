@@ -2725,7 +2725,7 @@
         "title": "Limit użycia",
         "description": "Maksymalna liczba użyć tej promocji we wszystkich zamówieniach. Pozostaw puste, aby nie ustawiać limitu."
       },
-      "storeOffers": {
+      "storeProducts": {
         "title": "Do produktów którego sklepu zostanie zastosowana promocja?",
         "description": "Ta promocja zostanie zastosowana tylko do produktów wybranego sklepu.",
         "label": "Sklep",

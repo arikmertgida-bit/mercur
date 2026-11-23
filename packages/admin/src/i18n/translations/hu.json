@@ -2685,7 +2685,7 @@
         "title": "Felhasználási korlát",
         "description": "Az az érték, ahányszor ez a promóció legfeljebb felhasználható az összes rendelés között. Hagyja üresen a korlátlan felhasználáshoz."
       },
-      "storeOffers": {
+      "storeProducts": {
         "title": "Melyik áruház termékeire vonatkozzon a promóció?",
         "description": "Válassza ki azt az áruházat, amelynek termékeire ez a promóció vonatkozik.",
         "label": "Áruház",

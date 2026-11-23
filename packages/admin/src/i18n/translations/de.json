@@ -2685,7 +2685,7 @@
         "title": "Nutzungslimit",
         "description": "Maximale Anzahl, wie oft diese Aktion über alle Bestellungen hinweg verwendet werden kann. Leer lassen für unbegrenzte Nutzung."
       },
-      "storeOffers": {
+      "storeProducts": {
         "title": "Auf die Produkte welches Shops soll die Aktion angewendet werden?",
         "description": "Diese Aktion gilt nur für die Produkte des ausgewählten Shops.",
         "label": "Shop",

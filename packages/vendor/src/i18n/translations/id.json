@@ -2443,7 +2443,7 @@
   },
   "promotions": {
     "templates": {
-      "amountOffOffers": {
+      "amountOffItems": {
         "title": "Potongan harga untuk item",
         "description": "Diskon untuk item yang dipilih"
       },

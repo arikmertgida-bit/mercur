@@ -2718,7 +2718,7 @@
         "title": "Naudojimo riba",
         "description": "Maksimalus kartų skaičius, kiek ši akcija gali būti panaudota visuose užsakymuose. Palikite tuščią neribotam naudojimui."
       },
-      "storeOffers": {
+      "storeProducts": {
         "title": "Kurios parduotuvės prekėms bus taikoma akcija?",
         "description": "Ši akcija bus taikoma tik pasirinktos parduotuvės prekėms.",
         "label": "Parduotuvė",

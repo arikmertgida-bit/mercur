@@ -2443,7 +2443,7 @@
   },
   "promotions": {
     "templates": {
-      "amountOffOffers": {
+      "amountOffItems": {
         "title": "Giảm số tiền cố định cho sản phẩm",
         "description": "Giảm giá cho các sản phẩm được chọn"
       },

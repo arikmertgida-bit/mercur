@@ -2689,7 +2689,7 @@
         "title": "Giới hạn sử dụng",
         "description": "Số lần tối đa khuyến mãi này có thể được sử dụng trên tất cả đơn hàng. Để trống nếu không giới hạn."
       },
-      "storeOffers": {
+      "storeProducts": {
         "title": "Khuyến mãi sẽ được áp dụng cho sản phẩm của cửa hàng nào?",
         "description": "Chọn cửa hàng có sản phẩm được áp dụng khuyến mãi này.",
         "label": "Cửa hàng",

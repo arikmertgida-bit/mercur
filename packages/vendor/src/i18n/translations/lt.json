@@ -2473,7 +2473,7 @@
   },
   "promotions": {
     "templates": {
-      "amountOffOffers": {
+      "amountOffItems": {
         "title": "Fiksuota nuolaida prekėms",
         "description": "Nuolaida pasirinktoms prekėms"
       },

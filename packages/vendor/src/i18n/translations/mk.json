@@ -2443,7 +2443,7 @@
   },
   "promotions": {
     "templates": {
-      "amountOffOffers": {
+      "amountOffItems": {
         "title": "Фиксен попуст на производи",
         "description": "Попуст на избраните производи"
       },

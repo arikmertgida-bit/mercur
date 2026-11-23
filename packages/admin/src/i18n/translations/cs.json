@@ -2722,7 +2722,7 @@
         "title": "Limit použití",
         "description": "Maximální počet použití této propagace napříč všemi objednávkami. Ponechte prázdné pro neomezené použití."
       },
-      "storeOffers": {
+      "storeProducts": {
         "title": "Na produkty kterého obchodu se propagace uplatní?",
         "description": "Tato propagace se uplatní pouze na produkty vybraného obchodu.",
         "label": "Obchod",

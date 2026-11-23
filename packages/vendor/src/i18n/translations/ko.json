@@ -2443,7 +2443,7 @@
   },
   "promotions": {
     "templates": {
-      "amountOffOffers": {
+      "amountOffItems": {
         "title": "상품 할인 금액",
         "description": "선택한 상품을 할인합니다"
       },

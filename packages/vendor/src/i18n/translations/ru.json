@@ -2503,7 +2503,7 @@
   },
   "promotions": {
     "templates": {
-      "amountOffOffers": {
+      "amountOffItems": {
         "title": "Фиксированная скидка на товары",
         "description": "Скидка на выбранные товары"
       },

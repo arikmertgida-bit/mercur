@@ -2473,7 +2473,7 @@
   },
   "promotions": {
     "templates": {
-      "amountOffOffers": {
+      "amountOffItems": {
         "title": "הנחת סכום על פריטים",
         "description": "הנחה על פריטים נבחרים"
       },

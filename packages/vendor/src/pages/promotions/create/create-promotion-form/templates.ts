@@ -27,10 +27,10 @@ const commonHiddenFields = ["type", "application_method.type"]
 
 export const templates: PromotionTemplate[] = [
   {
-    id: "amount_off_offers",
+    id: "amount_off_items",
     type: "standard",
-    titleKey: "promotions.templates.amountOffOffers.title",
-    descriptionKey: "promotions.templates.amountOffOffers.description",
+    titleKey: "promotions.templates.amountOffItems.title",
+    descriptionKey: "promotions.templates.amountOffItems.description",
     hiddenFields: [...commonHiddenFields],
     defaults: {
       is_automatic: "false",

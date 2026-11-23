@@ -2685,7 +2685,7 @@
         "title": "Gebruikslimiet",
         "description": "Maximum aantal keer dat deze promotie kan worden gebruikt over alle bestellingen. Laat leeg voor onbeperkt gebruik."
       },
-      "storeOffers": {
+      "storeProducts": {
         "title": "Op de producten van welke winkel wordt de promotie toegepast?",
         "description": "Deze promotie wordt alleen toegepast op de producten van de winkel die u kiest.",
         "label": "Winkel",

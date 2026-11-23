@@ -7248,7 +7248,7 @@
                 }
               }
             },
-            "storeOffers": {
+            "storeProducts": {
               "type": "object",
               "properties": {
                 "title": {

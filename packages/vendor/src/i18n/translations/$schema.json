@@ -6949,7 +6949,7 @@
         "templates": {
           "type": "object",
           "properties": {
-            "amountOffOffers": {
+            "amountOffItems": {
               "type": "object",
               "properties": {
                 "title": {

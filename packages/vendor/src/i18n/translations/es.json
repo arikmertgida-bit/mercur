@@ -2495,7 +2495,7 @@
   },
   "promotions": {
     "templates": {
-      "amountOffOffers": {
+      "amountOffItems": {
         "title": "Monto de descuento en productos",
         "description": "Descuento en los productos seleccionados"
       },

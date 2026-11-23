@@ -2718,7 +2718,7 @@
         "title": "Limite de uso",
         "description": "Número máximo de vezes que esta promoção pode ser usada em todos os pedidos. Deixe em branco para uso ilimitado."
       },
-      "storeOffers": {
+      "storeProducts": {
         "title": "A promoção será aplicada aos produtos de qual loja?",
         "description": "Esta promoção se aplica somente aos produtos da loja que você selecionar.",
         "label": "Loja",

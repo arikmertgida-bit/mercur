@@ -2763,7 +2763,7 @@
         "title": "使用次數限制",
         "description": "此促銷可在所有訂單中使用的最大次數。留空表示無限制。"
       },
-      "storeOffers": {
+      "storeProducts": {
         "title": "促銷要套用到哪間商店的商品？",
         "description": "選擇此促銷要套用其商品的商店。",
         "label": "商店",

@@ -2796,7 +2796,7 @@
         "title": "Limită de utilizare",
         "description": "Numărul maxim de utilizări ale acestei promoții, pentru toate comenzile. Lăsați gol pentru utilizare nelimitată."
       },
-      "storeOffers": {
+      "storeProducts": {
         "title": "Pentru produsele cărui magazin se va aplica promoția?",
         "description": "Alegeți magazinul pentru ale cărui produse se aplică această promoție.",
         "label": "Magazin",

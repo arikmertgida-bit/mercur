@@ -2743,7 +2743,7 @@
         "title": "Kullanım Limiti",
         "description": "Bu promosyonun tüm siparişlerde kullanılabileceği maksimum sayı. Sınırsız kullanım için boş bırakın."
       },
-      "storeOffers": {
+      "storeProducts": {
         "title": "Promosyon hangi mağazanın ürünlerine uygulanacak?",
         "description": "Bu promosyon yalnızca seçtiğiniz mağazanın ürünlerine uygulanır.",
         "label": "Mağaza",

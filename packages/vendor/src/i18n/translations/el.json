@@ -2443,7 +2443,7 @@
   },
   "promotions": {
     "templates": {
-      "amountOffOffers": {
+      "amountOffItems": {
         "title": "Έκπτωση ποσού σε προϊόντα",
         "description": "Έκπτωση σε επιλεγμένα προϊόντα"
       },

@@ -2473,7 +2473,7 @@
   },
   "promotions": {
     "templates": {
-      "amountOffOffers": {
+      "amountOffItems": {
         "title": "Importo di sconto sui prodotti",
         "description": "Sconto sugli articoli selezionati"
       },

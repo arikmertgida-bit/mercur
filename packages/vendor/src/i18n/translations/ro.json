@@ -2472,7 +2472,7 @@
   },
   "promotions": {
     "templates": {
-      "amountOffOffers": {
+      "amountOffItems": {
         "title": "Reducere valorică la produse",
         "description": "Reduceți prețul articolelor selectate"
       },

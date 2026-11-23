@@ -2473,7 +2473,7 @@
   },
   "promotions": {
     "templates": {
-      "amountOffOffers": {
+      "amountOffItems": {
         "title": "Popust na proizvode",
         "description": "Popust na odabrane proizvode"
       },

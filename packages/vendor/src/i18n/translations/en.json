@@ -2451,7 +2451,7 @@
   },
   "promotions": {
     "templates": {
-      "amountOffOffers": {
+      "amountOffItems": {
         "title": "Amount off items",
         "description": "Discount selected items"
       },

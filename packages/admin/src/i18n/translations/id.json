@@ -2685,7 +2685,7 @@
         "title": "Batas penggunaan",
         "description": "Jumlah maksimum promosi ini dapat digunakan di semua pesanan. Kosongkan untuk penggunaan tanpa batas."
       },
-      "storeOffers": {
+      "storeProducts": {
         "title": "Pada produk toko mana promosi ini akan diterapkan?",
         "description": "Promosi ini hanya berlaku untuk produk dari toko yang Anda pilih.",
         "label": "Toko",

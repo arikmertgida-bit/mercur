@@ -2718,7 +2718,7 @@
         "title": "Ograničenje korištenja",
         "description": "Maksimalan broj puta koliko se ova promocija može iskoristiti u svim narudžbama. Ostavite prazno za neograničeno korištenje."
       },
-      "storeOffers": {
+      "storeProducts": {
         "title": "Na proizvode koje prodavnice će se promocija primjenjivati?",
         "description": "Ova promocija se primjenjuje samo na proizvode prodavnice koju odaberete.",
         "label": "Prodavnica",

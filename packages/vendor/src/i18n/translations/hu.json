@@ -2443,7 +2443,7 @@
   },
   "promotions": {
     "templates": {
-      "amountOffOffers": {
+      "amountOffItems": {
         "title": "Fix összegű kedvezmény a termékekre",
         "description": "Kedvezmény a kiválasztott tételekre"
       },

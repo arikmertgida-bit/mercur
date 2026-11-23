@@ -2718,7 +2718,7 @@
         "title": "Limite d'utilisation",
         "description": "Nombre maximal de fois que cette promotion peut être utilisée sur toutes les commandes. Laissez vide pour une utilisation illimitée."
       },
-      "storeOffers": {
+      "storeProducts": {
         "title": "À quels produits de quelle boutique la promotion s'appliquera-t-elle ?",
         "description": "Cette promotion s'applique uniquement aux produits de la boutique sélectionnée.",
         "label": "Boutique",

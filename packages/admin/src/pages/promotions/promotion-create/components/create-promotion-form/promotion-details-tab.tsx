@@ -707,15 +707,15 @@ const Root = ({ currentTemplate }: PromotionDetailsTabProps) => {
                 <Heading
                   level="h2"
                   className="mb-2"
-                  data-testid="promotion-create-form-store-offers-heading"
+                  data-testid="promotion-create-form-store-products-heading"
                 >
-                  {t("promotions.form.storeOffers.title")}
+                  {t("promotions.form.storeProducts.title")}
                 </Heading>
                 <Text
                   className="txt-small text-ui-fg-subtle"
-                  data-testid="promotion-create-form-store-offers-description"
+                  data-testid="promotion-create-form-store-products-description"
                 >
-                  {t("promotions.form.storeOffers.description")}
+                  {t("promotions.form.storeProducts.description")}
                 </Text>
               </div>
 
@@ -729,7 +729,7 @@ const Root = ({ currentTemplate }: PromotionDetailsTabProps) => {
                       data-testid="promotion-create-form-store-item"
                     >
                       <Form.Label data-testid="promotion-create-form-store-label">
-                        {t("promotions.form.storeOffers.label")}
+                        {t("promotions.form.storeProducts.label")}
                       </Form.Label>
 
                       <ConditionalTooltip
@@ -746,7 +746,7 @@ const Root = ({ currentTemplate }: PromotionDetailsTabProps) => {
                               onSearchValueChange={stores.onSearchValueChange}
                               fetchNextPage={stores.fetchNextPage}
                               placeholder={t(
-                                "promotions.form.storeOffers.placeholder",
+                                "promotions.form.storeProducts.placeholder",
                               )}
                               disabled={storesGate.denied}
                               data-testid="promotion-create-form-store-select"

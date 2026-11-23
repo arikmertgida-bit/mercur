@@ -2473,7 +2473,7 @@
   },
   "promotions": {
     "templates": {
-      "amountOffOffers": {
+      "amountOffItems": {
         "title": "Desconto de valor nos itens",
         "description": "Desconto nos itens selecionados"
       },

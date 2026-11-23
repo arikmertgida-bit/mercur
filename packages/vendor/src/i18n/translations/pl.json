@@ -2538,7 +2538,7 @@
   },
   "promotions": {
     "templates": {
-      "amountOffOffers": {
+      "amountOffItems": {
         "title": "Zniżka kwotowa na produkty",
         "description": "Rabat na wybrane produkty"
       },

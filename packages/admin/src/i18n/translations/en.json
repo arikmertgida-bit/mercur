@@ -2568,7 +2568,7 @@
         "title": "Usage Limit",
         "description": "Maximum number of times this promotion can be used across all orders. Leave empty for unlimited usage."
       },
-      "storeOffers": {
+      "storeProducts": {
         "title": "Which store's products will the promotion be applied to?",
         "description": "Choose the store whose products this promotion applies to.",
         "label": "Store",

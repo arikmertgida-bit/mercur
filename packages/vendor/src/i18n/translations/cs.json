@@ -2473,7 +2473,7 @@
   },
   "promotions": {
     "templates": {
-      "amountOffOffers": {
+      "amountOffItems": {
         "title": "Sleva v hodnotě na položky",
         "description": "Sleva na vybrané položky"
       },

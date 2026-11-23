@@ -2448,7 +2448,7 @@
   },
   "promotions": {
     "templates": {
-      "amountOffOffers": {
+      "amountOffItems": {
         "title": "Ürünlerde tutar indirimi",
         "description": "Seçili ürünlerde indirim uygular"
       },

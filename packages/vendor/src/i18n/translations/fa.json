@@ -2443,7 +2443,7 @@
   },
   "promotions": {
     "templates": {
-      "amountOffOffers": {
+      "amountOffItems": {
         "title": "تخفیف مبلغی روی محصولات",
         "description": "تخفیف روی آیتم‌های انتخاب‌شده"
       },

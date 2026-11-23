@@ -2763,7 +2763,7 @@
         "title": "使用次数限制",
         "description": "该促销在所有订单中可使用的最大次数，留空表示不限次数。"
       },
-      "storeOffers": {
+      "storeProducts": {
         "title": "该促销将应用于哪个店铺的商品？",
         "description": "选择此促销适用其商品的店铺。",
         "label": "店铺",

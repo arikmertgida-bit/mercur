@@ -2443,7 +2443,7 @@
   },
   "promotions": {
     "templates": {
-      "amountOffOffers": {
+      "amountOffItems": {
         "title": "ส่วนลดแบบจำนวนเงินสำหรับสินค้า",
         "description": "ลดราคาสินค้าที่เลือก"
       },

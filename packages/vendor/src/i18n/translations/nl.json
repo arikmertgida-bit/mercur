@@ -2443,7 +2443,7 @@
   },
   "promotions": {
     "templates": {
-      "amountOffOffers": {
+      "amountOffItems": {
         "title": "Bedrag korting op artikelen",
         "description": "Korting op geselecteerde artikelen"
       },

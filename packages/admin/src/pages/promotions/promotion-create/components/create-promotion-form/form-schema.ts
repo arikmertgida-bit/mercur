@@ -81,7 +81,7 @@ export const CreatePromotionSchema = z
     },
     {
       path: ["seller_id"],
-      error: () => i18n.t("promotions.form.storeOffers.required"),
+      error: () => i18n.t("promotions.form.storeProducts.required"),
     }
   )
 

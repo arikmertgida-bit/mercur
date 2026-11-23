@@ -2563,7 +2563,7 @@
   },
   "promotions": {
     "templates": {
-      "amountOffOffers": {
+      "amountOffItems": {
         "title": "خصم مبلغ على المنتجات",
         "description": "خصم على المنتجات المحددة"
       },
