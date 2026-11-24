@@ -4,10 +4,10 @@ api: "POST /admin/products"
 description: "Create a master catalog product."
 ---
 
-Creates a shared master product that sellers can be made eligible to sell.
+Creates a product for a store.
 
 <Note>
-Pass `seller_ids` to set which sellers may sell the product. The `attributes` array accepts a unified input: reference an existing catalog attribute by `id`, or create an inline product-scoped attribute by `title`.
+Pass exactly one store in `seller_ids`: the store the product belongs to. The `attributes` array accepts a unified input: reference an existing catalog attribute by `id`, or create an inline product-scoped attribute by `title`.
 </Note>
 
 ## Body parameters
@@ -29,7 +29,7 @@ Pass `seller_ids` to set which sellers may sell the product. The `attributes` ar
 <ParamField body="external_id" type="string">ID of the product in an external system.</ParamField>
 <ParamField body="type_id" type="string">ID of the product type.</ParamField>
 <ParamField body="collection_id" type="string">ID of the collection to assign the product to.</ParamField>
-<ParamField body="seller_ids" type="string[]">IDs of sellers eligible to sell the product.</ParamField>
+<ParamField body="seller_ids" type="string[]">The store the product belongs to (exactly one).</ParamField>
 <ParamField body="categories" type="object[]">
   Categories to assign the product to.
   <Expandable title="properties">

@@ -1,20 +1,20 @@
 ---
-title: "Master products"
-sidebarTitle: "Master products"
-description: "The shared catalog, why products aren't seller-owned, and submission attribution."
+title: "Products"
+sidebarTitle: "Products"
+description: "How a product belongs to the store that created it, and how its price and stock live on its variants."
 ---
 
-In this document, you'll learn how Mercur models products as a single shared
-catalog rather than per-seller listings.
+In this document, you'll learn how products are modelled: every product belongs
+to the store that created it, and the store sells it directly through the
+product's own variants.
 
 ## Product
 
-A product is a **master product** in a catalog shared by the whole marketplace,
-represented by Medusa's native `Product` data model (table `product`, id prefix
-`prod`). Products carry the usual commerce fields such as `title`, `handle`,
-`description`, `status`, variants, options, and images, and are **not owned by
-any store**. Creating a product adds it to the shared catalog. Multiple stores
-can then sell the same master product.
+A product is Medusa's native `Product` data model (table `product`, id prefix
+`prod`). It carries the usual commerce fields such as `title`, `handle`,
+`description`, `status`, variants, options, and images. When a store creates a
+product, the product is linked to that store through the `product_seller` link,
+and only that store can see, edit, or delete it.
 
 ```ts
 const { result } = await createProductsWorkflow(container).run({
@@ -26,29 +26,30 @@ const { result } = await createProductsWorkflow(container).run({
         seller_ids: ["sel_123"],
       },
     ],
-    created_by: "usr_123",
+    created_by: "sel_123",
   },
 })
 ```
 
 <Note>
-  A store never sells a bare master product directly. It sells against one by
-  creating an [offer](/platform/offer/overview). The offer carries the store's
-  own SKU, price, inventory, and shipping profile, while the master product
-  holds the shared catalog data everyone shares.
+  There is no separate listing entity between a product and a store. The
+  store's SKU, price, and stock live on the product's own variants (Medusa
+  variant prices and inventory items), and the product's shipping profile
+  belongs to the same store. A cart line item points at a variant, and the
+  line item's store is the store linked to the variant's product.
 </Note>
 
-## Attribution, not ownership
+## Ownership and audit
 
-Because the catalog is shared, the creator of a product does **not** own it.
-When a store submits a new product, Mercur records the submission as an immutable
-audit entry (a `PRODUCT_ADD` action in the product-change pipeline) so you know
-who proposed it. That attribution is for review and history only. Once
-published, the product belongs to the shared catalog like any other.
+The `product_seller` link is the ownership record. Vendor routes only return
+products linked to the authenticated store (or created by it), and any other
+product id answers `404`. Every submission and edit is also recorded as an
+immutable audit entry in the product-change pipeline (for example a
+`PRODUCT_ADD` action) so you know who changed what.
 
 <Tip>
   Attribution is recorded automatically by `createProductsWorkflow` through its
   `created_by` input. You don't manage it by hand. See the
   [status lifecycle](/platform/catalog/concepts/status-lifecycle) for how a
-  submission becomes a published catalog product.
+  submission becomes a published product.
 </Tip>

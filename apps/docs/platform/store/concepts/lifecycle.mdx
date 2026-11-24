@@ -30,8 +30,8 @@ A store's state lives in the `status` field of the `Seller` model, typed by the
 | Status | Meaning |
 | --- | --- |
 | `pending_approval` | Registered, waiting for operator review. |
-| `open` | Active. Can list offers, take orders, and collect payouts. |
-| `suspended` | Temporarily frozen. Offers stay listed but cannot be purchased. |
+| `open` | Active. Can sell its products, take orders, and collect payouts. |
+| `suspended` | Temporarily frozen. Product create, update, and delete are rejected with `seller_suspended`. |
 | `terminated` | Permanently closed. This status is irreversible. |
 
 Only the operator can change a store's status. Each transition runs through a

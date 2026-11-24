@@ -7,7 +7,7 @@ description: "Retrieve a published product by ID."
 Returns a single published product; a `404` is returned if the product is unpublished or its seller is not visible.
 
 <Note>
-  Customer authentication is optional. When a customer token is provided, the customer's group memberships enter the pricing context used for `variants.calculated_price`. Prices are computed only when `variants.calculated_price` is requested in `fields` (or `region_id` is passed) and reflect the cheapest offer per variant.
+  Customer authentication is optional. When a customer token is provided, the customer's group memberships enter the pricing context used for `variants.calculated_price`. Prices are computed only when `variants.calculated_price` is requested in `fields` (or `region_id` is passed) and are the variant's own price in that context.
 </Note>
 
 ## Path parameters
@@ -47,7 +47,7 @@ Returns a single published product; a `404` is returned if the product is unpubl
     <ResponseField name="categories" type="object[]">The product's categories.</ResponseField>
     <ResponseField name="options" type="object[]">Product options with their values.</ResponseField>
     <ResponseField name="variants" type="object[]">
-      Product variants; `calculated_price` and `offer_id` are added when requested and reflect the cheapest offer.
+      Product variants; `calculated_price` is added when requested.
     </ResponseField>
     <ResponseField name="product_attribute_values" type="object[]">Attribute values assigned to the product.</ResponseField>
     <ResponseField name="scoped_attributes" type="object[]">Attributes scoped to this product, with their values.</ResponseField>
@@ -90,7 +90,6 @@ const { product } = await client.store.products.$id.query({
       {
         "id": "variant_01JB2K6E4F",
         "title": "M",
-        "offer_id": "offer_01JB2K6G5H",
         "calculated_price": {
           "calculated_amount": 4500,
           "original_amount": 5000,

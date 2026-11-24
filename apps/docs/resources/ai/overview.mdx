@@ -18,7 +18,7 @@ When you install a Mercur project, the documentation is bundled as a dependency 
 node_modules/@mercurjs/docs/
 ├── llms.txt              # index: every page with a one-line description
 └── content/
-    ├── learn/            # concepts: sellers, products, offers, commissions…
+    ├── learn/            # concepts: sellers, products, commissions…
     ├── resources/        # tutorials, integrations, deployment, this guide
     ├── tools/            # CLI, API client, dashboard SDK
     ├── references/       # module, HTTP API, and configuration reference
@@ -69,7 +69,7 @@ Don't guess at an API, data model, or file convention the docs already describe.
 
 ## What the agent reads
 
-The workflow is deliberately simple: **index first, then the page.** An agent reads `llms.txt` to see what exists, then opens the one or two `content/` pages relevant to the task before implementing. The bundled docs cover the full domain model (sellers, products, offers, attributes, commissions, payouts, order groups), the CLI, the typed API client, the dashboard SDK, module references, and how-to guides. The agent looks up the correct contract rather than inventing one.
+The workflow is deliberately simple: **index first, then the page.** An agent reads `llms.txt` to see what exists, then opens the one or two `content/` pages relevant to the task before implementing. The bundled docs cover the full domain model (sellers, products, attributes, commissions, payouts, order groups), the CLI, the typed API client, the dashboard SDK, module references, and how-to guides. The agent looks up the correct contract rather than inventing one.
 
 ## Verify its work
 

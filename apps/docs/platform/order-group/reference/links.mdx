@@ -1,7 +1,7 @@
 ---
 title: "Links to other modules"
 sidebarTitle: "Links"
-description: "How the Order Group domain links to carts, orders, sellers, and offers."
+description: "How the Order Group domain links to carts, orders, and sellers."
 ---
 
 Modules in Mercur never reference each other directly. They connect through
@@ -31,7 +31,7 @@ The child orders produced by the split carry their own marketplace links:
 | Linked module | Relationship |
 | --- | --- |
 | **Seller** | Each order belongs to one seller (`order_order_seller_seller`); a seller has many orders. |
-| **Offer** | Each order line item links to the offer it was purchased from (`order_line_item` → `offer`, list on the line-item side so one offer can back many order lines). |
+| **Product variant** | Each order line item keeps its `variant_id` and product snapshot (Medusa core); the variant's product is linked to the same seller through `product_seller`. |
 
 <Note>
   The `cart_id` link is resolved from the field on the group and can't be written

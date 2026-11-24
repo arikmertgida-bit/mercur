@@ -1,47 +1,45 @@
 ---
 title: "Catalog"
 sidebarTitle: "Overview"
-description: "Master products, variants, categories, and the store allowlist that governs who may sell what."
+description: "Store-owned products, variants, categories, and the product–seller link that ties each product to its store."
 ---
 
-Use Mercur to govern one shared product catalog and control which stores are
-allowed to sell what.
+Use Mercur to let each store manage and sell its own products.
 
-Master-data governance lives here. The Catalog domain keeps products as a single
-shared source of truth, controls access to it through an allowlist over who may
-sell each product, and holds every submission to an approval lifecycle before it
-goes live. On top of that governance layer it holds master products, variants,
-categories, collections, tags, and types. A store never owns a product. It sells
-against a shared master product through an [offer](/platform/offer/overview).
+The Catalog domain holds products, variants, categories, collections, tags, and
+types. Every product belongs to the store that created it through the
+`product_seller` link, and the store sells it directly: price and stock live on
+the product's variants. Submissions follow a status lifecycle before they go
+live.
 
 <Note>
   **Catalog = Medusa's Product module + Mercur's marketplace layer.** Products,
   variants, categories, and collections are Medusa's native `Product` module.
-  Mercur adds the `product_seller` allowlist (which stores may sell a product),
-  the `draft` → `proposed` → `published` / `rejected` status lifecycle, and its
-  own product workflows. Products are **shared master products**, not
-  seller-owned, and a store sells one via an [offer](/platform/offer/overview).
+  Mercur adds the `product_seller` link (which store a product belongs to), the
+  `draft` → `proposed` → `published` / `rejected` status lifecycle, and its
+  own product workflows. The store's SKU, price, and stock live on the
+  product's variants.
 </Note>
 
 ## Key features
 
-- **Shared master data:** products live in one catalog, not owned by any store. Creating a product adds it to the shared catalog.
-- **Allowlist access control:** the `product_seller` link governs which stores may sell a given master product.
+- **Store-owned products:** a store creates its products and only that store can see, edit, or delete them.
+- **Product–seller link:** the `product_seller` link records the one store a product belongs to.
 - **Approval governance:** a `draft` → `proposed` → `published` / `rejected` lifecycle, with vendor-created products defaulting to `proposed`.
-- **Attribution, not ownership:** the creator of an unreviewed submission is recorded for audit, but the product still belongs to the shared catalog.
+- **Audit trail:** every submission and edit is recorded in the product-change pipeline.
 - **Native Medusa structure:** variants, categories, collections, tags, and types come straight from Medusa's Product module.
-- **Sold via offers:** a store lists a master product by creating an offer that carries its SKU, price, and inventory.
+- **Sold through variants:** the variant carries the SKU, price, and inventory; a cart line item points at the variant.
 
 ## Get started
 
 Learn how the domain fits together.
 
 <CardGroup cols={2}>
-  <Card title="Master products" icon="box" href="/platform/catalog/concepts/master-products">
-    The shared catalog, why products aren't seller-owned, and submission attribution.
+  <Card title="Products" icon="box" href="/platform/catalog/concepts/master-products">
+    How a product belongs to its store and sells through its variants.
   </Card>
-  <Card title="The store allowlist" icon="user-lock" href="/platform/catalog/concepts/product-seller-allowlist">
-    The `product_seller` link that controls who may sell a product.
+  <Card title="Product–seller link" icon="user-lock" href="/platform/catalog/concepts/product-seller-allowlist">
+    The `product_seller` link that ties a product to its store.
   </Card>
   <Card title="Status lifecycle" icon="arrows-rotate" href="/platform/catalog/concepts/status-lifecycle">
     Draft, proposed, published, and rejected, plus how products move between them.
@@ -56,11 +54,11 @@ Learn how the domain fits together.
 Build against the Catalog domain in your own code.
 
 <CardGroup cols={2}>
-  <Card title="Create a master product" icon="plus" href="/platform/catalog/guides/create-a-master-product">
+  <Card title="Create a product" icon="plus" href="/platform/catalog/guides/create-a-master-product">
     Run `createProductsWorkflow` from a route or seed script.
   </Card>
-  <Card title="Allowlist stores" icon="user-plus" href="/platform/catalog/guides/allowlist-stores">
-    Grant and revoke a store's right to sell a product in code.
+  <Card title="Change a product's store" icon="user-plus" href="/platform/catalog/guides/allowlist-stores">
+    Move a product from one store to another in code.
   </Card>
   <Card title="Publish or reject" icon="gavel" href="/platform/catalog/guides/publish-or-reject-a-product">
     Move a proposed product to published or rejected.
@@ -76,10 +74,10 @@ Data models, workflows, service methods, and events for the Catalog domain.
     The `Product`, `ProductVariant`, `ProductCategory`, and the `product_seller` table.
   </Card>
   <Card title="Links" icon="link" href="/platform/catalog/reference/links">
-    How the catalog links to sellers, offers, attributes, and media.
+    How the catalog links to sellers, attributes, and media.
   </Card>
   <Card title="Workflows" icon="diagram-project" href="/platform/catalog/reference/workflows">
-    Mercur's product create, review, and allowlist workflows.
+    Mercur's product create, review, and store-link workflows.
   </Card>
   <Card title="Service" icon="gear" href="/platform/catalog/reference/service">
     Medusa's Product module service, resolved with `Modules.PRODUCT`.

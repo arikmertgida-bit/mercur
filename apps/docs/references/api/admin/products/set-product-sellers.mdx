@@ -1,10 +1,10 @@
 ---
 title: "Set Product Sellers"
 api: "POST /admin/products/{id}/sellers"
-description: "Manage which sellers are eligible to sell a product."
+description: "Change the store a product belongs to."
 ---
 
-Links or unlinks sellers from the product to control selling eligibility.
+Links or unlinks stores from the product. A product belongs to exactly one store, so a move sends the new store in `add` and the old one in `remove` together. The route does not enforce this yet: never leave a product with two stores or with none, or checkout cannot resolve the line item's store.
 
 ## Path parameters
 

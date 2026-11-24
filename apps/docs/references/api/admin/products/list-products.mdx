@@ -16,7 +16,7 @@ Returns all products across the marketplace, with optional filtering by status, 
 <ParamField query="id" type="string | string[]">Filter by product ID(s).</ParamField>
 <ParamField query="title" type="string">Filter by product title.</ParamField>
 <ParamField query="handle" type="string">Filter by product handle.</ParamField>
-<ParamField query="seller_id" type="string | string[]">Filter by the seller(s) eligible to sell the product.</ParamField>
+<ParamField query="seller_id" type="string | string[]">Filter by the store(s) the products belong to.</ParamField>
 <ParamField query="status" type="string[]">Filter by status: `draft`, `proposed`, `published`, or `rejected`.</ParamField>
 <ParamField query="collection_id" type="string | string[]">Filter by collection ID(s).</ParamField>
 <ParamField query="type_id" type="string | string[]">Filter by product type ID(s).</ParamField>
@@ -26,7 +26,6 @@ Returns all products across the marketplace, with optional filtering by status, 
 <ParamField query="ean" type="string">Filter by variant EAN.</ParamField>
 <ParamField query="upc" type="string">Filter by variant UPC.</ParamField>
 <ParamField query="barcode" type="string">Filter by variant barcode.</ParamField>
-<ParamField query="has_offer" type="boolean">Filter to products that have (or don't have) seller offers.</ParamField>
 <ParamField query="created_at" type="object">Filter by creation date with operators like `$gte`, `$lte`.</ParamField>
 <ParamField query="updated_at" type="object">Filter by update date with operators like `$gte`, `$lte`.</ParamField>
 <ParamField query="deleted_at" type="object">Filter by deletion date with operators like `$gte`, `$lte`.</ParamField>

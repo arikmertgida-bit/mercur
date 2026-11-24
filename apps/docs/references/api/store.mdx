@@ -5,7 +5,7 @@ description: "Storefront routes under /store/* for discovery, multi-vendor carts
 
 The Store API is what a storefront talks to.
 
-It extends Medusa's store routes with marketplace discovery (sellers and offers) and replaces the cart completion flow with the multi-vendor order-group split. Most routes are public, and customer authentication requirements are noted per group. See [API conventions](/rc/references/api/conventions) for pagination and field selection.
+It extends Medusa's store routes with marketplace discovery (sellers and their products) and replaces the cart completion flow with the multi-vendor order-group split. Most routes are public, and customer authentication requirements are noted per group. See [API conventions](/rc/references/api/conventions) for pagination and field selection.
 
 ## Products and discovery
 
@@ -23,20 +23,13 @@ It extends Medusa's store routes with marketplace discovery (sellers and offers)
 | `GET` | `/store/sellers` | List public seller storefronts (only `open` sellers outside a closure window) |
 | `GET` | `/store/sellers/:id` | Retrieve a seller storefront |
 
-## Offers
-
-| Method | Path | Purpose |
-| --- | --- | --- |
-| `GET` | `/store/offers` | List offers, with per-offer calculated prices |
-| `GET` | `/store/offers/:id` | Retrieve an offer |
-
 ## Carts and checkout
 
 Mercur overrides the cart routes so a single cart can span multiple sellers:
 
 | Method | Path | Purpose |
 | --- | --- | --- |
-| `POST` | `/store/carts/:id/line-items` | Add a line item (offer-aware, multi-seller) |
+| `POST` | `/store/carts/:id/line-items` | Add a variant as a line item (multi-seller) |
 | `POST` | `/store/carts/:id/shipping-methods` | Add per-seller shipping methods |
 | `GET` | `/store/shipping-options` | Shipping options available for the cart, grouped by seller |
 | `POST` | `/store/carts/:id/promotions` | Apply promotions |

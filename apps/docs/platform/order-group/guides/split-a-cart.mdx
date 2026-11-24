@@ -8,7 +8,7 @@ In this guide, you'll learn how the checkout split works and how to run it from
 your own server code, such as a custom complete-cart route.
 
 Mercur replaces Medusa's single-order checkout with
-`completeCartWithSplitOrdersWorkflow`. It takes a cart that may hold offers from
+`completeCartWithSplitOrdersWorkflow`. It takes a cart that may hold products from
 several sellers, creates one order per seller, and wraps them in an `OrderGroup`.
 
 ## Run the workflow
@@ -32,9 +32,9 @@ lock on the cart id for the duration of the split so concurrent completions can'
 create duplicate orders.
 
 <Note>
-  Line items are grouped by `item.offer.seller_id`. Sellers sell against the
-  shared master catalog through **offers**, so a line item's seller comes from
-  its offer, never from product ownership.
+  Line items are grouped by `item.variant.product.sellers[0].id`. Every
+  product belongs to exactly one store through the `product_seller` link, so a
+  line item's seller is the store that owns the variant's product.
 </Note>
 
 ## What happens during the split
@@ -45,7 +45,7 @@ single transaction:
 - creates the parent `OrderGroup` (`customer_id`, `cart_id`)
 - creates one child `Order` per seller from that seller's items and shipping
 - links each order to the group, its seller, and the originating cart
-- mirrors line-item → offer links, reserves offer inventory, and splits payment captures proportionally
+- reserves the variants' inventory and splits payment captures proportionally
 - refreshes commission lines per order and marks the cart `completed_at`
 
 Finally it emits `order.placed` for the created orders and `order_group.created`

@@ -118,7 +118,7 @@ The operator dashboard at `/dashboard`. This is where you run the marketplace.
 
 The seller portal at `/seller`, scoped so a seller only ever sees its own store.
 
-- **List products:** create offers against the shared catalog with a seller's own SKU, price, inventory, and shipping.
+- **List products:** create the store's own products with SKU, price, and inventory on each variant and one of the store's shipping profiles.
 - **Fulfill orders:** view, fulfill, and refund orders, and handle returns.
 - **Get paid:** complete provider onboarding and track payouts.
 - **Run a team:** invite members and assign roles.
@@ -136,7 +136,7 @@ The seller portal at `/seller`, scoped so a seller only ever sees its own store.
 ### Store API
 
 The storefront API under `/store/*` that your customer-facing frontend talks to.
-It exposes marketplace discovery (sellers and offers) and a cart that can span
+It exposes marketplace discovery (sellers and their products) and a cart that can span
 multiple sellers, then splits it into per-seller orders at checkout.
 
 ## How a multi-vendor order flows
@@ -146,7 +146,7 @@ payout. A single customer cart can hold items from several sellers.
 
 <Steps>
   <Step title="One cart, many sellers">
-    A customer adds offers from different sellers to a single cart through the Store API.
+    A customer adds products from different sellers to a single cart through the Store API.
   </Step>
   <Step title="Checkout splits the cart">
     Completing the cart runs the split-order workflow. Items are grouped by seller, and a separate order is created for each, all linked under one order group with a shared display id.

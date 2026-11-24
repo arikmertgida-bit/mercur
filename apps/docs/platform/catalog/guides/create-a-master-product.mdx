@@ -1,16 +1,16 @@
 ---
-title: "Create a master product"
-sidebarTitle: "Create a master product"
-description: "Create a master product programmatically with createProductsWorkflow."
+title: "Create a product"
+sidebarTitle: "Create a product"
+description: "Create a store's product programmatically with createProductsWorkflow."
 ---
 
-In this guide, you'll learn how to add a product to the shared catalog from your
+In this guide, you'll learn how to create a store's product from your
 own server code, for example in a seed script, a custom API route, or an import
 flow.
 
 Mercur exposes a `createProductsWorkflow` that creates the `Product` record,
 attaches attributes and variants, records the submission for audit, and
-optionally allowlists the submitting store. Run it from any place that has access
+links the product to its store (`seller_ids`). Run it from any place that has access
 to the Medusa container.
 
 ## Run the workflow
@@ -38,10 +38,9 @@ export async function POST(req: MedusaRequest, res: MedusaResponse) {
 ```
 
 <Note>
-  Passing `seller_ids` allowlists those stores for the product as it's created,
-  so the submitting store can immediately create an
-  [offer](/platform/offer/overview) against it. `created_by` records who
-  submitted the product for the audit trail.
+  Pass exactly one store in `seller_ids`: it becomes the store the product
+  belongs to. `created_by` records who submitted the product for the audit
+  trail.
 </Note>
 
 ## Default status

@@ -7,7 +7,7 @@ description: "Retrieve a paginated list of products visible to the seller."
 Returns products the seller created plus published products that are not restricted from the seller.
 
 <Note>
-  Products are shared master records. This list includes catalog products from other sellers (when published and unrestricted) so you can create offers against them.
+  The list contains only the store's own products (linked through `product_seller` or created by the store).
 </Note>
 
 ## Query parameters
@@ -25,7 +25,7 @@ Returns products the seller created plus published products that are not restric
 </ParamField>
 
 <ParamField query="fields" type="string">
-  Comma-separated fields to include in the response. Prefix with `+`/`-` to add to or remove from the defaults. Include `variants.offers` to attach the seller's offers to each variant.
+  Comma-separated fields to include in the response. Prefix with `+`/`-` to add to or remove from the defaults.
 </ParamField>
 
 <ParamField query="q" type="string">
@@ -78,10 +78,6 @@ Returns products the seller created plus published products that are not restric
 
 <ParamField query="barcode" type="string">
   Filter by variant barcode.
-</ParamField>
-
-<ParamField query="has_offer" type="boolean">
-  Filter to products the seller has (or has not) created an offer for.
 </ParamField>
 
 <ParamField query="created_at" type="object">

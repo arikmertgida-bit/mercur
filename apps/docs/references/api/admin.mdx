@@ -50,19 +50,19 @@ It extends Medusa's standard admin routes with the marketplace domains below. Ev
 | `GET` | `/admin/payouts` | List payouts across the marketplace |
 | `GET` | `/admin/payouts/:id` | Retrieve a payout |
 
-## Products (master catalog)
+## Products
 
-Products are shared catalog records. See [master products](/platform/catalog/concepts/master-products).
+Every product belongs to one store. See [products](/platform/catalog/concepts/master-products).
 
 | Method | Path | Purpose |
 | --- | --- | --- |
-| `GET` `POST` | `/admin/products` | List / create a product (`seller_ids` sets selling eligibility) |
+| `GET` `POST` | `/admin/products` | List / create a product (`seller_ids` sets the product's store) |
 | `GET` `POST` `DELETE` | `/admin/products/:id` | Retrieve / update / delete a product |
 | `GET` | `/admin/products/:id/preview` | Preview the product with pending changes applied |
 | `POST` | `/admin/products/:id/confirm` | Confirm the pending change |
 | `POST` | `/admin/products/:id/reject` | Reject the pending change |
 | `POST` | `/admin/products/:id/request-changes` | Send a change back to the seller for action |
-| `POST` | `/admin/products/:id/sellers` | Set the selling-eligibility allowlist |
+| `POST` | `/admin/products/:id/sellers` | Change the product's store (`add` / `remove`) |
 | `POST` | `/admin/products/:id/attributes/batch` | Batch add / update / remove product attributes |
 | `GET` `POST` | `/admin/products/:id/variants` | List / create variants |
 | `GET` `POST` `DELETE` | `/admin/products/:id/variants/:variant_id` | Retrieve / update / delete a variant |
@@ -73,14 +73,6 @@ Products are shared catalog records. See [master products](/platform/catalog/con
 | --- | --- | --- |
 | `POST` | `/admin/product-changes/:id/confirm` | Confirm a change request directly |
 | `POST` | `/admin/product-changes/:id/cancel` | Cancel a change request |
-
-## Offers
-
-| Method | Path | Purpose |
-| --- | --- | --- |
-| `GET` | `/admin/offers` | List offers (supports `group_by_seller`) |
-| `GET` `DELETE` | `/admin/offers/:id` | Retrieve / delete an offer |
-| `POST` | `/admin/offers/batch` | Batch create offers |
 
 ## Product attributes
 

@@ -22,7 +22,7 @@ const [products, count] = await productModuleService.listAndCountProducts({
 <Note>
   Because this is Medusa's own module, the service key is `Modules.PRODUCT` from
   `@medusajs/framework/utils`, **not** a `MercurModules` key. Mercur adds its
-  marketplace behavior (allowlist, review lifecycle, audit trail) as
+  marketplace behavior (store link, review lifecycle, audit trail) as
   [workflows](/platform/catalog/reference/workflows) layered on top of this
   service.
 </Note>
@@ -46,7 +46,7 @@ The same set exists for every model in the module, such as `ProductVariant`,
 
 <Warning>
   Prefer [workflows](/platform/catalog/reference/workflows) for anything with
-  side effects, such as submissions, review transitions, and allowlist changes. The
+  side effects, such as submissions, review transitions, and store-link changes. The
   service writes records directly and does **not** run the marketplace layer,
   emit Mercur's product events, or record the audit trail.
 </Warning>

@@ -231,7 +231,7 @@ Every route under `/vendor/*` is already authenticated and seller-scoped. You do
 
 ```ts
 export const POST = async (
-  req: AuthenticatedMedusaRequest<VendorCreateOfferType>,
+  req: AuthenticatedMedusaRequest<VendorCreateBrandType>,
   res: MedusaResponse
 ) => {
   const sellerId = req.seller_context!.seller_id       // the acting seller
@@ -245,14 +245,14 @@ export const POST = async (
 <Warning>
   Never take a `seller_id` from the request body or query to decide ownership. That's caller-supplied. The only authoritative seller is `req.seller_context.seller_id`. To scope a vendor list route to the caller's data, add the `filterBySellerId()` middleware and every query is constrained automatically, with no per-handler `where`:
 
-  ```ts src/api/vendor/offers/middlewares.ts
+  ```ts src/api/vendor/brands/middlewares.ts
   import { filterBySellerId } from "@mercurjs/core/..."
 
   {
     method: ["GET"],
-    matcher: "/vendor/offers",
+    matcher: "/vendor/brands",
     middlewares: [
-      validateAndTransformQuery(VendorGetOffersParams, vendorOfferQueryConfig.list),
+      validateAndTransformQuery(VendorGetBrandsParams, vendorBrandQueryConfig.list),
       filterBySellerId(),
     ],
   }

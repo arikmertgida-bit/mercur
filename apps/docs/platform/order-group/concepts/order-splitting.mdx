@@ -9,14 +9,14 @@ per-seller orders at checkout.
 
 ## Why carts are split
 
-A marketplace cart can hold offers from many different sellers. Each seller
+A marketplace cart can hold products from many different sellers. Each seller
 fulfills, ships, and settles independently, so a single combined order would be
 impossible to operate. Instead, on completion the cart is divided along seller
 boundaries. Every seller with items in the cart gets its own `Order`, and all of
 those orders are attached to one parent `OrderGroup`.
 
 The split is driven by the `completeCartWithSplitOrdersWorkflow`. It groups the
-cart's line items by the seller behind each offer, and builds one order per
+cart's line items by the seller that owns each product, and builds one order per
 seller from that seller's items and shipping methods.
 
 ```ts
@@ -29,9 +29,9 @@ const { result } = await completeCartWithSplitOrdersWorkflow(container).run({
 ```
 
 <Note>
-  Items are grouped by `item.offer.seller_id`. Sellers list against the shared
-  master catalog through **offers**, so the offer, not the product, is what
-  ties a line item to a seller.
+  Items are grouped by `item.variant.product.sellers[0].id`. Every product
+  belongs to exactly one store through the `product_seller` link, so the
+  variant's product is what ties a line item to a seller.
 </Note>
 
 ## What the split produces
@@ -40,9 +40,8 @@ For each seller in the cart the workflow, in one transaction:
 
 - creates a child `Order` with that seller's line items and shipping methods
 - links each order to the group (`order_group_order`) and to its seller (`order_order_seller_seller`)
-- mirrors the line-item → offer links onto the new order lines
 - splits payment captures proportionally across the child orders
-- reserves offer-scoped inventory and refreshes commission lines per order
+- reserves the variants' inventory and refreshes commission lines per order
 
 Once every child order is created, the workflow emits `order.placed` for the
 orders and `order_group.created` for the group.

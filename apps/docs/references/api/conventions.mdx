@@ -33,7 +33,7 @@ A handful of vendor routes are public by design: seller registration (`POST /ven
 
 ### Store
 
-Store routes are public. Customer authentication (session or bearer) is **required** for `/store/order-groups` and **optional** for `/store/offers` and `/store/products`, where it enriches the pricing context when present. Public seller routes only return sellers whose status is `open` and who are not inside a scheduled closure window.
+Store routes are public. Customer authentication (session or bearer) is **required** for `/store/order-groups` and **optional** for `/store/products`, where it enriches the pricing context when present. Public seller routes only return sellers whose status is `open` and who are not inside a scheduled closure window.
 
 ## Pagination
 

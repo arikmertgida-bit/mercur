@@ -133,39 +133,6 @@
             ]
           },
           {
-            "group": "Offer",
-            "icon": "tag",
-            "pages": [
-              "platform/offer/overview",
-              {
-                "group": "Concepts",
-                "pages": [
-                  "platform/offer/concepts/what-is-an-offer",
-                  "platform/offer/concepts/pricing-and-inventory",
-                  "platform/offer/concepts/shipping"
-                ]
-              },
-              {
-                "group": "Guides",
-                "pages": [
-                  "platform/offer/guides/create-an-offer",
-                  "platform/offer/guides/bulk-create-offers",
-                  "platform/offer/guides/manage-offer-inventory"
-                ]
-              },
-              {
-                "group": "Reference",
-                "pages": [
-                  "platform/offer/reference/data-models",
-                  "platform/offer/reference/links",
-                  "platform/offer/reference/workflows",
-                  "platform/offer/reference/service",
-                  "platform/offer/reference/events"
-                ]
-              }
-            ]
-          },
-          {
             "group": "Attribute",
             "icon": "sliders",
             "pages": [
@@ -386,8 +353,7 @@
                   "resources/best-practices/subscribers-and-jobs",
                   "resources/best-practices/custom-fields",
                   "resources/best-practices/types",
-                  "resources/tutorials/attributes-and-variant-axes",
-                  "resources/tutorials/master-products-and-offers"
+                  "resources/tutorials/attributes-and-variant-axes"
                 ]
               },
               {
@@ -504,15 +470,6 @@
                 ]
               },
               {
-                "group": "Offers",
-                "pages": [
-                  "references/api/admin/offers/list-offers",
-                  "references/api/admin/offers/retrieve-offer",
-                  "references/api/admin/offers/delete-offer",
-                  "references/api/admin/offers/batch-create-offers"
-                ]
-              },
-              {
                 "group": "Products",
                 "pages": [
                   "references/api/admin/products/list-products",
@@ -626,18 +583,6 @@
                 "pages": [
                   "references/api/vendor/product-attributes/list-product-attributes",
                   "references/api/vendor/product-attributes/retrieve-product-attribute"
-                ]
-              },
-              {
-                "group": "Offers",
-                "pages": [
-                  "references/api/vendor/offers/list-offers",
-                  "references/api/vendor/offers/create-offer",
-                  "references/api/vendor/offers/retrieve-offer",
-                  "references/api/vendor/offers/update-offer",
-                  "references/api/vendor/offers/delete-offer",
-                  "references/api/vendor/offers/batch-create-offers",
-                  "references/api/vendor/offers/batch-offer-inventory-items"
                 ]
               },
               {
@@ -779,19 +724,6 @@
               "user-guide/vendor/onboarding",
               "user-guide/vendor/stores",
               {
-                "group": "Offers",
-                "pages": [
-                  "user-guide/vendor/offers/overview",
-                  {
-                    "group": "How-tos",
-                    "pages": [
-                      "user-guide/vendor/offers/how-tos/create-an-offer",
-                      "user-guide/vendor/offers/how-tos/update-prices-and-stock"
-                    ]
-                  }
-                ]
-              },
-              {
                 "group": "Products",
                 "pages": [
                   "user-guide/vendor/products/overview",
@@ -862,39 +794,39 @@
     },
     {
       "source": "/get-started",
-      "destination": "/learn/installation"
+      "destination": "/learn/introduction"
     },
     {
       "source": "/rc/get-started",
-      "destination": "/learn/installation"
+      "destination": "/learn/introduction"
     },
     {
       "source": "/v2/get-started",
-      "destination": "/learn/installation"
+      "destination": "/learn/introduction"
     },
     {
       "source": "/installation",
-      "destination": "/learn/installation"
+      "destination": "/learn/introduction"
     },
     {
       "source": "/rc/installation",
-      "destination": "/learn/installation"
+      "destination": "/learn/introduction"
     },
     {
       "source": "/v2/installation",
-      "destination": "/learn/installation"
+      "destination": "/learn/introduction"
     },
     {
       "source": "/cli-installation",
-      "destination": "/learn/installation"
+      "destination": "/learn/introduction"
     },
     {
       "source": "/rc/cli-installation",
-      "destination": "/learn/installation"
+      "destination": "/learn/introduction"
     },
     {
       "source": "/v2/cli-installation",
-      "destination": "/learn/installation"
+      "destination": "/learn/introduction"
     },
     {
       "source": "/getting-started/introduction",
@@ -910,27 +842,27 @@
     },
     {
       "source": "/getting-started/installation",
-      "destination": "/learn/installation"
+      "destination": "/learn/introduction"
     },
     {
       "source": "/rc/getting-started/installation",
-      "destination": "/learn/installation"
+      "destination": "/learn/introduction"
     },
     {
       "source": "/v2/getting-started/installation",
-      "destination": "/learn/installation"
+      "destination": "/learn/introduction"
     },
     {
       "source": "/getting-started/concepts",
-      "destination": "/learn/concepts"
+      "destination": "/learn/architecture"
     },
     {
       "source": "/rc/getting-started/concepts",
-      "destination": "/learn/concepts"
+      "destination": "/learn/architecture"
     },
     {
       "source": "/v2/getting-started/concepts",
-      "destination": "/learn/concepts"
+      "destination": "/learn/architecture"
     },
     {
       "source": "/developer-guide/overview",
@@ -994,27 +926,27 @@
     },
     {
       "source": "/developer-guide/cli",
-      "destination": "/tools/cli"
+      "destination": "/references/overview"
     },
     {
       "source": "/rc/developer-guide/cli",
-      "destination": "/tools/cli"
+      "destination": "/references/overview"
     },
     {
       "source": "/v2/developer-guide/cli",
-      "destination": "/tools/cli"
+      "destination": "/references/overview"
     },
     {
       "source": "/developer-guide/api-client",
-      "destination": "/tools/api-client"
+      "destination": "/references/overview"
     },
     {
       "source": "/rc/developer-guide/api-client",
-      "destination": "/tools/api-client"
+      "destination": "/references/overview"
     },
     {
       "source": "/v2/developer-guide/api-client",
-      "destination": "/tools/api-client"
+      "destination": "/references/overview"
     },
     {
       "source": "/core-concepts/seller",

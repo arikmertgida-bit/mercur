@@ -21,7 +21,7 @@ Everything below follows from four decisions.
 
 - **You run it.** MIT-licensed, PostgreSQL, Node. No vendor in the request path, no GMV fee, no proprietary runtime. Self-host, or deploy to any cloud that runs a Node process and a database.
 - **Extension over configuration.** Instead of hundreds of settings, the platform exposes typed extension zones: workflow hooks, API routes, modules, custom fields, pages, and widgets. When a zone isn't enough, the source is yours to change.
-- **Marketplace on top of commerce, not instead of it.** Products, carts, orders, payments, and fulfillment are handled by [Medusa](https://medusajs.com), a mature commerce engine. Mercur adds only what multi-vendor requires: sellers, offers, order splitting, commissions, payouts, and governance.
+- **Marketplace on top of commerce, not instead of it.** Products, carts, orders, payments, and fulfillment are handled by [Medusa](https://medusajs.com), a mature commerce engine. Mercur adds only what multi-vendor requires: sellers, store-owned products, order splitting, commissions, payouts, and governance.
 - **Governance is structural.** Role scoping, the product change pipeline, and exact-precision money arithmetic are properties of the architecture, not features you enable.
 
 ## The layers
@@ -42,7 +42,7 @@ graph TD
         E["/admin/*"]
         F["/vendor/*"]
         G["/store/*"]
-        H[Marketplace domain<br/>sellers · offers · commissions · payouts · governance]
+        H[Marketplace domain<br/>sellers · products · commissions · payouts · governance]
         I[Commerce domain<br/>products · carts · orders · payments · fulfillment]
     end
 
@@ -78,7 +78,7 @@ nothing but Postgres.
 ### Domain
 
 The domain layer is where marketplace behaviour lives: seller accounts and
-members, offers against a shared product catalog, commission rules and their
+members, store-owned products, commission rules and their
 resolution, payout accounts and transfers, order groups, the product change
 pipeline. It calls into the commerce domain for anything commerce already does.
 
@@ -131,7 +131,7 @@ refactor rippling outward. [Modules →](/resources/best-practices/modules)
 
 A link declares a relationship between records in two modules without either
 module knowing about the other. The product–seller link, for example, is what
-allowlists which sellers may sell a given product — expressed as a link rather
+ties a product to the store it belongs to — expressed as a link rather
 than a foreign key, so neither the product model nor the seller model is
 modified. Your modules link to built-in entities exactly the same way.
 [Links →](/resources/best-practices/module-links)

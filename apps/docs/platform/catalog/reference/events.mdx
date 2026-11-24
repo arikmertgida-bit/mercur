@@ -28,7 +28,7 @@ export const config: SubscriberConfig = {
 
 | Event | Emitted when | Payload |
 | --- | --- | --- |
-| `product.created` | A master product is created | `{ id }` |
+| `product.created` | A product is created | `{ id }` |
 | `product.published` | A proposed product is approved (`→ published`) | `{ id, internal_note? }` |
 | `product.rejected` | A proposed product is rejected | `{ id, message? }` |
 | `product.change-requested` | A revision is requested on a proposed product | `{ id, message?, actor_id? }` |

@@ -1,19 +1,20 @@
 ---
-title: "Allowlist stores"
-sidebarTitle: "Allowlist stores"
-description: "Grant and revoke a store's right to sell a master product from server code."
+title: "Change a product's store"
+sidebarTitle: "Change a product's store"
+description: "Move a product from one store to another from server code."
 ---
 
-In this guide, you'll learn how to control which stores may sell a shared master
-product by managing the `product_seller` allowlist from your own server code.
+In this guide, you'll learn how to change which store a product belongs to by
+updating the `product_seller` link from your own server code.
 
-A store can only create an [offer](/platform/offer/overview) against a master
-product if it's on that product's allowlist. Mercur exposes
-`linkSellersToProductWorkflow` to add and remove stores in a single call.
+A product belongs to exactly one store (see
+[the product–seller link](/platform/catalog/concepts/product-seller-allowlist)).
+Mercur exposes `linkSellersToProductWorkflow` to add and remove store links in a
+single call, so a move removes the old store and adds the new one together.
 
-## Add and remove stores
+## Move a product
 
-```ts title="src/api/custom/allowlist/route.ts"
+```ts title="src/api/custom/move-product/route.ts"
 import type { MedusaRequest, MedusaResponse } from "@medusajs/framework/http"
 import { linkSellersToProductWorkflow } from "@mercurjs/core/workflows"
 
@@ -21,8 +22,8 @@ export async function POST(req: MedusaRequest, res: MedusaResponse) {
   await linkSellersToProductWorkflow(req.scope).run({
     input: {
       id: req.params.id, // product id
-      add: ["sel_123", "sel_456"],
-      remove: ["sel_789"],
+      add: ["sel_new"],
+      remove: ["sel_old"],
     },
   })
 
@@ -30,13 +31,14 @@ export async function POST(req: MedusaRequest, res: MedusaResponse) {
 }
 ```
 
-<Note>
-  `add` and `remove` are both optional. Pass either or both. Adding a store
-  that's already allowlisted is idempotent. Removing a store revokes its right
-  to sell the product going forward.
-</Note>
+<Warning>
+  Never leave a product with two stores or with none: the order split takes the
+  first linked store as the line item's store, and a line item without a store
+  is rejected at checkout. The product's shipping profile and stock locations
+  belong to the old store, so move or recreate them for the new store too.
+</Warning>
 
-## Allowlist a category
+## Link a category
 
 Categories use the same shape through `linkSellersToProductCategoryWorkflow`,
 scoping which stores a category is associated with:
@@ -51,9 +53,3 @@ await linkSellersToProductCategoryWorkflow(container).run({
   },
 })
 ```
-
-<Tip>
-  Allowlisting grants the **right to sell**, not the listing itself. After a
-  store is allowlisted, it still has to create an offer for the product to
-  appear on its storefront.
-</Tip>

@@ -1,13 +1,13 @@
 ---
 title: "Add Line Item"
 api: "POST /store/carts/{id}/line-items"
-description: "Add a seller offer to the cart as a line item."
+description: "Add a product variant to the cart as a line item."
 ---
 
-Adds an item to the cart by offer. Mercur resolves the offer's variant and stamps the `offer_id` on the line item so the cart can later split into per-seller orders.
+Adds a product variant to the cart. The line item's store is the store linked to the variant's product (`variant.product.sellers`), which is how the cart later splits into per-seller orders.
 
 <Note>
-  Unlike vanilla Medusa, this route takes an `offer_id` instead of a `variant_id`; an unknown offer returns a `404`.
+  The body is validated strictly: only `variant_id`, `quantity`, `metadata`, and `additional_data` are accepted. The price always comes from the variant's calculated price; a client cannot set it.
 </Note>
 
 ## Path parameters
@@ -18,24 +18,16 @@ Adds an item to the cart by offer. Mercur resolves the offer's variant and stamp
 
 ## Body parameters
 
-<ParamField body="offer_id" type="string" required>
-  ID of the offer to add.
+<ParamField body="variant_id" type="string" required>
+  ID of the product variant to add.
 </ParamField>
 
 <ParamField body="quantity" type="number" required>
   Quantity to add; must be a positive integer.
 </ParamField>
 
-<ParamField body="unit_price" type="number">
-  Custom unit price overriding the offer's calculated price.
-</ParamField>
-
-<ParamField body="compare_at_unit_price" type="number">
-  Compare-at unit price shown as the original price.
-</ParamField>
-
 <ParamField body="metadata" type="object">
-  Custom key-value data stored on the line item; `offer_id` is merged in automatically.
+  Custom key-value data stored on the line item.
 </ParamField>
 
 <ParamField body="additional_data" type="object">
@@ -50,7 +42,7 @@ Adds an item to the cart by offer. Mercur resolves the offer's variant and stamp
     <ResponseField name="currency_code" type="string">The cart's currency.</ResponseField>
     <ResponseField name="region_id" type="string">The cart's region.</ResponseField>
     <ResponseField name="email" type="string | null">The customer's email.</ResponseField>
-    <ResponseField name="items" type="object[]">Line items, each carrying `offer_id` in its `metadata`.</ResponseField>
+    <ResponseField name="items" type="object[]">Line items, each with its `variant_id`.</ResponseField>
     <ResponseField name="shipping_methods" type="object[]">Selected shipping methods.</ResponseField>
     <ResponseField name="promotions" type="object[]">Applied promotions.</ResponseField>
     <ResponseField name="shipping_address" type="object | null">The shipping address.</ResponseField>
@@ -69,13 +61,13 @@ Adds an item to the cart by offer. Mercur resolves the offer's variant and stamp
 curl -X POST 'http://localhost:9000/store/carts/cart_01JB2KB1CD/line-items' \
   -H 'Content-Type: application/json' \
   -H 'x-publishable-api-key: pk_01JB2K3XYZ' \
-  -d '{"offer_id": "offer_01JB2K6G5H", "quantity": 1}'
+  -d '{"variant_id": "variant_01JB2K6G5H", "quantity": 1}'
 ```
 
 ```ts JS Client
 const { cart } = await client.store.carts.$id.lineItems.mutate({
   $id: "cart_01JB2KB1CD",
-  offer_id: "offer_01JB2K6G5H",
+  variant_id: "variant_01JB2K6G5H",
   quantity: 1,
 })
 ```
@@ -96,7 +88,7 @@ const { cart } = await client.store.carts.$id.lineItems.mutate({
         "product_title": "Linen Shirt",
         "quantity": 1,
         "unit_price": 4500,
-        "metadata": { "offer_id": "offer_01JB2K6G5H" }
+        "variant_id": "variant_01JB2K6G5H"
       }
     ],
     "shipping_methods": [],

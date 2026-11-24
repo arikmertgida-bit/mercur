@@ -24,9 +24,9 @@ Every route is scoped to one seller through the member authentication and `x-sel
 | `GET` `POST` | `/vendor/members/me` | Retrieve / update the current member profile |
 | `POST` | `/vendor/members/invites/accept` | Accept an invite (**public**) |
 
-## Products and offers
+## Products
 
-Products are shared master records. Updates stage a [change request](/platform/product-edit/overview) rather than writing directly, and the list shows products the seller created plus published, unrestricted products.
+A store sees and edits only its own products; any other product id answers `404`. Updates stage a [change request](/platform/product-edit/overview) rather than writing directly. Prices and stock live on the variants.
 
 | Method | Path | Purpose |
 | --- | --- | --- |
@@ -38,10 +38,6 @@ Products are shared master records. Updates stage a [change request](/platform/p
 | `GET` `POST` | `/vendor/products/:id/variants` | List / create variants |
 | `GET` `POST` `DELETE` | `/vendor/products/:id/variants/:variant_id` | Retrieve / update / delete a variant |
 | `GET` | `/vendor/product-variants` | List variants across products |
-| `GET` `POST` | `/vendor/offers` | List / create offers |
-| `GET` `POST` `DELETE` | `/vendor/offers/:id` | Retrieve / update / delete an offer |
-| `POST` | `/vendor/offers/batch` | Batch create offers |
-| `POST` | `/vendor/offers/:id/inventory-items/batch` | Link inventory items to an offer |
 
 ### Catalog taxonomy (read-only)
 

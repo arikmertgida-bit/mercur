@@ -1,7 +1,7 @@
 ---
 title: "Links to other modules"
 sidebarTitle: "Links"
-description: "How the catalog links to sellers, offers, attributes, and media."
+description: "How the catalog links to sellers, attributes, and media."
 ---
 
 Modules in Mercur never reference each other directly. They connect through
@@ -12,7 +12,7 @@ defined, you retrieve related records with `query.graph` using the link alias.
 ```ts
 const { data: products } = await query.graph({
   entity: "product",
-  fields: ["id", "title", "sellers.*", "offers.*", "changes.*"],
+  fields: ["id", "title", "sellers.*", "changes.*"],
 })
 ```
 
@@ -20,8 +20,7 @@ const { data: products } = await query.graph({
 
 | Linked module | Relationship |
 | --- | --- |
-| **Seller** | Many-to-many allowlist (`product_seller`) that controls which stores may sell a master product. Categories carry the same via `category_seller`. |
-| **Offer** | A product has many offers (`offer.product_id`, read-only). Offers are how a store sells against the master product. |
+| **Seller** | The store a product belongs to (`product_seller`). The table allows a list on both sides, but a product has exactly one store. Categories carry a similar link via `category_seller`. |
 | **Product change** | A product has many change records (`product.changes`, read-only): the immutable submission and review audit trail. |
 
 ## Attributes
@@ -37,7 +36,7 @@ const { data: products } = await query.graph({
 | **Media** | Categories and collections link their artwork through the `media_images` alias (a `MediaImage` list). |
 
 <Note>
-  Read-only links (Offer, Product change, scoped attributes) are resolved from
+  Read-only links (Product change, scoped attributes) are resolved from
   the field on the owning record and can't be written through the link itself.
   The `media_images` alias is deliberately **not** the bare `images` alias. That
   would shadow the native `Product.images` relation and break product queries.

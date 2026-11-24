@@ -19,16 +19,15 @@ commission is calculated:
 
 | `reference` | Points at | Resolved from |
 | --- | --- | --- |
-| `product` | A master product | `item.product.id` |
+| `product` | A product | `item.product.id` |
 | `product_type` | A product type | `item.product.type_id` |
 | `product_collection` | A collection | `item.product.collection_id` |
 | `product_category` | A category | `item.product.categories[].id` |
-| `seller` | A store | `item.offer.seller_id` |
+| `seller` | A store | `order.seller.id` |
 
 <Note>
-  Products are the shared master catalog, not seller-owned. The `seller`
-  dimension resolves through the **offer** on the order line, which carries the
-  selling store.
+  The `seller` dimension resolves from the order's own seller link. The order
+  split guarantees one seller per order: the store that owns the line's product.
 </Note>
 
 ## Lines → orders

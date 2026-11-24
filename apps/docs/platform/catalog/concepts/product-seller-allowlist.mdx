@@ -1,18 +1,16 @@
 ---
-title: "The store allowlist"
-sidebarTitle: "The allowlist"
-description: "The product_seller link that controls which stores may sell a master product."
+title: "The product–seller link"
+sidebarTitle: "Product–seller link"
+description: "The product_seller link that records which store a product belongs to."
 ---
 
-In this document, you'll learn how Mercur controls which stores are allowed to
-sell a shared master product.
+In this document, you'll learn how a product is tied to the store that sells it.
 
 ## Product seller
 
-Since the catalog is shared, Mercur needs a way to say *which* stores may sell a
-given master product. That's the **product–seller allowlist**: a many-to-many
-link between Medusa's `Product` and Mercur's `Seller`, stored in the
-`product_seller` table.
+The `product_seller` table links Medusa's `Product` to Mercur's `Seller`. The
+link is created for the submitting store when a product is created with
+`seller_ids`, and it is what scopes every vendor product route to that store.
 
 ```ts
 const { data: products } = await query.graph({
@@ -22,27 +20,19 @@ const { data: products } = await query.graph({
 })
 ```
 
-A store appears in a product's `sellers` list only if it has been allowlisted.
-Being on the allowlist is what lets a store create an
-[offer](/platform/offer/overview) against the master product. Without it, the
-store cannot list that product for sale.
+A product has exactly one store. The order split reads the line item's store
+from `variant.product.sellers[0]`, so a product must not be linked to a second
+store, and a product without a store cannot be checked out.
 
-<Note>
-  The allowlist link is created automatically for the submitting store when a
-  product is created with `seller_ids`, and managed afterwards with
-  `linkSellersToProductWorkflow`. See
-  [Allowlist stores](/platform/catalog/guides/allowlist-stores).
-</Note>
+<Warning>
+  The link is defined as a list on both sides and
+  `linkSellersToProductWorkflow` can still add or remove stores. Use it only to
+  move a product to another store (remove the old store and add the new one in
+  the same call), never to attach a second store.
+</Warning>
 
-## Category allowlist
+## Category link
 
-Product categories carry the same pattern through the `category_seller` link. It
-is a many-to-many association between `ProductCategory` and `Seller` that scopes
-which categories a store is associated with. Manage it with
-`linkSellersToProductCategoryWorkflow`.
-
-<Tip>
-  The allowlist governs the **right to sell**, not the sale itself. A store on
-  the allowlist still has to create an offer to actually list the product.
-  Allowlisting alone doesn't put anything on the storefront.
-</Tip>
+Product categories carry a similar `category_seller` link between
+`ProductCategory` and `Seller` that scopes which categories a store is
+associated with. Manage it with `linkSellersToProductCategoryWorkflow`.

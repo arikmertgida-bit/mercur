@@ -41,12 +41,12 @@ line's product:
 | `product_type` | The product's type id equals `reference_id` |
 | `product_collection` | The product's collection id equals `reference_id` |
 | `product_category` | One of the product's categories equals `reference_id` |
-| `seller` | The seller behind the line's offer equals `reference_id` |
+| `seller` | The order's seller equals `reference_id` |
 
 <Note>
-  Products are the shared master catalog. The `seller` dimension resolves
-  through the **offer** on the order line (`item.offer.seller_id`), not through
-  product ownership.
+  The `seller` dimension resolves from the order's own seller link
+  (`order.seller.id`). The order split guarantees one seller per order, and
+  that seller is the store that owns the line's product.
 </Note>
 
 ## Most-specific-wins

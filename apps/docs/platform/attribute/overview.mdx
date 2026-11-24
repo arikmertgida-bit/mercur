@@ -9,7 +9,7 @@ materials, sizes, capacities, or warranty toggles, and reuse it across the whole
 marketplace.
 
 The Attribute domain is an operator-managed catalog of typed fields that attach
-to products in the shared master catalog. Attributes describe products
+to every store's products. Attributes describe products
 consistently and drive storefront filters. For variant axes, they generate the
 product variants shoppers pick between. Every attribute is one of five types.
 Each one is either a global catalog entry reused everywhere or an inline field
@@ -18,8 +18,8 @@ scoped to a single product.
 <Note>
   **Attribute = the `ProductAttribute` entity.** The catalog is owned by the
   Product Attribute module (`MercurModules.PRODUCT_ATTRIBUTE`, id prefix
-  `pattr`). Products are the shared master catalog. Attributes never belong to a
-  store. Sellers list against master products through offers.
+  `pattr`). Attributes never belong to a store, even though each product belongs to
+  one.
 </Note>
 
 ## Key features

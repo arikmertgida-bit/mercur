@@ -126,7 +126,7 @@ This is the distinction that trips people up:
   `query.graph` cannot filter by a linked (cross-module) field. Because modules are isolated and Query aggregates their data after the fact, there is no join to filter on. Passing `filters: { brand: { id } }` to `query.graph` will not scope products by brand.
 </Warning>
 
-You can still filter by a field that lives on the entity's **own** module, a plain column such as `product.status` or `offer.seller_id`. That is a normal `query.graph` filter. Only *linked-module* fields need a different tool.
+You can still filter by a field that lives on the entity's **own** module, a plain column such as `product.status` or `order.status`. That is a normal `query.graph` filter. Only *linked-module* fields need a different tool.
 
 ### Filter by a linked field with the Index Module
 

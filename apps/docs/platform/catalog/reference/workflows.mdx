@@ -1,29 +1,29 @@
 ---
 title: "Workflows"
 sidebarTitle: "Workflows"
-description: "Mercur's product create, review, and allowlist workflows."
+description: "Mercur's product create, review, and store-link workflows."
 ---
 
 This reference lists the Mercur workflows for the Catalog domain. Import them
 from `@mercurjs/core/workflows` and run them against the Medusa container. They
 wrap Medusa's native product flows to add the marketplace layer: the store
-allowlist, the review lifecycle, and the audit trail.
+link, the review lifecycle, and the audit trail.
 
 ## Product workflows
 
 | Workflow | Input | Purpose |
 | --- | --- | --- |
-| `createProductsWorkflow` | `{ products[], created_by, additional_data? }` | Create master products, attach attributes/variants, record the submission, allowlist `seller_ids` |
+| `createProductsWorkflow` | `{ products[], created_by, additional_data? }` | Create products, attach attributes/variants, record the submission, link the product to its store (`seller_ids`) |
 | `confirmProductsWorkflow` | `{ product_ids[], actor_id?, internal_note? }` | `proposed` → `published` |
 | `rejectProductWorkflow` | `{ product_id, message?, actor_id? }` | `proposed` → `rejected` |
 | `requestProductChangeWorkflow` | `{ product_id, message?, actor_id? }` | Ask the submitter for a revision (stays `proposed`) |
 
-## Allowlist & organization workflows
+## Store link & organization workflows
 
 | Workflow | Input | Purpose |
 | --- | --- | --- |
-| `linkSellersToProductWorkflow` | `{ id, add?, remove? }` | Add/remove stores on a product's allowlist |
-| `linkSellersToProductCategoryWorkflow` | `{ id, add?, remove? }` | Add/remove stores on a category's allowlist |
+| `linkSellersToProductWorkflow` | `{ id, add?, remove? }` | Change the store a product belongs to (a product has exactly one) |
+| `linkSellersToProductCategoryWorkflow` | `{ id, add?, remove? }` | Add/remove stores on a category's `category_seller` link |
 | `assignProductsToCategoryWorkflow` | `{ id, add?, remove? }` | Assign products to a single category |
 
 <Note>
@@ -31,7 +31,7 @@ allowlist, the review lifecycle, and the audit trail.
   reuses Medusa's native core-flows (`createProductsWorkflow`,
   `updateProductsWorkflow`, `createProductVariantsWorkflow`, and so on) under the
   hood. The workflows above are the Mercur-specific entry points that add the
-  allowlist, review lifecycle, and audit history.
+  store link, review lifecycle, and audit history.
 </Note>
 
 To work with records directly instead of through a workflow, see the

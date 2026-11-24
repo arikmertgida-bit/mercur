@@ -42,11 +42,11 @@ The product has three audiences:
 - Admin gets platform-wide order visibility; vendors see only their slice.
 - Independent fulfillment, returns, and refunds per child order.
 
-### Master Products & Offers
-- **Master products** form a single shared catalog — products are *not* seller-owned. Creating a product adds it to the shared catalog; the creator only gets attribution on unreviewed submissions.
-- A **product–seller link** acts as an allowlist controlling which sellers may sell which products.
-- Product status lifecycle: `draft` → `proposed` → `published`, or → `rejected`. Vendor-created products default to `proposed`. Visibility: vendors see their own submissions (any status) plus published products not allowlisted to others; admins see everything; the store sees published products of visible sellers.
-- **Offers** are how a seller sells against a master product. An offer carries the seller's own SKU (unique per seller), price (offer-scoped pricing rule), inventory (offer-scoped, not variant-scoped), and shipping profile. Cart/order line items record which offer was purchased.
+### Products & Sellers
+- Every product **belongs to the seller that created it** through the `product_seller` link (one seller per product). Vendor routes only see, edit, or delete the seller's own products; any other product id answers `404`.
+- The seller sells the product directly: SKU, prices, and inventory live on the product's **variants** (Medusa pricing + inventory), and the product uses one of the seller's own shipping profiles. There is no listing entity between product and seller.
+- Cart line items are added by `variant_id`; the line item's seller is `variant.product.sellers[0]`, which drives the order split and per-seller shipping.
+- Product status lifecycle: `draft` → `proposed` → `published`, or → `rejected`. Vendor-created products default to `proposed`. Visibility: vendors see only their own products (any status); admins see everything; the store sees published products of visible sellers.
 
 ### Product Requests & Change Pipeline
 - All product edits flow through a review pipeline of immutable `ProductChange` records — a full audit trail of who changed what and who approved it.
@@ -55,10 +55,10 @@ The product has three audiences:
 - Vendors see their own pending edits and revision requests on product pages.
 
 ### Catalog & Inventory
-- Marketplace-wide master products, variants, collections, categories, tags, and types; sellers list via offers (see above), which carry vendor-scoped price, inventory, and shipping.
+- Seller-owned products and variants (see above); marketplace-wide collections, categories, tags, and types.
 - **Product attributes** — an operator-managed, typed attribute catalog with five types: `multi_select`, `single_select`, `text`, `unit`, `toggle`. A `multi_select` attribute marked `is_variant_axis` generates product variants (backed by native Medusa `ProductOption`). Attributes can be global (shared catalog) or inline/product-scoped (one-off); an `is_filterable` flag exposes them as storefront filters. Products attach attributes through a single batch endpoint.
 - Price lists and price preferences per vendor and region.
-- Inventory items and stock locations (offer-scoped stock).
+- Inventory items and stock locations (variant stock in the seller's own stock locations).
 - Bulk product CSV import / export.
 
 ### Shipping & Fulfillment
@@ -69,11 +69,6 @@ The product has three audiences:
 ### Promotions & Campaigns
 - Vendor-level promotions and campaigns scoped to that vendor's catalog.
 - Platform-wide promotions configurable from the Admin Panel.
-
-### Offers
-- Admin panel module (`packages/admin/src/pages/offers`) for platform-wide
-  visibility into seller-created offers: list, detail, and per-variant detail
-  views, wired into the route map. Not previously documented here.
 
 ### Returns & Requests
 - Vendor-driven return workflows with vendor-defined return reasons.
@@ -106,7 +101,7 @@ The product has three audiences:
 - View every order, fulfillment, and return across sellers.
 
 ### Vendor Portal Capabilities
-- Manage offers against master products (SKU, price, inventory, shipping); submit product edits through the change-request pipeline and track their approval status.
+- Manage the seller's own products (SKU, price, and stock per variant, own shipping profile); submit product edits through the change-request pipeline and track their approval status.
 - Manage variants, collections, categories, tags, types, and attributes.
 - View, fulfill, and refund orders; process returns.
 - Configure shipping profiles, fulfillment, and return reasons.
@@ -163,7 +158,7 @@ The product has three audiences:
 | Admin Panel    (port 7000)        ─ Admin API  (/admin/*)     |
 +---------------------------------------------------------------+
 |                  Mercur Core Plugin (@mercurjs/core)          |
-|  Modules: Seller · Commission · Offer · Payout ·              |
+|  Modules: Seller · Commission · Payout ·                      |
 |           Product Attribute · Product Edit (change pipeline) · |
 |           Order Group · Media · Custom Fields ·               |
 |           Admin UI · Vendor UI · Codegen                      |

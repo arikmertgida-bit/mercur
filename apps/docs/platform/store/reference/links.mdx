@@ -12,7 +12,7 @@ retrieve related records with `query.graph` using the link alias.
 ```ts
 const { data: stores } = await query.graph({
   entity: "seller",
-  fields: ["id", "name", "offers.*", "payout_account.*"],
+  fields: ["id", "name", "products.*", "payout_account.*"],
 })
 ```
 
@@ -20,8 +20,7 @@ const { data: stores } = await query.graph({
 
 | Linked module | Relationship |
 | --- | --- |
-| **Offer** | A store has many offers (`offer.seller_id`, read-only). Offers are how a store sells against a master product. |
-| **Product** | Many-to-many allowlist (`product_seller`) that controls which stores may sell a given master product. |
+| **Product** | A store has many products (`product_seller`); each product belongs to exactly one store. |
 | **Product category** | Many-to-many link to the categories a store is associated with. |
 | **Order** | Each order belongs to one store; a store has many orders. |
 
@@ -66,6 +65,6 @@ const { data: stores } = await query.graph({
 | **Review** | A store has many reviews. |
 
 <Note>
-  Read-only links (Offer, RBAC role) are resolved from the field on the owning
+  Read-only links (RBAC role) are resolved from the field on the owning
   record and can't be written through the link itself.
 </Note>

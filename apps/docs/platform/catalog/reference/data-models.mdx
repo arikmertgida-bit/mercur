@@ -11,8 +11,8 @@ the [Medusa Product module](https://docs.medusajs.com/resources/commerce-modules
 
 ## Product
 
-Table `product`, id prefix `prod`. The shared master product, not owned by any
-store. The marketplace-relevant fields:
+Table `product`, id prefix `prod`. A product belongs to exactly one store
+through `product_seller`. The marketplace-relevant fields:
 
 | Field | Type | Notes |
 | --- | --- | --- |
@@ -26,33 +26,34 @@ store. The marketplace-relevant fields:
 
 Relations used by the marketplace: `variants`, `options`, `categories`,
 `collection`, `tags`, `type`, `images` (native Medusa), plus Mercur's `sellers`
-(the allowlist), `offers`, `scoped_attributes`, and `changes` (audit history).
+(the owning store), `scoped_attributes`, and `changes` (audit history).
 
 ## product_seller
 
-The **allowlist**: a many-to-many link table between `Product` and `Seller`
-controlling which stores may sell a master product.
+The link table between `Product` and `Seller` that records which store a
+product belongs to. It is a list on both sides, but a product has exactly one
+store.
 
 | Column | References |
 | --- | --- |
 | `product_id` | `product.id` |
 | `seller_id` | `seller.id` |
 
-A store on this table can create an [offer](/platform/offer/overview) against the
-product; a store not on it cannot.
+Vendor product routes return, edit, and delete only products linked to the
+authenticated store here; the order split reads a line item's store from it.
 
 ## ProductVariant
 
 Table `product_variant`, id prefix `variant`. A purchasable configuration of a
-master product, generated from its options and variant-axis attributes. Holds the
-SKU-level catalog structure. Offer-scoped price and inventory live on the offer,
-not here.
+product, generated from its options and variant-axis attributes. Holds the SKU,
+and the store's prices and inventory items are linked to it (Medusa pricing and
+inventory). A cart line item points at a variant.
 
 ## ProductCategory
 
 Table `product_category`, id prefix `pcat`. Hierarchical, nestable
 classification. Participates in the marketplace layer through the
-`category_seller` allowlist and the `media_images` link.
+`category_seller` link and the `media_images` link.
 
 ## ProductCollection
 
