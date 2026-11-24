@@ -408,10 +408,9 @@ medusaIntegrationTestRunner({
 
                 // Vendor allocates the added item from the allocate-items form —
                 // but only if the order-edit confirm workflow didn't already
-                // reserve it automatically (unlike the old offer-based flow,
-                // a plain `variant_id` add carries real `manage_inventory`
-                // inventory, so Medusa's own confirm workflow may already
-                // reserve it).
+                // reserve it automatically (a plain `variant_id` add carries
+                // real `manage_inventory` inventory, so Medusa's own confirm
+                // workflow may already reserve it).
                 const addedItemId = addedItem?.id as string
                 const existingReservationsResp = await api.get(
                     `/vendor/reservations?line_item_id[]=${addedItemId}&limit=100`,

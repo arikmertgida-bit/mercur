@@ -72,11 +72,11 @@ medusaIntegrationTestRunner({
             let salesChannel: SalesChannelDTO
             let prerequisiteCounter = 0
 
-            const seedSellerOfferWithShipping = async (opts: {
+            const seedSellerProductWithShipping = async (opts: {
                 email: string
                 name: string
                 stocked: number
-                offerPrice: number
+                price: number
             }): Promise<SellerSeed> => {
                 const result = await createSellerUser(appContainer, {
                     email: opts.email,
@@ -164,7 +164,7 @@ medusaIntegrationTestRunner({
                             sku: `V${tag}`,
                             prices: [
                                 {
-                                    amount: opts.offerPrice,
+                                    amount: opts.price,
                                     currency_code: "usd",
                                 },
                             ],
@@ -331,31 +331,24 @@ medusaIntegrationTestRunner({
                     },
                 })
 
-                seller1Seed = await seedSellerOfferWithShipping({
+                seller1Seed = await seedSellerProductWithShipping({
                     email: "cancel-seller1@test.com",
                     name: "CancelS1",
                     stocked: 5,
-                    offerPrice: 2500,
+                    price: 2500,
                 })
 
-                seller2Seed = await seedSellerOfferWithShipping({
+                seller2Seed = await seedSellerProductWithShipping({
                     email: "cancel-seller2@test.com",
                     name: "CancelS2",
                     stocked: 5,
-                    offerPrice: 2500,
+                    price: 2500,
                 })
             })
 
             describe("POST /vendor/orders/:id/cancel", () => {
-                // The Mercur cancel route surfaces a pre-existing MikroORM
-                // 'strategy' error in `getJoinedFilters` (mikro-orm 6.4.16 +
-                // Medusa 2.13.4 + Mercur order extensions). The same error
-                // appears in the legacy `order.spec.ts` cancel cases — not
-                // introduced by SPEC-008 work. Skipping until the upstream
-                // MikroORM populate path is fixed; the route itself does call
-                // `cancelOrderWorkflow` correctly per UI verification.
-                it.skip("cancels a seller-owned order and flips status to canceled", async () => {
-                    const order = await completeCartCheckout(seller1Seed.offer.id)
+                it("cancels a seller-owned order and flips status to canceled", async () => {
+                    const order = await completeCartCheckout(seller1Seed.variant.id)
 
                     const response = await api.post(
                         `/vendor/orders/${order.id}/cancel`,

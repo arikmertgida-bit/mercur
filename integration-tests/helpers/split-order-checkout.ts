@@ -80,30 +80,32 @@ export const seedSellerProductWithShipping = async (opts: {
         { add: [salesChannelId] },
         headers
     )
-    await api.post(
-        `/vendor/shipping-options`,
-        {
-            name: `Ship${tag}`,
-            service_zone_id: serviceZone.id,
-            shipping_profile_id: shippingProfile.id,
-            provider_id: "manual_manual",
-            price_type: "flat",
-            type: {
-                label: "Standard",
-                description: "Standard",
-                code: "standard",
-            },
-            prices: [{ currency_code: "usd", amount: 500 }],
-            rules: [
-                {
-                    attribute: "enabled_in_store",
-                    value: "true",
-                    operator: "eq",
+    const shippingOption = (
+        await api.post(
+            `/vendor/shipping-options`,
+            {
+                name: `Ship${tag}`,
+                service_zone_id: serviceZone.id,
+                shipping_profile_id: shippingProfile.id,
+                provider_id: "manual_manual",
+                price_type: "flat",
+                type: {
+                    label: "Standard",
+                    description: "Standard",
+                    code: "standard",
                 },
-            ],
-        },
-        headers
-    )
+                prices: [{ currency_code: "usd", amount: 500 }],
+                rules: [
+                    {
+                        attribute: "enabled_in_store",
+                        value: "true",
+                        operator: "eq",
+                    },
+                ],
+            },
+            headers
+        )
+    ).data.shipping_option
 
     const product = await createVendorProduct(api, headers, {
         title: `Prod${tag}`,
@@ -132,6 +134,8 @@ export const seedSellerProductWithShipping = async (opts: {
         product,
         variantId: product.variants[0].id,
         stockLocationId: stockLocation.id,
+        shippingOptionId: shippingOption.id as string,
+        shippingProfileId: shippingProfile.id,
     }
 }
 

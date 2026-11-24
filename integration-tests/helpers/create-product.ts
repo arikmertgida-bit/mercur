@@ -21,10 +21,10 @@ type ApiClient = {
 }
 
 /**
- * Master products are not auto-linked to their creating seller. Selling/visibility
- * eligibility lives on the `product_seller` restriction link, so tests that need a
- * product to be "assigned" to a seller (store visibility, category / sales-channel
- * ownership checks) must create that link explicitly.
+ * A product a seller creates through `POST /vendor/products` is linked to that
+ * seller automatically. Products created any other way (admin API, product
+ * module) have no seller, so a test that needs one to belong to a seller must
+ * create the `product_seller` link itself.
  */
 export const assignProductsToSeller = async (
   container: MedusaContainer,

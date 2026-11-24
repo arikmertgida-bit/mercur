@@ -1,6 +1,7 @@
 import { medusaIntegrationTestRunner } from "@medusajs/test-utils"
 import { MedusaContainer } from "@medusajs/framework/types"
 import { createSellerUser } from "../../../helpers/create-seller-user"
+import { createVendorProduct } from "../../../helpers/create-product"
 
 jest.setTimeout(60000)
 
@@ -176,6 +177,50 @@ medusaIntegrationTestRunner({
 
         expect(response.status).toEqual(200)
         expect(Array.isArray(response.data.values)).toBe(true)
+      })
+
+      it("returns global rule value options for non seller-scoped attributes", async () => {
+        for (const attribute of ["region", "currency_code", "sales_channel"]) {
+          const response = await api.get(
+            `/vendor/promotions/rule-value-options/rules/${attribute}?limit=10&offset=0&application_method_target_type=items`,
+            headers
+          )
+
+          expect(response.status).toEqual(200)
+          expect(Array.isArray(response.data.values)).toBe(true)
+        }
+      })
+
+      it("offers only the seller's own products as product rule values", async () => {
+        const own = await createSellerUser(appContainer, {
+          email: "rule-values-own@test.com",
+          name: "Rule Values Own",
+          autoApprove: true,
+        })
+        const ownProduct = await createVendorProduct(api, own.headers, {
+          title: "Own Rule Product",
+        })
+        const other = await createSellerUser(appContainer, {
+          email: "rule-values-other@test.com",
+          name: "Rule Values Other",
+          autoApprove: true,
+        })
+        const otherProduct = await createVendorProduct(api, other.headers, {
+          title: "Other Rule Product",
+        })
+
+        const response = await api.get(
+          `/vendor/promotions/rule-value-options/target-rules/product?limit=50&offset=0&application_method_target_type=items`,
+          own.headers
+        )
+
+        expect(response.status).toEqual(200)
+        const values = response.data.values.map((v: any) => v.value)
+        expect(values).toContain(ownProduct.id)
+        expect(values).not.toContain(otherProduct.id)
+        expect(
+          response.data.values.find((v: any) => v.value === ownProduct.id).label
+        ).toEqual("Own Rule Product")
       })
     })
   },
