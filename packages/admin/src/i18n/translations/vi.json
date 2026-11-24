@@ -592,7 +592,8 @@
         "requiredCategory": "Vui lòng chọn danh mục",
         "handleInvalidFormat": "Định danh chỉ được chứa chữ thường, số và dấu gạch nối",
         "handleMustContainLetter": "Định danh phải chứa ít nhất một chữ cái",
-        "formIncomplete": "Thiếu một số trường bắt buộc — hãy kiểm tra các hàng được đánh dấu trước khi đăng."
+        "formIncomplete": "Thiếu một số trường bắt buộc — hãy kiểm tra các hàng được đánh dấu trước khi đăng.",
+        "requiredSeller": "Chọn cửa hàng sở hữu sản phẩm"
       },
       "inventory": {
         "heading": "Bộ thành phần trong kho",
@@ -830,6 +831,9 @@
       "globally_available": {
         "label": "Có sẵn toàn cầu",
         "hint": "Khi bỏ chọn, chỉ những cửa hàng đã chọn mới có thể bán sản phẩm này"
+      },
+      "seller": {
+        "hint": "Sản phẩm thuộc cửa hàng này. Hồ sơ vận chuyển và vị trí kho lấy từ cửa hàng này."
       }
     },
     "variant": {
@@ -918,6 +922,17 @@
           "required": "Hồ sơ vận chuyển là bắt buộc"
         }
       }
+    },
+    "sellerChange": {
+      "action": "Đổi cửa hàng",
+      "header": "Đổi cửa hàng",
+      "description": "Chuyển sản phẩm sang cửa hàng khác.",
+      "currentStore": "Cửa hàng hiện tại",
+      "newStore": "Cửa hàng mới",
+      "shippingProfileHint": "Chỉ hiển thị hồ sơ vận chuyển của cửa hàng đã chọn.",
+      "selectStoreFirst": "Hãy chọn cửa hàng trước.",
+      "stockWarning": "Tồn kho tại các vị trí của cửa hàng hiện tại sẽ bị xóa và cửa hàng mới tự nhập tồn kho. Các đơn hàng trước đây vẫn thuộc cửa hàng hiện tại.",
+      "successToast": "Đã chuyển {{title}} sang {{store}}."
     },
     "toasts": {
       "delete": {

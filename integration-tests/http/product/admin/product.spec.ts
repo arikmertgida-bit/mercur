@@ -11,6 +11,7 @@ import {
   adminHeaders,
   createAdminUser,
 } from "../../../helpers/create-admin-user"
+import { createSellerUser } from "../../../helpers/create-seller-user"
 
 jest.setTimeout(60000)
 
@@ -31,8 +32,15 @@ medusaIntegrationTestRunner({
         appContainer = getContainer()
       })
 
+      // Every admin-created product belongs to exactly one store.
+      let sellerId: string
+
       beforeEach(async () => {
         await createAdminUser(dbConnection, adminHeaders, appContainer)
+        const { seller } = await createSellerUser(appContainer, {
+          autoApprove: true,
+        })
+        sellerId = seller.id
       })
 
       const createAttr = async (opts: {
@@ -354,6 +362,7 @@ medusaIntegrationTestRunner({
         const res = await api.post(
           "/admin/products",
           {
+            seller_ids: [sellerId],
             title: "Created Product",
             status: "published",
             attributes: [
@@ -406,6 +415,7 @@ medusaIntegrationTestRunner({
         const res = await api.post(
           "/admin/products",
           {
+            seller_ids: [sellerId],
             title: "testmodal",
             status: "published",
             attributes: [
@@ -493,6 +503,7 @@ medusaIntegrationTestRunner({
         const axisRes = await api.post(
           "/admin/products",
           {
+            seller_ids: [sellerId],
             title: "Axis Create Product",
             status: "published",
             attributes: [{ id: axis.id, value_ids: [axis.byName.get("A")!] }],
@@ -508,6 +519,7 @@ medusaIntegrationTestRunner({
         const inlineRes = await api.post(
           "/admin/products",
           {
+            seller_ids: [sellerId],
             title: "Inline Axis Create Product",
             status: "published",
             attributes: [
@@ -527,7 +539,7 @@ medusaIntegrationTestRunner({
         // "__default__" placeholder is kept so the product has at least one option.
         const bareRes = await api.post(
           "/admin/products",
-          { title: "Bare Create Product", status: "published" },
+          { title: "Bare Create Product", status: "published", seller_ids: [sellerId] },
           adminHeaders,
         )
         expect([200, 201]).toContain(bareRes.status)
@@ -541,6 +553,7 @@ medusaIntegrationTestRunner({
         const res = await api.post(
           "/admin/products",
           {
+            seller_ids: [sellerId],
             title: "Simple Product",
             status: "published",
             attributes: [
@@ -579,6 +592,7 @@ medusaIntegrationTestRunner({
         const res = await api.post(
           "/admin/products",
           {
+            seller_ids: [sellerId],
             title: "Variant Product",
             status: "published",
             attributes: [
@@ -797,6 +811,7 @@ medusaIntegrationTestRunner({
         const created = await api.post(
           "/admin/products",
           {
+            seller_ids: [sellerId],
             title: "Scoped Axis Variant Product",
             status: "published",
             attributes: [
@@ -901,6 +916,7 @@ medusaIntegrationTestRunner({
         const created = await api.post(
           "/admin/products",
           {
+            seller_ids: [sellerId],
             title: "Shared Axis Subset Product",
             status: "published",
             attributes: [{ id: multi.id, value_ids: [multi.byName.get("S")!] }],
@@ -951,6 +967,7 @@ medusaIntegrationTestRunner({
         const created = await api.post(
           "/admin/products",
           {
+            seller_ids: [sellerId],
             title: "Created Product",
             status: "published",
             attributes: [

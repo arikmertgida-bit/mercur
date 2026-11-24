@@ -597,7 +597,8 @@
         "requiredCategory": "Odaberite kategoriju",
         "handleInvalidFormat": "Identifikator (handle) smije sadržavati samo mala slova, brojeve i crtice",
         "handleMustContainLetter": "Identifikator (handle) mora sadržavati najmanje jedno slovo",
-        "formIncomplete": "Nedostaju neka obavezna polja — provjerite označene redove prije objavljivanja."
+        "formIncomplete": "Nedostaju neka obavezna polja — provjerite označene redove prije objavljivanja.",
+        "requiredSeller": "Odaberite prodavnicu kojoj proizvod pripada"
       },
       "inventory": {
         "heading": "Kits inventara",
@@ -838,6 +839,9 @@
       "globally_available": {
         "label": "Globalno dostupno",
         "hint": "Kada nije označeno, samo odabrane prodavnice će moći ponuditi ovaj proizvod"
+      },
+      "seller": {
+        "hint": "Proizvod pripada ovoj prodavnici. Profil dostave i lokacije zaliha dolaze iz nje."
       }
     },
     "variant": {
@@ -927,6 +931,17 @@
           "required": "Profil dostave je obavezan."
         }
       }
+    },
+    "sellerChange": {
+      "action": "Promijeni prodavnicu",
+      "header": "Promijeni prodavnicu",
+      "description": "Premjestite proizvod u drugu prodavnicu.",
+      "currentStore": "Trenutna prodavnica",
+      "newStore": "Nova prodavnica",
+      "shippingProfileHint": "Prikazuju se samo profili dostave odabrane prodavnice.",
+      "selectStoreFirst": "Prvo odaberite prodavnicu.",
+      "stockWarning": "Zalihe na lokacijama trenutne prodavnice se brišu, a nova prodavnica unosi vlastite zalihe. Ranije narudžbe ostaju u trenutnoj prodavnici.",
+      "successToast": "{{title}} je premješten u prodavnicu {{store}}."
     },
     "toasts": {
       "delete": {

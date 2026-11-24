@@ -6,16 +6,11 @@ import * as zod from "zod";
 
 import { ConditionalTooltip } from "../../../../../components/common/conditional-tooltip";
 import { Form } from "../../../../../components/common/form";
-import { SwitchBox } from "../../../../../components/common/switch-box";
 import { Combobox } from "../../../../../components/inputs/combobox";
 import { RouteDrawer, useRouteModal } from "../../../../../components/modals";
 import { KeyboundForm } from "../../../../../components/utilities/keybound-form";
-import { i18n } from "../../../../../components/utilities/i18n/i18n";
 
-import {
-  useLinkProductSellers,
-  useUpdateProduct,
-} from "../../../../../hooks/api/products";
+import { useUpdateProduct } from "../../../../../hooks/api/products";
 import { useComboboxData } from "../../../../../hooks/use-combobox-data";
 import { sdk } from "../../../../../lib/client";
 import { SingleCategoryCombobox } from "../../../common/components/category-combobox";
@@ -26,24 +21,12 @@ type ProductOrganizationFormProps = {
   product: HttpTypes.AdminProduct;
 };
 
-const ProductOrganizationSchema = zod
-  .object({
-    type_id: zod.string().nullable(),
-    collection_id: zod.string().nullable(),
-    category_id: zod.string().nullable(),
-    tag_ids: zod.array(zod.string()),
-    globally_available: zod.boolean(),
-    seller_ids: zod.array(zod.string()),
-  })
-  .superRefine((data, ctx) => {
-    if (!data.globally_available && !data.seller_ids.length) {
-      ctx.addIssue({
-        code: zod.ZodIssueCode.custom,
-        path: ["seller_ids"],
-        message: i18n.t("products.create.errors.requiredStore"),
-      });
-    }
-  });
+const ProductOrganizationSchema = zod.object({
+  type_id: zod.string().nullable(),
+  collection_id: zod.string().nullable(),
+  category_id: zod.string().nullable(),
+  tag_ids: zod.array(zod.string()),
+});
 
 export const ProductOrganizationForm = ({
   product,
@@ -54,7 +37,6 @@ export const ProductOrganizationForm = ({
   const collectionsGate = usePermissionGate("product_collections:view");
   const typesGate = usePermissionGate("product_types:view");
   const tagsGate = usePermissionGate("product_tags:view");
-  const sellersGate = usePermissionGate("sellers:view");
 
   const collections = useComboboxData({
     queryKey: ["product_collections"],
@@ -89,46 +71,19 @@ export const ProductOrganizationForm = ({
     enabled: tagsGate.allowed,
   });
 
-  const sellers = useComboboxData({
-    queryKey: ["sellers"],
-    queryFn: (params) => sdk.admin.sellers.query(params),
-    getOptions: (data) =>
-      data.sellers.map((seller: { id: string; name: string }) => ({
-        label: seller.name,
-        value: seller.id,
-      })),
-    enabled: sellersGate.allowed,
-  });
-
-  const initialSellerIds = product.sellers?.map((s) => s.id) ?? [];
-
   const form = useForm({
     defaultValues: {
       type_id: product.type_id ?? "",
       collection_id: product.collection_id ?? "",
       category_id: product.categories?.[0]?.id ?? null,
       tag_ids: product.tags?.map((t) => t.id) || [],
-      globally_available: initialSellerIds.length === 0,
-      seller_ids: initialSellerIds,
     },
     resolver: zodResolver(ProductOrganizationSchema),
   });
 
-  const isGloballyAvailable = form.watch("globally_available");
-
   const { mutateAsync, isPending } = useUpdateProduct(product.id);
-  const { mutateAsync: linkSellers, isPending: isLinkingSellers } =
-    useLinkProductSellers(product.id);
 
   const handleSubmit = form.handleSubmit(async (data) => {
-    const desiredSellerIds = data.globally_available ? [] : data.seller_ids;
-    const add = desiredSellerIds.filter(
-      (id) => !initialSellerIds.includes(id),
-    );
-    const remove = initialSellerIds.filter(
-      (id) => !desiredSellerIds.includes(id),
-    );
-
     await mutateAsync(
       {
         type_id: data.type_id || null,
@@ -137,11 +92,7 @@ export const ProductOrganizationForm = ({
         tags: data.tag_ids?.map((t) => ({ id: t })),
       },
       {
-        onSuccess: async ({ product }) => {
-          if (add.length || remove.length) {
-            await linkSellers({ add, remove });
-          }
-
+        onSuccess: ({ product }) => {
           toast.success(
             t("products.organization.edit.toasts.success", {
               title: product.title,
@@ -297,49 +248,6 @@ export const ProductOrganizationForm = ({
                 );
               }}
             />
-            <SwitchBox
-              control={form.control}
-              name="globally_available"
-              label={t("products.fields.globally_available.label")}
-              description={t("products.fields.globally_available.hint")}
-              optional
-              data-testid="product-organization-form-globally-available-switch"
-            />
-            {!isGloballyAvailable && (
-              <Form.Field
-                control={form.control}
-                name="seller_ids"
-                render={({ field }) => {
-                  return (
-                    <Form.Item data-testid="product-organization-form-stores-item">
-                      <Form.Label data-testid="product-organization-form-stores-label">
-                        {t("products.fields.stores.label")}
-                      </Form.Label>
-                      <ConditionalTooltip
-                        showTooltip={sellersGate.denied}
-                        content={sellersGate.tooltip}
-                      >
-                        <div>
-                          <Form.Control data-testid="product-organization-form-stores-control">
-                            <Combobox
-                              {...field}
-                              value={field.value ?? []}
-                              disabled={sellersGate.denied}
-                              options={sellers.options}
-                              searchValue={sellers.searchValue}
-                              onSearchValueChange={sellers.onSearchValueChange}
-                              fetchNextPage={sellers.fetchNextPage}
-                              data-testid="product-organization-form-stores-combobox"
-                            />
-                          </Form.Control>
-                        </div>
-                      </ConditionalTooltip>
-                      <Form.ErrorMessage data-testid="product-organization-form-stores-error" />
-                    </Form.Item>
-                  );
-                }}
-              />
-            )}
           </div>
         </RouteDrawer.Body>
         <RouteDrawer.Footer data-testid="product-organization-form-footer">
@@ -362,7 +270,7 @@ export const ProductOrganizationForm = ({
             <Button
               size="small"
               type="submit"
-              isLoading={isPending || isLinkingSellers}
+              isLoading={isPending}
               data-testid="product-organization-form-save-button"
             >
               {t("actions.save")}

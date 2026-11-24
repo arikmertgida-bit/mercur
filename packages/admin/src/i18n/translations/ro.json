@@ -597,7 +597,8 @@
         "requiredCategory": "Vă rugăm să selectați o categorie",
         "handleInvalidFormat": "Identificatorul trebuie să conțină doar litere mici, cifre și cratime",
         "handleMustContainLetter": "Identificatorul trebuie să conțină cel puțin o literă",
-        "formIncomplete": "Lipsesc unele câmpuri obligatorii — verifică rândurile evidențiate înainte de publicare."
+        "formIncomplete": "Lipsesc unele câmpuri obligatorii — verifică rândurile evidențiate înainte de publicare.",
+        "requiredSeller": "Selectați magazinul căruia îi aparține produsul"
       },
       "inventory": {
         "heading": "Truse de inventar",
@@ -835,6 +836,9 @@
       "globally_available": {
         "label": "Disponibil global",
         "hint": "Când nu este bifat, doar magazinele selectate vor putea oferi acest produs"
+      },
+      "seller": {
+        "hint": "Produsul aparține acestui magazin. Profilul de livrare și locațiile de stoc provin de la acesta."
       }
     },
     "variant": {
@@ -1041,6 +1045,17 @@
           "required": "Profilul de livrare este obligatoriu"
         }
       }
+    },
+    "sellerChange": {
+      "action": "Schimbați magazinul",
+      "header": "Schimbați magazinul",
+      "description": "Mutați produsul în alt magazin.",
+      "currentStore": "Magazinul actual",
+      "newStore": "Magazin nou",
+      "shippingProfileHint": "Sunt afișate doar profilurile de livrare ale magazinului selectat.",
+      "selectStoreFirst": "Selectați mai întâi un magazin.",
+      "stockWarning": "Stocul din locațiile magazinului actual este șters, iar noul magazin își introduce propriul stoc. Comenzile anterioare rămân la magazinul actual.",
+      "successToast": "{{title}} a fost mutat în {{store}}."
     }
   },
   "providers": {

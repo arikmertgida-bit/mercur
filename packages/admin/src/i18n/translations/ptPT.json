@@ -597,7 +597,8 @@
         "requiredCategory": "Selecione uma categoria",
         "handleInvalidFormat": "O identificador só pode conter letras minúsculas, números e hífens",
         "handleMustContainLetter": "O identificador deve conter pelo menos uma letra",
-        "formIncomplete": "Faltam alguns campos obrigatórios — verifique as linhas destacadas antes de publicar."
+        "formIncomplete": "Faltam alguns campos obrigatórios — verifique as linhas destacadas antes de publicar.",
+        "requiredSeller": "Selecione a loja a que o produto pertence"
       },
       "inventory": {
         "heading": "Kits de stock",
@@ -838,6 +839,9 @@
       "globally_available": {
         "label": "Disponível globalmente",
         "hint": "Quando desmarcado, apenas as lojas selecionadas poderão oferecer este produto"
+      },
+      "seller": {
+        "hint": "O produto pertence a esta loja. O perfil de envio e as localizações de stock vêm dela."
       }
     },
     "variant": {
@@ -1041,6 +1045,17 @@
           "required": "O perfil de envio é obrigatório"
         }
       }
+    },
+    "sellerChange": {
+      "action": "Alterar loja",
+      "header": "Alterar loja",
+      "description": "Mova o produto para outra loja.",
+      "currentStore": "Loja atual",
+      "newStore": "Nova loja",
+      "shippingProfileHint": "Só são listados os perfis de envio da loja selecionada.",
+      "selectStoreFirst": "Selecione primeiro uma loja.",
+      "stockWarning": "O stock nas localizações da loja atual é eliminado e a nova loja regista o seu próprio stock. As encomendas anteriores ficam na loja atual.",
+      "successToast": "{{title}} foi movido para {{store}}."
     }
   },
   "providers": {

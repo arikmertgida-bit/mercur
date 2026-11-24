@@ -592,7 +592,8 @@
         "requiredCategory": "Selecteer een categorie",
         "handleInvalidFormat": "De slug mag alleen kleine letters, cijfers en koppeltekens bevatten",
         "handleMustContainLetter": "De slug moet ten minste één letter bevatten",
-        "formIncomplete": "Sommige verplichte velden ontbreken — controleer de gemarkeerde rijen voordat u publiceert."
+        "formIncomplete": "Sommige verplichte velden ontbreken — controleer de gemarkeerde rijen voordat u publiceert.",
+        "requiredSeller": "Selecteer de winkel waartoe het product behoort"
       },
       "inventory": {
         "heading": "Voorraadsets",
@@ -830,6 +831,9 @@
       "globally_available": {
         "label": "Wereldwijd beschikbaar",
         "hint": "Indien niet aangevinkt, kunnen alleen de geselecteerde winkels dit product aanbieden"
+      },
+      "seller": {
+        "hint": "Het product hoort bij deze winkel. Het verzendprofiel en de voorraadlocaties komen van deze winkel."
       }
     },
     "variant": {
@@ -918,6 +922,17 @@
           "required": "Verzendprofiel is vereist"
         }
       }
+    },
+    "sellerChange": {
+      "action": "Winkel wijzigen",
+      "header": "Winkel wijzigen",
+      "description": "Verplaats het product naar een andere winkel.",
+      "currentStore": "Huidige winkel",
+      "newStore": "Nieuwe winkel",
+      "shippingProfileHint": "Alleen de verzendprofielen van de geselecteerde winkel worden getoond.",
+      "selectStoreFirst": "Selecteer eerst een winkel.",
+      "stockWarning": "De voorraad op de locaties van de huidige winkel wordt verwijderd en de nieuwe winkel voert zijn eigen voorraad in. Eerdere bestellingen blijven bij de huidige winkel.",
+      "successToast": "{{title}} is verplaatst naar {{store}}."
     },
     "toasts": {
       "delete": {

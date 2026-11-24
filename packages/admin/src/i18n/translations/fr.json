@@ -597,7 +597,8 @@
         "requiredCategory": "Veuillez sélectionner une catégorie",
         "handleInvalidFormat": "L'identifiant ne doit contenir que des lettres minuscules, des chiffres et des traits d'union",
         "handleMustContainLetter": "L'identifiant doit contenir au moins une lettre",
-        "formIncomplete": "Certains champs obligatoires sont manquants — vérifiez les lignes surlignées avant de publier."
+        "formIncomplete": "Certains champs obligatoires sont manquants — vérifiez les lignes surlignées avant de publier.",
+        "requiredSeller": "Sélectionnez la boutique à laquelle appartient le produit"
       },
       "inventory": {
         "heading": "Inventaires",
@@ -838,6 +839,9 @@
       "globally_available": {
         "label": "Disponible globalement",
         "hint": "Si décoché, seules les boutiques sélectionnées pourront proposer ce produit"
+      },
+      "seller": {
+        "hint": "Le produit appartient à cette boutique. Son profil de livraison et ses emplacements de stock en proviennent."
       }
     },
     "variant": {
@@ -1041,6 +1045,17 @@
           "required": "Le profil d'expédition est requis"
         }
       }
+    },
+    "sellerChange": {
+      "action": "Changer de boutique",
+      "header": "Changer de boutique",
+      "description": "Déplacez le produit vers une autre boutique.",
+      "currentStore": "Boutique actuelle",
+      "newStore": "Nouvelle boutique",
+      "shippingProfileHint": "Seuls les profils de livraison de la boutique sélectionnée sont listés.",
+      "selectStoreFirst": "Sélectionnez d'abord une boutique.",
+      "stockWarning": "Le stock des emplacements de la boutique actuelle est supprimé et la nouvelle boutique saisit son propre stock. Les commandes passées restent à la boutique actuelle.",
+      "successToast": "{{title}} a été déplacé vers {{store}}."
     }
   },
   "providers": {

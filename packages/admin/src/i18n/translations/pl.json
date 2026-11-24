@@ -579,7 +579,8 @@
         "requiredCategory": "Wybierz kategorię",
         "handleInvalidFormat": "Identyfikator URL może zawierać tylko małe litery, cyfry i myślniki",
         "handleMustContainLetter": "Identyfikator URL musi zawierać co najmniej jedną literę",
-        "formIncomplete": "Brakuje niektórych wymaganych pól — sprawdź podświetlone wiersze przed publikacją."
+        "formIncomplete": "Brakuje niektórych wymaganych pól — sprawdź podświetlone wiersze przed publikacją.",
+        "requiredSeller": "Wybierz sklep, do którego należy produkt"
       },
       "inventory": {
         "heading": "Zestawy magazynowe",
@@ -902,6 +903,9 @@
       "globally_available": {
         "label": "Dostępny globalnie",
         "hint": "Gdy opcja jest odznaczona, ten produkt będą mogły oferować tylko wybrane sklepy"
+      },
+      "seller": {
+        "hint": "Produkt należy do tego sklepu. Profil wysyłki i lokalizacje magazynowe pochodzą z niego."
       }
     },
     "variant": {
@@ -992,6 +996,17 @@
           "required": "Profil wysyłki jest wymagany."
         }
       }
+    },
+    "sellerChange": {
+      "action": "Zmień sklep",
+      "header": "Zmień sklep",
+      "description": "Przenieś produkt do innego sklepu.",
+      "currentStore": "Obecny sklep",
+      "newStore": "Nowy sklep",
+      "shippingProfileHint": "Wyświetlane są tylko profile wysyłki wybranego sklepu.",
+      "selectStoreFirst": "Najpierw wybierz sklep.",
+      "stockWarning": "Zapasy w lokalizacjach obecnego sklepu zostaną usunięte, a nowy sklep wprowadzi własne zapasy. Wcześniejsze zamówienia pozostają w obecnym sklepie.",
+      "successToast": "Produkt {{title}} przeniesiono do sklepu {{store}}."
     },
     "toasts": {
       "delete": {

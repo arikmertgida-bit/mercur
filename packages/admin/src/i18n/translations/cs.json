@@ -597,7 +597,8 @@
         "requiredCategory": "Vyberte prosím kategorii",
         "handleInvalidFormat": "Identifikátor smí obsahovat pouze malá písmena, čísla a spojovníky",
         "handleMustContainLetter": "Identifikátor musí obsahovat alespoň jedno písmeno",
-        "formIncomplete": "Chybí některá povinná pole — před publikováním zkontrolujte zvýrazněné řádky."
+        "formIncomplete": "Chybí některá povinná pole — před publikováním zkontrolujte zvýrazněné řádky.",
+        "requiredSeller": "Vyberte obchod, do kterého produkt patří"
       },
       "inventory": {
         "heading": "Sady inventáře",
@@ -838,6 +839,9 @@
       "globally_available": {
         "label": "Globálně dostupné",
         "hint": "Pokud není zaškrtnuto, tento produkt budou moci nabízet pouze vybrané obchody"
+      },
+      "seller": {
+        "hint": "Produkt patří tomuto obchodu. Dopravní profil a skladová místa pocházejí z něj."
       }
     },
     "variant": {
@@ -927,6 +931,17 @@
           "required": "Profil dopravy je povinný"
         }
       }
+    },
+    "sellerChange": {
+      "action": "Změnit obchod",
+      "header": "Změnit obchod",
+      "description": "Přesuňte produkt do jiného obchodu.",
+      "currentStore": "Současný obchod",
+      "newStore": "Nový obchod",
+      "shippingProfileHint": "Zobrazují se pouze dopravní profily vybraného obchodu.",
+      "selectStoreFirst": "Nejprve vyberte obchod.",
+      "stockWarning": "Zásoby ve skladových místech současného obchodu se smažou a nový obchod zadá vlastní zásoby. Dřívější objednávky zůstávají u současného obchodu.",
+      "successToast": "Produkt {{title}} byl přesunut do obchodu {{store}}."
     },
     "toasts": {
       "delete": {

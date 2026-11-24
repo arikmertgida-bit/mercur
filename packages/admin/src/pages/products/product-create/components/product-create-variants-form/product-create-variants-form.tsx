@@ -29,8 +29,16 @@ const Root = () => {
   const [search, setSearch] = useState("");
 
   const { regions } = useRegions({ limit: 9999 });
-  const { stock_locations } = useStockLocations({ limit: 100 });
-  const { shipping_profiles } = useShippingProfiles({ limit: 100 });
+  // Stock and shipping come from the product's own store only.
+  const sellerId = useWatch({ control: form.control, name: "seller_id" });
+  const { stock_locations } = useStockLocations(
+    { limit: 100, seller_id: sellerId },
+    { enabled: !!sellerId },
+  );
+  const { shipping_profiles } = useShippingProfiles(
+    { limit: 100, seller_id: sellerId },
+    { enabled: !!sellerId },
+  );
   const { price_preferences: pricePreferences } = usePricePreferences({});
 
   const currencies = useMemo(() => {

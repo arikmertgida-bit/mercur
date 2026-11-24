@@ -5,8 +5,6 @@ import {
   validateAndTransformQuery,
 } from "@medusajs/framework"
 
-import { createLinkBody } from "@medusajs/medusa/api/utils/validators"
-
 import {
   adminProductQueryConfig,
   adminProductVariantQueryConfig,
@@ -14,6 +12,7 @@ import {
 import {
   AdminBatchProductAttributes,
   AdminBatchProducts,
+  AdminChangeProductSeller,
   AdminCreateProduct,
   AdminCreateProductVariant,
   AdminGetProductParams,
@@ -27,6 +26,10 @@ import {
   AdminUpdateProductVariant,
 } from "./validators"
 import { withOriginalMiddlewares } from "../../../utils/disable-medusa-middlewares"
+import {
+  ensureBatchShippingProfilesOfSeller,
+  ensureProductShippingProfileOfSeller,
+} from "./seller-guards"
 
 const overrides: MiddlewareRoute[] = [
   {
@@ -62,6 +65,7 @@ const overrides: MiddlewareRoute[] = [
         AdminGetProductsParams,
         adminProductQueryConfig.list
       ),
+      ensureBatchShippingProfilesOfSeller,
     ],
   },
   {
@@ -85,6 +89,7 @@ const overrides: MiddlewareRoute[] = [
         AdminGetProductParams,
         adminProductQueryConfig.retrieve
       ),
+      ensureProductShippingProfileOfSeller,
     ],
   },
   {
@@ -203,10 +208,15 @@ const overrides: MiddlewareRoute[] = [
 
   {
     method: ["POST"],
-    matcher: "/admin/products/:id/sellers",
+    matcher: "/admin/products/:id/seller",
     middlewares: [
       requirePermission("products", "edit"),
-      validateAndTransformBody(createLinkBody())],
+      validateAndTransformBody(AdminChangeProductSeller),
+      validateAndTransformQuery(
+        AdminGetProductParams,
+        adminProductQueryConfig.retrieve
+      ),
+    ],
   },
 ]
 

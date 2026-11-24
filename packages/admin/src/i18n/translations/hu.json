@@ -592,7 +592,8 @@
         "requiredCategory": "Kérjük, válasszon kategóriát",
         "handleInvalidFormat": "Az URL-azonosító csak kisbetűket, számokat és kötőjeleket tartalmazhat",
         "handleMustContainLetter": "Az URL-azonosítónak legalább egy betűt kell tartalmaznia",
-        "formIncomplete": "Néhány kötelező mező hiányzik — közzététel előtt ellenőrizze a kiemelt sorokat."
+        "formIncomplete": "Néhány kötelező mező hiányzik — közzététel előtt ellenőrizze a kiemelt sorokat.",
+        "requiredSeller": "Válassza ki az áruházat, amelyhez a termék tartozik"
       },
       "inventory": {
         "heading": "Készletcsomagok",
@@ -830,6 +831,9 @@
       "globally_available": {
         "label": "Globálisan elérhető",
         "hint": "Ha nincs bejelölve, csak a kiválasztott áruházak kínálhatják ezt a terméket"
+      },
+      "seller": {
+        "hint": "A termék ehhez az áruházhoz tartozik. A szállítási profil és a készlethelyek innen származnak."
       }
     },
     "variant": {
@@ -918,6 +922,17 @@
           "required": "A szállítási profil mező kitöltése kötelező."
         }
       }
+    },
+    "sellerChange": {
+      "action": "Áruház módosítása",
+      "header": "Áruház módosítása",
+      "description": "Helyezze át a terméket egy másik áruházba.",
+      "currentStore": "Jelenlegi áruház",
+      "newStore": "Új áruház",
+      "shippingProfileHint": "Csak a kiválasztott áruház szállítási profiljai jelennek meg.",
+      "selectStoreFirst": "Először válasszon áruházat.",
+      "stockWarning": "A jelenlegi áruház készlethelyein lévő készlet törlődik, az új áruház saját készletet rögzít. A korábbi rendelések a jelenlegi áruháznál maradnak.",
+      "successToast": "{{title}} áthelyezve ide: {{store}}."
     },
     "toasts": {
       "delete": {

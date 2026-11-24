@@ -592,7 +592,8 @@
         "requiredCategory": "Bitte wählen Sie eine Kategorie aus",
         "handleInvalidFormat": "Das Handle darf nur Kleinbuchstaben, Zahlen und Bindestriche enthalten",
         "handleMustContainLetter": "Das Handle muss mindestens einen Buchstaben enthalten",
-        "formIncomplete": "Einige Pflichtfelder fehlen — überprüfen Sie die markierten Zeilen vor der Veröffentlichung."
+        "formIncomplete": "Einige Pflichtfelder fehlen — überprüfen Sie die markierten Zeilen vor der Veröffentlichung.",
+        "requiredSeller": "Wählen Sie den Shop aus, zu dem das Produkt gehört"
       },
       "inventory": {
         "heading": "Inventar-Kits",
@@ -830,6 +831,9 @@
       "globally_available": {
         "label": "Global verfügbar",
         "hint": "Wenn nicht aktiviert, können nur die ausgewählten Shops dieses Produkt anbieten"
+      },
+      "seller": {
+        "hint": "Das Produkt gehört zu diesem Shop. Versandprofil und Lagerorte stammen von ihm."
       }
     },
     "variant": {
@@ -1029,6 +1033,17 @@
           "required": "Versandprofil ist erforderlich"
         }
       }
+    },
+    "sellerChange": {
+      "action": "Shop wechseln",
+      "header": "Shop wechseln",
+      "description": "Verschieben Sie das Produkt in einen anderen Shop.",
+      "currentStore": "Aktueller Shop",
+      "newStore": "Neuer Shop",
+      "shippingProfileHint": "Es werden nur die Versandprofile des ausgewählten Shops angezeigt.",
+      "selectStoreFirst": "Wählen Sie zuerst einen Shop aus.",
+      "stockWarning": "Der Bestand an den Lagerorten des aktuellen Shops wird gelöscht, der neue Shop erfasst seinen eigenen Bestand. Frühere Bestellungen bleiben beim aktuellen Shop.",
+      "successToast": "{{title}} wurde zu {{store}} verschoben."
     }
   },
   "providers": {

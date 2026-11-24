@@ -32,15 +32,23 @@ export const ProductShippingProfileForm = ({
 
   const shippingProfilesGate = usePermissionGate("shipping_profiles:view")
 
+  // A product ships only with a profile of its own seller.
+  const sellerId = product.sellers?.[0]?.id
+
   const shippingProfiles = useComboboxData({
-    queryKey: ["shipping_profiles"],
-    queryFn: (params) => sdk.admin.shippingProfiles.query(params),
+    queryKey: ["shipping_profiles", sellerId],
+    queryFn: (params) => {
+      // seller_id is a Mercur filter (shipping_profile_seller link) that the
+      // Medusa-derived list params type does not declare.
+      const filters = { ...params, seller_id: sellerId }
+      return sdk.admin.shippingProfiles.query(filters)
+    },
     getOptions: (data) =>
       data.shipping_profiles.map((shippingProfile) => ({
         label: shippingProfile.name,
         value: shippingProfile.id,
       })),
-    enabled: shippingProfilesGate.allowed,
+    enabled: shippingProfilesGate.allowed && !!sellerId,
   })
 
   const form = useForm({

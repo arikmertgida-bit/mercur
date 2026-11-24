@@ -1,6 +1,5 @@
 import { usePermissionGate } from "@mercurjs/dashboard-shared"
 import { Heading } from "@medusajs/ui"
-import { useWatch } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
 import { ConditionalTooltip } from "../../../../../../../components/common/conditional-tooltip"
@@ -66,14 +65,59 @@ export const ProductCreateOrganizationSection = () => {
     enabled: sellersGate.allowed,
   })
 
-  const isGloballyAvailable = useWatch({
-    control: form.control,
-    name: "globally_available",
-  })
+  // Shipping profile and stock locations belong to the chosen store, so a
+  // new store clears what was picked for the previous one.
+  const resetSellerResources = () => {
+    form.setValue("shipping_profile_id", "")
+    form.setValue(
+      "variants",
+      form.getValues("variants").map((variant) => ({
+        ...variant,
+        inventory: {},
+      }))
+    )
+  }
 
   return (
     <div id="organize" className="flex flex-col gap-y-8" data-testid="product-create-organize-section">
       <Heading data-testid="product-create-organize-section-heading">{t("products.organization.header")}</Heading>
+      <Form.Field
+        control={form.control}
+        name="seller_id"
+        render={({ field: { onChange, ...field } }) => {
+          return (
+            <Form.Item data-testid="product-create-organize-section-store-item">
+              <Form.Label data-testid="product-create-organize-section-store-label">
+                {t("fields.store")}
+              </Form.Label>
+              <ConditionalTooltip
+                showTooltip={sellersGate.denied}
+                content={sellersGate.tooltip}
+              >
+                <div>
+                  <Form.Control data-testid="product-create-organize-section-store-control">
+                    <Combobox
+                      {...field}
+                      onChange={(value) => {
+                        onChange(value)
+                        resetSellerResources()
+                      }}
+                      disabled={sellersGate.denied}
+                      options={sellers.options}
+                      searchValue={sellers.searchValue}
+                      onSearchValueChange={sellers.onSearchValueChange}
+                      fetchNextPage={sellers.fetchNextPage}
+                      data-testid="product-create-organize-section-store-input"
+                    />
+                  </Form.Control>
+                </div>
+              </ConditionalTooltip>
+              <Form.Hint>{t("products.fields.seller.hint")}</Form.Hint>
+              <Form.ErrorMessage />
+            </Form.Item>
+          )
+        }}
+      />
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2" data-testid="product-create-organize-section-category-collection">
         <Form.Field
           control={form.control}
@@ -203,50 +247,7 @@ export const ProductCreateOrganizationSection = () => {
           optional
           data-testid="product-create-organize-section-discountable-switch"
         />
-        <SwitchBox
-          control={form.control}
-          name="globally_available"
-          label={t("products.fields.globally_available.label")}
-          description={t("products.fields.globally_available.hint")}
-          optional
-          data-testid="product-create-organize-section-globally-available-switch"
-        />
       </div>
-      {!isGloballyAvailable && (
-        <Form.Field
-          control={form.control}
-          name="seller_ids"
-          render={({ field }) => {
-            return (
-              <Form.Item data-testid="product-create-organize-section-stores-item">
-                <Form.Label data-testid="product-create-organize-section-stores-label">
-                  {t("products.fields.stores.label")}
-                </Form.Label>
-                <ConditionalTooltip
-                  showTooltip={sellersGate.denied}
-                  content={sellersGate.tooltip}
-                >
-                  <div>
-                    <Form.Control data-testid="product-create-organize-section-stores-control">
-                      <Combobox
-                        {...field}
-                        value={field.value ?? []}
-                        disabled={sellersGate.denied}
-                        options={sellers.options}
-                        searchValue={sellers.searchValue}
-                        onSearchValueChange={sellers.onSearchValueChange}
-                        fetchNextPage={sellers.fetchNextPage}
-                        data-testid="product-create-organize-section-stores-input"
-                      />
-                    </Form.Control>
-                  </div>
-                </ConditionalTooltip>
-                <Form.ErrorMessage />
-              </Form.Item>
-            )
-          }}
-        />
-      )}
     </div>
   )
 }

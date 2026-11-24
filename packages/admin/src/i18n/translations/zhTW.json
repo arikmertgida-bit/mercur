@@ -592,7 +592,8 @@
         "requiredCategory": "請選擇分類",
         "handleInvalidFormat": "識別碼只能包含小寫字母、數字和連字號",
         "handleMustContainLetter": "識別碼必須至少包含一個字母",
-        "formIncomplete": "缺少部分必填欄位——請在發布前檢查醒目提示的資料列。"
+        "formIncomplete": "缺少部分必填欄位——請在發布前檢查醒目提示的資料列。",
+        "requiredSeller": "請選擇商品所屬的商店"
       },
       "inventory": {
         "heading": "庫存套件",
@@ -830,6 +831,9 @@
       "globally_available": {
         "label": "全域可用",
         "hint": "取消勾選後，僅所選商店可以販售該商品"
+      },
+      "seller": {
+        "hint": "商品屬於這間商店，其運送設定檔與庫存地點均來自該商店。"
       }
     },
     "variant": {
@@ -918,6 +922,17 @@
           "required": "運送設定檔為必填"
         }
       }
+    },
+    "sellerChange": {
+      "action": "變更商店",
+      "header": "變更商店",
+      "description": "將商品移至另一間商店。",
+      "currentStore": "目前商店",
+      "newStore": "新商店",
+      "shippingProfileHint": "僅列出所選商店的運送設定檔。",
+      "selectStoreFirst": "請先選擇商店。",
+      "stockWarning": "目前商店庫存地點中的庫存將被刪除，新商店自行輸入庫存。過去的訂單仍屬於目前商店。",
+      "successToast": "已將{{title}}移至{{store}}。"
     },
     "toasts": {
       "delete": {

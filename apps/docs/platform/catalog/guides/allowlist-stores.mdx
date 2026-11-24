@@ -4,26 +4,25 @@ sidebarTitle: "Change a product's store"
 description: "Move a product from one store to another from server code."
 ---
 
-In this guide, you'll learn how to change which store a product belongs to by
-updating the `product_seller` link from your own server code.
+In this guide, you'll learn how a product moves from one store to another.
 
 A product belongs to exactly one store (see
 [the product–seller link](/platform/catalog/concepts/product-seller-allowlist)).
-Mercur exposes `linkSellersToProductWorkflow` to add and remove store links in a
-single call, so a move removes the old store and adds the new one together.
+The move is a single call: `changeProductSellerWorkflow`, exposed to the admin
+panel as `POST /admin/products/:id/seller`.
 
 ## Move a product
 
 ```ts title="src/api/custom/move-product/route.ts"
 import type { MedusaRequest, MedusaResponse } from "@medusajs/framework/http"
-import { linkSellersToProductWorkflow } from "@mercurjs/core/workflows"
+import { changeProductSellerWorkflow } from "@mercurjs/core/workflows"
 
 export async function POST(req: MedusaRequest, res: MedusaResponse) {
-  await linkSellersToProductWorkflow(req.scope).run({
+  await changeProductSellerWorkflow(req.scope).run({
     input: {
-      id: req.params.id, // product id
-      add: ["sel_new"],
-      remove: ["sel_old"],
+      product_id: req.params.id,
+      seller_id: "sel_new",
+      shipping_profile_id: "sp_of_sel_new",
     },
   })
 
@@ -31,12 +30,15 @@ export async function POST(req: MedusaRequest, res: MedusaResponse) {
 }
 ```
 
-<Warning>
-  Never leave a product with two stores or with none: the order split takes the
-  first linked store as the line item's store, and a line item without a store
-  is rejected at checkout. The product's shipping profile and stock locations
-  belong to the old store, so move or recreate them for the new store too.
-</Warning>
+The workflow:
+
+- requires a shipping profile of the new store,
+- deletes the stock levels in the old store's locations (the new store enters
+  its own stock) and moves the inventory items to the new store,
+- refuses the move while stock is reserved for unshipped orders, or while a
+  promotion rule or price list of the old store still names the product.
+
+Past orders stay with the old store.
 
 ## Link a category
 

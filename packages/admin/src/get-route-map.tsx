@@ -215,6 +215,12 @@ export function getRouteMap({
                               import("./pages/products/product-shipping-profile"),
                           },
                           {
+                            path: "seller",
+                            handle: { permissions: ["products:edit", "sellers:view"] },
+                            lazy: () =>
+                              import("./pages/products/product-seller"),
+                          },
+                          {
                             path: "media",
                             handle: { permissions: "products:edit" },
                             lazy: () =>

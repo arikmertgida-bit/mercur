@@ -592,7 +592,8 @@
         "requiredCategory": "カテゴリーを選択してください",
         "handleInvalidFormat": "ハンドルには小文字、数字、ハイフンのみを使用してください",
         "handleMustContainLetter": "ハンドルには少なくとも1文字のアルファベットを含めてください",
-        "formIncomplete": "必須項目が入力されていません。公開する前にハイライトされた行を確認してください。"
+        "formIncomplete": "必須項目が入力されていません。公開する前にハイライトされた行を確認してください。",
+        "requiredSeller": "商品が属するストアを選択してください"
       },
       "inventory": {
         "heading": "在庫キット",
@@ -830,6 +831,9 @@
       "globally_available": {
         "label": "全体で利用可能",
         "hint": "チェックを外すと、選択したストアのみがこの商品を出品できます"
+      },
+      "seller": {
+        "hint": "商品はこのストアに属します。配送プロファイルと在庫拠点はこのストアのものです。"
       }
     },
     "variant": {
@@ -1029,6 +1033,17 @@
           "required": "配送プロフィールは必須です"
         }
       }
+    },
+    "sellerChange": {
+      "action": "ストアを変更",
+      "header": "ストアを変更",
+      "description": "商品を別のストアに移動します。",
+      "currentStore": "現在のストア",
+      "newStore": "新しいストア",
+      "shippingProfileHint": "選択したストアの配送プロファイルのみが表示されます。",
+      "selectStoreFirst": "先にストアを選択してください。",
+      "stockWarning": "現在のストアの在庫拠点にある在庫は削除され、新しいストアが自分の在庫を登録します。過去の注文は現在のストアに残ります。",
+      "successToast": "{{title}}を{{store}}に移動しました。"
     }
   },
   "providers": {

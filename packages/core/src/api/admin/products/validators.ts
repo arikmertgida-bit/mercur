@@ -449,3 +449,13 @@ export type AdminBatchProductAttributesType = z.infer<
   AdditionalData
 export const AdminBatchProductAttributes =
   WithAdditionalData(BatchProductAttributes)
+
+export type AdminChangeProductSellerType = z.infer<
+  typeof AdminChangeProductSeller
+>
+export const AdminChangeProductSeller = z
+  .object({
+    seller_id: z.string().min(1),
+    shipping_profile_id: z.string().min(1),
+  })
+  .strict()

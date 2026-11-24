@@ -122,24 +122,30 @@ export const useUpdateProduct = (
   });
 };
 
-export const useLinkProductSellers = (
+export const useChangeProductSeller = (
   id: string,
   options?: UseMutationOptions<
-    InferClientOutput<typeof sdk.admin.products.$id.sellers.mutate>,
+    InferClientOutput<typeof sdk.admin.products.$id.seller.mutate>,
     ClientError,
-    { add?: string[]; remove?: string[] }
+    Omit<InferClientInput<typeof sdk.admin.products.$id.seller.mutate>, "$id">
   >,
 ) => {
   return useMutation({
     ...options,
     mutationFn: (payload) =>
-      sdk.admin.products.$id.sellers.mutate({ $id: id, ...payload }),
+      sdk.admin.products.$id.seller.mutate({ $id: id, ...payload }),
     onSuccess: async (data, variables, context) => {
       await queryClient.invalidateQueries({
         queryKey: productsQueryKeys.lists(),
       });
       await queryClient.invalidateQueries({
         queryKey: productsQueryKeys.detail(id),
+      });
+      await queryClient.invalidateQueries({
+        queryKey: variantsQueryKeys.all,
+      });
+      await queryClient.invalidateQueries({
+        queryKey: inventoryItemsQueryKeys.all,
       });
 
       options?.onSuccess?.(data, variables, context);

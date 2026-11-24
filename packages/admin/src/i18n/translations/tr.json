@@ -592,7 +592,8 @@
         "requiredCategory": "Lütfen bir kategori seçin",
         "handleInvalidFormat": "Handle yalnızca küçük harf, rakam ve tire içerebilir",
         "handleMustContainLetter": "Handle en az bir harf içermelidir",
-        "formIncomplete": "Eksik alanlar var — yayınlamadan önce işaretli satırları kontrol edin."
+        "formIncomplete": "Eksik alanlar var — yayınlamadan önce işaretli satırları kontrol edin.",
+        "requiredSeller": "Ürünün ait olduğu mağazayı seçin"
       },
       "inventory": {
         "heading": "Envanter Kitleri",
@@ -830,6 +831,9 @@
       "globally_available": {
         "label": "Genel olarak kullanılabilir",
         "hint": "İşaret kaldırıldığında, bu ürünü yalnızca seçilen mağazalar sunabilir"
+      },
+      "seller": {
+        "hint": "Ürün bu mağazaya aittir. Kargo profili ve stok konumları bu mağazadan gelir."
       }
     },
     "variant": {
@@ -929,6 +933,17 @@
           "required": "Kargo yapılandırması gereklidir"
         }
       }
+    },
+    "sellerChange": {
+      "action": "Mağazayı değiştir",
+      "header": "Mağazayı değiştir",
+      "description": "Ürünü başka bir mağazaya taşıyın.",
+      "currentStore": "Mevcut mağaza",
+      "newStore": "Yeni mağaza",
+      "shippingProfileHint": "Yalnızca seçilen mağazanın kargo profilleri listelenir.",
+      "selectStoreFirst": "Önce bir mağaza seçin.",
+      "stockWarning": "Mevcut mağazanın depolarındaki stok silinir, yeni mağaza kendi stoğunu girer. Geçmiş siparişler mevcut mağazada kalır.",
+      "successToast": "{{title}}, {{store}} mağazasına taşındı."
     },
     "associatedStore": "İlişkili Mağaza",
     "bulkEdit": {

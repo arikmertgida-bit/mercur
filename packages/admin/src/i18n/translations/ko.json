@@ -592,7 +592,8 @@
         "requiredCategory": "카테고리를 선택해 주세요",
         "handleInvalidFormat": "핸들은 소문자, 숫자, 하이픈만 포함할 수 있습니다",
         "handleMustContainLetter": "핸들은 하나 이상의 문자를 포함해야 합니다",
-        "formIncomplete": "필수 필드가 누락되었습니다. 게시하기 전에 강조 표시된 행을 확인하세요."
+        "formIncomplete": "필수 필드가 누락되었습니다. 게시하기 전에 강조 표시된 행을 확인하세요.",
+        "requiredSeller": "상품이 속한 스토어를 선택하세요"
       },
       "inventory": {
         "heading": "구성 상품",
@@ -830,6 +831,9 @@
       "globally_available": {
         "label": "전역으로 사용 가능",
         "hint": "선택 해제하면 선택한 스토어만 이 상품을 판매할 수 있습니다"
+      },
+      "seller": {
+        "hint": "상품은 이 스토어에 속합니다. 배송 프로필과 재고 위치는 이 스토어의 것입니다."
       }
     },
     "variant": {
@@ -918,6 +922,17 @@
           "required": "배송 프로필은 필수입니다"
         }
       }
+    },
+    "sellerChange": {
+      "action": "스토어 변경",
+      "header": "스토어 변경",
+      "description": "상품을 다른 스토어로 이동합니다.",
+      "currentStore": "현재 스토어",
+      "newStore": "새 스토어",
+      "shippingProfileHint": "선택한 스토어의 배송 프로필만 표시됩니다.",
+      "selectStoreFirst": "먼저 스토어를 선택하세요.",
+      "stockWarning": "현재 스토어의 재고 위치에 있는 재고는 삭제되며 새 스토어가 자체 재고를 입력합니다. 이전 주문은 현재 스토어에 남습니다.",
+      "successToast": "{{title}}을(를) {{store}}(으)로 이동했습니다."
     },
     "toasts": {
       "delete": {

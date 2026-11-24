@@ -293,7 +293,7 @@ export type Routes = {
                 preview: typeof import("@mercurjs/core/api/admin/products/[id]/preview/route");
                 reject: typeof import("@mercurjs/core/api/admin/products/[id]/reject/route");
                 requestChanges: typeof import("@mercurjs/core/api/admin/products/[id]/request-changes/route");
-                sellers: typeof import("@mercurjs/core/api/admin/products/[id]/sellers/route");
+                seller: typeof import("@mercurjs/core/api/admin/products/[id]/seller/route");
                 variants: typeof import("@mercurjs/core/api/admin/products/[id]/variants/route") & {
                     $variantId: typeof import("@mercurjs/core/api/admin/products/[id]/variants/[variant_id]/route") & {
                         images: {

@@ -6,7 +6,11 @@ import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
 import { AdditionalData } from "@medusajs/framework/types"
 import { HttpTypes } from "@mercurjs/types"
 
-import { createProductVariantsWorkflow } from "@medusajs/medusa/core-flows"
+import { createSellerProductVariantWorkflow } from "../../../../../workflows/product/workflows/create-seller-product-variant"
+import {
+  assertStockLocationsOfSeller,
+  getProductSellerId,
+} from "../../../../../workflows/product/utils/seller-ownership"
 import { AdminCreateProductVariantType } from "../../validators"
 
 export const GET = async (
@@ -39,29 +43,36 @@ export const POST = async (
 ) => {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
   const productId = req.params.id
-  const { additional_data, ...rest } = req.validatedBody
+  const { additional_data, inventory = [], ...rest } = req.validatedBody
 
-  await createProductVariantsWorkflow(req.scope).run({
+  const sellerId = await getProductSellerId(req.scope, productId)
+  await assertStockLocationsOfSeller(
+    req.scope,
+    sellerId,
+    inventory.map((level) => level.location_id)
+  )
+
+  await createSellerProductVariantWorkflow(req.scope).run({
     input: {
-      product_variants: [
-        {
-          ...rest,
-          sku: rest.sku ?? undefined,
-          ean: rest.ean ?? undefined,
-          upc: rest.upc ?? undefined,
-          barcode: rest.barcode ?? undefined,
-          hs_code: rest.hs_code ?? undefined,
-          mid_code: rest.mid_code ?? undefined,
-          material: rest.material ?? undefined,
-          length: rest.length ?? undefined,
-          height: rest.height ?? undefined,
-          width: rest.width ?? undefined,
-          weight: rest.weight ?? undefined,
-          origin_country: rest.origin_country ?? undefined,
-          metadata: rest.metadata ?? undefined,
-          product_id: productId,
-        },
-      ],
+      seller_id: sellerId,
+      inventory,
+      variant: {
+        ...rest,
+        sku: rest.sku ?? undefined,
+        ean: rest.ean ?? undefined,
+        upc: rest.upc ?? undefined,
+        barcode: rest.barcode ?? undefined,
+        hs_code: rest.hs_code ?? undefined,
+        mid_code: rest.mid_code ?? undefined,
+        material: rest.material ?? undefined,
+        length: rest.length ?? undefined,
+        height: rest.height ?? undefined,
+        width: rest.width ?? undefined,
+        weight: rest.weight ?? undefined,
+        origin_country: rest.origin_country ?? undefined,
+        metadata: rest.metadata ?? undefined,
+        product_id: productId,
+      },
       additional_data,
     },
   })

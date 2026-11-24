@@ -462,7 +462,8 @@
         "requiredCategory": "Please select a category",
         "handleInvalidFormat": "Handle must contain only lowercase letters, numbers, and hyphens",
         "handleMustContainLetter": "Handle must contain at least one letter",
-        "formIncomplete": "Some required fields are missing — check the highlighted rows before publishing."
+        "formIncomplete": "Some required fields are missing — check the highlighted rows before publishing.",
+        "requiredSeller": "Select the store the product belongs to"
       },
       "inventory": {
         "heading": "Inventory kits",
@@ -786,6 +787,9 @@
       },
       "hs_code": {
         "label": "HS code"
+      },
+      "seller": {
+        "hint": "The product belongs to this store. Its shipping profile and stock locations come from it."
       }
     },
     "variant": {
@@ -874,6 +878,17 @@
           "required": "Shipping profile is required"
         }
       }
+    },
+    "sellerChange": {
+      "action": "Change store",
+      "header": "Change store",
+      "description": "Move the product to another store.",
+      "currentStore": "Current store",
+      "newStore": "New store",
+      "shippingProfileHint": "Only the shipping profiles of the selected store are listed.",
+      "selectStoreFirst": "Select a store first.",
+      "stockWarning": "The stock in the current store's locations is deleted and the new store enters its own stock. Past orders stay with the current store.",
+      "successToast": "{{title}} was moved to {{store}}."
     },
     "toasts": {
       "delete": {

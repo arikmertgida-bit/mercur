@@ -592,7 +592,8 @@
         "requiredCategory": "请选择一个分类",
         "handleInvalidFormat": "标识只能包含小写字母、数字和连字符",
         "handleMustContainLetter": "标识必须至少包含一个字母",
-        "formIncomplete": "缺少部分必填字段——请在发布前检查高亮显示的行。"
+        "formIncomplete": "缺少部分必填字段——请在发布前检查高亮显示的行。",
+        "requiredSeller": "请选择商品所属的店铺"
       },
       "inventory": {
         "heading": "库存套件",
@@ -830,6 +831,9 @@
       "globally_available": {
         "label": "全局可用",
         "hint": "取消勾选后，仅所选店铺可以出售该商品"
+      },
+      "seller": {
+        "hint": "商品属于此店铺，其配送方案和库存地点均来自该店铺。"
       }
     },
     "variant": {
@@ -918,6 +922,17 @@
           "required": "需要配送方案"
         }
       }
+    },
+    "sellerChange": {
+      "action": "更换店铺",
+      "header": "更换店铺",
+      "description": "将商品转移到另一个店铺。",
+      "currentStore": "当前店铺",
+      "newStore": "新店铺",
+      "shippingProfileHint": "仅列出所选店铺的配送方案。",
+      "selectStoreFirst": "请先选择店铺。",
+      "stockWarning": "当前店铺库存地点中的库存将被删除，新店铺自行录入库存。以往订单仍归当前店铺。",
+      "successToast": "已将{{title}}转移到{{store}}。"
     },
     "toasts": {
       "delete": {

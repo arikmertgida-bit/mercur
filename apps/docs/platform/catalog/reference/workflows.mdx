@@ -22,7 +22,7 @@ link, the review lifecycle, and the audit trail.
 
 | Workflow | Input | Purpose |
 | --- | --- | --- |
-| `linkSellersToProductWorkflow` | `{ id, add?, remove? }` | Change the store a product belongs to (a product has exactly one) |
+| `changeProductSellerWorkflow` | `{ product_id, seller_id, shipping_profile_id }` | Move a product to another store (stock levels deleted, inventory items moved; refused while stock is reserved or the old store's promotions / price lists name it) |
 | `linkSellersToProductCategoryWorkflow` | `{ id, add?, remove? }` | Add/remove stores on a category's `category_seller` link |
 | `assignProductsToCategoryWorkflow` | `{ id, add?, remove? }` | Assign products to a single category |
 

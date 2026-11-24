@@ -597,7 +597,8 @@
         "requiredCategory": "Seleziona una categoria",
         "handleInvalidFormat": "Lo slug URL deve contenere solo lettere minuscole, numeri e trattini",
         "handleMustContainLetter": "Lo slug URL deve contenere almeno una lettera",
-        "formIncomplete": "Mancano alcuni campi obbligatori: controlla le righe evidenziate prima di pubblicare."
+        "formIncomplete": "Mancano alcuni campi obbligatori: controlla le righe evidenziate prima di pubblicare.",
+        "requiredSeller": "Seleziona il negozio a cui appartiene il prodotto"
       },
       "inventory": {
         "heading": "Kit di inventario",
@@ -838,6 +839,9 @@
       "globally_available": {
         "label": "Disponibile globalmente",
         "hint": "Se deselezionato, solo i negozi selezionati potranno offrire questo prodotto"
+      },
+      "seller": {
+        "hint": "Il prodotto appartiene a questo negozio. Il profilo di spedizione e le ubicazioni di magazzino provengono da esso."
       }
     },
     "variant": {
@@ -1041,6 +1045,17 @@
           "required": "Il profilo di spedizione è obbligatorio"
         }
       }
+    },
+    "sellerChange": {
+      "action": "Cambia negozio",
+      "header": "Cambia negozio",
+      "description": "Sposta il prodotto in un altro negozio.",
+      "currentStore": "Negozio attuale",
+      "newStore": "Nuovo negozio",
+      "shippingProfileHint": "Sono elencati solo i profili di spedizione del negozio selezionato.",
+      "selectStoreFirst": "Seleziona prima un negozio.",
+      "stockWarning": "Le scorte nelle ubicazioni del negozio attuale vengono eliminate e il nuovo negozio inserisce le proprie scorte. Gli ordini passati restano al negozio attuale.",
+      "successToast": "{{title}} è stato spostato in {{store}}."
     }
   },
   "providers": {

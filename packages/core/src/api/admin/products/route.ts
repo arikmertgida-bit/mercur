@@ -6,7 +6,16 @@ import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
 import { AdditionalData } from "@medusajs/framework/types"
 import { HttpTypes } from "@mercurjs/types"
 
-import { createProductsWorkflow } from "../../../workflows/product/workflows/create-products"
+import {
+  createProductsWorkflow,
+  type CreateProductsWorkflowInput,
+} from "../../../workflows/product/workflows/create-products"
+import {
+  assertSellerExists,
+  assertShippingProfileOfSeller,
+  assertStockLocationsOfSeller,
+  requireSingleSellerId,
+} from "../../../workflows/product/utils/seller-ownership"
 import { enrichProductAttributes } from "../../utils"
 import { AdminCreateProductType, AdminGetProductsParamsType } from "./validators"
 
@@ -41,9 +50,34 @@ export const POST = async (
 
   const { additional_data, ...productData } = req.validatedBody
 
+  const sellerId = requireSingleSellerId(productData.seller_ids)
+  await assertSellerExists(req.scope, sellerId)
+  await assertShippingProfileOfSeller(
+    req.scope,
+    sellerId,
+    productData.shipping_profile_id
+  )
+  await assertStockLocationsOfSeller(
+    req.scope,
+    sellerId,
+    (productData.variants ?? []).flatMap((variant) =>
+      (variant.inventory ?? []).map((level) => level.location_id)
+    )
+  )
+
+  // A seller variant is always stock-tracked, also when the admin creates it.
+  const productInput: CreateProductsWorkflowInput["products"][number] = {
+    ...productData,
+    seller_ids: [sellerId],
+    variants: productData.variants?.map((variant) => ({
+      ...variant,
+      manage_inventory: true,
+    })),
+  }
+
   const { result } = await createProductsWorkflow(req.scope).run({
     input: {
-      products: [productData],
+      products: [productInput],
       created_by: req.auth_context.actor_id,
       additional_data,
     },

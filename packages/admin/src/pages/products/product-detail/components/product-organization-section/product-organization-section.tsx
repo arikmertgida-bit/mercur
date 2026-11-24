@@ -1,4 +1,4 @@
-import { PencilSquare } from "@medusajs/icons";
+import { ArrowPath, PencilSquare } from "@medusajs/icons";
 import { Badge, Container, Heading, Tooltip } from "@medusajs/ui";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
@@ -36,12 +36,34 @@ export const ProductOrganizationSection = ({
                   permission: "products:edit",
                   icon: <PencilSquare />,
                 },
+                {
+                  label: t("products.sellerChange.action"),
+                  to: "seller",
+                  permission: "products:edit",
+                  icon: <ArrowPath />,
+                },
               ],
             },
           ]}
           data-testid="product-organization-action-menu"
         />
       </div>
+
+      <SectionRow
+        title={t("fields.store")}
+        value={
+          product.sellers?.length
+            ? product.sellers.map((seller) => (
+                <OrganizationTag
+                  key={seller.id}
+                  label={seller.name}
+                  to={`/stores/${seller.id}`}
+                />
+              ))
+            : undefined
+        }
+        data-testid="product-store-row"
+      />
 
       <SectionRow
         title={t("fields.category")}

@@ -1340,6 +1340,9 @@
                 },
                 "formIncomplete": {
                   "type": "string"
+                },
+                "requiredSeller": {
+                  "type": "string"
                 }
               }
             },
@@ -2250,6 +2253,14 @@
                   "type": "string"
                 }
               }
+            },
+            "seller": {
+              "type": "object",
+              "properties": {
+                "hint": {
+                  "type": "string"
+                }
+              }
             }
           }
         },
@@ -2491,6 +2502,38 @@
                   }
                 }
               }
+            }
+          }
+        },
+        "sellerChange": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "string"
+            },
+            "header": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "currentStore": {
+              "type": "string"
+            },
+            "newStore": {
+              "type": "string"
+            },
+            "shippingProfileHint": {
+              "type": "string"
+            },
+            "selectStoreFirst": {
+              "type": "string"
+            },
+            "stockWarning": {
+              "type": "string"
+            },
+            "successToast": {
+              "type": "string"
             }
           }
         },

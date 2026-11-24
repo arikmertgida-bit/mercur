@@ -592,7 +592,8 @@
         "requiredCategory": "Silakan pilih kategori",
         "handleInvalidFormat": "Slug URL hanya boleh berisi huruf kecil, angka, dan tanda hubung",
         "handleMustContainLetter": "Slug URL harus berisi setidaknya satu huruf",
-        "formIncomplete": "Beberapa kolom wajib belum diisi — periksa baris yang disorot sebelum mempublikasikan."
+        "formIncomplete": "Beberapa kolom wajib belum diisi — periksa baris yang disorot sebelum mempublikasikan.",
+        "requiredSeller": "Pilih toko pemilik produk"
       },
       "inventory": {
         "heading": "Kit inventaris",
@@ -830,6 +831,9 @@
       "globally_available": {
         "label": "Tersedia secara global",
         "hint": "Jika tidak dicentang, hanya toko yang dipilih yang dapat menawarkan produk ini"
+      },
+      "seller": {
+        "hint": "Produk ini milik toko ini. Profil pengiriman dan lokasi stoknya berasal dari toko ini."
       }
     },
     "variant": {
@@ -918,6 +922,17 @@
           "required": "Profil pengiriman wajib diisi"
         }
       }
+    },
+    "sellerChange": {
+      "action": "Ganti toko",
+      "header": "Ganti toko",
+      "description": "Pindahkan produk ke toko lain.",
+      "currentStore": "Toko saat ini",
+      "newStore": "Toko baru",
+      "shippingProfileHint": "Hanya profil pengiriman toko yang dipilih yang ditampilkan.",
+      "selectStoreFirst": "Pilih toko terlebih dahulu.",
+      "stockWarning": "Stok di lokasi toko saat ini dihapus dan toko baru memasukkan stoknya sendiri. Pesanan sebelumnya tetap di toko saat ini.",
+      "successToast": "{{title}} dipindahkan ke {{store}}."
     },
     "toasts": {
       "delete": {

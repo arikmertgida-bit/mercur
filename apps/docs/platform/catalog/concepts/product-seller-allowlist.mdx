@@ -24,12 +24,10 @@ A product has exactly one store. The order split reads the line item's store
 from `variant.product.sellers[0]`, so a product must not be linked to a second
 store, and a product without a store cannot be checked out.
 
-<Warning>
-  The link is defined as a list on both sides and
-  `linkSellersToProductWorkflow` can still add or remove stores. Use it only to
-  move a product to another store (remove the old store and add the new one in
-  the same call), never to attach a second store.
-</Warning>
+The admin API enforces this: `POST /admin/products` needs exactly one store in
+`seller_ids` (with that store's own shipping profile and stock locations), and
+the only way to change the store is `POST /admin/products/:id/seller` (see
+[Change a product's store](/platform/catalog/guides/allowlist-stores)).
 
 ## Category link
 

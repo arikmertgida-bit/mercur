@@ -62,7 +62,7 @@ Every product belongs to one store. See [products](/platform/catalog/concepts/ma
 | `POST` | `/admin/products/:id/confirm` | Confirm the pending change |
 | `POST` | `/admin/products/:id/reject` | Reject the pending change |
 | `POST` | `/admin/products/:id/request-changes` | Send a change back to the seller for action |
-| `POST` | `/admin/products/:id/sellers` | Change the product's store (`add` / `remove`) |
+| `POST` | `/admin/products/:id/seller` | Move the product to another store (`seller_id`, `shipping_profile_id`) |
 | `POST` | `/admin/products/:id/attributes/batch` | Batch add / update / remove product attributes |
 | `GET` `POST` | `/admin/products/:id/variants` | List / create variants |
 | `GET` `POST` `DELETE` | `/admin/products/:id/variants/:variant_id` | Retrieve / update / delete a variant |

@@ -49,7 +49,7 @@ const FIELD_LABEL_KEYS: Record<string, string> = {
   type_id: "products.fields.type.label",
   collection_id: "products.fields.collection.label",
   category_id: "fields.category",
-  seller_ids: "products.fields.stores.label",
+  seller_id: "fields.store",
   tags: "products.fields.tags.label",
   origin_country: "products.fields.countryOrigin.label",
   shipping_profile_id: "products.fields.shipping_profile.label",

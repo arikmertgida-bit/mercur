@@ -1,5 +1,16 @@
 import { MedusaError } from "@medusajs/framework/utils"
 
+import {
+  PRODUCT_MOVE_NAMES_SEPARATOR,
+  PRODUCT_MOVE_RESERVED_STOCK_CODE,
+  PRODUCT_MOVE_SELLER_PRICE_LISTS_CODE,
+  PRODUCT_MOVE_SELLER_PROMOTIONS_CODE,
+  PRODUCT_SELLER_REQUIRED_CODE,
+  PRODUCT_SELLER_UNCHANGED_CODE,
+  PRODUCT_SHIPPING_PROFILE_NOT_SELLER_CODE,
+  PRODUCT_STOCK_LOCATION_NOT_SELLER_CODE,
+} from "@mercurjs/core/api/utils/admin-error-codes"
+
 import { AUTOMATIC_PROMOTION_ATTRIBUTE_BUDGET_CODE } from "../campaign-budget-attribute"
 import type { AdminLanguage } from "./languages"
 import { ADMIN_ERROR_MESSAGES, AdminErrorCustomCodes, AdminErrorMessages } from "./messages"
@@ -119,6 +130,43 @@ function translateValidationMessage(
     .join(" ")
 }
 
+/**
+ * Product ↔ seller errors from packages/core admin-error-codes. The two "still
+ * used by the old seller" errors keep the promotion codes / price list titles
+ * the core message lists after PRODUCT_MOVE_NAMES_SEPARATOR.
+ */
+function productSellerCodeMessage(
+  code: string | undefined,
+  message: string,
+  customCodes: AdminErrorCustomCodes
+): string | null {
+  const names = (): string => {
+    const index = message.indexOf(PRODUCT_MOVE_NAMES_SEPARATOR)
+    return index === -1
+      ? ""
+      : message.slice(index + PRODUCT_MOVE_NAMES_SEPARATOR.length)
+  }
+
+  switch (code) {
+    case PRODUCT_SELLER_REQUIRED_CODE:
+      return customCodes.product_seller_required
+    case PRODUCT_SELLER_UNCHANGED_CODE:
+      return customCodes.product_seller_unchanged
+    case PRODUCT_SHIPPING_PROFILE_NOT_SELLER_CODE:
+      return customCodes.product_shipping_profile_not_seller
+    case PRODUCT_STOCK_LOCATION_NOT_SELLER_CODE:
+      return customCodes.product_stock_location_not_seller
+    case PRODUCT_MOVE_RESERVED_STOCK_CODE:
+      return customCodes.product_move_reserved_stock
+    case PRODUCT_MOVE_SELLER_PROMOTIONS_CODE:
+      return customCodes.product_move_seller_promotions.replace("{names}", names())
+    case PRODUCT_MOVE_SELLER_PRICE_LISTS_CODE:
+      return customCodes.product_move_seller_price_lists.replace("{names}", names())
+    default:
+      return null
+  }
+}
+
 function typeFallbackFor(type: string, messages: AdminErrorMessages): string {
   switch (type) {
     case MedusaError.Types.NOT_FOUND:
@@ -180,6 +228,19 @@ export function translateAdminError(
         code: error.code,
         type: error.type,
         message: messages.customCodes.automatic_promotion_attribute_budget,
+      }
+    }
+
+    const productSellerMessage = productSellerCodeMessage(
+      error.code,
+      error.message,
+      messages.customCodes
+    )
+    if (error.code && productSellerMessage) {
+      return {
+        code: error.code,
+        type: error.type,
+        message: productSellerMessage,
       }
     }
 
