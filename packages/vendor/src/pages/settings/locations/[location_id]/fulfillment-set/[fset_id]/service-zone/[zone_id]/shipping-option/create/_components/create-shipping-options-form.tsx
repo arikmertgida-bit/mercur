@@ -34,6 +34,21 @@ const Tab = {
 
 type Tab = (typeof Tab)[keyof typeof Tab]
 
+// Stored on the shipping option (Medusa requires a type); the same codes the
+// seed data uses, so every option of a kind shares one meaningful type.
+const SHIPPING_OPTION_TYPES = {
+  standard: {
+    label: "Standard",
+    description: "Standard shipping",
+    code: "standard",
+  },
+  return: {
+    label: "Return",
+    description: "Return shipping",
+    code: "return",
+  },
+} as const
+
 const TabSchema = z.enum(Tab)
 
 // Provider options are provider-defined objects; the chosen one is sent back
@@ -176,12 +191,9 @@ export function CreateShippingOptionsForm({
             operator: "eq",
           },
         ],
-        type: {
-          // TODO: FETCH TYPES
-          label: "Type label",
-          description: "Type description",
-          code: "type-code",
-        },
+        type: isReturn
+          ? SHIPPING_OPTION_TYPES.return
+          : SHIPPING_OPTION_TYPES.standard,
       },
       {
         onSuccess: ({ shipping_option }) => {

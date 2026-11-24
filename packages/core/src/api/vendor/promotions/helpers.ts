@@ -11,8 +11,95 @@ import {
 import { z } from "zod"
 
 import { parseGraphRows } from "../../../utils/graph-rows"
+import { PROMOTION_PRODUCT_NOT_OWNED_CODE } from "../../utils/vendor-error-codes"
 
 const PromotionIdRowSchema = z.object({ promotion_id: z.string() })
+const ProductIdRowSchema = z.object({ product_id: z.string() })
+const RuleAttributeRowSchema = z.object({ id: z.string(), attribute: z.string() })
+
+export const PRODUCT_RULE_ATTRIBUTE = "items.product.id"
+
+type SellerRuleInput = {
+  id?: string
+  attribute?: string
+  values: string | string[]
+}
+
+const toValueList = (values: string | string[]): string[] =>
+  Array.isArray(values) ? values : [values]
+
+/**
+ * A seller promotion's rule may only name products of that seller. The
+ * discount never reaches another seller's item anyway (the promotion is
+ * scoped to the seller), but the stored rule would still point at a product
+ * the seller does not own. Updates that keep the stored attribute are checked
+ * against that attribute.
+ */
+export const validateSellerRuleProducts = async (
+  scope: MedusaContainer,
+  sellerId: string,
+  rules: SellerRuleInput[]
+): Promise<void> => {
+  if (!rules.length) {
+    return
+  }
+
+  const query = scope.resolve(ContainerRegistrationKeys.QUERY)
+
+  const idsWithoutAttribute = rules
+    .filter((rule) => rule.attribute === undefined && rule.id !== undefined)
+    .map((rule) => rule.id)
+    .filter((id): id is string => id !== undefined)
+
+  const storedAttributes = new Map<string, string>()
+  if (idsWithoutAttribute.length) {
+    const { data } = await query.graph({
+      entity: "promotion_rule",
+      fields: ["id", "attribute"],
+      filters: { id: idsWithoutAttribute },
+    })
+    for (const row of parseGraphRows(RuleAttributeRowSchema, data)) {
+      storedAttributes.set(row.id, row.attribute)
+    }
+  }
+
+  const productIds = new Set<string>()
+  for (const rule of rules) {
+    const attribute =
+      rule.attribute ??
+      (rule.id !== undefined ? storedAttributes.get(rule.id) : undefined)
+    if (attribute !== PRODUCT_RULE_ATTRIBUTE) {
+      continue
+    }
+    for (const value of toValueList(rule.values)) {
+      productIds.add(value)
+    }
+  }
+
+  if (!productIds.size) {
+    return
+  }
+
+  const { data: links } = await query.graph({
+    entity: "product_seller",
+    fields: ["product_id"],
+    filters: { seller_id: sellerId, product_id: Array.from(productIds) },
+  })
+
+  const owned = new Set(
+    parseGraphRows(ProductIdRowSchema, links).map((link) => link.product_id)
+  )
+
+  for (const productId of productIds) {
+    if (!owned.has(productId)) {
+      throw new MedusaError(
+        MedusaError.Types.INVALID_DATA,
+        "Promotion rules can only use products of your store",
+        PROMOTION_PRODUCT_NOT_OWNED_CODE
+      )
+    }
+  }
+}
 
 export const refetchPromotion = async (
   promotionId: string,

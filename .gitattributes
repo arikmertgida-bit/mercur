@@ -1,3 +1,7 @@
+# Every text file is stored and checked out with LF on every machine, so
+# Windows checkouts (core.autocrlf=true) never mix CRLF and LF in one tree.
+* text=auto eol=lf
+
 # Shell scripts must always use LF, regardless of the checking-out machine's
 # core.autocrlf setting — a CRLF shebang line (`#!/bin/sh\r`) breaks exec()
 # with a misleading "no such file or directory" error inside Linux containers.

@@ -92,6 +92,17 @@ RUN ln -s /monorepo/node_modules /monorepo/apps/api/.medusa/server/node_modules
 # atlar); image boyutu ve node_modules/ içeriği birebir aynı kaldı. Bu yüzden
 # eklenmedi — build süresini uzatan faydasız bir adım olurdu.
 
+# --- prod-deps: runner'a giden node_modules yalnız @acme/api'nin üretim ağacı ---
+# Builder'daki kurulum tüm monorepo'nundur (panellerin, belgelerin, testlerin
+# geliştirme araçları: turbo, oxlint, playwright, typescript-eslint…). Burada
+# derlenmiş packages/* çıktısı korunur, tüm node_modules dizinleri silinir ve
+# yalnız @acme/api ile onun workspace bağımlılıklarının üretim paketleri
+# yeniden kurulur (bun `--production` var olan ağacı budamaz, sıfırdan
+# kurulumda devDependencies'i atlar — bu yüzden önce silinir).
+FROM builder AS prod-deps
+RUN find . -name node_modules -type d -prune -exec rm -rf {} + \
+  && bun install --frozen-lockfile --production --filter @acme/api
+
 # --- Runner: yalnızca çalışma zamanında gereken şeyler ---
 # builder'daki bun/npm global kurulumu, devDependencies dahil tüm monorepo
 # kaynağı (apps/docs, apps/vendor, apps/admin-test — bu servisin hiç
@@ -111,14 +122,20 @@ WORKDIR /monorepo
 # --chown tek bir COPY içinde uygulanır (ayrı bir "RUN chown -R" katmanı
 # değil) — bu yüzden builder'daki gibi tüm ağacın ikinci kez kopyalanmasına
 # yol açmaz.
-COPY --from=builder --chown=medusa:medusa /monorepo/node_modules ./node_modules
+COPY --from=prod-deps --chown=medusa:medusa /monorepo/node_modules ./node_modules
 COPY --from=builder --chown=medusa:medusa /monorepo/apps/api/.medusa ./apps/api/.medusa
 # bun workspace'leri node_modules/@mercurjs/* için packages/* kaynağına
 # symlink kurar (örn. @mercurjs/core -> ../../packages/core). packages/
 # buraya kopyalanmazsa bu symlink'ler kırık kalır ve runtime'da modül
 # çözümlemesi "Cannot find module"/"id must be a string" hatalarıyla çöker
-# (canlı testte yakalandı).
-COPY --from=builder --chown=medusa:medusa /monorepo/packages ./packages
+# (canlı testte yakalandı). Yalnız @acme/api'nin üretim ağacındaki workspace
+# paketleri kopyalanır (core, types, cli → dashboard-sdk, docs); panel
+# kaynakları (admin, vendor, dashboard-shared, registry) backend'de kullanılmaz.
+COPY --from=prod-deps --chown=medusa:medusa /monorepo/packages/core ./packages/core
+COPY --from=prod-deps --chown=medusa:medusa /monorepo/packages/types ./packages/types
+COPY --from=prod-deps --chown=medusa:medusa /monorepo/packages/cli ./packages/cli
+COPY --from=prod-deps --chown=medusa:medusa /monorepo/packages/dashboard-sdk ./packages/dashboard-sdk
+COPY --from=prod-deps --chown=medusa:medusa /monorepo/packages/docs ./packages/docs
 # bun, apps/api'nin DOĞRUDAN bağımlılıklarını (@medusajs/medusa, @aws-sdk/*
 # vb.) kök node_modules'a hoist etmek yerine apps/api/node_modules altında
 # küçük symlink'ler olarak tutuyor (gerçek içerik yine kök node_modules/.bun
@@ -127,7 +144,7 @@ COPY --from=builder --chown=medusa:medusa /monorepo/packages ./packages
 # tam olarak bu dizine ihtiyaç duyuyor — eksik olunca "@medusajs/medusa/
 # commands/db-migrate" bulunamıyor ve CLI "id must be a string" ile çöküyor
 # (canlı testte yakalandı).
-COPY --from=builder --chown=medusa:medusa /monorepo/apps/api/node_modules ./apps/api/node_modules
+COPY --from=prod-deps --chown=medusa:medusa /monorepo/apps/api/node_modules ./apps/api/node_modules
 
 USER medusa
 

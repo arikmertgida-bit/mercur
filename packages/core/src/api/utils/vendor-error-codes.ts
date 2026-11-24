@@ -10,3 +10,4 @@ export const MEMBER_PERMISSIONS_ESCALATION_CODE = "member_permissions_escalation
 export const SELLER_PENDING_APPROVAL_CODE = "seller_pending_approval"
 export const SELLER_SUSPENDED_CODE = "seller_suspended"
 export const SELLER_TERMINATED_CODE = "seller_terminated"
+export const PROMOTION_PRODUCT_NOT_OWNED_CODE = "promotion_product_not_owned"

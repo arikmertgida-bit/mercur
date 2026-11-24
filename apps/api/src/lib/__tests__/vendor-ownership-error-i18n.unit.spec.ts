@@ -1,6 +1,7 @@
 import { MedusaError } from "@medusajs/framework/utils"
 import {
   MEMBER_INVITE_EMAIL_MISMATCH_CODE,
+  PROMOTION_PRODUCT_NOT_OWNED_CODE,
   SELLER_IMAGE_NOT_OWNED_CODE,
 } from "@mercurjs/core/api/utils/vendor-error-codes"
 
@@ -14,6 +15,7 @@ describe("vendor ownership errors", () => {
   it.each([
     [SELLER_IMAGE_NOT_OWNED_CODE, MedusaError.Types.INVALID_DATA],
     [MEMBER_INVITE_EMAIL_MISMATCH_CODE, MedusaError.Types.NOT_ALLOWED],
+    [PROMOTION_PRODUCT_NOT_OWNED_CODE, MedusaError.Types.INVALID_DATA],
   ])("translates %s in every panel language", (code, type) => {
     const messages = new Set<string>()
     for (const language of SUPPORTED_VENDOR_LANGUAGES) {

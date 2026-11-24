@@ -7,7 +7,7 @@ import { HttpTypes } from "@mercurjs/types"
 
 import { createSellerPromotionsWorkflow } from "../../../workflows/promotion"
 import { verifyCodeReservationToken } from "../../../workflows/promotion/utils"
-import { refetchPromotion } from "./helpers"
+import { refetchPromotion, validateSellerRuleProducts } from "./helpers"
 import {
   VendorCreatePromotionType,
   VendorGetPromotionsParamsType,
@@ -41,6 +41,12 @@ export const POST = async (
 ) => {
   const sellerId = getSellerId(req)
   const { code_reservation_token, ...promotionData } = req.validatedBody
+
+  await validateSellerRuleProducts(req.scope, sellerId, [
+    ...(promotionData.rules ?? []),
+    ...(promotionData.application_method?.target_rules ?? []),
+    ...(promotionData.application_method?.buy_rules ?? []),
+  ])
 
   const preferredCode = code_reservation_token
     ? verifyCodeReservationToken(req.scope, code_reservation_token, sellerId)

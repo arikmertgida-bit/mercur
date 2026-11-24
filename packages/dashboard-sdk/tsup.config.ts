@@ -6,4 +6,5 @@ export default defineConfig({
     dts: true,
     clean: true,
     external: ["zod", "react"],
+    splitting: false,
 })

@@ -11,6 +11,7 @@ import {
   generateStoreHeaders,
 } from "../../../helpers/create-admin-user"
 import { createCustomerUser } from "../../../helpers/create-customer-user"
+import { createVendorProduct } from "../../../helpers/create-product"
 import { seedSellerProductWithShipping } from "../../../helpers/split-order-checkout"
 
 jest.setTimeout(120000)
@@ -242,21 +243,75 @@ medusaIntegrationTestRunner({
         expect(response.data.cart.total).toEqual(4500)
       })
 
-      it("does not discount another seller's product even when the rule names it", async () => {
+      it("rejects a promotion rule that names another seller's product", async () => {
         const sellerA = await seed("cart-cross-a@test.com", "CartCrossA", 2000)
         const sellerB = await seed("cart-cross-b@test.com", "CartCrossB", 3000)
-        const code = await createTargetedPromotion(
-          sellerA,
-          [sellerA.product.id, sellerB.product.id],
-          500
+        const reservation = await reserveCode(sellerA.headers)
+
+        const created = await api
+          .post(
+            `/vendor/promotions`,
+            {
+              code_reservation_token: reservation.code_reservation_token,
+              type: "standard",
+              status: "active",
+              application_method: {
+                type: "fixed",
+                target_type: "items",
+                allocation: "each",
+                value: 500,
+                currency_code: "usd",
+                max_quantity: 1,
+                target_rules: [
+                  {
+                    attribute: "items.product.id",
+                    operator: "in",
+                    values: [sellerA.product.id, sellerB.product.id],
+                  },
+                ],
+              },
+            },
+            sellerA.headers
+          )
+          .catch((e) => e)
+
+        expect(created.response.status).toEqual(400)
+        expect(created.response.data.code).toEqual("promotion_product_not_owned")
+
+        const { id: promotionId } = await createUntargetedPromotion(sellerA, false)
+        const batched = await api
+          .post(
+            `/vendor/promotions/${promotionId}/target-rules/batch`,
+            {
+              create: [
+                {
+                  attribute: "items.product.id",
+                  operator: "in",
+                  values: [sellerB.product.id],
+                },
+              ],
+            },
+            sellerA.headers
+          )
+          .catch((e) => e)
+
+        expect(batched.response.status).toEqual(400)
+        expect(batched.response.data.code).toEqual("promotion_product_not_owned")
+
+        const own = await api.post(
+          `/vendor/promotions/${promotionId}/target-rules/batch`,
+          {
+            create: [
+              {
+                attribute: "items.product.id",
+                operator: "in",
+                values: [sellerA.product.id],
+              },
+            ],
+          },
+          sellerA.headers
         )
-
-        const cart = await createCart()
-        await addLines(cart.id, [sellerA.variantId, sellerB.variantId])
-        const response = await applyCode(cart.id, code)
-
-        expect(response.status).toEqual(200)
-        expectOnlyFirstDiscounted(response.data.cart, sellerA, sellerB, 500)
+        expect(own.status).toEqual(200)
       })
 
       it("keeps an untargeted seller promotion scoped across cart refreshes", async () => {
@@ -404,8 +459,19 @@ medusaIntegrationTestRunner({
 
       it("does not discount a product the promotion is not targeting", async () => {
         const seller = await seed("cart-untargeted@test.com", "CartUntargeted", 2000)
-        const other = await seed("cart-untargeted-2@test.com", "CartUntargeted2", 1000)
-        const code = await createTargetedPromotion(seller, [other.product.id], 500)
+        const targeted = await createVendorProduct(api, seller.headers, {
+          title: "CartUntargeted second product",
+          variants: [
+            {
+              title: "Default",
+              sku: "CART-UNTARGETED-2",
+              prices: [{ amount: 1000, currency_code: "usd" }],
+              inventory: [{ location_id: seller.stockLocationId, quantity: 10 }],
+            },
+          ],
+          extra: { shipping_profile_id: seller.shippingProfileId },
+        })
+        const code = await createTargetedPromotion(seller, [targeted.id], 500)
 
         const cart = await createCart()
         await addLines(cart.id, [seller.variantId])
