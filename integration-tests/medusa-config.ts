@@ -1,6 +1,8 @@
 import { loadEnv } from '@medusajs/framework/utils'
 import { withMercur } from '@mercurjs/core'
 
+import { KAYI_CUSTOM_FIELDS_OPTIONS } from '../apps/api/src/lib/custom-fields-config'
+
 loadEnv(process.env.NODE_ENV || 'development', process.cwd())
 
 module.exports = withMercur({
@@ -25,6 +27,10 @@ module.exports = withMercur({
     },
   ],
   modules: [
+    {
+      resolve: '@mercurjs/core/modules/custom-fields',
+      options: KAYI_CUSTOM_FIELDS_OPTIONS,
+    },
     {
       resolve: '@mercurjs/core/modules/admin-ui',
       options: {

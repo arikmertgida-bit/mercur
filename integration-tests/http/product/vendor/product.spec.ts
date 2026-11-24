@@ -182,9 +182,9 @@ medusaIntegrationTestRunner({
         ])
       })
 
-      it("allows any seller to request changes on a master product it did not create", async () => {
-        // master product created by a different actor — every seller can
-        // still request a change through the product-edit pipeline.
+      it("rejects attribute changes on a product that does not belong to the seller", async () => {
+        // Every product has exactly one store; a product without this
+        // seller's product_seller link is not found, published or not.
         const { result } = await createProductsWorkflow(appContainer).run({
           input: {
             products: [{ title: "Foreign", status: "published" }],
@@ -196,9 +196,9 @@ medusaIntegrationTestRunner({
 
         const res = await batch(foreignId, {
           add: [{ id: attr.id, value: "x" }],
-        })
+        }).catch((e) => e.response)
 
-        expect(res.status).toEqual(202)
+        expect(res.status).toEqual(404)
       })
 
       // --- request flow: ProductChange staging via the batch endpoint ---
@@ -413,18 +413,19 @@ medusaIntegrationTestRunner({
         return (result as { id: string }[])[0].id
       }
 
-      it("scopes the vendor list to the seller's own proposed products plus published", async () => {
-        const proposedByA = await createProduct("A Proposed", "proposed", sellerA.id)
-        const published = await createProduct("Global Published", "published", "other-actor")
+      it("lists only the products linked to the seller, whatever their status", async () => {
+        const proposedOfA = await createProduct("A Proposed", "proposed", sellerA.id, [sellerA.id])
+        const unlinked = await createProduct("Unlinked Published", "published", sellerA.id)
 
         const listAsA = await api.get("/vendor/products?limit=100", headersA)
         const idsA = listAsA.data.products.map((p: { id: string }) => p.id)
-        expect(idsA).toEqual(expect.arrayContaining([proposedByA, published]))
+        expect(idsA).toContain(proposedOfA)
+        expect(idsA).not.toContain(unlinked)
 
         const listAsB = await api.get("/vendor/products?limit=100", headersB)
         const idsB = listAsB.data.products.map((p: { id: string }) => p.id)
-        expect(idsB).toContain(published)
-        expect(idsB).not.toContain(proposedByA)
+        expect(idsB).not.toContain(unlinked)
+        expect(idsB).not.toContain(proposedOfA)
       })
 
       it("hides a restricted published product from sellers it is not assigned to", async () => {
@@ -446,7 +447,7 @@ medusaIntegrationTestRunner({
       })
 
       it("does not retrieve another seller's unpublished product by id", async () => {
-        const proposedByA = await createProduct("A Proposed Detail", "proposed", sellerA.id)
+        const proposedByA = await createProduct("A Proposed Detail", "proposed", sellerA.id, [sellerA.id])
 
         const asA = await api.get(`/vendor/products/${proposedByA}`, headersA)
         expect(asA.status).toEqual(200)
@@ -480,7 +481,7 @@ medusaIntegrationTestRunner({
       })
 
       it("does not delete or edit another seller's draft product", async () => {
-        const draftByA = await createProduct("A Draft", "draft", sellerA.id)
+        const draftByA = await createProduct("A Draft", "draft", sellerA.id, [sellerA.id])
 
         const remove = await api
           .delete(`/vendor/products/${draftByA}`, headersB)
@@ -497,7 +498,9 @@ medusaIntegrationTestRunner({
         expect(stillThere.data.product.title).toEqual("A Draft")
       })
 
-      it("hides a published product from its creator once restricted to other sellers", async () => {
+      it("hides a product from the store that created it once it belongs to another store", async () => {
+        // An admin store change (POST /admin/products/:id/seller) leaves the
+        // PRODUCT_ADD audit row on the old store; only product_seller counts.
         const b = await createSellerUser(appContainer, {
           email: "scope-c@test.com",
           name: "Scope C Store",

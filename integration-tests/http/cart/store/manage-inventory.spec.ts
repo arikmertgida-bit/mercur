@@ -44,15 +44,15 @@ medusaIntegrationTestRunner({
           price: 2500,
         })
 
-      const createUnmanagedProduct = async (
+      const createStocklessProduct = async (
         seller: Awaited<ReturnType<typeof seed>>
       ) => {
         const product = await createVendorProduct(api, seller.headers, {
-          title: `Unmanaged ${Date.now()}`,
+          title: `Stockless ${Date.now()}`,
           variants: [
             {
               title: "Default",
-              sku: `UNMANAGED-${Date.now()}`,
+              sku: `STOCKLESS-${Date.now()}`,
               prices: [{ amount: 2500, currency_code: "usd" }],
             },
           ],
@@ -199,9 +199,11 @@ medusaIntegrationTestRunner({
         storeHeaders = generateStoreHeaders({ publishableKey: apiKey })
       })
 
-      it("derives manage_inventory from the stock given at creation", async () => {
+      // Seller variants are always stock-tracked (9e-2b-1): one created without
+      // a stock entry is tracked with 0 stock, never sold without limit.
+      it("tracks stock for every seller variant, even one created without stock", async () => {
         const seller = await seed("inv-flags@test.com", "InvFlags", 5)
-        const unmanaged = await createUnmanagedProduct(seller)
+        const unmanaged = await createStocklessProduct(seller)
 
         const managedVariant = await getVariant(
           seller,
@@ -216,18 +218,18 @@ medusaIntegrationTestRunner({
           unmanaged.id,
           unmanaged.variants[0].id
         )
-        expect(unmanagedVariant.manage_inventory).toEqual(false)
+        expect(unmanagedVariant.manage_inventory).toEqual(true)
       })
 
-      it("sells an unmanaged variant past any quantity", async () => {
+      it("does not sell a variant created without stock", async () => {
         const seller = await seed("inv-unmanaged@test.com", "InvUnmanaged", 1)
-        const unmanaged = await createUnmanagedProduct(seller)
+        const unmanaged = await createStocklessProduct(seller)
 
         const cart = await createCart()
-        const response = await addLine(cart.id, unmanaged.variants[0].id, 100)
+        const response = await addLine(cart.id, unmanaged.variants[0].id, 1)
 
-        expect(response.status).toEqual(200)
-        expect(response.data.cart.items[0].quantity).toEqual(100)
+        expect(response.status).toBeGreaterThanOrEqual(400)
+        expect(response.status).toBeLessThan(500)
       })
 
       it("blocks adding more of a managed variant than is in stock", async () => {

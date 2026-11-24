@@ -1,6 +1,7 @@
 import { medusaIntegrationTestRunner } from "@medusajs/test-utils"
 import { IProductModuleService, MedusaContainer } from "@medusajs/framework/types"
 import { Modules } from "@medusajs/framework/utils"
+import { createVendorProduct } from "../../../helpers/create-product"
 import { createSellerUser } from "../../../helpers/create-seller-user"
 
 jest.setTimeout(50000)
@@ -21,6 +22,7 @@ medusaIntegrationTestRunner({
                 const result = await createSellerUser(appContainer, {
                     email: "seller@test.com",
                     name: "Test Seller",
+                    autoApprove: true,
                 })
                 sellerHeaders = result.headers
             })
@@ -32,15 +34,10 @@ medusaIntegrationTestRunner({
                         { value: "sale" },
                     ])
 
-                    await api.post(
-                        `/vendor/products`,
-                        {
-                            title: "Product with Tags",
-                            options: [{ title: "Default", values: ["Default"] }],
-                            tags: [{ id: tag1.id }, { id: tag2.id }],
-                        },
-                        sellerHeaders
-                    )
+                    await createVendorProduct(api, sellerHeaders, {
+                        title: "Product with Tags",
+                        extra: { tags: [{ id: tag1.id }, { id: tag2.id }] },
+                    })
 
                     const response = await api.get(
                         `/vendor/product-tags`,
@@ -61,15 +58,10 @@ medusaIntegrationTestRunner({
                         { value: "unique-tag-123" },
                     ])
 
-                    await api.post(
-                        `/vendor/products`,
-                        {
-                            title: "Product with Unique Tag",
-                            options: [{ title: "Default", values: ["Default"] }],
-                            tags: [{ id: tag.id }],
-                        },
-                        sellerHeaders
-                    )
+                    await createVendorProduct(api, sellerHeaders, {
+                        title: "Product with Unique Tag",
+                        extra: { tags: [{ id: tag.id }] },
+                    })
 
                     const response = await api.get(
                         `/vendor/product-tags?value=unique-tag-123`,
@@ -86,15 +78,10 @@ medusaIntegrationTestRunner({
                         { value: "searchable-tag" },
                     ])
 
-                    await api.post(
-                        `/vendor/products`,
-                        {
-                            title: "Product for Search",
-                            options: [{ title: "Default", values: ["Default"] }],
-                            tags: [{ id: tag.id }],
-                        },
-                        sellerHeaders
-                    )
+                    await createVendorProduct(api, sellerHeaders, {
+                        title: "Product for Search",
+                        extra: { tags: [{ id: tag.id }] },
+                    })
 
                     const response = await api.get(
                         `/vendor/product-tags?q=searchable`,

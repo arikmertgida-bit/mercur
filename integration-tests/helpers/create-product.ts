@@ -9,6 +9,7 @@ type CreateVendorProductBody = {
   title: string
   variants: VendorVariantInput[]
   shipping_profile_id?: string
+  tags?: { id: string }[]
   attributes?: VendorAttributeInput[]
 }
 
@@ -84,7 +85,7 @@ type CreateVendorProductOptions = {
    */
   attributes?: VendorAttributeInput[]
   /** Extra top-level product fields merged into the request body. */
-  extra?: { shipping_profile_id?: string }
+  extra?: { shipping_profile_id?: string; tags?: { id: string }[] }
 }
 
 /**

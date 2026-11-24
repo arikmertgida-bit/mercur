@@ -1,5 +1,5 @@
 import { AuthenticatedMedusaRequest, MedusaResponse } from '@medusajs/framework'
-import { ContainerRegistrationKeys } from '@medusajs/framework/utils'
+import { ContainerRegistrationKeys, MedusaError } from '@medusajs/framework/utils'
 
 import { AdminReviewResponse } from '../../../../modules/reviews/types'
 
@@ -18,6 +18,13 @@ export async function GET(
       id: req.params.id
     }
   })
+
+  if (!review) {
+    throw new MedusaError(
+      MedusaError.Types.NOT_FOUND,
+      `Review with id: ${req.params.id} was not found`
+    )
+  }
 
   res.json({ review })
 }

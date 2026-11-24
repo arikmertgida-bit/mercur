@@ -10,6 +10,7 @@ import {
 import { ContainerRegistrationKeys, Modules } from "@medusajs/framework/utils"
 import { ProductDTO, SellerDTO } from "@mercurjs/types"
 import { createSellerUser } from "../../../helpers/create-seller-user"
+import { syncTestCustomFields } from "../../../helpers/custom-fields"
 import { createShippingProfile } from "../../../helpers/create-shipping-profile"
 import { createCustomerUser } from "../../../helpers/create-customer-user"
 import { generatePublishableKey, generateStoreHeaders } from "../../../helpers/create-admin-user"
@@ -46,6 +47,8 @@ medusaIntegrationTestRunner({
             })
 
             beforeEach(async () => {
+                // Vendor return lists read the return custom fields (vendor_seen_at).
+                await syncTestCustomFields(appContainer)
                 // Create first seller
                 const seller1Result = await createSellerUser(appContainer, {
                     email: "returnsseller1@test.com",

@@ -64,10 +64,16 @@ function pickTableRelatedCommands(tableNames: string[], sqlCommand: string) {
   return returnedCommands.join(";");
 }
 
-async function syncCustomFields(
+/**
+ * Creates/updates the `<entity>_custom_fields` tables. `medusa db:migrate`
+ * runs it from the loader below; `clientUrl` targets another database (the
+ * integration test runner migrates in-process, without that command).
+ */
+export async function syncCustomFields(
   logger: LoaderOptions["logger"],
   customFields: NonNullable<CustomFieldsModuleOptions["customFields"]>,
-) {
+  clientUrl?: string,
+): Promise<void> {
   const tableNames: string[] = [];
   const entities = Object.entries(customFields).map(([entityName, fields]) => {
     const tableName = `${camelToSnakeCase(entityName)}_custom_fields`;
@@ -90,7 +96,10 @@ async function syncCustomFields(
 
   logger?.info("Syncing custom fields...");
 
-  const dbConfig = ModulesSdkUtils.loadDatabaseConfig("custom_fields");
+  const dbConfig = ModulesSdkUtils.loadDatabaseConfig(
+    "custom_fields",
+    clientUrl ? { database: { clientUrl } } : undefined,
+  );
   const orm = await DALUtils.mikroOrmCreateConnection(dbConfig, entities, "");
 
   try {

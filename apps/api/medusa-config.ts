@@ -1,6 +1,8 @@
 import { loadEnv } from '@medusajs/framework/utils'
 import { withMercur } from '@mercurjs/core'
 
+import { KAYI_CUSTOM_FIELDS_OPTIONS } from './src/lib/custom-fields-config'
+
 loadEnv(process.env.NODE_ENV || 'development', process.cwd())
 
 const REDIS_URL = process.env.REDIS_URL || 'redis://localhost:6379'
@@ -64,63 +66,7 @@ module.exports = withMercur({
     },
     {
       resolve: '@mercurjs/core/modules/custom-fields',
-      options: {
-        customFields: {
-          ProductCollection: {
-            request_status: {
-              type: 'enum',
-              enum: ['draft', 'pending', 'accepted', 'rejected'],
-              defaultValue: 'draft',
-            },
-            submitter_id: { type: 'string', nullable: true },
-            reviewer_id: { type: 'string', nullable: true },
-            reviewer_note: { type: 'text', nullable: true },
-          },
-          ProductCategory: {
-            request_status: {
-              type: 'enum',
-              enum: ['draft', 'pending', 'accepted', 'rejected'],
-              defaultValue: 'draft',
-            },
-            submitter_id: { type: 'string', nullable: true },
-            reviewer_id: { type: 'string', nullable: true },
-            reviewer_note: { type: 'text', nullable: true },
-          },
-          ProductType: {
-            request_status: {
-              type: 'enum',
-              enum: ['draft', 'pending', 'accepted', 'rejected'],
-              defaultValue: 'draft',
-            },
-            submitter_id: { type: 'string', nullable: true },
-            reviewer_id: { type: 'string', nullable: true },
-            reviewer_note: { type: 'text', nullable: true },
-          },
-          ProductTag: {
-            request_status: {
-              type: 'enum',
-              enum: ['draft', 'pending', 'accepted', 'rejected'],
-              defaultValue: 'draft',
-            },
-            submitter_id: { type: 'string', nullable: true },
-            reviewer_id: { type: 'string', nullable: true },
-            reviewer_note: { type: 'text', nullable: true },
-          },
-          ReturnReason: {
-            request_status: {
-              type: 'enum',
-              enum: ['draft', 'pending', 'accepted', 'rejected'],
-              defaultValue: 'draft',
-            },
-            submitter_id: { type: 'string', nullable: true },
-            reviewer_id: { type: 'string', nullable: true },
-            reviewer_note: { type: 'text', nullable: true },
-          },
-          Return: {
-            vendor_seen_at: { type: 'datetime', nullable: true },
-          },
-        },
-      },
+      options: KAYI_CUSTOM_FIELDS_OPTIONS,
     },
     {
       resolve: './src/modules/reviews',

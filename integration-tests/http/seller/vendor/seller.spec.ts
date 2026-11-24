@@ -112,6 +112,45 @@ medusaIntegrationTestRunner({
       }
 
       describe("POST /vendor/sellers", () => {
+        // Store registration is limited to 10 per hour per client address
+        // (registrationRateLimiter) and this block opens more than that. The
+        // test client connects from loopback, a trusted peer, so X-Real-IP
+        // gives each test its own address the way nginx does for visitors.
+        let clientAddress = 0
+
+        beforeEach(() => {
+          clientAddress += 1
+          api.defaults.headers.common["x-real-ip"] = `10.77.0.${clientAddress}`
+        })
+
+        afterEach(() => {
+          delete api.defaults.headers.common["x-real-ip"]
+        })
+
+        it("limits store registration to 10 attempts per hour from one address", async () => {
+          const { headers } = await createUnregisteredToken()
+          const invalidBody = { name: "Flood Store" }
+
+          for (let attempt = 0; attempt < 10; attempt += 1) {
+            const response = await api
+              .post(`/vendor/sellers`, invalidBody, headers)
+              .catch((e) => e.response)
+            expect(response.status).toEqual(400)
+          }
+
+          const blocked = await api
+            .post(`/vendor/sellers`, invalidBody, headers)
+            .catch((e) => e.response)
+          expect(blocked.status).toEqual(429)
+
+          const otherAddress = await api
+            .post(`/vendor/sellers`, invalidBody, {
+              headers: { ...headers.headers, "x-real-ip": "10.78.0.1" },
+            })
+            .catch((e) => e.response)
+          expect(otherAddress.status).toEqual(400)
+        })
+
         it("should create seller with required fields", async () => {
           const { headers } = await createUnregisteredToken()
 

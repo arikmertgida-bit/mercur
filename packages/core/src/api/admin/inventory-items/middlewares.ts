@@ -12,6 +12,12 @@ import { AdminGetInventoryItemsParams } from "@medusajs/medusa/api/admin/invento
 import { listTransformQueryConfig } from "@medusajs/medusa/api/admin/inventory-items/query-config"
 
 import { ORIGINAL_MIDDLEWARES } from "../../../utils/disable-medusa-middlewares"
+import {
+  ensureItemLevelsBatchInItemStore,
+  ensureLevelsBatchInItemStore,
+  ensureLocationLevelInItemStore,
+  ensureNewItemLevelsWithoutStore,
+} from "./seller-guards"
 
 const LIST_MATCHER = "/admin/inventory-items"
 
@@ -54,6 +60,32 @@ const maybeApplySellerInventoryFilter = (
 
 export const adminInventoryItemsMiddlewares: MiddlewareRoute[] = [
   ...baseWithoutListGet,
+  // After Medusa's own body validation (registered above, same matchers).
+  {
+    method: ["POST"],
+    matcher: "/admin/inventory-items",
+    middlewares: [ensureNewItemLevelsWithoutStore],
+  },
+  {
+    method: ["POST"],
+    matcher: "/admin/inventory-items/batch",
+    middlewares: [ensureLevelsBatchInItemStore],
+  },
+  {
+    method: ["POST"],
+    matcher: "/admin/inventory-items/location-levels/batch",
+    middlewares: [ensureLevelsBatchInItemStore],
+  },
+  {
+    method: ["POST"],
+    matcher: "/admin/inventory-items/:id/location-levels",
+    middlewares: [ensureLocationLevelInItemStore],
+  },
+  {
+    method: ["POST"],
+    matcher: "/admin/inventory-items/:id/location-levels/batch",
+    middlewares: [ensureItemLevelsBatchInItemStore],
+  },
   {
     method: ["GET"],
     matcher: LIST_MATCHER,

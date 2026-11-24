@@ -15,17 +15,24 @@ medusaIntegrationTestRunner({
         await createAdminUser(dbConnection, adminHeaders, appContainer)
       })
 
+      // Vendor promotions take no free-form code: the seller reserves a
+      // generated one first (GET /vendor/promotions/generate-code).
+      const reserveCode = async (sellerHeaders: any): Promise<string> =>
+        (await api.get(`/vendor/promotions/generate-code`, sellerHeaders)).data
+          .code_reservation_token
+
       it("exposes the owning seller on a vendor promotion", async () => {
         const { seller, headers } = await createSellerUser(appContainer, {
           email: "owner-seller@test.com",
           name: "Owner Store",
+          autoApprove: true,
         })
 
         const promotion = (
           await api.post(
             `/vendor/promotions`,
             {
-              code: "OWNED10",
+              code_reservation_token: await reserveCode(headers),
               type: "standard",
               status: "active",
               application_method: {
@@ -137,13 +144,14 @@ medusaIntegrationTestRunner({
         const { seller, headers } = await createSellerUser(appContainer, {
           email: "filter-seller@test.com",
           name: "Filter Store",
+          autoApprove: true,
         })
 
         const vendorPromotion = (
           await api.post(
             `/vendor/promotions`,
             {
-              code: "FILTERVENDOR10",
+              code_reservation_token: await reserveCode(headers),
               type: "standard",
               status: "active",
               application_method: {
@@ -187,6 +195,7 @@ medusaIntegrationTestRunner({
         const { headers } = await createSellerUser(appContainer, {
           email: "platform-filter-seller@test.com",
           name: "Platform Filter Store",
+          autoApprove: true,
         })
 
         const platformPromotion = (
@@ -211,7 +220,7 @@ medusaIntegrationTestRunner({
           await api.post(
             `/vendor/promotions`,
             {
-              code: "PLATFORMFILTERVENDOR10",
+              code_reservation_token: await reserveCode(headers),
               type: "standard",
               status: "active",
               application_method: {

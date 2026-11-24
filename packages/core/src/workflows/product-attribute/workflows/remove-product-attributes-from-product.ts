@@ -101,12 +101,16 @@ export const removeProductAttributesFromProductWorkflow = createWorkflow(
 
           dismissAttrIds.add(a.id)
 
-          if (isAxis && !isScoped && productOptionId) {
+          // A scoped axis deletes its own option with the attribute; Medusa
+          // refuses to delete an option still attached to a product, so every
+          // axis is detached first.
+          if (isAxis && productOptionId) {
             optionPairs.push({
               product_option_id: productOptionId,
               product_id,
             })
-          } else if (isScoped) {
+          }
+          if (isScoped) {
             scopedAttrIds.push(a.id)
           }
         }

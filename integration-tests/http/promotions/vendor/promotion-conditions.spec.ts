@@ -15,15 +15,22 @@ medusaIntegrationTestRunner({
         const seller = await createSellerUser(appContainer, {
           email: "promo-conditions-seller@test.com",
           name: "Promo Conditions Seller",
+          autoApprove: true,
         })
         headers = seller.headers
       })
+
+      // Vendor promotions take no free-form code: the seller reserves a
+      // generated one first (GET /vendor/promotions/generate-code).
+      const reserveCode = async (sellerHeaders: any): Promise<string> =>
+        (await api.get(`/vendor/promotions/generate-code`, sellerHeaders)).data
+          .code_reservation_token
 
       it("creates a promotion targeting a product category", async () => {
         const response = await api.post(
           `/vendor/promotions`,
           {
-            code: "COND-CAT",
+            code_reservation_token: await reserveCode(headers),
             type: "standard",
             status: "active",
             application_method: {
@@ -54,17 +61,17 @@ medusaIntegrationTestRunner({
       })
 
       it("creates promotions for collection, type and tag target rules", async () => {
-        const cases: Array<[string, string]> = [
-          ["COND-COLL", "items.product.collection_id"],
-          ["COND-TYPE", "items.product.type_id"],
-          ["COND-TAG", "items.product.tags.id"],
+        const attributes = [
+          "items.product.collection_id",
+          "items.product.type_id",
+          "items.product.tags.id",
         ]
 
-        for (const [code, attribute] of cases) {
+        for (const attribute of attributes) {
           const response = await api.post(
             `/vendor/promotions`,
             {
-              code,
+              code_reservation_token: await reserveCode(headers),
               type: "standard",
               status: "active",
               application_method: {
@@ -92,7 +99,7 @@ medusaIntegrationTestRunner({
         const response = await api.post(
           `/vendor/promotions`,
           {
-            code: "COND-NE",
+            code_reservation_token: await reserveCode(headers),
             type: "standard",
             status: "active",
             application_method: {
@@ -125,7 +132,7 @@ medusaIntegrationTestRunner({
         const response = await api.post(
           `/vendor/promotions`,
           {
-            code: "COND-GENERAL",
+            code_reservation_token: await reserveCode(headers),
             type: "standard",
             status: "active",
             application_method: {
@@ -165,7 +172,7 @@ medusaIntegrationTestRunner({
         const response = await api.post(
           `/vendor/promotions`,
           {
-            code: "COND-SHIPPING",
+            code_reservation_token: await reserveCode(headers),
             type: "standard",
             status: "active",
             application_method: {

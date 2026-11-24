@@ -30,6 +30,10 @@ import {
   ensureBatchShippingProfilesOfSeller,
   ensureProductShippingProfileOfSeller,
 } from "./seller-guards"
+import {
+  ensureVariantInventoryItemInStore,
+  ensureVariantInventoryItemsBatchInStore,
+} from "../inventory-items/seller-guards"
 
 const overrides: MiddlewareRoute[] = [
   {
@@ -220,7 +224,22 @@ const overrides: MiddlewareRoute[] = [
   },
 ]
 
-export const adminProductsMiddlewares = withOriginalMiddlewares(
-  "dist/api/admin/products/middlewares.js",
-  overrides
-)
+// Run after Medusa's own body validation for these native routes; adding
+// them to `overrides` would replace that validation.
+const nativeRouteGuards: MiddlewareRoute[] = [
+  {
+    method: ["POST"],
+    matcher: "/admin/products/:id/variants/inventory-items/batch",
+    middlewares: [ensureVariantInventoryItemsBatchInStore],
+  },
+  {
+    method: ["POST"],
+    matcher: "/admin/products/:id/variants/:variant_id/inventory-items",
+    middlewares: [ensureVariantInventoryItemInStore],
+  },
+]
+
+export const adminProductsMiddlewares: MiddlewareRoute[] = [
+  ...withOriginalMiddlewares("dist/api/admin/products/middlewares.js", overrides),
+  ...nativeRouteGuards,
+]

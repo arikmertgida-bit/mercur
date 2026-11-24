@@ -2,6 +2,7 @@ import { medusaIntegrationTestRunner } from "@medusajs/test-utils"
 import { IOrderModuleService, MedusaContainer } from "@medusajs/framework/types"
 import { Modules } from "@medusajs/framework/utils"
 import { createSellerUser } from "../../../helpers/create-seller-user"
+import { syncTestCustomFields } from "../../../helpers/custom-fields"
 
 jest.setTimeout(50000)
 
@@ -18,9 +19,11 @@ medusaIntegrationTestRunner({
             })
 
             beforeEach(async () => {
+                await syncTestCustomFields(appContainer)
                 const result = await createSellerUser(appContainer, {
                     email: "seller@test.com",
                     name: "Test Seller",
+                    autoApprove: true,
                 })
                 sellerHeaders = result.headers
             })

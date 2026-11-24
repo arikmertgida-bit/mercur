@@ -854,17 +854,6 @@ medusaIntegrationTestRunner({
         expect(valueNames(res.data.product)).not.toContain("10kg")
       })
 
-      // Blocked by the 2.16 options-preview `product.options(.values)` populate
-      // bug (MikroORM expandDotPaths): Medusa's
-      // update/removeProductOptionValuesOnProductStep read that populate for
-      // compensation, so shared-axis subset edits and shared-axis unlink can't be
-      // verified over HTTP yet. The inline/exclusive-axis remove additionally hits
-      // "Cannot delete product options that are associated with products" because
-      // detaching the option before delete needs that same broken step. Engine-level
-      // coverage lives in product-attribute/admin/batch-engine.spec.ts. Re-enable
-      // when the populate bug is fixed (memory: product-options-populate-broken-216).
-      it.skip("update: shared-axis value subset add/remove", async () => {})
-
       // The exclusive (product-scoped) axis value delete now works over HTTP:
       // the option-value association is detached via the product service before
       // the option re-sync, sidestepping the broken `*OnProductStep` populate.
@@ -945,9 +934,71 @@ medusaIntegrationTestRunner({
         expect([200, 201]).toContain(variantRes.status)
       })
 
-      it.skip("update: exclusive option value mutation (add XXL / remove S,M,L)", async () => {})
-      it.skip("remove: shared-axis global unlinks product↔option", async () => {})
-      it.skip("remove: inline/exclusive scoped axis delete (option still associated)", async () => {})
+      it("update: exclusive option value add + remove in one entry (add XXL / remove S,M,L)", async () => {
+        const productId = await createProduct()
+        const added = await batch(productId, {
+          add: [
+            { title: "Size", values: ["S", "M", "L"], is_variant_axis: true },
+          ],
+        })
+        const scoped = scopedAttr(added.data.product, "Size")
+        const oldValueIds = (scoped.values ?? []).map((v: any) => v.id)
+
+        const res = await batch(productId, {
+          update: [
+            { id: scoped.id, add: [{ value: "XXL" }], remove: oldValueIds },
+          ],
+        })
+
+        expect(res.status).toEqual(200)
+        const updated = scopedAttr(res.data.product, "Size")
+        expect((updated.values ?? []).map((v: any) => v.name)).toEqual(["XXL"])
+        const query = appContainer.resolve(ContainerRegistrationKeys.QUERY)
+        const { data } = await query.graph({
+          entity: "product_option",
+          fields: ["title", "values.value"],
+          filters: { title: "Size" },
+        })
+        expect((data[0].values ?? []).map((v: any) => v.value)).toEqual(["XXL"])
+      })
+
+      it("remove: shared-axis global attribute unlinks the product's option (200)", async () => {
+        const multi = await createAttr({
+          name: "Shared Remove Size",
+          type: "multi_select",
+          is_variant_axis: true,
+          values: ["S", "M"],
+        })
+        const productId = await createProduct()
+        const added = await batch(productId, {
+          add: [{ id: multi.id, value_ids: [multi.byName.get("S")!] }],
+        })
+        expect(added.status).toEqual(200)
+        expect(await optionAttached(productId, "Shared Remove Size")).toBe(true)
+
+        const res = await batch(productId, { remove: [multi.id] })
+
+        expect(res.status).toEqual(200)
+        expect(await optionAttached(productId, "Shared Remove Size")).toBe(false)
+        // The global attribute itself stays in the catalog.
+        expect(await attributeRow(multi.id)).toBeTruthy()
+      })
+
+      it("remove: inline axis scoped attribute delete drops the attribute and its option (200)", async () => {
+        const productId = await createProduct()
+        const added = await batch(productId, {
+          add: [{ title: "Size", values: ["S", "M"], is_variant_axis: true }],
+        })
+        const sizeId = scopedAttr(added.data.product, "Size").id
+        expect(await optionAttached(productId, "Size")).toBe(true)
+
+        const res = await batch(productId, { remove: [sizeId] })
+
+        expect(res.status).toEqual(200)
+        expect(await attributeRow(sizeId)).toBeFalsy()
+        expect(await optionAttached(productId, "Size")).toBe(false)
+        expect(scopedAttr(res.data.product, "Size")).toBeFalsy()
+      })
 
       it("GET created product surfaces all linked attribute kinds", async () => {
         const multi = await createAttr({
