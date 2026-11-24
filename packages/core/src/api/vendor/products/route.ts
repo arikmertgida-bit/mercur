@@ -14,6 +14,7 @@ import { enrichProductAttributes } from "../../utils"
 import { VendorCreateProductType, VendorGetProductsParamsType } from "./validators"
 import { getSellerId } from "../../utils/seller-context"
 import { validateSellerShippingProfile } from "../shipping-profiles/helpers"
+import { validateSellerStockLocations } from "../stock-locations/helpers"
 
 export const GET = async (
   req: AuthenticatedMedusaRequest<
@@ -56,8 +57,22 @@ export const POST = async (
     payload.shipping_profile_id
   )
 
+  await validateSellerStockLocations(
+    req.scope,
+    sellerId,
+    (payload.variants ?? []).flatMap((variant) =>
+      (variant.inventory ?? []).map((level) => level.location_id)
+    )
+  )
+
+  // Seller variants are always stock-tracked, even when created without a
+  // stock entry: an untracked variant sells without limit once it is priced.
   const productInput: CreateProductsWorkflowInput["products"][number] = {
     ...payload,
+    variants: payload.variants?.map((variant) => ({
+      ...variant,
+      manage_inventory: true,
+    })),
     status: payload.status ?? ProductStatus.PROPOSED,
     seller_ids: [sellerId],
   }

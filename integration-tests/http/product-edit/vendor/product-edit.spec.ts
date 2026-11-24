@@ -35,12 +35,14 @@ medusaIntegrationTestRunner({
 
       beforeEach(async () => {
         const a = await createSellerUser(container, {
+          autoApprove: true,
           email: "edit-seller@test.com",
           name: "Edit Seller",
         })
         sellerHeaders = a.headers
         sellerId = sellerHeaders.headers["x-seller-id"]
         const b = await createSellerUser(container, {
+          autoApprove: true,
           email: "other-seller@test.com",
           name: "Other Seller",
         })

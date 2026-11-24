@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Button, Heading, Input, toast } from "@medusajs/ui"
+import { Button, Heading, Input, Label, Text, toast } from "@medusajs/ui"
 import { useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
@@ -11,23 +11,35 @@ import { MercurFeatureFlags } from "@mercurjs/types/feature-flags"
 
 import { Form } from "@components/common/form"
 import { AttributeValueInput } from "@components/inputs/attribute-value-input"
+import { LocaleCurrencyInput } from "@components/inputs/locale-currency-input"
 import { RouteFocusModal, useRouteModal } from "@components/modals"
 import { KeyboundForm } from "@components/utilities/keybound-form"
 import { useCurrentSeller, useFeatureFlags } from "@hooks/api"
 import { useCreateProductVariant } from "@hooks/api/products"
+import { getCurrencySymbol } from "@lib/data/currencies"
 import { generateVariantSku } from "@lib/generate-sku"
-import { CreateProductVariantSchema } from "./constants"
+import { sanitizeNumberInput } from "@lib/sanitize-number-input"
+import { CreateProductVariantSchema, toVariantStockPayload } from "./constants"
 
-export type CreateProductVariantSchemaType = z.infer<
+export type CreateProductVariantSchemaType = z.input<
   typeof CreateProductVariantSchema
 >
 
+type VariantStockLocation = { id: string; name: string }
+
 type CreateProductVariantFormProps = {
   product: ProductDTO
+  currencies: string[]
+  stockLocations: VariantStockLocation[]
 }
+
+const toBlankRecord = (keys: string[]): Record<string, string> =>
+  Object.fromEntries(keys.map((key) => [key, ""]))
 
 export const CreateProductVariantForm = ({
   product,
+  currencies,
+  stockLocations,
 }: CreateProductVariantFormProps) => {
   const { t } = useTranslation()
   const { handleSuccess } = useRouteModal()
@@ -55,6 +67,8 @@ export const CreateProductVariantForm = ({
       title: "",
       sku: "",
       options: defaultOptions,
+      prices: toBlankRecord(currencies),
+      inventory: toBlankRecord(stockLocations.map((location) => location.id)),
     },
     resolver: zodResolver(CreateProductVariantSchema),
   })
@@ -73,6 +87,10 @@ export const CreateProductVariantForm = ({
 
   const handleSubmit = form.handleSubmit(async (data) => {
     const { title, sku, options } = data
+    const { prices, inventory } = toVariantStockPayload({
+      prices: data.prices ?? {},
+      inventory: data.inventory ?? {},
+    })
 
     // Form keys variant fields by `handle ?? id`; backend keys options
     // by option title (= attribute name). Remap before submitting.
@@ -93,6 +111,8 @@ export const CreateProductVariantForm = ({
         options: Object.keys(cleanedOptions).length
           ? cleanedOptions
           : undefined,
+        prices,
+        inventory,
       },
       {
         onSuccess: () => {
@@ -199,6 +219,81 @@ export const CreateProductVariantForm = ({
                   />
                 )
               })}
+            </div>
+
+            <div className="flex flex-col gap-y-4">
+              <Heading level="h2">{t("fields.price")}</Heading>
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                {currencies.map((currency) => (
+                  <Form.Field
+                    key={currency}
+                    control={form.control}
+                    name={`prices.${currency}`}
+                    render={({ field: { value, onChange, ...field } }) => (
+                      <Form.Item>
+                        <Form.Label>
+                          {t("fields.priceTemplate", {
+                            regionOrCurrency: currency.toUpperCase(),
+                          })}
+                        </Form.Label>
+                        <Form.Control>
+                          <LocaleCurrencyInput
+                            {...field}
+                            min={0}
+                            code={currency}
+                            symbol={getCurrencySymbol(currency)}
+                            value={value ?? ""}
+                            onValueChange={(amount) => onChange(amount ?? "")}
+                            data-testid={`create-variant-price-${currency}-input`}
+                          />
+                        </Form.Control>
+                        <Form.ErrorMessage />
+                      </Form.Item>
+                    )}
+                  />
+                ))}
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-y-4">
+              <Heading level="h2">{t("fields.inventory")}</Heading>
+              {stockLocations.map((location) => (
+                <div
+                  key={location.id}
+                  className="grid grid-cols-1 items-start gap-4 md:grid-cols-2"
+                >
+                  <div className="flex flex-col gap-y-2">
+                    <Label size="small">{t("products.stock.edit.location")}</Label>
+                    <Text
+                      size="small"
+                      leading="compact"
+                      className="text-ui-fg-subtle px-2 py-1.5"
+                    >
+                      {location.name}
+                    </Text>
+                  </div>
+                  <Form.Field
+                    control={form.control}
+                    name={`inventory.${location.id}`}
+                    render={({ field: { value, ...field } }) => (
+                      <Form.Item>
+                        <Form.Label>{t("products.stock.edit.quantity")}</Form.Label>
+                        <Form.Control>
+                          <Input
+                            {...field}
+                            type="number"
+                            min={0}
+                            value={value ?? ""}
+                            onKeyDown={(e) => sanitizeNumberInput(e, [",", "."])}
+                            data-testid={`create-variant-stock-${location.id}-input`}
+                          />
+                        </Form.Control>
+                        <Form.ErrorMessage />
+                      </Form.Item>
+                    )}
+                  />
+                </div>
+              ))}
             </div>
           </div>
         </RouteFocusModal.Body>

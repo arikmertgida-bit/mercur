@@ -19,6 +19,7 @@ medusaIntegrationTestRunner({
 
             beforeEach(async () => {
                 const result = await createSellerUser(appContainer, {
+                    autoApprove: true,
                     email: "seller@test.com",
                     name: "Test Seller",
                 })
@@ -154,7 +155,6 @@ medusaIntegrationTestRunner({
                         `/vendor/products`,
                         {
                             title: "Product for Category",
-                            options: [{ title: "Default", values: ["Default"] }],
                         },
                         sellerHeaders
                     )
@@ -182,7 +182,6 @@ medusaIntegrationTestRunner({
                         `/vendor/products`,
                         {
                             title: "Product to Remove",
-                            options: [{ title: "Default", values: ["Default"] }],
                         },
                         sellerHeaders
                     )
@@ -218,7 +217,6 @@ medusaIntegrationTestRunner({
                         `/vendor/products`,
                         {
                             title: "Seller 1 Product",
-                            options: [{ title: "Default", values: ["Default"] }],
                         },
                         sellerHeaders
                     )
@@ -226,6 +224,7 @@ medusaIntegrationTestRunner({
                     const seller1ProductId = seller1ProductResponse.data.product.id
 
                     const seller2Result = await createSellerUser(appContainer, {
+                        autoApprove: true,
                         email: "seller2@test.com",
                         name: "Seller Two",
                     })

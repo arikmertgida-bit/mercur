@@ -37,11 +37,13 @@ medusaIntegrationTestRunner({
 
       beforeEach(async () => {
         const a = await createSellerUser(container, {
+          autoApprove: true,
           email: "variant-isolation-seller@test.com",
           name: "Variant Isolation Seller",
         })
         sellerHeaders = a.headers
         const b = await createSellerUser(container, {
+          autoApprove: true,
           email: "variant-isolation-victim@test.com",
           name: "Variant Isolation Victim",
         })

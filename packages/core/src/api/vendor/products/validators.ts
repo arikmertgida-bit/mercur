@@ -76,6 +76,19 @@ export const VendorGetProductParams = createSelectParams()
 
 const IdAssociation = z.object({ id: z.string() })
 
+const VariantPricesInput = z.array(
+  z.object({ amount: z.number().nonnegative(), currency_code: z.string() })
+)
+
+// Stock for the seller's own locations; the routes check every `location_id`
+// against `stock_location_seller` before anything is written.
+const VariantInventoryInput = z.array(
+  z.object({
+    location_id: z.string(),
+    quantity: z.number().int().nonnegative(),
+  })
+)
+
 const CreateProductVariant = z
   .object({
     title: z.string(),
@@ -97,14 +110,8 @@ const CreateProductVariant = z
     material: z.string().optional(),
     metadata: JsonRecordSchema.optional(),
     options: z.record(z.string(), z.string()).optional(),
-    prices: z
-      .array(z.object({ amount: z.number(), currency_code: z.string() }))
-      .optional(),
-    inventory: z
-      .array(
-        z.object({ location_id: z.string(), quantity: z.number() })
-      )
-      .optional(),
+    prices: VariantPricesInput.optional(),
+    inventory: VariantInventoryInput.optional(),
   })
   .strict()
 
@@ -315,6 +322,8 @@ export const VendorAddProductVariant = z
     thumbnail: z.string().optional(),
     metadata: JsonRecordSchema.optional(),
     options: z.record(z.string(), z.string()).optional(),
+    prices: VariantPricesInput.optional(),
+    inventory: VariantInventoryInput.optional(),
   })
   .strict()
 

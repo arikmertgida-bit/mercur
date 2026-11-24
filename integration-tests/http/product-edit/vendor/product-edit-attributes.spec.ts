@@ -31,6 +31,7 @@ medusaIntegrationTestRunner({
 
       beforeEach(async () => {
         const seller = await createSellerUser(container, {
+          autoApprove: true,
           email: "attr-seller@test.com",
           name: "Attr Seller",
         })

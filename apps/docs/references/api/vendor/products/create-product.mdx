@@ -125,6 +125,8 @@ Creates a product; when no status is provided it is created with status `propose
     <ParamField body="material" type="string">Material of the variant.</ParamField>
     <ParamField body="metadata" type="object">Custom key-value pairs.</ParamField>
     <ParamField body="options" type="object">Option title to value mapping, e.g. `{"Size": "M"}`.</ParamField>
+    <ParamField body="prices" type="object[]">Prices as `{ amount, currency_code }`; `amount` cannot be negative.</ParamField>
+    <ParamField body="inventory" type="object[]">Stock as `{ location_id, quantity }` in the seller's own stock locations (another seller's location answers `404`). Every variant is created with `manage_inventory: true`; without `inventory` it is tracked at zero stock.</ParamField>
   </Expandable>
 </ParamField>
 

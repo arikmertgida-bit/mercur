@@ -6,6 +6,7 @@ import {
   type ReturnWorkflow,
 } from "@medusajs/framework/workflows-sdk"
 import {
+  createInventoryLevelsWorkflow,
   createProductVariantsWorkflow,
   deleteProductsWorkflow,
   deleteProductVariantsWorkflow,
@@ -25,6 +26,7 @@ import {
   updateProductChangeActionsStep,
   type VariantImageLinks,
 } from "../steps"
+import { associateSellersWithInventoryItemStep } from "../../inventory-item/steps"
 import { applyProductAttributeChangeActionsWorkflow } from "./apply-product-attribute-change-actions"
 import { parseGraphRow, parseGraphRows } from "../../../utils/graph-rows"
 import { JsonSnapshot } from "../../../utils/json-schema"
@@ -43,6 +45,18 @@ import {
   VariantRemoveDetailsSchema,
   VariantUpdateDetailsSchema,
 } from "../utils/action-details"
+
+const CreatedVariantInventoryRowSchema = z.object({
+  id: z.string(),
+  inventory_items: z
+    .array(z.object({ inventory_item_id: z.string() }))
+    .nullish(),
+})
+
+const ProductSellerRowSchema = z.object({
+  product_id: z.string(),
+  seller_id: z.string(),
+})
 
 export type ApplyProductChangeActionsWorkflowInput = {
   change_ids: string[]
@@ -239,14 +253,127 @@ export const applyProductChangeActionsWorkflow: ReturnWorkflow<
       },
     )
 
-    when({ buckets }, ({ buckets }) => buckets.variantCreates.length > 0).then(
-      () => {
-        createProductVariantsWorkflow.runAsStep({
-          input: transform({ buckets }, ({ buckets }) => ({
-            product_variants: buckets.variantCreates,
-          })),
-        })
-      },
+    // `inventory` is not a variant field: it stocks the inventory item Medusa
+    // creates for the tracked variant, below.
+    const createdVariants = when(
+      { buckets },
+      ({ buckets }) => buckets.variantCreates.length > 0,
+    ).then(() =>
+      createProductVariantsWorkflow.runAsStep({
+        input: transform({ buckets }, ({ buckets }) => ({
+          product_variants: buckets.variantCreates.map(
+            ({ inventory: _inventory, ...variant }) => variant,
+          ),
+        })),
+      }),
+    )
+
+    const createdVariantStock = when(
+      { buckets },
+      ({ buckets }) => buckets.variantCreates.length > 0,
+    ).then(() => {
+      const createdVariantIds = transform(
+        { createdVariants },
+        ({ createdVariants }) =>
+          (createdVariants ?? []).map((variant) => variant.id),
+      )
+
+      const { data: createdVariantRows } = useQueryGraphStep({
+        entity: "product_variant",
+        fields: ["id", "inventory_items.inventory_item_id"],
+        filters: { id: createdVariantIds },
+      }).config({ name: "pc-load-created-variant-inventory-items" })
+
+      const variantProductIds = transform({ buckets }, ({ buckets }) =>
+        Array.from(new Set(buckets.variantCreates.map((v) => v.product_id))),
+      )
+
+      const { data: productSellerRows } = useQueryGraphStep({
+        entity: "product_seller",
+        fields: ["product_id", "seller_id"],
+        filters: { product_id: variantProductIds },
+      }).config({ name: "pc-load-created-variant-sellers" })
+
+      return transform(
+        { buckets, createdVariants, createdVariantRows, productSellerRows },
+        ({ buckets, createdVariants, createdVariantRows, productSellerRows }) => {
+          const inventoryItemByVariantId = new Map<string, string>()
+          for (const row of parseGraphRows(
+            CreatedVariantInventoryRowSchema,
+            createdVariantRows,
+          )) {
+            const inventoryItemId = row.inventory_items?.[0]?.inventory_item_id
+            if (inventoryItemId) {
+              inventoryItemByVariantId.set(row.id, inventoryItemId)
+            }
+          }
+
+          const sellerIdsByProductId = new Map<string, string[]>()
+          for (const row of parseGraphRows(
+            ProductSellerRowSchema,
+            productSellerRows,
+          )) {
+            const sellerIds = sellerIdsByProductId.get(row.product_id) ?? []
+            sellerIds.push(row.seller_id)
+            sellerIdsByProductId.set(row.product_id, sellerIds)
+          }
+
+          const levels: {
+            inventory_item_id: string
+            location_id: string
+            stocked_quantity: number
+          }[] = []
+          const sellerLinks: { inventory_item_id: string; seller_id: string }[] =
+            []
+
+          // createProductVariantsWorkflow returns variants in input order.
+          buckets.variantCreates.forEach((input, index) => {
+            const variantId = createdVariants?.[index]?.id
+            const inventoryItemId = variantId
+              ? inventoryItemByVariantId.get(variantId)
+              : undefined
+            if (!inventoryItemId) return
+
+            for (const level of input.inventory ?? []) {
+              levels.push({
+                inventory_item_id: inventoryItemId,
+                location_id: level.location_id,
+                stocked_quantity: level.quantity,
+              })
+            }
+            for (const seller_id of sellerIdsByProductId.get(input.product_id) ??
+              []) {
+              sellerLinks.push({ inventory_item_id: inventoryItemId, seller_id })
+            }
+          })
+
+          return { levels, sellerLinks }
+        },
+      )
+    })
+
+    when(
+      { createdVariantStock },
+      ({ createdVariantStock }) =>
+        (createdVariantStock?.levels.length ?? 0) > 0,
+    ).then(() =>
+      createInventoryLevelsWorkflow.runAsStep({
+        input: transform({ createdVariantStock }, ({ createdVariantStock }) => ({
+          inventory_levels: createdVariantStock?.levels ?? [],
+        })),
+      }),
+    )
+
+    when(
+      { createdVariantStock },
+      ({ createdVariantStock }) =>
+        (createdVariantStock?.sellerLinks.length ?? 0) > 0,
+    ).then(() =>
+      associateSellersWithInventoryItemStep(
+        transform({ createdVariantStock }, ({ createdVariantStock }) => ({
+          links: createdVariantStock?.sellerLinks ?? [],
+        })),
+      ).config({ name: "pc-associate-sellers-variant-inventory-items" }),
     )
 
     when({ buckets }, ({ buckets }) => buckets.variantUpdates.length > 0).then(

@@ -7,7 +7,7 @@ description: "Stage the addition of a variant to a product."
 Stages a `VARIANT_ADD` operation as a pending change request instead of creating the variant directly.
 
 <Note>
-  The endpoint responds with `202 Accepted` and a `product_change` record; the variant appears on the product once the change is confirmed. The staged variant is always created with `manage_inventory: false` and without prices, so its stock is not tracked. To sell a variant with tracked stock, create it together with the product (`POST /vendor/products`, `variants[].prices` and `variants[].inventory`).
+  The endpoint responds with `202 Accepted` and a `product_change` record; the variant appears on the product once the change is confirmed. The variant is always created with `manage_inventory: true`: its inventory item is linked to the seller and stocked with `inventory`. A variant added without stock stays tracked at zero, so it cannot be sold until stock is added.
 </Note>
 
 ## Path parameters
@@ -36,10 +36,12 @@ Stages a `VARIANT_ADD` operation as a pending change request instead of creating
 <ParamField body="origin_country" type="string">Country of origin.</ParamField>
 <ParamField body="material" type="string">Material of the variant.</ParamField>
 <ParamField body="allow_backorder" type="boolean">Whether backorders are allowed.</ParamField>
-<ParamField body="manage_inventory" type="boolean">Accepted in the body but forced to `false` when the change is staged.</ParamField>
+<ParamField body="manage_inventory" type="boolean">Accepted in the body but always stored as `true`.</ParamField>
 <ParamField body="thumbnail" type="string">Variant thumbnail URL.</ParamField>
 <ParamField body="metadata" type="object">Custom key-value pairs.</ParamField>
 <ParamField body="options" type="object">Option title to value mapping, e.g. `{"Size": "L"}`.</ParamField>
+<ParamField body="prices" type="object[]">Prices as `{ amount, currency_code }`; `amount` cannot be negative.</ParamField>
+<ParamField body="inventory" type="object[]">Stock as `{ location_id, quantity }`. Each `location_id` must be one of the seller's own stock locations (otherwise `404`); `quantity` is a whole number, zero or more.</ParamField>
 
 ## Response
 
@@ -58,7 +60,7 @@ curl -X POST 'http://localhost:9000/vendor/products/prod_01HXYZ/variants' \
   -H 'Authorization: Bearer <token>' \
   -H 'x-seller-id: <seller_id>' \
   -H 'Content-Type: application/json' \
-  -d '{"title": "L", "sku": "ACME-SHIRT-L", "options": {"Size": "L"}}'
+  -d '{"title": "L", "sku": "ACME-SHIRT-L", "options": {"Size": "L"}, "prices": [{"amount": 249.9, "currency_code": "try"}], "inventory": [{"location_id": "sloc_01HXYZ", "quantity": 12}]}'
 ```
 
 ```ts JS Client
@@ -67,6 +69,8 @@ const { product_change } = await client.vendor.products.$id.variants.mutate({
   title: "L",
   sku: "ACME-SHIRT-L",
   options: { Size: "L" },
+  prices: [{ amount: 249.9, currency_code: "try" }],
+  inventory: [{ location_id: "sloc_01HXYZ", quantity: 12 }],
 })
 ```
 </RequestExample>

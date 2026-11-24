@@ -70,11 +70,7 @@ export const AdminGetProductsParams = createFindParams({
   })
 
 export type AdminGetProductParamsType = z.infer<typeof AdminGetProductParams>
-export const AdminGetProductParams = createSelectParams().merge(
-  z.object({
-    seller_id: z.string().optional(),
-  })
-)
+export const AdminGetProductParams = createSelectParams()
 
 const IdAssociation = z.object({ id: z.string() })
 

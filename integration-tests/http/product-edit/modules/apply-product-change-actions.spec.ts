@@ -30,6 +30,7 @@ medusaIntegrationTestRunner({
       beforeEach(async () => {
         await createAdminUser(dbConnection, adminHeaders, container)
         const seller = await createSellerUser(container, {
+          autoApprove: true,
           email: "apply-actions-seller@test.com",
           name: "Apply Actions Seller",
         })

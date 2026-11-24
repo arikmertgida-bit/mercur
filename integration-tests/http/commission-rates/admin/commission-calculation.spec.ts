@@ -87,18 +87,20 @@ medusaIntegrationTestRunner({
 
       it("resolves per-currency Fixed amounts from values", async () => {
         const sellerId = "sel_fixed_test"
-        await commissionService.createCommissionRates({
-          name: "Fixed Per Currency",
-          code: "FIX_PER_CCY",
-          type: "fixed",
-          value: 0,
-          is_enabled: true,
-          values: [
-            { currency_code: "usd", amount: 500 },
-            { currency_code: "eur", amount: 450 },
-          ],
-          rules: [{ reference: "seller", reference_id: sellerId }],
-        })
+        await commissionService.createCommissionRates([
+          {
+            name: "Fixed Per Currency",
+            code: "FIX_PER_CCY",
+            type: "fixed",
+            value: 0,
+            is_enabled: true,
+            values: [
+              { currency_code: "usd", amount: 500 },
+              { currency_code: "eur", amount: 450 },
+            ],
+            rules: [{ reference: "seller", reference_id: sellerId }],
+          },
+        ])
 
         const ctx = (currency: string) => ({
           currency_code: currency,
@@ -126,17 +128,19 @@ medusaIntegrationTestRunner({
       it("matches AND-across-dimension, OR-within-dimension", async () => {
         const sellerId = "sel_and_test"
         const typeId = "ptyp_and_test"
-        await commissionService.createCommissionRates({
-          name: "Store And Type",
-          code: "AND_RATE",
-          type: "percentage",
-          value: 20,
-          is_enabled: true,
-          rules: [
-            { reference: "seller", reference_id: sellerId },
-            { reference: "product_type", reference_id: typeId },
-          ],
-        })
+        await commissionService.createCommissionRates([
+          {
+            name: "Store And Type",
+            code: "AND_RATE",
+            type: "percentage",
+            value: 20,
+            is_enabled: true,
+            rules: [
+              { reference: "seller", reference_id: sellerId },
+              { reference: "product_type", reference_id: typeId },
+            ],
+          },
+        ])
 
         // Matches BOTH dimensions → AND_RATE wins.
         const both = await commissionService.getCommissionLines({
@@ -174,25 +178,29 @@ medusaIntegrationTestRunner({
       it("breaks ties by specificity (more dimensions wins)", async () => {
         const sellerId = "sel_spec_test"
         const typeId = "ptyp_spec_test"
-        await commissionService.createCommissionRates({
-          name: "Store Only",
-          code: "SPEC_STORE",
-          type: "percentage",
-          value: 8,
-          is_enabled: true,
-          rules: [{ reference: "seller", reference_id: sellerId }],
-        })
-        await commissionService.createCommissionRates({
-          name: "Store And Type",
-          code: "SPEC_STORE_TYPE",
-          type: "percentage",
-          value: 12,
-          is_enabled: true,
-          rules: [
-            { reference: "seller", reference_id: sellerId },
-            { reference: "product_type", reference_id: typeId },
-          ],
-        })
+        await commissionService.createCommissionRates([
+          {
+            name: "Store Only",
+            code: "SPEC_STORE",
+            type: "percentage",
+            value: 8,
+            is_enabled: true,
+            rules: [{ reference: "seller", reference_id: sellerId }],
+          },
+        ])
+        await commissionService.createCommissionRates([
+          {
+            name: "Store And Type",
+            code: "SPEC_STORE_TYPE",
+            type: "percentage",
+            value: 12,
+            is_enabled: true,
+            rules: [
+              { reference: "seller", reference_id: sellerId },
+              { reference: "product_type", reference_id: typeId },
+            ],
+          },
+        ])
 
         const lines = await commissionService.getCommissionLines({
           currency_code: "usd",

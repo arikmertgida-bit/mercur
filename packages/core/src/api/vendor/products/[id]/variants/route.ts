@@ -11,6 +11,7 @@ import {
   VendorGetProductVariantsParamsType,
 } from "../../validators"
 import { getSellerId } from "../../../../utils/seller-context"
+import { validateSellerStockLocations } from "../../../stock-locations/helpers"
 
 export const GET = async (
   req: AuthenticatedMedusaRequest<
@@ -47,6 +48,12 @@ export const POST = async (
 
   const variant = req.validatedBody
 
+  await validateSellerStockLocations(
+    req.scope,
+    sellerId,
+    (variant.inventory ?? []).map((level) => level.location_id)
+  )
+
   const { result } = await productEditUpdateVariantsWorkflow(req.scope).run({
     input: {
       product_id: productId,
@@ -54,9 +61,12 @@ export const POST = async (
       operations: [
         {
           type: "add",
+          // Always stock-tracked: an untracked variant would sell without
+          // limit as soon as it has a price, and vendors cannot change
+          // manage_inventory afterwards.
           variant: {
             ...variant,
-            manage_inventory: false,
+            manage_inventory: true,
           },
         },
       ],

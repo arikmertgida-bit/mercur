@@ -19,6 +19,7 @@ medusaIntegrationTestRunner({
 
             beforeEach(async () => {
                 const result = await createSellerUser(appContainer, {
+                    autoApprove: true,
                     email: "seller@test.com",
                     name: "Test Seller",
                 })
@@ -151,7 +152,6 @@ medusaIntegrationTestRunner({
                         `/vendor/products`,
                         {
                             title: "Product for Collection",
-                            options: [{ title: "Default", values: ["Default"] }],
                         },
                         sellerHeaders
                     )
@@ -179,7 +179,6 @@ medusaIntegrationTestRunner({
                         `/vendor/products`,
                         {
                             title: "Product to Remove",
-                            options: [{ title: "Default", values: ["Default"] }],
                         },
                         sellerHeaders
                     )

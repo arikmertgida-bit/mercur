@@ -138,13 +138,10 @@ export const refreshOrderCommissionLinesWorkflow: ReturnWorkflow<
       return parseGraphRows(OrderForCommissionRefreshSchema, orders).map((order): CommissionCalculationContext => {
         // The order's own seller link (order-seller-link.ts) is 1:1 by
         // design — Order Splitting guarantees a single order never spans
-        // more than one seller. `product.sellers` on the other hand is the
-        // master-product allowlist (product-seller-link.ts, many-to-many):
-        // a shared product can be linked to several sellers, so picking
-        // `product.sellers[0]` there would resolve an arbitrary allowlisted
-        // seller instead of the seller this order actually belongs to,
-        // silently matching seller-scoped commission rules to the wrong
-        // seller for any product shared across multiple sellers.
+        // more than one seller. The product's seller can change later (an
+        // admin may move a product to another seller), so the seller this
+        // order was placed with is read from the order, not from
+        // `product.sellers`.
         const orderSellerId = order.seller?.id ?? undefined
 
         return {

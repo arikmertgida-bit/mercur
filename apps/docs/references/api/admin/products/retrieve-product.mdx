@@ -1,7 +1,7 @@
 ---
 title: "Retrieve Product"
 api: "GET /admin/products/{id}"
-description: "Retrieve a master catalog product by ID."
+description: "Retrieve a product by ID."
 ---
 
 Returns a single product with its variants, attribute values, and product-scoped attributes.
@@ -13,7 +13,6 @@ Returns a single product with its variants, attribute values, and product-scoped
 ## Query parameters
 
 <ParamField query="fields" type="string">Comma-separated list of fields to include, prefix with `+`/`-` to add or remove from defaults.</ParamField>
-<ParamField query="seller_id" type="string">Accepted for compatibility; it currently has no effect on the response.</ParamField>
 
 ## Response
 

@@ -1,5 +1,3 @@
-import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
-import type { MedusaContainer } from "@medusajs/framework/types"
 import { SellerStatus } from "@mercurjs/types"
 
 import { QueryFilter } from "../../utils/query-filter"
@@ -22,24 +20,6 @@ export const buildSellerOutsideClosureWindowFilter = (
     { closed_to: { $lt: now } },
   ],
 })
-
-export const resolveVisibleSellerIds = async (
-  scope: MedusaContainer
-): Promise<string[]> => {
-  const query = scope.resolve(ContainerRegistrationKeys.QUERY)
-  const now = new Date()
-
-  const { data: visibleSellers } = await query.graph({
-    entity: "seller",
-    fields: ["id"],
-    filters: {
-      status: SellerStatus.OPEN,
-      ...buildSellerOutsideClosureWindowFilter(now),
-    },
-  })
-
-  return visibleSellers.map((s: { id: string }) => s.id)
-}
 
 export type SellerClosureFields = {
   status: string
