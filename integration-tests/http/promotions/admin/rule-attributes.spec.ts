@@ -4,6 +4,8 @@ import {
   createAdminUser,
   adminHeaders,
 } from "../../../helpers/create-admin-user"
+import { createSellerUser } from "../../../helpers/create-seller-user"
+import { createVendorProduct } from "../../../helpers/create-product"
 
 jest.setTimeout(60000)
 
@@ -86,6 +88,44 @@ medusaIntegrationTestRunner({
         expect(idsOf(targetRules.data.attributes)).toContain(
           "apply_to_quantity"
         )
+      })
+
+      it("offers every seller's products, narrowed to one store by seller_id", async () => {
+        const first = await createSellerUser(appContainer, {
+          email: "admin-rule-values-1@test.com",
+          name: "Admin Rule Values One",
+          autoApprove: true,
+        })
+        const firstProduct = await createVendorProduct(api, first.headers, {
+          title: "Admin Rule Product One",
+        })
+        const second = await createSellerUser(appContainer, {
+          email: "admin-rule-values-2@test.com",
+          name: "Admin Rule Values Two",
+          autoApprove: true,
+        })
+        const secondProduct = await createVendorProduct(api, second.headers, {
+          title: "Admin Rule Product Two",
+        })
+
+        const all = await api.get(
+          `/admin/promotions/rule-value-options/target-rules/product?limit=50&offset=0&application_method_target_type=items`,
+          adminHeaders
+        )
+        expect(all.status).toEqual(200)
+        const allValues = all.data.values.map((v: any) => v.value)
+        expect(allValues).toEqual(
+          expect.arrayContaining([firstProduct.id, secondProduct.id])
+        )
+
+        const scoped = await api.get(
+          `/admin/promotions/rule-value-options/target-rules/product?limit=50&offset=0&application_method_target_type=items&seller_id=${first.seller.id}`,
+          adminHeaders
+        )
+        expect(scoped.status).toEqual(200)
+        const scopedValues = scoped.data.values.map((v: any) => v.value)
+        expect(scopedValues).toContain(firstProduct.id)
+        expect(scopedValues).not.toContain(secondProduct.id)
       })
     })
   },

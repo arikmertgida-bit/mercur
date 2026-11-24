@@ -5,6 +5,9 @@ import {
   MEMBER_PERMISSIONS_ESCALATION_CODE,
   MEMBER_PERMISSIONS_INVALID_CODE,
   SELLER_IMAGE_NOT_OWNED_CODE,
+  SELLER_PENDING_APPROVAL_CODE,
+  SELLER_SUSPENDED_CODE,
+  SELLER_TERMINATED_CODE,
 } from "@mercurjs/core/api/utils/vendor-error-codes"
 
 import { AUTOMATIC_PROMOTION_ATTRIBUTE_BUDGET_CODE } from "../campaign-budget-attribute"
@@ -245,6 +248,30 @@ export function translateVendorError(
         code: error.code,
         type: error.type,
         message: messages.customCodes.member_permissions_escalation,
+      }
+    }
+
+    if (error.code === SELLER_PENDING_APPROVAL_CODE) {
+      return {
+        code: error.code,
+        type: error.type,
+        message: messages.customCodes.seller_pending_approval,
+      }
+    }
+
+    if (error.code === SELLER_SUSPENDED_CODE) {
+      return {
+        code: error.code,
+        type: error.type,
+        message: messages.customCodes.seller_suspended,
+      }
+    }
+
+    if (error.code === SELLER_TERMINATED_CODE) {
+      return {
+        code: error.code,
+        type: error.type,
+        message: messages.customCodes.seller_terminated,
       }
     }
 

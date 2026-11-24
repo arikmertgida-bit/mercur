@@ -68,7 +68,10 @@ export const GET = async (
   // the create form); once that seller is chosen, restrict the product
   // picker to products actually belonging to them via the product_seller
   // link — products carry no `seller_id` column of their own.
+  // `seller_id` is not a column of any rule entity, so it never reaches the
+  // entity filter as-is (a product query by it fails with a 500).
   const sellerId = SellerIdQuerySchema.parse(req.query.seller_id)
+  delete filterableFields.seller_id
   if (queryConfig.entryPoint === "product" && sellerId) {
     const { data: sellerProducts } = await query.graph({
       entity: "product_seller",

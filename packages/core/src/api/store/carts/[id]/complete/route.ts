@@ -64,9 +64,10 @@ export const POST = async (
 
         if (!statusOKErrors.includes(error?.type)) {
             // The PostgreSQL-level second oversell defense
-            // (trg_enforce_reservation_limit, see the inventory-integrity-
-            // guard module) surfaces as a raw driver error, not a
-            // MedusaError — only reached if the app-level Redis lock around
+            // (trg_enforce_reservation_limit, installed by the app's
+            // install-reservation-oversell-guard migration script) surfaces
+            // as a raw driver error, not a MedusaError — only reached if the
+            // app-level Redis lock around
             // reserveInventoryStep somehow still let two reservations race.
             // Translate it to the exact same error type/shape the normal
             // `ensureInventoryLevels` oversell check already throws, so
