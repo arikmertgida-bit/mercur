@@ -1,6 +1,6 @@
 import { InitOptions } from "i18next"
 
-import translations from "./translations"
+import { translationLanguages } from "./translations"
 
 export const defaultI18nOptions: InitOptions = {
   debug: process.env.NODE_ENV === "development",
@@ -17,6 +17,5 @@ export const defaultI18nOptions: InitOptions = {
   interpolation: {
     escapeValue: false,
   },
-  resources: translations,
-  supportedLngs: Object.keys(translations),
+  supportedLngs: translationLanguages,
 }

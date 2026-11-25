@@ -1,130 +1,47 @@
-import type { TranslationResources } from "../types"
-import bg from "./bg.json"
-import de from "./de.json"
-import el from "./el.json"
-import en from "./en.json"
-import es from "./es.json"
-import fr from "./fr.json"
-import he from "./he.json"
-import hu from "./hu.json"
-import it from "./it.json"
-import ja from "./ja.json"
-import pl from "./pl.json"
-import ptBR from "./ptBR.json"
-import ptPT from "./ptPT.json"
-import th from "./th.json"
-import tr from "./tr.json"
-import uk from "./uk.json"
-import ro from "./ro.json"
-import mk from "./mk.json"
-import mn from "./mn.json"
-import ar from "./ar.json"
-import zhCN from "./zhCN.json"
-import fa from "./fa.json"
-import cs from "./cs.json"
-import ru from "./ru.json"
-import lt from "./lt.json"
-import vi from "./vi.json"
-import ko from "./ko.json"
-import nl from "./nl.json"
-import bs from "./bs.json"
-import id from "./id.json"
-import zhTW from "./zhTW.json"
+import type { TranslationTree } from "../types"
 
-const translations: TranslationResources = {
-  bs: {
-    translation: bs,
-  },
-  bg: {
-    translation: bg,
-  },
-  de: {
-    translation: de,
-  },
-  el: {
-    translation: el,
-  },
-  en: {
-    translation: en,
-  },
-  es: {
-    translation: es,
-  },
-  fr: {
-    translation: fr,
-  },
-  he: {
-    translation: he,
-  },
-  hu: {
-    translation: hu,
-  },
-  it: {
-    translation: it,
-  },
-  ja: {
-    translation: ja,
-  },
-  pl: {
-    translation: pl,
-  },
-  "pt-BR": {
-    translation: ptBR,
-  },
-  "pt-PT": {
-    translation: ptPT,
-  },
-  th: {
-    translation: th,
-  },
-  tr: {
-    translation: tr,
-  },
-  uk: {
-    translation: uk,
-  },
-  ro: {
-    translation: ro,
-  },
-  mk: {
-    translation: mk,
-  },
-  mn: {
-    translation: mn,
-  },
-  ar: {
-    translation: ar,
-  },
-  "zh-CN": {
-    translation: zhCN,
-  },
-  fa: {
-    translation: fa,
-  },
-  cs: {
-    translation: cs,
-  },
-  ru: {
-    translation: ru,
-  },
-  lt: {
-    translation: lt,
-  },
-  vi: {
-    translation: vi,
-  },
-  ko: {
-    translation: ko,
-  },
-  nl: {
-    translation: nl,
-  },
-  id: {
-    translation: id,
-  },
-  "zh-TW": {
-    translation: zhTW,
-  },
+type TranslationModule = { default: TranslationTree }
+
+/**
+ * One loader per panel language. Each file becomes its own chunk, so the
+ * panel downloads only the active language (and the fallback) instead of all
+ * of them on first load. Loaded by `i18n/backend.ts`.
+ */
+export const translationLoaders: Record<
+  string,
+  () => Promise<TranslationModule>
+> = {
+  bs: () => import("./bs.json"),
+  bg: () => import("./bg.json"),
+  de: () => import("./de.json"),
+  el: () => import("./el.json"),
+  en: () => import("./en.json"),
+  es: () => import("./es.json"),
+  fr: () => import("./fr.json"),
+  he: () => import("./he.json"),
+  hu: () => import("./hu.json"),
+  it: () => import("./it.json"),
+  ja: () => import("./ja.json"),
+  pl: () => import("./pl.json"),
+  "pt-BR": () => import("./ptBR.json"),
+  "pt-PT": () => import("./ptPT.json"),
+  th: () => import("./th.json"),
+  tr: () => import("./tr.json"),
+  uk: () => import("./uk.json"),
+  ro: () => import("./ro.json"),
+  mk: () => import("./mk.json"),
+  mn: () => import("./mn.json"),
+  ar: () => import("./ar.json"),
+  "zh-CN": () => import("./zhCN.json"),
+  fa: () => import("./fa.json"),
+  cs: () => import("./cs.json"),
+  ru: () => import("./ru.json"),
+  lt: () => import("./lt.json"),
+  vi: () => import("./vi.json"),
+  ko: () => import("./ko.json"),
+  nl: () => import("./nl.json"),
+  id: () => import("./id.json"),
+  "zh-TW": () => import("./zhTW.json"),
 }
 
-export default translations;
+export const translationLanguages: string[] = Object.keys(translationLoaders)

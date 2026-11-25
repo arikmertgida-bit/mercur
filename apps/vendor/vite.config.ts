@@ -62,25 +62,14 @@ export default defineConfig(({ mode, command }) => {
         : []),
     ],
     build: {
-      // `@mercurjs/vendor`'s own build (packages/vendor/tsdown.config.ts) now
-      // splits its ~150 pages into fine, per-usage chunks (was one ~9MB
-      // blob) using Rolldown's `entriesAware` code-splitting — a real,
-      // verified improvement to that package's own output and to any
-      // consumer that only needs part of it (e.g. this app's one
-      // `@mercurjs/vendor/pages/products` import, narrowed from the full
-      // `/pages` barrel for the same reason).
-      //
-      // That fix does not carry through to this app's own final bundle,
-      // though: get-route-map.tsx's ~150 dynamic route imports (compiled
-      // into packages/vendor/dist/index.js) converge on a large, genuinely
-      // shared core (dashboard-shared-adjacent hooks/components used by
-      // nearly every page) that this app's own Rolldown pass re-pools when
-      // it re-bundles the dependency — verified with the same `entriesAware`
-      // grouping applied here too: identical output size with or without
-      // it, so this is real cross-page sharing, not an artifact of
-      // over-eager default pooling. It's downloaded once and cached across
-      // every route for the rest of the session, not paid per page visit.
-      chunkSizeWarningLimit: 5500,
+      // Most of the old single ~5-8MB chunk was every panel language's
+      // translations bundled up front. packages/vendor/src/i18n/translations now
+      // loads each language on demand (i18n/backend.ts), so the shared core
+      // left here is real code every page uses (React, Medusa UI,
+      // dashboard-shared); splitting it further would not shrink what the
+      // first page load downloads. A new eagerly bundled dependency that
+      // pushes a chunk past this limit should be looked at, not waved through.
+      chunkSizeWarningLimit: 1100,
     },
   }
 })

@@ -1,40 +1,14 @@
-import i18n, { Resource } from "i18next";
+import i18n from "i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
+import { PropsWithChildren, useSyncExternalStore } from "react";
 import { initReactI18next } from "react-i18next";
-import type { TranslationTree } from "../../../i18n/types";
 
+import { createTranslationBackend } from "../../../i18n/backend";
 import { defaultI18nOptions } from "../../../i18n/config";
-import translations from "../../../i18n/translations";
 import { languages } from "../../../i18n/languages";
 import { installKayiZodErrorMap } from "../../../lib/zod-error-map";
 import customI18nResources from "virtual:mercur/i18n";
 import config from "virtual:mercur/config";
-
-function deepMerge(
-  target: TranslationTree,
-  source: TranslationTree,
-): TranslationTree {
-  const result: TranslationTree = { ...target };
-
-  for (const [key, sourceValue] of Object.entries(source)) {
-    const targetValue = target[key];
-
-    result[key] =
-      typeof sourceValue === "object" && typeof targetValue === "object"
-        ? deepMerge(targetValue, sourceValue)
-        : sourceValue;
-  }
-
-  return result;
-}
-
-// i18next keys resources by language; only object entries can be languages.
-const toResource = (tree: TranslationTree): Resource =>
-  Object.fromEntries(
-    Object.entries(tree).flatMap(([language, namespaces]) =>
-      typeof namespaces === "object" ? [[language, namespaces]] : [],
-    ),
-  );
 
 /**
  * Mirrors the active panel language onto `<html>`: `lang` for the browser
@@ -48,22 +22,19 @@ const syncDocumentLanguage = (lng: string): void => {
   document.documentElement.dir = language?.ltr === false ? "rtl" : "ltr";
 };
 
-const mergedTranslations = toResource(
-  deepMerge(translations, customI18nResources),
-);
-
-export const I18n = () => {
-  if (i18n.isInitialized) {
-    return null;
+const startI18n = (): void => {
+  if (i18n.isInitialized || i18n.isInitializing) {
+    return;
   }
 
-  i18n
+  void i18n
     .use(
       new LanguageDetector(null, {
         lookupCookie: "lng",
         lookupLocalStorage: "lng",
       }),
     )
+    .use(createTranslationBackend(customI18nResources))
     .use(initReactI18next)
     .init({
       ...defaultI18nOptions,
@@ -75,7 +46,6 @@ export const I18n = () => {
       ...(config.i18n?.defaultLanguage && {
         fallbackLng: config.i18n.defaultLanguage,
       }),
-      resources: mergedTranslations,
     });
 
   // `index.html`'deki statik `lang="en"` niteliği gerçek aktif dille hiçbir
@@ -84,12 +54,28 @@ export const I18n = () => {
   // vendor panelde de var (packages/vendor/.../i18n.tsx) — bkz. oradaki
   // yorum. `document.documentElement.lang`'i i18next'in aktif diliyle her
   // zaman eşitle: ilk yüklemede ve her `changeLanguage()` çağrısında.
-  syncDocumentLanguage(i18n.language);
   i18n.on("languageChanged", syncDocumentLanguage);
 
   installKayiZodErrorMap();
+};
 
-  return null;
+const subscribeInitialized = (onChange: () => void): (() => void) => {
+  i18n.on("initialized", onChange);
+  return () => i18n.off("initialized", onChange);
+};
+
+const isInitialized = (): boolean => i18n.isInitialized;
+
+/**
+ * Starts i18next and renders its children only once the active language's
+ * translations have loaded (they are fetched on demand, see i18n/backend.ts),
+ * so no screen ever shows raw keys.
+ */
+export const I18n = ({ children }: PropsWithChildren) => {
+  startI18n();
+  const ready = useSyncExternalStore(subscribeInitialized, isInitialized);
+
+  return ready ? <>{children}</> : null;
 };
 
 export { i18n };

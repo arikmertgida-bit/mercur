@@ -38,15 +38,16 @@ export default function App() {
                   navigation={navigation}
                   customFields={customFields}
                 >
-                  <I18n />
-                  <DocumentTitle />
-                  <I18nProvider>
-                    <RouterProvider
-                      router={createBrowserRouter(getRouteMap(routes), {
-                        basename: __BASE__,
-                      })}
-                    />
-                  </I18nProvider>
+                  <I18n>
+                    <DocumentTitle />
+                    <I18nProvider>
+                      <RouterProvider
+                        router={createBrowserRouter(getRouteMap(routes), {
+                          basename: __BASE__,
+                        })}
+                      />
+                    </I18nProvider>
+                  </I18n>
                   <Toaster />
                 </ExtensionProvider>
               </FeatureFlagProvider>

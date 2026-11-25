@@ -29,7 +29,6 @@ const isOwnedByAStore = (location: AdminStockLocation): boolean => {
 
 type EditInventoryItemAttributeFormProps = {
   item: AdminInventoryItem
-  locations: AdminStockLocation[]
   sellerId?: string
 }
 
@@ -180,9 +179,7 @@ export const ManageLocationsForm = ({
             renderEmpty={() => (
               <div className="flex items-center justify-center py-8" data-testid="inventory-manage-locations-form-empty-state">
                 <Text size="small" className="text-ui-fg-subtle" data-testid="inventory-manage-locations-form-empty-state-text">
-                  {searchQuery
-                    ? t("locations.noLocationsFound")
-                    : t("locations.noLocationsFound")}
+                  {t("locations.noLocationsFound")}
                 </Text>
               </div>
             )}

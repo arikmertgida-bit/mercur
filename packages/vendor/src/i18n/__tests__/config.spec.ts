@@ -3,14 +3,13 @@ import { describe, expect, test } from "vitest"
 
 import { defaultI18nOptions } from "../config"
 import { toIntlLocale } from "../languages"
-import translations from "../translations"
+import { createTranslationBackend } from "../backend"
 
 const initWith = async (lng: string): Promise<string> => {
   const instance = i18next.createInstance()
-  await instance.init({
+  await instance.use(createTranslationBackend({})).init({
     ...defaultI18nOptions,
     detection: undefined,
-    resources: translations,
     lng,
   })
   return instance.language

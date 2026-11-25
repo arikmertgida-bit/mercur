@@ -5,7 +5,6 @@ import { z } from "zod"
 
 import { RouteDrawer } from "../../../../../components/modals"
 import { useInventoryItem } from "../../../../../hooks/api/inventory"
-import { useStockLocations } from "../../../../../hooks/api/stock-locations"
 import { ManageLocationsForm } from "./components/manage-locations-form"
 
 // The owning seller comes from the inventory_item <-> seller link
@@ -30,13 +29,7 @@ export const ManageLocationsDrawer = () => {
   })
 
   const canViewLocations = useCan("stock_locations")
-  const { stock_locations, isLoading: loadingLocations } = useStockLocations(
-    undefined,
-    { enabled: canViewLocations }
-  )
-
-  const ready =
-    !isLoading && !loadingLocations && inventoryItem && stock_locations
+  const ready = canViewLocations && !isLoading && inventoryItem
 
   if (isError) {
     throw error
@@ -58,7 +51,6 @@ export const ManageLocationsDrawer = () => {
       {ready && (
         <ManageLocationsForm
           item={inventoryItem}
-          locations={stock_locations}
           sellerId={sellerId}
         />
       )}

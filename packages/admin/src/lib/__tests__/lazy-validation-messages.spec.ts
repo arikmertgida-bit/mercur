@@ -8,7 +8,7 @@ import { getProductCreateFormDefaults } from "../../pages/products/product-creat
 import { CreateStoreSchema } from "../../pages/stores/store-create/components/schema"
 import ar from "../../i18n/translations/ar.json"
 import en from "../../i18n/translations/en.json"
-import translations from "../../i18n/translations"
+import { createTranslationBackend } from "../../i18n/backend"
 import tr from "../../i18n/translations/tr.json"
 import { getPromotionStatus } from "../promotions"
 import { TransferOwnershipSchema } from "../schemas"
@@ -30,8 +30,7 @@ const messageAt = (
   result.error?.issues.find((issue) => issue.path.join(".") === path)?.message
 
 beforeAll(async () => {
-  await i18n.init({
-    resources: translations,
+  await i18n.use(createTranslationBackend({})).init({
     lng: "tr",
     fallbackLng: "en",
     interpolation: { escapeValue: false },

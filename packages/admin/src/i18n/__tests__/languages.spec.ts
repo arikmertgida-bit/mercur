@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest"
 
 import { languages } from "../languages"
-import translations from "../translations"
+import { translationLoaders } from "../translations"
 
 describe("languages", () => {
   test.each(languages.map((l) => l.code))(
@@ -15,7 +15,7 @@ describe("languages", () => {
   test.each(languages.map((l) => l.code))(
     "%s has translation resources",
     (code) => {
-      expect(translations[code]).toBeDefined()
+      expect(translationLoaders[code]).toBeDefined()
     }
   )
 })
