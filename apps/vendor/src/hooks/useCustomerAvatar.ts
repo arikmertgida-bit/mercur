@@ -53,29 +53,27 @@ function fetchCustomerAvatar(customerId: string): Promise<CustomerAvatarInfo> {
  * Returns immediately from cache if available; otherwise fetches once and caches.
  */
 export function useCustomerAvatar(customerId: string | undefined): CustomerAvatarInfo {
-  const [info, setInfo] = useState<CustomerAvatarInfo>(() => {
-    if (customerId && avatarCache.has(customerId)) {
-      return avatarCache.get(customerId) ?? EMPTY
-    }
-    return EMPTY
-  })
+  const [loaded, setLoaded] = useState<{ customerId: string; info: CustomerAvatarInfo } | null>(null)
+  const avatarCustomerId = customerId?.startsWith("cus_") ? customerId : null
 
-  useEffect(() => {
-    if (!customerId || customerId.trim() === "") return
-    if (!customerId.startsWith("cus_")) return
+  useEffect((): (() => void) | undefined => {
+    if (!avatarCustomerId || avatarCache.has(avatarCustomerId)) return undefined
 
-    const cached = avatarCache.get(customerId)
-    if (cached) {
-      setInfo(cached)
-      return
-    }
-
-    fetchCustomerAvatar(customerId)
-      .then(setInfo)
-      .catch(() => {
-        setInfo(EMPTY)
+    let cancelled = false
+    fetchCustomerAvatar(avatarCustomerId)
+      .then((info): void => {
+        if (!cancelled) setLoaded({ customerId: avatarCustomerId, info })
       })
-  }, [customerId])
+      .catch((): void => {
+        if (!cancelled) setLoaded({ customerId: avatarCustomerId, info: EMPTY })
+      })
+    return (): void => {
+      cancelled = true
+    }
+  }, [avatarCustomerId])
 
-  return info
+  if (!avatarCustomerId) return EMPTY
+  const cached = avatarCache.get(avatarCustomerId)
+  if (cached) return cached
+  return loaded?.customerId === avatarCustomerId ? loaded.info : EMPTY
 }

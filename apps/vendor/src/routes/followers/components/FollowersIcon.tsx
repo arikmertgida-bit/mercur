@@ -30,6 +30,16 @@ export function FollowersIcon(props: { className?: string }): React.JSX.Element 
   const isFollowersRoute =
     location.pathname === "/followers" || location.pathname.endsWith("/followers")
 
+  // Cleared while rendering (not in an effect) whenever the store session ends
+  // or the page is opened.
+  const [badgeKey, setBadgeKey] = React.useState({ sessionSellerId, isFollowersRoute })
+  if (badgeKey.sessionSellerId !== sessionSellerId || badgeKey.isFollowersRoute !== isFollowersRoute) {
+    setBadgeKey({ sessionSellerId, isFollowersRoute })
+    if (!sessionSellerId || isFollowersRoute) {
+      setUnreadCount(0)
+    }
+  }
+
   React.useEffect(
     (): (() => void) =>
       kayiEventManager.subscribeNotification(FOLLOWER_NOTIFICATION_TYPE, (): void => {
@@ -42,11 +52,9 @@ export function FollowersIcon(props: { className?: string }): React.JSX.Element 
   // belongs to the active store, and again after every store switch.
   React.useEffect((): (() => void) | undefined => {
     if (!sessionSellerId) {
-      setUnreadCount(0)
       return undefined
     }
     if (isFollowersRoute) {
-      setUnreadCount(0)
       markNotificationsRead(FOLLOWER_NOTIFICATION_TYPE).catch((err): void => {
         logger.error(
           `Failed to mark follower notifications read: ${getCatchMessage(err instanceof Error ? err : undefined)}`,

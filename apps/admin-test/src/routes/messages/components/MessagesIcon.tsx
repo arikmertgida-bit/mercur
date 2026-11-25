@@ -21,6 +21,17 @@ export function MessagesIcon(props: { className?: string }): React.JSX.Element {
   const { className } = props
   const [unreadCount, setUnreadCount] = React.useState<number>(0)
   const location = useLocation()
+  const isMessagesRoute =
+    location.pathname === "/messages" || location.pathname.endsWith("/messages")
+
+  // Cleared while rendering (not in an effect) whenever the page is opened.
+  const [wasMessagesRoute, setWasMessagesRoute] = React.useState(isMessagesRoute)
+  if (wasMessagesRoute !== isMessagesRoute) {
+    setWasMessagesRoute(isMessagesRoute)
+    if (isMessagesRoute) {
+      setUnreadCount(0)
+    }
+  }
 
   React.useEffect((): (() => void) => {
     const unsubscribe = kayiEventManager.subscribeUnreadCount((count: number): void => {
@@ -44,14 +55,6 @@ export function MessagesIcon(props: { className?: string }): React.JSX.Element {
       unsubscribe()
     }
   }, [])
-
-  React.useEffect((): void => {
-    const isMessagesRoute =
-      location.pathname === "/messages" || location.pathname.endsWith("/messages")
-    if (isMessagesRoute) {
-      setUnreadCount(0)
-    }
-  }, [location.pathname])
 
   const safeUnreadCount = unreadCount ?? 0
   const badgeLabel = formatSidebarUnreadCount(safeUnreadCount)

@@ -143,9 +143,9 @@ const ReviewPhotosSection = ({ review }: { review: ReviewDTO }) => {
                 key={image.id}
                 type="button"
                 onClick={() => setLightboxIndex(imageIndex)}
+                aria-label={t("messages.viewImage")}
                 className="relative block aspect-square overflow-hidden rounded-md border border-ui-border-base"
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={image.url}
                   alt=""
@@ -222,9 +222,9 @@ const ReviewReplyMessage = ({ reply }: { reply: ReviewReplyDTO }) => {
                 key={image.id}
                 type="button"
                 onClick={() => setLightboxIndex(imageIndex)}
+                aria-label={t("messages.viewImage")}
                 className="border-ui-border-base size-14 overflow-hidden rounded-md border"
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={image.url} alt="" className="size-full object-cover" />
               </button>
             ))}
@@ -316,11 +316,11 @@ const ReplyImagePicker = ({
           key={image.id}
           className="border-ui-border-base relative size-10 shrink-0 overflow-hidden rounded-md border"
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={image.url} alt="" className="size-full object-cover" />
           <button
             type="button"
             onClick={() => onRemove(image.id)}
+            aria-label={t("actions.remove")}
             className="bg-ui-bg-base/90 text-ui-fg-subtle absolute right-0 top-0 flex items-center justify-center rounded-bl-md"
           >
             <XMarkMini />

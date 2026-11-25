@@ -5,7 +5,7 @@ import { TriangleRightMini } from "@medusajs/icons"
 import { useCan } from "@mercurjs/dashboard-shared"
 import { useFollowers } from "../../hooks/api/followers"
 import { useUnseenReturnsCount } from "../../hooks/api/returns"
-import { useMessengerUnreads } from "../../providers/messenger-provider/MessengerProvider"
+import { useMessengerUnreads } from "../../providers/messenger-provider/messenger-context"
 
 const QuickAccessButton = ({
   to,

@@ -170,7 +170,6 @@ export const ImageLightbox = ({
               onPointerCancel={resetDrag}
             >
               {current && (
-                // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={current.url}
                   alt={current.alt || ""}
@@ -220,6 +219,8 @@ export const ImageLightbox = ({
                     key={image.id}
                     type="button"
                     onClick={(): void => onIndexChange(imageIndex)}
+                    aria-label={`${imageIndex + 1} / ${images.length}`}
+                    aria-current={imageIndex === activeIndex}
                     className={clx(
                       "size-12 shrink-0 overflow-hidden rounded-md border-2 transition-colors",
                       imageIndex === activeIndex
@@ -227,7 +228,6 @@ export const ImageLightbox = ({
                         : "border-transparent opacity-60 hover:opacity-100"
                     )}
                   >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={image.url}
                       alt={image.alt || ""}

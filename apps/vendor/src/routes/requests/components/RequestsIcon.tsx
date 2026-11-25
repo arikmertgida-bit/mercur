@@ -30,6 +30,16 @@ export function RequestsIcon(props: { className?: string }): React.JSX.Element {
   const isRequestsRoute =
     location.pathname === "/requests" || location.pathname.startsWith("/requests/")
 
+  // Cleared while rendering (not in an effect) whenever the store session ends
+  // or the page is opened.
+  const [badgeKey, setBadgeKey] = React.useState({ sessionSellerId, isRequestsRoute })
+  if (badgeKey.sessionSellerId !== sessionSellerId || badgeKey.isRequestsRoute !== isRequestsRoute) {
+    setBadgeKey({ sessionSellerId, isRequestsRoute })
+    if (!sessionSellerId || isRequestsRoute) {
+      setUnreadCount(0)
+    }
+  }
+
   React.useEffect(
     (): (() => void) =>
       kayiEventManager.subscribeNotification(REQUEST_NOTIFICATION_TYPE, (): void => {
@@ -42,11 +52,9 @@ export function RequestsIcon(props: { className?: string }): React.JSX.Element {
   // belongs to the active store, and again after every store switch.
   React.useEffect((): (() => void) | undefined => {
     if (!sessionSellerId) {
-      setUnreadCount(0)
       return undefined
     }
     if (isRequestsRoute) {
-      setUnreadCount(0)
       markNotificationsRead(REQUEST_NOTIFICATION_TYPE).catch((err): void => {
         logger.error(
           `Failed to mark request notifications read: ${getCatchMessage(err instanceof Error ? err : undefined)}`,

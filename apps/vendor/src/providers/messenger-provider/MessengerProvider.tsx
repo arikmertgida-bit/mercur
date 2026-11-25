@@ -1,12 +1,10 @@
 import {
-  createContext,
   useCallback,
-  useContext,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
-  useSyncExternalStore,
 } from "react"
 import { z } from "zod"
 import type { JsonRecord } from "../../lib/json-record"
@@ -36,11 +34,8 @@ import { getMessengerAuthToken, setMessengerAuthToken } from "../../lib/messenge
 import i18next from "i18next"
 import { kayiEventManager } from "../../lib/messenger/KayiEventManager"
 import { notificationPreferencesBridge } from "@mercurjs/dashboard-shared"
-import {
-  getMessengerVendorSnapshot,
-  publishMessengerVendorState,
-  subscribeMessengerVendorState,
-} from "../../lib/messenger/MessengerVendorBridge"
+import { publishMessengerVendorState } from "../../lib/messenger/MessengerVendorBridge"
+import { MessengerContext } from "./messenger-context"
 import {
   MESSENGER_SOCKET_EVENTS,
   type UnreadCountUpdatedPayload,
@@ -56,51 +51,7 @@ import type {
 import { logger } from "../../lib/logger"
 import { getCatchMessage } from "../../lib/errors"
 
-// ── Context ────────────────────────────────────────────────────────────────
-
 export type { MessengerContextValue } from "../../lib/messenger/types"
-
-const MessengerContext = createContext<MessengerContextValue | null>(null)
-
-export function useMessengerUnreads(): Array<{ unreadMessageCount: number }> {
-  const ctx = useContext(MessengerContext)
-  const count = ctx?.unreadCount ?? 0
-  return Array.from({ length: count }, () => ({ unreadMessageCount: 1 }))
-}
-
-/**
- * Returns unread count only for ADMIN_SUPPORT conversations.
- * Used by the Support button in the header so its badge reflects only
- * admin-support messages, not customer traffic.
- */
-export function useMessengerAdminUnreads(): Array<{ unreadMessageCount: number }> {
-  const ctx = useContext(MessengerContext)
-  if (!ctx) return []
-  const { conversations } = ctx
-  const count = conversations
-    .filter((c) => c.type === "ADMIN_SUPPORT")
-    .reduce((sum, c) => {
-      const selfParticipant = c.participants.find((p) => p.userType === "SELLER")
-      return sum + (selfParticipant?.unreadCount ?? 0)
-    }, 0)
-  return Array.from({ length: count }, () => ({ unreadMessageCount: 1 }))
-}
-
-export function useMessenger(): MessengerContextValue {
-  const ctx = useContext(MessengerContext)
-  const bridged = useSyncExternalStore(
-    subscribeMessengerVendorState,
-    getMessengerVendorSnapshot,
-    getMessengerVendorSnapshot
-  )
-  if (ctx) {
-    return ctx
-  }
-  if (bridged) {
-    return bridged
-  }
-  throw new Error("useMessenger must be used inside MessengerProvider or after session bootstrap")
-}
 
 // ── Provider ───────────────────────────────────────────────────────────────
 
@@ -199,9 +150,11 @@ export function MessengerProvider({
   const pinnedConvIdRef = useRef<string | null>(null)
   const conversationsRef = useRef<Conversation[]>([])
 
-  activeConvRef.current = activeConversationId
-  pinnedConvIdRef.current = pinnedConvId
-  conversationsRef.current = conversations
+  useLayoutEffect((): void => {
+    activeConvRef.current = activeConversationId
+    pinnedConvIdRef.current = pinnedConvId
+    conversationsRef.current = conversations
+  }, [activeConversationId, pinnedConvId, conversations])
 
   useEffect((): void => {
     kayiEventManager.emitUnreadCount(unreadCount)

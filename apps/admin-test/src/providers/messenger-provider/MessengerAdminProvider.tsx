@@ -1,12 +1,10 @@
 import {
-  createContext,
   useCallback,
-  useContext,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
-  useSyncExternalStore,
 } from "react"
 import { z } from "zod"
 import i18next from "i18next"
@@ -40,11 +38,8 @@ import {
   findOrCreateConversation,
 } from "../../lib/messenger/client"
 import { kayiEventManager } from "../../lib/messenger/KayiEventManager"
-import {
-  getMessengerAdminSnapshot,
-  publishMessengerAdminState,
-  subscribeMessengerAdminState,
-} from "../../lib/messenger/MessengerAdminBridge"
+import { publishMessengerAdminState } from "../../lib/messenger/MessengerAdminBridge"
+import { MessengerAdminContext } from "./messenger-admin-context"
 import {
   MESSENGER_SOCKET_EVENTS,
   type UnreadCountUpdatedPayload,
@@ -113,27 +108,7 @@ async function fetchMessengerToken(): Promise<string | null> {
   }
 }
 
-// ── Context ────────────────────────────────────────────────────────────────
-
 export type { MessengerContextValue } from "../../lib/messenger/types"
-
-const MessengerAdminContext = createContext<MessengerContextValue | null>(null)
-
-export function useMessengerAdmin(): MessengerContextValue {
-  const ctx = useContext(MessengerAdminContext)
-  const bridged = useSyncExternalStore(
-    subscribeMessengerAdminState,
-    getMessengerAdminSnapshot,
-    getMessengerAdminSnapshot
-  )
-  if (ctx) {
-    return ctx
-  }
-  if (bridged) {
-    return bridged
-  }
-  throw new Error("useMessengerAdmin must be used inside MessengerAdminProvider or after session bootstrap")
-}
 
 // ── Provider ───────────────────────────────────────────────────────────────
 
@@ -160,8 +135,10 @@ export function MessengerAdminProvider({
   const activeConvRef = useRef<string | null>(null)
   const conversationsRef = useRef<Conversation[]>([])
 
-  activeConvRef.current = activeConversationId
-  conversationsRef.current = conversations
+  useLayoutEffect((): void => {
+    activeConvRef.current = activeConversationId
+    conversationsRef.current = conversations
+  }, [activeConversationId, conversations])
 
   useEffect((): void => {
     kayiEventManager.emitUnreadCount(unreadCount)

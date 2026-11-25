@@ -22,5 +22,14 @@ export default defineConfig([
         tsconfigRootDir: import.meta.dirname,
       },
     },
+    rules: {
+      // Route and widget files must export these next to the component:
+      // @mercurjs/dashboard-sdk reads `config`, `handle` and `loader` from
+      // the page/widget module itself (src/routes.ts, src/menu-items.ts).
+      "react-refresh/only-export-components": [
+        "error",
+        { allowConstantExport: true, allowExportNames: ["config", "handle", "loader"] },
+      ],
+    },
   },
 ])

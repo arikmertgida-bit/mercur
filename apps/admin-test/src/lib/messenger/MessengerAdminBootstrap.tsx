@@ -3,7 +3,8 @@ import { toast } from "@medusajs/ui"
 import i18next from "i18next"
 import { client } from "../client"
 import { AdminUserMeSchema } from "./schemas"
-import { MessengerAdminProvider, useMessengerAdmin } from "../../providers/messenger-provider/MessengerAdminProvider"
+import { MessengerAdminProvider } from "../../providers/messenger-provider/MessengerAdminProvider"
+import { useMessengerAdmin } from "../../providers/messenger-provider/messenger-admin-context"
 
 /** While logged out, poll fast so a fresh login is picked up in seconds. */
 const FAST_POLL_INTERVAL_MS = 2_000
@@ -77,7 +78,6 @@ function useAdminSessionId(): string | null {
       window.removeEventListener("focus", resolveAdminId)
       if (pollTimer) clearInterval(pollTimer)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return adminId

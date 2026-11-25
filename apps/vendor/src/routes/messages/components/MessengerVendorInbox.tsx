@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next"
 import { Heading, Prompt, DropdownMenu, IconButton } from "@medusajs/ui"
 import { ChatBubbleLeftRight, PaperClip, PaperPlane, EllipsisHorizontal, XMarkMini } from "@medusajs/icons"
 import { ImageLightbox } from "@mercurjs/dashboard-shared"
-import { useMessenger } from "../../../providers/messenger-provider/MessengerProvider"
+import { useMessenger } from "../../../providers/messenger-provider/messenger-context"
 import { useCustomerAvatar } from "../../../hooks/useCustomerAvatar"
 import { useMessengerAutoScroll } from "../../../hooks/useMessengerAutoScroll"
 import { useAutoGrowTextarea } from "../../../hooks/useAutoGrowTextarea"
@@ -32,6 +32,11 @@ function formatTime(iso: string, locale: string): string {
 
 // ── Participant resolution ────────────────────────────────────────────────
 
+const VENDOR_CONTEXT: MessageContext = {
+  type: "VENDOR",
+  data: { id: "", name: "", handle: "", photo: null },
+}
+
 function getOtherParticipant(participants: Participant[]): Participant | null {
   return participants.find((p) => p.userType !== "SELLER") ?? null
 }
@@ -42,7 +47,7 @@ interface MessengerVendorInboxProps {
   sellerLogo?: string | null
 }
 
-export function MessengerVendorInbox({ sellerId: _sellerId, sellerLogo }: MessengerVendorInboxProps): React.JSX.Element {
+export function MessengerVendorInbox({ sellerLogo }: MessengerVendorInboxProps): React.JSX.Element {
   const {
     conversations,
     activeConversationId,
@@ -96,53 +101,57 @@ export function MessengerVendorInbox({ sellerId: _sellerId, sellerLogo }: Messen
     isOtherCustomer ? otherParticipant?.userId : undefined
   )
 
-  const [activeContext, setActiveContext] = useState<MessageContext | null>(null)
-  const [isContextLoading, setIsContextLoading] = useState(false)
+  // The context card is derived from the active conversation; only the product
+  // lookup is async, and a late answer for a previously opened conversation is
+  // dropped instead of overwriting the current one.
+  const isContextConversation = !!activeConv && activeConv.type !== "ADMIN_SUPPORT"
+  const isProductConversation =
+    isContextConversation &&
+    (activeConv.contextType === "PRODUCT_BASED" ||
+      (activeConv.contextType !== "VENDOR_BASED" && !!activeConv.productId))
+  const contextProductId = isProductConversation ? (activeConv.productId ?? null) : null
+  const [productContext, setProductContext] = useState<{
+    productId: string
+    data: ProductContextData | null
+  } | null>(null)
 
-  useEffect(() => {
-    const conv = activeConv
-    if (!conv) {
-      setActiveContext(null)
-      setIsContextLoading(false)
-      return
-    }
-
-    if (conv.type === "ADMIN_SUPPORT") {
-      setActiveContext(null)
-      setIsContextLoading(false)
-      return
-    }
-
-    const isProduct =
-      conv.contextType === "PRODUCT_BASED" ||
-      (conv.contextType !== "VENDOR_BASED" && !!conv.productId)
-
-    setIsContextLoading(true)
-
-    if (isProduct && conv.productId) {
-      const pid = conv.productId
-      client.vendor.products.$id
-        .query({ $id: pid })
-        .then(({ product }: {
-          product: ProductContextData & { thumbnail: string | null; handle: string | null }
-        }) => {
-          setActiveContext({
-            type: "PRODUCT",
-            data: {
-              id: pid,
-              title: product.title,
-              thumbnail: product.thumbnail ?? null,
-              handle: product.handle ?? null,
-            },
-          })
+  useEffect((): (() => void) | undefined => {
+    if (!contextProductId) return undefined
+    let cancelled = false
+    client.vendor.products.$id
+      .query({ $id: contextProductId })
+      .then(({ product }: {
+        product: ProductContextData & { thumbnail: string | null; handle: string | null }
+      }): void => {
+        if (cancelled) return
+        setProductContext({
+          productId: contextProductId,
+          data: {
+            id: contextProductId,
+            title: product.title,
+            thumbnail: product.thumbnail ?? null,
+            handle: product.handle ?? null,
+          },
         })
-        .catch(() => setActiveContext(null))
-        .finally(() => setIsContextLoading(false))
-    } else {
-      setActiveContext({ type: "VENDOR", data: { id: "", name: "", handle: "", photo: null } })
-      setIsContextLoading(false)
+      })
+      .catch((): void => {
+        if (!cancelled) setProductContext({ productId: contextProductId, data: null })
+      })
+    return (): void => {
+      cancelled = true
     }
-  }, [activeConv?.id]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [contextProductId])
+
+  const loadedProduct =
+    contextProductId && productContext?.productId === contextProductId ? productContext : null
+  const isContextLoading = !!contextProductId && !loadedProduct
+  const activeContext: MessageContext | null = contextProductId
+    ? loadedProduct?.data
+      ? { type: "PRODUCT", data: loadedProduct.data }
+      : null
+    : isContextConversation
+      ? VENDOR_CONTEXT
+      : null
 
   const otherName = isOtherAdmin
     ? t("messenger.supportTeam")

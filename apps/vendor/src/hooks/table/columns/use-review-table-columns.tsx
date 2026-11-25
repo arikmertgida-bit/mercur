@@ -2,17 +2,13 @@ import { createColumnHelper } from "@tanstack/react-table";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { Avatar, StatusBadge, Text } from "@medusajs/ui";
+import { StatusBadge, Text } from "@medusajs/ui";
 import { DateCell, DateHeader, Thumbnail } from "@mercurjs/dashboard-shared";
 import { ReviewDTO } from "../../api/reviews";
-import { useCustomerAvatar } from "../../useCustomerAvatar";
+import { ReviewCustomerCell } from "./review-customer-cell";
 import { ReplyStatusBadge } from "../../../routes/reviews/components/ReplyStatusBadge";
 
 const columnHelper = createColumnHelper<ReviewDTO>();
-
-// Panel-local copy of the storefront's default avatar — same asset,
-// self-hosted so the fallback never depends on cross-origin availability.
-const DEFAULT_CUSTOMER_AVATAR = "/images/customer-default-avatar.jpeg";
 
 const ratingColor = (rating: number) => {
   if (rating >= 4) return "green" as const;
@@ -26,25 +22,6 @@ const truncateCustomerNote = (note: string): string =>
   note.length > CUSTOMER_NOTE_PREVIEW_LENGTH
     ? `${note.slice(0, CUSTOMER_NOTE_PREVIEW_LENGTH)}...`
     : note;
-
-const ReviewCustomerCell = ({ review }: { review: ReviewDTO }) => {
-  const { t } = useTranslation();
-  const { avatarUrl } = useCustomerAvatar(review.customer?.id ?? undefined);
-
-  const fullName = [review.customer?.first_name, review.customer?.last_name]
-    .filter((part): part is string => Boolean(part && part.trim().length > 0))
-    .join(" ");
-  const displayName = fullName || t("messenger.unknown");
-
-  return (
-    <div className="flex items-center gap-x-3 overflow-hidden">
-      <Avatar src={avatarUrl || DEFAULT_CUSTOMER_AVATAR} fallback="" size="small" />
-      <Text size="small" leading="compact" className="truncate">
-        {displayName}
-      </Text>
-    </div>
-  );
-};
 
 export const useReviewTableColumns = () => {
   const { t } = useTranslation();

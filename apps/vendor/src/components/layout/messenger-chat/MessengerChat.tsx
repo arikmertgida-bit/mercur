@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next"
 import { Prompt, DropdownMenu, IconButton } from "@medusajs/ui"
 import { PaperClip, PaperPlane, EllipsisHorizontal, XMarkMini } from "@medusajs/icons"
 import { ImageLightbox } from "@mercurjs/dashboard-shared"
-import { useMessenger } from "../../../providers/messenger-provider/MessengerProvider"
+import { useMessenger } from "../../../providers/messenger-provider/messenger-context"
 import { useMessengerAutoScroll } from "../../../hooks/useMessengerAutoScroll"
 import { client } from "../../../lib/client"
 import { isMessengerHttpError } from "../../../lib/messenger/client"
@@ -98,13 +98,12 @@ export function MessengerChat({ currentUserId, otherName }: MessengerChatProps):
       .finally(() => setIsInitializing(false))
   }, [currentUserId])
 
-  // Reactive on purpose — `conversations` loads via its own async REST call on
-  // provider mount, which can still be in flight when adminUserId resolves.
-  // Re-running this whenever `conversations` changes (until localConvId locks
-  // it in) catches the pre-existing ADMIN_SUPPORT thread even if that fetch
+  // Locked in while rendering, not in an effect. `conversations` loads via
+  // its own async REST call on provider mount, which can still be in flight
+  // when adminUserId resolves — re-checking on every render until localConvId
+  // is set catches the pre-existing ADMIN_SUPPORT thread even if that fetch
   // hadn't landed yet on the first pass, instead of missing it permanently.
-  useEffect(() => {
-    if (!adminUserId || localConvId) return
+  if (adminUserId && !localConvId) {
     // Match on the resolved admin id too, not just the conversation type —
     // system notifications (e.g. review-report resolutions) also create an
     // ADMIN_SUPPORT thread, but addressed to a fixed "admin-system" sender
@@ -116,9 +115,15 @@ export function MessengerChat({ currentUserId, otherName }: MessengerChatProps):
     )
     if (existing) {
       setLocalConvId(existing.id)
-      openSidebarConversation(existing.id)
     }
-  }, [adminUserId, conversations, localConvId, openSidebarConversation])
+  }
+
+  const openedConvIdRef = useRef<string | null>(null)
+  useEffect((): void => {
+    if (!localConvId || openedConvIdRef.current === localConvId) return
+    openedConvIdRef.current = localConvId
+    void openSidebarConversation(localConvId)
+  }, [localConvId, openSidebarConversation])
 
   // Auto-scroll-to-bottom — typingUserIds is no longer a trigger (see useMessengerAutoScroll)
   useMessengerAutoScroll(messagesContainerRef, pinnedMessages, localConvId)
@@ -156,6 +161,7 @@ export function MessengerChat({ currentUserId, otherName }: MessengerChatProps):
           subject: t("messages.supportSubject"),
         })
         if (!cid) return
+        openedConvIdRef.current = cid
         setLocalConvId(cid)
         await openSidebarConversation(cid)
       }

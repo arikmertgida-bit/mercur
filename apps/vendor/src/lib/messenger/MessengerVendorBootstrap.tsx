@@ -1,11 +1,12 @@
-import { useEffect, useRef, useState, type ReactNode } from "react"
+import { useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from "react"
 import { toast } from "@medusajs/ui"
 import { useTranslation } from "react-i18next"
 import i18next from "i18next"
 import { client } from "../client"
 import { MemberPermissionsSchema, SellerMeSchema } from "./schemas"
 import { clearMessengerAuthToken } from "./auth-token"
-import { MessengerProvider, useMessenger } from "../../providers/messenger-provider/MessengerProvider"
+import { MessengerProvider } from "../../providers/messenger-provider/MessengerProvider"
+import { useMessenger } from "../../providers/messenger-provider/messenger-context"
 import { AdminChat } from "../../components/layout/admin-chat/AdminChat"
 import { OrdersBadgeBridge } from "./OrdersBadgeBridge"
 import { MESSENGER_NOTIFICATION_TYPE } from "./types"
@@ -150,7 +151,6 @@ function useSellerSession(): {
       window.removeEventListener("focus", resolveSeller)
       if (pollTimer) clearInterval(pollTimer)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return { sellerId, sellerName, canMessage }
@@ -165,22 +165,19 @@ function useSellerSession(): {
  * those children until the shared i18next singleton (same instance imported
  * everywhere via `import i18next from "i18next"`) reports itself ready.
  */
+function subscribeI18nInitialized(onChange: () => void): () => void {
+  i18next.on("initialized", onChange)
+  return (): void => {
+    i18next.off("initialized", onChange)
+  }
+}
+
+function getI18nInitialized(): boolean {
+  return i18next.isInitialized
+}
+
 function useI18nReady(): boolean {
-  const [ready, setReady] = useState(i18next.isInitialized)
-
-  useEffect(() => {
-    if (i18next.isInitialized) {
-      setReady(true)
-      return
-    }
-    const handleInitialized = (): void => setReady(true)
-    i18next.on("initialized", handleInitialized)
-    return (): void => {
-      i18next.off("initialized", handleInitialized)
-    }
-  }, [])
-
-  return ready
+  return useSyncExternalStore(subscribeI18nInitialized, getI18nInitialized, getI18nInitialized)
 }
 
 /**

@@ -23,6 +23,18 @@ export function MessagesIcon(props: { className?: string }): React.JSX.Element {
   const location = useLocation()
 
   const sessionSellerId = useMessengerSession()
+  const isMessagesRoute =
+    location.pathname === "/messages" || location.pathname.endsWith("/messages")
+
+  // Cleared while rendering (not in an effect) whenever the store session ends
+  // or the page is opened.
+  const [badgeKey, setBadgeKey] = React.useState({ sessionSellerId, isMessagesRoute })
+  if (badgeKey.sessionSellerId !== sessionSellerId || badgeKey.isMessagesRoute !== isMessagesRoute) {
+    setBadgeKey({ sessionSellerId, isMessagesRoute })
+    if (!sessionSellerId || isMessagesRoute) {
+      setUnreadCount(0)
+    }
+  }
 
   React.useEffect(
     (): (() => void) =>
@@ -36,7 +48,6 @@ export function MessagesIcon(props: { className?: string }): React.JSX.Element {
   // again after every store switch.
   React.useEffect((): (() => void) | undefined => {
     if (!sessionSellerId) {
-      setUnreadCount(0)
       return undefined
     }
     let cancelled = false
@@ -55,14 +66,6 @@ export function MessagesIcon(props: { className?: string }): React.JSX.Element {
       cancelled = true
     }
   }, [sessionSellerId])
-
-  React.useEffect((): void => {
-    const isMessagesRoute =
-      location.pathname === "/messages" || location.pathname.endsWith("/messages")
-    if (isMessagesRoute) {
-      setUnreadCount(0)
-    }
-  }, [location.pathname])
 
   const safeUnreadCount = unreadCount ?? 0
   const badgeLabel = formatSidebarUnreadCount(safeUnreadCount)

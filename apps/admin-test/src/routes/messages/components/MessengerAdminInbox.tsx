@@ -3,8 +3,8 @@ import { useTranslation } from "react-i18next"
 import { Prompt, DropdownMenu, IconButton } from "@medusajs/ui"
 import { ChatBubbleLeftRight, PaperClip, PaperPlane, EllipsisHorizontal, XMarkMini } from "@medusajs/icons"
 import { ImageLightbox } from "@mercurjs/dashboard-shared"
-import { useMessengerAdmin } from "../../../providers/messenger-provider/MessengerAdminProvider"
-import type { Conversation, Message, MessageContext, Participant, UserType } from "../../../lib/messenger/types"
+import { useMessengerAdmin } from "../../../providers/messenger-provider/messenger-admin-context"
+import type { Conversation, Message, MessageContext, Participant, ProductContextData, UserType } from "../../../lib/messenger/types"
 import { AdminProductSchema } from "../../../lib/messenger/schemas"
 import { client } from "../../../lib/client"
 import { logger } from "../../../lib/logger"
@@ -36,6 +36,8 @@ function formatDate(iso: string, locale: string, todayLabel: string, yesterdayLa
   if (d.toDateString() === yesterday.toDateString()) return yesterdayLabel
   return d.toLocaleDateString(locale, { day: "numeric", month: "long", year: "numeric" })
 }
+
+const VENDOR_CONTEXT: MessageContext = { type: "VENDOR", data: {} }
 
 function getOtherParticipant(participants: Participant[]): Participant | null {
   return participants.find((p) => p.userType !== "ADMIN") ?? null
@@ -96,9 +98,6 @@ export function MessengerAdminInbox({ adminId }: MessengerAdminInboxProps): Reac
   const isTypingRef = useRef(false)
 
   const activeConv = conversations.find((c) => c.id === activeConversationId) ?? null
-  const [activeContext, setActiveContext] = useState<MessageContext | null>(null)
-  const [isContextLoading, setIsContextLoading] = useState(false)
-
   const otherParticipant = activeConv ? getOtherParticipant(activeConv.participants) : null
   const otherParticipantType: UserType | "" = otherParticipant?.userType ?? ""
   const isOtherCustomer =
@@ -121,55 +120,59 @@ export function MessengerAdminInbox({ adminId }: MessengerAdminInboxProps): Reac
   )
   const sellerAvatarUrl = sellerAvatarData?.avatar_url ?? (activeConv?.metadata?.type === "store" ? activeConv.metadata.store_image : null)
 
-  useEffect(() => {
-    const conv = activeConv
-    if (!conv) {
-      setActiveContext(null)
-      setIsContextLoading(false)
-      return
-    }
+  // The context card is derived from the active conversation; only the product
+  // lookup is async, and a late answer for a previously opened conversation is
+  // dropped instead of overwriting the current one.
+  const isContextConversation = !!activeConv && activeConv.type !== "ADMIN_SUPPORT"
+  const isProductConversation =
+    isContextConversation &&
+    (activeConv.contextType === "PRODUCT_BASED" ||
+      (activeConv.contextType !== "VENDOR_BASED" && !!activeConv.productId))
+  const contextProductId = isProductConversation ? (activeConv.productId ?? null) : null
+  const [productContext, setProductContext] = useState<{
+    productId: string
+    data: ProductContextData | null
+  } | null>(null)
 
-    if (conv.type === "ADMIN_SUPPORT") {
-      setActiveContext(null)
-      setIsContextLoading(false)
-      return
-    }
-
-    const isProduct =
-      conv.contextType === "PRODUCT_BASED" ||
-      (conv.contextType !== "VENDOR_BASED" && !!conv.productId)
-
-    if (isProduct && conv.productId) {
-      const pid = conv.productId
-      setIsContextLoading(true)
-      client.admin.products.$id
-        .query({ $id: pid })
-        .then((raw) => {
-          const parsed = AdminProductSchema.safeParse(raw)
-          if (!parsed.success) { setActiveContext(null); return }
-          setActiveContext({
-            type: "PRODUCT",
-            data: {
-              id: pid,
-              title: parsed.data.product.title,
-              thumbnail: parsed.data.product.thumbnail,
-              handle: parsed.data.product.handle,
-            },
-          })
+  useEffect((): (() => void) | undefined => {
+    if (!contextProductId) return undefined
+    let cancelled = false
+    client.admin.products.$id
+      .query({ $id: contextProductId })
+      .then((raw): void => {
+        if (cancelled) return
+        const parsed = AdminProductSchema.safeParse(raw)
+        setProductContext({
+          productId: contextProductId,
+          data: parsed.success
+            ? {
+                id: contextProductId,
+                title: parsed.data.product.title,
+                thumbnail: parsed.data.product.thumbnail,
+                handle: parsed.data.product.handle,
+              }
+            : null,
         })
-        .catch((err) => {
-          logger.error(`[MessengerAdminInbox] product fetch error: ${getCatchMessage(err instanceof Error ? err : undefined)}`)
-          setActiveContext(null)
-        })
-        .finally(() => setIsContextLoading(false))
-    } else if (conv.contextType === "VENDOR_BASED") {
-      setActiveContext({ type: "VENDOR", data: {} })
-      setIsContextLoading(false)
-    } else {
-      setActiveContext(null)
-      setIsContextLoading(false)
+      })
+      .catch((err): void => {
+        logger.error(`[MessengerAdminInbox] product fetch error: ${getCatchMessage(err instanceof Error ? err : undefined)}`)
+        if (!cancelled) setProductContext({ productId: contextProductId, data: null })
+      })
+    return (): void => {
+      cancelled = true
     }
-  }, [activeConv?.id]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [contextProductId])
+
+  const loadedProduct =
+    contextProductId && productContext?.productId === contextProductId ? productContext : null
+  const isContextLoading = !!contextProductId && !loadedProduct
+  const activeContext: MessageContext | null = contextProductId
+    ? loadedProduct?.data
+      ? { type: "PRODUCT", data: loadedProduct.data }
+      : null
+    : isContextConversation && activeConv.contextType === "VENDOR_BASED"
+      ? VENDOR_CONTEXT
+      : null
 
   const isOtherTyping = typingUserIds.length > 0
 

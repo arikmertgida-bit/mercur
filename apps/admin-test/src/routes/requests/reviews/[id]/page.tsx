@@ -151,9 +151,9 @@ const AdminReviewReportDetailPage = () => {
                     key={image.id}
                     type="button"
                     onClick={() => setLightboxIndex(imageIndex)}
+                    aria-label={t("messages.viewImage")}
                     className="relative block aspect-square overflow-hidden rounded-md border border-ui-border-base"
                   >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={image.url} alt="" className="size-full object-cover" />
                   </button>
                 ))}

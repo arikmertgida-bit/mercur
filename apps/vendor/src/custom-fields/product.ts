@@ -1,5 +1,5 @@
 import { defineCustomFieldsConfig } from "@mercurjs/dashboard-sdk";
-import { Text } from "@medusajs/ui";
+import { ProductHandleDisplay } from "../components/custom-fields/product-displays";
 
 // ERP integration is on hold (see project notes) — the ERP ID field below is
 // fully disabled until the external vendor delivers its own integration code.
@@ -35,25 +35,11 @@ export default defineCustomFieldsConfig({
       zone: "general",
       fields: [
         // ERP ID — row in the product detail page's General section (disabled)
-        // {
-        //   id: "erp_id",
-        //   component: ({ data }) => (
-        //     <Text size="small" className="text-ui-fg-subtle px-6 py-4">
-        //       ERP ID: {erpId(data as ProductWithMeta)}
-        //     </Text>
-        //   ),
-        // },
+        // { id: "erp_id", component: ProductErpIdDisplay }, // components/custom-fields/product-displays.tsx
         // REMOVE — built-in id + null hides the field
         { id: "subtitle", component: null },
         // REPLACE — built-in id + component overrides its render
-        {
-          id: "handle",
-          component: ({ data }) => (
-            <Text size="small" className="text-ui-fg-subtle px-6 py-4">
-              <span dir="ltr">/{typeof data?.handle === "string" ? data.handle : null}</span>
-            </Text>
-          ),
-        },
+        { id: "handle", component: ProductHandleDisplay },
       ],
     },
   ],

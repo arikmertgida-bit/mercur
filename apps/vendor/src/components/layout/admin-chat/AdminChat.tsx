@@ -3,7 +3,7 @@ import { Drawer, Heading } from "@medusajs/ui"
 import { supportChatBridge } from "@mercurjs/dashboard-shared"
 import { useTranslation } from "react-i18next"
 import { MessengerChat } from "../messenger-chat/MessengerChat"
-import { useMessengerAdminUnreads } from "../../../providers/messenger-provider/MessengerProvider"
+import { useMessengerAdminUnreads } from "../../../providers/messenger-provider/messenger-context"
 
 interface AdminChatProps {
   currentUserId: string
