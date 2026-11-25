@@ -149,12 +149,14 @@ export function MessengerProvider({
   const activeConvRef = useRef<string | null>(null)
   const pinnedConvIdRef = useRef<string | null>(null)
   const conversationsRef = useRef<Conversation[]>([])
+  const sellerNameRef = useRef(sellerName)
 
   useLayoutEffect((): void => {
     activeConvRef.current = activeConversationId
     pinnedConvIdRef.current = pinnedConvId
     conversationsRef.current = conversations
-  }, [activeConversationId, pinnedConvId, conversations])
+    sellerNameRef.current = sellerName
+  }, [activeConversationId, pinnedConvId, conversations, sellerName])
 
   useEffect((): void => {
     kayiEventManager.emitUnreadCount(unreadCount)
@@ -164,10 +166,15 @@ export function MessengerProvider({
     if (typeof window === "undefined") return
     if (document.visibilityState === "visible") return
     if (Notification.permission !== "granted") return
-    new Notification(i18next.t("messenger.notificationTitle", { senderName: payload.senderName }), {
+    const notification = new Notification(i18next.t("messenger.notificationTitle", { senderName: payload.senderName }), {
       body: payload.preview,
-      icon: "/favicon.ico",
+      icon: "/logo.png",
     })
+    // Clicking the notification brings this tab to the front.
+    notification.onclick = (): void => {
+      window.focus()
+      notification.close()
+    }
   }, [])
 
   const refreshNotificationPreferences = useCallback(async (): Promise<void> => {
@@ -353,7 +360,7 @@ export function MessengerProvider({
       if (isStoredTokenValid(sellerId)) {
         kayiEventManager.setSessionSellerId(sellerId)
       }
-      socketInstance = connectSocket(sellerName)
+      socketInstance = connectSocket(sellerNameRef.current)
 
       if (socketInstance.connected) {
         setIsConnected(true)
@@ -419,8 +426,7 @@ export function MessengerProvider({
         disconnectSocket()
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sellerId, persistSession])
+  }, [sellerId, persistSession, refreshNotificationPreferences, showBrowserNotification])
 
   const openConversation = useCallback(async (conversationId: string) => {
     if (activeConvRef.current && activeConvRef.current !== pinnedConvIdRef.current) {

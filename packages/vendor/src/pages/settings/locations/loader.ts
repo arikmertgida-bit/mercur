@@ -1,5 +1,3 @@
-import { LoaderFunctionArgs } from "react-router-dom"
-
 import { stockLocationsQueryKeys } from "@hooks/api/stock-locations"
 import { sdk } from "@lib/client"
 import { queryClient } from "@lib/query-client"
@@ -13,6 +11,6 @@ const shippingListQuery = () => {
   }
 }
 
-export const shippingListLoader = async (_: LoaderFunctionArgs) => {
+export const shippingListLoader = async () => {
   return queryClient.ensureQueryData(shippingListQuery())
 }

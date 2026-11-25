@@ -149,10 +149,15 @@ export function MessengerAdminProvider({
     if (typeof window === "undefined") return
     if (document.visibilityState === "visible") return
     if (Notification.permission !== "granted") return
-    new Notification(i18next.t("messenger.notificationTitle", { senderName: payload.senderName }), {
+    const notification = new Notification(i18next.t("messenger.notificationTitle", { senderName: payload.senderName }), {
       body: payload.preview,
-      icon: "/favicon.ico",
+      icon: "/logo.png",
     })
+    // Clicking the notification brings this tab to the front.
+    notification.onclick = (): void => {
+      window.focus()
+      notification.close()
+    }
   }, [])
 
   useEffect(() => {
@@ -334,8 +339,7 @@ export function MessengerAdminProvider({
         disconnectSocket()
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [adminId, persistSession])
+  }, [adminId, persistSession, showBrowserNotification])
 
   const openConversation = useCallback(async (conversationId: string): Promise<void> => {
     if (activeConvRef.current) leaveConversation(activeConvRef.current)

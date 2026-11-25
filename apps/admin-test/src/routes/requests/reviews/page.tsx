@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import i18n from "i18next";
 import { createColumnHelper } from "@tanstack/react-table";
@@ -38,6 +37,47 @@ const STATUS_COLOR: Record<ReviewReportRowDTO["status"], "orange" | "red" | "gre
 const PAGE_SIZE = 20;
 const columnHelper = createColumnHelper<ReviewReportRowDTO>();
 
+const ColumnHeader = ({ labelKey }: { labelKey: string }) => {
+  const { t } = useTranslation();
+  return <>{t(labelKey)}</>;
+};
+
+const ReviewReportStatusCell = ({ status }: { status: ReviewReportRowDTO["status"] }) => {
+  const { t } = useTranslation();
+  return (
+    <StatusBadge color={STATUS_COLOR[status]}>
+      {t(`requests.reviews.status.${status}`)}
+    </StatusBadge>
+  );
+};
+
+const columns = [
+  columnHelper.accessor("seller_name", {
+    header: () => <ColumnHeader labelKey="requests.reviews.columns.seller" />,
+    cell: ({ getValue }) => (
+      <Text size="small" leading="compact">
+        {getValue()}
+      </Text>
+    ),
+  }),
+  columnHelper.accessor("reason", {
+    header: () => <ColumnHeader labelKey="requests.reviews.columns.reason" />,
+    cell: ({ getValue }) => (
+      <Text size="small" leading="compact" className="max-w-[320px] truncate">
+        {getValue()}
+      </Text>
+    ),
+  }),
+  columnHelper.accessor("status", {
+    header: () => <ColumnHeader labelKey="requests.reviews.columns.status" />,
+    cell: ({ getValue }) => <ReviewReportStatusCell status={getValue()} />,
+  }),
+  columnHelper.accessor("created_at", {
+    header: () => <DateHeader />,
+    cell: ({ getValue }) => <DateCell date={new Date(getValue())} />,
+  }),
+];
+
 const AdminReviewReportsPage = () => {
   const { t } = useTranslation();
   const { raw, searchParams } = useReviewTableQuery({ pageSize: PAGE_SIZE });
@@ -45,40 +85,6 @@ const AdminReviewReportsPage = () => {
   const { reports, count, isError, error, isLoading } = useReviewReports(
     searchParams,
     { placeholderData: keepPreviousData },
-  );
-
-  const columns = useMemo(
-    () => [
-      columnHelper.accessor("seller_name", {
-        header: () => t("requests.reviews.columns.seller"),
-        cell: ({ getValue }) => (
-          <Text size="small" leading="compact">
-            {getValue()}
-          </Text>
-        ),
-      }),
-      columnHelper.accessor("reason", {
-        header: () => t("requests.reviews.columns.reason"),
-        cell: ({ getValue }) => (
-          <Text size="small" leading="compact" className="max-w-[320px] truncate">
-            {getValue()}
-          </Text>
-        ),
-      }),
-      columnHelper.accessor("status", {
-        header: () => t("requests.reviews.columns.status"),
-        cell: ({ getValue }) => (
-          <StatusBadge color={STATUS_COLOR[getValue()]}>
-            {t(`requests.reviews.status.${getValue()}`)}
-          </StatusBadge>
-        ),
-      }),
-      columnHelper.accessor("created_at", {
-        header: () => <DateHeader />,
-        cell: ({ getValue }) => <DateCell date={new Date(getValue())} />,
-      }),
-    ],
-    [t],
   );
 
   const { table } = useDataTable({

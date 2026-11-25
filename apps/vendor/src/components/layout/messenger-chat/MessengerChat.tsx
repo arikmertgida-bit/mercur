@@ -12,6 +12,8 @@ import type { Message } from "../../../lib/messenger/types"
 import { logger } from "../../../lib/logger"
 import { getCatchMessage } from "../../../lib/errors"
 import { toIntlLocale } from "../../../lib/intl-locale"
+import { NotificationMessageContent } from "../../../components/messenger/notification-message-content"
+import { hasNotificationUrl } from "../../../lib/messenger/notification-segments"
 
 function formatTime(iso: string, locale: string): string {
   return new Date(iso).toLocaleTimeString(toIntlLocale(locale), {
@@ -126,7 +128,7 @@ export function MessengerChat({ currentUserId, otherName }: MessengerChatProps):
   }, [localConvId, openSidebarConversation])
 
   // Auto-scroll-to-bottom — typingUserIds is no longer a trigger (see useMessengerAutoScroll)
-  useMessengerAutoScroll(messagesContainerRef, pinnedMessages, localConvId)
+  useMessengerAutoScroll(messagesContainerRef, pinnedMessages.at(-1)?.id, localConvId)
 
   const handleRemoveImage = (): void => {
     if (previewUrl) {
@@ -281,29 +283,7 @@ export function MessengerChat({ currentUserId, otherName }: MessengerChatProps):
               const isLastMine = msg.id === lastMyMessageId
 
               if (isNotification) {
-                const hasUrl = /https?:\/\//.test(msg.content)
-                const renderContent = (): React.ReactNode => {
-                  if (!hasUrl) return msg.content
-                  const urlRegex = /https?:\/\/[^\s]+/g
-                  const parts = msg.content.split(urlRegex)
-                  const urls = msg.content.match(urlRegex) ?? []
-                  return parts.map((part, i) => (
-                    <span key={i}>
-                      {part}
-                      {urls[i] && (
-                        <a
-                          href={urls[i]}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="underline text-ui-fg-interactive hover:opacity-80"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          {t("messages.viewPromotion")}
-                        </a>
-                      )}
-                    </span>
-                  ))
-                }
+                const hasUrl = hasNotificationUrl(msg.content)
                 return (
                   <div key={msg.id} className="flex justify-center my-1">
                     <span
@@ -313,7 +293,7 @@ export function MessengerChat({ currentUserId, otherName }: MessengerChatProps):
                           : "rounded-full px-3 py-1"
                       }`}
                     >
-                      {renderContent()}
+                      <NotificationMessageContent content={msg.content} linkLabel={t("messages.viewPromotion")} />
                     </span>
                   </div>
                 )

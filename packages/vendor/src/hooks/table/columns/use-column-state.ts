@@ -70,7 +70,7 @@ export function useColumnState(
 
   const currentColumns = useMemo(() => {
     const visible = Object.entries(visibleColumns)
-      .filter(([_, isVisible]) => isVisible)
+      .filter(([, isVisible]) => isVisible)
       .map(([field]) => field)
 
     return {

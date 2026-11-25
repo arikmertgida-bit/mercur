@@ -16,6 +16,7 @@ import { VendorContextCard } from "./VendorContextCard"
 import { DynamicAvatar } from "./DynamicAvatar"
 import { useAdminSellerAvatar } from "../../../hooks/api/seller-avatar"
 import { useCustomerAvatar } from "../../../hooks/useCustomerAvatar"
+import { useMessengerAutoScroll } from "../../../hooks/useMessengerAutoScroll"
 import { resolveParticipantDisplayName } from "../../../lib/messenger/resolve-participant-display-name"
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -182,13 +183,7 @@ export function MessengerAdminInbox({ adminId }: MessengerAdminInboxProps): Reac
     return () => window.removeEventListener("resize", handleResize)
   }, [])
 
-  useEffect(() => {
-    const frameId = requestAnimationFrame(() => {
-      const container = messagesContainerRef.current
-      if (container) container.scrollTop = container.scrollHeight
-    })
-    return () => cancelAnimationFrame(frameId)
-  }, [messages, typingUserIds])
+  useMessengerAutoScroll(messagesContainerRef, messages.at(-1)?.id, activeConversationId)
 
   const handleSend = useCallback(async () => {
     if (!activeConversationId) return

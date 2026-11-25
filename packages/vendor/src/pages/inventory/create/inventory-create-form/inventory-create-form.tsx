@@ -144,7 +144,7 @@ export function InventoryCreateForm({ locations }: InventoryCreateFormProps) {
         method: "POST",
         body: {
           create: Object.entries(locations ?? {})
-            .filter(([_, quantiy]) => !!quantiy)
+            .filter(([, quantity]) => !!quantity)
             .map(([location_id, stocked_quantity]) => ({
               location_id,
               stocked_quantity: transformNullableFormNumber(

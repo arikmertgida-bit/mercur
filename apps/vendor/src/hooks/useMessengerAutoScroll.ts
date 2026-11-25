@@ -1,5 +1,4 @@
 import { useEffect, useRef, type RefObject } from "react"
-import type { Message } from "../lib/messenger/types"
 
 /**
  * Distance (px) considered "near the bottom". While the user is within this
@@ -11,11 +10,10 @@ const NEAR_BOTTOM_THRESHOLD_PX = 80
 /**
  * Scrolls the message list to the bottom — only (a) when a different
  * conversation is opened (`conversationKey` changes, always scrolls to
- * bottom), or (b) when a new message arrives in the same conversation AND the
- * user is already near the bottom. Deliberately NOT dependent on
- * `typingUserIds`: the other side starting/stopping typing produced a new
- * array reference on every change, which forced a scroll to bottom even while
- * the user was reading history.
+ * bottom), or (b) when a new message arrives in the same conversation
+ * (`lastMessageId` changes) AND the user is already near the bottom. Other
+ * updates of the message list (read receipts, deletions, older history) and
+ * the other side's typing state never scroll, so reading history stays put.
  *
  * `container.scrollTop` is assigned directly — `Element.scrollIntoView()` was
  * not used because, by definition, it can target the nearest scrollable
@@ -24,14 +22,14 @@ const NEAR_BOTTOM_THRESHOLD_PX = 80
  */
 export function useMessengerAutoScroll(
   containerRef: RefObject<HTMLElement | null>,
-  messages: Message[],
+  lastMessageId: string | undefined,
   conversationKey: string | null
 ): void {
   const previousConversationKeyRef = useRef<string | null>(null)
 
   useEffect(() => {
     const container = containerRef.current
-    if (!container) return
+    if (!container || lastMessageId === undefined) return
 
     const isNewConversation = conversationKey !== previousConversationKeyRef.current
     previousConversationKeyRef.current = conversationKey
@@ -46,6 +44,5 @@ export function useMessengerAutoScroll(
       container.scrollTop = container.scrollHeight
     })
     return () => cancelAnimationFrame(frameId)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [messages, conversationKey])
+  }, [containerRef, lastMessageId, conversationKey])
 }
