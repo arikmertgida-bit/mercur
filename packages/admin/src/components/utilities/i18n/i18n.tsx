@@ -7,7 +7,9 @@ import { createTranslationBackend } from "../../../i18n/backend";
 import { defaultI18nOptions } from "../../../i18n/config";
 import { languages } from "../../../i18n/languages";
 import { installKayiZodErrorMap } from "../../../lib/zod-error-map";
-import customI18nResources from "virtual:mercur/i18n";
+import customI18nResources, {
+  translationLoaders as appTranslationLoaders,
+} from "virtual:mercur/i18n";
 import config from "virtual:mercur/config";
 
 /**
@@ -34,7 +36,7 @@ const startI18n = (): void => {
         lookupLocalStorage: "lng",
       }),
     )
-    .use(createTranslationBackend(customI18nResources))
+    .use(createTranslationBackend(customI18nResources, appTranslationLoaders))
     .use(initReactI18next)
     .init({
       ...defaultI18nOptions,

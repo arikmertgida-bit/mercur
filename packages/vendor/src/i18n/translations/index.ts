@@ -1,16 +1,11 @@
-import type { TranslationTree } from "../types"
-
-type TranslationModule = { default: TranslationTree }
+import type { TranslationLoaders } from "../types"
 
 /**
  * One loader per panel language. Each file becomes its own chunk, so the
  * panel downloads only the active language (and the fallback) instead of all
  * of them on first load. Loaded by `i18n/backend.ts`.
  */
-export const translationLoaders: Record<
-  string,
-  () => Promise<TranslationModule>
-> = {
+export const translationLoaders: TranslationLoaders = {
   bs: () => import("./bs.json"),
   bg: () => import("./bg.json"),
   de: () => import("./de.json"),

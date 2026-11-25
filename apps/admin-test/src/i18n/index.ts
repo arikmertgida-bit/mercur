@@ -1,68 +1,45 @@
-import type { Resource } from "i18next"
-import ar from "./ar.json"
-import bg from "./bg.json"
-import bs from "./bs.json"
-import cs from "./cs.json"
-import de from "./de.json"
-import el from "./el.json"
-import en from "./en.json"
-import es from "./es.json"
-import fa from "./fa.json"
-import fr from "./fr.json"
-import he from "./he.json"
-import hu from "./hu.json"
-import id from "./id.json"
-import it from "./it.json"
-import ja from "./ja.json"
-import ko from "./ko.json"
-import lt from "./lt.json"
-import mk from "./mk.json"
-import mn from "./mn.json"
-import nl from "./nl.json"
-import pl from "./pl.json"
-import ptBR from "./ptBR.json"
-import ptPT from "./ptPT.json"
-import ro from "./ro.json"
-import ru from "./ru.json"
-import th from "./th.json"
-import tr from "./tr.json"
-import uk from "./uk.json"
-import vi from "./vi.json"
-import zhCN from "./zhCN.json"
-import zhTW from "./zhTW.json"
+type TranslationTree = { [key: string]: string | TranslationTree }
 
-const i18nResources: Resource = {
-  ar: { translation: ar },
-  bg: { translation: bg },
-  bs: { translation: bs },
-  cs: { translation: cs },
-  de: { translation: de },
-  el: { translation: el },
-  en: { translation: en },
-  es: { translation: es },
-  fa: { translation: fa },
-  fr: { translation: fr },
-  he: { translation: he },
-  hu: { translation: hu },
-  id: { translation: id },
-  it: { translation: it },
-  ja: { translation: ja },
-  ko: { translation: ko },
-  lt: { translation: lt },
-  mk: { translation: mk },
-  mn: { translation: mn },
-  nl: { translation: nl },
-  pl: { translation: pl },
-  "pt-BR": { translation: ptBR },
-  "pt-PT": { translation: ptPT },
-  ro: { translation: ro },
-  ru: { translation: ru },
-  th: { translation: th },
-  tr: { translation: tr },
-  uk: { translation: uk },
-  vi: { translation: vi },
-  "zh-CN": { translation: zhCN },
-  "zh-TW": { translation: zhTW },
+/**
+ * One loader per language: the dashboard SDK hands these to the panel's
+ * translation backend, which downloads only the active language's file (and
+ * the fallback's) instead of all of them on first load.
+ */
+const appTranslationLoaders: Record<
+  string,
+  () => Promise<{ default: TranslationTree }>
+> = {
+  ar: () => import("./ar.json"),
+  bg: () => import("./bg.json"),
+  bs: () => import("./bs.json"),
+  cs: () => import("./cs.json"),
+  de: () => import("./de.json"),
+  el: () => import("./el.json"),
+  en: () => import("./en.json"),
+  es: () => import("./es.json"),
+  fa: () => import("./fa.json"),
+  fr: () => import("./fr.json"),
+  he: () => import("./he.json"),
+  hu: () => import("./hu.json"),
+  id: () => import("./id.json"),
+  it: () => import("./it.json"),
+  ja: () => import("./ja.json"),
+  ko: () => import("./ko.json"),
+  lt: () => import("./lt.json"),
+  mk: () => import("./mk.json"),
+  mn: () => import("./mn.json"),
+  nl: () => import("./nl.json"),
+  pl: () => import("./pl.json"),
+  "pt-BR": () => import("./ptBR.json"),
+  "pt-PT": () => import("./ptPT.json"),
+  ro: () => import("./ro.json"),
+  ru: () => import("./ru.json"),
+  th: () => import("./th.json"),
+  tr: () => import("./tr.json"),
+  uk: () => import("./uk.json"),
+  vi: () => import("./vi.json"),
+  "zh-CN": () => import("./zhCN.json"),
+  "zh-TW": () => import("./zhTW.json"),
 }
 
-export default i18nResources
+export default appTranslationLoaders

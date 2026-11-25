@@ -24,7 +24,7 @@ const mercurVirtualModulesForTests = (): Plugin => ({
   load(id: string): string | null {
     return id.startsWith(RESOLVED_PREFIX) &&
       MERCUR_VIRTUAL_MODULES.includes(id.slice(RESOLVED_PREFIX.length))
-      ? "export default {}"
+      ? "export default {}; export const translationLoaders = {}"
       : null
   },
 })

@@ -30,14 +30,15 @@ export default defineConfig(({ mode }) => {
         : []),
     ],
     build: {
-      // Most of the old single ~5-8MB chunk was every panel language's
-      // translations bundled up front. packages/admin/src/i18n/translations now
-      // loads each language on demand (i18n/backend.ts), so the shared core
-      // left here is real code every page uses (React, Medusa UI,
-      // dashboard-shared); splitting it further would not shrink what the
-      // first page load downloads. A new eagerly bundled dependency that
-      // pushes a chunk past this limit should be looked at, not waved through.
-      chunkSizeWarningLimit: 2700,
+      // Most of the old single ~5-8MB chunk was every panel language bundled
+      // up front: the panel translations, the app translations (src/i18n) and
+      // the date-fns locales. All three now load per language on demand
+      // (packages/admin/src/i18n/backend.ts), so the shared core left here is
+      // real code every page uses (React, Medusa UI, dashboard-shared);
+      // splitting it further would not shrink what the first page load
+      // downloads. A new eagerly bundled dependency that pushes a chunk past
+      // this limit should be looked at, not waved through.
+      chunkSizeWarningLimit: 2200,
     },
   }
 })

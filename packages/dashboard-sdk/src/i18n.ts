@@ -34,11 +34,30 @@ export function generateI18n({ srcDir, pluginExtensions }: BuiltMercurConfig): s
     // Plugins first, app last, so the host can override a plugin's copy.
     const sources = [
         ...pluginExtensions.map((_, i) => `(__plugin${i}.i18nModule ?? {})`),
-        ...(indexFile ? ["appI18n"] : []),
+        ...(indexFile ? ["appResources"] : []),
     ]
+
+    // The app file may default-export either a resource map or one loader
+    // per language (`{ tr: () => import("./tr.json") }`). Loaders are handed
+    // to the panel as `translationLoaders`, so only the active language's
+    // file is downloaded; a resource map is merged into the default export
+    // as before.
+    const appSplit = indexFile
+        ? `
+const appIsLoaders =
+  Object.keys(appI18n).length > 0 &&
+  Object.values(appI18n).every((entry) => typeof entry === "function")
+const appResources = appIsLoaders ? {} : appI18n
+
+export const translationLoaders = appIsLoaders ? appI18n : {}
+`
+        : `
+export const translationLoaders = {}
+`
 
     // deepMerge is inlined because the virtual module has no runtime dependency on @mercurjs/admin.
     return `${imports.join("\n")}
+${appSplit}
 
 function deepMerge(target, source) {
   const result = { ...target }

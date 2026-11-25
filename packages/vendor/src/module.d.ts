@@ -19,6 +19,7 @@ declare module "virtual:mercur/menu-items" {
 
 declare module "virtual:mercur/i18n" {
     const i18nResources: import("./i18n/types").TranslationResources
+    export const translationLoaders: import("./i18n/types").TranslationLoaders
     export default i18nResources
 }
 

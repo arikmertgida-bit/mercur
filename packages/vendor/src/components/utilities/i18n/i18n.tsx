@@ -10,7 +10,9 @@ import {
 import { defaultI18nOptions } from "../../../i18n/config";
 import { languages } from "../../../i18n/languages";
 import { installKayiZodErrorMap } from "../../../lib/zod-error-map";
-import customI18nResources from "virtual:mercur/i18n";
+import customI18nResources, {
+  translationLoaders as appTranslationLoaders,
+} from "virtual:mercur/i18n";
 import config from "virtual:mercur/config";
 
 /**
@@ -37,7 +39,7 @@ const startI18n = (): void => {
         lookupLocalStorage: "lng",
       }),
     )
-    .use(createTranslationBackend(customI18nResources))
+    .use(createTranslationBackend(customI18nResources, appTranslationLoaders))
     .use(initReactI18next)
     .init({
       ...defaultI18nOptions,
@@ -50,7 +52,10 @@ const startI18n = (): void => {
         fallbackLng: config.i18n.defaultLanguage,
       }),
       // Custom resources may add languages beyond the built-in set.
-      supportedLngs: getAvailableLanguages(customI18nResources),
+      supportedLngs: getAvailableLanguages(
+        customI18nResources,
+        appTranslationLoaders,
+      ),
     });
 
   // `index.html`'deki statik `lang="en"` niteliği gerçek aktif dille
