@@ -160,7 +160,6 @@ export async function loadPromotionDetails(
         status: promotion.status,
         type: promotion.type,
         is_automatic: promotion.is_automatic,
-        seller_scoped: Boolean(sellerIdByPromotionId.get(promotion.id)),
         rule_count: (promotion.rules ?? []).filter((rule) => rule !== null).length,
         limit: promotion.limit ?? null,
         used: promotion.used ?? 0,

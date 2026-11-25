@@ -125,7 +125,7 @@ export function applyMercurPatches(options: ApplyPatchesOptions = {}): void {
       throw new Error(`[mercur] Patch file is missing: ${patchFilePath}`)
     }
 
-    const copies = resolvePackageCopies(entry.package)
+    const copies = resolvePackageCopies(entry.package, entry.loadedVia)
     if (!copies.length) {
       throw new Error(
         `[mercur] Patch "${entry.file}" found no installed copy of ${entry.package}.`
@@ -150,7 +150,7 @@ export function applyMercurPatches(options: ApplyPatchesOptions = {}): void {
         `${entry.package}`
     )
 
-    patchedPackages.add(entry.package)
+    patchedPackages.add(entry.loadedVia ?? entry.package)
   }
 
   // Load the patched packages now rather than leaving it to Medusa: the
@@ -159,8 +159,8 @@ export function applyMercurPatches(options: ApplyPatchesOptions = {}): void {
   // registered, because requiring a package after its first patch loads the
   // files a later patch targets unpatched, and the package index keeps
   // re-exporting those stale modules even after they are reloaded.
-  for (const packageName of patchedPackages) {
-    require(packageName)
+  for (const specifier of patchedPackages) {
+    require(specifier)
   }
 }
 

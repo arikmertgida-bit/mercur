@@ -24,7 +24,7 @@ describe("patches", () => {
         // turns up versions this project never loads. Only the copy the project
         // resolves has to accept the patch.
         const inRange = () =>
-            resolvePackageCopies(entry.package).filter(
+            resolvePackageCopies(entry.package, entry.loadedVia).filter(
                 (copy) =>
                     copy.version && isWithinRange(copy.version, entry.compatible)
             )

@@ -1,0 +1,64 @@
+diff --git a/dist/services/promotion-module.js b/dist/services/promotion-module.js
+index d56a69d..f35709d 100644
+--- a/dist/services/promotion-module.js
++++ b/dist/services/promotion-module.js
+@@ -476,6 +476,30 @@ class PromotionModuleService extends (0, utils_1.MedusaService)({
+                 continue;
+             }
+             const { application_method: applicationMethod, rules: promotionRules = [], } = promotion;
++            // MERCUR: a seller promotion is computed against that seller's own lines
++            // and shipping only. Against the whole cart an "across" amount is spread
++            // over every seller, and the shares landing on other sellers' lines use
++            // up their totals before those sellers' own promotions run. The caller
++            // supplies seller_promotion_scope (@mercurjs/core seller-promotion-scope);
++            // a promotion it did not check is left out rather than guessed at.
++            const sellerPromotionScope = applicationContext.seller_promotion_scope;
++            let promotionContext = applicationContext;
++            if (sellerPromotionScope) {
++                if (!(sellerPromotionScope.checked ?? []).includes(promotion.id)) {
++                    continue;
++                }
++                const scopedSellerId = (sellerPromotionScope.promotions ?? []).find((entry) => entry.promotion_id === promotion.id)?.seller_id;
++                if (scopedSellerId) {
++                    const idsOfSeller = (entries) => new Set((entries ?? []).filter((entry) => entry.seller_id === scopedSellerId).map((entry) => entry.id));
++                    const sellerItemIds = idsOfSeller(sellerPromotionScope.items);
++                    const sellerShippingMethodIds = idsOfSeller(sellerPromotionScope.shipping_methods);
++                    promotionContext = {
++                        ...applicationContext,
++                        items: items.filter((item) => sellerItemIds.has(item.id)),
++                        shipping_methods: shippingMethods.filter((method) => sellerShippingMethodIds.has(method.id)),
++                    };
++                }
++            }
+             if (!skipUsageLimitChecks &&
+                 promotion.campaign?.budget?.type === utils_1.CampaignBudgetType.USE_BY_ATTRIBUTE) {
+                 const attribute = promotion.campaign?.budget?.attribute;
+@@ -508,12 +532,12 @@ class PromotionModuleService extends (0, utils_1.MedusaService)({
+             }
+             const isCurrencyCodeValid = !(0, utils_1.isPresent)(applicationMethod.currency_code) ||
+                 applicationContext.currency_code === applicationMethod.currency_code;
+-            const isPromotionApplicable = (0, _utils_1.areRulesValidForContext)(promotionRules, applicationContext, utils_1.ApplicationMethodTargetType.ORDER);
++            const isPromotionApplicable = (0, _utils_1.areRulesValidForContext)(promotionRules, promotionContext, utils_1.ApplicationMethodTargetType.ORDER);
+             if (!isPromotionApplicable || !isCurrencyCodeValid) {
+                 continue;
+             }
+             if (promotion.type === utils_1.PromotionType.BUYGET) {
+-                const computedActionsForItems = _utils_1.ComputeActionUtils.getComputedActionsForBuyGet(promotion, applicationContext[utils_1.ApplicationMethodTargetType.ITEMS], methodIdPromoValueMap, eligibleBuyItemMap, eligibleTargetItemMap);
++                const computedActionsForItems = _utils_1.ComputeActionUtils.getComputedActionsForBuyGet(promotion, promotionContext[utils_1.ApplicationMethodTargetType.ITEMS], methodIdPromoValueMap, eligibleBuyItemMap, eligibleTargetItemMap);
+                 computedActions.push(...computedActionsForItems);
+             }
+             else if (promotion.type === utils_1.PromotionType.STANDARD) {
+@@ -525,11 +549,11 @@ class PromotionModuleService extends (0, utils_1.MedusaService)({
+                     ? utils_1.ApplicationMethodAllocation.ACROSS
+                     : undefined;
+                 if (isTargetOrder || isTargetItems) {
+-                    const computedActionsForItems = _utils_1.ComputeActionUtils.getComputedActionsForItems(promotion, applicationContext[utils_1.ApplicationMethodTargetType.ITEMS], methodIdPromoValueMap, allocationOverride);
++                    const computedActionsForItems = _utils_1.ComputeActionUtils.getComputedActionsForItems(promotion, promotionContext[utils_1.ApplicationMethodTargetType.ITEMS], methodIdPromoValueMap, allocationOverride);
+                     computedActions.push(...computedActionsForItems);
+                 }
+                 if (isTargetShipping) {
+-                    const computedActionsForShippingMethods = _utils_1.ComputeActionUtils.getComputedActionsForShippingMethods(promotion, applicationContext[utils_1.ApplicationMethodTargetType.SHIPPING_METHODS], methodIdPromoValueMap);
++                    const computedActionsForShippingMethods = _utils_1.ComputeActionUtils.getComputedActionsForShippingMethods(promotion, promotionContext[utils_1.ApplicationMethodTargetType.SHIPPING_METHODS], methodIdPromoValueMap);
+                     computedActions.push(...computedActionsForShippingMethods);
+                 }
+             }

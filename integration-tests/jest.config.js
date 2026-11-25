@@ -10,6 +10,9 @@ module.exports = {
     // test and the suite silently exercises unpatched code.
     "node_modules[\\\\/].*core-flows[\\\\/]dist[\\\\/](cart|order|payment)[\\\\/].*\\.js$":
       "@mercurjs/core/patches/jest-transformer",
+    // The seller promotion scope patch on the promotion module service.
+    "node_modules[\\\\/].*@medusajs[\\\\/]promotion[\\\\/]dist[\\\\/]services[\\\\/]promotion-module\\.js$":
+      "@mercurjs/core/patches/jest-transformer",
     "^.+\\.[jt]s$": [
       // Resolved here, not by name: `test:unit` runs with `--rootDir ..`, and
       // Jest resolves bare transformer names from rootDir, where bun does not
@@ -25,10 +28,11 @@ module.exports = {
   },
   testEnvironment: "node",
   // Everything in node_modules is left untransformed except the core-flows cart,
-  // order and payment files the patches target, and the ESM-only htmlparser2
-  // chain that sanitize-html require()s (Jest can't load ESM through require).
+  // order and payment files and the promotion module service the patches
+  // target, and the ESM-only htmlparser2 chain that sanitize-html require()s
+  // (Jest can't load ESM through require).
   transformIgnorePatterns: [
-    "/node_modules/(?!.*core-flows[\\\\/]dist[\\\\/](cart|order|payment)[\\\\/]|(?:.*[\\\\/])?(htmlparser2|domhandler|domutils|domelementtype|dom-serializer|entities)[\\\\/]dist[\\\\/])",
+    "/node_modules/(?!.*core-flows[\\\\/]dist[\\\\/](cart|order|payment)[\\\\/]|.*@medusajs[\\\\/]promotion[\\\\/]dist[\\\\/]services[\\\\/]promotion-module\\.js$|(?:.*[\\\\/])?(htmlparser2|domhandler|domutils|domelementtype|dom-serializer|entities)[\\\\/]dist[\\\\/])",
   ],
   moduleFileExtensions: ["js", "ts", "json"],
   modulePathIgnorePatterns: ["dist/"],

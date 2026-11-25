@@ -22,7 +22,6 @@ export function facts({ method, ...overrides }: FactsOverrides): CartPromotionFa
     status: "active",
     type: "standard",
     is_automatic: true,
-    seller_scoped: false,
     rule_count: 0,
     limit: null,
     used: 0,

@@ -13,7 +13,11 @@ import {
 import { z } from "zod"
 
 import { GraphBigNumberSchema, parseGraphRow } from "../../../utils/graph-rows"
-import { assertCartPricingUnchangedStep, PricingCartRowSchema } from "../steps"
+import {
+    assertCartPricingUnchangedStep,
+    getSellerPromotionScopeStep,
+    PricingCartRowSchema,
+} from "../steps"
 import { cartFieldsForRefreshSteps } from "../utils"
 
 export type ValidateCartPricingWorkflowInput = {
@@ -124,9 +128,15 @@ export const validateCartPricingWorkflow = createWorkflow(
             )
         )
 
+        const sellerPromotionScope = getSellerPromotionScopeStep({
+            cart,
+            promo_codes: promotionCodesToApply,
+        })
+
         const actions = getActionsToComputeFromPromotionsStep({
             computeActionContext: cart,
             promotionCodesToApply,
+            additional_promotion_context: sellerPromotionScope,
         })
 
         const { lineItemAdjustmentsToCreate, shippingMethodAdjustmentsToCreate } =

@@ -71,12 +71,6 @@ function toAutomaticBadge(
   }
   if (facts.type === PROMOTION_TYPE_STANDARD && method.target_type === TARGET_TYPE_ORDER) {
     const discountType = toMoneyStepType(method, context.currency_code)
-    // A seller's fixed order amount is spread over the whole multi-seller
-    // cart before the other sellers' share is dropped, so the shopper can get
-    // less than the amount. A percentage is unaffected.
-    if (discountType === 'fixed' && facts.seller_scoped) {
-      return null
-    }
     return discountType
       ? {
           type: 'order_discount',

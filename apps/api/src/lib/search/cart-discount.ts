@@ -19,8 +19,6 @@ export type CartPromotionFacts = {
   status: string
   type: string
   is_automatic: boolean
-  // Linked to a seller: the cart only lets it discount that seller's lines.
-  seller_scoped: boolean
   // Promotion-level rules (customer group, region, …) depend on the cart.
   rule_count: number
   limit: number | null

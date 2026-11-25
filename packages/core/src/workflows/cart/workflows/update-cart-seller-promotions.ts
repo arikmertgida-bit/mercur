@@ -8,6 +8,7 @@ import {
     WorkflowResponse,
 } from "@medusajs/framework/workflows-sdk"
 import { acquireLockStep, createLineItemAdjustmentsStep, createShippingMethodAdjustmentsStep, getActionsToComputeFromPromotionsStep, getPromotionCodesToApply, prepareAdjustmentsFromPromotionActionsStep, refreshPaymentCollectionForCartWorkflow, releaseLockStep, removeLineItemAdjustmentsStep, removeShippingMethodAdjustmentsStep, updateCartPromotionsStep, UpdateCartPromotionsWorkflowInput, useQueryGraphStep, validateCartStep } from "@medusajs/medusa/core-flows"
+import { getSellerPromotionScopeStep } from "../steps"
 import { cartFieldsForRefreshSteps } from "../utils"
 
 
@@ -61,9 +62,15 @@ export const updateCartSellerPromotionsWorkflow = createWorkflow(
             action,
         })
 
+        const sellerPromotionScope = getSellerPromotionScopeStep({
+            cart,
+            promo_codes,
+        })
+
         const actions = getActionsToComputeFromPromotionsStep({
             computeActionContext: cart,
             promotionCodesToApply,
+            additional_promotion_context: sellerPromotionScope,
         })
 
         const {

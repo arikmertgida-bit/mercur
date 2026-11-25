@@ -92,17 +92,6 @@ describe("toCampaignBadge", () => {
     expect(badge({ id: "p_other", type: "buyget", method: BUY_2_GET_1 })).toBeNull()
   })
 
-  it("gives no label for a seller's fixed order amount, which a mixed cart shrinks", () => {
-    expect(badge({ id: "p", method: ORDER_FIXED, seller_scoped: true })).toBeNull()
-    expect(badge({ id: "p", method: ORDER_PERCENT, seller_scoped: true })).toEqual({
-      type: "order_discount",
-      discount_type: "percentage",
-      value: 10,
-      currency_code: null,
-    })
-    expect(badge({ id: "p", is_automatic: false, method: ORDER_FIXED, seller_scoped: true })).toEqual({ type: "code" })
-  })
-
   it("gives no partial shipping or foreign-currency order label", () => {
     expect(badge({ id: "p", method: { ...FREE_SHIPPING, value: 50 } })).toBeNull()
     expect(badge({ id: "p", method: { ...ORDER_FIXED, currency_code: "eur" } })).toBeNull()

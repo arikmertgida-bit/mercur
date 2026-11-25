@@ -10,6 +10,13 @@ export interface PatchEntry {
   compatible: { from: string; to: string }
   /** Surfaced in boot logs and in the error raised when the patch stops applying. */
   reason: string
+  /**
+   * The specifier Medusa itself loads the package through, for a package the
+   * project only reaches transitively (`@medusajs/promotion` is required by
+   * `@medusajs/medusa/promotion`, not by the app). The copy it resolves to is
+   * the one that must accept the patch, and it is what gets loaded eagerly.
+   */
+  loadedVia?: string
 }
 
 export const PATCHES: PatchEntry[] = [
@@ -62,5 +69,20 @@ export const PATCHES: PatchEntry[] = [
       "Delivery is where a marketplace releases the seller's money from pending to " +
       "payable, and that release must run in the delivery's own transaction, with " +
       "compensation, so it needs fulfillmentDelivered.",
+  },
+  {
+    file: "@medusajs+promotion@2.21.2-seller-promotion-scope.patch",
+    package: "@medusajs/promotion",
+    loadedVia: "@medusajs/medusa/promotion",
+    compatible: { from: "2.21.0", to: "2.22.0" },
+    reason:
+      "computeActions evaluates every promotion against the whole cart. A seller's " +
+      "\"across\" promotion (a fixed order or shipping amount) is spread over every " +
+      "seller's lines, and the core-flows seller scope then drops the other sellers' " +
+      "share: 500 off on seller A in a cart of A 2000 + B 3000 arrives as 200. The " +
+      "shares also use up the other sellers' line totals before their own promotions " +
+      "run. With the patch a seller promotion sees only its seller's lines and " +
+      "shipping, read from the seller_promotion_scope the cart workflows add to the " +
+      "context (workflows/cart/utils/seller-promotion-scope.ts).",
   },
 ]

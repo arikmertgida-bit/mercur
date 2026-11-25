@@ -7,6 +7,8 @@ import {
 import { ContainerRegistrationKeys, Modules } from "@medusajs/framework/utils"
 
 import {
+  adminHeaders,
+  createAdminUser,
   generatePublishableKey,
   generateStoreHeaders,
 } from "../../../helpers/create-admin-user"
@@ -19,7 +21,7 @@ jest.setTimeout(120000)
 type Seed = Awaited<ReturnType<typeof seedSellerProductWithShipping>>
 
 medusaIntegrationTestRunner({
-  testSuite: ({ getContainer, api }) => {
+  testSuite: ({ getContainer, api, dbConnection }) => {
     describe("Store - Cart seller promotion", () => {
       let appContainer: MedusaContainer
       let storeHeaders: any
@@ -105,6 +107,95 @@ medusaIntegrationTestRunner({
           )
         ).data.promotion
         return { id: promotion.id, code: promotion.code }
+      }
+
+      /** An automatic fixed "across" promotion of `seller` (order or shipping). */
+      const createFixedAcrossPromotion = async (
+        seller: Seed,
+        targetType: "order" | "shipping_methods",
+        value: number,
+        campaignId?: string
+      ): Promise<{ id: string }> =>
+        (
+          await api.post(
+            `/vendor/promotions`,
+            {
+              type: "standard",
+              status: "active",
+              is_automatic: true,
+              ...(campaignId ? { campaign_id: campaignId } : {}),
+              application_method: {
+                type: "fixed",
+                target_type: targetType,
+                allocation: "across",
+                value,
+                currency_code: "usd",
+              },
+            },
+            seller.headers
+          )
+        ).data.promotion
+
+      const checkoutAddress = {
+        first_name: "Split",
+        last_name: "Buyer",
+        address_1: "123 Main St",
+        city: "New York",
+        country_code: "us",
+        postal_code: "10001",
+      }
+
+      /** A customer cart with one line of each seller and both shipping methods. */
+      const prepareTwoSellerCheckout = async (
+        email: string,
+        sellerA: Seed,
+        sellerB: Seed
+      ) => {
+        const customer = await createCustomerUser(appContainer, {
+          email,
+          first_name: "Split",
+          last_name: "Buyer",
+        })
+        const buyerHeaders = {
+          headers: { ...storeHeaders.headers, ...customer.headers.headers },
+        }
+
+        const cart = await createCart(buyerHeaders)
+        await addLines(cart.id, [sellerA.variantId, sellerB.variantId], buyerHeaders)
+        await api.post(
+          `/store/carts/${cart.id}`,
+          {
+            email: customer.customer.email,
+            shipping_address: checkoutAddress,
+            billing_address: checkoutAddress,
+          },
+          buyerHeaders
+        )
+        for (const optionId of [sellerA.shippingOptionId, sellerB.shippingOptionId]) {
+          await api.post(
+            `/store/carts/${cart.id}/shipping-methods`,
+            { option_id: optionId },
+            buyerHeaders
+          )
+        }
+
+        const complete = async () => {
+          const paymentCollection = (
+            await api.post(
+              `/store/payment-collections`,
+              { cart_id: cart.id },
+              buyerHeaders
+            )
+          ).data.payment_collection
+          await api.post(
+            `/store/payment-collections/${paymentCollection.id}/payment-sessions`,
+            { provider_id: "pp_system_default" },
+            buyerHeaders
+          )
+          return api.post(`/store/carts/${cart.id}/complete`, {}, buyerHeaders)
+        }
+
+        return { cartId: cart.id, buyerHeaders, complete }
       }
 
       const createCart = async (headers = storeHeaders) =>
@@ -359,18 +450,33 @@ medusaIntegrationTestRunner({
         expectOnlyFirstDiscounted(await getCart(cart.id), sellerA, sellerB, 200)
       })
 
-      // KNOWN BUG (next part, 9e-2b-5): Medusa spreads the fixed amount over
-      // every line, then the seller scope drops the other seller's share, so
-      // this cart gets 200 instead of 500. Remove .failing with the fix.
-      it.failing("gives a seller's fixed order discount in full in a multi-seller cart", async () => {
+      it("gives a seller's fixed order discount in full in a multi-seller cart", async () => {
         const sellerA = await seed("cart-order-a@test.com", "CartOrderA", 2000)
         const sellerB = await seed("cart-order-b@test.com", "CartOrderB", 3000)
+        await createFixedAcrossPromotion(sellerA, "order", 500)
+
+        const cart = await createCart()
+        await addLines(cart.id, [sellerA.variantId, sellerB.variantId])
+        expectOnlyFirstDiscounted(await getCart(cart.id), sellerA, sellerB, 500)
+
+        await api.post(
+          `/store/carts/${cart.id}`,
+          { email: "order-refresh@test.com" },
+          storeHeaders
+        )
+        expectOnlyFirstDiscounted(await getCart(cart.id), sellerA, sellerB, 500)
+      })
+
+      it("gives a coded seller fixed order discount in full in a multi-seller cart", async () => {
+        const sellerA = await seed("cart-ordercode-a@test.com", "CartOrderCodeA", 2000)
+        const sellerB = await seed("cart-ordercode-b@test.com", "CartOrderCodeB", 3000)
+        const reservation = await reserveCode(sellerA.headers)
         await api.post(
           `/vendor/promotions`,
           {
+            code_reservation_token: reservation.code_reservation_token,
             type: "standard",
             status: "active",
-            is_automatic: true,
             application_method: {
               type: "fixed",
               target_type: "order",
@@ -384,76 +490,177 @@ medusaIntegrationTestRunner({
 
         const cart = await createCart()
         await addLines(cart.id, [sellerA.variantId, sellerB.variantId])
-        expectOnlyFirstDiscounted(await getCart(cart.id), sellerA, sellerB, 500)
+        const applied = await applyCode(cart.id, reservation.code)
+        expect(applied.status).toEqual(200)
+        expectOnlyFirstDiscounted(applied.data.cart, sellerA, sellerB, 500)
+        expect(applied.data.cart.total).toEqual(4500)
+      })
+
+      it("caps a seller's fixed order discount at that seller's lines", async () => {
+        const sellerA = await seed("cart-ordercap-a@test.com", "CartOrderCapA", 2000)
+        const sellerB = await seed("cart-ordercap-b@test.com", "CartOrderCapB", 3000)
+        await createFixedAcrossPromotion(sellerA, "order", 4000)
+
+        const cart = await createCart()
+        await addLines(cart.id, [sellerA.variantId, sellerB.variantId])
+        expectOnlyFirstDiscounted(await getCart(cart.id), sellerA, sellerB, 2000)
+      })
+
+      it("gives each seller's fixed order discount in full on its own lines", async () => {
+        const sellerA = await seed("cart-ordertwo-a@test.com", "CartOrderTwoA", 2000)
+        const sellerB = await seed("cart-ordertwo-b@test.com", "CartOrderTwoB", 3000)
+        await createFixedAcrossPromotion(sellerA, "order", 500)
+        await createFixedAcrossPromotion(sellerB, "order", 300)
+
+        const cart = await createCart()
+        await addLines(cart.id, [sellerA.variantId, sellerB.variantId])
+        const refreshed = await getCart(cart.id)
+
+        const lineA = findLine(refreshed, sellerA.variantId)
+        const lineB = findLine(refreshed, sellerB.variantId)
+        expect(lineA.adjustments.map((a: any) => a.amount)).toEqual([500])
+        expect(lineB.adjustments.map((a: any) => a.amount)).toEqual([300])
+        expect(refreshed.discount_total).toEqual(800)
+      })
+
+      it("spreads a platform fixed order discount over every seller", async () => {
+        await createAdminUser(dbConnection, adminHeaders, appContainer)
+        const sellerA = await seed("cart-orderplat-a@test.com", "CartOrderPlatA", 2000)
+        const sellerB = await seed("cart-orderplat-b@test.com", "CartOrderPlatB", 3000)
+        await api.post(
+          `/admin/promotions`,
+          {
+            code: "PLATFORMFIXED500",
+            type: "standard",
+            status: "active",
+            is_automatic: true,
+            application_method: {
+              type: "fixed",
+              target_type: "order",
+              allocation: "across",
+              value: 500,
+              currency_code: "usd",
+            },
+          },
+          adminHeaders
+        )
+
+        const cart = await createCart()
+        await addLines(cart.id, [sellerA.variantId, sellerB.variantId])
+        const refreshed = await getCart(cart.id)
+
+        expect(findLine(refreshed, sellerA.variantId).adjustments[0].amount).toEqual(200)
+        expect(findLine(refreshed, sellerB.variantId).adjustments[0].amount).toEqual(300)
+        expect(refreshed.discount_total).toEqual(500)
+      })
+
+      it("gives a seller's fixed shipping discount in full on that seller's shipping", async () => {
+        const sellerA = await seed("cart-ship-a@test.com", "CartShipA", 2000)
+        const sellerB = await seed("cart-ship-b@test.com", "CartShipB", 3000)
+        await createFixedAcrossPromotion(sellerA, "shipping_methods", 300)
+
+        const { cartId, buyerHeaders } = await prepareTwoSellerCheckout(
+          "ship-promo-buyer@test.com",
+          sellerA,
+          sellerB
+        )
+        const cart = await getCart(cartId, buyerHeaders)
+        const methodOf = (seller: Seed) =>
+          cart.shipping_methods.find(
+            (sm: any) => sm.shipping_option_id === seller.shippingOptionId
+          )
+
+        expect(methodOf(sellerA).adjustments.map((a: any) => a.amount)).toEqual([300])
+        expect(methodOf(sellerB).adjustments ?? []).toHaveLength(0)
+        expect(cart.shipping_discount_total).toEqual(300)
+      })
+
+      it("keeps a seller's fixed order discount whole through the split order and its budget", async () => {
+        const sellerA = await seed("cart-ordersplit-a@test.com", "CartOrderSplitA", 2000)
+        const sellerB = await seed("cart-ordersplit-b@test.com", "CartOrderSplitB", 3000)
+        const campaign = (
+          await api.post(
+            `/vendor/campaigns`,
+            {
+              name: "Fixed order campaign",
+              campaign_identifier: "fixed-order-split",
+              budget: { type: "spend", limit: 10000, currency_code: "usd" },
+            },
+            sellerA.headers
+          )
+        ).data.campaign
+        const promotion = await createFixedAcrossPromotion(
+          sellerA,
+          "order",
+          500,
+          campaign.id
+        )
+
+        const checkout = await prepareTwoSellerCheckout(
+          "order-split-buyer@test.com",
+          sellerA,
+          sellerB
+        )
+        expectOnlyFirstDiscounted(
+          await getCart(checkout.cartId, checkout.buyerHeaders),
+          sellerA,
+          sellerB,
+          500
+        )
+
+        const completed = await checkout.complete()
+        expect(completed.status).toEqual(200)
+        expect(completed.data.type).toEqual("order_group")
+
+        const query = appContainer.resolve(ContainerRegistrationKeys.QUERY)
+        const { data: groups } = await query.graph({
+          entity: "order_group",
+          filters: { id: completed.data.order_group.id },
+          fields: [
+            "orders.seller.id",
+            "orders.discount_total",
+            "orders.items.adjustments.amount",
+            "orders.items.adjustments.promotion_id",
+          ],
+        })
+        const orderOf = (sellerId: string) =>
+          (groups[0] as any).orders.find((o: any) => o.seller?.id === sellerId)
+
+        const orderA = orderOf(sellerA.sellerId)
+        const orderB = orderOf(sellerB.sellerId)
+        expect(Number(orderA.discount_total)).toEqual(500)
+        expect(
+          orderA.items.flatMap((i: any) => i.adjustments).map((a: any) => a.promotion_id)
+        ).toEqual([promotion.id])
+        expect(Number(orderB.discount_total)).toEqual(0)
+        expect(orderB.items.flatMap((i: any) => i.adjustments ?? [])).toHaveLength(0)
+
+        const { data: campaigns } = await query.graph({
+          entity: "campaign",
+          filters: { id: campaign.id },
+          fields: ["budget.used"],
+        })
+        expect(Number((campaigns[0] as any).budget.used)).toEqual(500)
       })
 
       it("does not carry a seller promotion onto another seller's split order", async () => {
-        const customer = await createCustomerUser(appContainer, {
-          email: "split-promo-buyer@test.com",
-          first_name: "Split",
-          last_name: "Buyer",
-        })
-        const buyerHeaders = {
-          headers: { ...storeHeaders.headers, ...customer.headers.headers },
-        }
-
         const sellerA = await seed("cart-split-a@test.com", "CartSplitA", 2000)
         const sellerB = await seed("cart-split-b@test.com", "CartSplitB", 3000)
         const promotion = await createUntargetedPromotion(sellerA, true)
 
-        const cart = await createCart(buyerHeaders)
-        await addLines(cart.id, [sellerA.variantId, sellerB.variantId], buyerHeaders)
-
-        const address = {
-          first_name: "Split",
-          last_name: "Buyer",
-          address_1: "123 Main St",
-          city: "New York",
-          country_code: "us",
-          postal_code: "10001",
-        }
-        await api.post(
-          `/store/carts/${cart.id}`,
-          {
-            email: customer.customer.email,
-            shipping_address: address,
-            billing_address: address,
-          },
-          buyerHeaders
+        const checkout = await prepareTwoSellerCheckout(
+          "split-promo-buyer@test.com",
+          sellerA,
+          sellerB
         )
-        for (const optionId of [sellerA.shippingOptionId, sellerB.shippingOptionId]) {
-          await api.post(
-            `/store/carts/${cart.id}/shipping-methods`,
-            { option_id: optionId },
-            buyerHeaders
-          )
-        }
-
         expectOnlyFirstDiscounted(
-          await getCart(cart.id, buyerHeaders),
+          await getCart(checkout.cartId, checkout.buyerHeaders),
           sellerA,
           sellerB,
           200
         )
 
-        const paymentCollection = (
-          await api.post(
-            `/store/payment-collections`,
-            { cart_id: cart.id },
-            buyerHeaders
-          )
-        ).data.payment_collection
-        await api.post(
-          `/store/payment-collections/${paymentCollection.id}/payment-sessions`,
-          { provider_id: "pp_system_default" },
-          buyerHeaders
-        )
-
-        const completed = await api.post(
-          `/store/carts/${cart.id}/complete`,
-          {},
-          buyerHeaders
-        )
+        const completed = await checkout.complete()
         expect(completed.status).toEqual(200)
         expect(completed.data.type).toEqual("order_group")
 

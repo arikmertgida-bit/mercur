@@ -17,7 +17,7 @@ describe("jest transformer", () => {
     )!
 
     const copy = () =>
-        resolvePackageCopies(entry.package).find(
+        resolvePackageCopies(entry.package, entry.loadedVia).find(
             (candidate) =>
                 candidate.version &&
                 isWithinRange(candidate.version, entry.compatible)

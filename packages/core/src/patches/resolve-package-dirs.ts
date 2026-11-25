@@ -1,4 +1,5 @@
 import { existsSync, readdirSync, readFileSync, realpathSync } from "fs"
+import { createRequire } from "module"
 import { dirname, join } from "path"
 import pkgDir from "pkg-dir"
 import resolveCwd from "resolve-cwd"
@@ -57,7 +58,19 @@ function sweepStore(
   }
 }
 
-export function resolvePackageCopies(packageName: string): PackageCopy[] {
+function resolveEntry(packageName: string, loadedVia?: string): string {
+  if (!loadedVia) return resolveCwd(packageName)
+  return createRequire(resolveCwd(loadedVia)).resolve(packageName)
+}
+
+/**
+ * `loadedVia` names the specifier Medusa loads a transitive package through;
+ * the copy resolved from there, not from the project, is the primary one.
+ */
+export function resolvePackageCopies(
+  packageName: string,
+  loadedVia?: string
+): PackageCopy[] {
   let primary: string | null = null
 
   // Resolve the package entry point, not `<name>/package.json`: packages that
@@ -66,7 +79,7 @@ export function resolvePackageCopies(packageName: string): PackageCopy[] {
   // non-primary and drop the guarantee that the copy this project loads is the
   // one that must accept the patch.
   try {
-    const entry = resolveCwd(packageName)
+    const entry = resolveEntry(packageName, loadedVia)
     const resolved = pkgDir.sync(dirname(entry))
     if (resolved) primary = canonical(resolved)
   } catch {
