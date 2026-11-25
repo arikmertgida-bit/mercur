@@ -3,6 +3,7 @@ import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
 import { MedusaContainer } from "@medusajs/framework/types"
 
 import { createProductsWorkflow } from "@mercurjs/core/workflows"
+import { createSellerUser } from "../../../helpers/create-seller-user"
 
 import {
   adminHeaders,
@@ -24,6 +25,9 @@ medusaIntegrationTestRunner({
 
       beforeEach(async () => {
         await createAdminUser(dbConnection, adminHeaders, appContainer)
+        const { seller } = await createSellerUser(appContainer, {
+          autoApprove: true,
+        })
 
         const { result } = await createProductsWorkflow(appContainer).run({
           input: {
@@ -31,6 +35,7 @@ medusaIntegrationTestRunner({
               {
                 title: "Native Routes Product",
                 status: "published",
+                seller_ids: [seller.id],
                 variants: [{ title: "V1" }, { title: "V2" }],
               },
             ],

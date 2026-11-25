@@ -4,6 +4,7 @@ import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
 import { ProductChangeActionType } from "@mercurjs/types"
 
 import { createSellerUser } from "../../../helpers/create-seller-user"
+import { ensureVendorShippingProfile } from "../../../helpers/create-product"
 
 jest.setTimeout(60_000)
 
@@ -54,7 +55,7 @@ medusaIntegrationTestRunner({
         title: string,
         headers: { headers: Record<string, string> },
       ): Promise<string> => {
-        const res = await api.post(`/vendor/products`, { title }, headers)
+        const res = await api.post(`/vendor/products`, { shipping_profile_id: await ensureVendorShippingProfile(api, headers), title }, headers)
         return res.data.product.id
       }
 

@@ -598,7 +598,8 @@
         "handleInvalidFormat": "Lo slug URL deve contenere solo lettere minuscole, numeri e trattini",
         "handleMustContainLetter": "Lo slug URL deve contenere almeno una lettera",
         "formIncomplete": "Mancano alcuni campi obbligatori: controlla le righe evidenziate prima di pubblicare.",
-        "requiredSeller": "Seleziona il negozio a cui appartiene il prodotto"
+        "requiredSeller": "Seleziona il negozio a cui appartiene il prodotto",
+        "requiredShippingProfile": "Seleziona un profilo di spedizione."
       },
       "inventory": {
         "heading": "Kit di inventario",

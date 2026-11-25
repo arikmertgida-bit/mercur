@@ -593,7 +593,8 @@
         "handleInvalidFormat": "Handle yalnızca küçük harf, rakam ve tire içerebilir",
         "handleMustContainLetter": "Handle en az bir harf içermelidir",
         "formIncomplete": "Eksik alanlar var — yayınlamadan önce işaretli satırları kontrol edin.",
-        "requiredSeller": "Ürünün ait olduğu mağazayı seçin"
+        "requiredSeller": "Ürünün ait olduğu mağazayı seçin",
+        "requiredShippingProfile": "Lütfen bir kargo profili seçin."
       },
       "inventory": {
         "heading": "Envanter Kitleri",

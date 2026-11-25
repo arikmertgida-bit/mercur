@@ -593,7 +593,8 @@
         "handleInvalidFormat": "标识只能包含小写字母、数字和连字符",
         "handleMustContainLetter": "标识必须至少包含一个字母",
         "formIncomplete": "缺少部分必填字段——请在发布前检查高亮显示的行。",
-        "requiredSeller": "请选择商品所属的店铺"
+        "requiredSeller": "请选择商品所属的店铺",
+        "requiredShippingProfile": "请选择一个配送方案。"
       },
       "inventory": {
         "heading": "库存套件",

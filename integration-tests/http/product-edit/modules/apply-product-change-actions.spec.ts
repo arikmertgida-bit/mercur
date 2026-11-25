@@ -14,6 +14,7 @@ import {
   createAdminUser,
 } from "../../../helpers/create-admin-user"
 import { createSellerUser } from "../../../helpers/create-seller-user"
+import { ensureVendorShippingProfile } from "../../../helpers/create-product"
 
 jest.setTimeout(60_000)
 
@@ -85,7 +86,7 @@ medusaIntegrationTestRunner({
       }
 
       const createProduct = async (title: string): Promise<string> => {
-        const res = await api.post("/vendor/products", { title }, sellerHeaders)
+        const res = await api.post("/vendor/products", { shipping_profile_id: await ensureVendorShippingProfile(api, sellerHeaders), title }, sellerHeaders)
         return res.data.product.id
       }
 

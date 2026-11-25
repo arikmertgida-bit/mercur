@@ -598,7 +598,8 @@
         "handleInvalidFormat": "O identificador só pode conter letras minúsculas, números e hífens",
         "handleMustContainLetter": "O identificador deve conter pelo menos uma letra",
         "formIncomplete": "Faltam alguns campos obrigatórios — verifique as linhas destacadas antes de publicar.",
-        "requiredSeller": "Selecione a loja a que o produto pertence"
+        "requiredSeller": "Selecione a loja a que o produto pertence",
+        "requiredShippingProfile": "Selecione um perfil de envio."
       },
       "inventory": {
         "heading": "Kits de stock",

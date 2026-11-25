@@ -2,6 +2,7 @@ import { medusaIntegrationTestRunner } from "@medusajs/test-utils"
 import { ISalesChannelModuleService, MedusaContainer } from "@medusajs/framework/types"
 import { Modules } from "@medusajs/framework/utils"
 import { createSellerUser } from "../../../helpers/create-seller-user"
+import { ensureVendorShippingProfile } from "../../../helpers/create-product"
 
 jest.setTimeout(50000)
 
@@ -135,6 +136,7 @@ medusaIntegrationTestRunner({
                     const productResponse = await api.post(
                         `/vendor/products`,
                         {
+                            shipping_profile_id: await ensureVendorShippingProfile(api, sellerHeaders),
                             title: "Product for Sales Channel",
                         },
                         sellerHeaders
@@ -162,6 +164,7 @@ medusaIntegrationTestRunner({
                     const productResponse = await api.post(
                         `/vendor/products`,
                         {
+                            shipping_profile_id: await ensureVendorShippingProfile(api, sellerHeaders),
                             title: "Product to Remove from Channel",
                         },
                         sellerHeaders
@@ -197,6 +200,7 @@ medusaIntegrationTestRunner({
                     const seller1ProductResponse = await api.post(
                         `/vendor/products`,
                         {
+                            shipping_profile_id: await ensureVendorShippingProfile(api, sellerHeaders),
                             title: "Seller 1 Product",
                         },
                         sellerHeaders

@@ -14,11 +14,30 @@ type CreateVendorProductBody = {
 }
 
 type ApiClient = {
-  post: (
-    path: string,
-    body: CreateVendorProductBody,
-    headers: RequestHeaders
-  ) => Promise<{ data: { product: ProductDTO } }>
+  post: (path: string, body: any, headers: RequestHeaders) => Promise<{ data: any }>
+  get: (path: string, headers: RequestHeaders) => Promise<{ data: any }>
+}
+
+/**
+ * Every seller product needs one of the seller's own shipping profiles. Uses
+ * the seller's first profile and creates one when it has none.
+ */
+export const ensureVendorShippingProfile = async (
+  api: ApiClient,
+  headers: RequestHeaders
+): Promise<string> => {
+  const { data } = await api.get(`/vendor/shipping-profiles?limit=1`, headers)
+  const existing: string | undefined = data.shipping_profiles?.[0]?.id
+  if (existing) {
+    return existing
+  }
+  const created = await api.post(
+    `/vendor/shipping-profiles`,
+    // Profile names are unique across the whole marketplace.
+    { name: `Test kargo profili ${Date.now()}-${Math.random().toString(36).slice(2, 8)}`, type: "default" },
+    headers
+  )
+  return created.data.shipping_profile.id
 }
 
 /**
@@ -109,6 +128,9 @@ export const createVendorProduct = async (
     title: opts.title,
     variants,
     ...opts.extra,
+    shipping_profile_id:
+      opts.extra?.shipping_profile_id ??
+      (await ensureVendorShippingProfile(api, headers)),
   }
 
   if (opts.attributes) {

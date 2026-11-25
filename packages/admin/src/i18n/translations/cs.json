@@ -598,7 +598,8 @@
         "handleInvalidFormat": "Identifikátor smí obsahovat pouze malá písmena, čísla a spojovníky",
         "handleMustContainLetter": "Identifikátor musí obsahovat alespoň jedno písmeno",
         "formIncomplete": "Chybí některá povinná pole — před publikováním zkontrolujte zvýrazněné řádky.",
-        "requiredSeller": "Vyberte obchod, do kterého produkt patří"
+        "requiredSeller": "Vyberte obchod, do kterého produkt patří",
+        "requiredShippingProfile": "Vyberte přepravní profil."
       },
       "inventory": {
         "heading": "Sady inventáře",

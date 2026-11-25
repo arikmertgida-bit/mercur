@@ -303,7 +303,7 @@ export type Routes = {
                             $inventoryItemId: typeof import("@medusajs/medusa/api/admin/products/[id]/variants/[variant_id]/inventory-items/[inventory_item_id]/route");
                         };
                     };
-                    batch: typeof import("@medusajs/medusa/api/admin/products/[id]/variants/batch/route");
+                    batch: typeof import("../src/api/admin/products/[id]/variants/batch/route");
                     inventoryItems: {
                         batch: typeof import("@medusajs/medusa/api/admin/products/[id]/variants/inventory-items/batch/route");
                     };

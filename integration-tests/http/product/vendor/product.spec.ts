@@ -18,6 +18,7 @@ import {
   ProductChangeActionType,
   ProductChangeStatus,
 } from "@mercurjs/types"
+import { ensureVendorShippingProfile } from "../../../helpers/create-product"
 
 jest.setTimeout(60000)
 
@@ -564,6 +565,7 @@ medusaIntegrationTestRunner({
         const created = await api.post(
           "/vendor/products",
           {
+            shipping_profile_id: await ensureVendorShippingProfile(api, sellerHeaders),
             status: "published",
             title: "Multi Image Product",
             images,

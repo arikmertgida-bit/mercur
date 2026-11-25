@@ -506,7 +506,7 @@
         "formIncomplete": "缺少部分必填欄位——請在發布前檢查醒目提示的資料列。",
         "mediaRequired": "請為此變體至少新增一張圖片。",
         "priceRequired": "請至少以一種貨幣為此變體輸入價格。",
-        "shippingProfileRequired": "請選擇一個物流方案。",
+        "shippingProfileRequired": "請選擇一個運送設定檔。",
         "stockRequired": "請至少在一個地點為此變體設定庫存數量。",
         "mediaUploadFailed": "一張或多張圖片上傳失敗。請先刪除上傳失敗的圖片，再重新嘗試發佈。"
       },

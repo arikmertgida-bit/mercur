@@ -36,6 +36,11 @@ export const importSellerProductsWorkflow = createWorkflow(
           ...product,
           status: product.status || "draft",
           seller_ids: [input.seller_id],
+          // Seller variants are always stock-tracked, whatever the CSV says.
+          variants: product.variants?.map((variant) => ({
+            ...variant,
+            manage_inventory: true,
+          })),
         })),
         created_by: input.seller_id,
       })

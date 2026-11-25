@@ -593,7 +593,8 @@
         "handleInvalidFormat": "De slug mag alleen kleine letters, cijfers en koppeltekens bevatten",
         "handleMustContainLetter": "De slug moet ten minste één letter bevatten",
         "formIncomplete": "Sommige verplichte velden ontbreken — controleer de gemarkeerde rijen voordat u publiceert.",
-        "requiredSeller": "Selecteer de winkel waartoe het product behoort"
+        "requiredSeller": "Selecteer de winkel waartoe het product behoort",
+        "requiredShippingProfile": "Selecteer een verzendprofiel."
       },
       "inventory": {
         "heading": "Voorraadsets",

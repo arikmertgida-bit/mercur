@@ -4,6 +4,7 @@ import { ContainerRegistrationKeys, Modules } from "@medusajs/framework/utils"
 import { MercurModules } from "@mercurjs/types"
 import jwt from "jsonwebtoken"
 import { createSellerUser } from "../../../helpers/create-seller-user"
+import { ensureVendorShippingProfile } from "../../../helpers/create-product"
 
 jest.setTimeout(80000)
 
@@ -108,8 +109,15 @@ medusaIntegrationTestRunner({
 
       it("rejects foreign image URLs on products", async () => {
         const own = await upload(seller1.headers)
-        const body = (images: string[], thumbnail?: string) => ({
+        const profile1 = await ensureVendorShippingProfile(api, seller1.headers)
+        const profile2 = await ensureVendorShippingProfile(api, seller2.headers)
+        const body = (
+          images: string[],
+          thumbnail?: string,
+          shipping_profile_id = profile1
+        ) => ({
           title: "Image proof",
+          shipping_profile_id,
           thumbnail,
           images: images.map((url) => ({ url })),
           variants: [{ title: "Default" }],
@@ -140,11 +148,12 @@ medusaIntegrationTestRunner({
         const foreignSeller = await failure(
           api.post(
             "/vendor/products",
-            body([own]),
+            body([own], undefined, profile2),
             seller2.headers
           )
         )
         expect(foreignSeller.status).toBe(400)
+        expect(foreignSeller.data.code).toBe("seller_image_not_owned")
       })
 
       it("never returns the invite token and binds acceptance to the invited email", async () => {

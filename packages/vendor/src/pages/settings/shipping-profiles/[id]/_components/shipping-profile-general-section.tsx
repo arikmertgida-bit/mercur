@@ -40,6 +40,8 @@ export const ShippingProfileGeneralSection = ({
         />
       </div>
       <SectionRow title={t("fields.type")} value={profile.type} />
+      {/* The product CSV import names the profile by this id. */}
+      <SectionRow title={t("fields.id")} value={profile.id} />
     </Container>
   )
 }

@@ -177,7 +177,7 @@
   "/admin/products/:id/variants/:variant_id/images/batch": "typeof import(\"@medusajs/medusa/api/admin/products/[id]/variants/[variant_id]/images/batch/route\")",
   "/admin/products/:id/variants/:variant_id/inventory-items": "typeof import(\"@medusajs/medusa/api/admin/products/[id]/variants/[variant_id]/inventory-items/route\")",
   "/admin/products/:id/variants/:variant_id/inventory-items/:inventory_item_id": "typeof import(\"@medusajs/medusa/api/admin/products/[id]/variants/[variant_id]/inventory-items/[inventory_item_id]/route\")",
-  "/admin/products/:id/variants/batch": "typeof import(\"@medusajs/medusa/api/admin/products/[id]/variants/batch/route\")",
+  "/admin/products/:id/variants/batch": "typeof import(\"@mercurjs/core/api/admin/products/[id]/variants/batch/route\")",
   "/admin/products/:id/variants/inventory-items/batch": "typeof import(\"@medusajs/medusa/api/admin/products/[id]/variants/inventory-items/batch/route\")",
   "/admin/products/batch": "typeof import(\"@medusajs/medusa/api/admin/products/batch/route\")",
   "/admin/products/export": "typeof import(\"@medusajs/medusa/api/admin/products/export/route\")",

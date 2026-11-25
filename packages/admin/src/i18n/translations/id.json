@@ -593,7 +593,8 @@
         "handleInvalidFormat": "Slug URL hanya boleh berisi huruf kecil, angka, dan tanda hubung",
         "handleMustContainLetter": "Slug URL harus berisi setidaknya satu huruf",
         "formIncomplete": "Beberapa kolom wajib belum diisi — periksa baris yang disorot sebelum mempublikasikan.",
-        "requiredSeller": "Pilih toko pemilik produk"
+        "requiredSeller": "Pilih toko pemilik produk",
+        "requiredShippingProfile": "Silakan pilih profil pengiriman."
       },
       "inventory": {
         "heading": "Kit inventaris",

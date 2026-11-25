@@ -13,6 +13,7 @@ import {
     generateStoreHeaders,
 } from "../../../helpers/create-admin-user"
 import { createSellerUser } from "../../../helpers/create-seller-user"
+import { ensureVendorShippingProfile } from "../../../helpers/create-product"
 
 jest.setTimeout(60000)
 
@@ -103,6 +104,7 @@ medusaIntegrationTestRunner({
                 const response = await api.post(
                     `/vendor/products`,
                     {
+                        shipping_profile_id: await ensureVendorShippingProfile(api, headers),
                         title: "Test Product",
                         status: "published",
                         ...overrides,

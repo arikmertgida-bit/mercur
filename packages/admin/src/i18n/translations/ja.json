@@ -593,7 +593,8 @@
         "handleInvalidFormat": "ハンドルには小文字、数字、ハイフンのみを使用してください",
         "handleMustContainLetter": "ハンドルには少なくとも1文字のアルファベットを含めてください",
         "formIncomplete": "必須項目が入力されていません。公開する前にハイライトされた行を確認してください。",
-        "requiredSeller": "商品が属するストアを選択してください"
+        "requiredSeller": "商品が属するストアを選択してください",
+        "requiredShippingProfile": "配送プロファイルを選択してください。"
       },
       "inventory": {
         "heading": "在庫キット",

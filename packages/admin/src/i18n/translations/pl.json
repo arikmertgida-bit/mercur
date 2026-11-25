@@ -580,7 +580,8 @@
         "handleInvalidFormat": "Identyfikator URL może zawierać tylko małe litery, cyfry i myślniki",
         "handleMustContainLetter": "Identyfikator URL musi zawierać co najmniej jedną literę",
         "formIncomplete": "Brakuje niektórych wymaganych pól — sprawdź podświetlone wiersze przed publikacją.",
-        "requiredSeller": "Wybierz sklep, do którego należy produkt"
+        "requiredSeller": "Wybierz sklep, do którego należy produkt",
+        "requiredShippingProfile": "Wybierz profil wysyłki."
       },
       "inventory": {
         "heading": "Zestawy magazynowe",

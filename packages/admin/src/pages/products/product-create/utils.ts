@@ -64,7 +64,7 @@ export const normalizeProductFormValues = (
     material: values.material || undefined,
     mid_code: values.mid_code || undefined,
     hs_code: values.hs_code || undefined,
-    shipping_profile_id: values.shipping_profile_id || undefined,
+    shipping_profile_id: values.shipping_profile_id,
     thumbnail,
     title: values.title.trim(),
     subtitle: values.subtitle?.trim(),

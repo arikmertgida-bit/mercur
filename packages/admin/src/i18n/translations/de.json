@@ -593,7 +593,8 @@
         "handleInvalidFormat": "Das Handle darf nur Kleinbuchstaben, Zahlen und Bindestriche enthalten",
         "handleMustContainLetter": "Das Handle muss mindestens einen Buchstaben enthalten",
         "formIncomplete": "Einige Pflichtfelder fehlen — überprüfen Sie die markierten Zeilen vor der Veröffentlichung.",
-        "requiredSeller": "Wählen Sie den Shop aus, zu dem das Produkt gehört"
+        "requiredSeller": "Wählen Sie den Shop aus, zu dem das Produkt gehört",
+        "requiredShippingProfile": "Bitte wählen Sie ein Versandprofil aus."
       },
       "inventory": {
         "heading": "Inventar-Kits",

@@ -593,7 +593,8 @@
         "handleInvalidFormat": "Định danh chỉ được chứa chữ thường, số và dấu gạch nối",
         "handleMustContainLetter": "Định danh phải chứa ít nhất một chữ cái",
         "formIncomplete": "Thiếu một số trường bắt buộc — hãy kiểm tra các hàng được đánh dấu trước khi đăng.",
-        "requiredSeller": "Chọn cửa hàng sở hữu sản phẩm"
+        "requiredSeller": "Chọn cửa hàng sở hữu sản phẩm",
+        "requiredShippingProfile": "Vui lòng chọn hồ sơ vận chuyển."
       },
       "inventory": {
         "heading": "Bộ thành phần trong kho",

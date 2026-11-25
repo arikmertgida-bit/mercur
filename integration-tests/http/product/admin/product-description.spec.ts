@@ -6,6 +6,7 @@ import {
   createAdminUser,
 } from "../../../helpers/create-admin-user"
 import { createSellerUser } from "../../../helpers/create-seller-user"
+import { createShippingProfile } from "../../../helpers/create-shipping-profile"
 
 jest.setTimeout(60000)
 
@@ -20,6 +21,7 @@ medusaIntegrationTestRunner({
 
       // Every admin-created product belongs to exactly one store.
       let sellerId: string
+      let profileId: string
 
       beforeEach(async () => {
         await createAdminUser(dbConnection, adminHeaders, appContainer)
@@ -27,13 +29,20 @@ medusaIntegrationTestRunner({
           autoApprove: true,
         })
         sellerId = seller.id
+        profileId = (
+          await createShippingProfile(
+            appContainer,
+            { name: "Profil" },
+            { seller_id: sellerId }
+          )
+        ).id
       })
 
       it("sanitizes the description on create", async () => {
         const res = await api.post(
           "/admin/products",
           {
-            seller_ids: [sellerId],
+            seller_ids: [sellerId], shipping_profile_id: profileId,
             title: "Rich Admin Product",
             description:
               '<h3>Specs</h3><ul><li><p>one</p></li></ul><script>alert(1)</script><p style="color:red">x</p>',
@@ -50,7 +59,7 @@ medusaIntegrationTestRunner({
       it("sanitizes the description on update and keeps allowed images and links", async () => {
         const created = await api.post(
           "/admin/products",
-          { title: "Rich Admin Update", seller_ids: [sellerId] },
+          { title: "Rich Admin Update", seller_ids: [sellerId], shipping_profile_id: profileId },
           adminHeaders,
         )
         const productId = created.data.product.id
@@ -73,7 +82,7 @@ medusaIntegrationTestRunner({
       it("stores plain-text descriptions unchanged", async () => {
         const res = await api.post(
           "/admin/products",
-          { title: "Plain", description: "Tom & Jerry\n5 < 6", seller_ids: [sellerId] },
+          { title: "Plain", description: "Tom & Jerry\n5 < 6", seller_ids: [sellerId], shipping_profile_id: profileId },
           adminHeaders,
         )
 
@@ -83,7 +92,7 @@ medusaIntegrationTestRunner({
       it("keeps a null description on update", async () => {
         const created = await api.post(
           "/admin/products",
-          { title: "Nullable", description: "<p>x</p>", seller_ids: [sellerId] },
+          { title: "Nullable", description: "<p>x</p>", seller_ids: [sellerId], shipping_profile_id: profileId },
           adminHeaders,
         )
 

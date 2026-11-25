@@ -598,7 +598,8 @@
         "handleInvalidFormat": "Identificatorul trebuie să conțină doar litere mici, cifre și cratime",
         "handleMustContainLetter": "Identificatorul trebuie să conțină cel puțin o literă",
         "formIncomplete": "Lipsesc unele câmpuri obligatorii — verifică rândurile evidențiate înainte de publicare.",
-        "requiredSeller": "Selectați magazinul căruia îi aparține produsul"
+        "requiredSeller": "Selectați magazinul căruia îi aparține produsul",
+        "requiredShippingProfile": "Selectează un profil de livrare."
       },
       "inventory": {
         "heading": "Truse de inventar",

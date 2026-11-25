@@ -598,7 +598,8 @@
         "handleInvalidFormat": "Identifikator (handle) smije sadržavati samo mala slova, brojeve i crtice",
         "handleMustContainLetter": "Identifikator (handle) mora sadržavati najmanje jedno slovo",
         "formIncomplete": "Nedostaju neka obavezna polja — provjerite označene redove prije objavljivanja.",
-        "requiredSeller": "Odaberite prodavnicu kojoj proizvod pripada"
+        "requiredSeller": "Odaberite prodavnicu kojoj proizvod pripada",
+        "requiredShippingProfile": "Odaberite profil dostave."
       },
       "inventory": {
         "heading": "Kits inventara",

@@ -70,7 +70,9 @@ export const ProductCreateSchema = z
     discountable: z.boolean(),
     type_id: z.string().optional(),
     collection_id: z.string().optional(),
-    shipping_profile_id: z.string().optional(),
+    shipping_profile_id: z
+      .string()
+      .min(1, { error: () => i18n.t("products.create.errors.requiredShippingProfile") }),
     category_id: z.string().min(1, { error: () => i18n.t("products.create.errors.requiredCategory") }),
     seller_id: z
       .string()

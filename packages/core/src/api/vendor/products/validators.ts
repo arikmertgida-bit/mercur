@@ -205,7 +205,7 @@ const CreateProduct = z
     mid_code: z.string().optional(),
     origin_country: z.string().optional(),
     material: z.string().optional(),
-    shipping_profile_id: z.string().nullish(),
+    shipping_profile_id: z.string().min(1),
     metadata: JsonRecordSchema.optional(),
   })
   .strict()
@@ -265,7 +265,7 @@ const UpdateProduct = z
     mid_code: z.string().nullish(),
     origin_country: z.string().nullish(),
     material: z.string().nullish(),
-    shipping_profile_id: z.string().nullish(),
+    shipping_profile_id: z.string().min(1).optional(),
     metadata: JsonRecordSchema.nullish(),
   })
   .strict()

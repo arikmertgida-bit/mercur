@@ -21,6 +21,7 @@ const IMPORT_TEMPLATE_HEADER = [
   "Product Tags",
   "Product Discountable",
   "Product External Id",
+  "Shipping Profile Id",
   "Variant Id",
   "Variant Title",
   "Variant SKU",

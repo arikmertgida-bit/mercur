@@ -15,14 +15,16 @@ import { sdk } from "@lib/client"
 import { InferClientInput, InferClientOutput } from "@mercurjs/client"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useEffect } from "react"
+import { i18n } from "@components/utilities/i18n/i18n"
 
 type ProductShippingProfileFormProps = {
   product: VendorHttpTypes.VendorProduct
 }
 
 const ProductShippingProfileSchema = zod.object({
-  shipping_profile_id: zod.string(),
+  shipping_profile_id: zod
+    .string()
+    .min(1, { error: () => i18n.t("products.create.errors.shippingProfileRequired") }),
 })
 
 export const ProductShippingProfileForm = ({
@@ -54,15 +56,12 @@ export const ProductShippingProfileForm = ({
     resolver: zodResolver(ProductShippingProfileSchema),
   })
 
-  const selectedShippingProfile = form.watch("shipping_profile_id")
-
   const { mutateAsync, isPending } = useUpdateProduct(product.id)
 
   const handleSubmit = form.handleSubmit(async (data) => {
     await mutateAsync(
       {
-        shipping_profile_id:
-          data.shipping_profile_id === "" ? null : data.shipping_profile_id,
+        shipping_profile_id: data.shipping_profile_id,
       },
       {
         onSuccess: () => {
@@ -75,12 +74,6 @@ export const ProductShippingProfileForm = ({
       }
     )
   })
-
-  useEffect(() => {
-    if (typeof selectedShippingProfile === "undefined") {
-      form.setValue("shipping_profile_id", "")
-    }
-  }, [selectedShippingProfile, form])
 
   return (
     <RouteDrawer.Form form={form}>
@@ -104,7 +97,6 @@ export const ProductShippingProfileForm = ({
                         <Form.Control>
                           <Combobox
                             {...field}
-                            allowClear
                             disabled={profilesGate.denied}
                             options={shippingProfiles.options}
                             searchValue={shippingProfiles.searchValue}

@@ -11,3 +11,5 @@ export const SELLER_PENDING_APPROVAL_CODE = "seller_pending_approval"
 export const SELLER_SUSPENDED_CODE = "seller_suspended"
 export const SELLER_TERMINATED_CODE = "seller_terminated"
 export const PROMOTION_PRODUCT_NOT_OWNED_CODE = "promotion_product_not_owned"
+export const PRODUCT_SHIPPING_PROFILE_REQUIRED_CODE =
+  "product_shipping_profile_required"

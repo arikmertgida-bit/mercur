@@ -1343,6 +1343,9 @@
                 },
                 "requiredSeller": {
                   "type": "string"
+                },
+                "requiredShippingProfile": {
+                  "type": "string"
                 }
               }
             },

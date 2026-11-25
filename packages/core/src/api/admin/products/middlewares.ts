@@ -1,5 +1,10 @@
 import { requirePermission } from "../../utils"
-import { MiddlewareRoute } from "@medusajs/framework/http"
+import {
+  MedusaNextFunction,
+  MedusaRequest,
+  MedusaResponse,
+  MiddlewareRoute,
+} from "@medusajs/framework/http"
 import {
   validateAndTransformBody,
   validateAndTransformQuery,
@@ -11,6 +16,7 @@ import {
 } from "./query-config"
 import {
   AdminBatchProductAttributes,
+  AdminBatchProductVariants,
   AdminBatchProducts,
   AdminChangeProductSeller,
   AdminCreateProduct,
@@ -25,6 +31,7 @@ import {
   AdminUpdateProduct,
   AdminUpdateProductVariant,
 } from "./validators"
+import { MedusaError } from "@medusajs/framework/utils"
 import { withOriginalMiddlewares } from "../../../utils/disable-medusa-middlewares"
 import {
   ensureBatchShippingProfilesOfSeller,
@@ -34,6 +41,21 @@ import {
   ensureVariantInventoryItemInStore,
   ensureVariantInventoryItemsBatchInStore,
 } from "../inventory-items/seller-guards"
+
+// Medusa's admin CSV import creates products without a store; sellers import
+// their own products through /vendor/products/import instead.
+const CLOSED_IMPORT_MATCHERS = [
+  "/admin/products/import",
+  "/admin/products/imports",
+  "/admin/products/import/:transaction_id/confirm",
+  "/admin/products/imports/:transaction_id/confirm",
+]
+
+const rejectClosedRoute = (
+  _req: MedusaRequest,
+  _res: MedusaResponse,
+  next: MedusaNextFunction
+) => next(new MedusaError(MedusaError.Types.NOT_FOUND, "Route not found"))
 
 const overrides: MiddlewareRoute[] = [
   {
@@ -163,6 +185,18 @@ const overrides: MiddlewareRoute[] = [
     ],
   },
   {
+    method: ["POST"],
+    matcher: "/admin/products/:id/variants/batch",
+    middlewares: [
+      requirePermission("products", "edit"),
+      validateAndTransformBody(AdminBatchProductVariants),
+      validateAndTransformQuery(
+        AdminGetProductVariantParams,
+        adminProductVariantQueryConfig.retrieve
+      ),
+    ],
+  },
+  {
     method: ["GET"],
     matcher: "/admin/products/:id/variants/:variant_id",
     middlewares: [
@@ -222,6 +256,13 @@ const overrides: MiddlewareRoute[] = [
       ),
     ],
   },
+  ...CLOSED_IMPORT_MATCHERS.map(
+    (matcher): MiddlewareRoute => ({
+      method: ["POST"],
+      matcher,
+      middlewares: [rejectClosedRoute],
+    })
+  ),
 ]
 
 // Run after Medusa's own body validation for these native routes; adding

@@ -598,7 +598,8 @@
         "handleInvalidFormat": "L'identifiant ne doit contenir que des lettres minuscules, des chiffres et des traits d'union",
         "handleMustContainLetter": "L'identifiant doit contenir au moins une lettre",
         "formIncomplete": "Certains champs obligatoires sont manquants — vérifiez les lignes surlignées avant de publier.",
-        "requiredSeller": "Sélectionnez la boutique à laquelle appartient le produit"
+        "requiredSeller": "Sélectionnez la boutique à laquelle appartient le produit",
+        "requiredShippingProfile": "Veuillez sélectionner un profil d'expédition."
       },
       "inventory": {
         "heading": "Inventaires",

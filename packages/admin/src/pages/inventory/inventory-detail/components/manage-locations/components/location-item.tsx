@@ -4,34 +4,46 @@ import { HttpTypes } from "@medusajs/types"
 
 type LocationItemProps = {
   selected: boolean
+  disabled?: boolean
   onSelect: (selected: boolean) => void
   location: HttpTypes.AdminStockLocation
 }
 
 export const LocationItem = ({
   selected,
+  disabled = false,
   onSelect,
   location,
 }: LocationItemProps) => {
+  const toggle = (): void => {
+    if (!disabled) {
+      onSelect(!selected)
+    }
+  }
+
   return (
     // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
     <div
       className={clx(
-        "flex w-full cursor-pointer gap-x-2 rounded-lg border px-2 py-2",
+        "flex w-full gap-x-2 rounded-lg border px-2 py-2",
         {
           "border-ui-border-interactive ": selected,
+          "cursor-pointer": !disabled,
+          "cursor-not-allowed opacity-50": disabled,
         }
       )}
-      onClick={() => onSelect(!selected)}
+      onClick={toggle}
+      aria-disabled={disabled}
       data-testid={`inventory-manage-locations-form-location-item-${location.id}`}
     >
       <div className="h-5 w-5" data-testid={`inventory-manage-locations-form-location-item-${location.id}-checkbox-container`}>
         <Checkbox
           onClick={(e) => {
             e.stopPropagation()
-            onSelect(!selected)
+            toggle()
           }}
           checked={selected}
+          disabled={disabled}
           data-testid={`inventory-manage-locations-form-location-item-${location.id}-checkbox`}
         />
       </div>

@@ -593,7 +593,8 @@
         "handleInvalidFormat": "識別碼只能包含小寫字母、數字和連字號",
         "handleMustContainLetter": "識別碼必須至少包含一個字母",
         "formIncomplete": "缺少部分必填欄位——請在發布前檢查醒目提示的資料列。",
-        "requiredSeller": "請選擇商品所屬的商店"
+        "requiredSeller": "請選擇商品所屬的商店",
+        "requiredShippingProfile": "請選擇一個運送設定檔。"
       },
       "inventory": {
         "heading": "庫存套件",

@@ -14,14 +14,16 @@ import { useComboboxData } from "../../../../../hooks/use-combobox-data"
 import { sdk } from "../../../../../lib/client"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useEffect } from "react"
+import { i18n } from "../../../../../components/utilities/i18n/i18n"
 
 type ProductShippingProfileFormProps = {
   product: HttpTypes.AdminProduct
 }
 
 const ProductShippingProfileSchema = zod.object({
-  shipping_profile_id: zod.string(),
+  shipping_profile_id: zod
+    .string()
+    .min(1, { error: () => i18n.t("validation.requiredField") }),
 })
 
 export const ProductShippingProfileForm = ({
@@ -58,15 +60,12 @@ export const ProductShippingProfileForm = ({
     resolver: zodResolver(ProductShippingProfileSchema),
   })
 
-  const selectedShippingProfile = form.watch("shipping_profile_id")
-
   const { mutateAsync, isPending } = useUpdateProduct(product.id)
 
   const handleSubmit = form.handleSubmit(async (data) => {
     await mutateAsync(
       {
-        shipping_profile_id:
-          data.shipping_profile_id === "" ? null : data.shipping_profile_id,
+        shipping_profile_id: data.shipping_profile_id,
       },
       {
         onSuccess: ({ product }) => {
@@ -83,12 +82,6 @@ export const ProductShippingProfileForm = ({
       }
     )
   })
-
-  useEffect(() => {
-    if (typeof selectedShippingProfile === "undefined") {
-      form.setValue("shipping_profile_id", "")
-    }
-  }, [selectedShippingProfile, form])
 
   return (
     <RouteDrawer.Form form={form} data-testid="product-shipping-profile-form">
@@ -112,7 +105,6 @@ export const ProductShippingProfileForm = ({
                         <Form.Control data-testid="product-shipping-profile-form-shipping-profile-control">
                           <Combobox
                             {...field}
-                            allowClear
                             disabled={shippingProfilesGate.denied}
                             options={shippingProfiles.options}
                             searchValue={shippingProfiles.searchValue}

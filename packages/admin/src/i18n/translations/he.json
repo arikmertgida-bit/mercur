@@ -598,7 +598,8 @@
         "handleInvalidFormat": "מזהה ה-URL יכול להכיל רק אותיות קטנות, ספרות ומקפים",
         "handleMustContainLetter": "מזהה ה-URL חייב להכיל לפחות אות אחת",
         "formIncomplete": "חסרים כמה שדות חובה — בדוק את השורות המודגשות לפני הפרסום.",
-        "requiredSeller": "בחרו את החנות שאליה שייך המוצר"
+        "requiredSeller": "בחרו את החנות שאליה שייך המוצר",
+        "requiredShippingProfile": "אנא בחר פרופיל משלוח."
       },
       "inventory": {
         "heading": "ערכות מלאי",

@@ -593,7 +593,8 @@
         "handleInvalidFormat": "Az URL-azonosító csak kisbetűket, számokat és kötőjeleket tartalmazhat",
         "handleMustContainLetter": "Az URL-azonosítónak legalább egy betűt kell tartalmaznia",
         "formIncomplete": "Néhány kötelező mező hiányzik — közzététel előtt ellenőrizze a kiemelt sorokat.",
-        "requiredSeller": "Válassza ki az áruházat, amelyhez a termék tartozik"
+        "requiredSeller": "Válassza ki az áruházat, amelyhez a termék tartozik",
+        "requiredShippingProfile": "Válasszon szállítási profilt."
       },
       "inventory": {
         "heading": "Készletcsomagok",

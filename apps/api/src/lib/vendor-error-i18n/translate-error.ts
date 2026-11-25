@@ -4,6 +4,7 @@ import {
   MEMBER_INVITE_EMAIL_MISMATCH_CODE,
   MEMBER_PERMISSIONS_ESCALATION_CODE,
   MEMBER_PERMISSIONS_INVALID_CODE,
+  PRODUCT_SHIPPING_PROFILE_REQUIRED_CODE,
   PROMOTION_PRODUCT_NOT_OWNED_CODE,
   SELLER_IMAGE_NOT_OWNED_CODE,
   SELLER_PENDING_APPROVAL_CODE,
@@ -225,6 +226,14 @@ export function translateVendorError(
         code: error.code,
         type: error.type,
         message: messages.customCodes.seller_image_not_owned,
+      }
+    }
+
+    if (error.code === PRODUCT_SHIPPING_PROFILE_REQUIRED_CODE) {
+      return {
+        code: error.code,
+        type: error.type,
+        message: messages.customCodes.product_shipping_profile_required,
       }
     }
 

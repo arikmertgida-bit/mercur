@@ -3,6 +3,7 @@ import { MedusaContainer } from "@medusajs/framework/types"
 import { MercurModules, SellerStatus } from "@mercurjs/types"
 
 import { createSellerUser } from "../../../helpers/create-seller-user"
+import { ensureVendorShippingProfile } from "../../../helpers/create-product"
 import { createVendorProduct } from "../../../helpers/create-product"
 
 jest.setTimeout(60000)
@@ -61,7 +62,10 @@ medusaIntegrationTestRunner({
 
         const response = await api.post(
           `/vendor/products`,
-          productBody("Open store product"),
+          {
+            ...productBody("Open store product"),
+            shipping_profile_id: await ensureVendorShippingProfile(api, headers),
+          },
           headers
         )
 

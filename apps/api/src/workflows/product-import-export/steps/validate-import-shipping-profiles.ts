@@ -6,6 +6,7 @@ import {
 } from "@medusajs/framework/utils"
 import { createStep, StepResponse } from "@medusajs/framework/workflows-sdk"
 import { z } from "zod"
+import { PRODUCT_SHIPPING_PROFILE_REQUIRED_CODE } from "@mercurjs/core/api/utils/vendor-error-codes"
 
 const ShippingProfileLinkRowSchema = z.object({
   shipping_profile_id: z.string(),
@@ -19,11 +20,20 @@ type ValidateImportShippingProfilesStepInput = {
 /**
  * The CSV "Shipping Profile Id" column reaches product creation untouched,
  * so an import could attach products to another seller's shipping profile.
- * Only the importing seller's own profiles are accepted.
+ * Every row needs one of the importing seller's own profiles: a product
+ * without one cannot be shipped.
  */
 export const validateImportShippingProfilesStep = createStep(
   "validate-import-shipping-profiles",
   async (input: ValidateImportShippingProfilesStepInput, { container }) => {
+    if (input.products.some((product) => !product.shipping_profile_id)) {
+      throw new MedusaError(
+        MedusaError.Types.INVALID_DATA,
+        "Every product needs a shipping profile",
+        PRODUCT_SHIPPING_PROFILE_REQUIRED_CODE
+      )
+    }
+
     const ids = Array.from(
       new Set(
         input.products.flatMap((product) =>

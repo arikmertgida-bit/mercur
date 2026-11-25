@@ -245,7 +245,7 @@ const CreateProduct = z
     mid_code: z.string().nullish(),
     origin_country: z.string().nullish(),
     material: z.string().nullish(),
-    shipping_profile_id: z.string().nullish(),
+    shipping_profile_id: z.string().min(1),
     metadata: JsonRecordSchema.nullish(),
   })
   .strict()
@@ -292,7 +292,7 @@ export const UpdateProduct = z
     mid_code: z.string().nullish(),
     origin_country: z.string().nullish(),
     material: z.string().nullish(),
-    shipping_profile_id: z.string().nullish(),
+    shipping_profile_id: z.string().min(1).optional(),
     // The admin product sales-channels form sends the full assignment (same
     // field as Medusa's own update validator).
     sales_channels: z.array(IdAssociation).optional(),

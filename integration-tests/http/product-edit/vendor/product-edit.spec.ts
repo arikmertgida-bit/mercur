@@ -8,6 +8,7 @@ import {
 } from "@mercurjs/types"
 
 import { createSellerUser } from "../../../helpers/create-seller-user"
+import { ensureVendorShippingProfile } from "../../../helpers/create-product"
 
 jest.setTimeout(60_000)
 
@@ -56,7 +57,7 @@ medusaIntegrationTestRunner({
       ): Promise<string> => {
         const res = await api.post(
           `/vendor/products`,
-          { title },
+          { shipping_profile_id: await ensureVendorShippingProfile(api, headers), title },
           headers,
         )
         return res.data.product.id
@@ -148,6 +149,7 @@ medusaIntegrationTestRunner({
           const created = await api.post(
             `/vendor/products`,
             {
+              shipping_profile_id: await ensureVendorShippingProfile(api, sellerHeaders),
               title: "Rich",
               description:
                 '<h2>Hello</h2><p onclick="steal()">ok</p><script>alert(1)</script>',
@@ -540,6 +542,7 @@ medusaIntegrationTestRunner({
             await api.post(
               `/vendor/products`,
               {
+                shipping_profile_id: await ensureVendorShippingProfile(api, sellerHeaders),
                 status: "published",
                 title,
                 attributes: [

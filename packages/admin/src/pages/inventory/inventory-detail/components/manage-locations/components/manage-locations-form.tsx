@@ -7,6 +7,7 @@ import { useBatchInventoryItemLocationLevels } from "../../../../../../hooks/api
 import { sdk } from "../../../../../../lib/client"
 
 import { useMemo, useState } from "react"
+import { z } from "zod"
 import { LocationItem } from "./location-item"
 import { LocationSearchInput } from "./location-search-input"
 import { InfiniteList } from "../../../../../../components/common/infinite-list/infinite-list"
@@ -14,6 +15,17 @@ import {
   AdminStockLocationListQuery,
   useStockLocations,
 } from "../../../../../../hooks/api/stock-locations"
+
+// Stock locations carry their owning seller through stock_location_seller;
+// `seller` is absent from Medusa's HttpTypes, so it is read through a schema.
+const LocationOwnerSchema = z.object({
+  seller: z.object({ id: z.string() }).nullish(),
+})
+
+const isOwnedByAStore = (location: AdminStockLocation): boolean => {
+  const parsed = LocationOwnerSchema.safeParse(location)
+  return parsed.success && !!parsed.data.seller?.id
+}
 
 type EditInventoryItemAttributeFormProps = {
   item: AdminInventoryItem
@@ -39,7 +51,7 @@ export const ManageLocationsForm = ({
 
   const canViewLocations = useCan("stock_locations")
   const { count } = useStockLocations(
-    { limit: 1, fields: "id" },
+    { limit: 1, fields: "id", ...(sellerId && { seller_id: sellerId }) },
     { enabled: canViewLocations }
   )
 
@@ -141,10 +153,12 @@ export const ManageLocationsForm = ({
             queryKey={["stock-locations", searchQuery, sellerId ?? "all"]}
             queryFn={async (params) => {
               // Only the item's store may stock it — scope to that seller's
-              // warehouses via the admin stock-locations `seller_id` filter.
+              // warehouses via the admin stock-locations `seller_id` filter. An
+              // item without a store may only use warehouses without one.
               const query: AdminStockLocationListQuery = {
                 limit: params.limit,
                 offset: params.offset,
+                fields: "+seller.id",
                 ...(sellerId && { seller_id: sellerId }),
                 ...(searchQuery && { q: searchQuery }),
               }
@@ -155,6 +169,7 @@ export const ManageLocationsForm = ({
               <div className="pb-2 last:pb-0">
                 <LocationItem
                   selected={selectedLocationIds.has(location.id)}
+                  disabled={!sellerId && isOwnedByAStore(location)}
                   location={location}
                   onSelect={(selected) =>
                     handleLocationSelect(location.id, selected)

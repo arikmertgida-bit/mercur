@@ -12,6 +12,7 @@ import {
   createAdminUser,
 } from "../../../helpers/create-admin-user"
 import { createSellerUser } from "../../../helpers/create-seller-user"
+import { createShippingProfile } from "../../../helpers/create-shipping-profile"
 
 jest.setTimeout(60000)
 
@@ -34,6 +35,7 @@ medusaIntegrationTestRunner({
 
       // Every admin-created product belongs to exactly one store.
       let sellerId: string
+      let profileId: string
 
       beforeEach(async () => {
         await createAdminUser(dbConnection, adminHeaders, appContainer)
@@ -41,6 +43,13 @@ medusaIntegrationTestRunner({
           autoApprove: true,
         })
         sellerId = seller.id
+        profileId = (
+          await createShippingProfile(
+            appContainer,
+            { name: "Profil" },
+            { seller_id: sellerId }
+          )
+        ).id
       })
 
       const createAttr = async (opts: {
@@ -362,7 +371,7 @@ medusaIntegrationTestRunner({
         const res = await api.post(
           "/admin/products",
           {
-            seller_ids: [sellerId],
+            seller_ids: [sellerId], shipping_profile_id: profileId,
             title: "Created Product",
             status: "published",
             attributes: [
@@ -415,7 +424,7 @@ medusaIntegrationTestRunner({
         const res = await api.post(
           "/admin/products",
           {
-            seller_ids: [sellerId],
+            seller_ids: [sellerId], shipping_profile_id: profileId,
             title: "testmodal",
             status: "published",
             attributes: [
@@ -503,7 +512,7 @@ medusaIntegrationTestRunner({
         const axisRes = await api.post(
           "/admin/products",
           {
-            seller_ids: [sellerId],
+            seller_ids: [sellerId], shipping_profile_id: profileId,
             title: "Axis Create Product",
             status: "published",
             attributes: [{ id: axis.id, value_ids: [axis.byName.get("A")!] }],
@@ -519,7 +528,7 @@ medusaIntegrationTestRunner({
         const inlineRes = await api.post(
           "/admin/products",
           {
-            seller_ids: [sellerId],
+            seller_ids: [sellerId], shipping_profile_id: profileId,
             title: "Inline Axis Create Product",
             status: "published",
             attributes: [
@@ -539,7 +548,7 @@ medusaIntegrationTestRunner({
         // "__default__" placeholder is kept so the product has at least one option.
         const bareRes = await api.post(
           "/admin/products",
-          { title: "Bare Create Product", status: "published", seller_ids: [sellerId] },
+          { title: "Bare Create Product", status: "published", seller_ids: [sellerId], shipping_profile_id: profileId },
           adminHeaders,
         )
         expect([200, 201]).toContain(bareRes.status)
@@ -553,7 +562,7 @@ medusaIntegrationTestRunner({
         const res = await api.post(
           "/admin/products",
           {
-            seller_ids: [sellerId],
+            seller_ids: [sellerId], shipping_profile_id: profileId,
             title: "Simple Product",
             status: "published",
             attributes: [
@@ -592,7 +601,7 @@ medusaIntegrationTestRunner({
         const res = await api.post(
           "/admin/products",
           {
-            seller_ids: [sellerId],
+            seller_ids: [sellerId], shipping_profile_id: profileId,
             title: "Variant Product",
             status: "published",
             attributes: [
@@ -811,7 +820,7 @@ medusaIntegrationTestRunner({
         const created = await api.post(
           "/admin/products",
           {
-            seller_ids: [sellerId],
+            seller_ids: [sellerId], shipping_profile_id: profileId,
             title: "Scoped Axis Variant Product",
             status: "published",
             attributes: [
@@ -905,7 +914,7 @@ medusaIntegrationTestRunner({
         const created = await api.post(
           "/admin/products",
           {
-            seller_ids: [sellerId],
+            seller_ids: [sellerId], shipping_profile_id: profileId,
             title: "Shared Axis Subset Product",
             status: "published",
             attributes: [{ id: multi.id, value_ids: [multi.byName.get("S")!] }],
@@ -1018,7 +1027,7 @@ medusaIntegrationTestRunner({
         const created = await api.post(
           "/admin/products",
           {
-            seller_ids: [sellerId],
+            seller_ids: [sellerId], shipping_profile_id: profileId,
             title: "Created Product",
             status: "published",
             attributes: [
