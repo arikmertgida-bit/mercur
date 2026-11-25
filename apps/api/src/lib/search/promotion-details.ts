@@ -8,6 +8,7 @@ import {
   type CartDiscountContext,
   type CartPromotionFacts,
 } from './cart-discount'
+import { buildCampaignBadges, type CampaignBadge } from './campaign-badges'
 
 const PromotionDetailRowSchema = z.object({
   id: z.string(),
@@ -27,6 +28,8 @@ const PromotionDetailRowSchema = z.object({
       // as a string from the ORM layer (precision safety) — see the same
       // gotcha documented in reference-price.ts's SnapshotRowSchema.
       value: z.coerce.number().nullable().optional(),
+      buy_rules_min_quantity: z.coerce.number().nullable().optional(),
+      apply_to_quantity: z.coerce.number().nullable().optional(),
     })
     .nullable()
     .optional(),
@@ -66,6 +69,9 @@ export type PromotionDetail = {
   // Set only on the promotion a listing/PDP shows for a product: the
   // product's whole in-cart discount (see cart-discount.ts).
   cart_discount: CartDiscount | null
+  // Set only on that same promotion: every campaign label of the product
+  // (see campaign-badges.ts), including order/shipping promotions.
+  campaign_badges: CampaignBadge[]
 }
 
 export type LoadedPromotion = {
@@ -113,6 +119,8 @@ export async function loadPromotionDetails(
       'application_method.target_type',
       'application_method.currency_code',
       'application_method.value',
+      'application_method.buy_rules_min_quantity',
+      'application_method.apply_to_quantity',
       'campaign.name',
       'campaign.starts_at',
       'campaign.ends_at',
@@ -145,12 +153,14 @@ export async function loadPromotionDetails(
             }
           : null,
         cart_discount: null,
+        campaign_badges: [],
       },
       facts: {
         id: promotion.id,
         status: promotion.status,
         type: promotion.type,
         is_automatic: promotion.is_automatic,
+        seller_scoped: Boolean(sellerIdByPromotionId.get(promotion.id)),
         rule_count: (promotion.rules ?? []).filter((rule) => rule !== null).length,
         limit: promotion.limit ?? null,
         used: promotion.used ?? 0,
@@ -160,6 +170,8 @@ export async function loadPromotionDetails(
               target_type: method.target_type ?? null,
               value: method.value ?? 0,
               currency_code: method.currency_code ?? null,
+              buy_rules_min_quantity: method.buy_rules_min_quantity ?? null,
+              apply_to_quantity: method.apply_to_quantity ?? null,
             }
           : null,
         campaign: campaign
@@ -180,29 +192,55 @@ export async function loadPromotionDetails(
   })
 }
 
-// The promotions matched to one product, the one the cart applies first
-// leading (so a card's strip/budget bar describe the discount the cart
-// gives) and carrying the product's combined `cart_discount`.
-export function presentProductPromotions(
-  matched: LoadedPromotion[],
-  context: CartDiscountContext
-): PromotionDetail[] {
+export type PresentPromotionsContext = CartDiscountContext & {
+  buy_rule_matches: ReadonlySet<string>
+}
+
+function orderByCartLead(matched: LoadedPromotion[], context: CartDiscountContext): {
+  details: PromotionDetail[]
+  cartDiscount: CartDiscount | null
+} {
   const cart = buildCartDiscount(
     matched.map((promotion) => promotion.facts),
     context
   )
-  if (!cart) {
-    return matched.map((promotion) => promotion.detail)
-  }
-  const leadId = cart.promotionIds[0]
+  const leadId = cart?.promotionIds[0]
   const lead = matched.find((promotion) => promotion.detail.id === leadId)
-  if (!lead) {
-    return matched.map((promotion) => promotion.detail)
+  if (!cart || !lead) {
+    return { details: matched.map((promotion) => promotion.detail), cartDiscount: null }
   }
-  return [
-    { ...lead.detail, cart_discount: cart.discount },
-    ...matched
-      .filter((promotion) => promotion.detail.id !== leadId)
-      .map((promotion) => promotion.detail),
-  ]
+  return {
+    details: [
+      lead.detail,
+      ...matched
+        .filter((promotion) => promotion.detail.id !== lead.detail.id)
+        .map((promotion) => promotion.detail),
+    ],
+    cartDiscount: cart.discount,
+  }
+}
+
+// The promotions covering one product: those matched to it by product rules,
+// the one the cart applies first leading (so a card's strip/budget bar
+// describe the discount the cart gives), then the order/shipping promotions
+// in its seller scope that earn a label. The lead carries the product's
+// combined `cart_discount` and all its campaign labels.
+export function presentProductPromotions(
+  matched: LoadedPromotion[],
+  cartWide: LoadedPromotion[],
+  context: PresentPromotionsContext
+): PromotionDetail[] {
+  const { details, cartDiscount } = orderByCartLead(matched, context)
+  const badges = buildCampaignBadges(
+    [...matched, ...cartWide].map((promotion) => promotion.facts),
+    context
+  )
+  const labelledCartWide = cartWide
+    .filter((promotion) => buildCampaignBadges([promotion.facts], context).length > 0)
+    .map((promotion) => promotion.detail)
+  const [lead, ...rest] = [...details, ...labelledCartWide]
+  if (!lead) {
+    return []
+  }
+  return [{ ...lead, cart_discount: cartDiscount, campaign_badges: badges }, ...rest]
 }

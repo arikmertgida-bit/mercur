@@ -34,6 +34,7 @@ function promotion(
     discountStartsAt: null,
     kind: "percentage_off_product",
     rules: [{ attribute: "product_id", values: ["prod_1"] }],
+    buyRules: [],
     ...overrides,
   }
 }

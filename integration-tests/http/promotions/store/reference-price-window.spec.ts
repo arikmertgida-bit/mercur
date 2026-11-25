@@ -16,6 +16,7 @@ import {
     generateStoreHeaders,
 } from "../../../helpers/create-admin-user"
 import { createVendorProduct } from "../../../helpers/create-product"
+import { PROMOTION_CACHE_KEYS } from "@acme/api/src/lib/search/promotion-index"
 import { approveSeller } from "../../../helpers/split-order-checkout"
 
 jest.setTimeout(180000)
@@ -43,7 +44,6 @@ const RAISED_PRICE = 3000
 const CAMPAIGN_STARTED_DAYS_AGO = 20
 const PRICE_RAISED_DAYS_AGO = 12
 const HISTORY_DAYS = 30
-const PROMOTION_CACHE_KEYS = ["search:product-promotions:active", "search:product-promotions:upcoming"]
 
 const istanbulDate = (daysAgo: number): string =>
     new Intl.DateTimeFormat("en-CA", {

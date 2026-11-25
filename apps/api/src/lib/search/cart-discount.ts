@@ -19,6 +19,8 @@ export type CartPromotionFacts = {
   status: string
   type: string
   is_automatic: boolean
+  // Linked to a seller: the cart only lets it discount that seller's lines.
+  seller_scoped: boolean
   // Promotion-level rules (customer group, region, …) depend on the cart.
   rule_count: number
   limit: number | null
@@ -28,6 +30,8 @@ export type CartPromotionFacts = {
     target_type: string | null
     value: number
     currency_code: string | null
+    buy_rules_min_quantity: number | null
+    apply_to_quantity: number | null
   } | null
   campaign: {
     starts_at: string | Date | null
@@ -91,41 +95,62 @@ function spendBudgetRemaining(facts: CartPromotionFacts): number | null | false 
   return null
 }
 
+// Whether the cart can apply the promotion to anyone right now: published,
+// inside its campaign window, usage limit and budget not spent, and no
+// promotion-level rule (customer group, region, …) that depends on the cart.
+export function isPromotionOpenToEveryone(facts: CartPromotionFacts, now: number): boolean {
+  return (
+    facts.status === PROMOTION_STATUS_ACTIVE &&
+    facts.rule_count === 0 &&
+    isCampaignRunning(facts.campaign, now) &&
+    (facts.limit === null || facts.used < facts.limit) &&
+    spendBudgetRemaining(facts) !== false
+  )
+}
+
+// A fixed amount is in one currency: it only means something to a shopper
+// paying in it.
+export function toMoneyStepType(
+  method: NonNullable<CartPromotionFacts['method']>,
+  currencyCode: string | null
+): CartDiscountStepType | null {
+  const type = toStepType(method.type)
+  if (!type || method.value <= 0) {
+    return null
+  }
+  if (method.currency_code && method.currency_code !== currencyCode) {
+    return null
+  }
+  if (type === 'fixed' && !currencyCode) {
+    return null
+  }
+  return type
+}
+
 export function toCartDiscountStep(
   facts: CartPromotionFacts,
   context: Pick<CartDiscountContext, 'currency_code' | 'now'>
 ): CartDiscountStep | null {
   const method = facts.method
   if (
-    facts.status !== PROMOTION_STATUS_ACTIVE ||
     facts.type !== PROMOTION_TYPE_STANDARD ||
     !facts.is_automatic ||
-    facts.rule_count > 0 ||
     !method ||
     method.target_type !== TARGET_TYPE_ITEMS ||
-    method.value <= 0 ||
-    !isCampaignRunning(facts.campaign, context.now)
+    !isPromotionOpenToEveryone(facts, context.now)
   ) {
     return null
   }
-  if (facts.limit !== null && facts.used >= facts.limit) {
-    return null
-  }
-  const type = toStepType(method.type)
+  const type = toMoneyStepType(method, context.currency_code)
   if (!type) {
     return null
   }
-  if (method.currency_code && method.currency_code !== context.currency_code) {
-    return null
-  }
-  if (type === 'fixed' && !context.currency_code) {
-    return null
-  }
   const budgetRemaining = spendBudgetRemaining(facts)
-  if (budgetRemaining === false) {
-    return null
+  return {
+    type,
+    value: method.value,
+    budget_remaining: budgetRemaining === false ? null : budgetRemaining,
   }
-  return { type, value: method.value, budget_remaining: budgetRemaining }
 }
 
 // Medusa lists the candidate promotions ordered by application_method.value

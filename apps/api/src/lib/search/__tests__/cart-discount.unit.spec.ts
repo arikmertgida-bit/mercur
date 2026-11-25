@@ -1,27 +1,8 @@
-import { buildCartDiscount, CartPromotionFacts, toCartDiscountStep } from "../cart-discount"
+import { buildCartDiscount, toCartDiscountStep } from "../cart-discount"
+import { facts, FactsOverrides, HOUR, iso, NOW } from "./promotion-facts"
 import { LoadedPromotion, presentProductPromotions } from "../promotion-details"
 
-const NOW = Date.parse("2026-11-16T12:00:00.000Z")
-const HOUR = 60 * 60 * 1000
-const CONTEXT = { currency_code: "try", product_discountable: true, now: NOW }
-
-function iso(offsetMs: number): string {
-  return new Date(NOW + offsetMs).toISOString()
-}
-
-function facts(overrides: Partial<CartPromotionFacts> & Pick<CartPromotionFacts, "id">): CartPromotionFacts {
-  return {
-    status: "active",
-    type: "standard",
-    is_automatic: true,
-    rule_count: 0,
-    limit: null,
-    used: 0,
-    method: { type: "percentage", target_type: "items", value: 10, currency_code: null },
-    campaign: { starts_at: iso(-HOUR), ends_at: iso(HOUR), budget: null },
-    ...overrides,
-  }
-}
+const CONTEXT = { currency_code: "try", product_discountable: true, now: NOW, buy_rule_matches: new Set<string>() }
 
 describe("toCartDiscountStep", () => {
   it("accepts an automatic item percentage promotion of a running campaign", () => {
@@ -88,7 +69,7 @@ describe("buildCartDiscount", () => {
 })
 
 describe("presentProductPromotions", () => {
-  function loaded(id: string, overrides: Partial<CartPromotionFacts> = {}): LoadedPromotion {
+  function loaded(id: string, overrides: Omit<FactsOverrides, "id"> = {}): LoadedPromotion {
     return {
       detail: {
         id,
@@ -101,6 +82,7 @@ describe("presentProductPromotions", () => {
         scope: "seller",
         campaign: null,
         cart_discount: null,
+        campaign_badges: [],
       },
       facts: facts({ id, ...overrides }),
     }
@@ -112,6 +94,7 @@ describe("presentProductPromotions", () => {
         loaded("p_code", { is_automatic: false }),
         loaded("p_auto", { method: { type: "percentage", target_type: "items", value: 15, currency_code: null } }),
       ],
+      [],
       CONTEXT
     )
     expect(presented.map((promotion) => promotion.id)).toEqual(["p_auto", "p_code"])
@@ -124,6 +107,7 @@ describe("presentProductPromotions", () => {
   it("keeps the matched order without a cart discount", () => {
     const presented = presentProductPromotions(
       [loaded("p_a", { is_automatic: false }), loaded("p_b", { type: "buyget" })],
+      [],
       CONTEXT
     )
     expect(presented.map((promotion) => promotion.id)).toEqual(["p_a", "p_b"])

@@ -359,6 +359,34 @@ medusaIntegrationTestRunner({
         expectOnlyFirstDiscounted(await getCart(cart.id), sellerA, sellerB, 200)
       })
 
+      // KNOWN BUG (next part, 9e-2b-5): Medusa spreads the fixed amount over
+      // every line, then the seller scope drops the other seller's share, so
+      // this cart gets 200 instead of 500. Remove .failing with the fix.
+      it.failing("gives a seller's fixed order discount in full in a multi-seller cart", async () => {
+        const sellerA = await seed("cart-order-a@test.com", "CartOrderA", 2000)
+        const sellerB = await seed("cart-order-b@test.com", "CartOrderB", 3000)
+        await api.post(
+          `/vendor/promotions`,
+          {
+            type: "standard",
+            status: "active",
+            is_automatic: true,
+            application_method: {
+              type: "fixed",
+              target_type: "order",
+              allocation: "across",
+              value: 500,
+              currency_code: "usd",
+            },
+          },
+          sellerA.headers
+        )
+
+        const cart = await createCart()
+        await addLines(cart.id, [sellerA.variantId, sellerB.variantId])
+        expectOnlyFirstDiscounted(await getCart(cart.id), sellerA, sellerB, 500)
+      })
+
       it("does not carry a seller promotion onto another seller's split order", async () => {
         const customer = await createCustomerUser(appContainer, {
           email: "split-promo-buyer@test.com",

@@ -8,6 +8,8 @@ import {
   CampaignWindow,
   earliestDiscountStart,
   loadActiveProductPromotions,
+  loadCartWidePromotions,
+  matchBuyRulePromotionIds,
   loadUpcomingProductPromotions,
   matchProductPromotionIds,
   pickCampaignWindow,
@@ -63,15 +65,20 @@ export async function loadCatalogPromotionPricing(
     return EMPTY_RESULT
   }
 
-  const [activePromotions, upcomingPromotions] = await Promise.all([
+  const [activePromotions, upcomingPromotions, cartWidePromotions] = await Promise.all([
     loadActiveProductPromotions(container),
     loadUpcomingProductPromotions(container),
+    loadCartWidePromotions(container),
   ])
   const sellerIdByPromotionId = new Map(
-    activePromotions.map((promotion) => [promotion.promotionId, promotion.sellerId] as const)
+    [...activePromotions, ...cartWidePromotions].map(
+      (promotion) => [promotion.promotionId, promotion.sellerId] as const
+    )
   )
 
   const matchedIdsByProductId = new Map<string, string[]>()
+  const buyRuleMatchesByProductId = new Map<string, Set<string>>()
+  const cartWideIdsByProductId = new Map<string, string[]>()
   const allMatchedIds = new Set<string>()
   const campaignWindows: Record<string, ProductCampaignWindows> = {}
   for (const product of products) {
@@ -85,6 +92,11 @@ export async function loadCatalogPromotionPricing(
     const scopedActive = promotionsInSellerScope(activePromotions, product.seller?.id)
     const matchedIds = matchProductPromotionIds(matchableProduct, scopedActive)
     matchedIdsByProductId.set(product.id, matchedIds)
+    buyRuleMatchesByProductId.set(product.id, matchBuyRulePromotionIds(matchableProduct, scopedActive))
+    const cartWideIds = promotionsInSellerScope(cartWidePromotions, product.seller?.id).map(
+      (promotion) => promotion.promotionId
+    )
+    cartWideIdsByProductId.set(product.id, cartWideIds)
     const active = pickCampaignWindow(matchableProduct, scopedActive, 'active')
     const upcoming = pickCampaignWindow(
       matchableProduct,
@@ -94,7 +106,7 @@ export async function loadCatalogPromotionPricing(
     if (active || upcoming) {
       campaignWindows[product.id] = { active, upcoming }
     }
-    for (const id of matchedIds) {
+    for (const id of [...matchedIds, ...cartWideIds]) {
       allMatchedIds.add(id)
     }
   }
@@ -111,14 +123,20 @@ export async function loadCatalogPromotionPricing(
   const now = Date.now()
   const promotionsByProductId: Record<string, PromotionDetail | null> = {}
   for (const product of products) {
-    const matched = (matchedIdsByProductId.get(product.id) ?? [])
-      .map((id) => promotionById.get(id))
-      .filter((promotion): promotion is LoadedPromotion => promotion !== undefined)
-    const presented = presentProductPromotions(matched, {
-      currency_code: region?.currency_code ?? null,
-      product_discountable: product.discountable,
-      now,
-    })
+    const loaded = (ids: string[] | undefined): LoadedPromotion[] =>
+      (ids ?? [])
+        .map((id) => promotionById.get(id))
+        .filter((promotion): promotion is LoadedPromotion => promotion !== undefined)
+    const presented = presentProductPromotions(
+      loaded(matchedIdsByProductId.get(product.id)),
+      loaded(cartWideIdsByProductId.get(product.id)),
+      {
+        currency_code: region?.currency_code ?? null,
+        product_discountable: product.discountable,
+        now,
+        buy_rule_matches: buyRuleMatchesByProductId.get(product.id) ?? new Set(),
+      }
+    )
     promotionsByProductId[product.id] = presented[0] ?? null
   }
 

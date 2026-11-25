@@ -19,6 +19,7 @@ import {
     generateStoreHeaders,
 } from "../../../helpers/create-admin-user"
 import { createVendorProduct } from "../../../helpers/create-product"
+import { PROMOTION_CACHE_KEYS } from "@acme/api/src/lib/search/promotion-index"
 import { approveSeller } from "../../../helpers/split-order-checkout"
 
 jest.setTimeout(180000)
@@ -39,7 +40,6 @@ type StoreCart = {
 
 const DAY_MS = 24 * 60 * 60 * 1000
 const UNIT_PRICE = 2000
-const PROMOTION_CACHE_KEYS = ["search:product-promotions:active", "search:product-promotions:upcoming"]
 
 medusaIntegrationTestRunner({
     testSuite: ({ getContainer, api }) => {

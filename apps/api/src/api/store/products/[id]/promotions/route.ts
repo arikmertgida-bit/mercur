@@ -6,7 +6,9 @@ import { z } from "zod"
 import {
   earliestDiscountStart,
   loadActiveProductPromotions,
+  loadCartWidePromotions,
   loadUpcomingProductPromotions,
+  matchBuyRulePromotionIds,
   matchProductPromotionIds,
   pickCampaignWindow,
   PromotionMatchableProduct,
@@ -72,28 +74,39 @@ export const GET = async (
   }
 
   const sellerId = (product.sellers ?? [])[0]?.id
-  const [activePromotions, upcomingPromotions] = await Promise.all([
+  const [activePromotions, upcomingPromotions, cartWidePromotions] = await Promise.all([
     loadActiveProductPromotions(req.scope).then((promotions) =>
       promotionsInSellerScope(promotions, sellerId)
     ),
     loadUpcomingProductPromotions(req.scope).then((promotions) =>
       promotionsInSellerScope(promotions, sellerId)
     ),
+    loadCartWidePromotions(req.scope).then((promotions) =>
+      promotionsInSellerScope(promotions, sellerId)
+    ),
   ])
   const matchedIds = matchProductPromotionIds(matchableProduct, activePromotions)
+  const cartWideIds = new Set(cartWidePromotions.map((promotion) => promotion.promotionId))
   const sellerIdByPromotionId = new Map(
-    activePromotions.map((promotion) => [promotion.promotionId, promotion.sellerId] as const)
+    [...activePromotions, ...cartWidePromotions].map(
+      (promotion) => [promotion.promotionId, promotion.sellerId] as const
+    )
   )
 
   const [loadedPromotions, region] = await Promise.all([
-    loadPromotionDetails(query, matchedIds, sellerIdByPromotionId),
+    loadPromotionDetails(query, [...matchedIds, ...cartWideIds], sellerIdByPromotionId),
     resolveRegionByCountryCode(query, req.validatedQuery.country_code),
   ])
-  const promotions = presentProductPromotions(loadedPromotions, {
-    currency_code: region?.currency_code ?? null,
-    product_discountable: product.discountable,
-    now: Date.now(),
-  })
+  const promotions = presentProductPromotions(
+    loadedPromotions.filter((promotion) => !cartWideIds.has(promotion.detail.id)),
+    loadedPromotions.filter((promotion) => cartWideIds.has(promotion.detail.id)),
+    {
+      currency_code: region?.currency_code ?? null,
+      product_discountable: product.discountable,
+      now: Date.now(),
+      buy_rule_matches: matchBuyRulePromotionIds(matchableProduct, activePromotions),
+    }
+  )
 
   const referencePriceByVariantId: Record<string, ReferencePriceEntry> = {}
 

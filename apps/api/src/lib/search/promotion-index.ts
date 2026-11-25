@@ -43,6 +43,18 @@ export type IndexedProductPromotion = {
   // cart line items. An empty array means the promotion has no product
   // restriction (matches everything), which is valid native behaviour.
   rules: ProductTargetRule[]
+  // Buy-get only: the rules the bought items must match (same AND
+  // semantics). null when they cannot be resolved — the product then never
+  // gets an "X Al Y Öde" label, since buying it might not unlock the deal.
+  buyRules: ProductTargetRule[] | null
+}
+
+// A promotion discounting the whole order or its shipping instead of chosen
+// products: it covers every product in its seller scope (see
+// promotionsInSellerScope). Only the campaign labels use it.
+export type CartWidePromotion = {
+  promotionId: string
+  sellerId: string | null
 }
 
 export type PromotionMatchableProduct = {
@@ -73,6 +85,7 @@ type PromotionRow = {
     type?: string | null
     target_type?: string | null
     target_rules?: GraphList<TargetRuleRow>
+    buy_rules?: GraphList<TargetRuleRow>
   } | null
 }
 
@@ -165,11 +178,17 @@ function resolveTargetRules(
   return rules
 }
 
+// "v2": entries carry buyRules; the suffix keeps a just-deployed backend from
+// reading a list cached before the field existed.
 const CACHE_KEY_BY_PHASE: Record<CampaignPhase, string> = {
-  active: 'search:product-promotions:active',
-  upcoming: 'search:product-promotions:upcoming',
+  active: 'search:product-promotions:active:v2',
+  upcoming: 'search:product-promotions:upcoming:v2',
 }
+const CART_WIDE_CACHE_KEY = 'search:cart-wide-promotions:active'
+// Every list cached here; a test clears them to see a promotion it just made.
+export const PROMOTION_CACHE_KEYS = [...Object.values(CACHE_KEY_BY_PHASE), CART_WIDE_CACHE_KEY]
 const CACHE_TTL_SECONDS = 60
+const CART_WIDE_TARGET_TYPES = ['order', 'shipping_methods']
 
 // Loaded fresh on every reindex call (product.created/updated, the stock
 // job) but cached briefly — promotions change far less often than products,
@@ -219,6 +238,9 @@ async function loadProductPromotions(
       'application_method.target_rules.attribute',
       'application_method.target_rules.operator',
       'application_method.target_rules.values.value',
+      'application_method.buy_rules.attribute',
+      'application_method.buy_rules.operator',
+      'application_method.buy_rules.values.value',
     ],
     filters: { status: 'active' },
   })
@@ -238,18 +260,10 @@ async function loadProductPromotions(
     candidates.push({ promotion, kind, rules })
   }
 
-  const promotionIds = candidates.map((c) => c.promotion.id)
-  const sellerByPromotionId = new Map<string, string>()
-  if (promotionIds.length) {
-    const { data: sellerLinks } = await query.graph({
-      entity: 'promotion_seller',
-      fields: ['promotion_id', 'seller_id'],
-      filters: { promotion_id: promotionIds },
-    })
-    for (const link of sellerLinks) {
-      sellerByPromotionId.set(link.promotion_id, link.seller_id)
-    }
-  }
+  const sellerByPromotionId = await loadPromotionSellerIds(
+    query,
+    candidates.map((c) => c.promotion.id)
+  )
 
   const resolved: IndexedProductPromotion[] = candidates.map(({ promotion, kind, rules }) => ({
     promotionId: promotion.id,
@@ -260,9 +274,74 @@ async function loadProductPromotions(
     discountStartsAt: toIsoString(promotion.campaign?.starts_at ?? promotion.created_at),
     kind,
     rules,
+    buyRules:
+      kind === 'buy_get' ? resolveTargetRules(promotion.application_method?.buy_rules) : [],
   }))
 
   await cache.set(cacheKey, resolved, CACHE_TTL_SECONDS)
+  return resolved
+}
+
+async function loadPromotionSellerIds(
+  query: Query,
+  promotionIds: string[]
+): Promise<Map<string, string>> {
+  const sellerByPromotionId = new Map<string, string>()
+  if (!promotionIds.length) {
+    return sellerByPromotionId
+  }
+  const { data: sellerLinks } = await query.graph({
+    entity: 'promotion_seller',
+    fields: ['promotion_id', 'seller_id'],
+    filters: { promotion_id: promotionIds },
+  })
+  for (const link of sellerLinks) {
+    sellerByPromotionId.set(link.promotion_id, link.seller_id)
+  }
+  return sellerByPromotionId
+}
+
+// Running order/shipping promotions. One with target rules (shipping option
+// types) covers only some shipping methods and is left out: a label must hold
+// for whatever shipping the shopper picks.
+export async function loadCartWidePromotions(
+  container: MedusaContainer
+): Promise<CartWidePromotion[]> {
+  const cache = container.resolve<ICacheService>(Modules.CACHE)
+  const cached = await cache.get<CartWidePromotion[]>(CART_WIDE_CACHE_KEY)
+  if (cached) {
+    return cached
+  }
+
+  const query = container.resolve<Query>(ContainerRegistrationKeys.QUERY)
+  const { data: promotions } = await query.graph({
+    entity: 'promotion',
+    fields: [
+      'id',
+      'campaign.starts_at',
+      'campaign.ends_at',
+      'application_method.target_type',
+      'application_method.target_rules.id',
+    ],
+    filters: { status: 'active' },
+  })
+
+  const now = Date.now()
+  const promotionIds = promotions
+    .filter(
+      (promotion) =>
+        CART_WIDE_TARGET_TYPES.includes(promotion.application_method?.target_type ?? '') &&
+        presentItems(promotion.application_method?.target_rules).length === 0 &&
+        isInCampaignPhase(promotion.campaign, 'active', now)
+    )
+    .map((promotion) => promotion.id)
+  const sellerByPromotionId = await loadPromotionSellerIds(query, promotionIds)
+  const resolved: CartWidePromotion[] = promotionIds.map((promotionId) => ({
+    promotionId,
+    sellerId: sellerByPromotionId.get(promotionId) ?? null,
+  }))
+
+  await cache.set(CART_WIDE_CACHE_KEY, resolved, CACHE_TTL_SECONDS)
   return resolved
 }
 
@@ -324,11 +403,30 @@ export function matchProductPromotions(
  * (`isAdjustmentInSellerScope` in @mercurjs/core), so the index never marks a
  * product with a campaign the cart would not apply to it.
  */
-export function promotionsInSellerScope(
-  promotions: IndexedProductPromotion[],
+export function promotionsInSellerScope<T extends { sellerId: string | null }>(
+  promotions: T[],
   sellerId: string | null | undefined
-): IndexedProductPromotion[] {
+): T[] {
   return promotions.filter((promotion) => !promotion.sellerId || promotion.sellerId === sellerId)
+}
+
+// The matched buy-get promotions whose buy rules the product itself meets, so
+// buying more of it alone unlocks the deal ("3 Al 2 Öde" on its card).
+export function matchBuyRulePromotionIds(
+  product: PromotionMatchableProduct,
+  promotions: IndexedProductPromotion[]
+): Set<string> {
+  return new Set(
+    promotions
+      .filter(
+        (promotion) =>
+          promotion.kind === 'buy_get' &&
+          promotion.buyRules !== null &&
+          promotion.buyRules.every((rule) => ruleMatches(rule, product)) &&
+          promotion.rules.every((rule) => ruleMatches(rule, product))
+      )
+      .map((promotion) => promotion.promotionId)
+  )
 }
 
 export function matchCampaignIds(
