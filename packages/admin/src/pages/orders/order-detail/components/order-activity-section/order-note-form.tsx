@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { ArrowUpCircleSolid } from "@medusajs/icons"
 import { IconButton } from "@medusajs/ui"
-import { useRef } from "react"
+import { BaseSyntheticEvent, useRef } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
@@ -31,7 +31,8 @@ export const OrderNoteForm = ({ order }: OrderNoteFormProps) => {
 
   const { mutateAsync, isLoading } = {}
 
-  const handleSubmit = form.handleSubmit(async (values) => {
+  const handleSubmit = (event?: BaseSyntheticEvent) =>
+    form.handleSubmit(async (values) => {
     mutateAsync(
       {
         resource_id: order.id,
@@ -45,7 +46,7 @@ export const OrderNoteForm = ({ order }: OrderNoteFormProps) => {
         },
       }
     )
-  })
+  })(event)
 
   const handleResize = () => {
     const textarea = textareaRef.current

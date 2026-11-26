@@ -15,7 +15,7 @@ import {
 } from "@medusajs/ui";
 import type { ProductAttributeBatchAdd, ProductAttributeDTO } from "@mercurjs/types";
 import { AttributeType } from "@mercurjs/types/product";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { keepPreviousData } from "@tanstack/react-query";
@@ -153,20 +153,15 @@ const Content = ({ productId }: { productId: string }) => {
     return ids;
   }, [assignedIds, product_attributes]);
 
-  useEffect(() => {
-    if (!lockedIds.size) return;
-    setRowSelection((prev) => {
-      const next = { ...prev };
-      let changed = false;
-      for (const id of lockedIds) {
-        if (!next[id]) {
-          next[id] = true;
-          changed = true;
-        }
-      }
-      return changed ? next : prev;
+  // Assigned and required attributes are always selected (set during render).
+  const missingLockedIds = [...lockedIds].filter((id) => !rowSelection[id]);
+
+  if (missingLockedIds.length) {
+    setRowSelection({
+      ...rowSelection,
+      ...Object.fromEntries(missingLockedIds.map((id) => [id, true])),
     });
-  }, [lockedIds]);
+  }
 
   const { mutateAsync, isPending } = useBatchProductAttributes(productId);
 

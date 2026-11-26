@@ -6,7 +6,7 @@ import {
   OnChangeFn,
   RowSelectionState,
 } from "@tanstack/react-table"
-import { useEffect, useMemo, useState } from "react"
+import { useMemo, useState } from "react"
 import { UseFieldArrayReplace } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { isForbidden, SectionNoAccess } from "@mercurjs/dashboard-shared"
@@ -89,66 +89,74 @@ export const ProductCreateAddAttributesModal = ({
 
   const open = getIsOpen(ADD_ATTRIBUTES_MODAL_ID)
 
-  useEffect(() => {
-    if (!open) {
-      return
-    }
+  // Seed the modal from the form when it opens or the attribute page changes
+  // (set during render; both keys are stable between renders).
+  const [seededFor, setSeededFor] = useState<{
+    open: boolean
+    attributes: typeof product_attributes
+  }>({ open: false, attributes: undefined })
 
-    const attributes = getValues("attributes") ?? []
-    const existing = attributes.filter((a) => a.attribute_id)
+  if (seededFor.open !== open || seededFor.attributes !== product_attributes) {
+    setSeededFor({ open, attributes: product_attributes })
 
-    const selection: RowSelectionState = {}
-    const entries: SelectedAttribute[] = []
+    if (open) {
 
-    for (const a of existing) {
-      if (a.attribute_id) {
-        selection[a.attribute_id] = true
-        const apiAttr = product_attributes?.find(
-          (pa: ProductAttributeDTO) => pa.id === a.attribute_id
-        )
-        entries.push({
-          id: a.attribute_id,
-          name: a.title,
-          values: Array.isArray(a.values)
-            ? a.values
-            : a.values
-              ? [a.values]
-              : [],
-          is_variant_axis: a.use_for_variants,
-          is_required: a.is_required,
-          type: a.type ?? apiAttr?.type ?? "",
-          available_values:
-            a.available_values ??
-            apiAttr?.values?.map((v: { id: string; name: string }) => ({
-              id: v.id,
-              name: v.name,
-            })) ??
-            [],
-        })
-      }
-    }
+      const attributes = getValues("attributes") ?? []
+      const existing = attributes.filter((a) => a.attribute_id)
 
-    if (product_attributes) {
-      for (const attr of product_attributes) {
-        if (attr.is_required && !selection[attr.id]) {
-          selection[attr.id] = true
+      const selection: RowSelectionState = {}
+      const entries: SelectedAttribute[] = []
+
+      for (const a of existing) {
+        if (a.attribute_id) {
+          selection[a.attribute_id] = true
+          const apiAttr = product_attributes?.find(
+            (pa: ProductAttributeDTO) => pa.id === a.attribute_id
+          )
           entries.push({
-            id: attr.id,
-            name: attr.name,
-            values: [],
-            is_variant_axis: attr.is_variant_axis,
-            is_required: true,
-            type: attr.type,
+            id: a.attribute_id,
+            name: a.title,
+            values: Array.isArray(a.values)
+              ? a.values
+              : a.values
+                ? [a.values]
+                : [],
+            is_variant_axis: a.use_for_variants,
+            is_required: a.is_required,
+            type: a.type ?? apiAttr?.type ?? "",
             available_values:
-              attr.values?.map((v) => ({ id: v.id, name: v.name })) ?? [],
+              a.available_values ??
+              apiAttr?.values?.map((v: { id: string; name: string }) => ({
+                id: v.id,
+                name: v.name,
+              })) ??
+              [],
           })
         }
       }
-    }
 
-    setRowSelection(selection)
-    setSelected(entries)
-  }, [open, getValues, product_attributes])
+      if (product_attributes) {
+        for (const attr of product_attributes) {
+          if (attr.is_required && !selection[attr.id]) {
+            selection[attr.id] = true
+            entries.push({
+              id: attr.id,
+              name: attr.name,
+              values: [],
+              is_variant_axis: attr.is_variant_axis,
+              is_required: true,
+              type: attr.type,
+              available_values:
+                attr.values?.map((v) => ({ id: v.id, name: v.name })) ?? [],
+            })
+          }
+        }
+      }
+
+      setRowSelection(selection)
+      setSelected(entries)
+    }
+  }
 
   const updater: OnChangeFn<RowSelectionState> = (fn) => {
     const next = typeof fn === "function" ? fn(rowSelection) : fn

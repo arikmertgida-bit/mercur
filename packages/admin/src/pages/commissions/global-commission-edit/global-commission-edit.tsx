@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Heading, Input, toast } from "@medusajs/ui";
 import i18n from "i18next";
 import { useMemo } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import * as zod from "zod";
 
@@ -99,7 +99,7 @@ const EditGlobalCommissionForm = ({ rate }: { rate: CommissionRate }) => {
     });
   });
 
-  const watchType = form.watch("type");
+  const watchType = useWatch({ control: form.control, name: "type" });
 
   return (
     <RouteDrawer.Form form={form}>

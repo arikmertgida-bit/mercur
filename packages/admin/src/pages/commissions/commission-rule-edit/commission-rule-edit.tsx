@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Heading, Input, Select, toast } from "@medusajs/ui";
 import i18n from "i18next";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import * as zod from "zod";
 
@@ -134,7 +134,7 @@ const EditCommissionRuleForm = ({ rule }: { rule: CommissionRate }) => {
       })),
   });
 
-  const scopeType = form.watch("scopeType");
+  const scopeType = useWatch({ control: form.control, name: "scopeType" });
   const dimensions = SCOPE_TYPE_DIMENSIONS[scopeType];
 
   const handleSubmit = form.handleSubmit(async (values) => {

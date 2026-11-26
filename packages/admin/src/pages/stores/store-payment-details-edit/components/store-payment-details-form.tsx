@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import i18n from "i18next";
 import { Button, Input, toast } from "@medusajs/ui";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import * as zod from "zod";
 
@@ -55,7 +55,7 @@ export const StorePaymentDetailsForm = ({
     resolver: zodResolver(StorePaymentDetailsSchema),
   });
 
-  const selectedCountry = form.watch("country_code");
+  const selectedCountry = useWatch({ control: form.control, name: "country_code" });
 
   const { mutateAsync, isPending } = useUpdateSellerPaymentDetails(seller.id);
 

@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { HttpTypes } from "@medusajs/types"
 import type { ProductDTO } from "@mercurjs/types"
 import { Button, toast } from "@medusajs/ui"
-import { useRef } from "react"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { z } from "zod"
@@ -44,11 +44,12 @@ export const PriceListPricesEditForm = ({
   const { t } = useTranslation()
   const { handleSuccess, setCloseOnEscape } = useRouteModal()
 
-  const initialValue = useRef(initRecord(priceList, products))
+  // Snapshot of the values the form opened with, compared on submit.
+  const [initialValue] = useState(() => initRecord(priceList, products))
 
   const form = useForm<z.infer<typeof PricingProductPricesSchema>>({
     defaultValues: {
-      products: initialValue.current,
+      products: initialValue,
     },
     resolver: zodResolver(PricingProductPricesSchema),
   })
@@ -60,7 +61,7 @@ export const PriceListPricesEditForm = ({
 
     const { pricesToDelete, pricesToCreate, pricesToUpdate } = sortPrices(
       products,
-      initialValue.current,
+      initialValue,
       regions
     )
 

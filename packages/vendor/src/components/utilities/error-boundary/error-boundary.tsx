@@ -23,28 +23,34 @@ export const ErrorBoundary = () => {
   const error = useRouteError()
   const location = useLocation()
   const { t } = useTranslation()
-  const [isRecoveringChunk, setIsRecoveringChunk] = useState(false)
 
   const chunkLoadError =
     error instanceof Error && CHUNK_LOAD_ERROR_PATTERN.test(error.message)
       ? error
       : null
 
+  const reloadKey = chunkLoadError
+    ? getChunkReloadStorageKey(chunkLoadError)
+    : null
+  const [checkedReloadKey, setCheckedReloadKey] = useState<string | null>(null)
+  const [isRecoveringChunk, setIsRecoveringChunk] = useState(false)
+
+  // Decide once per failed chunk whether this tab still gets its one reload.
+  if (reloadKey !== checkedReloadKey) {
+    setCheckedReloadKey(reloadKey)
+    setIsRecoveringChunk(
+      reloadKey !== null && !window.sessionStorage.getItem(reloadKey)
+    )
+  }
+
   useEffect(() => {
-    if (!chunkLoadError) {
+    if (!isRecoveringChunk || !reloadKey) {
       return
     }
 
-    const storageKey = getChunkReloadStorageKey(chunkLoadError)
-
-    if (window.sessionStorage.getItem(storageKey)) {
-      return
-    }
-
-    window.sessionStorage.setItem(storageKey, String(Date.now()))
-    setIsRecoveringChunk(true)
+    window.sessionStorage.setItem(reloadKey, String(Date.now()))
     window.location.reload()
-  }, [chunkLoadError])
+  }, [isRecoveringChunk, reloadKey])
 
   if (isRecoveringChunk) {
     return null

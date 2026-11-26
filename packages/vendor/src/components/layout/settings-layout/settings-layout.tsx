@@ -1,7 +1,7 @@
 import { ArrowUturnLeft, MinusMini } from "@medusajs/icons";
 import { clx, Divider, IconButton, Text } from "@medusajs/ui";
 import { Collapsible as RadixCollapsible } from "radix-ui";
-import { Fragment, useCallback, useEffect, useMemo, useState } from "react";
+import { Fragment, useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
 
@@ -204,11 +204,14 @@ const Header = () => {
   const { t } = useTranslation();
   const location = useLocation();
 
-  useEffect(() => {
-    if (location.state?.from) {
-      setFrom(getSafeFromValue(location.state.from, landing));
-    }
-  }, [location, landing]);
+  // Keep the last "from" seen while moving between settings pages.
+  const nextFrom = location.state?.from
+    ? getSafeFromValue(location.state.from, landing)
+    : undefined;
+
+  if (nextFrom !== undefined && nextFrom !== from) {
+    setFrom(nextFrom);
+  }
 
   return (
     <div className="bg-ui-bg-subtle p-3">

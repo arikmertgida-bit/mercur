@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { usePermissionGate } from "@mercurjs/dashboard-shared"
 import { ConditionalTooltip } from "@components/common/conditional-tooltip"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { useTranslation } from "react-i18next"
 import * as zod from "zod"
 
@@ -41,12 +41,14 @@ export function OrderCreateFulfillmentForm({
   const { mutateAsync: createOrderFulfillment, isPending: isMutating } =
     useCreateOrderFulfillment(order.id)
 
-  const [fulfillableItems, setFulfillableItems] = useState(() =>
-    (order.items || []).filter(
-      (item) =>
-        item.requires_shipping === requiresShipping &&
-        getFulfillableQuantity(item) > 0
-    )
+  const fulfillableItems = useMemo(
+    () =>
+      (order.items || []).filter(
+        (item) =>
+          item.requires_shipping === requiresShipping &&
+          getFulfillableQuantity(item) > 0
+      ),
+    [order.items, requiresShipping]
   )
 
   const form = useForm<zod.infer<typeof CreateFulfillmentSchema>>({
@@ -223,45 +225,28 @@ export function OrderCreateFulfillmentForm({
 	shipping_options
 ])
 
-  const fulfilledQuantityArray = (order.items || []).map(
-    (item) =>
-      item.requires_shipping === requiresShipping &&
-      item.detail.fulfilled_quantity
-  )
+  const {
+    setValue: setFormValue,
+    setError: setFormError,
+    clearErrors: clearFormErrors,
+  } = form
 
   useEffect(() => {
-    const itemsToFulfill =
-      order?.items?.filter(
-        (item) =>
-          item.requires_shipping === requiresShipping &&
-          getFulfillableQuantity(item) > 0
-      ) || []
-
-    setFulfillableItems(itemsToFulfill)
-
-    if (itemsToFulfill.length) {
-      form.clearErrors("root")
+    if (fulfillableItems.length) {
+      clearFormErrors("root")
     } else {
-      form.setError("root", {
+      setFormError("root", {
         type: "manual",
         message: t("orders.fulfillment.error.noItems"),
       })
     }
 
     const quantityMap: Record<string, number> = Object.fromEntries(
-      itemsToFulfill.map((item) => [item.id, getFulfillableQuantity(item)])
+      fulfillableItems.map((item) => [item.id, getFulfillableQuantity(item)])
     )
 
-    form.setValue("quantity", quantityMap)
-  /* oxlint-disable react-hooks/exhaustive-deps */
-  }, [
-	...fulfilledQuantityArray,
-	requiresShipping,
-	t,
-	form,
-	order.items
-])
-  /* oxlint-enable react-hooks/exhaustive-deps */
+    setFormValue("quantity", quantityMap)
+  }, [fulfillableItems, t, setFormValue, setFormError, clearFormErrors])
 
   const differentOptionSelected =
     shippingOptionId &&

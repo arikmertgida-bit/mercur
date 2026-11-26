@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Heading, toast } from "@medusajs/ui";
 import { useMemo } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import * as zod from "zod";
 
@@ -91,7 +91,7 @@ const EditCommissionForm = ({ rule }: { rule: CommissionRate }) => {
     );
   });
 
-  const watchType = form.watch("type");
+  const watchType = useWatch({ control: form.control, name: "type" });
 
   return (
     <RouteDrawer.Form form={form}>

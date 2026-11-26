@@ -11,7 +11,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod"
 import { HttpTypes } from "@medusajs/types"
 import React from "react"
-import { useForm } from "react-hook-form"
+import { useForm, useWatch } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { Form } from "@components/common/form"
 import { Combobox } from "@components/inputs/combobox"
@@ -127,17 +127,17 @@ export const ReservationCreateForm = (props: { inventoryItemId?: string }) => {
     return Array.from(byId.values())
   }, [presetItems, searchedItems])
 
-  const inventoryItemId = form.watch("inventory_item_id")
+  const inventoryItemId = useWatch({ control: form.control, name: "inventory_item_id" })
   const selectedInventoryItem = inventory_items?.find(
     (it) => it.id === inventoryItemId
   )
 
-  const locationId = form.watch("location_id")
+  const locationId = useWatch({ control: form.control, name: "location_id" })
   const selectedLocationLevel = selectedInventoryItem?.location_levels?.find(
     (it) => it.location_id === locationId
   )
 
-  const quantity = form.watch("quantity")
+  const quantity = useWatch({ control: form.control, name: "quantity" })
 
   const { stock_locations } = useStockLocations(
     {

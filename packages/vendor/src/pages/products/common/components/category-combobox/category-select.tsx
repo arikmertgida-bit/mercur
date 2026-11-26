@@ -64,37 +64,40 @@ export const CategorySelect = forwardRef<
    * this is done to prevent the popover from flickering too much when
    * navigating between levels or searching.
    */
-  useEffect(() => {
-    let timeoutId: ReturnType<typeof setTimeout> | undefined
+  if (isPending && !showLoading) {
+    setShowLoading(true)
+  }
 
+  useEffect(() => {
     if (isPending) {
-      setShowLoading(true)
-    } else {
-      timeoutId = setTimeout(() => {
-        setShowLoading(false)
-      }, 150)
+      return
     }
+
+    const timeoutId = setTimeout(() => {
+      setShowLoading(false)
+    }, 150)
 
     return () => {
       clearTimeout(timeoutId)
     }
   }, [isPending])
 
-  useEffect(() => {
-    if (searchValue) {
-      setLevel([])
-    }
-  }, [searchValue])
-
-  const handleSelect = (option: string) => {
-    if (value.includes(option)) {
-      onChange([])
-    } else {
-      onChange([option])
-    }
-
-    innerRef.current?.focus()
+  if (searchValue && level.length > 0) {
+    setLevel([])
   }
+
+  const handleSelect = useCallback(
+    (option: string) => {
+      if (value.includes(option)) {
+        onChange([])
+      } else {
+        onChange([option])
+      }
+
+      innerRef.current?.focus()
+    },
+    [value, onChange]
+  )
 
   const options = getOptions(product_categories || [])
 
@@ -159,7 +162,6 @@ export const CategorySelect = forwardRef<
         handleSelect(options[index].value)
       }
     },
-    /* oxlint-disable react-hooks/exhaustive-deps */
     [
 	open,
 	focusedIndex,
@@ -169,7 +171,6 @@ export const CategorySelect = forwardRef<
 	showLevelUp,
 	handleSelect
 ]
-    /* oxlint-enable react-hooks/exhaustive-deps */
   )
 
   useEffect(() => {
@@ -214,16 +215,12 @@ export const CategorySelect = forwardRef<
               !showLoading &&
               options.map((option, index) => (
                 <SelectItem value={option.value} key={option.value}>
-                  <button
+                  <span
                     data-active={
                       showLevelUp
                         ? focusedIndex === index + 1
                         : focusedIndex === index
                     }
-                    type="button"
-                    // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role
-                    role="option"
-                    aria-selected={false}
                     className={clx(
                       "flex h-full w-full appearance-none items-center gap-2 overflow-hidden rounded-md px-2 py-1.5 text-left outline-none"
                     )}
@@ -231,7 +228,6 @@ export const CategorySelect = forwardRef<
                       setFocusedIndex(showLevelUp ? index + 1 : index)
                     }
                     onMouseLeave={() => setFocusedIndex(-1)}
-                    tabIndex={-1}
                   >
                     <Text
                       as="span"
@@ -241,7 +237,7 @@ export const CategorySelect = forwardRef<
                     >
                       {option.label}
                     </Text>
-                  </button>
+                  </span>
                 </SelectItem>
               ))}
           </Select.Viewport>

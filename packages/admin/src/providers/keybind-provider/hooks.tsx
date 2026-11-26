@@ -1,10 +1,9 @@
-import { default as debounceFn } from "lodash.debounce";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 import { useLogout } from "../../hooks/api/auth";
-import { PermissionsContext } from "@mercurjs/dashboard-shared";
+import { PermissionsContext, useDebouncedAction } from "@mercurjs/dashboard-shared";
 import { canReachRoute } from "../../lib/permissions/can-reach-route";
 import { queryClient } from "../../lib/query-client";
 import { KeybindContext } from "./keybind-context";
@@ -33,15 +32,23 @@ export const useShortcuts = ({
   const [keys, setKeys] = useState<string[]>([]);
   const navigate = useNavigate();
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const scheduleRemoveKeys = useDebouncedAction(debounce);
+  const scheduleInvoke = useDebouncedAction(debounce / 2);
+
   const removeKeys = useCallback(
-    debounceFn(() => setKeys([]), debounce),
-    [],
+    () => scheduleRemoveKeys(() => setKeys([])),
+    [scheduleRemoveKeys],
   );
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const invokeShortcut = useCallback(
-    debounceFn((shortcut: Shortcut | null) => {
+  useEffect(() => {
+    const shortcut =
+      keys.length > 0 && shortcuts.length > 0
+        ? findShortcut(shortcuts, keys)
+        : null;
+
+    // Scheduling replaces the pending call, so a key change (or reset) drops
+    // the shortcut matched for the previous key sequence.
+    scheduleInvoke(() => {
       if (shortcut && shortcut.callback) {
         shortcut.callback();
         setKeys([]);
@@ -52,21 +59,9 @@ export const useShortcuts = ({
       if (shortcut && shortcut.to) {
         navigate(shortcut.to);
         setKeys([]);
-
-        return;
       }
-    }, debounce / 2),
-    [],
-  );
-
-  useEffect(() => {
-    if (keys.length > 0 && shortcuts.length > 0) {
-      const shortcut = findShortcut(shortcuts, keys);
-      invokeShortcut(shortcut);
-    }
-
-    return () => invokeShortcut.cancel();
-  }, [keys, shortcuts, invokeShortcut]);
+    });
+  }, [keys, shortcuts, scheduleInvoke, navigate]);
 
   useEffect(() => {
     const listener = (event: KeyboardEvent) => {

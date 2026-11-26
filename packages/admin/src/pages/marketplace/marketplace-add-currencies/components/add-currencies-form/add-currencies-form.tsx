@@ -12,7 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { HttpTypes } from "@medusajs/types"
 import { SectionNoAccess, isForbidden } from "@mercurjs/dashboard-shared"
 import { keepPreviousData } from "@tanstack/react-query"
-import { useForm } from "react-hook-form"
+import { useForm, useWatch } from "react-hook-form"
 import {
   RouteFocusModal,
   useRouteModal,
@@ -81,8 +81,11 @@ export const AddCurrenciesForm = ({
 
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({})
 
-  const { setValue, watch } = form
-  const pricePreferenceValues = watch("pricePreferences")
+  const { setValue } = form
+  const pricePreferenceValues = useWatch({
+    control: form.control,
+    name: "pricePreferences",
+  })
 
   const updater: OnChangeFn<RowSelectionState> = (fn) => {
     const updated = typeof fn === "function" ? fn(rowSelection) : fn

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import {
   Alert,
@@ -65,11 +65,16 @@ const Root = ({ currentTemplate }: PromotionDetailsTabProps) => {
     name: "application_method.allocation",
   });
 
-  useEffect(() => {
+  const [syncedAllocation, setSyncedAllocation] =
+    useState<typeof watchAllocation | undefined>(undefined);
+
+  if (watchAllocation !== syncedAllocation) {
+    setSyncedAllocation(watchAllocation);
+
     if (watchAllocation) {
       setAllocationMode(watchAllocation);
     }
-  }, [watchAllocation]);
+  }
 
   const watchType = useWatch({
     control: form.control,

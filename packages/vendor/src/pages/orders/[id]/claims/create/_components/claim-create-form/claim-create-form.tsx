@@ -21,15 +21,14 @@ import { usePermissionGate } from "@mercurjs/dashboard-shared"
 import { ConditionalTooltip } from "@components/common/conditional-tooltip"
 import {
   AdminClaim,
-  AdminInventoryLevel,
   AdminOrder,
   AdminOrderPreview,
   AdminReturn,
   HttpTypes,
 } from "@medusajs/types"
 import { Alert, Button, Heading, Switch, Text, toast, usePrompt } from "@medusajs/ui"
-import { useEffect, useMemo, useState } from "react"
-import { useFieldArray, useForm } from "react-hook-form"
+import { useEffect, useMemo } from "react"
+import { useFieldArray, useForm, useWatch } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
 import { Form } from "@components/common/form"
@@ -88,10 +87,6 @@ export const ClaimCreateForm = ({
   const { handleSuccess } = useRouteModal()
 
   const { setIsOpen } = useStackedModal()
-  const [_inventoryMap, setInventoryMap] = useState<
-    Record<string, AdminInventoryLevel[]>
-  >({})
-
   /**
    * MUTATIONS
    */
@@ -203,7 +198,8 @@ export const ClaimCreateForm = ({
     resolver: zodResolver(ClaimCreateSchema),
   })
 
-  const locationId = form.watch("location_id")
+  const locationId = useWatch({ control: form.control, name: "location_id" })
+  const { setValue: setFormValue } = form
 
   /**
    * HOOKS
@@ -287,9 +283,7 @@ export const ClaimCreateForm = ({
         remove(ind)
       }
     })
-    /* oxlint-disable react-hooks/exhaustive-deps */
-  }, [previewItems])
-  /* oxlint-enable react-hooks/exhaustive-deps */
+  }, [inboundPreviewItems, inboundItems, append, update, remove])
 
   useEffect(() => {
     const inboundShipping = preview.shipping_methods?.find(
@@ -298,19 +292,15 @@ export const ClaimCreateForm = ({
     )
 
     if (inboundShipping) {
-      form.setValue("inbound_option_id", inboundShipping.shipping_option_id)
+      setFormValue("inbound_option_id", inboundShipping.shipping_option_id)
     } else {
-      form.setValue("inbound_option_id", null)
+      setFormValue("inbound_option_id", null)
     }
-    /* oxlint-disable react-hooks/exhaustive-deps */
-  }, [preview.shipping_methods])
-  /* oxlint-enable react-hooks/exhaustive-deps */
+  }, [preview.shipping_methods, setFormValue])
 
   useEffect(() => {
-    form.setValue("location_id", orderReturn?.location_id ?? null)
-    /* oxlint-disable react-hooks/exhaustive-deps */
-  }, [orderReturn])
-  /* oxlint-enable react-hooks/exhaustive-deps */
+    setFormValue("location_id", orderReturn?.location_id ?? null)
+  }, [orderReturn, setFormValue])
 
   const showInboundItemsPlaceholder = !inboundPreviewItems.length
 
@@ -359,20 +349,26 @@ export const ClaimCreateForm = ({
       )
     }
 
-    for (const itemToRemove of itemsToRemove) {
+    const removeActionIds = itemsToRemove.flatMap((itemToRemove) => {
       const actionId = previewItems
         .find((i) => i.id === itemToRemove)
         ?.actions?.find((a) => a.action === "RETURN_ITEM")?.id
 
-      if (actionId) {
-        // oxlint-disable-next-line eslint/no-await-in-loop -- sequential mutations on the same order-change/claim record; parallelizing risks a backend race
-        await removeInboundItem(actionId, {
-          onError: (error) => {
-            toast.error(error.message)
-          },
-        })
-      }
-    }
+      return actionId ? [actionId] : []
+    })
+
+    // One at a time: every removal edits the same claim's order change.
+    await removeActionIds.reduce<Promise<void>>(
+      (previous, actionId) =>
+        previous.then(async () => {
+          await removeInboundItem(actionId, {
+            onError: (error) => {
+              toast.error(error.message)
+            },
+          })
+        }),
+      Promise.resolve()
+    )
 
     setIsOpen("inbound-items", false)
   }
@@ -439,19 +435,7 @@ export const ClaimCreateForm = ({
         IS_CANCELING = false
       }
     }
-    /* oxlint-disable react-hooks/exhaustive-deps */
-  }, [])
-  /* oxlint-enable react-hooks/exhaustive-deps */
-
-  /**
-   * Reset and consume the inventoryMap setter so React doesn't warn on
-   * `setInventoryMap` being unused. The full inventory-level cross-check
-   * lives behind the admin form's `ExtendedVariant` types; vendor doesn't
-   * surface those yet, so for now we just track the placeholder.
-   */
-  useEffect(() => {
-    setInventoryMap({})
-  }, [inboundItems.length])
+  }, [t, cancelClaimRequest])
 
   const estimatedDifference =
     (preview.summary?.pending_difference ?? 0) -
@@ -474,14 +458,12 @@ export const ClaimCreateForm = ({
 
               <StackedFocusModal id="inbound-items">
                 <StackedFocusModal.Trigger asChild>
-                  {/* oxlint-disable-next-line jsx-a11y/anchor-is-valid */}
-                  <a
-                    href="#"
-                    onClick={(e) => e.preventDefault()}
+                  <button
+                    type="button"
                     className="focus-visible:shadow-borders-focus transition-fg txt-compact-small-plus cursor-pointer text-blue-500 outline-none hover:text-blue-400"
                   >
                     {t("actions.addItems")}
-                  </a>
+                  </button>
                 </StackedFocusModal.Trigger>
                 <StackedFocusModal.Content>
                   <StackedFocusModal.Header />

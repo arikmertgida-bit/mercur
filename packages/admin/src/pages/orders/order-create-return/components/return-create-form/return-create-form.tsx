@@ -19,7 +19,7 @@ import {
 } from "@medusajs/ui"
 import { PanelCurrencyInput } from "../../../../../components/inputs/locale-currency-input"
 import { useEffect, useMemo, useState } from "react"
-import { useFieldArray, useForm } from "react-hook-form"
+import { useFieldArray, useForm, useWatch } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
 import {
@@ -280,8 +280,8 @@ export const ReturnCreateForm = ({
   }, [preview.shipping_methods, form])
 
   const showPlaceholder = !items.length
-  const locationId = form.watch("location_id")
-  const shippingOptionId = form.watch("option_id")
+  const locationId = useWatch({ control: form.control, name: "location_id" })
+  const shippingOptionId = useWatch({ control: form.control, name: "option_id" })
   const prompt = usePrompt()
 
   const handleSubmit = form.handleSubmit(async (data) => {
@@ -485,8 +485,6 @@ export const ReturnCreateForm = ({
                           type="submit"
                           variant="primary"
                           size="small"
-                          // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role
-                          role="button"
                           onClick={() => onItemsSelected()}
                         >
                           {t("actions.save")}

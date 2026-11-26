@@ -4,7 +4,7 @@ import {
   createDataTableColumnHelper,
   DataTableRowSelectionState,
 } from "@medusajs/ui"
-import { useEffect, useMemo, useState } from "react"
+import { useMemo, useState } from "react"
 import { useTranslation } from "react-i18next"
 
 import {
@@ -52,12 +52,13 @@ export const ProductCreateSalesChannelStackedModal = () => {
 
   const open = getIsOpen(SC_STACKED_MODAL_ID)
 
-  useEffect(() => {
-    if (!open) {
-      return
-    }
+  // Seed the drawer from the form each time it opens (set during render).
+  const [seededForOpen, setSeededForOpen] = useState(false)
 
-    const salesChannels = getValues("sales_channels")
+  if (open !== seededForOpen) {
+    setSeededForOpen(open)
+
+    const salesChannels = open ? getValues("sales_channels") : undefined
 
     if (salesChannels) {
       setState(
@@ -77,7 +78,7 @@ export const ProductCreateSalesChannelStackedModal = () => {
         )
       )
     }
-  }, [open, getValues])
+  }
 
   const onRowSelectionChange = (state: DataTableRowSelectionState) => {
     const ids = Object.keys(state)

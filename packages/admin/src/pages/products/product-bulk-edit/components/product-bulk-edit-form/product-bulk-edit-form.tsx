@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { ProductDTO } from "@mercurjs/types"
 import { Button, toast } from "@medusajs/ui"
-import { useRef } from "react"
+import { useState } from "react"
 import { DefaultValues, useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
@@ -23,7 +23,8 @@ export const ProductBulkEditForm = ({ products }: ProductBulkEditFormProps) => {
   const { t } = useTranslation()
   const { setCloseOnEscape, handleSuccess } = useRouteModal()
 
-  const initialValues = useRef(getDefaultValues(products))
+  // Snapshot of the values the form opened with, compared on submit.
+  const [initialValues] = useState(() => getDefaultValues(products))
 
   const form = useForm<ProductBulkEditSchema>({
     defaultValues: getDefaultValues(products),
@@ -36,7 +37,7 @@ export const ProductBulkEditForm = ({ products }: ProductBulkEditFormProps) => {
 
   const onSubmit = form.handleSubmit(async (data) => {
     const initialById = new Map(
-      (initialValues.current.products ?? []).map((p) => [p?.id, p] as const)
+      (initialValues.products ?? []).map((p) => [p?.id, p] as const)
     )
 
     const changed = data.products

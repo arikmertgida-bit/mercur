@@ -105,7 +105,7 @@ export function CreateShippingOptionsForm({
     })
 
   const isCalculatedPriceType =
-    form.watch("price_type") === ShippingOptionPriceType.Calculated
+    useWatch({ control: form.control, name: "price_type" }) === ShippingOptionPriceType.Calculated
 
   const { mutateAsync, isPending: isLoading } = useCreateShippingOptions()
 

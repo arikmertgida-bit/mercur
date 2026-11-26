@@ -17,7 +17,7 @@ import {
 } from "@medusajs/ui";
 import { PanelCurrencyInput } from "../../../../../components/inputs/locale-currency-input";
 import { useEffect, useMemo, useState } from "react";
-import { useFieldArray, useForm } from "react-hook-form";
+import { useFieldArray, useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 import {
@@ -237,7 +237,7 @@ export const ClaimCreateForm = ({
     resolver: zodResolver(ClaimCreateSchema),
   });
 
-  const locationId = form.watch("location_id");
+  const locationId = useWatch({ control: form.control, name: "location_id" });
 
   /**
    * HOOKS
@@ -283,7 +283,18 @@ export const ClaimCreateForm = ({
     );
   });
 
-  useEffect(() => {
+  // Re-seed the editable amount when the preview's inbound shipping changes
+  // (keyed on id + total, so a refetch of the same method keeps a draft).
+  const inboundShippingKey = inboundShipping
+    ? `${inboundShipping.id}:${inboundShipping.total}`
+    : null;
+  const [syncedInboundShippingKey, setSyncedInboundShippingKey] = useState<
+    string | null
+  >(null);
+
+  if (inboundShippingKey !== syncedInboundShippingKey) {
+    setSyncedInboundShippingKey(inboundShippingKey);
+
     if (inboundShipping) {
       setCustomInboundShippingAmount({
         value: inboundShipping.total.toFixed(
@@ -292,9 +303,20 @@ export const ClaimCreateForm = ({
         float: inboundShipping.total,
       });
     }
-  }, [inboundShipping, order.currency_code]);
+  }
 
-  useEffect(() => {
+  // Re-seed the editable amount when the preview's outbound shipping changes
+  // (keyed on id + total, so a refetch of the same method keeps a draft).
+  const outboundShippingKey = outboundShipping
+    ? `${outboundShipping.id}:${outboundShipping.total}`
+    : null;
+  const [syncedOutboundShippingKey, setSyncedOutboundShippingKey] = useState<
+    string | null
+  >(null);
+
+  if (outboundShippingKey !== syncedOutboundShippingKey) {
+    setSyncedOutboundShippingKey(outboundShippingKey);
+
     if (outboundShipping) {
       setCustomOutboundShippingAmount({
         value: outboundShipping.total.toFixed(
@@ -303,7 +325,7 @@ export const ClaimCreateForm = ({
         float: outboundShipping.total,
       });
     }
-  }, [outboundShipping, order.currency_code]);
+  }
 
   const {
     fields: inboundItems,
@@ -356,14 +378,7 @@ export const ClaimCreateForm = ({
         remove(ind);
       }
     });
-  }, [
-	previewItems,
-	inboundItems,
-	remove,
-	inboundPreviewItems,
-	append,
-	update
-]);
+  }, [inboundItems, remove, inboundPreviewItems, append, update]);
 
   useEffect(() => {
     const inboundShipping = preview.shipping_methods.find(
@@ -396,8 +411,8 @@ export const ClaimCreateForm = ({
   const showInboundItemsPlaceholder = !inboundPreviewItems.length;
   const showOutboundItemsPlaceholder = !outboundPreviewItems.length;
 
-  const inboundShippingOptionId = form.watch("inbound_option_id");
-  const outboundShippingOptionId = form.watch("outbound_option_id");
+  const inboundShippingOptionId = useWatch({ control: form.control, name: "inbound_option_id" });
+  const outboundShippingOptionId = useWatch({ control: form.control, name: "outbound_option_id" });
 
   const prompt = usePrompt();
 
@@ -618,8 +633,6 @@ export const ClaimCreateForm = ({
                           type="submit"
                           variant="primary"
                           size="small"
-                          // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role
-                          role="button"
                           onClick={async () => await onItemsSelected()}
                         >
                           {t("actions.save")}

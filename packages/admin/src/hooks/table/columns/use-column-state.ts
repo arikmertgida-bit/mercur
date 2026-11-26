@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo, useEffect, useRef } from "react"
+import { useState, useCallback, useMemo } from "react"
 import { HttpTypes } from "@medusajs/types"
 
 type ViewConfiguration =
@@ -119,41 +119,42 @@ export function useColumnState(
     [visibleColumns, columnOrder.length]
   )
 
-  // Track previous active view to detect changes
-  const prevActiveViewRef = useRef<ViewConfiguration | null | undefined>()
+  // The active view this state was last synced to (id + updated_at only, so a
+  // new object for the same view does not re-sync and cannot loop).
+  const [syncedView, setSyncedView] = useState<{
+    id: NonNullable<ViewConfiguration>["id"] | undefined
+    updated_at: NonNullable<ViewConfiguration>["updated_at"] | undefined
+  }>()
 
-  // Sync local state when active view changes
-  useEffect(() => {
+  // Sync local state when the active view changes (set during render).
+  const viewChanged = syncedView?.id !== activeView?.id
+  const viewUpdated =
+    !!activeView &&
+    syncedView?.id === activeView.id &&
+    syncedView.updated_at !== activeView.updated_at
+
+  if (viewChanged || viewUpdated) {
+    setSyncedView({ id: activeView?.id, updated_at: activeView?.updated_at })
+
     if (apiColumns?.length) {
-      // Check if this is a different view or an update to the same view
-      const viewChanged = prevActiveViewRef.current?.id !== activeView?.id
-      const viewUpdated =
-        activeView &&
-        prevActiveViewRef.current?.id === activeView.id &&
-        prevActiveViewRef.current.updated_at !== activeView.updated_at
-
-      if (viewChanged || viewUpdated) {
-        if (activeView?.configuration) {
-          // Apply the active view's configuration
-          const newVisibility: Record<string, boolean> = {}
-          apiColumns.forEach((column) => {
-            newVisibility[column.field] =
-              activeView.configuration?.visible_columns?.includes(
-                column.field
-              ) || false
-          })
-          setVisibleColumns(newVisibility)
-          setColumnOrder(activeView.configuration?.column_order || [])
-        } else {
-          // No active view - reset to defaults
-          setVisibleColumns(getInitialColumnVisibility(apiColumns))
-          setColumnOrder(getInitialColumnOrder(apiColumns))
-        }
+      if (activeView?.configuration) {
+        // Apply the active view's configuration
+        const newVisibility: Record<string, boolean> = {}
+        apiColumns.forEach((column) => {
+          newVisibility[column.field] =
+            activeView.configuration?.visible_columns?.includes(
+              column.field
+            ) || false
+        })
+        setVisibleColumns(newVisibility)
+        setColumnOrder(activeView.configuration?.column_order || [])
+      } else {
+        // No active view - reset to defaults
+        setVisibleColumns(getInitialColumnVisibility(apiColumns))
+        setColumnOrder(getInitialColumnOrder(apiColumns))
       }
     }
-
-    prevActiveViewRef.current = activeView
-  }, [activeView, apiColumns])
+  }
 
   return {
     visibleColumns,

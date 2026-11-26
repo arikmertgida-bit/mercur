@@ -4,7 +4,7 @@ import { HttpTypes } from "@medusajs/types"
 import { MercurFeatureFlags } from "@mercurjs/types/feature-flags"
 import { Button, Checkbox, clx, CommandBar, toast, Tooltip } from "@medusajs/ui"
 import { Fragment, useCallback, useState } from "react"
-import { useForm } from "react-hook-form"
+import { useForm, useWatch } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { z } from "zod"
 
@@ -68,8 +68,8 @@ export const EditVariantMediaForm = ({
     resolver: zodResolver(MediaSchema),
   })
 
-  const formImageIds = form.watch("image_ids")
-  const formThumbnail = form.watch("thumbnail")
+  const formImageIds = useWatch({ control: form.control, name: "image_ids" })
+  const formThumbnail = useWatch({ control: form.control, name: "thumbnail" })
 
   const availableImages = allProductImages.filter(
     (image) => !formImageIds.includes(image.id)

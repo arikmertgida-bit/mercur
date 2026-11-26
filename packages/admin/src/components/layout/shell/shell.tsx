@@ -69,16 +69,18 @@ const NavigationBar = ({ loading }: { loading: boolean }) => {
    * If the loading state is true, we want to show the bar after a short delay.
    * The delay is used to prevent the bar from flashing on quick navigations.
    */
-  useEffect(() => {
-    let timeout: ReturnType<typeof setTimeout>
+  if (!loading && showBar) {
+    setShowBar(false)
+  }
 
-    if (loading) {
-      timeout = setTimeout(() => {
-        setShowBar(true)
-      }, 200)
-    } else {
-      setShowBar(false)
+  useEffect(() => {
+    if (!loading) {
+      return
     }
+
+    const timeout = setTimeout(() => {
+      setShowBar(true)
+    }, 200)
 
     return () => {
       clearTimeout(timeout)
@@ -131,6 +133,7 @@ const Breadcrumbs = () => {
       }
 
       return {
+        id: match.id,
         label: label,
         path: match.pathname,
       }
@@ -148,7 +151,7 @@ const Breadcrumbs = () => {
         const isSingle = crumbs.length === 1
 
         return (
-          <li key={index} className={clx("flex items-center")}>
+          <li key={crumb.id} className={clx("flex items-center")}>
             {!isLast ? (
               <Link
                 className="transition-fg hover:text-ui-fg-subtle"
@@ -160,7 +163,6 @@ const Breadcrumbs = () => {
               <div>
                 {!isSingle && <span className="block lg:hidden">...</span>}
                 <span
-                  key={index}
                   className={clx({
                     "hidden lg:block": !isSingle,
                   })}

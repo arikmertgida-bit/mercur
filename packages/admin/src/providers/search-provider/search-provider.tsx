@@ -1,4 +1,5 @@
 import { PropsWithChildren, useEffect, useState } from "react"
+import { useLocation } from "react-router-dom"
 import { Search } from "../../components/search"
 import { useSidebar } from "../sidebar-provider"
 import { SearchContext } from "./search-context"
@@ -6,6 +7,13 @@ import { SearchContext } from "./search-context"
 export const SearchProvider = ({ children }: PropsWithChildren) => {
   const [open, setOpen] = useState(false)
   const { mobile, toggle } = useSidebar()
+  const { pathname } = useLocation()
+  const [syncedPathname, setSyncedPathname] = useState(pathname)
+
+  if (syncedPathname !== pathname) {
+    setSyncedPathname(pathname)
+    setOpen(false)
+  }
 
   const toggleSearch = () => {
     const update = !open

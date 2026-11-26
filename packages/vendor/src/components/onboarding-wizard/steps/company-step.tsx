@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Alert, Button, Heading, Input, RadioGroup } from "@medusajs/ui";
 import i18n from "i18next";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import * as z from "zod";
 
@@ -65,7 +65,7 @@ export const CompanyStep = ({ onSubmit, isPending }: CompanyStepProps) => {
     },
   });
 
-  const companyType = form.watch("company_type");
+  const companyType = useWatch({ control: form.control, name: "company_type" });
 
   const handleSubmit = form.handleSubmit(async (data) => {
     await onSubmit(data);

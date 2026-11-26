@@ -72,6 +72,10 @@ const STACKED_MODAL_ID = "tr"
 const getStackedModalId = (type: TaxRateRuleReferenceType) =>
   `${STACKED_MODAL_ID}-${type}`
 
+const RULE_DISPLAY_ORDER: TaxRateRuleReferenceType[] = [
+  TaxRateRuleReferenceType.PRODUCT,
+]
+
 export const TaxRegionCreateTaxOverrideForm = ({
   taxRegion,
 }: TaxRegionCreateTaxOverrideFormProps) => {
@@ -299,10 +303,6 @@ export const TaxRegionCreateTaxOverrideForm = ({
     }
   }
 
-  const displayOrder = new Set<TaxRateRuleReferenceType>([
-    TaxRateRuleReferenceType.PRODUCT,
-  ])
-
   const disableRule = (type: TaxRateRuleReferenceType) => {
     form.setValue(type, [], {
       shouldDirty: true,
@@ -310,8 +310,6 @@ export const TaxRegionCreateTaxOverrideForm = ({
     form.setValue(`enabled_rules.${type}`, false, {
       shouldDirty: true,
     })
-
-    displayOrder.delete(type)
   }
 
   const enableRule = (type: TaxRateRuleReferenceType) => {
@@ -321,8 +319,6 @@ export const TaxRegionCreateTaxOverrideForm = ({
     form.setValue(type, [], {
       shouldDirty: true,
     })
-
-    displayOrder.add(type)
   }
 
   const watchedEnabledRules = useWatch({
@@ -343,9 +339,10 @@ export const TaxRegionCreateTaxOverrideForm = ({
   const visibleRuleTypes = referenceTypeOptions
     .filter((option) => watchedEnabledRules[option.value])
     .sort((a, b) => {
-      const orderArray = Array.from(displayOrder)
-
-      return orderArray.indexOf(b.value) - orderArray.indexOf(a.value)
+      return (
+        RULE_DISPLAY_ORDER.indexOf(b.value) -
+        RULE_DISPLAY_ORDER.indexOf(a.value)
+      )
     })
 
   const getAvailableRuleTypes = (type: TaxRateRuleReferenceType) => {

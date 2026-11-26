@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
+import { useWatch } from "react-hook-form"
 import { Button, Checkbox, Heading, Text, clx } from "@medusajs/ui"
 import { useTranslation } from "react-i18next"
 
@@ -22,22 +23,29 @@ export const ProductCreateVariantMediaDrawer = ({
   const { getIsOpen, setIsOpen } = useStackedModal()
 
   const open = getIsOpen(VARIANT_MEDIA_DRAWER_ID)
-  const productMedia = form.watch("media") ?? []
+  const productMedia =
+    useWatch({ control: form.control, name: "media" }) ?? []
 
   const [selectedIds, setSelectedIds] = useState<string[]>([])
 
-  useEffect(() => {
-    if (!open || activeIndex === null) {
-      return
-    }
+  // Seed the selection from the variant each time the drawer opens for it.
+  const [seededFor, setSeededFor] = useState<{
+    open: boolean
+    activeIndex: number | null
+  }>({ open: false, activeIndex: null })
 
-    const current = getValues(`variants.${activeIndex}.media`) ?? []
-    setSelectedIds(
-      current
-        .map((media) => media.id)
-        .filter((id): id is string => !!id)
-    )
-  }, [open, activeIndex, getValues])
+  if (seededFor.open !== open || seededFor.activeIndex !== activeIndex) {
+    setSeededFor({ open, activeIndex })
+
+    if (open && activeIndex !== null) {
+      const current = getValues(`variants.${activeIndex}.media`) ?? []
+      setSelectedIds(
+        current
+          .map((media) => media.id)
+          .filter((id): id is string => !!id)
+      )
+    }
+  }
 
   const toggleSelected = (mediaId: string, checked: boolean) => {
     setSelectedIds((prev) =>

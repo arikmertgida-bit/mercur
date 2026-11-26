@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { HttpTypes, PromotionRuleDTO } from "@medusajs/types"
 import { Button } from "@medusajs/ui"
-import { useRef, useState } from "react"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { RouteDrawer } from "@components/modals"
@@ -30,10 +30,6 @@ export const EditRulesForm = ({
 }: EditPromotionFormProps) => {
   const { t } = useTranslation()
   const [rulesToRemove, setRulesToRemove] = useState<RuleToRemove[]>([])
-  const rulesToRemoveRef = useRef(rulesToRemove)
-
-  rulesToRemoveRef.current = rulesToRemove
-
   const form = useForm<EditRulesType>({
     defaultValues: {
       rules: [],
@@ -46,7 +42,7 @@ export const EditRulesForm = ({
   })
 
   const handleFormSubmit = form.handleSubmit((data) => {
-    return handleSubmit(rulesToRemoveRef.current)(data)
+    return handleSubmit(rulesToRemove)(data)
   })
 
   return (

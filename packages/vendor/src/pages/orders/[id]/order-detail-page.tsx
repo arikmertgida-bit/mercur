@@ -30,7 +30,7 @@ const Root = ({ children }: { children?: ReactNode }) => {
 
   const query = useLinkQuery("order", DEFAULT_FIELDS);
 
-  const { order, isLoading, isError, error } = useOrder(
+  const { order: rawOrder, isLoading, isError, error } = useOrder(
     id,
     query,
     {
@@ -42,19 +42,23 @@ const Root = ({ children }: { children?: ReactNode }) => {
     id,
   );
 
-  if (order) {
-    order.items = order.items.sort((itemA, itemB) => {
-      if (itemA.created_at > itemB.created_at) {
-        return 1;
-      }
+  // Sort a copy: the order object is the query cache entry and stays as fetched.
+  const order = rawOrder
+    ? {
+        ...rawOrder,
+        items: [...rawOrder.items].sort((itemA, itemB) => {
+          if (itemA.created_at > itemB.created_at) {
+            return 1;
+          }
 
-      if (itemA.created_at < itemB.created_at) {
-        return -1;
-      }
+          if (itemA.created_at < itemB.created_at) {
+            return -1;
+          }
 
-      return 0;
-    });
-  }
+          return 0;
+        }),
+      }
+    : rawOrder;
 
   if (isLoading || !order || isPreviewLoading) {
     return (

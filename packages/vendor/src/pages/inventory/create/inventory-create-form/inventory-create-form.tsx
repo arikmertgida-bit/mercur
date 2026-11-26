@@ -206,27 +206,41 @@ export function InventoryCreateForm({ locations }: InventoryCreateFormProps) {
     }
   }, [tab, trigger])
 
-  useEffect(() => {
-    if (isDirty) {
-      setStatus((prev) => ({ ...prev, [Tab.DETAILS]: "in-progress" }))
-    } else {
-      setStatus((prev) => ({ ...prev, [Tab.DETAILS]: "not-started" }))
-    }
-  }, [isDirty])
+  // Step badges follow the tab and dirty state (set during render).
+  const [statusFor, setStatusFor] = useState<{
+    tab: Tab
+    isDirty: boolean
+  } | null>(null)
 
-  useEffect(() => {
-    if (tab === Tab.DETAILS && isDirty) {
-      setStatus((prev) => ({ ...prev, [Tab.DETAILS]: "in-progress" }))
-    }
+  if (statusFor?.tab !== tab || statusFor.isDirty !== isDirty) {
+    const dirtyChanged = statusFor?.isDirty !== isDirty
 
-    if (tab === Tab.AVAILABILITY) {
-      setStatus((prev) => ({
-        ...prev,
-        [Tab.DETAILS]: "completed",
-        [Tab.AVAILABILITY]: "in-progress",
-      }))
-    }
-  }, [tab, isDirty])
+    setStatusFor({ tab, isDirty })
+    setStatus((prev) => {
+      let next = prev
+
+      if (dirtyChanged) {
+        next = {
+          ...next,
+          [Tab.DETAILS]: isDirty ? "in-progress" : "not-started",
+        }
+      }
+
+      if (tab === Tab.DETAILS && isDirty) {
+        next = { ...next, [Tab.DETAILS]: "in-progress" }
+      }
+
+      if (tab === Tab.AVAILABILITY) {
+        next = {
+          ...next,
+          [Tab.DETAILS]: "completed",
+          [Tab.AVAILABILITY]: "in-progress",
+        }
+      }
+
+      return next
+    })
+  }
 
   return (
     <RouteFocusModal.Form form={form}>

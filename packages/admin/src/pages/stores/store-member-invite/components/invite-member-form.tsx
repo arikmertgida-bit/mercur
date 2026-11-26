@@ -3,7 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import i18n from "i18next";
 import { Button, Input, Select, Text, clx, toast } from "@medusajs/ui";
 import { useMemo, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import * as zod from "zod";
 
@@ -66,7 +66,7 @@ export const InviteMemberForm = () => {
     resolver: zodResolver(InviteMemberSchema),
   });
 
-  const emailValue = form.watch("email");
+  const emailValue = useWatch({ control: form.control, name: "email" });
 
   const { can } = usePermissions();
   const canViewMembers = can("members");

@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Heading, Input } from "@medusajs/ui";
 import i18n from "i18next";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import * as z from "zod";
 
@@ -44,7 +44,7 @@ export const PaymentStep = ({
     },
   });
 
-  const selectedCountry = form.watch("country_code");
+  const selectedCountry = useWatch({ control: form.control, name: "country_code" });
   const isUS = selectedCountry === "us";
 
   const handleSubmit = form.handleSubmit(async (data) => {

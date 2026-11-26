@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { HttpTypes } from "@medusajs/types"
 import { Button, toast } from "@medusajs/ui"
-import { useRef } from "react"
+import { useState } from "react"
 import { DefaultValues, useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { DataGrid } from "@components/data-grid"
@@ -31,7 +31,8 @@ export const InventoryStockForm = ({
   const { t } = useTranslation()
   const { setCloseOnEscape, handleSuccess } = useRouteModal()
 
-  const initialValues = useRef(getDefaultValues(items, locations))
+  // Snapshot of the values the form opened with, compared on submit.
+  const [initialValues] = useState(() => getDefaultValues(items, locations))
 
   const form = useForm<InventoryStockSchema>({
     defaultValues: getDefaultValues(items, locations),
@@ -56,7 +57,7 @@ export const InventoryStockForm = ({
       for (const [location_id, level] of Object.entries(item.locations)) {
         if (level.id) {
           const wasChecked =
-            initialValues.current?.inventory_items?.[inventory_item_id]
+            initialValues?.inventory_items?.[inventory_item_id]
               ?.locations?.[location_id]?.checked
 
           if (wasChecked && !level.checked) {
@@ -65,7 +66,7 @@ export const InventoryStockForm = ({
             const newQuantity =
               level.quantity !== "" ? castNumber(level.quantity) : 0
             const originalQuantity =
-              initialValues.current?.inventory_items?.[inventory_item_id]
+              initialValues?.inventory_items?.[inventory_item_id]
                 ?.locations?.[location_id]?.quantity
 
             if (newQuantity !== originalQuantity) {

@@ -20,7 +20,7 @@ import {
 } from "@medusajs/ui"
 import { PanelCurrencyInput } from "@components/inputs/locale-currency-input"
 import { useEffect, useMemo, useState } from "react"
-import { useFieldArray, useForm } from "react-hook-form"
+import { useFieldArray, useForm, useWatch } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
 import { Form } from "@components/common/form"
@@ -91,7 +91,6 @@ export const ReturnCreateForm = ({
             (a) => a.return_id === activeReturn.id
           )
       ),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [preview.items, activeReturn.id]
   )
 
@@ -208,6 +207,8 @@ export const ReturnCreateForm = ({
     },
     resolver: zodResolver(ReturnCreateSchema),
   })
+  const { setValue: setFormValue, clearErrors: clearFormErrors } = form
+
 
   const {
     fields: items,
@@ -264,8 +265,7 @@ export const ReturnCreateForm = ({
         remove(ind)
       }
     })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [previewItems])
+  }, [previewItems, items, append, update, remove])
 
   useEffect(() => {
     const method = preview.shipping_methods?.find(
@@ -276,17 +276,15 @@ export const ReturnCreateForm = ({
     )
 
     if (method) {
-      form.setValue("option_id", method.shipping_option_id ?? "")
+      setFormValue("option_id", method.shipping_option_id ?? "")
     } else {
-      form.setValue("option_id", "")
+      setFormValue("option_id", "")
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [preview.shipping_methods])
+  }, [preview.shipping_methods, setFormValue])
 
   useEffect(() => {
-    form.setValue("location_id", activeReturn?.location_id || "")
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeReturn])
+    setFormValue("location_id", activeReturn?.location_id || "")
+  }, [activeReturn, setFormValue])
 
   useEffect(() => {
     if (isShippingPriceEdit) {
@@ -296,18 +294,17 @@ export const ReturnCreateForm = ({
 
   const showPlaceholder = !items.length
   const itemsError = form.formState.errors.items
-  const locationId = form.watch("location_id")
-  const shippingOptionId = form.watch("option_id")
+  const locationId = useWatch({ control: form.control, name: "location_id" })
+  const shippingOptionId = useWatch({ control: form.control, name: "option_id" })
   const prompt = usePrompt()
 
   // Clear the "no items" validation error as soon as an item lands on the
   // draft (items sync in from the preview refetch, not synchronously on Save).
   useEffect(() => {
     if (items.length) {
-      form.clearErrors("items")
+      clearFormErrors("items")
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [items.length])
+  }, [items.length, clearFormErrors])
 
   const locationName = useMemo(() => {
     if (!locationId) return null

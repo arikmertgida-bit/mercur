@@ -8,7 +8,7 @@ import {
   Textarea,
   toast,
 } from "@medusajs/ui"
-import { useForm } from "react-hook-form"
+import { useForm, useWatch } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import * as zod from "zod"
 
@@ -65,7 +65,7 @@ export const CreateAttributeForm = ({
     resolver: zodResolver(schema),
   })
 
-  const useForVariants = form.watch("use_for_variants")
+  const useForVariants = useWatch({ control: form.control, name: "use_for_variants" })
 
   const { mutateAsync: createAttribute, isPending } =
     useBatchProductAttributes(productId)

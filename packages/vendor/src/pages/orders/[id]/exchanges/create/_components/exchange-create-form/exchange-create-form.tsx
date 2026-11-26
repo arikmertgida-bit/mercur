@@ -11,7 +11,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Button, Heading, Switch, Text, toast, usePrompt } from "@medusajs/ui"
 import { useEffect, useMemo, useState } from "react"
-import { useForm } from "react-hook-form"
+import { useForm, useWatch } from "react-hook-form"
 import { useNavigate, useParams } from "react-router-dom"
 import { useTranslation } from "react-i18next"
 
@@ -109,11 +109,10 @@ export const ExchangeCreateForm = () => {
     }
 
     run()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [preview, orderId, exchangeId])
+  }, [preview, orderId, exchangeId, createExchange, navigate, t])
 
-  const inboundItemsWatch = form.watch("inbound_items")
-  const outboundItemsWatch = form.watch("outbound_items")
+  const inboundItemsWatch = useWatch({ control: form.control, name: "inbound_items" })
+  const outboundItemsWatch = useWatch({ control: form.control, name: "outbound_items" })
 
   const hasSelection = useMemo(
     () =>

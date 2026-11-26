@@ -2,7 +2,6 @@ import {
   PropsWithChildren,
   ReactNode,
   useCallback,
-  useEffect,
   useState,
 } from "react";
 
@@ -90,7 +89,7 @@ const NavItemTooltip = ({
           <span>{shortcut?.label}</span>
           <div className="flex items-center gap-x-1">
             {shortcut?.keys.Mac?.map((key, index) => (
-              <div className="flex items-center gap-x-1" key={index}>
+              <div className="flex items-center gap-x-1" key={key}>
                 <Kbd key={key}>{key}</Kbd>
                 {index < (shortcut.keys.Mac?.length || 0) - 1 && (
                   <span className="txt-compact-xsmall text-ui-fg-muted">
@@ -126,9 +125,15 @@ export const NavItem = ({
   const [open, setOpen] = useState(getIsOpen(to, items, pathname));
   const resolvedLabel = resolveNavLabel(t, label, translationNs);
 
-  useEffect(() => {
+  // Re-derive when the route or the item paths change (primitive key, so a new
+  // `items` array with the same paths keeps the user's toggle).
+  const openKey = [pathname, to, ...(items?.map((i) => i.to) ?? [])].join("|");
+  const [syncedOpenKey, setSyncedOpenKey] = useState(openKey);
+
+  if (syncedOpenKey !== openKey) {
+    setSyncedOpenKey(openKey);
     setOpen(getIsOpen(to, items, pathname));
-  }, [pathname, to, items]);
+  }
 
   const navLinkClassNames = useCallback(
     ({

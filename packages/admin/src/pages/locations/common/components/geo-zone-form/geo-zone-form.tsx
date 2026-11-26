@@ -4,7 +4,7 @@ import {
   RowSelectionState,
   createColumnHelper,
 } from "@tanstack/react-table"
-import { useEffect, useMemo, useState } from "react"
+import { useMemo, useState } from "react"
 import { UseFormReturn, useFieldArray, useFormContext } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { z } from "zod"
@@ -134,12 +134,13 @@ const AreaStackedModal = () => {
     ...searchParams,
   })
 
-  useEffect(() => {
-    if (!open) {
-      return
-    }
+  // Seed the stacked modal from the form each time it opens (set during render).
+  const [seededForOpen, setSeededForOpen] = useState(false)
 
-    const countries = getValues("countries")
+  if (open !== seededForOpen) {
+    setSeededForOpen(open)
+
+    const countries = open ? getValues("countries") : undefined
 
     if (countries) {
       setState(
@@ -159,7 +160,7 @@ const AreaStackedModal = () => {
         )
       )
     }
-  }, [open, getValues])
+  }
 
   const updater: OnChangeFn<RowSelectionState> = (fn) => {
     const value = typeof fn === "function" ? fn(selection) : fn

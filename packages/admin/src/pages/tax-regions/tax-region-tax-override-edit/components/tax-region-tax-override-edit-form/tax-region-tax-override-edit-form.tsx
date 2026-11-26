@@ -39,6 +39,10 @@ import { createTaxRulePayload } from "../../../common/utils"
 import { InitialRuleValues } from "../../types"
 import { useDocumentDirection } from "../../../../../hooks/use-document-direction"
 
+const RULE_DISPLAY_ORDER: TaxRateRuleReferenceType[] = [
+  TaxRateRuleReferenceType.PRODUCT,
+]
+
 export const DISPLAY_OVERRIDE_ITEMS_LIMIT = 10
 
 type TaxRegionTaxOverrideEditFormProps = {
@@ -302,10 +306,6 @@ export const TaxRegionTaxOverrideEditForm = ({
     }
   }
 
-  const displayOrder = new Set<TaxRateRuleReferenceType>([
-    TaxRateRuleReferenceType.PRODUCT,
-  ])
-
   const disableRule = (type: TaxRateRuleReferenceType) => {
     form.setValue(type, [], {
       shouldDirty: true,
@@ -313,8 +313,6 @@ export const TaxRegionTaxOverrideEditForm = ({
     form.setValue(`enabled_rules.${type}`, false, {
       shouldDirty: true,
     })
-
-    displayOrder.delete(type)
   }
 
   const enableRule = (type: TaxRateRuleReferenceType) => {
@@ -324,8 +322,6 @@ export const TaxRegionTaxOverrideEditForm = ({
     form.setValue(type, [], {
       shouldDirty: true,
     })
-
-    displayOrder.add(type)
   }
 
   const watchedEnabledRules = useWatch({
@@ -346,8 +342,10 @@ export const TaxRegionTaxOverrideEditForm = ({
   const visibleRuleTypes = referenceTypeOptions
     .filter((option) => watchedEnabledRules[option.value])
     .sort((a, b) => {
-      const orderArray = Array.from(displayOrder)
-      return orderArray.indexOf(a.value) - orderArray.indexOf(b.value)
+      return (
+        RULE_DISPLAY_ORDER.indexOf(a.value) -
+        RULE_DISPLAY_ORDER.indexOf(b.value)
+      )
     })
 
   const getAvailableRuleTypes = (type: TaxRateRuleReferenceType) => {

@@ -16,7 +16,6 @@ import {
   forwardRef,
   Fragment,
   useCallback,
-  useEffect,
   useImperativeHandle,
   useMemo,
   useRef,
@@ -87,9 +86,13 @@ export const Search = () => {
     [onOpenChange, handleReset],
   );
 
-  useEffect(() => {
-    handleOpenChange(false);
-  }, [location.pathname, handleOpenChange]);
+  // SearchProvider closes the dialog on navigation; reset the query with it.
+  const [syncedPathname, setSyncedPathname] = useState(location.pathname);
+
+  if (syncedPathname !== location.pathname) {
+    setSyncedPathname(location.pathname);
+    handleReset();
+  }
 
   const handleSelect = (item: { to?: string; callback?: () => void }) => {
     handleOpenChange(false);
@@ -249,7 +252,7 @@ export const Search = () => {
                         return (
                           <div
                             className="flex items-center gap-x-1"
-                            key={index}
+                            key={key}
                           >
                             <Kbd>{key}</Kbd>
                             {index < (item.keys.Mac?.length || 0) - 1 && (
@@ -517,6 +520,8 @@ const CommandEmpty = forwardRef<
 
 CommandEmpty.displayName = Command.Empty.displayName;
 
+const SKELETON_ROWS = Array.from({ length: 7 }, (_, row) => `skeleton-${row}`);
+
 const CommandLoading = forwardRef<
   ElementRef<typeof Command.Loading>,
   ComponentPropsWithoutRef<typeof Command.Loading>
@@ -530,8 +535,8 @@ const CommandLoading = forwardRef<
       <div className="w-full px-2 pb-1 pt-3">
         <Skeleton className="h-5 w-10" />
       </div>
-      {Array.from({ length: 7 }).map((_, index) => (
-        <div key={index} className="w-full p-2">
+      {SKELETON_ROWS.map((row) => (
+        <div key={row} className="w-full p-2">
           <Skeleton className="h-5 w-full" />
         </div>
       ))}

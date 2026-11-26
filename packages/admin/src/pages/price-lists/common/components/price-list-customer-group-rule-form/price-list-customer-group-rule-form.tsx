@@ -6,7 +6,7 @@ import {
   RowSelectionState,
   createColumnHelper,
 } from "@tanstack/react-table"
-import { useEffect, useMemo, useState } from "react"
+import { useMemo, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { StackedDrawer } from "../../../../../components/modals/stacked-drawer"
 import { StackedFocusModal } from "../../../../../components/modals/stacked-focus-modal"
@@ -47,12 +47,15 @@ export const PriceListCustomerGroupRuleForm = ({
   const [intermediate, setIntermediate] =
     useState<PriceListCustomerGroup[]>(state)
 
-  useEffect(() => {
-    // If the selected customer groups change outside of the drawer,
-    // update the row selection state and intermediate state
+  // If the selected customer groups change outside of the drawer,
+  // update the row selection state and intermediate state
+  const [syncedState, setSyncedState] = useState(state)
+
+  if (syncedState !== state) {
+    setSyncedState(state)
     setRowSelection(initRowSelection(state))
     setIntermediate(state)
-  }, [state])
+  }
 
   const { searchParams, raw } = useCustomerGroupTableQuery({
     pageSize: PAGE_SIZE,
