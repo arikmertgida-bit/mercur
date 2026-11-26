@@ -86,9 +86,8 @@ class MessagingModuleService extends MedusaService({
 }) {
   protected readonly options_: ResolvedMessagingModuleOptions
 
-  constructor(_container: InjectedDependencies, options?: MessagingModuleOptions) {
-    // eslint-disable-next-line prefer-rest-params
-    super(...arguments)
+  constructor(container: InjectedDependencies, options?: MessagingModuleOptions) {
+    super(container, options)
     this.options_ = {
       rateLimits: {
         ...MESSAGING_MODULE_OPTION_DEFAULTS.rateLimits,

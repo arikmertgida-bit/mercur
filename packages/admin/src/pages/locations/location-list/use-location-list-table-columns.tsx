@@ -8,7 +8,7 @@ import {
 } from "@medusajs/ui"
 import type { useDataTable } from "@medusajs/ui"
 import { useTranslation } from "react-i18next"
-import { useMemo } from "react"
+import { useCallback, useMemo } from "react"
 import { useNavigate } from "react-router-dom"
 import { usePermissions } from "@mercurjs/dashboard-shared"
 import { sdk } from "@lib/client"
@@ -31,7 +31,7 @@ export const useLocationListTableColumns = (): LocationListColumns => {
   const navigate = useNavigate()
   const prompt = usePrompt()
 
-  const handleDelete = async (location: HttpTypes.AdminStockLocation) => {
+  const handleDelete = useCallback(async (location: HttpTypes.AdminStockLocation) => {
     const result = await prompt({
       title: t("general.areYouSure"),
       description: t("stockLocations.delete.confirmation", {
@@ -63,7 +63,7 @@ export const useLocationListTableColumns = (): LocationListColumns => {
     } catch (e) {
       toast.error(e instanceof Error ? e.message : t("general.unknownError"))
     }
-  }
+  }, [prompt, t])
 
   // Built before the return so the cells keep their inferred value types
   // instead of taking the wider column type DataTable accepts.
@@ -187,8 +187,7 @@ export const useLocationListTableColumns = (): LocationListColumns => {
         },
       }),
     ],
-    // oxlint-disable-next-line react-hooks/exhaustive-deps
-    [navigate, t, can]
+    [navigate, t, can, handleDelete]
   )
 
   return columns

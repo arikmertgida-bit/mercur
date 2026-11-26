@@ -106,8 +106,12 @@ export const ExchangeInboundSection = ({
     [preview.items, exchange.id]
   )
 
-  const inboundPreviewItems = previewInboundItems.filter(
-    (item) => !!item.actions?.find((a) => a.action === "RETURN_ITEM")
+  const inboundPreviewItems = useMemo(
+    () =>
+      previewInboundItems.filter(
+        (item) => !!item.actions?.find((a) => a.action === "RETURN_ITEM")
+      ),
+    [previewInboundItems]
   )
 
   const itemsMap = useMemo(
@@ -195,13 +199,14 @@ export const ExchangeInboundSection = ({
       }
     })
 
-    inboundItems.forEach((i, ind) => {
-      if (!(i.item_id in existingItemsMap)) {
-        remove(ind)
-      }
-    })
+    const staleIndexes = inboundItems.flatMap((i, ind) =>
+      i.item_id in existingItemsMap ? [] : [ind]
+    )
+
+    if (staleIndexes.length) {
+      remove(staleIndexes)
+    }
   }, [
-	previewInboundItems,
 	inboundPreviewItems,
 	append,
 	update,

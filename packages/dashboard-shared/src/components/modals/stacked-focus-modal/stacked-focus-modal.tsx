@@ -40,8 +40,7 @@ export const Root: ComponentType<StackedFocusModalProps> = ({
     register(id);
 
     return () => unregister(id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [id, register, unregister]);
 
   const handleOpenChange = (open: boolean) => {
     setIsOpen(id, open);

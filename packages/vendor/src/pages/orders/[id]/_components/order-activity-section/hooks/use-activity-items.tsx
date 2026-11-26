@@ -451,16 +451,18 @@ export const useActivityItems = (order: HttpTypes.VendorOrder): Activity[] => {
     }
 
     return [...sortedActivities, createdAt]
-  /* oxlint-disable react-hooks/exhaustive-deps */
   }, [
-	order,
-	exchanges,
-	orderChanges,
-	payments,
-	isLoading,
-	itemsMap,
-	extensionActivity
-])
-  /* oxlint-enable react-hooks/exhaustive-deps */
+    order,
+    returns,
+    claims,
+    exchanges,
+    orderChanges,
+    payments,
+    isLoading,
+    itemsMap,
+    extensionActivity,
+    t,
+    i18n.language,
+  ])
 }
 

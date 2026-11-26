@@ -118,8 +118,7 @@ export const CreatePromotionForm = () => {
     // displayed) for the whole session regardless of which template/tab
     // the vendor is on; see code-reservation-token for why it's safe to
     // leave stale on close instead of explicitly revoking it.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [generatePromotionCode]);
 
   const showPromotionTabError = () => {
     toast.error(t('promotions.errors.promotionTabError'));

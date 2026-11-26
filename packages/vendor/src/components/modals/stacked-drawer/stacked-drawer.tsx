@@ -36,8 +36,7 @@ export const Root: ComponentType<StackedDrawerProps> = ({
     register(id);
 
     return () => unregister(id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [id, register, unregister]);
 
   return (
     <Drawer

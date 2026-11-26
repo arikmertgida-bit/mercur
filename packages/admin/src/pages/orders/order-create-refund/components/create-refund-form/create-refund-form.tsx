@@ -1,5 +1,5 @@
 import { usePermissionGate } from "@mercurjs/dashboard-shared";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { HttpTypes } from "@medusajs/types";
@@ -54,6 +54,18 @@ const CreateRefundSchema = zod.object({
   refund_reason_id: zod.string().optional(),
 });
 
+const getSuggestedRefundAmount = (
+  pendingDifference: number,
+  paymentTotal: number,
+): number => {
+  const pendingAmount =
+    pendingDifference < 0
+      ? Math.min(Math.abs(pendingDifference), paymentTotal)
+      : paymentTotal;
+
+  return pendingAmount < 0 ? pendingAmount * -1 : pendingAmount;
+};
+
 export const CreateRefundForm = ({ order }: CreateRefundFormProps) => {
   const { t } = useTranslation();
   const { handleSuccess } = useRouteModal();
@@ -87,30 +99,26 @@ export const CreateRefundForm = ({ order }: CreateRefundFormProps) => {
     resolver: zodResolver(CreateRefundSchema),
   });
 
+  const selectedPaymentAmount = payment?.amount || 0;
+  const pendingDifference = order.summary.pending_difference;
+  const decimalDigits = currency.decimal_digits;
+  const { setValue } = form;
+
+  const seedAmount = useCallback(
+    (paymentTotal: number) => {
+      const amount = getSuggestedRefundAmount(pendingDifference, paymentTotal);
+
+      setValue("amount", {
+        value: amount.toFixed(decimalDigits),
+        float: amount,
+      });
+    },
+    [pendingDifference, decimalDigits, setValue],
+  );
+
   useEffect(() => {
-    const pendingDifference = order.summary.pending_difference;
-    const paymentAmount = payment?.amount || 0;
-    const pendingAmount =
-      pendingDifference < 0
-        ? Math.min(Math.abs(pendingDifference), paymentAmount)
-        : paymentAmount;
-
-    const normalizedAmount =
-      pendingAmount < 0 ? pendingAmount * -1 : pendingAmount;
-
-    form.setValue("amount", {
-      value: normalizedAmount.toFixed(currency.decimal_digits),
-      float: normalizedAmount,
-    });
-  /* oxlint-disable react-hooks/exhaustive-deps */
-  }, [
-	payment?.id || '',
-	form,
-	order.summary.pending_difference,
-	payment?.amount,
-	currency.decimal_digits
-]);
-  /* oxlint-enable react-hooks/exhaustive-deps */
+    seedAmount(selectedPaymentAmount);
+  }, [seedAmount, selectedPaymentAmount]);
 
   const { mutateAsync, isPending } = useRefundPayment(order.id, payment?.id);
 
@@ -158,6 +166,9 @@ export const CreateRefundForm = ({ order }: CreateRefundFormProps) => {
                 value={paymentId}
                 onValueChange={(value) => {
                   setPaymentId(value);
+                  seedAmount(
+                    payments.find((p) => p.id === value)?.amount || 0,
+                  );
                 }}
                 data-testid="order-create-refund-payment-select"
               >

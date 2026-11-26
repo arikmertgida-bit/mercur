@@ -124,13 +124,14 @@ export const ClaimOutboundSection = ({
       }
     })
 
-    outboundItems.forEach((i, ind) => {
-      if (!(i.item_id in existingItemsMap)) {
-        remove(ind)
-      }
-    })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [previewOutboundItems])
+    const staleIndexes = outboundItems.flatMap((i, ind) =>
+      i.item_id in existingItemsMap ? [] : [ind]
+    )
+
+    if (staleIndexes.length) {
+      remove(staleIndexes)
+    }
+  }, [previewOutboundItems, outboundItems, append, update, remove])
 
   const showOutboundItemsPlaceholder = !outboundItems.length
 

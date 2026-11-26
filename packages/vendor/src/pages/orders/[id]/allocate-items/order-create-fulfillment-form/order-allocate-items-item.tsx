@@ -106,7 +106,6 @@ export function OrderAllocateItemsItem({
       availableQuantity: locationInventory.available_quantity,
       inStockQuantity: locationInventory.stocked_quantity,
     }
-    // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, [firstLink, locationId])
 
   const hasQuantityError =

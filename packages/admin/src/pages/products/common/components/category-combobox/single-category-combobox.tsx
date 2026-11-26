@@ -118,21 +118,46 @@ export const SingleCategoryCombobox = forwardRef<
     innerRef.current?.focus()
   }
 
-  function handleLevelDown(option: ProductCategoryOption) {
-    // Invoked both from the option button's onClick (React MouseEvent) and
-    // from the window keydown listener ("Enter" key, native DOM
-    // KeyboardEvent) — accept the minimal shape both share instead of one
-    // specific event type.
-    return (e: { preventDefault(): void; stopPropagation(): void }) => {
-      e.preventDefault()
-      e.stopPropagation()
+  const handleOpenChange = useCallback(
+    (open: boolean) => {
+      if (open && !canViewCategories) {
+        return
+      }
 
-      onSearchValueChange("")
-      setLevel([...level, { id: option.value, label: option.label }])
+      if (!open) {
+        onSearchValueChange("")
+        setLevel([])
+      }
 
-      innerRef.current?.focus()
-    }
-  }
+      if (open) {
+        requestAnimationFrame(() => {
+          innerRef.current?.focus()
+        })
+      }
+
+      setOpen(open)
+    },
+    [canViewCategories, onSearchValueChange]
+  )
+
+  const handleLevelDown = useCallback(
+    (option: ProductCategoryOption) => {
+      // Invoked both from the option button's onClick (React MouseEvent) and
+      // from the window keydown listener ("Enter" key, native DOM
+      // KeyboardEvent) — accept the minimal shape both share instead of one
+      // specific event type.
+      return (e: { preventDefault(): void; stopPropagation(): void }) => {
+        e.preventDefault()
+        e.stopPropagation()
+
+        onSearchValueChange("")
+        setLevel((prev) => [...prev, { id: option.value, label: option.label }])
+
+        innerRef.current?.focus()
+      }
+    },
+    [onSearchValueChange]
+  )
 
   const handleSelect = useCallback(
     (option: ProductCategoryOption) => {
@@ -153,7 +178,6 @@ export const SingleCategoryCombobox = forwardRef<
         innerRef.current?.focus()
       }
     },
-    // oxlint-disable-next-line react-hooks/exhaustive-deps
     [value, onChange, handleOpenChange]
   )
 
@@ -165,28 +189,8 @@ export const SingleCategoryCombobox = forwardRef<
         ? handleLevelDown(option)
         : handleSelect(option)
     },
-    // oxlint-disable-next-line react-hooks/exhaustive-deps
-    [handleSelect, level]
+    [handleSelect, handleLevelDown]
   )
-
-  function handleOpenChange(open: boolean) {
-    if (open && !canViewCategories) {
-      return
-    }
-
-    if (!open) {
-      onSearchValueChange("")
-      setLevel([])
-    }
-
-    if (open) {
-      requestAnimationFrame(() => {
-        innerRef.current?.focus()
-      })
-    }
-
-    setOpen(open)
-  }
 
   const options = getOptions(product_categories || [])
 

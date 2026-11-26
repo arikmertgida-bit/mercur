@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useMemo, useRef, useState } from "react"
+import React, { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from "react"
 
 import { CheckMini, TrianglesMini, XMarkMini } from "@medusajs/icons"
 import { Badge, Input, Text } from "@medusajs/ui"
@@ -66,7 +66,7 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
       }
     }, [])
 
-    const calculateVisibleBadges = () => {
+    const calculateVisibleBadges = useCallback(() => {
       if (!value || value.length === 0 || !badgesContainerRef.current) {
         setVisibleBadgesCount(0)
         return
@@ -107,12 +107,11 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
       }
 
       setVisibleBadgesCount(count)
-    }
+    }, [value, options])
 
     useEffect(() => {
       calculateVisibleBadges()
-      // oxlint-disable-next-line react-hooks/exhaustive-deps
-    }, [value, options])
+    }, [calculateVisibleBadges])
 
     useEffect(() => {
       const resizeObserver = new ResizeObserver(() => {
@@ -126,8 +125,7 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
       return () => {
         resizeObserver.disconnect()
       }
-      // oxlint-disable-next-line react-hooks/exhaustive-deps
-    }, [value, options])
+    }, [calculateVisibleBadges])
 
     const handleToggle = () => {
       if (disabled) return

@@ -87,8 +87,15 @@ export const Component = () => {
         IS_REQUEST_RUNNING = false
       }
     })()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [preview, orderReturn])
+  }, [
+    preview,
+    orderReturn,
+    orderId,
+    navigate,
+    t,
+    initiateReceiveReturn,
+    addReceiveItems,
+  ])
 
   const ready = !!order && !!orderReturn && !!preview
 

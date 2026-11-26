@@ -12,7 +12,8 @@
     "eslint/no-shadow": "off",
     "import/no-named-as-default-member": "off",
     "eslint/no-underscore-dangle": "off",
-    "import/no-unassigned-import": "off"
+    "import/no-unassigned-import": "off",
+    "react/incompatible-library": "warn"
   },
   "env": {
     "browser": true,

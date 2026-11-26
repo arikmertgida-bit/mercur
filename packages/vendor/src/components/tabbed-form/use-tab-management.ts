@@ -52,20 +52,21 @@ const validateTab = async <T extends FieldValues>(
  * Validates all tabs from `fromIndex` to `toIndex` (inclusive) sequentially.
  * Returns false on the first tab that fails validation.
  */
-const validateTabRange = async <T extends FieldValues>(
+const validateTabRange = <T extends FieldValues>(
   form: UseFormReturn<T>,
   tabs: TabDefinition<T>[],
   fromIndex: number,
   toIndex: number
-): Promise<boolean> => {
-  for (let i = fromIndex; i <= toIndex; i++) {
-    // oxlint-disable-next-line eslint/no-await-in-loop -- intentional short-circuit: stop at the first invalid tab instead of validating all tabs in parallel
-    if (!(await validateTab(form, tabs[i]))) {
-      return false
-    }
-  }
-  return true
-}
+): Promise<boolean> =>
+  // Chained, not parallel: a tab is validated only after every earlier tab
+  // passed, so the first invalid tab stops the walk.
+  tabs
+    .slice(fromIndex, toIndex + 1)
+    .reduce<Promise<boolean>>(
+      (previous, tab) =>
+        previous.then((valid) => (valid ? validateTab(form, tab) : false)),
+      Promise.resolve(true)
+    )
 
 /**
  * Walks a (possibly nested) RHF error down to the first leaf that carries a

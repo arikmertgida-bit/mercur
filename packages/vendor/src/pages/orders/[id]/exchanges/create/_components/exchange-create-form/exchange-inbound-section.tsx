@@ -111,8 +111,12 @@ export const ExchangeInboundSection = ({
     [preview.items, exchange.id]
   )
 
-  const inboundPreviewItems = previewInboundItems.filter(
-    (item) => !!item.actions?.find((a) => a.action === "RETURN_ITEM")
+  const inboundPreviewItems = useMemo(
+    () =>
+      previewInboundItems.filter(
+        (item) => !!item.actions?.find((a) => a.action === "RETURN_ITEM")
+      ),
+    [previewInboundItems]
   )
 
   const itemsMap = useMemo(
@@ -200,13 +204,16 @@ export const ExchangeInboundSection = ({
       }
     })
 
-    inboundItems.forEach((i, ind) => {
-      if (!(i.item_id in existingItemsMap)) {
-        remove(ind)
-      }
-    })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [previewInboundItems])
+    const staleIndexes = inboundItems.flatMap((i, ind) =>
+      i.item_id in existingItemsMap ? [] : [ind]
+    )
+
+    if (staleIndexes.length) {
+      remove(staleIndexes)
+    }
+  }, [inboundPreviewItems, inboundItems, append, update, remove])
+
+  const { setValue } = form
 
   useEffect(() => {
     const inboundShippingMethod = (preview.shipping_methods ?? []).find((s) =>
@@ -214,19 +221,17 @@ export const ExchangeInboundSection = ({
     )
 
     if (inboundShippingMethod?.shipping_option_id) {
-      form.setValue("inbound_option_id", inboundShippingMethod.shipping_option_id)
+      setValue("inbound_option_id", inboundShippingMethod.shipping_option_id)
     } else {
-      form.setValue("inbound_option_id", "")
+      setValue("inbound_option_id", "")
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [preview.shipping_methods])
+  }, [preview.shipping_methods, setValue])
 
   useEffect(() => {
     if (orderReturn?.location_id) {
-      form.setValue("location_id", orderReturn.location_id)
+      setValue("location_id", orderReturn.location_id)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [orderReturn])
+  }, [orderReturn?.location_id, setValue])
 
   const showInboundItemsPlaceholder = !inboundItems.length
 
@@ -247,20 +252,27 @@ export const ExchangeInboundSection = ({
       )
     }
 
-    for (const itemToRemove of itemsToRemove) {
+    const removeActionIds = itemsToRemove.flatMap((itemToRemove) => {
       const actionId = previewInboundItems
         .find((i) => i.id === itemToRemove)
         ?.actions?.find((a) => a.action === "RETURN_ITEM")?.id
 
-      if (actionId) {
-        // oxlint-disable-next-line eslint/no-await-in-loop -- sequential mutations on the same order-change/exchange record; parallelizing risks a backend race
-        await removeInboundItem(actionId, {
-          onError: (error) => {
-            toast.error(error.message)
-          },
-        })
-      }
-    }
+      return actionId ? [actionId] : []
+    })
+
+    // Chained, not parallel: every removal mutates the same exchange's order
+    // change, and concurrent requests race on it.
+    await removeActionIds.reduce<Promise<void>>(
+      (previous, actionId) =>
+        previous.then(async () => {
+          await removeInboundItem(actionId, {
+            onError: (error) => {
+              toast.error(error.message)
+            },
+          })
+        }),
+      Promise.resolve()
+    )
 
     setIsOpen("inbound-items", false)
   }

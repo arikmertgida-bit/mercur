@@ -254,11 +254,13 @@ export const ReturnCreateForm = ({
       }
     })
 
-    items.forEach((i, ind) => {
-      if (!(i.item_id in existingItemsMap)) {
-        remove(ind)
-      }
-    })
+    const staleIndexes = items.flatMap((i, ind) =>
+      i.item_id in existingItemsMap ? [] : [ind]
+    )
+
+    if (staleIndexes.length) {
+      remove(staleIndexes)
+    }
   }, [
 	previewItems,
 	append,

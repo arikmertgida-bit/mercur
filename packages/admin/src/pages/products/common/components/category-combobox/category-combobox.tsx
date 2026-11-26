@@ -122,6 +122,24 @@ export const CategoryCombobox = forwardRef<
     }
   }
 
+  const handleOpenChange = useCallback(
+    (open: boolean) => {
+      if (!open) {
+        onSearchValueChange("")
+        setLevel([])
+      }
+
+      if (open) {
+        requestAnimationFrame(() => {
+          innerRef.current?.focus()
+        })
+      }
+
+      setOpen(open)
+    },
+    [onSearchValueChange]
+  )
+
   const handleSelect = useCallback(
     (option: ProductCategoryOption) => {
       // Invoked both from onClick (React MouseEvent) and from the window
@@ -145,24 +163,8 @@ export const CategoryCombobox = forwardRef<
         innerRef.current?.focus()
       }
     },
-    // oxlint-disable-next-line react-hooks/exhaustive-deps
     [value, onChange, isSingleSelect, handleOpenChange]
   )
-
-  function handleOpenChange(open: boolean) {
-    if (!open) {
-      onSearchValueChange("")
-      setLevel([])
-    }
-
-    if (open) {
-      requestAnimationFrame(() => {
-        innerRef.current?.focus()
-      })
-    }
-
-    setOpen(open)
-  }
 
   const options = getOptions(product_categories || [])
 

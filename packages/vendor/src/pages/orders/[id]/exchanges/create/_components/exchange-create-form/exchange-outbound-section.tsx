@@ -134,13 +134,14 @@ export const ExchangeOutboundSection = ({
       }
     })
 
-    outboundItems.forEach((i, ind) => {
-      if (!(i.item_id in existingItemsMap)) {
-        remove(ind)
-      }
-    })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [previewOutboundItems])
+    const staleIndexes = outboundItems.flatMap((i, ind) =>
+      i.item_id in existingItemsMap ? [] : [ind]
+    )
+
+    if (staleIndexes.length) {
+      remove(staleIndexes)
+    }
+  }, [previewOutboundItems, outboundItems, append, update, remove])
 
   const showOutboundItemsPlaceholder = !outboundItems.length
 
@@ -161,7 +162,7 @@ export const ExchangeOutboundSection = ({
       )
     }
 
-    for (const variantToRemove of variantsToRemove) {
+    const removeActionIds = variantsToRemove.flatMap((variantToRemove) => {
       const field = outboundItems.find(
         (f) => f.variant_id === variantToRemove
       )
@@ -172,18 +173,27 @@ export const ExchangeOutboundSection = ({
         (a) => a.action === "ITEM_ADD"
       )?.id
 
-      if (actionId) {
-        // oxlint-disable-next-line eslint/no-await-in-loop -- sequential mutations on the same order-change/exchange record; parallelizing risks a backend race
-        await removeOutboundItem(actionId, {
-          onError: (error) => {
-            toast.error(error.message)
-          },
-        })
-      }
-    }
+      return actionId ? [actionId] : []
+    })
+
+    // Chained, not parallel: every removal mutates the same exchange's order
+    // change, and concurrent requests race on it.
+    await removeActionIds.reduce<Promise<void>>(
+      (previous, actionId) =>
+        previous.then(async () => {
+          await removeOutboundItem(actionId, {
+            onError: (error) => {
+              toast.error(error.message)
+            },
+          })
+        }),
+      Promise.resolve()
+    )
 
     setIsOpen("outbound-items", false)
   }
+
+  const { setValue } = form
 
   useEffect(() => {
     const outboundShipping = (preview.shipping_methods ?? []).find(
@@ -192,12 +202,11 @@ export const ExchangeOutboundSection = ({
     )
 
     if (outboundShipping?.shipping_option_id) {
-      form.setValue("outbound_option_id", outboundShipping.shipping_option_id)
+      setValue("outbound_option_id", outboundShipping.shipping_option_id)
     } else {
-      form.setValue("outbound_option_id", "")
+      setValue("outbound_option_id", "")
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [preview.shipping_methods])
+  }, [preview.shipping_methods, setValue])
 
   const onShippingOptionChange = async (
     selectedOptionId: string | undefined

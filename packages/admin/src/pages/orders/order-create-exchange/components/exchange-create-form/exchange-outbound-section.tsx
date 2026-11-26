@@ -143,11 +143,13 @@ export const ExchangeOutboundSection = ({
       }
     })
 
-    outboundItems.forEach((i, ind) => {
-      if (!(i.item_id in existingItemsMap)) {
-        remove(ind)
-      }
-    })
+    const staleIndexes = outboundItems.flatMap((i, ind) =>
+      i.item_id in existingItemsMap ? [] : [ind]
+    )
+
+    if (staleIndexes.length) {
+      remove(staleIndexes)
+    }
   }, [
 	previewOutboundItems,
 	remove,

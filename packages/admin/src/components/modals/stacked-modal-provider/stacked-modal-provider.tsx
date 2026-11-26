@@ -1,4 +1,4 @@
-import { PropsWithChildren, useState } from "react"
+import { PropsWithChildren, useCallback, useMemo, useState } from "react"
 import { StackedModalContext } from "./stacked-modal-context"
 
 type StackedModalProviderProps = PropsWithChildren<{
@@ -11,43 +11,52 @@ export const StackedModalProvider = ({
 }: StackedModalProviderProps) => {
   const [state, setState] = useState<Record<string, boolean>>({})
 
-  const getIsOpen = (id: string) => {
-    return state[id] || false
-  }
+  const getIsOpen = useCallback(
+    (id: string) => {
+      return state[id] || false
+    },
+    [state],
+  )
 
-  const setIsOpen = (id: string, open: boolean) => {
-    setState((prevState) => ({
-      ...prevState,
-      [id]: open,
-    }))
+  const setIsOpen = useCallback(
+    (id: string, open: boolean) => {
+      setState((prevState) => ({
+        ...prevState,
+        [id]: open,
+      }))
 
-    onOpenChange(open)
-  }
+      onOpenChange(open)
+    },
+    [onOpenChange],
+  )
 
-  const register = (id: string) => {
+  const register = useCallback((id: string) => {
     setState((prevState) => ({
       ...prevState,
       [id]: false,
     }))
-  }
+  }, [])
 
-  const unregister = (id: string) => {
+  const unregister = useCallback((id: string) => {
     setState((prevState) => {
       const newState = { ...prevState }
       delete newState[id]
       return newState
     })
-  }
+  }, [])
+
+  const value = useMemo(
+    () => ({
+      getIsOpen,
+      setIsOpen,
+      register,
+      unregister,
+    }),
+    [getIsOpen, setIsOpen, register, unregister],
+  )
 
   return (
-    <StackedModalContext.Provider
-      value={{
-        getIsOpen,
-        setIsOpen,
-        register,
-        unregister,
-      }}
-    >
+    <StackedModalContext.Provider value={value}>
       {children}
     </StackedModalContext.Provider>
   )

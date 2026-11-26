@@ -56,7 +56,9 @@ export function OrderReceiveReturnForm({
   const previewItems = useMemo(() => {
     const idsMap: Record<string, boolean> = {}
     orderReturn.items.forEach((i) => (idsMap[i.item_id] = true))
-    return preview.items.filter((i) => idsMap[i.id])
+    return preview.items
+      .filter((i) => idsMap[i.id])
+      .sort((i1, i2) => i1.id.localeCompare(i2.id))
   }, [preview.items, orderReturn])
 
   const { mutateAsync: confirmReturnReceive, isPending: isConfirming } =
@@ -100,9 +102,7 @@ export function OrderReceiveReturnForm({
   const form = useForm<zod.infer<typeof ReceiveReturnSchema>>({
     defaultValues: {
       location_id: orderReturn.location_id ?? "",
-      items: previewItems
-        ?.sort((i1, i2) => i1.id.localeCompare(i2.id))
-        .map((i) => ({ item_id: i.id })),
+      items: previewItems.map((i) => ({ item_id: i.id })),
       send_notification: false,
     },
     resolver: zodResolver(ReceiveReturnSchema),
@@ -118,29 +118,28 @@ export function OrderReceiveReturnForm({
     }
   }
 
+  const { setValue } = form
+
   useEffect(() => {
-    previewItems
-      ?.sort((i1, i2) => i1.id.localeCompare(i2.id))
-      .forEach((item, index) => {
-        const receivedAction = item.actions?.find(
-          (a) => a.action === "RECEIVE_RETURN_ITEM"
-        )
-        const dismissedAction = item.actions?.find(
-          (a) => a.action === "RECEIVE_DAMAGED_RETURN_ITEM"
-        )
-        form.setValue(
-          `items.${index}.quantity`,
-          getOrderChangeActionDetails(receivedAction).quantity,
-          { shouldTouch: true, shouldDirty: true }
-        )
-        form.setValue(
-          `items.${index}.dismissed_quantity`,
-          getOrderChangeActionDetails(dismissedAction).quantity,
-          { shouldTouch: true, shouldDirty: true }
-        )
-      })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [previewItems])
+    previewItems.forEach((item, index) => {
+      const receivedAction = item.actions?.find(
+        (a) => a.action === "RECEIVE_RETURN_ITEM"
+      )
+      const dismissedAction = item.actions?.find(
+        (a) => a.action === "RECEIVE_DAMAGED_RETURN_ITEM"
+      )
+      setValue(
+        `items.${index}.quantity`,
+        getOrderChangeActionDetails(receivedAction).quantity,
+        { shouldTouch: true, shouldDirty: true }
+      )
+      setValue(
+        `items.${index}.dismissed_quantity`,
+        getOrderChangeActionDetails(dismissedAction).quantity,
+        { shouldTouch: true, shouldDirty: true }
+      )
+    })
+  }, [previewItems, setValue])
 
   const handleSubmit = form.handleSubmit(async (data) => {
     try {

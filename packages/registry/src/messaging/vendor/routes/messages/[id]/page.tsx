@@ -159,18 +159,20 @@ const VendorConversationDetailPage = () => {
     error,
   } = useVendorConversation(id)
 
-  const markRead = useMarkVendorRead(id)
+  const { mutate: markRead } = useMarkVendorRead(id)
   const sendReply = useSendVendorReply(id)
 
   useMessagingLayout()
 
   // Mark messages as read on mount
+  const loadedConversationId = conversation?.id
+  const sellerUnreadCount = conversation?.unread_count_seller ?? 0
+
   useEffect(() => {
-    if (conversation && conversation.unread_count_seller > 0) {
-      markRead.mutate()
+    if (loadedConversationId && sellerUnreadCount > 0) {
+      markRead()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [conversation?.id, conversation?.unread_count_seller])
+  }, [loadedConversationId, sellerUnreadCount, markRead])
 
   // Scroll to bottom when messages change
   useEffect(() => {

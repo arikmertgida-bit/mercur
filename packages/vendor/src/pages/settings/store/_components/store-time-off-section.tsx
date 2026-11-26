@@ -2,6 +2,7 @@ import { CalendarMini, PencilSquare, Trash } from "@medusajs/icons";
 import {
   Container,
   Heading,
+  createDataTableColumnHelper,
   toast,
   usePrompt,
 } from "@medusajs/ui";
@@ -22,27 +23,22 @@ type TimeOffEntry = {
   note: string | null;
 };
 
+const columnHelper = createDataTableColumnHelper<TimeOffEntry>();
+
 type StoreTimeOffSectionProps = {
   seller: HttpTypes.StoreSellerResponse["seller"];
 };
 
-export const StoreTimeOffSection = ({ seller }: StoreTimeOffSectionProps) => {
-  const { t } = useTranslation();
-  const { getFullDate } = useDate();
-  const prompt = usePrompt();
-  const { mutateAsync: updateSeller } = useUpdateSeller(seller.id);
+const TimeOffNoteCell = ({ note }: { note: string | null }) => (
+  <span className="block max-w-[240px] truncate" title={note ?? undefined}>
+    {note || "-"}
+  </span>
+);
 
-  const data: TimeOffEntry[] = useMemo(() => {
-    if (!seller.closed_from) return [];
-    return [
-      {
-        id: "closure",
-        closed_from: new Date(seller.closed_from),
-        closed_to: seller.closed_to ? new Date(seller.closed_to) : null,
-        note: seller.closure_note ?? null,
-      },
-    ];
-  }, [seller.closed_from, seller.closed_to, seller.closure_note]);
+const TimeOffActions = ({ sellerId }: { sellerId: string }) => {
+  const { t } = useTranslation();
+  const prompt = usePrompt();
+  const { mutateAsync: updateSeller } = useUpdateSeller(sellerId);
 
   const handleDelete = async () => {
     const confirmed = await prompt({
@@ -67,79 +63,86 @@ export const StoreTimeOffSection = ({ seller }: StoreTimeOffSectionProps) => {
     );
   };
 
-  const columns = useMemo(
+  return (
+    <div className="flex justify-end">
+      <ActionMenu
+        groups={[
+          {
+            actions: [
+              {
+                permission: "store:edit",
+                label: t("actions.edit"),
+                icon: <PencilSquare />,
+                to: "store-closure",
+              },
+            ],
+          },
+          {
+            actions: [
+              {
+                permission: "store:edit",
+                label: t("actions.delete"),
+                icon: <Trash />,
+                onClick: handleDelete,
+              },
+            ],
+          },
+        ]}
+      />
+    </div>
+  );
+};
+
+const useTimeOffColumns = (sellerId: string) => {
+  const { t } = useTranslation();
+  const { getFullDate } = useDate();
+
+  return useMemo(
     () => [
-      {
+      columnHelper.accessor((row) => getFullDate({ date: row.closed_from }), {
         id: "closed_from",
         header: t("store.timeOff.columns.firstDay"),
-        accessorFn: (row: TimeOffEntry) =>
-          getFullDate({ date: row.closed_from }),
-      },
-      {
-        id: "closed_to",
-        header: t("store.timeOff.columns.lastDay"),
-        accessorFn: (row: TimeOffEntry) =>
-          row.closed_to ? getFullDate({ date: row.closed_to }) : "-",
-      },
-      {
-        id: "note",
+      }),
+      columnHelper.accessor(
+        (row) => (row.closed_to ? getFullDate({ date: row.closed_to }) : "-"),
+        {
+          id: "closed_to",
+          header: t("store.timeOff.columns.lastDay"),
+        }
+      ),
+      columnHelper.accessor("note", {
         header: t("store.timeOff.columns.note"),
-        accessorFn: (row: TimeOffEntry) => row.note || "-",
-        // oxlint-disable-next-line react/no-unstable-nested-components -- TanStack Table cell render-prop, invoked as a function by the table, never mounted as JSX
-        cell: ({ row }: { row: { original: TimeOffEntry } }) => (
-          <span
-            className="block max-w-[240px] truncate"
-            title={row.original.note ?? undefined}
-          >
-            {row.original.note || "-"}
-          </span>
-        ),
-      },
-      {
+        cell: ({ getValue }) => <TimeOffNoteCell note={getValue()} />,
+      }),
+      columnHelper.display({
         id: "actions",
         header: "",
-        // oxlint-disable-next-line react/no-unstable-nested-components -- TanStack Table cell render-prop, invoked as a function by the table, never mounted as JSX
-        cell: () => (
-          <div className="flex justify-end">
-            <ActionMenu
-              groups={[
-                {
-                  actions: [
-                    {
-                      permission: "store:edit",
-                      label: t("actions.edit"),
-                      icon: <PencilSquare />,
-                      to: "store-closure",
-                    },
-                  ],
-                },
-                {
-                  actions: [
-                    {
-                      permission: "store:edit",
-                      label: t("actions.delete"),
-                      icon: <Trash />,
-                      onClick: handleDelete,
-                    },
-                  ],
-                },
-              ]}
-            />
-          </div>
-        ),
+        cell: () => <TimeOffActions sellerId={sellerId} />,
         meta: {
           className: "w-[1%]",
         },
-      },
+      }),
     ],
-    /* oxlint-disable react-hooks/exhaustive-deps */
-    [
-	t,
-	getFullDate,
-	handleDelete
-]
-    /* oxlint-enable react-hooks/exhaustive-deps */
+    [t, getFullDate, sellerId]
   );
+};
+
+export const StoreTimeOffSection = ({ seller }: StoreTimeOffSectionProps) => {
+  const { t } = useTranslation();
+
+  const data: TimeOffEntry[] = useMemo(() => {
+    if (!seller.closed_from) return [];
+    return [
+      {
+        id: "closure",
+        closed_from: new Date(seller.closed_from),
+        closed_to: seller.closed_to ? new Date(seller.closed_to) : null,
+        note: seller.closure_note ?? null,
+      },
+    ];
+  }, [seller.closed_from, seller.closed_to, seller.closure_note]);
+
+  const columns = useTimeOffColumns(seller.id);
 
   if (data.length === 0) {
     return (

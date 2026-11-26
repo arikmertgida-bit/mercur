@@ -78,9 +78,7 @@ export const Component = () => {
     }
 
     run()
-    /* oxlint-disable react-hooks/exhaustive-deps */
-  }, [preview])
-  /* oxlint-enable react-hooks/exhaustive-deps */
+  }, [preview, navigate, t, createClaim])
 
   return (
     <RouteFocusModal>

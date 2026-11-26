@@ -9,7 +9,10 @@ import { useTranslation } from "react-i18next"
 import { zodResolver } from "@hookform/resolvers/zod"
 
 import { RouteFocusModal, useRouteModal } from "@components/modals"
-import { TabbedForm } from "@components/tabbed-form/tabbed-form"
+import {
+  type FooterRenderProps,
+  TabbedForm,
+} from "@components/tabbed-form/tabbed-form"
 import {
   useCreateProduct,
   useFeatureFlags,
@@ -140,21 +143,25 @@ const applyVariantMediaUpdates = async (
   // other one observes the not-yet-cleared pending change and fails, which
   // is exactly the "some variants never got their image" symptom this was
   // producing on multi-variant products.
-  const failedVariantTitles: string[] = []
-
-  for (const update of updates) {
-    try {
-      // oxlint-disable-next-line no-await-in-loop -- intentionally sequential, not parallel: see the comment above this loop
-      await sdk.vendor.products.$id.variants.$variantId.mutate({
-        $id: productId,
-        $variantId: update.variantId,
-        thumbnail: update.thumbnail,
-        images: update.imageIds.length ? { add: update.imageIds } : undefined,
-      })
-    } catch {
-      failedVariantTitles.push(update.variantTitle)
-    }
-  }
+  const failedVariantTitles = await updates.reduce<Promise<string[]>>(
+    (previous, update) =>
+      previous.then(async (failed) => {
+        try {
+          await sdk.vendor.products.$id.variants.$variantId.mutate({
+            $id: productId,
+            $variantId: update.variantId,
+            thumbnail: update.thumbnail,
+            images: update.imageIds.length
+              ? { add: update.imageIds }
+              : undefined,
+          })
+          return failed
+        } catch {
+          return [...failed, update.variantTitle]
+        }
+      }),
+    Promise.resolve([])
+  )
 
   if (failedVariantTitles.length > 0) {
     toast.warning(
@@ -163,6 +170,67 @@ const applyVariantMediaUpdates = async (
       })
     )
   }
+}
+
+const ProductCreateFooter = ({
+  isLastTab,
+  onNext,
+  isLoading,
+  onSaveAsDraft,
+}: FooterRenderProps & { onSaveAsDraft: () => void }) => {
+  const { t } = useTranslation()
+
+  return (
+    <div
+      className="flex items-center justify-end gap-x-2"
+      data-testid="product-create-form-footer-actions"
+    >
+      <RouteFocusModal.Close asChild>
+        <Button
+          variant="secondary"
+          size="small"
+          data-testid="product-create-form-cancel-button"
+        >
+          {t("actions.cancel")}
+        </Button>
+      </RouteFocusModal.Close>
+      <Button
+        variant="secondary"
+        size="small"
+        type="button"
+        onClick={onSaveAsDraft}
+        isLoading={isLoading}
+        className="whitespace-nowrap"
+        data-testid="product-create-form-save-draft-button"
+      >
+        {t("actions.saveAsDraft")}
+      </Button>
+      {isLastTab ? (
+        <Button
+          data-name="publish-button"
+          key="submit-button"
+          type="submit"
+          variant="primary"
+          size="small"
+          isLoading={isLoading}
+          data-testid="product-create-form-publish-button"
+        >
+          {t("actions.publish")}
+        </Button>
+      ) : (
+        <Button
+          key="next-button"
+          type="button"
+          variant="primary"
+          size="small"
+          onClick={() => onNext()}
+          data-testid="product-create-form-continue-button"
+        >
+          {t("actions.continue")}
+        </Button>
+      )}
+    </div>
+  )
 }
 
 // Uploads happen in the background the moment a seller picks an image (see
@@ -356,6 +424,10 @@ const ProductCreateFormContent = ({
     []
   )
 
+  const renderFooter = (footerProps: FooterRenderProps): ReactNode => (
+    <ProductCreateFooter {...footerProps} onSaveAsDraft={handleSaveAsDraft} />
+  )
+
   const hasCustomChildren = Children.count(children) > 0
 
   return (
@@ -365,58 +437,7 @@ const ProductCreateFormContent = ({
       form={form}
       onSubmit={handleSubmit}
       isLoading={isPending || isMediaUploading}
-      // oxlint-disable-next-line react/no-unstable-nested-components -- TabbedForm footer render-prop, invoked as a function by TabbedForm, never mounted as JSX
-      footer={({ isLastTab, onNext, isLoading }) => (
-        <div
-          className="flex items-center justify-end gap-x-2"
-          data-testid="product-create-form-footer-actions"
-        >
-          <RouteFocusModal.Close asChild>
-            <Button
-              variant="secondary"
-              size="small"
-              data-testid="product-create-form-cancel-button"
-            >
-              {t("actions.cancel")}
-            </Button>
-          </RouteFocusModal.Close>
-          <Button
-            variant="secondary"
-            size="small"
-            type="button"
-            onClick={handleSaveAsDraft}
-            isLoading={isLoading}
-            className="whitespace-nowrap"
-            data-testid="product-create-form-save-draft-button"
-          >
-            {t("actions.saveAsDraft")}
-          </Button>
-          {isLastTab ? (
-            <Button
-              data-name="publish-button"
-              key="submit-button"
-              type="submit"
-              variant="primary"
-              size="small"
-              isLoading={isLoading}
-              data-testid="product-create-form-publish-button"
-            >
-              {t("actions.publish")}
-            </Button>
-          ) : (
-            <Button
-              key="next-button"
-              type="button"
-              variant="primary"
-              size="small"
-              onClick={() => onNext()}
-              data-testid="product-create-form-continue-button"
-            >
-              {t("actions.continue")}
-            </Button>
-          )}
-        </div>
-      )}
+      footer={renderFooter}
     >
       {hasCustomChildren ? children : defaultTabs}
     </TabbedForm>

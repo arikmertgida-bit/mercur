@@ -1,5 +1,5 @@
 import { configManager } from "@medusajs/framework/config"
-import { Context, DAL, InternalModuleDeclaration } from "@medusajs/framework/types"
+import { Context, DAL } from "@medusajs/framework/types"
 import {
   generateJwtToken,
   InjectManager,
@@ -94,16 +94,14 @@ class SellerModuleService extends MedusaService({
   protected readonly baseRepository_: DAL.RepositoryService
   protected readonly options_: ResolvedSellerModuleOptions
 
-  constructor(
-    { orderGroupRepository, baseRepository }: InjectedDependencies,
-    protected readonly moduleDeclaration?: InternalModuleDeclaration,
-  ) {
-    // eslint-disable-next-line prefer-rest-params
-    super(...arguments)
-    this.orderGroupRepository_ = orderGroupRepository
-    this.baseRepository_ = baseRepository
+  // Medusa constructs module services as (container, moduleOptions,
+  // moduleDeclaration); the options arrive as the second argument.
+  constructor(container: InjectedDependencies, options?: SellerModuleOptions) {
+    super(container, options)
+    this.orderGroupRepository_ = container.orderGroupRepository
+    this.baseRepository_ = container.baseRepository
 
-    const opts = SellerModuleOptionsSchema.parse(moduleDeclaration?.options ?? {})
+    const opts = SellerModuleOptionsSchema.parse(options ?? {})
     const jwtSecret =
       opts.jwt_secret ?? configManager.config.projectConfig.http.jwtSecret
 

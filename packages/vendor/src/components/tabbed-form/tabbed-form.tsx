@@ -109,7 +109,7 @@ function collectTabs<T extends FieldValues>(children: ReactNode): {
   return { tabs, elements }
 }
 
-type FooterRenderProps = {
+export type FooterRenderProps = {
   isLastTab: boolean
   onNext: () => void
   isLoading?: boolean

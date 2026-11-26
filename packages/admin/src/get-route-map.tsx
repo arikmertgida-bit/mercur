@@ -251,7 +251,6 @@ export function getRouteMap({
                             loader: withPermission(loader, "products:view"),
                             handle: {
                               breadcrumb: (
-                                // eslint-disable-next-line max-len
                                 match: UIMatch<MercurHttpTypes.AdminProductVariantResponse>,
                               ) => <Breadcrumb {...match} />,
                             },
@@ -1563,7 +1562,6 @@ export function getRouteMap({
                             loader: withPermission(loader, "shipping_profiles:view"),
                             handle: {
                               breadcrumb: (
-                                // eslint-disable-next-line max-len
                                 match: UIMatch<HttpTypes.AdminShippingProfileResponse>,
                               ) => <Breadcrumb {...match} />,
                             },
@@ -1620,7 +1618,6 @@ export function getRouteMap({
                             loader: withPermission(loader, "shipping_options:view"),
                             handle: {
                               breadcrumb: (
-                                // eslint-disable-next-line max-len
                                 match: UIMatch<HttpTypes.AdminShippingOptionTypeResponse>,
                               ) => <Breadcrumb {...match} />,
                             },

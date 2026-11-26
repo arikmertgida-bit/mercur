@@ -373,11 +373,13 @@ export const ClaimCreateForm = ({
       }
     });
 
-    inboundItems.forEach((i, ind) => {
-      if (!(i.item_id in existingItemsMap)) {
-        remove(ind);
-      }
-    });
+    const staleIndexes = inboundItems.flatMap((i, ind) =>
+      i.item_id in existingItemsMap ? [] : [ind]
+    );
+
+    if (staleIndexes.length) {
+      remove(staleIndexes);
+    }
   }, [inboundItems, remove, inboundPreviewItems, append, update]);
 
   useEffect(() => {

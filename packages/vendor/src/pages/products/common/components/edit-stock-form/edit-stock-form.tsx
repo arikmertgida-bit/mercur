@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Button, Input, Label, Text, toast } from "@medusajs/ui"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useFieldArray, useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { z } from "zod"
@@ -89,13 +89,26 @@ export const EditStockForm = ({
   // under an already-open drawer (order fulfillment, another session's
   // edit), so the form is kept in sync explicitly whenever a fresh fetch
   // resolves with different values.
+  // `inventoryItemsWithLevels` is a new array on every render, so the reset
+  // keys off a snapshot that is replaced only when the stock content changes.
   const levelsSignature = getLevelsSignature(inventoryItemsWithLevels)
+  const [levelsSnapshot, setLevelsSnapshot] = useState({
+    signature: levelsSignature,
+    items: inventoryItemsWithLevels,
+  })
+
+  if (levelsSnapshot.signature !== levelsSignature) {
+    setLevelsSnapshot({
+      signature: levelsSignature,
+      items: inventoryItemsWithLevels,
+    })
+  }
+
+  const { reset } = form
+
   useEffect(() => {
-    form.reset(getDefaultValues(inventoryItemsWithLevels))
-    // Only the content signature should retrigger this — `inventoryItemsWithLevels`
-    // itself is a new array reference on every render.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [levelsSignature, form])
+    reset(getDefaultValues(levelsSnapshot.items))
+  }, [levelsSnapshot, reset])
 
   const { fields } = useFieldArray({ control: form.control, name: "levels" })
 

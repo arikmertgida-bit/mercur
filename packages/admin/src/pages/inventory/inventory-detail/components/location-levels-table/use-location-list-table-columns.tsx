@@ -38,13 +38,16 @@ const getLevelLocationName = (
 
 const columnHelper = createColumnHelper<HttpTypes.AdminInventoryLevel>();
 
-export const useLocationListTableColumns = (): TableOptions<HttpTypes.AdminInventoryLevel>["columns"] => {
+const LevelActions = ({
+  level,
+}: {
+  level: HttpTypes.AdminInventoryLevel;
+}) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-
   const prompt = usePrompt();
 
-  const handleDelete = async (level: HttpTypes.AdminInventoryLevel) => {
+  const handleDelete = async () => {
     const locationName = getLevelLocationName(level);
 
     const res = await prompt({
@@ -86,6 +89,42 @@ export const useLocationListTableColumns = (): TableOptions<HttpTypes.AdminInven
       toast.error(e instanceof Error ? e.message : t("general.unknownError"));
     }
   };
+
+  return (
+    <ActionMenu
+      groups={[
+        {
+          actions: [
+            {
+              icon: <PencilSquare />,
+              label: t("actions.edit"),
+              permission: "inventory_items:edit",
+              onClick: () => {
+                navigate(`locations/${level.location_id}`);
+              },
+            },
+          ],
+        },
+        {
+          actions: [
+            {
+              icon: <Trash />,
+              label: t("actions.delete"),
+              onClick: handleDelete,
+              permission: "inventory_items:manage",
+              disabled:
+                level.reserved_quantity > 0 ||
+                level.stocked_quantity > 0,
+            },
+          ],
+        },
+      ]}
+    />
+  );
+};
+
+export const useLocationListTableColumns = (): TableOptions<HttpTypes.AdminInventoryLevel>["columns"] => {
+  const { t } = useTranslation();
 
   return useMemo(
     () => [
@@ -158,43 +197,9 @@ export const useLocationListTableColumns = (): TableOptions<HttpTypes.AdminInven
       }),
       columnHelper.display({
         id: "actions",
-        cell: ({ row }) => {
-          const level = row.original;
-          return (
-            <ActionMenu
-              groups={[
-                {
-                  actions: [
-                    {
-                      icon: <PencilSquare />,
-                      label: t("actions.edit"),
-                      permission: "inventory_items:edit",
-                      onClick: () => {
-                        navigate(`locations/${level.location_id}`);
-                      },
-                    },
-                  ],
-                },
-                {
-                  actions: [
-                    {
-                      icon: <Trash />,
-                      label: t("actions.delete"),
-                      onClick: () => handleDelete(level),
-                      permission: "inventory_items:manage",
-                      disabled:
-                        level.reserved_quantity > 0 ||
-                        level.stocked_quantity > 0,
-                    },
-                  ],
-                },
-              ]}
-            />
-          );
-        },
+        cell: ({ row }) => <LevelActions level={row.original} />,
       }),
     ],
-    // oxlint-disable-next-line react-hooks/exhaustive-deps
-    [t, navigate],
+    [t],
   );
 };
