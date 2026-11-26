@@ -9,7 +9,11 @@ import {
   MedusaError,
 } from "@medusajs/framework/utils"
 
-import { OrderCurrencyRowSchema, resolveAddItems } from "../../../orders/resolve-add-items"
+import {
+  AddItemsCaller,
+  OrderCurrencyRowSchema,
+  resolveAddItems,
+} from "../../../orders/resolve-add-items"
 import { VendorPostOrderEditsAddItemsReqType } from "../../validators"
 import { parseGraphRows } from "../../../../../utils/graph-rows"
 import { toHttpOrderPreview } from "../../../../../utils/http-order"
@@ -37,6 +41,8 @@ export const POST = async (
 
   const items = await resolveAddItems({
     container: req.scope,
+    caller: AddItemsCaller.VENDOR,
+    orderId: id,
     currencyCode: order.currency_code,
     items: req.validatedBody.items,
   })

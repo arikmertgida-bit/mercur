@@ -1,39 +1,24 @@
 import { SectionNoAccess, useCan } from "@mercurjs/dashboard-shared"
 import { OnChangeFn, RowSelectionState } from "@tanstack/react-table"
-import { useMemo, useState } from "react"
+import { HttpTypes } from "@medusajs/types"
+import { useState } from "react"
 import { useTranslation } from "react-i18next"
 
 import { _DataTable } from "@components/table/data-table"
-import { useProducts } from "@hooks/api/products"
 import { useDataTable } from "@hooks/use-data-table"
 
-import {
-  ClaimOutboundVariantPickerRow,
-  useClaimOutboundItemTableColumns,
-} from "./use-claim-outbound-item-table-columns"
+import { useOrderStoreVariants } from "../../../common/use-order-store-variants"
+
+import { useClaimOutboundItemTableColumns } from "./use-claim-outbound-item-table-columns"
 import { useClaimOutboundItemTableFilters } from "./use-claim-outbound-item-table-filters"
 import { useClaimOutboundItemTableQuery } from "./use-claim-outbound-item-table-query"
 
 const PAGE_SIZE = 50
 const PREFIX = "rit"
 
-const PRODUCT_PICKER_FIELDS = [
-  "id",
-  "title",
-  "thumbnail",
-  "variants.id",
-  "variants.sku",
-  "variants.title",
-].join(",")
-
-type ProductPickerRow = {
-  id?: string | null
-  title?: string | null
-  thumbnail?: string | null
-  variants?: ClaimOutboundVariantPickerRow[] | null
-}
-
 type AddClaimOutboundItemsTableProps = {
+  /** The order being changed; only its store's variants are listed. */
+  order: HttpTypes.AdminOrder
   /**
    * Receives the picked variant ids. The parent submits them as
    * `{ variant_id, quantity }` to the claim "add outbound items" route,
@@ -44,6 +29,7 @@ type AddClaimOutboundItemsTableProps = {
 }
 
 export const AddClaimOutboundItemsTable = ({
+  order,
   onSelectionChange,
   selectedItems = [],
 }: AddClaimOutboundItemsTableProps) => {
@@ -71,33 +57,11 @@ export const AddClaimOutboundItemsTable = ({
     prefix: PREFIX,
   })
 
-  const productsResponse = useProducts(
-    {
-      ...searchParams,
-      fields: PRODUCT_PICKER_FIELDS,
-    },
-    { enabled: canViewProducts }
+  const { variants, count } = useOrderStoreVariants(
+    order,
+    searchParams,
+    canViewProducts
   )
-  const rawProducts: ProductPickerRow[] | undefined =
-    productsResponse.products
-  const rawCount = productsResponse.count ?? 0
-
-  const variants = useMemo<ClaimOutboundVariantPickerRow[]>(() => {
-    const products = rawProducts ?? []
-    return products.flatMap((product) =>
-      (product.variants ?? []).map((variant) => ({
-        ...variant,
-        product: {
-          id: product.id,
-          title: product.title,
-          thumbnail: product.thumbnail,
-        },
-      }))
-    )
-  }, [rawProducts])
-
-  const count = variants.length
-  void rawCount
 
   const columns = useClaimOutboundItemTableColumns()
   const filters = useClaimOutboundItemTableFilters()

@@ -11,6 +11,7 @@ export const PRODUCT_STOCK_LOCATION_NOT_SELLER_CODE =
   "product_stock_location_not_seller"
 export const PRODUCT_INVENTORY_ITEM_NOT_SELLER_CODE =
   "product_inventory_item_not_seller"
+export const ORDER_VARIANT_NOT_SELLER_CODE = "order_variant_not_seller"
 export const PRODUCT_MOVE_RESERVED_STOCK_CODE = "product_move_reserved_stock"
 export const PRODUCT_MOVE_SELLER_PROMOTIONS_CODE =
   "product_move_seller_promotions"

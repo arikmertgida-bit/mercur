@@ -11,6 +11,7 @@ import {
 
 import {
   OrderCurrencyRowSchema,
+  AddItemsCaller,
   resolveAddItems,
 } from "../../../../../vendor/orders/resolve-add-items"
 import { parseGraphRows } from "../../../../../../utils/graph-rows"
@@ -67,6 +68,8 @@ export const POST = async (
 
   const items = await resolveAddItems({
     container: req.scope,
+    caller: AddItemsCaller.ADMIN,
+    orderId: exchange.order_id,
     currencyCode,
     items: req.validatedBody.items,
   })

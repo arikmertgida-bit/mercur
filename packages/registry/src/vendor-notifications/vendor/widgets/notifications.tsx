@@ -245,22 +245,21 @@ const useUnreadNotifications = () => {
       fetchNotifications({ limit: 1, offset: 0, fields: "created_at" }),
     refetchInterval: 60_000,
   })
-  const lastNotification = data?.notifications[0]
+  const lastCreatedAt = data?.notifications[0]?.created_at
+  const [checkedCreatedAt, setCheckedCreatedAt] = useState<string>()
 
-  useEffect(() => {
-    if (!lastNotification) {
-      return
-    }
+  if (lastCreatedAt && lastCreatedAt !== checkedCreatedAt) {
+    setCheckedCreatedAt(lastCreatedAt)
 
     const lastReadDatetime = localStorage.getItem(LAST_READ_NOTIFICATION_KEY)
     const lastReadAsTimestamp = lastReadDatetime
       ? Date.parse(lastReadDatetime)
       : 0
 
-    if (Date.parse(lastNotification.created_at) > lastReadAsTimestamp) {
+    if (Date.parse(lastCreatedAt) > lastReadAsTimestamp) {
       setHasUnread(true)
     }
-  }, [lastNotification])
+  }
 
   return [hasUnread, setHasUnread] as const
 }

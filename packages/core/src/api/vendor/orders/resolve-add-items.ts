@@ -7,6 +7,7 @@ import {
 import { z } from "zod"
 
 import { parseGraphRows } from "../../../utils/graph-rows"
+import { ORDER_VARIANT_NOT_SELLER_CODE } from "../../utils/admin-error-codes"
 
 export type AddItemInput = {
   variant_id: string
@@ -23,6 +24,17 @@ type ResolvedAddItem = AddItemInput & {
   requires_shipping?: boolean
 }
 
+/**
+ * Who is adding the items. A seller never learns that another store's variant
+ * exists (404, like any foreign resource); the admin gets its own error code.
+ */
+export const AddItemsCaller = {
+  VENDOR: "vendor",
+  ADMIN: "admin",
+} as const
+
+export type AddItemsCaller = (typeof AddItemsCaller)[keyof typeof AddItemsCaller]
+
 export const OrderCurrencyRowSchema = z.object({ currency_code: z.string() })
 
 const VariantPricingRowSchema = z.object({
@@ -31,16 +43,63 @@ const VariantPricingRowSchema = z.object({
   product: z
     .object({
       shipping_profile: z.object({ id: z.string().nullish() }).nullish(),
+      sellers: z.array(z.object({ id: z.string() }).nullable()).nullish(),
     })
     .nullish(),
 })
 
+type VariantPricingRow = z.infer<typeof VariantPricingRowSchema>
+
+const OrderSellerRowSchema = z.object({ seller_id: z.string() })
+
+const getOrderSellerId = async (
+  container: MedusaContainer,
+  orderId: string
+): Promise<string | null> => {
+  const query = container.resolve(ContainerRegistrationKeys.QUERY)
+  const { data } = await query.graph({
+    entity: "order_seller",
+    fields: ["seller_id"],
+    filters: { order_id: orderId },
+  })
+  return parseGraphRows(OrderSellerRowSchema, data)[0]?.seller_id ?? null
+}
+
+const getVariantSellerId = (variant: VariantPricingRow): string | null =>
+  (variant.product?.sellers ?? []).flatMap((seller) =>
+    seller ? [seller.id] : []
+  )[0] ?? null
+
+const foreignVariantError = (
+  caller: AddItemsCaller,
+  variantId: string
+): MedusaError =>
+  caller === AddItemsCaller.ADMIN
+    ? new MedusaError(
+        MedusaError.Types.INVALID_DATA,
+        `Variant ${variantId} does not belong to the order's store`,
+        ORDER_VARIANT_NOT_SELLER_CODE
+      )
+    : new MedusaError(
+        MedusaError.Types.NOT_FOUND,
+        `Variant ${variantId} not found`
+      )
+
+/**
+ * An order belongs to exactly one store, so every added variant must come from
+ * that store: otherwise the order draws another store's stock while the money
+ * goes to the order's seller, and the order stops being single-store.
+ */
 export const resolveAddItems = async ({
   container,
+  caller,
+  orderId,
   currencyCode,
   items,
 }: {
   container: MedusaContainer
+  caller: AddItemsCaller
+  orderId: string
   currencyCode: string
   items: AddItemInput[]
 }): Promise<ResolvedAddItem[]> => {
@@ -62,10 +121,19 @@ export const resolveAddItems = async ({
       "id",
       "price_set.id",
       "product.shipping_profile.id",
+      "product.sellers.id",
     ],
     filters: { id: variantIds },
   })
   const variants = parseGraphRows(VariantPricingRowSchema, variantRows)
+
+  const orderSellerId = await getOrderSellerId(container, orderId)
+  const foreign = variants.find(
+    (variant) => getVariantSellerId(variant) !== orderSellerId
+  )
+  if (foreign) {
+    throw foreignVariantError(caller, foreign.id)
+  }
 
   const variantsById = new Map(
     variants.map((v) => [v.id, v])

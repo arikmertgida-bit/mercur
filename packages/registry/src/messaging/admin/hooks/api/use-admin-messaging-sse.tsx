@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useLayoutEffect, useRef } from "react"
 import { useQueryClient } from "@tanstack/react-query"
 
 declare const __BACKEND_URL__: string
@@ -12,7 +12,7 @@ const POLLING_INTERVAL = 30000
 export const useAdminMessagingSSE = (
   activeConversationId?: string,
   onStatusChange?: (status: SSEStatus) => void
-) => {
+): void => {
   const queryClient = useQueryClient()
   const eventSourceRef = useRef<EventSource | null>(null)
   const pollingRef = useRef<ReturnType<typeof setInterval> | null>(null)
@@ -23,7 +23,9 @@ export const useAdminMessagingSSE = (
 
   // Store callbacks in refs to avoid dependency chains
   const onStatusChangeRef = useRef(onStatusChange)
-  onStatusChangeRef.current = onStatusChange
+  useLayoutEffect(() => {
+    onStatusChangeRef.current = onStatusChange
+  }, [onStatusChange])
 
   useEffect(() => {
     mountedRef.current = true
@@ -140,6 +142,4 @@ export const useAdminMessagingSSE = (
       }
     }
   }, [queryClient]) // queryClient is stable — no re-render loop
-
-  return { status: statusRef.current }
 }

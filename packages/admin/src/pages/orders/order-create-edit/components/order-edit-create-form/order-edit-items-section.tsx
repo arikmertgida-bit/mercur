@@ -105,6 +105,7 @@ export const OrderEditItemsSection = ({
               </StackedFocusModal.Title>
 
               <AddOrderEditItemsTable
+                order={order}
                 onSelectionChange={(finalSelection) => {
                   addedSelections = finalSelection;
                 }}

@@ -1,6 +1,7 @@
 import { MedusaError } from "@medusajs/framework/utils"
 
 import {
+  ORDER_VARIANT_NOT_SELLER_CODE,
   PRODUCT_INVENTORY_ITEM_NOT_SELLER_CODE,
   PRODUCT_MOVE_NAMES_SEPARATOR,
   PRODUCT_MOVE_RESERVED_STOCK_CODE,
@@ -157,6 +158,8 @@ function productSellerCodeMessage(
       return customCodes.product_shipping_profile_not_seller
     case PRODUCT_STOCK_LOCATION_NOT_SELLER_CODE:
       return customCodes.product_stock_location_not_seller
+    case ORDER_VARIANT_NOT_SELLER_CODE:
+      return customCodes.order_variant_not_seller
     case PRODUCT_INVENTORY_ITEM_NOT_SELLER_CODE:
       return customCodes.product_inventory_item_not_seller
     case PRODUCT_MOVE_RESERVED_STOCK_CODE:

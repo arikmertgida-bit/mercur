@@ -85,7 +85,6 @@ export const AddExchangeOutboundItemsTable = ({
   )
   const rawProducts: ProductPickerRow[] | undefined =
     productsResponse.products
-  const rawCount = productsResponse.count ?? 0
 
   const variants = useMemo<OutboundVariantPickerRow[]>(() => {
     const products = rawProducts ?? []
@@ -101,8 +100,7 @@ export const AddExchangeOutboundItemsTable = ({
     )
   }, [rawProducts])
 
-  const count = variants.length
-  void rawCount
+  const count = productsResponse.count ?? 0
 
   const columns = useExchangeOutboundItemTableColumns()
   const filters = useExchangeOutboundItemTableFilters()

@@ -1,6 +1,6 @@
 import { useCan } from "@mercurjs/dashboard-shared"
 import { OnChangeFn, RowSelectionState } from "@tanstack/react-table"
-import { useMemo, useState } from "react"
+import { useLayoutEffect, useMemo, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
 
 import { _DataTable } from "@components/table/data-table"
@@ -59,7 +59,7 @@ export const AddClaimOutboundItemsTable = ({
   // Lookup of every variant the picker has seen this session so the
   // section can still resolve titles for variants selected on a previous
   // page after the user paginates away.
-  const [variantLookup, setVariantLookup] = useState<
+  const variantLookupRef = useRef<
     Record<string, ClaimOutboundVariantPickerRow>
   >({})
 
@@ -68,7 +68,7 @@ export const AddClaimOutboundItemsTable = ({
       typeof fn === "function" ? fn(rowSelection) : fn
 
     setRowSelection(newState)
-    onSelectionChange(Object.keys(newState), variantLookup)
+    onSelectionChange(Object.keys(newState), { ...variantLookupRef.current })
   }
 
   const { searchParams, raw } = useClaimOutboundItemTableQuery({
@@ -101,22 +101,13 @@ export const AddClaimOutboundItemsTable = ({
     )
   }, [rawProducts])
 
-  useMemo(() => {
-    if (!variants.length) return
-    setVariantLookup((prev) => {
-      let changed = false
-      const next = { ...prev }
-      for (const variant of variants) {
-        if (!next[variant.id]) {
-          next[variant.id] = variant
-          changed = true
-        }
-      }
-      return changed ? next : prev
-    })
+  useLayoutEffect(() => {
+    for (const variant of variants) {
+      variantLookupRef.current[variant.id] ??= variant
+    }
   }, [variants])
 
-  const count = variants.length
+  const count = productsResponse.count ?? 0
 
   const columns = useClaimOutboundItemTableColumns()
   const filters = useClaimOutboundItemTableFilters()

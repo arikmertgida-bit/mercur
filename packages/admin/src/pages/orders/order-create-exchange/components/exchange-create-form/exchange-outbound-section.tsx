@@ -257,6 +257,7 @@ export const ExchangeOutboundSection = ({
             </StackedFocusModal.Title>
 
             <AddExchangeOutboundItemsTable
+              order={order}
               selectedItems={outboundItems
                 .map((i) => i.variant_id)
                 .filter((v): v is string => !!v)}

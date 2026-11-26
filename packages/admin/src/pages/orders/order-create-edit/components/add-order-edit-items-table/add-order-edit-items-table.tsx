@@ -1,42 +1,24 @@
 import { SectionNoAccess, useCan } from "@mercurjs/dashboard-shared"
 import { OnChangeFn, RowSelectionState } from "@tanstack/react-table"
-import { useMemo, useState } from "react"
+import { HttpTypes } from "@medusajs/types"
+import { useState } from "react"
 import { useTranslation } from "react-i18next"
 
 import { _DataTable } from "@components/table/data-table"
-import { useProducts } from "@hooks/api/products"
 import { useDataTable } from "@hooks/use-data-table"
 
-import {
-  VariantPickerRow,
-  useOrderEditItemsTableColumns,
-} from "./use-order-edit-item-table-columns"
+import { useOrderStoreVariants } from "../../../common/use-order-store-variants"
+
+import { useOrderEditItemsTableColumns } from "./use-order-edit-item-table-columns"
 import { useOrderEditItemTableFilters } from "./use-order-edit-item-table-filters"
 import { useOrderEditItemTableQuery } from "./use-order-edit-item-table-query"
 
 const PAGE_SIZE = 50
 const PREFIX = "rit"
 
-// Field set covers the picker columns + the variant id needed downstream
-// when items are submitted to the order-edit / exchange / claim "add
-// items" routes.
-const PRODUCT_PICKER_FIELDS = [
-  "id",
-  "title",
-  "thumbnail",
-  "variants.id",
-  "variants.sku",
-  "variants.title",
-].join(",")
-
-type ProductPickerRow = {
-  id?: string | null
-  title?: string | null
-  thumbnail?: string | null
-  variants?: VariantPickerRow[] | null
-}
-
 type AddOrderEditItemsTableProps = {
+  /** The order being changed; only its store's variants are listed. */
+  order: HttpTypes.AdminOrder
   /**
    * Receives the picked variant ids. The parent submits them as
    * `{ variant_id, quantity }` to the order-edit "add items" route, which
@@ -46,6 +28,7 @@ type AddOrderEditItemsTableProps = {
 }
 
 export const AddOrderEditItemsTable = ({
+  order,
   onSelectionChange,
 }: AddOrderEditItemsTableProps) => {
   const { t } = useTranslation()
@@ -58,33 +41,11 @@ export const AddOrderEditItemsTable = ({
   })
 
   const canViewProducts = useCan("products")
-  const productsResponse = useProducts(
-    {
-      ...searchParams,
-      fields: PRODUCT_PICKER_FIELDS,
-    },
-    { enabled: canViewProducts }
+  const { variants, count } = useOrderStoreVariants(
+    order,
+    searchParams,
+    canViewProducts
   )
-  const rawProducts: ProductPickerRow[] | undefined =
-    productsResponse.products
-  const rawCount = productsResponse.count ?? 0
-
-  const variants = useMemo<VariantPickerRow[]>(() => {
-    const products = rawProducts ?? []
-    return products.flatMap((product) =>
-      (product.variants ?? []).map((variant) => ({
-        ...variant,
-        product: {
-          id: product.id,
-          title: product.title,
-          thumbnail: product.thumbnail,
-        },
-      }))
-    )
-  }, [rawProducts])
-
-  const count = variants.length
-  void rawCount
 
   const columns = useOrderEditItemsTableColumns()
   const filters = useOrderEditItemTableFilters()
