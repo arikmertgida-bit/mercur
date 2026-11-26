@@ -5,7 +5,6 @@ import {
   ComponentType,
   PropsWithChildren,
   forwardRef,
-  useEffect,
   useState,
 } from "react"
 import { Path, useNavigate } from "react-router-dom"
@@ -26,24 +25,14 @@ type RouteFocusModalProps = PropsWithChildren<{
 
 const Root: ComponentType<RouteFocusModalProps> = ({ prev = "..", children }: RouteFocusModalProps) => {
   const navigate = useNavigate()
-  const [open, setOpen] = useState(false)
+  // Mounted open: the enter animation is a CSS keyframe on
+  // `data-[state=open]`, which also plays on first paint.
+  const [open, setOpen] = useState(true)
   const [stackedModalOpen, onStackedModalOpen] = useState(false)
 
+  const stateAwareTo = useStateAwareTo(typeof prev === "number" ? ".." : prev)
   const to: string | Partial<Path> | number =
-    typeof prev === "number" ? prev : useStateAwareTo(prev)
-
-  /**
-   * Open the modal when the component mounts. This
-   * ensures that the entry animation is played.
-   */
-  useEffect(() => {
-    setOpen(true)
-
-    return () => {
-      setOpen(false)
-      onStackedModalOpen(false)
-    }
-  }, [])
+    typeof prev === "number" ? prev : stateAwareTo
 
   const handleOpenChange = (open: boolean) => {
     if (!open) {

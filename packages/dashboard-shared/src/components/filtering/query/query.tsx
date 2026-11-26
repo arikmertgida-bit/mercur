@@ -1,50 +1,41 @@
-import { Input } from "@medusajs/ui";
-import debounce from "lodash.debounce";
-import { ChangeEvent, useCallback, useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { useSearchParams } from "react-router-dom";
+import { Input } from "@medusajs/ui"
+import { ChangeEvent, useState } from "react"
+import { useTranslation } from "react-i18next"
+import { useSearchParams } from "react-router-dom"
+import { useDebouncedAction } from "../../../hooks/use-debounced-action"
 
 type QueryProps = {
-  placeholder?: string;
-};
+  placeholder?: string
+}
 
 export const Query = ({ placeholder }: QueryProps) => {
-  const { t } = useTranslation();
-  const placeholderText = placeholder || t("general.search");
+  const { t } = useTranslation()
+  const placeholderText = placeholder || t("general.search")
 
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [inputValue, setInputValue] = useState(searchParams.get("q") || "");
+  const [searchParams, setSearchParams] = useSearchParams()
+  const [inputValue, setInputValue] = useState(searchParams.get("q") || "")
+  const debounceUpdate = useDebouncedAction(500)
 
   const updateSearchParams = (newValue: string) => {
-    if (!newValue) {
-      setSearchParams((prev) => {
-        prev.delete("q");
-        return prev;
-      });
+    setSearchParams((prev) => {
+      const next = new URLSearchParams(prev)
 
-      return;
-    }
+      if (newValue) {
+        next.set("q", newValue)
+      } else {
+        next.delete("q")
+      }
 
-    setSearchParams((prev) => ({ ...prev, q: newValue || "" }));
-  };
-
-  // oxlint-disable-next-line react-hooks/exhaustive-deps
-  const debouncedUpdate = useCallback(
-    debounce((newValue: string) => updateSearchParams(newValue), 500),
-    [],
-  );
-
-  useEffect(() => {
-    debouncedUpdate(inputValue);
-
-    return () => {
-      debouncedUpdate.cancel();
-    };
-  }, [inputValue, debouncedUpdate]);
+      return next
+    })
+  }
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.target.value);
-  };
+    const value = event.target.value
+
+    setInputValue(value)
+    debounceUpdate(() => updateSearchParams(value))
+  }
 
   return (
     <Input
@@ -54,5 +45,5 @@ export const Query = ({ placeholder }: QueryProps) => {
       onChange={handleInputChange}
       placeholder={placeholderText}
     />
-  );
-};
+  )
+}

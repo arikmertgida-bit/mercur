@@ -1,10 +1,31 @@
 import { ProgressStatus } from "@medusajs/ui"
-import { useCallback, useEffect, useMemo, useState } from "react"
+import { useCallback, useMemo, useState } from "react"
 import { FieldValues, UseFormReturn } from "react-hook-form"
 
 import { TabDefinition } from "./types"
 
 type TabState = Record<string, ProgressStatus>
+
+const getTabState = <T extends FieldValues>(
+  visibleTabs: TabDefinition<T>[],
+  activeTabId: string,
+  previous: TabState
+): TabState => {
+  const state: TabState = {}
+  const activeIndex = visibleTabs.findIndex((t) => t.id === activeTabId)
+
+  visibleTabs.forEach((t, i) => {
+    if (i < activeIndex) {
+      state[t.id] = "completed"
+    } else if (i === activeIndex) {
+      state[t.id] = "in-progress"
+    } else {
+      state[t.id] = previous[t.id] ?? "not-started"
+    }
+  })
+
+  return state
+}
 
 export const useTabManagement = <T extends FieldValues>({
   tabs,
@@ -30,23 +51,14 @@ export const useTabManagement = <T extends FieldValues>({
     return state
   })
 
-  useEffect(() => {
-    const newState: TabState = {}
-    const activeIndex = visibleTabs.findIndex((t) => t.id === activeTabId)
+  // Recomputed when the active tab or the visible tabs change; tabs after the
+  // active one keep the status they had.
+  const [synced, setSynced] = useState({ activeTabId, visibleTabs })
 
-    visibleTabs.forEach((t, i) => {
-      if (i < activeIndex) {
-        newState[t.id] = "completed"
-      } else if (i === activeIndex) {
-        newState[t.id] = "in-progress"
-      } else {
-        newState[t.id] = tabState[t.id] ?? "not-started"
-      }
-    })
-
-    setTabState(newState)
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- we only want this effect to run when the active tab or visible tabs change
-  }, [activeTabId, visibleTabs])
+  if (synced.activeTabId !== activeTabId || synced.visibleTabs !== visibleTabs) {
+    setSynced({ activeTabId, visibleTabs })
+    setTabState(getTabState(visibleTabs, activeTabId, tabState))
+  }
 
   const activeIndex = visibleTabs.findIndex((t) => t.id === activeTabId)
   const isLastTab = activeIndex === visibleTabs.length - 1

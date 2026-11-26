@@ -1,6 +1,6 @@
 import { createDataTableFilterHelper } from "@medusajs/ui"
 import { subDays, subMonths } from "date-fns"
-import { useMemo } from "react"
+import { useMemo, useState } from "react"
 import { useTranslation } from "react-i18next"
 
 import { useDate } from "../../../../hooks/use-date"
@@ -10,11 +10,11 @@ const filterHelper = createDataTableFilterHelper()
 const useDateFilterOptions = () => {
   const { t } = useTranslation()
 
-  const today = useMemo(() => {
+  const [today] = useState(() => {
     const date = new Date()
     date.setHours(0, 0, 0, 0)
     return date
-  }, [])
+  })
 
   return useMemo(() => {
     return [

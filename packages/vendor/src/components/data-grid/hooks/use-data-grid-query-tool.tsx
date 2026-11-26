@@ -1,15 +1,11 @@
-import { RefObject, useEffect, useRef } from "react"
+import { RefObject, useState } from "react"
 
 import { DataGridQueryTool } from "../models"
 
-export const useDataGridQueryTool = (containerRef: RefObject<HTMLElement>) => {
-  const queryToolRef = useRef<DataGridQueryTool | null>(null)
+export const useDataGridQueryTool = (
+  containerRef: RefObject<HTMLElement | null>
+) => {
+  const [queryTool] = useState(() => new DataGridQueryTool(containerRef))
 
-  useEffect(() => {
-    if (containerRef.current) {
-      queryToolRef.current = new DataGridQueryTool(containerRef.current)
-    }
-  }, [containerRef])
-
-  return queryToolRef.current
+  return queryTool
 }

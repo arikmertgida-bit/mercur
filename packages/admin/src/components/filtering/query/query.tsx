@@ -1,8 +1,8 @@
 import { Input } from "@medusajs/ui"
-import debounce from "lodash.debounce"
-import { ChangeEvent, useCallback, useEffect, useState } from "react"
+import { ChangeEvent, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { useSearchParams } from "react-router-dom"
+import { useDebouncedAction } from "@mercurjs/dashboard-shared"
 
 type QueryProps = {
   placeholder?: string
@@ -14,36 +14,27 @@ export const Query = ({ placeholder }: QueryProps) => {
 
   const [searchParams, setSearchParams] = useSearchParams()
   const [inputValue, setInputValue] = useState(searchParams.get("q") || "")
+  const debounceUpdate = useDebouncedAction(500)
 
   const updateSearchParams = (newValue: string) => {
-    if (!newValue) {
-      setSearchParams((prev) => {
-        prev.delete("q")
-        return prev
-      })
+    setSearchParams((prev) => {
+      const next = new URLSearchParams(prev)
 
-      return
-    }
+      if (newValue) {
+        next.set("q", newValue)
+      } else {
+        next.delete("q")
+      }
 
-    setSearchParams((prev) => ({ ...prev, q: newValue || "" }))
+      return next
+    })
   }
 
-  // oxlint-disable-next-line react-hooks/exhaustive-deps
-  const debouncedUpdate = useCallback(
-    debounce((newValue: string) => updateSearchParams(newValue), 500),
-    []
-  )
-
-  useEffect(() => {
-    debouncedUpdate(inputValue)
-
-    return () => {
-      debouncedUpdate.cancel()
-    }
-  }, [inputValue, debouncedUpdate])
-
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.target.value)
+    const value = event.target.value
+
+    setInputValue(value)
+    debounceUpdate(() => updateSearchParams(value))
   }
 
   return (

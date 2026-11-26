@@ -164,23 +164,15 @@ export const DataTable = <TData,>({
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>(initialColumnVisibility)
 
-  // Update column visibility when initial visibility changes
-  React.useEffect(() => {
-    // Deep compare to check if the visibility has actually changed
-    const currentKeys = Object.keys(columnVisibility).sort()
-    const newKeys = Object.keys(initialColumnVisibility).sort()
+  // Re-seed from `initialColumnVisibility` only when its content changes, so
+  // the user's own toggles are kept while the parent passes the same value.
+  const [seededVisibility, setSeededVisibility] =
+    React.useState<VisibilityState>(initialColumnVisibility)
 
-    const hasChanged =
-      currentKeys.length !== newKeys.length ||
-      currentKeys.some((key, index) => key !== newKeys[index]) ||
-      Object.entries(initialColumnVisibility).some(
-        ([key, value]) => columnVisibility[key] !== value
-      )
-
-    if (hasChanged) {
-      setColumnVisibility(initialColumnVisibility)
-    }
-  }, [initialColumnVisibility, columnVisibility])
+  if (!isSameVisibility(seededVisibility, initialColumnVisibility)) {
+    setSeededVisibility(initialColumnVisibility)
+    setColumnVisibility(initialColumnVisibility)
+  }
 
   // Wrapper function to handle column visibility changes
   const handleColumnVisibilityChange = React.useCallback(
@@ -579,10 +571,21 @@ const DataTableAction = ({
 const DataTableActions = ({ actions }: { actions: DataTableActionProps[] }) => {
   return (
     <div className="flex items-center gap-x-2">
-      {actions.map((action, index) => (
-        // oxlint-disable-next-line react/no-array-index-key -- static action config declared by the caller, not persistent/reorderable
-        <DataTableAction key={index} {...action} />
+      {actions.map((action) => (
+        <DataTableAction key={action.label} {...action} />
       ))}
     </div>
+  )
+}
+
+const isSameVisibility = (
+  a: VisibilityState,
+  b: VisibilityState
+): boolean => {
+  const aKeys = Object.keys(a)
+
+  return (
+    aKeys.length === Object.keys(b).length &&
+    aKeys.every((key) => a[key] === b[key])
   )
 }

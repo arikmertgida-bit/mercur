@@ -2,7 +2,7 @@ import CurrencyInput, { CurrencyInputProps } from "react-currency-input-field"
 import type { JsonValue } from "@mercurjs/types"
 import { Controller, ControllerRenderProps } from "react-hook-form"
 
-import { useCallback, useEffect, useState } from "react"
+import { useState } from "react"
 import { useCombinedRefs } from "../../../hooks/use-combined-refs"
 import { CurrencyInfo, currencies } from "../../../lib/data/currencies"
 import { useDataGridCell, useDataGridCellError } from "../hooks"
@@ -64,15 +64,26 @@ const Inner = ({
 
   const numberInput = useNumberInputLocale()
 
-  const formatter = useCallback(
-    (value?: string | number) =>
-      toCanonicalDecimal(value, currencyInfo.decimal_digits),
-    [currencyInfo]
-  )
+  const decimalDigits = currencyInfo.decimal_digits
 
-  const [localValue, setLocalValue] = useState<string | number>(
-    toInputValue(value) || ""
+  // The component we use is a bit fidly when the value is updated externally
+  // so we need to ensure a format that will result in the cell being formatted correctly
+  // according to the users locale on the next render.
+  const toDisplayValue = (next: JsonValue): string | number => {
+    const update = toInputValue(next)
+
+    return isNaN(Number(next)) ? update : toCanonicalDecimal(update, decimalDigits)
+  }
+
+  const [localValue, setLocalValue] = useState<string | number>(() =>
+    toDisplayValue(value)
   )
+  const [synced, setSynced] = useState({ value, decimalDigits })
+
+  if (synced.value !== value || synced.decimalDigits !== decimalDigits) {
+    setSynced({ value, decimalDigits })
+    setLocalValue(toDisplayValue(value))
+  }
 
   const handleValueChange: CurrencyInputProps["onValueChange"] = (
     value,
@@ -86,19 +97,6 @@ const Inner = ({
 
     setLocalValue(value)
   }
-
-  useEffect(() => {
-    let update = toInputValue(value)
-
-    // The component we use is a bit fidly when the value is updated externally
-    // so we need to ensure a format that will result in the cell being formatted correctly
-    // according to the users locale on the next render.
-    if (!isNaN(Number(value))) {
-      update = formatter(update)
-    }
-
-    setLocalValue(update)
-  }, [value, formatter])
 
   const combinedRed = useCombinedRefs(inputRef, ref)
 

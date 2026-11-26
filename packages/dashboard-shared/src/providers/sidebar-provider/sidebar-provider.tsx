@@ -1,4 +1,4 @@
-import { PropsWithChildren, useCallback, useEffect, useMemo, useState } from "react"
+import { PropsWithChildren, useCallback, useMemo, useState } from "react"
 import { useLocation } from "react-router-dom"
 
 import { SidebarContext, SidebarContextValue } from "./sidebar-context"
@@ -16,9 +16,12 @@ export const SidebarProvider = ({ children }: PropsWithChildren) => {
   // close the mobile sidebar on route change
   // this is to prevent the sidebar from staying open
   // when navigating to a new page
-  useEffect(() => {
+  const [syncedPathname, setSyncedPathname] = useState(pathname)
+
+  if (syncedPathname !== pathname) {
+    setSyncedPathname(pathname)
     setMobile(false)
-  }, [pathname])
+  }
 
   const toggle = useCallback((view: "desktop" | "mobile") => {
     if (view === "desktop") {

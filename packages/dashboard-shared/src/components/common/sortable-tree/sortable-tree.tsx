@@ -7,6 +7,7 @@ import {
   DragOverlay,
   DragStartEvent,
   DropAnimation,
+  KeyboardCoordinateGetter,
   KeyboardSensor,
   MeasuringStrategy,
   PointerSensor,
@@ -155,9 +156,9 @@ export function SortableTree<T extends TreeItem>({
     offset: offsetLeft,
   })
 
-  const [coordinateGetter] = useState(() =>
-    sortableTreeKeyboardCoordinates(sensorContext, indentationWidth)
-  )
+  // Built per key press so the sensor context ref is read only then.
+  const coordinateGetter: KeyboardCoordinateGetter = (event, args) =>
+    sortableTreeKeyboardCoordinates(sensorContext, indentationWidth)(event, args)
 
   const sensors = useSensors(
     useSensor(PointerSensor),

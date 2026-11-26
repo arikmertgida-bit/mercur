@@ -1,5 +1,5 @@
 import { clx } from "@medusajs/ui"
-import { useEffect, useRef, useState } from "react"
+import { useRef, useState } from "react"
 import type { JsonValue } from "@mercurjs/types"
 import { Controller, ControllerRenderProps } from "react-hook-form"
 
@@ -47,9 +47,12 @@ const Inner = ({
   const [localValue, setLocalValue] = useState<JsonValue>(value)
   const inputElRef = useRef<HTMLInputElement>(null)
 
-  useEffect(() => {
+  const [syncedValue, setSyncedValue] = useState<JsonValue>(value)
+
+  if (syncedValue !== value) {
+    setSyncedValue(value)
     setLocalValue(value)
-  }, [value])
+  }
 
   const combinedRefs = useCombinedRefs(inputRef, ref, inputElRef)
 

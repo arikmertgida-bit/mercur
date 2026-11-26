@@ -90,9 +90,12 @@ const OuterComponent = ({
 
   const [localValue, setLocalValue] = useState(() => toToggleableNumber(value))
 
-  useEffect(() => {
+  const [syncedValue, setSyncedValue] = useState<JsonValue>(value)
+
+  if (syncedValue !== value) {
+    setSyncedValue(value)
     setLocalValue(toToggleableNumber(value))
-  }, [value])
+  }
 
   const handleCheckedChange = (update: boolean) => {
     const newValue = { ...localValue, checked: update }
@@ -164,9 +167,12 @@ const Inner = ({
 
   const [localValue, setLocalValue] = useState(() => toToggleableNumber(value))
 
-  useEffect(() => {
+  const [syncedValue, setSyncedValue] = useState<JsonValue>(value)
+
+  if (syncedValue !== value) {
+    setSyncedValue(value)
     setLocalValue(toToggleableNumber(value))
-  }, [value])
+  }
 
   const combinedRefs = useCombinedRefs(inputRef, ref)
   const numberInput = useNumberInputLocale()

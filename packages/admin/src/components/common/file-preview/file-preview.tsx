@@ -47,7 +47,7 @@ export const FilePreview = ({
         {!loading && actions && <ActionMenu groups={actions} />}
         {!loading && url && (
           <IconButton variant="transparent" asChild>
-            <a href={url} download={filename ?? `${Date.now()}`}>
+            <a href={url} download={filename}>
               <ArrowDownTray />
             </a>
           </IconButton>

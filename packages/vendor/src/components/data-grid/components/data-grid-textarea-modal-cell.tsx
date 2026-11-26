@@ -85,15 +85,19 @@ const Inner = ({
   const [popoverValue, setPopoverValue] = useState(textValue)
   const popoverContentRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    setLocalValue(toTextValue(value))
-  }, [value])
+  const [synced, setSynced] = useState({ value, isPopoverOpen })
 
-  useEffect(() => {
-    if (isPopoverOpen) {
-      setPopoverValue(toTextValue(value))
+  if (synced.value !== value || synced.isPopoverOpen !== isPopoverOpen) {
+    setSynced({ value, isPopoverOpen })
+
+    if (synced.value !== value) {
+      setLocalValue(textValue)
     }
-  }, [isPopoverOpen, value])
+
+    if (isPopoverOpen) {
+      setPopoverValue(textValue)
+    }
+  }
 
   // Prevent DataGrid keyboard handlers from intercepting keys when popover is open
   useEffect(() => {

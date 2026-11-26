@@ -1,5 +1,5 @@
 import { clx } from "@medusajs/ui"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import type { JsonValue } from "@mercurjs/types"
 import { Controller, ControllerRenderProps } from "react-hook-form"
 import { useCombinedRefs } from "../../../hooks/use-combined-refs"
@@ -60,9 +60,12 @@ const Inner = ({
 
   const [localValue, setLocalValue] = useState<JsonValue>(value)
 
-  useEffect(() => {
+  const [syncedValue, setSyncedValue] = useState<JsonValue>(value)
+
+  if (syncedValue !== value) {
+    setSyncedValue(value)
     setLocalValue(value)
-  }, [value])
+  }
 
   const combinedRefs = useCombinedRefs(inputRef, ref)
 

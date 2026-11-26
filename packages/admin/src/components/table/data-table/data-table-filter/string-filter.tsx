@@ -1,7 +1,7 @@
 import { Input, Label, clx } from "@medusajs/ui"
-import debounce from "lodash.debounce"
 import { Popover as RadixPopover } from "radix-ui"
-import { ChangeEvent, useCallback, useEffect, useState } from "react"
+import { ChangeEvent, useRef, useState } from "react"
+import { useDebouncedAction } from "@mercurjs/dashboard-shared"
 import { useSelectedParams } from "../hooks"
 import { useDataTableFilterContext } from "./context"
 import FilterChip from "./filter-chip"
@@ -28,38 +28,33 @@ export const StringFilter = ({
     query?.[0]
   )
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const debouncedOnChange = useCallback(
-    debounce((e: ChangeEvent<HTMLInputElement>) => {
-      const value = e.target.value
+  const debounceChange = useDebouncedAction(500)
 
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+
+    debounceChange(() => {
       if (!value) {
         selectedParams.delete()
       } else {
         selectedParams.add(value)
       }
-    }, 500),
-    [selectedParams]
-  )
+    })
+  }
 
-  useEffect(() => {
-    return () => {
-      debouncedOnChange.cancel()
-    }
-  }, [debouncedOnChange])
-
-  let timeoutId: ReturnType<typeof setTimeout> | null = null
+  const removeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const handleOpenChange = (open: boolean) => {
     setOpen(open)
     setPreviousValue(query?.[0])
 
-    if (timeoutId) {
-      clearTimeout(timeoutId)
+    if (removeTimeoutRef.current) {
+      clearTimeout(removeTimeoutRef.current)
+      removeTimeoutRef.current = null
     }
 
     if (!open && !query.length) {
-      timeoutId = setTimeout(() => {
+      removeTimeoutRef.current = setTimeout(() => {
         removeFilter(key)
       }, 200)
     }
@@ -113,7 +108,7 @@ export const StringFilter = ({
                   name={key}
                   size="small"
                   defaultValue={query?.[0] || undefined}
-                  onChange={debouncedOnChange}
+                  onChange={handleChange}
                 />
               </div>
             </div>

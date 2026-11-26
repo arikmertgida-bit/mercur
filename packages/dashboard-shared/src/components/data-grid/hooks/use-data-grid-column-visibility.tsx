@@ -1,5 +1,4 @@
 import type { Column, Table } from "@tanstack/react-table"
-import { useCallback } from "react"
 
 import { DataGridMatrix } from "../models"
 import { createDataGridColumnMetaSchema, GridColumnOption } from "../types"
@@ -17,23 +16,20 @@ export function useDataGridColumnVisibility<TData>(
     disabled: !column.getCanHide(),
   }))
 
-  const handleToggleColumn = useCallback(
-    (index: number) => (value: boolean) => {
-      const column = columns[index]
+  const handleToggleColumn = (index: number) => (value: boolean) => {
+    const column = columns[index]
 
-      if (!column.getCanHide()) {
-        return
-      }
+    if (!column?.getCanHide()) {
+      return
+    }
 
-      matrix.toggleColumn(index, value)
-      column.toggleVisibility(value)
-    },
-    [columns, matrix]
-  )
+    matrix.toggleColumn(index, value)
+    column.toggleVisibility(value)
+  }
 
-  const handleResetColumns = useCallback(() => {
+  const handleResetColumns = () => {
     grid.setColumnVisibility({})
-  }, [grid])
+  }
 
   const optionCount = columnOptions.filter((c) => !c.disabled).length
   const isDisabled = optionCount === 0

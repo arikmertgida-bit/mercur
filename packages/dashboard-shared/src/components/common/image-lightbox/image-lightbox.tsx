@@ -56,6 +56,7 @@ export const ImageLightbox = ({
   }
 
   const [dragX, setDragX] = useState(0)
+  const [isDragging, setIsDragging] = useState(false)
   const dragStateRef = useRef<{
     pointerId: number
     startX: number
@@ -65,6 +66,7 @@ export const ImageLightbox = ({
   const resetDrag = (): void => {
     dragStateRef.current = null
     setDragX(0)
+    setIsDragging(false)
   }
 
   const handlePointerDown = (event: ReactPointerEvent<HTMLDivElement>): void => {
@@ -81,6 +83,7 @@ export const ImageLightbox = ({
       if (Math.abs(delta) < DRAG_ACTIVATION_THRESHOLD) return
       drag.captured = true
       event.currentTarget.setPointerCapture(event.pointerId)
+      setIsDragging(true)
     }
     setDragX(delta)
   }
@@ -96,17 +99,18 @@ export const ImageLightbox = ({
     resetDrag()
   }
 
+  const imageCount = images.length
+
   useEffect(() => {
-    if (!open) return
+    if (index === null || imageCount === 0) return
 
     const handler = (event: KeyboardEvent): void => {
-      if (event.key === "ArrowLeft") goTo(-1)
-      if (event.key === "ArrowRight") goTo(1)
+      if (event.key === "ArrowLeft") onIndexChange((index - 1 + imageCount) % imageCount)
+      if (event.key === "ArrowRight") onIndexChange((index + 1) % imageCount)
     }
     window.addEventListener("keydown", handler)
     return (): void => window.removeEventListener("keydown", handler)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open, index, images.length])
+  }, [index, imageCount, onIndexChange])
 
   return (
     <RadixDialog.Root
@@ -162,7 +166,7 @@ export const ImageLightbox = ({
             <div
               className={clx(
                 "bg-ui-bg-subtle relative flex h-[min(50vh,360px)] touch-pan-y items-center justify-center overflow-hidden select-none",
-                images.length > 1 && (dragStateRef.current?.captured ? "cursor-grabbing" : "cursor-grab")
+                images.length > 1 && (isDragging ? "cursor-grabbing" : "cursor-grab")
               )}
               onPointerDown={handlePointerDown}
               onPointerMove={handlePointerMove}
@@ -177,7 +181,7 @@ export const ImageLightbox = ({
                   className="max-h-full max-w-full object-contain"
                   style={{
                     transform: dragX !== 0 ? `translateX(${dragX}px)` : undefined,
-                    transition: dragStateRef.current?.captured ? "none" : "transform 150ms ease",
+                    transition: isDragging ? "none" : "transform 150ms ease",
                   }}
                 />
               )}

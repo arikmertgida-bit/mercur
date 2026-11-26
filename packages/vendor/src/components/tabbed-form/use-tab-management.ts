@@ -13,6 +13,27 @@ import { TabDefinition } from "./types"
 
 type TabState = Record<string, ProgressStatus>
 
+const getTabState = <T extends FieldValues>(
+  visibleTabs: TabDefinition<T>[],
+  activeTabId: string,
+  previous: TabState
+): TabState => {
+  const state: TabState = {}
+  const activeIndex = visibleTabs.findIndex((t) => t.id === activeTabId)
+
+  visibleTabs.forEach((t, i) => {
+    if (i < activeIndex) {
+      state[t.id] = "completed"
+    } else if (i === activeIndex) {
+      state[t.id] = "in-progress"
+    } else {
+      state[t.id] = previous[t.id] ?? "not-started"
+    }
+  })
+
+  return state
+}
+
 /**
  * Validates fields for a specific tab. If the tab declares `validationFields`,
  * only those fields are validated. Otherwise falls back to full form validation.
@@ -111,7 +132,14 @@ export const useTabManagement = <T extends FieldValues>({
     return state
   })
 
-  useEffect(() => {
+  // Recomputed when the active tab or the visible tabs change; tabs after the
+  // active one keep the status they had. A hidden active tab falls back to the
+  // first visible one.
+  const [synced, setSynced] = useState({ activeTabId, visibleTabs })
+
+  if (synced.activeTabId !== activeTabId || synced.visibleTabs !== visibleTabs) {
+    setSynced({ activeTabId, visibleTabs })
+
     let resolvedActiveId = activeTabId
     const activeExists = visibleTabs.some((t) => t.id === activeTabId)
 
@@ -120,24 +148,8 @@ export const useTabManagement = <T extends FieldValues>({
       setActiveTabId(resolvedActiveId)
     }
 
-    const newState: TabState = {}
-    const resolvedIndex = visibleTabs.findIndex(
-      (t) => t.id === resolvedActiveId
-    )
-
-    visibleTabs.forEach((t, i) => {
-      if (i < resolvedIndex) {
-        newState[t.id] = "completed"
-      } else if (i === resolvedIndex) {
-        newState[t.id] = "in-progress"
-      } else {
-        newState[t.id] = tabState[t.id] ?? "not-started"
-      }
-    })
-
-    setTabState(newState)
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- we only want this effect to run when the active tab or visible tabs change
-  }, [activeTabId, visibleTabs])
+    setTabState(getTabState(visibleTabs, resolvedActiveId, tabState))
+  }
 
   const activeIndex = visibleTabs.findIndex((t) => t.id === activeTabId)
   const isLastTab = activeIndex === visibleTabs.length - 1

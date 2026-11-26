@@ -1,5 +1,5 @@
 import { Label, Prompt, Textarea } from "@medusajs/ui";
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 export type ConfirmPromptProps = {
@@ -69,11 +69,15 @@ export const ConfirmPrompt = ({
   const { t } = useTranslation();
   const [note, setNote] = useState(defaultNote);
 
-  useEffect(() => {
+  const [synced, setSynced] = useState({ open, defaultNote });
+
+  if (synced.open !== open || synced.defaultNote !== defaultNote) {
+    setSynced({ open, defaultNote });
+
     if (open) {
       setNote(defaultNote);
     }
-  }, [open, defaultNote]);
+  }
 
   const showNoteField = typeof noteLabel === "string";
 

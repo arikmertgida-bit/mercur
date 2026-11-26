@@ -1,4 +1,10 @@
-import { createContext, useContext, useMemo, type ReactNode } from "react"
+import {
+  createContext,
+  useContext,
+  useLayoutEffect,
+  useMemo,
+  type ReactNode,
+} from "react"
 import {
   ExtensionRegistry,
   type CustomFieldsModule,
@@ -31,11 +37,16 @@ export const ExtensionProvider = ({
   customFields,
   children,
 }: ExtensionProviderProps) => {
-  const registry = useMemo(() => {
-    const next = new ExtensionRegistry({ widgets, navigation, customFields })
-    activeRegistry = next
-    return next
-  }, [widgets, navigation, customFields])
+  const registry = useMemo(
+    () => new ExtensionRegistry({ widgets, navigation, customFields }),
+    [widgets, navigation, customFields]
+  )
+
+  // Published before any child effect or router loader that runs after this
+  // commit; the panels render the router only once the language has loaded.
+  useLayoutEffect(() => {
+    activeRegistry = registry
+  }, [registry])
 
   return (
     <ExtensionContext.Provider value={registry}>

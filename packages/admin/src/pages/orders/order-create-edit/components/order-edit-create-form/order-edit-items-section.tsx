@@ -1,10 +1,10 @@
-import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
+import { ChangeEvent, useMemo, useState } from "react";
 
 import { MagnifyingGlass } from "@medusajs/icons";
 import { AdminOrder, AdminOrderPreview } from "@medusajs/types";
 import { Button, Heading, Input, Text, toast } from "@medusajs/ui";
 
-import debounce from "lodash.debounce";
+import { useDebouncedAction } from "@mercurjs/dashboard-shared";
 import { useTranslation } from "react-i18next";
 
 import {
@@ -52,21 +52,13 @@ export const OrderEditItemsSection = ({
     setIsOpen("inbound-items", false);
   };
 
-  // oxlint-disable-next-line react-hooks/exhaustive-deps
-  const debouncedOnChange = useCallback(
-    debounce((e: ChangeEvent<HTMLInputElement>) => {
-      const value = e.target.value;
+  const debounceFilter = useDebouncedAction(500);
 
-      setFilterTerm(value);
-    }, 500),
-    [setFilterTerm],
-  );
+  const handleFilterChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
 
-  useEffect(() => {
-    return () => {
-      debouncedOnChange.cancel();
-    };
-  }, [debouncedOnChange]);
+    debounceFilter(() => setFilterTerm(value));
+  };
 
   const filteredItems = useMemo(() => {
     
@@ -84,7 +76,7 @@ export const OrderEditItemsSection = ({
 
         <div className="flex gap-2" data-testid="order-edit-items-section-actions">
           <Input
-            onChange={debouncedOnChange}
+            onChange={handleFilterChange}
             placeholder={t("fields.search")}
             autoComplete="off"
             type="search"

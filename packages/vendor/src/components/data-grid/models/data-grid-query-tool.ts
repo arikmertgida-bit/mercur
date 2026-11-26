@@ -1,29 +1,30 @@
+import type { RefObject } from "react"
 import { DataGridCoordinates } from "../types"
 import { generateCellId } from "../utils"
 
 export class DataGridQueryTool {
-  private container: HTMLElement | null
+  private containerRef: RefObject<HTMLElement | null>
 
-  constructor(container: HTMLElement | null) {
-    this.container = container
+  constructor(containerRef: RefObject<HTMLElement | null>) {
+    this.containerRef = containerRef
   }
 
   getInput(cell: DataGridCoordinates) {
     const id = this._getCellId(cell)
 
-    const input = this.container?.querySelector(`[data-cell-id="${id}"]`)
+    const input = this.containerRef.current?.querySelector(`[data-cell-id="${id}"]`)
 
     return input instanceof HTMLElement ? input : null
   }
 
   getInputByField(field: string) {
-    const input = this.container?.querySelector(`[data-field="${field}"]`)
+    const input = this.containerRef.current?.querySelector(`[data-field="${field}"]`)
 
     return input instanceof HTMLElement ? input : null
   }
 
   getCoordinatesByField(field: string): DataGridCoordinates | null {
-    const cell = this.container?.querySelector(
+    const cell = this.containerRef.current?.querySelector(
       `[data-field="${field}"][data-cell-id]`
     )
 
@@ -49,7 +50,7 @@ export class DataGridQueryTool {
   getContainer(cell: DataGridCoordinates) {
     const id = this._getCellId(cell)
 
-    const container = this.container?.querySelector(
+    const container = this.containerRef.current?.querySelector(
       `[data-container-id="${id}"]`
     )
 

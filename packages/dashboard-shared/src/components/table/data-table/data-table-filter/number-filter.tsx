@@ -1,15 +1,15 @@
 import { EllipseMiniSolid } from "@medusajs/icons"
 import { Input, Label, clx } from "@medusajs/ui"
-import debounce from "lodash.debounce"
 import {
   Popover as RadixPopover,
   RadioGroup as RadixRadioGroup,
 } from "radix-ui"
-import { ChangeEvent, useCallback, useEffect, useState } from "react"
+import { ChangeEvent, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { z } from "zod"
 
 import { TFunction } from "i18next"
+import { useDebouncedAction } from "../../../../hooks/use-debounced-action"
 import {
   parseJsonQueryParam,
   RangeNumberFilterValue,
@@ -54,10 +54,15 @@ export const NumberFilter = ({
     getOperator(currentValue)
   )
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const debouncedOnChange = useCallback(
-    debounce((e: ChangeEvent<HTMLInputElement>, operator: Operator) => {
-      const value = e.target.value
+  const debounceChange = useDebouncedAction(500)
+
+  const debouncedOnChange = (
+    e: ChangeEvent<HTMLInputElement>,
+    operator: Operator
+  ) => {
+    const value = e.target.value
+
+    debounceChange(() => {
       const curr = parseValue(currentValue) ?? {}
 
       const handleValue = (operator: "lt" | "gt") => {
@@ -93,28 +98,22 @@ export const NumberFilter = ({
           handleValue(operator)
           break
       }
-    }, 500),
-    [selectedParams, currentValue]
-  )
+    })
+  }
 
-  useEffect(() => {
-    return () => {
-      debouncedOnChange.cancel()
-    }
-  }, [debouncedOnChange])
-
-  let timeoutId: ReturnType<typeof setTimeout> | null = null
+  const removeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const handleOpenChange = (open: boolean) => {
     setOpen(open)
     setPreviousValue(currentValue)
 
-    if (timeoutId) {
-      clearTimeout(timeoutId)
+    if (removeTimeoutRef.current) {
+      clearTimeout(removeTimeoutRef.current)
+      removeTimeoutRef.current = null
     }
 
     if (!open && !currentValue.length) {
-      timeoutId = setTimeout(() => {
+      removeTimeoutRef.current = setTimeout(() => {
         removeFilter(key)
       }, 200)
     }

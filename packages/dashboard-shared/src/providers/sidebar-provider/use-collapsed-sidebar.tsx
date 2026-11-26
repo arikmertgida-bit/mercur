@@ -1,12 +1,16 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useLayoutEffect, useRef } from "react"
 
 import { useSidebar } from "./use-sidebar"
 
 const useDesktopSidebarOverride = (desktop: boolean, enabled: boolean) => {
   const { desktop: current, setDesktop } = useSidebar()
 
+  // Layout effects run before the effect below, so it reads the state the
+  // user had right before the override was applied.
   const desktopRef = useRef(current)
-  desktopRef.current = current
+  useLayoutEffect(() => {
+    desktopRef.current = current
+  })
 
   useEffect(() => {
     if (!enabled) {

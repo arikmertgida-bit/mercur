@@ -1,4 +1,5 @@
 import { Text, clx } from "@medusajs/ui"
+import { useState } from "react"
 import { useTranslation } from "react-i18next"
 import { useDate } from "../../../hooks/use-date"
 
@@ -59,7 +60,7 @@ export const DateRangeDisplay = ({
 }
 
 const Bar = ({ date }: { date: Date | null }) => {
-  const now = new Date()
+  const [now] = useState(() => new Date())
 
   const isDateInFuture = date && date > now
 

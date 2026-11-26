@@ -47,9 +47,12 @@ const Inner = ({
   const [localValue, setLocalValue] = useState<JsonValue>(value)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
-  useEffect(() => {
+  const [syncedValue, setSyncedValue] = useState<JsonValue>(value)
+
+  if (syncedValue !== value) {
+    setSyncedValue(value)
     setLocalValue(value)
-  }, [value])
+  }
 
   const combinedRefs = useCombinedRefs(inputRef, ref, textareaRef)
 

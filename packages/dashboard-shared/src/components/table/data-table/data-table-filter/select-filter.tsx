@@ -3,7 +3,7 @@ import { CheckMini, EllipseMiniSolid, XMarkMini } from "@medusajs/icons"
 import { clx } from "@medusajs/ui"
 import { Command } from "cmdk"
 import { Popover as RadixPopover } from "radix-ui"
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
 
 import { useSelectedParams } from "../hooks"
@@ -52,19 +52,20 @@ export const SelectFilter = ({
     removeFilter(key)
   }
 
-  let timeoutId: ReturnType<typeof setTimeout> | null = null
+  const removeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const handleOpenChange = (open: boolean) => {
     setOpen(open)
 
     setPreviousValue(labelValues)
 
-    if (timeoutId) {
-      clearTimeout(timeoutId)
+    if (removeTimeoutRef.current) {
+      clearTimeout(removeTimeoutRef.current)
+      removeTimeoutRef.current = null
     }
 
     if (!open && !currentValue.length) {
-      timeoutId = setTimeout(() => {
+      removeTimeoutRef.current = setTimeout(() => {
         removeFilter(key)
       }, 200)
     }

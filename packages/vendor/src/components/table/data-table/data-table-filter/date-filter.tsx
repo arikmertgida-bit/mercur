@@ -2,7 +2,7 @@ import { EllipseMiniSolid } from "@medusajs/icons"
 import { DatePicker, Text, clx } from "@medusajs/ui"
 import isEqual from "lodash.isequal"
 import { Popover as RadixPopover } from "radix-ui"
-import { useMemo, useState } from "react"
+import { useMemo, useRef, useState } from "react"
 
 import { t } from "i18next"
 import { useTranslation } from "react-i18next"
@@ -99,18 +99,19 @@ export const DateFilter = ({
     removeFilter(key)
   }
 
-  let timeoutId: ReturnType<typeof setTimeout> | null = null
+  const removeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const handleOpenChange = (open: boolean) => {
     setOpen(open)
     setPreviousValue(displayValue)
 
-    if (timeoutId) {
-      clearTimeout(timeoutId)
+    if (removeTimeoutRef.current) {
+      clearTimeout(removeTimeoutRef.current)
+      removeTimeoutRef.current = null
     }
 
     if (!open && !currentValue.length) {
-      timeoutId = setTimeout(() => {
+      removeTimeoutRef.current = setTimeout(() => {
         removeFilter(key)
       }, 200)
     }
