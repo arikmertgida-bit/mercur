@@ -56,11 +56,7 @@ export const MultiSelectCategory = ({
     return categories.some((cat) => cat.parent_category_id === categoryId)
   }
 
-  const handleDrillDown = (
-    category: AdminProductCategory,
-    event: React.MouseEvent
-  ) => {
-    event.stopPropagation()
+  const handleDrillDown = (category: AdminProductCategory) => {
     setPathHistory([...pathHistory, currentParentId])
     setCurrentParentId(category.id)
   }
@@ -95,24 +91,28 @@ export const MultiSelectCategory = ({
       className="relative"
       data-testid="attribute-form-category-multiselect"
     >
-      {/* oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
       <div
         ref={triggerRef}
-        className="focus-within:ring-ui-ring-interactive relative flex h-10 w-full cursor-pointer items-center justify-between overflow-hidden rounded-md border border-ui-border-base bg-ui-bg-field text-ui-fg-base shadow-sm transition-colors duration-150 ease-in-out focus-within:border-ui-border-interactive focus-within:ring-1 hover:bg-ui-bg-field-hover"
-        onClick={handleToggle}
-        data-testid="attribute-form-category-multiselect-trigger"
+        className="focus-within:ring-ui-ring-interactive relative flex h-10 w-full items-center justify-between overflow-hidden rounded-md border border-ui-border-base bg-ui-bg-field text-ui-fg-base shadow-sm transition-colors duration-150 ease-in-out focus-within:border-ui-border-interactive focus-within:ring-1 hover:bg-ui-bg-field-hover"
       >
+        <button
+          type="button"
+          className="absolute inset-0 cursor-pointer outline-none"
+          onClick={handleToggle}
+          aria-expanded={isOpen}
+          aria-label={t("attributes.selectCategory.placeholder")}
+          data-testid="attribute-form-category-multiselect-trigger"
+        />
         <div
-          className="flex items-center gap-2 px-3 py-2"
+          className="pointer-events-none relative flex items-center gap-2 px-3 py-2"
           data-testid="attribute-form-category-multiselect-trigger-content"
         >
           {value.length > 0 ? (
             <button
               type="button"
-              onClick={(e) => {
-                e.stopPropagation()
-                onChange([])
-              }}
+              className="pointer-events-auto"
+              onClick={() => onChange([])}
+              aria-label={t("actions.clearAll")}
               data-testid="attribute-form-category-multiselect-clear-button"
             >
               <Badge
@@ -134,7 +134,7 @@ export const MultiSelectCategory = ({
           )}
         </div>
         <span
-          className="flex h-full w-10 items-center justify-center border-l border-ui-border-base"
+          className="pointer-events-none relative flex h-full w-10 items-center justify-center border-s border-ui-border-base"
           data-testid="attribute-form-category-multiselect-icon"
         >
           <TrianglesMini />
@@ -148,17 +148,18 @@ export const MultiSelectCategory = ({
           data-testid="attribute-form-category-multiselect-dropdown"
         >
           {currentParentId !== null && (
-            // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
-            <div
-              className="flex cursor-pointer items-center gap-3 border-b border-ui-border-base px-3 py-2 text-ui-fg-subtle hover:bg-ui-bg-base-hover"
+            <button
+              type="button"
+              className="flex w-full cursor-pointer items-center gap-3 border-b border-ui-border-base px-3 py-2 text-start text-ui-fg-subtle outline-none hover:bg-ui-bg-base-hover focus-visible:bg-ui-bg-base-hover"
               onClick={handleGoBack}
               data-testid="attribute-form-category-multiselect-back-button"
             >
               <ArrowUturnLeft />
+              <span className="sr-only">{t("actions.back")}</span>
               <Text data-testid="attribute-form-category-multiselect-back-text">
                 {getBackButtonText()}
               </Text>
-            </div>
+            </button>
           )}
           {currentCategories.length === 0 ? (
             <div
@@ -172,39 +173,41 @@ export const MultiSelectCategory = ({
               const isSelected = value.includes(category.id)
               const hasChildrenNode = hasChildren(category.id)
               return (
-                // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
                 <div
                   key={category.id}
-                  className="flex cursor-pointer items-center justify-between px-1 py-1"
-                  onClick={() => handleItemClick(category.id)}
+                  className="flex items-center justify-between px-1 py-1"
                   data-testid={`attribute-form-category-multiselect-item-${category.id}`}
                 >
-                  <div
-                    className="relative mr-2 flex flex-1 items-center rounded-md px-2 py-1.5 hover:bg-ui-bg-base-hover"
+                  <button
+                    type="button"
+                    aria-pressed={isSelected}
+                    onClick={() => handleItemClick(category.id)}
+                    className="relative me-2 flex flex-1 cursor-pointer items-center rounded-md px-2 py-1.5 text-start outline-none hover:bg-ui-bg-base-hover focus-visible:bg-ui-bg-base-hover"
                     data-testid={`attribute-form-category-multiselect-item-${category.id}-content`}
                   >
                     {isSelected && (
                       <span
-                        className="absolute left-3 top-1/2 h-1 w-1 -translate-y-1/2 rounded-full bg-ui-fg-base"
+                        className="absolute start-3 top-1/2 h-1 w-1 -translate-y-1/2 rounded-full bg-ui-fg-base"
                         data-testid={`attribute-form-category-multiselect-item-${category.id}-selected-indicator`}
                       />
                     )}
                     <Text
-                      className="ml-6"
+                      className="ms-6"
                       data-testid={`attribute-form-category-multiselect-item-${category.id}-name`}
                     >
                       {category.name}
                     </Text>
-                  </div>
+                  </button>
                   {hasChildrenNode && (
-                    // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
-                    <div
-                      onClick={(e) => handleDrillDown(category, e)}
-                      className="rounded-md p-2 hover:bg-ui-bg-base-hover"
+                    <button
+                      type="button"
+                      onClick={() => handleDrillDown(category)}
+                      aria-label={t("categories.fields.children.label")}
+                      className="rounded-md p-2 outline-none hover:bg-ui-bg-base-hover focus-visible:bg-ui-bg-base-hover"
                       data-testid={`attribute-form-category-multiselect-item-${category.id}-drill-down`}
                     >
                       <TriangleRightMini className="me-1 rtl:rotate-180" />
-                    </div>
+                    </button>
                   )}
                 </div>
               )

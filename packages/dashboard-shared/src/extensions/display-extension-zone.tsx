@@ -1,5 +1,6 @@
 import { Fragment, type ComponentType, type ReactNode } from "react"
 import type { JsonRecord } from "@mercurjs/types"
+import { withContentKeys } from "../lib/content-keys"
 import { useExtension } from "./context"
 
 // `data` is generic for the same reason as `WidgetZone`'s: hosts pass
@@ -25,11 +26,13 @@ export type DisplayExtensionZoneProps<TData = JsonRecord> = {
  * field) plus the section's custom `ActionMenu` contributions. Built-in fields
  * are overridden in place by `<DisplayField>` / `useDisplayFieldOverride`.
  */
+const NO_BUILT_IN_FIELD_IDS: string[] = []
+
 export const DisplayExtensionZone = <TData = JsonRecord,>({
   model,
   zone,
   data,
-  builtInFieldIds = [],
+  builtInFieldIds = NO_BUILT_IN_FIELD_IDS,
 }: DisplayExtensionZoneProps<TData>) => {
   const { fields, actions } = useExtension().getDisplays(model, zone)
   const builtIn = new Set(builtInFieldIds)
@@ -44,8 +47,11 @@ export const DisplayExtensionZone = <TData = JsonRecord,>({
         if (!Component) return null
         return <Component key={id} data={displayData} />
       })}
-      {actions.map(({ component: Component }, i) => (
-        <Component key={`action-${i}`} data={displayData} />
+      {withContentKeys(
+        actions,
+        ({ component }) => component.displayName ?? (component.name || "action")
+      ).map(({ key, item: { component: Component } }) => (
+        <Component key={key} data={displayData} />
       ))}
     </>
   )

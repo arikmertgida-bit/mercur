@@ -1,5 +1,5 @@
 import { createColumnHelper } from "@tanstack/react-table"
-import { useMemo, useState } from "react"
+import { type MouseEvent, useMemo, useState } from "react"
 import { createPortal } from "react-dom"
 import { useTranslation } from "react-i18next"
 import {
@@ -32,89 +32,50 @@ const ATTRIBUTE_TYPE_LABELS: Record<string, string> = {
   text: "attributes.type.text_area",
 }
 
-// --- Filterable Toggle ---
+// --- Inline toggles ---
 
-const FilterableToggle = ({
+type AttributeToggleField = "is_filterable" | "is_required"
+
+const AttributeToggle = ({
   attribute,
+  field,
+  label,
 }: {
   attribute: ProductAttributeDTO
+  field: AttributeToggleField
+  label: string
 }) => {
   const { t } = useTranslation()
   const { mutateAsync } = useUpdateProductAttribute(attribute.id)
+  const checked = !!attribute[field]
 
-  const handleToggle = async (checked: boolean) => {
+  const handleToggle = async (next: boolean): Promise<void> => {
     try {
-      await mutateAsync({ is_filterable: checked })
+      await mutateAsync(
+        field === "is_filterable"
+          ? { is_filterable: next }
+          : { is_required: next }
+      )
     } catch (err) {
       toast.error(err instanceof Error ? err.message : t("general.unknownError"))
     }
   }
 
-  return (
-    <div
-      // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role
-      role="button"
-      tabIndex={0}
-      onClick={(e) => {
-        e.preventDefault()
-        e.stopPropagation()
-      }}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault()
-          e.stopPropagation()
-        }
-      }}
-    >
-      <Switch
-        checked={!!attribute.is_filterable}
-        onCheckedChange={handleToggle}
-        size="small"
-      />
-    </div>
-  )
-}
-
-// --- Required Toggle ---
-
-const RequiredToggle = ({
-  attribute,
-}: {
-  attribute: ProductAttributeDTO
-}) => {
-  const { t } = useTranslation()
-  const { mutateAsync } = useUpdateProductAttribute(attribute.id)
-
-  const handleToggle = async (checked: boolean) => {
-    try {
-      await mutateAsync({ is_required: checked })
-    } catch (err) {
-      toast.error(err instanceof Error ? err.message : t("general.unknownError"))
-    }
+  // The row is wrapped in a link: the click must not navigate, and once
+  // the default is prevented Radix skips its own toggle, so it is done here.
+  const handleClick = (event: MouseEvent<HTMLButtonElement>): void => {
+    event.preventDefault()
+    event.stopPropagation()
+    void handleToggle(!checked)
   }
 
   return (
-    <div
-      // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role
-      role="button"
-      tabIndex={0}
-      onClick={(e) => {
-        e.preventDefault()
-        e.stopPropagation()
-      }}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault()
-          e.stopPropagation()
-        }
-      }}
-    >
-      <Switch
-        checked={!!attribute.is_required}
-        onCheckedChange={handleToggle}
-        size="small"
-      />
-    </div>
+    <Switch
+      checked={checked}
+      onClick={handleClick}
+      aria-label={label}
+      size="small"
+    />
   )
 }
 
@@ -229,12 +190,22 @@ export const useAttributeTableColumns = () => {
       }),
       columnHelper.accessor("is_required", {
         header: () => t("attributes.fields.required"),
-        cell: ({ row }) => <RequiredToggle attribute={row.original} />,
+        cell: ({ row }) => (
+          <AttributeToggle
+            attribute={row.original}
+            field="is_required"
+            label={t("attributes.fields.required")}
+          />
+        ),
       }),
       columnHelper.accessor("is_filterable", {
         header: () => t("attributes.fields.filterable"),
         cell: ({ row }) => (
-          <FilterableToggle attribute={row.original} />
+          <AttributeToggle
+            attribute={row.original}
+            field="is_filterable"
+            label={t("attributes.fields.filterable")}
+          />
         ),
       }),
       columnHelper.accessor("type", {

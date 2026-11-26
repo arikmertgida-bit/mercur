@@ -10,6 +10,7 @@ import {
 } from "@medusajs/ui"
 import { FieldArrayWithId, useFieldArray, useWatch } from "react-hook-form"
 import { useTranslation } from "react-i18next"
+import { withContentKeys } from "@mercurjs/dashboard-shared"
 
 import { Form } from "../../../../../../../components/common/form"
 import { SortableList } from "../../../../../../../components/common/sortable-list"
@@ -53,6 +54,7 @@ export const ProductCreateVariantsSection = () => {
       .filter((axis) => axis.title && axis.values.length > 0)
   }, [watchedAttributes])
 
+  const keyedVariantAxes = withContentKeys(variantAxes, (axis) => axis.title)
   const hasVariantAxes = variantAxes.length > 0
 
   const showInvalidVariantsMessage =
@@ -156,8 +158,8 @@ export const ProductCreateVariantsSection = () => {
                   />
                 </div>
                 <div />
-                {variantAxes.map((axis, index) => (
-                  <div key={index}>
+                {keyedVariantAxes.map(({ key, item: axis }) => (
+                  <div key={key}>
                     <Text size="small" leading="compact" weight="plus">
                       {axis.title}
                     </Text>
@@ -200,8 +202,8 @@ export const ProductCreateVariantsSection = () => {
                           )}
                         />
                         <SortableList.DragHandle />
-                        {variantAxes.map((axis, i) => (
-                          <Text key={i} size="small" leading="compact">
+                        {keyedVariantAxes.map(({ key, item: axis }) => (
+                          <Text key={key} size="small" leading="compact">
                             {item.options?.[axis.title] ?? "-"}
                           </Text>
                         ))}

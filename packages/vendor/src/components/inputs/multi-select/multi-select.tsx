@@ -66,6 +66,8 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
       }
     }, [])
 
+    const fallbackLabel = t("general.notAvailable")
+
     const calculateVisibleBadges = useCallback(() => {
       if (!value || value.length === 0 || !badgesContainerRef.current) {
         setVisibleBadgesCount(0)
@@ -89,7 +91,7 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
 
       for (let i = 0; i < value.length; i++) {
         const option = options.find((opt) => opt.value === value[i])
-        const optionLabel = option?.label || "Unknown"
+        const optionLabel = option?.label || fallbackLabel
         const badgeWidth =
           estimateBadgeWidth(optionLabel) > 200
             ? 235
@@ -107,7 +109,7 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
       }
 
       setVisibleBadgesCount(count)
-    }, [value, options])
+    }, [value, options, fallbackLabel])
 
     useEffect(() => {
       calculateVisibleBadges()
@@ -145,11 +147,7 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
       }
     }
 
-    const handleRemoveBadge = (
-      optionValue: string,
-      e: React.MouseEvent
-    ) => {
-      e.stopPropagation()
+    const handleRemoveBadge = (optionValue: string) => {
       const currentValue = value || []
       onChange(currentValue.filter((val) => val !== optionValue))
     }
@@ -175,30 +173,28 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
 
     return (
       <div ref={ref} className={`relative ${className}`}>
-        {/* oxlint-disable-next-line jsx-a11y/click-events-have-key-events */}
         <div
           ref={triggerRef}
-          className={`relative flex h-8 w-full cursor-pointer items-center justify-between overflow-hidden rounded-md border bg-ui-bg-field text-ui-fg-base shadow-sm transition-colors duration-150 ease-in-out focus-within:ring-1 hover:bg-ui-bg-field-hover ${
+          className={`relative flex h-8 w-full items-center justify-between overflow-hidden rounded-md border bg-ui-bg-field text-ui-fg-base shadow-sm transition-colors duration-150 ease-in-out focus-within:ring-1 hover:bg-ui-bg-field-hover ${
             disabled
               ? "cursor-not-allowed bg-ui-bg-disabled opacity-50"
               : ariaInvalid
                 ? "!shadow-borders-error"
                 : "focus-within:ring-ui-ring-interactive border-ui-border-base focus-within:border-ui-border-interactive"
           }`}
-          onClick={handleToggle}
           onBlur={onBlur}
-          tabIndex={0}
-          // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role
-          role="combobox"
-          aria-controls={isOpen ? `${name}-listbox` : undefined}
-          aria-expanded={isOpen}
-          aria-haspopup="listbox"
-          aria-invalid={ariaInvalid}
-          aria-label={name}
         >
+          <button
+            type="button"
+            className="absolute inset-0 cursor-pointer outline-none disabled:cursor-not-allowed"
+            onClick={handleToggle}
+            disabled={disabled}
+            aria-expanded={isOpen}
+            aria-label={placeholder || name || t("general.selectValues")}
+          />
           <div
             ref={badgesContainerRef}
-            className="flex min-w-0 flex-1 items-center gap-2 px-3 py-2"
+            className="pointer-events-none relative flex min-w-0 flex-1 items-center gap-2 px-3 py-2"
           >
             {value && value.length > 0 ? (
               <>
@@ -208,24 +204,24 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
                     const option = options.find(
                       (opt) => opt.value === optionValue
                     )
+                    const optionLabel = option?.label || fallbackLabel
                     return (
                       <button
                         key={optionValue}
                         type="button"
-                        onClick={(e) =>
-                          handleRemoveBadge(optionValue, e)
-                        }
-                        className="flex flex-shrink-0 items-center self-center"
+                        onClick={() => handleRemoveBadge(optionValue)}
+                        className="pointer-events-auto flex flex-shrink-0 items-center self-center"
                         disabled={disabled}
+                        aria-label={`${t("actions.remove")}: ${optionLabel}`}
                       >
                         <Badge
                           size="2xsmall"
                           className="w-fit bg-ui-bg-base p-0"
                         >
-                          <span className="max-w-[200px] truncate text-ellipsis border-r border-ui-border-base px-1.5">
-                            {option?.label || "Unknown"}
+                          <span className="max-w-[200px] truncate text-ellipsis border-e border-ui-border-base px-1.5">
+                            {optionLabel}
                           </span>
-                          <XMarkMini className="mr-0.5 !text-ui-fg-base" />
+                          <XMarkMini className="me-0.5 !text-ui-fg-base" />
                         </Badge>
                       </button>
                     )
@@ -245,7 +241,7 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
               </Text>
             )}
           </div>
-          <div className="flex h-full items-center justify-center">
+          <div className="pointer-events-none relative flex h-full items-center justify-center">
             <span className="flex h-full w-8 items-center justify-center">
               <TrianglesMini className="text-ui-fg-muted" />
             </span>
@@ -264,14 +260,14 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
                     value={searchValue}
                     onChange={handleSearchChange}
                     placeholder={t("general.searchOptions")}
-                    className="w-full bg-transparent pr-8 shadow-none focus:!shadow-none"
-                    
+                    aria-label={t("general.searchOptions")}
+                    className="w-full bg-transparent pe-8 shadow-none focus:!shadow-none"
                   />
                   {searchValue && (
                     <button
                       type="button"
                       onClick={handleClearSearch}
-                      className="absolute right-2 top-1/2 -translate-y-1/2 rounded-md p-1 transition-colors hover:bg-ui-bg-base-hover"
+                      className="absolute end-2 top-1/2 -translate-y-1/2 rounded-md p-1 transition-colors hover:bg-ui-bg-base-hover"
                       aria-label={t("actions.clearSearch")}
                     >
                       <XMarkMini className="h-4 w-4 text-ui-fg-muted" />
@@ -295,10 +291,12 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
                   const currentValue = value || []
                   const isSelected = currentValue.includes(option.value)
                   return (
-                    // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
-                    <div
+                    <button
+                      type="button"
                       key={option.value}
-                      className="flex cursor-pointer items-center px-1 py-1 hover:bg-ui-bg-base-hover"
+                      aria-pressed={isSelected}
+                      aria-label={option.label}
+                      className="flex w-full cursor-pointer items-center px-1 py-1 text-start outline-none hover:bg-ui-bg-base-hover focus-visible:bg-ui-bg-base-hover"
                       onClick={() => handleItemClick(option.value)}
                     >
                       <div className="flex flex-1 items-center gap-x-2 rounded-md px-2">
@@ -307,7 +305,7 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
                         </div>
                         <Text className="truncate">{option.label}</Text>
                       </div>
-                    </div>
+                    </button>
                   )
                 })
               )}

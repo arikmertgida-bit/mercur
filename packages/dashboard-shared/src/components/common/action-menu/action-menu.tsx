@@ -6,6 +6,7 @@ import { PropsWithChildren, ReactNode, useContext, useMemo } from "react"
 import { useTranslation } from "react-i18next"
 import { Link } from "react-router-dom"
 import { ConditionalTooltip } from "../conditional-tooltip"
+import { withContentKeys } from "../../../lib/content-keys"
 import { useDocumentDirection } from "../../../hooks/use-document-direction"
 import { applyActionPermissions } from "../../../permissions/action-permissions"
 import { PermissionsContext } from "../../../permissions/permissions-context"
@@ -75,7 +76,9 @@ export const ActionMenu = ({
     <DropdownMenu dir={direction}>
       <DropdownMenu.Trigger asChild>{inner}</DropdownMenu.Trigger>
       <DropdownMenu.Content>
-        {groups.map((group, index) => {
+        {withContentKeys(groups, (group) =>
+          group.actions.map((action) => action.label).join("|")
+        ).map(({ key: groupKey, item: group }, index) => {
           if (!group.actions.length) {
             return null
           }
@@ -83,8 +86,9 @@ export const ActionMenu = ({
           const isLast = index === groups.length - 1
 
           return (
-            <DropdownMenu.Group key={index}>
-              {group.actions.map((action, index) => {
+            <DropdownMenu.Group key={groupKey}>
+              {withContentKeys(group.actions, (action) => action.label).map(
+                ({ key: actionKey, item: action }) => {
                 const Wrapper = action.disabledTooltip
                   ? ({ children }: { children: ReactNode }) => (
                       <ConditionalTooltip
@@ -99,7 +103,7 @@ export const ActionMenu = ({
 
                 if (action.onClick) {
                   return (
-                    <Wrapper key={index}>
+                    <Wrapper key={actionKey}>
                       <DropdownMenu.Item
                         disabled={action.disabled}
                         onClick={(e) => {
@@ -121,7 +125,7 @@ export const ActionMenu = ({
                 }
 
                 return (
-                  <Wrapper key={index}>
+                  <Wrapper key={actionKey}>
                     <DropdownMenu.Item
                       className={clx(
                         "[&_svg]:text-ui-fg-subtle flex items-center gap-x-2",
@@ -139,7 +143,8 @@ export const ActionMenu = ({
                     </DropdownMenu.Item>
                   </Wrapper>
                 )
-              })}
+              }
+              )}
               {!isLast && <DropdownMenu.Separator />}
             </DropdownMenu.Group>
           )

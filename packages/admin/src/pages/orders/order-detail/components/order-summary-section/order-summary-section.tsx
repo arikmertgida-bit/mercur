@@ -664,7 +664,7 @@ const CostBreakdown = ({
                 new Date(m1.created_at).getTime() -
                 new Date(m2.created_at).getTime(),
             )
-            .map((sm, i) => {
+            .map((sm) => {
               return (
                 <div
                   key={sm.id}
@@ -675,7 +675,7 @@ const CostBreakdown = ({
                       {sm.name}
                       {sm.detail.return_id &&
                         ` (${t("fields.returnShipping")})`}{" "}
-                      <ShippingInfoPopover key={i} shippingMethod={sm} />
+                      <ShippingInfoPopover shippingMethod={sm} />
                     </span>
                   </div>
                   <div className="relative flex-1">

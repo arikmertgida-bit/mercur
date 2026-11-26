@@ -2,10 +2,12 @@ import { XMarkMini } from "@medusajs/icons"
 import { useTranslation } from "react-i18next"
 import { Badge, clx } from "@medusajs/ui"
 import { AnimatePresence, motion } from "motion/react"
+import { withContentKeys } from "@mercurjs/dashboard-shared"
 import {
   FocusEvent,
   KeyboardEvent,
   forwardRef,
+  useId,
   useImperativeHandle,
   useRef,
   useState,
@@ -42,6 +44,9 @@ export const ChipInput = forwardRef<HTMLInputElement, ChipInputProps>(
   ) => {
     const { t } = useTranslation()
     const innerRef = useRef<HTMLInputElement>(null)
+    // The chip remove buttons are labelable too and come first, so the label
+    // must name its input or a click on a chip would press its remove button.
+    const inputId = useId()
 
     const isControlledRef = useRef(typeof value !== "undefined")
     const isControlled = isControlledRef.current
@@ -123,8 +128,8 @@ export const ChipInput = forwardRef<HTMLInputElement, ChipInputProps>(
     }
 
     return (
-      // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
-      <div
+      <label
+        htmlFor={inputId}
         className={clx(
           "shadow-borders-base flex min-h-8 flex-wrap items-center gap-1 rounded-md px-2 py-1.5",
           "transition-fg focus-within:shadow-borders-interactive-with-active",
@@ -136,16 +141,14 @@ export const ChipInput = forwardRef<HTMLInputElement, ChipInputProps>(
           },
           className
         )}
-        tabIndex={-1}
-        onClick={() => innerRef.current?.focus()}
       >
-        {chips.map((v, index) => {
+        {withContentKeys(chips, (chip) => chip).map(({ key, item: v }, index) => {
           return (
-            <AnimatePresence key={`${v}-${index}`}>
+            <AnimatePresence key={key}>
               <Badge
                 size="2xsmall"
-                className={clx("gap-x-0.5 pl-1.5 pr-1.5", {
-                  "transition-fg pr-1": showRemove,
+                className={clx("gap-x-0.5 ps-1.5 pe-1.5", {
+                  "transition-fg pe-1": showRemove,
                   "shadow-borders-focus": index === duplicateIndex,
                 })}
                 asChild
@@ -158,7 +161,11 @@ export const ChipInput = forwardRef<HTMLInputElement, ChipInputProps>(
                     <button
                       tabIndex={-1}
                       type="button"
-                      onClick={() => handleRemoveChip(v)}
+                      onClick={() => {
+                        handleRemoveChip(v)
+                        innerRef.current?.focus()
+                      }}
+                      aria-label={`${t("actions.remove")}: ${v}`}
                       className={clx(
                         "text-ui-fg-subtle transition-fg outline-none"
                       )}
@@ -172,6 +179,7 @@ export const ChipInput = forwardRef<HTMLInputElement, ChipInputProps>(
           )
         })}
         <input
+          id={inputId}
           aria-label={t("a11y.chipInput")}
           className={clx(
             "caret-ui-fg-base text-ui-fg-base txt-compact-small flex-1 appearance-none bg-transparent",
@@ -187,7 +195,7 @@ export const ChipInput = forwardRef<HTMLInputElement, ChipInputProps>(
           placeholder={chips.length === 0 ? placeholder : undefined}
           autoComplete="off"
         />
-      </div>
+      </label>
     )
   }
 )

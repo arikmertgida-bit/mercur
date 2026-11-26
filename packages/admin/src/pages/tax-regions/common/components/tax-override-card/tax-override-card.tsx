@@ -21,6 +21,7 @@ import { ClientError } from "@mercurjs/client"
 import {
   isForbidden,
   usePermissions,
+  withContentKeys,
 } from "@mercurjs/dashboard-shared"
 import type { PermissionKey } from "@mercurjs/dashboard-sdk"
 import { ActionMenu } from "../../../../../components/common/action-menu"
@@ -269,9 +270,11 @@ const ReferenceValues = ({
     <Tooltip
       content={
         <ul>
-          {labels?.map((label: string, index) => (
-            <li key={index}>{label}</li>
-          ))}
+          {withContentKeys(labels ?? [], (label) => label).map(
+            ({ key, item: label }) => (
+              <li key={key}>{label}</li>
+            )
+          )}
           {additional > 0 && (
             <li>
               {t("taxRegions.fields.targets.additionalValues", {

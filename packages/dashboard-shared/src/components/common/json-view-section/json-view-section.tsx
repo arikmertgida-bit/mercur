@@ -72,6 +72,7 @@ export const JsonViewSection = ({ data }: JsonViewSectionProps) => {
             size="small"
             variant="transparent"
             className="text-ui-fg-muted hover:text-ui-fg-subtle"
+            aria-label={t("json.drawer.description")}
           >
             <ArrowUpRightOnBox />
           </IconButton>
@@ -98,6 +99,7 @@ export const JsonViewSection = ({ data }: JsonViewSectionProps) => {
               </Drawer.Description>
             </div>
             <div className="flex items-center gap-x-2">
+              <CopyAllButton value={data} />
               <Kbd className="bg-ui-contrast-bg-subtle border-ui-contrast-border-base text-ui-contrast-fg-secondary">
                 esc
               </Kbd>
@@ -106,6 +108,7 @@ export const JsonViewSection = ({ data }: JsonViewSectionProps) => {
                   size="small"
                   variant="transparent"
                   className="text-ui-contrast-fg-secondary hover:text-ui-contrast-fg-primary hover:bg-ui-contrast-bg-base-hover active:bg-ui-contrast-bg-base-pressed focus-visible:bg-ui-contrast-bg-base-hover focus-visible:shadow-borders-interactive-with-active"
+                  aria-label={t("actions.close")}
                 >
                   <XMarkMini />
                 </IconButton>
@@ -166,6 +169,52 @@ export const JsonViewSection = ({ data }: JsonViewSectionProps) => {
   )
 }
 
+const COPIED_RESET_MS = 2000
+
+const toClipboardText = (value: JsonViewValue): string =>
+  typeof value === "string" ? value : JSON.stringify(value, null, 2)
+
+const useCopyValue = (
+  value: JsonViewValue
+): { copied: boolean; copy: () => void } => {
+  const [copied, setCopied] = useState(false)
+
+  const copy = (): void => {
+    setCopied(true)
+    navigator.clipboard.writeText(toClipboardText(value)).catch(() => {
+      setCopied(false)
+    })
+    setTimeout(() => {
+      setCopied(false)
+    }, COPIED_RESET_MS)
+  }
+
+  return { copied, copy }
+}
+
+/**
+ * The viewer draws its per-node copy icon only while the pointer is over a
+ * row, so keyboard users get one header button that copies the whole value.
+ */
+const CopyAllButton = ({ value }: { value: JsonViewValue }) => {
+  const { t } = useTranslation()
+  const { copied, copy } = useCopyValue(value)
+
+  return (
+    <IconButton
+      type="button"
+      size="small"
+      variant="transparent"
+      className="text-ui-contrast-fg-secondary hover:text-ui-contrast-fg-primary hover:bg-ui-contrast-bg-base-hover active:bg-ui-contrast-bg-base-pressed focus-visible:bg-ui-contrast-bg-base-hover focus-visible:shadow-borders-interactive-with-active"
+      aria-label={copied ? t("actions.copied") : t("actions.copy")}
+      onClick={copy}
+      data-testid="json-view-copy-all"
+    >
+      {copied ? <Check /> : <SquareTwoStack />}
+    </IconButton>
+  )
+}
+
 type CopiedProps = {
   style?: CSSProperties
   value: JsonViewValue
@@ -173,22 +222,11 @@ type CopiedProps = {
 
 const Copied = ({ style, value }: CopiedProps) => {
   const { t } = useTranslation()
-  const [copied, setCopied] = useState(false)
+  const { copied, copy } = useCopyValue(value)
 
   const handler = (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation()
-    setCopied(true)
-
-    if (typeof value === "string") {
-      navigator.clipboard.writeText(value)
-    } else {
-      const json = JSON.stringify(value, null, 2)
-      navigator.clipboard.writeText(json)
-    }
-
-    setTimeout(() => {
-      setCopied(false)
-    }, 2000)
+    copy()
   }
 
   const styl = { whiteSpace: "nowrap", width: "20px" }

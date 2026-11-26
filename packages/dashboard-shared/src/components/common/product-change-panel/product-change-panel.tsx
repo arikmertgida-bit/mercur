@@ -24,6 +24,7 @@ import {
   type ReferenceField,
 } from "../../../lib/product-change-diff";
 import { isJsonObject } from "../../../lib/json";
+import { withContentKeys } from "../../../lib/content-keys";
 
 type WrappedAttributeValue = { id: string; name?: string | null };
 
@@ -98,9 +99,11 @@ const ImageStrip = ({
       faded && "opacity-50",
     )}
   >
-    {images.map((image, idx) => (
-      <Thumbnail key={`${image.url}-${idx}`} src={image.url} size="base" />
-    ))}
+    {withContentKeys(images, (image) => image.url).map(
+      ({ key, item: image }) => (
+        <Thumbnail key={key} src={image.url} size="base" />
+      ),
+    )}
   </div>
 );
 
@@ -351,6 +354,9 @@ const attributeDisplay = (
     next: nextNames.length ? nextNames.join(", ") : "-",
   };
 };
+
+const attributeChangeKey = (change: AttributeChange): string =>
+  change.attributeId ?? `inline:${change.inlineTitle ?? ""}`;
 
 const AttributeValue = ({
   change,
@@ -691,16 +697,18 @@ export const ProductChangePanel = ({
               label={t("labels.updated")}
               testId="product-active-edit-updated"
             >
-              {view.productUpdated.map((diff, idx) => (
+              {withContentKeys(view.productUpdated, (diff) => diff.field).map(
+                ({ key, item: diff }) => (
                 <ItemRow
-                  key={`u-${diff.field}-${idx}`}
+                  key={`u-${key}`}
                   label={fieldLabel(diff.field)}
                 >
                   <FieldDiffValue diff={diff} lookups={lookups} />
                 </ItemRow>
               ))}
-              {updatedAttributes.map((change, idx) => (
-                <ItemRow key={`ua-${idx}`} label={typeAttribute}>
+              {withContentKeys(updatedAttributes, attributeChangeKey).map(
+                ({ key, item: change }) => (
+                <ItemRow key={`ua-${key}`} label={typeAttribute}>
                   <AttributeValue change={change} lookup={attributeLookup} />
                 </ItemRow>
               ))}
@@ -720,8 +728,9 @@ export const ProductChangePanel = ({
                   />
                 </ItemRow>
               ))}
-              {addedAttributes.map((change, idx) => (
-                <ItemRow key={`aa-${idx}`} label={typeAttribute}>
+              {withContentKeys(addedAttributes, attributeChangeKey).map(
+                ({ key, item: change }) => (
+                <ItemRow key={`aa-${key}`} label={typeAttribute}>
                   <AttributeValue change={change} lookup={attributeLookup} />
                 </ItemRow>
               ))}
@@ -749,8 +758,9 @@ export const ProductChangePanel = ({
                   </ItemRow>
                 );
               })}
-              {removedAttributes.map((change, idx) => (
-                <ItemRow key={`ra-${idx}`} label={typeAttribute}>
+              {withContentKeys(removedAttributes, attributeChangeKey).map(
+                ({ key, item: change }) => (
+                <ItemRow key={`ra-${key}`} label={typeAttribute}>
                   <AttributeValue change={change} lookup={attributeLookup} />
                 </ItemRow>
               ))}
@@ -853,9 +863,10 @@ const VariantGroupBlock = ({
 
       {group.fieldDiffs.length > 0 && (
         <GroupRow label={updatedLabel}>
-          {group.fieldDiffs.map((diff, idx) => (
+          {withContentKeys(group.fieldDiffs, (diff) => diff.field).map(
+            ({ key, item: diff }) => (
             <ItemRow
-              key={`vu-${diff.field}-${idx}`}
+              key={`vu-${key}`}
               label={fieldLabel(diff.field)}
             >
               <FieldDiffValue diff={diff} lookups={lookups} />

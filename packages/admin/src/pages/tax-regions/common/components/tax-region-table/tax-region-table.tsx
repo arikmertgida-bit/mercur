@@ -48,10 +48,10 @@ export const TaxRegionTable = ({
   if (isPending) {
     return (
       <div className="flex flex-col divide-y">
-        {Array.from({ length: 3 }).map((_, index) => {
+        {Array.from({ length: 3 }, (_, slot) => slot).map((slot) => {
           return (
             <div
-              key={index}
+              key={slot}
               className="h-[52px] w-full animate-pulse bg-ui-bg-field-component"
             />
           );
@@ -110,16 +110,13 @@ export const TaxRegionTable = ({
                   variant={variant}
                   key={row.id}
                   taxRegion={row.original}
-                  // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role
-                  role="row"
-                  aria-rowindex={row.index}
                 />
               );
             })
-          : Array.from({ length: 3 }).map((_, index) => {
+          : Array.from({ length: 3 }, (_, slot) => slot).map((slot) => {
               return (
                 <div
-                  key={index}
+                  key={slot}
                   className="h-[60px] w-full animate-pulse bg-ui-bg-field-component"
                 />
               );

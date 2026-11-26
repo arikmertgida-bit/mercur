@@ -181,7 +181,7 @@ export const RulesFormField = ({
         const identifier = fieldRule.id;
 
         return (
-          <Fragment key={`${fieldRule.id}.${index}.${fieldRule.attribute}`}>
+          <Fragment key={`${fieldRule.id}.${fieldRule.attribute}`}>
             <div
               className="flex flex-row gap-2 rounded-xl border border-ui-border-base bg-ui-bg-subtle px-2 py-2"
               data-testid={`rules-form-field-rule-${ruleType}-${index}`}
@@ -263,9 +263,9 @@ export const RulesFormField = ({
                               <Select.Content
                                 data-testid={`rules-form-field-rule-${ruleType}-${index}-attribute-select-content`}
                               >
-                                {attributeOptions?.map((c, i) => (
+                                {attributeOptions?.map((c) => (
                                   <Select.Item
-                                    key={`${identifier}-attribute-option-${i}`}
+                                    key={`${identifier}-attribute-option-${c.value}`}
                                     value={c.value}
                                     data-testid={`rules-form-field-rule-${ruleType}-${index}-attribute-select-option-${c.value}`}
                                   >
