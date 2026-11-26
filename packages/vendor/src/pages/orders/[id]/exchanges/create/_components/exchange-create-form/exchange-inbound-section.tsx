@@ -310,14 +310,12 @@ export const ExchangeInboundSection = ({
 
         <StackedFocusModal id="inbound-items">
           <StackedFocusModal.Trigger asChild>
-            {/* oxlint-disable-next-line jsx-a11y/anchor-is-valid */}
-            <a
-              href="#"
-              onClick={(e) => e.preventDefault()}
+            <button
+              type="button"
               className="focus-visible:shadow-borders-focus transition-fg txt-compact-small-plus cursor-pointer text-blue-500 outline-none hover:text-blue-400"
             >
               {t("actions.addItems")}
-            </a>
+            </button>
           </StackedFocusModal.Trigger>
 
           <StackedFocusModal.Content>

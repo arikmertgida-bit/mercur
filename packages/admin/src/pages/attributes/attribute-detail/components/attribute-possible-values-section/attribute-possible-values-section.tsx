@@ -122,6 +122,30 @@ const PossibleValueActions = ({
 
 const columnHelper = createColumnHelper<ProductAttributeValueDTO>()
 
+const usePossibleValueColumns = (attribute: ProductAttributeDTO) => {
+  const { t } = useTranslation()
+
+  return useMemo(
+    () => [
+      columnHelper.accessor("name", {
+        header: () => t("fields.name"),
+        cell: ({ getValue }) => <TextCell text={getValue()} />,
+      }),
+      columnHelper.accessor("rank", {
+        header: () => t("attributes.fields.rank"),
+        cell: ({ getValue }) => <TextCell text={String(getValue())} />,
+      }),
+      columnHelper.display({
+        id: "actions",
+        cell: ({ row }) => (
+          <PossibleValueActions value={row.original} attribute={attribute} />
+        ),
+      }),
+    ],
+    [t, attribute]
+  )
+}
+
 const PAGE_SIZE = 10
 
 export const AttributePossibleValuesSection = ({
@@ -148,25 +172,7 @@ export const AttributePossibleValuesSection = ({
     [filtered, offset]
   )
 
-  const columns = useMemo(
-    () => [
-      columnHelper.accessor("name", {
-        header: () => t("fields.name"),
-        cell: ({ getValue }) => <TextCell text={getValue()} />,
-      }),
-      columnHelper.accessor("rank", {
-        header: () => t("attributes.fields.rank"),
-        cell: ({ getValue }) => <TextCell text={String(getValue())} />,
-      }),
-      columnHelper.display({
-        id: "actions",
-        cell: ({ row }) => (
-          <PossibleValueActions value={row.original} attribute={attribute} />
-        ),
-      }),
-    ],
-    [t, attribute]
-  )
+  const columns = usePossibleValueColumns(attribute)
 
   const { table } = useDataTable({
     data: page,

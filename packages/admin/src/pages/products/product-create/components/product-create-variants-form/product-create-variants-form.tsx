@@ -23,7 +23,7 @@ type ShippingProfileLite = { id: string; name?: string | null };
 const Root = () => {
   const { t } = useTranslation();
   const form = useTabbedForm<ProductCreateSchemaType>();
-  const { getValues, setValue } = form;
+  const { setValue } = form;
   const { setCloseOnEscape } = useRouteModal();
 
   const [search, setSearch] = useState("");
@@ -60,10 +60,9 @@ const Root = () => {
   useEffect(() => {
     if (!stock_locations?.length) return;
 
-    const current = getValues("variants") ?? [];
     let changed = false;
 
-    const next = current.map((variant) => {
+    const next = variants.map((variant) => {
       const inventory = { ...(variant.inventory ?? {}) };
       for (const location of stock_locations) {
         if (!inventory[location.id]) {
@@ -81,7 +80,7 @@ const Root = () => {
     if (changed) {
       setValue("variants", next, { shouldDirty: false });
     }
-  }, [stock_locations, variants.length, getValues, setValue]);
+  }, [stock_locations, variants, setValue]);
 
   const watchedAttributes = useWatch({
     control: form.control,

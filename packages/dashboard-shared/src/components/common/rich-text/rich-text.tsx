@@ -38,6 +38,8 @@ const Collapsible = ({
   const [isOverflowing, setIsOverflowing] = useState(false)
   const [isExpanded, setIsExpanded] = useState(false)
 
+  // Re-measured after every render: new children replace the observed child
+  // nodes, and a collapsed box does not resize when its content grows.
   useEffect(() => {
     const element = contentRef.current
 
@@ -55,7 +57,7 @@ const Collapsible = ({
     Array.from(element.children).forEach((child) => observer.observe(child))
 
     return () => observer.disconnect()
-  }, [collapsedHeight, children])
+  })
 
   if (!collapsedHeight) {
     return <>{children}</>

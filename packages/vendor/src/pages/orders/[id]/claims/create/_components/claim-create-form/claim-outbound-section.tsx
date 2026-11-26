@@ -171,15 +171,13 @@ export const ClaimOutboundSection = ({
 
         <StackedFocusModal id={STACKED_MODAL_ID}>
           <StackedFocusModal.Trigger asChild>
-            {/* oxlint-disable-next-line jsx-a11y/anchor-is-valid */}
-            <a
-              href="#"
-              onClick={(e) => e.preventDefault()}
+            <button
+              type="button"
               className="focus-visible:shadow-borders-focus transition-fg txt-compact-small-plus cursor-pointer text-blue-500 outline-none hover:text-blue-400"
               data-testid="claim-add-outbound-trigger"
             >
               {t("orders.claims.addOutboundItems")}
-            </a>
+            </button>
           </StackedFocusModal.Trigger>
           <StackedFocusModal.Content>
             <StackedFocusModal.Header />

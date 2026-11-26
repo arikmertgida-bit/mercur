@@ -62,10 +62,10 @@ export const useOnboarding = (memberEmail: string) => {
   const sellerIdRef = useRef<string | null>(null);
   const [sellerIdState, setSellerIdState] = useState<string | null>(null);
 
-  const setSellerId = (id: string) => {
+  const setSellerId = useCallback((id: string) => {
     sellerIdRef.current = id;
     setSellerIdState(id);
-  };
+  }, []);
 
   const storeDataRef = useRef<StoreData | null>(null);
   const addressDataRef = useRef<AddressData | null>(null);
@@ -220,7 +220,7 @@ export const useOnboarding = (memberEmail: string) => {
         setIsSubmitting(false);
       }
     },
-    [createSeller, logout, memberEmail, navigate, t],
+    [createSeller, logout, memberEmail, navigate, setSellerId, t],
   );
 
   // Step 4: Payment — create seller with everything and finish

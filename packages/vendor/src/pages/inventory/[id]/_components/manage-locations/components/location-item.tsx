@@ -1,4 +1,5 @@
 import { Checkbox, Text, clx } from "@medusajs/ui"
+import { useId } from "react"
 
 import { StockLocationDTO } from "@medusajs/types"
 
@@ -13,31 +14,34 @@ export const LocationItem = ({
   onSelect,
   location,
 }: LocationItemProps) => {
+  const checkboxId = useId()
   return (
-    // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
-    <div
+    <label
+      htmlFor={checkboxId}
       className={clx(
         "flex w-full cursor-pointer gap-x-2 rounded-lg border px-2 py-2",
         {
           "border-ui-border-interactive ": selected,
         }
       )}
-      onClick={() => onSelect(!selected)}
     >
-      <div className="h-5 w-5">
+      <span className="block h-5 w-5">
         <Checkbox
-          onClick={(e) => {
-            e.stopPropagation()
-            onSelect(!selected)
-          }}
+          id={checkboxId}
+          onCheckedChange={() => onSelect(!selected)}
           checked={selected}
         />
-      </div>
-      <div className="flex w-full flex-col">
-        <Text size="small" leading="compact" weight="plus">
+      </span>
+      <span className="flex w-full flex-col">
+        <Text as="span" size="small" leading="compact" weight="plus">
           {location.name}
         </Text>
-        <Text size="small" leading="compact" className="text-ui-fg-subtle">
+        <Text
+          as="span"
+          size="small"
+          leading="compact"
+          className="text-ui-fg-subtle"
+        >
           {[
             location.address?.address_1,
             location.address?.city,
@@ -46,7 +50,7 @@ export const LocationItem = ({
             .filter((el) => !!el)
             .join(", ")}
         </Text>
-      </div>
-    </div>
+      </span>
+    </label>
   )
 }

@@ -285,13 +285,11 @@ export const ExchangeOutboundSection = ({
                       {t("actions.cancel")}
                     </Button>
                   </RouteFocusModal.Close>
-                  <Button tabIndex={0}
+                  <Button
                     key="submit-button"
                     type="submit"
                     variant="primary"
                     size="small"
-                    // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role
-                    role="button"
                     onClick={async () => await onItemsSelected()}
                   >
                     {t("actions.save")}

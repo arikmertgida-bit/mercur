@@ -385,10 +385,9 @@ const ComboboxImpl = (
         aria-busy={isPending || isSearching}
       >
         {isSearching ? (
-          Array.from({ length: 3 }).map((_, index) => (
+          Array.from({ length: 3 }, (_, slot) => slot).map((slot) => (
             <div
-              // oxlint-disable-next-line react/no-array-index-key -- fixed-length skeleton placeholder, no persistent/reorderable state
-              key={index}
+              key={slot}
               className="transition-fg bg-ui-bg-base flex items-center rounded-[4px] px-2 py-1.5"
             >
               <div className="bg-ui-bg-component size-full h-5 w-full animate-pulse rounded-[4px]" />

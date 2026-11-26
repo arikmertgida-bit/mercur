@@ -1,8 +1,9 @@
+import { withContentKeys } from "@mercurjs/dashboard-shared"
 import { Text } from "@medusajs/ui"
 import { Collapsible as RadixCollapsible } from "radix-ui"
 import { useState } from "react"
 import { useTranslation } from "react-i18next"
-import { Activity } from "../hooks/use-activity-items"
+import { getActivityContentKey, type Activity } from "../hooks/use-activity-items"
 import { OrderActivityItem } from "./order-activity-item"
 
 type OrderActivityCollapsibleProps = {
@@ -45,11 +46,10 @@ export const OrderActivityCollapsible = ({
       )}
       <RadixCollapsible.Content>
         <div className="flex flex-col gap-y-0.5">
-          {activities.map((item, index) => {
+          {withContentKeys(activities, getActivityContentKey).map(({ key, item }) => {
             return (
               <OrderActivityItem
-                // oxlint-disable-next-line react/no-array-index-key -- read-only order activity log derived from order data, no stable id, not persistent/reorderable
-                key={index}
+                key={key}
                 title={item.title}
                 timestamp={item.timestamp}
                 itemsToSend={item.itemsToSend}

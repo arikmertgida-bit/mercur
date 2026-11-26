@@ -1,4 +1,5 @@
 import { Checkbox, Text, clx } from "@medusajs/ui"
+import { useId } from "react"
 
 import { HttpTypes } from "@medusajs/types"
 
@@ -15,6 +16,7 @@ export const LocationItem = ({
   onSelect,
   location,
 }: LocationItemProps) => {
+  const checkboxId = useId()
   const toggle = (): void => {
     if (!disabled) {
       onSelect(!selected)
@@ -22,8 +24,9 @@ export const LocationItem = ({
   }
 
   return (
-    // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
-    <div
+    <label
+      htmlFor={checkboxId}
+      aria-disabled={disabled}
       className={clx(
         "flex w-full gap-x-2 rounded-lg border px-2 py-2",
         {
@@ -32,26 +35,22 @@ export const LocationItem = ({
           "cursor-not-allowed opacity-50": disabled,
         }
       )}
-      onClick={toggle}
-      aria-disabled={disabled}
       data-testid={`inventory-manage-locations-form-location-item-${location.id}`}
     >
-      <div className="h-5 w-5" data-testid={`inventory-manage-locations-form-location-item-${location.id}-checkbox-container`}>
+      <span className="block h-5 w-5" data-testid={`inventory-manage-locations-form-location-item-${location.id}-checkbox-container`}>
         <Checkbox
-          onClick={(e) => {
-            e.stopPropagation()
-            toggle()
-          }}
+          id={checkboxId}
+          onCheckedChange={toggle}
           checked={selected}
           disabled={disabled}
           data-testid={`inventory-manage-locations-form-location-item-${location.id}-checkbox`}
         />
-      </div>
-      <div className="flex w-full flex-col" data-testid={`inventory-manage-locations-form-location-item-${location.id}-details`}>
-        <Text size="small" leading="compact" weight="plus" data-testid={`inventory-manage-locations-form-location-item-${location.id}-name`}>
+      </span>
+      <span className="flex w-full flex-col" data-testid={`inventory-manage-locations-form-location-item-${location.id}-details`}>
+        <Text as="span" size="small" leading="compact" weight="plus" data-testid={`inventory-manage-locations-form-location-item-${location.id}-name`}>
           {location.name}
         </Text>
-        <Text size="small" leading="compact" className="text-ui-fg-subtle" data-testid={`inventory-manage-locations-form-location-item-${location.id}-address`}>
+        <Text as="span" size="small" leading="compact" className="text-ui-fg-subtle" data-testid={`inventory-manage-locations-form-location-item-${location.id}-address`}>
           {[
             location.address?.address_1,
             location.address?.city,
@@ -60,7 +59,7 @@ export const LocationItem = ({
             .filter((el) => !!el)
             .join(", ")}
         </Text>
-      </div>
-    </div>
+      </span>
+    </label>
   )
 }

@@ -116,8 +116,6 @@ export const OrderEditItemsSection = ({
                       type="submit"
                       variant="primary"
                       size="small"
-                      // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role
-                      role="button"
                       disabled={isPending}
                       onClick={async () => await onItemsSelected()}
                       data-testid="order-edit-items-section-add-items-modal-save-button"

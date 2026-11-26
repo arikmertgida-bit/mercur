@@ -77,16 +77,20 @@ export const CreateCampaignFormFields = ({
 
   const currency = currencyValue || promotionCurrencyValue
 
-  useEffect(() => {
+  const handleBudgetTypeChange = (
+    value: string,
+    onChange: (value: string) => void
+  ) => {
+    onChange(value)
     resetField("campaign.budget.limit")
 
     if (syncPromotionCurrency) {
       setValue(
         "campaign.budget.currency_code",
-        isTypeSpend ? promotionCurrencyValue : null
+        value === "spend" ? promotionCurrencyValue : null
       )
     }
-  }, [watchValueType, syncPromotionCurrency, resetField, setValue, isTypeSpend, promotionCurrencyValue])
+  }
 
   if (promotionCurrencyValue && syncPromotionCurrency) {
     const budget = form.getValues().campaign?.budget
@@ -253,7 +257,9 @@ export const CreateCampaignFormFields = ({
                 <RadioGroup
                   className="grid grid-cols-2 gap-4"
                   {...field}
-                  onValueChange={field.onChange}
+                  onValueChange={(value) =>
+                    handleBudgetTypeChange(value, field.onChange)
+                  }
                 >
                   <RadioGroup.ChoiceBox
                     value={"usage"}

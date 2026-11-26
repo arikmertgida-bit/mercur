@@ -267,8 +267,9 @@ export function OrderAllocateItemsItem({
 
       {hasInventoryKit && (
         <div className="px-4 py-2">
-          {/* oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
-          <div
+          <button
+            type="button"
+            aria-expanded={isOpen}
             onClick={() => setIsOpen((o) => !o)}
             className="flex items-center gap-x-2"
           >
@@ -281,7 +282,7 @@ export function OrderAllocateItemsItem({
                 num: inventoryLinks.length,
               })}
             </span>
-          </div>
+          </button>
         </div>
       )}
 

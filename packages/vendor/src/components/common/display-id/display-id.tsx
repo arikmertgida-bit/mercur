@@ -20,10 +20,16 @@ function DisplayId({ id, className }: DisplayIdProps) {
 
   return (
     <Tooltip maxWidth={260} content={id} open={open} onOpenChange={setOpen}>
-      {/* oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
-      <span onClick={onClick} className={clx("cursor-pointer", className)}>
+      <button
+        type="button"
+        onClick={onClick}
+        className={clx(
+          "focus-visible:shadow-borders-focus cursor-pointer rounded-sm outline-none",
+          className
+        )}
+      >
         #{id.slice(-7)}
-      </span>
+      </button>
     </Tooltip>
   )
 }

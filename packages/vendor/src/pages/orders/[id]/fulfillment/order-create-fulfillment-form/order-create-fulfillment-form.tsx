@@ -195,6 +195,12 @@ export function OrderCreateFulfillmentForm({
     }
   })
 
+  const {
+    setValue: setFormValue,
+    setError: setFormError,
+    clearErrors: clearFormErrors,
+  } = form
+
   useEffect(() => {
     if (stock_locations?.length && shipping_options?.length) {
       const initialShippingOptionId =
@@ -209,8 +215,8 @@ export function OrderCreateFulfillmentForm({
           const locationId =
             shippingOption.service_zone.fulfillment_set.location.id
 
-          form.setValue("location_id", locationId)
-          form.setValue(
+          setFormValue("location_id", locationId)
+          setFormValue(
             "shipping_option_id",
             initialShippingOptionId || undefined
           )
@@ -218,18 +224,11 @@ export function OrderCreateFulfillmentForm({
       }
     }
   }, [
-	stock_locations?.length,
-	shipping_options?.length,
-	order.shipping_methods,
-	form,
-	shipping_options
-])
-
-  const {
-    setValue: setFormValue,
-    setError: setFormError,
-    clearErrors: clearFormErrors,
-  } = form
+    stock_locations?.length,
+    shipping_options,
+    order.shipping_methods,
+    setFormValue,
+  ])
 
   useEffect(() => {
     if (fulfillableItems.length) {

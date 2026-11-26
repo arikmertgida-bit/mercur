@@ -639,8 +639,9 @@ const CostBreakdown = ({
       />
       <Cost
         label={
-          // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
-          <span
+          <button
+            type="button"
+            aria-expanded={isShippingOpen}
             onClick={() => setIsShippingOpen((o) => !o)}
             className="flex cursor-pointer items-center gap-1"
           >
@@ -650,7 +651,7 @@ const CostBreakdown = ({
                 transform: `rotate(${isShippingOpen ? 0 : -90}deg)`,
               }}
             />
-          </span>
+          </button>
         }
         value={getLocaleAmount(order.shipping_subtotal, order.currency_code)}
       />
@@ -691,9 +692,11 @@ const CostBreakdown = ({
 
       <>
         <div className="flex justify-between">
-          {/* oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
-          <div
-            onClick={() => hasTaxes && setIsTaxOpen((o) => !o)}
+          <button
+            type="button"
+            aria-expanded={isTaxOpen}
+            disabled={!hasTaxes}
+            onClick={() => setIsTaxOpen((o) => !o)}
             className={clx("flex items-center gap-1", {
               "cursor-pointer": hasTaxes,
             })}
@@ -708,7 +711,7 @@ const CostBreakdown = ({
                 }}
               />
             )}
-          </div>
+          </button>
 
           <div className="text-right">
             <Text size="small" leading="compact">
@@ -746,8 +749,9 @@ const CostBreakdown = ({
       {hasCommission && (
         <>
           <div className="flex justify-between">
-            {/* oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
-            <div
+            <button
+              type="button"
+              aria-expanded={isCommissionOpen}
               onClick={() => setIsCommissionOpen((o) => !o)}
               className="flex cursor-pointer items-center gap-1"
             >
@@ -759,7 +763,7 @@ const CostBreakdown = ({
                   transform: `rotate(${isCommissionOpen ? 0 : -90}deg)`,
                 }}
               />
-            </div>
+            </button>
 
             <div className="text-right">
               <Text size="small" leading="compact">
@@ -871,9 +875,11 @@ const DiscountAndTotalBreakdown = ({
     >
       <Cost
         label={
-          // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
-          <span
-            onClick={() => hasDiscount && setIsDiscountOpen((o) => !o)}
+          <button
+            type="button"
+            aria-expanded={isDiscountOpen}
+            disabled={!hasDiscount}
+            onClick={() => setIsDiscountOpen((o) => !o)}
             className={clx("flex items-center gap-1", {
               "cursor-pointer": hasDiscount,
             })}
@@ -887,7 +893,7 @@ const DiscountAndTotalBreakdown = ({
                 }}
               />
             )}
-          </span>
+          </button>
         }
         value={getLocaleAmount(order.discount_total, order.currency_code)}
       />
@@ -919,8 +925,9 @@ const DiscountAndTotalBreakdown = ({
         <>
           <Cost
             label={
-              // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
-              <span
+              <button
+                type="button"
+                aria-expanded={isCreditLinesOpen}
                 onClick={() => setIsCreditLinesOpen((o) => !o)}
                 className="flex cursor-pointer items-center gap-1"
               >
@@ -930,7 +937,7 @@ const DiscountAndTotalBreakdown = ({
                     transform: `rotate(${isCreditLinesOpen ? 0 : -90}deg)`,
                   }}
                 />
-              </span>
+              </button>
             }
             value={getLocaleAmount(
               order.credit_line_total,
@@ -1033,10 +1040,11 @@ const InventoryKitBreakdown = ({ item }: { item: AdminOrderLineItem }) => {
 
   return (
     <>
-      {/* oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
-      <div
+      <button
+        type="button"
+        aria-expanded={isOpen}
         onClick={() => setIsOpen((o) => !o)}
-        className="flex cursor-pointer items-center gap-2 border-t border-dashed px-6 py-4"
+        className="flex w-full cursor-pointer items-center gap-2 border-t border-dashed px-6 py-4"
       >
         <TriangleDownMini
           style={{
@@ -1046,7 +1054,7 @@ const InventoryKitBreakdown = ({ item }: { item: AdminOrderLineItem }) => {
         <span className="text-ui-fg-muted txt-small select-none">
           {t("orders.summary.inventoryKit", { count: inventory.length })}
         </span>
-      </div>
+      </button>
       {isOpen && (
         <div className="flex flex-col gap-1 px-6 pb-4">
           {inventory.map((i) => {

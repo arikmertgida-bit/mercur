@@ -100,6 +100,8 @@ export const CreateShippingOptionsPricesForm = ({
     [currencies, regions]
   )
 
+  const { setValue } = form
+
   /**
    * Prefill prices with 0 if createing a pickup (shipping) option
    */
@@ -107,25 +109,17 @@ export const CreateShippingOptionsPricesForm = ({
     if (!isLoading && isPickup) {
       if (currencies.length > 0) {
         currencies.forEach((currency) => {
-          form.setValue(`currency_prices.${currency}`, "0")
+          setValue(`currency_prices.${currency}`, "0")
         })
       }
 
       if (regions.length > 0) {
         regions.forEach((region) => {
-          form.setValue(`region_prices.${region.id}`, "0")
+          setValue(`region_prices.${region.id}`, "0")
         })
       }
     }
-  }, [
-	isLoading,
-	isPickup,
-	currencies.length,
-	currencies,
-	regions?.length,
-	regions,
-	form
-])
+  }, [isLoading, isPickup, currencies, regions, setValue])
 
   if (isSellerError) {
     throw sellerError

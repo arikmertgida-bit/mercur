@@ -115,14 +115,16 @@ export const useTabManagement = <T extends FieldValues>({
 
   // Set right before switching to the tab that holds the first error; the
   // field only mounts (and can take focus) once that tab has rendered.
-  const pendingFocusRef = useRef<FieldPath<T> | null>(null)
+  const pendingFocusRef = useRef<{ tabId: string; name: FieldPath<T> } | null>(
+    null
+  )
 
   useEffect(() => {
-    const name = pendingFocusRef.current
-    if (!name) return
+    const pending = pendingFocusRef.current
+    if (!pending || pending.tabId !== activeTabId) return
 
     pendingFocusRef.current = null
-    setFocus(name)
+    setFocus(pending.name)
   }, [activeTabId, setFocus])
 
   const [tabState, setTabState] = useState<TabState>(() => {
@@ -223,7 +225,7 @@ export const useTabManagement = <T extends FieldValues>({
       if (tab.id === activeTabId) {
         setFocus(name)
       } else {
-        pendingFocusRef.current = name
+        pendingFocusRef.current = { tabId: tab.id, name }
         setActiveTabId(tab.id)
       }
 

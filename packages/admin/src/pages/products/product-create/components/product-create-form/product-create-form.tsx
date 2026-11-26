@@ -9,7 +9,10 @@ import {
   RouteFocusModal,
   useRouteModal,
 } from "../../../../../components/modals";
-import { TabbedForm } from "../../../../../components/tabbed-form/tabbed-form";
+import {
+  type FooterRenderProps,
+  TabbedForm,
+} from "../../../../../components/tabbed-form/tabbed-form";
 import { useCreateProduct } from "../../../../../hooks/api/products";
 import { useRegions } from "../../../../../hooks/api";
 import { sdk } from "../../../../../lib/client";
@@ -108,6 +111,70 @@ type ProductCreateFormProps = {
   schema?: typeof ProductCreateSchema;
   defaultValues?: DeepPartial<ProductCreateSchemaType>;
 };
+
+const ProductCreateFooter = ({
+  isLastTab,
+  onNext,
+  isLoading,
+}: FooterRenderProps): ReactNode => {
+  const { t } = useTranslation();
+
+  return (
+    <div
+      className="flex items-center justify-end gap-x-2"
+      data-testid="product-create-form-footer-actions"
+    >
+      <RouteFocusModal.Close asChild>
+        <Button
+          variant="secondary"
+          size="small"
+          data-testid="product-create-form-cancel-button"
+        >
+          {t("actions.cancel")}
+        </Button>
+      </RouteFocusModal.Close>
+      <Button
+        data-name={SAVE_DRAFT_BUTTON}
+        variant="secondary"
+        size="small"
+        type="submit"
+        isLoading={isLoading}
+        className="whitespace-nowrap"
+        data-testid="product-create-form-save-draft-button"
+      >
+        {t("actions.saveAsDraft")}
+      </Button>
+      {isLastTab ? (
+        <Button
+          data-name="publish-button"
+          key="submit-button"
+          type="submit"
+          variant="primary"
+          size="small"
+          isLoading={isLoading}
+          data-testid="product-create-form-publish-button"
+        >
+          {t("actions.publish")}
+        </Button>
+      ) : (
+        <Button
+          key="next-button"
+          type="button"
+          variant="primary"
+          size="small"
+          onClick={() => onNext()}
+          data-testid="product-create-form-continue-button"
+        >
+          {t("actions.continue")}
+        </Button>
+      )}
+    </div>
+  );
+};
+
+const renderFooter = (footerProps: FooterRenderProps): ReactNode => (
+  <ProductCreateFooter {...footerProps} />
+);
 
 export const ProductCreateForm = ({
   children,
@@ -246,57 +313,7 @@ export const ProductCreateForm = ({
       form={form}
       onSubmit={handleSubmit}
       isLoading={isPending || isRegionsPending}
-      footer={({ isLastTab, onNext, isLoading }) => (
-        <div
-          className="flex items-center justify-end gap-x-2"
-          data-testid="product-create-form-footer-actions"
-        >
-          <RouteFocusModal.Close asChild>
-            <Button
-              variant="secondary"
-              size="small"
-              data-testid="product-create-form-cancel-button"
-            >
-              {t("actions.cancel")}
-            </Button>
-          </RouteFocusModal.Close>
-          <Button
-            data-name={SAVE_DRAFT_BUTTON}
-            variant="secondary"
-            size="small"
-            type="submit"
-            isLoading={isLoading}
-            className="whitespace-nowrap"
-            data-testid="product-create-form-save-draft-button"
-          >
-            {t("actions.saveAsDraft")}
-          </Button>
-          {isLastTab ? (
-            <Button
-              data-name="publish-button"
-              key="submit-button"
-              type="submit"
-              variant="primary"
-              size="small"
-              isLoading={isLoading}
-              data-testid="product-create-form-publish-button"
-            >
-              {t("actions.publish")}
-            </Button>
-          ) : (
-            <Button
-              key="next-button"
-              type="button"
-              variant="primary"
-              size="small"
-              onClick={() => onNext()}
-              data-testid="product-create-form-continue-button"
-            >
-              {t("actions.continue")}
-            </Button>
-          )}
-        </div>
-      )}
+      footer={renderFooter}
     >
       {hasCustomChildren ? children : defaultTabs}
     </TabbedForm>

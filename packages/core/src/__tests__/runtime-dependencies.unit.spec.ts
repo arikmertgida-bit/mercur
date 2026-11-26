@@ -41,13 +41,17 @@ const readDeclaredPackages = (): Set<string> => {
   try {
     raw = readFileSync(join(CORE_ROOT, "package.json"), "utf8")
   } catch (error) {
-    throw new Error(`packages/core/package.json unreadable: ${String(error)}`)
+    throw new Error(`packages/core/package.json unreadable: ${String(error)}`, {
+      cause: error,
+    })
   }
   let parsed: z.infer<typeof PackageJsonSchema>
   try {
     parsed = PackageJsonSchema.parse(JSON.parse(raw))
   } catch (error) {
-    throw new Error(`packages/core/package.json invalid: ${String(error)}`)
+    throw new Error(`packages/core/package.json invalid: ${String(error)}`, {
+      cause: error,
+    })
   }
   return new Set([
     ...Object.keys(parsed.dependencies),

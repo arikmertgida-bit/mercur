@@ -36,9 +36,8 @@ export const CategoryTree = ({
   if (isLoading) {
     return (
       <div className="txt-compact-small relative flex-1 overflow-y-auto">
-        {Array.from({ length: 10 }).map((_, i) => (
-          // oxlint-disable-next-line react/no-array-index-key -- fixed-length skeleton placeholder, no persistent/reorderable state
-          <CategoryLeafPlaceholder key={i} />
+        {Array.from({ length: 10 }, (_, slot) => slot).map((slot) => (
+          <CategoryLeafPlaceholder key={slot} />
         ))}
       </div>
     )

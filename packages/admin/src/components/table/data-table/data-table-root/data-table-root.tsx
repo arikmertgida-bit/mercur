@@ -140,7 +140,12 @@ export const DataTableRoot = <TData,>({
     })
   }
 
+  const scrolledPageRef = useRef(pageIndex)
+
   useEffect(() => {
+    if (scrolledPageRef.current === pageIndex) return
+
+    scrolledPageRef.current = pageIndex
     scrollableRef.current?.scroll({ top: 0, left: 0 })
   }, [pageIndex])
 
@@ -364,7 +369,7 @@ export const DataTableRoot = <TData,>({
             <CommandBar.Seperator />
             {commands?.map((command, index) => {
               return (
-                <Fragment key={index}>
+                <Fragment key={command.label}>
                   <CommandBar.Command
                     label={command.label}
                     shortcut={command.shortcut}

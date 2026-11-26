@@ -174,13 +174,16 @@ const VendorConversationDetailPage = () => {
     }
   }, [loadedConversationId, sellerUnreadCount, markRead])
 
-  // Scroll to bottom when messages change
+  // Messages arrive newest first. Scroll to the bottom only when a newer
+  // message arrives, not when older pages are loaded above.
+  const newestMessageId = messages[0]?.id
+
   useEffect(() => {
     const el = messagesContainerRef.current
-    if (el) {
+    if (el && newestMessageId) {
       el.scrollTop = el.scrollHeight
     }
-  }, [messages?.length])
+  }, [newestMessageId])
 
   if (isError) throw error
 

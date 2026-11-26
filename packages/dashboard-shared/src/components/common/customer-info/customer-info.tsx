@@ -136,14 +136,9 @@ const AddressPrint = ({
       {address ? (
         <div className="grid grid-cols-[1fr_20px] items-start gap-x-2">
           <Text size="small" leading="compact">
-            {getFormattedAddress({ address }).map((line, i) => {
-              return (
-                <span key={i} className="break-words">
-                  {line}
-                  <br />
-                </span>
-              );
-            })}
+            <span className="whitespace-pre-line break-words">
+              {getFormattedAddress({ address }).join("\n")}
+            </span>
           </Text>
           <div className="flex justify-end">
             <Copy

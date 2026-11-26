@@ -135,7 +135,12 @@ export const DataTableRoot = <TData,>({
     })
   }
 
+  const scrolledPageRef = useRef(pageIndex)
+
   useEffect(() => {
+    if (scrolledPageRef.current === pageIndex) return
+
+    scrolledPageRef.current = pageIndex
     scrollableRef.current?.scroll({ top: 0, left: 0 })
   }, [pageIndex])
 
@@ -359,8 +364,7 @@ export const DataTableRoot = <TData,>({
             <CommandBar.Seperator />
             {commands?.map((command, index) => {
               return (
-                // oxlint-disable-next-line react/no-array-index-key -- static command-bar config declared by the caller, not persistent/reorderable
-                <Fragment key={index}>
+                <Fragment key={command.label}>
                   <CommandBar.Command
                     label={command.label}
                     shortcut={command.shortcut}

@@ -260,10 +260,10 @@ const GlobalKeybindsModal = (props: {
             </div>
           </div>
           <div className="flex flex-col divide-y overflow-y-auto" data-testid="shortcuts-modal-list">
-            {searchResults.map((shortcut, index) => {
+            {searchResults.map((shortcut) => {
               return (
                 <div
-                  key={index}
+                  key={shortcut.label}
                   className="text-ui-fg-subtle flex items-center justify-between px-6 py-3"
                   data-testid={`shortcut-item-${shortcut.label.toLowerCase().replace(/\s/g, '-')}`}
                 >
@@ -271,7 +271,7 @@ const GlobalKeybindsModal = (props: {
                   <div className="flex items-center gap-x-1" data-testid={`shortcut-item-${shortcut.label.toLowerCase().replace(/\s/g, '-')}-keys`}>
                     {shortcut.keys.Mac?.map((key, index) => {
                       return (
-                        <div className="flex items-center gap-x-1" key={index} data-testid={`shortcut-item-${shortcut.label.toLowerCase().replace(/\s/g, '-')}-key-${index}`}>
+                        <div className="flex items-center gap-x-1" key={key} data-testid={`shortcut-item-${shortcut.label.toLowerCase().replace(/\s/g, '-')}-key-${index}`}>
                           <Kbd data-testid={`shortcut-item-${shortcut.label.toLowerCase().replace(/\s/g, '-')}-kbd-${index}`}>{key}</Kbd>
                           {index < (shortcut.keys.Mac?.length || 0) - 1 && (
                             <span className="txt-compact-xsmall text-ui-fg-subtle" data-testid={`shortcut-item-${shortcut.label.toLowerCase().replace(/\s/g, '-')}-separator-${index}`}>

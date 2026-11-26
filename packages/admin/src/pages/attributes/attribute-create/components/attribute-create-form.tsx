@@ -7,7 +7,10 @@ import { z } from "zod";
 import { AttributeType } from "@mercurjs/types/product";
 
 import { RouteFocusModal, useRouteModal } from "../../../../components/modals";
-import { TabbedForm } from "../../../../components/tabbed-form/tabbed-form";
+import {
+  type FooterRenderProps,
+  TabbedForm,
+} from "../../../../components/tabbed-form/tabbed-form";
 import { useCreateProductAttribute } from "../../../../hooks/api";
 import { createAttributeSchema } from "../../attribute-edit/schema";
 import { AttributeCreateDetailsTab } from "./attribute-create-details-tab";
@@ -21,6 +24,55 @@ type CreateAttributeFormValues = z.output<CreateAttributeSchema>;
 type AttributeCreateFormProps = {
   children?: ReactNode;
 };
+
+const AttributeCreateFooter = ({
+  isLastTab,
+  onNext,
+  isLoading,
+}: FooterRenderProps): ReactNode => {
+  const { t } = useTranslation();
+
+  return (
+    <div className="flex items-center justify-end gap-x-2">
+      <RouteFocusModal.Close asChild>
+        <Button
+          variant="secondary"
+          size="small"
+          data-testid="attribute-create-cancel-button"
+        >
+          {t("actions.cancel")}
+        </Button>
+      </RouteFocusModal.Close>
+      {isLastTab ? (
+        <Button
+          key="submit-button"
+          type="submit"
+          variant="primary"
+          size="small"
+          isLoading={isLoading}
+          data-testid="attribute-create-save-button"
+        >
+          {t("actions.save")}
+        </Button>
+      ) : (
+        <Button
+          key="next-button"
+          type="button"
+          variant="primary"
+          size="small"
+          onClick={() => onNext()}
+          data-testid="attribute-create-continue-button"
+        >
+          {t("actions.continue")}
+        </Button>
+      )}
+    </div>
+  );
+};
+
+const renderFooter = (footerProps: FooterRenderProps): ReactNode => (
+  <AttributeCreateFooter {...footerProps} />
+);
 
 export const AttributeCreateForm = ({ children }: AttributeCreateFormProps) => {
   const { t } = useTranslation();
@@ -96,42 +148,7 @@ export const AttributeCreateForm = ({ children }: AttributeCreateFormProps) => {
       form={form}
       onSubmit={handleSubmit}
       isLoading={isPending}
-      footer={({ isLastTab, onNext, isLoading }) => (
-        <div className="flex items-center justify-end gap-x-2">
-          <RouteFocusModal.Close asChild>
-            <Button
-              variant="secondary"
-              size="small"
-              data-testid="attribute-create-cancel-button"
-            >
-              {t("actions.cancel")}
-            </Button>
-          </RouteFocusModal.Close>
-          {isLastTab ? (
-            <Button
-              key="submit-button"
-              type="submit"
-              variant="primary"
-              size="small"
-              isLoading={isLoading}
-              data-testid="attribute-create-save-button"
-            >
-              {t("actions.save")}
-            </Button>
-          ) : (
-            <Button
-              key="next-button"
-              type="button"
-              variant="primary"
-              size="small"
-              onClick={() => onNext()}
-              data-testid="attribute-create-continue-button"
-            >
-              {t("actions.continue")}
-            </Button>
-          )}
-        </div>
-      )}
+      footer={renderFooter}
     >
       {hasCustomChildren ? children : defaultTabs}
     </TabbedForm>

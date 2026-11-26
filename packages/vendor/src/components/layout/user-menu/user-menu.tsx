@@ -310,19 +310,17 @@ const GlobalKeybindsModal = (props: {
             </div>
           </div>
           <div className="flex flex-col divide-y overflow-y-auto">
-            {searchResults.map((shortcut, index) => {
+            {searchResults.map((shortcut) => {
               return (
                 <div
-                  // oxlint-disable-next-line react/no-array-index-key -- static keyboard-shortcut config list, not persistent/reorderable
-                  key={index}
+                  key={shortcut.label}
                   className="text-ui-fg-subtle flex items-center justify-between px-6 py-3"
                 >
                   <Text size="small">{shortcut.label}</Text>
                   <div className="flex items-center gap-x-1">
                     {shortcut.keys.Mac?.map((key, index) => {
                       return (
-                        // oxlint-disable-next-line react/no-array-index-key -- static key-combo list, not persistent/reorderable
-                        <div className="flex items-center gap-x-1" key={index}>
+                        <div className="flex items-center gap-x-1" key={key}>
                           <Kbd>{key}</Kbd>
                           {index < (shortcut.keys.Mac?.length || 0) - 1 && (
                             <span className="txt-compact-xsmall text-ui-fg-subtle">

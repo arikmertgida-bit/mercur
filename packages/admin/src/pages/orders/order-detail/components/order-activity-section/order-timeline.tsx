@@ -12,7 +12,12 @@ import {
   AdminReturn,
 } from "@medusajs/types";
 import { useTranslation } from "react-i18next";
-import { useExtensionActivity, useCan, PermissionAction } from "@mercurjs/dashboard-shared";
+import {
+  PermissionAction,
+  useCan,
+  useExtensionActivity,
+  withContentKeys,
+} from "@mercurjs/dashboard-shared";
 
 import { AdminOrderLineItem } from "@medusajs/types";
 import { By } from "../../../../../components/common/user-link";
@@ -51,10 +56,10 @@ export const OrderTimeline = ({ order }: OrderTimelineProps) => {
   if (items.length <= 3) {
     return (
       <div className="flex flex-col gap-y-0.5" data-testid="order-timeline">
-        {items.map((item, index) => {
+        {withContentKeys(items, getActivityContentKey).map(({ key, item }, index) => {
           return (
             <OrderActivityItem
-              key={index}
+              key={key}
               title={item.title}
               timestamp={item.timestamp}
               isFirst={index === items.length - 1}
@@ -76,10 +81,10 @@ export const OrderTimeline = ({ order }: OrderTimelineProps) => {
 
   return (
     <div className="flex flex-col gap-y-0.5" data-testid="order-timeline">
-      {lastItems.map((item, index) => {
+      {withContentKeys(lastItems, getActivityContentKey).map(({ key, item }) => {
         return (
           <OrderActivityItem
-            key={index}
+            key={key}
             title={item.title}
             timestamp={item.timestamp}
             itemsToSend={item.itemsToSend}
@@ -116,6 +121,9 @@ type Activity = {
   itemsToReturn?: AdminReturn["items"];
   itemsMap?: Map<string, AdminOrderLineItem>;
 };
+
+export const getActivityContentKey = (item: Activity): string =>
+  `${typeof item.title === "string" ? item.title : ""}|${String(item.timestamp)}`;
 
 const useActivityItems = (order: AdminOrder): Activity[] => {
   const { t } = useTranslation();
@@ -697,10 +705,10 @@ const OrderActivityCollapsible = ({
       )}
       <RadixCollapsible.Content>
         <div className="flex flex-col gap-y-0.5">
-          {activities.map((item, index) => {
+          {withContentKeys(activities, getActivityContentKey).map(({ key, item }) => {
             return (
               <OrderActivityItem
-                key={index}
+                key={key}
                 title={item.title}
                 timestamp={item.timestamp}
                 itemsToSend={item.itemsToSend}

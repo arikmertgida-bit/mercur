@@ -1,5 +1,11 @@
 import { clx } from "@medusajs/ui"
-import { useCallback, useEffect, useRef, useState } from "react"
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react"
 import type { JsonValue } from "@mercurjs/types"
 import { Controller, ControllerRenderProps } from "react-hook-form"
 
@@ -67,10 +73,11 @@ const Inner = ({
     }
   }, [])
 
-  // Adjust height when value changes
-  useEffect(() => {
+  // The height follows the rendered text, which can change on any render
+  // (typing or a synced form value), so it is measured after each one.
+  useLayoutEffect(() => {
     adjustTextareaHeight()
-  }, [localValue, adjustTextareaHeight])
+  })
 
   useEffect(() => {
     // Immediate adjustment
@@ -92,7 +99,6 @@ const Inner = ({
       value={toInputValue(localValue)}
       onChange={(e) => {
         setLocalValue(e.target.value)
-        adjustTextareaHeight()
       }}
       ref={combinedRefs}
       onBlur={() => {

@@ -1,3 +1,4 @@
+import { withContentKeys } from "../../../lib/content-keys"
 import { Badge, Tooltip } from "@medusajs/ui"
 import { useTranslation } from "react-i18next"
 import { DataGridRowError } from "../types"
@@ -19,9 +20,11 @@ export const DataGridRowErrorIndicator = ({
     <Tooltip
       content={
         <ul className="flex flex-col gap-y-3">
-          {rowErrors.map((error, index) => (
-            <DataGridRowErrorLine key={index} error={error} />
-          ))}
+          {withContentKeys(rowErrors, (error) => error.message).map(
+            ({ key, item: error }) => (
+              <DataGridRowErrorLine key={key} error={error} />
+            )
+          )}
         </ul>
       }
       delayDuration={0}

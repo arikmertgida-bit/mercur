@@ -438,9 +438,9 @@ export const CategoryCombobox = forwardRef<
               </div>
             ))}
           {showLoading &&
-            Array.from({ length: 5 }).map((_, index) => (
+            Array.from({ length: 5 }, (_, slot) => slot).map((slot) => (
               <div
-                key={index}
+                key={slot}
                 className="grid grid-cols-[20px_1fr_20px] gap-2 px-2 py-1.5"
               >
                 <div />

@@ -1,5 +1,6 @@
+import { withContentKeys } from "@mercurjs/dashboard-shared"
 import { HttpTypes } from "@mercurjs/types"
-import { useActivityItems } from "./hooks"
+import { getActivityContentKey, useActivityItems } from "./hooks"
 import { OrderActivityItem, OrderActivityCollapsible } from "./components"
 
 type OrderTimelineProps = {
@@ -12,11 +13,10 @@ export const OrderTimeline = ({ order }: OrderTimelineProps) => {
   if (items.length <= 3) {
     return (
       <div className="flex flex-col gap-y-0.5">
-        {items.map((item, index) => {
+        {withContentKeys(items, getActivityContentKey).map(({ key, item }, index) => {
           return (
             <OrderActivityItem
-              // oxlint-disable-next-line react/no-array-index-key -- read-only order activity log derived from order data, no stable id, not persistent/reorderable
-              key={index}
+              key={key}
               title={item.title}
               timestamp={item.timestamp}
               isFirst={index === items.length - 1}
@@ -38,11 +38,10 @@ export const OrderTimeline = ({ order }: OrderTimelineProps) => {
 
   return (
     <div className="flex flex-col gap-y-0.5">
-      {lastItems.map((item, index) => {
+      {withContentKeys(lastItems, getActivityContentKey).map(({ key, item }) => {
         return (
           <OrderActivityItem
-            // oxlint-disable-next-line react/no-array-index-key -- read-only order activity log derived from order data, no stable id, not persistent/reorderable
-            key={index}
+            key={key}
             title={item.title}
             timestamp={item.timestamp}
             itemsToSend={item.itemsToSend}

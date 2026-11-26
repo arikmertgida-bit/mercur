@@ -143,7 +143,9 @@ function parseJsonText(value: string): JsonValue {
     return JsonValueSchema.parse(JSON.parse(value))
   } catch (error) {
     const reason = error instanceof Error ? ` ${error.message}` : ""
-    throw new Error(`String "${value}" cannot be converted to object.${reason}`)
+    throw new Error(`String "${value}" cannot be converted to object.${reason}`, {
+      cause: error,
+    })
   }
 }
 

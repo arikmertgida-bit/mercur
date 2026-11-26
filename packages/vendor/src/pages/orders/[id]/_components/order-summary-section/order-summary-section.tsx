@@ -793,8 +793,9 @@ const CostBreakdown = ({
       />
       <Cost
         label={
-          // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
-          <span
+          <button
+            type="button"
+            aria-expanded={isShippingOpen}
             onClick={() => setIsShippingOpen((o) => !o)}
             className="flex cursor-pointer items-center gap-1"
           >
@@ -810,7 +811,7 @@ const CostBreakdown = ({
                 transform: `rotate(${isShippingOpen ? 0 : -90}deg)`,
               }}
             />
-          </span>
+          </button>
         }
         value={getLocaleAmount(
           automaticTaxesOn ? order.shipping_total : order.shipping_subtotal,
@@ -869,9 +870,11 @@ const CostBreakdown = ({
 
       <>
         <div className="flex justify-between">
-          {/* oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
-          <div
-            onClick={() => hasTaxLines && setIsTaxOpen((o) => !o)}
+          <button
+            type="button"
+            aria-expanded={isTaxOpen}
+            disabled={!hasTaxLines}
+            onClick={() => setIsTaxOpen((o) => !o)}
             className={clx("flex items-center gap-1", {
               "cursor-pointer": hasTaxLines,
             })}
@@ -890,7 +893,7 @@ const CostBreakdown = ({
                 }}
               />
             )}
-          </div>
+          </button>
 
           <div className="text-right">
             <Text size="small" leading="compact">
@@ -927,8 +930,9 @@ const CostBreakdown = ({
       {hasCommission && (
         <>
           <div className="flex justify-between">
-            {/* oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
-            <div
+            <button
+              type="button"
+              aria-expanded={isCommissionOpen}
               onClick={() => setIsCommissionOpen((o) => !o)}
               className="flex cursor-pointer items-center gap-1"
             >
@@ -940,7 +944,7 @@ const CostBreakdown = ({
                   transform: `rotate(${isCommissionOpen ? 0 : -90}deg)`,
                 }}
               />
-            </div>
+            </button>
 
             <div className="text-right">
               <Text size="small" leading="compact">

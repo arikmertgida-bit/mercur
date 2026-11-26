@@ -90,9 +90,7 @@ const Root = () => {
   useEffect(() => {
     if (!stock_locations?.length) return
 
-    const current = getValues("variants") ?? []
-
-    current.forEach((variant, index) => {
+    variants.forEach((variant, index) => {
       const inventory = { ...(variant.inventory ?? {}) }
       let changed = false
 
@@ -113,7 +111,7 @@ const Root = () => {
         })
       }
     })
-  }, [stock_locations, variants.length, getValues, setValue])
+  }, [stock_locations, variants, setValue])
 
   const productTitle = useWatch({
     control: form.control,
@@ -133,9 +131,7 @@ const Root = () => {
     const trimmedTitle = productTitle.trim()
     if (!trimmedTitle) return
 
-    const current = getValues("variants") ?? []
-
-    current.forEach((variant, index) => {
+    variants.forEach((variant, index) => {
       const hasOptions = !!variant.options && Object.keys(variant.options).length > 0
 
       if (hasOptions || variant.title === trimmedTitle) {
@@ -146,7 +142,7 @@ const Root = () => {
         shouldDirty: false,
       })
     })
-  }, [productTitle, variants.length, getValues, setValue])
+  }, [productTitle, variants, setValue])
 
   // SKU is store-only, generated once per row, and read-only in the grid —
   // there is nothing for the seller to edit, so this only ever fills in a
@@ -158,9 +154,7 @@ const Root = () => {
   useEffect(() => {
     if (!seller) return
 
-    const current = getValues("variants") ?? []
-
-    current.forEach((variant, index) => {
+    variants.forEach((variant, index) => {
       if (variant.sku) {
         return
       }
@@ -169,7 +163,7 @@ const Root = () => {
         shouldDirty: false,
       })
     })
-  }, [seller, variants.length, getValues, setValue])
+  }, [seller, variants, setValue])
 
   const watchedMedia = useWatch({
     control: form.control,

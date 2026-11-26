@@ -172,9 +172,10 @@ type CopiedProps = {
 }
 
 const Copied = ({ style, value }: CopiedProps) => {
+  const { t } = useTranslation()
   const [copied, setCopied] = useState(false)
 
-  const handler = (e: MouseEvent<HTMLSpanElement>) => {
+  const handler = (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation()
     setCopied(true)
 
@@ -201,9 +202,14 @@ const Copied = ({ style, value }: CopiedProps) => {
   }
 
   return (
-    // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
-    <span style={{ ...style, ...styl }} onClick={handler}>
+    <button
+      type="button"
+      aria-label={t("actions.copy")}
+      className="focus-visible:shadow-borders-focus rounded-sm outline-none"
+      style={{ ...style, ...styl }}
+      onClick={handler}
+    >
       <SquareTwoStack className="text-ui-contrast-fg-secondary" />
-    </span>
+    </button>
   )
 }

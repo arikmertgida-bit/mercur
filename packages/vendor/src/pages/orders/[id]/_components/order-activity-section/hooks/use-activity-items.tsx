@@ -46,6 +46,9 @@ export type Activity = {
   itemsMap?: Map<string, AdminOrderLineItem>
 }
 
+export const getActivityContentKey = (item: Activity): string =>
+  `${typeof item.title === "string" ? item.title : ""}|${String(item.timestamp)}`
+
 export const useActivityItems = (order: HttpTypes.VendorOrder): Activity[] => {
   const { t, i18n } = useTranslation()
   const extensionActivity = useExtensionActivity("order", order)

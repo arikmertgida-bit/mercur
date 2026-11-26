@@ -210,17 +210,16 @@ export const DataTableFilter = ({
               >
                 {availableFilters.map((filter) => {
                   return (
-                    // oxlint-disable-next-line jsx-a11y/click-events-have-key-events
-                    <div tabIndex={0}
-                      className="bg-ui-bg-base hover:bg-ui-bg-base-hover focus-visible:bg-ui-bg-base-pressed text-ui-fg-base data-[disabled]:text-ui-fg-disabled txt-compact-small relative flex cursor-pointer select-none items-center rounded-md px-2 py-1.5 outline-none transition-colors data-[disabled]:pointer-events-none"
-                      role="menuitem"
+                    <button
+                      type="button"
+                      className="bg-ui-bg-base hover:bg-ui-bg-base-hover focus-visible:bg-ui-bg-base-pressed text-ui-fg-base data-[disabled]:text-ui-fg-disabled txt-compact-small relative flex w-full text-start cursor-pointer select-none items-center rounded-md px-2 py-1.5 outline-none transition-colors data-[disabled]:pointer-events-none"
                       key={filter.key}
                       onClick={() => {
                         addFilter(filter)
                       }}
                     >
                       {filter.label}
-                    </div>
+                    </button>
                   )
                 })}
               </RadixPopover.Content>
