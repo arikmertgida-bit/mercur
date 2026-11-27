@@ -96,7 +96,8 @@ export class DataGridMatrix<TData> {
           ? this.cells[row][col]
           : null
 
-        if (cell) {
+        // Hidden rows inside a range (error highlighting) are not part of the selection.
+        if (cell && cell.enabled !== false) {
           keys.push(cell.field)
         }
       }
@@ -312,10 +313,7 @@ export class DataGridMatrix<TData> {
       let newCol = col + dCol
 
       while (this._isValidPosition(newRow, newCol)) {
-        if (
-          this.cells[newRow][newCol] !== null &&
-          this.cells[newRow][newCol]?.enabled !== false
-        ) {
+        if (this._isNavigable(newRow, newCol)) {
           return { row: newRow, col: newCol }
         }
         newRow += dRow
@@ -324,6 +322,13 @@ export class DataGridMatrix<TData> {
 
       return { row, col }
     }
+  }
+
+  /** A cell that exists and is not in a hidden row or column. */
+  private _isNavigable(row: number, col: number): boolean {
+    const cell = this.cells[row]?.[col]
+
+    return cell !== null && cell !== undefined && cell.enabled !== false
   }
 
   private _isValidPosition(
@@ -367,7 +372,7 @@ export class DataGridMatrix<TData> {
     while (this._isValidPosition(newRow + dRow, newCol + dCol)) {
       newRow += dRow
       newCol += dCol
-      if (this.cells[newRow][newCol] !== null) {
+      if (this._isNavigable(newRow, newCol)) {
         lastValidRow = newRow
         lastValidCol = newCol
       }

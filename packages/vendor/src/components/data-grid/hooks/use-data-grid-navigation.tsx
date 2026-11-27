@@ -3,10 +3,12 @@ import { ScrollToOptions, Virtualizer } from "@tanstack/react-virtual"
 import { Dispatch, SetStateAction, useCallback } from "react"
 import { DataGridMatrix, DataGridQueryTool } from "../models"
 import { DataGridCoordinates } from "../types"
+import { getVisibleIndex } from "../utils"
 
 type UseDataGridNavigationOptions<TData> = {
   matrix: DataGridMatrix<TData>
   anchor: DataGridCoordinates | null
+  flatRows: Row<TData>[]
   visibleRows: Row<TData>[]
   visibleColumns: Column<TData>[]
   rowVirtualizer: Virtualizer<HTMLDivElement, Element>
@@ -17,9 +19,21 @@ type UseDataGridNavigationOptions<TData> = {
   setSingleRange: (coords: DataGridCoordinates | null) => void
 }
 
+/** One item past the target in the direction of travel, so the next move is already in view. */
+const getLookAheadIndex = (
+  index: number,
+  forward: boolean,
+  count: number
+): number => {
+  const next = forward ? index + 1 : index - 1
+
+  return next >= 0 && next < count ? next : index
+}
+
 export const useDataGridNavigation = <TData,>({
   matrix,
   anchor,
+  flatRows,
   visibleColumns,
   visibleRows,
   columnVirtualizer,
@@ -35,33 +49,35 @@ export const useDataGridNavigation = <TData,>({
         return
       }
 
-      const { row, col } = coords
-      const { row: anchorRow, col: anchorCol } = anchor
-
-      const rowDirection = row >= anchorRow ? "down" : "up"
-      const colDirection = col >= anchorCol ? "right" : "left"
-
-      let toRow = rowDirection === "down" ? row + 1 : row - 1
-      if (visibleRows[toRow] === undefined) {
-        toRow = row
-      }
-
-      let toCol = colDirection === "right" ? col + 1 : col - 1
-      if (visibleColumns[toCol] === undefined) {
-        toCol = col
-      }
+      // The virtualizers count visible rows and columns only.
+      const row = getVisibleIndex(flatRows, visibleRows, coords.row)
+      const col = getVisibleIndex(flatColumns, visibleColumns, coords.col)
 
       const scrollOptions: ScrollToOptions = { align: "auto", behavior: "auto" }
 
-      if (direction === "horizontal" || direction === "both") {
-        columnVirtualizer.scrollToIndex(toCol, scrollOptions)
+      if ((direction === "horizontal" || direction === "both") && col !== -1) {
+        columnVirtualizer.scrollToIndex(
+          getLookAheadIndex(col, coords.col >= anchor.col, visibleColumns.length),
+          scrollOptions
+        )
       }
 
-      if (direction === "vertical" || direction === "both") {
-        rowVirtualizer.scrollToIndex(toRow, scrollOptions)
+      if ((direction === "vertical" || direction === "both") && row !== -1) {
+        rowVirtualizer.scrollToIndex(
+          getLookAheadIndex(row, coords.row >= anchor.row, visibleRows.length),
+          scrollOptions
+        )
       }
     },
-    [anchor, columnVirtualizer, visibleRows, rowVirtualizer, visibleColumns]
+    [
+      anchor,
+      columnVirtualizer,
+      flatRows,
+      flatColumns,
+      visibleRows,
+      rowVirtualizer,
+      visibleColumns,
+    ]
   )
 
   const navigateToField = useCallback(

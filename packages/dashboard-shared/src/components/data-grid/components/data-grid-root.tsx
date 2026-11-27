@@ -52,7 +52,7 @@ import {
 } from "../hooks"
 import { DataGridMatrix } from "../models"
 import { DataGridCoordinates, DataGridForm, GridColumnOption } from "../types"
-import { isCellMatch, isSpecialFocusKey } from "../utils"
+import { getVisibleIndexes, isCellMatch, isSpecialFocusKey } from "../utils"
 import { DataGridKeyboardShortcutModal } from "./data-grid-keyboard-shortcut-modal"
 export interface DataGridRootProps<
   TData,
@@ -130,6 +130,14 @@ const getCommonPinningStyles = <TData,>(
       isPinned === "right" ? `${column.getAfter("right")}px` : undefined,
   }
 }
+
+const getSelectionEdges = (
+  anchor: DataGridCoordinates | null,
+  rangeEnd: DataGridCoordinates | null
+): DataGridCoordinates[] =>
+  [anchor, rangeEnd].filter(
+    (coords): coords is DataGridCoordinates => coords !== null
+  )
 
 /** Gap before a virtual column when the columns in between are not rendered. */
 const getColumnGap = (
@@ -294,13 +302,11 @@ export const DataGridRoot = <
         )
       )
 
-      if (anchor && visibleRows[anchor.row]) {
-        toRender.add(anchor.row)
-      }
-
-      if (rangeEnd && visibleRows[rangeEnd.row]) {
-        toRender.add(rangeEnd.row)
-      }
+      getVisibleIndexes(
+        flatRows,
+        visibleRows,
+        getSelectionEdges(anchor, rangeEnd).map((coords) => coords.row)
+      ).forEach((row) => toRender.add(row))
 
       return Array.from(toRender).sort((a, b) => a - b)
     },
@@ -402,13 +408,11 @@ export const DataGridRoot = <
         )
       )
 
-      if (anchor && visibleColumns[anchor.col]) {
-        toRender.add(anchor.col)
-      }
-
-      if (rangeEnd && visibleColumns[rangeEnd.col]) {
-        toRender.add(rangeEnd.col)
-      }
+      getVisibleIndexes(
+        flatColumns,
+        visibleColumns,
+        getSelectionEdges(anchor, rangeEnd).map((coords) => coords.col)
+      ).forEach((col) => toRender.add(col))
 
       // The first column is pinned, so we always render it
       toRender.add(0)
@@ -434,11 +438,35 @@ export const DataGridRoot = <
       (virtualColumns[virtualColumns.length - 1]?.end ?? 0)
   }
 
-  const matrix = useMemo(
-    () =>
-      new DataGridMatrix<TData>(flatRows, columns, multiColumnSelection),
-    [flatRows, columns, multiColumnSelection]
-  )
+  // Hidden rows and columns (view menu, error highlighting) are skipped by navigation and selection.
+  const matrix = useMemo(() => {
+    const next = new DataGridMatrix<TData>(
+      flatRows,
+      columns,
+      multiColumnSelection
+    )
+
+    flatColumns.forEach((column, index) => {
+      if (columnVisibility[column.id] === false) {
+        next.toggleColumn(index, false)
+      }
+    })
+
+    flatRows.forEach((_, index) => {
+      if (rowVisibility[index] === false) {
+        next.toggleRow(index, false)
+      }
+    })
+
+    return next
+  }, [
+    flatRows,
+    flatColumns,
+    columns,
+    multiColumnSelection,
+    columnVisibility,
+    rowVisibility,
+  ])
   const queryTool = useDataGridQueryTool(containerRef)
 
   const setSingleRange = useCallback(
@@ -466,7 +494,7 @@ export const DataGridRoot = <
     handleToggleColumn,
     handleResetColumns,
     isDisabled: isColumsDisabled,
-  } = useDataGridColumnVisibility(grid, matrix)
+  } = useDataGridColumnVisibility(grid)
 
   const handleToggleColumnVisibility = useCallback(
     (index: number) => {
@@ -482,6 +510,7 @@ export const DataGridRoot = <
     columnVirtualizer,
     rowVirtualizer,
     flatColumns,
+    flatRows,
     setColumnVisibility,
     setSingleRange,
     visibleColumns,
@@ -851,7 +880,10 @@ export const DataGridRoot = <
                         <DataGridHeaderCell
                           key={header.id}
                           header={header}
-                          columnIndex={vc.index}
+                          columnIndex={flatColumns.findIndex(
+                            (c) => c.id === header.column.id
+                          )}
+                          ariaColIndex={vc.index + 1}
                           gapBefore={getColumnGap(array[index - 1], vc)}
                           direction={direction}
                           onResize={resizeColumn}
@@ -1054,6 +1086,7 @@ const DataGridHeader = ({
 type DataGridHeaderCellProps<TData> = {
   header: HeaderGroup<TData>["headers"][number]
   columnIndex: number
+  ariaColIndex: number
   gapBefore?: number
   direction: ReadingDirection
   onResize: (column: Column<TData>, size: number) => void
@@ -1064,6 +1097,7 @@ type DataGridHeaderCellProps<TData> = {
 const DataGridHeaderCell = <TData,>({
   header,
   columnIndex,
+  ariaColIndex,
   gapBefore,
   direction,
   onResize,
@@ -1133,7 +1167,7 @@ const DataGridHeaderCell = <TData,>({
       onTouchStart={onResizer(resizeHandler)}
       onClick={onResizer((e) => e.stopPropagation())}
       data-column-index={columnIndex}
-      aria-colindex={columnIndex + 1}
+      aria-colindex={ariaColIndex}
       style={{
         width: header.getSize(),
         ...getCommonPinningStyles(column),

@@ -128,3 +128,41 @@ export function getCellCoordinates<TData, TValue>(
 
   throw new Error("DataGrid cells must be rendered by DataGridRoot")
 }
+
+/**
+ * Matrix coordinates count every row and column, hidden ones included, while
+ * the virtualizers only count the visible ones. Maps a matrix index to its
+ * position among the visible items; a hidden item gets the position it takes
+ * once shown. Returns -1 outside the matrix.
+ */
+export function getVisibleIndex<TItem extends { id: string }>(
+  items: TItem[],
+  visibleItems: TItem[],
+  index: number
+): number {
+  if (index < 0 || index >= items.length) {
+    return -1
+  }
+
+  const visibleIds = new Set(visibleItems.map((item) => item.id))
+
+  return items
+    .slice(0, index)
+    .filter((item) => visibleIds.has(item.id)).length
+}
+
+/** Visible positions of the given matrix indexes, skipping hidden items. */
+export function getVisibleIndexes<TItem extends { id: string }>(
+  items: TItem[],
+  visibleItems: TItem[],
+  indexes: number[]
+): number[] {
+  const visibleIds = new Set(visibleItems.map((item) => item.id))
+
+  return indexes
+    .filter((index) => {
+      const item = items[index]
+      return item !== undefined && visibleIds.has(item.id)
+    })
+    .map((index) => getVisibleIndex(items, visibleItems, index))
+}

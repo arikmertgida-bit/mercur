@@ -1,12 +1,8 @@
 import type { Column, Table } from "@tanstack/react-table"
 
-import { DataGridMatrix } from "../models"
 import { createDataGridColumnMetaSchema, GridColumnOption } from "../types"
 
-export function useDataGridColumnVisibility<TData>(
-  grid: Table<TData>,
-  matrix: DataGridMatrix<TData>
-) {
+export function useDataGridColumnVisibility<TData>(grid: Table<TData>) {
   const columns = grid.getAllLeafColumns()
 
   const columnOptions: GridColumnOption[] = columns.map((column) => ({
@@ -23,7 +19,6 @@ export function useDataGridColumnVisibility<TData>(
       return
     }
 
-    matrix.toggleColumn(index, value)
     column.toggleVisibility(value)
   }
 
