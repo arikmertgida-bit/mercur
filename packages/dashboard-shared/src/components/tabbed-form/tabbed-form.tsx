@@ -18,7 +18,10 @@ import { useTranslation } from "react-i18next"
 import { z } from "zod"
 
 import { RouteFocusModal } from "@components/modals"
-import { KeyboundForm } from "@components/utilities/keybound-form"
+import {
+  KeyboundForm,
+  isImplicitSubmissionTarget,
+} from "@components/utilities/keybound-form"
 
 import { TabDefinition } from "./types"
 import { useTabManagement } from "./use-tab-management"
@@ -172,28 +175,28 @@ function Root<T extends FieldValues>({
       <RouteFocusModal.Form form={form}>
         <KeyboundForm
           onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              if (
-                e.target instanceof HTMLTextAreaElement &&
-                !(e.metaKey || e.ctrlKey)
-              ) {
-                return
-              }
-
-              e.preventDefault()
-
-              if (e.metaKey || e.ctrlKey) {
-                if (!isLastTab) {
-                  e.preventDefault()
-                  e.stopPropagation()
-                  onNext()
-
-                  return
-                }
-
-                onSubmit()
-              }
+            if (e.key !== "Enter") {
+              return
             }
+
+            if (!(e.metaKey || e.ctrlKey)) {
+              if (isImplicitSubmissionTarget(e.target)) {
+                e.preventDefault()
+              }
+
+              return
+            }
+
+            e.preventDefault()
+
+            if (!isLastTab) {
+              e.stopPropagation()
+              onNext()
+
+              return
+            }
+
+            onSubmit()
           }}
           onSubmit={onSubmit}
           className="flex h-full flex-col"

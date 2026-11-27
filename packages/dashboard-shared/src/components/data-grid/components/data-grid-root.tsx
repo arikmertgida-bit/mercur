@@ -1,7 +1,3 @@
-/* eslint-disable jsx-a11y/prefer-tag-over-role -- virtualized grid intentionally uses divs with grid/row/gridcell roles; semantic table tags would break CSS grid layout */
-/* eslint-disable jsx-a11y/click-events-have-key-events -- keyboard handling is managed at the grid container level */
-/* eslint-disable jsx-a11y/no-static-element-interactions -- grid cells/anchors are part of grid semantics */
-/* eslint-disable jsx-a11y/no-noninteractive-tabindex -- grid container is focusable for keyboard navigation */
 import {
   Adjustments,
   AdjustmentsDone,
@@ -127,6 +123,27 @@ const getCommonPinningStyles = <TData,>(
     right: isPinned === "right" ? `${column.getAfter("right")}px` : undefined,
   }
 }
+
+/** Gap before a virtual column when the columns in between are not rendered. */
+const getColumnGap = (
+  previous: VirtualItem | undefined,
+  current: VirtualItem
+): number | undefined => {
+  if (!previous || current.index === previous.index + 1) {
+    return undefined
+  }
+
+  return current.start - previous.end
+}
+
+/** Space for the virtualized columns outside the rendered range. */
+const getRowPaddingStyles = (
+  paddingStart: number | undefined,
+  paddingEnd: number | undefined
+): CSSProperties => ({
+  paddingInlineStart: paddingStart || undefined,
+  paddingInlineEnd: paddingEnd || undefined,
+})
 
 /**
  * TODO:
@@ -668,6 +685,8 @@ export const DataGridRoot = <
     }
   }, [anchor, trapActive, setSingleRange, scrollToCoordinates, queryTool])
 
+  const headerGroups = grid.getHeaderGroups()
+
   return (
     <DataGridContext.Provider value={values}>
       <div className="bg-ui-bg-subtle flex size-full flex-col">
@@ -684,62 +703,49 @@ export const DataGridRoot = <
           headerContent={headerContent}
         />
         <div className="size-full overflow-hidden">
-          {/* oxlint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
           <div
             ref={containerRef}
-
-            tabIndex={0}
             className="relative h-full select-none overflow-auto outline-none"
-            onFocus={handleRestoreGridFocus}
-            onClick={handleRestoreGridFocus}
             data-container={true}
-            role="application"
           >
-            <div role="grid" className="text-ui-fg-subtle grid">
-              <div
-                role="rowgroup"
-                className="txt-compact-small-plus bg-ui-bg-subtle sticky top-0 z-[1] grid"
-              >
-                {grid.getHeaderGroups().map((headerGroup) => (
-                  <div
-                    role="row"
+            <table
+              role="grid"
+              tabIndex={0}
+              aria-rowcount={headerGroups.length + effectiveRowCount}
+              aria-colcount={visibleColumns.length}
+              onFocus={handleRestoreGridFocus}
+              onClick={handleRestoreGridFocus}
+              onKeyDown={handleRestoreGridFocus}
+              className="text-ui-fg-subtle grid outline-none"
+            >
+              <thead className="txt-compact-small-plus bg-ui-bg-subtle sticky top-0 z-[1] grid">
+                {headerGroups.map((headerGroup, headerGroupIndex) => (
+                  <tr
                     key={headerGroup.id}
+                    aria-rowindex={headerGroupIndex + 1}
                     className="flex h-10 w-full"
+                    style={getRowPaddingStyles(
+                      virtualPaddingLeft,
+                      virtualPaddingRight
+                    )}
                   >
-                    {virtualPaddingLeft ? (
-                      <div
-                        role="presentation"
-                        style={{ display: "flex", width: virtualPaddingLeft }}
-                      />
-                    ) : null}
-                    {virtualColumns.reduce<ReactNode[]>((acc, vc, index, array) => {
+                    {virtualColumns.map((vc, index, array) => {
                       const header = headerGroup.headers[vc.index]
-                      const previousVC = array[index - 1]
 
-                      if (previousVC && vc.index !== previousVC.index + 1) {
-                        // If there's a gap between the current and previous virtual columns
-                        acc.push(
-                          <div
-                            key={`padding-${previousVC.index}-${vc.index}`}
-                            role="presentation"
-                            style={{
-                              display: "flex",
-                              width: `${vc.start - previousVC.end}px`,
-                            }}
-                          />
-                        )
-                      }
-
-                      acc.push(
-                        <div
+                      return (
+                        <th
                           key={header.id}
-                          role="columnheader"
                           data-column-index={vc.index}
+                          aria-colindex={vc.index + 1}
                           style={{
                             width: header.getSize(),
                             ...getCommonPinningStyles(header.column),
+                            marginInlineStart: getColumnGap(
+                              array[index - 1],
+                              vc
+                            ),
                           }}
-                          className="bg-ui-bg-base txt-compact-small-plus flex items-center border-b border-r px-4 py-2.5"
+                          className="bg-ui-bg-base txt-compact-small-plus flex items-center border-b border-r px-4 py-2.5 text-start"
                         >
                           {header.isPlaceholder
                             ? null
@@ -749,6 +755,7 @@ export const DataGridRoot = <
                               )}
                           {header.column.getCanResize() && (
                             <div
+                              aria-hidden="true"
                               onMouseDown={header.getResizeHandler()}
                               onTouchStart={header.getResizeHandler()}
                               onClick={(e) => e.stopPropagation()}
@@ -761,25 +768,13 @@ export const DataGridRoot = <
                               )}
                             />
                           )}
-                        </div>
+                        </th>
                       )
-
-                      return acc
-                    }, [])}
-                    {virtualPaddingRight ? (
-                      <div
-                        role="presentation"
-                        style={{
-                          display: "flex",
-                          width: virtualPaddingRight,
-                        }}
-                      />
-                    ) : null}
-                  </div>
+                    })}
+                  </tr>
                 ))}
-              </div>
-              <div
-                role="rowgroup"
+              </thead>
+              <tbody
                 className="relative grid"
                 style={{
                   height: `${rowVirtualizer.getTotalSize()}px`,
@@ -788,12 +783,15 @@ export const DataGridRoot = <
                 {virtualRows.map((virtualRow) => {
                   const row: Row<TData> | undefined =
                     visibleRows[virtualRow.index]
+                  const ariaRowIndex =
+                    headerGroups.length + virtualRow.index + 1
 
                   // In lazy mode, rows beyond loaded data show as skeleton
                   if (!row) {
                     return (
                       <DataGridRowSkeleton
                         key={`skeleton-${virtualRow.index}`}
+                        ariaRowIndex={ariaRowIndex}
                         virtualRow={virtualRow}
                         virtualColumns={virtualColumns}
                         virtualPaddingLeft={virtualPaddingLeft}
@@ -809,6 +807,7 @@ export const DataGridRoot = <
                       key={row.id}
                       row={row}
                       rowIndex={rowIndex}
+                      ariaRowIndex={ariaRowIndex}
                       virtualRow={virtualRow}
                       rowVirtualizer={rowVirtualizer}
                       flatColumns={flatColumns}
@@ -821,8 +820,8 @@ export const DataGridRoot = <
                     />
                   )
                 })}
-              </div>
-            </div>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -960,20 +959,24 @@ type DataGridCellProps<TData> = {
   column: Column<TData>
   content: ReactNode
   columnIndex: number
+  ariaColIndex: number
   rowIndex: number
   anchor: DataGridCoordinates | null
   onDragToFillStart: (e: React.MouseEvent<HTMLElement>) => void
   multiColumnSelection: boolean
+  gapBefore?: number
 }
 
 const DataGridCell = <TData,>({
   column,
   content,
   columnIndex,
+  ariaColIndex,
   rowIndex,
   anchor,
   onDragToFillStart,
   multiColumnSelection,
+  gapBefore,
 }: DataGridCellProps<TData>) => {
   const coords: DataGridCoordinates = {
     row: rowIndex,
@@ -983,13 +986,12 @@ const DataGridCell = <TData,>({
   const isAnchor = isCellMatch(coords, anchor)
 
   return (
-    <div
-      role="gridcell"
-      aria-rowindex={rowIndex}
-      aria-colindex={columnIndex}
+    <td
+      aria-colindex={ariaColIndex}
       style={{
         width: column.getSize(),
         ...getCommonPinningStyles(column),
+        marginInlineStart: gapBefore,
       }}
       data-row-index={rowIndex}
       data-column-index={columnIndex}
@@ -1002,6 +1004,7 @@ const DataGridCell = <TData,>({
         {content}
         {isAnchor && (
           <div
+            aria-hidden="true"
             onMouseDown={onDragToFillStart}
             className={clx(
               "bg-ui-fg-interactive absolute bottom-0 right-0 z-[3] size-1.5 cursor-ns-resize",
@@ -1012,13 +1015,14 @@ const DataGridCell = <TData,>({
           />
         )}
       </div>
-    </div>
+    </td>
   )
 }
 
 type DataGridRowProps<TData> = {
   row: Row<TData>
   rowIndex: number
+  ariaRowIndex: number
   virtualRow: VirtualItem
   rowVirtualizer: Virtualizer<HTMLDivElement, Element>
   virtualPaddingLeft?: number
@@ -1033,6 +1037,7 @@ type DataGridRowProps<TData> = {
 const DataGridRow = <TData,>({
   row,
   rowIndex,
+  ariaRowIndex,
   virtualRow,
   rowVirtualizer,
   virtualPaddingLeft,
@@ -1046,67 +1051,40 @@ const DataGridRow = <TData,>({
   const visibleCells = row.getVisibleCells()
 
   return (
-    <div
-      role="row"
-      aria-rowindex={virtualRow.index}
+    <tr
+      aria-rowindex={ariaRowIndex}
       data-index={virtualRow.index}
       ref={(node) => rowVirtualizer.measureElement(node)}
       style={{
         transform: `translateY(${virtualRow.start}px)`,
+        ...getRowPaddingStyles(virtualPaddingLeft, virtualPaddingRight),
       }}
       className="bg-ui-bg-subtle txt-compact-small absolute flex min-h-10 w-full"
     >
-      {virtualPaddingLeft ? (
-        <div
-          role="presentation"
-          style={{ display: "flex", width: virtualPaddingLeft }}
-        />
-      ) : null}
-      {virtualColumns.reduce<ReactNode[]>((acc, vc, index, array) => {
+      {virtualColumns.map((vc, index, array) => {
         const cell = visibleCells[vc.index]
         const column = cell.column
         const columnIndex = flatColumns.findIndex((c) => c.id === column.id)
-        const previousVC = array[index - 1]
-
-        if (previousVC && vc.index !== previousVC.index + 1) {
-          // If there's a gap between the current and previous virtual columns
-          acc.push(
-            <div
-              key={`padding-${previousVC.index}-${vc.index}`}
-              role="presentation"
-              style={{
-                display: "flex",
-                width: `${vc.start - previousVC.end}px`,
-              }}
-            />
-          )
-        }
 
         // Cells read their grid position from the context (see getCellCoordinates).
         const context = { ...cell.getContext(), columnIndex, rowIndex }
 
-        acc.push(
+        return (
           <DataGridCell
             key={cell.id}
             column={column}
             content={flexRender(cell.column.columnDef.cell, context)}
             columnIndex={columnIndex}
+            ariaColIndex={vc.index + 1}
             rowIndex={rowIndex}
             anchor={anchor}
             onDragToFillStart={onDragToFillStart}
             multiColumnSelection={multiColumnSelection}
+            gapBefore={getColumnGap(array[index - 1], vc)}
           />
         )
-
-        return acc
-      }, [])}
-      {virtualPaddingRight ? (
-        <div
-          role="presentation"
-          style={{ display: "flex", width: virtualPaddingRight }}
-        />
-      ) : null}
-    </div>
+      })}
+    </tr>
   )
 }
 
@@ -1115,6 +1093,7 @@ const DataGridRow = <TData,>({
  * Displays placeholder cells while data is being fetched.
  */
 type DataGridRowSkeletonProps = {
+  ariaRowIndex: number
   virtualRow: VirtualItem
   virtualPaddingLeft?: number
   virtualPaddingRight?: number
@@ -1122,6 +1101,7 @@ type DataGridRowSkeletonProps = {
 }
 
 const DataGridRowSkeleton = ({
+  ariaRowIndex,
   virtualRow,
   virtualPaddingLeft,
   virtualPaddingRight,
@@ -1129,59 +1109,31 @@ const DataGridRowSkeleton = ({
 }: DataGridRowSkeletonProps) => {
   const { t } = useTranslation()
   return (
-    <div
-      role="row"
-      aria-rowindex={virtualRow.index}
+    <tr
+      aria-rowindex={ariaRowIndex}
+      aria-busy={true}
       style={{
         transform: `translateY(${virtualRow.start}px)`,
+        ...getRowPaddingStyles(virtualPaddingLeft, virtualPaddingRight),
       }}
       className="bg-ui-bg-subtle txt-compact-small absolute flex h-10 w-full"
     >
-      {virtualPaddingLeft ? (
-        <div
-          role="presentation"
-          style={{ display: "flex", width: virtualPaddingLeft }}
-        />
-      ) : null}
-      {virtualColumns.map((vc, index, array) => {
-        const previousVC = array[index - 1]
-        const elements: ReactNode[] = []
-
-        if (previousVC && vc.index !== previousVC.index + 1) {
-          elements.push(
-            <div
-              key={`padding-${previousVC.index}-${vc.index}`}
-              role="presentation"
-              style={{
-                display: "flex",
-                width: `${vc.start - previousVC.end}px`,
-              }}
-            />
-          )
-        }
-
-        elements.push(
-          <div
-            key={`skeleton-cell-${vc.index}`}
-            role="gridcell"
-            aria-label={t("a11y.cellInput")}
-            style={{ width: vc.size }}
-            className="relative flex items-center border-b border-r p-0 outline-none"
-          >
-            <div className="flex h-full w-full items-center px-4">
-              <div className="bg-ui-bg-component h-4 w-3/4 animate-pulse rounded" />
-            </div>
+      {virtualColumns.map((vc, index, array) => (
+        <td
+          key={`skeleton-cell-${vc.index}`}
+          aria-colindex={vc.index + 1}
+          aria-label={t("a11y.cellInput")}
+          style={{
+            width: vc.size,
+            marginInlineStart: getColumnGap(array[index - 1], vc),
+          }}
+          className="relative flex items-center border-b border-r p-0 outline-none"
+        >
+          <div className="flex h-full w-full items-center px-4">
+            <div className="bg-ui-bg-component h-4 w-3/4 animate-pulse rounded" />
           </div>
-        )
-
-        return elements
-      })}
-      {virtualPaddingRight ? (
-        <div
-          role="presentation"
-          style={{ display: "flex", width: virtualPaddingRight }}
-        />
-      ) : null}
-    </div>
+        </td>
+      ))}
+    </tr>
   )
 }

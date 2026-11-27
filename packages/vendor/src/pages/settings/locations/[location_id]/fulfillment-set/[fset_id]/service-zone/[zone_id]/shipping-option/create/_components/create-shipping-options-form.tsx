@@ -10,7 +10,10 @@ import {
   RouteFocusModal,
   useRouteModal,
 } from "@components/modals"
-import { KeyboundForm } from "@components/utilities/keybound-form"
+import {
+  KeyboundForm,
+  isImplicitSubmissionTarget,
+} from "@components/utilities/keybound-form"
 import { useCreateShippingOptions } from "@hooks/api/shipping-options"
 import { castNumber } from "@lib/cast-number"
 import { buildShippingOptionPriceRules } from "@pages/settings/locations/_common/utils/price-rule-helpers"
@@ -289,11 +292,16 @@ export function CreateShippingOptionsForm({
           if (!isEnterKey) {
             return
           }
-          e.preventDefault()
 
           if (!isModifierPressed) {
+            if (isImplicitSubmissionTarget(e.target)) {
+              e.preventDefault()
+            }
+
             return
           }
+
+          e.preventDefault()
 
           if (shouldContinueToPricing) {
             e.stopPropagation()

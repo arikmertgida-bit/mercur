@@ -13,7 +13,17 @@
     "import/no-named-as-default-member": "off",
     "eslint/no-underscore-dangle": "off",
     "import/no-unassigned-import": "off",
-    "react/incompatible-library": "warn"
+    "react/incompatible-library": "warn",
+    "jsx-a11y/no-noninteractive-element-to-interactive-role": [
+      "error",
+      {
+        "ul": ["menu", "menubar", "radiogroup", "tablist", "tree", "treegrid"],
+        "ol": ["menu", "menubar", "radiogroup", "tablist", "tree", "treegrid"],
+        "li": ["menuitem", "menuitemcheckbox", "menuitemradio", "row", "tab", "treeitem"],
+        "fieldset": ["radiogroup", "presentation"],
+        "table": ["grid"]
+      }
+    ]
   },
   "env": {
     "browser": true,

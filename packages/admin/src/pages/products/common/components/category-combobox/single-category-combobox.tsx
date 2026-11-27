@@ -17,6 +17,7 @@ import {
   useEffect,
   useImperativeHandle,
   useRef,
+  useId,
   useState,
 } from "react"
 import { Trans, useTranslation } from "react-i18next"
@@ -71,7 +72,7 @@ export const SingleCategoryCombobox = forwardRef<
       {
         q: query,
         parent_category_id: !searchValue ? getParentId(level) : undefined,
-        include_descendants_tree: !searchValue ? true : false,
+        include_descendants_tree: !searchValue,
       },
       {
         enabled: open && canViewCategories,
@@ -201,6 +202,21 @@ export const SingleCategoryCombobox = forwardRef<
 
   const [focusedIndex, setFocusedIndex] = useState<number>(-1)
 
+  const treeId = useId()
+  const getOptionId = (optionValue: string): string =>
+    `${treeId}-${optionValue}`
+  const levelUpId = `${treeId}-level-up`
+  const activeOptionIndex = showLevelUp ? focusedIndex - 1 : focusedIndex
+  const activeOption = options[activeOptionIndex]
+  const activeDescendant = !open
+    ? undefined
+    : showLevelUp && focusedIndex === 0
+      ? levelUpId
+      : activeOption
+        ? getOptionId(activeOption.value)
+        : undefined
+  const parent = level[level.length - 1]
+
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
       if (!open) {
@@ -325,6 +341,12 @@ export const SingleCategoryCombobox = forwardRef<
                   "opacity-0": hideInput,
                 }
               )}
+              role="combobox"
+              aria-expanded={open}
+              aria-haspopup="tree"
+              aria-autocomplete="list"
+              aria-controls={open ? treeId : undefined}
+              aria-activedescendant={activeDescendant}
               {...props}
               disabled={disabled || !canViewCategories}
             />
@@ -332,6 +354,8 @@ export const SingleCategoryCombobox = forwardRef<
               type="button"
               disabled={disabled || !canViewCategories}
               onClick={() => handleOpenChange(true)}
+              aria-label={t("general.open")}
+              aria-expanded={open}
               className="text-ui-fg-muted transition-fg hover:bg-ui-bg-field-hover absolute end-0 flex size-8 items-center justify-center rounded-r outline-none"
             >
               <TrianglesMini className="text-ui-fg-muted" />
@@ -341,8 +365,11 @@ export const SingleCategoryCombobox = forwardRef<
       </ConditionalTooltip>
       <RadixPopover.Content
         sideOffset={4}
-        // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role
-        role="listbox"
+        id={treeId}
+        role="tree"
+        tabIndex={-1}
+        aria-label={t("fields.category")}
+        aria-multiselectable={false}
         className={clx(
           "shadow-elevation-flyout bg-ui-bg-base -start-2 z-50 w-[var(--radix-popper-anchor-width)] rounded-[8px]",
           "max-h-[200px] overflow-y-auto",
@@ -368,6 +395,11 @@ export const SingleCategoryCombobox = forwardRef<
             <div className="p-1">
               <button
                 data-active={focusedIndex === 0}
+                id={levelUpId}
+                role="treeitem"
+                aria-level={level.length}
+                aria-expanded={true}
+                aria-selected={parent !== undefined && value === parent.id}
                 className={clx(
                   "transition-fg grid w-full appearance-none grid-cols-[20px_1fr] items-center justify-center gap-2 rounded-md px-2 py-1.5 text-start outline-none",
                   "data-[active=true]:bg-ui-bg-field-hover"
@@ -407,9 +439,13 @@ export const SingleCategoryCombobox = forwardRef<
                       : focusedIndex === index
                   }
                   type="button"
-                  // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role
-                  role="option"
+                  id={getOptionId(option.value)}
+                  role="treeitem"
                   aria-selected={value === option.value}
+                  aria-level={searchValue ? undefined : level.length + 1}
+                  aria-expanded={
+                    option.has_children && !searchValue ? false : undefined
+                  }
                   className={clx(
                     "grid h-full w-full appearance-none grid-cols-[20px_1fr] items-center gap-2 overflow-hidden rounded-md px-2 py-1.5 text-start outline-none",
                     "data-[active=true]:bg-ui-bg-field-hover"
@@ -441,6 +477,7 @@ export const SingleCategoryCombobox = forwardRef<
                     )}
                     type="button"
                     onClick={handleLevelDown(option)}
+                    aria-label={`${t("categories.fields.children.label")}: ${option.label}`}
                     tabIndex={-1}
                   >
                     <TriangleRightMini className="rtl:rotate-180" />
