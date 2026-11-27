@@ -332,6 +332,7 @@
         "selectUp": "Pilih ke atas",
         "selectColumnDown": "Pilih kolom ke bawah",
         "selectColumnUp": "Pilih kolom ke atas",
+        "resizeColumn": "Ubah lebar kolom",
         "focusToolbar": "Fokus bilah alat",
         "focusCancel": "Fokus batal"
       }

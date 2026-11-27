@@ -332,6 +332,7 @@
         "selectUp": "انتخاب از بالا",
         "selectColumnDown": "انتخاب ستون از پایین",
         "selectColumnUp": "انتخاب ستون به بالا",
+        "resizeColumn": "تغییر عرض ستون",
         "focusToolbar": "تمرکز بر نوار ابزار",
         "focusCancel": "تمرکز بر لغو"
       }

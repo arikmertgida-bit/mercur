@@ -476,6 +476,7 @@
         "selectUp": "Seleccionar hacia arriba",
         "selectColumnDown": "Seleccionar columna hacia abajo",
         "selectColumnUp": "Seleccionar columna hacia arriba",
+        "resizeColumn": "Cambiar el ancho de la columna",
         "focusToolbar": "Enfocar barra de herramientas",
         "focusCancel": "Enfocar cancelar"
       }

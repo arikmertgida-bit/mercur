@@ -332,6 +332,7 @@
         "selectUp": "Selecteer omhoog",
         "selectColumnDown": "Selecteer kolom omlaag",
         "selectColumnUp": "Selecteer kolom omhoog",
+        "resizeColumn": "Kolombreedte wijzigen",
         "focusToolbar": "Focus op werkbalk",
         "focusCancel": "Focus op annuleren"
       }

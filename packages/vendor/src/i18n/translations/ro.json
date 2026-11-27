@@ -336,6 +336,7 @@
         "selectUp": "Selectați sus",
         "selectColumnDown": "Selectați coloana în jos",
         "selectColumnUp": "Selectați coloana în sus",
+        "resizeColumn": "Modificați lățimea coloanei",
         "focusToolbar": "Focalizați bara de instrumente",
         "focusCancel": "Anulați focalizarea"
       }

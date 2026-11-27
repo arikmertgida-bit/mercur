@@ -458,6 +458,7 @@
         "selectUp": "Выбрать вверх",
         "selectColumnDown": "Выбрать столбец вниз",
         "selectColumnUp": "Выбрать столбец вверх",
+        "resizeColumn": "Изменить ширину столбца",
         "focusToolbar": "Перейти к панели инструментов",
         "focusCancel": "Отменить фокус"
       }

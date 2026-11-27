@@ -58,6 +58,25 @@ type DataGridHelperColumnsProps<TData, TFieldValues extends FieldValues> = {
   | { field?: null | undefined; type?: never }
 )
 
+type ColumnSizing = Pick<
+  DisplayColumnDef<never>,
+  "size" | "minSize" | "maxSize"
+>
+
+/**
+ * TanStack lets an explicit `undefined` replace the grid's `defaultColumn`
+ * size and bounds, so only the sizes a column sets are passed on.
+ */
+const getColumnSizing = ({
+  size,
+  minSize,
+  maxSize,
+}: ColumnSizing): ColumnSizing => ({
+  ...(size === undefined ? {} : { size }),
+  ...(minSize === undefined ? {} : { minSize }),
+  ...(maxSize === undefined ? {} : { maxSize }),
+})
+
 export function createDataGridHelper<
   TData,
   TFieldValues extends FieldValues
@@ -83,9 +102,7 @@ export function createDataGridHelper<
         header,
         cell,
         enableHiding: !disableHiding,
-        size,
-        minSize,
-        maxSize,
+        ...getColumnSizing({ size, minSize, maxSize }),
         meta: {
           name,
           field,

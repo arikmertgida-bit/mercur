@@ -336,6 +336,7 @@
         "selectUp": "Sélectionner vers le haut",
         "selectColumnDown": "Sélectionner la colonne vers le bas",
         "selectColumnUp": "Sélectionner la colonne vers le haut",
+        "resizeColumn": "Modifier la largeur de la colonne",
         "focusToolbar": "Focus barre d'outils",
         "focusCancel": "Annuler le focus"
       }

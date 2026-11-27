@@ -336,6 +336,7 @@
         "selectUp": "Odaberi gore",
         "selectColumnDown": "Odaberi kolonu dolje",
         "selectColumnUp": "Odaberi kolonu gore",
+        "resizeColumn": "Promijeni širinu kolone",
         "focusToolbar": "Fokusiraj alatnu traku",
         "focusCancel": "Fokus otkaži"
       }

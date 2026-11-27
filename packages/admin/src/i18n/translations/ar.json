@@ -466,6 +466,7 @@
         "selectUp": "تحديد لأعلى",
         "selectColumnDown": "تحديد عمود لأسفل",
         "selectColumnUp": "تحديد عمود لأعلى",
+        "resizeColumn": "تغيير عرض العمود",
         "focusToolbar": "تركيز على شريط الأدوات",
         "focusCancel": "تركيز على إلغاء"
       }

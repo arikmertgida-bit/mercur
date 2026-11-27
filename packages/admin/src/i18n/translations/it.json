@@ -454,6 +454,7 @@
         "selectUp": "Seleziona su",
         "selectColumnDown": "Seleziona colonna giù",
         "selectColumnUp": "Seleziona colonna su",
+        "resizeColumn": "Modifica larghezza colonna",
         "focusToolbar": "Focalizza barra degli strumenti",
         "focusCancel": "Focalizza annulla"
       }

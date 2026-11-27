@@ -306,6 +306,7 @@
         "selectUp": "Select up",
         "selectColumnDown": "Select column down",
         "selectColumnUp": "Select column up",
+        "resizeColumn": "Resize column",
         "focusToolbar": "Focus toolbar",
         "focusCancel": "Focus cancel"
       }

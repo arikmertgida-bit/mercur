@@ -450,6 +450,7 @@
         "selectUp": "Chọn lên",
         "selectColumnDown": "Chọn cột xuống",
         "selectColumnUp": "Chọn cột lên",
+        "resizeColumn": "Thay đổi độ rộng cột",
         "focusToolbar": "Tập trung vào thanh công cụ",
         "focusCancel": "Tập trung vào hủy"
       }

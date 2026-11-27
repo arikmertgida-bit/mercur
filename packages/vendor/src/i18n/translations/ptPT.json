@@ -336,6 +336,7 @@
         "selectUp": "Selecionar acima",
         "selectColumnDown": "Selecionar coluna abaixo",
         "selectColumnUp": "Selecionar coluna acima",
+        "resizeColumn": "Alterar a largura da coluna",
         "focusToolbar": "Focar barra de ferramentas",
         "focusCancel": "Focar cancelar"
       }

@@ -450,6 +450,7 @@
         "selectUp": "向上選擇",
         "selectColumnDown": "向下選擇欄位",
         "selectColumnUp": "向上選擇欄位",
+        "resizeColumn": "調整欄寬",
         "focusToolbar": "聚焦工具列",
         "focusCancel": "聚焦取消"
       }

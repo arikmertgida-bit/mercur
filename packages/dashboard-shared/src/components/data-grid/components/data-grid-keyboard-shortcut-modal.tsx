@@ -137,6 +137,13 @@ const useDataGridShortcuts = () => {
         },
       },
       {
+        label: t("dataGrid.shortcuts.commands.resizeColumn"),
+        keys: {
+          Mac: ["⌥", "⇧", "← →"],
+          Windows: ["Alt", "Shift", "← →"],
+        },
+      },
+      {
         label: t("dataGrid.shortcuts.commands.focusToolbar"),
         keys: {
           Mac: ["⌃", "⌥", ","],

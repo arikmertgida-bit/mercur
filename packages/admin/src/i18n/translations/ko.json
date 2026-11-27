@@ -450,6 +450,7 @@
         "selectUp": "위로 선택",
         "selectColumnDown": "열 아래로 선택",
         "selectColumnUp": "열 위로 선택",
+        "resizeColumn": "열 너비 변경",
         "focusToolbar": "툴바 포커스",
         "focusCancel": "취소 포커스"
       }

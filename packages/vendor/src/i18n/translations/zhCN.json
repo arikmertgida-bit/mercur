@@ -332,6 +332,7 @@
         "selectUp": "向上选择",
         "selectColumnDown": "向下选择列",
         "selectColumnUp": "向上选择列",
+        "resizeColumn": "调整列宽",
         "focusToolbar": "聚焦工具栏",
         "focusCancel": "聚焦取消"
       }

@@ -450,6 +450,7 @@
         "selectUp": "上を選択",
         "selectColumnDown": "下の列を選択",
         "selectColumnUp": "上の列を選択",
+        "resizeColumn": "列の幅を変更",
         "focusToolbar": "ツールバーにフォーカス",
         "focusCancel": "キャンセルにフォーカス"
       }

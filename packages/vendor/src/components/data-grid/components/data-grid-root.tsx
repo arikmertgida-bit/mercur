@@ -7,8 +7,10 @@ import { Button, DropdownMenu, clx } from "@medusajs/ui"
 import {
   Column,
   ColumnDef,
+  HeaderGroup,
   Row,
   VisibilityState,
+  defaultColumnSizing,
   flexRender,
   getCoreRowModel,
   useReactTable,
@@ -23,6 +25,7 @@ import React, {
   ReactNode,
   useCallback,
   useEffect,
+  useId,
   useMemo,
   useRef,
   useState,
@@ -119,9 +122,12 @@ const getCommonPinningStyles = <TData,>(
     width: column.getSize(),
     zIndex: isPinned ? 1 : 0,
     borderBottom: isPinned ? `1px solid ${BORDER_COLOR}` : undefined,
-    borderRight: isPinned ? `1px solid ${BORDER_COLOR}` : undefined,
-    left: isPinned === "left" ? `${column.getStart("left")}px` : undefined,
-    right: isPinned === "right" ? `${column.getAfter("right")}px` : undefined,
+    borderInlineEnd: isPinned ? `1px solid ${BORDER_COLOR}` : undefined,
+    // TanStack's "left"/"right" pins are the grid's start/end; logical insets keep them in RTL.
+    insetInlineStart:
+      isPinned === "left" ? `${column.getStart("left")}px` : undefined,
+    insetInlineEnd:
+      isPinned === "right" ? `${column.getAfter("right")}px` : undefined,
   }
 }
 
@@ -145,6 +151,39 @@ const getRowPaddingStyles = (
   paddingInlineStart: paddingStart || undefined,
   paddingInlineEnd: paddingEnd || undefined,
 })
+
+const COLUMN_RESIZE_STEP = 10
+const COLUMN_RESIZER_ATTRIBUTE = "data-column-resizer"
+
+type ReadingDirection = "ltr" | "rtl"
+
+/** Alt+Shift+ArrowLeft/Right on a cell resizes its column (keyboard path for the mouse-only handle). */
+const isColumnResizeShortcut = (e: KeyboardEvent): boolean =>
+  e.altKey &&
+  e.shiftKey &&
+  !e.ctrlKey &&
+  !e.metaKey &&
+  (e.key === "ArrowLeft" || e.key === "ArrowRight")
+
+const isColumnResizerTarget = (target: EventTarget | null): boolean =>
+  target instanceof Element &&
+  target.closest(`[${COLUMN_RESIZER_ATTRIBUTE}]`) !== null
+
+const getColumnSizeBounds = <TData,>(
+  column: Column<TData>
+): { min: number; max: number } => ({
+  min: column.columnDef.minSize ?? defaultColumnSizing.minSize,
+  max: column.columnDef.maxSize ?? defaultColumnSizing.maxSize,
+})
+
+/** The handle sits on the column's end edge, so the arrow pointing past it widens the column. */
+const getArrowResizeDelta = (
+  key: string,
+  direction: ReadingDirection
+): number => {
+  const widenKey = direction === "rtl" ? "ArrowLeft" : "ArrowRight"
+  return key === widenKey ? COLUMN_RESIZE_STEP : -COLUMN_RESIZE_STEP
+}
 
 /**
  * TODO:
@@ -199,6 +238,8 @@ export const DataGridRoot = <
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [rowVisibility, setRowVisibility] = useState<VisibilityState>({})
 
+  const direction: ReadingDirection = useDocumentDirection() ?? "ltr"
+
   const grid = useReactTable({
     data: data,
     columns,
@@ -214,8 +255,11 @@ export const DataGridRoot = <
     getSubRows,
     getCoreRowModel: getCoreRowModel(),
     columnResizeMode: "onChange",
+    columnResizeDirection: direction,
     defaultColumn: {
       size: 200,
+      // Header cells have 32px padding + a 1px border; anything narrower splits headers from their cells.
+      minSize: 60,
       maxSize: 400,
     },
   })
@@ -345,6 +389,7 @@ export const DataGridRoot = <
     estimateSize: (index) => visibleColumns[index].getSize(),
     getScrollElement: () => containerRef.current,
     horizontal: true,
+    isRtl: direction === "rtl",
     overscan: 3,
     rangeExtractor: (range) => {
       const startIndex = range.startIndex
@@ -472,6 +517,7 @@ export const DataGridRoot = <
   const { handleKeyDownEvent, handleSpecialFocusKeys } =
     useDataGridKeydownEvent({
       containerRef,
+      direction,
       matrix,
       queryTool,
       anchor,
@@ -546,6 +592,58 @@ export const DataGridRoot = <
     matrix,
   })
 
+  const resizeColumn = useCallback(
+    (column: Column<TData>, size: number) => {
+      const { min, max } = getColumnSizeBounds(column)
+      const next = Math.min(max, Math.max(min, size))
+
+      grid.setColumnSizing((sizing) => ({ ...sizing, [column.id]: next }))
+    },
+    [grid]
+  )
+
+  const focusAnchorColumnResizer = useCallback(
+    (e: KeyboardEvent) => {
+      const column = anchor ? flatColumns[anchor.col] : undefined
+
+      if (!column?.getCanResize()) {
+        return
+      }
+
+      e.preventDefault()
+      e.stopPropagation()
+
+      resizeColumn(
+        column,
+        column.getSize() + getArrowResizeDelta(e.key, direction)
+      )
+
+      const resizers = containerRef.current?.querySelectorAll<HTMLElement>(
+        `[${COLUMN_RESIZER_ATTRIBUTE}]`
+      )
+
+      Array.from(resizers ?? [])
+        .find(
+          (resizer) =>
+            resizer.getAttribute(COLUMN_RESIZER_ATTRIBUTE) === column.id
+        )
+        ?.focus()
+    },
+    [anchor, flatColumns, resizeColumn, direction]
+  )
+
+  const handleGridKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (isColumnResizeShortcut(e) && !isEditing) {
+        focusAnchorColumnResizer(e)
+        return
+      }
+
+      handleKeyDownEvent(e)
+    },
+    [isEditing, focusAnchorColumnResizer, handleKeyDownEvent]
+  )
+
   /** Effects */
 
   /**
@@ -556,7 +654,7 @@ export const DataGridRoot = <
       return
     }
 
-    window.addEventListener("keydown", handleKeyDownEvent)
+    window.addEventListener("keydown", handleGridKeyDown)
     window.addEventListener("mouseup", handleMouseUpEvent)
 
     // Copy and paste event listeners need to be added to the window
@@ -564,7 +662,7 @@ export const DataGridRoot = <
     window.addEventListener("paste", handlePasteEvent)
 
     return () => {
-      window.removeEventListener("keydown", handleKeyDownEvent)
+      window.removeEventListener("keydown", handleGridKeyDown)
       window.removeEventListener("mouseup", handleMouseUpEvent)
 
       window.removeEventListener("copy", handleCopyEvent)
@@ -572,7 +670,7 @@ export const DataGridRoot = <
     }
   }, [
     trapActive,
-    handleKeyDownEvent,
+    handleGridKeyDown,
     handleMouseUpEvent,
     handleCopyEvent,
     handlePasteEvent,
@@ -686,6 +784,22 @@ export const DataGridRoot = <
     }
   }, [anchor, trapActive, setSingleRange, scrollToCoordinates, queryTool])
 
+  /** Focus, clicks and keys on a column resizer stay with the resizer. */
+  const handleGridInteraction = useCallback(
+    (e: React.SyntheticEvent<HTMLTableElement>) => {
+      if (isColumnResizerTarget(e.target)) {
+        return
+      }
+
+      handleRestoreGridFocus()
+    },
+    [handleRestoreGridFocus]
+  )
+
+  const handleColumnResizerFocus = useCallback(() => {
+    setTrapActive(false)
+  }, [])
+
   const headerGroups = grid.getHeaderGroups()
 
   return (
@@ -714,9 +828,9 @@ export const DataGridRoot = <
               tabIndex={0}
               aria-rowcount={headerGroups.length + effectiveRowCount}
               aria-colcount={visibleColumns.length}
-              onFocus={handleRestoreGridFocus}
-              onClick={handleRestoreGridFocus}
-              onKeyDown={handleRestoreGridFocus}
+              onFocus={handleGridInteraction}
+              onClick={handleGridInteraction}
+              onKeyDown={handleGridInteraction}
               className="text-ui-fg-subtle grid outline-none"
             >
               <thead className="txt-compact-small-plus bg-ui-bg-subtle sticky top-0 z-[1] grid">
@@ -734,42 +848,16 @@ export const DataGridRoot = <
                       const header = headerGroup.headers[vc.index]
 
                       return (
-                        <th
+                        <DataGridHeaderCell
                           key={header.id}
-                          data-column-index={vc.index}
-                          aria-colindex={vc.index + 1}
-                          style={{
-                            width: header.getSize(),
-                            ...getCommonPinningStyles(header.column),
-                            marginInlineStart: getColumnGap(
-                              array[index - 1],
-                              vc
-                            ),
-                          }}
-                          className="bg-ui-bg-base txt-compact-small-plus flex items-center border-b border-r px-4 py-2.5 text-start"
-                        >
-                          {header.isPlaceholder
-                            ? null
-                            : flexRender(
-                                header.column.columnDef.header,
-                                header.getContext()
-                              )}
-                          {header.column.getCanResize() && (
-                            <div
-                              aria-hidden="true"
-                              onMouseDown={header.getResizeHandler()}
-                              onTouchStart={header.getResizeHandler()}
-                              onClick={(e) => e.stopPropagation()}
-                              className={clx(
-                                "hover:bg-ui-fg-interactive absolute right-0 top-0 z-[2] h-full w-1 cursor-col-resize touch-none select-none",
-                                {
-                                  "bg-ui-fg-interactive":
-                                    header.column.getIsResizing(),
-                                }
-                              )}
-                            />
-                          )}
-                        </th>
+                          header={header}
+                          columnIndex={vc.index}
+                          gapBefore={getColumnGap(array[index - 1], vc)}
+                          direction={direction}
+                          onResize={resizeColumn}
+                          onResizerFocus={handleColumnResizerFocus}
+                          onResizerExit={handleRestoreGridFocus}
+                        />
                       )
                     })}
                   </tr>
@@ -927,7 +1015,7 @@ const DataGridHeader = ({
           )}
         </div>
       )}
-      <div className="ml-auto flex items-center gap-x-2">
+      <div className="ms-auto flex items-center gap-x-2">
         {headerContent && (
           <div
             className="flex items-center"
@@ -960,6 +1048,124 @@ const DataGridHeader = ({
         />
       </div>
     </div>
+  )
+}
+
+type DataGridHeaderCellProps<TData> = {
+  header: HeaderGroup<TData>["headers"][number]
+  columnIndex: number
+  gapBefore?: number
+  direction: ReadingDirection
+  onResize: (column: Column<TData>, size: number) => void
+  onResizerFocus: () => void
+  onResizerExit: () => void
+}
+
+const DataGridHeaderCell = <TData,>({
+  header,
+  columnIndex,
+  gapBefore,
+  direction,
+  onResize,
+  onResizerFocus,
+  onResizerExit,
+}: DataGridHeaderCellProps<TData>) => {
+  const { t } = useTranslation()
+  const labelId = useId()
+  const resizerId = useId()
+  const { column } = header
+  const { min, max } = getColumnSizeBounds(column)
+  const resizeHandler = header.getResizeHandler()
+
+  /**
+   * WAI-ARIA window splitter keys; Enter and Tab return to the active cell.
+   * Escape keeps its grid-wide meaning (the route modal closes on it).
+   */
+  const handleResizerKeyDown = (
+    e: React.KeyboardEvent<HTMLTableCellElement>
+  ) => {
+    switch (e.key) {
+      case "ArrowLeft":
+      case "ArrowRight":
+        onResize(
+          column,
+          column.getSize() + getArrowResizeDelta(e.key, direction)
+        )
+        break
+      case "Home":
+        onResize(column, min)
+        break
+      case "End":
+        onResize(column, max)
+        break
+      case "Enter":
+      case "Tab":
+        onResizerExit()
+        break
+      default:
+        return
+    }
+
+    e.preventDefault()
+    e.stopPropagation()
+  }
+
+  /** The resizer (an `<hr>`) gets its events through the header cell. */
+  const onResizer =
+    <TEvent extends React.SyntheticEvent<HTMLTableCellElement>>(
+      handler: (e: TEvent) => void
+    ) =>
+    (e: TEvent) => {
+      if (isColumnResizerTarget(e.target)) {
+        handler(e)
+      }
+    }
+
+  return (
+    <th
+      onFocus={onResizer(onResizerFocus)}
+      onKeyDown={onResizer(handleResizerKeyDown)}
+      onMouseDown={onResizer((e) => {
+        // Dragging keeps the grid's cell navigation; only the keyboard path focuses the handle.
+        e.preventDefault()
+        resizeHandler(e)
+      })}
+      onTouchStart={onResizer(resizeHandler)}
+      onClick={onResizer((e) => e.stopPropagation())}
+      data-column-index={columnIndex}
+      aria-colindex={columnIndex + 1}
+      style={{
+        width: header.getSize(),
+        ...getCommonPinningStyles(column),
+        marginInlineStart: gapBefore,
+      }}
+      className="bg-ui-bg-base txt-compact-small-plus flex min-w-0 items-center overflow-hidden border-b border-e px-4 py-2.5 text-start"
+    >
+      <div id={labelId} className="contents">
+        {header.isPlaceholder
+          ? null
+          : flexRender(column.columnDef.header, header.getContext())}
+      </div>
+      {column.getCanResize() && (
+        <hr
+          id={resizerId}
+          tabIndex={-1}
+          aria-orientation="vertical"
+          aria-label={t("fields.width")}
+          aria-labelledby={`${resizerId} ${labelId}`}
+          aria-valuenow={column.getSize()}
+          aria-valuemin={min}
+          aria-valuemax={max}
+          data-column-resizer={column.id}
+          className={clx(
+            "hover:bg-ui-fg-interactive focus-visible:bg-ui-fg-interactive absolute end-0 top-0 z-[2] m-0 h-full w-1 cursor-col-resize border-0 touch-none select-none outline-none",
+            {
+              "bg-ui-fg-interactive": column.getIsResizing(),
+            }
+          )}
+        />
+      )}
+    </th>
   )
 }
 
@@ -1004,7 +1210,7 @@ const DataGridCell = <TData,>({
       data-row-index={rowIndex}
       data-column-index={columnIndex}
       className={clx(
-        "relative flex items-stretch border-b border-r p-0 outline-none"
+        "relative flex items-stretch border-b border-e p-0 outline-none"
       )}
       tabIndex={-1}
     >
@@ -1015,7 +1221,7 @@ const DataGridCell = <TData,>({
             aria-hidden="true"
             onMouseDown={onDragToFillStart}
             className={clx(
-              "bg-ui-fg-interactive absolute bottom-0 right-0 z-[3] size-1.5 cursor-ns-resize",
+              "bg-ui-fg-interactive absolute bottom-0 end-0 z-[3] size-1.5 cursor-ns-resize",
               {
                 "cursor-nwse-resize": multiColumnSelection,
               }
@@ -1135,7 +1341,7 @@ const DataGridRowSkeleton = ({
             width: vc.size,
             marginInlineStart: getColumnGap(array[index - 1], vc),
           }}
-          className="relative flex items-center border-b border-r p-0 outline-none"
+          className="relative flex items-center border-b border-e p-0 outline-none"
         >
           <div className="flex h-full w-full items-center px-4">
             <div className="bg-ui-bg-component h-4 w-3/4 animate-pulse rounded" />

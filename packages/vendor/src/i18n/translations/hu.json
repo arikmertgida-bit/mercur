@@ -332,6 +332,7 @@
         "selectUp": "Kijelölés fel",
         "selectColumnDown": "Oszlop kijelölése le",
         "selectColumnUp": "Oszlop kijelölése fel",
+        "resizeColumn": "Oszlopszélesség módosítása",
         "focusToolbar": "Ugrás a felső eszköztárra",
         "focusCancel": "Ugrás a Mégse gombra"
       }

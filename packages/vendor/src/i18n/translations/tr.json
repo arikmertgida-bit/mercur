@@ -332,6 +332,7 @@
         "selectUp": "Yukarı Seç",
         "selectColumnDown": "Sütunu Aşağı Seç",
         "selectColumnUp": "Sütunu Yukarı Seç",
+        "resizeColumn": "Sütun Genişliğini Değiştir",
         "focusToolbar": "Araç Çubuğuna Odaklan",
         "focusCancel": "Odak İptal"
       }

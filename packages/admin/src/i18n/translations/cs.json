@@ -454,6 +454,7 @@
         "selectUp": "Vybrat nahoru",
         "selectColumnDown": "Vybrat sloupec dolů",
         "selectColumnUp": "Vybrat sloupec nahoru",
+        "resizeColumn": "Změnit šířku sloupce",
         "focusToolbar": "Zaměřit na panel nástrojů",
         "focusCancel": "Zaměřit na zrušení"
       }

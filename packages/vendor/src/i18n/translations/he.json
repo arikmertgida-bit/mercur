@@ -336,6 +336,7 @@
         "selectUp": "בחר למעלה",
         "selectColumnDown": "בחר עמודה למטה",
         "selectColumnUp": "בחר עמודה למעלה",
+        "resizeColumn": "שנה רוחב עמודה",
         "focusToolbar": "התמקד בסרגל הכלים",
         "focusCancel": "התמקד בביטול"
       }

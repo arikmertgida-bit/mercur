@@ -986,6 +986,9 @@
                 "selectColumnUp": {
                   "type": "string"
                 },
+                "resizeColumn": {
+                  "type": "string"
+                },
                 "focusToolbar": {
                   "type": "string"
                 },

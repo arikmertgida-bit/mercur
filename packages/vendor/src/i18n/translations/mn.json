@@ -332,6 +332,7 @@
         "selectUp": "Дээш сонгох",
         "selectColumnDown": "Багана доош сонгох",
         "selectColumnUp": "Багана дээш сонгох",
+        "resizeColumn": "Баганын өргөнийг өөрчлөх",
         "focusToolbar": "Хэрэгсэл самбарт төвлөрөх",
         "focusCancel": "Цуцлахад төвлөрөх"
       }

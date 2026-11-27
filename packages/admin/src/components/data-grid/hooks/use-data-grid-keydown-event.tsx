@@ -18,6 +18,7 @@ const ToggleableNumberStateSchema = DataGridToggleableNumberSchema.partial()
 
 type UseDataGridKeydownEventOptions<TData> = {
   containerRef: React.RefObject<HTMLDivElement>
+  direction: "ltr" | "rtl"
   matrix: DataGridMatrix<TData>
   anchor: DataGridCoordinates | null
   rangeEnd: DataGridCoordinates | null
@@ -45,8 +46,22 @@ type UseDataGridKeydownEventOptions<TData> = {
 const ARROW_KEYS = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"]
 const VERTICAL_KEYS = ["ArrowUp", "ArrowDown"]
 
+/** The matrix moves in column order; in RTL the first column is on the right, so the horizontal arrows swap. */
+const getMatrixKey = (key: string, direction: "ltr" | "rtl"): string => {
+  if (direction !== "rtl") {
+    return key
+  }
+
+  if (key === "ArrowLeft") {
+    return "ArrowRight"
+  }
+
+  return key === "ArrowRight" ? "ArrowLeft" : key
+}
+
 export const useDataGridKeydownEvent = <TData,>({
   containerRef,
+  direction: readingDirection,
   matrix,
   anchor,
   rangeEnd,
@@ -127,13 +142,14 @@ export const useDataGridKeydownEvent = <TData,>({
       const next = matrix.getValidMovement(
         row,
         col,
-        e.key,
+        getMatrixKey(e.key, readingDirection),
         e.metaKey || e.ctrlKey
       )
 
       handleNavigation(next)
     },
     [
+      readingDirection,
       isEditing,
       anchor,
       rangeEnd,

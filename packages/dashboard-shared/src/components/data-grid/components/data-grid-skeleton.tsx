@@ -31,7 +31,7 @@ export const DataGridSkeleton = <TData,>({
             return (
               <div
                 key={col}
-                className="bg-ui-bg-base flex h-10 w-[200px] items-center border-b border-r px-4 py-2.5 last:border-r-0"
+                className="bg-ui-bg-base flex h-10 w-[200px] items-center border-b border-e px-4 py-2.5 last:border-e-0"
               >
                 <Skeleton className="h-[14px] w-[164px]" />
               </div>
@@ -49,7 +49,7 @@ export const DataGridSkeleton = <TData,>({
                 return (
                   <div
                     key={col}
-                    className="bg-ui-bg-base flex h-10 w-[200px] items-center border-b border-r px-4 py-2.5 last:border-r-0"
+                    className="bg-ui-bg-base flex h-10 w-[200px] items-center border-b border-e px-4 py-2.5 last:border-e-0"
                   >
                     <Skeleton className="h-[14px] w-[164px]" />
                   </div>

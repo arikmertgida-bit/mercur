@@ -450,6 +450,7 @@
         "selectUp": "เลือกขึ้น",
         "selectColumnDown": "เลือกคอลัมน์ลง",
         "selectColumnUp": "เลือกคอลัมน์ขึ้น",
+        "resizeColumn": "ปรับความกว้างคอลัมน์",
         "focusToolbar": "โฟกัสไปที่แถบเครื่องมือ",
         "focusCancel": "ยกเลิกโฟกัส"
       }

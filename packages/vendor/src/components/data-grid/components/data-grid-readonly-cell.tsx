@@ -30,8 +30,10 @@ export const DataGridReadonlyCell = <TData, TValue = JsonValue>({
         "h-full items-center"
       )}
     >
+      {/* Catalog text (often Latin in an RTL panel) is cut at its own end; short text still aligns with the column. */}
       <div
-        className={clx("flex-1", {
+        dir="auto"
+        className={clx("flex-1 [text-align:match-parent]", {
           truncate: !isMultiLine,
           "whitespace-pre-wrap break-words": isMultiLine,
         })}

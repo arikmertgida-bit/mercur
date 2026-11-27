@@ -332,6 +332,7 @@
         "selectUp": "Nach oben auswählen",
         "selectColumnDown": "Spalte nach unten auswählen",
         "selectColumnUp": "Spalte nach oben auswählen",
+        "resizeColumn": "Spaltenbreite ändern",
         "focusToolbar": "Symbolleiste fokussieren",
         "focusCancel": "Fokus aufheben"
       }

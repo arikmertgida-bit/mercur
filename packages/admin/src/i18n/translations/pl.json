@@ -415,6 +415,7 @@
         "selectUp": "Wybierz w górę",
         "selectColumnDown": "Wybierz kolumnę w dół",
         "selectColumnUp": "Wybierz kolumnę w górę",
+        "resizeColumn": "Zmień szerokość kolumny",
         "focusToolbar": "Przejdź do paska narzędzi",
         "focusCancel": "Anuluj fokus"
       }
